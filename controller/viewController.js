@@ -332,12 +332,14 @@ exports.APIcall = catchAsync(async(req, res, next) => {
             "username": "use1"
            }
 
-    }).then(res => res.json()).then(result => {
+    }).then(res => console.log(res))
+    // .then(result => {
 
-        console.log(result)
-        res.status(200).json({
-            status:"success",
-            result
-        })
-    })
+    //     console.log(result)
+    //     res.status(200).json({
+    //         status:"success",
+    //         result
+    //     })
+    // }
+    // )
 })
