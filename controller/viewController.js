@@ -318,7 +318,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
 
 
 exports.APIcall = catchAsync(async(req, res, next) => {
-    var fullUrl = 'https://stage-api.mysportsfeed.io/api/v1/feed/login';
+    var fullUrl = 'https://api.mysportsfeed.io/api/v1/feed/login';
     fetch(fullUrl, {
         method: 'POST',
         headers: { 
