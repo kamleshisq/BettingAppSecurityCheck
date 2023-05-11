@@ -315,3 +315,29 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         data:json.userAcc
     }));
 });
+
+
+exports.APIcall = catchAsync(async(req, res, next) => {
+    var fullUrl = 'https://stage-api.mysportsfeed.io/api/v1/feed/login';
+    fetch(fullUrl, {
+        method: 'POST',
+        headers: { 
+    'Signature':'TUlJQ1hnSUJBQUtCZ1FETzREV1pRdEFsM0tFSjlrSGNLbGFReEJONnFaejFOQjVYRHUrZUZXUmpJeFBDOVAreQpzd0Y2NzliQ3NwaDkwa3c0NUx4MW05YzZtVytWemFmY3E2Wmw1K3dEZ0E2dWpUdjJKcTUrM1F2MkFnL24rVkwwCjZPVHE0UmN2UGY3Nm5TUFV5Y1Myb2FEZTVYaG5hYXFibHVCWjVWWHNMSkFQRmhkZyszbHRzc2RWM3dJREFRQUIKQW9HQkFLQ01sbXdyMHZnZlFvZEZxeFVmY25FRkNveitod1l3L1g3WTQ1Tk96TXEzVlVYTzk0WUtzQkpsZ2NrMQo2Mnh5UVo5QnZSU1U3akxYRXljeUpKejRSYmlaTFJ3WGZGWmd5NkZIazFjS3BPQm9WK3dweWtEL1hBS01kU1k1CkZZMHVka2YzbHFXQkpGTllQYko3YmptZTlCS0M5UFl2eFAreVpXV2ZVMU9ZUGVHUkFrRUE3TlhjMUgzZmZkUTkKWTg2RWZyR1pyV3JobnhJeEsydExOQjNyMjEvTEVsVis3eDRIL3pNeG92Nm95ZEh5NXZlZmxWUTEvN1pMWU1ELworL1ZId1ZCK3VRSkJBTitkdU91b2FuTEhNRDNGUU1KOGd2TkRZWG95aVZYYW5jdS91K0hEeUJ6QlNXMXZWZEtRCkgxZVpxRVZRT0dYVWhFSnQ3clN4czY5dXo0R1ZKLzV6N1ZjQ1FFK2NmRVQ1b3Z6Yk1WK3hkaHhZZXY0dVpYVmgKV2lIc1NUVlZzWWptcEk2ZktySWFlRG15N2NhS3NCWlhlcjFsRThIUXN1NG9TeUpVL2plbDlkN252aEVDUVFDNQplUUttUS94MjB3d0tVQStVd04yRWxBREg4QjdGSFIwQW9EbGYycG1pY0JkTk02bEZpdERVUWRpMkZRR1NSS0NtCjBMUExJQkZmazFOOXNZK0lsL0xsQWtFQTEyQTF0b0oycGgwWVdxZS9EQmN6Vy82NnhBdkJ4VlZ2VE1pcU1hZSsKS21oNmF4NzF5RFBEUkd2VG5qd28vUmJMOEFjN0t3WmhNVW15N1VvZW1DTDYyQT09' },
+        body:{
+            "clientIp": "46.101.225.192",
+            "operatorId": "sheldon",
+            "partnerId": "SHPID01",
+            "platformId": "DESKTOP",
+            "userId": `6438f3b5d2eb67c8f67fe065`,
+            "username": "use1"
+           }
+
+    }).then(res => res.json()).then(result => {
+
+        console.log(result)
+        res.status(200).json({
+            status:"success",
+            result
+        })
+    })
+})

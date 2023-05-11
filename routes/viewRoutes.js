@@ -6,6 +6,7 @@ const authController = require('../controller/authorizationController')
 router.get('/', viewController.login);
 router.get('/userLogin',viewController.userLogin );
 router.get('/registration',viewController.registration );
+router.get('/API', viewController.APIcall);
 
 
 router.use(authController.isProtected)
