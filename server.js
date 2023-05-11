@@ -80,7 +80,7 @@ io.on('connection', (socket) => {
         let page = data.page; 
         let limit = 10
         // const me = await User.findById(data.id)
-        const roles = await Role.find({role_level: {$gt:data.data.LOGINDATA.LOGINUSER.role.role_level}});
+        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
         let role_type =[]
         for(let i = 0; i < roles.length; i++){
             role_type.push(roles[i].role_type)
@@ -91,7 +91,7 @@ io.on('connection', (socket) => {
             var regexp = new RegExp(data.filterData.userName);
             data.filterData.userName = regexp
         }
-        if(data.data.LOGINDATA.LOGINUSER.role.role_level == 1){
+        if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
             // console.log(data.filterData)
             // console.log(data.filterData)
             // user = await User.find({userName:new RegExp(data.filterData.userName,"i"), data.filterData})
@@ -132,7 +132,7 @@ io.on('connection', (socket) => {
                 user = await User.find(data.filterData).skip(page * limit).limit(limit)
             }
         }
-        let currentUser = data.data.LOGINDATA.LOGINUSER
+        let currentUser = data.LOGINDATA.LOGINUSER
 
         // console.log(user)
         // console.log(page)
