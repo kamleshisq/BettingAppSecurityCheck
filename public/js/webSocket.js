@@ -1,0 +1,762 @@
+// const { date } = require("joi");
+
+const socket = io();
+socket.on('connect', () => {
+    console.log("websocket Connected")
+    let LOGINDATA = {}
+    socket.on('loginUser',(data) => {
+        LOGINDATA.LOGINUSER = data.loginData.User
+        LOGINDATA.LOGINTOKEN = data.loginData.Token
+    
+    // console.log(LOGINTOKEN, LOGINUSER)
+    // console.log(window.location.href)
+    // let query = window.location.href.split('?')[1]
+    // let id;
+    // let P = 0;
+    // if(query){
+    //     id = query.split('=')[1]
+    // }
+    // // console.log(id)
+    // if(id){
+    //     socket.emit('load', {P:P, id:id})
+    // }else{
+    //     socket.emit('load', {P:P})
+    // }
+
+    //....................FOR UPDATE ROLE...................//
+
+
+
+
+    if(window.location.href == "http://localhost:8000/updateRole"){
+        let x = "121"
+        // let y = document.getElementById("mySelect").value
+        function sendData(){
+            
+            if(x != document.getElementById("mySelect").value){
+                x = document.getElementById("mySelect").value
+                socket.emit("dataId", (x))
+                setTimeout(()=>{
+                  sendData()
+                }, 300)
+            }else{
+                setTimeout(()=>{
+                    sendData()
+                  }, 300)
+            }
+          }
+          sendData()
+
+          socket.on("sendData", data => {
+            // console.log(data)
+            // console.log(data[1])
+            let html = ""
+            if(data[0].role.authorization.includes("createDeleteUser")){
+                html += `<label for="authorization">create and delete users</label><br>
+                        <input type="checkbox" name="authorization" value="createDeleteUser" checked><br>`
+            }else{
+                html += `<label for="authorization">create and delete users</label><br>
+                        <input type="checkbox" name="authorization" value="createDeleteUser" ><br>`
+            }
+            if(data[0].role.authorization.includes("userStatus")){
+                html += `<label for="authorization">User Status</label><br>
+                        <input type="checkbox" name="authorization" value="userStatus" checked><br>`
+            }else{
+                html += `<label for="authorization">User Status</label><br>
+                        <input type="checkbox" name="authorization" value="userStatus" ><br>`
+            }
+            if(data[0].role.authorization.includes("userName")){
+                html += `<label for="authorization">Users Details</label><br>
+                        <input type="checkbox" name="authorization" value="userName" checked><br>`
+            }else{
+                html += `<label for="authorization">Users Details</label><br>
+                        <input type="checkbox" name="authorization" value="userName" ><br>`
+            }
+            if(data[0].role.authorization.includes("betLockAndUnloack")){
+                html += `<label for="authorization">bet lock and unlock</label><br>
+                        <input type="checkbox" name="authorization" value="betLockAndUnloack" checked><br>`
+            }else{
+                html += `<label for="authorization">bet lock and unlock</label><br>
+                        <input type="checkbox" name="authorization" value="betLockAndUnloack" ><br>`
+            }
+            if(data[0].role.authorization.includes("changeUserPassword")){
+                html += `<label for="authorization">Password</label><br>
+                        <input type="checkbox" name="authorization" value="changeUserPassword" checked><br>`
+            }else{
+                html += `<label for="authorization">Password</label><br>
+                        <input type="checkbox" name="authorization" value="changeUserPassword" ><br>`
+            }
+            if(data[0].role.authorization.includes("roleController")){
+                html += `<label for="authorization">Role Controller</label><br>
+                        <input type="checkbox" name="authorization" value="roleController" checked><br>`
+            }else{
+                html += `<label for="authorization">Role Controller</label><br>
+                        <input type="checkbox" name="authorization" value="roleController" ><br>`
+            }
+            if(data[0].role.authorization.includes("accountControl")){
+                html += `<label for="authorization">Account Controller</label><br>
+                        <input type="checkbox" name="authorization" value="accountControl" checked><br>`
+            }else{
+                html += `<label for="authorization">Account Controller</label><br>
+                        <input type="checkbox" name="authorization" value="accountControl" ><br>`
+            }
+            if(data[0].role.authorization.includes("allUserLogOut")){
+                html += `<label for="authorization">All User Logout</label><br>
+                        <input type="checkbox" name="authorization" value="allUserLogOut" checked><br>`
+            }else{
+                html += `<label for="authorization">All User Logout</label><br>
+                        <input type="checkbox" name="authorization" value="allUserLogOut" ><br>`
+            }
+            if(data[0].role.authorization.includes("dashboard")){
+                html += `<label for="authorization">Dashboard</label><br>
+                        <input type="checkbox" name="authorization" value="dashboard" checked><br>`
+            }else{
+                html += `<label for="authorization">Dashboard</label><br>
+                        <input type="checkbox" name="authorization" value="dashboard" ><br>`
+            }
+            
+            document.getElementById('user_controller').innerHTML = html
+        
+            for(let i = 0; i < data[1].roles.length; i++){
+                // console.log(data[0].role.userAuthorization)
+                // console.log(data[1].roles[i].role_type)
+                // document.getElementById(data[1].roles[i].role_type).checked = true
+                // console.log(document.getElementById(data[1].roles[i].role_type))
+                if(data[0].role.userAuthorization.includes(`${data[1].roles[i].role_type}`)){
+                    document.getElementById(data[1].roles[i].role_type).checked = true
+                    // console.log(document.getElementById(data[1].roles[i].role_type), "checked")
+                }else{
+                    document.getElementById(data[1].roles[i].role_type).checked = false
+                    // console.log(data[1].roles[i].role_type)
+                }
+            }
+        
+            let html1 = ""
+            document.getElementById("role_controller").innerHTML = `
+            <label for="level">Role Level</label>
+            <input type="number" name="level" placeholder='${data[0].role.role_level}' id='role_level'>`
+        })
+    }
+
+
+
+
+
+
+
+    //..................FOR user management page...........//
+
+
+
+
+    // console.log(window.location.href)
+
+    if(window.location.href.startsWith('http://localhost:8000/userManagement')){
+        function getOwnChild(id,page,token) {
+            socket.emit(token,{
+                id,
+                page
+            })
+        
+        }
+
+
+        
+        // socket.on('getOwnChild',(data) => {
+            // console.log(data)
+            // let response = data.response;
+            // if(data.status === 'success')
+            // {
+                
+            //     $('table').html("<tr>"+
+            //     "<th>S.No</th>"+
+            //     "<th>User Name</th>"+
+            //     "<th>White lable</th>"+
+            //     "<th>Credit Reference</th>"+
+            //     "<th>Balance</th>"+
+            //     "<th>Available Balance</th>"+
+            //     "<th>Downlevel Balance</th>"+
+            //     "<th>Client P/L</th>"+
+            //     "<th>Upline P/L</th>"+
+            //     "<th>Exposure</th>"+
+            //     "<th>Exposure limit</th>"+
+            //     "<th>Lifetime Credit</th>"+
+            // " <th>Lifetime Deposite</th>"+
+            //     "<th>Action</th>"+
+            // "</tr>")
+            // let html ="";
+            // for(let i = 0; i < response.length; i++){ 
+            //     html +=
+            //     `<tr>
+            //         <td> ${i+1} </td>
+            //         <td class="getOwnChild" data-id='${JSON.stringify(response[i])}'>${response[i].userName}</td>
+            //         <td> ${response[i].whiteLabel}</td>
+            //         <td> ${response[i].creditReference}</td>
+            //         <td> ${response[i].balance}</td>
+            //         <td> ${response[i].availableBalance}</td>
+            //         <td> ${response[i].downlineBalance}</td>
+            //         <td> ${response[i].clientPL}</td>
+            //         <td> ${response[i].uplinePL}</td>
+            //         <td> ${response[i].exposure}</td>
+            //         <td> ${response[i].exposureLimit}</td>
+            //         <td> ${response[i].lifeTimeCredit}</td>
+            //         <td> ${response[i].lifeTimeDeposit}</td>
+            //         <td>`
+            //             if(data.currentUser.role.authorization.includes('userStatus')){
+            //                 html += `<button class="userStatus" type="userStatus" id="${response[i]._id}" data-myval='${JSON.stringify(response[i])}'>U/S</button>`
+            //             }
+            //             if(data.currentUser.role.authorization.includes('betLockAndUnloack')){
+            //                 html += `<button class="betLockStatus" id="${response[i]._id}" data-myval='${JSON.stringify(response[i])}'>BetLock status</button>`
+            //             }
+            //             if(data.currentUser.role.authorization.includes('changeUserPassword')){
+            //                 html += `<button ><a href="/resetPassword?id=${response[i]._id} ">change password</a></button>`
+            //             }
+            //             if(data.currentUser.role.authorization.includes('accountControl')){
+            //                 html += `<button ><a href="/accountStatement?id=${response[i]._id} ">A/S</a></button>
+            //                 <button ><a href="/DebitCredit?id=${response[i]._id}">D/C</a></button>`
+            //             }
+            //             if(data.currentUser.role.authorization.includes('userName')){
+            //                 html += `<button ><a href="/updateUser?id=${response[i]._id} ">Details</a></button>`
+            //             }
+            //           html += `</td> </tr>`
+            // }
+            // $('table').append(html)
+            //     html = '';
+            //     for(let i=0;i<data.Rows;i++){
+            //         html += `<a href="#" class="pagination">${i + 1}</a>`
+            //     }
+            //     $('.pageLink').html(html)
+            //     $('#back').attr('data-me',JSON.stringify(data.me));
+            // }
+        // })
+        //   $(document).on('click','.getOwnChild',function(e){
+        //         e.preventDefault();
+        //         let id = $(this).data('id')._id
+        //         if($(this).data('id').role.roleName != 'user'){
+        //             // sessionStorage.setItem('grandParentDetails',sessionStorage.getItem('parentDetails'))
+        //             // sessionStorage.setItem('parentDetails',JSON.stringify($(this).data('id')))
+        //             $('.pageLink').attr('data-page','1')
+        //             // console.log(id)
+        
+        //             getOwnChild(id,0,'getOwnChild')
+        
+        //         }
+        //     })
+        
+        //     $(document).on('click','#back',function(e){
+        //         e.preventDefault();
+        //         let parentId;
+        //         parentId = JSON.parse(document.querySelector('#back').getAttribute('data-me')).parent_id  
+        //         let loginuserparentid = JSON.parse(sessionStorage.getItem('loginUserDetails')).parent_id
+        //         // console.log(parentId)
+        //         // console.log(loginuserparentid)
+        //         if(parentId != loginuserparentid){
+        //                 getOwnChild(parentId,0,'getOwnChild')
+        //         }
+        //     })
+            
+        //     $(document).on('click','.pagination',function(e){
+        //         let page = $(this).text()
+        //         $('.pageLink').attr('data-page',page)
+        //         let id = JSON.parse(document.querySelector('#back').getAttribute('data-me'))._id;
+        //         // console.log(id)
+        
+        //         getOwnChild(id,page - 1,'getOwnChild')
+        
+        //     })
+        let count = 11;
+        socket.on('getOwnChild',(data) => {
+            // console.log(data)
+            // console.log('rows',data.result)
+            // let headHight = document.getElementsByClassName('HeadRow').height()
+            // console.log( "user row height", $('.UserRow').height())
+            // loadHight += (data.result * $('.UserRow').height()) 
+            let response = data.response;
+            if(data.status === 'success')
+            {
+                if(data.page == 0){
+                    count = 1;
+
+                        $('table').html("<tr>"+
+                        "<th>S.No</th>"+
+                        "<th>User Name</th>"+
+                        "<th>White lable</th>"+
+                        "<th>Credit Reference</th>"+
+                        "<th>Balance</th>"+
+                        "<th>Available Balance</th>"+
+                        "<th>Downlevel Balance</th>"+
+                        "<th>Client P/L</th>"+
+                        "<th>Upline P/L</th>"+
+                        "<th>Exposure</th>"+
+                        "<th>Exposure limit</th>"+
+                        "<th>Lifetime Credit</th>"+
+                    " <th>Lifetime Deposite</th>"+
+                        "<th>Action</th>"+
+                    "</tr>")
+                }
+                
+            let html ="";
+            for(let i = 0; i < response.length; i++){ 
+                html +=
+                `<tr id = ${count + i}>
+                    <td> ${count + i} </td>
+                    <td class="getOwnChild" data-id='${JSON.stringify(response[i])}'>`
+                    if(response[i].roleName != 'user'){
+                        html+= `<a href='/userManagement?id=${response[i]._id}'>${response[i].userName}</a>`
+                    }else{
+                        html+= `${response[i].userName}`
+                    }
+
+                    html += `</td>
+                    <td> ${response[i].whiteLabel}</td>
+                    <td> ${response[i].creditReference}</td>
+                    <td> ${response[i].balance}</td>
+                    <td> ${response[i].availableBalance}</td>
+                    <td> ${response[i].downlineBalance}</td>
+                    <td> ${response[i].clientPL}</td>
+                    <td> ${response[i].uplinePL}</td>
+                    <td> ${response[i].exposure}</td>
+                    <td> ${response[i].exposureLimit}</td>
+                    <td> ${response[i].lifeTimeCredit}</td>
+                    <td> ${response[i].lifeTimeDeposit}</td>
+                    <td>`
+                        if(data.currentUser.role.authorization.includes('userStatus')){
+                            html += `<button class="userStatus" type="userStatus" id="${response[i]._id}" data-myval='${JSON.stringify(response[i])}'>U/S</button>`
+                        }
+                        if(data.currentUser.role.authorization.includes('betLockAndUnloack')){
+                            html += `<button class="betLockStatus" id="${response[i]._id}" data-myval='${JSON.stringify(response[i])}'>BetLock status</button>`
+                        }
+                        if(data.currentUser.role.authorization.includes('changeUserPassword')){
+                            html += `<div class="popup_main">
+                            <!-- <button class="open_popup">Open Pop Up 1</button> -->
+                            <button class="open_popup">change password</button>
+          
+                            <div class="popup_body">
+                              <div class="popup_back"></div>
+                                <div class="popup_contain">
+                                  <div class="popup_close">x</div>
+                                    <h2>reset password</h2>
+          
+                                    <div class="ResetFORM">
+                                      <form class= "passReset-form" enctype="multipart/form-data" >
+                                        <!-- <div class="imgcontainer">
+                                          <img src="img_avatar2.png" alt="Avatar" class="avatar">
+                                        </div> -->
+                                      
+                                        <div class="container">
+                                          <input type="hidden" name="id" value=${response[i]._id}>
+                                          <label for="npsw"><b>New Password</b></label>
+                                          <input type="password" placeholder="Enter Password" name="password" required >
+                    
+                                          <label for="cpsw"><b>Confirm Password</b></label>
+                                          <input type="password" placeholder="Enter Password" name="passwordConfirm" required >
+                                              
+                                          <button type="submit">Submit</button>
+                                        </div>
+                                      </form>
+                                    </div>                      
+                                  </div>
+                            </div>
+                            </div>`
+                        }
+                        if(data.currentUser.role.authorization.includes('accountControl')){
+                            html += `<button ><a href="/accountStatement?id=${response[i]._id} ">A/S</a></button>
+                            <div class="popup_main">
+                            <button class="open_popup">D/C</button>
+                            <div class="popup_body">
+                                <div class="popup_back"></div>
+                                <div class="popup_contain">
+                                    <div class="popup_close">x</div>
+                                    <h2>Account</h2>
+
+                                    <div class="AccForm">
+                                        <form class= "acc-form" >
+                                        <!-- <div class="imgcontainer">
+                                            <img src="img_avatar2.png" alt="Avatar" class="avatar">
+                                        </div> -->
+                                        
+                                        <div class="container">
+                                    
+                                            <label for="amount"><b>Amount</b></label>
+                                            <input type="number" name="amount" required >
+                                            <input type="hidden" name="id" value='${response[i]._id}'>
+                                            <label for="type"><b>Select</b></label>
+                                            <select name="type">
+                                            <option value=deposit >Deposit</option>
+                                            <option value=withdrawl >withdrawl</option>
+                                            </select>
+                                            <button type="submit">Submit</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>`
+                        }
+                        if(data.currentUser.role.authorization.includes('userName')){
+                            html += `
+                            <div class="popup_main">
+                            <!-- <button class="open_popup">Open Pop Up 1</button> -->
+                            <button class="open_popup">Details</button>
+                            <!-- <button ><a href="/updateUser?id=<%=users[i]._id %>">Details</a></button> -->
+                            <div class="popup_body">
+                              <div class="popup_back"></div>
+                                <div class="popup_contain">
+                                  <div class="popup_close">x</div>
+                                    <h2>Update User</h2>
+          
+                                    <div class="editForm">
+                                      <form class= "edit-form">
+                                        <!-- <div class="imgcontainer">
+                                          <img src="img_avatar2.png" alt="Avatar" class="avatar">
+                                        </div> -->
+                                      
+                                        <div class="container" >
+                                          <label for="uname"><b>Username</b></label>
+                                          <input type="text" placeholder="Enter Username" name="userName" required  value=${response[i].userName}>
+                                          <input type="hidden"  name="id" value=${response[i]._id}>
+                                    
+                                          <label for="name"><b>Name</b></label>
+                                          <input type="text" placeholder="Enter name" name="name" required value=${response[i].name}>
+                                    
+                                          <select name="role">`
+                                           
+                                            for(let j=0;j<data.roles.length; j++){
+                                              if(response[i].role_type===data.roles[j].role_type){ 
+                                                html += `<option value=${data.roles[j]._id} selected>${data.roles[j].roleName}</option>`
+                                              }else{
+                                                html += `<option value=${data.roles[j]._id} >${data.roles[j].roleName}</option>`
+                                              }
+                                            }
+                                    
+                                          html += `</select>
+                                    
+                                          <button type="submit">Save</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                          </div>`
+                        }
+                      html += `</td> </tr>`
+            }
+            count += 10;
+            $('table').append(html)
+                // html = '';
+                // for(let i=0;i<data.Rows;i++){
+                //     html += `<a href='/userManagement?id=${data.me_id}&page=${i}' class="pagination">${i + 1}</a>`
+                // }
+                // $('.pageLink').html(html)
+                $('#back').attr('data-me',JSON.stringify(data.me));
+            }
+        })
+
+
+        //.........for search in user management page.............//
+
+        let filterData = {}
+        let S = false
+        let W = false
+        let R = false
+
+        $('#searchUser, #ROLEselect, #WhiteLabel').bind("change keyup", function(){
+            
+            if($(this).hasClass("WhiteLabel")){
+                    filterData.whiteLabel = $(this).val()
+                    if(filterData.whiteLabel != "" && filterData.whiteLabel != undefined){
+                        W = true
+                    }else{
+                        W = false
+                        delete filterData.whiteLabel 
+                    }
+            }
+            if($(this).hasClass("ROLEselect")){
+                    filterData.role_type = $(this).val()
+                    if(filterData.role_type != "" && filterData.role_type != undefined){
+                        R = true
+                    }else{
+                        R = false
+                        delete filterData.role_type 
+                    }
+            }
+
+            if($(this).hasClass("searchUser")){
+                    filterData.userName = $(this).val()
+                    if(filterData.userName.length >= 3){
+                        S = true
+                    }else{
+                        S = false
+                        delete filterData.userName
+                    }
+            }
+        console.log(W,S,R)
+        // if(W || S || R){
+               let page =  0;
+               $('.pageLink').attr('data-page',1)
+               let id = JSON.parse(document.querySelector('#back').getAttribute('data-me'))._id
+               socket.emit("search", {filterData,page,id, LOGINDATA })
+        // }
+    })
+
+    $(window).scroll(function() {
+        if($(document).height()-$(window).scrollTop() == window.innerHeight){
+            console.log(W,S,R)
+            let id = JSON.parse(document.querySelector('#back').getAttribute('data-me'))._id;
+
+            let page = parseInt($('.pageLink').attr('data-page'));
+        //  console.log(page)
+
+            $('.pageLink').attr('data-page',page + 1)
+            if(W || S || R){
+                    
+                    
+                // let page = parseInt($('.pageLink').attr('data-page'));
+                // $('.pageLink').attr('data-page',page + 1)
+                
+                socket.emit("search", {filterData, page, LOGINDATA})
+            }else{
+                getOwnChild(id,page ,'getOwnChild')
+            }
+        }
+     });
+        // socket.on("searchUser", (data)=>{
+        //     // console.log(data[1]._id)
+        //     console.log(data)
+        //     let html = "";
+        //     if(data.page == 0){
+        //         count = 1;
+        //         html = `
+        //         <tr>
+        //           <th>S.No</th>
+        //           <th>User Name</th>
+        //           <th>White lable</th>
+        //           <th>Credit Reference</th>
+        //           <th>Balance</th>
+        //           <th>Available Balance</th>
+        //           <th>Downlevel Balance</th>
+        //           <th>Client P/L</th>
+        //           <th>Upline P/L</th>
+        //           <th>Exposure</th>
+        //           <th>Exposure limit</th>
+        //           <th>Lifetime Credit</th>
+        //           <th>Lifetime Deposite</th>
+        //           <th>Action</th>
+        //         </tr>` 
+        //         $('table').html(html)  
+        //     }
+        //     html = ""
+        //     for(let i = 0; i < data.user.length; i++){
+        //         if(data.user.roleName == 'user'){
+        //             html += `<tr>
+        //         <td>${i + count}</td>
+        //         <td>${data.user[i].userName}</td>
+        //         <td>${data.user[i].whiteLabel}</td>
+        //         <td>${data.user[i].creditReference}</td>
+        //         <td>${data.user[i].balance}</td>
+        //         <td>${data.user[i].availableBalance}</td>
+        //         <td>${data.user[i].downlineBalance}</td>
+        //         <td>${data.user[i].clientPL}</td>
+        //         <td>${data.user[i].uplinePL}</td>
+        //         <td>${data.user[i].exposure}</td>
+        //         <td>${data.user[i].exposureLimit}</td>
+        //         <td>${data.user[i].lifeTimeCredit}</td>
+        //         <td>${data.user[i].lifeTimeDeposit}</td>
+        //         <td>`
+        //         }else{
+        //             html += `<tr>
+        //         <td>${i + count}</td>
+        //         <td><a href='/userManagement?id=${data.user[i]._id}'>${data.user[i].userName}</a></td>
+        //         <td>${data.user[i].whiteLabel}</td>
+        //         <td>${data.user[i].creditReference}</td>
+        //         <td>${data.user[i].balance}</td>
+        //         <td>${data.user[i].availableBalance}</td>
+        //         <td>${data.user[i].downlineBalance}</td>
+        //         <td>${data.user[i].clientPL}</td>
+        //         <td>${data.user[i].uplinePL}</td>
+        //         <td>${data.user[i].exposure}</td>
+        //         <td>${data.user[i].exposureLimit}</td>
+        //         <td>${data.user[i].lifeTimeCredit}</td>
+        //         <td>${data.user[i].lifeTimeDeposit}</td>
+        //         <td>`
+        //         }
+        //         if(data.currentUser.role.authorization.includes('userStatus')){
+        //             html += `<button class="userStatus" type="userStatus" id="${data.user[i]._id}" data-myval='${JSON.stringify(data.user[i])}'>U/S</button>`
+        //         }
+        //         if(data.currentUser.role.authorization.includes('betLockAndUnloack')){
+        //             html += `<button class="betLockStatus" id="${data.user[i]._id}" data-myval='${JSON.stringify(data.user[i])}'>BetLock status</button>`
+        //         }
+        //         if(data.currentUser.role.authorization.includes('changeUserPassword')){
+        //             html += `<button ><a href="/resetPassword?id=${data.user[i]._id} ">change password</a></button>`
+        //         }
+        //         if(data.currentUser.role.authorization.includes('accountControl')){
+        //             html += `<button ><a href="/accountStatement?id=${data.user[i]._id} ">A/S</a></button>
+        //             <button ><a href="/DebitCredit?id=${data.user[i]._id} ">D/C</a></button>`
+        //         }
+        //         if(data.currentUser.role.authorization.includes('userName')){
+        //             html += `<button ><a href="/updateUser?id=${data.user[i]._id} ">Details</a></button>`
+        //         }
+        //         html += `</td> </tr> `
+        //     }
+        //     count += 10;
+        //     // html += "</table>"
+        //     $('table').append(html)
+        //     // document.getElementById("table1").innerHTML = html
+        // })
+
+        socket.on('searchErr',(data) => {
+            alert(data.message)
+        })
+
+
+
+        // socket.on('searchUser2', (data) => {
+        //     // console.log(data)
+        //     let html = `<table style="width:100%">
+        //     <tr>
+        //       <th>S.No</th>
+        //       <th>User Name</th>
+        //       <th>White lable</th>
+        //       <th>Credit Reference</th>
+        //       <th>Balance</th>
+        //       <th>Available Balance</th>
+        //       <th>Downlevel Balance</th>
+        //       <th>Client P/L</th>
+        //       <th>Upline P/L</th>
+        //       <th>Exposure</th>
+        //       <th>Exposure limit</th>
+        //       <th>Lifetime Credit</th>
+        //       <th>Lifetime Deposite</th>
+        //       <th>Action</th>
+        //     </tr>
+        //     <tr>
+        //     <td>1</td>
+        //     <td class="getOwnChild" data-id='${JSON.stringify(data.user)}'>${data.user.userName}</td>
+        //     <td>${data.user.whiteLabel}</td>
+        //     <td>${data.user.creditReference}</td>
+        //     <td>${data.user.balance}</td>
+        //     <td>${data.user.availableBalance}</td>
+        //     <td>${data.user.downlineBalance}</td>
+        //     <td>${data.user.clientPL}</td>
+        //     <td>${data.user.uplinePL}</td>
+        //     <td>${data.user.exposure}</td>
+        //     <td>${data.user.exposureLimit}</td>
+        //     <td>${data.user.lifeTimeCredit}</td>
+        //     <td>${data.user.lifeTimeDeposit}</td>
+        //     <td>`
+        //     if(data.currentUser.role.authorization.includes('userStatus')){
+        //         html += `<button class="userStatus" type="userStatus" id="${data.user._id}" data-myval='${JSON.stringify(data.user)}'>U/S</button>`
+        //     }
+        //     if(data.currentUser.role.authorization.includes('betLockAndUnloack')){
+        //         html += `<button class="betLockStatus" id="${data.user._id}" data-myval='${JSON.stringify(data.user)}'>BetLock status</button>`
+        //     }
+        //     if(data.currentUser.role.authorization.includes('changeUserPassword')){
+        //         html += `<button ><a href="/resetPassword?id=${data.user._id} ">change password</a></button>`
+        //     }
+        //     if(data.currentUser.role.authorization.includes('accountControl')){
+        //         html += `<button ><a href="/accountStatement?id=${data.user._id} ">A/S</a></button>
+        //         <button ><a href="/DebitCredit?id=${data.user._id} ">D/C</a></button>`
+        //     }
+        //     if(data.currentUser.role.authorization.includes('userName')){
+        //         html += `<button ><a href="/updateUser?id=${data.user._id} ">Details</a></button>`
+        //     }
+        //   html += `</td> </tr> </table>`
+        // //     <button class="userStatus" type="userStatus" id="${data.user._id }" data-myval="${JSON.stringify(data.user)}">U/S</button>
+        // //       <button class="betLockStatus" id="${data.user._id}" data-myval="${JSON.stringify(data.user)}">BetLock status</button>
+        // //       <button ><a href="/resetPassword?id=${data.user._id}">change password</a></button>
+        // //       <button ><a href="/accountStatement?id=${data.user._id}">A/S</a></button>
+        // //       <button ><a href="/updateUser?id=${data.user._id}">Details</a></button>
+        // //       <button><a href="/DebitCredit?id=${data.user._id}">D/C</a></button>
+        // //     </td>
+        // // </tr>
+        // // </table>
+        //     document.getElementById("table1").innerHTML = html
+        // })
+
+        socket.on('load1', (data) => {
+            // console.log(data)
+        })
+
+    }
+
+
+
+
+    //for inactive users//
+    if(window.location.href == "http://localhost:8000/inactiveUser"){
+        $(document).on('click','.userStatusActive',function(e){
+            e.preventDefault();
+            let id = $(this).data('id')
+            socket.emit('UserActiveStatus', {id, LOGINDATA})
+        })
+        $(document).on('click','.Delete',function(e){
+            e.preventDefault();
+            let id = $(this).data('id')
+            socket.emit("deleteUser", {id, LOGINDATA});
+        })
+        socket.on("inActiveUserDATA", (data) => {
+            let html = `<table style="width:100%">
+            <tr>
+              <th>S.No</th>
+              <th>User Name</th>
+              <th>White lable</th>
+              <th>Action</th>
+            </tr>`
+            for(let i = 0; i < data.length; i++){
+                html += `<tr>
+                <td>${i + 1}</td>
+                <td>${data[i].userName}</td>
+                <td>${data[i].whiteLabel}</td>
+                <td>
+                  <button class="userStatusActive" type="userStatusActive" id="userStatusActive" data-id="${data[i]._id}">User status Active</button>
+                  <button class="Delete" type="Delete" id="Delete" data-id="${data[i]._id}">Delete</button>
+                </td>
+              </tr>`
+            }
+            html += `</table>`
+            // console.log(html)
+            document.getElementById('table1_Inactive').innerHTML = html
+        })
+        socket.on('inActiveUserDATA1', (data) => {
+            let html = `<table style="width:100%">
+            <tr>
+              <th>S.No</th>
+              <th>User Name</th>
+              <th>White lable</th>
+              <th>Action</th>
+            </tr>`
+            for(let i = 0; i < data.length; i++){
+                html += `<tr>
+                <td>${i + 1}</td>
+                <td>${data[i].userName}</td>
+                <td>${data[i].whiteLabel}</td>
+                <td>
+                  <button class="userStatusActive" type="userStatusActive" id="userStatusActive" data-id="${data[i]._id}">User status Active</button>
+                  <button class="Delete" type="Delete" id="Delete" data-id="${data[i]._id}">Delete</button>
+                </td>
+              </tr>`
+            }
+            html += `</table>`
+            // console.log(html)
+            document.getElementById('table1_Inactive').innerHTML = html
+        })
+    }
+    //for online users//
+    if(window.location.href == "http://localhost:8000/loginUser"){
+        // $(document).on('click','.userLogout',function(){
+        //     let id = $(this).data('id');
+        //     $(this).parent().parent().html('')
+        //     socket.emit('logOutUser',{id, LOGINDATA})
+        // })
+        // socket.on('logOutUser',(data) => {
+        //     // console.log(data.users)
+
+        // })
+    }
+})
+
+
+})
+
+

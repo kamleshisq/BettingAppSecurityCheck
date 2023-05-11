@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<style>
+    .container{
+        margin: 0px;
+        padding: 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    form{
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+    .input_group{
+        margin: 3px;
+    }
+</style>
+<body>
+    <div class="container">
+        <form class="createRole-form">
+            <div class="input_group">
+                <label for="roleName">Role Name</label>
+                <input type="text" name="roleName" placeholder="Enter Role Name" id="roleName" required>
+            </div>
+            <h3>User Controller</h3>
+            <div class="input_group">
+                <label for="createDeleteUser">Create Delete User</label>
+                <input type="checkbox" name="authorization" value="createDeleteUser"  id="createDeleteUser" >
+            </div>
+            <div class="input_group">
+                <label for="betLockAndUnloack">Bet Unlock</label>
+                <input type="checkbox" name="authorization" value="betLockAndUnloack" id="betLockAndUnloack" >
+            </div>
+            <div class="input_group">
+                <label for="userStatus">User Status</label>
+                <input type="checkbox" name="authorization" value="userStatus" id="userStatus">
+            </div>
+            <div class="input_group">
+                <label for="userName">User Name</label>
+                <input type="checkbox" name="authorization" value="userName" id="userName">
+            </div>
+            <div class="input_group">
+                <label for="roleController">Role Controller</label>
+                <input type="checkbox" name="authorization" value="roleController" id="roleController">
+            </div>
+            <div class="input_group">
+                <label for="allUserLogOut">All User Log Out</label>
+                <input type="checkbox" name="authorization" value="allUserLogOut" id="allUserLogOut">
+            </div>
+            <div class="input_group">
+                <label for="changeUserPassword">Change Password</label>
+                <input type="checkbox" name="authorization" value="changeUserPassword" id="changeUserPassword">
+            </div>
+            <div class="input_group">
+                <label for="userManagement">User Management</label>
+                <input type="checkbox" name="authorization" value="userManagement" id="userManagement">
+            </div>
+            <div class="input_group">
+                <label for="roleNameaccountControl">Account Controller</label>
+                <input type="checkbox" name="authorization" value="accountControl" id="accountControl">
+            </div>
+            <div class="input_group">
+                <label for="logOutUser">Log Out User</label>
+                <input type="checkbox" name="authorization" value="logOutUser" id="logOutUser">
+            </div>
+            <h3>Role Auth</h3>
+            <%for(let i=0;i<roles.length;i++){%>
+                <div class="input_group">
+                    <label for=<%=roles[i].roleName%>><%=roles[i].roleName%></label>
+                    <input type="checkbox" name="userAuthorization" value='<%=roles[i].role_level%>' 
+                    id='<%=roles[i].roleName%>'>
+                </div>
+            <%}%>
+            <div class="input_group">
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+
+<script type="text/javascript" src="js/bundle.js"></script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+const app = require('./app');
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const fetch = require('node-fetch');
+const Role = require('./model/roleModel');
+const User = require("./model/userModel");
+const userController = require("./websocketController/userController");
+const loginlogs = require('./model/loginLogs')
+io.on('connection', (socket) => {
+    console.log('connected to client')
+    let loginData = {}
+    loginData.User = global._User
+    loginData.Token = global._token
+
+    socket.emit("loginUser", {
+        loginData
+    })
+    const urlRequestAdd = async(url,method, Token) => {
+        const login = await loginlogs.findOne({session_id:Token, isOnline:true})
+        // console.log(login)
+
+        var fullUrl = global._protocol + '://' + global._host + url
+        // console.log(fullUrl)
+        login.logs.push(method + " - " + fullUrl)
+        login.save()
+    }
+
+
+//.........................for update role................//
+
+
+    socket.on('dataId', async(id)=>{
+        var fullUrl = global._protocol + '://' + global._host + '/api/v1/role/getRoleById?id=' + id
+        var fullUrl1 = global._protocol + '://' + global._host + "/api/v1/role/getAuthROle"
+
+        let urls = [
+            {
+                url:fullUrl,
+                name:'data'
+            },
+            {
+                url:fullUrl1,
+                name:'role'
+            }
+        ]
+        // console.log(urls)
+        let requests = urls.map(item => fetch(item.url, {
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ` + global._token, // notice the Bearer before your token
+            }
+        }).then(data => data.json()));
+        const resultData = {data:[], role:[]};
+        // console.log('here')
+        const data = await Promise.all(requests)
+        // console.log(data)
+        // const data1 = data[0].data;
+        // const role = data[1].roles;
+        // console.log(data)
+        socket.emit("sendData", data)
+        
+        // console.log(data)
+    })
+
+
+
+
+
+
+//......................FOR user management page .......................//
+
+
+    socket.on("Parent", async(id) => {
+       let child = await User.find({parent_id: id})
+       socket.emit("child", child);
+    })
+
+    socket.on("search", async(data) => {
+        // console.log(data.LOGINDATA.LOGINTOKEN);
+        let page = data.page; 
+        let limit = 10
+        // const me = await User.findById(data.id)
+        const roles = await Role.find({role_level: {$gt:global._User.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        
+        let user
+        if(data.filterData.userName){
+            var regexp = new RegExp(data.filterData.userName);
+            data.filterData.userName = regexp
+        }
+        if(global._User.role.role_level == 1){
+            // console.log(data.filterData)
+            // console.log(data.filterData)
+            // user = await User.find({userName:new RegExp(data.filterData.userName,"i"), data.filterData})
+           
+            if(data.filterData.role_type){
+                // console.log(parseInt(data.filterData.role_type))
+                if(role_type.includes(parseInt(data.filterData.role_type))){
+                    user = await User.find(data.filterData).skip(page * limit).limit(limit)
+                }else{
+                    socket.emit('searchErr',{
+                        message:'you not have permition'
+                    })
+                }
+            }else{
+                data.filterData.role_type = {
+                    $ne : 1
+                }
+                user = await User.find(data.filterData).skip(page * limit).limit(limit)
+            }
+          
+        }else{
+            if(data.filterData.role_type){
+                if(role_type.includes(data.filterData.role_type)){
+                    // console.log('here')
+                    user = await User.find(data.filterData).skip(page * limit).limit(limit)
+                }else{
+                    socket.on('searchErr',{
+                        message:'you not have permition'
+                    })
+                }
+            }else{
+
+                let role_Type = {
+                    $in:role_type
+                }
+                data.filterData.role_type = role_Type
+                // console.log(data.filterData)
+                user = await User.find(data.filterData).skip(page * limit).limit(limit)
+            }
+        }
+        let currentUser = global._User
+
+        // console.log(user)
+        // console.log(page)
+        let response = user;
+        urlRequestAdd(`/api/v1/users/searchUser?username = ${data.filterData.userName}& role=${data.filterData.role}& whiteLable = ${data.filterData.whiteLabel}`,'GET', data.LOGINDATA.LOGINTOKEN)
+        socket.emit("getOwnChild", {status : 'success',response, currentUser,page,roles})
+    })
+    
+    // status:'success',
+    // response:response.child,
+    // // Rows:response.Rows,
+    // result:response.result,
+    // me:response.me,
+    // currentUser:response.currentUser,
+    // page:data.page,
+    // roles:response.roles
+
+    // socket.on('searchUser1', async(data) => {
+    //     // console.log(data)
+    //     let user = await User.findById(data)
+    //     let currentUser = global._User
+    //     socket.emit("searchUser2", {user, currentUser})
+    // })
+    
+    //...........for pagination......./
+    
+    socket.on('getOwnChild',async(data) => {
+        // console.log(data)
+        let response = await userController.getOwnChild(data.id,data.page)
+        if(response.status === 'success'){
+
+            socket.emit('getOwnChild',{
+                status:'success',
+                response:response.child,
+                // Rows:response.Rows,
+                // result:response.result,
+                // me:response.me,
+                currentUser:response.currentUser,
+                page:data.page,
+                roles:response.roles
+            })
+        }else{
+            socket.emit('error',{
+                status:'error'
+            })
+        }
+    })
+
+    //....For inactive user page....//
+    
+    socket.on("UserActiveStatus", async(id) => {
+        // console.log(id)
+        await User.findByIdAndUpdate(id.id, {isActive: true})
+        let Users
+        const roles = await Role.find({role_level: {$gt:global._User.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        if(global._User.role_type == 1){
+            Users = await User.find({isActive:false})
+        }else{
+            Users = await User.find({role_type:{$in:role_type},isActive:false , whiteLabel:global._User.whiteLabel})
+        }
+        urlRequestAdd(`/api/v1/users/updateUserStatusActive`,'POST', id.LOGINDATA.LOGINTOKEN)
+        socket.emit("inActiveUserDATA", Users)
+
+    });
+
+
+    socket.on("deleteUser", async(id) => {
+        // console.log(id)
+        await User.findByIdAndDelete(id.id)
+        let Users
+        const roles = await Role.find({role_level: {$gt:global._User.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        if(global._User.role_type == 1){
+            Users = await User.find({isActive:false})
+        }else{
+            Users = await User.find({role_type:{$in:role_type},isActive:false , whiteLabel:global._User.whiteLabel})
+        }
+        socket.emit("inActiveUserDATA1", Users)
+        urlRequestAdd(`/api/v1/users/deleteUser`,'POST', id.LOGINDATA.LOGINTOKEN)
+    })
+
+
+    // socket.on('logOutUser',async(id) => {
+    //     // console.log(id)
+    //     // const user = await User.findOne({_id:id,is_Online:true});
+    //     // if(!user){
+    //     //     return next(new AppError('User not find with this id',404))
+    //     // }
+    //     // if(user.role.role_level < req.currentUser.role.role_level){
+    //     //     return next(new AppError('You do not have permission to perform this action',404))
+    //     // }
+    //     // console.log(user._id)
+    //     const logs = await loginlogs.findOneAndUpdate({user_id:id.id,isOnline:true},{isOnline:false})
+    //     global._loggedInToken.splice(logs.session_id, 1);
+    //     await User.findByIdAndUpdate({_id:id.id},{is_Online:false})
+    //     // const roles = await Role.find({role_level: {$gt:global._User.role.role_level}});
+    //     // let role_type =[]
+    //     // for(let i = 0; i < roles.length; i++){
+    //     //     role_type.push(roles[i].role_type)
+    //     // }
+    //     // const currentUser = global._User
+    //     // let users
+    //     // if(currentUser.role_type == 1){
+    //     //     users = await User.find({is_Online:true})
+    //     // }else{
+    //     //     users = await User.find({role_type:{$in:role_type},is_Online:true , whiteLabel:currentUser.whiteLabel})
+    //     // }
+    //     urlRequestAdd(`/api/v1/users/logOutSelectedUser`,'POST')
+    //     socket.emit('logOutUser',{status:'success'})
+    // })
+
+    // //For load page//
+    // socket.on('load',async(data) =>{
+    //     // console.log(global._User)
+    //     data.currentUser = global._User
+    //     let response = await userController.getownChild(data)
+    //     // console.log(response)
+    //     socket.emit('load1', response)
+
+    // })    
+})
+
+http.listen(8000,()=> {
+    console.log('app is running on port 8000')
+})

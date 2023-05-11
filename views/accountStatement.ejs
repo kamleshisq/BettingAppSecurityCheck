@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<style>
+table, th, td {
+  border:1px solid black;
+}
+</style>
+<body>
+
+<h2><%= title %></h2>
+<button class="logOut">logout</button>
+<button><a href="/userManagement">User Management</a></button>
+<table style="width:100%">
+  <tr>
+    <th>S.No</th>
+    <th>Date & Time</th>
+    <th>Credit</th>
+    <th>Debit</th>
+    <th>Closing</th>
+    <th>Description</th>
+    <th>User Name</th>
+  </tr>
+  <%if(data.length != 0){%>
+  <%for(let i = 0; i < data.length; i++){%>
+    <tr>
+      <td><%= i + 1 %></td>
+      <td><%= data[i].date%></td>
+      <%if(data[i].creditDebitamount > 0){%>
+        <td><%=data[i].creditDebitamount%></td>
+        <td>0</td>
+      <%}else{%>
+        <td>0</td>
+        <td><%=data[i].creditDebitamount%></td>
+      <%}%>
+      <td><%=data[i].balance%></td>
+      <td><%=data[i].description%></td>
+      <td><%=data[i].user_id.userName%></td>
+    </tr>
+  <%}}%>
+</table>
+
+
+<script type="text/javascript" src="js/bundle.js"></script>
+</body>
+</html>
