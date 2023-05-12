@@ -1,70 +1,707 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="../images/logo.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" integrity="sha512-1cK78a1o+ht2JcaW6g8OXYwqpev9+6GqOkz9xmBN9iUUhIndKtxwILGWYOSibOKjLsEdjyjZvYDq/cZwNeak0w==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+<title>Balaji Dashboard</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.css"> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.css">
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js" integrity="sha256-6ec2OYfOEVNM4UoRBRGoUP5SRgKyf/FhNoOjTwtqD3k=" crossorigin="anonymous"></script>
+<style>
+  .green{
+    background-color: #46BCAA;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 13px;
+    color: #fff;
+  }
+  .green>h5{
+    font-size: 15px;
+  }
+  .green>h6{
+    font-size: 13px;
+  }
+  .red{
+    background-color: #FE3030;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 13px;
+    color: #fff;
 
-    <title>Dashboard</title>
-    <style>
-        table, tr, th, td{
-            border: 1px solid black;
-        }
-    </style>
+  }
+  .red>h5{
+    font-size: 15px;
+  }
+  .red>h6{
+    font-size: 13px;
+  }
+  /* tr:nth-child(odd) {
+  background-color: ;
+}
+tr:nth-child(even) {
+  background-color: ;
+} */
+</style>
 </head>
-<body>
-    <button><a href="/userManagement">User Management</a></button>
-    <div class="container">
-        <div class="userDetails">
-
-            <h3>User Details</h3>
-            <table>
-                <tr>
-                    <th>User Type</th>
-                    <th>Total</th>
-                </tr>
-                <%for(let i=0; i<data.dashboard.roles.length;i++){%>
-                <tr>
-                    <td><%=data.dashboard.roles[i]._id%></td>
-                    <td><%=data.dashboard.roles[i].total%></td>
-                </tr>
-                <%}%>
-            </table>
+<body id="body-pd" class="fix-width-body" style="font-family: Outfit;background-color:#EAEEF7;">
+  <div class="container-fluid">
+  <header class="header" id="header">
+    
+      <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> 
+        
+          <span class="datre-time">Date 21-12-22   Time-11:08</span>
+        
+      </div>
+      
+      <div>
+      
+        <div class="social-media">
+          <!-- <span>Follow us: </span> -->
+          <span><a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="instagram"><i class="fa-solid fa-moon"></i></a></span> 
+          <span> <a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="facebook"><i class="fa-solid fa-bell"></i></a></span> 
+          <span> <a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="instagram"><i class="fa-solid fa-message"></i></a></span> 
+          <span> <a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="instagram"><i class="fa-solid fa-gear"></i></a></span> 
         </div>
-        <div class="whiteLable">
+      </div>
+  </header>
+  <div class="l-navbar" id="nav-bar" style="background-color: #FFFFFF;">
+      <nav class="nav">
+          
+            <div class="nav_list">
+              <a href="/dashboard" class="nav_link active"><img src="../images/dash.png" alt=""> <span class="nav_name">Dashboard</span> </a>
+              <a href="/userManagement" class="nav_link"> <img src="../images/user.png" alt=""> <span class="nav_name">User Mangement</span> </a>
+              <a href="/operation" class="nav_link"> <img src="../images/222.png" alt=""> <span class="nav_name">Operation</span> </a>
+              <a href="/livemarket" class="nav_link"> <img src="../images/333.png" alt=""> <span class="nav_name">Live Market</span> </a>
+              <a href="/casinocontrol" class="nav_link"> <img src="../images/44.png" alt=""> <span class="nav_name">Casino Control</span> </a>
+              <a href="/reports" class="nav_link"> <img src="../images/55.png" alt=""> <span class="nav_name">Reports</span> </a>
+              <a href="/payment" class="nav_link"> <img src="../images/66.png" alt=""> <span class="nav_name">Payments Gateway Option</span> </a>
+              <a href="/promotion" class="nav_link"> <img src="../images/77.png" alt=""> <span class="nav_name">Promotion</span> </a>
+              <a href="/cms" class="nav_link"> <img src="../images/88.png" alt=""> <span class="nav_name">Cms</span> </a>
+            </div>
+      </nav>
+  </div>
 
-            <h3>White Lable</h3>
-            <table>
-                <tr>
-                    <th>Domain</th>
-                    <%for(let i=0; i<data.dashboard.roles.length;i++){%>
-                        <th><%=data.dashboard.roles[i]._id%></th>
-                    <%}%>
 
-                </tr>
-                <%for(let i=0; i<data.dashboard.users.length;i++){%>
-                    <tr>
-                        <td><%=data.dashboard.users[i]._id%></td>
-                        <%for(let j=0; j<data.dashboard.roles.length;j++){%>
-                            <%let check = 0%>
-                            <%for(let k=0; k<data.dashboard.users[i].terms.length;k++){%>
-                                <%if(data.dashboard.users[i].terms[k].roleType == data.dashboard.roles[j]._id){%>
-                                    <td><%=data.dashboard.users[i].terms[k].total%></td>
-                                    <%check = 1%>
-                                <%}%>
-                            <%}%>
-                            <%if(check != 1){%>
-                                <td>0</td>
-                            <%}%>
+
+<div class="height-100" style="background-color: #EAEEF7;">
+   
+  <section class="pad-top-bottom" style="padding-top: 70px ;">
+    <section style="padding-top: 10px;">
+      <div class="new-head"> 
+          <h3 style="font-weight: 700;font-size: 24px;">Welcome to Dashboard</h3>
+          <form action="" style="display: flex;">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;">
+              
+            </div>
+            <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
+          </form>
+      </div>
+    </section>
+    <div class=""> 
+      <div class="main">
+          <div class="skin-data green">
+              <h5>Credit Reference</h5>
+              <h6>21,00,00,01,100.00</h6>
+          </div>
+          <div class="skin-data green">
+              <h5>Balance</h5>
+              <h6>21,00,91,42,890.00</h6>
+          </div>
+          <div class="skin-data green">
+              <h5>Available Balance</h5>
+              <h6>5,14,94,44,334.48</h6>
+          </div>
+          <div class="skin-data green">
+              <h5>Downline Balance</h5>
+              <h6>15,85,96,98,555.52</h6>
+          </div>
+
+          <div class="skin-data red">
+              <h5>MY P/L</h5>
+              <h6>-91,41,790.00</h6>
+          </div>
+          <div class="skin-data red">
+              <h5>Upline P/L</h5>
+              <h6>-54,58,455.00</h6>
+          </div>
+          <div class="skin-data green">
+              <h5>Client P/L</h5>
+              <h6>91,41,790.00</h6>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="">
+    <div class="">
+          <div class="video-section">
+
+            <div class="" style="background-color: #fff; padding: 10px;border-radius: 10px;">
+              <div id="chart"></div>
+              
+            </div>
+
+            <div class="video-play">
+                <div class="video-section" style="height: auto;">
+                  <div class="small-part" style="background-color: #fff;"> 
+                      <div class="hed-data">
+                          <h3 class="fix-h3"><img src="../images/sum.png" alt=""> &nbsp; Summary</h3>
+                          <select name="Today" id="">
+                            <option value="">Today</option>
+                          </select>
+                      </div>
+                      <table>
+                        <thead></thead>
+                        <tbody>
+                          <tr class="flex-justify blue">
+                            <td>Active Users</td>
+                            <td class="text-purple">5000</td>
+                          </tr>
+                          <tr class="flex-justify">
+                            <td>Active Users</td>
+                            <td class="text-purple">5000</td>
+                          </tr>
+                          <tr class="flex-justify blue">
+                            <td>Active Users</td>
+                            <td class="text-purple">5000</td>
+                          </tr>
+                          <tr class="flex-justify">
+                            <td>Active Users</td>
+                            <td class="text-purple">5000</td>
+                          </tr> 
+                          <tr class="flex-justify blue">
+                            <td>Active Users</td>
+                            <td class="text-purple">5000</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                  </div>
+                  <div class="small-part" style="background-color: #fff;">
+                    <div class="hed-data">
+                      <h3 class="fix-h3"><img src="../images/sum.png" alt=""> &nbsp; User Management</h3>
+                      
+                  </div>
+                  <table>
+                    <thead>
+                        <th>User Type</th>
+                        <th>Total</th>
+                    </thead>
+                    <tbody>
+                        <%for(let i=0; i<data.dashboard.roles.length;i++){%>
+                            <tr class="flex-justify blue">
+                                <td><%=data.dashboard.roles[i]._id%></td>
+                                <td><%=data.dashboard.roles[i].total%></td>
+                            </tr>
                         <%}%>
-                    </tr>
-                <%}%>
-            </table>
-        </div>
+                    </tbody>
+                  </table>
+                  </div>
+              
+                </div>
+              
+              <div class="video-section-">
+                <div class="video-play" style="background-color: #fff;padding: 10px;border-radius:10px;">
+                  <div class="hed-data">
+                    <h3 class="fix-h3"><img src="../images/wl.png" alt=""> &nbsp; White Labels</h3>
+                    
+                </div>
+                  <div class="full-adta">
+                    <table>
+                      <thead>
+                          <tr style="text-align: center;">
+                            <th></th>
+                            <th>Domain</th>
+                            <%for(let i=0; i<data.dashboard.roles.length;i++){%>
+                                <th><%=data.dashboard.roles[i]._id%></th>
+                            <%}%>
+                            
+                          </tr>
+                      </thead>
+                      <tbody>
+                        
+                            <%for(let i=0; i<data.dashboard.users.length;i++){%>
+                                <tr style="text-align: center;" class="blue">
+                                    <td><%=i + 1%></td>
+                                    <td><%=data.dashboard.users[i]._id%></td>
+                                    <%for(let j=0; j<data.dashboard.roles.length;j++){%>
+                                        <%let check = 0%>
+                                        <%for(let k=0; k<data.dashboard.users[i].terms.length;k++){%>
+                                            <%if(data.dashboard.users[i].terms[k].roleType == data.dashboard.roles[j]._id){%>
+                                                <td><%=data.dashboard.users[i].terms[k].total%></td>
+                                                <%check = 1%>
+                                            <%}%>
+                                        <%}%>
+                                        <%if(check != 1){%>
+                                            <td>0</td>
+                                        <%}%>
+                                    <%}%>
+                                </tr>
+                            <%}%>
+                        
+                       
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+            </div>
+           
+          </div>
+      </div>
+      </section>
+<!-- End skin device table-section-->
+<section style="padding: 15px 0px;">
+  <div class="table-section">
+   
+    <div class="table_data_details">
+      <div class="spcare-table">
+      <div class="hed-data">
+        <h3 class="fix-h3"><img src="../images/tp.png" alt=""> &nbsp; Top Player</h3>
+        
+    </div>
+      <table>
+        <thead>
+            <tr style="text-align: center;">
+              <th></th>
+              <th>Player</th>
+              <th>No.of Bets</th>
+              <th>Points</th>
+              
+            </tr>
+        </thead>
+        <tbody>
+          <tr style="text-align: center;">
+            <td>1</td>
+            <td>Sergio01</td>
+            <td>67</td>
+            <td class="text-purple">17900</td>
+          </tr>
+          <tr style="text-align: center;" class="blue">
+            <td>1</td>
+            <td>Sergio01</td>
+            <td>67</td>
+            <td class="text-purple">17900</td>
+          </tr>
+          <tr style="text-align: center;">
+            <td>1</td>
+            <td>Sergio01</td>
+            <td>67</td>
+            <td class="text-purple">17900</td>
+          </tr>
+          <tr style="text-align: center;" class="blue">
+            <td>1</td>
+            <td>Sergio01</td>
+            <td>67</td>
+            <td class="text-purple">17900</td>
+          </tr>
+          
+         
+        </tbody>
+      </table>
+</div>
+
+<div class="spcare-table">
+      <div class="hed-data">
+        <h3 class="fix-h3"><img src="../images/cat.png" alt=""> &nbsp; Categories</h3>
+        
+    </div>
+      <table>
+        <thead>
+            <tr style="text-align: center;">
+              <th></th>
+              <th>Category</th>
+              <th>No.of Matches</th>
+              <th>No.of Bets</th>
+              <th>Points</th>
+            </tr>
+        </thead>
+        <tbody>
+          
+          <tr style="text-align: center;" class="blue">
+            <td>1</td>
+            <td>Crickets</td>
+            <td>1</td>
+            <td>2</td>
+            <td class="text-purple">1500</td>
+          </tr>
+          
+        </tbody>
+      </table>
+</div>
+
+<div class="spcare-table">
+      <div class="hed-data">
+        <h3 class="fix-h3"><img src="../images/tp.png" alt=""> &nbsp; Top Player</h3>
+        
+    </div>
+      <table>
+        <thead>
+            <tr style="text-align: center;">
+              <th></th>
+              <th>Name</th>
+              <th>Event Type</th>
+              <th>Event</th>
+              <th>Market</th>
+              <th>Odds</th>
+              <th>Value</th>
+              <th>Risk</th>
+              
+            </tr>
+        </thead>
+        <tbody>
+          <tr style="text-align: center;">
+            <td></td>
+            <td>Sergio01</td>
+            <td>Tennies</td>
+            <td>Vivo</td>
+            <td>01</td>
+            <td>05</td>
+            <td>100%</td>
+            <td>10%</td>
+          </tr>
+          <tr style="text-align: center;" class="blue">
+            <td></td>
+            <td>Sergio01</td>
+            <td>Tennies</td>
+            <td>Vivo</td>
+            <td>01</td>
+            <td>05</td>
+            <td>100%</td>
+            <td>10%</td>
+          </tr>
+          <tr style="text-align: center;">
+            <td></td>
+            <td>Sergio01</td>
+            <td>Tennies</td>
+            <td>Vivo</td>
+            <td>01</td>
+            <td>05</td>
+            <td>100%</td>
+            <td>10%</td>
+          </tr>
+          <tr style="text-align: center;" class="blue">
+            <td></td>
+            <td>Sergio01</td>
+            <td>Tennies</td>
+            <td>Vivo</td>
+            <td>01</td>
+            <td>05</td>
+            <td>100%</td>
+            <td>10%</td>
+          </tr>
+          <tr style="text-align: center;">
+            <td></td>
+            <td>Sergio01</td>
+            <td>Tennies</td>
+            <td>Vivo</td>
+            <td>01</td>
+            <td>05</td>
+            <td>100%</td>
+            <td>10%</td>
+          </tr>
+          <tr style="text-align: center;" class="blue">
+            <td></td>
+            <td>Sergio01</td>
+            <td>Tennies</td>
+            <td>Vivo</td>
+            <td>01</td>
+            <td>05</td>
+            <td>100%</td>
+            <td>10%</td>
+          </tr>
+         
+        </tbody>
+      </table>
+      </div>
     </div>
 
-    <script type="text/javascript" src="js/bundle.js"></script>
+<!--  -->
+    <div class="table_data_details">
+      <div class="spcare-table">
+      <div class="hed-data">
+        <h3 class="fix-h3"><img src="../images/game.png" alt=""> &nbsp; Top Game</h3>
+        
+    </div>
+      <table>
+        <thead>
+            <tr style="text-align: center;">
+              <th></th>
+              <th>Game</th>
+              <th>No.of User </th>
+              <th>No.of Bets</th>
+              <th>Amount</th>
 
-</body>
+              
+              
+            </tr>
+        </thead>
+        <tbody>
+          <tr style="text-align: center;">
+            <td>1</td>
+            <td>Sergio01</td>
+            <td>67</td>
+            <td>67</td>
+            <td class="text-purple">17900</td>
+          </tr>
+          <tr style="text-align: center;" class="blue">
+            <td>1</td>
+            <td>Sergio01</td>
+            <td>67</td>
+            <td>67</td>
+            <td class="text-purple">17900</td>
+          </tr>
+          <tr style="text-align: center;">
+            <td>1</td>
+            <td>Sergio01</td>
+            <td>67</td>
+            <td>67</td>
+            <td class="text-purple">17900</td>
+          </tr>
+          
+          
+         
+        </tbody>
+      </table>
+    </div>
+    <div class="spcare-table">
+      <div class="hed-data">
+        <h3 class="fix-h3"><img src="../images/setal.png" alt=""> &nbsp; Settlements</h3>
+        
+    </div>
+      <table>
+        <thead>
+            <tr style="text-align: center;">
+              <th></th>
+              <th>Sport</th>
+              <th>Series</th>
+              <th>Event Name</th>
+              <th>Open Bets</th>
+              
+            </tr>
+        </thead>
+        <tbody>
+          <tr style="text-align: center;">
+            <td>1</td>
+            <td>Cricket</td>
+            <td>WC</td>
+            <td>T-20 </td>
+            <td>10</td>
+          </tr>
+          <tr style="text-align: center;" class="blue">
+            <td>1</td>
+            <td>Cricket</td>
+            <td>WC</td>
+            <td>T-20 </td>
+            <td>10</td>
+          </tr>
+          <tr style="text-align: center;">
+            <td>1</td>
+            <td>Cricket</td>
+            <td>WC</td>
+            <td>T-20 </td>
+            <td>10</td>
+          </tr>
+          <tr style="text-align: center;" class="blue">
+            <td>1</td>
+            <td>Cricket</td>
+            <td>WC</td>
+            <td>T-20 </td>
+            <td>10</td>
+          </tr>
+          <tr style="text-align: center;">
+            <td>1</td>
+            <td>Cricket</td>
+            <td>WC</td>
+            <td>T-20 </td>
+            <td>10</td>
+          </tr>
+          <tr style="text-align: center;" class="blue">
+            <td>1</td>
+            <td>Cricket</td>
+            <td>WC</td>
+            <td>T-20 </td>
+            <td>10</td>
+          </tr>
+          <tr style="text-align: center;">
+            <td>1</td>
+            <td>Cricket</td>
+            <td>WC</td>
+            <td>T-20 </td>
+            <td>10</td>
+          </tr> 
+        </tbody>
+      </table>
+      </div>
+      <div class="spcare-table">
+        <div class="hed-data">
+          <h3 class="fix-h3"><img src="../images/alert.png" alt=""> &nbsp; Alert Bets</h3>
+          
+      </div>
+        <table>
+          <thead>
+              <tr style="text-align: center;">
+                <th></th>
+                <th>Palyer</th>
+                <th>Event</th>
+                <th>Points</th>
+  
+                
+              </tr>
+          </thead>
+          <tbody>
+            
+            <tr style="text-align: center;" class="blue">
+              <td>1</td>
+              <td>No Data</td>
+              <td>Kabbadi</td>
+              <td class="text-purple">1500</td>
+            </tr>
+            
+          </tbody>
+        </table>
+  </div>
+    </div>
+
+
+  </div>
+</section>
+</div>
+</div>
+    
+<script src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+
+
+<script >
+  var options = {
+          series: [{
+          name: 'Income',
+          type: 'column',
+          data: [1.4, 2, 2.5, 1.5, 2.5, 2.8, 3.8, 4.6]
+        }, {
+          name: 'Cashflow',
+          type: 'column',
+          data: [1.1, 3, 3.1, 4, 4.1, 4.9, 6.5, 8.5]
+        }, 
+        {
+          name: 'Revenue',
+          type: 'line',
+          data: [20, 29, 37, 36, 44, 45, 50, 58]
+        }],
+          chart: {
+          height: 350,
+          type: 'line',
+          stacked: false
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          width: [1, 1, 4]
+        },
+        
+        yaxis: [
+          {
+            axisTicks: {
+              show: true,
+            },
+            axisBorder: {
+              show: true,
+              color: '#008FFB'
+            },
+            labels: {
+              style: {
+                colors: '#008FFB',
+              }
+            },
+            title: {
+              text: "Income (thousand crores)",
+              style: {
+                color: '#008FFB',
+              }
+            },
+            tooltip: {
+              enabled: true
+            }
+          },
+          {
+            seriesName: 'Income',
+            opposite: true,
+            axisTicks: {
+              show: true,
+            },
+            axisBorder: {
+              show: true,
+              color: '#00E396'
+            },
+            labels: {
+              style: {
+                colors: '#00E396',
+              }
+            },
+            title: {
+              text: "Operating Cashflow (thousand crores)",
+              style: {
+                color: '#00E396',
+              }
+            },
+          },
+          {
+            seriesName: 'Revenue',
+            opposite: true,
+            axisTicks: {
+              show: true,
+            },
+            axisBorder: {
+              show: true,
+              color: '#FEB019'
+            },
+            labels: {
+              style: {
+                colors: '#FEB019',
+              },
+            },
+            title: {
+              text: "Revenue (thousand crores)",
+              style: {
+                color: '#FEB019',
+              }
+            }
+          },
+        ],
+        tooltip: {
+          fixed: {
+            enabled: true,
+            position: 'topLeft', // topRight, topLeft, bottomRight, bottomLeft
+            offsetY: 30,
+            offsetX: 60
+          },
+        },
+        legend: {
+          horizontalAlign: 'left',
+          offsetX: 40
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    </script>
+  </body>
 </html>
