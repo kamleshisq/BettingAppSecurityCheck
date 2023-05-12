@@ -1,685 +1,478 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;700&display=swap" rel="stylesheet">
-<link rel="icon" type="image/x-icon" href="../images/logo.png">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-<title>Balaji Dashboard</title>
-<link rel="stylesheet" type="text/css" href="/css/style.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.css"> -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.css">
+<!-- <!DOCTYPE html> -->
+<html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js" integrity="sha256-6ec2OYfOEVNM4UoRBRGoUP5SRgKyf/FhNoOjTwtqD3k=" crossorigin="anonymous"></script>
+
 <style>
-  .green{
-    background-color: #46BCAA;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 13px;
-    color: #fff;
-  }
-  .green>h5{
-    font-size: 15px;
-  }
-  .green>h6{
-    font-size: 13px;
-  }
-  .red{
-    background-color: #FE3030;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 13px;
-    color: #fff;
+table, th, td {
+  border:1px solid black;
+}
+table {
+  border-collapse: collapse;
+  text-align: center;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
 
+* {
+  box-sizing: border-box;
+}
+
+/* Create a column layout with Flexbox */
+.row {
+  display: flex;
+}
+
+/* Left column (menu) */
+.left {
+  flex: 35%;
+  padding: 15px 0;
+}
+
+.left h2 {
+  padding-left: 8px;
+}
+
+/* Right column (page content) */
+.right {
+  flex: 65%;
+  padding: 15px;
+}
+
+/* Style the search box */
+#mySearch {
+  width: 100%;
+  font-size: 18px;
+  padding: 11px;
+  border: 1px solid #ddd;
+}
+
+/* Style the navigation menu inside the left column */
+#myMenu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myMenu li a {
+  padding: 12px;
+  text-decoration: none;
+  color: black;
+  display: block
+}
+
+#myMenu li a:hover {
+  background-color: #eee;
+}
+
+a{
+  text-decoration: none;
+  color:black;
+}
+
+/* .open_popup{
+  background:tomato;
+  border:none;
+  padding:5px 15px;
+  color:#fff;
+} */
+.popup_body{
+  display:none;
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  -webkit-transition: 300ms;
+    -moz-transition: 300ms;
+    -o-transition: 300ms;
+    -ms-transition: 300ms;
+    transition: 300ms;
+}
+.popup_body_show{
+  display:block;
+  top:-92;
+  -webkit-transition: 300ms;
+    -moz-transition: 300ms;
+    -o-transition: 300ms;
+    -ms-transition: 300ms;
+    transition: 300ms;
+}
+.popup_back{
+  background: rgba(0,0,0,0.4);
+  position: fixed;
+  left:0;right:0;top:0;bottom:0;
+}
+.popup_contain{
+  position:relative;
+  background:#fff;
+  min-width:300px;
+  max-width:80%;
+  margin:100px auto 50px;
+  min-height:150px;
+  padding: 10px 20px;
+}
+.popup_close{
+  background:red;
+  padding:3px 10px 5px;
+  position: absolute;
+  right:-10px;
+  top:-10px;
+  color: #fff;
+  border-radius: 50%;
+}
+form {border: 3px solid #f1f1f1;}
+
+form input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+form button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+form button:hover {
+  opacity: 0.8;
+}
+
+form .cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+form .imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+form img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+form .container {
+  padding: 16px;
+}
+
+form span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
   }
-  label{
-    color: #fff;
+  .cancelbtn {
+     width: 100%;
   }
-  .red>h5{
-    font-size: 15px;
-  }
-  .red>h6{
-    font-size: 13px;
-  }
-  .new-body,td{
-    font-size: 11px;
-  }
-  .flex-des{
-    display: flex;
-    justify-content: space-between;
-  }
+}
+
+/* #table1 {
+        overflow-y: auto; 
+        height: 600px; 
+      }
+      #table1 thead th {
+        position: sticky; 
+        top: 0px; 
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        padding: 8px 16px;
+        border: 1px solid #ccc;
+      }
+      th {
+        background: #eee;
+      } */
 </style>
-</head>
-<body id="body-pd" class="fix-width-body" style="font-family: Outfit;background-color:#EAEEF7;">
-  <header class="header" id="header">
-      <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> 
-        
-          <span class="datre-time">Date 21-12-22   Time-11:08</span>
-        
-      </div>
-      
-      <div>
-      
-        <div class="social-media">
-          <!-- <span>Follow us: </span> -->
-          <span><a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="instagram"><i class="fa-solid fa-moon"></i></a></span> 
-          <span> <a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="facebook"><i class="fa-solid fa-bell"></i></a></span> 
-          <span> <a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="instagram"><i class="fa-solid fa-message"></i></a></span> 
-          <span> <a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="instagram"><i class="fa-solid fa-gear"></i></a></span> 
-        </div>
-      </div>
-  </header>
-  <div class="l-navbar" id="nav-bar" style="background-color: #FFFFFF;">
-      <nav class="nav">
-         
-              <div class="nav_list"> 
-                <a href="/dashboard" class="nav_link active"><img src="../images/dash.png" alt=""> <span class="nav_name">Dashboard</span> </a>
-                <a href="/userManagement" class="nav_link"> <img src="../images/user.png" alt=""> <span class="nav_name">User Mangement</span> </a> 
-                <a href="/operation" class="nav_link"> <img src="../images/222.png" alt=""> <span class="nav_name">Operation</span> </a> 
-                <a href="/livemarket" class="nav_link"> <img src="../images/333.png" alt=""> <span class="nav_name">Live Market</span> </a> 
-                <a href="/casinocontrol" class="nav_link"> <img src="../images/44.png" alt=""> <span class="nav_name">Casino Control</span> </a> 
-                <a href="/reports" class="nav_link"> <img src="../images/55.png" alt=""> <span class="nav_name">Reports</span> </a> 
-                <a href="/payment" class="nav_link"> <img src="../images/66.png" alt=""> <span class="nav_name">Payments Gateway Option</span> </a>
-                <a href="/promotion" class="nav_link"> <img src="../images/77.png" alt=""> <span class="nav_name">Promotion</span> </a>
-                <a href="/cms" class="nav_link"> <img src="../images/88.png" alt=""> <span class="nav_name">Cms</span> </a>
-              </div>
-        
-      </nav>
-  </div>
-  <!--Container Main start-->
-  <div class="height-100" style="background-color: #EAEEF7;">
+<body>
 
-  <section class="pad-top-bottom" style="padding:70px 0px 10px;">
-    <div class="container-fluid">
-    <section style="padding-top: 10px;">
-      <div class="new-head"> 
-          <h3 style="font-weight: 700;font-size: 24px;">Welcome to User Management</h3>
-          <form action="" style="display: flex;">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-              </div>
-              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;">
+<h2><%= title %></h2>
+<button class="logOut">logout</button>
+<%if(currentUser.role.authorization.includes('createDeleteUser')){%>
+  <div class="popup_main">
+    <button class="open_popup">Create User</button>
+    <div class="popup_body">
+      <div class="popup_back"></div>
+        <div class="popup_contain">
+          <div class="popup_close">x</div>
+            <h2>Create User</h2>
+
+            <div class="createForm">
+              <form class= "login-form" id="my-form">
+                <!-- <div class="imgcontainer">
+                  <img src="img_avatar2.png" alt="Avatar" class="avatar">
+                </div> -->
               
+                <div class="container">
+                  <label for="userName"><b>Username</b></label>
+                  <input type="text" placeholder="Enter Username" name="userName" required id=uname>
+            
+                  <label for="name"><b>Name</b></label>
+                  <input type="text" placeholder="Enter name" name="name" required id=name>
+            
+                  <label for="phoneNumber"><b>Phone Number</b></label>
+                  <input type="number" name="phoneNumber" id=pNumber>
+                  <br><br>
+                  <label for="role">Choose a Role</label>
+                    <select name="role" id="role">
+                      <%for(let i = 0; i < roles.length; i++){%>
+                        <option value="<%=roles[i]._id%>" ><%=roles[i].roleName%></option>
+                      <%}%>
+                    </select>
+                  <br><br>
+                  <%if(currentUser.role_type == 1){%>
+                    <label for="role" >Choose a whitelabel</label>
+                      <select id="whitelabel">
+                        <option value="123" selected disabled hidden>select WhiteLabel</option>
+                        <%for(let i = 0; i < WhiteLabel.length; i++){%>
+                          <option value="<%=WhiteLabel[i].whiteLabelName%>" ><%=WhiteLabel[i].whiteLabelName%></option>
+                        <%}%>
+                      </select>
+                      <div >
+                        <input name="whiteLabel" type="text" id="for_new_whitelabel" required>
+                      </div>
+                  <%}%>
+                  <br><br>
+                  <label for="password"><b>Password</b></label>
+                  <input type="password" placeholder="Enter Password" name="password" required id=password>
+            
+                  <label for="passwordConfirm"><b>Confirm Password</b></label>
+                  <input type="password" placeholder="Enter Password" name="passwordConfirm" required id=cpsw>
+            
+                  <button type="submit">Login</button>
+                </div>
+              </form>
             </div>
-            <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
-          </form>
-      </div>
-    </section>
-    <div class=""> 
-        <div class="main">
-          <div class="skin-data green">
-              
-              <h5>Credit Reference</h5>
-              <h6>21,00,00,01,100.00</h6>
+                             
           </div>
-          <div class="skin-data green">
-            
-            <h5>Balance</h5>
-              <h6>21,00,91,42,890.00</h6>
-          </div>
-          <div class="skin-data green">
-            
-            <h5>Available Balance</h5>
-              <h6>5,14,94,44,334.48</h6>
-          </div>
-          <div class="skin-data green">
-            
-            <h5>Downline Balance</h5>
-              <h6>15,85,96,98,555.52</h6>
-          </div>
-
-          <div class="skin-data red">
-           
-            <h5>MY P/L</h5>
-              <h6>-91,41,790.00</h6>
-          </div>
-          <div class="skin-data red">
-            
-            <h5>Upline P/L</h5>
-              <h6>-54,58,455.00</h6>
-          </div>
-          <div class="skin-data green">
-            
-            <h5>Client P/L</h5>
-              <h6>91,41,790.00</h6>
-          </div>
-
-      </div>
     </div>
-  </div>
-  </section>
-
-  
-<section style="padding: 15px 0px;">
-  <div class="container-fluid">
-  <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
-    <div class="">
-      
-    <h3 style="color:#6359CA;font-size: 18px;font-weight: 700;"><img src="../images/c-user.png" alt=""> &nbsp;User Management</h3>
-  </div>
-    <div style="justify-content: flex-end;
-    display: flex;
-    gap: 10px;">
-    <button class="btn-filter"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
-    <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add User</button>
-  </div>
-
-<div class="row">
-    <div class="table_data_details col-lg-12">
-      
-<div class="spcare-table_">
-      <table>
-        <thead>
-            <tr style="text-align: center;font-size: 11px;">
-              <th>S.No</th>
-              <th>User Name</th>
-              <th>White Labels</th>
-              <th>Credit Reference<br>3,52,66,13,710.00</th>
-              <th>Balance</th>
-              <th>Available Balance<br>11,81,93,19,543.58</th>
-              <th>Downlevel Balance<br>4040372561.46</th>
-              <th>Client P/L<br>-2,62,10,40,161.45</th>
-              <th>Upline P/L<br>12333078395.04</th>
-
-              <th>Exposure<br>0.00</th>
-
-              <!-- <th>Exposure<br>0.00</th> -->
-              <th>Lifetime Credit</th>
-              <th>Lifetime Deposit</th>
-              <th colspan="6">Exposure Limit</th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              
-
-              
-            </tr>
-        </thead>
-        <tbody class="new-body">
-          <%for(let i = 0; i<users.length; i++){%>
-            <%if((i+1) % 2 != 0){%>
-              <tr style="text-align: center;" class="blue">
-            <%}else{%>
-              <tr style="text-align: center;">
-            <%}%>
-              <td><%i + 1%></td>
-              <td><%=users[i].userName%></td>
-              <td><%=users[i].whiteLable%></td>
-              <td><%=users[i].creditReference%> </td>
-              <td><%=users[i].balance%></td>
-              <td><%=users[i].availableBalance%></td>
-              <td><%=users[i].downlineBalance%></td>
-              <td style="color:#FE3030;"><%=users[i].clientPL%></td>
-              <td><%=users[i].uplinePL%> </td>
-              <td><%=users[i].exposure%></td>
-              <!-- <td><%=users[i].userName%></td> -->
-              <td><%=users[i].lifeTimeCredit%></td>
-              <td><%=users[i].lifeTimeDeposit%></td>
-              <td><button data-bs-toggle="modal" data-bs-target="#myModal"> D </button></td>
-              <td><button data-bs-toggle="modal" data-bs-target="#myModal1">W</button></td>
-              <td><button data-bs-toggle="modal" data-bs-target="#myModal2">C</button></td>
-              <td><button data-bs-toggle="modal" data-bs-target="#myModal3">P</button></td>
-              <td class="text-purple"><button data-bs-toggle="modal" data-bs-target="#myModal4">CS</button></td>
-              <td><button data-bs-toggle="modal" data-bs-target="#myModal5"><i class="fa-solid fa-database"></i></button></td>
-            </tr>
-          <%}%>
-         
-        </tbody>
-      </table>
-      </div>
     </div>
 
-      </div>
-    </div>
-  </div>
+<%}%>
+<%if(currentUser.role.authorization.includes('roleController')){%>
+  <button><a href="/createRole">Create Role</a></button>
+  <button><a href="/updateRole">Update Role</a></button>
+<%}%>
+<%if(currentUser.role.authorization.includes('dashboard')){%>
+  <button><a href="/dashboard">Dashboard</a></button>
+<%}%>
+<%if(currentUser.role.authorization.includes('userStatus')){%>
+  <button><a href="/inactiveUser">inactive users</a></button>
+<%}%>
+<%if(currentUser.role.authorization.includes('logOutUser')){%>
+  <button><a href="/loginUser">Online Users</a></button>
+<%}%>
+<button><a href="/changeCurrentUserPass">change password</a></button>
+<button type="button" id="back" data-me='<%=JSON.stringify(me)%>'><a href='/userManagement?id=<%=me.parent_id%>'>Back</a></button>
+<%if(currentUser.role_type == 1){%>
+  <select name="WhiteLabel" id="WhiteLabel" class="WhiteLabel">
+    <option value="" selected >select WhiteLabel</option>
+    <%for(let i = 0 ; i < WhiteLabel.length; i++){%>
+      <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
+    <%}%>
+  </select>
+<%}%>
+<select name="ROLEselect" id="ROLEselect" class="ROLEselect">
+  <option value="" selected >Select Role</option>
+  <%for(let i = 0 ; i < roles.length; i++){%>
+    <option value="<%=roles[i].role_type%>"><%=roles[i].roleName%></option>
+  <%}%>
+</select>
+<div class="Search-box">
+  Search:<input type="text" placeholder="search user" id="searchUser" class="searchUser">
+  <button><a href="/userManagement">Refresh</a></button>
+  <!-- <ul id="myMenu" class="dropdown-content">
+  </ul> -->
 </div>
-</section>
-<button class="btn-filter">Next &nbsp; <i class="fa-solid fa-forward-step"></i></button>
+<div id="table1">
 
-<!-- end gallary -->
+  <table style="width:100%" class="TABLE">
+    <tr class="HeadRow">
+      <th>S.No</th>
+      <th>User Name</th>
+      <th>White lable</th>
+      <th>Credit Reference</th>
+      <th>Balance</th>
+      <th>Available Balance</th>
+      <th>Downlevel Balance</th>
+      <th>Client P/L</th>
+      <th>Upline P/L</th>
+      <th>Exposure</th>
+      <th>Exposure limit</th>
+      <th>Lifetime Credit</th>
+      <th>Lifetime Deposite</th>
+      <th>Action</th>
+    </tr>
+      <% for(let i = 0; i < users.length; i++){ %>
+        <tr class="UserRow" id='<%=i + 1%>'>
+            <td><%= i + 1 %></td>
+              <td class="getOwnChild" data-id='<%=JSON.stringify(users[i])%>'>
+                <%if(users[i].roleName !== 'user'){%>
+                <a href='/userManagement?id=<%=users[i]._id%>'><%= users[i].userName%></a>
+                <%}else{%>
+                  <%= users[i].userName%>
+                <%}%>
+              </td>
+            <td><%= users[i].whiteLabel%></td>
+            <td><%= users[i].creditReference%></td>
+            <td><%= users[i].balance%></td>
+            <td><%= users[i].availableBalance%></td>
+            <td><%= users[i].downlineBalance%></td>
+            <td><%= users[i].clientPL%></td>
+            <td><%= users[i].uplinePL%></td>
+            <td><%= users[i].exposure%></td>
+            <td><%= users[i].exposureLimit%></td>
+            <td><%= users[i].lifeTimeCredit%></td>
+            <td><%= users[i].lifeTimeDeposit%></td>
+            <td>
+              <%if(currentUser.role.authorization.includes('userStatus')){%>
+                <button class="userStatus" id="<%=users[i]._id %>" data-myval="<%=JSON.stringify(users[i])%>">U/S</button>
+              <%}%>
+              <%if(currentUser.role.authorization.includes('betLockAndUnloack')){%>
+                <button class="betLockStatus" id="<%=users[i]._id %>" data-myval="<%=JSON.stringify(users[i])%>">BetLock status</button>
+              <%}%>
+              <%if(currentUser.role.authorization.includes('changeUserPassword')){%>
+                <div class="popup_main">
+                  <!-- <button class="open_popup">Open Pop Up 1</button> -->
+                  <button class="open_popup">change password</button>
 
-  </div>
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-header" style="text-align: center;">
-          <h4 class="modal-title" style="color: #fff;">Deposit</h4>
-        </div>
-        <div class="modal-body">
-          <form class="form-data">
-            <div class="row">
-              <div class="col">
-                <label for="">From User</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
-              </div>
-              <div class="col">
-                <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="1000700.100" name="pswd">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">To User</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
-              </div>
-              <div class="col">
-                <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="1000700.100" name="pswd">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Client P&L</label>
-                <input type="text" class="form-control ml0" placeholder="0.00" name="email">
-              </div>
-              <div class="col">
-                <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="pswd">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Remarks</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Transcation Code</label>
-                <input type="text" class="form-control ml0" placeholder="" name="email">
-              </div>
-              <div class="col">
-                <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="Add Funds" name="pswd">
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+                  <div class="popup_body">
+                    <div class="popup_back"></div>
+                      <div class="popup_contain">
+                        <div class="popup_close">x</div>
+                          <h2>reset password</h2>
 
-  <div class="modal fade" id="myModal1" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-header" style="text-align: center;">
-          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-          <h4 class="modal-title" style="color: #fff;">Withdraw</h4>
-        </div>
-        <div class="modal-body">
-          <form class="form-data">
-            <div class="row">
-              <div class="col">
-                <label for="">From User</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
-              </div>
-              <div class="col">
-                <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="1000700.100" name="pswd">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">To User</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
-              </div>
-              <div class="col">
-                <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="1000700.100" name="pswd">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Client P&L</label>
-                <input type="text" class="form-control ml0" placeholder="0.00" name="email">
-              </div>
-              <div class="col">
-                <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="pswd">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Remarks</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Transcation Code</label>
-                <input type="text" class="form-control ml0" placeholder="" name="email">
-              </div>
-              <div class="col">
-                <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="Add Funds" name="pswd">
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="myModal2" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-header" style="text-align: center;">
-          <!-- <button type="button" class="close" data-dismiss="modal"></button> -->
-          <h4 class="modal-title" style="color: #fff;">Change Credit</h4>
-        </div>
-        <div class="modal-body">
-          <form class="form-data">
-            <div class="row">
-              <div class="col">
-                <label for="">Old Credit</label>
-                <input type="text" class="form-control ml0" placeholder="10000000" name="credit">
-              </div>
-              <div class="col">
-                
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <label for="">New Credit</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="pswd">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Transcation Password</label>
-                <input type="password" class="form-control ml0" placeholder="******" name="email">
-              </div>
-            </div>
-          <button type="button" class="btn-submit mt-3">Submit &nbsp;   <img src="../images/sub.png" alt=""></button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="modal fade" id="myModal3" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-header" style="text-align: center;">
-          <h4 class="modal-title" style="color: #fff;">Reset User Password</h4>
-        </div>
-        <div class="modal-body">
-          <p style="color: #fff;">Reset Password For Abitest<br>User Will Be Forced To Changed The Password On Login</p>
-
-          <form class="form-data">
-            <div class="row">
-              <div class="col">
-                <label for="">Enter New Password</label>
-                <input type="password" class="form-control ml0" placeholder="*****" name="credit">
-              </div>
-              <div class="col">
-                <label for="">Confirm Password</label>
-                <input type="password" class="form-control ml0" placeholder="*****" name="pswd">
-              </div>
-            </div>
-            
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Your Transcation Code</label>
-                <input type="password" class="form-control ml0" placeholder="******" name="email">
-              </div>
-            </div>
-          <button type="button" class="btn-submit mt-3">Confirm</button>
-
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-   
-
-  <div class="modal fade" id="myModal4" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-header" style="text-align: center;">
-          <h4 class="modal-title" style="color: #fff;">Change status</h4>
-        </div>
-        <div class="modal-body">
-          <form class="form-data">
-            <div class="row">
-              <div class="col">
-                <label for="">Account status</label>
-                <select name="" id="" class="form-control ml0" style="color: #000 !important;">Active
-                  <option value="">Active</option>
-                  <option value="">Close</option>
-                </select>
-              </div>
-            </div>
-            
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Enter Your Password</label>
-                <input type="password" class="form-control ml0" placeholder="******" name="email">
-              </div>
-            </div>
-          <button type="button" class="btn-submit mt-3">Confirm</button>
-
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-   
-
-  <div class="modal fade" id="myModaladduser" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-header" style="text-align: center;">
-          <h4 class="modal-title" style="color: #fff;">Add Account</h4>
-        </div>
-        <div class="modal-body">
-          <form class="form-data">
-            <div class="row">
-              <div class="col">
-                <label for="">Name</label>
-                <input type="text" class="form-control ml0" placeholder="" name="email">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">User ID</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
-              </div>
-              <div class="col">
-                <label for="">User Role</label>
-                <select class="form-control ml0" style="color: #000 !important;">
-                  <option value="">Super Duper Master</option>
-                  <option value="">Super Duper Master</option>
-                </select>
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Password</label>
-                <input type="password" class="form-control ml0" placeholder="" name="email">
-              </div>
-              <div class="col">
-                <label for="">Confirm Password</label>
-                <input type="password" class="form-control ml0" placeholder="" name="pswd">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Share</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="email">
-              </div>
-              <div class="col">
-                <label for="">Visible</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="pswd">
-              </div>
-              <div class="col">
-                <label for="">Actual</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="pswd">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Credit Reference</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="email">
-              </div>
-              <div class="col">
-                <label for="">Expose Limits</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="email">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Note</label>
-                <input type="text" class="form-control ml0" placeholder="" name="email">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Password</label>
-                <input type="password" class="form-control ml0" placeholder="" name="email">
-                <i class="bi bi-eye-slash" id="togglePassword"></i>
-              </div>
-            </div>
-            <button type="button" class="btn-submit mt-3" style="background-color: #46BCAA;">Add</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="modal fade" id="myModal5" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-header" style="text-align: center;">
-          <h4 class="modal-title" style="color: #fff;">User Details</h4>
-        </div>
-        <div class="modal-body">
-          <form class="form-data">
-            <div class="row">
-              <div class="col">
-                <label for="">Name</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">User ID</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
-              </div>
-              <div class="col">
-                <label for="">User Role</label>
-                <select class="form-control ml0" style="color: #000 !important;">
-                  <option value="">Super Duper Master</option>
-                  <option value="">Super Duper Master</option>
-                </select>
-              </div>
-            </div>
-            
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Share <span style="color: #46BCAA;">100</span></label>
-                <input type="text" class="form-control ml0" placeholder="90" name="email">
-              </div>
-              <div class="col">
-                <label for="">My Share</label>
-                <input type="text" class="form-control ml0" placeholder="10" name="pswd">
-              </div>
-              <div class="col">
-                <label for="">Actual</label>
-                <input type="text" class="form-control ml0" placeholder="10" name="pswd">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Credit Reference</label>
-                <input type="text" class="form-control ml0" placeholder="10000700" name="email">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="vehicle1"> Sports</label>
-                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                
-              </div>
-              <div class="col">
-                <label for="vehicle2"> Casino</label>
-                <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-                
-              </div>
-              <div class="col">
-                
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Note</label>
-                <textarea id="w3review" placeholder="" name="w3review" rows="3" cols="50" style="width: 100%;border-radius: 5px;"></textarea>
-              </div>
-            </div>
+                          <div class="ResetFORM">
+                            <form class= "passReset-form" enctype="multipart/form-data" >
+                              <!-- <div class="imgcontainer">
+                                <img src="img_avatar2.png" alt="Avatar" class="avatar">
+                              </div> -->
+                            
+                              <div class="container">
+                                <input type="hidden" name="id" value=<%=users[i]._id%>>
+                                <label for="npsw"><b>New Password</b></label>
+                                <input type="password" placeholder="Enter Password" name="password" required >
           
-  
-            <button type="button" class="btn-submit mt-3">Save</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-    <script src="/js/main.js"></script>
-    <script src="/js/bundle.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/webSocket.js"></script>
+                                <label for="cpsw"><b>Confirm Password</b></label>
+                                <input type="password" placeholder="Enter Password" name="passwordConfirm" required >
+                                    
+                                <button type="submit">Submit</button>
+                              </div>
+                            </form>
+                          </div>                      
+                        </div>
+                  </div>
+                  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+              <%}%>
+              <%if(currentUser.role.authorization.includes('accountControl')){%>
+                <button ><a href="/accountStatement?id=<%=users[i]._id %>">A/S</a></button>
+                <div class="popup_main">
+                  <button class="open_popup">D/C</button>
+                  <div class="popup_body">
+                    <div class="popup_back"></div>
+                      <div class="popup_contain">
+                        <div class="popup_close">x</div>
+                          <h2>Account</h2>
 
-  </body>
+                          <div class="AccForm">
+                            <form class= "acc-form" >
+                              <!-- <div class="imgcontainer">
+                                <img src="img_avatar2.png" alt="Avatar" class="avatar">
+                              </div> -->
+                            
+                              <div class="container">
+                          
+                                <label for="amount"><b>Amount</b></label>
+                                <input type="number" name="amount" required >
+                                <input type="hidden" name="id" value='<%=users[i]._id%>'>
+                                <label for="type"><b>Select</b></label>
+                                <select name="type">
+                                  <option value=deposit >Deposit</option>
+                                  <option value=withdrawl >withdrawl</option>
+                                </select>
+                                <button type="submit">Submit</button>
+                              </div>
+                            </form>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              <%}%>
+              <%if(currentUser.role.authorization.includes('userName')){%>
+                <div class="popup_main">
+                  <!-- <button class="open_popup">Open Pop Up 1</button> -->
+                  <button class="open_popup">Details</button>
+                  <!-- <button ><a href="/updateUser?id=<%=users[i]._id %>">Details</a></button> -->
+                  <div class="popup_body">
+                    <div class="popup_back"></div>
+                      <div class="popup_contain">
+                        <div class="popup_close">x</div>
+                          <h2>Update User</h2>
+
+                          <div class="editForm">
+                            <form class= "edit-form">
+                              <!-- <div class="imgcontainer">
+                                <img src="img_avatar2.png" alt="Avatar" class="avatar">
+                              </div> -->
+                            
+                              <div class="container" >
+                                <label for="uname"><b>Username</b></label>
+                                <input type="text" placeholder="Enter Username" name="userName" required  value=<%=users[i].userName%>>
+                                <input type="hidden"  name="id" value=<%=users[i]._id%>>
+                          
+                                <label for="name"><b>Name</b></label>
+                                <input type="text" placeholder="Enter name" name="name" required value=<%=users[i].name%>>
+                          
+                                <select name="role" >
+                                  <%for(let j=0;j<roles.length; j++) {%>
+                                    <% if(users[i].role_type===roles[j].role_type){ %>
+                                      <option value=<%=roles[j]._id%> selected><%=roles[j].roleName%></option>
+                                    <%} else{%>
+                                      <option value=<%=roles[j]._id%> ><%=roles[j].roleName%></option>
+                                  <%}}%>
+                          
+                                </select>
+                          
+                                <button type="submit">Save</button>
+                              </div>
+                            </form>
+                          </div>
+                        
+                      </div>
+                  </div>
+                </div>
+              <%}%>
+            </td>
+        </tr>
+       <%}%>    
+  </table>
+</div>
+<!-- <button id="LoadMore" class="LoadMore">Load More</button> -->
+<div class="pageLink" data-page="1">
+
+</div>
+<span data-rowid="1" class="rowId"></span>
+
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="js/webSocket.js"></script>
+<script type="text/javascript" src="js/bundle.js"></script>
+</script>
+</body>
 </html>
