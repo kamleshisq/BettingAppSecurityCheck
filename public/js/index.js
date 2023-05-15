@@ -243,3 +243,34 @@ $('.Deposite').on('click',function(e){
     form.find('input[name = "fromUser"]').attr('value','admin')
     // console.log(form)
 })
+
+$('.Withdraw').on('click',function(){
+    let modleName = $(this).data('bs-target')
+    let form = $(modleName).find('.form-data')
+    let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
+    let me = $('#meDatails').data('me')
+    form.find('input[name = "fromUser"]').attr('value',me.userName)
+    form.find('input[name = "toUser"]').attr('value',userData.userName)
+    form.find('input[name = "fuBalance"]').attr('value',me.balance)
+    form.find('input[name = "tuBalance"]').attr('value',userData.balance)
+    form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
+})
+
+$('.CreaditChange').on('click',function(){
+    let modleName = $(this).data('bs-target')
+    let form = $(modleName).find('.form-data')
+    let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
+    let me = $('#meDatails').data('me')
+    form.find('input[name = "credit"]').attr('value',userData.creditReference)
+    form.find('input[name = "newCreadit"]').attr('value','0')
+})
+
+$('.UserDetails').on('click',function(){
+    let modleName = $(this).data('bs-target')
+    let form = $(modleName).find('.form-data')
+    let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
+    let me = $('#meDatails').data('me')
+    form.find('input[name = "name"]').attr('value',userData.name)
+    form.find('input[name = "userName"]').attr('value',userData.userName)
+    form.find('input[name = "id"]').attr('value',userData._id)
+})

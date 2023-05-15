@@ -171,7 +171,7 @@
             <div class="row">
               <div class="col">
                 <label for="">New Credit</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="pswd">
+                <input type="text" class="form-control ml0" placeholder="0" name="newCreadit">
               </div>
             </div>
             <div class="row mt-2">
@@ -186,7 +186,6 @@
       </div>
     </div>
   </div>
-
 
   <div class="modal fade" id="myModal3" role="dialog">
     <div class="modal-dialog">
@@ -370,19 +369,21 @@
             <div class="row">
               <div class="col">
                 <label for="">Name</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
+                <input type="text" class="form-control ml0" name="name">
+                <input type="hidden" id="id" name="id">
               </div>
             </div>
             <div class="row mt-2">
               <div class="col">
-                <label for="">User ID</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
+                <label for="">User Name</label>
+                <input type="text" class="form-control ml0" name="userName">
               </div>
               <div class="col">
                 <label for="">User Role</label>
-                <select name=" " id="" class="form-control ml0" style="color: #000 !important;">
-                  <option value="">Super Duper Master</option>
-                  <option value="">Super Duper Master</option>
+                <select class="form-control ml0" name="role" style="color: #000 !important;">
+                  <%for(let i = 0;i<roles.length; i++){%>
+                  <option value="<%=roles[i]._id%>>"><%=roles[i].roleName%></option>
+                  <%}%>
                 </select>
               </div>
             </div>
@@ -390,21 +391,21 @@
             <div class="row mt-2">
               <div class="col">
                 <label for="">Share <span style="color: #46BCAA;">100</span></label>
-                <input type="text" class="form-control ml0" placeholder="90" name="email">
+                <input type="text" class="form-control ml0" placeholder="90" name="share">
               </div>
               <div class="col">
                 <label for="">My Share</label>
-                <input type="text" class="form-control ml0" placeholder="10" name="pswd">
+                <input type="text" class="form-control ml0" placeholder="10" name="myShare">
               </div>
               <div class="col">
                 <label for="">Actual</label>
-                <input type="text" class="form-control ml0" placeholder="10" name="pswd">
+                <input type="text" class="form-control ml0" placeholder="10" name="actual">
               </div>
             </div>
             <div class="row mt-2">
               <div class="col">
                 <label for="">Credit Reference</label>
-                <input type="text" class="form-control ml0" placeholder="10000700" name="email">
+                <input type="text" class="form-control ml0" name="cdReference">
               </div>
             </div>
             <div class="row mt-2">
@@ -430,7 +431,90 @@
             </div>
           
   
-            <button type="button" class="btn-submit mt-3" style="">Save</button>
+            <button type="button" class="btn-submit mt-3">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>  <div class="modal fade" id="myModal5" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header" style="text-align: center;">
+          <h4 class="modal-title" style="color: #fff;">User Details</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-data">
+            <div class="row">
+              <div class="col">
+                <label for="">Name</label>
+                <input type="text" class="form-control ml0" name="name">
+                <input type="hidden" id="id" name="id">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">User Name</label>
+                <input type="text" class="form-control ml0" name="userName">
+              </div>
+              <div class="col">
+                <label for="">User Role</label>
+                <select class="form-control ml0" name="role" style="color: #000 !important;">
+                  <%for(let i = 0;i<roles.length; i++){%>
+                  <option value="<%=roles[i]._id%>>"><%=roles[i].roleName%></option>
+                  <%}%>
+                </select>
+              </div>
+            </div>
+            
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Share <span style="color: #46BCAA;">100</span></label>
+                <input type="text" class="form-control ml0" placeholder="90" name="share">
+              </div>
+              <div class="col">
+                <label for="">My Share</label>
+                <input type="text" class="form-control ml0" placeholder="10" name="myShare">
+              </div>
+              <div class="col">
+                <label for="">Actual</label>
+                <input type="text" class="form-control ml0" placeholder="10" name="actual">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Credit Reference</label>
+                <input type="text" class="form-control ml0" name="cdReference">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="vehicle1"> Sports</label>
+                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                
+              </div>
+              <div class="col">
+                <label for="vehicle2"> Casino</label>
+                <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+                
+              </div>
+              <div class="col">
+                
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Note</label>
+                <textarea id="w3review" placeholder="" name="w3review" rows="3" cols="50" style="width: 100%;border-radius: 5px;"></textarea>
+              </div>
+            </div>
+          
+  
+            <button type="button" class="btn-submit mt-3">Save</button>
           </form>
         </div>
       </div>

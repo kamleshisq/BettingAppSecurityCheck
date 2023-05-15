@@ -79,26 +79,26 @@
             </td>
             <td> <%if(currentUser.role.authorization.includes('accountControl')){%>
 
-              <button data-bs-toggle="modal" data-bs-target="#myModal1">W</button>
+              <button data-bs-toggle="modal" data-bs-target="#myModal1" class="Withdraw">W</button>
               <%}%>
             </td>
-            <td><button data-bs-toggle="modal" data-bs-target="#myModal2">C</button></td>
+            <td><button data-bs-toggle="modal" data-bs-target="#myModal2" class="CreaditChange">C</button></td>
             <td>
               <%if(currentUser.role.authorization.includes('changeUserPassword')){%>
 
-              <button data-bs-toggle="modal" data-bs-target="#myModal3">P</button>
+              <button data-bs-toggle="modal" data-bs-target="#myModal3"class="PasswordChange">P</button>
               <%}%>
             </td>
             <td class="text-purple">
               <%if(currentUser.role.authorization.includes('userStatus')){%>
 
-              <button data-bs-toggle="modal" data-bs-target="#myModal4">CS</button>
+              <button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange">CS</button>
                 <%}%>
             </td>
             <td>
               <%if(currentUser.role.authorization.includes('userName')){%>
 
-              <button data-bs-toggle="modal" data-bs-target="#myModal5"><i class="fa-solid fa-database"></i></button>
+              <button data-bs-toggle="modal" data-bs-target="#myModal5" class="UserDetails"><i class="fa-solid fa-database"></i></button>
               <%}%>
             </td>
           </tr>

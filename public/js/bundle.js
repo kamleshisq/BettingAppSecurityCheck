@@ -6300,6 +6300,35 @@ $('.Deposite').on('click', function (e) {
   form.find('input[name = "fromUser"]').attr('value', 'admin');
   // console.log(form)
 });
+
+$('.Withdraw').on('click', function () {
+  var modleName = $(this).data('bs-target');
+  var form = $(modleName).find('.form-data');
+  var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
+  var me = $('#meDatails').data('me');
+  form.find('input[name = "fromUser"]').attr('value', me.userName);
+  form.find('input[name = "toUser"]').attr('value', userData.userName);
+  form.find('input[name = "fuBalance"]').attr('value', me.balance);
+  form.find('input[name = "tuBalance"]').attr('value', userData.balance);
+  form.find('input[name = "clintPL"]').attr('value', userData.clientPL);
+});
+$('.CreaditChange').on('click', function () {
+  var modleName = $(this).data('bs-target');
+  var form = $(modleName).find('.form-data');
+  var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
+  var me = $('#meDatails').data('me');
+  form.find('input[name = "credit"]').attr('value', userData.creditReference);
+  form.find('input[name = "newCreadit"]').attr('value', '0');
+});
+$('.UserDetails').on('click', function () {
+  var modleName = $(this).data('bs-target');
+  var form = $(modleName).find('.form-data');
+  var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
+  var me = $('#meDatails').data('me');
+  form.find('input[name = "name"]').attr('value', userData.name);
+  form.find('input[name = "userName"]').attr('value', userData.userName);
+  form.find('input[name = "id"]').attr('value', userData._id);
+});
 },{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./betLock":"betLock.js","./updateRow":"updateRow.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
