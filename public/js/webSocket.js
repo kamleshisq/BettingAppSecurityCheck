@@ -266,7 +266,7 @@ socket.on('connect', () => {
         //     })
         let count = 11;
         socket.on('getOwnChild',(data) => {
-            // console.log(data)
+            console.log(data)
             // console.log('rows',data.result)
             // let headHight = document.getElementsByClassName('HeadRow').height()
             // console.log( "user row height", $('.UserRow').height())
@@ -297,9 +297,16 @@ socket.on('connect', () => {
                 
             let html ="";
             for(let i = 0; i < response.length; i++){ 
-                html +=
-                `<tr id = ${count + i}>
-                    <td> ${count + i} </td>
+                if((i+1) % 2 != 0){
+
+                    html +=
+                    `<tr style="text-align: center;" class="blue" id="${count + 1}">`
+                }else{
+                    html +=
+                    `<tr style="text-align: center;"id="${count + 1}">` 
+                }
+                    
+                html += `<td> ${count + i} </td>
                     <td class="getOwnChild" data-id='${JSON.stringify(response[i])}'>`
                     if(response[i].roleName != 'user'){
                         html+= `<a href='/userManagement?id=${response[i]._id}'>${response[i].userName}</a>`
@@ -313,132 +320,32 @@ socket.on('connect', () => {
                     <td> ${response[i].balance}</td>
                     <td> ${response[i].availableBalance}</td>
                     <td> ${response[i].downlineBalance}</td>
-                    <td> ${response[i].clientPL}</td>
+                    <td style="color:#FE3030;"> ${response[i].clientPL}</td>
                     <td> ${response[i].uplinePL}</td>
                     <td> ${response[i].exposure}</td>
-                    <td> ${response[i].exposureLimit}</td>
+        
                     <td> ${response[i].lifeTimeCredit}</td>
                     <td> ${response[i].lifeTimeDeposit}</td>
-                    <td>`
-                        if(data.currentUser.role.authorization.includes('userStatus')){
-                            html += `<button class="userStatus" type="userStatus" id="${response[i]._id}" data-myval='${JSON.stringify(response[i])}'>U/S</button>`
-                        }
-                        if(data.currentUser.role.authorization.includes('betLockAndUnloack')){
-                            html += `<button class="betLockStatus" id="${response[i]._id}" data-myval='${JSON.stringify(response[i])}'>BetLock status</button>`
-                        }
-                        if(data.currentUser.role.authorization.includes('changeUserPassword')){
-                            html += `<div class="popup_main">
-                            <!-- <button class="open_popup">Open Pop Up 1</button> -->
-                            <button class="open_popup">change password</button>
-          
-                            <div class="popup_body">
-                              <div class="popup_back"></div>
-                                <div class="popup_contain">
-                                  <div class="popup_close">x</div>
-                                    <h2>reset password</h2>
-          
-                                    <div class="ResetFORM">
-                                      <form class= "passReset-form" enctype="multipart/form-data" >
-                                        <!-- <div class="imgcontainer">
-                                          <img src="img_avatar2.png" alt="Avatar" class="avatar">
-                                        </div> -->
-                                      
-                                        <div class="container">
-                                          <input type="hidden" name="id" value=${response[i]._id}>
-                                          <label for="npsw"><b>New Password</b></label>
-                                          <input type="password" placeholder="Enter Password" name="password" required >
-                    
-                                          <label for="cpsw"><b>Confirm Password</b></label>
-                                          <input type="password" placeholder="Enter Password" name="passwordConfirm" required >
-                                              
-                                          <button type="submit">Submit</button>
-                                        </div>
-                                      </form>
-                                    </div>                      
-                                  </div>
-                            </div>
-                            </div>`
+                    `
+                        if(data.currentUser.role.authorization.includes('accountControl')){
+                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal"> D </button></td>`
                         }
                         if(data.currentUser.role.authorization.includes('accountControl')){
-                            html += `<button ><a href="/accountStatement?id=${response[i]._id} ">A/S</a></button>
-                            <div class="popup_main">
-                            <button class="open_popup">D/C</button>
-                            <div class="popup_body">
-                                <div class="popup_back"></div>
-                                <div class="popup_contain">
-                                    <div class="popup_close">x</div>
-                                    <h2>Account</h2>
-
-                                    <div class="AccForm">
-                                        <form class= "acc-form" >
-                                        <!-- <div class="imgcontainer">
-                                            <img src="img_avatar2.png" alt="Avatar" class="avatar">
-                                        </div> -->
-                                        
-                                        <div class="container">
-                                    
-                                            <label for="amount"><b>Amount</b></label>
-                                            <input type="number" name="amount" required >
-                                            <input type="hidden" name="id" value='${response[i]._id}'>
-                                            <label for="type"><b>Select</b></label>
-                                            <select name="type">
-                                            <option value=deposit >Deposit</option>
-                                            <option value=withdrawl >withdrawl</option>
-                                            </select>
-                                            <button type="submit">Submit</button>
-                                        </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>`
+                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal1">W</button></td>`
+                        }
+                        if(data.currentUser.role.authorization.includes('accountControl')){
+                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal2">C</button></td>`
+                        }
+                        if(data.currentUser.role.authorization.includes('changeUserPassword')){
+                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal3">P</button></td>`
+                        }
+                        if(data.currentUser.role.authorization.includes('userStatus')){
+                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal4">CS</button></td>
+                            `
                         }
                         if(data.currentUser.role.authorization.includes('userName')){
-                            html += `
-                            <div class="popup_main">
-                            <!-- <button class="open_popup">Open Pop Up 1</button> -->
-                            <button class="open_popup">Details</button>
-                            <!-- <button ><a href="/updateUser?id=<%=users[i]._id %>">Details</a></button> -->
-                            <div class="popup_body">
-                              <div class="popup_back"></div>
-                                <div class="popup_contain">
-                                  <div class="popup_close">x</div>
-                                    <h2>Update User</h2>
-          
-                                    <div class="editForm">
-                                      <form class= "edit-form">
-                                        <!-- <div class="imgcontainer">
-                                          <img src="img_avatar2.png" alt="Avatar" class="avatar">
-                                        </div> -->
-                                      
-                                        <div class="container" >
-                                          <label for="uname"><b>Username</b></label>
-                                          <input type="text" placeholder="Enter Username" name="userName" required  value=${response[i].userName}>
-                                          <input type="hidden"  name="id" value=${response[i]._id}>
-                                    
-                                          <label for="name"><b>Name</b></label>
-                                          <input type="text" placeholder="Enter name" name="name" required value=${response[i].name}>
-                                    
-                                          <select name="role">`
-                                           
-                                            for(let j=0;j<data.roles.length; j++){
-                                              if(response[i].role_type===data.roles[j].role_type){ 
-                                                html += `<option value=${data.roles[j]._id} selected>${data.roles[j].roleName}</option>`
-                                              }else{
-                                                html += `<option value=${data.roles[j]._id} >${data.roles[j].roleName}</option>`
-                                              }
-                                            }
-                                    
-                                          html += `</select>
-                                    
-                                          <button type="submit">Save</button>
-                                        </div>
-                                      </form>
-                                    </div>
-                                  
-                                </div>
-                            </div>
-                          </div>`
+                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal5"><i class="fa-solid fa-database"></i></button></td>
+                            `
                         }
                       html += `</td> </tr>`
             }
@@ -449,7 +356,7 @@ socket.on('connect', () => {
                 //     html += `<a href='/userManagement?id=${data.me_id}&page=${i}' class="pagination">${i + 1}</a>`
                 // }
                 // $('.pageLink').html(html)
-                $('#back').attr('data-me',JSON.stringify(data.me));
+                $('#meDetails').attr('data-me',JSON.stringify(data.me));
             }
         })
 
@@ -501,12 +408,13 @@ socket.on('connect', () => {
     })
 
     $(window).scroll(function() {
+        console.log(W,S,R)
         if($(document).height()-$(window).scrollTop() == window.innerHeight){
-            console.log(W,S,R)
-            let id = JSON.parse(document.querySelector('#back').getAttribute('data-me'))._id;
+            let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
 
             let page = parseInt($('.pageLink').attr('data-page'));
         //  console.log(page)
+
 
             $('.pageLink').attr('data-page',page + 1)
             if(W || S || R){
@@ -515,12 +423,12 @@ socket.on('connect', () => {
                 // let page = parseInt($('.pageLink').attr('data-page'));
                 // $('.pageLink').attr('data-page',page + 1)
                 
-                socket.emit("search", {filterData, page, LOGINDATA})
+                socket.emit("search", {filterData, page})
             }else{
                 getOwnChild(id,page ,'getOwnChild')
             }
         }
-     });
+     }); 
         // socket.on("searchUser", (data)=>{
         //     // console.log(data[1]._id)
         //     console.log(data)

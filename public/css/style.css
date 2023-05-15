@@ -969,7 +969,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light{
 
 html {
   height: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 body{
