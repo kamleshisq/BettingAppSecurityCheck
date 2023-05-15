@@ -234,7 +234,7 @@ exports.dashboard = catchAsync(async(req, res, nex) => {
         res.status(200).render('./adminSideDashboard/dashboard',{
             title:"Dashboard",
             data:result,
-            currentUser
+            me:currentUser
         })
     })
 });
