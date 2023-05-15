@@ -288,7 +288,6 @@ socket.on('connect', () => {
                         "<th>Client P/L</th>"+
                         "<th>Upline P/L</th>"+
                         "<th>Exposure</th>"+
-                        "<th>Exposure limit</th>"+
                         "<th>Lifetime Credit</th>"+
                     " <th>Lifetime Deposite</th>"+
                         "<th>Action</th>"+
