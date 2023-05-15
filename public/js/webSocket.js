@@ -277,7 +277,7 @@ socket.on('connect', () => {
                 if(data.page == 0){
                     count = 1;
 
-                        $('table').html("<tr>"+
+                        $('table').html(`<tr style="text-align: center;font-size: 11px;">`+
                         "<th>S.No</th>"+
                         "<th>User Name</th>"+
                         "<th>White lable</th>"+
