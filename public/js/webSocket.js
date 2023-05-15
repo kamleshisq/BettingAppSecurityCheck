@@ -151,7 +151,7 @@ socket.on('connect', () => {
 
     // console.log(window.location.href)
 
-    if(window.location.href.startsWith('http://localhost:8000/userManagement')){
+    if(window.location.href.startsWith('http://46.101.225.192/:8000/userManagement')){
         function getOwnChild(id,page,token) {
             socket.emit(token,{
                 id,
