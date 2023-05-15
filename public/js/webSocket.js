@@ -266,7 +266,7 @@ socket.on('connect', () => {
         //     })
         let count = 11;
         socket.on('getOwnChild',(data) => {
-            console.log(data)
+            // console.log(data)
             // console.log('rows',data.result)
             // let headHight = document.getElementsByClassName('HeadRow').height()
             // console.log( "user row height", $('.UserRow').height())
@@ -328,23 +328,20 @@ socket.on('connect', () => {
                     <td> ${response[i].lifeTimeDeposit}</td>
                     `
                         if(data.currentUser.role.authorization.includes('accountControl')){
-                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal"> D </button></td>`
+                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite"> D/W </button></td>`
                         }
                         if(data.currentUser.role.authorization.includes('accountControl')){
-                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal1">W</button></td>`
-                        }
-                        if(data.currentUser.role.authorization.includes('accountControl')){
-                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal2">C</button></td>`
+                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal2" class="CreaditChange">C</button></td>`
                         }
                         if(data.currentUser.role.authorization.includes('changeUserPassword')){
-                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal3">P</button></td>`
+                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal3" class="PasswordChange">P</button></td>`
                         }
                         if(data.currentUser.role.authorization.includes('userStatus')){
-                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal4">CS</button></td>
+                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange">CS</button></td>
                             `
                         }
                         if(data.currentUser.role.authorization.includes('userName')){
-                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal5"><i class="fa-solid fa-database"></i></button></td>
+                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal5" class="UserDetails"><i class="fa-solid fa-database"></i></button></td>
                             `
                         }
                       html += `</td> </tr>`
