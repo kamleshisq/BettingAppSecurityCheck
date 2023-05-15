@@ -319,10 +319,10 @@ button.tablinks1{
 }
 .form-control {
  
-  color: #fff !important;
+  color: #000000 !important;
   background-color: #fff0 ;
   background-clip: padding-box;
-  border: 1px solid #ced4da;
+  border: 1px solid #000000;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -1107,7 +1107,7 @@ body{
   speak: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #ffff;
+  color: #000000;
 }   
 form i {
   margin-left: -30px;
@@ -1404,6 +1404,7 @@ label{
   gap: 5px;
   display: flex;
   flex-direction: column;
+  color: #0000;
 }
 .modal-header {
   

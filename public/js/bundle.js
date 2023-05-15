@@ -6282,6 +6282,24 @@ $(document).on('click', '.userStatus', function (e) {
   // console.log(data)
   (0, _userStatus.userStatus)(data, rowId);
 });
+$('.Deposite').on('click', function (e) {
+  var modleName = $(this).data('bs-target');
+  var form = $(modleName).find('.form-data');
+  var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
+  var me = $('#meDatails').data('me');
+  // console.log(me)
+  // console.log(userData)
+  // console.log(form.find('input[name = "fromUser"]'))
+  form.find('input[name = "fromUser"]').attr('value', me.userName);
+  form.find('input[name = "toUser"]').attr('value', userData.userName);
+  form.find('input[name = "fuBalance"]').attr('value', me.balance);
+  form.find('input[name = "tuBalance"]').attr('value', userData.balance);
+  form.find('input[name = "clintPL"]').attr('value', userData.clientPL);
+  form.find('input[name = "fromUser"]').attr('value', 'admin');
+  form.find('input[name = "fromUser"]').attr('value', 'admin');
+  form.find('input[name = "fromUser"]').attr('value', 'admin');
+  // console.log(form)
+});
 },{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./betLock":"betLock.js","./updateRow":"updateRow.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
