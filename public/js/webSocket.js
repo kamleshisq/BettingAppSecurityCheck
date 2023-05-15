@@ -151,7 +151,7 @@ socket.on('connect', () => {
 
     // console.log(window.location.href)
 
-    if(window.location.href.startsWith('http://46.101.225.192:8000/userManagement')){
+    if(window.location.href.startsWith('http://localhost:8000/userManagement')){
         function getOwnChild(id,page,token) {
             socket.emit(token,{
                 id,
@@ -369,7 +369,7 @@ socket.on('connect', () => {
         let R = false
 
         $('#searchUser, #ROLEselect, #WhiteLabel').bind("change keyup", function(){
-            
+            console.log($(this).hasClass("searchUser"), 123)
             if($(this).hasClass("WhiteLabel")){
                     filterData.whiteLabel = $(this).val()
                     if(filterData.whiteLabel != "" && filterData.whiteLabel != undefined){
@@ -391,7 +391,8 @@ socket.on('connect', () => {
 
             if($(this).hasClass("searchUser")){
                     filterData.userName = $(this).val()
-                    if(filterData.userName.length >= 3){
+                    // console.log(filterData.userName)
+                    if(filterData.userName.length >= 0){
                         S = true
                     }else{
                         S = false
@@ -402,14 +403,14 @@ socket.on('connect', () => {
         // if(W || S || R){
                let page =  0;
                $('.pageLink').attr('data-page',1)
-               let id = JSON.parse(document.querySelector('#back').getAttribute('data-me'))._id
+               let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
                socket.emit("search", {filterData,page,id, LOGINDATA })
         // }
     })
 
     $(window).scroll(function() {
-        console.log(W,S,R)
         if($(document).height()-$(window).scrollTop() == window.innerHeight){
+            console.log(W,S,R)
             let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
 
             let page = parseInt($('.pageLink').attr('data-page'));
@@ -422,8 +423,8 @@ socket.on('connect', () => {
                     
                 // let page = parseInt($('.pageLink').attr('data-page'));
                 // $('.pageLink').attr('data-page',page + 1)
-                
-                socket.emit("search", {filterData, page})
+                console.log(W, S, R)
+                socket.emit("search", {filterData,page,id, LOGINDATA })
             }else{
                 getOwnChild(id,page ,'getOwnChild')
             }
