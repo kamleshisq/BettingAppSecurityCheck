@@ -89,8 +89,8 @@ exports.userTable = catchAsync(async(req, res, next) => {
     const currentUser = global._User
     const rows = data[0].rows
     const me = data[0].me
-    res.status(200).render('userTable',{
-        title: "User table",
+    res.status(200).render('./userManagement/main',{
+        title: "User Management",
         users,
         rows,
         currentUser,
