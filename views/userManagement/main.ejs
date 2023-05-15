@@ -27,7 +27,11 @@
           <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
         </div>
         <div class="modal-header" style="text-align: center;">
-          <h4 class="modal-title" style="color: #fff;">Deposit</h4>
+          <!-- <h4 class="modal-title" style="color: #fff;">Deposit</h4> -->
+          <select name="header" id="header" class="modal-title" style="color: #fff;">
+            <option value="Deposit">Deposit</option>
+            <option value="Withdraw">Withdraw</option>
+          </select>
         </div>
         <div class="modal-body">
           <form class="form-data">
@@ -72,6 +76,7 @@
                 <label for="">Balance</label>
                 <input type="text" class="form-control ml0" placeholder="Add Funds" name="balance">
               </div>
+              <button type="button" class="btn-submit mt-3">Submit &nbsp;   <img src="../images/sub.png" alt=""></button>
             </div>
           </form>
         </div>
