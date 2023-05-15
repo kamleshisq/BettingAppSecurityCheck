@@ -62,7 +62,9 @@
     display: flex;
     gap: 10px;">
     <button class="btn-filter"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
+    <%if(currentUser.role.authorization.includes('createDeleteUser')){%>
     <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add User</button>
+    <%}%>
   </div>
 
 <div class="row">

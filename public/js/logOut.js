@@ -9,7 +9,7 @@ export const logout = async() => {
         if(res.data.status === 'success'){
             alert('Logged out successfully!!!!');
             window.setTimeout(()=>{
-                location.assign('/')
+                location.href = '/'
             },1000)
         }
     }catch(err){

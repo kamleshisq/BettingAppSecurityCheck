@@ -25,7 +25,10 @@ if(document.querySelector('.loginForm')){
 })};
 
 if(document.querySelector('.logOut')){
-    document.querySelector('.logOut').addEventListener('click', logout)
+    document.querySelector('.logOut').addEventListener('click', function(e){
+        e.preventDefault()
+        logout()
+    })
 };
 
 // if(document.querySelector("ResetFORM")){
