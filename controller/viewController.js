@@ -231,6 +231,7 @@ exports.dashboard = catchAsync(async(req, res, nex) => {
     }).then(res => res.json()).then(result => {
         // console.log(result.dashboard.users)
         res.status(200).render('dashboard',{
+            title:"Dashboard",
             data:result
         })
     })
