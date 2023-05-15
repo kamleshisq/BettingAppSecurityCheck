@@ -6282,7 +6282,7 @@ $(document).on('click', '.userStatus', function (e) {
   // console.log(data)
   (0, _userStatus.userStatus)(data, rowId);
 });
-$('.Deposite').on('click', function (e) {
+$(document).on('click', '.Deposite', function (e) {
   var modleName = $(this).data('bs-target');
   var form = $(modleName).find('.form-data');
   var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
@@ -6301,7 +6301,7 @@ $('.Deposite').on('click', function (e) {
   // console.log(form)
 });
 
-$('.Withdraw').on('click', function () {
+$(document).on('click', '.Withdraw', function () {
   var modleName = $(this).data('bs-target');
   var form = $(modleName).find('.form-data');
   var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
@@ -6312,7 +6312,7 @@ $('.Withdraw').on('click', function () {
   form.find('input[name = "tuBalance"]').attr('value', userData.balance);
   form.find('input[name = "clintPL"]').attr('value', userData.clientPL);
 });
-$('.CreaditChange').on('click', function () {
+$(document).on('click', '.CreaditChange', function () {
   var modleName = $(this).data('bs-target');
   var form = $(modleName).find('.form-data');
   var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
@@ -6320,11 +6320,12 @@ $('.CreaditChange').on('click', function () {
   form.find('input[name = "credit"]').attr('value', userData.creditReference);
   form.find('input[name = "newCreadit"]').attr('value', '0');
 });
-$('.UserDetails').on('click', function () {
+$(document).on('click', '.UserDetails', function () {
   var modleName = $(this).data('bs-target');
   var form = $(modleName).find('.form-data');
   var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
   var me = $('#meDatails').data('me');
+  console.log(userData);
   form.find('input[name = "name"]').attr('value', userData.name);
   form.find('input[name = "userName"]').attr('value', userData.userName);
   form.find('input[name = "id"]').attr('value', userData._id);

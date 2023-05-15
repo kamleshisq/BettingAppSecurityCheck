@@ -151,7 +151,7 @@ socket.on('connect', () => {
 
     // console.log(window.location.href)
 
-    if(window.location.href.startsWith('http://46.101.225.192:8000/userManagement')){
+    if(window.location.href.startsWith('http://localhost:8000/userManagement')){
         function getOwnChild(id,page,token) {
             socket.emit(token,{
                 id,
@@ -307,7 +307,7 @@ socket.on('connect', () => {
                 }
                     
                 html += `<td> ${count + i} </td>
-                    <td class="getOwnChild" data-id='${JSON.stringify(response[i])}'>`
+                    <td class="getOwnChild" data-bs-dismiss='${JSON.stringify(response[i])}'>`
                     if(response[i].roleName != 'user'){
                         html+= `<a href='/userManagement?id=${response[i]._id}'>${response[i].userName}</a>`
                     }else{

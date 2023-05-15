@@ -225,7 +225,7 @@ $(document).on('click','.userStatus',function(e) {
     userStatus(data,rowId)
 });
 
-$('.Deposite').on('click',function(e){
+$(document).on('click','.Deposite',function(e){
     let modleName = $(this).data('bs-target')
     let form = $(modleName).find('.form-data')
     let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
@@ -244,7 +244,7 @@ $('.Deposite').on('click',function(e){
     // console.log(form)
 })
 
-$('.Withdraw').on('click',function(){
+$(document).on('click','.Withdraw',function(){
     let modleName = $(this).data('bs-target')
     let form = $(modleName).find('.form-data')
     let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
@@ -256,7 +256,7 @@ $('.Withdraw').on('click',function(){
     form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
 })
 
-$('.CreaditChange').on('click',function(){
+$(document).on('click','.CreaditChange',function(){
     let modleName = $(this).data('bs-target')
     let form = $(modleName).find('.form-data')
     let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
@@ -265,11 +265,12 @@ $('.CreaditChange').on('click',function(){
     form.find('input[name = "newCreadit"]').attr('value','0')
 })
 
-$('.UserDetails').on('click',function(){
+$(document).on('click','.UserDetails',function(){
     let modleName = $(this).data('bs-target')
     let form = $(modleName).find('.form-data')
     let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
     let me = $('#meDatails').data('me')
+    console.log(userData)
     form.find('input[name = "name"]').attr('value',userData.name)
     form.find('input[name = "userName"]').attr('value',userData.userName)
     form.find('input[name = "id"]').attr('value',userData._id)
