@@ -43,9 +43,9 @@ if(document.querySelector('.logOut')){
 //     })
 // };
 
-$('.createForm').submit(function(e){
+$('#Add-User').submit(function(e){
 e.preventDefault();
-const form = document.getElementById('my-form');
+const form = document.getElementById('Add-User');
 let data = new FormData(form) 
 const formDataObj = Object.fromEntries(data.entries());
 // console.log(formDataObj)

@@ -6076,9 +6076,9 @@ if (document.querySelector('.logOut')) {
 //     })
 // };
 
-$('.createForm').submit(function (e) {
+$('#Add-User').submit(function (e) {
   e.preventDefault();
-  var form = document.getElementById('my-form');
+  var form = document.getElementById('Add-User');
   var data = new FormData(form);
   var formDataObj = Object.fromEntries(data.entries());
   // console.log(formDataObj)

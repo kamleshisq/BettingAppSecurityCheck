@@ -284,34 +284,35 @@
           <h4 class="modal-title" style="color: #fff;">Add Account</h4>
         </div>
         <div class="modal-body">
-          <form class="form-data">
+          <form class="form-data" id="Add-User">
             <div class="row">
               <div class="col">
                 <label for="">Name</label>
-                <input type="text" class="form-control ml0" placeholder="" name="email">
+                <input type="text" class="form-control ml0" placeholder="" name="name">
               </div>
             </div>
             <div class="row mt-2">
               <div class="col">
                 <label for="">User ID</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
+                <input type="text" class="form-control ml0" placeholder="Abitest" name="userName">
               </div>
               <div class="col">
                 <label for="">User Role</label>
-                <select name=" "  class="form-control ml0" style="color: #000 !important;">
-                  <option value="">Super Duper Master</option>
-                  <option value="">Super Duper Master</option>
+                <select name="role"  class="form-control ml0" style="color: #000 !important;">
+                  <%for(let i = 0;i<roles.length; i++){%>
+                    <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
+                  <%}%>
                 </select>
               </div>
             </div>
             <div class="row mt-2">
               <div class="col">
                 <label for="">Password</label>
-                <input type="password" class="form-control ml0" placeholder="" name="email">
+                <input type="password" class="form-control ml0" placeholder="" name="password">
               </div>
               <div class="col">
                 <label for="">Confirm Password</label>
-                <input type="password" class="form-control ml0" placeholder="" name="pswd">
+                <input type="password" class="form-control ml0" placeholder="" name="passwordConfirm">
               </div>
             </div>
             <div class="row mt-2">
@@ -351,7 +352,7 @@
                 <i class="bi bi-eye-slash" id="togglePassword"></i>
               </div>
             </div>
-            <button type="button" class="btn-submit mt-3" style="background-color: #46BCAA;">Add</button>
+            <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Add</button>
           </form>
         </div>
       </div>
