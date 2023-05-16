@@ -325,7 +325,9 @@ exports.APIcall = catchAsync(async(req, res, next) => {
     fetch(fullUrl, {
         method: 'POST',
         headers: { 
-    'Signature':'MIICXgIBAAKBgQDO4DWZQtAl3KEJ9kHcKlaQxBN6qZz1NB5XDu+eFWRjIxPC9P+yswF679bCsph90kw45Lx1m9c6mW+Vzafcq6Zl5+wDgA6ujTv2Jq5+3Qv2Ag/n+VL06OTq4RcvPf76nSPUycS2oaDe5XhnaaqbluBZ5VXsLJAPFhdg+3ltssdV3wIDAQABAoGBAKCMlmwr0vgfQodFqxUfcnEFCoz+hwYw/X7Y45NOzMq3VUXO94YKsBJlgck162xyQZ9BvRSU7jLXEycyJJz4RbiZLRwXfFZgy6FHk1cKpOBoV+wpykD/XAKMdSY5FY0udkf3lqWBJFNYPbJ7bjme9BKC9PYvxP+yZWWfU1OYPeGRAkEA7NXc1H3ffdQ9Y86EfrGZrWrhnxIxK2tLNB3r21/LElV+7x4H/zMxov6oydHy5veflVQ1/7ZLYMD/+/VHwVB+uQJBAN+duOuoanLHMD3FQMJ8gvNDYXoyiVXancu/u+HDyBzBSW1vVdKQH1eZqEVQOGXUhEJt7rSxs69uz4GVJ/5z7VcCQE+cfET5ovzbMV+xdhxYev4uZXVhWiHsSTVVsYjmpI6fKrIaeDmy7caKsBZXer1lE8HQsu4oSyJU/jel9d7nvhECQQC5eQKmQ/x20wwKUA+UwN2ElADH8B7FHR0AoDlf2pmicBdNM6lFitDUQdi2FQGSRKCm0LPLIBFfk1N9sY+Il/LlAkEA12A1toJ2ph0YWqe/DBczW/66xAvBxVVvTMiqMae+Kmh6ax71yDPDRGvTnjwo/RbL8Ac7KwZhMUmy7UoemCL62A==' 
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Signature':'MIICXgIBAAKBgQDO4DWZQtAl3KEJ9kHcKlaQxBN6qZz1NB5XDu+eFWRjIxPC9P+yswF679bCsph90kw45Lx1m9c6mW+Vzafcq6Zl5+wDgA6ujTv2Jq5+3Qv2Ag/n+VL06OTq4RcvPf76nSPUycS2oaDe5XhnaaqbluBZ5VXsLJAPFhdg+3ltssdV3wIDAQABAoGBAKCMlmwr0vgfQodFqxUfcnEFCoz+hwYw/X7Y45NOzMq3VUXO94YKsBJlgck162xyQZ9BvRSU7jLXEycyJJz4RbiZLRwXfFZgy6FHk1cKpOBoV+wpykD/XAKMdSY5FY0udkf3lqWBJFNYPbJ7bjme9BKC9PYvxP+yZWWfU1OYPeGRAkEA7NXc1H3ffdQ9Y86EfrGZrWrhnxIxK2tLNB3r21/LElV+7x4H/zMxov6oydHy5veflVQ1/7ZLYMD/+/VHwVB+uQJBAN+duOuoanLHMD3FQMJ8gvNDYXoyiVXancu/u+HDyBzBSW1vVdKQH1eZqEVQOGXUhEJt7rSxs69uz4GVJ/5z7VcCQE+cfET5ovzbMV+xdhxYev4uZXVhWiHsSTVVsYjmpI6fKrIaeDmy7caKsBZXer1lE8HQsu4oSyJU/jel9d7nvhECQQC5eQKmQ/x20wwKUA+UwN2ElADH8B7FHR0AoDlf2pmicBdNM6lFitDUQdi2FQGSRKCm0LPLIBFfk1N9sY+Il/LlAkEA12A1toJ2ph0YWqe/DBczW/66xAvBxVVvTMiqMae+Kmh6ax71yDPDRGvTnjwo/RbL8Ac7KwZhMUmy7UoemCL62A==' 
             },
         body:{
             "clientIp": "122.170.115.53",

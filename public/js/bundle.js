@@ -6287,10 +6287,10 @@ $(document).on('click', '.Deposite', function (e) {
   var form = $(modleName).find('.form-data');
   var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
   var me = $('#meDatails').data('me');
-  // console.log(me)
+  console.log(me.userName);
   // console.log(userData)
   // console.log(form.find('input[name = "fromUser"]'))
-  form.find('input[name = "fromUser"]').attr('value', me.userName);
+  // form.find('input[name = "fromUser"]').attr('value',me.userName)
   form.find('input[name = "toUser"]').attr('value', userData.userName);
   form.find('input[name = "fuBalance"]').attr('value', me.balance);
   form.find('input[name = "tuBalance"]').attr('value', userData.balance);
