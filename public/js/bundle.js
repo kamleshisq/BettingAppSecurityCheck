@@ -5997,6 +5997,7 @@ var updateRow = function updateRow(user, rowId, currentUser) {
     html += "<tr style=\"text-align: center;\" id=\"".concat(rowId, "\">");
   }
   html += "<td> ".concat(rowId, " </td>\n      <td class=\"getOwnChild\" data-bs-dismiss='").concat(JSON.stringify(user), "'>");
+  // console.log(user.roleName)
   if (user.roleName != 'user') {
     html += "<a href='/userManagement?id=".concat(user._id, "'>").concat(user.userName, "</a>");
   } else {

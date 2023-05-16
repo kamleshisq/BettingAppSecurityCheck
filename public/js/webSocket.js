@@ -299,10 +299,10 @@ socket.on('connect', () => {
                 if((i+1) % 2 != 0){
 
                     html +=
-                    `<tr style="text-align: center;" class="blue" id="${count + 1}">`
+                    `<tr style="text-align: center;" class="blue" id="${count + i}">`
                 }else{
                     html +=
-                    `<tr style="text-align: center;"id="${count + 1}">` 
+                    `<tr style="text-align: center;"id="${count + i}">` 
                 }
                     
                 html += `<td> ${count + i} </td>

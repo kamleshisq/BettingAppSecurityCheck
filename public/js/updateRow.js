@@ -12,6 +12,7 @@ export const updateRow = (user,rowId,currentUser) => {
       
   html += `<td> ${rowId} </td>
       <td class="getOwnChild" data-bs-dismiss='${JSON.stringify(user)}'>`
+      // console.log(user.roleName)
       if(user.roleName != 'user'){
           html+= `<a href='/userManagement?id=${user._id}'>${user.userName}</a>`
       }else{

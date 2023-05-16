@@ -385,10 +385,12 @@ exports.updateUser = catchAsync(async(req, res, next) => {
         name:req.body.name,
         userName:req.body.userName,
         role_type:role.role_type,
-        role:req.body.role
+        role:req.body.role,
+        roleName:role.roleName
     }
-    // console.log(data)
+
     const updatedUser = await User.findByIdAndUpdate(req.body.id,data,{new:true})
+    console.log(updatedUser)
     res.status(200).json({
         status:'success',
         user:updatedUser
