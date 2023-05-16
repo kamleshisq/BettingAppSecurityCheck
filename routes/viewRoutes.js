@@ -22,6 +22,7 @@ router.get("/dashboard",  authController.restrictTo("dashboard"), viewController
 router.get("/inactiveUser", authController.restrictTo("userStatus"), viewController.inactiveUser);
 router.get("/changeCurrentUserPass", viewController.updatePass);
 router.get("/changeUserPassword", viewController.updateUserPass);
+router.get("/reports", viewController.ReportPage)
 
 //user routs
 router.get("/loginUser", authController.restrictTo("logOutUser"), viewController.onlineUsers);

@@ -350,4 +350,9 @@ exports.APIcall = catchAsync(async(req, res, next) => {
         })
     }
     )
+});
+
+
+exports.ReportPage = catchAsync(async(req, res, next) => {
+    res.status(200).render('reports')
 })

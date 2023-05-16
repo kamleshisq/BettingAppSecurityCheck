@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="../images/logo.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<title>Balaji Dashboard</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.css"> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.css">
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js" integrity="sha256-6ec2OYfOEVNM4UoRBRGoUP5SRgKyf/FhNoOjTwtqD3k=" crossorigin="anonymous"></script>
+<style>
+
+  select {
+    word-wrap: normal;
+    padding: 6px;
+}
+</style>
+</head>
+<body id="body-pd" class="fix-width-body" style="background-color:#EAEEF7;">
+  <header class="header" id="header">
+      <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> 
+        
+          <span class="datre-time">Date 21-12-22   Time-11:08</span>
+        
+      </div>
+      
+      <div>
+      
+        <div class="social-media">
+          <!-- <span>Follow us: </span> -->
+          <span><a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="instagram"><i class="fa-solid fa-moon"></i></a></span> 
+          <span> <a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="facebook"><i class="fa-solid fa-bell"></i></a></span> 
+          <span> <a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="instagram"><i class="fa-solid fa-message"></i></a></span> 
+          <span> <a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="instagram"><i class="fa-solid fa-gear"></i></a></span> 
+        </div>
+      </div>
+  </header>
+  <div class="l-navbar" id="nav-bar" style="background-color: #FFFFFF;">
+      <nav class="nav">
+        <div class="nav_list"> 
+          <a href="/" class="nav_link active"> <img src="../images/dash.png" alt=""> <span class="nav_name">Dashboard</span> </a> 
+          <a href="/about" class="nav_link"> <img src="../images/user.png" alt=""> <span class="nav_name">User Mangement</span> </a> 
+          <a href="/operation" class="nav_link"> <img src="../images/222.png" alt=""> <span class="nav_name">Operation</span> </a> 
+          <a href="/livemarket" class="nav_link"> <img src="../images/333.png" alt=""> <span class="nav_name">Live Market</span> </a> 
+          <a href="/casinocontrol" class="nav_link"> <img src="../images/44.png" alt=""> <span class="nav_name">Casino Control</span> </a> 
+          <a href="/reports" class="nav_link"> <img src="../images/55.png" alt=""> <span class="nav_name">Reports</span> </a> 
+          <a href="/payment" class="nav_link"> <img src="../images/66.png" alt=""> <span class="nav_name">Payments Gateway Option</span> </a>
+          <a href="/promotion" class="nav_link"> <img src="../images/77.png" alt=""> <span class="nav_name">Promotion</span> </a>
+          <a href="/cms" class="nav_link"> <img src="../images/88.png" alt=""> <span class="nav_name">Cms</span> </a>
+        </div>
+      </nav>
+  </div>
+  <!--Container Main start-->
+  <div class="height-100" style="background-color: #EAEEF7;">
+   
+
+
+
+<!-- End banner Slider -->
+
+<!-- skin device sec -->
+
+  <section class="" style="padding-top: 70px ;">
+    <div class="container-fluid">
+    <section style="padding-top: 10px;">
+      <div class="new-head"> 
+          <h1 class="main-heading">Reports</h1>
+          <form action="" style="display: flex;height: 30px;">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
+              
+            </div>
+            <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
+          </form>
+      </div>
+   
+    </section>
+    <div class=""> 
+       
+        <div class="main">
+          <div class="skin-data green">
+              
+              <h5>Credit Reference</h5>
+              <h6>21,00,00,01,100.00</h6>
+          </div>
+          <div class="skin-data green">
+            
+            <h5>Balance</h5>
+              <h6>21,00,91,42,890.00</h6>
+          </div>
+          <div class="skin-data green">
+            
+            <h5>Available Balance</h5>
+              <h6>5,14,94,44,334.48</h6>
+          </div>
+          <div class="skin-data green">
+            
+            <h5>Downline Balance</h5>
+              <h6>15,85,96,98,555.52</h6>
+          </div>
+
+          <div class="skin-data red">
+           
+            <h5>MY P/L</h5>
+              <h6>-91,41,790.00</h6>
+          </div>
+          <div class="skin-data red">
+            
+            <h5>Upline P/L</h5>
+              <h6>-54,58,455.00</h6>
+          </div>
+          <div class="skin-data green">
+            
+            <h5>Client P/L</h5>
+              <h6>91,41,790.00</h6>
+          </div>
+
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <section style="padding: 15px 0px;">
+    <div class="container-fluid">
+    <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
+      <div class="">
+        
+      <h3 class="fix-h3"><img src="../images/reports.png" alt=""> &nbsp;Reports</h3>
+    </div>
+    <div class="cms-rep">
+    <div>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #6359ca !important;color: #fff !important;border: 2px solid #6359CA; padding: 6px 34px;">
+          Reports 
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item " href="/gamereport">Game Reports</a></li>
+          <li><a class="dropdown-item " href="/useracount">User Account Statment</a></li>
+          <li><a class="dropdown-item active" href="/reports">Bet List</a></li>
+          <li><a class="dropdown-item" href="/userhistoryreport">User history</a></li>
+          <li><a class="dropdown-item" href="/Notification">plreport</a></li>
+          
+        </ul>
+      </div>
+    </div>
+    <!-- <div>
+      <form action="">
+        <select name="" id="" style="background-color: #fff;color: #000;border: 2px solid #EAEEF7;">
+          <option value="">Cricket</option>
+          <option value="">FOOTBALL</option>
+
+          <option value="">TENNIS</option>
+          <option value="">BASKETBALL</option>
+          <option value="">BASEBALL</option>
+          <option value="">Primium</option>
+          <option value="">Sports Books</option>
+
+        </select>
+          
+          <select name="" id="" style="background-color: #fff;color: #000;border: 2px solid #EAEEF7; padding: 6px 34px;">
+            <option value="">Open</option>
+            <option value="">Settle</option>
+            <option value="">Won</option>
+            <option value="">Lost</option>
+            <option value="">Vold</option>
+            
+  
+          </select>
+
+          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+
+          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+          </form>
+    </div> -->
+    <div>
+      <span class="up-down-form">Select Game</span>
+      <form action="">
+        <select name="" id="" style="background-color: #fff;color: #000;border: 2px solid #EAEEF7;">
+          <option value="">Cricket</option>
+          <option value="">FOOTBALL</option>
+
+          <option value="">TENNIS</option>
+          <option value="">BASKETBALL</option>
+          <option value="">BASEBALL</option>
+          <option value="">Primium</option>
+          <option value="">Sports Books</option>
+         
+        </select>
+      </form>
+    </div>
+    <div>
+      <span class="up-down-form">Filter Bets</span>
+
+      <form action="">
+        <select name="" id="" style="background-color: #fff;color: #000;border: 2px solid #EAEEF7;">
+          <option value="">Open Bets</option>
+          <option value="">Settle</option>
+          <option value="">Won</option>
+          <option value="">Lost</option>
+          <option value="">Vold</option>
+         
+        </select>
+      </form>
+    </div>
+    
+      <div>
+        <span class="up-down-form">From Date</span>
+      <form action="">
+        
+          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+      </form>
+        </div>
+        <div>
+          <span class="up-down-form">To Date</span>  
+          <form action="">
+          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+          </form>
+          </div>
+      <div style="justify-content: flex-end;display: flex;gap: 10px;">
+      <button class="btn-filter"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
+    </div>
+  </div>
+  <section class="">
+    <div class="">
+      <div class="table_data_details_ col-lg-12">
+      
+        <!-- <div class="spcare-table_">
+              <div class="hed-data">
+                <h3 class="fix-h3"><img src="../images/tp.png" alt=""> &nbsp; Top Player</h3>
+                
+            </div> -->
+              <table>
+                <thead>
+                    <tr style="text-align: center;font-size: 11px;">
+                      <th>S.No</th>
+                      <th>User Name</th>
+                      <th>Date</th>
+                      <th>Sport</th>
+                      <th>Match</th>
+                      <th>Market</th>
+                      <th>Bet On </th>
+                      <th>Odds</th>
+                      <th>Stake</th>
+                      <th>Returns</th>
+                      <th>Txn ID </th>
+                      <th>Game/Round</th>
+                      
+                    </tr>
+                </thead>
+                <tbody class="new-body" style="font-size: 11px;">
+                  <tr style="text-align: center;" class="blue">
+                    <td>1</td>
+                    <td>Bett3</td>
+                    <td>22-12-2022</td>
+                    <td>Cricket</td>
+                    <td>S S v H H</td>
+                    <td>Fancy</td>
+                    <td>5 over runs SS (N) @ 100</td>
+                    <td>44</td>
+                    <td>100.00</td>
+                    <td>0.00</td>
+                    <td>177957406</td>
+                    <td>-</td>
+                  </tr>
+                  <tr style="text-align: center;">
+                    <td>1</td>
+                    <td>Bett3</td>
+                    <td>22-12-2022</td>
+                    <td>Cricket</td>
+                    <td>S S v H H</td>
+                    <td>Fancy</td>
+                    <td>5 over runs SS (N) @ 100</td>
+                    <td>44</td>
+                    <td>100.00</td>
+                    <td>0.00</td>
+                    <td>177957406</td>
+                    <td>-</td>
+                  </tr>
+                  <tr style="text-align: center;" class="blue">
+                    <td>1</td>
+                    <td>Bett3</td>
+                    <td>22-12-2022</td>
+                    <td>Cricket</td>
+                    <td>S S v H H</td>
+                    <td>Fancy</td>
+                    <td>5 over runs SS (N) @ 100</td>
+                    <td>44</td>
+                    <td>100.00</td>
+                    <td>0.00</td>
+                    <td>177957406</td>
+                    <td>-</td>
+                  </tr>
+                  <tr style="text-align: center;">
+                    <td>1</td>
+                    <td>Bett3</td>
+                    <td>22-12-2022</td>
+                    <td>Cricket</td>
+                    <td>S S v H H</td>
+                    <td>Fancy</td>
+                    <td>5 over runs SS (N) @ 100</td>
+                    <td>44</td>
+                    <td>100.00</td>
+                    <td>0.00</td>
+                    <td>177957406</td>
+                    <td>-</td>
+                  </tr>
+                  <tr style="text-align: center;" class="blue">
+                    <td>1</td>
+                    <td>Bett3</td>
+                    <td>22-12-2022</td>
+                    <td>Cricket</td>
+                    <td>S S v H H</td>
+                    <td>Fancy</td>
+                    <td>5 over runs SS (N) @ 100</td>
+                    <td>44</td>
+                    <td>100.00</td>
+                    <td>0.00</td>
+                    <td>177957406</td>
+                    <td>-</td>
+                  </tr>
+                  <tr style="text-align: center;">
+                    <td>1</td>
+                    <td>Bett3</td>
+                    <td>22-12-2022</td>
+                    <td>Cricket</td>
+                    <td>S S v H H</td>
+                    <td>Fancy</td>
+                    <td>5 over runs SS (N) @ 100</td>
+                    <td>44</td>
+                    <td>100.00</td>
+                    <td>0.00</td>
+                    <td>177957406</td>
+                    <td>-</td>
+                  </tr>
+                  <tr style="text-align: center;" class="blue">
+                    <td>1</td>
+                    <td>Bett3</td>
+                    <td>22-12-2022</td>
+                    <td>Cricket</td>
+                    <td>S S v H H</td>
+                    <td>Fancy</td>
+                    <td>5 over runs SS (N) @ 100</td>
+                    <td>44</td>
+                    <td>100.00</td>
+                    <td>0.00</td>
+                    <td>177957406</td>
+                    <td>-</td>
+                  </tr>
+                  <tr style="text-align: center;" class="">
+                    <td>1</td>
+                    <td>Bett3</td>
+                    <td>22-12-2022</td>
+                    <td>Cricket</td>
+                    <td>S S v H H</td>
+                    <td>Fancy</td>
+                    <td>5 over runs SS (N) @ 100</td>
+                    <td>44</td>
+                    <td>100.00</td>
+                    <td>0.00</td>
+                    <td>177957406</td>
+                    <td>-</td>
+                  </tr>
+                  <tr style="text-align: center;" class="blue">
+                    <td>1</td>
+                    <td>Bett3</td>
+                    <td>22-12-2022</td>
+                    <td>Cricket</td>
+                    <td>S S v H H</td>
+                    <td>Fancy</td>
+                    <td>5 over runs SS (N) @ 100</td>
+                    <td>44</td>
+                    <td>100.00</td>
+                    <td>0.00</td>
+                    <td>177957406</td>
+                    <td>-</td>
+                  </tr>
+                  <tr style="text-align: center;" class="">
+                    <td>1</td>
+                    <td>Bett3</td>
+                    <td>22-12-2022</td>
+                    <td>Cricket</td>
+                    <td>S S v H H</td>
+                    <td>Fancy</td>
+                    <td>5 over runs SS (N) @ 100</td>
+                    <td>44</td>
+                    <td>100.00</td>
+                    <td>0.00</td>
+                    <td>177957406</td>
+                    <td>-</td>
+                  </tr>
+                  <tr style="text-align: center;" class="blue">
+                    <td>1</td>
+                    <td>Bett3</td>
+                    <td>22-12-2022</td>
+                    <td>Cricket</td>
+                    <td>S S v H H</td>
+                    <td>Fancy</td>
+                    <td>5 over runs SS (N) @ 100</td>
+                    <td>44</td>
+                    <td>100.00</td>
+                    <td>0.00</td>
+                    <td>177957406</td>
+                    <td>-</td>
+                  </tr>
+                  <tr style="text-align: center;" class="">
+                    <td>1</td>
+                    <td>Bett3</td>
+                    <td>22-12-2022</td>
+                    <td>Cricket</td>
+                    <td>S S v H H</td>
+                    <td>Fancy</td>
+                    <td>5 over runs SS (N) @ 100</td>
+                    <td>44</td>
+                    <td>100.00</td>
+                    <td>0.00</td>
+                    <td>177957406</td>
+                    <td>-</td>
+                  </tr>
+                  <tr style="text-align: center;" class="blue">
+                    <td>1</td>
+                    <td>Bett3</td>
+                    <td>22-12-2022</td>
+                    <td>Cricket</td>
+                    <td>S S v H H</td>
+                    <td>Fancy</td>
+                    <td>5 over runs SS (N) @ 100</td>
+                    <td>44</td>
+                    <td>100.00</td>
+                    <td>0.00</td>
+                    <td>177957406</td>
+                    <td>-</td>
+                  </tr>
+                 
+                </tbody>
+              </table>
+              </div>
+            </div>
+
+            </div>
+          </div>
+            </section>
+<!-- end gallary -->
+
+
+  </div>
+ 
+<script src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+
+</body>
+    </html>
