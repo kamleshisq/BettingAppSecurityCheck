@@ -340,7 +340,7 @@ exports.APIcall = catchAsync(async(req, res, next) => {
            })
 
     })
-    // .then(res => console.log(res))
+    .then(res => res.json())
     .then(result => {
 
         console.log(result)
