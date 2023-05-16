@@ -30,29 +30,36 @@
           <!-- <h4 class="modal-title" style="color: #fff;">Deposit</h4> -->
         </div>
         <div class="modal-body">
-          <form class="form-data">
-            <select name="header" id="header" class="modal-title" style="color: #fff;">
-              <option value="Deposit">Deposit</option>
-              <option value="Withdraw">Withdraw</option>
-            </select>
+          <form class="form-data acc-form">
             <div class="row">
               <div class="col">
+                <label for="">Choose Option</label>
+                <select name="type" style="color: #fff;">
+                  <option value="deposit">Deposit</option>
+                  <option value="withdrawl">Withdraw</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
                 <label for="">From User</label>
-                <input type="text" class="form-control ml0" name="fromUser" readonly >
+                <input type="text" class="form-control ml0" placeholder="Enter User Name" name="fromUser" readonly>
+                <input type="hidden" name="id">
+
               </div>
               <div class="col">
                 <label for="">Balance</label>
-                <input type="text" class="form-control ml0" name="fuBalance" readonly>
+                <input type="text" class="form-control ml0" placeholder="Balance" name="fuBalance">
               </div>
             </div>
             <div class="row mt-2">
               <div class="col">
                 <label for="">To User</label>
-                <input type="text" class="form-control ml0"  name="toUser" readonly>
+                <input type="text" class="form-control ml0" placeholder="Enter User Name" name="toUser">
               </div>
               <div class="col">
                 <label for="">Balance</label>
-                <input type="text" class="form-control ml0" name="tuBalance" readonly>
+                <input type="text" class="form-control ml0" placeholder="Balance" name="tuBalance">
               </div>
             </div>
             <div class="row mt-2">
@@ -60,7 +67,7 @@
                 <label for="">Client P&L</label>
                 <input type="text" class="form-control ml0" placeholder="0.00" name="clintPL">
               </div>
-              </div>
+            </div>
             <div class="row mt-2">
               <div class="col">
                 <label for="">Remarks</label>
@@ -74,10 +81,10 @@
               </div>
               <div class="col">
                 <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="Add Funds" name="balance">
+                <input type="number" class="form-control ml0" placeholder="Add Funds" name="amount">
               </div>
-              <button type="button" class="btn-submit mt-3">Submit &nbsp;   <img src="../images/sub.png" alt=""></button>
             </div>
+            <button type="submit" class="btn-submit mt-3">Submit</button>
           </form>
         </div>
       </div>
@@ -246,14 +253,15 @@
           <h4 class="modal-title" style="color: #fff;">Change status</h4>
         </div>
         <div class="modal-body">
-          <form class="form-data">
+          <form class="form-data userStatus">
             <div class="row">
               <div class="col">
                 <label for="">Account status</label>
-                <select name=""  class="form-control ml0" style="color: #000 !important;">Active
-                  <option value="">Active</option>
-                  <option value="">Close</option>
+                <select name="status" class="form-control ml0" style="color: #000 !important;">Active
+                  <option value="true">Active</option>
+                  <option value="false">Close</option>
                 </select>
+                <input type="hidden" name="id">
               </div>
             </div>
             
@@ -263,7 +271,7 @@
                 <input type="password" class="form-control ml0" placeholder="******" name="email">
               </div>
             </div>
-          <button type="button" class="btn-submit mt-3">Confirm</button>
+          <button type="submit" class="btn-submit mt-3">Confirm</button>
 
           </form>
         </div>

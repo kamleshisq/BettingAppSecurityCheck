@@ -5920,29 +5920,20 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.userStatus = void 0;
 var userStatus = function userStatus(data, rawId) {
-  var url = !data.isActive ? '/api/v1/users/updateUserStatusActive' : '/api/v1/users/updateUserStatusInactive';
-  var message = !data.isActive ? 'user active successfully' : 'user inactive successfully';
-  // let rowId = rowId;
-  // console.log(rowId)
+  var url = data.status === 'true' ? '/api/v1/users/updateUserStatusActive' : '/api/v1/users/updateUserStatusInactive';
   $.ajax({
     url: url,
     type: 'post',
     data: {
-      id: data._id
+      id: data.id
     },
     success: function success(data) {
-      $('tr[id = ' + rawId + ']').html('');
-      alert(message);
-
-      // $('tr[id = '+rawId+']').html('
-      // ')
-      // let id = JSON.parse(document.querySelector('#back').getAttribute('data-me'))._id
-      // let page = document.querySelector('.pageLink').getAttribute('data-page')
-      // getOwnChild(id,0,'getOwnChild')
-      // console.log($(this).parent().parent().hide())
-      // $(this).parent().parent().hide()
+      if (data.status === 'success') {
+        $('tr[id = ' + rawId + ']').html('');
+        alert(data.message);
+      }
+      console.log(data);
     },
-
     error: function error(_error) {
       alert(_error.responseJSON.message);
     }
@@ -6124,7 +6115,7 @@ $(document).on('submit', '#edit-form', /*#__PURE__*/function () {
 }());
 $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
-    var form, fd, formDataObj, rowId, user;
+    var form, fd, formDataObj, rowId, user, currentUser;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
@@ -6140,9 +6131,10 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           return (0, _debitCredit.debitCredit)(formDataObj);
         case 7:
           user = _context2.sent;
-          (0, _updateRow.updateRow)(user, rowId);
+          currentUser = $('#currentUserDetails').data('currentuser');
+          (0, _updateRow.updateRow)(user, rowId, currentUser);
           // console.log(user)
-        case 9:
+        case 10:
         case "end":
           return _context2.stop();
       }
@@ -6276,14 +6268,29 @@ $(document).on('click', '.betLockStatus', function (e) {
   // alert('hiii')
   (0, _betLock.betLockStatus)(data, rowId);
 });
-$(document).on('click', '.userStatus', function (e) {
-  var rowId = $(this).parent().parent().attr('id');
-  var data = $(this).data('myval');
+$(document).on('submit', '.userStatus', function (e) {
+  e.preventDefault();
+  var form = $(this)[0];
+  var fd = new FormData(form);
+  var formDataObj = Object.fromEntries(fd.entries());
+  var rowId = $('.rowId').attr('data-rowid');
   // console.log(rowId)
-  // console.log(data)
-  (0, _userStatus.userStatus)(data, rowId);
+  // console.log(formDataObj)
+  (0, _userStatus.userStatus)(formDataObj, rowId);
+});
+$(document).on('click', '.StatusChange', function () {
+  var rowId = $(this).parent().parent().attr('id');
+  // console.log(rowId)
+  $('.rowId').attr('data-rowid', rowId);
+  var modleName = $(this).data('bs-target');
+  var form = $(modleName).find('.form-data');
+  var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
+  var me = $('#meDatails').data('me');
+  form.find('input[name = "id"]').attr('value', userData._id);
 });
 $(document).on('click', '.Deposite', function (e) {
+  var rowId = $(this).parent().parent().attr('id');
+  $('.rowId').attr('data-rowid', rowId);
   var modleName = $(this).data('bs-target');
   var form = $(modleName).find('.form-data');
   var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
@@ -6303,6 +6310,8 @@ $(document).on('click', '.Deposite', function (e) {
 });
 
 $(document).on('click', '.Withdraw', function () {
+  var rowId = $(this).parent().parent().attr('id');
+  $('.rowId').attr('data-rowid', rowId);
   var modleName = $(this).data('bs-target');
   var form = $(modleName).find('.form-data');
   var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
@@ -6314,6 +6323,8 @@ $(document).on('click', '.Withdraw', function () {
   form.find('input[name = "clintPL"]').attr('value', userData.clientPL);
 });
 $(document).on('click', '.CreaditChange', function () {
+  var rowId = $(this).parent().parent().attr('id');
+  $('.rowId').attr('data-rowid', rowId);
   var modleName = $(this).data('bs-target');
   var form = $(modleName).find('.form-data');
   var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
@@ -6322,6 +6333,8 @@ $(document).on('click', '.CreaditChange', function () {
   form.find('input[name = "newCreadit"]').attr('value', '0');
 });
 $(document).on('click', '.UserDetails', function () {
+  // let rowId = $(this).parent().parent().attr('id')
+  // $('.rowId').attr('data-rowid',rowId)
   var modleName = $(this).data('bs-target');
   var form = $(modleName).find('.form-data');
   var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');

@@ -89,8 +89,8 @@ $(document).on('submit','.acc-form',async function(e) {
     let rowId = $('.rowId').attr('data-rowid')
     // console.log(rowId)
     const user = await debitCredit(formDataObj)
-
-    updateRow(user,rowId)
+    let currentUser = $('#currentUserDetails').data('currentuser')
+    updateRow(user,rowId,currentUser)
     // console.log(user)
 })
 
@@ -220,16 +220,34 @@ $(document).on('click','.betLockStatus',function(e) {
     const data = $(this).data('myval')
     // alert('hiii')
     betLockStatus(data,rowId)
-})
-$(document).on('click','.userStatus',function(e) {
-    const rowId = $(this).parent().parent().attr('id');
-    const data = $(this).data('myval')
-    // console.log(rowId)
-    // console.log(data)
-    userStatus(data,rowId)
 });
 
+$(document).on('submit','.userStatus',function(e) {
+    e.preventDefault()
+    
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    let formDataObj = Object.fromEntries(fd.entries());
+    let rowId = $('.rowId').attr('data-rowid')
+    // console.log(rowId)
+    // console.log(formDataObj)
+    userStatus(formDataObj,rowId)
+});
+
+   $(document).on('click','.StatusChange',function(){
+        let rowId = $(this).parent().parent().attr('id')
+        // console.log(rowId)
+        $('.rowId').attr('data-rowid',rowId)
+        let modleName = $(this).data('bs-target')
+        let form = $(modleName).find('.form-data')
+        let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
+        let me = $('#meDatails').data('me')
+        form.find('input[name = "id"]').attr('value',userData._id)
+    })
+
 $(document).on('click','.Deposite',function(e){
+    let rowId = $(this).parent().parent().attr('id')
+    $('.rowId').attr('data-rowid',rowId)
     let modleName = $(this).data('bs-target')
     let form = $(modleName).find('.form-data')
     let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
@@ -249,6 +267,8 @@ $(document).on('click','.Deposite',function(e){
 })
 
 $(document).on('click','.Withdraw',function(){
+    let rowId = $(this).parent().parent().attr('id')
+    $('.rowId').attr('data-rowid',rowId)
     let modleName = $(this).data('bs-target')
     let form = $(modleName).find('.form-data')
     let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
@@ -261,6 +281,8 @@ $(document).on('click','.Withdraw',function(){
 })
 
 $(document).on('click','.CreaditChange',function(){
+    let rowId = $(this).parent().parent().attr('id')
+        $('.rowId').attr('data-rowid',rowId)
     let modleName = $(this).data('bs-target')
     let form = $(modleName).find('.form-data')
     let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
@@ -270,6 +292,8 @@ $(document).on('click','.CreaditChange',function(){
 })
 
 $(document).on('click','.UserDetails',function(){
+    // let rowId = $(this).parent().parent().attr('id')
+        // $('.rowId').attr('data-rowid',rowId)
     let modleName = $(this).data('bs-target')
     let form = $(modleName).find('.form-data')
     let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
