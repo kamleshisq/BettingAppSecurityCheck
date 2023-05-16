@@ -60,17 +60,21 @@ $(document).on('submit','.passReset-form',function(e){
     reset(formDataObj);
 });
 
-$(document).on('submit','.edit-form',async function(e){
+
+$(document).on('submit','#edit-form',async function(e){
+    // $('#edit-form').on('submit', async function(e){
+    console.log("working")
     e.preventDefault();
     let form = $(this)[0];
     let fd = new FormData(form);
     let formDataObj = Object.fromEntries(fd.entries());
-    // console.log(formDataObj);
+    console.log(formDataObj);
     let rowId = $('.rowId').attr('data-rowid')
     const user = await editUser(formDataObj)
-    // console.log(user)
-    updateRow(user,rowId)
-
+    console.log(user)
+    let currentUser = $('#currentUserDetails').data('currentuser')
+    // console.log(currentUser)
+    updateRow(user,rowId,currentUser)
 });
 
 $(document).on('submit','.acc-form',async function(e) {
@@ -275,4 +279,7 @@ $(document).on('click','.UserDetails',function(){
     form.find('input[name = "userName"]').attr('value',userData.userName)
     form.find('input[name = "id"]').attr('value',userData._id)
     form.find('select option[value="'+userData.role._id+'"]').attr('selected','selected')
+    let rowId = $(this).parent().parent().attr('id')
+    // console.log(rowId)
+    $('.rowId').attr('data-rowid',rowId)
 })

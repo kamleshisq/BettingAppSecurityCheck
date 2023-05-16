@@ -5988,41 +5988,37 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.updateRow = void 0;
-var updateRow = function updateRow(user, rowId) {
+var updateRow = function updateRow(user, rowId, currentUser) {
+  console.log(currentUser);
   var html = "";
-  html += "<tr id = ".concat(rowId, ">\n        <td> ").concat(rowId, " </td>\n        <td class=\"getOwnChild\" data-id='").concat(JSON.stringify(user), "'>");
+  if (rowId % 2 != 0) {
+    html += "<tr style=\"text-align: center;\" class=\"blue\" id=\"".concat(rowId, "\">");
+  } else {
+    html += "<tr style=\"text-align: center;\" id=\"".concat(rowId, "\">");
+  }
+  html += "<td> ".concat(rowId, " </td>\n      <td class=\"getOwnChild\" data-bs-dismiss='").concat(JSON.stringify(user), "'>");
   if (user.roleName != 'user') {
     html += "<a href='/userManagement?id=".concat(user._id, "'>").concat(user.userName, "</a>");
   } else {
     html += "".concat(user.userName);
   }
-  html += "</td>\n        <td> ".concat(user.whiteLabel, "</td>\n        <td> ").concat(user.creditReference, "</td>\n        <td> ").concat(user.balance, "</td>\n        <td> ").concat(user.availableBalance, "</td>\n        <td> ").concat(user.downlineBalance, "</td>\n        <td> ").concat(user.clientPL, "</td>\n        <td> ").concat(user.uplinePL, "</td>\n        <td> ").concat(user.exposure, "</td>\n        <td> ").concat(user.exposureLimit, "</td>\n        <td> ").concat(user.lifeTimeCredit, "</td>\n        <td> ").concat(user.lifeTimeDeposit, "</td>\n        <td>");
-  var currentUser = JSON.parse(sessionStorage.getItem('loginUserDetails'));
-  if (currentUser.role.authorization.includes('userStatus')) {
-    html += "<button class=\"userStatus\" type=\"userStatus\" id=\"".concat(user._id, "\" data-myval='").concat(JSON.stringify(user), "'>U/S</button>");
-  }
-  if (currentUser.role.authorization.includes('betLockAndUnloack')) {
-    html += "<button class=\"betLockStatus\" id=\"".concat(user._id, "\" data-myval='").concat(JSON.stringify(user), "'>BetLock status</button>");
-  }
-  if (currentUser.role.authorization.includes('changeUserPassword')) {
-    html += "<div class=\"popup_main\">\n                <!-- <button class=\"open_popup\">Open Pop Up 1</button> -->\n                <button class=\"open_popup\">change password</button>\n\n                <div class=\"popup_body\">\n                  <div class=\"popup_back\"></div>\n                    <div class=\"popup_contain\">\n                      <div class=\"popup_close\">x</div>\n                        <h2>reset password</h2>\n\n                        <div class=\"ResetFORM\">\n                          <form class= \"passReset-form\" enctype=\"multipart/form-data\" >\n                            <!-- <div class=\"imgcontainer\">\n                              <img src=\"img_avatar2.png\" alt=\"Avatar\" class=\"avatar\">\n                            </div> -->\n                          \n                            <div class=\"container\">\n                              <input type=\"hidden\" name=\"id\" value=".concat(user._id, ">\n                              <label for=\"npsw\"><b>New Password</b></label>\n                              <input type=\"password\" placeholder=\"Enter Password\" name=\"password\" required >\n        \n                              <label for=\"cpsw\"><b>Confirm Password</b></label>\n                              <input type=\"password\" placeholder=\"Enter Password\" name=\"passwordConfirm\" required >\n                                  \n                              <button type=\"submit\">Submit</button>\n                            </div>\n                          </form>\n                        </div>                      \n                      </div>\n                </div>");
+  html += "</td>\n      <td> ".concat(user.whiteLabel, "</td>\n      <td> ").concat(user.creditReference, "</td>\n      <td> ").concat(user.balance, "</td>\n      <td> ").concat(user.availableBalance, "</td>\n      <td> ").concat(user.downlineBalance, "</td>\n      <td style=\"color:#FE3030;\"> ").concat(user.clientPL, "</td>\n      <td> ").concat(user.uplinePL, "</td>\n      <td> ").concat(user.exposure, "</td>\n\n      <td> ").concat(user.lifeTimeCredit, "</td>\n      <td> ").concat(user.lifeTimeDeposit, "</td>");
+  if (currentUser.role.authorization.includes('accountControl')) {
+    html += "<td><button data-bs-toggle=\"modal\" data-bs-target=\"#myModal\" class=\"Withdraw\"> D/W \n              </button></td>";
   }
   if (currentUser.role.authorization.includes('accountControl')) {
-    html += "<button ><a href=\"/accountStatement?id=".concat(user._id, " \">A/S</a></button>\n                <div class=\"popup_main\">\n                <button class=\"open_popup\">D/C</button>\n                <div class=\"popup_body\">\n                    <div class=\"popup_back\"></div>\n                    <div class=\"popup_contain\">\n                        <div class=\"popup_close\">x</div>\n                        <h2>Account</h2>\n\n                        <div class=\"AccForm\">\n                            <form class= \"acc-form\" >\n                            <!-- <div class=\"imgcontainer\">\n                                <img src=\"img_avatar2.png\" alt=\"Avatar\" class=\"avatar\">\n                            </div> -->\n                            \n                            <div class=\"container\">\n                        \n                                <label for=\"amount\"><b>Amount</b></label>\n                                <input type=\"number\" name=\"amount\" required >\n                                <input type=\"hidden\" name=\"id\" value='").concat(user._id, "'>\n                                <label for=\"type\"><b>Select</b></label>\n                                <select name=\"type\">\n                                <option value=deposit >Deposit</option>\n                                <option value=withdrawl >withdrawl</option>\n                                </select>\n                                <button type=\"submit\">Submit</button>\n                            </div>\n                            </form>\n                        </div>\n                    </div>\n                </div>\n                </div>");
+    html += "<td><button data-bs-toggle=\"modal\" data-bs-target=\"#myModal2\">C</button></td>";
+  }
+  if (currentUser.role.authorization.includes('changeUserPassword')) {
+    html += "<td><button data-bs-toggle=\"modal\" data-bs-target=\"#myModal3\">P</button></td>";
+  }
+  if (currentUser.role.authorization.includes('userStatus')) {
+    html += "<td><button data-bs-toggle=\"modal\" data-bs-target=\"#myModal4\">CS</button></td>\n              ";
   }
   if (currentUser.role.authorization.includes('userName')) {
-    html += "\n                <div class=\"popup_main\">\n                <!-- <button class=\"open_popup\">Open Pop Up 1</button> -->\n                <button class=\"open_popup\">Details</button>\n                <!-- <button ><a href=\"/updateUser?id=<%=users[i]._id %>\">Details</a></button> -->\n                <div class=\"popup_body\">\n                  <div class=\"popup_back\"></div>\n                    <div class=\"popup_contain\">\n                      <div class=\"popup_close\">x</div>\n                        <h2>Update User</h2>\n\n                        <div class=\"editForm\">\n                          <form class= \"edit-form\">\n                            <!-- <div class=\"imgcontainer\">\n                              <img src=\"img_avatar2.png\" alt=\"Avatar\" class=\"avatar\">\n                            </div> -->\n                          \n                            <div class=\"container\" >\n                              <label for=\"uname\"><b>Username</b></label>\n                              <input type=\"text\" placeholder=\"Enter Username\" name=\"userName\" required  value=".concat(user.userName, ">\n                              <input type=\"hidden\"  name=\"id\" value=").concat(user._id, ">\n                        \n                              <label for=\"name\"><b>Name</b></label>\n                              <input type=\"text\" placeholder=\"Enter name\" name=\"name\" required value=").concat(user.name, ">\n                        \n                              <select name=\"role\">");
-    var roles = JSON.parse(sessionStorage.getItem('roles'));
-    for (var j = 0; j < roles.length; j++) {
-      if (user.role_type === roles[j].role_type) {
-        html += "<option value=".concat(roles[j]._id, " selected>").concat(roles[j].roleName, "</option>");
-      } else {
-        html += "<option value=".concat(roles[j]._id, " >").concat(roles[j].roleName, "</option>");
-      }
-    }
-    html += "</select>\n                        \n                              <button type=\"submit\">Save</button>\n                            </div>\n                          </form>\n                        </div>\n                      \n                    </div>\n                </div>\n              </div>";
+    html += "<td><button data-bs-toggle=\"modal\" data-bs-target=\"#myModal5\" class=\"UserDetails\"><i class=\"fa-solid fa-database\"></i></button></td>\n              ";
   }
-  html += "</td> </tr>";
+  html += "</tr>";
   //   console.log(html)
   // console.log(rowId)
   $('tr[id = ' + rowId + ']').replaceWith(html);
@@ -6094,24 +6090,28 @@ $(document).on('submit', '.passReset-form', function (e) {
   var formDataObj = Object.fromEntries(fd.entries());
   (0, _resetPass.reset)(formDataObj);
 });
-$(document).on('submit', '.edit-form', /*#__PURE__*/function () {
+$(document).on('submit', '#edit-form', /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
-    var form, fd, formDataObj, rowId, user;
+    var form, fd, formDataObj, rowId, user, currentUser;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
+          // $('#edit-form').on('submit', async function(e){
+          console.log("working");
           e.preventDefault();
           form = $(this)[0];
           fd = new FormData(form);
-          formDataObj = Object.fromEntries(fd.entries()); // console.log(formDataObj);
+          formDataObj = Object.fromEntries(fd.entries());
+          console.log(formDataObj);
           rowId = $('.rowId').attr('data-rowid');
-          _context.next = 7;
+          _context.next = 9;
           return (0, _editUser.editUser)(formDataObj);
-        case 7:
-          user = _context.sent;
-          // console.log(user)
-          (0, _updateRow.updateRow)(user, rowId);
         case 9:
+          user = _context.sent;
+          console.log(user);
+          currentUser = $('#currentUserDetails').data('currentuser'); // console.log(currentUser)
+          (0, _updateRow.updateRow)(user, rowId, currentUser);
+        case 13:
         case "end":
           return _context.stop();
       }
@@ -6330,6 +6330,9 @@ $(document).on('click', '.UserDetails', function () {
   form.find('input[name = "userName"]').attr('value', userData.userName);
   form.find('input[name = "id"]').attr('value', userData._id);
   form.find('select option[value="' + userData.role._id + '"]').attr('selected', 'selected');
+  var rowId = $(this).parent().parent().attr('id');
+  // console.log(rowId)
+  $('.rowId').attr('data-rowid', rowId);
 });
 },{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./betLock":"betLock.js","./updateRow":"updateRow.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
