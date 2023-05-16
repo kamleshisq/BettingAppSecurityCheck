@@ -335,8 +335,8 @@ exports.APIcall = catchAsync(async(req, res, next) => {
             "operatorId": "sheldon",
             "partnerId": "SHPID01",
             "platformId": "DESKTOP",
-            "userId": `6438f3b5d2eb67c8f67fe065`,
-            "username": "use1"
+            "userId": `6438f3b5d2eb67c8f67fe0651`,
+            "username": "user11"
            })
 
     })
