@@ -6,6 +6,7 @@ const accountStatement = require('../model/accountStatementByUserModel');
 const { use } = require("../routes/viewRoutes");
 
 exports.deposit = catchAsync(async(req, res, next) => {
+    console.log(req.body)
     const childUser = await User.findById(req.body.id);
     const parentUser = await User.findById(childUser.parent_id);
     req.body.amount = req.body.amount * 1

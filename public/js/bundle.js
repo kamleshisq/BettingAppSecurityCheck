@@ -6304,8 +6304,7 @@ $(document).on('click', '.Deposite', function (e) {
   form.find('input[name = "tuBalance"]').attr('value', userData.balance);
   form.find('input[name = "clintPL"]').attr('value', userData.clientPL);
   form.find('input[name = "fromUser"]').attr('value', 'admin');
-  form.find('input[name = "fromUser"]').attr('value', 'admin');
-  form.find('input[name = "fromUser"]').attr('value', 'admin');
+  form.find('input[name = "id"]').attr('value', userData._id);
   // console.log(form)
 });
 
@@ -6321,6 +6320,7 @@ $(document).on('click', '.Withdraw', function () {
   form.find('input[name = "fuBalance"]').attr('value', me.balance);
   form.find('input[name = "tuBalance"]').attr('value', userData.balance);
   form.find('input[name = "clintPL"]').attr('value', userData.clientPL);
+  form.find('input[name = "id"]').attr('value', userData._id);
 });
 $(document).on('click', '.CreaditChange', function () {
   var rowId = $(this).parent().parent().attr('id');
