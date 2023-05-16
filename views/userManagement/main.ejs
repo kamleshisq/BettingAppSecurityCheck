@@ -385,9 +385,9 @@
               </div>
               <div class="col">
                 <label for="">User Role</label>
-                <select class="form-control ml0" name="role" style="color: #000 !important;">
+                <select class="form-control ml0" id="role" name="role" style="color: #000 !important;">
                   <%for(let i = 0;i<roles.length; i++){%>
-                  <option value="<%=roles[i]._id%>>"><%=roles[i].roleName%></option>
+                  <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
                   <%}%>
                 </select>
               </div>

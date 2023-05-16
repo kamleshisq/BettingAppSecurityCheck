@@ -6325,10 +6325,11 @@ $(document).on('click', '.UserDetails', function () {
   var form = $(modleName).find('.form-data');
   var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
   var me = $('#meDatails').data('me');
-  console.log(userData);
+  // console.log(userData)
   form.find('input[name = "name"]').attr('value', userData.name);
   form.find('input[name = "userName"]').attr('value', userData.userName);
   form.find('input[name = "id"]').attr('value', userData._id);
+  form.find('select option[value="' + userData.role._id + '"]').attr('selected', 'selected');
 });
 },{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./betLock":"betLock.js","./updateRow":"updateRow.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -6355,7 +6356,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50803" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50196" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
