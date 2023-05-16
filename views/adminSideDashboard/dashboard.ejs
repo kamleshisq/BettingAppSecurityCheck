@@ -76,10 +76,17 @@
                     </thead>
                     <tbody>
                         <%for(let i=0; i<data.dashboard.roles.length;i++){%>
+                          <%if((i % 2) == 0){%>
                             <tr class="flex-justify blue">
                                 <td><%=data.dashboard.roles[i]._id%></td>
-                                <td><%=data.dashboard.roles[i].total%></td>
+                                <td class="text-purple"><%=data.dashboard.roles[i].total%></td>
                             </tr>
+                            <%}else{%>
+                              <tr class="flex-justify">
+                                <td><%=data.dashboard.roles[i]._id%></td>
+                                <td class="text-purple"><%=data.dashboard.roles[i].total%></td>
+                              </tr>
+                            <%}%>
                         <%}%>
                     </tbody>
                   </table>
@@ -108,6 +115,7 @@
                       <tbody>
                         
                             <%for(let i=0; i<data.dashboard.users.length;i++){%>
+                              <%if((i % 2) == 0){%>
                                 <tr style="text-align: center;" class="blue">
                                     <td><%=i + 1%></td>
                                     <td><%=data.dashboard.users[i]._id%></td>
@@ -115,15 +123,33 @@
                                         <%let check = 0%>
                                         <%for(let k=0; k<data.dashboard.users[i].terms.length;k++){%>
                                             <%if(data.dashboard.users[i].terms[k].roleType == data.dashboard.roles[j]._id){%>
-                                                <td><%=data.dashboard.users[i].terms[k].total%></td>
+                                                <td class="text-purple"><%=data.dashboard.users[i].terms[k].total%></td>
                                                 <%check = 1%>
                                             <%}%>
                                         <%}%>
                                         <%if(check != 1){%>
-                                            <td>0</td>
+                                            <td class="text-purple">0</td>
                                         <%}%>
                                     <%}%>
                                 </tr>
+                              <%}else{%>
+                                <tr style="text-align: center;" >
+                                  <td><%=i + 1%></td>
+                                  <td><%=data.dashboard.users[i]._id%></td>
+                                  <%for(let j=0; j<data.dashboard.roles.length;j++){%>
+                                      <%let check = 0%>
+                                      <%for(let k=0; k<data.dashboard.users[i].terms.length;k++){%>
+                                          <%if(data.dashboard.users[i].terms[k].roleType == data.dashboard.roles[j]._id){%>
+                                              <td class="text-purple"><%=data.dashboard.users[i].terms[k].total%></td>
+                                              <%check = 1%>
+                                          <%}%>
+                                      <%}%>
+                                      <%if(check != 1){%>
+                                          <td class="text-purple">0</td>
+                                      <%}%>
+                                  <%}%>
+                              </tr>
+                              <%}%>
                             <%}%>
                         
                        
