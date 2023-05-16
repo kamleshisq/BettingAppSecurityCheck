@@ -282,4 +282,15 @@ $(document).on('click','.UserDetails',function(){
     let rowId = $(this).parent().parent().attr('id')
     // console.log(rowId)
     $('.rowId').attr('data-rowid',rowId)
+});
+
+$(document).on('click','.PasswordChange',function(){
+    let rowId = $(this).parent().parent().attr('id')
+    // console.log(rowId)
+    $('.rowId').attr('data-rowid',rowId)
+    let modleName = $(this).data('bs-target')
+    let form = $(modleName).find('.form-data')
+    let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
+    let me = $('#meDatails').data('me')
+    form.find('input[name = "id"]').attr('value',userData._id)
 })

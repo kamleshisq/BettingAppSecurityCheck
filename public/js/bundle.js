@@ -5891,7 +5891,7 @@ var updatePassword = /*#__PURE__*/function () {
           if (res.data.status === 'success') {
             alert('updated successfully!!!!');
             window.setTimeout(function () {
-              location.assign('/userManagement');
+              location.href = '/userManagement';
             }, 100);
           }
           _context.next = 10;
@@ -6334,6 +6334,16 @@ $(document).on('click', '.UserDetails', function () {
   var rowId = $(this).parent().parent().attr('id');
   // console.log(rowId)
   $('.rowId').attr('data-rowid', rowId);
+});
+$(document).on('click', '.PasswordChange', function () {
+  var rowId = $(this).parent().parent().attr('id');
+  // console.log(rowId)
+  $('.rowId').attr('data-rowid', rowId);
+  var modleName = $(this).data('bs-target');
+  var form = $(modleName).find('.form-data');
+  var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
+  var me = $('#meDatails').data('me');
+  form.find('input[name = "id"]').attr('value', userData._id);
 });
 },{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./betLock":"betLock.js","./updateRow":"updateRow.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];

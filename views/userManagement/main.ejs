@@ -28,13 +28,13 @@
         </div>
         <div class="modal-header" style="text-align: center;">
           <!-- <h4 class="modal-title" style="color: #fff;">Deposit</h4> -->
-          <select name="header" id="header" class="modal-title" style="color: #fff;">
-            <option value="Deposit">Deposit</option>
-            <option value="Withdraw">Withdraw</option>
-          </select>
         </div>
         <div class="modal-body">
           <form class="form-data">
+            <select name="header" id="header" class="modal-title" style="color: #fff;">
+              <option value="Deposit">Deposit</option>
+              <option value="Withdraw">Withdraw</option>
+            </select>
             <div class="row">
               <div class="col">
                 <label for="">From User</label>
@@ -206,15 +206,16 @@
         <div class="modal-body">
           <p style="color: #fff;">Reset Password For Abitest<br>User Will Be Forced To Changed The Password On Login</p>
 
-          <form class="form-data">
+          <form class="form-data passReset-form">
             <div class="row">
               <div class="col">
                 <label for="">Enter New Password</label>
-                <input type="password" class="form-control ml0" placeholder="*****" name="credit">
+                <input type="hidden" name="id">
+                <input type="password" class="form-control ml0" placeholder="*****" name="password">
               </div>
               <div class="col">
                 <label for="">Confirm Password</label>
-                <input type="password" class="form-control ml0" placeholder="*****" name="pswd">
+                <input type="password" class="form-control ml0" placeholder="*****" name="passwordConfirm">
               </div>
             </div>
             
@@ -224,7 +225,7 @@
                 <input type="password" class="form-control ml0" placeholder="******" name="email">
               </div>
             </div>
-          <button type="button" class="btn-submit mt-3">Confirm</button>
+          <button type="submit" class="btn-submit mt-3">Confirm</button>
 
           </form>
         </div>
