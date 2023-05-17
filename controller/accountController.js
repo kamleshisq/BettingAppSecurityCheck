@@ -142,7 +142,10 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
 
 exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
     // console.log(req.query)
-    let page=0;
+    let page;
+    if(!page){
+        page = 0;
+    }
     let limit = 10
     req.body = req.query  
     const user = await User.findById(req.body.id);
