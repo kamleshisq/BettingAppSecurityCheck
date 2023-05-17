@@ -371,7 +371,7 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
 
 exports.useracount = catchAsync(async(req, res, next) => {
     const currentUser = global._User
-    console.log(currentUser)
+    // console.log(currentUser)
     var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement?id=' + currentUser._id
     fetch(fullUrl, {
         method: 'POST',
