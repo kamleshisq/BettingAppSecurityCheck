@@ -6,7 +6,7 @@ const accountStatement = require('../model/accountStatementByUserModel');
 const { use } = require("../routes/viewRoutes");
 
 exports.deposit = catchAsync(async(req, res, next) => {
-    console.log(req.body)
+    // console.log(req.body)
     const childUser = await User.findById(req.body.id);
     const parentUser = await User.findById(childUser.parent_id);
     req.body.amount = req.body.amount * 1
@@ -112,7 +112,7 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
     childAccStatement.parent_id = parentUser.id;
     childAccStatement.description = 'Chips debited to ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
     childAccStatement.creditDebitamount = req.body.amount * -1;
-    childAccStatement.balance = (childUser.availableBalance - req.body.amount);
+    childAccStatement.balance = (childUser.availableBalance * 1  - req.body.amount * 1);
     childAccStatement.date = date
 
     const accStatementChild = await accountStatement.create(childAccStatement)
@@ -126,7 +126,7 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
     ParentAccStatement.parent_id = parentUser.id;
     ParentAccStatement.description = 'Chips debited to ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
     ParentAccStatement.creditDebitamount = req.body.amount;
-    ParentAccStatement.balance = parentUser.availableBalance + req.body.amount;
+    ParentAccStatement.balance = (parentUser.availableBalance*1 + req.body.amount*1);
     ParentAccStatement.date = date
 
     // console.log(ParentAccStatement)
