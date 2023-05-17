@@ -360,7 +360,7 @@ socket.on('connect', () => {
                 //     html += `<a href='/userManagement?id=${data.me_id}&page=${i}' class="pagination">${i + 1}</a>`
                 // }
                 // $('.pageLink').html(html)
-                $('#meDetails').attr('data-me',JSON.stringify(data.me));
+                // $('#meDetails').attr('data-me',JSON.stringify(data.me));
             }
         })
 
@@ -666,6 +666,15 @@ socket.on('connect', () => {
         //     // console.log(data.users)
 
         // })
+    }
+
+    if(pathname == "/useracount"){
+        // console.log("Working")
+        $(window).scroll(function() {
+            if($(document).height()-$(window).scrollTop() == window.innerHeight){
+                
+            }
+         }); 
     }
 })
 
