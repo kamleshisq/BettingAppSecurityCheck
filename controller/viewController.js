@@ -378,12 +378,12 @@ exports.useracount = catchAsync(async(req, res, next) => {
         headers: { 'Authorization': `Bearer ` + req.token }
     }).then(res => res.json())
     .then(json =>{ 
-        // console.log(json)
-        const data = json.userAcc
-        res.status(200).render('./userAccountStatement/useracount',{
-        title:"UserAccountStatement",
-        me:currentUser,
-        data
+        console.log(json)
+        // const data = json.userAcc
+        // res.status(200).render('./userAccountStatement/useracount',{
+        // title:"UserAccountStatement",
+        // me:currentUser,
+        // data
     })
 });
 
