@@ -64,7 +64,7 @@ tr:nth-child(even) {
     
       <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> 
         
-          <span class="datre-time">Date 21-12-22   Time-11:08</span>
+          <span class="datre-time" id="date">Date 21-12-22   Time-11:08</span>
         
       </div>
       
@@ -96,3 +96,15 @@ tr:nth-child(even) {
           </div>
     </nav>
 </div>
+<script>
+  // var currentDate = date.moment().format('D-MM-YYYY');
+  // console.log(date)
+  function date1(){
+    var date = new Date();
+    document.getElementById("date").innerHTML = date
+    setTimeout(()=>{
+      date1()
+    }, 300)
+  }
+  date1()
+</script>
