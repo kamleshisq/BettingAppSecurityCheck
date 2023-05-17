@@ -10,7 +10,9 @@ socket.on('connect', () => {
         const {
             host, hostname, href, origin, pathname, port, protocol, search
           } = window.location
-          console.log(pathname)
+        //   console.log(pathname)
+        //   console.log(host, hostname, href, origin ,port, protocol, search)
+
     // console.log(LOGINTOKEN, LOGINUSER)
     // console.log(window.location.href)
     // let query = window.location.href.split('?')[1]
@@ -337,6 +339,9 @@ socket.on('connect', () => {
                         }
                         if(data.currentUser.role.authorization.includes('changeUserPassword')){
                             html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal3" class="PasswordChange">P</button></td>`
+                        }
+                        if(data.currentUser.role.authorization.includes('betLockAndUnloack')){
+                            html += `<td><button type="button" class="betLockStatus">B</button></td>`
                         }
                         if(data.currentUser.role.authorization.includes('userStatus')){
                             html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange">CS</button></td>

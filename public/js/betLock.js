@@ -6,9 +6,17 @@ export const betLockStatus = (data,rowId) => {
         type:'post',
         data:{id:data._id},
         success:function(data){
-            // console.log(data)
-            alert(data.message)
-            $('tr[id = '+rowId+']').children().eq(13).children().eq(1).replaceWith((`<button class="betLockStatus" id="${data.user._id}" data-myval='${JSON.stringify(data.user)}'>BetLock status</button>`))
+            console.log(data)
+            if(data.status === 'success'){
+                alert(data.message)
+                let html = `<td class='getOwnChild' data-bs-dismiss='${JSON.stringify(data.user)}'>`;
+                if(data.user.roleName != 'user'){
+                    html += `<a href='/userManagement?id=${data.user._id}'>${data.user.userName}</a></td>`
+                }else{
+                    html += `${data.user.userName}</td>`
+                }
+                $('tr[id = '+rowId+']').children().eq(1).replaceWith((html))
+            }
 
             // let id = JSON.parse(document.querySelector('#back').getAttribute('data-me'))._id
             // let page = document.querySelector('.pageLink').getAttribute('data-page')

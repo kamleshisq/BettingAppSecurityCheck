@@ -5957,9 +5957,17 @@ var betLockStatus = function betLockStatus(data, rowId) {
       id: data._id
     },
     success: function success(data) {
-      // console.log(data)
-      alert(data.message);
-      $('tr[id = ' + rowId + ']').children().eq(13).children().eq(1).replaceWith("<button class=\"betLockStatus\" id=\"".concat(data.user._id, "\" data-myval='").concat(JSON.stringify(data.user), "'>BetLock status</button>"));
+      console.log(data);
+      if (data.status === 'success') {
+        alert(data.message);
+        var html = "<td class='getOwnChild' data-bs-dismiss='".concat(JSON.stringify(data.user), "'>");
+        if (data.user.roleName != 'user') {
+          html += "<a href='/userManagement?id=".concat(data.user._id, "'>").concat(data.user.userName, "</a></td>");
+        } else {
+          html += "".concat(data.user.userName, "</td>");
+        }
+        $('tr[id = ' + rowId + ']').children().eq(1).replaceWith(html);
+      }
 
       // let id = JSON.parse(document.querySelector('#back').getAttribute('data-me'))._id
       // let page = document.querySelector('.pageLink').getAttribute('data-page')
@@ -6264,10 +6272,15 @@ $(document).on('click', '.popup_back', function () {
 });
 $(document).on('click', '.betLockStatus', function (e) {
   var rowId = $(this).parent().parent().attr('id');
-  var data = $(this).data('myval');
-  // alert('hiii')
+  var data = $(this).parent().siblings('.getOwnChild').data('bs-dismiss');
+  // console.log(rowId)
+  // console.log(data)
   (0, _betLock.betLockStatus)(data, rowId);
+  // console.log(user)
+  // let currentUser = $('#currentUserDetails').data('currentuser')
+  // updateRow(user,rowId,currentUser)
 });
+
 $(document).on('submit', '.userStatus', function (e) {
   e.preventDefault();
   var form = $(this)[0];

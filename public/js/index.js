@@ -214,13 +214,18 @@ $(document).on('click','.popup_back',function () {
 });
 
 
-$(document).on('click','.betLockStatus',function(e) {
+$(document).on('click','.betLockStatus', function(e) {
     const rowId = $(this).parent().parent().attr('id');
     
-    const data = $(this).data('myval')
-    // alert('hiii')
+    const data = $(this).parent().siblings('.getOwnChild').data('bs-dismiss')
+    // console.log(rowId)
+    // console.log(data)
     betLockStatus(data,rowId)
-});
+    // console.log(user)
+    // let currentUser = $('#currentUserDetails').data('currentuser')
+    // updateRow(user,rowId,currentUser)
+
+})
 
 $(document).on('submit','.userStatus',function(e) {
     e.preventDefault()

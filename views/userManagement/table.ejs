@@ -86,6 +86,12 @@
               <button data-bs-toggle="modal" data-bs-target="#myModal3"class="PasswordChange">P</button>
               <%}%>
             </td>
+            <td> 
+              <%if(currentUser.role.authorization.includes('betLockAndUnloack')){%>
+
+              <button type="button" class="betLockStatus">B</button>
+              <%}%>
+            </td>
             <td class="text-purple">
               <%if(currentUser.role.authorization.includes('userStatus')){%>
 
