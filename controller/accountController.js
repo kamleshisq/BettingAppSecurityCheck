@@ -142,12 +142,14 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
 
 exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
     // console.log(req.query)
+    let page=0;
+    let limit = 10
     req.body = req.query  
     const user = await User.findById(req.body.id);
     if(req.currentUser.role.role_level > user.role.role_level){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
     }
-    let userAcc = await accountStatement.find({user_id:req.body.id})
+    let userAcc = await accountStatement.find({user_id:req.body.id}).skip(page * limit).limit(limit);
     // if(req.body.from && req.body.to){
     //     userAcc = await accountStatement.find({$or:[{to_user_id:req.body.id},{from_user_id:req.body.id}],date:{$gte:req.body.from,$lte:req.body.to}})
     // }else{
