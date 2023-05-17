@@ -354,5 +354,41 @@ exports.APIcall = catchAsync(async(req, res, next) => {
 
 
 exports.ReportPage = catchAsync(async(req, res, next) => {
-    res.status(200).render('reports')
+    const currentUser = global._User
+    res.status(200).render('./reports/reports',{
+        title:"Reports",
+        me:currentUser
+    })
+})
+
+exports.gameReportPage = catchAsync(async(req, res, next) => {
+    const currentUser = global._User
+    res.status(200).render('./gamereports/gamereport',{
+        title:"gameReports",
+        me:currentUser
+    })
+})
+
+exports.useracount = catchAsync(async(req, res, next) => {
+    const currentUser = global._User
+    res.status(200).render('./userAccountStatement/useracount',{
+        title:"UserAccountStatement",
+        me:currentUser
+    })
+})
+
+exports.userhistoryreport = catchAsync(async(req, res, next) => {
+    const currentUser = global._User
+    res.status(200).render('./userHistory/userhistoryreport',{
+        title:"UserHistory",
+        me:currentUser
+    })
+})
+
+exports.plreport = catchAsync(async(req, res, next) => {
+    const currentUser = global._User
+    res.status(200).render('./PL_Report/plreport',{
+        title:"P/L Report",
+        me:currentUser
+    })
 })

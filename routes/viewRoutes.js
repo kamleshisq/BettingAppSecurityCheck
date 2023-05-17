@@ -23,6 +23,10 @@ router.get("/inactiveUser", authController.restrictTo("userStatus"), viewControl
 router.get("/changeCurrentUserPass", viewController.updatePass);
 router.get("/changeUserPassword", viewController.updateUserPass);
 router.get("/reports", viewController.ReportPage)
+router.get("/gamereport", viewController.gameReportPage)
+router.get("/useracount", viewController.useracount)
+router.get("/userhistoryreport", viewController.userhistoryreport)
+router.get("/plreport", viewController.plreport)
 
 //user routs
 router.get("/loginUser", authController.restrictTo("logOutUser"), viewController.onlineUsers);
