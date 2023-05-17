@@ -7,7 +7,10 @@ socket.on('connect', () => {
     socket.on('loginUser',(data) => {
         LOGINDATA.LOGINUSER = data.loginData.User
         LOGINDATA.LOGINTOKEN = data.loginData.Token
-    
+        const {
+            host, hostname, href, origin, pathname, port, protocol, search
+          } = window.location
+          console.log(pathname)
     // console.log(LOGINTOKEN, LOGINUSER)
     // console.log(window.location.href)
     // let query = window.location.href.split('?')[1]
@@ -28,7 +31,7 @@ socket.on('connect', () => {
 
 
 
-    if(window.location.href == "http://46.101.225.192:8000/updateRole"){
+    if(pathname == "/updateRole"){
         let x = "121"
         // let y = document.getElementById("mySelect").value
         function sendData(){
@@ -151,7 +154,7 @@ socket.on('connect', () => {
 
     // console.log(window.location.href)
 
-    if(window.location.href.startsWith('http://46.101.225.192:8000/userManagement')){
+    if(pathname.startsWith('/userManagement')){
         function getOwnChild(id,page,token) {
             socket.emit(token,{
                 id,
@@ -589,7 +592,7 @@ socket.on('connect', () => {
 
 
     //for inactive users//
-    if(window.location.href == "http://46.101.225.192:8000/inactiveUser"){
+    if(pathname == "/inactiveUser"){
         $(document).on('click','.userStatusActive',function(e){
             e.preventDefault();
             let id = $(this).data('id')
@@ -648,7 +651,7 @@ socket.on('connect', () => {
         })
     }
     //for online users//
-    if(window.location.href == "http://46.101.225.192:8000/loginUser"){
+    if(pathname == "/loginUser"){
         // $(document).on('click','.userLogout',function(){
         //     let id = $(this).data('id');
         //     $(this).parent().parent().html('')
