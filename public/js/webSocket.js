@@ -690,10 +690,13 @@ socket.on('connect', () => {
             if(data.status == "success"){
                 let html = "";
                 for(let i = 0; i < data.userAcc.length; i++){
+                    let date = new Date(data.userAcc[i].date);
+                    // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
+                    // console.log(abc)
                     if((i%2)==0){
                         html += `<tr style="text-align: center;" class="blue">
                         <td>${count1 + i}</td>
-                        <td>${data.userAcc[i].date}`
+                        <td>${date}`
                         if(data.userAcc[i].creditDebitamount > 0){
                             html += `<td>${data.userAcc[i].creditDebitamount}</td>
                             <td>0</td>
@@ -709,7 +712,7 @@ socket.on('connect', () => {
                     }else{
                         html += `<tr style="text-align: center;" >
                         <td>${count1 + i}</td>
-                        <td>${data.userAcc[i].date}`
+                        <td>${date}`
                         if(data.userAcc[i].creditDebitamount > 0){
                             html += `<td>${data.userAcc[i].creditDebitamount}</td>
                             <td>0</td>

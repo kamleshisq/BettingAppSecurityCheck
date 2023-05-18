@@ -164,10 +164,11 @@
                 </thead>
                 <tbody class="new-body" style="font-size: 11px;">
                   <%for(let i = 0; i < data.length; i++){%>
+                    <% let date = new Date(data[i].date)%>
                     <%if((i%2 == 0)){%>
                     <tr style="text-align: center;" class="blue">
                       <td><%= i + 1%></td>
-                      <td><%=data[i].date%></td>
+                      <td><%=date%></td>
                       <%if(data[i].creditDebitamount > 0){%>
                       <td><%=data[i].creditDebitamount%></td>
                       <td>0</td>
@@ -184,7 +185,7 @@
                     <%}else{%>
                       <tr style="text-align: center;" >
                         <td><%= i + 1%></td>
-                        <td><%=data[i].date%></td>
+                        <td><%=date%></td>
                         <%if(data[i].creditDebitamount > 0){%>
                           <td><%=data[i].creditDebitamount%></td>
                           <td>0</td>
