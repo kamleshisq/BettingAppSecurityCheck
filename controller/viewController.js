@@ -408,8 +408,10 @@ exports.plreport = catchAsync(async(req, res, next) => {
 
 exports.roleManagement = catchAsync(async(req, res, next) => {
     const currentUser = global._User
+    const roles = await Role.find()
     res.status(200).render("./roleManagement/roleManagement", {
         title:"Role Management",
-        me:currentUser
+        me:currentUser,
+        roles
     })
 })
