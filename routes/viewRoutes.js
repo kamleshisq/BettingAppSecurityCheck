@@ -27,6 +27,7 @@ router.get("/gamereport", viewController.gameReportPage)
 router.get("/useracount", viewController.useracount)
 router.get("/userhistoryreport", viewController.userhistoryreport)
 router.get("/plreport", viewController.plreport)
+router.get("/roleManagement", viewController.roleManagement)
 
 //user routs
 router.get("/loginUser", authController.restrictTo("logOutUser"), viewController.onlineUsers);
