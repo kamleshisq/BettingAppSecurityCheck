@@ -5,6 +5,7 @@ const fetch = require('node-fetch');
 const Role = require('./model/roleModel');
 const User = require("./model/userModel");
 const userController = require("./websocketController/userController");
+const accountControl = require("./controller/accountController");
 const loginlogs = require('./model/loginLogs')
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -219,6 +220,26 @@ io.on('connection', (socket) => {
         }
         socket.emit("inActiveUserDATA1", Users)
         urlRequestAdd(`/api/v1/users/deleteUser`,'POST', id.LOGINDATA.LOGINTOKEN)
+    });
+
+
+    socket.on("AccountScroll", async(data)=>{
+        // console.log(data)
+        var fullUrl = 'http://127.0.0.1:8000/api/v1/Account/getUserAccStatement?id=' + data.id + "&page=" + data.page
+        // console.log(fullUrl)
+        fetch(fullUrl, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ` + loginData.Token },
+        }).then(res => res.json())
+        .then(json =>{ 
+            // console.log(json)
+            socket.emit('Acc', json)
+            // const data = json.userAcc
+            // res.status(200).render('./userAccountStatement/useracount',{
+            // title:"UserAccountStatement",
+            // me:currentUser,
+            // data})
+        });
     })
 
 

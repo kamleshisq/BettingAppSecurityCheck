@@ -1,4 +1,4 @@
-// const { date } = require("joi");
+
 
 const socket = io();
 socket.on('connect', () => {
@@ -672,9 +672,62 @@ socket.on('connect', () => {
         // console.log("Working")
         $(window).scroll(function() {
             if($(document).height()-$(window).scrollTop() == window.innerHeight){
-                
+                let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
+
+                let page = parseInt($('.pageLink').attr('data-page'));
+                $('.pageLink').attr('data-page',page + 1)
+                // console.log(id, page)
+                socket.emit('AccountScroll',{
+                    id,
+                    page
+                })
             }
          }); 
+
+         socket.on("Acc", async(data) => {
+            // console.log(data)
+            if(data.status == "success"){
+                let html = "";
+                count = 11
+                for(let i = 0; i < data.userAcc.length; i++){
+                    if((i%2)==0){
+                        html += `<tr style="text-align: center;" class="blue">
+                        <td>${count + i}</td>
+                        <td>${data.userAcc[i].date}`
+                        if(data.userAcc[i].creditDebitamount > 0){
+                            html += `<td>${data.userAcc[i].creditDebitamount}</td>
+                            <td>0</td>
+                            <td>${data.userAcc[i].child_id.userName}/${data.userAcc[i].user_id.userName}</td>`
+                        }else{
+                            html += `<td>0</td>
+                            <td>${data.userAcc[i].creditDebitamount}</td>
+                            <td>${data.userAcc[i].user_id.userName}/${data.userAcc[i].child_id.userName}</td>`
+                        }
+                        html += `<td>${data.userAcc[i].balance}</td>
+                        <td><button style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+                        <td>-</td>`
+                    }else{
+                        html += `<tr style="text-align: center;" >
+                        <td>${count + i}</td>
+                        <td>${data.userAcc[i].date}`
+                        if(data.userAcc[i].creditDebitamount > 0){
+                            html += `<td>${data.userAcc[i].creditDebitamount}</td>
+                            <td>0</td>
+                            <td>${data.userAcc[i].child_id.userName}/${data.userAcc[i].user_id.userName}</td>`
+                        }else{
+                            html += `<td>0</td>
+                            <td>${data.userAcc[i].creditDebitamount}</td>
+                            <td>${data.userAcc[i].user_id.userName}/${data.userAcc[i].child_id.userName}</td>`
+                        }
+                        html += `<td>${data.userAcc[i].balance}</td>
+                        <td><button style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+                        <td>-</td>`
+                    }
+                }
+                count += 10;
+                $('table').append(html)
+            }
+         })
     }
 })
 
