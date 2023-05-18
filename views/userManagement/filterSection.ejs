@@ -9,7 +9,23 @@
               <input type="text" placeholder="search user" style="margin-right: 13px;" id="searchUser" class="searchUser">
               
             </div>
-            <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
+            <!-- <button ><i class="fa-solid fa-filter"></i>&nbsp;Filter</button> -->
+              <!-- <label for="role" style="color-scheme: #0000;">Choose a Role</label> -->
+              <select name="ROLEselect" id="ROLEselect" class="ROLEselect">
+                <option value="" selected >Select Role</option>
+                <%for(let i = 0 ; i < roles.length; i++){%>
+                  <option value="<%=roles[i].role_type%>"><%=roles[i].roleName%></option>
+                <%}%>
+              </select>
+              <%if(currentUser.role_type == 1){%>
+                <select name="WhiteLabel" id="WhiteLabel" class="WhiteLabel">
+                  <option value="" selected >select WhiteLabel</option>
+                  <%for(let i = 0 ; i < WhiteLabel.length; i++){%>
+                    <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
+                  <%}%>
+                </select>
+              <%}%>
+                <!-- <br><br> -->
             <button class="logOut">logout</button>
           </form>
       </div>
