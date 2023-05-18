@@ -731,6 +731,13 @@ socket.on('connect', () => {
                 $('table').append(html)
             }
          })
+
+         $(document).on("click", ".load", function(){
+            // console.log("clicked")
+            let Fdate = document.getElementById("Fdate").value
+            let Tdate = document.getElementById("Tdate").value
+            socket.emit("datefilter", {Fdate, Tdate})
+        })
     }
 })
 

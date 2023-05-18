@@ -322,4 +322,6 @@ $(document).on('click','.PasswordChange',function(){
     let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
     let me = $('#meDatails').data('me')
     form.find('input[name = "id"]').attr('value',userData._id)
-})
+});
+
+// console.log($(".load"))

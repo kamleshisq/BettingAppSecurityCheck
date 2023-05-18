@@ -242,6 +242,11 @@ io.on('connection', (socket) => {
         });
     })
 
+    socket.on("datefilter", async(data) => {
+        console.log(data)
+
+    })
+
 
     // socket.on('logOutUser',async(id) => {
     //     // console.log(id)

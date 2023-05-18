@@ -148,18 +148,20 @@ exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
         page = 0;
     }
     let limit = 10
+    // req.body.from = '2023-05-17'
+    // req.body.to = '2023-05-18'
     const user = await User.findById(req.body.id);
     if(req.currentUser.role.role_level > user.role.role_level){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
     }
-    let userAcc = await accountStatement.find({user_id:req.body.id}).skip(page * limit).limit(limit);
-    // if(req.body.from && req.body.to){
-    //     userAcc = await accountStatement.find({$or:[{to_user_id:req.body.id},{from_user_id:req.body.id}],date:{$gte:req.body.from,$lte:req.body.to}})
-    // }else{
-    //     userAcc = await accountStatement.find({$or:[{to_user_id:req.body.id},{from_user_id:req.body.id}]})
-    // }
+    // let userAcc = await accountStatement.find({user_id:req.body.id}).skip(page * limit).limit(limit);
+    if(req.body.from && req.body.to){
+        userAcc = await accountStatement.find({$or:[{user_id:req.body.id}],date:{$gte:req.body.from,$lte:req.body.to}}).skip(page * limit).limit(limit);
+    }else{
+        userAcc = await accountStatement.find({$or:[{user_id:req.body.id}]}).skip(page * limit).limit(limit);
+    }
     // if(user.role_type = 5){
-    //     userAcc = await accountStatement.find({})
+    //     userAcc = await accountStatement.find({}).skip(page * limit).limit(limit);
     // }
     
     if(!userAcc){

@@ -6371,6 +6371,8 @@ $(document).on('click', '.PasswordChange', function () {
   var me = $('#meDatails').data('me');
   form.find('input[name = "id"]').attr('value', userData._id);
 });
+
+// console.log($(".load"))
 },{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./betLock":"betLock.js","./updateRow":"updateRow.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

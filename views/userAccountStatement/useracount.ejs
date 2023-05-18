@@ -122,20 +122,20 @@
     </div>
     
       <div>
-        <span class="up-down-form">From Date</span>
+        <span class="up-down-form " >From Date</span>
       <form action="">
         
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+          <input type = "date" id="Fdate" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
       </form>
         </div>
         <div>
-          <span class="up-down-form">To Date</span>  
+          <span class="up-down-form ">To Date</span>  
           <form action="">
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+          <input type = "date" id="Tdate" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
           </form>
           </div>
       <div style="justify-content: flex-end;display: flex;gap: 10px;">
-      <button class="btn-filter"> &nbsp; Load</button>
+      <button type="click" class="btn-filter load"> &nbsp; Load</button>
     </div>
   </div>
   <section class="">
@@ -308,7 +308,8 @@
   </div>
   </div>
   </div>
- 
+
+<script type="text/javascript" src="js/bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
