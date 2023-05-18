@@ -684,15 +684,15 @@ socket.on('connect', () => {
             }
          }); 
 
+         let count1 = 11
          socket.on("Acc", async(data) => {
             // console.log(data)
             if(data.status == "success"){
                 let html = "";
-                count = 11
                 for(let i = 0; i < data.userAcc.length; i++){
                     if((i%2)==0){
                         html += `<tr style="text-align: center;" class="blue">
-                        <td>${count + i}</td>
+                        <td>${count1 + i}</td>
                         <td>${data.userAcc[i].date}`
                         if(data.userAcc[i].creditDebitamount > 0){
                             html += `<td>${data.userAcc[i].creditDebitamount}</td>
@@ -708,7 +708,7 @@ socket.on('connect', () => {
                         <td>-</td>`
                     }else{
                         html += `<tr style="text-align: center;" >
-                        <td>${count + i}</td>
+                        <td>${count1 + i}</td>
                         <td>${data.userAcc[i].date}`
                         if(data.userAcc[i].creditDebitamount > 0){
                             html += `<td>${data.userAcc[i].creditDebitamount}</td>
@@ -724,7 +724,7 @@ socket.on('connect', () => {
                         <td>-</td>`
                     }
                 }
-                count += 10;
+                count1 += 10;
                 $('table').append(html)
             }
          })
