@@ -6373,6 +6373,10 @@ $(document).on('click', '.PasswordChange', function () {
 });
 $(document).on('click', '.RoleDetails', function () {
   // console.log("Working")
+  var modleName = $(this).data('bs-target');
+  var form = $(modleName).find('.UpdateRole-form');
+  var roledata = $(this).parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
+  form.find('input[name = "name"]').attr('value', roledata.roleName);
 });
 // console.log($(".RoleDetails"))
 // console.log($(".load"))

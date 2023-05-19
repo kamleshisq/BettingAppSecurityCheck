@@ -30,14 +30,14 @@
                 <%if((i % 2) == 0){%>
                     <tr class="blue">
                         <td><%=i + 1%></td>
-                        <td><%=roles[i].roleName%></td>
+                        <td class="getRoleForPopUP" data-bs-dismiss="<%=JSON.stringify(roles[i])%>"><%=roles[i].roleName%></td>
                         <td><%=roles[i].role_level%></td>
                         <td><button data-bs-toggle="modal" data-bs-target="#myModal5" class="RoleDetails"><i class="fa-solid fa-database"></i></button></td>
                     </tr>
                 <%}else{%>
                     <tr>
                         <td><%=i + 1%></td>
-                        <td><%=roles[i].roleName%></td>
+                        <td class="getRoleForPopUP" data-bs-dismiss="<%=JSON.stringify(roles[i])%>"><%=roles[i].roleName%></td>
                         <td><%=roles[i].role_level%></td>
                         <td><button data-bs-toggle="modal" data-bs-target="#myModal5" class="RoleDetails"><i class="fa-solid fa-database"></i></button></td>
                     </tr>

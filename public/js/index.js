@@ -327,7 +327,10 @@ $(document).on('click','.PasswordChange',function(){
 
 $(document).on('click','.RoleDetails',function(){
     // console.log("Working")
-    
+    let modleName = $(this).data('bs-target')
+    let form = $(modleName).find('.UpdateRole-form')
+    let roledata = $(this).parent('td').siblings('.getRoleForPopUP').data('bs-dismiss')
+    form.find('input[name = "name"]').attr('value',roledata.roleName)
 });
 // console.log($(".RoleDetails"))
 // console.log($(".load"))
