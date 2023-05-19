@@ -668,62 +668,129 @@ socket.on('connect', () => {
         // })
     }
 
+
+
+
     if(pathname == "/useracount"){
         // console.log("Working")
+        // console.log(LOGINDATA)
+        let Fdate;
+        let Tdate;
+        let search;
+
+        $('.searchUser').keyup(function(){
+            search = $(this).val()
+            if(!search){
+                search = 'undefined'
+            }
+            let page = 0;
+            let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
+            socket.emit('AccountScroll',{
+                id,
+                page,
+                Fdate,
+                Tdate,
+                search,LOGINDATA
+            })    
+        })
+
+        $(document).on("click", ".load", function(){
+            
+            let page = 0;
+            let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
+
+            Fdate = document.getElementById("Fdate").value
+            Tdate = document.getElementById("Tdate").value
+            if(!Fdate){
+                Fdate = 'undefined'
+            }
+            if(!Tdate){
+                Tdate = 'undefined'
+            }
+            socket.emit('AccountScroll',{
+                id,
+                page,
+                Fdate,
+                Tdate,
+                search,
+                LOGINDATA
+            })        
+        })
+
         $(window).scroll(function() {
+            // console.log(LOGINDATA)
             if($(document).height()-$(window).scrollTop() == window.innerHeight){
                 let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
 
                 let page = parseInt($('.pageLink').attr('data-page'));
                 $('.pageLink').attr('data-page',page + 1)
-                // console.log(id, page)
-                socket.emit('AccountScroll',{
+                // console.log(id, page, LOGINDATA)
+                let data = {
                     id,
-                    page
-                })
+                    page,
+                    Fdate,
+                    Tdate,
+                    search,
+                    LOGINDATA
+                }
+                socket.emit('AccountScroll',data)
             }
          }); 
 
          let count1 = 11
          socket.on("Acc", async(data) => {
             // console.log(data)
-            if(data.status == "success"){
+            if(data.json.status == "success"){
+                if(data.page == 0){
+                    count1 = 1;
+
+                        $('table').html(`<tr style="text-align: center;font-size: 11px;">+
+                        "<th>S.No</th>" +
+                        "<th>Date/Time</th>" +
+                        "<th>Credit</th>"+
+                        "<th>Debit</th>"+
+                        "<th>From / To</th>"+
+                        "<th>Closing</th>"+
+                        "<th>Description</th>"+
+                        "<th>Remarks</th>"+
+                      "</tr> `)
+                }
                 let html = "";
-                for(let i = 0; i < data.userAcc.length; i++){
-                    let date = new Date(data.userAcc[i].date);
+                for(let i = 0; i < data.json.userAcc.length; i++){
+                    let date = new Date(data.json.userAcc[i].date);
                     // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
                     // console.log(abc)
                     if((i%2)==0){
                         html += `<tr style="text-align: center;" class="blue">
                         <td>${count1 + i}</td>
-                        <td>${date}`
-                        if(data.userAcc[i].creditDebitamount > 0){
-                            html += `<td>${data.userAcc[i].creditDebitamount}</td>
+                        <td>${date.getFullYear() + '-' +(date.getMonth() + 1) + '-' + date.getDate() + ' ' +          date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}`
+                        if(data.json.userAcc[i].creditDebitamount > 0){
+                            html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
                             <td>0</td>
-                            <td>${data.userAcc[i].child_id.userName}/${data.userAcc[i].user_id.userName}</td>`
+                            <td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
                         }else{
                             html += `<td>0</td>
-                            <td>${data.userAcc[i].creditDebitamount}</td>
-                            <td>${data.userAcc[i].user_id.userName}/${data.userAcc[i].child_id.userName}</td>`
+                            <td>${data.json.userAcc[i].creditDebitamount}</td>
+                            <td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
                         }
-                        html += `<td>${data.userAcc[i].balance}</td>
-                        <td><button style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+                        html += `<td>${data.json.userAcc[i].balance}</td>
+                        <td><button style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
                         <td>-</td>`
                     }else{
                         html += `<tr style="text-align: center;" >
                         <td>${count1 + i}</td>
-                        <td>${date}`
-                        if(data.userAcc[i].creditDebitamount > 0){
-                            html += `<td>${data.userAcc[i].creditDebitamount}</td>
+                        <td>${date.getFullYear() + '-' +(date.getMonth() + 1) + '-' + date.getDate() + ' ' +          date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}`
+                        if(data.json.userAcc[i].creditDebitamount > 0){
+                            html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
                             <td>0</td>
-                            <td>${data.userAcc[i].child_id.userName}/${data.userAcc[i].user_id.userName}</td>`
+                            <td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
                         }else{
                             html += `<td>0</td>
-                            <td>${data.userAcc[i].creditDebitamount}</td>
-                            <td>${data.userAcc[i].user_id.userName}/${data.userAcc[i].child_id.userName}</td>`
+                            <td>${data.json.userAcc[i].creditDebitamount}</td>
+                            <td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
                         }
-                        html += `<td>${data.userAcc[i].balance}</td>
-                        <td><button style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+                        html += `<td>${data.json.userAcc[i].balance}</td>
+                        <td><button style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
                         <td>-</td>`
                     }
                 }
@@ -732,12 +799,7 @@ socket.on('connect', () => {
             }
          })
 
-         $(document).on("click", ".load", function(){
-            // console.log("clicked")
-            let Fdate = document.getElementById("Fdate").value
-            let Tdate = document.getElementById("Tdate").value
-            socket.emit("datefilter", {Fdate, Tdate})
-        })
+     
     }
 })
 

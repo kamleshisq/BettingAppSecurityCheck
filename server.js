@@ -223,9 +223,20 @@ io.on('connection', (socket) => {
     });
 
 
+
+    socket.on("datefilter", async(data) => {
+        console.log(data)
+
+    })
+
     socket.on("AccountScroll", async(data)=>{
-        // console.log(data)
-        var fullUrl = 'http://127.0.0.1:8000/api/v1/Account/getUserAccStatement?id=' + data.id + "&page=" + data.page
+        // console.log(data, 1234)
+
+        let fullUrl = 'http://127.0.0.1:8000/api/v1/Account/getUserAccStatement?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  + "&search=" + data.search
+
+        urlRequestAdd(`/api/v1/Account/getUserAccStatement?id = ${data.id}&page=${data.page}&from = ${data.from}&from = ${data.from}&to = ${data.to}&search = ${data.search}`,'GET', data.LOGINDATA.LOGINTOKEN)
+
+
         // console.log(fullUrl)
         fetch(fullUrl, {
             method: 'POST',
@@ -233,18 +244,13 @@ io.on('connection', (socket) => {
         }).then(res => res.json())
         .then(json =>{ 
             // console.log(json)
-            socket.emit('Acc', json)
+            socket.emit('Acc', {json,page:data.page})
             // const data = json.userAcc
             // res.status(200).render('./userAccountStatement/useracount',{
             // title:"UserAccountStatement",
             // me:currentUser,
             // data})
         });
-    })
-
-    socket.on("datefilter", async(data) => {
-        console.log(data)
-
     })
 
 

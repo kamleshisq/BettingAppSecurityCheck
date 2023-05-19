@@ -1,6 +1,7 @@
 const AppError = require("../utils/AppError");
 const catchAsync = require("../utils/catchAsync");
 const User = require("../model/userModel");
+const Role = require('./../model/roleModel')
 // const { required } = require("joi");
 const accountStatement = require('../model/accountStatementByUserModel');
 const { use } = require("../routes/viewRoutes");
@@ -48,6 +49,8 @@ exports.deposit = catchAsync(async(req, res, next) => {
     childAccStatement.creditDebitamount = req.body.amount;
     childAccStatement.balance = userData.availableBalance;
     childAccStatement.date = date
+    childAccStatement.userName = childUser.userName
+    childAccStatement.role_type = childUser.role_type
 
     const accStatementChild = await accountStatement.create(childAccStatement)
     if(!accStatementChild){
@@ -62,6 +65,8 @@ exports.deposit = catchAsync(async(req, res, next) => {
     ParentAccStatement.creditDebitamount = req.body.amount * -1;
     ParentAccStatement.balance = parentData.availableBalance;
     ParentAccStatement.date = date
+    ParentAccStatement.userName = parentUser.userName;
+    ParentAccStatement.role_type = parentUser.role_type
 
     // console.log(ParentAccStatement)
     const accStatementparent = await accountStatement.create(ParentAccStatement)
@@ -114,6 +119,8 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
     childAccStatement.creditDebitamount = req.body.amount * -1;
     childAccStatement.balance = (childUser.availableBalance * 1  - req.body.amount * 1);
     childAccStatement.date = date
+    childAccStatement.userName = childUser.userName
+    childAccStatement.role_type = childUser.role_type
 
     const accStatementChild = await accountStatement.create(childAccStatement)
     if(!accStatementChild){
@@ -128,6 +135,8 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
     ParentAccStatement.creditDebitamount = req.body.amount;
     ParentAccStatement.balance = (parentUser.availableBalance*1 + req.body.amount*1);
     ParentAccStatement.date = date
+    ParentAccStatement.userName = parentUser.userName;
+    ParentAccStatement.role_type = parentUser.role_type
 
     // console.log(ParentAccStatement)
     const accStatementparent = await accountStatement.create(ParentAccStatement)
@@ -144,22 +153,43 @@ exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
     // console.log(req.query)
     req.body = req.query  
     let page = req.body.page;
+    let userAcc
     if(!page){
         page = 0;
     }
     let limit = 10
-    req.body.from = '2023-05-17'
-    req.body.to = '2023-05-19'
-    const user = await User.findById(req.body.id);
-    if(req.currentUser.role.role_level > user.role.role_level){
-        return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
-    }
-    // let userAcc = await accountStatement.find({user_id:req.body.id}).skip(page * limit).limit(limit);
-    if(req.body.from && req.body.to){
-        userAcc = await accountStatement.find({$or:[{user_id:req.body.id}],date:{$gte:req.body.from,$lte:req.body.to}}).skip(page * limit).limit(limit);
+
+    if(req.body.search == 'undefined'){
+        const user = await User.findById(req.body.id);
+        if(req.currentUser.role.role_level > user.role.role_level){
+            return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
+        }
+
+        if(req.body.from != 'undefined' && req.body.to != 'undefined'){
+            userAcc = await accountStatement.find({user_id:req.body.id,date:{$gte:req.body.from,$lte:req.body.to}}).skip(page * limit).limit(limit);
+        }else{
+            userAcc = await accountStatement.find({user_id:req.body.id}).skip(page * limit).limit(limit);
+        }
     }else{
-        userAcc = await accountStatement.find({$or:[{user_id:req.body.id}]}).skip(page * limit).limit(limit);
+        const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        if(req.body.from != 'undefined' && req.body.to != 'undefined'){
+            userAcc = await accountStatement.find({userName:new RegExp(req.body.search,"i"),date:{$gte:req.body.from,$lte:req.body.to},role_type:{$in:role_type}}).skip(page * limit).limit(limit);
+        }else{
+            userAcc = await accountStatement.find({userName:new RegExp(req.body.search,"i"),role_type:{$in:role_type}}).skip(page * limit).limit(limit);
+        }
     }
+    // console.log(userAcc)
+    // let userAcc = await accountStatement.find({user_id:req.body.id}).skip(page * limit).limit(limit);
+    // if(req.body.search){
+    //     if(req.body.from && req.body.to){
+    //         userAcc = await accountStatement.find({user_id:req.body.id,date:{$gte:req.body.from,$lte:req.body.to}}).skip(page * limit).limit(limit);
+    //     }
+    // }
+   
     // if(user.role_type = 5){
     //     userAcc = await accountStatement.find({}).skip(page * limit).limit(limit);
     // }

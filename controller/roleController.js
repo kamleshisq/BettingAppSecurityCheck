@@ -66,16 +66,18 @@ exports.getAllRole = catchAsync(async(req, res, next) => {
 exports.updateRoleLevel = catchAsync(async(req, res, next) => {
     const Roles = await Role.find()
     const noOfRoles  = Roles.length;
-    const role = await Role.findById(req.body.id);
+    // console.log(req.body.roleName)
+    const role = await Role.findOne({roleName:req.body.roleName});
     const role_level = role.role_level;
-    // console.log(role_level)
+    // console.log(req.body.role_level)
+    req.body.role_level = req.body.role_level * 1 
     if(req.body.role_level == 1){
         return next(new AppError('role type must greater then 1',400))
     }
     else if(req.body.role_level>noOfRoles){
         return next(new AppError(`role must less than ${noOfRoles}`,400))
     }else if(req.body.role_level === role_level){
-
+        return next(new AppError(`same role lavel`,400))
     }
     else
     {
@@ -83,7 +85,7 @@ exports.updateRoleLevel = catchAsync(async(req, res, next) => {
         {
 
             const ids = await Role.find({role_level:{$gte:req.body.role_level,$lte:role_level}},{_id:1});
-
+            // console.log(ids)
             for(let i=0;i<(role_level-req.body.role_level+1);i++)
             {
     
@@ -147,8 +149,10 @@ exports.getRoleById =catchAsync(async(req, res, next) => {
 });
 
 exports.updateRoleById = catchAsync(async(req, res, next) => {
-    console.log(req.body)
+    // console.log(req.body)
     const role = await Role.findOneAndUpdate({roleName:req.body.roleName}, {authorization:req.body.authorization, userAuthorization:req.body.userAuthorization})
+    req.body.id = role.id
+    // console.log(req.body.id)
     if(!role){
         return next(new AppError("Ops!, Something went wrong please try again later", 404))
     }

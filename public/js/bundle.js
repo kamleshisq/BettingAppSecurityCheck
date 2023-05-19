@@ -6197,7 +6197,7 @@ if (document.querySelector(".updateRole")) {
   document.querySelector(".updateRole").addEventListener('submit', function (e) {
     e.preventDefault();
     var roleName = document.getElementById("mySelect").value;
-    // let role_level = document.getElementById("role_level").value
+    var role_level = document.getElementById("role_level").value;
     var authorization = [];
     var roleAuthorization = [];
     var authCheck = document.querySelectorAll("input[name='authorization']:checked");
@@ -6211,7 +6211,8 @@ if (document.querySelector(".updateRole")) {
     var data = {
       authorization: authorization,
       userAuthorization: roleAuthorization,
-      roleName: roleName
+      roleName: roleName,
+      role_level: role_level
     };
     // console.log(data)
     (0, _updateRoleByaxios.updateRole)(data);
@@ -6390,6 +6391,7 @@ $(document).on('click', '.RoleDetails', function () {
   for (var _i3 = 0; _i3 < roledata.userAuthorization.length; _i3++) {
     form.find("input[value = \"".concat(roledata.userAuthorization[_i3], "\"]")).attr("checked", "checked");
   }
+  document.getElementById("role_controller").innerHTML = "\n            <label for=\"level\"> <h3>Role Level </h3></label><br>\n            <input type=\"number\" name=\"level\" placeholder='".concat(roledata.role_level, "' id='role_level'>");
 });
 // console.log($(".RoleDetails"))
 // console.log($(".load"))

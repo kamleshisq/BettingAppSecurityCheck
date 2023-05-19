@@ -31,7 +31,13 @@ const accountStatementByUser = mongoose.Schema({
     date:{
         type:Date,    
         required:true
-    }
+    },    
+    userName:{
+        type:String
+    },
+    role_type:{
+        type:Number
+    },
 })
 
 accountStatementByUser.pre(/^find/, function(next){

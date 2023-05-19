@@ -373,7 +373,7 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
 exports.useracount = catchAsync(async(req, res, next) => {
     const currentUser = global._User
     // console.log(currentUser)
-    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement?id=' + currentUser._id
+    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement?id=' + currentUser._id + "&from=" + 'undefined' + "&to=" + 'undefined'  + "&search=" + 'undefined'
     fetch(fullUrl, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ` + req.token }
@@ -409,7 +409,7 @@ exports.plreport = catchAsync(async(req, res, next) => {
 
 exports.roleManagement = catchAsync(async(req, res, next) => {
     const currentUser = global._User
-    const roles = await Role.find()
+    const roles = await Role.find().sort({role_level:1})
     const Auth = await roleAuth.find()
     // console.log(Auth[0].UserControll);
     res.status(200).render("./roleManagement/roleManagement", {

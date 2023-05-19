@@ -139,7 +139,7 @@ if(document.querySelector(".updateRole")){
     document.querySelector(".updateRole").addEventListener('submit', e => {
         e.preventDefault()
     let roleName = document.getElementById("mySelect").value
-    // let role_level = document.getElementById("role_level").value
+    let role_level = document.getElementById("role_level").value
     let authorization = [];
     let roleAuthorization = [];
     let authCheck = document.querySelectorAll("input[name='authorization']:checked");
@@ -153,7 +153,8 @@ if(document.querySelector(".updateRole")){
     let data = {
         authorization,
         userAuthorization:roleAuthorization,
-        roleName
+        roleName,
+        role_level
     }
     // console.log(data)
     updateRole(data)
@@ -344,6 +345,9 @@ $(document).on('click','.RoleDetails',function(){
     for(let i = 0; i < roledata.userAuthorization.length; i++){
         form.find(`input[value = "${roledata.userAuthorization[i]}"]`).attr("checked", "checked");
     }
+    document.getElementById("role_controller").innerHTML = `
+            <label for="level"> <h3>Role Level </h3></label><br>
+            <input type="number" name="level" placeholder='${roledata.role_level}' id='role_level'>`
 });
 // console.log($(".RoleDetails"))
 // console.log($(".load"))
