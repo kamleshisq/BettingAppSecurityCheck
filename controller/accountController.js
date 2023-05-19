@@ -148,8 +148,8 @@ exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
         page = 0;
     }
     let limit = 10
-    // req.body.from = '2023-05-17'
-    // req.body.to = '2023-05-18'
+    req.body.from = '2023-05-17'
+    req.body.to = '2023-05-19'
     const user = await User.findById(req.body.id);
     if(req.currentUser.role.role_level > user.role.role_level){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))

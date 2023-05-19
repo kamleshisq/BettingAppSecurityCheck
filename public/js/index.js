@@ -324,4 +324,10 @@ $(document).on('click','.PasswordChange',function(){
     form.find('input[name = "id"]').attr('value',userData._id)
 });
 
+
+$(document).on('click','.RoleDetails',function(){
+    // console.log("Working")
+    
+});
+// console.log($(".RoleDetails"))
 // console.log($(".load"))

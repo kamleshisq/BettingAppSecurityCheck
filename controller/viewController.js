@@ -210,7 +210,7 @@ exports.createRole = catchAsync(async(req, res, next) => {
 });
 
 exports.getUpdateRolePage = catchAsync(async(req, res, next) => {
-    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/role/getAuthROle'
+    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/role/getAllRoles'
     fetch(fullUrl, {
         method: 'get',
         headers: { 'Authorization': `Bearer ` + req.token }

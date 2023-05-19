@@ -6371,7 +6371,10 @@ $(document).on('click', '.PasswordChange', function () {
   var me = $('#meDatails').data('me');
   form.find('input[name = "id"]').attr('value', userData._id);
 });
-
+$(document).on('click', '.RoleDetails', function () {
+  // console.log("Working")
+});
+// console.log($(".RoleDetails"))
 // console.log($(".load"))
 },{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./betLock":"betLock.js","./updateRow":"updateRow.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -6398,7 +6401,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50134" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54103" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
