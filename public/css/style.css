@@ -215,7 +215,7 @@ button.tablinks1{
   color: #fff;border-bottom: 1px solid #D2D2D2;padding: 10px;padding-left: 0px;font-size: 25px;
 }
 .form-control {
-  color: #fff !important;
+  color: #000000 !important;
   background-color: #fff0 ;
   background-clip: padding-box;
   border: 1px solid #ced4da;

@@ -1,4 +1,5 @@
 const Role = require('../model/roleModel');
+const roleAuth = require('../model/authorizationModel');
 const AppError = require('../utils/AppError');
 // const appError = require('../utils/AppError');   
 const catchAsync = require('./../utils/catchAsync');

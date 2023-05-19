@@ -2,6 +2,7 @@ const AppError = require('./../utils/AppError');
 const catchAsync = require('./../utils/catchAsync');
 const User = require('../model/userModel');
 const Role = require('../model/roleModel');
+const roleAuth = require('../model/authorizationModel');
 const fetch = require("node-fetch")
 const whiteLabel = require('../model/whitelableModel');
 const mongoose = require("mongoose");
@@ -409,9 +410,12 @@ exports.plreport = catchAsync(async(req, res, next) => {
 exports.roleManagement = catchAsync(async(req, res, next) => {
     const currentUser = global._User
     const roles = await Role.find()
+    const Auth = await roleAuth.find()
+    // console.log(Auth[0].UserControll);
     res.status(200).render("./roleManagement/roleManagement", {
         title:"Role Management",
         me:currentUser,
-        roles
+        roles,
+        roleAuth:Auth[0]
     })
 })

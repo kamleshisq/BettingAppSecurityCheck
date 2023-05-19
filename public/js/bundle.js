@@ -6308,7 +6308,7 @@ $(document).on('click', '.Deposite', function (e) {
   var form = $(modleName).find('.form-data');
   var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
   var me = $('#meDatails').data('me');
-  console.log(me.userName);
+  // console.log(me.userName)
   // console.log(userData)
   // console.log(form.find('input[name = "fromUser"]'))
   // form.find('input[name = "fromUser"]').attr('value',me.userName)
@@ -6375,8 +6375,21 @@ $(document).on('click', '.RoleDetails', function () {
   // console.log("Working")
   var modleName = $(this).data('bs-target');
   var form = $(modleName).find('.UpdateRole-form');
+  // let x = form.find('input[id="check"]').length
+  // console.log(x)
+  // for(let i = 0; i < x ; i++){
+  //     document.getElementsByClassName(`${i}`).checked = false
+  // }
+  form.find('input:checkbox').removeAttr('checked');
   var roledata = $(this).parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
   form.find('input[name = "name"]').attr('value', roledata.roleName);
+  // console.log(roledata.authorization)
+  for (var i = 0; i < roledata.authorization.length; i++) {
+    form.find("input[name = \"".concat(roledata.authorization[i], "\"]")).attr("checked", "checked");
+  }
+  for (var _i3 = 0; _i3 < roledata.userAuthorization.length; _i3++) {
+    form.find("input[name = \"".concat(roledata.userAuthorization[_i3], "\"]")).attr("checked", "checked");
+  }
 });
 // console.log($(".RoleDetails"))
 // console.log($(".load"))
