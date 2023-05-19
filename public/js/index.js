@@ -138,24 +138,24 @@ $('.createRole-form').submit(function(e) {
 if(document.querySelector(".updateRole")){
     document.querySelector(".updateRole").addEventListener('submit', e => {
         e.preventDefault()
-    let id = document.getElementById("mySelect").value
-    let role_level = document.getElementById("role_level").value
+    let roleName = document.getElementById("mySelect").value
+    // let role_level = document.getElementById("role_level").value
     let authorization = [];
+    let roleAuthorization = [];
     let authCheck = document.querySelectorAll("input[name='authorization']:checked");
     for (let i = 0 ; i < authCheck.length; i++) {
-     authorization.push(authCheck[i].value)
+        roleAuthorization.push(authCheck[i].value)
     }
-    let roleAuthorization = [];
     let checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
     for (let i = 0 ; i < checkboxes.length; i++) {
-        roleAuthorization.push(checkboxes[i].value)
+        authorization.push(checkboxes[i].value)
     }
     let data = {
         authorization,
         userAuthorization:roleAuthorization,
-        id,
-        role_level
+        roleName
     }
+    // console.log(data)
     updateRole(data)
     })
 };
@@ -339,10 +339,10 @@ $(document).on('click','.RoleDetails',function(){
     form.find('input[name = "name"]').attr('value',roledata.roleName)
     // console.log(roledata.authorization)
     for(let i = 0; i < roledata.authorization.length; i++){
-        form.find(`input[name = "${roledata.authorization[i]}"]`).attr("checked", "checked");
+        form.find(`input[value = "${roledata.authorization[i]}"]`).attr("checked", "checked");
     }
     for(let i = 0; i < roledata.userAuthorization.length; i++){
-        form.find(`input[name = "${roledata.userAuthorization[i]}"]`).attr("checked", "checked");
+        form.find(`input[value = "${roledata.userAuthorization[i]}"]`).attr("checked", "checked");
     }
 });
 // console.log($(".RoleDetails"))

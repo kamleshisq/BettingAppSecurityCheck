@@ -6,7 +6,7 @@ const authController = require('../controller/authorizationController');
 
 
 router.get('/getAuthROle', authController.isProtected, authController.restrictTo("roleController"),roleController.getAuthROle);
-router.use(authController.isProtected, authController.restrictTo("roleController"))
+// router.use(authController.isProtected, authController.restrictTo("roleController"))
 
 router.post('/createRole', roleController.createRole);
 router.post('/addAuthorization', roleController.addAuthorization);

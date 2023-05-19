@@ -152,6 +152,7 @@ exports.restrictTo = (...roles) => {
             // console.log(roles)
             // console.log(roles.includes(req.currentUser.role.authorization[i]))
             // console.log(req.currentUser.role.authorization[i])
+            // console.log(req.currentUser.role.authorization[i])
             if(roles.includes(req.currentUser.role.authorization[i])){
                 j = j + 1;
             }

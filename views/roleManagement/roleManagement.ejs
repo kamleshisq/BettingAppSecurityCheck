@@ -41,24 +41,24 @@
       <div class="modal-header" style="text-align: center;">
         <h4 class="modal-title" style="color: #fff;">Update Role</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body updateRole">
         <form class="UpdateRole-form" id="UpdateRole-form">
           <div class="input_group">
               <label for="roleName">Role Name</label>
-              <input type="text" class="form-control ml0" placeholder="" name="name">
+              <input type="text" class="form-control ml0" id="mySelect" placeholder="" name="name">
           </div>
           <label for=""><h3>User Controller</h3></label>
           <div class="user_controller" id="user_controller">
               <%for(let i = 0; i < roleAuth.UserControll.length; i++){%>
                 <label for=<%=roleAuth.UserControll[i]%>><%=roleAuth.UserControll[i]%></label>
-                <input type="checkbox" name="<%=roleAuth.UserControll[i]%>" value="<%=roleAuth.UserControll[i]%>" id="check" class="<%=i%>">
+                <input type="checkbox" name="userAuthorization" value="<%=roleAuth.UserControll[i]%>" id="check" class="<%=i%>">
               <%}%>
           </div>
           <label for=""><h3>Role Auth</h3></label>
           <div class="input_group">
             <%for(let i = 0; i < roles.length; i++){%>
               <label for=<%=roles[i].roleName%>><%=roles[i].roleName%></label>
-              <input type="checkbox" name="<%=roles[i].role_level%>" value="<%=roles[i].role_level%>" id="<%=roles[i].role_type%>">
+              <input type="checkbox" name="authorization" value="<%=roles[i].role_level%>" id="<%=roles[i].role_type%>">
             <%}%>
           </div>
           <div class="input_group" id="role_controller">

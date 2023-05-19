@@ -5839,7 +5839,7 @@ var updateRole = /*#__PURE__*/function () {
           if (res.data.status === 'success') {
             alert('Updated successfully successfully!!!!');
             window.setTimeout(function () {
-              location.assign('/userManagement');
+              location.assign('/roleManagement');
             }, 100);
           }
           _context.next = 11;
@@ -6196,24 +6196,24 @@ $('.createRole-form').submit(function (e) {
 if (document.querySelector(".updateRole")) {
   document.querySelector(".updateRole").addEventListener('submit', function (e) {
     e.preventDefault();
-    var id = document.getElementById("mySelect").value;
-    var role_level = document.getElementById("role_level").value;
+    var roleName = document.getElementById("mySelect").value;
+    // let role_level = document.getElementById("role_level").value
     var authorization = [];
+    var roleAuthorization = [];
     var authCheck = document.querySelectorAll("input[name='authorization']:checked");
     for (var i = 0; i < authCheck.length; i++) {
-      authorization.push(authCheck[i].value);
+      roleAuthorization.push(authCheck[i].value);
     }
-    var roleAuthorization = [];
     var checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
     for (var _i2 = 0; _i2 < checkboxes.length; _i2++) {
-      roleAuthorization.push(checkboxes[_i2].value);
+      authorization.push(checkboxes[_i2].value);
     }
     var data = {
       authorization: authorization,
       userAuthorization: roleAuthorization,
-      id: id,
-      role_level: role_level
+      roleName: roleName
     };
+    // console.log(data)
     (0, _updateRoleByaxios.updateRole)(data);
   });
 }
@@ -6385,10 +6385,10 @@ $(document).on('click', '.RoleDetails', function () {
   form.find('input[name = "name"]').attr('value', roledata.roleName);
   // console.log(roledata.authorization)
   for (var i = 0; i < roledata.authorization.length; i++) {
-    form.find("input[name = \"".concat(roledata.authorization[i], "\"]")).attr("checked", "checked");
+    form.find("input[value = \"".concat(roledata.authorization[i], "\"]")).attr("checked", "checked");
   }
   for (var _i3 = 0; _i3 < roledata.userAuthorization.length; _i3++) {
-    form.find("input[name = \"".concat(roledata.userAuthorization[_i3], "\"]")).attr("checked", "checked");
+    form.find("input[value = \"".concat(roledata.userAuthorization[_i3], "\"]")).attr("checked", "checked");
   }
 });
 // console.log($(".RoleDetails"))
