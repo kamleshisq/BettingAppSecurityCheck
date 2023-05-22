@@ -418,4 +418,29 @@ exports.roleManagement = catchAsync(async(req, res, next) => {
         roles,
         roleAuth:Auth[0]
     })
-})
+});
+
+exports.APIcall2 = catchAsync(async(req, res, next) => {
+    var fullUrl = 'https://dev-api.dreamdelhi.com/api/games/list';
+    fetch(fullUrl, {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Casino-Signature':'mpc' 
+            },
+        body:JSON.stringify({
+            "Partner_id": "SHPID01",
+           })
+
+    })
+    .then(res => res.json())
+    .then(result => {
+
+        console.log(result)
+        res.status(200).json({
+            status:"success",
+            result
+        })
+    }
+    )
+});

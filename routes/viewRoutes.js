@@ -7,6 +7,7 @@ router.get('/', viewController.login);
 router.get('/userLogin',viewController.userLogin );
 router.get('/registration',viewController.registration );
 router.get('/API', viewController.APIcall);
+router.get('/API2', viewController.APIcall2);
 
 
 router.use(authController.isProtected)
