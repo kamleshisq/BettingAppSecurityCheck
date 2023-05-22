@@ -433,14 +433,14 @@ exports.APIcall2 = catchAsync(async(req, res, next) => {
            })
 
     })
-    .then(res => res.json())
-    .then(result => {
+    .then(res => console.log(res))
+    // .then(result => {
 
-        console.log(result)
-        res.status(200).json({
-            status:"success",
-            result
-        })
-    }
-    )
+    //     console.log(result)
+    //     res.status(200).json({
+    //         status:"success",
+    //         result
+    //     })
+    // }
+    // )
 });
