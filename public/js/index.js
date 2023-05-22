@@ -351,3 +351,31 @@ $(document).on('click','.RoleDetails',function(){
 });
 // console.log($(".RoleDetails"))
 // console.log($(".load"))
+
+
+let datalist = document.querySelector('#text_editors');
+// console.log(datalist)
+let  select = document.querySelector('#select');
+// console.log(select)
+let options = select.options;
+// console.log(options)
+
+
+
+/* when user selects an option from DDL, write it to text field */
+select.addEventListener('change', fill_input);
+
+function fill_input() {
+    // console.log(input.value)
+  input.value = options[this.selectedIndex].value;
+  hide_select();
+}
+
+/* when user wants to type in text field, hide DDL */
+let input = document.querySelector('.searchUser');
+input.addEventListener('focus', hide_select);
+
+function hide_select() {
+  datalist.style.display = '';
+//   button.textContent = "▼";
+}
