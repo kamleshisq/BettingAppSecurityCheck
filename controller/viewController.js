@@ -421,6 +421,7 @@ exports.roleManagement = catchAsync(async(req, res, next) => {
 });
 
 exports.APIcall2 = catchAsync(async(req, res, next) => {
+    console.log("Working")
     var fullUrl = 'https://dev-api.dreamdelhi.com/api/operator/login';
     fetch(fullUrl, {
         method: 'POST',
