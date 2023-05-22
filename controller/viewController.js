@@ -427,7 +427,7 @@ exports.APIcall2 = catchAsync(async(req, res, next) => {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
-            'Casino-Signature':'mpc',
+            'Signature':'mpc',
             'accept': 'application/json'
             },
         body:JSON.stringify({
