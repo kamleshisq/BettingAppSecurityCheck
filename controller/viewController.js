@@ -6,6 +6,9 @@ const roleAuth = require('../model/authorizationModel');
 const fetch = require("node-fetch")
 const whiteLabel = require('../model/whitelableModel');
 const mongoose = require("mongoose");
+const SHA256 = require("../utils/sha256");
+const fs = require('fs');
+const path = require('path');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -422,12 +425,33 @@ exports.roleManagement = catchAsync(async(req, res, next) => {
 
 exports.APIcall2 = catchAsync(async(req, res, next) => {
     // console.log("Working")
+    // Example usage
+    function readPem (filename) {
+        return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename)).toString('ascii');
+      }
+const privateKey = readPem('previteKey.pem');
+const textToSign = JSON.stringify({
+    "operatorId": "sheldon",
+    "userId":"TestDemo",
+    "providerName":"DC",
+    "platformId":"DESKTOP",
+    "currency":"INR",
+    "username":"TestDemo",
+    "lobby":false,
+    "clientIp":"46.101.225.192",
+    "gameId":"100001",
+    "balance":2.5
+   })
+// console.log(privateKey, text)
+const hashedOutput = SHA256(privateKey, textToSign);
+console.log(hashedOutput    )
+
     var fullUrl = 'https://dev-api.dreamdelhi.com/api/operator/login';
     fetch(fullUrl, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
-            'Casino-Signature':'TUlJQ1hnSUJBQUtCZ1FETzREV1pRdEFsM0tFSjlrSGNLbGFReEJONnFaejFOQjVYRHUrZUZXUmpJeFBDOVAreQpzd0Y2NzliQ3NwaDkwa3c0NUx4MW05YzZtVytWemFmY3E2Wmw1K3dEZ0E2dWpUdjJKcTUrM1F2MkFnL24rVkwwCjZPVHE0UmN2UGY3Nm5TUFV5Y1Myb2FEZTVYaG5hYXFibHVCWjVWWHNMSkFQRmhkZyszbHRzc2RWM3dJREFRQUIKQW9HQkFLQ01sbXdyMHZnZlFvZEZxeFVmY25FRkNveitod1l3L1g3WTQ1Tk96TXEzVlVYTzk0WUtzQkpsZ2NrMQo2Mnh5UVo5QnZSU1U3akxYRXljeUpKejRSYmlaTFJ3WGZGWmd5NkZIazFjS3BPQm9WK3dweWtEL1hBS01kU1k1CkZZMHVka2YzbHFXQkpGTllQYko3YmptZTlCS0M5UFl2eFAreVpXV2ZVMU9ZUGVHUkFrRUE3TlhjMUgzZmZkUTkKWTg2RWZyR1pyV3JobnhJeEsydExOQjNyMjEvTEVsVis3eDRIL3pNeG92Nm95ZEh5NXZlZmxWUTEvN1pMWU1ELworL1ZId1ZCK3VRSkJBTitkdU91b2FuTEhNRDNGUU1KOGd2TkRZWG95aVZYYW5jdS91K0hEeUJ6QlNXMXZWZEtRCkgxZVpxRVZRT0dYVWhFSnQ3clN4czY5dXo0R1ZKLzV6N1ZjQ1FFK2NmRVQ1b3Z6Yk1WK3hkaHhZZXY0dVpYVmgKV2lIc1NUVlZzWWptcEk2ZktySWFlRG15N2NhS3NCWlhlcjFsRThIUXN1NG9TeUpVL2plbDlkN252aEVDUVFDNQplUUttUS94MjB3d0tVQStVd04yRWxBREg4QjdGSFIwQW9EbGYycG1pY0JkTk02bEZpdERVUWRpMkZRR1NSS0NtCjBMUExJQkZmazFOOXNZK0lsL0xsQWtFQTEyQTF0b0oycGgwWVdxZS9EQmN6Vy82NnhBdkJ4VlZ2VE1pcU1hZSsKS21oNmF4NzF5RFBEUkd2VG5qd28vUmJMOEFjN0t3WmhNVW15N1VvZW1DTDYyQT09',
+            'Casino-Signature': hashedOutput ,
             'accept': 'application/json'
             },
         body:JSON.stringify({
