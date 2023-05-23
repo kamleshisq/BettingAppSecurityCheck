@@ -437,10 +437,10 @@ exports.APIcall2 = catchAsync(async(req, res, next) => {
             "platformId":"DESKTOP",
             "currency":"INR",
             "username":"TestDemo",
-            "lobby":"False",
+            "lobby":false,
             "clientIp":"46.101.225.192",
             "gameId":"100001",
-            "balance":"0"
+            "balance":2.5
            })
 
     })
@@ -455,3 +455,9 @@ exports.APIcall2 = catchAsync(async(req, res, next) => {
     }
     )
 });
+
+exports.getPromotionPage = catchAsync(async(req, res, next) => {
+    res.status(200).render("./promotion/promotion",{
+        title:"Promotion"
+    })
+})
