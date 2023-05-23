@@ -843,12 +843,20 @@ socket.on('connect', () => {
                         <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
-                            <td>0</td>
-                            <td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                            <td>0</td>`
+                            if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
+                                html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                            }else{
+                                html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                            }
                         }else{
                             html += `<td>0</td>
-                            <td>${data.json.userAcc[i].creditDebitamount}</td>
-                            <td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                            <td>${data.json.userAcc[i].creditDebitamount}</td>`
+                            if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
+                                html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                            }else{
+                                html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                            }
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
                         <td><button style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
@@ -860,12 +868,20 @@ socket.on('connect', () => {
                         <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
-                            <td>0</td>
-                            <td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                            <td>0</td>`
+                            if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
+                                html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                            }else{
+                                html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                            }
                         }else{
                             html += `<td>0</td>
-                            <td>${data.json.userAcc[i].creditDebitamount}</td>
-                            <td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                            <td>${data.json.userAcc[i].creditDebitamount}</td>`
+                            if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
+                                html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                            }else{
+                                html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                            }
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
                         <td><button style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
