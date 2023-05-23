@@ -6395,29 +6395,6 @@ $(document).on('click', '.RoleDetails', function () {
 });
 // console.log($(".RoleDetails"))
 // console.log($(".load"))
-
-var datalist = document.querySelector('#text_editors');
-// console.log(datalist)
-var select = document.querySelector('#select');
-// console.log(select)
-var options = select.options;
-// console.log(options)
-
-/* when user selects an option from DDL, write it to text field */
-select.addEventListener('change', fill_input);
-function fill_input() {
-  // console.log(input.value)
-  input.value = options[this.selectedIndex].value;
-  hide_select();
-}
-
-/* when user wants to type in text field, hide DDL */
-var input = document.querySelector('.searchUser');
-input.addEventListener('focus', hide_select);
-function hide_select() {
-  datalist.style.display = '';
-  //   button.textContent = "▼";
-}
 },{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./betLock":"betLock.js","./updateRow":"updateRow.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -6443,7 +6420,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64213" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49894" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

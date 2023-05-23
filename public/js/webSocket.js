@@ -1,3 +1,4 @@
+// const { countDocuments } = require("../../model/userModel");
 
 
 const socket = io();
@@ -373,7 +374,7 @@ socket.on('connect', () => {
         let R = false
 
         $('#searchUser, #ROLEselect, #WhiteLabel').bind("change keyup", function(){
-            console.log($(this).hasClass("searchUser"), 123)
+            // console.log($(this).hasClass("searchUser"), 123)
             if($(this).hasClass("WhiteLabel")){
                     filterData.whiteLabel = $(this).val()
                     if(filterData.whiteLabel != "" && filterData.whiteLabel != undefined){
@@ -673,135 +674,222 @@ socket.on('connect', () => {
 
     if(pathname == "/useracount"){
         // console.log($('.searchUser'))
-        $('.searchUser').change(function(){
-            console.log('working')
+
+
+
+
+        $('.searchUser').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchUser")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    socket.emit("SearchACC", {x, LOGINDATA})
+                }else{
+                    document.getElementById('select').innerHTML = ``
+                }
+            }
         })
+
+        socket.on("ACCSEARCHRES", async(data)=>{
+            // console.log(data)
+            let html = ` `
+            for(let i = 0; i < data.length; i++){
+                html += `<option><button onclick="myFunction(${data[i].userName})">${data[i].userName}</button>`
+            }
+            // console.log(html)
+            document.getElementById('select').innerHTML = html
+
+            let datalist = document.querySelector('#text_editors');
+            // console.log(datalist)
+            let  select = document.querySelector('#select');
+            // console.log(select)
+            let options = select.options;
+            // console.log(options)
+
+
+
+            /* when user selects an option from DDL, write it to text field */
+            select.addEventListener('change', fill_input);
+
+            function fill_input() {
+                 input.value = options[this.selectedIndex].value;
+            hide_select();
+            }
+
+            /* when user wants to type in text field, hide DDL */
+            let input = document.querySelector('.searchUser');
+            input.addEventListener('focus', hide_select);
+
+            function hide_select() {
+            datalist.style.display = '';
+            //   button.textContent = "▼";
+            }
+        })
+        let searchU 
+        $(".searchUser").on('input', function(e){
+            var $input = $(this),
+                val = $input.val();
+                list = $input.attr('list'),
+                match = $('#'+list + ' option').filter(function() {
+                    return ($(this).val() === val);
+                });
+         
+             if(match.length > 0) {
+                searchU = true
+                let  data = {}
+                let Fdate = document.getElementById("Fdate").value
+                let Tdate = document.getElementById("Tdate").value
+                if(!Fdate){
+                    Fdate = 'undefined'
+                }
+                if(!Tdate){
+                    Tdate = 'undefined'
+                }
+                data.Fdate = Fdate;
+                data.Tdate = Tdate;
+                data.userName = val
+                data.Tdate = document.getElementById("Tdate").value
+                data.page = 0
+                data.LOGINDATA = LOGINDATA
+                 socket.emit( "UserSearchId", data)
+             }else{
+                searchU = false
+             }
+         });
+        // console.log($("#select").value)
+
     //     // console.log("Working")
     //     // console.log(LOGINDATA)
-    //     let Fdate;
-    //     let Tdate;
-    //     let search;
+        // let Fdate;
+        // let Tdate;
+        // let search;
 
-    //     $('.searchUser').keyup(function(){
-    //         search = $(this).val()
-    //         if(!search){
-    //             search = 'undefined'
-    //         }
-    //         let page = 0;
-    //         let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
-    //         socket.emit('AccountScroll',{
-    //             id,
-    //             page,
-    //             Fdate,
-    //             Tdate,
-    //             search,LOGINDATA
-    //         })    
-    //     })
+        // $('.searchUser').keyup(function(){
+        //     search = $(this).val()
+        //     if(!search){
+        //         search = 'undefined'
+        //     }
+        //     let page = 0;
+        //     let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
+        //     socket.emit('AccountScroll',{
+        //         id,
+        //         page,
+        //         Fdate,
+        //         Tdate,
+        //         search,LOGINDATA
+        //     })    
+        // })
 
-    //     $(document).on("click", ".load", function(){
+        $(document).on("click", ".load", function(){
             
-    //         let page = 0;
-    //         let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
+            let page = 0;
+            let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
+           
+            Fdate = document.getElementById("Fdate").value
+            Tdate = document.getElementById("Tdate").value
+            if(!Fdate){
+                Fdate = 'undefined'
+            }
+            if(!Tdate){
+                Tdate = 'undefined'
+            }
+            socket.emit('AccountScroll',{
+                id,
+                page,
+                Fdate,
+                Tdate,
+                search,
+                LOGINDATA
+            })        
+        })
 
-    //         Fdate = document.getElementById("Fdate").value
-    //         Tdate = document.getElementById("Tdate").value
-    //         if(!Fdate){
-    //             Fdate = 'undefined'
-    //         }
-    //         if(!Tdate){
-    //             Tdate = 'undefined'
-    //         }
-    //         socket.emit('AccountScroll',{
-    //             id,
-    //             page,
-    //             Fdate,
-    //             Tdate,
-    //             search,
-    //             LOGINDATA
-    //         })        
-    //     })
+        $(window).scroll(function() {
+            // console.log(LOGINDATA)
+            if($(document).height()-$(window).scrollTop() == window.innerHeight){
+            let loginUser = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me')).userName;
+            let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
+                // console.log(loginUser, id)
+                let page = parseInt($('.pageLink').attr('data-page'));
+                // console.log(page)
+                $('.pageLink').attr('data-page',page + 1)
+                console.log(id, page, LOGINDATA)
+               if(searchU){
 
-    //     $(window).scroll(function() {
-    //         // console.log(LOGINDATA)
-    //         if($(document).height()-$(window).scrollTop() == window.innerHeight){
-    //             let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
+               }
+                let data = {
+                    id,
+                    page,
+                    Fdate,
+                    Tdate,
+                    LOGINDATA
+                }
+                socket.emit('AccountScroll',data)
+            }
+         }); 
 
-    //             let page = parseInt($('.pageLink').attr('data-page'));
-    //             $('.pageLink').attr('data-page',page + 1)
-    //             // console.log(id, page, LOGINDATA)
-    //             let data = {
-    //                 id,
-    //                 page,
-    //                 Fdate,
-    //                 Tdate,
-    //                 search,
-    //                 LOGINDATA
-    //             }
-    //             socket.emit('AccountScroll',data)
-    //         }
-    //      }); 
+         let count1 = 11
+         socket.on("Acc", async(data) => {
+            // console.log(data)
+            if(data.json.status == "success"){
+                if(data.page == 0){
+                    count1 = 1;
 
-    //      let count1 = 11
-    //      socket.on("Acc", async(data) => {
-    //         // console.log(data)
-    //         if(data.json.status == "success"){
-    //             if(data.page == 0){
-    //                 count1 = 1;
-
-    //                     $('table').html(`<tr style="text-align: center;font-size: 11px;">+
-    //                     "<th>S.No</th>" +
-    //                     "<th>Date/Time</th>" +
-    //                     "<th>Credit</th>"+
-    //                     "<th>Debit</th>"+
-    //                     "<th>From / To</th>"+
-    //                     "<th>Closing</th>"+
-    //                     "<th>Description</th>"+
-    //                     "<th>Remarks</th>"+
-    //                   "</tr> `)
-    //             }
-    //             let html = "";
-    //             for(let i = 0; i < data.json.userAcc.length; i++){
-    //                 let date = new Date(data.json.userAcc[i].date);
-    //                 // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
-    //                 // console.log(abc)
-    //                 if((i%2)==0){
-    //                     html += `<tr style="text-align: center;" class="blue">
-    //                     <td>${count1 + i}</td>
-    //                     <td>${date.getFullYear() + '-' +(date.getMonth() + 1) + '-' + date.getDate() + ' ' +          date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}`
-    //                     if(data.json.userAcc[i].creditDebitamount > 0){
-    //                         html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
-    //                         <td>0</td>
-    //                         <td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
-    //                     }else{
-    //                         html += `<td>0</td>
-    //                         <td>${data.json.userAcc[i].creditDebitamount}</td>
-    //                         <td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
-    //                     }
-    //                     html += `<td>${data.json.userAcc[i].balance}</td>
-    //                     <td><button style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
-    //                     <td>-</td>`
-    //                 }else{
-    //                     html += `<tr style="text-align: center;" >
-    //                     <td>${count1 + i}</td>
-    //                     <td>${date.getFullYear() + '-' +(date.getMonth() + 1) + '-' + date.getDate() + ' ' +          date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}`
-    //                     if(data.json.userAcc[i].creditDebitamount > 0){
-    //                         html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
-    //                         <td>0</td>
-    //                         <td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
-    //                     }else{
-    //                         html += `<td>0</td>
-    //                         <td>${data.json.userAcc[i].creditDebitamount}</td>
-    //                         <td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
-    //                     }
-    //                     html += `<td>${data.json.userAcc[i].balance}</td>
-    //                     <td><button style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
-    //                     <td>-</td>`
-    //                 }
-    //             }
-    //             count1 += 10;
-    //             $('table').append(html)
-    //         }
-    //      })
+                        $('table').html(`<tr style="text-align: center;font-size: 11px;">+
+                        "<th>S.No</th>" +
+                        "<th>Date/Time</th>" +
+                        "<th>Credit</th>"+
+                        "<th>Debit</th>"+
+                        "<th>From / To</th>"+
+                        "<th>Closing</th>"+
+                        "<th>Description</th>"+
+                        "<th>Remarks</th>"+
+                      "</tr> `)
+                }
+                let html = "";
+                for(let i = 0; i < data.json.userAcc.length; i++){
+                    let date = new Date(data.json.userAcc[i].date);
+                    // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
+                    // console.log(abc)
+                    if((i%2)==0){
+                        html += `<tr style="text-align: center;" class="blue">
+                        <td>${count1 + i}</td>
+                        <td>${date.getFullYear() + '-' +(date.getMonth() + 1) + '-' + date.getDate() + ' ' +          date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}`
+                        if(data.json.userAcc[i].creditDebitamount > 0){
+                            html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
+                            <td>0</td>
+                            <td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                        }else{
+                            html += `<td>0</td>
+                            <td>${data.json.userAcc[i].creditDebitamount}</td>
+                            <td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                        }
+                        html += `<td>${data.json.userAcc[i].balance}</td>
+                        <td><button style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+                        <td>-</td>`
+                    }else{
+                        html += `<tr style="text-align: center;" >
+                        <td>${count1 + i}</td>
+                        <td>${date.getFullYear() + '-' +(date.getMonth() + 1) + '-' + date.getDate() + ' ' +          date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}`
+                        if(data.json.userAcc[i].creditDebitamount > 0){
+                            html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
+                            <td>0</td>
+                            <td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                        }else{
+                            html += `<td>0</td>
+                            <td>${data.json.userAcc[i].creditDebitamount}</td>
+                            <td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                        }
+                        html += `<td>${data.json.userAcc[i].balance}</td>
+                        <td><button style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+                        <td>-</td>`
+                    }
+                }
+                count1 += 10;
+                $('table').append(html)
+            }
+         })
 
      
     }

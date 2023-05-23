@@ -4,7 +4,7 @@ const User = require("../model/userModel");
 const Role = require('./../model/roleModel')
 // const { required } = require("joi");
 const accountStatement = require('../model/accountStatementByUserModel');
-const { use } = require("../routes/viewRoutes");
+// const { use } = require("../routes/viewRoutes");
 
 exports.deposit = catchAsync(async(req, res, next) => {
     // console.log(req.body)
@@ -150,53 +150,16 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
 });
 
 exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
-    // console.log(req.query)
-    req.body = req.query  
-    let page = req.body.page;
     let userAcc
+    let page = req.query.page
     if(!page){
-        page = 0;
+        page = 0
     }
-    let limit = 10
-
-    if(req.body.search == 'undefined'){
-        const user = await User.findById(req.body.id);
-        if(req.currentUser.role.role_level > user.role.role_level){
-            return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
-        }
-
-        if(req.body.from != 'undefined' && req.body.to != 'undefined'){
-            userAcc = await accountStatement.find({user_id:req.body.id,date:{$gte:req.body.from,$lte:req.body.to}}).skip(page * limit).limit(limit);
-        }else{
-            userAcc = await accountStatement.find({user_id:req.body.id}).skip(page * limit).limit(limit);
-        }
-    }else{
-        const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
-        let role_type =[]
-        for(let i = 0; i < roles.length; i++){
-            role_type.push(roles[i].role_type)
-        }
-        if(req.body.from != 'undefined' && req.body.to != 'undefined'){
-            userAcc = await accountStatement.find({userName:new RegExp(req.body.search,"i"),date:{$gte:req.body.from,$lte:req.body.to},role_type:{$in:role_type}}).skip(page * limit).limit(limit);
-        }else{
-            userAcc = await accountStatement.find({userName:new RegExp(req.body.search,"i"),role_type:{$in:role_type}}).skip(page * limit).limit(limit);
-        }
+    limit = 10
+    if(req.query.id){
+        userAcc = await accountStatement.find({user_id:req.query.id}).skip(page * limit).limit(limit);
     }
-    // console.log(userAcc)
-    // let userAcc = await accountStatement.find({user_id:req.body.id}).skip(page * limit).limit(limit);
-    // if(req.body.search){
-    //     if(req.body.from && req.body.to){
-    //         userAcc = await accountStatement.find({user_id:req.body.id,date:{$gte:req.body.from,$lte:req.body.to}}).skip(page * limit).limit(limit);
-    //     }
-    // }
-   
-    // if(user.role_type = 5){
-    //     userAcc = await accountStatement.find({}).skip(page * limit).limit(limit);
-    // }
-    
-    if(!userAcc){
-        return next(new AppError("there is no user belonging to that id", 404))
-    }
+    // console.log(userAcc.length)
     res.status(200).json({
         status:"success",
         userAcc

@@ -224,13 +224,13 @@ io.on('connection', (socket) => {
 
 
 
-    socket.on("datefilter", async(data) => {
-        console.log(data)
+    // socket.on("datefilter", async(data) => {
+    //     console.log(data)
 
-    })
+    // })
 
     socket.on("AccountScroll", async(data)=>{
-        // console.log(data, 1234)
+        console.log(data, 1234)
 
         let fullUrl = 'http://127.0.0.1:8000/api/v1/Account/getUserAccStatement?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  + "&search=" + data.search
 
@@ -251,6 +251,56 @@ io.on('connection', (socket) => {
             // me:currentUser,
             // data})
         });
+    })
+
+    socket.on("SearchACC", async(data) => {
+        // console.log(data)
+        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        
+        var regexp = new RegExp(data.x);
+        let user
+        if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
+                user = await User.find({userName:regexp})
+        }else{
+                let role_Type = {
+                    $in:role_type
+                }
+                let xfiletr  = {}
+                xfiletr.role_Type = role_Type
+                xfiletr.userName = regexp
+                // console.log(data.filterData)
+                user = await User.find(xfiletr)
+        }
+        socket.emit("ACCSEARCHRES", user)
+    })
+
+    socket.on("UserSearchId", async(data) => {
+        let user = await User.findOne({userName:data.userName})
+        // console.log(data)
+        let fullUrl = 'http://127.0.0.1:8000/api/v1/Account/getUserAccStatement?id=' + user.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  + "&search=" + data.search
+        // console.log(fullUrl)
+        urlRequestAdd(`/api/v1/Account/getUserAccStatement?id = ${data.id}&page=${data.page}&from = ${data.from}&from = ${data.from}&to = ${data.to}&search = ${data.search}`,'GET', data.LOGINDATA.LOGINTOKEN)
+
+
+        // console.log(fullUrl)
+        fetch(fullUrl, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ` + data.LOGINDATA.LOGINTOKEN },
+        }).then(res => res.json())
+        .then(json =>{ 
+            // console.log(json)
+            socket.emit('Acc', {json,page:data.page})
+            // const data = json.userAcc
+            // res.status(200).render('./userAccountStatement/useracount',{
+            // title:"UserAccountStatement",
+            // me:currentUser,
+            // data})
+        });
+        
     })
 
 

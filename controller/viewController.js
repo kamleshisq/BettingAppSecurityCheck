@@ -373,7 +373,7 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
 exports.useracount = catchAsync(async(req, res, next) => {
     const currentUser = global._User
     // console.log(currentUser)
-    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement?id=' + currentUser._id + "&from=" + 'undefined' + "&to=" + 'undefined'  + "&search=" + 'undefined'
+    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement?id=' + currentUser._id 
     fetch(fullUrl, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ` + req.token }
@@ -421,13 +421,13 @@ exports.roleManagement = catchAsync(async(req, res, next) => {
 });
 
 exports.APIcall2 = catchAsync(async(req, res, next) => {
-    console.log("Working")
+    // console.log("Working")
     var fullUrl = 'https://dev-api.dreamdelhi.com/api/operator/login';
     fetch(fullUrl, {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
-            'Signature':'mpc',
+            'Casino-Signature':'MIICXgIBAAKBgQDO4DWZQtAl3KEJ9kHcKlaQxBN6qZz1NB5XDu+eFWRjIxPC9P+yswF679bCsph90kw45Lx1m9c6mW+Vzafcq6Zl5+wDgA6ujTv2Jq5+3Qv2Ag/n+VL06OTq4RcvPf76nSPUycS2oaDe5XhnaaqbluBZ5VXsLJAPFhdg+3ltssdV3wIDAQABAoGBAKCMlmwr0vgfQodFqxUfcnEFCoz+hwYw/X7Y45NOzMq3VUXO94YKsBJlgck162xyQZ9BvRSU7jLXEycyJJz4RbiZLRwXfFZgy6FHk1cKpOBoV+wpykD/XAKMdSY5FY0udkf3lqWBJFNYPbJ7bjme9BKC9PYvxP+yZWWfU1OYPeGRAkEA7NXc1H3ffdQ9Y86EfrGZrWrhnxIxK2tLNB3r21/LElV+7x4H/zMxov6oydHy5veflVQ1/7ZLYMD/+/VHwVB+uQJBAN+duOuoanLHMD3FQMJ8gvNDYXoyiVXancu/u+HDyBzBSW1vVdKQH1eZqEVQOGXUhEJt7rSxs69uz4GVJ/5z7VcCQE+cfET5ovzbMV+xdhxYev4uZXVhWiHsSTVVsYjmpI6fKrIaeDmy7caKsBZXer1lE8HQsu4oSyJU/jel9d7nvhECQQC5eQKmQ/x20wwKUA+UwN2ElADH8B7FHR0AoDlf2pmicBdNM6lFitDUQdi2FQGSRKCm0LPLIBFfk1N9sY+Il/LlAkEA12A1toJ2ph0YWqe/DBczW/66xAvBxVVvTMiqMae+Kmh6ax71yDPDRGvTnjwo/RbL8Ac7KwZhMUmy7UoemCL62A==',
             'accept': 'application/json'
             },
         body:JSON.stringify({
@@ -438,6 +438,7 @@ exports.APIcall2 = catchAsync(async(req, res, next) => {
             "currency":"INR",
             "username":"TestDemo",
             "lobby":"False",
+            "clientIp":"46.101.225.192",
             "gameId":"100001",
             "balance":"0"
            })
