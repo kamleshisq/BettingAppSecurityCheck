@@ -755,6 +755,7 @@ socket.on('connect', () => {
                 data.Tdate = document.getElementById("Tdate").value
                 data.page = 0
                 data.LOGINDATA = LOGINDATA
+                $('.pageLink').attr('data-page',1)
                  socket.emit( "UserSearchId", data)
              }else{
                 searchU = false
@@ -764,24 +765,25 @@ socket.on('connect', () => {
         $(document).on("click", ".load", function(){
             
             let page = 0;
+            $('.pageLink').attr('data-page',1)
             let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
            
             Fdate = document.getElementById("Fdate").value
             Tdate = document.getElementById("Tdate").value
-            if(!Fdate){
-                Fdate = 'undefined'
+            let data = {}
+            if(searchU){
+                 data.id = SUSER,
+                 data.page = page,
+                 data.Fdate = Fdate,
+                 data.Tdate = Tdate,
+                 data.LOGINDATA = LOGINDATA
+            }{
+                 data.page = page,
+                 data.Fdate = Fdate,
+                 data.Tdate = Tdate,
+                 data.LOGINDATA = LOGINDATA
             }
-            if(!Tdate){
-                Tdate = 'undefined'
-            }
-            socket.emit('AccountScroll',{
-                id,
-                page,
-                Fdate,
-                Tdate,
-                search,
-                LOGINDATA
-            })        
+            socket.emit('AccountScroll',data)        
         })
 
         $(window).scroll(function() {
