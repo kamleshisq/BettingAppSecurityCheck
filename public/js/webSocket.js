@@ -728,6 +728,7 @@ socket.on('connect', () => {
             }
         })
         let searchU 
+        let SUSER
         $(".searchUser").on('input', function(e){
             var $input = $(this),
                 val = $input.val();
@@ -750,6 +751,7 @@ socket.on('connect', () => {
                 data.Fdate = Fdate;
                 data.Tdate = Tdate;
                 data.userName = val
+                SUSER = val
                 data.Tdate = document.getElementById("Tdate").value
                 data.page = 0
                 data.LOGINDATA = LOGINDATA
@@ -758,29 +760,6 @@ socket.on('connect', () => {
                 searchU = false
              }
          });
-        // console.log($("#select").value)
-
-    //     // console.log("Working")
-    //     // console.log(LOGINDATA)
-        // let Fdate;
-        // let Tdate;
-        // let search;
-
-        // $('.searchUser').keyup(function(){
-        //     search = $(this).val()
-        //     if(!search){
-        //         search = 'undefined'
-        //     }
-        //     let page = 0;
-        //     let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
-        //     socket.emit('AccountScroll',{
-        //         id,
-        //         page,
-        //         Fdate,
-        //         Tdate,
-        //         search,LOGINDATA
-        //     })    
-        // })
 
         $(document).on("click", ".load", function(){
             
@@ -808,23 +787,27 @@ socket.on('connect', () => {
         $(window).scroll(function() {
             // console.log(LOGINDATA)
             if($(document).height()-$(window).scrollTop() == window.innerHeight){
-            let loginUser = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me')).userName;
             let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
                 // console.log(loginUser, id)
                 let page = parseInt($('.pageLink').attr('data-page'));
                 // console.log(page)
+                Fdate = document.getElementById("Fdate").value
+                Tdate = document.getElementById("Tdate").value
                 $('.pageLink').attr('data-page',page + 1)
-                console.log(id, page, LOGINDATA)
+                let data = {}
                if(searchU){
-
+                    data.id = SUSER,
+                    data.page = page,
+                    data.Fdate = Fdate,
+                    data.Tdate = Tdate,
+                    data.LOGINDATA = LOGINDATA
+               }{
+                    data.page = page,
+                    data.Fdate = Fdate,
+                    data.Tdate = Tdate,
+                    data.LOGINDATA = LOGINDATA
                }
-                let data = {
-                    id,
-                    page,
-                    Fdate,
-                    Tdate,
-                    LOGINDATA
-                }
+                
                 socket.emit('AccountScroll',data)
             }
          }); 

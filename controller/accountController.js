@@ -157,7 +157,11 @@ exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
     }
     limit = 10
     if(req.query.id){
-        userAcc = await accountStatement.find({user_id:req.query.id}).skip(page * limit).limit(limit);
+        if(req.query.from && req.query.to){
+            userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:req.query.from,$lte:req.query.to}}).skip(page * limit).limit(limit);
+        }else{
+            userAcc = await accountStatement.find({user_id:req.query.id}).skip(page * limit).limit(limit);
+        }
     }
     // console.log(userAcc.length)
     res.status(200).json({
