@@ -429,7 +429,8 @@ exports.APIcall2 = catchAsync(async(req, res, next) => {
     function readPem (filename) {
         return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename)).toString('ascii');
       }
-const privateKey = readPem('previteKey.pem');
+const privateKey = readPem('private.pem');
+console.log(privateKey)
 const textToSign = JSON.stringify({
     "operatorId": "sheldon",
     "userId":"TestDemo",
@@ -442,9 +443,9 @@ const textToSign = JSON.stringify({
     "gameId":"100001",
     "balance":2.5
    })
-// console.log(privateKey, text)
+console.log(privateKey, textToSign)
 const hashedOutput = SHA256(privateKey, textToSign);
-console.log(hashedOutput    )
+console.log(hashedOutput)
 
     var fullUrl = 'https://dev-api.dreamdelhi.com/api/operator/login';
     fetch(fullUrl, {
