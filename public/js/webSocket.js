@@ -821,7 +821,8 @@ socket.on('connect', () => {
 
                         $('table').html(`<tr style="text-align: center;font-size: 11px;">+
                         "<th>S.No</th>" +
-                        "<th>Date/Time</th>" +
+                        "<th>Date</th>" +
+                        "<th>Time</th>" +
                         "<th>Credit</th>"+
                         "<th>Debit</th>"+
                         "<th>From / To</th>"+
@@ -838,7 +839,8 @@ socket.on('connect', () => {
                     if((i%2)==0){
                         html += `<tr style="text-align: center;" class="blue">
                         <td>${count1 + i}</td>
-                        <td>${date.getFullYear() + '-' +(date.getMonth() + 1) + '-' + date.getDate() + ' ' +          date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}`
+                        <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
+                        <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
                             <td>0</td>
@@ -854,7 +856,8 @@ socket.on('connect', () => {
                     }else{
                         html += `<tr style="text-align: center;" >
                         <td>${count1 + i}</td>
-                        <td>${date.getFullYear() + '-' +(date.getMonth() + 1) + '-' + date.getDate() + ' ' +          date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}`
+                        <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
+                        <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
                             <td>0</td>

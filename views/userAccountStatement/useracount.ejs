@@ -155,7 +155,8 @@
                 <thead>
                     <tr style="text-align: center;font-size: 11px;">
                       <th>S.No</th>
-                      <th>Date/Time</th>
+                      <th>Date</th>
+                      <th>Time</th>
                       <th>Credit</th>
                       <th>Debit</th>
                       <th>From / To</th>
@@ -172,7 +173,8 @@
                     <%if((i%2 == 0)){%>
                     <tr style="text-align: center;" class="blue">
                       <td><%= i + 1%></td>
-                      <td><%=date%></td>
+                      <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
+                      <td><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
                       <%if(data[i].creditDebitamount > 0){%>
                       <td><%=data[i].creditDebitamount%></td>
                       <td>0</td>
@@ -189,8 +191,9 @@
                     <%}else{%>
                       <tr style="text-align: center;" >
                         <td><%= i + 1%></td>
-                        <td><%=date%></td>
-                        <%if(data[i].creditDebitamount > 0){%>
+                        <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
+                        <td><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+                      <%if(data[i].creditDebitamount > 0){%>
                           <td><%=data[i].creditDebitamount%></td>
                           <td>0</td>
                           <td><%=data[i].child_id.userName%>/<%=data[i].user_id.userName%></td>
