@@ -40,6 +40,7 @@ exports.createUser = catchAsync(async(req, res, next)=>{
         User: newUser
     })
 })
+
 exports.deletUser = catchAsync(async(req, res, next) =>{
     let user
     if(req.currentUser.role.role_level == 1){

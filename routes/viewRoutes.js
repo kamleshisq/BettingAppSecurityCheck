@@ -10,31 +10,31 @@ router.get('/API', viewController.APIcall);
 router.get('/API2', viewController.APIcall2);
 
 
-router.use(authController.isProtected)
-router.get('/userManagement', authController.restrictTo("userName"), viewController.userTable);
-router.get("/createUSer", authController.restrictTo("createDeleteUser"), viewController.createUser);
-router.get("/accountStatement", authController.restrictTo('accountControl'), viewController.accountStatement);
-router.get("/updateUser", authController.restrictTo("createDeleteUser"),viewController.updateUser);
-router.get("/resetPassword", authController.restrictTo("createDeleteUser"), viewController.resetPassword);
-router.get("/DebitCredit", authController.restrictTo("accountControl"), viewController.getCreditDebitPage);
-router.get("/createRole", authController.restrictTo("roleController"), viewController.createRole);
-router.get("/updateRole", authController.restrictTo("roleController"), viewController.getUpdateRolePage);
-router.get("/dashboard",  authController.restrictTo("dashboard"), viewController.dashboard);
-router.get("/inactiveUser", authController.restrictTo("userStatus"), viewController.inactiveUser);
-router.get("/changeCurrentUserPass", viewController.updatePass);
-router.get("/changeUserPassword", viewController.updateUserPass);
-router.get("/reports", viewController.ReportPage)
-router.get("/gamereport", viewController.gameReportPage)
-router.get("/useracount", viewController.useracount)
-router.get("/userhistoryreport", viewController.userhistoryreport)
-router.get("/plreport", viewController.plreport)
-router.get("/roleManagement", viewController.roleManagement)
-router.get("/promotion", viewController.getPromotionPage)
+// router.use()
+router.get('/userManagement', authController.isProtected, authController.restrictTo("userName"), viewController.userTable);
+router.get("/createUSer", authController.isProtected, authController.restrictTo("createDeleteUser"), viewController.createUser);
+router.get("/accountStatement", authController.isProtected, authController.restrictTo('accountControl'), viewController.accountStatement);
+router.get("/updateUser", authController.isProtected, authController.restrictTo("createDeleteUser"),viewController.updateUser);
+router.get("/resetPassword", authController.isProtected, authController.restrictTo("createDeleteUser"), viewController.resetPassword);
+router.get("/DebitCredit", authController.isProtected, authController.restrictTo("accountControl"), viewController.getCreditDebitPage);
+router.get("/createRole", authController.isProtected, authController.restrictTo("roleController"), viewController.createRole);
+router.get("/updateRole", authController.isProtected, authController.restrictTo("roleController"), viewController.getUpdateRolePage);
+router.get("/dashboard",  authController.isProtected, authController.restrictTo("dashboard"), viewController.dashboard);
+router.get("/inactiveUser", authController.isProtected, authController.restrictTo("userStatus"), viewController.inactiveUser);
+router.get("/changeCurrentUserPass", authController.isProtected, viewController.updatePass);
+router.get("/changeUserPassword", authController.isProtected, viewController.updateUserPass);
+router.get("/reports", authController.isProtected, viewController.ReportPage)
+router.get("/gamereport", authController.isProtected, viewController.gameReportPage)
+router.get("/useracount", authController.isProtected, viewController.useracount)
+router.get("/userhistoryreport", authController.isProtected, viewController.userhistoryreport)
+router.get("/plreport", authController.isProtected, viewController.plreport)
+router.get("/roleManagement", authController.isProtected, viewController.roleManagement)
+router.get("/promotion", authController.isProtected, viewController.getPromotionPage)
 
 //user routs
-router.get("/loginUser", authController.restrictTo("logOutUser"), viewController.onlineUsers);
-router.get("/userDashboard", viewController.userdashboard);
-router.get("/edit", viewController.edit);
-router.get("/myAccountStatment", viewController.myAccountStatment);
+router.get("/loginUser", authController.isProtected, authController.restrictTo("logOutUser"), viewController.onlineUsers);
+router.get("/userDashboard", authController.isProtected, viewController.userdashboard);
+router.get("/edit", authController.isProtected, viewController.edit);
+router.get("/myAccountStatment", authController.isProtected, viewController.myAccountStatment);
 
 module.exports = router

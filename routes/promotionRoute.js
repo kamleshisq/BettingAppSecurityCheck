@@ -1,10 +1,10 @@
 const express = require('express');
-const router = express.Router()
+const router1 = express.Router()
 const promotionController = require("../controller/promotionController");
 
-router.post("/createPromotionPosition", promotionController.createPosition)
+router1.post("/createPromotionPosition", promotionController.createPosition)
 
 
 
 
-module.exports = router
+module.exports = router1
