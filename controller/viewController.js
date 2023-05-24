@@ -2,6 +2,7 @@ const AppError = require('./../utils/AppError');
 const catchAsync = require('./../utils/catchAsync');
 const User = require('../model/userModel');
 const Role = require('../model/roleModel');
+const promotionModel = require("../model/promotion");
 const roleAuth = require('../model/authorizationModel');
 const fetch = require("node-fetch")
 const whiteLabel = require('../model/whitelableModel');
@@ -472,7 +473,17 @@ const hashedOutput = SHA256(privateKey, textToSign);
 });
 
 exports.getPromotionPage = catchAsync(async(req, res, next) => {
+    const data = await promotionModel.find()
     res.status(200).render("./promotion/promotion",{
-        title:"Promotion"
+        title:"Promotion",
+        data
+    })
+});
+
+
+exports.promotion = catchAsync(async(req, res, next) => {
+    const data = await promotionModel.find()
+    res.status(200).render("promotionpage",{
+        data
     })
 })

@@ -30,6 +30,7 @@ router.get("/userhistoryreport", authController.isProtected, viewController.user
 router.get("/plreport", authController.isProtected, viewController.plreport)
 router.get("/roleManagement", authController.isProtected, viewController.roleManagement)
 router.get("/promotion", authController.isProtected, viewController.getPromotionPage)
+router.get("/pp", viewController.promotion);
 
 //user routs
 router.get("/loginUser", authController.isProtected, authController.restrictTo("logOutUser"), viewController.onlineUsers);

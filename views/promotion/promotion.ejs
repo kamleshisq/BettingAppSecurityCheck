@@ -27,88 +27,26 @@
   
               <table>
                 <thead>
-                  
-                      <tr style="text-align: center;font-size: 11px;">
-                      <th >Bonusname</th>
-                      <th>Percent</th>
-                      <th>Min</th>
-                      <th>Max</th>
-                      <th>Wager</th>
-                      <th>Timeline</th>
-                      <th>Comment </th>
-                      <th>Status</th>
-                        <th colspan="2">Actions</th>
-                        <th></th>
-  
-                        
-  
-                  
-
+                    <tr style="text-align: center;font-size: 11px;">
+                      <th>Name</th>
+                      <th>Image</th>
+                      <th colspan="2">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="new-body" style="font-size: 11px;">
+                <%for(let i = 0; i < data.length; i++){%>
                   <tr style="text-align: center;" class="blue">
-                    <td>50% Welcome....</td>
-                    <td>50 </td>
-                    <td>1000</td>
-                    <td>20000</td>
-                    <td> 1000 </td>
-                    <td>15</td>
-                    <td>50% Bonus upto 20...</td>
-                    <td><span style="background-color: #46BCAA;padding: 2px 8px;border-radius: 5px;">Enabled</span></td>
-                    <td><i class="fa-regular fa-pen-to-square"></i></td>
-                    <td><i class="fa-solid fa-trash-can"></i></td>
+                    <td><%=data[i].position%></td>
+                    <td><img src="img/<%=data[i].position%>.png" alt="img" class="form__user-photo"></td>
+                    <td><button>Upload Photo/Image</button>
+                      <%if(data[i].status){%>
+                        <button>Enabled</button>
+                      <%}else{%>
+                        <button>Disable</button>
+                      <%}%>
+                      <button><i class="fa-solid fa-trash-can"></i></button></td>
                   </tr>
-                  <tr style="text-align: center;">
-                    <td>50% Welcome....</td>
-                    <td>50 </td>
-                    <td>1000</td>
-                    <td>20000</td>
-                    <td> 1000 </td>
-                    <td>15</td>
-                    <td>50% Bonus upto 20...</td>
-                    <td><span style="background-color: #46BCAA;padding: 2px 8px;border-radius: 5px;">Enabled</span></td>
-                    <td><i class="fa-regular fa-pen-to-square"></i></td>
-                    <td><i class="fa-solid fa-trash-can"></i></td>
-                  </tr>
-                  <tr style="text-align: center;" class="blue">
-                    <td>50% Welcome....</td>
-                    <td>50 </td>
-                    <td>1000</td>
-                    <td>20000</td>
-                    <td> 1000 </td>
-                    <td>15</td>
-                    <td>50% Bonus upto 20...</td>
-                    <td><span style="background-color: #46BCAA;padding: 2px 8px;border-radius: 5px;">Enabled</span></td>
-                    <td><i class="fa-regular fa-pen-to-square"></i></td>
-                    <td><i class="fa-solid fa-trash-can"></i></td>
-                  </tr>
-                  <tr style="text-align: center;">
-                    <td>50% Welcome....</td>
-                    <td>50 </td>
-                    <td>1000</td>
-                    <td>20000</td>
-                    <td> 1000 </td>
-                    <td>15</td>
-                    <td>50% Bonus upto 20...</td>
-                    <td><span style="background-color: #46BCAA;padding: 2px 8px;border-radius: 5px;">Enabled</span></td>
-                    <td><i class="fa-regular fa-pen-to-square"></i></td>
-                    <td><i class="fa-solid fa-trash-can"></i></td>
-                  </tr>
-                  <tr style="text-align: center;" class="blue">
-                    <td>50% Welcome....</td>
-                    <td>50 </td>
-                    <td>1000</td>
-                    <td>20000</td>
-                    <td> 1000 </td>
-                    <td>15</td>
-                    <td>50% Bonus upto 20...</td>
-                    <td><span style="background-color: #46BCAA;padding: 2px 8px;border-radius: 5px;">Enabled</span></td>
-                    <td><i class="fa-regular fa-pen-to-square"></i></td>
-                    <td><i class="fa-solid fa-trash-can"></i></td>
-                  </tr>
-                  
-                 
+                <%}%>
                 </tbody>
               </table>
               </div>
