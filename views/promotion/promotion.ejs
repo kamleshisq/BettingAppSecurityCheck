@@ -1,5 +1,171 @@
 <%- include("../header") %>
+<style>
+  .green{
+    background-color: #46BCAA;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 13px;
+    color: #fff;
+  }
+  .green>h5{
+    font-size: 15px;
+  }
+  .green>h6{
+    font-size: 13px;
+  }
+  .accordion-collapse {
+    border: solid rgba(0,0,0,.125);
+    border-width: 0 1px;
+    width: 100% !important; 
+    background: #fff;
+    -webkit-font-smoothing: subpixel-antialiased;
+    border-radius: 10px;
+}
+  .red{
+    background-color: #FE3030;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 13px;
+    color: #fff;
 
+  }
+  .red>h5{
+    font-size: 15px;
+  }
+  .red>h6{
+    font-size: 13px;
+  }
+  .accordion-item:last-of-type .accordion-button.collapsed {
+    border-bottom-width: 1px;
+    border-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.accordion-header {
+    margin-bottom: 10px;
+}
+.accordion-button {
+    
+    color: #6359ca;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 10px;
+    font-weight: 700;
+    font-family: 'poppins';
+   
+
+}
+.accordion-item:first-of-type .accordion-button {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-family: 'poppins';
+}
+.accordion-button:not(.collapsed) {
+    color: #6359CA;
+    background-color: #fff;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #6359CA;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #fff;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #fff;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+  height: 25px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+[data-tab-info] {
+  display: none;
+}
+
+.active[data-tab-info] {
+  display: block;
+}
+
+.tabs {
+  padding: 10px 10px;
+  display: flex;
+  gap: 6px;
+  background: transparent;
+  border-bottom: 0px solid #b2b2b2;
+  justify-content: flex-start;
+  border-radius: 0px;
+}
+
+.tabs span {
+ 
+  padding: 10px;
+    font-size: 17px;
+    padding: 8px 20px;
+    font-weight: 400;
+    /* color: #fff; */
+    border-radius: 5px;
+    border: none;
+    color: #212121;
+    background: #fff;
+
+}
+
+.tabs.active {
+  background-color:transparent;
+  color: #000;
+  font-weight: 700;
+}
+.tabs span:hover {
+
+  cursor: pointer;
+  color: black;
+}
+</style>
   <!--Container Main start-->
   <div class="height-100" style="background-color: #EAEEF7;">
 
@@ -30,21 +196,15 @@
                     <tr style="text-align: center;font-size: 11px;">
                       <th>Name</th>
                       <th>Image</th>
-                      <th colspan="2">Actions</th>
+                      <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody class="new-body" style="font-size: 11px;">
                 <%for(let i = 0; i < data.length; i++){%>
                   <tr style="text-align: center;" class="blue">
-                    <td><%=data[i].position%></td>
+                    <td class="promotionData" data-bs-dismiss="<%=JSON.stringify(data[i])%>"><%=data[i].position%></td>
                     <td><img src="img/<%=data[i].position%>.png" alt="img" class="form__user-photo"></td>
-                    <td><button>Upload Photo/Image</button>
-                      <%if(data[i].status){%>
-                        <button>Enabled</button>
-                      <%}else{%>
-                        <button>Disable</button>
-                      <%}%>
-                      <button><i class="fa-solid fa-trash-can"></i></button></td>
+                    <td><button data-bs-toggle="modal" data-bs-target="#myModal5" class="promotionDetails"><i class="fa-solid fa-database"></i></button><button><i class="fa-solid fa-trash-can" id="delete"></i></button></td>
                   </tr>
                 <%}%>
                 </tbody>
@@ -57,123 +217,57 @@
             </section>
   
   
-            <div class="modal fade" id="myModaladduser" role="dialog">
-              <div class="modal-dialog">
-              
-                <!-- Modal content-->
-                <div class="modal-content">
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-                  </div>
-                  <div class="modal-header" style="text-align: center;">
-                    <h4 class="modal-title" style="color: #fff;">Payment Menu Manager</h4>
-                  </div>
-                  <div class="modal-body">
-                    <form class="form-data">
-                      <div class="row">
-                        <div class="col">
-                          <label for="">Name</label>
-                          <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
-                        </div>
-                        <div class="col">
-                          <label for="">Payment Type</label>
-                          <input type="text" class="form-control ml0" placeholder="10007000.30" name="email">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <label for="">Currency</label>
-                          <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
-                        </div>
-                        <div class="col">
-                          <label for="">Min</label>
-                          <input type="text" class="form-control ml0" placeholder="10007000.30" name="email">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <label for="">Max</label>
-                          <input type="text" class="form-control ml0" placeholder="00.00" name="email">
-                        </div>
-                        <div class="col">
-                          <label for="">Fee</label>
-                          <input type="text" class="form-control ml0" placeholder="0.0" name="email">
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col">
-                          <label for="">Type</label><br>
-                          <select name="" id="">
-                            <option value="">All</option>
-
-                            <option value="">Payout</option>
-                            <option value="">Deposit</option>
-                            
-                           
-                          </select>
-                        </div>
-                        <div class="col">
-                          <label for="">Type Option</label><br>
-                          <select name="" id="">
-                            <option value="">All</option>
-                            <option value="">Yaarpay</option>
-                            <option value="">Case</option>
-                            <option value="">Paymaro</option>
-                            <option value="">Rushpay</option>
-                            <option value="">Rushpay UPI</option>
-                           
-                          </select>
-                        </div>
-                      </div>
-
-                      <div class="row" >
-                        <div class="col">
-                          <textarea id="w3review" placeholder="Abitest" name="w3review" rows="4" cols="50" style="width: 100%;border-radius: 5px;"></textarea>
-                        </div>
-                      </div>
-                      <div class="row" style="align-items: baseline;">
-                        <div class="col-5">
-                          <input type="text" class="form-control ml0" placeholder="depositBankCodevalue" name="email">
-                        </div>
-                        <div class="col-5">
-                          <input type="text" class="form-control ml0" placeholder="depositBankCodelabel" name="email">
-                        </div>
-                        <div class="col-2">
-                            <button style="border-radius: 5px; padding: 4px 12px;border: none;">Add</button>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col ">
-                          <label for="">Image</label>
-                          <!-- <input type="text" class="form-control ml0" placeholder="Image Select" name="email"> -->
-                          <input type="file" id="myFile" name="filename" class="form-control ml0" placeholder="Image Select">
-                        </div>
-                        <div class="col">
-                          <label for="">Mobile Status</label>
-                          <input type="text" class="form-control ml0" placeholder="0.0" name="email">
-                        </div>
-                      </div>
-                      <div style="display: flex;gap: 25px;">
-                               <button type="button" class="btn-submit mt-3" style="width: 100%;justify-content: center;background: transparent;
-                               border: 1px solid #fff;">Cancel</button>
-                               <button type="button" class="btn-submit mt-3" style="background-color: #46BCAA;width:100%;justify-content: center;">Accept</button>
-                              </div>
-                              </form>
-                  </div>
+          </div>  <div class="modal fade" id="myModal5" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
                 </div>
+                <div class="modal-header" style="text-align: center;">
+                  <h4 class="modal-title" style="color: #fff;">User Details</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="form-data1" id="edit-form1">
+                    <div class="row">
+                      <div class="col">
+                        <label for="">Name</label>
+                        <input type="text" class="form-control ml0" name="name">
+                        <input type="hidden" id="id" name="id">
+                      </div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                      <label for="check">Status</label>
+                      <span>OFF &nbsp; <label class="switch">
+                        <input type="checkbox" id="check" name="check">
+                        <span class="slider round"></span>
+                        </label>&nbsp; ON</span>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col" id="img">
+                      </div>
+                      <div class="col" >
+                        <input type="file" name="file" id="file">
+                      </div>
+                    </div>
+                    <button type="submit" class="btn-submit mt-3">Save</button>
+                  </form>
                 </div>
               </div>
             </div>
+          </div>
 
-  </div>
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"  
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>-->
-    <script src="/js/main.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <script type="text/javascript" src="js/bundle.js"></script>    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"> -->
@@ -230,126 +324,6 @@
 
     
   </script> -->
-<script >
-  var options = {
-          series: [{
-          name: 'Income',
-          type: 'column',
-          data: [1.4, 2, 2.5, 1.5, 2.5, 2.8, 3.8, 4.6]
-        }, {
-          name: 'Cashflow',
-          type: 'column',
-          data: [1.1, 3, 3.1, 4, 4.1, 4.9, 6.5, 8.5]
-        }, 
-        {
-          name: 'Revenue',
-          type: 'line',
-          data: [20, 29, 37, 36, 44, 45, 50, 58]
-        }],
-          chart: {
-          height: 350,
-          type: 'line',
-          stacked: false
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          width: [1, 1, 4]
-        },
-        // title: {
-        //   text: 'XYZ - Stock Analysis (2009 - 2016)',
-        //   align: 'left',
-        //   offsetX: 110
-        // },
-        // xaxis: {
-        //   categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016],
-        // },
-        yaxis: [
-          {
-            axisTicks: {
-              show: true,
-            },
-            axisBorder: {
-              show: true,
-              color: '#008FFB'
-            },
-            labels: {
-              style: {
-                colors: '#008FFB',
-              }
-            },
-            title: {
-              text: "Income (thousand crores)",
-              style: {
-                color: '#008FFB',
-              }
-            },
-            tooltip: {
-              enabled: true
-            }
-          },
-          {
-            seriesName: 'Income',
-            opposite: true,
-            axisTicks: {
-              show: true,
-            },
-            axisBorder: {
-              show: true,
-              color: '#00E396'
-            },
-            labels: {
-              style: {
-                colors: '#00E396',
-              }
-            },
-            title: {
-              text: "Operating Cashflow (thousand crores)",
-              style: {
-                color: '#00E396',
-              }
-            },
-          },
-          {
-            seriesName: 'Revenue',
-            opposite: true,
-            axisTicks: {
-              show: true,
-            },
-            axisBorder: {
-              show: true,
-              color: '#FEB019'
-            },
-            labels: {
-              style: {
-                colors: '#FEB019',
-              },
-            },
-            title: {
-              text: "Revenue (thousand crores)",
-              style: {
-                color: '#FEB019',
-              }
-            }
-          },
-        ],
-        tooltip: {
-          fixed: {
-            enabled: true,
-            position: 'topLeft', // topRight, topLeft, bottomRight, bottomLeft
-            offsetY: 30,
-            offsetX: 60
-          },
-        },
-        legend: {
-          horizontalAlign: 'left',
-          offsetX: 40
-        }
-        };
 
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
-</script>
 </body>
     </html>

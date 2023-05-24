@@ -11,6 +11,7 @@ import { updatePassword } from "./updatePASSWORD";
 import { userStatus } from "./userStatus";
 import { betLockStatus } from "./betLock";
 import { updateRow } from "./updateRow";
+import { func } from "joi";
 
 
 // console.log(document.querySelector('.loginForm'))
@@ -351,5 +352,15 @@ $(document).on('click','.RoleDetails',function(){
 });
 // console.log($(".RoleDetails"))
 // console.log($(".load"))
-
-
+$(document).on('click','.promotionDetails', function(){
+    let modleName = $(this).data('bs-target')
+    let form = $(modleName).find('.form-data1')
+    let PMD = $(this).parent('td').siblings('.promotionData').data('bs-dismiss')
+    // console.log(PMD.position)
+    form.find('input[name = "check"]').removeAttr('checked');
+    form.find('input[name = "name"]').attr('value',PMD.position)
+    if(PMD.status){
+        form.find('input[name = "check"]').attr("checked", "checked");
+    }
+    form.find('#img').html(`<img src="img/${PMD.position}.png" height=100 width=100>`)
+})

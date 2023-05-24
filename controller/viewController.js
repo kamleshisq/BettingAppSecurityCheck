@@ -440,7 +440,7 @@ let body = {
     "username":"TestDemo",
     "lobby":false,
     "clientIp":"46.101.225.192",
-    "gameId":"100001",
+    "gameId":"105002",
     "balance":2.5
    }
 // console.log(privateKey)

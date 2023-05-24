@@ -1,5 +1,12 @@
 <h2>hello</h2>
 
 <%for(let i = 0; i < data.length; i++){%>
-    <img src="img/<%=data[i].position%>.png" alt="img"  width="500" height="600"><br>
+    <%if(data[i].status){%>
+        <!-- <img src="img/<%=data[i].position%>.mp4" alt="img"  width="500" height="600"><br> -->
+        <video width="400" controls>
+            <source src="img/<%=data[i].position%>.mp4" type="video/mp4">
+            <!-- <source src="mov_bbb.ogg" type="video/ogg"> -->
+            Your browser does not support HTML video.
+        </video>
+    <%}%>
 <%}%>
