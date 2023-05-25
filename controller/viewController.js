@@ -434,7 +434,7 @@ const privateKey = readPem('private.pem');
 let body = {
     "operatorId": "sheldon",
     "userId":"TestDemo",
-    "providerName":"DC",
+    "providerName":"EZUGI",
     "platformId":"DESKTOP",
     "currency":"INR",
     "username":"TestDemo",
@@ -463,11 +463,10 @@ const hashedOutput = SHA256(privateKey, textToSign);
     .then(res => res.json())
     .then(result => {
 
-        console.log(result)
-        res.status(200).json({
-            status:"success",
-            result
-        })
+        console.log(result.url)
+        fetch(result.url,{
+            method: 'GET'
+        }).then(res => console.log(res))
     }
     )
 });
