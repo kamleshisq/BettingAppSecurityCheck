@@ -2,12 +2,12 @@
 
 <%for(let i = 0; i < data.length; i++){%>
     <%if(data[i].status){%>
-        <%if(data[i].status){%>
-        <!-- <img src="img/<%=data[i].position%>.mp4" alt="img"  width="500" height="600"><br> -->
-        <video width="400" controls>
-            <source src="img/<%=data[i].position%>.mp4" type="video/mp4">
-            <!-- <source src="mov_bbb.ogg" type="video/ogg"> -->
-            Your browser does not support HTML video.
-        </video>
+        <%if(data[i].video){%>
+            <video width="400" controls>
+                <source src="img/<%=data[i].position%>.mp4" type="video/mp4">
+            </video>
+        <%}else{%>
+            <img src="img/<%=data[i].position%>.png" alt="img"  width="500" height="600"><br>
+        <%}%>
     <%}%>
 <%}%>

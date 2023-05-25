@@ -363,7 +363,11 @@ $(document).on('click','.promotionDetails', function(){
     if(PMD.status){
         form.find('input[name = "check"]').attr("checked", "checked");
     }
-    form.find('#img').html(`<img src="img/${PMD.position}.png" height=100 width=100>`)
+    if(PMD.video){
+        form.find('#img').html(`<video src="img/${PMD.position}.mp4" type="video/mp4" height=100 width=100>`)
+    }else{
+        form.find('#img').html(`<img src="img/${PMD.position}.png" height=100 width=100>`)
+    }
 });
 
 $(document).on('submit', ".form-data1", function(e){

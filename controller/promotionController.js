@@ -13,7 +13,8 @@ exports.createPosition = catchAsync(async(req, res, next) => {
             image.mv(`public/img/${req.body.position}.png`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
-        }else{
+        }else if(req.files.image.mimetype.startsWith('video')){
+            // console.log(req.files)
             data.video = true
             // return next(new AppError('Please Upload An Image', 404))
             const image = req.files.image
@@ -21,6 +22,8 @@ exports.createPosition = catchAsync(async(req, res, next) => {
             image.mv(`public/img/${req.body.position}.mp4`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
+        }else{
+            return next(new AppError("Please upload a midea file", 400))
         }
 
         data.position = req.body.position
@@ -40,18 +43,23 @@ exports.updatePosition = catchAsync(async(req, res, next) => {
     let data = {}
     if(req.files){
         if(req.files.image.mimetype.startsWith('image')){
+            data.video = false
             const image = req.files.image
             // console.log(logo)
             image.mv(`public/img/${req.body.position}.png`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
-        }else{
+        }else if(req.files.image.mimetype.startsWith('video')){
+            // console.log(req.files)
+            data.video = true
             // return next(new AppError('Please Upload An Image', 404))
             const image = req.files.image
             // console.log(logo)
             image.mv(`public/img/${req.body.position}.mp4`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
+        }else{
+            return next(new AppError("Please upload a midea file", 400))
         }
     }
         data.position = req.body.position
