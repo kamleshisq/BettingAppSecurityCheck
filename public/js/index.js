@@ -12,6 +12,8 @@ import { userStatus } from "./userStatus";
 import { betLockStatus } from "./betLock";
 import { updateRow } from "./updateRow";
 import {updatePromotion} from "./updatePromotion";
+import { createPromotion } from "./createPromotion";
+import { deletePromotion } from "./deletePormotion";
 // import { func } from "joi";
 
 
@@ -384,4 +386,19 @@ $(document).on('submit', ".form-data1", function(e){
     }
     form.append('image',document.getElementById('file').files[0])
     updatePromotion(form)
+});
+
+
+$(document).on('submit', '.form-data2', function(e){
+    e.preventDefault()
+    const form = new FormData();
+    form.append('position', document.getElementById('name1').value)
+    form.append('image', document.getElementById('file1').files[0])
+    createPromotion(form)
+});
+
+$(document).on('click', ".Delete", function(){
+    let data = {}
+    data.id = $(this).attr('id')
+    deletePromotion(data)
 })

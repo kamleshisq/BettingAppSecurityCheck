@@ -30,7 +30,7 @@ exports.createPosition = catchAsync(async(req, res, next) => {
         data.Image = req.body.position
         const newPosition = await promotion.create(data)
         res.status(200).json({
-            status:"Success",
+            status:"success",
             newPosition
         })
 
@@ -75,4 +75,17 @@ exports.updatePosition = catchAsync(async(req, res, next) => {
             status:"success",
             newPosition
         })
+});
+
+
+exports.deletePosition = catchAsync(async(req, res, next) => {
+    // console.log(req.body.id)
+    const deletedposition = await promotion.findByIdAndDelete(req.body.id);
+    if(!deletedposition){
+        return next(new AppError("Ops! Something went wrong please try again later", 404))
+    }
+    res.status(200).json({
+        status:"success",
+        data:[]
+    })
 })

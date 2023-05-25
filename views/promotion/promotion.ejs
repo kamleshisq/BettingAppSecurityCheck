@@ -176,7 +176,6 @@ input:checked + .slider:before {
         <h3 class="main-heading">Promotion</h3>
         <form action="" style="display: flex;">
             
-          <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add Position</button>
         </form>
     </div>
     </div>
@@ -186,6 +185,11 @@ input:checked + .slider:before {
   <section style="padding: 15px 0px;">
     <div class="container-fluid">
     <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
+    <div style="justify-content: flex-end;
+    display: flex;
+    gap: 10px;">
+      <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add Position</button>
+    </div>
     
   <section class="">
     <div class="">
@@ -208,7 +212,8 @@ input:checked + .slider:before {
                     <%}else{%>
                       <td><img src="img/<%=data[i].position%>.png" alt="img" class="form__user-photo"></td>
                     <%}%>
-                    <td><button data-bs-toggle="modal" data-bs-target="#myModal5" class="promotionDetails"><i class="fa-solid fa-database"></i></button><button><i class="fa-solid fa-trash-can" id="delete"></i></button></td>
+                    <td><button data-bs-toggle="modal" data-bs-target="#myModal5" class="promotionDetails"><i class="fa-solid fa-database"></i></button>
+                    <button class="Delete" id="<%=data[i].id%>"><i class="fa-solid fa-trash-can" ></i></button></td>
                   </tr>
                 <%}%>
                 </tbody>
@@ -255,6 +260,40 @@ input:checked + .slider:before {
                       </div>
                       <div class="col" >
                         <input type="file" name="file" id="file">
+                      </div>
+                    </div>
+                    <button type="submit" class="btn-submit mt-3">Save</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="modal fade" id="myModaladduser" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-header" style="text-align: center;">
+                  <h4 class="modal-title" style="color: #fff;">Add Position</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="form-data2" id="edit-form2">
+                    <div class="row">
+                      <div class="col">
+                        <label for="">Name</label>
+                        <input type="text" class="form-control ml0" id="name1" name="name" required>
+                      </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                      <div class="col" >
+                        <input type="file" name="file" id="file1" required>
                       </div>
                     </div>
                     <button type="submit" class="btn-submit mt-3">Save</button>
