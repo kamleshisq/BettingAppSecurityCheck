@@ -1,3 +1,4 @@
+const { boolean } = require('joi');
 const mongoose = require('mongoose');
 
 const promotionSchema = mongoose.Schema({
@@ -14,6 +15,10 @@ const promotionSchema = mongoose.Schema({
         type:Boolean,
         required:true,
         default:true
+    },
+    video:{
+        type:Boolean,
+        required:true
     }
 });
 

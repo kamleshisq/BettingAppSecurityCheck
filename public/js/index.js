@@ -11,7 +11,8 @@ import { updatePassword } from "./updatePASSWORD";
 import { userStatus } from "./userStatus";
 import { betLockStatus } from "./betLock";
 import { updateRow } from "./updateRow";
-import { func } from "joi";
+import {updatePromotion} from "./updatePromotion";
+// import { func } from "joi";
 
 
 // console.log(document.querySelector('.loginForm'))
@@ -356,11 +357,27 @@ $(document).on('click','.promotionDetails', function(){
     let modleName = $(this).data('bs-target')
     let form = $(modleName).find('.form-data1')
     let PMD = $(this).parent('td').siblings('.promotionData').data('bs-dismiss')
-    // console.log(PMD.position)
+    form.attr('id', PMD._id);
     form.find('input[name = "check"]').removeAttr('checked');
     form.find('input[name = "name"]').attr('value',PMD.position)
     if(PMD.status){
         form.find('input[name = "check"]').attr("checked", "checked");
     }
     form.find('#img').html(`<img src="img/${PMD.position}.png" height=100 width=100>`)
+});
+
+$(document).on('submit', ".form-data1", function(e){
+    e.preventDefault()
+    let id = $('.form-data1').attr('id')
+    let check = document.getElementById('check')
+    const form = new FormData();
+    form.append('Id', id)
+    form.append('position',document.getElementById('name').value)
+    if(check.checked == true){
+        form.append('status',"on")
+    }else{
+        form.append('status',"off")
+    }
+    form.append('image',document.getElementById('file').files[0])
+    updatePromotion(form)
 })
