@@ -462,13 +462,10 @@ const hashedOutput = SHA256(privateKey, textToSign);
     })
     .then(res => res.json())
     .then(result => {
-
-        console.log(result.url)
-        fetch(result.url,{
-            method: 'GET'
-        }).then(res => console.log(res))
-    }
-    )
+        res.status(200).json({
+            result
+        })
+    })
 });
 
 exports.getPromotionPage = catchAsync(async(req, res, next) => {
