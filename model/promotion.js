@@ -19,6 +19,10 @@ const promotionSchema = mongoose.Schema({
     video:{
         type:Boolean,
         required:true
+    },
+    click:{
+        type:Number,
+        default:0
     }
 });
 

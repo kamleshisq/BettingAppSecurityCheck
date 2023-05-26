@@ -4,6 +4,7 @@ const io = require('socket.io')(http);
 const fetch = require('node-fetch');
 const Role = require('./model/roleModel');
 const User = require("./model/userModel");
+const Promotion = require("./model/promotion")
 const userController = require("./websocketController/userController");
 const accountControl = require("./controller/accountController");
 const loginlogs = require('./model/loginLogs')
@@ -307,6 +308,12 @@ io.on('connection', (socket) => {
             // data})
         });
         
+    })
+
+    socket.on('UpdateBYID', async(data) => {
+        console.log(data)
+        let position = await Promotion.findById(data)
+        await Promotion.findByIdAndUpdate(data, {click:position.click+1})
     })
 
 
