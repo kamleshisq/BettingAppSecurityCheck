@@ -6,6 +6,7 @@ const userRoute = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const roleRoutes = require('./routes/roleRoutes');
 const viewRoutes = require('./routes/viewRoutes');
+const gameRoutes = require('./routes/gameRoutes');
 const promotionRoutes = require('./routes/promotionRoute');
 const accountRoutes = require("./routes/accountRoutes");
 const deshBoardRoutes = require("./routes/deshboardRoutes");
@@ -46,6 +47,7 @@ app.use("/api/v1/Account", accountRoutes)
 app.use("/api/v1/deshBoard", deshBoardRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/promotion", promotionRoutes);
+app.use("/api/v1/games", gameRoutes);
 app.use("/", viewRoutes)
 // console.log(globleErrorHandler)
 

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="../images/logo.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<title>Balaji Dashboard</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.css">
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js" integrity="sha256-6ec2OYfOEVNM4UoRBRGoUP5SRgKyf/FhNoOjTwtqD3k=" crossorigin="anonymous"></script>
+<style>
+
+  .btn-ju{
+    width: 50%;margin: auto;justify-content: center;
+  }
+ 
+</style>
+</head>
+<body id="body-pd" class="fix-width-body" style="font-family: Outfit;background-color:#EAEEF7;">
+  <header class="header" id="header">
+      <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> 
+        <span class="datre-time">Date 21-12-22  &nbsp;&nbsp;  Time-11:08</span>
+      </div>
+      
+      <div>
+      
+        <div class="social-media">
+          <!-- <span>Follow us: </span> -->
+          <span><a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="instagram"><i class="fa-solid fa-moon"></i></a></span> 
+          <span> <a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="facebook"><i class="fa-solid fa-bell"></i></a></span> 
+          <span> <a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="instagram"><i class="fa-solid fa-message"></i></a></span> 
+          <span> <a href="#" target="_blank" data-toggle="tooltip" data-placement="bottom" title="instagram"><i class="fa-solid fa-gear"></i></a></span> 
+        </div>
+      </div>
+  </header>
+  <div class="l-navbar" id="nav-bar" style="background-color: #FFFFFF;">
+      <nav class="nav">
+        
+        <div class="nav_list"> 
+          <a href="index" class="nav_link active"> <img src="../images/dash.png" alt=""> <span class="nav_name">Dashboard</span> </a> 
+          <a href="/about" class="nav_link"> <img src="../images/user.png" alt=""> <span class="nav_name">User Mangement</span> </a> 
+          <a href="/operation" class="nav_link"> <img src="../images/222.png" alt=""> <span class="nav_name">Operation</span> </a> 
+          <a href="/livemarket" class="nav_link"> <img src="../images/333.png" alt=""> <span class="nav_name">Live Market</span> </a> 
+          <a href="/casinocontrol" class="nav_link"> <img src="../images/44.png" alt=""> <span class="nav_name">Casino Control</span> </a> 
+          <a href="/reports" class="nav_link"> <img src="../images/55.png" alt=""> <span class="nav_name">Reports</span> </a> 
+          <a href="/payment" class="nav_link"> <img src="../images/66.png" alt=""> <span class="nav_name">Payments Gateway Option</span> </a>
+          <a href="/promotion" class="nav_link"> <img src="../images/77.png" alt=""> <span class="nav_name">Promotion</span> </a>
+          <a href="/cms" class="nav_link"> <img src="../images/88.png" alt=""> <span class="nav_name">Cms</span> </a>
+        </div>
+          
+      </nav>
+  </div>
+  <!--Container Main start-->
+  <div class="height-100" style="background-color: #EAEEF7;">
+
+  <section class="pad-top-bottom" style="padding:70px 0px 10px;">
+    <div class="container-fluid">
+    <section>
+      <div class="align-fix"> 
+          <h1 class="main-heading"> Operation</h1>
+          <form action="" style="display: flex;height: 30px;">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
+              
+            </div>
+            <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
+          </form>
+      </div>
+    </section>
+    <div class=""> 
+        
+        <div class="main">
+          <div class="skin-data green">
+              <h5>Credit Reference</h5>
+              <h6>21,00,00,01,100.00</h6>
+          </div>
+          <div class="skin-data green">
+              <h5>Balance</h5>
+              <h6>21,00,91,42,890.00</h6>
+          </div>
+          <div class="skin-data green">
+              <h5>Available Balance</h5>
+              <h6>5,14,94,44,334.48</h6>
+          </div>
+          <div class="skin-data green">
+              <h5>Downline Balance</h5>
+              <h6>15,85,96,98,555.52</h6>
+          </div>
+
+          <div class="skin-data red">
+              <h5>MY P/L</h5>
+              <h6>-91,41,790.00</h6>
+          </div>
+          <div class="skin-data red">
+              <h5>Upline P/L</h5>
+              <h6>-54,58,455.00</h6>
+          </div>
+          <div class="skin-data green">
+              <h5>Client P/L</h5>
+              <h6>91,41,790.00</h6>
+          </div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <section style="padding: 15px 0px;">
+    <div class="container-fluid">
+    <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
+      <div class="">
+        
+      <h3 class="fix-h3"><img src="../images/c-user.png" alt=""> &nbsp;Notification</h3>
+    </div>
+    <div class="header-front">
+    <div>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          Notification 
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="/operation">House Management</a></li>
+          <li><a class="dropdown-item " href="/setalment">Settlements</a></li>
+          <li><a class="dropdown-item " href="/gameanalysis">Game Analysis</a></li>
+          <li><a class="dropdown-item" href="/streammanagement">Stream Managements</a></li>
+          <li><a class="dropdown-item active" href="/Notification">Notification</a></li>
+          <li><a class="dropdown-item" href="/betmoniter">Bets Monitaring</a></li>
+          <li><a class="dropdown-item" href="/alertbet">Alert Bets</a></li>
+          <li><a class="dropdown-item" href="/">Bet Limits</a></li>
+          
+          
+        </ul>
+      </div>
+    </div>
+      <div  class="loc"style="">
+      <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add New Notification</button>
+    </div>
+  </div>
+
+  <section class="">
+    <div class="">
+      <br>
+      <div class="table_data_details_ col-lg-12">
+      
+        <!-- <div class="spcare-table_">
+              <div class="hed-data">
+                <h3 class="fix-h3"><img src="../images/tp.png" alt=""> &nbsp; Top Player</h3>
+                
+            </div> -->
+              <table>
+                <thead>
+                    <tr style="text-align: center;font-size: 11px;">
+                      <th>S.No</th>
+                      <th>Event</th>
+                      <th>Message </th>
+                      <th >Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="new-body">
+                  <tr style="text-align: center;" class="blue">
+                    <td>1</td>
+                    <td>Book </td>
+                    <td>SPORTS BOOK IS LIVE ON OUR EXCH.!! ALL SPORTS <br> ADVANCE BETTING AVAILABLE WITH BET LIMIT AS LOW AS Rs 10/-.!!</td>
+                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
+                  </tr>
+                  <tr style="text-align: center;">
+                    <td>2</td>
+                    <td>Maintenance Message </td>
+                    <td>SYSTEM UNDER MAINTAINENCE SORRY FOR  INCONVINENCE CAUSED</td>
+                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
+
+                  </tr>
+                  <tr style="text-align: center;" class="blue">
+                    <td>1</td>
+                    <td>Book </td>
+                    <td>SPORTS BOOK IS LIVE ON OUR EXCH.!! ALL SPORTS <br> ADVANCE BETTING AVAILABLE WITH BET LIMIT AS LOW AS Rs 10/-.!!</td>
+                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
+
+                    
+                  </tr>
+                  <tr style="text-align: center;">
+                    <td>2</td>
+                    <td>Maintenance Message </td>
+                    <td>SYSTEM UNDER MAINTAINENCE SORRY FOR  INCONVINENCE CAUSED</td>
+                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
+
+                  </tr>
+                  <tr style="text-align: center;" class="blue">
+                    <td>1</td>
+                    <td>Book </td>
+                    <td>SPORTS BOOK IS LIVE ON OUR EXCH.!! ALL SPORTS <br> ADVANCE BETTING AVAILABLE WITH BET LIMIT AS LOW AS Rs 10/-.!!</td>
+                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
+
+                    
+                  </tr>
+                  <tr style="text-align: center;">
+                    <td>2</td>
+                    <td>Maintenance Message </td>
+                    <td>SYSTEM UNDER MAINTAINENCE SORRY FOR  INCONVINENCE CAUSED</td>
+                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
+
+                  </tr>
+                  <tr style="text-align: center;" class="blue">
+                    <td>1</td>
+                    <td>Book </td>
+                    <td>SPORTS BOOK IS LIVE ON OUR EXCH.!! ALL SPORTS <br> ADVANCE BETTING AVAILABLE WITH BET LIMIT AS LOW AS Rs 10/-.!!</td>
+                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
+
+                    
+                  </tr>
+                  <tr style="text-align: center;">
+                    <td>2</td>
+                    <td>Maintenance Message </td>
+                    <td>SYSTEM UNDER MAINTAINENCE SORRY FOR  INCONVINENCE CAUSED</td>
+                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
+
+                  </tr>
+                  <tr style="text-align: center;" class="blue">
+                    <td>1</td>
+                    <td>Book </td>
+                    <td>SPORTS BOOK IS LIVE ON OUR EXCH.!! ALL SPORTS <br> ADVANCE BETTING AVAILABLE WITH BET LIMIT AS LOW AS Rs 10/-.!!</td>
+                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
+
+                    
+                  </tr>
+                  <tr style="text-align: center;">
+                    <td>2</td>
+                    <td>Maintenance Message </td>
+                    <td>SYSTEM UNDER MAINTAINENCE SORRY FOR  INCONVINENCE CAUSED</td>
+                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
+
+                  </tr>
+                 
+                </tbody>
+              </table>
+              </div>
+            </div>
+
+            </div>
+          </div>
+        </section>
+<!-- seling section -->
+
+<!--  -->
+
+<!--  -->
+<div class="modal fade" id="myModaladduser" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header" style="text-align: center;">
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        <h4 class="modal-title" style="color: #fff;">Add Notification</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-data">
+          <div class="row">
+            <div class="col">
+              <label for="">Title</label>
+              <input type="text" class="form-control ml0" placeholder="" name="email">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="">Message</label>
+              <input type="text" class="form-control ml0" placeholder="" name="email">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+              <label for="vehicle1"> Sports</label>
+              
+              
+            </div>
+            <div class="col">
+              <input type="checkbox" id="vehicle2" name="vehicle2" value="Car"> 
+              <label for="vehicle2"> Casino</label>
+              
+            </div>
+            <div class="col">
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="">Start Date & Time</label>
+              <input type="text" class="form-control ml0" placeholder="January 10th 03:44 PM" name="email">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="">End Date & Time</label>
+              <input type="text" class="form-control ml0" placeholder="January 10th 03:44 PM" name="email">
+            </div>
+          </div>
+          
+                   <button type="button" class="btn-green mt-3 btn-ju"  style="">Save</button>
+        </form>
+      </div>
+    </div>
+    
+  </div>
+</div>
+  </div>
+    
+<script src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+
+</body>
+    </html>

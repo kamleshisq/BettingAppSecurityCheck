@@ -48,7 +48,7 @@ socket.on('connect', () => {
             }else{
                 setTimeout(()=>{
                     sendData()
-                  }, 300)
+                }, 300)
             }
           }
           sendData()

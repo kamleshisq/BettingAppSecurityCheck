@@ -29,7 +29,13 @@ router.get("/useracount", authController.isProtected, viewController.useracount)
 router.get("/userhistoryreport", authController.isProtected, viewController.userhistoryreport)
 router.get("/plreport", authController.isProtected, viewController.plreport)
 router.get("/roleManagement", authController.isProtected, viewController.roleManagement)
-router.get("/promotion", authController.isProtected, viewController.getPromotionPage)
+router.get("/promotion", authController.isProtected, viewController.getPromotionPage);
+router.get("/operation", authController.isProtected, viewController.getoperationsPage);
+router.get("/setalment", authController.isProtected, viewController.getSettlementPage);
+router.get("/gameanalysis", authController.isProtected, viewController.getGameAnalysisPage);
+router.get("/streammanagement", authController.isProtected, viewController.getStreamManagementPage);
+router.get("/Notification", authController.isProtected, viewController.getNotificationsPage);
+router.get("/casinocontrol", authController.isProtected, viewController.getCasinoControllerPage);
 router.get("/pp", viewController.promotion);
 
 //user routs

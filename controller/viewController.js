@@ -434,13 +434,13 @@ const privateKey = readPem('private.pem');
 let body = {
     "operatorId": "sheldon",
     "userId":"TestDemo",
-    "providerName":"EZUGI",
+    "providerName":"RG",
     "platformId":"DESKTOP",
     "currency":"INR",
     "username":"TestDemo",
     "lobby":false,
     "clientIp":"46.101.225.192",
-    "gameId":"105002",
+    "gameId":"900000",
     "balance":2.5
    }
 // console.log(privateKey)
@@ -476,6 +476,39 @@ exports.getPromotionPage = catchAsync(async(req, res, next) => {
     })
 });
 
+exports.getoperationsPage = catchAsync(async(req, res, next) => {
+    res.status(200).render("./operations/operation")
+})
+
+exports.getSettlementPage = catchAsync(async(req, res, next) => {
+    res.status(200).render("./sattelment/setalment")
+})
+
+exports.getGameAnalysisPage = catchAsync(async(req, res, next) => {
+    res.status(200).render("./gameAnalysis/gameanalysis")
+})
+
+exports.getStreamManagementPage = catchAsync(async(req, res, next) => {
+    res.status(200).render("./streamManagement/streammanagement")
+})
+
+exports.getNotificationsPage = catchAsync(async(req, res, next) => {
+    res.status(200).render("./Notifications/Notification")
+})
+
+exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
+    res.status(200).render("./betMonitering/betmoniter")
+})
+
+// exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
+//     res.status(200).render("./alertBet/betmoniter")
+// })
+
+exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
+    res.status(200).render("./casinoController/casinocontrol", {
+        title:"casinoController"
+    })
+})
 
 exports.promotion = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find()
