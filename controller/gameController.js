@@ -1,11 +1,11 @@
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/AppError');
 const gameModel = require('../model/gameModel');
-const XLSX = require('xlsx');
-const workbook = XLSX.readFile("C:\\jayesh\\New_folder1\\Lordex-New\\backend\\xlsfiles\\DC.xlsx");
-const sheetName = workbook.SheetNames[0];
-const worksheet = workbook.Sheets[sheetName];
-const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+// const XLSX = require('xlsx');
+// const workbook = XLSX.readFile("C:\\jayesh\\New_folder1\\Lordex-New\\backend\\xlsfiles\\DC.xlsx");
+// const sheetName = workbook.SheetNames[0];
+// const worksheet = workbook.Sheets[sheetName];
+// const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
 // console.log(data[2])
 
