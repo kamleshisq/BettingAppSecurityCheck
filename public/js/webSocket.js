@@ -906,7 +906,8 @@ socket.on('connect', () => {
          });
 
          socket.on('URLlINK', (data) =>{
-            window.location.href = data
+            // console.log(data)
+            document.getElementById('data123').innerHTML = `<iframe src="${data}" width="100%" height="1000"></iframe>`
          })
     }
 

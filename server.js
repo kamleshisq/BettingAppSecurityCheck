@@ -321,10 +321,10 @@ io.on('connection', (socket) => {
     socket.on('IMGID', async(data) => {
         let gameData = await gameModel.findById(data)
         let urldata = await gameAPI(gameData)
-        socket.emit("URLlINK", urldata.url)
+        socket.emit('URLlINK', urldata.url)
         // console.log(urldata)
         // await iframe(urldata.url).then(data => {
-        //     console.log(data)
+        //     socket.emit("URLlINK", data)
         // }).catch(err => {
         //     console.error(err);
         // });

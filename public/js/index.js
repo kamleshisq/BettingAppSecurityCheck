@@ -402,3 +402,4 @@ $(document).on('click', ".Delete", function(){
     data.id = $(this).attr('id')
     deletePromotion(data)
 })
+
