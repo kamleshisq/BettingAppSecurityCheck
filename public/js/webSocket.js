@@ -898,6 +898,37 @@ socket.on('connect', () => {
      
     }
 
+    if(pathname == "/casinocontrol"){
+        $(BACCARAT).click(function(){
+            socket.emit('baccarat', "on")
+        })
+
+        socket.on('baccarat1', (data1) => {
+            let html = ""
+            for(let i = 0 ; i < data1.length; i++){
+                if(data1[i].status){
+                    html += `<div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;">
+                    <span>${data1[i].game_name} (${data1[i].sub_provider_name})</span>
+                    <span>OFF &nbsp; <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider round"></span>
+                    </label>&nbsp; ON</span>
+                  </div>`
+                }else{
+                    html += `<div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;">
+                    <span>${data1[i].game_name} (${data1[i].sub_provider_name})</span>
+                    <span>OFF &nbsp; <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                    </label>&nbsp; ON</span>
+                  </div>`
+                }
+            }
+            document.getElementById('accordion-body').innerHTML = html
+        })
+    }
+
+
     if(pathname == "/ALLGAMEFORTESTING"){
         // console.log('working')
         $('.img').click(function(){

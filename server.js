@@ -322,13 +322,13 @@ io.on('connection', (socket) => {
         let gameData = await gameModel.findById(data)
         let urldata = await gameAPI(gameData)
         socket.emit('URLlINK', urldata.url)
-        // console.log(urldata)
-        // await iframe(urldata.url).then(data => {
-        //     socket.emit("URLlINK", data)
-        // }).catch(err => {
-        //     console.error(err);
-        // });
-        
+    })
+
+    socket.on('baccarat', async(A) => {
+        // console.log(data)
+        let data
+        data = await gameModel.find({game_name:new RegExp("Baccarat","i")})
+        socket.emit('baccarat1', data)
     })
 
 
