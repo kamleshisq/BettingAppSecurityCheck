@@ -1,0 +1,5 @@
+<%- include("./header") %>
+
+<%for(let i = 0; i < data.length; i++){%>
+    <img src="<%=data[i].url_thumb%>" alt="" width="300" height="200" id="<%=data[i]._id%>" class="img"> 
+<%}%>

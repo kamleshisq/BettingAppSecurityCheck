@@ -2,12 +2,15 @@ const app = require('./app');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const fetch = require('node-fetch');
+const gameAPI = require('./utils/gameAPI');
+const iframe = require('./utils/getIframe');
 const Role = require('./model/roleModel');
 const User = require("./model/userModel");
 const Promotion = require("./model/promotion")
 const userController = require("./websocketController/userController");
 const accountControl = require("./controller/accountController");
-const loginlogs = require('./model/loginLogs')
+const loginlogs = require('./model/loginLogs');
+const gameModel = require('./model/gameModel');
 io.on('connection', (socket) => {
     console.log('connected to client')
     let loginData = {}
@@ -311,9 +314,21 @@ io.on('connection', (socket) => {
     })
 
     socket.on('UpdateBYID', async(data) => {
-        console.log(data)
+        // console.log(data)
         let position = await Promotion.findById(data)
         await Promotion.findByIdAndUpdate(data, {click:position.click+1})
+    })
+    socket.on('IMGID', async(data) => {
+        let gameData = await gameModel.findById(data)
+        let urldata = await gameAPI(gameData)
+        socket.emit("URLlINK", urldata.url)
+        // console.log(urldata)
+        // await iframe(urldata.url).then(data => {
+        //     console.log(data)
+        // }).catch(err => {
+        //     console.error(err);
+        // });
+        
     })
 
 

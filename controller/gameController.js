@@ -44,4 +44,8 @@ exports.getAllGame = catchAsync(async(req, res, next) => {
         results:AllGame.length,
         data:AllGame
     })
+});
+
+exports.getGameByCategory = catchAsync(async(req, res, next) => {
+    console.log(req.body);
 })

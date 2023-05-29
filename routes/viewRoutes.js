@@ -37,6 +37,7 @@ router.get("/streammanagement", authController.isProtected, viewController.getSt
 router.get("/Notification", authController.isProtected, viewController.getNotificationsPage);
 router.get("/casinocontrol", authController.isProtected, viewController.getCasinoControllerPage);
 router.get("/pp", viewController.promotion);
+router.get('/ALLGAMEFORTESTING', viewController.getAllCasinoPageFOrTEsting);
 
 //user routs
 router.get("/loginUser", authController.isProtected, authController.restrictTo("logOutUser"), viewController.onlineUsers);

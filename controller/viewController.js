@@ -4,6 +4,7 @@ const User = require('../model/userModel');
 const Role = require('../model/roleModel');
 const promotionModel = require("../model/promotion");
 const roleAuth = require('../model/authorizationModel');
+const gameModel = require('../model/gameModel');
 const fetch = require("node-fetch")
 const whiteLabel = require('../model/whitelableModel');
 const mongoose = require("mongoose");
@@ -434,13 +435,13 @@ const privateKey = readPem('private.pem');
 let body = {
     "operatorId": "sheldon",
     "userId":"TestDemo",
-    "providerName":"RG",
+    "providerName":"EZUGI",
     "platformId":"DESKTOP",
     "currency":"INR",
     "username":"TestDemo",
     "lobby":false,
     "clientIp":"46.101.225.192",
-    "gameId":"900000",
+    "gameId":"105001",
     "balance":2.5
    }
 // console.log(privateKey)
@@ -505,14 +506,27 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
 // })
 
 exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
+    let data
+    data = await gameModel.find({game_name:new RegExp("32 Cards","i")})
+    // console.log(data)
     res.status(200).render("./casinoController/casinocontrol", {
-        title:"casinoController"
+        title:"casinoController",
+        data:data
     })
 })
 
 exports.promotion = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find()
     res.status(200).render("promotionpage",{
+        
+        data
+    })
+});
+
+exports.getAllCasinoPageFOrTEsting = catchAsync(async(req, res, next) => {
+    const data = await gameModel.find();
+    res.status(200).render('allCasinoGame', {
+        title:"allGame",
         data
     })
 })

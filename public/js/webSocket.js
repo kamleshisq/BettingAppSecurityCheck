@@ -898,6 +898,18 @@ socket.on('connect', () => {
      
     }
 
+    if(pathname == "/ALLGAMEFORTESTING"){
+        // console.log('working')
+        $('.img').click(function(){
+            let id = this.id;
+            socket.emit('IMGID', id)
+         });
+
+         socket.on('URLlINK', (data) =>{
+            window.location.href = data
+         })
+    }
+
 
 
     
