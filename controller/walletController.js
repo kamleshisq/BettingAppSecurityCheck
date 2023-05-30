@@ -2,6 +2,12 @@ const userModel = require('../model/userModel');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 
+exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
+    console.log(req.body)
+    console.log(req.header)
+    next()
+})
+
 
 exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
     console.log(req.body)
