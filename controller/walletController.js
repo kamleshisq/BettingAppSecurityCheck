@@ -4,7 +4,7 @@ const catchAsync = require('../utils/catchAsync');
 
 exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     console.log(req.body)
-    console.log(req.header)
+    console.log(req.originalUrl)
     next()
 })
 
