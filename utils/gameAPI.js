@@ -13,15 +13,15 @@ const privateKey = readPem('private.pem');
 // return privateKey
 let body = {
     "operatorId": "sheldon",
-    "userId":"TestDemo",
+    "userId":"TestDemo1",
     "providerName": data.provider_name,
     "platformId":"DESKTOP",
     "currency":"INR",
-    "username":"TestDemo",
+    "username":"TestDemo1",
     "lobby":false,
     "clientIp":"46.101.225.192",
     "gameId":`${data.game_id}`,
-    "balance":500
+    "balance":5000
    }
 //    console.log(body)
 //    return body
