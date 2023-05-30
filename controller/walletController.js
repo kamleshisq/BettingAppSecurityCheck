@@ -55,4 +55,8 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         "status":"OP_SUCCESS",
         "balance":balance
     })
+});
+
+exports.rollBack = catchAsync(async(req, res, next) => {
+    console.body(req.body, 13245)
 })
