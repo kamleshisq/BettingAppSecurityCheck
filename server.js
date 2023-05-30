@@ -331,7 +331,25 @@ io.on('connection', (socket) => {
         socket.emit('baccarat1', data)
     })
 
+    socket.on("RGV", async(A)=>{
+        let data;
+        data = await gameModel.find({sub_provider_name:"Royal Gaming Virtual"})
+        // console.log(data)
+        socket.emit("RGV1", {data, provider:"RGV"})
+    })
 
+
+    socket.on("EZ", async(A)=>{
+        let data;
+        data = await gameModel.find({sub_provider_name:"Ezugi"})
+        socket.emit("RGV1", {data, provider:"EZ"})
+    })
+
+    socket.on("EG", async(A)=>{
+        let data;
+        data = await gameModel.find({sub_provider_name:"Evolution Gaming"})
+        socket.emit("RGV1", {data, provider:"EG"})
+    })
     // socket.on('logOutUser',async(id) => {
     //     // console.log(id)
     //     // const user = await User.findOne({_id:id,is_Online:true});

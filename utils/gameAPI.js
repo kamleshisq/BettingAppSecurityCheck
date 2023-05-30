@@ -21,7 +21,7 @@ let body = {
     "lobby":false,
     "clientIp":"46.101.225.192",
     "gameId":`${data.game_id}`,
-    "balance":2.5
+    "balance":500
    }
 //    console.log(body)
 //    return body

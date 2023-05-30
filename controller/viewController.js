@@ -506,12 +506,15 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
 // })
 
 exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
-    let data
+    let data;
+    let RG;
     data = await gameModel.find({game_name:new RegExp("32 Cards","i")})
-    // console.log(data)
+    RG = await gameModel.find({sub_provider_name:"Royal Gaming"})
+    // console.log(RG.length)
     res.status(200).render("./casinoController/casinocontrol", {
         title:"casinoController",
-        data:data
+        data:data,
+        RG
     })
 })
 

@@ -1,6 +1,7 @@
 // const { countDocuments } = require("../../model/userModel");
 
 
+
 const socket = io();
 socket.on('connect', () => {
     console.log("websocket Connected")
@@ -899,8 +900,38 @@ socket.on('connect', () => {
     }
 
     if(pathname == "/casinocontrol"){
+        let baccarat = false;
+        let RGV = false;
+        let EZ = false;
+        let EG = false;
         $(BACCARAT).click(function(){
-            socket.emit('baccarat', "on")
+            if(!baccarat){
+                // console.log("1")
+                socket.emit('baccarat', "on")
+                baccarat = true
+            }
+        })
+
+        $("#RGV").click(function(){
+            if(!RGV){
+                // console.log(2)
+                socket.emit('RGV', "on")
+                RGV=true
+            }
+        })
+
+        $('#EZ').click(function(){
+            if(!EZ){
+                socket.emit('EZ', "on")
+                EZ = true
+            }
+        })
+
+        $('#EG').click(function(){
+            if(!EG){
+                socket.emit('EG', "on")
+                EG = true
+            }
         })
 
         socket.on('baccarat1', (data1) => {
@@ -925,8 +956,62 @@ socket.on('connect', () => {
                 }
             }
             document.getElementById('accordion-body').innerHTML = html
+        });
+
+        socket.on("RGV1", (data)=>{
+            let html = ""
+            // console.log(data.data)
+            for(let i = 0; i < data.data.length ; i++){
+                if((i%2)==0){
+                    html += `<div class="col-lg-4">
+                        <div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;margin-bottom: 10px;">
+                      <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>
+                      <span>OFF &nbsp; <label class="switch">`
+                      if(data.data[i].status){
+                        html += `<input type="checkbox" checked>`
+                      }else{
+                        html += `<input type="checkbox">`
+                      }
+                      html +=`<span class="slider round"></span>
+                      </label>&nbsp; ON</span>
+                    </div>`
+                }else if(((i%2)-1)==0){
+                    html += `<div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;margin-bottom: 10px;">
+                      <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>
+                      <span>OFF &nbsp; <label class="switch">`
+                      if(data.data[i].status){
+                        html += `<input type="checkbox" checked>`
+                      }else{
+                        html += `<input type="checkbox">`
+                      }
+                      html +=`<span class="slider round"></span>
+                      </label>&nbsp; ON</span>
+                    </div>
+                    </div>`
+                }else{
+                    html += `<div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;margin-bottom: 10px;">
+                      <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>
+                      <span>OFF &nbsp; <label class="switch">`
+                      if(data.data[i].status){
+                        html += `<input type="checkbox" checked>`
+                      }else{
+                        html += `<input type="checkbox">`
+                      }
+                      html +=`<span class="slider round"></span>
+                      </label>&nbsp; ON</span>
+                    </div>`
+                }
+            }
+            if(data.provider == "RGV"){
+                document.getElementById('RGVd').innerHTML = html
+            }else if(data.provider == "EZ"){
+                document.getElementById('EZUGId').innerHTML = html
+            }else if(data.provider == "EG"){
+                document.getElementById('ZEd').innerHTML = html
+            }
         })
     }
+
 
 
     if(pathname == "/ALLGAMEFORTESTING"){
