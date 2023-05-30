@@ -7,7 +7,7 @@ const betSchema = mongoose.Schema({
         type:String,
         required:true
     },
-    operatorToken:{
+    token:{
         type:String,
         required:true
     },
