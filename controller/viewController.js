@@ -434,15 +434,15 @@ exports.APIcall2 = catchAsync(async(req, res, next) => {
 const privateKey = readPem('private.pem');
 let body = {
     "operatorId": "sheldon",
-    "userId":"TestDemo",
-    "providerName":"EZUGI",
+    "userId":"6438f3b5d2eb67c8f67fe065",
+    "providerName": "EZUGI",
     "platformId":"DESKTOP",
     "currency":"INR",
-    "username":"TestDemo",
+    "username":"user1",
     "lobby":false,
     "clientIp":"46.101.225.192",
     "gameId":"105001",
-    "balance":2.5
+    "balance":766
    }
 // console.log(privateKey)
 const textToSign = JSON.stringify(body)

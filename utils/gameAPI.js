@@ -13,11 +13,11 @@ const privateKey = readPem('private.pem');
 // return privateKey
 let body = {
     "operatorId": "sheldon",
-    "userId":"TestDemo1",
+    "userId":"6438f3b5d2eb67c8f67fe065",
     "providerName": data.provider_name,
     "platformId":"DESKTOP",
     "currency":"INR",
-    "username":"TestDemo1",
+    "username":"user1",
     "lobby":false,
     "clientIp":"46.101.225.192",
     "gameId":`${data.game_id}`,
