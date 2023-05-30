@@ -43,11 +43,12 @@ exports.betResult = catchAsync(async(req, res, next) =>{
     let balance
     if(req.body.creditAmount == 0){
         await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{result:"LOSS"})
-        user = userModel.findById(req.body.userId)
+        user = await userModel.findById(req.body.userId)
         balance = user.balance
     }else{
         await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{result:"WON", WinAmmount:req.body.creditAmount})
-        user = userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance: req.body.creditAmount, availableBalance: req.body.creditAmount}})
+        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance: req.body.creditAmount, availableBalance: req.body.creditAmount}})
+        // console.log(user, 132)
         balance = user.balance + req.body.creditAmount
     }
     res.status(200).json({
