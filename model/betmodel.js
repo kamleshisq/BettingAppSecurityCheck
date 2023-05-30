@@ -38,7 +38,7 @@ const betSchema = mongoose.Schema({
     result:{
         type:String
     },
-    lossWinAmmount:{
+    WinAmmount:{
         type:Number
     }
 })
