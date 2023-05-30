@@ -238,9 +238,9 @@ io.on('connection', (socket) => {
         if(data.id){
             let id = await User.findOne({userName:data.id})
             // console.log()
-            fullUrl = 'http://127.0.0.1:8000/api/v1/Account/getUserAccStatement?id=' + id.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
+            fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement?id=' + id.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
         }else{
-            fullUrl = 'http://127.0.0.1:8000/api/v1/Account/getUserAccStatement?id=' + data.LOGINDATA.LOGINUSER._id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
+            fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement?id=' + data.LOGINDATA.LOGINUSER._id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
 
         }
 
@@ -291,7 +291,7 @@ io.on('connection', (socket) => {
     socket.on("UserSearchId", async(data) => {
         let user = await User.findOne({userName:data.userName})
         // console.log(data)
-        let fullUrl = 'http://127.0.0.1:8000/api/v1/Account/getUserAccStatement?id=' + user.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate
+        let fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement?id=' + user.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate
         // console.log(fullUrl)
         urlRequestAdd(`/api/v1/Account/getUserAccStatement?id = ${data.id}&page=${data.page}&from = ${data.from}&from = ${data.from}&to = ${data.to}`,'GET', data.LOGINDATA.LOGINTOKEN)
 
@@ -390,6 +390,6 @@ io.on('connection', (socket) => {
     // })    
 })
 
-http.listen(8000,()=> {
-    console.log('app is running on port 8000')
+http.listen(80,()=> {
+    console.log('app is running on port 80')
 })

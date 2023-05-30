@@ -61,11 +61,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
         }
         urls = [
             {
-                url:`http://127.0.0.1:8000/api/v1/users/getOwnChild?id=${id}`,
+                url:`http://127.0.0.1/api/v1/users/getOwnChild?id=${id}`,
                 name:'user'
             },
             {
-                url:`http://127.0.0.1:8000/api/v1/role/getAuthROle`,
+                url:`http://127.0.0.1/api/v1/role/getAuthROle`,
                 name:'role'
             }
         ]
@@ -73,11 +73,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
     else{
         urls = [
             {
-                url:`http://127.0.0.1:8000/api/v1/users/getOwnChild`,
+                url:`http://127.0.0.1/api/v1/users/getOwnChild`,
                 name:'user'
             },
             {
-                url:`http://127.0.0.1:8000/api/v1/role/getAuthROle`,
+                url:`http://127.0.0.1/api/v1/role/getAuthROle`,
                 name:'role'
             }
         ]
@@ -169,11 +169,11 @@ exports.resetPassword = catchAsync(async(req,res,next)=> {
 exports.updateUser = catchAsync(async(req, res, next) => {
     let urls = [
         {
-            url:`http://127.0.0.1:8000/api/v1/users/getUser?id=${req.query.id}`,
+            url:`http://127.0.0.1/api/v1/users/getUser?id=${req.query.id}`,
             name:'user'
         },
         {
-            url:`http://127.0.0.1:8000/api/v1/role/getAuthROle`,
+            url:`http://127.0.0.1/api/v1/role/getAuthROle`,
             name:'role'
         }
     ]

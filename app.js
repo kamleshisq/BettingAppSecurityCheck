@@ -40,7 +40,11 @@ app.use(middlewares);
     // })
 
 app.use(morgan('dev'))
-    
+// app.use((req, res, next) => {
+//     console.log('Request URL:', req.url); // Logs the URL path
+//     console.log('Request headers:', req.headers); // Logs the request headers
+//     next();
+//   });
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/role", roleRoutes)
 app.use("/api/v1/Account", accountRoutes)
