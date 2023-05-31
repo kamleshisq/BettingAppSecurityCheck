@@ -235,8 +235,9 @@ input:checked + .slider:before {
   // var currentDate = date.moment().format('D-MM-YYYY');
   // console.log(date)
   function date1(){
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     var date = new Date();
-    document.getElementById("date").innerHTML = date
+    document.getElementById("date").innerHTML = `${dayNames[date.getDay()]+ " "+date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()+" "+date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}`
     setTimeout(()=>{
       date1()
     }, 300)
