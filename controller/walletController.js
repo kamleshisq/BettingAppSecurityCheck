@@ -39,8 +39,8 @@ exports.betrequest = catchAsync(async(req, res, next) => {
 
 exports.betResult = catchAsync(async(req, res, next) =>{
     // console.log(req.body)
-    let user
-    let balance
+    let user;
+    let balance;
     if(req.body.creditAmount == 0){
         await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{result:"LOSS"})
         user = await userModel.findById(req.body.userId)
@@ -58,5 +58,13 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 });
 
 exports.rollBack = catchAsync(async(req, res, next) => {
-    console.body(req.body, 13245)
+    let user;
+    let balance;
+    user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance:req.body.rollbackAmount}});
+    balance = user.balance + req.body.rollbackAmount;
+    await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{result:"CANCEL"})
+    res.status(200).json({
+        "status": "OP_SUCCESS",
+        "balance": balance
+    })
 })
