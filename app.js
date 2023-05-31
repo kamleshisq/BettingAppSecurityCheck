@@ -20,7 +20,7 @@ const fileUpload = require('express-fileupload');
 // const ejs = require("ejs");
 
 dotenv.config({path: './config.env'});
-mongoose.connect("mongodb://127.0.0.1:27017/New_Lordex",{
+mongoose.connect("mongodb+srv://jayesh:Jk123456@cluster0.bhsp2aw.mongodb.net/New_Lordex",{
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(()=>{

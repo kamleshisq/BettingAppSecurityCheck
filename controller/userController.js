@@ -34,6 +34,11 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     req.body.roleName = user_type.roleName
     req.body.parent_id = req.currentUser.id
     req.body.parent_user_type_id = req.currentUser.user_type_id
+    req.body.parentUsers = []
+    if(req.currentUser.parentUsers){
+        req.body.parentUsers = req.currentUser.parentUsers
+    }
+    req.body.parentUsers.push(req.currentUser._id)
     const newUser = await User.create(req.body);
     res.status(200).json({
         status:'success',

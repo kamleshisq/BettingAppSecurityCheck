@@ -4,7 +4,7 @@ const accountStatementByUser = mongoose.Schema({
     child_id:{
         type:mongoose.Schema.ObjectId,
         ref:"User",
-        required:true
+        // required:true
     },
     user_id:{
         type:mongoose.Schema.ObjectId,
@@ -14,7 +14,7 @@ const accountStatementByUser = mongoose.Schema({
     parent_id:{
         type:mongoose.Schema.ObjectId,
         ref:"User",
-        required:true
+        // required:true
     },
     description:{
         type:String,
