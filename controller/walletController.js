@@ -78,7 +78,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             "role_type" : user.role_type
         }
         await accountStatement.create(Acc)
-        let A = await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: req.body.creditAmount, downlineBalance: req.body.creditAmount}})
+        await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: req.body.creditAmount, downlineBalance: req.body.creditAmount}})
         // console.log(A)
         // console.log(user, 132)
     }
