@@ -67,7 +67,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         balance = user.balance
         let Acc = {
             // "user_id":req.body.userId,
-            description:`Bet for game ${game.game_name} LOSS and creditAmount is ${req.body.creditAmount}`,
+            description:`Bet for game ${game.game_name} LOSS`,
             // "creditDebitamount" : req.body.creditAmount,
             // "balance" : balance,
             // "date" : Date.now(),
