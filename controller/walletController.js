@@ -16,18 +16,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     console.log(JSON.stringify(req.body).length)
     console.log(req.originalUrl)
     console.log(req.headers)
-    let x  = {
-        operatorId: 'sheldon',
-        userId: '6476f43cd334a60f88f87049',
-        providerName: 'RG',
-        platformId: 'DESKTOP',
-        currency: 'INR',
-        username: 'user3',
-        lobby: false,
-        clientIp: '46.101.225.192',
-        gameId: '900000',
-        balance: 5000
-      }
+    let x  = req.body
     const publicKey = readPem("private.pem")
     let result = verify(req.headers.signature, publicKey, x)
     console.log(result)
