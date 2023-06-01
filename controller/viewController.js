@@ -2,6 +2,7 @@ const AppError = require('./../utils/AppError');
 const catchAsync = require('./../utils/catchAsync');
 const User = require('../model/userModel');
 const Role = require('../model/roleModel');
+const betModel = require("../model/betmodel");
 const promotionModel = require("../model/promotion");
 const roleAuth = require('../model/authorizationModel');
 const gameModel = require('../model/gameModel');
@@ -361,9 +362,11 @@ exports.APIcall = catchAsync(async(req, res, next) => {
 
 exports.ReportPage = catchAsync(async(req, res, next) => {
     const currentUser = global._User
+    const bets = await betModel.find()
     res.status(200).render('./reports/reports',{
         title:"Reports",
-        me:currentUser
+        me:currentUser,
+        bets
     })
 })
 
