@@ -4,13 +4,23 @@ const catchAsync = require('../utils/catchAsync');
 const betModel = require("../model/betmodel");
 const accountStatement = require('../model/accountStatementByUserModel');
 const gameModel = require("../model/gameModel");
+const path = require('path');
+const fs = require('fs');
+const verify = require("../utils/verify");
 // const { use } = require('../app');
+function readPem (filename) {
+    return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename)).toString('ascii');
+  }
 
 exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     console.log(req.body)
     console.log(req.originalUrl)
-    console.log(req.headers)
-    next()
+    console.log(req.headers.signature)
+    let x  = req.body
+    const publicKey = readPem("private.pem")
+    let result = verify(req.headers.signature, publicKey, x)
+    console.log(result)
+    // next()
 })
 
 
