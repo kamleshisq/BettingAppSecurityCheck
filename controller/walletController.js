@@ -125,9 +125,17 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 exports.rollBack = catchAsync(async(req, res, next) => {
     let user;
     let balance;
-    user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance:req.body.rollbackAmount}});
+    user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance:req.body.rollbackAmount, availableBalance:req.body.rollbackAmount}});
+    await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance:req.body.rollbackAmount, downlineBalance:req.body.rollbackAmount}})
     balance = user.balance + req.body.rollbackAmount;
-    await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{result:"CANCEL"})
+    let bet =  await betModel.findOne({transactionId:req.body.transactionId})
+    let acc = await accountStatement.find({transactionId:req.body.transactionId})
+    if(bet){
+        await betModel.findByIdAndUpdate(bet._id,{returns:0, status:"CANCEL"})
+    }
+    if(acc){
+        await accountStatement.findByIdAndDelete(acc._id)
+    }
     res.status(200).json({
         "status": "OP_SUCCESS",
         "balance": balance

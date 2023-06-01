@@ -32,3 +32,15 @@
   signature: 'R1hEqsPgzCRRCfuhRB/inpBwpnrxc8UQboOENuXEl7ATK0prhuMFrH4qfvRQTpHxaaVutkjw/HGvNtOPOeboGqq6gJAvgH3pA4ZT7ayXhWhjhkCWjVhxM7ok3ZY6pL1kIkQHtyFReYp7TISs7BThgdApp9TUGZeMDzh8tqb6HqoQlz+JvQoX+Iog3f1TsfOaoS1Oj3tnMiQ5Nnj3zVxhogtthrxBtML92moY5+qF4QuHuC9u4VDNVrAdx+9kLScMAWNnw1BC93WV5CpAalTNI47IBTzczdigKoRJPBKhsym7uSsvT5u5IsrVepYAl9ZQ+zyfMHb+NTQ83KV2GdXg0Q==',
   'accept-encoding': 'gzip'
 }
+
+{
+  "betType": "Casino",
+  "gameId": "251164",
+  "operatorId": "sheldon",
+  "reqId": "912f04d4-b26b-4d00-b009-7c7daa5e4b05",
+  "rollbackAmount": 6,
+  "roundId": "7c629ddd-d405-5aba-b4e0-6403115c5545",
+  "token": "334aea35-e49e-430c-ad8a-2251e6aee865",
+  "transactionId": "05e1e955-a1e5-5652-82e3-69c5d181cb2b",
+  "userId": "6476f43cd334a60f88f87049"
+}
