@@ -15,7 +15,7 @@ function readPem (filename) {
 exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     console.log(req.body)
     console.log(req.originalUrl)
-    console.log(req.headers.signature)
+    console.log(req.headers)
     let x  = req.body
     const publicKey = readPem("private.pem")
     let result = verify(req.headers.signature, publicKey, x)
