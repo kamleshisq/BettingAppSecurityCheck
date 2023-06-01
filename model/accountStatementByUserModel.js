@@ -38,6 +38,12 @@ const accountStatementByUser = mongoose.Schema({
     role_type:{
         type:Number
     },
+    Remark:{
+        type:String
+    },
+    transactionId:{
+        type:String
+    }
 })
 
 accountStatementByUser.pre(/^find/, function(next){

@@ -45,7 +45,9 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         "balance" : user.availableBalance - req.body.debitAmount,
         "date" : Date.now(),
         "userName" : user.userName,
-        "role_type" : user.role_type
+        "role_type" : user.role_type,
+        "Remark":"-",
+        "transactionId":req.body.transactionId
     }
     accountStatement.create(Acc)
     res.status(200).json({
@@ -63,21 +65,31 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{result:"LOSS"})
         user = await userModel.findById(req.body.userId)
         balance = user.balance
+        let Acc = {
+            // "user_id":req.body.userId,
+            description:`Bet for game ${game.game_name} LOSS and creditAmount is ${req.body.creditAmount}`,
+            // "creditDebitamount" : req.body.creditAmount,
+            // "balance" : balance,
+            // "date" : Date.now(),
+            // "userName" : user.userName,
+            // "role_type" : user.role_type
+        }
+        await accountStatement.findOneAndUpdate({transactionId:req.body.transactionId},Acc)
     }else{
         await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{result:"WON", WinAmmount:req.body.creditAmount})
         user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance: req.body.creditAmount, availableBalance: req.body.creditAmount}})
         // console.log(user.parentUsers)
         balance = user.availableBalance + req.body.creditAmount
         let Acc = {
-            "user_id":req.body.userId,
-            "description":`Bet for game ${game.game_name} WON and creditAmount is ${req.body.creditAmount}`,
-            "creditDebitamount" : req.body.creditAmount,
-            "balance" : balance,
-            "date" : Date.now(),
-            "userName" : user.userName,
-            "role_type" : user.role_type
+            // "user_id":req.body.userId,
+            description:`Bet for game ${game.game_name} WON and creditAmount is ${req.body.creditAmount}`,
+            creditDebitamount: req.body.creditAmount,
+            balance: balance,
+            // "date" : Date.now(),
+            // "userName" : user.userName,
+            // "role_type" : user.role_type
         }
-        await accountStatement.create(Acc)
+        await accountStatement.findOneAndUpdate({transactionId:req.body.transactionId},Acc)
         await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: req.body.creditAmount, downlineBalance: req.body.creditAmount}})
         // console.log(A)
         // console.log(user, 132)
