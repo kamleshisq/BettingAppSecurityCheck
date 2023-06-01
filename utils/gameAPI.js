@@ -23,7 +23,7 @@ let body = {
     "gameId":`${data.game_id}`,
     "balance":5000
    }
-   console.log(body)
+//    console.log(body)
 //    return body
 // // console.log(privateKey)
 let DATA 
