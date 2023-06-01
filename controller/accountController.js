@@ -24,6 +24,7 @@ exports.deposit = catchAsync(async(req, res, next) => {
 
     userData.balance = (childUser.balance + req.body.amount);
     userData.availableBalance = (childUser.availableBalance + req.body.amount);
+    // userData.creditReference = {}
     // userData.lifeTimeCredit = (childUser.lifeTimeCredit + req.body.amount);
     parentData.availableBalance = (parentUser.availableBalance - req.body.amount);
     // parentData.lifeTimeDeposit = (parentUser.lifeTimeDeposit + req.body.amount);
@@ -33,7 +34,9 @@ exports.deposit = catchAsync(async(req, res, next) => {
     const updatedChild = await User.findByIdAndUpdate(childUser.id, userData,{
         new:true
     });
+    await User.findByIdAndUpdate(childUser.id, {$inc:{creditReference:req.body.amount}})
     const updatedparent =  await User.findByIdAndUpdate(parentUser.id, parentData);
+    // await User.findByIdAndUpdate(parentUser.id,{$inc:{lifeTimeDeposit:-req.body.amount}})
     if(!updatedChild || !updatedparent){
         return next(new AppError("Ops, Something went wrong Please try again later", 500))
     }
@@ -102,7 +105,7 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
     if(childUser.availableBalance < req.body.amount){
         return next(new AppError('withdrow amount must less than available balance',404))
     }
-    await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{downlineBalance:-req.body.amount,availableBalance:req.body.amount}})
+    await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{downlineBalance:-req.body.amount,availableBalance:req.body.amount,}})
     const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{balance:-req.body.amount,availableBalance:-req.body.amount}},{
         new:true
     })
