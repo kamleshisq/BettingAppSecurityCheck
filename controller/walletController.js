@@ -9,6 +9,7 @@ const gameModel = require("../model/gameModel");
 exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     console.log(req.body)
     console.log(req.originalUrl)
+    console.log(req.headers)
     next()
 })
 
