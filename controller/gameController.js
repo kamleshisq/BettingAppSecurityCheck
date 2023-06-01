@@ -1,6 +1,10 @@
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/AppError');
 const gameModel = require('../model/gameModel');
+const fs = require('fs')
+const path = require('path')
+const SHA256 = require('../utils/sha256')
+const fetch = require("node-fetch") 
 // const XLSX = require('xlsx');
 // const workbook = XLSX.readFile("C:\\jayesh\\New_folder1\\Lordex-New\\backend\\xlsfiles\\DC.xlsx");
 // const sheetName = workbook.SheetNames[0];
@@ -48,4 +52,44 @@ exports.getAllGame = catchAsync(async(req, res, next) => {
 
 exports.getGameByCategory = catchAsync(async(req, res, next) => {
     console.log(req.body);
+})
+
+
+exports.sport = catchAsync(async(req, res, next) => {
+    let body = {
+        clientIp: "121.122.32.1",
+        currency: "INR",
+        operatorId: "sheldon",
+        partnerId: "SHPID01",
+        platformId: "DESKTOP",
+        userId: "6476f43cd334a60f88f87049",
+        username: "user3"
+    }
+    function readPem (filename) {
+        return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename)).toString('ascii');
+      }
+
+    const privateKey = readPem('private.pem');
+    const textToSign = JSON.stringify(body);
+    const hashedOutput = SHA256(privateKey, textToSign);
+    // console.log(hashedOutput)
+    var fullUrl = 'https://stage-api.mysportsfeed.io/api/v1/feed/user-login';
+    await fetch(fullUrl, {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Signature': hashedOutput ,
+            'accept': 'application/json'
+            },
+        body:JSON.stringify(body)
+
+    })
+    .then(res => res.json())
+    .then(result => {
+      DATA = result
+    })
+    // console.log(DATA)
+    // return DATA
+    req.body.url = DATA.url
+    next()
 })

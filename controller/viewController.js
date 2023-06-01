@@ -535,4 +535,13 @@ exports.getAllCasinoPageFOrTEsting = catchAsync(async(req, res, next) => {
         title:"allGame",
         data
     })
+});
+
+
+exports.getSpoertPage = catchAsync(async(req, res, next) => {
+    // console.log(req.body.url)
+    res.status(200).render("sport",{
+        title:"Sports",
+        url: req.body.url
+    })
 })

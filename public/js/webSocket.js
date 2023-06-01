@@ -728,6 +728,7 @@ socket.on('connect', () => {
             //   button.textContent = "▼";
             }
         })
+
         let searchU 
         let SUSER
         $(".searchUser").on('input', function(e){
@@ -761,7 +762,7 @@ socket.on('connect', () => {
              }else{
                 searchU = false
              }
-         });
+        });
 
         $(document).on("click", ".load", function(){
             
@@ -913,6 +914,75 @@ socket.on('connect', () => {
          })
 
      
+    }
+
+    if(pathname == "/reports"){
+        // console.log("Working")
+        $('.searchUser').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchUser")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    socket.emit("SearchACC", {x, LOGINDATA})
+                }else{
+                    // document.getElementById('select').innerHTML = ``
+                }
+            }
+        })
+
+
+        socket.on("ACCSEARCHRES", async(data)=>{
+            // console.log(data)
+            let html = ` `
+            for(let i = 0; i < data.length; i++){
+                html += `<option><button onclick="myFunction(${data[i].userName})">${data[i].userName}</button>`
+            }
+            // console.log(html)
+            document.getElementById('select').innerHTML = html
+
+            let datalist = document.querySelector('#text_editors');
+            // console.log(datalist)
+            let  select = document.querySelector('#select');
+            // console.log(select)
+            let options = select.options;
+            // console.log(options)
+
+
+
+            /* when user selects an option from DDL, write it to text field */
+            select.addEventListener('change', fill_input);
+
+            function fill_input() {
+                 input.value = options[this.selectedIndex].value;
+            hide_select();
+            }
+
+            /* when user wants to type in text field, hide DDL */
+            let input = document.querySelector('.searchUser');
+            input.addEventListener('focus', hide_select);
+
+            function hide_select() {
+            datalist.style.display = '';
+            //   button.textContent = "▼";
+            }
+        })
+
+        let searchU 
+        let SUSER
+        $(".searchUser").on('input', function(e){
+            var $input = $(this),
+                val = $input.val();
+                list = $input.attr('list'),
+                match = $('#'+list + ' option').filter(function() {
+                    return ($(this).val() === val);
+                });
+
+                if(match.length > 0){
+                    console.log("working")
+                }
+        })
     }
 
     if(pathname == "/casinocontrol"){

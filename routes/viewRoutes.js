@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const viewController = require('./../controller/viewController')
 const authController = require('../controller/authorizationController')
+const gameController = require("../controller/gameController");
 
 router.get('/', viewController.login);
 router.get('/userLogin',viewController.userLogin );
@@ -38,6 +39,7 @@ router.get("/Notification", authController.isProtected, viewController.getNotifi
 router.get("/casinocontrol", authController.isProtected, viewController.getCasinoControllerPage);
 router.get("/pp", viewController.promotion);
 router.get('/ALLGAMEFORTESTING', viewController.getAllCasinoPageFOrTEsting);
+router.get("/SPORT",gameController.sport ,viewController.getSpoertPage);
 
 //user routs
 router.get("/loginUser", authController.isProtected, authController.restrictTo("logOutUser"), viewController.onlineUsers);
