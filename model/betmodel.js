@@ -14,6 +14,9 @@ const betSchema = mongoose.Schema({
         type:String,
         required:true
     },
+    userName:{
+        type:String
+    },
     transactionId:{
         type:String,
         required:true
@@ -26,18 +29,30 @@ const betSchema = mongoose.Schema({
         type:String,
         required:true
     },
-    debitAmount:{
-        type:Number,
-        required:true
-    },
     betType:{
         type:String,
         required:true
     },
-    result:{
+    date:{
+        type:Date,
+        required:true
+    },
+    event:{
+        type:String,
+    },
+    BetOn:{
         type:String
     },
-    WinAmmount:{
+    odds:{
+        type:Number
+    },
+    Stake:{
+        type:Number
+    },
+    status:{
+        type:String
+    },
+    returns:{
         type:Number
     }
 })

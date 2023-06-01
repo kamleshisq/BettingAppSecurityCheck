@@ -13,13 +13,13 @@ function readPem (filename) {
   }
 
 exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
-    console.log(JSON.stringify(req.body).length)
+    console.log(req.body)
     console.log(req.originalUrl)
     console.log(req.headers)
-    let x  = req.body
-    const publicKey = readPem("private.pem")
-    let result = verify(req.headers.signature, publicKey, x)
-    console.log(result)
+    // let x  = req.body
+    // const publicKey = readPem("private.pem")
+    // let result = verify(req.headers.signature, publicKey, x)
+    // console.log(result)
     next()
 })
 
@@ -37,6 +37,7 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 });
 
 exports.betrequest = catchAsync(async(req, res, next) => {
+    let date = Date.now()
     let game = await gameModel.findOne({game_id:req.body.gameId})
     // console.log(game)
     let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount}})
@@ -47,8 +48,18 @@ exports.betrequest = catchAsync(async(req, res, next) => {
     await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
     // let A = await userModel.find({_id:user.parentUsers[0]})
     // console.log(A,123)
-    req.body.result = "Pending"
-    await betModel.create(req.body);
+    // req.body.result = "Pending"
+    let bet = {
+        ...req.body,
+        date : date,
+        event : game.game_name,
+        status : "OPEN",
+        returns : -req.body.debitAmount,
+        Stake : req.body.debitAmount,
+        userName : user.userName
+    }
+    // console.log(bet)
+    await betModel.create(bet);
     let Acc = {
         "user_id":req.body.userId,
         "description":`Bet for game ${game.game_name}, amount ${req.body.debitAmount}`,
@@ -73,7 +84,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
     let user;
     let balance;
     if(req.body.creditAmount == 0){
-        await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{result:"LOSS"})
+        await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"LOSS"})
         user = await userModel.findById(req.body.userId)
         balance = user.balance
         let Acc = {
@@ -87,7 +98,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         }
         await accountStatement.findOneAndUpdate({transactionId:req.body.transactionId},Acc)
     }else{
-        await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{result:"WON", WinAmmount:req.body.creditAmount})
+        await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:req.body.creditAmount})
         user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance: req.body.creditAmount, availableBalance: req.body.creditAmount}})
         // console.log(user.parentUsers)
         balance = user.availableBalance + req.body.creditAmount
