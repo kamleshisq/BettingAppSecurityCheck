@@ -152,7 +152,10 @@ exports.rollBack = catchAsync(async(req, res, next) => {
     user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance:req.body.rollbackAmount, availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount}});
     // console.log(user.parentUsers)
     if(!user){
-        return next(new AppError("There is no user with taht id", 404))
+        res.status(200).json({
+            "status": "OP_SUCCESS",
+            "balance": 0
+        })
     }
     await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance:req.body.rollbackAmount, downlineBalance:req.body.rollbackAmount}})
     balance = user.balance + req.body.rollbackAmount;
