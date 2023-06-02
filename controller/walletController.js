@@ -45,52 +45,52 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 });
 
 exports.betrequest = catchAsync(async(req, res, next) => {
-    // let date = Date.now()
-    // let game = await gameModel.findOne({game_id:req.body.gameId})
-    // // console.log(game)
-    // let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount}})
-    // // console.log(user)
-    // if(!user){
-    //     return next(new AppError("There is no user with that id", 404))
-    // }
-    // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
-    // // let A = await userModel.find({_id:user.parentUsers[0]})
-    // // console.log(A,123)
-    // // req.body.result = "Pending"
-    // let bet = {
-    //     ...req.body,
-    //     date : date,
-    //     event : game.game_name,
-    //     status : "OPEN",
-    //     returns : -req.body.debitAmount,
-    //     Stake : req.body.debitAmount,
-    //     userName : user.userName
-    // }
-    // // console.log(bet)
-    // await betModel.create(bet);
-    // let Acc = {
-    //     "user_id":req.body.userId,
-    //     "description":`Bet for game ${game.game_name}, amount ${req.body.debitAmount}`,
-    //     "creditDebitamount" : -req.body.debitAmount,
-    //     "balance" : user.availableBalance - req.body.debitAmount,
-    //     "date" : Date.now(),
-    //     "userName" : user.userName,
-    //     "role_type" : user.role_type,
-    //     "Remark":"-",
-    //     "transactionId":req.body.transactionId
-    // }
-    // accountStatement.create(Acc)
-    // if(global.url123){
-    //     res.status(200).json({
-    //         "balance":user.availableBalance - req.body.debitAmount,
-    //         "status": "RS_OK"
-    // })
-    // }else{
-    //     res.status(200).json({
-    //         "balance":user.availableBalance - req.body.debitAmount,
-    //         "status": "OP_SUCCESS"
-    // })
-    // }
+    let date = Date.now()
+    let game = await gameModel.findOne({game_id:req.body.gameId})
+    // console.log(game)
+    let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount}})
+    // console.log(user)
+    if(!user){
+        return next(new AppError("There is no user with that id", 404))
+    }
+    await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
+    // let A = await userModel.find({_id:user.parentUsers[0]})
+    // console.log(A,123)
+    // req.body.result = "Pending"
+    let bet = {
+        ...req.body,
+        date : date,
+        event : game.game_name,
+        status : "OPEN",
+        returns : -req.body.debitAmount,
+        Stake : req.body.debitAmount,
+        userName : user.userName
+    }
+    // console.log(bet)
+    await betModel.create(bet);
+    let Acc = {
+        "user_id":req.body.userId,
+        "description":`Bet for game ${game.game_name}, amount ${req.body.debitAmount}`,
+        "creditDebitamount" : -req.body.debitAmount,
+        "balance" : user.availableBalance - req.body.debitAmount,
+        "date" : Date.now(),
+        "userName" : user.userName,
+        "role_type" : user.role_type,
+        "Remark":"-",
+        "transactionId":req.body.transactionId
+    }
+    accountStatement.create(Acc)
+    if(global.url123){
+        res.status(200).json({
+            "balance":user.availableBalance - req.body.debitAmount,
+            "status": "RS_OK"
+    })
+    }else{
+        res.status(200).json({
+            "balance":user.availableBalance - req.body.debitAmount,
+            "status": "OP_SUCCESS"
+    })
+    }
     
 });
 
