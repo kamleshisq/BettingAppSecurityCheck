@@ -74,7 +74,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
     accountStatement.create(Acc)
     res.status(200).json({
             "balance":user.availableBalance - req.body.debitAmount,
-            "status": "OP_SUCCESS"
+            "status": "RS_OK"
         })
 });
 
