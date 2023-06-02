@@ -316,6 +316,22 @@ io.on('connection', (socket) => {
         
     })
 
+
+    socket.on("bettingList", async(data) => {
+        let user = await User.findOne({userName:data.val})
+        // console.log(user)
+        let fullUrl = "http://127.0.0.1:8000/api/v1/bets/betListByUserId?id=" + user._id;
+        // console.log(fullUrl)
+        fetch(fullUrl, {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ` + data.LOGINDATA.LOGINTOKEN },
+        }).then(res => res.json())
+        .then(Data =>{
+            socket.emit("resBetListData", Data.betList)
+        })  
+
+    })
+
     socket.on('UpdateBYID', async(data) => {
         // console.log(data)
         let position = await Promotion.findById(data)

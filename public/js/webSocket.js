@@ -971,6 +971,7 @@ socket.on('connect', () => {
 
         let searchU 
         let SUSER
+        let data = {}
         $(".searchUser").on('input', function(e){
             var $input = $(this),
                 val = $input.val();
@@ -980,7 +981,9 @@ socket.on('connect', () => {
                 });
 
                 if(match.length > 0){
-                    console.log("working")
+                    data.val = val
+                    data.LOGINDATA = LOGINDATA
+                    socket.emit("bettingList", data)
                 }
         })
     }

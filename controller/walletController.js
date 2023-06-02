@@ -40,7 +40,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
     let date = Date.now()
     let game = await gameModel.findOne({game_id:req.body.gameId})
     // console.log(game)
-    let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount}})
+    let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount}})
     // console.log(user)
     if(!user){
         return next(new AppError("There is no user with that id", 404))
@@ -99,7 +99,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         await accountStatement.findOneAndUpdate({transactionId:req.body.transactionId},Acc)
     }else{
         await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:req.body.creditAmount})
-        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance: req.body.creditAmount, availableBalance: req.body.creditAmount}})
+        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance: req.body.creditAmount, availableBalance: req.body.creditAmount, myPL: req.body.creditAmount}})
         // console.log(user.parentUsers)
         balance = user.availableBalance + req.body.creditAmount
         let Acc = {
@@ -117,7 +117,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         // console.log(user, 132)
     }
     res.status(200).json({
-        "status":"OP_SUCCESS",
+        "status":"RS_OK",
         "balance":balance
     })
 });
@@ -125,7 +125,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 exports.rollBack = catchAsync(async(req, res, next) => {
     let user;
     let balance;
-    user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance:req.body.rollbackAmount, availableBalance:req.body.rollbackAmount}});
+    user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance:req.body.rollbackAmount, availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount}});
     await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance:req.body.rollbackAmount, downlineBalance:req.body.rollbackAmount}})
     balance = user.balance + req.body.rollbackAmount;
     let bet =  await betModel.findOne({transactionId:req.body.transactionId})

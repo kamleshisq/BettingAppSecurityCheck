@@ -7,6 +7,7 @@ const authRoutes = require('./routes/authRoutes');
 const roleRoutes = require('./routes/roleRoutes');
 const viewRoutes = require('./routes/viewRoutes');
 const gameRoutes = require('./routes/gameRoutes');
+const betRRoutes = require("./routes/betRoutes");
 const walletRoutes = require("./routes/walletRoutes")
 const promotionRoutes = require('./routes/promotionRoute');
 const accountRoutes = require("./routes/accountRoutes");
@@ -46,7 +47,7 @@ app.use(morgan('dev'))
 //     console.log('Request headers:', req.headers); // Logs the request headers
 //     next();
 //   });
-app.use("/wallet",walletRoutes )
+app.use("/wallet",walletRoutes );
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/role", roleRoutes)
 app.use("/api/v1/Account", accountRoutes)
@@ -54,6 +55,7 @@ app.use("/api/v1/deshBoard", deshBoardRoutes);
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/promotion", promotionRoutes);
 app.use("/api/v1/games", gameRoutes);
+app.use("/api/v1/bets", betRRoutes);
 app.use("/", viewRoutes)
 // console.log(globleErrorHandler)
 

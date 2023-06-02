@@ -111,7 +111,19 @@ const userSchema = mongoose.Schema({
     },
     parentUsers:[{
         type:String
-    }]
+    }],
+    gameCount:[{
+        type:String
+    }],
+    Bets:{
+        type:Number
+    },
+    Won:{
+        type:Number
+    },
+    Loss:{
+        type:Number
+    }
 })
 
 userSchema.pre('save', async function(next){

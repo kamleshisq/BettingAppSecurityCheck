@@ -44,3 +44,7 @@
   "transactionId": "05e1e955-a1e5-5652-82e3-69c5d181cb2b",
   "userId": "6476f43cd334a60f88f87049"
 }
+
+
+
+GET /livemarket 404 2.424 ms - 149
