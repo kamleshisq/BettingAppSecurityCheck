@@ -30,10 +30,18 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
     if(!user){
         return next(new AppError("There is no user with that id", 404))
     }
-    res.status(200).json({
-        "balance": user.availableBalance,
-        "status": "OP_SUCCESS"
-    })
+
+    if(global.url123 == "/SPORT"){
+        res.status(200).json({
+            "balance": user.availableBalance,
+            "status": "RS_OK"
+        })
+    }else{
+        res.status(200).json({
+            "balance": user.availableBalance,
+            "status": "OP_SUCCESS"
+        })
+    }
 });
 
 exports.betrequest = catchAsync(async(req, res, next) => {
@@ -72,10 +80,18 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         "transactionId":req.body.transactionId
     }
     accountStatement.create(Acc)
-    res.status(200).json({
+    if(global.url123){
+        res.status(200).json({
             "balance":user.availableBalance - req.body.debitAmount,
             "status": "RS_OK"
-        })
+    })
+    }else{
+        res.status(200).json({
+            "balance":user.availableBalance - req.body.debitAmount,
+            "status": "OP_SUCCESS"
+    })
+    }
+    
 });
 
 exports.betResult = catchAsync(async(req, res, next) =>{

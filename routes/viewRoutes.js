@@ -4,6 +4,9 @@ const viewController = require('./../controller/viewController')
 const authController = require('../controller/authorizationController')
 const gameController = require("../controller/gameController");
 
+
+router.use(viewController.url123)
+
 router.get('/', viewController.login);
 router.get('/userLogin',viewController.userLogin );
 router.get('/registration',viewController.registration );

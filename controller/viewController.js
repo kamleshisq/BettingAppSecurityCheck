@@ -537,9 +537,14 @@ exports.getAllCasinoPageFOrTEsting = catchAsync(async(req, res, next) => {
     })
 });
 
+exports.url123 = catchAsync(async(req, res, next) => {
+    global.url123 = "123/SPORT"
+    next()
+})
 
 exports.getSpoertPage = catchAsync(async(req, res, next) => {
     // console.log(req.body.url)
+    global.url123 = "/SPORT"
     res.status(200).render("sport",{
         title:"Sports",
         url: req.body.url
