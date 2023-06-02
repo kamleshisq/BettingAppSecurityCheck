@@ -22,12 +22,10 @@ const betSchema = mongoose.Schema({
         required:true
     },
     gameId:{
-        type:String,
-        required:true       
+        type:String       
     },
     roundId:{
-        type:String,
-        required:true
+        type:String
     },
     betType:{
         type:String,
@@ -43,7 +41,7 @@ const betSchema = mongoose.Schema({
     BetOn:{
         type:String
     },
-    odds:{
+    oddValue:{
         type:Number
     },
     Stake:{
