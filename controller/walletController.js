@@ -80,7 +80,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         "transactionId":req.body.transactionId
     }
     accountStatement.create(Acc)
-    if(global.url123){
+    if(global.url123 == "/SPORT"){
         res.status(200).json({
             "balance":user.availableBalance - req.body.debitAmount,
             "status": "RS_OK"
