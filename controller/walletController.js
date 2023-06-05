@@ -65,7 +65,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         description = `Bet for game ${req.body.eventName}, amount ${req.body.debitAmount}`
     }
     // console.log(game)
-    let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount}})
+    let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, $in:{Bets:1}}})
     // console.log(user)
     if(!user){
         return next(new AppError("There is no user with that id", 404))
@@ -120,7 +120,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
     let balance;
     if(req.body.creditAmount == 0){
         await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"LOSS"})
-        user = await userModel.findById(req.body.userId)
+        user = await userModel.findByIdAndUpdate(req.body.userId,{$in:{Loss:1}})
         balance = user.balance
         let Acc = {
             // "user_id":req.body.userId,
@@ -134,7 +134,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         await accountStatement.findOneAndUpdate({transactionId:req.body.transactionId},Acc)
     }else{
         await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:req.body.creditAmount})
-        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance: req.body.creditAmount, availableBalance: req.body.creditAmount, myPL: req.body.creditAmount}})
+        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance: req.body.creditAmount, availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1}})
         // console.log(user.parentUsers)
         balance = user.availableBalance + req.body.creditAmount
         let Acc = {

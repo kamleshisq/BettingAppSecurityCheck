@@ -409,6 +409,8 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
 
 exports.plreport = catchAsync(async(req, res, next) => {
     const currentUser = global._User
+    // let fullUrl = `http://127.0.0.1:8000/api/v1/users/getOwnChild?id=${id}`
+
     res.status(200).render('./PL_Report/plreport',{
         title:"P/L Report",
         me:currentUser

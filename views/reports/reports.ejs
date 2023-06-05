@@ -26,14 +26,13 @@
               </datalist>
               
             </div>
-            <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
           </form>
       </div>
    
     </section>
     <%- include("../loginUserAdminsideDetails") %>
   </section>
-
+<div class="pageId" data-pageid="1"></div>
   <section style="padding: 15px 0px;">
     <div class="container-fluid">
     <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
@@ -89,15 +88,16 @@
     <div>
       <span class="up-down-form">Select Game</span>
       <form action="">
-        <select name="" id="" style="background-color: #fff;color: #000;border: 2px solid #EAEEF7;">
-          <option value="">Cricket</option>
-          <option value="">FOOTBALL</option>
+        <select name="" id="fGame" style="background-color: #fff;color: #000;border: 2px solid #EAEEF7;">
+          <option value="Cricket" selected>Cricket</option>
+          <option value="FOOTBALL">FOOTBALL</option>
 
-          <option value="">TENNIS</option>
-          <option value="">BASKETBALL</option>
-          <option value="">BASEBALL</option>
-          <option value="">Primium</option>
-          <option value="">Sports Books</option>
+          <option value="TENNIS">TENNIS</option>
+          <option value="BASKETBALL">BASKETBALL</option>
+          <option value="BASEBALL">BASEBALL</option>
+          <option value="Primium">Primium</option>
+          <option value="Sports Books">Sports Books</option>
+          <option value="Casino">Casino</option>
          
         </select>
       </form>
@@ -106,12 +106,12 @@
       <span class="up-down-form">Filter Bets</span>
 
       <form action="">
-        <select name="" id="" style="background-color: #fff;color: #000;border: 2px solid #EAEEF7;">
-          <option value="">Open Bets</option>
-          <option value="">Settle</option>
-          <option value="">Won</option>
-          <option value="">Lost</option>
-          <option value="">Vold</option>
+        <select name="" id="fBets" style="background-color: #fff;color: #000;border: 2px solid #EAEEF7;">
+          <option value="OPEN" selected>Open Bets</option>
+          <option value="SETTLE">Settle</option>
+          <option value="WON">Won</option>
+          <option value="LOSS">Lost</option>
+          <option value="VOLD">Vold</option>
          
         </select>
       </form>
@@ -121,16 +121,21 @@
         <span class="up-down-form">From Date</span>
       <form action="">
         
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="fromDate"> 
       </form>
         </div>
         <div>
           <span class="up-down-form">To Date</span>  
           <form action="">
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="toDate"> 
           </form>
           </div>
       <div style="justify-content: flex-end;display: flex;gap: 10px;">
+        
+        <button class="btn-filter filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
+      </div>
+      <div style="justify-content: flex-end;display: flex;gap: 10px;">
+
       <button class="btn-filter"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
     </div>
   </div>

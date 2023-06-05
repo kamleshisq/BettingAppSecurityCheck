@@ -116,13 +116,16 @@ const userSchema = mongoose.Schema({
         type:String
     }],
     Bets:{
-        type:Number
+        type:Number,
+        default:0
     },
     Won:{
-        type:Number
+        type:Number,
+        default:0
     },
     Loss:{
-        type:Number
+        type:Number,
+        default:0
     }
 })
 

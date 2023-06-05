@@ -944,41 +944,201 @@ socket.on('connect', () => {
         })
 
 
-        socket.on("ACCSEARCHRES", async(data)=>{
-            // console.log(data)
-            let html = ` `
-            for(let i = 0; i < data.length; i++){
-                html += `<option><button onclick="myFunction(${data[i].userName})">${data[i].userName}</button>`
-            }
-            // console.log(html)
-            document.getElementById('select').innerHTML = html
-
-            let datalist = document.querySelector('#text_editors');
-            // console.log(datalist)
-            let  select = document.querySelector('#select');
-            // console.log(select)
-            let options = select.options;
-            // console.log(options)
-
-
-
-            /* when user selects an option from DDL, write it to text field */
-            select.addEventListener('change', fill_input);
-
-            function fill_input() {
-                 input.value = options[this.selectedIndex].value;
-            hide_select();
-            }
-
-            /* when user wants to type in text field, hide DDL */
-            let input = document.querySelector('.searchUser');
-            input.addEventListener('focus', hide_select);
-
-            function hide_select() {
-            datalist.style.display = '';
-            //   button.textContent = "▼";
-            }
-        })
+        if(pathname == "/reports"){
+            // console.log("Working")
+            $('.searchUser').keyup(function(){
+                // console.log('working')
+                if($(this).hasClass("searchUser")){
+                    // console.log($(this).val())
+                    if($(this).val().length >= 3 ){
+                        let x = $(this).val(); 
+                        // console.log(x)
+                        socket.emit("SearchACC", {x, LOGINDATA})
+                    }else{
+                        // document.getElementById('select').innerHTML = ``
+                    }
+                }
+            })
+    
+    
+            socket.on("ACCSEARCHRES", async(data)=>{
+                // console.log(data)
+                let html = ` `
+                for(let i = 0; i < data.length; i++){
+                    html += `<option><button onclick="myFunction(${data[i].userName})">${data[i].userName}</button>`
+                }
+                // console.log(html)
+                document.getElementById('select').innerHTML = html
+    
+                let datalist = document.querySelector('#text_editors');
+                // console.log(datalist)
+                let  select = document.querySelector('#select');
+                // console.log(select)
+                let options = select.options;
+                // console.log(options)
+    
+    
+    
+                / when user selects an option from DDL, write it to text field /
+                select.addEventListener('change', fill_input);
+    
+                function fill_input() {
+                     input.value = options[this.selectedIndex].value;
+                hide_select();
+                }
+    
+                / when user wants to type in text field, hide DDL /
+                let input = document.querySelector('.searchUser');
+                input.addEventListener('focus', hide_select);
+    
+                function hide_select() {
+                datalist.style.display = '';
+                //   button.textContent = "▼";
+                }
+            })
+    
+            let searchU 
+            let SUSER
+            let fromDate
+            let toDate
+            let fGame
+            let fBets
+            let filterData = {}
+            $(".searchUser").on('input', function(e){
+                var $input = $(this),
+                    val = $input.val();
+                    list = $input.attr('list'),
+                    match = $('#'+list + ' option').filter(function() {
+                        return ($(this).val() === val);
+                    });
+    
+                    if(match.length > 0){
+                        console.log(match.text())
+                        filterData = {}
+                        filterData.userName = match.text()
+                        $('.pageId').attr('data-pageid','1')
+                        socket.emit('userBetDetail',{filterData,LOGINDATA,page:0})
+                    }
+            })
+    
+    
+            $('.filter').click(function(){
+                let userName = $('.searchUser').val()
+                fromDate = $('#fromDate').val()
+                toDate = $('#toDate').val()
+                fGame = $('#fGame').val()
+                fBets = $('#fBets').val()
+                let page = $('.pageId').attr('data-pageid','1')
+                data.page = 0;
+                if(fromDate != ''  && toDate != '' ){
+                    filterData.date = {$gte : fromDate,$lte : toDate}
+                }else{
+    
+                    if(fromDate != '' ){
+                        filterData.date = {$gte : fromDate}
+                    }
+                    if(toDate != '' ){
+                        filterData.date = {$lte : toDate}
+                    }
+                }
+                if(userName != ''){
+                    filterData.userName = userName
+                }else{
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                }
+                filterData.betType = fGame
+                filterData.status = fBets
+                data.filterData = filterData
+                data.LOGINDATA = LOGINDATA
+                console.log(data)
+                socket.emit('userBetDetail',data)
+    
+            })
+    
+            $(window).scroll(function() {
+                if($(document).height()-$(window).scrollTop() == window.innerHeight){
+                    let page = parseInt($('.pageId').attr('data-pageid'));
+                    $('.pageId').attr('data-pageid',page + 1)
+                    let data = {}
+                    let userName = $('.searchUser').val()
+                    if(userName == ''){
+                        filterData.userName = LOGINDATA.LOGINUSER.userName
+                    }else{
+                        filterData.userName = userName
+                    }
+                    if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
+                        filterData.date = {$gte : fromDate,$lte : toDate}
+                    }else{
+    
+                        if(fromDate != undefined && fromDate != '' ){
+                            filterData.date = {$gte : fromDate}
+                        }
+                        if(toDate != undefined && toDate != '' ){
+                            filterData.date = {$lte : toDate}
+                        }
+                    }
+                    if(fGame !== undefined ){
+                        filterData.betType = fGame
+                    }
+                    if(fBets != undefined ){
+                        filterData.status = fBets
+                    }
+    
+                    data.filterData = filterData;
+                    data.page = page
+                    data.LOGINDATA = LOGINDATA
+                    console.log(data)
+                    socket.emit('userBetDetail',data)
+    
+    
+    
+                }
+             }); 
+    
+            socket.on('userBetDetail',(data) => {
+                console.log(data)
+                let page = data.page
+                let bets = data.ubDetails;
+                let html = '';
+                 for(let i = 0; i < bets.length; i++){
+                     let date = new Date(bets[i].date)
+                    if((i%2)==0){
+                        html += `<tr style="text-align: center;" class="blue">`
+                    }else{
+                        html += `<tr style="text-align: center;" >`
+                    }
+                    html += `<td>${i + 1}</td>
+                    <td>${bets[i].userName}</td>
+                    <td>${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}</td>
+                    <td>${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>`
+                    if(bets[i].Sport){
+                        html += `<td>${bets[i].Sport}</td>
+                        <td>${bets[i].Match}</td>
+                        <td>${bets[i].Market}</td>
+                        <td>${bets[i].betOn}</td>
+                        <td>${bets[i].Odds}</td>`
+                    }else{
+                        html += `<td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>`
+                    }
+                    html += `
+                    <td>${bets[i].status}</td>
+                    <td>${bets[i].Stake}</td>
+                    <td>${bets[i].returns}</td>
+                    <td>${bets[i].transactionId}</td>
+                    <td>${bets[i].event}</td></tr>`
+                }
+                if(data.page == 0){
+                    $('.new-body').html(html)
+                }else{
+                    $('.new-body').append(html)         
+                }
+            })
+    
+        }
 
         let searchU 
         let SUSER

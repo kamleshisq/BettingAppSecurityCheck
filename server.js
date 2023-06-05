@@ -5,6 +5,7 @@ const fetch = require('node-fetch');
 const gameAPI = require('./utils/gameAPI');
 const Role = require('./model/roleModel');
 const User = require("./model/userModel");
+const Bet = require("./model/betmodel");
 const Promotion = require("./model/promotion")
 const userController = require("./websocketController/userController");
 const accountControl = require("./controller/accountController");
@@ -264,33 +265,33 @@ io.on('connection', (socket) => {
         });
     })
 
-    socket.on("SearchACC", async(data) => {
-        // console.log(data)
-        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
-        let role_type =[]
-        for(let i = 0; i < roles.length; i++){
-            role_type.push(roles[i].role_type)
-        }
-        // console.log(role_type, 123)
+    // socket.on("SearchACC", async(data) => {
+    //     // console.log(data)
+    //     const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+    //     let role_type =[]
+    //     for(let i = 0; i < roles.length; i++){
+    //         role_type.push(roles[i].role_type)
+    //     }
+    //     // console.log(role_type, 123)
         
-        var regexp = new RegExp(data.x);
-        let user
-        if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
-                user = await User.find({userName:regexp})
-        }else{
-                // let role_Type = {
-                //     $in:role_type
-                // }
-                // let xfiletr  = {}
-                // xfiletr.role_Type = role_Type
-                // xfiletr.userName = regexp
-                // console.log(data.filterData)
-                // console.log(xfiletr)
-                user = await User.find({ role_type:{$in: role_type}, userName: regexp })
-        }
-        // console.log(user)
-        socket.emit("ACCSEARCHRES", user)
-    })
+    //     var regexp = new RegExp(data.x);
+    //     let user
+    //     if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
+    //             user = await User.find({userName:regexp})
+    //     }else{
+    //             // let role_Type = {
+    //             //     $in:role_type
+    //             // }
+    //             // let xfiletr  = {}
+    //             // xfiletr.role_Type = role_Type
+    //             // xfiletr.userName = regexp
+    //             // console.log(data.filterData)
+    //             // console.log(xfiletr)
+    //             user = await User.find({ role_type:{$in: role_type}, userName: regexp })
+    //     }
+    //     // console.log(user)
+    //     socket.emit("ACCSEARCHRES", user)
+    // })
 
     socket.on("UserSearchId", async(data) => {
         let user = await User.findOne({userName:data.userName})
@@ -369,6 +370,63 @@ io.on('connection', (socket) => {
         let data;
         data = await gameModel.find({sub_provider_name:"Evolution Gaming"})
         socket.emit("RGV1", {data, provider:"EG"})
+    })
+
+    socket.on("SearchACC", async(data) => {
+        // console.log(data)
+        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        // console.log(roles)
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        // console.log(role_type, 123)
+        
+        var regexp = new RegExp(data.x);
+        let user
+        if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
+                user = await User.find({userName:regexp})
+        }else{
+                // let role_Type = {
+                //     $in:role_type
+                // }
+                // let xfiletr  = {}
+                // xfiletr.role_Type = role_Type
+                // xfiletr.userName = regexp
+                // console.log(data.filterData)
+                // console.log(xfiletr)
+                user = await User.find({ role_type:{$in: role_type}, userName: regexp })
+        }
+        // console.log(user)
+        socket.emit("ACCSEARCHRES", user)
+    })
+
+    socket.on('userBetDetail',async(data)=>{
+        // console.log(data)
+        let limit = 10;
+        let page = data.page;
+        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        data.filterData.role_type = {
+            $in:role_type
+        }
+        const user = await User.findOne({userName:data.filterData.userName})
+        if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
+            delete data.filterData['userName']
+            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+            socket.emit('userBetDetail',{ubDetails,page})
+        }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
+            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+            socket.emit('userBetDetail',{ubDetails,page})
+
+        }
+        
+        
+        
+        // console.log(user)
     })
     // socket.on('logOutUser',async(id) => {
     //     // console.log(id)
