@@ -362,7 +362,7 @@ exports.APIcall = catchAsync(async(req, res, next) => {
 
 exports.ReportPage = catchAsync(async(req, res, next) => {
     const currentUser = global._User
-    const bets = await betModel.find()
+    const bets = await betModel.find().limit(10)
     res.status(200).render('./reports/reports',{
         title:"Reports",
         me:currentUser,

@@ -1094,7 +1094,9 @@ socket.on('connect', () => {
     
                 }
              }); 
-    
+             
+
+            let count = 11
             socket.on('userBetDetail',(data) => {
                 console.log(data)
                 let page = data.page
@@ -1107,7 +1109,7 @@ socket.on('connect', () => {
                     }else{
                         html += `<tr style="text-align: center;" >`
                     }
-                    html += `<td>${i + 1}</td>
+                    html += `<td>${i + count}</td>
                     <td>${bets[i].userName}</td>
                     <td>${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}</td>
                     <td>${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>`
