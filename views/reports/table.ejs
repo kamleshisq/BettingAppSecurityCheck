@@ -22,9 +22,9 @@
         <% for(let i = 0; i < bets.length; i++){%>
             <% let date = new Date(bets[i].date)%>
             <%if((i%2)==0){%>
-                <tr style="text-align: center;" class="blue"></tr>
+                <tr style="text-align: center;" class="blue">
             <%}else{%>
-                <tr style="text-align: center;" ></tr>
+                <tr style="text-align: center;" >
             <%}%>
             <td><%=i + 1%></td>
             <td><%=bets[i].userName%></td>
@@ -48,6 +48,7 @@
             <td><%=bets[i].returns%></td>
             <td><%=bets[i].transactionId%></td>
             <td><%=bets[i].event%></td>
+        </tr>
         <%}%>
       
      
