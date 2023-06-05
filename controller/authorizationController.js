@@ -30,7 +30,8 @@ const createSendToken = async (user, statuscode, res, req)=>{
     // console.log(req.headers['user-agent'])
     // req.loginUser = user
     let time = Date.now()
-    await loginLogs.create({user_id:user._id, 
+    await loginLogs.create({user_id:user._id,
+                            userName:user.userName, 
                             login_time:time, 
                             isOnline: true, 
                             ip_address:req.ip, 

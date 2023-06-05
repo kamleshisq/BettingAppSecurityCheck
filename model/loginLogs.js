@@ -6,6 +6,9 @@ const loginLogSchema = mongoose.Schema({
         type:mongoose.Schema.ObjectId,
         ref:"User"
     },
+    userName:{
+        type:String
+    },
     login_time:{
         type:Date,
         default:Date.now(),

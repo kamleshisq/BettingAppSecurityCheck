@@ -1289,6 +1289,168 @@ socket.on('connect', () => {
          })
     }
 
+    if(pathname == "/plreport"){
+        // let fromDate
+        // let toDate
+        let filterData = {}
+        $('.searchUser').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchUser")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    socket.emit("SearchACC", {x, LOGINDATA})
+                }else{
+                    // document.getElementById('select').innerHTML = ``
+                }
+            }
+        })
+
+        socket.on("ACCSEARCHRES", async(data)=>{
+            // console.log(data)
+            let html = ` `
+            for(let i = 0; i < data.length; i++){
+                html += `<option><button onclick="myFunction(${data[i].userName})">${data[i].userName}</button>`
+            }
+            // console.log(html)
+            document.getElementById('select').innerHTML = html
+
+            let datalist = document.querySelector('#text_editors');
+            console.log(datalist)
+            let  select = document.querySelector('#select');
+            // console.log(select)
+            let options = select.options;
+            // console.log(options)
+
+
+
+            / when user selects an option from DDL, write it to text field /
+            select.addEventListener('change', fill_input);
+
+            function fill_input() {
+                 input.value = options[this.selectedIndex].value;
+            hide_select();
+            }
+
+            / when user wants to type in text field, hide DDL /
+            let input = document.querySelector('.searchUser');
+            input.addEventListener('focus', hide_select);
+
+            function hide_select() {
+            datalist.style.display = '';
+            //   button.textContent = "▼";
+            }
+        })
+
+        // $('.filter').click(function(){
+        //     let userName = $('.searchUser').val()
+        //     fromDate = $('#fromDate').val()
+        //     toDate = $('#toDate').val()
+        //     $('.pageId').attr('data-pageid','1')
+        //     data.page = 0;
+        //     if(fromDate != ''  && toDate != '' ){
+        //         filterData.date = {$gte : fromDate,$lte : toDate}
+        //     }else{
+
+        //         if(fromDate != '' ){
+        //             filterData.date = {$gte : fromDate}
+        //         }
+        //         if(toDate != '' ){
+        //             filterData.date = {$lte : toDate}
+        //         }
+        //     }
+        //     if(userName != ''){
+        //         filterData.userName = userName
+        //     }else{
+        //         filterData.userName = LOGINDATA.LOGINUSER.userName
+        //     }
+        //     data.filterData = filterData
+        //     data.LOGINDATA = LOGINDATA
+        //     console.log(data)
+        //     socket.emit('userPLDetail',data)
+
+        // })
+
+        $(window).scroll(function() {
+            if($(document).height()-$(window).scrollTop() == window.innerHeight){
+                let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                let data = {}
+                let userName = $('.searchUser').val()
+                if(userName == ''){
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                }
+                // if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
+                //     filterData.date = {$gte : fromDate,$lte : toDate}
+                // }else{
+
+                //     if(fromDate != undefined && fromDate != '' ){
+                //         filterData.date = {$gte : fromDate}
+                //     }
+                //     if(toDate != undefined && toDate != '' ){
+                //         filterData.date = {$lte : toDate}
+                //     }
+                // }    
+                data.filterData = filterData;
+                data.page = page
+                data.LOGINDATA = LOGINDATA
+                console.log(data)
+                socket.emit('userPLDetail',data)
+
+
+
+            }
+         }); 
+
+        $(".searchUser").on('input', function(e){
+            var $input = $(this),
+                val = $input.val();
+                list = $input.attr('list'),
+                match = $('#'+list + ' option').filter(function() {
+                    return ($(this).val() === val);
+                });
+
+                if(match.length > 0){
+                    console.log(match.text())
+                    filterData = {}
+                    filterData.userName = match.text()
+                    $('.pageId').attr('data-pageid','1')
+                    socket.emit('userPLDetail',{filterData,LOGINDATA,page:0})
+                }
+        })
+
+        socket.on('userPLDetail',(data)=>{
+            console.log(data)
+            let users = data.users
+            let page = data.page;
+            let html = '';
+            for(let i = 0; i < users.length; i++){
+                if((i%2) == 0){
+                    html += `<tr style="text-align: center;" class="blue">`
+                }else{
+                    html += `<tr style="text-align: center;">`
+                }
+                html += `<td>${users[i].userName}</td>
+                <td>${users[i].Won}</td>
+                <td>${users[i].Loss}</td>
+                <td>${users[i].myPL}</td>
+                </tr>`
+            }
+            if(page == 0){
+                $('.new-body').html(html)
+            }else{
+                $('.new-body').append(html)
+            }
+          
+          
+        })
+
+
+    }
+
 
 
     

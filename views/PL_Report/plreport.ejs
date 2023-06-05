@@ -19,16 +19,20 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
               </div>
-              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
+              <input type="text" list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
+              <datalist id="text_editors">
+                <select id="select">
+                </select>
+              </datalist>
               
             </div>
-            <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
           </form>
       </div>
    
     </section>
     <%- include("../loginUserAdminsideDetails") %>
   </section>
+  <div class="pageId" data-pageid="1"></div>
 
   <section >
     <div class="container-fluid">
@@ -52,22 +56,6 @@
           
         </ul>
       </div>
-    </div>
-    <div>
-      <span class="up-down-form">From Date</span>
-    <form action="">
-      
-        <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
-    </form>
-      </div>
-      <div>
-        <span class="up-down-form">To Date</span>  
-        <form action="">
-        <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
-        </form>
-        </div>
-      <div style="justify-content: flex-end;display: flex;gap: 10px;">
-      <button class="btn-filter"> Refresh</button>
     </div>
   </div>
   <section class="">

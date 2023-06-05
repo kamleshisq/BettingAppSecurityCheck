@@ -428,6 +428,31 @@ io.on('connection', (socket) => {
         
         // console.log(user)
     })
+
+    socket.on('userPLDetail',async(data)=>{
+        // console.log(data)
+        let page = data.page;
+        let limit = 10;
+        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        data.filterData.role_type = {
+            $in:role_type
+        }
+        console.log(data.filterData)
+        const user = await User.findOne({userName:data.filterData.userName})
+        if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
+            delete data.filterData['userName']
+            let users = await User.find(data.filterData).skip(page * limit).limit(limit)
+            socket.emit('userPLDetail',{users,page})
+        }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
+            let users = await User.find(data.filterData).skip(page * limit).limit(limit)
+            socket.emit('userPLDetail',{users,page})
+
+        }
+    })
     // socket.on('logOutUser',async(id) => {
     //     // console.log(id)
     //     // const user = await User.findOne({_id:id,is_Online:true});
