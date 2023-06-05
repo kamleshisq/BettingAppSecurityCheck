@@ -137,6 +137,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                     "balance": 0,
                     "status": "OP_SUCCESS"
                 })
+            }
         }
         balance = user.balance
         let Acc = {
@@ -164,6 +165,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                     "balance": 0,
                     "status": "OP_SUCCESS"
                 })
+            }
         }
         balance = user.availableBalance + req.body.creditAmount
         let Acc = {
@@ -193,7 +195,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             "status": "OP_SUCCESS"
         })
     }
-};
+});
 
 exports.rollBack = catchAsync(async(req, res, next) => {
     let user;
