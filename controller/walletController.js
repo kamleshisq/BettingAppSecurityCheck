@@ -20,8 +20,12 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     const publicKey = readPem("public.pem")
     // console.log(publicKey)
     let result = verify(req.headers.signature, publicKey, x)
-    // console.log(result, 564)
-    next()
+    console.log(result, 564)
+    if(result){
+        next()
+    }else{
+        return next(new AppError("Please provide a valide signature", 404))
+    }
 })
 
 
