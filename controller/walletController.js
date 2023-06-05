@@ -61,7 +61,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         game = game1.game_name
         description = `Bet for game ${game.game_name}, amount ${req.body.debitAmount}`
     }else{
-        game = req.body.eventName
+        game = req.body.competitionName
         description = `Bet for game ${req.body.eventName}, amount ${req.body.debitAmount}`
     }
     // console.log(game)
@@ -76,6 +76,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
     // req.body.result = "Pending"
     let bet = {
         ...req.body,
+        match   : req.body.eventName,
         date : date,
         event : game,
         status : "OPEN",

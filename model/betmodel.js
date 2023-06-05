@@ -55,6 +55,9 @@ const betSchema = mongoose.Schema({
     },
     role_type:{
         type:Number
+    },
+    match:{
+        type:String
     }
 })
 

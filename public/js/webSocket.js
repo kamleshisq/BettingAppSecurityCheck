@@ -928,20 +928,20 @@ socket.on('connect', () => {
     }
 
     if(pathname == "/reports"){
-        // console.log("Working")
-        $('.searchUser').keyup(function(){
-            // console.log('working')
-            if($(this).hasClass("searchUser")){
-                // console.log($(this).val())
-                if($(this).val().length >= 3 ){
-                    let x = $(this).val(); 
-                    // console.log(x)
-                    socket.emit("SearchACC", {x, LOGINDATA})
-                }else{
-                    // document.getElementById('select').innerHTML = ``
-                }
-            }
-        })
+    //     // console.log("Working")
+    //     $('.searchUser').keyup(function(){
+    //         // console.log('working')
+    //         if($(this).hasClass("searchUser")){
+    //             // console.log($(this).val())
+    //             if($(this).val().length >= 3 ){
+    //                 let x = $(this).val(); 
+    //                 // console.log(x)
+    //                 socket.emit("SearchACC", {x, LOGINDATA})
+    //             }else{
+    //                 // document.getElementById('select').innerHTML = ``
+    //             }
+    //         }
+    //     })
 
 
         if(pathname == "/reports"){
@@ -1113,12 +1113,12 @@ socket.on('connect', () => {
                     <td>${bets[i].userName}</td>
                     <td>${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}</td>
                     <td>${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>`
-                    if(bets[i].Sport){
-                        html += `<td>${bets[i].Sport}</td>
-                        <td>${bets[i].Match}</td>
-                        <td>${bets[i].Market}</td>
-                        <td>${bets[i].betOn}</td>
-                        <td>${bets[i].Odds}</td>`
+                    if(bets[i].match){
+                        html += `<td>-</td>
+                        <td>${bets[i].match}</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>${bets[i].oddValue}</td>`
                     }else{
                         html += `<td>-</td>
                         <td>-</td>
