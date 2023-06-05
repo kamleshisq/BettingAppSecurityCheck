@@ -44,21 +44,22 @@ const LoginLogs = catchAsync(async(req, res, next) => {
                 res.status(200).render('./user/passwordUpdate')
 
             }
+    }else if(req.originalUrl != "\\" ){
+        if(req.cookies.JWT && !req.originalUrl.startsWith("/wallet")){
+            // console.log(global._loggedInToken)
+            const login = await loginLogs.findOne({session_id:req.cookies.JWT, isOnline:true})
+            // console.log(req.cookies.JWT)
+            const user = await User.findById(login.user_id._id)
+            var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl
+            login.logs.push(req.method + " - " + fullUrl)
+            login.save()
+            global._token = req.cookies.JWT
+            global._protocol = req.protocol
+            global._host = req.get('host')
+            global._User = user
+        }
     }
     
-    if(req.cookies.JWT && !req.originalUrl.startsWith("/wallet")){
-        // console.log(global._loggedInToken)
-        const login = await loginLogs.findOne({session_id:req.cookies.JWT, isOnline:true})
-        // console.log(req.cookies.JWT)
-        const user = await User.findById(login.user_id._id)
-        var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl
-        login.logs.push(req.method + " - " + fullUrl)
-        login.save()
-        global._token = req.cookies.JWT
-        global._protocol = req.protocol
-        global._host = req.get('host')
-        global._User = user
-    }
     
     next()
 })
