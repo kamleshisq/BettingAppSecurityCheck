@@ -33,7 +33,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
     await loginLogs.create({user_id:user._id, 
                             login_time:time, 
                             isOnline: true, 
-                            ip_address:req.socket.localAddress, 
+                            ip_address:req.ip, 
                             session_id:token, 
                             device_info:req.headers['user-agent']})
     global._loggedInToken.push({token:token,time:time})
