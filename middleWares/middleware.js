@@ -23,6 +23,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         }
         const userLog = await loginLogs.find({user_id:id._id})
         global._count = userLog.length
+        req._count = userLog.length
         global._admin = true
         // console.log(global._count, global._admin)
     }else if (req.originalUrl == "/api/v1/auth/userLogin"){
@@ -38,16 +39,16 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         global._count = userLog.length
         global._admin = false
     }
-    if(global._count == 0){
-            global._count = 2
-            if(global._admin){
+    // if(global._count == 0){
+    //         global._count = 2
+    //         if(global._admin){
 
-                res.redirect('http://46.101.225.192:8000/');
-            }else{
-                res.status(200).render('./user/passwordUpdate')
+    //             res.redirect('http://46.101.225.192:8000/');
+    //         }else{
+    //             res.status(200).render('./user/passwordUpdate')
 
-            }
-    }
+    //         }
+    // }
     // console.log(req)
     if(req.cookies.JWT && !req.originalUrl.startsWith("/wallet") && !req.originalUrl == "/"){
         // console.log(global._loggedInToken)

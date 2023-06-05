@@ -5448,14 +5448,20 @@ var login = /*#__PURE__*/function () {
             sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
-            if (res.data.data.user.role.authorization.includes('dashboard')) {
+            if (res.data.count) {
               window.setTimeout(function () {
-                location.assign('/dashboard');
+                location.assign('/updatePassWord');
               }, 100);
             } else {
-              window.setTimeout(function () {
-                location.assign('/userManagement');
-              }, 100);
+              if (res.data.data.user.role.authorization.includes('dashboard')) {
+                window.setTimeout(function () {
+                  location.assign('/dashboard');
+                }, 100);
+              } else {
+                window.setTimeout(function () {
+                  location.assign('/userManagement');
+                }, 100);
+              }
             }
           }
           _context.next = 11;
