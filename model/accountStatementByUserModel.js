@@ -43,6 +43,9 @@ const accountStatementByUser = mongoose.Schema({
     },
     transactionId:{
         type:String
+    },
+    stake:{
+        type:String
     }
 })
 

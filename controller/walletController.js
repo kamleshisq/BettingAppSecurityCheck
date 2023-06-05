@@ -45,6 +45,7 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 });
 
 exports.betrequest = catchAsync(async(req, res, next) => {
+    // console.log(req.body)
     let date = Date.now()
     let game
     let description
@@ -54,6 +55,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         description = `Bet for game ${game.game_name}, amount ${req.body.debitAmount}`
     }else{
         game = req.body.eventName
+        description = `Bet for game ${req.body.eventName}, amount ${req.body.debitAmount}`
     }
     // console.log(game)
     let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount}})
@@ -72,7 +74,8 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         status : "OPEN",
         returns : -req.body.debitAmount,
         Stake : req.body.debitAmount,
-        userName : user.userName
+        userName : user.userName,
+        role_type:user.role_type
     }
     // console.log(bet)
     await betModel.create(bet);
@@ -85,6 +88,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         "userName" : user.userName,
         "role_type" : user.role_type,
         "Remark":"-",
+        "stake": req.body.debitAmount,
         "transactionId":req.body.transactionId
     }
     accountStatement.create(Acc)

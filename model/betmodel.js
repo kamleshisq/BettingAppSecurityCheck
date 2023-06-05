@@ -52,6 +52,9 @@ const betSchema = mongoose.Schema({
     },
     returns:{
         type:Number
+    },
+    role_type:{
+        type:Number
     }
 })
 
