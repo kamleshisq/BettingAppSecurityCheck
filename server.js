@@ -3,7 +3,6 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const fetch = require('node-fetch');
 const gameAPI = require('./utils/gameAPI');
-const iframe = require('./utils/getIframe');
 const Role = require('./model/roleModel');
 const User = require("./model/userModel");
 const Promotion = require("./model/promotion")
@@ -11,6 +10,8 @@ const userController = require("./websocketController/userController");
 const accountControl = require("./controller/accountController");
 const loginlogs = require('./model/loginLogs');
 const gameModel = require('./model/gameModel');
+
+// http(req, res) => {}
 io.on('connection', (socket) => {
     console.log('connected to client')
     let loginData = {}

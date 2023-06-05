@@ -30,7 +30,8 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
     if(!user){
         return next(new AppError("There is no user with that id", 404))
     }
-
+    const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    console.log(clientIP)
     if(global.url123 == "/SPORT"){
         res.status(200).json({
             "balance": user.availableBalance,

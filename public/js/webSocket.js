@@ -846,10 +846,10 @@ socket.on('connect', () => {
                         <td>${count1 + i}</td>
                         <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
                         <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
-                        if(data.json.userAcc[i].stale){
+                        if(data.json.userAcc[i].stake){
                             html += `<td>${data.json.userAcc[i].stake}</td>`
                         }else{
-                            html += `<td></td>`
+                            html += `<td>-</td>`
                         }
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
@@ -884,6 +884,11 @@ socket.on('connect', () => {
                         <td>${count1 + i}</td>
                         <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
                         <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        if(data.json.userAcc[i].stake){
+                            html += `<td>${data.json.userAcc[i].stake}</td>`
+                        }else{
+                            html += `<td>-</td>`
+                        }
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
                             <td>0</td>`
