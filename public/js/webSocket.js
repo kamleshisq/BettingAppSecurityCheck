@@ -827,6 +827,7 @@ socket.on('connect', () => {
                         "<th>S.No</th>" +
                         "<th>Date</th>" +
                         "<th>Time</th>" +
+                        "<th>Stake</th>" +
                         "<th>Credit</th>"+
                         "<th>Debit</th>"+
                         "<th>From / To</th>"+
@@ -845,6 +846,11 @@ socket.on('connect', () => {
                         <td>${count1 + i}</td>
                         <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
                         <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        if(data.json.userAcc[i].stale){
+                            html += `<td>${data.json.userAcc[i].stake}</td>`
+                        }else{
+                            html += `<td></td>`
+                        }
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
                             <td>0</td>`

@@ -157,7 +157,7 @@
                       <th>S.No</th>
                       <th>Date</th>
                       <th>Time</th>
-                      <td>Stake</td>
+                      <th>Stake</th>
                       <th>Credit</th>
                       <th>Debit</th>
                       <th>From / To</th>
@@ -176,6 +176,11 @@
                       <td><%= i + 1%></td>
                       <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
                       <td><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+                      <%if(data[i].stake){%>
+                        <td><%=data[i].stake%></td>
+                      <%}else{%>
+                        <td>-</td>
+                      <%}%>
                       <%if(data[i].creditDebitamount > 0){%>
                       <td><%=data[i].creditDebitamount%></td>
                       <td>0</td>
@@ -206,21 +211,34 @@
                         <td><%= i + 1%></td>
                         <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
                         <td><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
-                      <%if(data[i].creditDebitamount > 0){%>
+                        <%if(data[i].stake){%>
+                          <td><%=data[i].stake%></td>
+                        <%}else{%>
+                          <td>-</td>
+                        <%}%>
+                        <%if(data[i].creditDebitamount > 0){%>
                           <td><%=data[i].creditDebitamount%></td>
                           <td>0</td>
-                          <%if(data[i].parent_id.userName == data[i].user_id.userName){%>
-                            <td><%=data[i].child_id.userName%>/<%=data[i].parent_id.userName%></td>
-                          <%}else{%>
-                            <td><%=data[i].parent_id.userName%>/<%=data[i].child_id.userName%></td>
-                          <%}%>
-                      <%}else{%>
+                            <%if(data[i].parent_id){%>
+                              <%if(data[i].parent_id.userName == data[i].user_id.userName){%>
+                                <td><%=data[i].child_id.userName%>/<%=data[i].parent_id.userName%></td>
+                              <%}else{%>
+                                <td><%=data[i].parent_id.userName%>/<%=data[i].child_id.userName%></td>
+                              <%}%>
+                            <%}else{%>
+                              <td>-</td>  
+                            <%}%>
+                        <%}else{%>
                       <td>0</td>
                       <td><%=data[i].creditDebitamount%></td>
+                      <%if(data[i].parent_id){%>
                         <%if(data[i].parent_id.userName == data[i].user_id.userName){%>
                           <td><%=data[i].parent_id.userName%>/<%=data[i].child_id.userName%></td>
                         <%}else{%>
                           <td><%=data[i].child_id.userName%>/<%=data[i].parent_id.userName%></td>
+                        <%}%>
+                        <%}else{%>
+                          <td>-</td>  
                         <%}%>
                       <%}%>
                         <td><%=data[i].balance%></td>
