@@ -37,7 +37,8 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         const userLog = await loginLogs.find({user_id:id._id})
         global._count = userLog.length
         global._admin = false
-    }else if(global._count == 0){
+    }
+    if(global._count == 0){
             global._count = 2
             if(global._admin){
 
