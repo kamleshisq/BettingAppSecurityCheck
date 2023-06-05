@@ -193,7 +193,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             "status": "OP_SUCCESS"
         })
     }
-});
+};
 
 exports.rollBack = catchAsync(async(req, res, next) => {
     let user;
