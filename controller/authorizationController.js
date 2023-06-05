@@ -29,7 +29,6 @@ const createSendToken = async (user, statuscode, res, req)=>{
     // console.log(req.socket.localAddress)
     // console.log(req.headers['user-agent'])
     // req.loginUser = user
-    console.log(user)
     let time = Date.now()
     await loginLogs.create({user_id:user._id,
                             userName:user.userName, 
@@ -42,24 +41,13 @@ const createSendToken = async (user, statuscode, res, req)=>{
     global._loggedInToken.push({token:token,time:time})
     // console.log(global._loggedInToken)
     // const roles = await Role.find({role_level: {$gt:user.role.role_level}})
-    if(req._count){
-        res.status(200).json({
-            status:"success",
-            token,
-            data: {
-                user
-            },
-            count:0
-        })    
-    }else{
-        res.status(200).json({
-            status:"success",
-            token,
-            data: {
-                user
-            }
-        })
-    }
+    res.status(200).json({
+        status:"success",
+        token,
+        data: {
+            user
+        }
+    })
 }
 
 exports.login = catchAsync (async(req, res, next) => {

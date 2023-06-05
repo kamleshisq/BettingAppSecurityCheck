@@ -8,8 +8,6 @@ const User = require("../model/userModel");
 
 const LoginLogs = catchAsync(async(req, res, next) => {
     // console.log(req.originalUrl, "abcd")
-
-    // console.log(req.ip)
     if(req.originalUrl == "/api/v1/auth/login" ){
         // console.log("working")
         const id = await User.findOne({userName:req.body.userName})
@@ -23,7 +21,6 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         }
         const userLog = await loginLogs.find({user_id:id._id})
         global._count = userLog.length
-        req._count = userLog.length
         global._admin = true
         // console.log(global._count, global._admin)
     }else if (req.originalUrl == "/api/v1/auth/userLogin"){
@@ -38,27 +35,21 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         const userLog = await loginLogs.find({user_id:id._id})
         global._count = userLog.length
         global._admin = false
+    }else if(global._count == 0){
+            global._count = 2
+            if(global._admin){
+
+                res.status(200).render('updatePassword')
+            }else{
+                res.status(200).render('./user/passwordUpdate')
+
+            }
     }
-    // if(global._count == 0){
-    //         global._count = 2
-    //         if(global._admin){
-
-    //             res.redirect('http://46.101.225.192:8000/');
-    //         }else{
-    //             res.status(200).render('./user/passwordUpdate')
-
-    //         }
-    // }
-    // console.log(req)
-    if(req.cookies.JWT && !req.originalUrl.startsWith("/wallet") && !req.originalUrl == "/"){
+    
+    if(req.cookies.JWT && !req.originalUrl.startsWith("/wallet")){
         // console.log(global._loggedInToken)
-        const login = await loginLogs.findOne({ip_address:req.ip, isOnline:true})
-        console.log(login)
+        const login = await loginLogs.findOne({session_id:req.cookies.JWT, isOnline:true})
         // console.log(req.cookies.JWT)
-        // if(!login){
-        //     return res.status(200).render('loginPage', {
-        //     title:"Login form"
-        // })}
         const user = await User.findById(login.user_id._id)
         var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl
         login.logs.push(req.method + " - " + fullUrl)
