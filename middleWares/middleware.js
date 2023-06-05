@@ -50,8 +50,13 @@ const LoginLogs = catchAsync(async(req, res, next) => {
     
     if(req.cookies.JWT && !req.originalUrl.startsWith("/wallet")){
         // console.log(global._loggedInToken)
-        const login = await loginLogs.findOne({session_id:req.cookies.JWT, isOnline:true})
+        const login = await loginLogs.findOne({ip_address:req.ip, isOnline:true})
         // console.log(req.cookies.JWT)
+        if(!login){
+            res.status(200).render('loginPage', {
+            title:"Login form"
+        })
+        }
         const user = await User.findById(login.user_id._id)
         var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl
         login.logs.push(req.method + " - " + fullUrl)
