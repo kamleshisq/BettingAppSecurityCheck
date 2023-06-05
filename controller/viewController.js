@@ -1,6 +1,7 @@
 const AppError = require('./../utils/AppError');
 const catchAsync = require('./../utils/catchAsync');
 const User = require('../model/userModel');
+const loginLogs = require("../model/loginLogs");
 const Role = require('../model/roleModel');
 const betModel = require("../model/betmodel");
 const promotionModel = require("../model/promotion");
@@ -400,10 +401,24 @@ exports.useracount = catchAsync(async(req, res, next) => {
 })
 
 exports.userhistoryreport = catchAsync(async(req, res, next) => {
+    // const currentUser = global._User
     const currentUser = global._User
+    const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
+    let role_type =[]
+    for(let i = 0; i < roles.length; i++){
+        role_type.push(roles[i].role_type)
+    }
+    // console.log(role_type)
+    let Logs
+    if(currentUser.role_type == 1){
+        Logs = await loginLogs.find().limit(10)
+    }else{
+        Logs = await loginLogs.find({role_Type:{$in:role_type}}).limit(10)
+    }
     res.status(200).render('./userHistory/userhistoryreport',{
         title:"UserHistory",
-        me:currentUser
+        me:currentUser,
+        Logs
     })
 })
 

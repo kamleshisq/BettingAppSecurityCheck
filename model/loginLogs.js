@@ -9,6 +9,9 @@ const loginLogSchema = mongoose.Schema({
     userName:{
         type:String
     },
+    role_Type:{
+        type:Number
+    },
     login_time:{
         type:Date,
         default:Date.now(),

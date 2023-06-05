@@ -1,0 +1,32 @@
+<table>
+    <thead>
+        <tr style="text-align: center;font-size: 11px;">
+          <th>S.No</th>
+          <th>User Name</th>
+          <th>Date & Time</th>
+          <th>IP</th>
+          <th>Audit Type</th>
+          
+        </tr>
+    </thead>
+    <tbody class="new-body" style="font-size: 11px;">
+        <%for(let i = 0; i < Logs.length; i++){%>
+            <%if((i%2) == 0){%>
+                <tr style="text-align: center;" class="blue">
+            <%}else{%>
+                <tr style="text-align: center;">
+            <%}%>
+            <td><%=i+1%></td>
+            <td><%=Logs[i].userName%></td>
+            <td><%=i+1%></td>
+            <td><%=Logs[i].ip_address%></td>
+            <%if(Logs[i].isOnline){%>
+                <td>Active</td>
+            <%}else{%>
+                <td>LogOut</td>    
+            <%}%>
+            </tr>
+        <%}%>
+     
+    </tbody>
+  </table>
