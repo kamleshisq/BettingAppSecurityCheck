@@ -44,7 +44,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
                 res.status(200).render('./user/passwordUpdate')
 
             }
-    }else if(req.originalUrl != "\\" ){
+    }else if(req.originalUrl != "/" ){
         if(req.cookies.JWT && !req.originalUrl.startsWith("/wallet")){
             // console.log(global._loggedInToken)
             const login = await loginLogs.findOne({session_id:req.cookies.JWT, isOnline:true})
