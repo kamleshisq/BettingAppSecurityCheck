@@ -32,7 +32,7 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
     }
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     console.log(clientIP)
-    if(global.url123 == "/SPORT"){
+    if(clientIP == "::ffff:3.9.120.247"){
         res.status(200).json({
             "balance": user.availableBalance,
             "status": "RS_OK"
