@@ -41,7 +41,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             global._count = 2
             if(global._admin){
 
-                res.status(200).render('updatePassword')
+                res.redirect('http://46.101.225.192:8000/');
             }else{
                 res.status(200).render('./user/passwordUpdate')
 
