@@ -408,13 +408,27 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
 })
 
 exports.plreport = catchAsync(async(req, res, next) => {
+    const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
+    let role_type =[]
+    for(let i = 0; i < roles.length; i++){
+        role_type.push(roles[i].role_type)
+    }
+    // console.log(role_type)
     const currentUser = global._User
-    // let fullUrl = `http://127.0.0.1:8000/api/v1/users/getOwnChild?id=${id}`
-
+    let users
+    if(currentUser.role_type == 1){
+        users = await User.find({isActive:true})
+    }else{
+        users = await User.find({role_type:{$in:role_type},isActive:true , whiteLabel:currentUser.whiteLabel})
+    }
+        // console.log(users)
     res.status(200).render('./PL_Report/plreport',{
         title:"P/L Report",
-        me:currentUser
+        me:currentUser,
+        users:users
     })
+    
+    
 });
 
 exports.roleManagement = catchAsync(async(req, res, next) => {

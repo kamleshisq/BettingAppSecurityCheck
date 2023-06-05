@@ -8,36 +8,19 @@
         </tr>
     </thead>
     <tbody class="new-body" style="font-size: 11px;">
-      <tr style="text-align: center;" class="blue">
-        <td>bettest5</td>
-        <td>Sport</td>
-        <td>15</td>
-        <td>10</td>
-        <td style="color: #46BCAA;">5000</td>
-        
-      </tr>
-      <tr style="text-align: center;">
-        <td>bettest5</td>
-        <td>Livecasino</td>
-        <td>15</td>
-        <td>10</td>
-        <td style="color: #FE3030;">-2045</td>
-      </tr>
-      <tr style="text-align: center;" class="blue">
-        <td>bettest5</td>
-        <td>SportsBook</td>
-        <td>15</td>
-        <td>10</td>
-        <td style="color: #FE3030;">-3510</td>
-        
-      </tr>
-      <tr style="text-align: center;">
-        <td>bettest5</td>
-        <td>Indian Casion</td>
-        <td>15</td>
-        <td>10</td>
-        <td style="color: #46BCAA;">1099</td>
-      </tr>
+        <%for(let i = 0; i < users.length; i++){%>
+            <%if((i%2) == 0){%>
+                <tr style="text-align: center;" class="blue">
+            <%}else{%>
+                <tr style="text-align: center;">
+            <%}%>
+            <td><%=users[i].userName%></td>
+            <td><%=users[i].Won%></td>
+            <td><%=users[i].Loss%></td>
+            <td><%=users[i].myPL%></td>
+            </tr>
+        <%}%>
+      
       
     </tbody>
   </table>
