@@ -151,10 +151,18 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         // console.log(A)
         // console.log(user, 132)
     }
-    res.status(200).json({
-        "status":"RS_OK",
-        "balance":balance
-    })
+
+    if(clientIP == "::ffff:3.9.120.247"){
+        res.status(200).json({
+            "balance": balance,
+            "status": "RS_OK"
+        })
+    }else{
+        res.status(200).json({
+            "balance": balance,
+            "status": "OP_SUCCESS"
+        })
+    }
 });
 
 exports.rollBack = catchAsync(async(req, res, next) => {
