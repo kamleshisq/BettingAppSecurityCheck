@@ -126,6 +126,18 @@ exports.betResult = catchAsync(async(req, res, next) =>{
     if(req.body.creditAmount == 0){
         await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"LOSS"})
         user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{Loss:1}})
+        if(!user){
+            if(clientIP == "::ffff:3.9.120.247"){
+                res.status(200).json({
+                    "balance": 0,
+                    "status": "RS_OK"
+                })
+            }else{
+                res.status(200).json({
+                    "balance": 0,
+                    "status": "OP_SUCCESS"
+                })
+        }
         balance = user.balance
         let Acc = {
             // "user_id":req.body.userId,
@@ -141,6 +153,18 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:req.body.creditAmount})
         user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance: req.body.creditAmount, availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1}})
         // console.log(user.parentUsers)
+        if(!user){
+            if(clientIP == "::ffff:3.9.120.247"){
+                res.status(200).json({
+                    "balance": 0,
+                    "status": "RS_OK"
+                })
+            }else{
+                res.status(200).json({
+                    "balance": 0,
+                    "status": "OP_SUCCESS"
+                })
+        }
         balance = user.availableBalance + req.body.creditAmount
         let Acc = {
             // "user_id":req.body.userId,
