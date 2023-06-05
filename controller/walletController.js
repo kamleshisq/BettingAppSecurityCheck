@@ -13,14 +13,14 @@ function readPem (filename) {
   }
 
 exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
-    // console.log(req.body)
-    // console.log(req.originalUrl)
-    // console.log(req.headers)
+    console.log(req.body)
+    console.log(req.originalUrl)
+    console.log(req.headers)
     let x  = req.body
     const publicKey = readPem("public.pem")
-    console.log(publicKey)
+    // console.log(publicKey)
     let result = verify(req.headers.signature, publicKey, x)
-    console.log(result, 564)
+    // console.log(result, 564)
     next()
 })
 
