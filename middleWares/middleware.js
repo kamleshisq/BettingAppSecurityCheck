@@ -53,7 +53,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         const login = await loginLogs.findOne({ip_address:req.ip, isOnline:true})
         // console.log(req.cookies.JWT)
         if(!login){
-            res.status(200).render('loginPage', {
+            return res.status(200).render('loginPage', {
             title:"Login form"
         })
         }
