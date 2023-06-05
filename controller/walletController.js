@@ -114,7 +114,12 @@ exports.betrequest = catchAsync(async(req, res, next) => {
 });
 
 exports.betResult = catchAsync(async(req, res, next) =>{
-    let game = await gameModel.findOne({game_id:req.body.gameId})
+    const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    let game
+    if(req.body.gameId){
+        game = await gameModel.findOne({game_id:req.body.gameId})
+
+    }
     // console.log(req.body)
     let user;
     let balance;
@@ -146,6 +151,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             // "userName" : user.userName,
             // "role_type" : user.role_type
         }
+        console.log(user.parentUsers);
         await accountStatement.findOneAndUpdate({transactionId:req.body.transactionId},Acc)
         await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: req.body.creditAmount, downlineBalance: req.body.creditAmount}})
         // console.log(A)
