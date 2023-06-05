@@ -18,8 +18,9 @@ const globleErrorHandler = require('./controller/errorController');
 const path = require('path');
 const middlewares = require("./middleWares/middleware");
 const fileUpload = require('express-fileupload');
+const requestIp = require("request-ip");
 // const ejs = require("ejs");
-
+app.use(requestIp.mw());
 dotenv.config({path: './config.env'});
 mongoose.connect("mongodb+srv://jayesh:Jk123456@cluster0.bhsp2aw.mongodb.net/New_Lordex",{
     useNewUrlParser: true,

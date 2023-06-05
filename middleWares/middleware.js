@@ -7,7 +7,8 @@ const User = require("../model/userModel");
 
 
 const LoginLogs = catchAsync(async(req, res, next) => {
-    console.log(req.originalUrl, "abcd")
+    const clientIP = req.clientIp;
+    console.log(clientIP, "abcd")
     if(req.originalUrl == "/api/v1/auth/login" ){
         // console.log("working")
         const id = await User.findOne({userName:req.body.userName})
