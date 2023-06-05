@@ -8,7 +8,7 @@ const User = require("../model/userModel");
 
 const LoginLogs = catchAsync(async(req, res, next) => {
     // const clientIP = req.clientIp;
-    const clientIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    const clientIP = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
     console.log(clientIP, "abcd")
     if(req.originalUrl == "/api/v1/auth/login" ){
