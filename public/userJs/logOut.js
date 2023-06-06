@@ -11,7 +11,7 @@ const logout = () => {
                 if(data.status === 'success'){
                     alert('Logged out successfully!!!!');
                     window.setTimeout(()=>{
-                        location.assign('/userLogin')
+                        location.assign('/')
                     },1000)
                 }
             },

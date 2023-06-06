@@ -32,7 +32,11 @@ const sendErrorDev = (err, req,res) => {
         stack: err.stack
     })
     }
-    return console.log(err)
+    if(err.message == "Please log in to access"){
+        return res.status(err.statusCode).json({
+            message : err.message,
+        })
+    }
     // return res.status(err.statusCode).render('loginPage',{
     //     title: 'login page'
     // })
