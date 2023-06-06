@@ -5512,7 +5512,7 @@ var logout = /*#__PURE__*/function () {
           if (res.data.status === 'success') {
             alert('Logged out successfully!!!!');
             window.setTimeout(function () {
-              location.href = '/adminLogi';
+              location.href = '/adminLogin ';
             }, 1000);
           }
           _context.next = 11;
