@@ -1133,6 +1133,7 @@ socket.on('connect', () => {
                     <td>${bets[i].transactionId}</td>
                     <td>${bets[i].event}</td></tr>`
                 }
+                count += 10
                 if(data.page == 0){
                     $('.new-body').html(html)
                 }else{
@@ -1142,23 +1143,7 @@ socket.on('connect', () => {
     
         }
 
-        let searchU 
-        let SUSER
-        let data = {}
-        $(".searchUser").on('input', function(e){
-            var $input = $(this),
-                val = $input.val();
-                list = $input.attr('list'),
-                match = $('#'+list + ' option').filter(function() {
-                    return ($(this).val() === val);
-                });
-
-                if(match.length > 0){
-                    data.val = val
-                    data.LOGINDATA = LOGINDATA
-                    socket.emit("bettingList", data)
-                }
-        })
+        
     }
 
     if(pathname == "/admin/casinocontrol"){
@@ -1583,7 +1568,8 @@ socket.on('connect', () => {
 
             }
          }); 
-         
+        
+        let count = 11
         socket.on('userHistory',(data)=>{
             console.log(data)
             let html = '';
@@ -1596,7 +1582,7 @@ socket.on('connect', () => {
                 }else{
                     html += `<tr style="text-align: center;">`
                 }
-                html += `<td>${i+1}</td>
+                html += `<td>${i+count}</td>
                 <td>${Logs[i].userName}</td>
                 <td>${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()},${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
                 <td>${Logs[i].ip_address}</td>`
@@ -1607,6 +1593,7 @@ socket.on('connect', () => {
                 }
                 html += `</tr>`
             }
+            count += 10
             if(page == 0){
                 $('.new-body').html(html)
             }else{

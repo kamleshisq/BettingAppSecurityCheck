@@ -162,8 +162,12 @@ io.on('connection', (socket) => {
         }
         console.log(data.filterData)
         const user = await User.findOne({userName:data.filterData.userName})
-        if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
+        if(data.LOGINDATA.LOGINUSER.role_type == 1){
+            let users = await loginlogs.find().skip(page * limit).limit(limit)
+            socket.emit('userHistory',{users,page})
+        }else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
             delete data.filterData['userName']
+            // console.log(data.filterData)
             let users = await loginlogs.find(data.filterData).skip(page * limit).limit(limit)
             socket.emit('userHistory',{users,page})
         }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
