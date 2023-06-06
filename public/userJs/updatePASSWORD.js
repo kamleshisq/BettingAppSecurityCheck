@@ -20,7 +20,7 @@ const updatePassword = (data)=>{
                 if(data.status === 'success'){
                     alert('updated successfully!!!!');
                     window.setTimeout(()=>{
-                        location.assign('/userDashboard')
+                        location.assign('/')
                     }, 100)
                 }
             },
