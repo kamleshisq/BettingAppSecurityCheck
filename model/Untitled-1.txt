@@ -1,0 +1,102 @@
+{
+  operatorId: 'sheldon',
+  token: '9fd50019-e51e-44a8-acf1-d160f064e068',
+  userId: '6476f43cd334a60f88f87049',
+  reqId: '60185d19-a3a6-4c69-bd4c-dd86e0a16cbd',
+  transactionId: 'c47445cb-2aed-4ec2-b621-f9c7b3d30b29',
+  betType: 'BACK',
+  oddValue: 1.51,
+  eventId: 'sr:match:41546127',
+  marketId: '186',
+  debitAmount: 100,
+  sportId: 'sr:sport:20',
+  competitionId: 'sr:tournament:32133',
+  competitionName: 'Russia / Liga Pro',
+  eventName: 'Lobanov, Aleksej vs. Novikov, Ilya',
+  marketName: 'Winner',
+  selectionId: '5',
+  selectionName: 'Novikov, Ilya',
+  berfairEventId: '',
+  providerId: 'SportRadar'
+}
+
+
+{
+  operatorId: 'sheldon',
+  token: 'cd5c85e9-a6b6-46ac-b4e9-3a3f9863120e',
+  userId: '6476f43cd334a60f88f87049',
+  reqId: '13afe75a-d228-4542-9625-a07157e956c5',
+  transactionId: 'b9e0db60-e78f-4cca-a119-ff5a994585c7',
+  betType: 'BACK',
+  oddValue: 1.46,
+  eventId: 'sr:match:41439967',
+  marketId: '340',
+  debitAmount: 100,
+  sportId: 'sr:sport:21',
+  competitionId: 'sr:tournament:33207',
+  competitionName: 'Simulated Reality League / Big Bash League SRL',
+  eventName: 'Brisbane Heat Srl vs. Melbourne Renegades Srl',
+  marketName: 'Winner (incl. super over)',
+  selectionId: '5',
+  selectionName: 'Melbourne Renegades Srl',
+  berfairEventId: '',
+  providerId: 'SportRadar'
+}
+
+
+{
+  operatorId: 'sheldon',
+  token: 'cd5c85e9-a6b6-46ac-b4e9-3a3f9863120e',
+  userId: '6476f43cd334a60f88f87049',
+  reqId: 'b31dc8ab-0496-4a82-917b-11b72c88bfc0',
+  transactionId: 'e2df891a-a7ef-49a0-a12e-059cd5e792e7',
+  betType: 'BACK',
+  oddValue: 1.02,
+  eventId: 'sr:match:41439967',
+  marketId: '342',
+  debitAmount: 100,
+  sportId: 'sr:sport:21',
+  competitionId: 'sr:tournament:33207',
+  competitionName: 'Simulated Reality League / Big Bash League SRL',
+  eventName: 'Brisbane Heat Srl vs. Melbourne Renegades Srl',
+  marketName: 'Will there be a tie',
+  selectionId: '76',
+  selectionName: 'no',
+  berfairEventId: '',
+  providerId: 'SportRadar'
+}
+
+
+
+
+
+
+
+results 
+
+
+{
+  operatorId: 'sheldon',
+  providerId: 'SportRadar',
+  token: 'cd5c85e9-a6b6-46ac-b4e9-3a3f9863120e',
+  userId: '6476f43cd334a60f88f87049',
+  reqId: 'e3490088-adad-40dc-8548-f8068e5f6cd8',
+  transactionId: 'b9e0db60-e78f-4cca-a119-ff5a994585c7',
+  eventId: 'sr:match:41439967',
+  marketId: '340',
+  creditAmount: 146
+}
+
+
+
+{
+  operatorId: 'sheldon',
+  providerId: 'SportRadar',
+  token: 'cd5c85e9-a6b6-46ac-b4e9-3a3f9863120e',
+  userId: '6476f43cd334a60f88f87049',
+  reqId: '09f068ff-684c-4526-8f8e-c12e90f9e93b',
+  transactionId: 'e2df891a-a7ef-49a0-a12e-059cd5e792e7',
+  eventId: 'sr:match:41439967',
+  marketId: '342',
+  creditAmount: 102
+}

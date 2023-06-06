@@ -116,10 +116,12 @@ exports.betrequest = catchAsync(async(req, res, next) => {
 
 exports.betResult = catchAsync(async(req, res, next) =>{
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    let game
+    let game = {}
     if(req.body.gameId){
         game = await gameModel.findOne({game_id:req.body.gameId})
-
+    }else{
+        let game1 = await betModel.findOne({transactionId:req.body.transactionId})
+        game.game_name = game1.match
     }
     // console.log(req.body)
     let user;
