@@ -147,6 +147,31 @@ io.on('connection', (socket) => {
         urlRequestAdd(`/api/v1/users/searchUser?username = ${data.filterData.userName}& role=${data.filterData.role}& whiteLable = ${data.filterData.whiteLabel}`,'GET', data.LOGINDATA.LOGINTOKEN)
         socket.emit("getOwnChild", {status : 'success',response, currentUser,page,roles})
     })
+
+
+    socket.on('userHistory',async(data)=>{
+        let page = data.page;
+        let limit = 10;
+        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        data.filterData.role_Type = {
+            $in:role_type
+        }
+        console.log(data.filterData)
+        const user = await User.findOne({userName:data.filterData.userName})
+        if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
+            delete data.filterData['userName']
+            let users = await loginlogs.find(data.filterData).skip(page * limit).limit(limit)
+            socket.emit('userHistory',{users,page})
+        }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
+            let users = await loginlogs.find(data.filterData).skip(page * limit).limit(limit)
+            socket.emit('userHistory',{users,page})
+
+        }
+    })
     
     // status:'success',
     // response:response.child,

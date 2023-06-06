@@ -19,17 +19,19 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
               </div>
-              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
-              
+              <input type="text" id="searchUser" list=text_editors class="form-control searchUser" placeholder="Search User Name " aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
+              <datalist id="text_editors">
+                <select id="select" multiple size=8>
+                </select>
+              </datalist>
             </div>
-            <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
           </form>
       </div>
    
     </section>
     <%- include("../loginUserAdminsideDetails") %>
   </section>
-
+  <div class="pageId" data-pageid="1"></div>
   <section style="padding: 15px 0px;">
     <div class="container-fluid">
     <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
@@ -46,46 +48,24 @@
         <%- include("../reportSubDropDown") %>
       </div>
     </div>
-    <div>
-      <form action="">
-        <input type="text" name="" id="" placeholder="Search By IP" style="background-color: #fff;color: #000;border: 2px solid #EAEEF7;    border-radius: 10px;border: 2px solid #EAEEF7;
-        height: 40px;">
-      </form>
-    </div>
-    <div>
-      <form action="">
-        <input type="text" name="" id="" placeholder="Select User" style="background-color: #fff;color: #000;border: 2px solid #EAEEF7;border-radius: 10px;border: 2px solid #EAEEF7;
-        height: 40px;">
-      </form>
-    </div>
-    <div>
-      <span class="up-down-form">Select type</span>
-
-      <form action="">
-        <select name="" id="" style="background-color: #fff;color: #000;border: 2px solid #EAEEF7;">
-          <option value="">Login Details</option>
-          <option value="">Open</option>
-          <option value="">Settle</option>
-          <option value="">Won</option>
-          <option value="">Lost</option>
-          <option value="">Vold</option>
-         
-        </select>
-      </form>
-    </div>
     
       <div>
         <span class="up-down-form">From Date</span>
       <form action="">
         
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="fromDate"> 
       </form>
         </div>
         <div>
           <span class="up-down-form">To Date</span>  
           <form action="">
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="toDate"> 
           </form>
+          </div>
+
+          <div>
+            <button class="btn-filter filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
+
           </div>
      
   </div>
