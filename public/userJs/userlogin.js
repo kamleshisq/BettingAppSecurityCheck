@@ -14,7 +14,7 @@ if(document.querySelector('.userLoginForm')){
             success:function(data){
                 // console.log(data)
                 sessionStorage.setItem('loginUserDetails',JSON.stringify(data.data.user));
-                setTimeout(alert('login successfully'),window.location.href = '/userDashboard')
+                setTimeout(alert('login successfully'),window.location.href = '/')
             },
             error:function(error){
                 (error)

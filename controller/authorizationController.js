@@ -139,6 +139,39 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     next()
 });
 
+exports.isLogin = catchAsync( async (req, res, next) => {
+    let token 
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+        token = req.headers.authorization.split(' ')[1];
+    }else if(req.cookies.JWT){
+        token = req.cookies.JWT;
+        // console.log(token)
+    }
+    // console.log(token)
+    if(!token){
+        return next()
+    }
+    const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
+    const currentUser = await User.findById(decoded.A);
+    // console.log(currentUser)
+    if(!currentUser){
+        return res.status(404).json({
+            status:"success",
+            message:'the user belonging to this token does no longer available'
+        })
+    }else if(!currentUser.isActive){
+        return res.status(404).json({
+            status:"success",
+            message:'the user belonging to this token does no longer available'
+        })
+    }else if(!currentUser.is_Online){
+        return next()
+    }
+    req.currentUser = currentUser
+    req.token = token
+    next()
+});
+
 exports.restrictTo = (...roles) => {
     return function(req, res, next){
         // if(!roles.includes(req.currentUser.role)){

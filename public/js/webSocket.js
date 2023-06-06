@@ -1262,7 +1262,7 @@ socket.on('connect', () => {
 
 
     if(pathname == "/ALLGAMEFORTESTING"){
-        // console.log('working')
+        console.log('working')
         $('.img').click(function(){
             let id = this.id;
             socket.emit('IMGID', id)

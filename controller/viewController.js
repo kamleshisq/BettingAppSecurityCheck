@@ -303,7 +303,11 @@ exports.registration = catchAsync(async(req, res, next) => {
 });
 
 exports.userdashboard = catchAsync(async(req, res, next) => {
-    res.status(200).render("./user/userDashboard")
+    let user = req.currentUser
+    console.log(user)
+    res.status(200).render("./user/userDashboard",{
+        user
+    })
 })
 
 exports.edit = catchAsync(async(req, res, next) => {
@@ -562,9 +566,11 @@ exports.promotion = catchAsync(async(req, res, next) => {
 
 exports.getAllCasinoPageFOrTEsting = catchAsync(async(req, res, next) => {
     const data = await gameModel.find();
+    let user = req.currentUser
     res.status(200).render('allCasinoGame', {
         title:"allGame",
-        data
+        data,
+        user
     })
 });
 
@@ -576,8 +582,10 @@ exports.url123 = catchAsync(async(req, res, next) => {
 exports.getSpoertPage = catchAsync(async(req, res, next) => {
     // console.log(req.body.url)
     global.url123 = "/SPORT"
+    let user = req.currentUser
     res.status(200).render("sport",{
         title:"Sports",
-        url: req.body.url
+        url: req.body.url,
+        user
     })
 })

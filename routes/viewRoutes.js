@@ -8,7 +8,7 @@ const gameController = require("../controller/gameController");
 router.use(viewController.url123)
 
 router.get('/adminLogin/', viewController.login);
-router.get('/',viewController.userLogin );
+router.get('/userlogin',viewController.userLogin );
 router.get('/registration',viewController.registration );
 router.get('/API', viewController.APIcall);
 router.get('/API2', viewController.APIcall2);
@@ -41,12 +41,12 @@ router.get("/streammanagement", authController.isProtected, authController.isAdm
 router.get("/Notification", authController.isProtected, authController.isAdmin,viewController.getNotificationsPage);
 router.get("/admin/casinocontrol", authController.isProtected, authController.isAdmin,viewController.getCasinoControllerPage);
 router.get("/pp", viewController.promotion);
-router.get('/ALLGAMEFORTESTING', viewController.getAllCasinoPageFOrTEsting);
-router.get("/SPORT",gameController.sport ,viewController.getSpoertPage);
+router.get('/ALLGAMEFORTESTING', authController.isProtected, viewController.getAllCasinoPageFOrTEsting);
+router.get("/SPORT",authController.isProtected, gameController.sport ,viewController.getSpoertPage);
 
 //user routs
 router.get("/loginUser", authController.isProtected, authController.restrictTo("logOutUser"), viewController.onlineUsers);
-router.get("/userDashboard", authController.isProtected, viewController.userdashboard);
+router.get("/", authController.isLogin, viewController.userdashboard);
 router.get("/edit", authController.isProtected, viewController.edit);
 router.get("/myAccountStatment", authController.isProtected, viewController.myAccountStatment);
 
