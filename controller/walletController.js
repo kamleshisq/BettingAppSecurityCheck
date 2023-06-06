@@ -18,7 +18,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     console.log(req.headers)
     let x  = req.body
     const publicKey = readPem("public.pem")
-    console.log(publicKey)
+    console.log(publicKey, req.headers.signature)
     let result = verify(req.headers.signature, publicKey, x)
     console.log(result, 564)
     // if(result){
