@@ -62,8 +62,8 @@ exports.sport = catchAsync(async(req, res, next) => {
         operatorId: "sheldon",
         partnerId: "SHPID01",
         platformId: "DESKTOP",
-        userId: "6476f43cd334a60f88f87049",
-        username: "user3"
+        userId: "647f087ca595d26d201d4de4",
+        username: "testingUser"
     }
     function readPem (filename) {
         return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename)).toString('ascii');
