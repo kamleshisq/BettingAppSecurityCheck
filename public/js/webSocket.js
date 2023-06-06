@@ -1276,7 +1276,7 @@ socket.on('connect', () => {
 
 
 
-    if(pathname == "/admin/ALLGAMEFORTESTING"){
+    if(pathname == "/ALLGAMEFORTESTING"){
         // console.log('working')
         $('.img').click(function(){
             let id = this.id;
