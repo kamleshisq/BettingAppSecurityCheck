@@ -36,6 +36,10 @@ const sendErrorDev = (err, req,res) => {
         return res.status(err.statusCode).json({
             message : err.message,
         })
+    }else{
+        return res.status(err.statusCode).json({
+            message : err.message,
+        })
     }
     // return res.status(err.statusCode).render('loginPage',{
     //     title: 'login page'

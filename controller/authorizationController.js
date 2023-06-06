@@ -335,4 +335,16 @@ exports.userLogin = catchAsync (async(req, res, next) => {
 
         }
     }
+});
+
+
+
+exports.isAdmin = catchAsync(async(req, res, next) => {
+    console.log(global._User.role_type)
+    if(global._User.role_type == 5){
+        return next(new AppError('You do not have permission to access this route',404))
+    }else{
+
+        next()
+    }
 })

@@ -121,7 +121,7 @@ io.on('connection', (socket) => {
           
         }else{
             if(data.filterData.role_type){
-                if(role_type.includes(data.filterData.role_type)){
+                if(role_type.includes((data.filterData.role_type) * 1)){
                     // console.log('here')
                     user = await User.find(data.filterData).skip(page * limit).limit(limit)
                 }else{
