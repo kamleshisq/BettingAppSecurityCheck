@@ -66,6 +66,28 @@
   providerId: 'SportRadar'
 }
 
+{
+  operatorId: 'sheldon',
+  token: 'cd5c85e9-a6b6-46ac-b4e9-3a3f9863120e',
+  userId: '6476f43cd334a60f88f87049',
+  reqId: '2803865b-b0d5-455a-8f9f-d4a925811423',
+  transactionId: '7ec491ad-9315-413d-8088-18f9f860c4a6',
+  betType: 'BACK',
+  oddValue: 1.98,
+  eventId: 'sr:match:41439531',
+  marketId: '357:sp:overnr=3|total=6.5|inningnr=1',
+  debitAmount: 100,
+  sportId: 'sr:sport:21',
+  competitionId: 'sr:tournament:39175',
+  competitionName: 'Simulated Reality League / SA T20 League SRL',
+  eventName: 'Paarl Royals Srl vs. Pretoria Capitals Srl',
+  marketName: '1st innings over 3 - Pretoria Capitals Srl total',
+  selectionId: '13',
+  selectionName: 'under 6.5',
+  berfairEventId: '',
+  providerId: 'SportRadar'
+}
+
 
 
 
@@ -99,4 +121,30 @@ results
   eventId: 'sr:match:41439967',
   marketId: '342',
   creditAmount: 102
+}
+
+
+
+{
+  operatorId: 'sheldon',
+  providerId: 'SportRadar',
+  token: 'cd5c85e9-a6b6-46ac-b4e9-3a3f9863120e',
+  userId: '6476f43cd334a60f88f87049',
+  reqId: 'da2bd4ce-4b8e-4b29-b4f8-c28c895011bf',
+  transactionId: '3d4d588b-7e87-4838-b2f4-373c42bd3a48',
+  eventId: 'sr:match:41622437',
+  marketId: '245:sp:gamenr=1',
+  creditAmount: 0
+}
+
+{
+  operatorId: 'sheldon',
+  providerId: 'SportRadar',
+  token: 'cd5c85e9-a6b6-46ac-b4e9-3a3f9863120e',
+  userId: '6476f43cd334a60f88f87049',
+  reqId: 'f0336421-786b-4835-a765-f07123e209fb',
+  transactionId: '6473e27a-807a-4fc2-b951-fccba32b37a7',
+  eventId: 'sr:match:41439531',
+  marketId: '357:sp:overnr=15|total=10.5|inningnr=1',
+  creditAmount: 155
 }

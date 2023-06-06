@@ -12,7 +12,7 @@ export const deletePromotion = async(data)=>{
         if(res.data.status === 'success'){
             alert('deleted successfully!!!!');
                 window.setTimeout(()=>{
-                    location.assign('/promotion')
+                    location.assign('/admin/promotion')
                 }, 100)
         }
 

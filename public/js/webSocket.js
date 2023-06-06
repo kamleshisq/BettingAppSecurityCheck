@@ -35,7 +35,7 @@ socket.on('connect', () => {
 
 
 
-    if(pathname == "/updateRole"){
+    if(pathname == "/admin/updateRole"){
         let x = "121"
         // let y = document.getElementById("mySelect").value
         function sendData(){
@@ -158,7 +158,7 @@ socket.on('connect', () => {
 
     // console.log(window.location.href)
 
-    if(pathname.startsWith('/userManagement')){
+    if(pathname.startsWith('/admin/userManagement')){
         function getOwnChild(id,page,token) {
             socket.emit(token,{
                 id,
@@ -599,7 +599,7 @@ socket.on('connect', () => {
 
 
     //for inactive users//
-    if(pathname == "/inactiveUser"){
+    if(pathname == "/admin/inactiveUser"){
         $(document).on('click','.userStatusActive',function(e){
             e.preventDefault();
             let id = $(this).data('id')
@@ -658,7 +658,7 @@ socket.on('connect', () => {
         })
     }
     //for online users//
-    if(pathname == "/loginUser"){
+    if(pathname == "/admin/loginUser"){
         // $(document).on('click','.userLogout',function(){
         //     let id = $(this).data('id');
         //     $(this).parent().parent().html('')
@@ -673,7 +673,7 @@ socket.on('connect', () => {
 
 
 
-    if(pathname == "/useracount"){
+    if(pathname == "/admin/useracount"){
         // console.log($('.searchUser'))
 
 
@@ -927,7 +927,7 @@ socket.on('connect', () => {
      
     }
 
-    if(pathname == "/reports"){
+    if(pathname == "/admin/reports"){
     //     // console.log("Working")
     //     $('.searchUser').keyup(function(){
     //         // console.log('working')
@@ -944,7 +944,7 @@ socket.on('connect', () => {
     //     })
 
 
-        if(pathname == "/reports"){
+        if(pathname == "/admin/reports"){
             // console.log("Working")
             $('.searchUser').keyup(function(){
                 // console.log('working')
@@ -1161,7 +1161,7 @@ socket.on('connect', () => {
         })
     }
 
-    if(pathname == "/casinocontrol"){
+    if(pathname == "/admin/casinocontrol"){
         let baccarat = false;
         let RGV = false;
         let EZ = false;
@@ -1276,7 +1276,7 @@ socket.on('connect', () => {
 
 
 
-    if(pathname == "/ALLGAMEFORTESTING"){
+    if(pathname == "/admin/ALLGAMEFORTESTING"){
         // console.log('working')
         $('.img').click(function(){
             let id = this.id;
@@ -1289,7 +1289,7 @@ socket.on('connect', () => {
          })
     }
 
-    if(pathname == "/plreport"){
+    if(pathname == "/admin/plreport"){
         // let fromDate
         // let toDate
         let filterData = {}

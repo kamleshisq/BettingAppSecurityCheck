@@ -11,7 +11,7 @@ export const updatePromotion = async(data)=>{
         if(res.data.status === 'success'){
             alert('Updated successfully!!!!');
                 window.setTimeout(()=>{
-                    location.assign('/promotion')
+                    location.assign('/admin/promotion')
                 }, 100)
         }
 

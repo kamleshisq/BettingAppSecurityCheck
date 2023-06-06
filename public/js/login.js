@@ -23,11 +23,11 @@ export const login = async(userName, password)=>{
             }else{
                 if(res.data.data.user.role.authorization.includes('dashboard')){
                     window.setTimeout(()=>{
-                        location.assign('/dashboard')
+                        location.assign('/admin/dashboard')
                     }, 100)
                 }else{
                     window.setTimeout(()=>{
-                        location.assign('/userManagement')
+                        location.assign('/admin/userManagement')
                     }, 100)
                 }
             }

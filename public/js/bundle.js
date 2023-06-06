@@ -5455,11 +5455,11 @@ var login = /*#__PURE__*/function () {
             } else {
               if (res.data.data.user.role.authorization.includes('dashboard')) {
                 window.setTimeout(function () {
-                  location.assign('/dashboard');
+                  location.assign('/admin/dashboard');
                 }, 100);
               } else {
                 window.setTimeout(function () {
-                  location.assign('/userManagement');
+                  location.assign('/admi/userManagement');
                 }, 100);
               }
             }
@@ -5512,7 +5512,7 @@ var logout = /*#__PURE__*/function () {
           if (res.data.status === 'success') {
             alert('Logged out successfully!!!!');
             window.setTimeout(function () {
-              location.href = '/';
+              location.href = '/adminLogi';
             }, 1000);
           }
           _context.next = 11;
@@ -5623,7 +5623,7 @@ var createUser = /*#__PURE__*/function () {
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
-              location.assign('/userManagement');
+              location.assign('/admin/userManagement');
             }, 100);
           }
           _context.next = 11;
@@ -5806,7 +5806,7 @@ var createRole = function createRole(data) {
     type: 'post',
     data: data,
     success: function success(data) {
-      setTimeout(alert('role created successfully'), window.location.href = '/userManagement');
+      setTimeout(alert('role created successfully'), window.location.href = '/admin/userManagement');
     },
     error: function error(_error) {
       alert(_error.responseJSON.message);
@@ -5845,7 +5845,7 @@ var updateRole = /*#__PURE__*/function () {
           if (res.data.status === 'success') {
             alert('Updated successfully successfully!!!!');
             window.setTimeout(function () {
-              location.assign('/roleManagement');
+              location.assign('/admin/roleManagement');
             }, 100);
           }
           _context.next = 11;
@@ -5897,7 +5897,7 @@ var updatePassword = /*#__PURE__*/function () {
           if (res.data.status === 'success') {
             alert('updated successfully!!!!');
             window.setTimeout(function () {
-              location.href = '/userManagement';
+              location.href = '/admin/userManagement';
             }, 100);
           }
           _context.next = 10;
@@ -6062,7 +6062,7 @@ var updatePromotion = /*#__PURE__*/function () {
           if (res.data.status === 'success') {
             alert('Updated successfully!!!!');
             window.setTimeout(function () {
-              location.assign('/promotion');
+              location.assign('/admin/promotion');
             }, 100);
           }
           _context.next = 11;
@@ -6115,7 +6115,7 @@ var createPromotion = /*#__PURE__*/function () {
           if (res.data.status === 'success') {
             alert('Created successfully!!!!');
             window.setTimeout(function () {
-              location.assign('/promotion');
+              location.assign('/admin/promotion');
             }, 100);
           }
           _context.next = 11;
@@ -6169,7 +6169,7 @@ var deletePromotion = /*#__PURE__*/function () {
           if (res.data.status === 'success') {
             alert('deleted successfully!!!!');
             window.setTimeout(function () {
-              location.assign('/promotion');
+              location.assign('/admin/promotion');
             }, 100);
           }
           _context.next = 13;
