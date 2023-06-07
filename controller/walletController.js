@@ -9,7 +9,7 @@ const fs = require('fs');
 const verify = require("../utils/verify");//
 // const { use } = require('../app');
 function readPem (filename) {
-    return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename), 'utf8').toString('ascii');
+    return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename), 'utf8')
   }
 
 exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
