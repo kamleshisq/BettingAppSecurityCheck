@@ -15,7 +15,7 @@ const verifier = crypto.createVerify('RSA-SHA256');
 verifier.update(x); // Replace 'data to verify' with the actual data you want to verify against the signature
 // console.log(publicKey)
 // Verify the signature using the public key
-console.log(verifier)
+// console.log(verifier)
 let isSignatureValid
 try{
     isSignatureValid = verifier.verify(publicKey, signatureBuffer);
