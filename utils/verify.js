@@ -16,7 +16,12 @@ verifier.update(x); // Replace 'data to verify' with the actual data you want to
 // console.log(publicKey)
 // Verify the signature using the public key
 console.log(verifier)
-const isSignatureValid = verifier.verify(publicKey, signatureBuffer);
+let isSignatureValid
+try{
+    isSignatureValid = verifier.verify(publicKey, signatureBuffer);
+}catch(err){
+    console.log(err)
+}
 // console.log(isSignatureValid, 456)
 return isSignatureValid;
 }
