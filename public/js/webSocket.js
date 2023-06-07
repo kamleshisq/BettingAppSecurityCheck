@@ -1712,6 +1712,141 @@ socket.on('connect', () => {
         })
     }
 
+    if(pathname == "/admin/gamereport"){
+        $('.searchUser').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchUser")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    socket.emit("SearchACC", {x, LOGINDATA})
+                }else{
+                    // document.getElementById('select').innerHTML = ``
+                }
+            }
+        })
+
+        socket.on("ACCSEARCHRES", async(data)=>{
+            // console.log(data)
+            let html = ` `
+            for(let i = 0; i < data.length; i++){
+                html += `<option><button onclick="myFunction(${data[i].userName})">${data[i].userName}</button>`
+            }
+            // console.log(html)
+            document.getElementById('select').innerHTML = html
+
+            let datalist = document.querySelector('#text_editors');
+            console.log(datalist)
+            let  select = document.querySelector('#select');
+            // console.log(select)
+            let options = select.options;
+            // console.log(options)
+
+
+
+            / when user selects an option from DDL, write it to text field /
+            select.addEventListener('change', fill_input);
+
+            function fill_input() {
+                 input.value = options[this.selectedIndex].value;
+            hide_select();
+            }
+
+            / when user wants to type in text field, hide DDL /
+            let input = document.querySelector('.searchUser');
+            input.addEventListener('focus', hide_select);
+
+            function hide_select() {
+            datalist.style.display = '';
+            //   button.textContent = "▼";
+            }
+        })
+
+        let filterData = {}
+        $(window).scroll(function() {
+            if($(document).height()-$(window).scrollTop() == window.innerHeight){
+                let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                let data = {}
+                let userName = $('.searchUser').val()
+                if(userName == ''){
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                }
+                // if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
+                //     filterData.date = {$gte : fromDate,$lte : toDate}
+                // }else{
+
+                //     if(fromDate != undefined && fromDate != '' ){
+                //         filterData.date = {$gte : fromDate}
+                //     }
+                //     if(toDate != undefined && toDate != '' ){
+                //         filterData.date = {$lte : toDate}
+                //     }
+                // }    
+                data.filterData = filterData;
+                data.page = page
+                data.LOGINDATA = LOGINDATA
+                console.log(data)
+                socket.emit('gameReport',data)
+
+
+
+            }
+         }); 
+
+        $(".searchUser").on('input', function(e){
+            var $input = $(this),
+                val = $input.val();
+                list = $input.attr('list'),
+                match = $('#'+list + ' option').filter(function() {
+                    return ($(this).val() === val);
+                });
+
+                if(match.length > 0){
+                    console.log(match.text())
+                    filterData = {}
+                    filterData.userName = match.text()
+                    $('.pageId').attr('data-pageid','1')
+                    socket.emit('gameReport',{filterData,LOGINDATA,page:0})
+                }
+        })
+
+        socket.on('gameReport',(data)=>{
+            console.log(data)
+            let page = data.page;
+            let games = data.games;
+            let html = '';
+            for(let i = 0;i<games.length;i++){
+                if(i % 2 == 0){
+                  html += `<tr style="text-align: center;">`
+                }else{
+                  html += `<tr style="text-align: center;" class="blue">`
+                }
+                  html += `<td>${i + 1}</td>
+                  <td>${games[i]._id}</td>
+                  <td>${games[i].gameCount}</td>
+                  <td>${games[i].betCount}</td>
+                  <td>${games[i].won}</td>
+                  <td>${games[i].loss}</td>`
+                if(games[i].returns >= 0){
+                  html += `<td style="color: #46BCAA;">+${games[i].returns}</td>`
+                }else{
+                  html += `<td style="color: #FE3030;">${games[i].returns}</td>`
+                }
+                html += `</tr>`
+            }
+
+            if(data.page == 0){
+            $('.new-body').html(html)
+            }else{
+            $('.new-body').append(html)
+            }
+        })
+    }
+
 
 
     

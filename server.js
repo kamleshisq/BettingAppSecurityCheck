@@ -418,6 +418,133 @@ io.on('connection', (socket) => {
         socket.emit("RGV1", {data, provider:"EG"})
     })
 
+    socket.on('gameReport',async(data)=>{
+        // console.log(data)
+        let page = data.page;
+        let limit = 10;
+        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        data.filterData.role_type = {
+            $in:role_type
+        }
+        console.log(data.filterData)
+        const user = await User.findOne({userName:data.filterData.userName})
+        if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData == "admin"){
+            let games = await Bet.aggregate([
+                {
+                    $group:{
+                        _id:{
+                            userName:'$userName',
+                            gameId: '$event'
+                        },
+                        gameCount:{$sum:1},
+                        loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                        won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                        returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+                        
+                    }
+                },
+                {
+                    $group:{
+                        _id:'$_id.userName',
+                        gameCount:{$sum:1},
+                        betCount:{$sum:'$gameCount'},
+                        loss:{$sum:'$loss'},
+                        won:{$sum:'$won'},
+                        returns:{$sum:'$returns'}
+        
+                    }
+                },
+                {
+                    $skip:(page * limit)
+                },
+                {
+                    $limit:limit
+                }
+            ])
+            socket.emit('gameReport',{games,page})
+        }else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
+            delete data.filterData['userName']
+            let games = await Bet.aggregate([
+                {
+                    $match:data.filterData
+                },
+                {
+                    $group:{
+                        _id:{
+                            userName:'$userName',
+                            gameId: '$gameId'
+                        },
+                        gameCount:{$sum:1},
+                        loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                        won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                        returns:{$sum:'$returns'}
+                        
+                    }
+                },
+                {
+                    $group:{
+                        _id:'$_id.userName',
+                        gameCount:{$sum:1},
+                        betCount:{$sum:'$gameCount'},
+                        loss:{$sum:'$loss'},
+                        won:{$sum:'$won'},
+                        returns:{$sum:'$returns'}
+        
+                    }
+                },
+                {
+                    $skip:(page * limit)
+                },
+                {
+                    $limit:limit
+                }
+            ])
+            socket.emit('gameReport',{games,page})
+        }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
+            let games = await Bet.aggregate([
+                {
+                    $match:data.filterData
+                },
+                {
+                    $group:{
+                        _id:{
+                            userName:'$userName',
+                            gameId: '$gameId'
+                        },
+                        gameCount:{$sum:1},
+                        loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                        won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                        returns:{$sum:'$returns'}
+                        
+                    }
+                },
+                {
+                    $group:{
+                        _id:'$_id.userName',
+                        gameCount:{$sum:1},
+                        betCount:{$sum:'$gameCount'},
+                        loss:{$sum:'$loss'},
+                        won:{$sum:'$won'},
+                        returns:{$sum:'$returns'}
+        
+                    }
+                },
+                {
+                    $skip:(page * limit)
+                },
+                {
+                    $limit:limit
+                }
+            ])
+            socket.emit('gameReport',{games,page})
+
+        }
+    })
+
     socket.on("SearchACC", async(data) => {
         // console.log(data)
         const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
