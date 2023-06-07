@@ -344,12 +344,12 @@ exports.userLogin = catchAsync (async(req, res, next) => {
                 message:"Please provide valide user and password"
             })
         }
-        // else if(user.role_type != 5){
-        //     res.status(404).json({
-        //         status:'error',
-        //         message:"Please provide valide user and password 1212111"
-        //     })
-        // }
+        else if(user.role_type != 5){
+            res.status(404).json({
+                status:'error',
+                message:"You do not have permission to login as user"
+            })
+        }
         else if(!user.isActive){
             res.status(404).json({
                 status:'error',

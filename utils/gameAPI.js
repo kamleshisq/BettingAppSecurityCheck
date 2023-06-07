@@ -3,8 +3,8 @@ const path = require('path');
 const SHA256 = require('./sha256');
 const fs = require('fs');
 
-async function gameAPi(data){
-    // console.log(data)
+async function gameAPi(data,user){
+    // console.log(user, data,123)
     function readPem (filename) {
         return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename)).toString('ascii');
       }
@@ -13,11 +13,11 @@ const privateKey = readPem('private.pem');
 // return privateKey
 let body = {
     "operatorId": "sheldon",
-    "userId":"6476f43cd334a60f88f87049",
+    "userId":user._id,
     "providerName": data.provider_name,
     "platformId":"DESKTOP",
     "currency":"INR",
-    "username":"user3",
+    "username":user.userName,
     "lobby":false,
     "clientIp":"46.101.225.192",
     "gameId":`${data.game_id}`,

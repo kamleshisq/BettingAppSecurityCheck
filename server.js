@@ -369,8 +369,9 @@ io.on('connection', (socket) => {
         await Promotion.findByIdAndUpdate(data, {click:position.click+1})
     })
     socket.on('IMGID', async(data) => {
-        let gameData = await gameModel.findById(data)
-        let urldata = await gameAPI(gameData)
+        // console.log(data)
+        let gameData = await gameModel.findById(data.id)
+        let urldata = await gameAPI(gameData, data.LOGINDATA.LOGINUSER)
         socket.emit('URLlINK', urldata.url)
     })
 

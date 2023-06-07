@@ -56,14 +56,15 @@ exports.getGameByCategory = catchAsync(async(req, res, next) => {
 
 
 exports.sport = catchAsync(async(req, res, next) => {
+    // console.log(req.currentUser, 123)
     let body = {
         clientIp: "121.122.32.1",
         currency: "INR",
         operatorId: "sheldon",
         partnerId: "SHPID01",
         platformId: "DESKTOP",
-        userId: "647f087ca595d26d201d4de4",
-        username: "testingUser"
+        userId: req.currentUser._id,
+        username: req.currentUser.userName
     }
     function readPem (filename) {
         return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename)).toString('ascii');
