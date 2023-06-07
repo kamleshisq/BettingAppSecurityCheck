@@ -30,12 +30,12 @@
             <td><%=bets[i].userName%></td>
             <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
             <td><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
-            <%if(bets[i].Sport){%>
-                <td><%=bets[i].Sport%></td>
-                <td><%=bets[i].Match%></td>
-                <td><%=bets[i].Market%></td>
-                <td><%=bets[i].betOn%></td>
-                <td><%=bets[i].Odds%></td>
+            <%if(bets[i].match){%>
+                <td>-</td>
+                <td><%=bets[i].match%></td>
+                <td><%=bets[i].marketName%></td>
+                <td><%=bets[i].selectionName%></td>
+                <td><%=bets[i].oddValue%></td>
             <%}else{%>
                 <td>-</td>
                 <td>-</td>

@@ -1116,8 +1116,8 @@ socket.on('connect', () => {
                     if(bets[i].match){
                         html += `<td>-</td>
                         <td>${bets[i].match}</td>
-                        <td>-</td>
-                        <td>-</td>
+                        <td>${bets[i].marketName}</td>
+                        <td>${bets[i].selectionName}</td>
                         <td>${bets[i].oddValue}</td>`
                     }else{
                         html += `<td>-</td>
