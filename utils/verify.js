@@ -6,7 +6,7 @@ function verify(sig, pub, body){
 const signature = sig; // The signature you want to decrypt and verify
 const publicKey = pub; // The public key for verification
 let x = JSON.stringify(body)
-console.log(x)
+console.log(x, 132)
 // Convert the signature and public key from base64 to buffers
 const signatureBuffer = Buffer.from(signature, 'base64');
 // console.log(signatureBuffer)
