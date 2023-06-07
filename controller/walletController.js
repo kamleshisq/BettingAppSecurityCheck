@@ -19,7 +19,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     let x  = req.body
     let publicKey
     if(req.ip == "::ffff:3.9.120.247"){
-        publicKey = readPem("publicCasino.pem")
+        publicKey = readPem("publicSport.pem")
     }else{
         publicKey = readPem("publicCasino.pem")
     }
