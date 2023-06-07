@@ -13,9 +13,9 @@ function readPem (filename) {
   }
 
 exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
-    console.log(req.body)
-    // console.log(req.originalUrl)
-    console.log(req.ip)
+    console.log("body:",req.body)
+    console.log("signature:", req.headers.signature)
+    // console.log(req.ip)
     let x  = req.body
     let publicKey
     if(req.ip == "::ffff:3.9.120.247"){
@@ -23,7 +23,7 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     }else{
         publicKey = readPem("publicCasino.pem")
     }
-    console.log(publicKey, req.headers.signature)
+    console.log("PublicKey:",publicKey)
     let result = verify(req.headers.signature, publicKey, x)
     console.log(result, 564)
     // if(result){
