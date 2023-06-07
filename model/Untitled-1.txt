@@ -88,6 +88,27 @@
   providerId: 'SportRadar'
 }
 
+body: {
+  operatorId: 'sheldon',
+  token: '1cb09861-3bfc-4b76-a32f-b4c361b7f642',
+  userId: '6476f43cd334a60f88f87049',
+  reqId: '891cf963-7191-4663-b157-b0898b7b4575',
+  transactionId: '3ca80e9d-c9aa-4bf9-bcdc-2a663a917f7c',
+  betType: 'BACK',
+  oddValue: 32,
+  eventId: 'sr:match:41439971',
+  marketId: '651:sp:inningnr=1|player=sr:player:2070399',
+  debitAmount: 100,
+  sportId: 'sr:sport:21',
+  competitionId: 'sr:tournament:33207',
+  competitionName: 'Simulated Reality League / Big Bash League SRL',
+  eventName: 'Perth Scorchers Srl vs. Sydney Thunder Srl',
+  marketName: '1st innings - Richardson, Jhye (SRL) dismissal method',
+  selectionId: '1811',
+  selectionName: 'stumped',
+  berfairEventId: '',
+  providerId: 'SportRadar'
+}
 
 
 

@@ -38,7 +38,7 @@ const betSchema = mongoose.Schema({
     event:{
         type:String,
     },
-    BetOn:{
+    selectionName:{
         type:String
     },
     oddValue:{
@@ -57,6 +57,9 @@ const betSchema = mongoose.Schema({
         type:Number
     },
     match:{
+        type:String
+    },
+    marketName:{
         type:String
     }
 })
