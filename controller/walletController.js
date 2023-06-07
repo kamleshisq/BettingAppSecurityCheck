@@ -17,10 +17,15 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     // console.log(req.originalUrl)
     console.log(req.ip)
     let x  = req.body
-    const publicKey = readPem("public.pem")
+    let publicKey
+    if(req.ip == "::ffff:3.9.120.247"){
+        publicKey = readPem("publicSport.pem")
+    }else{
+        publicKey = readPem("publicCasino.pem")
+    }
     // console.log(publicKey, req.headers.signature)
     let result = verify(req.headers.signature, publicKey, x)
-    // console.log(result, 564)
+    console.log(result, 564)
     // if(result){
         next()
     // }else{
