@@ -9,11 +9,11 @@ let x = JSON.stringify(body)
 // console.log(x, 132)
 // Convert the signature and public key from base64 to buffers
 const signatureBuffer = Buffer.from(signature, 'base64');
-console.log(x, 121)
+// console.log(x, 121)
 // Create a verifier object using the public key
 const verifier = crypto.createVerify('RSA-SHA256');
 verifier.update(x); // Replace 'data to verify' with the actual data you want to verify against the signature
-
+console.log(publicKey)
 // Verify the signature using the public key
 const isSignatureValid = verifier.verify(publicKey, signatureBuffer);
 return isSignatureValid;
