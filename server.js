@@ -6,6 +6,7 @@ const gameAPI = require('./utils/gameAPI');
 const Role = require('./model/roleModel');
 const User = require("./model/userModel");
 const Bet = require("./model/betmodel");
+const AccModel  = require("./model/accountStatementByUserModel");
 const Promotion = require("./model/promotion")
 const userController = require("./websocketController/userController");
 const accountControl = require("./controller/accountController");
@@ -389,6 +390,21 @@ io.on('connection', (socket) => {
         socket.emit("RGV1", {data, provider:"RGV"})
     })
 
+    socket.on('ElementID',async(data)=>{
+        // console.log(data)
+        const acc = await AccModel.findById(data)
+        console.log(acc, 132)
+        let bet = {}
+        if(acc.transactionId){
+            bet = await Bet.findOne({transactionId:acc.transactionId})
+        }else{
+            bet = acc
+        }
+
+        // let transactionId = data;
+        // console.log(bet)
+        socket.emit('getMyBetDetails',bet)
+    })
 
     socket.on("EZ", async(A)=>{
         let data;

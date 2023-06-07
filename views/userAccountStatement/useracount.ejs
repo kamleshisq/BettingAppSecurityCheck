@@ -188,15 +188,20 @@
                         <%}%>
                       <%}else{%>
                       <td>0</td>
+                      <%if(data[i].parent_id){%>
                       <td><%=data[i].creditDebitamount%></td>
                         <%if(data[i].parent_id.userName == data[i].user_id.userName){%>
                           <td><%=data[i].parent_id.userName%>/<%=data[i].child_id.userName%></td>
                         <%}else{%>
                           <td><%=data[i].child_id.userName%>/<%=data[i].parent_id.userName%></td>
                         <%}%>
+                      <%}else{%>
+                        <td><%=data[i].creditDebitamount%></td>
+                        <td>-</td>  
+                        <%}%>
                       <%}%>
                       <td><%=data[i].balance%></td>
-                      <td><button style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=data[i].description%>&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+                      <td><button class="ownAccDetails" id="<%=data[i]._id%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=data[i].description%>&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
                       <td>-</td>
                     </tr>
                     <%}else{%>
@@ -235,7 +240,7 @@
                         <%}%>
                       <%}%>
                         <td><%=data[i].balance%></td>
-                        <td><button style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=data[i].description%> &nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+                        <td><button class="ownAccDetails" id="<%=data[i]._id%>" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=data[i].description%> &nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
                         <td>-</td>
                       </tr>
                     <%}%>
@@ -275,7 +280,7 @@
                         
                         <th>Date</th>
                         <th>Event</th>
-                        <th>Market Type</th>
+                        <th>Market</th>
                         <th>Bet on</th>
                         <th>odds</th>
                         <th>Stake</th>
@@ -348,7 +353,7 @@
   </div>
   </div>
 
-<script type="text/javascript" src="js/bundle.js"></script>
+<script type="text/javascript" src="../js/bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>

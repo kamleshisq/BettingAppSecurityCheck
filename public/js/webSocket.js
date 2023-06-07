@@ -676,7 +676,114 @@ socket.on('connect', () => {
     if(pathname == "/admin/useracount"){
         // console.log($('.searchUser'))
 
+        let model 
+        $(document).on('click','.ownAccDetails',function(e){
+            // console.log($(this))
+            let modelId = $(this).attr('id')
+            let modelId1 = $(this).attr("data-bs-target")
+            model =  $(modelId1)
+            // console.log(model)
+            // console.log(modelId)
+            socket.emit("ElementID", modelId)
+        })
+        socket.on('getMyBetDetails',(data)=>{
+            // console.log(data)
+            let html = ``
+            if(data.transactionId){
+                html += `<thead>
+                <tr style="text-align: center;font-size: 11px;color: #fff;">
+                  <th>Date</th>
+                  <th>Event</th>
+                  <th>Market</th>
+                  <th>Bet on</th>
+                  <th>odds</th>
+                  <th>Stake</th>
+                  <th>Status</th>
+                  <th>Returns</th>
+                </tr>
+            </thead>`
+                html += `<tbody class="new-body" style="font-size: 11px;">
+                <tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>
+                <td>${data.event}</td>`
+                if(data.marketName){
+                    html += `<td>${data.marketName}</td>`
+                }else{
+                    html += `<td>-</td>`
+                }
 
+                if(data.selectionName){
+                    html += `<td>${data.selectionName}</td>`
+                }else{
+                    html += `<td>-</td>`
+                }
+                if(data.oddValue){
+                    html += `<td>${data.oddValue}</td>`
+                }else{
+                    html += `<td>-</td>`
+                }
+
+                html += `
+                <td>${data.Stake}</td>
+                <td>${data.status}</td>
+                <td>${data.returns}</td></tr></tbody>`
+                model.find('table').html(html)
+            }else{
+                html += `<thead>
+                <tr style="text-align: center;font-size: 11px;color: #fff;">
+                  <th>Date</th>
+                  <th>Credit</th>
+                  <th>Debit</th>
+                  <th>From/To</th>
+                  <th>Closing</th>
+                  <th>Description</th>
+                  <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody class="new-body" style="font-size: 11px;">`
+                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>`
+                if(data.creditDebitamount>0){
+                    html += `<td>${data.creditDebitamount}</td><td>0</td>`
+                    if(data.parent_id.userName == data.user_id.userName){
+                        html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
+                    }else{
+                        html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
+                    }
+                }else{
+                    html += `<td>0</td><td>${data.creditDebitamount}</td>`
+                    if(data.parent_id.userName == data.user_id.userName){
+                        html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
+                    }else{
+                        html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
+                    }
+                }
+                
+                        html += `
+                        <td>${data.balance}</td>
+                        <td>${data.description}</td>
+                        <td>-</td></tr></tbody>`
+                        // console.log(html)
+                        model.find('table').html(html)
+                    }
+            // console.log(model)
+        })
+            // let 
+            // let data = $(this).parent().parent().data('details')
+            // let html = '';
+            // if(data.hasOwnProperty('transactionId')){
+            //     socket.emit('getMyBetDetails',data.transactionId)
+                
+            //         // console.log(data)
+                   
+
+            // }
+            
+    
+            //     
+            // }
+
+        
+        
+            // console.log(data)
 
 
         $('.searchUser').keyup(function(){
@@ -842,7 +949,7 @@ socket.on('connect', () => {
                     // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
                     // console.log(abc)
                     if((i%2)==0){
-                        html += `<tr style="text-align: center;" class="blue">
+                        html += `<tr style="text-align: center;" class="blue" >
                         <td>${count1 + i}</td>
                         <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
                         <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
@@ -877,7 +984,7 @@ socket.on('connect', () => {
                             }
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><button style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+                        <td><button class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
                         <td>-</td>`
                     }else{
                         html += `<tr style="text-align: center;" >
@@ -915,7 +1022,7 @@ socket.on('connect', () => {
                             }
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><button style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+                        <td><button class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
                         <td>-</td>`
                     }
                 }
