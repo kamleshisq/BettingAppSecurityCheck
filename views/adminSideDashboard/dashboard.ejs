@@ -75,7 +75,7 @@
                         <th>Total</th>
                     </thead>
                     <tbody>
-                        <%for(let i=0; i<data.dashboard.roles.length;i++){%>
+                        <%for(let i=0; i < data.dashboard.roles.length;i++){%>
                           <%if((i % 2) == 0){%>
                             <tr class="flex-justify blue">
                                 <td><%=data.dashboard.roles[i]._id%></td>
@@ -179,32 +179,18 @@
             </tr>
         </thead>
         <tbody>
-          <tr style="text-align: center;">
-            <td>1</td>
-            <td>Sergio01</td>
-            <td>67</td>
-            <td class="text-purple">17900</td>
-          </tr>
-          <tr style="text-align: center;" class="blue">
-            <td>1</td>
-            <td>Sergio01</td>
-            <td>67</td>
-            <td class="text-purple">17900</td>
-          </tr>
-          <tr style="text-align: center;">
-            <td>1</td>
-            <td>Sergio01</td>
-            <td>67</td>
-            <td class="text-purple">17900</td>
-          </tr>
-          <tr style="text-align: center;" class="blue">
-            <td>1</td>
-            <td>Sergio01</td>
-            <td>67</td>
-            <td class="text-purple">17900</td>
-          </tr>
-          
-         
+          <%for(let i = 0; i < data.dashboard.topPlayers.length; i++){%>
+            <%if((i%2)==0){%>
+              <tr style="text-align: center;" class="blue">
+            <%}else{%>
+              <tr style="text-align: center;">
+            <%}%>
+            <td><%=i+1%></td>
+            <td><%=data.dashboard.topPlayers[i].userName%></td>
+            <td><%=data.dashboard.topPlayers[i].Bets%></td>
+            <td><%=data.dashboard.topPlayers[i].Bets%></td>
+              </tr>
+          <%}%>
         </tbody>
       </table>
 </div>
