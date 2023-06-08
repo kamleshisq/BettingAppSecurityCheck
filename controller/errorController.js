@@ -38,7 +38,10 @@ const sendErrorDev = (err, req,res) => {
         })
     }else{
         return res.status(err.statusCode).json({
-            message : err.message,
+            status : err.status,
+        error: err,
+        message : err.message,
+        stack: err.stack
         })
     }
     // return res.status(err.statusCode).render('loginPage',{
