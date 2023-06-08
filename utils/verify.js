@@ -6,8 +6,8 @@ const signature = sig;
 const publicKey = pub; 
 let x = JSON.stringify(body)
 // console.log(x, 132)
-
-const signatureBuffer = Buffer.from(signature, 'base64');
+const base64Signature = signature.toString('base64');
+const signatureBuffer = Buffer.from(base64Signature, 'base64');
 // console.log(x, 121)
 const verifier = crypto.createVerify('RSA-SHA256');
 verifier.update(x); 
