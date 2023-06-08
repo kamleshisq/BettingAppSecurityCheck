@@ -185,7 +185,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             // "userName" : user.userName,
             // "role_type" : user.role_type
         }
-        console.log(user.parentUsers);
+        // console.log(user.parentUsers);
         await accountStatement.findOneAndUpdate({transactionId:req.body.transactionId},Acc)
         await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: req.body.creditAmount, downlineBalance: req.body.creditAmount}})
         // console.log(A)

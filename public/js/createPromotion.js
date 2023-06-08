@@ -16,7 +16,7 @@ export const createPromotion = async(data)=>{
         }
 
     }catch(err){
-        console.log(err)
+        // console.log(err)
     setTimeout(alert(err.response.data.message), 1500)
     }
 }

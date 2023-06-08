@@ -51,7 +51,7 @@ exports.getAllGame = catchAsync(async(req, res, next) => {
 });
 
 exports.getGameByCategory = catchAsync(async(req, res, next) => {
-    console.log(req.body);
+    // console.log(req.body);
 })
 
 

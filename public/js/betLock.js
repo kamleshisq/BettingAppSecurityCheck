@@ -6,7 +6,7 @@ export const betLockStatus = (data,rowId) => {
         type:'post',
         data:{id:data._id},
         success:function(data){
-            console.log(data)
+            // console.log(data)
             if(data.status === 'success'){
                 alert(data.message)
                 let html = `<td class='getOwnChild' data-bs-dismiss='${JSON.stringify(data.user)}'>`;

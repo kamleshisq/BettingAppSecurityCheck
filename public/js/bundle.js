@@ -5459,7 +5459,7 @@ var login = /*#__PURE__*/function () {
                 }, 100);
               } else {
                 window.setTimeout(function () {
-                  location.assign('/admi/userManagement');
+                  location.assign('/admin/userManagement');
                 }, 100);
               }
             }
@@ -5900,14 +5900,14 @@ var updatePassword = /*#__PURE__*/function () {
               location.href = '/admin/userManagement';
             }, 100);
           }
-          _context.next = 10;
+          _context.next = 11;
           break;
         case 7:
           _context.prev = 7;
           _context.t0 = _context["catch"](0);
-          // console.log(err)
+          console.log(_context.t0);
           setTimeout(alert(_context.t0.response.data.message), 1500);
-        case 10:
+        case 11:
         case "end":
           return _context.stop();
       }
@@ -5963,7 +5963,7 @@ var betLockStatus = function betLockStatus(data, rowId) {
       id: data._id
     },
     success: function success(data) {
-      console.log(data);
+      // console.log(data)
       if (data.status === 'success') {
         alert(data.message);
         var html = "<td class='getOwnChild' data-bs-dismiss='".concat(JSON.stringify(data.user), "'>");
@@ -6118,14 +6118,14 @@ var createPromotion = /*#__PURE__*/function () {
               location.assign('/admin/promotion');
             }, 100);
           }
-          _context.next = 11;
+          _context.next = 10;
           break;
         case 7:
           _context.prev = 7;
           _context.t0 = _context["catch"](0);
-          console.log(_context.t0);
+          // console.log(err)
           setTimeout(alert(_context.t0.response.data.message), 1500);
-        case 11:
+        case 10:
         case "end":
           return _context.stop();
       }
@@ -6155,35 +6155,34 @@ var deletePromotion = /*#__PURE__*/function () {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          console.log(data);
-          _context.prev = 1;
-          _context.next = 4;
+          _context.prev = 0;
+          _context.next = 3;
           return (0, _axios.default)({
             method: 'POST',
             url: '/api/v1/promotion/deletePosition',
             data: data
           });
-        case 4:
+        case 3:
           res = _context.sent;
-          console.log(res);
+          // console.log(res)
           if (res.data.status === 'success') {
             alert('deleted successfully!!!!');
             window.setTimeout(function () {
               location.assign('/admin/promotion');
             }, 100);
           }
-          _context.next = 13;
+          _context.next = 11;
           break;
-        case 9:
-          _context.prev = 9;
-          _context.t0 = _context["catch"](1);
+        case 7:
+          _context.prev = 7;
+          _context.t0 = _context["catch"](0);
           console.log(_context.t0);
           setTimeout(alert(_context.t0.response.data.message), 1500);
-        case 13:
+        case 11:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[1, 9]]);
+    }, _callee, null, [[0, 7]]);
   }));
   return function deletePromotion(_x) {
     return _ref.apply(this, arguments);
@@ -6229,7 +6228,7 @@ if (document.querySelector('.loginForm')) {
 if (document.querySelector('.logOut')) {
   document.querySelector('.logOut').addEventListener('click', function (e) {
     e.preventDefault();
-    console.log("working");
+    // console.log("working")
     (0, _logOut.logout)();
   });
 }
@@ -6268,21 +6267,20 @@ $(document).on('submit', '#edit-form', /*#__PURE__*/function () {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           // $('#edit-form').on('submit', async function(e){
-          console.log("working");
+          // console.log("working")
           e.preventDefault();
           form = $(this)[0];
           fd = new FormData(form);
-          formDataObj = Object.fromEntries(fd.entries());
-          console.log(formDataObj);
+          formDataObj = Object.fromEntries(fd.entries()); // console.log(formDataObj);
           rowId = $('.rowId').attr('data-rowid');
-          _context.next = 9;
+          _context.next = 7;
           return (0, _editUser.editUser)(formDataObj);
-        case 9:
+        case 7:
           user = _context.sent;
-          console.log(user);
+          // console.log(user)
           currentUser = $('#currentUserDetails').data('currentuser'); // console.log(currentUser)
           (0, _updateRow.updateRow)(user, rowId, currentUser);
-        case 13:
+        case 10:
         case "end":
           return _context.stop();
       }

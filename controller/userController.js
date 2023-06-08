@@ -398,7 +398,7 @@ exports.updateUser = catchAsync(async(req, res, next) => {
     }
 
     const updatedUser = await User.findByIdAndUpdate(req.body.id,data,{new:true})
-    console.log(updatedUser)
+    // console.log(updatedUser)
     res.status(200).json({
         status:'success',
         user:updatedUser

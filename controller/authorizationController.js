@@ -182,7 +182,7 @@ exports.restrictTo = (...roles) => {
         // }
         // next()
         let j = 0;
-        console.log(req.currentUser)
+        // console.log(req.currentUser)
         for(let i=0 ; i < req.currentUser.role.authorization.length; i++){
             // console.log(req.currentUser.role.authorization[i])
             // console.log(roles)
@@ -374,7 +374,7 @@ exports.userLogin = catchAsync (async(req, res, next) => {
 
 
 exports.isAdmin = catchAsync(async(req, res, next) => {
-    console.log(global._User.role_type)
+    // console.log(global._User.role_type)
     if(global._User.role_type == 5){
         return next(new AppError('You do not have permission to access this route',404))
     }else{

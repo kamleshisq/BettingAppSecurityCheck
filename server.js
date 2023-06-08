@@ -161,7 +161,7 @@ io.on('connection', (socket) => {
         data.filterData.role_Type = {
             $in:role_type
         }
-        console.log(data.filterData)
+        // console.log(data.filterData)
         const user = await User.findOne({userName:data.filterData.userName})
         if(data.LOGINDATA.LOGINUSER.role_type == 1){
             let users = await loginlogs.find().skip(page * limit).limit(limit)
@@ -393,7 +393,7 @@ io.on('connection', (socket) => {
     socket.on('ElementID',async(data)=>{
         // console.log(data)
         const acc = await AccModel.findById(data)
-        console.log(acc, 132)
+        // console.log(acc, 132)
         let bet = {}
         if(acc.transactionId){
             bet = await Bet.findOne({transactionId:acc.transactionId})
@@ -430,7 +430,7 @@ io.on('connection', (socket) => {
         data.filterData.role_type = {
             $in:role_type
         }
-        console.log(data.filterData)
+        // console.log(data.filterData)
         const user = await User.findOne({userName:data.filterData.userName})
         if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData == "admin"){
             let games = await Bet.aggregate([
@@ -614,7 +614,7 @@ io.on('connection', (socket) => {
         data.filterData.role_type = {
             $in:role_type
         }
-        console.log(data.filterData)
+        // console.log(data.filterData)
         const user = await User.findOne({userName:data.filterData.userName})
         if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
             delete data.filterData['userName']

@@ -14,7 +14,7 @@ $('document').ready(function(){
                     if(data.status === 'success'){
                         alert('you are registered successfully')
                         setTimeout(()=> {
-                            location.href = '/userDashboard'
+                            location.href = '/'
                         })
                     }
                 },

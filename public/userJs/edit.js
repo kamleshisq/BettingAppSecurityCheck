@@ -13,7 +13,7 @@ $('document').ready(function(){
                 if(data.status == 'success'){
                     alert('update successfullt')
                     setTimeout(()=> {
-                        location.href = '/userDashboard'
+                        location.href = '/'
                     })
                 }
             },error:function(err){

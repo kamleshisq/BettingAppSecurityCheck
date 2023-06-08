@@ -405,7 +405,7 @@ socket.on('connect', () => {
                         delete filterData.userName
                     }
             }
-        console.log(W,S,R)
+        // console.log(W,S,R)
         // if(W || S || R){
                let page =  0;
                $('.pageLink').attr('data-page',1)
@@ -416,7 +416,7 @@ socket.on('connect', () => {
 
     $(window).scroll(function() {
         if($(document).height()-$(window).scrollTop() == window.innerHeight){
-            console.log(W,S,R)
+            // console.log(W,S,R)
             let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
 
             let page = parseInt($('.pageLink').attr('data-page'));
@@ -429,7 +429,7 @@ socket.on('connect', () => {
                     
                 // let page = parseInt($('.pageLink').attr('data-page'));
                 // $('.pageLink').attr('data-page',page + 1)
-                console.log(W, S, R)
+                // console.log(W, S, R)
                 socket.emit("search", {filterData,page,id, LOGINDATA })
             }else{
                 getOwnChild(id,page ,'getOwnChild')
@@ -1120,7 +1120,7 @@ socket.on('connect', () => {
                     });
     
                     if(match.length > 0){
-                        console.log(match.text())
+                        // console.log(match.text())
                         filterData = {}
                         filterData.userName = match.text()
                         $('.pageId').attr('data-pageid','1')
@@ -1157,7 +1157,7 @@ socket.on('connect', () => {
                 filterData.status = fBets
                 data.filterData = filterData
                 data.LOGINDATA = LOGINDATA
-                console.log(data)
+                // console.log(data)
                 socket.emit('userBetDetail',data)
     
             })
@@ -1194,7 +1194,7 @@ socket.on('connect', () => {
                     data.filterData = filterData;
                     data.page = page
                     data.LOGINDATA = LOGINDATA
-                    console.log(data)
+                    // console.log(data)
                     socket.emit('userBetDetail',data)
     
     
@@ -1205,7 +1205,7 @@ socket.on('connect', () => {
 
             let count = 11
             socket.on('userBetDetail',(data) => {
-                console.log(data)
+                // console.log(data)
                 let page = data.page
                 let bets = data.ubDetails;
                 let html = '';
@@ -1409,7 +1409,7 @@ socket.on('connect', () => {
             document.getElementById('select').innerHTML = html
 
             let datalist = document.querySelector('#text_editors');
-            console.log(datalist)
+            // console.log(datalist)
             let  select = document.querySelector('#select');
             // console.log(select)
             let options = select.options;
@@ -1489,7 +1489,7 @@ socket.on('connect', () => {
                 data.filterData = filterData;
                 data.page = page
                 data.LOGINDATA = LOGINDATA
-                console.log(data)
+                // console.log(data)
                 socket.emit('userPLDetail',data)
 
 
@@ -1506,7 +1506,7 @@ socket.on('connect', () => {
                 });
 
                 if(match.length > 0){
-                    console.log(match.text())
+                    // console.log(match.text())
                     filterData = {}
                     filterData.userName = match.text()
                     $('.pageId').attr('data-pageid','1')
@@ -1515,7 +1515,7 @@ socket.on('connect', () => {
         })
 
         socket.on('userPLDetail',(data)=>{
-            console.log(data)
+            // console.log(data)
             let users = data.users
             let page = data.page;
             let html = '';
@@ -1567,7 +1567,7 @@ socket.on('connect', () => {
             document.getElementById('select').innerHTML = html
 
             let datalist = document.querySelector('#text_editors');
-            console.log(datalist)
+            // console.log(datalist)
             let  select = document.querySelector('#select');
             // console.log(select)
             let options = select.options;
@@ -1605,7 +1605,7 @@ socket.on('connect', () => {
                 });
 
                 if(match.length > 0){
-                    console.log(match.text())
+                    // console.log(match.text())
                     filterData = {}
                     filterData.userName = match.text()
                     $('.pageId').attr('data-pageid','1')
@@ -1637,7 +1637,7 @@ socket.on('connect', () => {
             }
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
-            console.log(data)
+            // console.log(data)
             socket.emit('userHistory',data)
 
         })
@@ -1668,7 +1668,7 @@ socket.on('connect', () => {
                 data.filterData = filterData;
                 data.page = page
                 data.LOGINDATA = LOGINDATA
-                console.log(data)
+                // console.log(data)
                 socket.emit('userHistory',data)
 
 
@@ -1678,7 +1678,7 @@ socket.on('connect', () => {
         
         let count = 11
         socket.on('userHistory',(data)=>{
-            console.log(data)
+            // console.log(data)
             let html = '';
             let page = data.page
             Logs = data.users
@@ -1737,7 +1737,7 @@ socket.on('connect', () => {
             document.getElementById('select').innerHTML = html
 
             let datalist = document.querySelector('#text_editors');
-            console.log(datalist)
+            // console.log(datalist)
             let  select = document.querySelector('#select');
             // console.log(select)
             let options = select.options;
@@ -1789,7 +1789,7 @@ socket.on('connect', () => {
                 data.filterData = filterData;
                 data.page = page
                 data.LOGINDATA = LOGINDATA
-                console.log(data)
+                // console.log(data)
                 socket.emit('gameReport',data)
 
 
@@ -1806,7 +1806,7 @@ socket.on('connect', () => {
                 });
 
                 if(match.length > 0){
-                    console.log(match.text())
+                    // console.log(match.text())
                     filterData = {}
                     filterData.userName = match.text()
                     $('.pageId').attr('data-pageid','1')
@@ -1815,7 +1815,7 @@ socket.on('connect', () => {
         })
 
         socket.on('gameReport',(data)=>{
-            console.log(data)
+            // console.log(data)
             let page = data.page;
             let games = data.games;
             let html = '';

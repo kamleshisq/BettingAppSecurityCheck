@@ -31,7 +31,7 @@ if(document.querySelector('.loginForm')){
 if(document.querySelector('.logOut')){
     document.querySelector('.logOut').addEventListener('click', function(e){
         e.preventDefault()
-        console.log("working")
+        // console.log("working")
         logout()
     })
 };
@@ -67,15 +67,15 @@ $(document).on('submit','.passReset-form',function(e){
 
 $(document).on('submit','#edit-form',async function(e){
     // $('#edit-form').on('submit', async function(e){
-    console.log("working")
+    // console.log("working")
     e.preventDefault();
     let form = $(this)[0];
     let fd = new FormData(form);
     let formDataObj = Object.fromEntries(fd.entries());
-    console.log(formDataObj);
+    // console.log(formDataObj);
     let rowId = $('.rowId').attr('data-rowid')
     const user = await editUser(formDataObj)
-    console.log(user)
+    // console.log(user)
     let currentUser = $('#currentUserDetails').data('currentuser')
     // console.log(currentUser)
     updateRow(user,rowId,currentUser)

@@ -304,7 +304,7 @@ exports.registration = catchAsync(async(req, res, next) => {
 
 exports.userdashboard = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    console.log(user)
+    // console.log(user)
     res.status(200).render("./user/userDashboard",{
         user
     })
@@ -649,8 +649,8 @@ exports.getGameAnalysisPage = catchAsync(async(req, res, next) => {
             }
         }
     ])
-    console.log(gameAnalist)
-    console.log(activeUser)
+    // console.log(gameAnalist)
+    // console.log(activeUser)
     res.status(200).render("./gameAnalysis/gameanalysis",{
         title:"Gameanalysis",
         gameAnalist,
