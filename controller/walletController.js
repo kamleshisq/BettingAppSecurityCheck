@@ -14,7 +14,7 @@ function readPem (filename) {
 
 exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     console.log("body:",req.body)
-    console.log("signature:", req.headers.signature)
+    // console.log("signature:", req.headers.signature)
     // console.log(req.ip)
     let x  = req.body
     let publicKey
@@ -23,9 +23,9 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     }else{
         publicKey = readPem("publicCasino.pem")
     }
-    console.log("PublicKey:",publicKey)
+    // console.log("PublicKey:",publicKey)
     let result = verify(req.headers.signature, publicKey, x)
-    console.log(result, 564)
+    console.log(result)
     if(result){
         next()
     }else{
