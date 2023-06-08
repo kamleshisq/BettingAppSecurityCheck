@@ -23,7 +23,7 @@ const requestIp = require("request-ip");
 app.use(requestIp.mw());
 app.set('trust proxy', true);
 dotenv.config({path: './config.env'});
-mongoose.connect("mongodb+srv://jayesh:Jk123456@cluster0.bhsp2aw.mongodb.net/New_Lordex",{
+mongoose.connect("mongodb://localhost:27017/New_Lordex",{
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(()=>{
