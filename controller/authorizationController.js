@@ -182,6 +182,7 @@ exports.restrictTo = (...roles) => {
         // }
         // next()
         let j = 0;
+        console.log(req.currentUser)
         for(let i=0 ; i < req.currentUser.role.authorization.length; i++){
             // console.log(req.currentUser.role.authorization[i])
             // console.log(roles)
