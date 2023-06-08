@@ -26,11 +26,11 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     console.log("PublicKey:",publicKey)
     let result = verify(req.headers.signature, publicKey, x)
     console.log(result, 564)
-    // if(result){
+    if(result){
         next()
-    // }else{
-        // return next(new AppError("Please provide a valide signature", 404))
-    // }
+    }else{
+        return next(new AppError("Please provide a valide signature", 404))
+    }
 })
 
 
