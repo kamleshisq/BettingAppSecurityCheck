@@ -51,7 +51,10 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 _id:1
             }
         }
-    ])
+    ]);
+
+    const topPlayers = await User.find({Bets:{$ne:0}})
+    console.log(topPlayers, 123)
     const dashboard = {};
     dashboard.roles = roles
     dashboard.users = users

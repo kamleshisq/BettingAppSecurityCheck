@@ -70,7 +70,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         description = `Bet for game ${req.body.eventName}, amount ${req.body.debitAmount}`
     }
     // console.log(game)
-    let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, $in:{Bets:1}}})
+    let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1}})
     // console.log(user)
     if(!user){
         return next(new AppError("There is no user with that id", 404))
