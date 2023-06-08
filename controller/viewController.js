@@ -565,27 +565,115 @@ exports.getPromotionPage = catchAsync(async(req, res, next) => {
 });
 
 exports.getoperationsPage = catchAsync(async(req, res, next) => {
-    res.status(200).render("./operations/operation")
+    res.status(200).render("./operations/operation",{
+        title:"House Management"
+    })
 })
 
 exports.getSettlementPage = catchAsync(async(req, res, next) => {
-    res.status(200).render("./sattelment/setalment")
+    res.status(200).render("./sattelment/setalment",{
+        title:"Setalment"
+    })
 })
 
 exports.getGameAnalysisPage = catchAsync(async(req, res, next) => {
-    res.status(200).render("./gameAnalysis/gameanalysis")
+    const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+    let fWhitlabel;
+    if(req.currentUser.role_type == 1){
+        fWhitlabel = {$ne:null}
+    }else{
+        fWhitlabel = req.currentUser.whiteLabel
+    }
+    const gameAnalist = await betModel.aggregate([
+        {
+            $lookup:{
+                from:'users',
+                localField:'userName',
+                foreignField:'userName',
+                as:'userDetails'
+            }
+        },
+        {
+            $unwind:'$userDetails'
+        },
+        {
+            $match:{
+                'userDetails.isActive':true,
+                'userDetails.roleName':{$ne:'Admin'},
+                'userDetails.role_type':{$in:role_type},
+                'userDetails.whiteLabel':fWhitlabel
+            }
+        },
+        {
+            $group:{
+                _id:{
+                    whiteLabel:'$userDetails.whiteLabel',
+                    userName:'$userName'
+                },
+                betCount:{$sum:1},
+                loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                open:{$sum:{$cond:[{$eq:['$status','OPEN']},1,0]}},
+                returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+                
+            }
+        },
+        {
+            $group:{
+                _id:'$_id.whiteLabel',
+                activeUser:{$sum:1},
+                betcount:{$sum:'$betCount'},
+                loss:{$sum:'$loss'},
+                won:{$sum:'$won'},
+                open:{$sum:'$open'},
+                returns:{$sum:'$returns'}
+            }
+        }
+    ])
+    const activeUser = await User.aggregate([
+        {
+            $match:{
+                roleName:{$ne:'Admin'},
+                role_type:{$in:role_type},
+                whiteLabel:fWhitlabel
+            }
+        },
+        {
+            $group:{
+                _id:'$whiteLabel',
+                activeUser:{$sum:{$cond:[{$eq:['$isActive',true]},1,0]}}
+            }
+        }
+    ])
+    console.log(gameAnalist)
+    console.log(activeUser)
+    res.status(200).render("./gameAnalysis/gameanalysis",{
+        title:"Gameanalysis",
+        gameAnalist,
+        activeUser
+    })
 })
 
 exports.getStreamManagementPage = catchAsync(async(req, res, next) => {
-    res.status(200).render("./streamManagement/streammanagement")
+    res.status(200).render("./streamManagement/streammanagement",{
+        title:"Streammanagement"
+    })
 })
 
 exports.getNotificationsPage = catchAsync(async(req, res, next) => {
-    res.status(200).render("./Notifications/Notification")
+    res.status(200).render("./Notifications/Notification",{
+        title:"Notification"
+    })
 })
 
 exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
-    res.status(200).render("./betMonitering/betmoniter")
+    res.status(200).render("./betMonitering/betmoniter",{
+        title:"Betmoniter"
+    })
 })
 
 // exports.getBetMoniterPage = catchAsync(async(req, res, next) => {

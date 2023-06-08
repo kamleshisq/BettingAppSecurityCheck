@@ -34,11 +34,11 @@ router.get("/admin/userhistoryreport", authController.isProtected, authControlle
 router.get("/admin/plreport", authController.isProtected, authController.isAdmin,viewController.plreport)
 router.get("/admin/roleManagement", authController.isProtected, authController.isAdmin,viewController.roleManagement)
 router.get("/admin/promotion", authController.isProtected,authController.isAdmin, viewController.getPromotionPage);
-router.get("/admin/operation", authController.isProtected, authController.isAdmin,viewController.getoperationsPage);
-router.get("/setalment", authController.isProtected, authController.isAdmin,viewController.getSettlementPage);
-router.get("/gameanalysis", authController.isProtected, authController.isAdmin,viewController.getGameAnalysisPage);
-router.get("/streammanagement", authController.isProtected, authController.isAdmin,viewController.getStreamManagementPage);
-router.get("/Notification", authController.isProtected, authController.isAdmin,viewController.getNotificationsPage);
+router.get("/admin/houseManagement", authController.isProtected, authController.isAdmin,viewController.getoperationsPage);
+router.get("/admin/setalment", authController.isProtected, authController.isAdmin,viewController.getSettlementPage);
+router.get("/admin/gameanalysis", authController.isProtected, authController.isAdmin,viewController.getGameAnalysisPage);
+router.get("/admin/streammanagement", authController.isProtected, authController.isAdmin,viewController.getStreamManagementPage);
+router.get("/admin/Notification", authController.isProtected, authController.isAdmin,viewController.getNotificationsPage);
 router.get("/admin/casinocontrol", authController.isProtected, authController.isAdmin,viewController.getCasinoControllerPage);
 router.get("/pp", viewController.promotion);
 router.get('/ALLGAMEFORTESTING', authController.isProtected, viewController.getAllCasinoPageFOrTEsting);
