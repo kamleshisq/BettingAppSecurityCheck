@@ -206,6 +206,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 });
 
 exports.rollBack = catchAsync(async(req, res, next) => {
+    const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let user;
     let balance;
     user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance:req.body.rollbackAmount, availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount}});
