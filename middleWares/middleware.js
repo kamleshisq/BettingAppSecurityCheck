@@ -1,8 +1,8 @@
 const catchAsync = require("../utils/catchAsync");
-// const AppError = require("../utils/AppError");
+const AppError = require("../utils/AppError");
 const loginLogs = require("../model/loginLogs");
 const User = require("../model/userModel");
-const { log } = require("util");
+// const { log } = require("util");
 
 // const { log } = require("util");
 
@@ -52,8 +52,10 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         if(req.cookies.JWT && !req.originalUrl.startsWith("/wallet")){
             // console.log(global._loggedInToken)
             const login = await loginLogs.findOne({session_id:req.cookies.JWT, isOnline:true})
-            console.log(login)
             // console.log(req.cookies.JWT)
+            if(login == null){
+                return next(new AppError("Please Login to get access", 404))
+            }
             const user = await User.findById(login.user_id._id)
             var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl
             login.logs.push(req.method + " - " + fullUrl)
