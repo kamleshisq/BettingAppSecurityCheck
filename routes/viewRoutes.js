@@ -46,7 +46,7 @@ router.get('/ALLGAMEFORTESTING', authController.isProtected, viewController.getA
 router.get("/SPORT",authController.isProtected, gameController.sport ,viewController.getSpoertPage);
 
 //user routs
-router.get("/loginUser", authController.isProtected, authController.restrictTo("logOutUser"), viewController.onlineUsers);
+router.get("/admin/onlineUsers", authController.isProtected,  viewController.onlineUsers);
 router.get("/", authController.isLogin, viewController.userdashboard);
 router.get("/edit", authController.isProtected, viewController.edit);
 router.get("/myAccountStatment", authController.isProtected, viewController.myAccountStatment);

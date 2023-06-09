@@ -281,8 +281,8 @@ exports.onlineUsers = catchAsync(async(req, res, next) => {
     }else{
         users = await User.find({role_type:{$in:role_type},is_Online:true , whiteLabel:currentUser.whiteLabel})
     }
-    res.status(200).render('onlineUser',{
-        title:"Inavtive Users",
+    res.status(200).render('./onlineUsers/onlineUsers',{
+        title:"Online Users",
         users,
         currentUser
     })
