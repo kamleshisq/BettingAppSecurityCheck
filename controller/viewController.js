@@ -674,8 +674,8 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
             }
         }
     ])
-    // console.log(gameAnalist)
-    
+    console.log(gameAnalist)
+
     res.status(200).render("./gameAnalysis/gameAnalysis",{
         title:"Game Analysis",
         gameAnalist,
