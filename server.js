@@ -595,13 +595,16 @@ io.on('connection', (socket) => {
         // console.log(data)
         let limit = 10;
         let page = data.page;
-        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        const roles = await Role.find({role_type: {$gt:data.LOGINDATA.LOGINUSER.role.role_type}});
         let role_type =[]
         for(let i = 0; i < roles.length; i++){
             role_type.push(roles[i].role_type)
         }
         data.filterData.role_type = {
             $in:role_type
+        }
+        data.filterData.status = {
+            $ne:"OPEN"
         }
         const user = await User.findOne({userName:data.filterData.userName})
         if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){

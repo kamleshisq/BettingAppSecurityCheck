@@ -368,7 +368,13 @@ exports.APIcall = catchAsync(async(req, res, next) => {
 
 exports.ReportPage = catchAsync(async(req, res, next) => {
     const currentUser = global._User
-    const bets = await betModel.find().limit(10)
+    const role_type = []
+    const roles = await Role.find({role_type: {$gt:currentUser.role_type}});
+    // let role_type =[]
+    for(let i = 0; i < roles.length; i++){
+        role_type.push(roles[i].role_type)
+    }
+    const bets = await betModel.find({role_type:{$in:role_type}, status:{$ne:"OPEN"}}).limit(10)
     res.status(200).render('./reports/reports',{
         title:"Reports",
         me:currentUser,
