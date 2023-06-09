@@ -1848,7 +1848,7 @@ socket.on('connect', () => {
     }
 
     if(pathname == "/admin/onlineUsers"){
-        // console.log("Working 123")
+        console.log("Working 123")
         $(".logout").click(function(){
             let id = $(this).attr("id")
             socket.emit("SelectLogoutUserId", id)
