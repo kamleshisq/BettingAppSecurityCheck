@@ -16,21 +16,21 @@ exports.consoleBodyAndURL = catchAsync(async(req, res, next) => {
     console.log("body:",req.body)
     // console.log("signature:", req.headers.signature)
     // console.log(req.ip)
-    let x  = req.body
-    let publicKey
-    if(req.ip == "::ffff:3.9.120.247"){
-        publicKey = readPem("publicSport.pem")
-    }else{
-        publicKey = readPem("publicCasino.pem")
-    }
+    // let x  = req.body
+    // let publicKey
+    // if(req.ip == "::ffff:3.9.120.247"){
+    //     publicKey = readPem("publicSport.pem")
+    // }else{
+    //     publicKey = readPem("publicCasino.pem")
+    // }
     // console.log("PublicKey:",publicKey)
-    let result = verify(req.headers.signature, publicKey, x)
-    console.log(result)
-    if(result){
+    // let result = verify(req.headers.signature, publicKey, x)
+    // console.log(result)
+    // if(result){
         next()
-    }else{
-        return next(new AppError("Please provide a valide signature", 404))
-    }
+    // }else{
+        // return next(new AppError("Please provide a valide signature", 404))
+    // }
 })
 
 
