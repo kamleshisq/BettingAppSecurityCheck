@@ -234,7 +234,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
         if(acc){
             await accountStatement.findByIdAndDelete(acc._id)
         }
-        
+        console.log(balance)
         if(clientIP == "::ffff:3.9.120.247"){
             res.status(200).json({
                 "status": "RS_OK",
