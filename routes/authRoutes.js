@@ -10,7 +10,7 @@ router.get('/logOut', authController.isProtected, authController.logOut);
 
 router.use(authController.isProtected)
 router.get("/logOutAllUser", authController.restrictTo("allUserLogOut"), authController.logOutAllUser);
-router.post("/logOutSelectedUser", authController.restrictTo("logOutUser"), authController.logOutSelectedUser);
+router.post("/logOutSelectedUser", authController.logOutSelectedUser);
 
 
 module.exports = router;

@@ -211,10 +211,17 @@ exports.rollBack = catchAsync(async(req, res, next) => {
     user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance:req.body.rollbackAmount, availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount}});
     // console.log(user.parentUsers)
     if(!user){
-        res.status(200).json({
-            "status": "OP_SUCCESS",
-            "balance": 0
-        })
+        if(clientIP == "::ffff:3.9.120.247"){
+            res.status(200).json({
+                "status": "RS_OK",
+                "balance": 0
+            })
+        }else{
+            res.status(200).json({
+                "status": "OP_SUCCESS",
+                "balance": 0
+            })
+        }
     }else{
         await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance:req.body.rollbackAmount, downlineBalance:req.body.rollbackAmount}})
         balance = user.balance + req.body.rollbackAmount;
@@ -223,12 +230,21 @@ exports.rollBack = catchAsync(async(req, res, next) => {
         if(bet){
             await betModel.findByIdAndUpdate(bet._id,{returns:0, status:"CANCEL"})
         }
+
         if(acc){
             await accountStatement.findByIdAndDelete(acc._id)
         }
-        res.status(200).json({
-            "status": "OP_SUCCESS",
-            "balance": balance
-        })
+        
+        if(clientIP == "::ffff:3.9.120.247"){
+            res.status(200).json({
+                "status": "RS_OK",
+                "balance": balance
+            })
+        }else{
+            res.status(200).json({
+                "status": "OP_SUCCESS",
+                "balance": balance
+            })
+        }
     }
 })

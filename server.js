@@ -12,6 +12,7 @@ const userController = require("./websocketController/userController");
 const accountControl = require("./controller/accountController");
 const loginlogs = require('./model/loginLogs');
 const gameModel = require('./model/gameModel');
+const { json } = require('express');
 
 // http(req, res) => {}
 io.on('connection', (socket) => {
@@ -163,7 +164,7 @@ io.on('connection', (socket) => {
         }
         // console.log(data.filterData)
         const user = await User.findOne({userName:data.filterData.userName})
-        if(data.LOGINDATA.LOGINUSER.role_type == 1){
+        if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == "admin"){
             let users = await loginlogs.find().skip(page * limit).limit(limit)
             socket.emit('userHistory',{users,page})
         }else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
@@ -216,6 +217,22 @@ io.on('connection', (socket) => {
                 status:'error'
             })
         }
+    })
+
+    socket.on("SelectLogoutUserId",async(id)=>{
+        // console.log(id)
+        // let data = {userId:`${id}`}
+        const fullUrl = global._protocol + '://' + global._host + `/api/v1/auth/logOutSelectedUser?userId=`+id
+        fetch(fullUrl, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ` + loginData.Token }
+        }).then(res => res.json())
+        .then(json =>{
+            console.log(json.status)
+            if(json.status == "success"){
+                socket.emit("SelectLogoutUserId", "success")
+            }
+        })
     })
 
     //....For inactive user page....//

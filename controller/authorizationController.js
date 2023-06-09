@@ -6,6 +6,7 @@ const Joi = require('joi');
 const util = require('util');
 const loginLogs = require('../model/loginLogs');
 const Role = require("../model/roleModel");
+const { log } = require('console');
 
 const createToken = A => {
     return JWT.sign({A}, process.env.JWT_SECRET, {
@@ -111,7 +112,11 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         token = req.cookies.JWT;
         // console.log(token)
     }
-    // console.log(token)
+    const tokenId = await loginLogs.findOne({session_id:token})
+    console.log(tokenId.isOnline)
+    if(!tokenId.isOnline){
+        return next(new AppError('Please log in to access', 404))
+    }
     if(!token){
         return next(new AppError('Please log in to access', 404))
     }
@@ -151,6 +156,12 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     if(!token){
         return next()
     }
+    const tokenId = await loginLogs.findOne({session_id:token})
+    console.log(tokenId)
+    if(!tokenId.isOnline){
+        return next()
+    }
+    // console.log(token)
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
     // console.log(currentUser)
@@ -297,6 +308,8 @@ exports.logOutAllUser = catchAsync(async(req, res, next) => {
 });
 
 exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
+    // console.log(req.query)
+    req.body = req.query
     const user = await User.findOne({_id:req.body.userId,is_Online:true});
     if(!user){
         return next(new AppError('User not find with this id',404))
@@ -305,12 +318,18 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
         return next(new AppError('You do not have permission to perform this action',404))
     }
     // console.log(user._id)
-    const logs = await loginLogs.findOneAndUpdate({user_id:user._id,isOnline:true},{isOnline:false})
+    const logs = await loginLogs.find({user_id:user._id,isOnline:true})
+    console.log(logs)
+    for(let i = 0; i < logs.length; i++){
+        res.cookie(logs[i].session_id, '', { expires: new Date(0) });
+        res.clearCookie(logs[i].session_id);
+    }
+    await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false})
     global._loggedInToken.splice(logs.session_id, 1);
     await User.findByIdAndUpdate({_id:user._id},{is_Online:false})
 
     res.status(200).json({
-        status:'success'
+        status:'success',
 
     })
 
