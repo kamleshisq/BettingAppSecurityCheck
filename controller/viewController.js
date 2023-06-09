@@ -13,6 +13,7 @@ const mongoose = require("mongoose");
 const SHA256 = require("../utils/sha256");
 const fs = require('fs');
 const path = require('path');
+const { all } = require('axios');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -576,7 +577,46 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     })
 })
 
-exports.getGameAnalysisPage = catchAsync(async(req, res, next) => {
+exports.WhiteLabelAnalysis = catchAsync(async(req, res, next) => {
+    const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+    let fWhitlabel;
+    if(req.currentUser.role_type == 1){
+        fWhitlabel = {$ne:null}
+    }else{
+        fWhitlabel = req.currentUser.whiteLabel
+    }
+    
+    const whiteLabelWise = await User.aggregate([
+        {
+            $match:{
+                roleName:{$ne:'Admin'},
+                role_type:{$in:role_type},
+                whiteLabel:fWhitlabel
+            }
+        },
+        {
+            $group:{
+                _id:'$whiteLabel',
+                activeUser:{$sum:{$cond:[{$eq:['$isActive',true]},1,0]}},
+                onLineUser:{$sum:{$cond:[{$eq:['$is_Online',true]},1,0]}},
+                pL:{$sum:"$myPL"}
+            }
+        }
+    ])
+    // console.log(whiteLabelWise)
+    res.status(200).render("./whiteLableAnalysis/whiteLableAnalysis",{
+        title:"whiteLableAnalysis",
+        whiteLabelWise,
+        // activeUser,
+        // AWhitelabel
+    })
+}),
+
+exports.gameAnalysis =  catchAsync(async(req, res, next) => {
     const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
         let role_type =[]
         for(let i = 0; i < roles.length; i++){
@@ -611,7 +651,7 @@ exports.getGameAnalysisPage = catchAsync(async(req, res, next) => {
         {
             $group:{
                 _id:{
-                    whiteLabel:'$userDetails.whiteLabel',
+                    event:'$event',
                     userName:'$userName'
                 },
                 betCount:{$sum:1},
@@ -624,8 +664,8 @@ exports.getGameAnalysisPage = catchAsync(async(req, res, next) => {
         },
         {
             $group:{
-                _id:'$_id.whiteLabel',
-                activeUser:{$sum:1},
+                _id:'$_id.event',
+                Total_User:{$sum:1},
                 betcount:{$sum:'$betCount'},
                 loss:{$sum:'$loss'},
                 won:{$sum:'$won'},
@@ -634,27 +674,11 @@ exports.getGameAnalysisPage = catchAsync(async(req, res, next) => {
             }
         }
     ])
-    const activeUser = await User.aggregate([
-        {
-            $match:{
-                roleName:{$ne:'Admin'},
-                role_type:{$in:role_type},
-                whiteLabel:fWhitlabel
-            }
-        },
-        {
-            $group:{
-                _id:'$whiteLabel',
-                activeUser:{$sum:{$cond:[{$eq:['$isActive',true]},1,0]}}
-            }
-        }
-    ])
     // console.log(gameAnalist)
-    // console.log(activeUser)
-    res.status(200).render("./gameAnalysis/gameanalysis",{
-        title:"Gameanalysis",
+    
+    res.status(200).render("./gameAnalysis/gameAnalysis",{
+        title:"Game Analysis",
         gameAnalist,
-        activeUser
     })
 })
 
