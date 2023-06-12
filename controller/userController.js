@@ -424,7 +424,7 @@ exports.createUser10000 = catchAsync(async(req, res, next) => {
     // console.log('working')
     let array = []
     array.push("648193f1cb86f71eede0b201")
-    for(let i = 0; i < 10000; i++){
+    for(let i = 0; i < 5; i++){
         let x = generateString(7)
         // console.log(x)
         let data = {}
@@ -432,8 +432,8 @@ exports.createUser10000 = catchAsync(async(req, res, next) => {
         data.name = "user" + x;
         data.password = "123456789";
         data.passwordConfirm = "123456789";
-        data.role = "648193c3cb86f71eede0b1fd";
-        data.whiteLabel = "betbhai";
+        data.role = "648193c3cb86f71eede0b1fe";
+        data.whiteLabel = "betbhaiTest";
         data.role_type = 5;
         data.roleName = "user";
         data.parent_id = "648193f1cb86f71eede0b201";
