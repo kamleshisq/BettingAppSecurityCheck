@@ -8,7 +8,7 @@ const User = require("../model/userModel");
 
 
 const LoginLogs = catchAsync(async(req, res, next) => {
-    console.log(req.originalUrl)
+    console.log(req.originalUrl, 123121)
     if(!req.originalUrl.startsWith("/api/v1") && !req.originalUrl.startsWith("/wallet")){
         const clientIP1 = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
         let clientIP2 = clientIP1.split(":")
