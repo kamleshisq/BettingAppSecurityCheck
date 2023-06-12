@@ -424,7 +424,7 @@ exports.createUser10000 = catchAsync(async(req, res, next) => {
     // console.log('working')
     let array = []
     array.push("648193f1cb86f71eede0b201")
-    for(let i = 0; i < 5; i++){
+    for(let i = 0; i < 3; i++){
         let x = generateString(7)
         // console.log(x)
         let data = {}
