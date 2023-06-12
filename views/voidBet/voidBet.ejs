@@ -12,8 +12,11 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
               </div>
-              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
-              
+              <input type="text" id="searchUser" list=text_editors class="form-control searchUser" placeholder="Search User Name " aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
+              <datalist id="text_editors">
+                <select id="select" multiple size=8>
+                </select>
+              </datalist>
             </div>
             <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
           </form>
@@ -103,19 +106,18 @@
         <span class="up-down-form">From Date</span>
       <form action="">
         
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+          <input type = "date" id="fromDate" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
       </form>
         </div>
         <div>
           <span class="up-down-form">To Date</span>  
           <form action="">
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+          <input type = "date" id="toDate" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
           </form>
           </div>
-      <div  class="loc"style="">
-      
-    
-    </div>
+          <div  class="loc"style="">
+            <button class="btn-filter filter"><i class="fa-solid fa-filter"></i> &nbsp; Filter</button>
+          </div>
   </div>
 
 <div id="Account" class="tabcontent" style="margin-bottom:15px">
@@ -162,7 +164,6 @@
 </div>
   </div>
     
-<script src="/js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
