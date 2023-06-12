@@ -56,7 +56,7 @@
             <td><%=i + 1%></td>
             <td class="getOwnChild" data-bs-dismiss="<%=JSON.stringify(users[i])%>">
               <%if(users[i].roleName != 'user'){%>
-                <a href="/userManagement?id=<%=users[i]._id%>"><%=users[i].userName%></a>
+                <a href="/admin/userManagement?id=<%=users[i]._id%>"><%=users[i].userName%></a>
               
               <%}else{%>
                 <%=users[i].userName%>

@@ -5968,7 +5968,7 @@ var betLockStatus = function betLockStatus(data, rowId) {
         alert(data.message);
         var html = "<td class='getOwnChild' data-bs-dismiss='".concat(JSON.stringify(data.user), "'>");
         if (data.user.roleName != 'user') {
-          html += "<a href='/userManagement?id=".concat(data.user._id, "'>").concat(data.user.userName, "</a></td>");
+          html += "<a href='/admin/userManagement?id=".concat(data.user._id, "'>").concat(data.user.userName, "</a></td>");
         } else {
           html += "".concat(data.user.userName, "</td>");
         }
@@ -6004,7 +6004,7 @@ var updateRow = function updateRow(user, rowId, currentUser) {
   html += "<td> ".concat(rowId, " </td>\n      <td class=\"getOwnChild\" data-bs-dismiss='").concat(JSON.stringify(user), "'>");
   // console.log(user.roleName)
   if (user.roleName != 'user') {
-    html += "<a href='/userManagement?id=".concat(user._id, "'>").concat(user.userName, "</a>");
+    html += "<a href='/admin/userManagement?id=".concat(user._id, "'>").concat(user.userName, "</a>");
   } else {
     html += "".concat(user.userName);
   }

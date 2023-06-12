@@ -11,7 +11,7 @@ export const betLockStatus = (data,rowId) => {
                 alert(data.message)
                 let html = `<td class='getOwnChild' data-bs-dismiss='${JSON.stringify(data.user)}'>`;
                 if(data.user.roleName != 'user'){
-                    html += `<a href='/userManagement?id=${data.user._id}'>${data.user.userName}</a></td>`
+                    html += `<a href='/admin/userManagement?id=${data.user._id}'>${data.user.userName}</a></td>`
                 }else{
                     html += `${data.user.userName}</td>`
                 }

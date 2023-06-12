@@ -316,7 +316,7 @@ socket.on('connect', () => {
                 html += `<td> ${count + i} </td>
                     <td class="getOwnChild" data-bs-dismiss='${JSON.stringify(response[i])}'>`
                     if(response[i].roleName != 'user'){
-                        html+= `<a href='/userManagement?id=${response[i]._id}'>${response[i].userName}</a>`
+                        html+= `<a href='/admin/userManagement?id=${response[i]._id}'>${response[i].userName}</a>`
                     }else{
                         html+= `${response[i].userName}`
                     }
