@@ -15,7 +15,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         let clientIP = clientIP2[clientIP2.length - 1]
         global.ip = clientIP
     }
-    console.log(global.ip)
+    // console.log(global.ip)
     
     if(req.originalUrl == "/api/v1/auth/login" ){
         // console.log("working")

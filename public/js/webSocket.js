@@ -2024,7 +2024,7 @@ socket.on('connect', () => {
                         <td>${bets[i].selectionName}</td>`
                     }else{
                         html += `<td>-</td>
-                        <td>-</td>`
+                        <td>-</td><td>-</td><td>-</td>`
                     }
                     html += `
                     <td>${bets[i].Stake}</td>
