@@ -1927,7 +1927,7 @@ socket.on('connect', () => {
                 });
 
                 if(match.length > 0){
-                    console.log(match.text())
+                    // console.log(match.text())
                     filterData = {}
                     filterData.userName = match.text()
                     $('.pageId').attr('data-pageid','1')
@@ -1960,7 +1960,7 @@ socket.on('connect', () => {
             }
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
-            console.log(data)
+            // console.log(data)
             socket.emit('betMoniter',data)
 
         })
@@ -2001,7 +2001,7 @@ socket.on('connect', () => {
             
             let count = 11
             socket.on('betMoniter',(data) => {
-                console.log(data)
+                // console.log(data)
                 let bets = data.ubDetails;
                 let html = '';
                     for(let i = 0; i < bets.length; i++){
