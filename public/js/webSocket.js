@@ -2,6 +2,7 @@
 
 
 
+
 const socket = io();
 socket.on('connect', () => {
     console.log("websocket Connected")
@@ -2229,6 +2230,12 @@ socket.on('connect', () => {
 
     }
 
+
+
+
+    if(pathname === "/admin/betlimit"){
+        console.log("WORKING")
+    }
 
 
 
