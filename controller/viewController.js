@@ -282,10 +282,12 @@ exports.onlineUsers = catchAsync(async(req, res, next) => {
     }else{
         users = await User.find({role_type:{$in:role_type},is_Online:true , whiteLabel:currentUser.whiteLabel})
     }
+    let me = global._User
     res.status(200).render('./onlineUsers/onlineUsers',{
         title:"Online Users",
         users,
-        currentUser
+        currentUser,
+        me
     })
 });
 
@@ -573,14 +575,18 @@ exports.getPromotionPage = catchAsync(async(req, res, next) => {
 });
 
 exports.getoperationsPage = catchAsync(async(req, res, next) => {
+    const me = global._User
     res.status(200).render("./operations/operation",{
-        title:"House Management"
+        title:"House Management",
+        me
     })
 })
 
 exports.getSettlementPage = catchAsync(async(req, res, next) => {
+    const me = global._User
     res.status(200).render("./sattelment/setalment",{
-        title:"Setalment"
+        title:"Setalment",
+        me
     })
 })
 
@@ -614,10 +620,12 @@ exports.WhiteLabelAnalysis = catchAsync(async(req, res, next) => {
             }
         }
     ])
+    const me = global._User
     // console.log(whiteLabelWise)
     res.status(200).render("./whiteLableAnalysis/whiteLableAnalysis",{
         title:"whiteLableAnalysis",
         whiteLabelWise,
+        me
         // activeUser,
         // AWhitelabel
     })
@@ -681,23 +689,29 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
             }
         }
     ])
-    console.log(gameAnalist)
+    // console.log(gameAnalist)
 
+    const me = global._User
     res.status(200).render("./gameAnalysis/gameanalysis",{
         title:"Game Analysis",
         gameAnalist,
+        me
     })
 })
 
 exports.getStreamManagementPage = catchAsync(async(req, res, next) => {
+    const me = global._User
     res.status(200).render("./streamManagement/streammanagement",{
-        title:"Streammanagement"
+        title:"Streammanagement",
+        me
     })
 })
 
 exports.getNotificationsPage = catchAsync(async(req, res, next) => {
+    const me = global._User
     res.status(200).render("./Notifications/Notification",{
-        title:"Notification"
+        title:"Notification",
+        me
     })
 })
 
@@ -715,9 +729,11 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
     }else{
         bets = await betModel.find({role_type:{$in:role_type},status:'OPEN'}).limit(10)
     }
+    const me = global._User
     res.status(200).render("./betMonitering/betmoniter",{
         title:"Betmoniter",
-        bets
+        bets,
+        me
     })
 })
 
@@ -786,17 +802,21 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
     }else{
         bets = await betModel.find({role_type:{$in:role_type},status:'CANCEL'}).limit(10)
     }
+    let me = global._User
     res.status(200).render("./voidBet/voidBet",{
         title:"Void Bets",
-        bets
+        bets,
+        me
     })
 });
 
 
 exports.getBetLimitPage = catchAsync(async(req, res, next) => {
+    const me = global._User
     const betLimit = await betLimitModel.find()
     res.status(200).render("./betLimit/betLimit", {
         title:"Bet Limits",
-        betLimit
+        betLimit,
+        me
     })
 })
