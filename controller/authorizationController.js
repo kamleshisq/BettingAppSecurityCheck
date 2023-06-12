@@ -113,7 +113,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         // console.log(token)
     }
     const tokenId = await loginLogs.findOne({session_id:token})
-    console.log(tokenId.isOnline)
+    // console.log(tokenId.isOnline)
     if(!tokenId.isOnline){
         return next(new AppError('Please log in to access', 404))
     }
@@ -157,7 +157,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
         return next()
     }
     const tokenId = await loginLogs.findOne({session_id:token})
-    console.log(tokenId)
+    // console.log(tokenId)
     if(!tokenId.isOnline){
         return next()
     }
@@ -319,7 +319,7 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
     }
     // console.log(user._id)
     const logs = await loginLogs.find({user_id:user._id,isOnline:true})
-    console.log(logs)
+    // console.log(logs)
     for(let i = 0; i < logs.length; i++){
         res.cookie(logs[i].session_id, '', { expires: new Date(0) });
         res.clearCookie(logs[i].session_id);
