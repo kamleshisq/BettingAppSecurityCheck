@@ -434,7 +434,7 @@ exports.createUser10000 = catchAsync(async(req, res, next) => {
         data.passwordConfirm = "123456789";
         data.role = "648193c3cb86f71eede0b1fe";
         data.whiteLabel = "betbhaiTest";
-        data.role_type = 5;
+        data.role_type = 2;
         data.roleName = "user";
         data.parent_id = "648193f1cb86f71eede0b201";
         data.parent_user_type_id = 1;
