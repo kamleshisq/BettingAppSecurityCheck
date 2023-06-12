@@ -423,7 +423,7 @@ exports.createUser10000 = catchAsync(async(req, res, next) => {
 
     // console.log('working')
     let array = []
-    array.push("648193f1cb86f71eede0b201", "648710692e7886b4ca60bd83")
+    array.push("648193f1cb86f71eede0b201")
     console.log(array)
     for(let i = 0; i < 5000; i++){
         let x = generateString(7)
@@ -437,8 +437,8 @@ exports.createUser10000 = catchAsync(async(req, res, next) => {
         data.whiteLabel = "betbhaiTest";
         data.role_type = 5;
         data.roleName = "user";
-        data.parent_id = "648710692e7886b4ca60bd83";
-        data.parent_user_type_id = 2;
+        data.parent_id = "648193f1cb86f71eede0b201";
+        data.parent_user_type_id = 1;
         data.parentUsers = array
         await User.create(data)
     }

@@ -12,6 +12,7 @@ const walletRoutes = require("./routes/walletRoutes")
 const promotionRoutes = require('./routes/promotionRoute');
 const accountRoutes = require("./routes/accountRoutes");
 const deshBoardRoutes = require("./routes/deshboardRoutes");
+const betLimtRoutes = require("./routes/betLimitRoutes");
 const dotenv =require('dotenv');
 const cookieParser = require('cookie-parser')
 const globleErrorHandler = require('./controller/errorController');
@@ -23,7 +24,7 @@ const requestIp = require("request-ip");
 app.use(requestIp.mw());
 app.set('trust proxy', true);
 dotenv.config({path: './config.env'});
-mongoose.connect(process.env.db1,{
+mongoose.connect(process.env.db,{
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(()=>{
@@ -58,6 +59,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/promotion", promotionRoutes);
 app.use("/api/v1/games", gameRoutes);
 app.use("/api/v1/bets", betRRoutes);
+app.use("/api/v1/betLimit", betLimtRoutes);
 app.use("/", viewRoutes)
 // console.log(globleErrorHandler)
 
