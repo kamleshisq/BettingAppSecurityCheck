@@ -9,9 +9,11 @@ const User = require("../model/userModel");
 
 const LoginLogs = catchAsync(async(req, res, next) => {
     // const clientIP = req.clientIp;
-    const clientIP = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-
-    // console.log(clientIP, "abcd")
+    const clientIP1 = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    let clientIP2 = clientIP1.split(":")
+    let clientIP = clientIP2[clientIP2.length - 1]
+    console.log(clientIP)
+    
     if(req.originalUrl == "/api/v1/auth/login" ){
         // console.log("working")
         const id = await User.findOne({userName:req.body.userName})
