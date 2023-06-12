@@ -5,6 +5,7 @@ const Role = require('../model/roleModel');
 const whiteLabel = require('../model/whitelableModel');
 const AppError = require('./../utils/AppError');
 const catchAsync = require('./../utils/catchAsync');
+const { array } = require('joi');
 // const { use } = require('../routes/userRoutes')
 
 exports.createUser = catchAsync(async(req, res, next)=>{
@@ -410,7 +411,7 @@ exports.createUser10000 = catchAsync(async(req, res, next) => {
     const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     function generateString(length) {
-        let result = ' ';
+        let result = "";
         const charactersLength = characters.length;
         for ( let i = 0; i < length; i++ ) {
             result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -421,8 +422,11 @@ exports.createUser10000 = catchAsync(async(req, res, next) => {
     // console.log();
 
     // console.log('working')
-    for(let i = 0; i < 10; i++){
+    let array = []
+    array.push("648193f1cb86f71eede0b201")
+    for(let i = 0; i < 10000; i++){
         let x = generateString(7)
+        // console.log(x)
         let data = {}
         data.userName = "user" + x;
         data.name = "user" + x;
@@ -434,7 +438,7 @@ exports.createUser10000 = catchAsync(async(req, res, next) => {
         data.roleName = "user";
         data.parent_id = "648193f1cb86f71eede0b201";
         data.parent_user_type_id = 1;
-        req.body.parentUsers = ["648193f1cb86f71eede0b201"]
+        data.parentUsers = array
         await User.create(data)
     }
     res.status(200).json({
