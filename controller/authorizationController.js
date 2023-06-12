@@ -36,7 +36,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
                             role_Type:user.role_type,
                             login_time:time, 
                             isOnline: true, 
-                            ip_address:req.ip, 
+                            ip_address:global.ip, 
                             session_id:token, 
                             device_info:req.headers['user-agent']})
     global._loggedInToken.push({token:token,time:time})

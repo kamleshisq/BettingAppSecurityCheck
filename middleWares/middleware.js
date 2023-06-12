@@ -9,10 +9,13 @@ const User = require("../model/userModel");
 
 const LoginLogs = catchAsync(async(req, res, next) => {
     // const clientIP = req.clientIp;
-    const clientIP1 = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    let clientIP2 = clientIP1.split(":")
-    let clientIP = clientIP2[clientIP2.length - 1]
-    console.log(clientIP)
+    if(!req.originalUrl.startsWith("/api/v1") && !req.originalUrl.startsWith("/wallet")){
+        const clientIP1 = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        let clientIP2 = clientIP1.split(":")
+        let clientIP = clientIP2[clientIP2.length - 1]
+        global.ip = clientIP
+    }
+    console.log(global.ip)
     
     if(req.originalUrl == "/api/v1/auth/login" ){
         // console.log("working")
