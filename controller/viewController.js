@@ -769,4 +769,24 @@ exports.getSpoertPage = catchAsync(async(req, res, next) => {
         url: req.body.url,
         user
     })
+});
+
+
+exports.getVoidBetPage = catchAsync(async(req, res, next) => {
+    const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
+    let role_type =[]
+    for(let i = 0; i < roles.length; i++){
+        role_type.push(roles[i].role_type)
+    }
+    // console.log(await betModel.find({status:'OPEN'}).limit(10))
+    let bets
+    if(req.currentUser.role.role_level == 1){
+        bets = await betModel.find({status:'CANCEL'}).limit(10)
+    }else{
+        bets = await betModel.find({role_type:{$in:role_type},status:'CANCEL'}).limit(10)
+    }
+    res.status(200).render("./voidBet/voidBet",{
+        title:"Void Bets",
+        bets
+    })
 })
