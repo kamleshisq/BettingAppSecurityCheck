@@ -7,6 +7,7 @@ const betModel = require("../model/betmodel");
 const promotionModel = require("../model/promotion");
 const roleAuth = require('../model/authorizationModel');
 const gameModel = require('../model/gameModel');
+const betLimitModel = require("../model/betLimitModel");
 const fetch = require("node-fetch")
 const whiteLabel = require('../model/whitelableModel');
 const mongoose = require("mongoose");
@@ -788,5 +789,14 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
     res.status(200).render("./voidBet/voidBet",{
         title:"Void Bets",
         bets
+    })
+});
+
+
+exports.getBetLimitPage = catchAsync(async(req, res, next) => {
+    const betLimit = await betLimitModel.find()
+    res.status(200).render("./betLimit/betLimit", {
+        title:"Bet Limits",
+        betLimit
     })
 })

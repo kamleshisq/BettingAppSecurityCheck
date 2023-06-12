@@ -1,0 +1,30 @@
+<table>
+    <thead>
+        <tr style="text-align: center;font-size: 11px;">
+          <th>Type</th>
+          <th>Min Stake</th>
+          <th>Max Stake </th>
+          <th>Max Profit</th>
+          <th>Max Odd</th>
+          <th>Delay</th>
+          <th>Actions </th>
+          
+          </tr>
+    </thead>
+    <tbody class="new-body">
+        <%for(let i = 0; i<betLimit.length; i++){%>
+
+            <tr style="text-align: center;" >
+              <td class="btn-filter"><%=betLimit[i].type%></td>
+              <td><input type="text" class="form-datas" value='<%=betLimit[i].min_stake%>'></td>
+              <td><input type="text" class="form-datas" value='<%=betLimit[i].max_stake%>'></td>
+              <td><input type="text" class="form-datas" value='<%=betLimit[i].max_profit%>'></td>
+              <td><input type="text" class="form-datas" value='<%=betLimit[i].max_odd%>'></td>
+              <td><input type="text" class="form-datas" value='<%=betLimit[i].delay%>'></td>
+              <td><a href="" class="btn-green uBetLimit">Update</a></td>
+            </tr>
+        <%}%>
+      
+     
+    </tbody>
+  </table>
