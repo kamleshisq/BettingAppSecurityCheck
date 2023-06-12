@@ -12,7 +12,11 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
               </div>
-              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
+              <input type="text" id="searchUser" list=text_editors class="form-control searchUser" placeholder="Search User Name " aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
+              <datalist id="text_editors">
+                <select id="select" multiple size=8>
+                </select>
+              </datalist>
               
             </div>
             <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
@@ -55,6 +59,8 @@
     </div>
   </div>
   </section>
+
+  <div class="pageId" data-pageid="1"></div>
 
   <section style="padding: 15px 0px;">
     <div class="container-fluid">
@@ -116,17 +122,17 @@
         <span class="up-down-form">From Date</span>
       <form action="">
         
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+          <input type = "date" id="fromDate" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
       </form>
         </div>
         <div>
           <span class="up-down-form">To Date</span>  
           <form action="">
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+          <input type = "date" id="toDate" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
           </form>
           </div>
       <div  class="loc"style="">
-      <button class="btn-filter"><i class="fa-solid fa-download"></i> &nbsp; Refresh</button>
+      <button class="btn-filter filter"><i class="fa-solid fa-filter"></i> &nbsp; Filter</button>
     </div>
   </div>
 
@@ -181,163 +187,7 @@
       <br>
       <div class="table_data_details_ col-lg-12">
     
-              <table>
-                <thead>
-                    <tr style="text-align: center;font-size: 11px;">
-                      <th>S.No</th>
-                      <th>Date</th>
-                      <th>Parent </th>
-                      <th>User Name</th>
-                      <th>Sport</th>
-                      <th>Event</th>
-                      <th>Market </th>
-                      <th>Odds</th>
-                      <th>Stake</th>
-                      <th>Result</th>
-                      <th>State </th>
-                      <th>P/L</th>
-                      <th>IP </th>
-                      <th>Action</th>
-                      
-                    </tr>
-                </thead>
-                <tbody class="new-body">
-                  <tr style="text-align: center;" class="blue">
-                    <td>1</td>
-                    <td>22-12-2022, 03:05 </td>
-                    <td>10</td>
-                    <td>Betting123 </td>
-                    <td>Cricket</td>
-                    <td>Vivo </td>
-                    <td>27</td>
-                    <td>23 </td>
-                    <td>15</td>
-                    <td>23 </td>
-                    <td>Delhi</td>
-                    <td>27 </td>
-                    <td>000001156</td>
-                    <td>20 </td>
-                    
-                  </tr>
-                  <tr style="text-align: center;">
-                    <td>1</td>
-                    <td>22-12-2022, 03:05 </td>
-                    <td>10</td>
-                    <td>Betting123 </td>
-                    <td>Cricket</td>
-                    <td>Vivo </td>
-                    <td>27</td>
-                    <td>23 </td>
-                    <td>15</td>
-                    <td>23 </td>
-                    <td>Delhi</td>
-                    <td>27 </td>
-                    <td>000001156</td>
-                    <td>20 </td>
-                  </tr>
-                  <tr style="text-align: center;" class="blue">
-                    <td>1</td>
-                    <td>22-12-2022, 03:05 </td>
-                    <td>10</td>
-                    <td>Betting123 </td>
-                    <td>Cricket</td>
-                    <td>Vivo </td>
-                    <td>27</td>
-                    <td>23 </td>
-                    <td>15</td>
-                    <td>23 </td>
-                    <td>Delhi</td>
-                    <td>27 </td>
-                    <td>000001156</td>
-                    <td>20 </td>
-                    
-                  </tr>
-                  <tr style="text-align: center;">
-                    <td>1</td>
-                    <td>22-12-2022, 03:05 </td>
-                    <td>10</td>
-                    <td>Betting123 </td>
-                    <td>Cricket</td>
-                    <td>Vivo </td>
-                    <td>27</td>
-                    <td>23 </td>
-                    <td>15</td>
-                    <td>23 </td>
-                    <td>Delhi</td>
-                    <td>27 </td>
-                    <td>000001156</td>
-                    <td>20 </td>
-                  </tr>
-                  <tr style="text-align: center;" class="blue">
-                    <td>1</td>
-                    <td>22-12-2022, 03:05 </td>
-                    <td>10</td>
-                    <td>Betting123 </td>
-                    <td>Cricket</td>
-                    <td>Vivo </td>
-                    <td>27</td>
-                    <td>23 </td>
-                    <td>15</td>
-                    <td>23 </td>
-                    <td>Delhi</td>
-                    <td>27 </td>
-                    <td>000001156</td>
-                    <td>20 </td>
-                    
-                  </tr>
-                  <tr style="text-align: center;">
-                    <td>1</td>
-                    <td>22-12-2022, 03:05 </td>
-                    <td>10</td>
-                    <td>Betting123 </td>
-                    <td>Cricket</td>
-                    <td>Vivo </td>
-                    <td>27</td>
-                    <td>23 </td>
-                    <td>15</td>
-                    <td>23 </td>
-                    <td>Delhi</td>
-                    <td>27 </td>
-                    <td>000001156</td>
-                    <td>20 </td>
-                  </tr>
-                  <tr style="text-align: center;" class="blue">
-                    <td>1</td>
-                    <td>22-12-2022, 03:05 </td>
-                    <td>10</td>
-                    <td>Betting123 </td>
-                    <td>Cricket</td>
-                    <td>Vivo </td>
-                    <td>27</td>
-                    <td>23 </td>
-                    <td>15</td>
-                    <td>23 </td>
-                    <td>Delhi</td>
-                    <td>27 </td>
-                    <td>000001156</td>
-                    <td>20 </td>
-                    
-                  </tr>
-                  <tr style="text-align: center;">
-                    <td>1</td>
-                    <td>22-12-2022, 03:05 </td>
-                    <td>10</td>
-                    <td>Betting123 </td>
-                    <td>Cricket</td>
-                    <td>Vivo </td>
-                    <td>27</td>
-                    <td>23 </td>
-                    <td>15</td>
-                    <td>23 </td>
-                    <td>Delhi</td>
-                    <td>27 </td>
-                    <td>000001156</td>
-                    <td>20 </td>
-                  </tr>
-                  
-                 
-                </tbody>
-              </table>
+              <%- include("./table") %>
               </div>
             </div>
 
@@ -381,10 +231,10 @@
 </div>
   </div>
     
-<script src="/js/main.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
 
 </body>
-    </html>
+</html>
