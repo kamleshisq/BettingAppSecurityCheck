@@ -2033,6 +2033,7 @@ socket.on('connect', () => {
                     <td>${bets[i].returns}</td>
                     </tr>`
                 }
+                count += 10;
                 if(data.page == 0){
                     $('.new-body').html(html)
                 }else{
@@ -2218,6 +2219,7 @@ socket.on('connect', () => {
                     <td>${bets[i].returns}</td>
                     </tr>`
                 }
+                count += 10;
                 if(data.page == 0){
                     $('.new-body').html(html)
                 }else{
