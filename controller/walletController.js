@@ -2,6 +2,7 @@ const userModel = require('../model/userModel');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 const betModel = require("../model/betmodel");
+const betLimitModel = require("../model/betLimitModel");
 const accountStatement = require('../model/accountStatementByUserModel');
 const gameModel = require("../model/gameModel");
 const path = require('path');
@@ -57,6 +58,8 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 
 exports.betrequest = catchAsync(async(req, res, next) => {
     // console.log(req.body)
+    let betDetails = await betLimitModel.find()
+    console.log(betDetails)
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let date = Date.now()
     let game
