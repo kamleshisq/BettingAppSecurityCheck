@@ -2020,7 +2020,8 @@ socket.on('connect', () => {
                         html += `
                         <td>${bets[i].marketName}</td>
                         <td>${bets[i].oddValue}</td>
-                        <td>${bets[i].match}</td>`
+                        <td>${bets[i].match}</td>
+                        <td>${bets[i].selectionName}</td>`
                     }else{
                         html += `<td>-</td>
                         <td>-</td>`
