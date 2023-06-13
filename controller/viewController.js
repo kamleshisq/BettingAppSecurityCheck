@@ -822,11 +822,15 @@ exports.getBetLimitPage = catchAsync(async(req, res, next) => {
 });
 
 exports.getSportList = catchAsync(async(req, res, next) => {
-    var fullUrl = 'https://score-session.dbm9.com/api/get-live-score?event_id=32415875';
+    var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-cricketdata';
     fetch(fullUrl, {
         method: 'GET'
     })
-    .then(res =>res.json())
+    .then(res =>function(){
+        console.log(res.headers)
+        return res.json()
+    }
+        )
     .then(result => {
         console.log(result)
         res.status(200).json({
