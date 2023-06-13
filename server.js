@@ -341,8 +341,8 @@ io.on('connection', (socket) => {
     // })
 
     socket.on("UserSearchId", async(data) => {
+        // console.log(data, 123545)
         let user = await User.findOne({userName:data.userName})
-        // console.log(data)
         let fullUrl = 'http://127.0.0.1:8000/api/v1/Account/getUserAccStatement?id=' + user.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate
         // console.log(fullUrl)
         urlRequestAdd(`/api/v1/Account/getUserAccStatement?id = ${data.id}&page=${data.page}&from = ${data.from}&from = ${data.from}&to = ${data.to}`,'GET', data.LOGINDATA.LOGINTOKEN)

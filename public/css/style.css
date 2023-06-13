@@ -1336,4 +1336,34 @@ label{
         fill: #6359CA;
 
       }
+
       
+#search {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#search li {
+  border: 1px solid #000000;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #6359CA;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: rgb(255, 255, 255);
+  display: block
+}
+
+
+
+#search li:hover:not(.header) {
+  color: black;
+  background-color: #eee;
+}
+
+ul {
+  height: 200px;
+  overflow: hidden;
+  overflow-y: auto;
+}

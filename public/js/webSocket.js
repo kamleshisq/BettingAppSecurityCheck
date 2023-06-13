@@ -796,7 +796,7 @@ socket.on('connect', () => {
                     // console.log(x)
                     socket.emit("SearchACC", {x, LOGINDATA})
                 }else{
-                    document.getElementById('select').innerHTML = ``
+                    document.getElementById('search').innerHTML = ``
                 }
             }
         })
@@ -805,49 +805,30 @@ socket.on('connect', () => {
             // console.log(data)
             let html = ` `
             for(let i = 0; i < data.length; i++){
-                html += `<option><button onclick="myFunction(${data[i].userName})">${data[i].userName}</button>`
+                html += `<li class="searchList" id="${data[i]._id}">${data[i].userName}</li>`
             }
             // console.log(html)
-            document.getElementById('select').innerHTML = html
-
-            let datalist = document.querySelector('#text_editors');
-            // console.log(datalist)
-            let  select = document.querySelector('#select');
-            // console.log(select)
-            let options = select.options;
-            // console.log(options)
-
-
-
-            /* when user selects an option from DDL, write it to text field */
-            select.addEventListener('change', fill_input);
-
-            function fill_input() {
-                 input.value = options[this.selectedIndex].value;
-            hide_select();
-            }
-
-            /* when user wants to type in text field, hide DDL */
-            let input = document.querySelector('.searchUser');
-            input.addEventListener('focus', hide_select);
-
-            function hide_select() {
-            datalist.style.display = '';
-            //   button.textContent = "▼";
-            }
+            document.getElementById('search').innerHTML = html
         })
 
         let searchU 
         let SUSER
+        let match = false
         $(".searchUser").on('input', function(e){
             var $input = $(this),
                 val = $input.val();
-                list = $input.attr('list'),
-                match = $('#'+list + ' option').filter(function() {
-                    return ($(this).val() === val);
-                });
-         
-             if(match.length > 0) {
+                // console.log(val,1234)
+                var listItems = document.getElementsByTagName("li");
+                for (var i = 0; i < listItems.length; i++) {
+                    if (listItems[i].textContent === val) {
+                        match = ($(this).val() === val);
+                      break; 
+                    }else{
+                        match = false
+                    }
+                  }
+                // console.log(match, 123)
+             if(match) {
                 searchU = true
                 let  data = {}
                 let Fdate = document.getElementById("Fdate").value
@@ -866,11 +847,38 @@ socket.on('connect', () => {
                 data.page = 0
                 data.LOGINDATA = LOGINDATA
                 $('.pageLink').attr('data-page',1)
+                // console.log(data, 456)
                  socket.emit( "UserSearchId", data)
              }else{
                 searchU = false
              }
         });
+
+        $(document).on("click", ".searchList", function(){
+            // console.log("working")
+            // console.log(this.textContent)
+            document.getElementById("searchUser").value = this.textContent
+            searchU = true
+                let  data = {}
+                let Fdate = document.getElementById("Fdate").value
+                let Tdate = document.getElementById("Tdate").value
+                if(!Fdate){
+                    Fdate = 'undefined'
+                }
+                if(!Tdate){
+                    Tdate = 'undefined'
+                }
+                data.Fdate = Fdate;
+                data.Tdate = Tdate;
+                data.userName = this.textContent
+                SUSER = this.textContent
+                data.Tdate = document.getElementById("Tdate").value
+                data.page = 0
+                data.LOGINDATA = LOGINDATA
+                $('.pageLink').attr('data-page',1)
+                // console.log(data, 456)
+                 socket.emit( "UserSearchId", data)
+        })
 
         $(document).on("click", ".load", function(){
             
