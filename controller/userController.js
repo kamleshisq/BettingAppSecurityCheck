@@ -428,18 +428,20 @@ exports.createUser10000 = catchAsync(async(req, res, next) => {
     for(let i = 0; i < 15000; i++){
         let x = generateString(7)
         // console.log(x)
-        let data = {}
-        data.userName = x;
-        data.name = x;
-        data.password = "123456789";
-        data.passwordConfirm = "123456789";
-        data.role = "648193c3cb86f71eede0b1fd";
-        data.whiteLabel = "betbhaiTest";
-        data.role_type = 5;
-        data.roleName = "user";
-        data.parent_id = "648193f1cb86f71eede0b201";
-        data.parent_user_type_id = 1;
-        data.parentUsers = array
+        let data = {
+            userName : x,
+            name : x,
+            password : "123456789",
+            passwordConfirm : "123456789",
+            role : "648193c3cb86f71eede0b1fd",
+            whiteLabel : "betbhaiTest",
+            role_type : 5,
+            roleName : "user",
+            parent_id : "648193f1cb86f71eede0b201",
+            parent_user_type_id : 1,
+            parentUsers : array
+        }
+        
         await User.create(data)
     }
     res.status(200).json({
