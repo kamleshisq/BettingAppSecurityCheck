@@ -575,7 +575,7 @@ io.on('connection', (socket) => {
         var regexp = new RegExp(data.x);
         let user
         if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
-                user = await User.find({userName:regexp})
+                user = await User.find({userName:regexp}).limit(10)
         }else{
                 // let role_Type = {
                 //     $in:role_type
@@ -585,7 +585,7 @@ io.on('connection', (socket) => {
                 // xfiletr.userName = regexp
                 // console.log(data.filterData)
                 // console.log(xfiletr)
-                user = await User.find({ role_type:{$in: role_type}, userName: regexp })
+                user = await User.find({ role_type:{$in: role_type}, userName: regexp }).limit(10)
         }
         // console.log(user)
         socket.emit("ACCSEARCHRES", user)
