@@ -558,12 +558,12 @@ const hashedOutput = SHA256(privateKey, textToSign);
         body:JSON.stringify(body)
 
     })
-    .then(res => res.json())
-    .then(result => {
-        res.status(200).json({
-            result
-        })
-    })
+    .then(res => console.log(res))
+    // .then(result => {
+    //     res.status(200).json({
+    //         result
+    //     })
+    // })
 });
 
 exports.getPromotionPage = catchAsync(async(req, res, next) => {
