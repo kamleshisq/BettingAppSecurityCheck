@@ -32,7 +32,7 @@ socket.on('connect', () => {
     // }
 
     //....................FOR UPDATE ROLE...................//
-
+if(pathname != "/admin/userManagement"){
     $('.searchUser').keyup(function(){
         // console.log('working')
         if($(this).hasClass("searchUser")){
@@ -46,6 +46,7 @@ socket.on('connect', () => {
             }
         }
     })
+}
 
 
     if(pathname == "/admin/updateRole"){
