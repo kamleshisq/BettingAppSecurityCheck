@@ -10,8 +10,11 @@ router.use(viewController.url123)
 router.get('/adminLogin/', viewController.login);
 router.get('/userlogin',viewController.userLogin );
 router.get('/registration',viewController.registration );
+
+// FOR TESTING API //
 router.get('/API', viewController.APIcall);
 router.get('/API2', viewController.APIcall2);
+router.get("/sportDetails", viewController.getSportList);
 
 
 // router.use()

@@ -13,6 +13,7 @@ const accountControl = require("./controller/accountController");
 const loginlogs = require('./model/loginLogs');
 const gameModel = require('./model/gameModel');
 const { json } = require('express');
+const { x } = require('joi');
 
 // http(req, res) => {}
 io.on('connection', (socket) => {
@@ -713,6 +714,28 @@ io.on('connection', (socket) => {
             socket.emit('userPLDetail',{users,page})
 
         }
+    })
+
+    socket.on("SearchOnlineUser", async(data) => {
+        console.log(data)
+        let page
+        page = data.page
+        if(!page){
+            page = 0
+        }
+        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        let onlineUsers
+        if(data.LOGINDATA.LOGINUSER.role_type === 1){
+            onlineUsers = await User.find({is_Online:true, userName:new RegExp(data.x)})
+        }else{
+            onlineUsers = await User.find({is_Online:true, role_type:{$in:role_type}, userName:new RegExp(data.x)})
+        }
+        page++
+        socket.emit("SearchOnlineUser",{onlineUsers, page})
     })
     // socket.on('logOutUser',async(id) => {
     //     // console.log(id)

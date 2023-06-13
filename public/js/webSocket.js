@@ -1903,7 +1903,29 @@ socket.on('connect', () => {
     }
 
     if(pathname == "/admin/onlineUsers"){
-        console.log("Working 123")
+        $('.searchUser').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchUser")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    socket.emit("SearchOnlineUser", {x, LOGINDATA})
+                }else{
+                    // document.getElementById('select').innerHTML = ``
+                }
+            }
+        })
+        socket.on("SearchOnlineUser", (data) =>{
+            console.log(data)
+            // if(data.page == 0){
+            //     let html = ``
+            //     for(let i = 0; i < data.onlineUsers.length; i++){
+            //         html += ``
+            //     }
+            // }
+        })
+
         $(".logout").click(function(){
             let id = $(this).attr("id")
             socket.emit("SelectLogoutUserId", id)
