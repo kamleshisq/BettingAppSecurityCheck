@@ -24,7 +24,7 @@ const requestIp = require("request-ip");
 app.use(requestIp.mw());
 app.set('trust proxy', true);
 dotenv.config({path: './config.env'});
-mongoose.connect(process.env.db1,{
+mongoose.connect(process.env.db,{
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(()=>{
