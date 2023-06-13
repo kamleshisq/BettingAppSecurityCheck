@@ -828,9 +828,9 @@ exports.getSportList = catchAsync(async(req, res, next) => {
     })
     .then(res =>res.text())
     .then(result => {
-        console.log(result)
-        // res.status(200).json({
-        //     result
-        // })
+        // console.log(result)
+        res.status(200).json({
+            result
+        })
     })
 })
