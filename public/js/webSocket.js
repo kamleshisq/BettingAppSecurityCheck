@@ -32,29 +32,9 @@ socket.on('connect', () => {
     // }
 
     //....................FOR UPDATE ROLE...................//
-if(pathname != "/admin/userManagement"){
-    $('.searchUser').keyup(function(){
-        // console.log('working')
-        if($(this).hasClass("searchUser")){
-            // console.log($(this).val())
-            if($(this).val().length >= 3 ){
-                let x = $(this).val(); 
-                // console.log(x)
-                socket.emit("SearchACC", {x, LOGINDATA})
-            }else{
-                document.getElementById('search').innerHTML = ``
-                document.getElementById("button").innerHTML = ''
-            }
-        }
-    })
 
-    $(document).on("click", ".next", function(e){
-        e.preventDefault()
-        let page = $(this).attr("id")
-        let x = $("#searchUser").val()
-        socket.emit("SearchACC", {x, LOGINDATA, page})
-    })
-}
+   
+
 
 
     if(pathname == "/admin/updateRole"){
@@ -697,7 +677,27 @@ if(pathname != "/admin/userManagement"){
 
     if(pathname == "/admin/useracount"){
         // console.log($('.searchUser'))
-
+        $('.searchUser').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchUser")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    socket.emit("SearchACC", {x, LOGINDATA})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                    document.getElementById("button").innerHTML = ''
+                }
+            }
+        })
+    
+        $(document).on("click", ".next", function(e){
+            e.preventDefault()
+            let page = $(this).attr("id")
+            let x = $("#searchUser").val()
+            socket.emit("SearchACC", {x, LOGINDATA, page})
+        })
         let model 
         $(document).on('click','.ownAccDetails',function(e){
             // console.log($(this))
@@ -1069,7 +1069,27 @@ if(pathname != "/admin/userManagement"){
 
 
         if(pathname == "/admin/reports"){
-            
+            $('.searchUser').keyup(function(){
+                // console.log('working')
+                if($(this).hasClass("searchUser")){
+                    // console.log($(this).val())
+                    if($(this).val().length >= 3 ){
+                        let x = $(this).val(); 
+                        // console.log(x)
+                        socket.emit("SearchACC", {x, LOGINDATA})
+                    }else{
+                        document.getElementById('search').innerHTML = ``
+                        document.getElementById("button").innerHTML = ''
+                    }
+                }
+            })
+        
+            $(document).on("click", ".next", function(e){
+                e.preventDefault()
+                let page = $(this).attr("id")
+                let x = $("#searchUser").val()
+                socket.emit("SearchACC", {x, LOGINDATA, page})
+            })
     
     
             socket.on("ACCSEARCHRES", async(data)=>{
@@ -1379,6 +1399,27 @@ if(pathname != "/admin/userManagement"){
 
     if(pathname == "/admin/plreport"){
         // let fromDate
+        $('.searchUser').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchUser")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    socket.emit("SearchACC", {x, LOGINDATA})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                    document.getElementById("button").innerHTML = ''
+                }
+            }
+        })
+    
+        $(document).on("click", ".next", function(e){
+            e.preventDefault()
+            let page = $(this).attr("id")
+            let x = $("#searchUser").val()
+            socket.emit("SearchACC", {x, LOGINDATA, page})
+        })
         // let toDate
         let filterData = {}
         
@@ -1497,7 +1538,27 @@ if(pathname != "/admin/userManagement"){
 
     }
     if(pathname == "/admin/userhistoryreport"){
-        
+        $('.searchUser').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchUser")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    socket.emit("SearchACC", {x, LOGINDATA})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                    document.getElementById("button").innerHTML = ''
+                }
+            }
+        })
+    
+        $(document).on("click", ".next", function(e){
+            e.preventDefault()
+            let page = $(this).attr("id")
+            let x = $("#searchUser").val()
+            socket.emit("SearchACC", {x, LOGINDATA, page})
+        })
 
         socket.on("ACCSEARCHRES", async(data)=>{
             // console.log(data, 565464)
@@ -1666,7 +1727,27 @@ if(pathname != "/admin/userManagement"){
     }
 
     if(pathname == "/admin/gamereport"){
-        
+        $('.searchUser').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchUser")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    socket.emit("SearchACC", {x, LOGINDATA})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                    document.getElementById("button").innerHTML = ''
+                }
+            }
+        })
+    
+        $(document).on("click", ".next", function(e){
+            e.preventDefault()
+            let page = $(this).attr("id")
+            let x = $("#searchUser").val()
+            socket.emit("SearchACC", {x, LOGINDATA, page})
+        })
 
         socket.on("ACCSEARCHRES", async(data)=>{
             // console.log(data, 565464)
