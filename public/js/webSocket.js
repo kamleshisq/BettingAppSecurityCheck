@@ -33,7 +33,19 @@ socket.on('connect', () => {
 
     //....................FOR UPDATE ROLE...................//
 
-
+    $('.searchUser').keyup(function(){
+        // console.log('working')
+        if($(this).hasClass("searchUser")){
+            // console.log($(this).val())
+            if($(this).val().length >= 3 ){
+                let x = $(this).val(); 
+                // console.log(x)
+                socket.emit("SearchACC", {x, LOGINDATA})
+            }else{
+                document.getElementById('search').innerHTML = ``
+            }
+        }
+    })
 
 
     if(pathname == "/admin/updateRole"){
@@ -787,20 +799,7 @@ socket.on('connect', () => {
             // console.log(data)
 
 
-        $('.searchUser').keyup(function(){
-            // console.log('working')
-            if($(this).hasClass("searchUser")){
-                // console.log($(this).val())
-                if($(this).val().length >= 3 ){
-                    let x = $(this).val(); 
-                    // console.log(x)
-                    socket.emit("SearchACC", {x, LOGINDATA})
-                }else{
-                    document.getElementById('search').innerHTML = ``
-                }
-            }
-        })
-
+        
         socket.on("ACCSEARCHRES", async(data)=>{
             // console.log(data)
             let html = ` `
@@ -1043,7 +1042,7 @@ socket.on('connect', () => {
      
     }
 
-    if(pathname == "/admin/reports"){
+    // if(pathname == "/admin/reports"){    
     //     // console.log("Working")
     //     $('.searchUser').keyup(function(){
     //         // console.log('working')
@@ -1071,46 +1070,19 @@ socket.on('connect', () => {
                         // console.log(x)
                         socket.emit("SearchACC", {x, LOGINDATA})
                     }else{
-                        // document.getElementById('select').innerHTML = ``
+                        document.getElementById('search').innerHTML = ``
                     }
                 }
             })
     
     
             socket.on("ACCSEARCHRES", async(data)=>{
-                // console.log(data)
                 let html = ` `
                 for(let i = 0; i < data.length; i++){
-                    html += `<option><button onclick="myFunction(${data[i].userName})">${data[i].userName}</button>`
+                    html += `<li class="searchList" id="${data[i]._id}">${data[i].userName}</li>`
                 }
                 // console.log(html)
-                document.getElementById('select').innerHTML = html
-    
-                let datalist = document.querySelector('#text_editors');
-                // console.log(datalist)
-                let  select = document.querySelector('#select');
-                // console.log(select)
-                let options = select.options;
-                // console.log(options)
-    
-    
-    
-                / when user selects an option from DDL, write it to text field /
-                select.addEventListener('change', fill_input);
-    
-                function fill_input() {
-                     input.value = options[this.selectedIndex].value;
-                hide_select();
-                }
-    
-                / when user wants to type in text field, hide DDL /
-                let input = document.querySelector('.searchUser');
-                input.addEventListener('focus', hide_select);
-    
-                function hide_select() {
-                datalist.style.display = '';
-                //   button.textContent = "▼";
-                }
+                document.getElementById('search').innerHTML = html
             })
     
             let searchU 
@@ -1123,15 +1095,20 @@ socket.on('connect', () => {
             $(".searchUser").on('input', function(e){
                 var $input = $(this),
                     val = $input.val();
-                    list = $input.attr('list'),
-                    match = $('#'+list + ' option').filter(function() {
-                        return ($(this).val() === val);
-                    });
+                    var listItems = document.getElementsByTagName("li");
+                for (var i = 0; i < listItems.length; i++) {
+                    if (listItems[i].textContent === val) {
+                        match = ($(this).val() === val);
+                      break; 
+                    }else{
+                        match = false
+                    }
+                  }
     
-                    if(match.length > 0){
+                    if(match){
                         // console.log(match.text())
                         filterData = {}
-                        filterData.userName = match.text()
+                        filterData.userName = val
                         $('.pageId').attr('data-pageid','1')
                         socket.emit('userBetDetail',{filterData,LOGINDATA,page:0})
                     }
@@ -1169,6 +1146,17 @@ socket.on('connect', () => {
                 // console.log(data)
                 socket.emit('userBetDetail',data)
     
+            })
+
+            $(document).on("click", ".searchList", function(){
+                // console.log("working")
+                // console.log(this.textContent)
+                document.getElementById("searchUser").value = this.textContent
+                filterData = {}
+                filterData.userName = this.textContent
+                $('.pageId').attr('data-pageid','1')
+                socket.emit('userBetDetail',{filterData,LOGINDATA,page:0})
+                
             })
     
             $(window).scroll(function() {
@@ -1214,7 +1202,9 @@ socket.on('connect', () => {
 
             let count = 11
             socket.on('userBetDetail',(data) => {
-                // console.log(data)
+                if(data.page === 0){
+                    count = 1
+                }
                 let page = data.page
                 let bets = data.ubDetails;
                 let html = '';
@@ -1260,7 +1250,7 @@ socket.on('connect', () => {
         }
 
         
-    }
+    // }
 
     if(pathname == "/admin/casinocontrol"){
         let baccarat = false;
@@ -1394,84 +1384,17 @@ socket.on('connect', () => {
         // let fromDate
         // let toDate
         let filterData = {}
-        $('.searchUser').keyup(function(){
-            // console.log('working')
-            if($(this).hasClass("searchUser")){
-                // console.log($(this).val())
-                if($(this).val().length >= 3 ){
-                    let x = $(this).val(); 
-                    // console.log(x)
-                    socket.emit("SearchACC", {x, LOGINDATA})
-                }else{
-                    // document.getElementById('select').innerHTML = ``
-                }
-            }
-        })
+        
 
         socket.on("ACCSEARCHRES", async(data)=>{
             // console.log(data)
             let html = ` `
             for(let i = 0; i < data.length; i++){
-                html += `<option><button onclick="myFunction(${data[i].userName})">${data[i].userName}</button>`
+                html += `<li class="searchList" id="${data[i]._id}">${data[i].userName}</li>`
             }
             // console.log(html)
-            document.getElementById('select').innerHTML = html
-
-            let datalist = document.querySelector('#text_editors');
-            // console.log(datalist)
-            let  select = document.querySelector('#select');
-            // console.log(select)
-            let options = select.options;
-            // console.log(options)
-
-
-
-            / when user selects an option from DDL, write it to text field /
-            select.addEventListener('change', fill_input);
-
-            function fill_input() {
-                 input.value = options[this.selectedIndex].value;
-            hide_select();
-            }
-
-            / when user wants to type in text field, hide DDL /
-            let input = document.querySelector('.searchUser');
-            input.addEventListener('focus', hide_select);
-
-            function hide_select() {
-            datalist.style.display = '';
-            //   button.textContent = "▼";
-            }
+            document.getElementById('search').innerHTML = html
         })
-
-        // $('.filter').click(function(){
-        //     let userName = $('.searchUser').val()
-        //     fromDate = $('#fromDate').val()
-        //     toDate = $('#toDate').val()
-        //     $('.pageId').attr('data-pageid','1')
-        //     data.page = 0;
-        //     if(fromDate != ''  && toDate != '' ){
-        //         filterData.date = {$gte : fromDate,$lte : toDate}
-        //     }else{
-
-        //         if(fromDate != '' ){
-        //             filterData.date = {$gte : fromDate}
-        //         }
-        //         if(toDate != '' ){
-        //             filterData.date = {$lte : toDate}
-        //         }
-        //     }
-        //     if(userName != ''){
-        //         filterData.userName = userName
-        //     }else{
-        //         filterData.userName = LOGINDATA.LOGINUSER.userName
-        //     }
-        //     data.filterData = filterData
-        //     data.LOGINDATA = LOGINDATA
-        //     console.log(data)
-        //     socket.emit('userPLDetail',data)
-
-        // })
 
         $(window).scroll(function() {
             if($(document).height()-$(window).scrollTop() == window.innerHeight){
@@ -1509,22 +1432,37 @@ socket.on('connect', () => {
         $(".searchUser").on('input', function(e){
             var $input = $(this),
                 val = $input.val();
-                list = $input.attr('list'),
-                match = $('#'+list + ' option').filter(function() {
-                    return ($(this).val() === val);
-                });
+                var listItems = document.getElementsByTagName("li");
+                for (var i = 0; i < listItems.length; i++) {
+                    if (listItems[i].textContent === val) {
+                        match = ($(this).val() === val);
+                      break; 
+                    }else{
+                        match = false
+                    }
+                  }
 
-                if(match.length > 0){
+                if(match){
                     // console.log(match.text())
                     filterData = {}
-                    filterData.userName = match.text()
+                    filterData.userName = val
                     $('.pageId').attr('data-pageid','1')
                     socket.emit('userPLDetail',{filterData,LOGINDATA,page:0})
                 }
         })
+        $(document).on("click", ".searchList", function(){
+            // console.log("working")
+            // console.log(this.textContent)
+            document.getElementById("searchUser").value = this.textContent
+            filterData = {}
+            filterData.userName = this.textContent
+            $('.pageId').attr('data-pageid','1')
+            socket.emit('userPLDetail',{filterData,LOGINDATA,page:0})
+           
+        })
 
         socket.on('userPLDetail',(data)=>{
-            // console.log(data)
+            // console.log(data.page)
             let users = data.users
             let page = data.page;
             let html = '';
@@ -1552,54 +1490,16 @@ socket.on('connect', () => {
 
     }
     if(pathname == "/admin/userhistoryreport"){
-        $('.searchUser').keyup(function(){
-            // console.log('working')
-            if($(this).hasClass("searchUser")){
-                // console.log($(this).val())
-                if($(this).val().length >= 3 ){
-                    let x = $(this).val(); 
-                    // console.log(x)
-                    socket.emit("SearchACC", {x, LOGINDATA})
-                }else{
-                    // document.getElementById('select').innerHTML = ``
-                }
-            }
-        })
+        
 
          socket.on("ACCSEARCHRES", async(data)=>{
             // console.log(data)
-            let html = ` `
+            let html = ``
             for(let i = 0; i < data.length; i++){
-                html += `<option><button onclick="myFunction(${data[i].userName})">${data[i].userName}</button>`
+                html += `<li class="searchList" id="${data[i]._id}">${data[i].userName}</li>`
             }
             // console.log(html)
-            document.getElementById('select').innerHTML = html
-
-            let datalist = document.querySelector('#text_editors');
-            // console.log(datalist)
-            let  select = document.querySelector('#select');
-            // console.log(select)
-            let options = select.options;
-            // console.log(options)
-
-
-
-            / when user selects an option from DDL, write it to text field /
-            select.addEventListener('change', fill_input);
-
-            function fill_input() {
-                 input.value = options[this.selectedIndex].value;
-            hide_select();
-            }
-
-            / when user wants to type in text field, hide DDL /
-            let input = document.querySelector('.searchUser');
-            input.addEventListener('focus', hide_select);
-
-            function hide_select() {
-            datalist.style.display = '';
-            //   button.textContent = "▼";
-            }
+            document.getElementById('search').innerHTML = html
         })
 
         let fromDate
@@ -1608,15 +1508,20 @@ socket.on('connect', () => {
         $(".searchUser").on('input', function(e){
             var $input = $(this),
                 val = $input.val();
-                list = $input.attr('list'),
-                match = $('#'+list + ' option').filter(function() {
-                    return ($(this).val() === val);
-                });
+                var listItems = document.getElementsByTagName("li");
+                for (var i = 0; i < listItems.length; i++) {
+                    if (listItems[i].textContent === val) {
+                        match = ($(this).val() === val);
+                      break; 
+                    }else{
+                        match = false
+                    }
+                  }
 
-                if(match.length > 0){
+                if(match){
                     // console.log(match.text())
                     filterData = {}
-                    filterData.userName = match.text()
+                    filterData.userName = val
                     $('.pageId').attr('data-pageid','1')
                     socket.emit('userHistory',{filterData,LOGINDATA,page:0})
                 }
@@ -1648,7 +1553,37 @@ socket.on('connect', () => {
             data.LOGINDATA = LOGINDATA
             // console.log(data)
             socket.emit('userHistory',data)
+        })
 
+        $(document).on("click", ".searchList", function(){
+            // console.log("working")
+            // console.log(this.textContent)
+            document.getElementById("searchUser").value = this.textContent
+            let userName = this.textContent
+            fromDate = $('#fromDate').val()
+            toDate = $('#toDate').val()
+            $('.pageId').attr('data-pageid','1')
+            data.page = 0;
+            if(fromDate != ''  && toDate != '' ){
+                filterData.login_time = {$gte : fromDate,$lte : toDate}
+            }else{
+
+                if(fromDate != '' ){
+                    filterData.login_time = {$gte : fromDate}
+                }
+                if(toDate != '' ){
+                    filterData.login_time = {$lte : toDate}
+                }
+            }
+            if(userName != ''){
+                filterData.userName = userName
+            }else{
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }
+            data.filterData = filterData
+            data.LOGINDATA = LOGINDATA
+            // console.log(data)
+            socket.emit('userHistory',data)
         })
 
         $(window).scroll(function() {
@@ -1687,7 +1622,9 @@ socket.on('connect', () => {
         
         let count = 11
         socket.on('userHistory',(data)=>{
-            // console.log(data)
+            if(data.page == 0){
+                count = 1
+            }
             let html = '';
             let page = data.page
             Logs = data.users
@@ -1722,54 +1659,16 @@ socket.on('connect', () => {
     }
 
     if(pathname == "/admin/gamereport"){
-        $('.searchUser').keyup(function(){
-            // console.log('working')
-            if($(this).hasClass("searchUser")){
-                // console.log($(this).val())
-                if($(this).val().length >= 3 ){
-                    let x = $(this).val(); 
-                    // console.log(x)
-                    socket.emit("SearchACC", {x, LOGINDATA})
-                }else{
-                    // document.getElementById('select').innerHTML = ``
-                }
-            }
-        })
+        
 
         socket.on("ACCSEARCHRES", async(data)=>{
             // console.log(data)
             let html = ` `
             for(let i = 0; i < data.length; i++){
-                html += `<option><button onclick="myFunction(${data[i].userName})">${data[i].userName}</button>`
+                html += `<li class="searchList" id="${data[i]._id}">${data[i].userName}</li>`
             }
             // console.log(html)
-            document.getElementById('select').innerHTML = html
-
-            let datalist = document.querySelector('#text_editors');
-            // console.log(datalist)
-            let  select = document.querySelector('#select');
-            // console.log(select)
-            let options = select.options;
-            // console.log(options)
-
-
-
-            / when user selects an option from DDL, write it to text field /
-            select.addEventListener('change', fill_input);
-
-            function fill_input() {
-                 input.value = options[this.selectedIndex].value;
-            hide_select();
-            }
-
-            / when user wants to type in text field, hide DDL /
-            let input = document.querySelector('.searchUser');
-            input.addEventListener('focus', hide_select);
-
-            function hide_select() {
-            datalist.style.display = '';
-            //   button.textContent = "▼";
-            }
+            document.getElementById('search').innerHTML = html
         })
 
         let filterData = {}
@@ -1809,18 +1708,34 @@ socket.on('connect', () => {
         $(".searchUser").on('input', function(e){
             var $input = $(this),
                 val = $input.val();
-                list = $input.attr('list'),
-                match = $('#'+list + ' option').filter(function() {
-                    return ($(this).val() === val);
-                });
+                var listItems = document.getElementsByTagName("li");
+                for (var i = 0; i < listItems.length; i++) {
+                    if (listItems[i].textContent === val) {
+                        match = ($(this).val() === val);
+                      break; 
+                    }else{
+                        match = false
+                    }
+                  }
 
-                if(match.length > 0){
+                if(match){
                     // console.log(match.text())
                     filterData = {}
-                    filterData.userName = match.text()
+                    filterData.userName = val
                     $('.pageId').attr('data-pageid','1')
                     socket.emit('gameReport',{filterData,LOGINDATA,page:0})
                 }
+        })
+
+        $(document).on("click", ".searchList", function(){
+            // console.log("working")
+            // console.log(this.textContent)
+            document.getElementById("searchUser").value = this.textContent
+            filterData = {}
+            filterData.userName = this.textContent
+            $('.pageId').attr('data-pageid','1')
+            socket.emit('gameReport',{filterData,LOGINDATA,page:0})
+            
         })
 
         socket.on('gameReport',(data)=>{
