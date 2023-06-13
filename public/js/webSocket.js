@@ -43,8 +43,16 @@ if(pathname != "/admin/userManagement"){
                 socket.emit("SearchACC", {x, LOGINDATA})
             }else{
                 document.getElementById('search').innerHTML = ``
+                document.getElementById("button").innerHTML = ''
             }
         }
+    })
+
+    $(document).on("click", ".next", function(e){
+        e.preventDefault()
+        let page = $(this).attr("id")
+        let x = $("#searchUser").val()
+        socket.emit("SearchACC", {x, LOGINDATA, page})
     })
 }
 
@@ -801,15 +809,15 @@ if(pathname != "/admin/userManagement"){
 
 
         
-        socket.on("ACCSEARCHRES", async(data)=>{
-            // console.log(data)
-            let html = ` `
-            for(let i = 0; i < data.length; i++){
-                html += `<li class="searchList" id="${data[i]._id}">${data[i].userName}</li>`
-            }
-            // console.log(html)
-            document.getElementById('search').innerHTML = html
-        })
+            socket.on("ACCSEARCHRES", async(data)=>{
+                // console.log(data, 565464)
+                let html = ` `
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            })
 
         let searchU 
         let SUSER
@@ -1061,29 +1069,17 @@ if(pathname != "/admin/userManagement"){
 
 
         if(pathname == "/admin/reports"){
-            // console.log("Working")
-            $('.searchUser').keyup(function(){
-                // console.log('working')
-                if($(this).hasClass("searchUser")){
-                    // console.log($(this).val())
-                    if($(this).val().length >= 3 ){
-                        let x = $(this).val(); 
-                        // console.log(x)
-                        socket.emit("SearchACC", {x, LOGINDATA})
-                    }else{
-                        document.getElementById('search').innerHTML = ``
-                    }
-                }
-            })
+            
     
     
             socket.on("ACCSEARCHRES", async(data)=>{
+                // console.log(data, 565464)
                 let html = ` `
-                for(let i = 0; i < data.length; i++){
-                    html += `<li class="searchList" id="${data[i]._id}">${data[i].userName}</li>`
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
                 }
-                // console.log(html)
                 document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
             })
     
             let searchU 
@@ -1388,13 +1384,23 @@ if(pathname != "/admin/userManagement"){
         
 
         socket.on("ACCSEARCHRES", async(data)=>{
-            // console.log(data)
-            let html = ` `
-            for(let i = 0; i < data.length; i++){
-                html += `<li class="searchList" id="${data[i]._id}">${data[i].userName}</li>`
+            let html = ``
+            if(data.page === 1){
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }else if(data.page === null){
+                document.getElementById("button").innerHTML = ``
+            }else{
+                html = document.getElementById('search').innerHTML
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
             }
-            // console.log(html)
-            document.getElementById('search').innerHTML = html
         })
 
         $(window).scroll(function() {
@@ -1493,14 +1499,14 @@ if(pathname != "/admin/userManagement"){
     if(pathname == "/admin/userhistoryreport"){
         
 
-         socket.on("ACCSEARCHRES", async(data)=>{
-            // console.log(data)
-            let html = ``
-            for(let i = 0; i < data.length; i++){
-                html += `<li class="searchList" id="${data[i]._id}">${data[i].userName}</li>`
+        socket.on("ACCSEARCHRES", async(data)=>{
+            // console.log(data, 565464)
+            let html = ` `
+            for(let i = 0; i < data.user.length; i++){
+                html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
             }
-            // console.log(html)
             document.getElementById('search').innerHTML = html
+            document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
         })
 
         let fromDate
@@ -1663,13 +1669,13 @@ if(pathname != "/admin/userManagement"){
         
 
         socket.on("ACCSEARCHRES", async(data)=>{
-            // console.log(data)
+            // console.log(data, 565464)
             let html = ` `
-            for(let i = 0; i < data.length; i++){
-                html += `<li class="searchList" id="${data[i]._id}">${data[i].userName}</li>`
+            for(let i = 0; i < data.user.length; i++){
+                html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
             }
-            // console.log(html)
             document.getElementById('search').innerHTML = html
+            document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
         })
 
         let filterData = {}
