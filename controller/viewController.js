@@ -826,10 +826,10 @@ exports.getSportList = catchAsync(async(req, res, next) => {
     fetch(fullUrl, {
         method: 'GET'
     })
-    .then(res => res.json())
-    .then(result => {
-        res.status(200).json({
-            result
-        })
-    })
+    .then(res => console.log(res))
+    // .then(result => {
+    //     res.status(200).json({
+    //         result
+    //     })
+    // })
 })
