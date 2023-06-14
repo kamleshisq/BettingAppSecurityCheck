@@ -4,7 +4,7 @@ const fetch = require("node-fetch")
 async function getSportList(){
     let DATA
     var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-sportdata';
-    fetch(fullUrl, {
+    await fetch(fullUrl, {
         method: 'GET'
     })
     .then(res =>res.json())
