@@ -10,10 +10,9 @@ const AccModel  = require("./model/accountStatementByUserModel");
 const Promotion = require("./model/promotion")
 const userController = require("./websocketController/userController");
 const accountControl = require("./controller/accountController");
+const marketDetailsBymarketID = require("./utils/getmarketsbymarketId");
 const loginlogs = require('./model/loginLogs');
 const gameModel = require('./model/gameModel');
-const { json } = require('express');
-const { x } = require('joi');
 
 // http(req, res) => {}
 io.on('connection', (socket) => {
@@ -738,7 +737,9 @@ io.on('connection', (socket) => {
     })
 
     socket.on("marketId", async(data) => {
-        console.log(data)
+        // console.log(data)
+        const result = await marketDetailsBymarketID(data)
+        console.log(result)
     })
     // socket.on('logOutUser',async(id) => {
     //     // console.log(id)

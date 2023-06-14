@@ -2322,7 +2322,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 300)
+              }, 500)
         }
         marketId()
     }
