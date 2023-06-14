@@ -739,7 +739,8 @@ io.on('connection', (socket) => {
     socket.on("marketId", async(data) => {
         // console.log(data)
         const result = await marketDetailsBymarketID(data)
-        console.log(result)
+        let finalResult = result.data.items
+        socket.emit("marketId", finalResult)
     })
     // socket.on('logOutUser',async(id) => {
     //     // console.log(id)
