@@ -16,6 +16,7 @@ async function getmarketdetails(array){
     .then(result => {
         Data = result
     })
+    return Data
 }
 
 module.exports = getmarketdetails
