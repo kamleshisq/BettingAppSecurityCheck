@@ -12,7 +12,8 @@ const fetch = require("node-fetch")
 const whiteLabel = require('../model/whitelableModel');
 const mongoose = require("mongoose");
 const SHA256 = require("../utils/sha256");
-const sportList = require("../utils/getSportList")
+const sportList = require("../utils/getSportList");
+const getCrkAndAllData = require("../utils/getSportAndCricketList");
 const fs = require('fs');
 const path = require('path');
 const { all } = require('axios');
@@ -926,10 +927,9 @@ exports.getMarketResult = catchAsync(async(req, res, next) => {
 
 exports.getExchangePage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    const sportListData = await sportList()
-    let gamelist = sportListData.gameList
+    const sportListData = await getCrkAndAllData()
+    console.log(sportListData)
     res.status(200).render("./user/exchange",{
         user,
-        gamelist
     })
 })
