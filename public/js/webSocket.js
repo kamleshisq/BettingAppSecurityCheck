@@ -2310,15 +2310,21 @@ socket.on('connect', () => {
 
 
     if(pathname === "/exchange_sports/inplay"){
-        $(document).ready(function() {
-            var ids = [];
-      
-            $(".name1").each(function() {
-              ids.push(this.id);
-            });
-      
-            socket.emit("marketId", ids)
-          });
+        function marketId(){
+            $(document).ready(function() {
+                var ids = [];
+          
+                $(".name1").each(function() {
+                  ids.push(this.id);
+                });
+          
+                socket.emit("marketId", ids)
+              });
+              setTimeout(()=>{
+                marketId()
+              }, 300)
+        }
+        marketId()
     }
 
 
