@@ -92,13 +92,11 @@ table, th, td {
       <td>X</td>
       <td>2</td>
     </tr>
-    <%for(let i = 0; i < cricket.length; i++){%>
-      <%if(cricket[i].eventData.type === "IN_PLAY"){%>
+    <%for(let i = 0; i < LiveCricket.length; i++){%>
         <tr>
-          <td><%= Date(cricket[i].eventData.time)  %></td>
-          <td><%=cricket[i].eventData.name%></td>
+          <td><%= Date(LiveCricket[i].eventData.time)  %></td>
+          <td><%=LiveCricket[i].eventData.name%></td>
         </tr>
-      <%}%>
     <%}%>
   </tbody>
 </table>
