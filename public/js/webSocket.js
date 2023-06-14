@@ -2327,7 +2327,7 @@ socket.on('connect', () => {
         marketId()
 
         socket.on("marketId", (data) => {
-            console.log(data)
+            // console.log(data)
         })
     }
 
