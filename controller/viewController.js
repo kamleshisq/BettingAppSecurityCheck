@@ -881,3 +881,23 @@ exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
         })
     })
 });
+
+
+exports.getLiveTv = catchAsync(async(req, res, next) => {
+    let body = {
+        ipv4 : "27.61.182.67",
+        channel : "9002"
+    }
+    var fullUrl = 'https://score-session.dbm9.com/api/tv-stream-2';
+    fetch(fullUrl, {
+        method: 'POST',
+        body:JSON.stringify(body) 
+    })
+    .then(res =>res.json())
+    .then(result => {
+        console.log(result)
+        res.status(200).json({
+            result
+        })
+    })
+})
