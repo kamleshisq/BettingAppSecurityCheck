@@ -98,7 +98,7 @@ table, th, td {
           <td><%=LiveCricket[i].eventData.name%></td>
           <% if(LiveCricket[i].marketList.match_odd != null){ %>
             <% const result = marketdetails1.data.items.find(item => item.market_id === LiveCricket[i].marketList.match_odd.marketId) %>
-            <td><%=result.odds[0].backPrice3  %></td>
+            <td><%=result.odds[0].backPrice3  %>, <%=result.odds[0].layPrice3  %></td>
           <%}else{%>
             <td>null</td>
           <%}%>
