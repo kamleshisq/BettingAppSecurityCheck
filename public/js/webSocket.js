@@ -2331,7 +2331,9 @@ socket.on('connect', () => {
             $(document).ready(function() {
           
                 $(".one").each(function() {
-                  console.log(this)
+                  const update = data.find(subArray => {if(subArray.selectionId === this.id){
+                    this.textContent = `${subArray.backPrice3}, ${subArray.layPrice3} updating`
+                  }})
                 });
             })
         })
