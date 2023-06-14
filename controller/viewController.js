@@ -940,7 +940,7 @@ exports.getExchangePage = catchAsync(async(req, res, next) => {
         },
         { LiveCricket: [], marketArray: [] }
       );
-      console.log(LiveCricket)
+      console.log(LiveCricket, marketArray)
     res.status(200).render("./user/exchange",{
         user,
         LiveCricket
