@@ -2332,7 +2332,7 @@ socket.on('connect', () => {
           
                 $(".one").each(function() {
                   const update = data.find(subArray => {if(subArray.selectionId === this.id){
-                    this.textContent = `${subArray.backPrice3}, ${subArray.layPrice3} updating`
+                    this.innerHTML = `${subArray.backPrice3}, ${subArray.layPrice3} updating`
                   }})
                 });
             })
