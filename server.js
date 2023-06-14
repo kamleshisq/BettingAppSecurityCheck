@@ -736,6 +736,10 @@ io.on('connection', (socket) => {
         page++
         socket.emit("SearchOnlineUser",{onlineUsers, page})
     })
+
+    socket.on("marketId", async(data) => {
+        console.log(data)
+    })
     // socket.on('logOutUser',async(id) => {
     //     // console.log(id)
     //     // const user = await User.findOne({_id:id,is_Online:true});
