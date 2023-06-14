@@ -2331,7 +2331,7 @@ socket.on('connect', () => {
             $(document).ready(function() {
           
                 $(".one").each(function() {
-                  
+                  console.log(this)
                 });
             })
         })
