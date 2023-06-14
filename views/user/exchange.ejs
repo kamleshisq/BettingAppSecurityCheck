@@ -91,7 +91,9 @@ ul {
     <%for(let i = 0; i < cricket.length; i++){%>
       <%if(cricket[i].eventData.type === "IN_PLAY"){%>
         <tr>
-          <% let date = new Date(cricket[i].eventData.time) %>
+          <script>
+          let date = new Date(cricket[i].eventData.time
+          </script>
           <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
           <td><%=cricket[i].eventData.name%></td>
         </tr>
