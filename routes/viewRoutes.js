@@ -58,6 +58,7 @@ router.get("/admin/betlimit", authController.isProtected, authController.isAdmin
 //user routs
 router.get("/admin/onlineUsers", authController.isProtected, authController.isAdmin, viewController.onlineUsers);
 router.get("/", authController.isLogin, viewController.userdashboard);
+router.get("/exchange_sports/inplay", authController.isLogin, viewController.getExchangePage);
 router.get("/edit", authController.isProtected, viewController.edit);
 router.get("/myAccountStatment", authController.isProtected, viewController.myAccountStatment);
 
