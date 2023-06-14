@@ -18,9 +18,7 @@ async function getSportDATA(){
     let requests = urls.map(item => fetch(item.url, {
         method: 'GET'
     }).then(data => data.json()));
-    const resultData = {data:[], role:[]};
     const data = await Promise.all(requests)
-    console.log(data)
     return data
 }
 
