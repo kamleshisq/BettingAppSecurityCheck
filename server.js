@@ -57,11 +57,10 @@ io.on('connection', (socket) => {
         let requests = urls.map(item => fetch(item.url, {
             headers: {
                 'Content-type': 'application/json',
-                'Authorization': `Bearer ` + global._token, // notice the Bearer before your token
+                'Authorization': `Bearer ` + global._token, 
             }
         }).then(data => data.json()));
         const resultData = {data:[], role:[]};
-        // console.log('here')
         const data = await Promise.all(requests)
         // console.log(data)
         // const data1 = data[0].data;
