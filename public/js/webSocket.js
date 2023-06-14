@@ -2331,7 +2331,7 @@ socket.on('connect', () => {
           
                 $(".0").each(function() {
                   const update = data.find(subArray => subArray.selectionId === this.id)
-                  console.log(this.innerHTML)
+                  console.log(this.textContent)
                   console.log(update)
                 this.innerHTML = ` updating`
 
