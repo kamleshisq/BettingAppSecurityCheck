@@ -2327,7 +2327,13 @@ socket.on('connect', () => {
         marketId()
 
         socket.on("marketId", (data) => {
-            console.log(data)
+            // console.log(data)
+            $(document).ready(function() {
+          
+                $(".name1").each(function() {
+                  console.log(this)
+                });
+            })
         })
     }
 
