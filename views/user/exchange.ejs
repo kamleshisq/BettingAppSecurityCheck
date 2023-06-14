@@ -74,6 +74,29 @@ ul {
   <a href="#">Football</a>
 </div>
 
+<table>
+  <thead>
+    <tr>
+      <th colspan="5">cricket</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Schedule</td>
+      <td>Teams</td>
+      <td>1</td>
+      <td>X</td>
+      <td>2</td>
+    </tr>
+    <%for(let i = 0; i < cricket.length; i++){%>
+      <%if(cricket[i].eventData.type === "IN_PLAY"){%>
+        <% let date = new Date(cricket[i].eventData.time) %>
+        <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+        <td><%=cricket[i].eventData.name%></td>
+      <%}%>
+    <%}%>
+  </tbody>
+</table>
 
 <script src="../userJs/logOut.js"></script>
 </body>
