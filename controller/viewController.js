@@ -14,10 +14,9 @@ const mongoose = require("mongoose");
 const SHA256 = require("../utils/sha256");
 const sportList = require("../utils/getSportList");
 const getCrkAndAllData = require("../utils/getSportAndCricketList");
+const getmarketDetails = require("../utils/getmarketsbymarketId");
 const fs = require('fs');
 const path = require('path');
-const { all } = require('axios');
-const { json } = require('express');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -943,7 +942,8 @@ exports.getExchangePage = catchAsync(async(req, res, next) => {
         },
         { LiveCricket: [], marketArray: [] }
       );
-      console.log(LiveCricket, marketArray)
+      const marketdetails = await getmarketDetails(marketArray)
+      console.log(marketdetails)
     res.status(200).render("./user/exchange",{
         user,
         LiveCricket
