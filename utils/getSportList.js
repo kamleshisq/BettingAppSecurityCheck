@@ -1,19 +1,17 @@
 const fetch = require("node-fetch") 
-const fullUrl = "https://admin-api.dreamexch9.com/api/dream/cron/get-sportdata"
 
 
 async function getSportList(){
-
-    let data
-
-    await fetch(fullUrl, {
+    let DATA
+    var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-sportdata';
+    fetch(fullUrl, {
         method: 'GET'
     })
     .then(res =>res.json())
     .then(result => {
-        data = result
+        DATA = result
     })
-    return data
+    return DATA
 }
 
 module.exports = getSportList
