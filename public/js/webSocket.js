@@ -2330,8 +2330,8 @@ socket.on('connect', () => {
             // console.log(data)
             $(document).ready(function() {
           
-                $(".name1").each(function() {
-                  console.log(this)
+                $(".one").each(function() {
+                  
                 });
             })
         })
