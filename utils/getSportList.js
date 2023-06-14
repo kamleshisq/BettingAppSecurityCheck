@@ -11,6 +11,7 @@ async function getSportList(){
     .then(result => {
         data=result
     })
+    console.log(data, 1)
     return data
 }
 
