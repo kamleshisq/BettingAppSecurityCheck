@@ -871,6 +871,10 @@ exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
     var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
     fetch(fullUrl, {
         method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'accept': 'application/json'
+            },
         body:body 
     })
     .then(res =>res.json())
