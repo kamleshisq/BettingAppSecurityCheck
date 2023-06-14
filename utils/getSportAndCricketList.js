@@ -21,4 +21,5 @@ async function getSportDATA(){
     const resultData = {data:[], role:[]};
     const data = await Promise.all(requests)
     console.log(data)
+    return data
 }
