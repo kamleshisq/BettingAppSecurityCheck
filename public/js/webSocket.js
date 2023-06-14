@@ -2309,7 +2309,7 @@ socket.on('connect', () => {
 
 
 
-    if(pathname === "/admin/betlimit"){
+    if(pathname === "/exchange_sports"){
         console.log("WORKING")
     }
 
