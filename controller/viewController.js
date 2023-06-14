@@ -870,11 +870,11 @@ exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
         method: 'POST',
         body:["1.215173134"]
     })
-    .then(res =>console.log(res))
-    // .then(result => {
-    //     console.log(result)
-    //     res.status(200).json({
-    //         result
-    //     })
-    // })
+    .then(res =>res.json())
+    .then(result => {
+        console.log(result)
+        res.status(200).json({
+            result
+        })
+    })
 });
