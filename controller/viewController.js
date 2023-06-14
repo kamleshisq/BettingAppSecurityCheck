@@ -930,7 +930,7 @@ exports.getExchangePage = catchAsync(async(req, res, next) => {
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList
     const LiveCricket1 = cricket.filter(item => item.eventData.type === "IN_PLAY")
-    console.log(LiveCricket1[0].marketList)
+    console.log(LiveCricket1[0].marketList.match_odd)
     const {LiveCricket, marketArray} = cricket.reduce(
         (acc, item) => {
           if (item.eventData.type === "IN_PLAY") {
