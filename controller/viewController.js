@@ -935,7 +935,9 @@ exports.getExchangePage = catchAsync(async(req, res, next) => {
         (acc, item) => {
           if (item.eventData.type === "IN_PLAY") {
             acc.LiveCricket.push(item);
-            acc.marketArray.push(item.marketList.match_odd.marketId);
+            if(item.marketList.match_odd.marketId){
+                acc.marketArray.push(item.marketList.match_odd.marketId);
+            }
           }
           return acc;
         },
