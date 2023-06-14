@@ -98,9 +98,9 @@ table, th, td {
           <% if(LiveCricket[i].marketList.match_odd != null){ %>
           <td class="name1" id="<%=LiveCricket[i].marketList.match_odd.marketId%>"><%=LiveCricket[i].eventData.name%></td>
             <% const result = marketdetails1.data.items.find(item => item.market_id === LiveCricket[i].marketList.match_odd.marketId) %>
-            <td class="one" id="<%=LiveCricket[i].marketList.match_odd.marketId%>-<%=result.odds[0].selectionId%>"><%=result.odds[0].backPrice3%>, <%=result.odds[0].layPrice3%></td>
-            <td class="X"> <%=result.odds[1].backPrice3%>, <%=result.odds[1].layPrice3%></td>
-            <td class="second"><%=result.odds[1].backPrice3%>, <%=result.odds[1].layPrice3%></td>
+            <td class="one" id="<%=result.odds[0].selectionId%>"><%=result.odds[0].backPrice3%>, <%=result.odds[0].layPrice3%></td>
+            <td class="X" id="<%=result.odds[1].selectionId%>" > <%=result.odds[1].backPrice3%>, <%=result.odds[1].layPrice3%></td>
+            <td class="second" id="<%=result.odds[2].selectionId%>"><%=result.odds[2].backPrice3%>, <%=result.odds[2].layPrice3%></td>
           <%}else{%>
             <td><%=LiveCricket[i].eventData.name%></td>
             <td colspan="3">null</td>
