@@ -930,15 +930,15 @@ exports.getExchangePage = catchAsync(async(req, res, next) => {
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList
     // const LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
-    const LiveCricket = cricket.reduce(
+    const {LiveCricket, marketArray} = cricket.reduce(
         (acc, item) => {
           if (item.eventData.type === "IN_PLAY") {
-            acc.filteredArray.push(item);
+            acc.LiveCricket.push(item);
             acc.marketArray.push(item.marketList.match_odd.marketId);
           }
           return acc;
         },
-        { filteredArray: [], nameArray: [] }
+        { LiveCricket: [], marketArray: [] }
       );
       console.log(LiveCricket)
     res.status(200).render("./user/exchange",{
