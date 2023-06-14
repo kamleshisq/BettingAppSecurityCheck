@@ -928,7 +928,7 @@ exports.getMarketResult = catchAsync(async(req, res, next) => {
 exports.getExchangePage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     const sportListData = await getCrkAndAllData()
-    const cricket = sportListData[0].gameList.eventList
+    const cricket = sportListData[0].gameList[0].eventList
     console.log(cricket)
     res.status(200).render("./user/exchange",{
         user,
