@@ -23,3 +23,5 @@ async function getSportDATA(){
     console.log(data)
     return data
 }
+
+module.exports = getSportDATA
