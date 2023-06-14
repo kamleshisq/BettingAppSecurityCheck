@@ -112,12 +112,12 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         token = req.cookies.JWT;
         // console.log(token)
     }
+    if(!token){
+        return next(new AppError('Please log in to access', 404))
+    }
     const tokenId = await loginLogs.findOne({session_id:token})
     // console.log(tokenId.isOnline)
     if(!tokenId.isOnline){
-        return next(new AppError('Please log in to access', 404))
-    }
-    if(!token){
         return next(new AppError('Please log in to access', 404))
     }
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
