@@ -866,10 +866,12 @@ exports.getFootballData = catchAsync(async(req, res, next) => {
 });
 
 exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
+    let body = JSON.stringify(["1.215076435", "4.1686476623-BM"]);
+    console.log(body)
     var fullUrl = 'http://dbm9.com:3000/dream/m/get_odds';
     fetch(fullUrl, {
         method: 'POST',
-        body:JSON.stringify(["1.215076435", "4.1686476623-BM"]) 
+        body:body 
     })
     .then(res =>res.json())
     .then(result => {
