@@ -2327,12 +2327,12 @@ socket.on('connect', () => {
         marketId()
 
         socket.on("marketId", (data) => {
-            console.log(data)
             $(document).ready(function() {
           
                 $(".one").each(function() {
                   const update = data.find(subArray => subArray.selectionId === this.id)
                 this.innerHTML = `${update.backPrice3}, ${update.layPrice3} updating`
+                console.log(this.innerHTML)
                 });
             })
         })
