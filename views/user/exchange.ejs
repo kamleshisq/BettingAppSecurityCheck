@@ -91,7 +91,7 @@ ul {
     <%for(let i = 0; i < cricket.length; i++){%>
       <%if(cricket[i].eventData.type === "IN_PLAY"){%>
         <tr>
-          <td><%= cricket[i].eventData.time  %></td>
+          <td><%= Date(cricket[i].eventData.time)  %></td>
           <td><%=cricket[i].eventData.name%></td>
         </tr>
       <%}%>
