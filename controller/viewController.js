@@ -15,6 +15,7 @@ const SHA256 = require("../utils/sha256");
 const fs = require('fs');
 const path = require('path');
 const { all } = require('axios');
+const { json } = require('express');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -868,7 +869,7 @@ exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
     var fullUrl = 'http://dbm9.com:3000/dream/m/get_odds';
     fetch(fullUrl, {
         method: 'POST',
-        body:["1.215076435", "4.1686476623-BM"]
+        body:json.stringify(["1.215076435", "4.1686476623-BM"]) 
     })
     .then(res =>res.json())
     .then(result => {
