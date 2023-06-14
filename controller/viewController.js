@@ -942,10 +942,10 @@ exports.getExchangePage = catchAsync(async(req, res, next) => {
         },
         { LiveCricket: [], marketArray: [] }
       );
-      const marketdetails = await getmarketDetails(marketArray)
-      console.log(marketdetails)
+      const marketdetails1 = await getmarketDetails(marketArray)
     res.status(200).render("./user/exchange",{
         user,
-        LiveCricket
+        LiveCricket,
+        marketdetails1
     })
 })

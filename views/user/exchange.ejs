@@ -96,6 +96,8 @@ table, th, td {
         <tr>
           <td><%= Date(LiveCricket[i].eventData.time)  %></td>
           <td><%=LiveCricket[i].eventData.name%></td>
+          <% const result = marketdetails1.data.items.find(item => item.market_id === LiveCricket[i].marketList.match_odd.marketId) %>
+          <td><%=result.market_id%></td>
         </tr>
     <%}%>
   </tbody>
