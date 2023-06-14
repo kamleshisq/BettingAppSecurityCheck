@@ -3,15 +3,16 @@ const fullUrl = "https://admin-api.dreamexch9.com/api/dream/cron/get-sportdata"
 
 
 async function getSportList(){
+
     let data
-    fetch(fullUrl, {
+
+    await fetch(fullUrl, {
         method: 'GET'
     })
     .then(res =>res.json())
     .then(result => {
-        data=result
+        data = result
     })
-    console.log(data, 1)
     return data
 }
 
