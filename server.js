@@ -773,7 +773,7 @@ io.on('connection', (socket) => {
 
     socket.on("eventId", async(data) => {
         let matchScore = await scores(data)
-        console.log(matchScore)
+        console.log(matchScore.JSON.parse(matchScore))
         socket.emit("eventId", matchScore)
     })
 
