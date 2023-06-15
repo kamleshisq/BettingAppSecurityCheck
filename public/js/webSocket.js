@@ -2350,8 +2350,8 @@ socket.on('connect', () => {
             })
         })
 
-        $(document).on("click", "#click", function(){
-            console.log("Working")
+        $(document).on("click", ".click", function(){
+            console.log(this.id)
         })
     }
 
