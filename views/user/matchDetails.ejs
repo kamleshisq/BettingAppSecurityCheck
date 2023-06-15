@@ -116,7 +116,9 @@ table, th, td {
                 <%for(let i = 0; i < runners1.length; i++){%>
                     <tr>
                         <td class="name1"> <%=runners1[i]%></td>
-                        <td><%=secIds%></td>
+                        <%for(let i = 0; i < secIds.length; i++){%>
+                            <td class="<%=i%>" id="<%secIds[i]%>" name="liveCricket.marketList.marketId" ></td>
+                        <%}%>
                     </tr>
                 <%}%>
               </tbody>
