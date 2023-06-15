@@ -2410,8 +2410,10 @@ socket.on('connect', () => {
         }
         eventID()
         socket.on("eventId", async(data)=>{
-            let score = JSON.parse(data)
-            document.getElementById("Score").innerHTML = score[0].data
+            if(data != ""){
+                let score = JSON.parse(data)
+                document.getElementById("Score").innerHTML = score[0].data
+            }
         })
     }
 
