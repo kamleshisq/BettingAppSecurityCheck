@@ -2403,9 +2403,9 @@ socket.on('connect', () => {
         function eventID(){
             let eventId = $(".eventName").attr("id")
             socket.emit("eventId", eventId)
-            setTimeout(()=>{
-                eventID()
-              }, 500)
+            // setTimeout(()=>{
+            //     eventID()
+            //   }, 500)
 
         }
         eventID()
