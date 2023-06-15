@@ -971,6 +971,10 @@ exports.getCricketpage = catchAsync(async(req, res, next) => {
 exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
     const sportData = await getCrkAndAllData()
     const cricket = sportData[0].gameList[0].eventList
-    let liveCricket = cricket.filter(item => item.eventData.eventId == req.query.id);
-    console.log(liveCricket)
+    let liveCricket = cricket.find(item => item.eventData.eventId == req.query.id);
+    let user = req.currentUser
+    res.status(200).render("./user/matchDetails", {
+        user,
+        liveCricket
+    })
 })
