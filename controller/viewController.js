@@ -969,5 +969,8 @@ exports.getCricketpage = catchAsync(async(req, res, next) => {
 
 
 exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
-    console.log(req.query);
+    console.log(req.query.id)
+    const sportData = await getCrkAndAllData()
+    const cricket = sportData[0].gameList[0].eventList
+    let liveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY");
 })
