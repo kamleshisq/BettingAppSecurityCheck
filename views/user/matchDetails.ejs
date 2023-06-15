@@ -91,7 +91,7 @@ table, th, td {
 </div>
 
 <div id="details">
-    <h2><%=liveCricket.eventData.name%></h2><h3><%=liveCricket.eventData.league%></h3>
+    <h2 class="eventName" id="<%=liveCricket.eventData.eventId%>"><%=liveCricket.eventData.name%></h2><h3><%=liveCricket.eventData.league%></h3>
 
     <%if(liveCricket.marketList.match_odd != null){%>
         <table class="market" id="<%=liveCricket.marketList.match_odd.marketId%>">
