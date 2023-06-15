@@ -89,13 +89,13 @@ table, th, td {
   <a href="#">Tennis</a>
   <a href="#">Football</a>
 </div>
+<div class="live">
 <table>
     <thead style="text-align: center;font-size: 11px;">
       <tr>
         <th colspan="5">cricket</th>
       </tr>
     </thead>
-<div class="live">
     <tbody class="new-body">
         <tr>
           <td>Schedule</td>
@@ -114,7 +114,6 @@ table, th, td {
                 <td><%=liveCricket[i].eventData.name%></td>
                 <td colspan="3">null</td>
               <%}%>
-              <td><button class="click" id="<%=liveCricket[i].eventData.sportId%>"</button> <i class="arrow right"></button></td>
             </tr>
         <%}%>
       </tbody>
