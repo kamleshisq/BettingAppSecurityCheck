@@ -2379,15 +2379,23 @@ socket.on('connect', () => {
           
                 $(".BACK").each(function() {
                 let id = this.id
-                console.log(this)
                 const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                console.log(foundItem)
                 for(let i = 0; i < 3; i++){
                     if($(this).hasClass(`${i}`)){
                         this.innerHTML = `${foundItem.odds[i].backPrice1}, ${foundItem.odds[i].backPrice2}, ${foundItem.odds[i].backPrice3}`
                     }
                 }
                 });
+
+                $(".LAY").each(function() {
+                    let id = this.id
+                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                    for(let i = 0; i < 3; i++){
+                        if($(this).hasClass(`${i}`)){
+                            this.innerHTML = `${foundItem.odds[i].backPrice1}, ${foundItem.odds[i].backPrice2}, ${foundItem.odds[i].backPrice3}`
+                        }
+                    }
+                    });
              
             })
         })
