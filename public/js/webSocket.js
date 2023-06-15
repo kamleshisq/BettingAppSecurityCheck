@@ -2331,10 +2331,10 @@ socket.on('connect', () => {
             $(document).ready(function() {
           
                 $(".0").each(function() {
-                  const update = data.find(item => item.odds.find(item => item.selectionId === this.id))
-                  const foundMainArray = data.find(mainArray =>
-                    mainArray.find(mainItem => mainItem.odds.some(item => item.selectionId === selectionIdToFind))
-                  );
+                  const update = data.find(item => item.odds.some(item => item.selectionId === this.id))
+                //   const foundMainArray = data.find(mainArray =>
+                //     mainArray.find(mainItem => mainItem.odds.some(item => item.selectionId === selectionIdToFind))
+                //   );
                   console.log(this.id)
                   console.log(update)
                 this.innerHTML = ` updating`
