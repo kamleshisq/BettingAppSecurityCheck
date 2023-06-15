@@ -2361,6 +2361,11 @@ socket.on('connect', () => {
 
     if(pathname === "/exchange_sports/cricket"){
         socket.emit("SPORTDATA", "cricket")
+        socket.emit("SPORTDATA", async(data) => {
+            let htmlLive = ``
+            const liveCricket = data.filter(item => item.eventData.type === "IN_PLAY")
+            console.log(liveCricket)
+        })
     }
 
 

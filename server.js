@@ -747,23 +747,21 @@ io.on('connection', (socket) => {
     socket.on("SPORTDATA", async(data) => {
         if(data === "cricket"){
             const sportListData = await getCrkAndAllData()
-            const cricket = sportListData[0].gameList[0].eventList
-            console.log(cricket, "cricket")
-    // console.log(LiveCricket1[0].marketList.match_odd)
-    const {LiveCricket, marketArray} = cricket.reduce(
-        (acc, item) => {
-          if (item.eventData.type === "IN_PLAY") {
-            acc.LiveCricket.push(item);
-            // console.log(item.marketList.match_odd)
-            if(item.marketList.match_odd != null){
-                acc.marketArray.push(item.marketList.match_odd.marketId);
-            }
-          }
-          return acc;
-        },
-        { LiveCricket: [], marketArray: [] }
-      );
-    //   console.log(LiveCricket)
+            const cricket1 = sportListData[0].gameList[0].eventList
+            // console.log(LiveCricket1[0].marketList.match_odd)
+            const {cricket, marketArray} = cricket1.reduce(
+                (acc, item) => {
+                        acc.LiveCricket.push(item);
+                        // console.log(item.marketList.match_odd)
+                        if(item.marketList.match_odd != null){
+                            acc.marketArray.push(item.marketList.match_odd.marketId);
+                        }
+                    return acc;
+                },
+                { cricket: [], marketArray: [] }
+                );
+                //   console.log(LiveCricket)
+                socket.emit("SPORTDATA", cricket)
       const marketdetails1 = await getmarketDetails(marketArray)
 
       console.log(marketdetails1, "market")
