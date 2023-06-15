@@ -23,6 +23,12 @@
   background-color: #04AA6D;
   color: white;
 }
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
 ul {
           list-style-type: none;
           margin: 0;
@@ -106,6 +112,7 @@ table, th, td {
             <td><%=LiveCricket[i].eventData.name%></td>
             <td colspan="3">null</td>
           <%}%>
+          <td><button> <i class="arrow right"></button></td>
         </tr>
     <%}%>
   </tbody>
