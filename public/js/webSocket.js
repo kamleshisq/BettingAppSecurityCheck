@@ -2404,7 +2404,7 @@ socket.on('connect', () => {
         let eventId = $(".eventName").attr("id")
         socket.emit("eventId", eventId)
         socket.on("eventId", async(data)=>{
-            document.getElementById("Score").innerHTML = data.data
+            document.getElementById("Score").innerHTML = data[0].data
         })
     }
 
