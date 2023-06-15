@@ -2352,7 +2352,7 @@ socket.on('connect', () => {
 
         $(document).on("click", ".click", function(){
             if(this.id === "4"){
-                window.location.href = "/cricket"
+                window.location.href = "/exchange_sports/cricket"
             }
         })
     }
