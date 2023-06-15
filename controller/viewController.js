@@ -959,6 +959,7 @@ exports.getCricketpage = catchAsync(async(req, res, next) => {
     let liveCricket = cricket.find(item => item.eventData.type === "IN_PLAY");
     let upcomingCricket = cricket.find(item => item.eventData.type == "UPCOMING");
     let user = req.currentUser
+    console.log(liveCricket, "live")
     res.status(200).render("./user/cricket", {
         user,
         liveCricket,
