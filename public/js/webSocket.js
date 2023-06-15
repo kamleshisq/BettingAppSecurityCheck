@@ -2351,7 +2351,9 @@ socket.on('connect', () => {
         })
 
         $(document).on("click", ".click", function(){
-            console.log(this.id)
+            if(this.id === "4"){
+                window.location.href = "exchange_sports/cricket"
+            }
         })
     }
 
