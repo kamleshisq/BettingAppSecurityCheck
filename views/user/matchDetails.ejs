@@ -123,6 +123,39 @@ table, th, td {
               </tbody>
             </table>
     <%}%>
+    <br>
+    <br>
+    <br><br><br>
+    <%if(liveCricket.marketList.bookmaker != null){%>
+        <table class="market" id="<%=liveCricket.marketList.bookmaker.marketId%>">
+            <thead style="text-align: center;font-size: 11px;">
+              <tr>
+                <th colspan="5">BOOKMAKER     MIN:<%=liveCricket.marketList.bookmaker.min_stack%> MAX:<%=liveCricket.marketList.bookmaker.max_stack%></th>
+              </tr>
+            </thead>
+            <tbody class="new-body">
+                <tr>
+                  <td>MARKET</td>
+                  <td>BACK</td>
+                  <td>LAY</td>
+                </tr>
+                <% let runners = JSON.parse(liveCricket.marketList.match_odd.runners); %>
+                <% const runners1 = []; %>
+                <%const secIds = []; %>
+                <%runners.forEach(item => {%>
+                    <%runners1.push(item.runner);%>
+                    <%secIds.push(item.secId);%>
+                <%});%>
+                <%for(let i = 0; i < runners1.length; i++){%>
+                    <tr>
+                        <td class="name1"> <%=runners1[i]%></td>
+                        <td class="BACK <%=i%>" id="<%=secIds[i]%>"  ></td>
+                        <td class="LAY <%=i%>" id="<%=secIds[i]%>"  ></td>
+                    </tr>
+                <%}%>
+              </tbody>
+            </table>
+    <%}%>
 </div>
 
 <script src="../userJs/logOut.js"></script>
