@@ -2400,9 +2400,15 @@ socket.on('connect', () => {
             })
         })
 
+        function eventID(){
+            let eventId = $(".eventName").attr("id")
+            socket.emit("eventId", eventId)
+            setTimeout(()=>{
+                eventID()
+              }, 500)
 
-        let eventId = $(".eventName").attr("id")
-        socket.emit("eventId", eventId)
+        }
+        eventID()
         socket.on("eventId", async(data)=>{
             document.getElementById("Score").innerHTML = data[0].data
         })
