@@ -121,7 +121,34 @@ table, th, td {
 </div>
 
 <div class="Upcoming" >
-
+    <table>
+        <thead style="text-align: center;font-size: 11px;">
+          <tr>
+            <th colspan="5">cricket</th>
+          </tr>
+        </thead>
+        <tbody class="new-body">
+            <tr>
+              <td>Schedule</td>
+              <td>Teams</td>
+              <td>1</td>
+              <td>X</td>
+              <td>2</td>
+            </tr>
+            <%for(let i = 0; i < upcomingCricket.length; i++){%>
+                <tr>
+                  <td><%= Date(upcomingCricket[i].eventData.time)  %></td>
+                  <% if(upcomingCricket[i].marketList.match_odd != null){ %>
+                  <td class="name1" id="<%=upcomingCricket[i].marketList.match_odd.marketId%>"><%=upcomingCricket[i].eventData.name%></td>
+                    <td colspan="3">null</td>
+                    <%}else{%>
+                    <td><%=upcomingCricket[i].eventData.name%></td>
+                    <td colspan="3">null</td>
+                  <%}%>
+                </tr>
+            <%}%>
+          </tbody>
+        </table>
 </div>
 
 <script src="../userJs/logOut.js"></script>
