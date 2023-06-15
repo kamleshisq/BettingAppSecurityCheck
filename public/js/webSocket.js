@@ -2406,11 +2406,11 @@ socket.on('connect', () => {
             $(document).ready(function() {
                 var ids = [];
           
-                $(".market").each(function() {
+                $(".name1").each(function() {
                   ids.push(this.id);
                 });
-                // console.log(ids)
-                socket.emit("marketId", ids)
+                console.log(ids)
+                // socket.emit("marketId", ids)
               });
               setTimeout(()=>{
                 marketId()
