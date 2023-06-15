@@ -2377,7 +2377,7 @@ socket.on('connect', () => {
             // console.log(data)
             $(document).ready(function() {
           
-                $(".BACK .LAY").each(function() {
+                $(".BACK").each(function() {
                 let id = this.id
                 const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
                 if(foundItem.odds.length === 3){
