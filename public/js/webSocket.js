@@ -2327,10 +2327,14 @@ socket.on('connect', () => {
         marketId()
 
         socket.on("marketId", (data) => {
+            console.log(data)
             $(document).ready(function() {
           
                 $(".0").each(function() {
                   const update = data.find(item => item.odds.find(item => item.selectionId === this.id))
+                  const foundMainArray = data.find(mainArray =>
+                    mainArray.find(mainItem => mainItem.odds.some(item => item.selectionId === selectionIdToFind))
+                  );
                   console.log(this.id)
                   console.log(update)
                 this.innerHTML = ` updating`
