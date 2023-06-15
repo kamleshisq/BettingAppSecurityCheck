@@ -954,8 +954,14 @@ exports.getExchangePage = catchAsync(async(req, res, next) => {
 
 
 exports.getCricketpage = catchAsync(async(req, res, next) => {
+    const sportData = await getCrkAndAllData()
+    const cricket = sportData[0].gameList[0].eventList
+    let liveCricket = cricket.find(item => item.eventData.type === "IN_PLAY");
+    let upcomingCricket = cricket.find(item => item.eventData.type == "UPCOMING");
     let user = req.currentUser
     res.status(200).render("./user/cricket", {
-        user
+        user,
+        liveCricket,
+        upcomingCricket
     })
 })

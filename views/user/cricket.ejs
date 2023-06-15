@@ -91,11 +91,32 @@ table, th, td {
 </div>
 
 <div class="live">
-
+    <tbody class="new-body">
+        <tr>
+          <td>Schedule</td>
+          <td>Teams</td>
+          <td>1</td>
+          <td>X</td>
+          <td>2</td>
+        </tr>
+        <%for(let i = 0; i < liveCricket.length; i++){%>
+            <tr>
+              <td><%= Date(liveCricket[i].eventData.time)  %></td>
+              <% if(liveCricket[i].marketList.match_odd != null){ %>
+              <td class="name1" id="<%=liveCricket[i].marketList.match_odd.marketId%>"><%=liveCricket[i].eventData.name%></td>
+                <td colspan="3">null</td>
+                <%}else{%>
+                <td><%=liveCricket[i].eventData.name%></td>
+                <td colspan="3">null</td>
+              <%}%>
+              <td><button class="click" id="<%=liveCricket[i].eventData.sportId%>"</button> <i class="arrow right"></button></td>
+            </tr>
+        <%}%>
+      </tbody>
 </div>
 
 <div class="Upcoming" >
-    
+
 </div>
 
 <script src="../userJs/logOut.js"></script>
