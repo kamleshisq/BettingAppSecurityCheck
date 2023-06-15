@@ -2359,6 +2359,12 @@ socket.on('connect', () => {
 
 
 
+    if(pathname === "/exchange_sports/cricket"){
+        console.log("working")
+    }
+
+
+
 
 
 
