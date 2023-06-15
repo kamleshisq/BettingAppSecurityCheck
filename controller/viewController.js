@@ -950,4 +950,12 @@ exports.getExchangePage = catchAsync(async(req, res, next) => {
         LiveCricket,
         marketdetails1
     })
+});
+
+
+exports.getCricketpage = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    res.status(200).render("./user/cricket", {
+        user
+    })
 })

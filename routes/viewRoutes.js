@@ -55,10 +55,14 @@ router.get("/SPORT",authController.isProtected, gameController.sport ,viewContro
 router.get("/admin/betmoniter", authController.isProtected, authController.isAdmin, viewController.getBetMoniterPage);
 router.get("/admin/voidbet", authController.isProtected, authController.isAdmin, viewController.getVoidBetPage);
 router.get("/admin/betlimit", authController.isProtected, authController.isAdmin, viewController.getBetLimitPage);
-//user routs
 router.get("/admin/onlineUsers", authController.isProtected, authController.isAdmin, viewController.onlineUsers);
+//user routs
+
+
+
 router.get("/", authController.isLogin, viewController.userdashboard);
 router.get("/exchange_sports/inplay", authController.isLogin, viewController.getExchangePage);
+router.get("/exchange_sports/cricket", authController.isProtected, viewController.getExchangePage);
 router.get("/edit", authController.isProtected, viewController.edit);
 router.get("/myAccountStatment", authController.isProtected, viewController.myAccountStatment);
 
