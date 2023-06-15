@@ -2377,13 +2377,15 @@ socket.on('connect', () => {
             // console.log(data)
             $(document).ready(function() {
           
-                $(".BACK").each(function() {
+                $(".BACK .LAY").each(function() {
                 let id = this.id
                 const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                console.log(foundItem.odds.length)
-                this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[0].backPrice2}, ${foundItem.odds[0].backPrice3}`
+                if(foundItem.odds.length === 3){
+                    this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[1].backPrice2}, ${foundItem.odds[2].backPrice3}`
+                }else{
+                    this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[1].backPrice2}`
+                }
                 });
-
              
             })
         })
