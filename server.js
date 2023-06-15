@@ -10,9 +10,11 @@ const AccModel  = require("./model/accountStatementByUserModel");
 const Promotion = require("./model/promotion")
 const userController = require("./websocketController/userController");
 const accountControl = require("./controller/accountController");
+const getmarketDetails = require("./utils/getmarketsbymarketId");
 const marketDetailsBymarketID = require("./utils/getmarketsbymarketId");
 const loginlogs = require('./model/loginLogs');
 const gameModel = require('./model/gameModel');
+const getCrkAndAllData = require("./utils/getSportAndCricketList");
 
 // http(req, res) => {}
 io.on('connection', (socket) => {
@@ -743,7 +745,32 @@ io.on('connection', (socket) => {
     })
 
     socket.on("SPORTDATA", async(data) => {
-        console.log(data,456)
+        if(data === "cricket"){
+            const sportListData = await getCrkAndAllData()
+            const cricket = sportListData[0].gameList[0].eventList
+            console.log(cricket, "cricket")
+    // console.log(LiveCricket1[0].marketList.match_odd)
+    const {LiveCricket, marketArray} = cricket.reduce(
+        (acc, item) => {
+          if (item.eventData.type === "IN_PLAY") {
+            acc.LiveCricket.push(item);
+            // console.log(item.marketList.match_odd)
+            if(item.marketList.match_odd != null){
+                acc.marketArray.push(item.marketList.match_odd.marketId);
+            }
+          }
+          return acc;
+        },
+        { LiveCricket: [], marketArray: [] }
+      );
+    //   console.log(LiveCricket)
+      const marketdetails1 = await getmarketDetails(marketArray)
+
+      console.log(marketdetails1, "market")
+
+
+
+        }
     })
 
     // socket.on('logOutUser',async(id) => {
