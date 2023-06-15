@@ -2399,6 +2399,9 @@ socket.on('connect', () => {
              
             })
         })
+
+
+        console.log($(".eventName").id)
     }
 
     if(pathname === "/exchange_sports/cricket"){
