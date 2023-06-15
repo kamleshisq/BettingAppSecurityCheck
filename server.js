@@ -762,9 +762,8 @@ io.on('connection', (socket) => {
                 );
                 //   console.log(LiveCricket)
                 socket.emit("SPORTDATA", cricket)
-      const marketdetails1 = await getmarketDetails(marketArray)
+            const marketdetails1 = await getmarketDetails(marketArray)
 
-      console.log(marketdetails1, "market")
 
 
 
