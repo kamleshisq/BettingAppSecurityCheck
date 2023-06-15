@@ -2429,10 +2429,9 @@ socket.on('connect', () => {
         //   popup.style.display = 'block';
         // });
         const buttons = document.getElementsByClassName('button');
-        const popup = document.getElementById('popupForm');
+        let popup = document.getElementById('popupForm');
         Array.from(buttons).forEach(function(button) {
             button.addEventListener('click', function() {
-              var popup = document.getElementById('popupForm');
               popup.style.display = 'block';
             });
           });
