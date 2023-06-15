@@ -751,7 +751,7 @@ io.on('connection', (socket) => {
             // console.log(LiveCricket1[0].marketList.match_odd)
             const {cricket, marketArray} = cricket1.reduce(
                 (acc, item) => {
-                        acc.LiveCricket.push(item);
+                        acc.cricket.push(item);
                         // console.log(item.marketList.match_odd)
                         if(item.marketList.match_odd != null){
                             acc.marketArray.push(item.marketList.match_odd.marketId);
