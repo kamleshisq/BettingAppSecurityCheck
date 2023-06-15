@@ -103,6 +103,7 @@ table, th, td {
           <td>1</td>
           <td>X</td>
           <td>2</td>
+          <td></td>
         </tr>
         <%for(let i = 0; i < liveCricket.length; i++){%>
             <tr>
@@ -123,6 +124,7 @@ table, th, td {
                   <td><%=liveCricket[i].eventData.name%></td>
                   <td colspan="3">null</td>
               <%}%>
+              <td><button class="click" id="<%=liveCricket[i].eventData.eventId%>"</button> <i class="arrow right"></button></td>
             </tr>
         <%}%>
       </tbody>
@@ -143,6 +145,7 @@ table, th, td {
               <td>1</td>
               <td>2</td>
               <td>X</td>
+              <td></td>
             </tr>
             <%for(let i = 0; i < upcomingCricket.length; i++){%>
                 <tr>
@@ -163,6 +166,7 @@ table, th, td {
                     <td><%=upcomingCricket[i].eventData.name%></td>
                     <td colspan="3">null</td>
                   <%}%>
+                  <td><button class="click" id="<%=upcomingCricket[i].eventData.eventId%>"</button> <i class="arrow right"></button></td>
                 </tr>
             <%}%>
           </tbody>
