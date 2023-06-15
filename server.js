@@ -743,7 +743,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("SPORTDATA", async(data) => {
-        console.log(data)
+        console.log(data,456)
     })
 
     // socket.on('logOutUser',async(id) => {
