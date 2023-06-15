@@ -2360,7 +2360,7 @@ socket.on('connect', () => {
 
 
     if(pathname === "/exchange_sports/cricket"){
-        socket.emit("CricketData", data)
+        socket.emit("SPORTDATA", "cricket")
     }
 
 

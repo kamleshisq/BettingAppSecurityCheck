@@ -741,6 +741,11 @@ io.on('connection', (socket) => {
         let finalResult = result.data
         socket.emit("marketId", finalResult)
     })
+
+    socket.on("SPORTDATA", async(data) => {
+        console.log(data)
+    })
+
     // socket.on('logOutUser',async(id) => {
     //     // console.log(id)
     //     // const user = await User.findOne({_id:id,is_Online:true});
