@@ -2384,6 +2384,8 @@ socket.on('connect', () => {
                     if($(this).hasClass(`${i}`)){
                         // this.innerHTML = `<button id="123">${foundItem.odds[i].backPrice1}</button>, <button id="123">${foundItem.odds[i].backPrice2}</button>, <button id="123">${foundItem.odds[i].backPrice3}</button>`
                         document.getElementById(`${this.id}0`).innerHTML = `${foundItem.odds[i].layPrice1}`
+                        document.getElementById(`${this.id}1`).innerHTML = `${foundItem.odds[i].layPrice2}`
+                        document.getElementById(`${this.id}2`).innerHTML = `${foundItem.odds[i].layPrice3}`
                     }
                 }
                 });
