@@ -2350,7 +2350,7 @@ socket.on('connect', () => {
             })
         })
 
-        $(document).on("click", "click", function(){
+        $(document).on("click", "#click", function(){
             console.log("Working")
         })
     }
