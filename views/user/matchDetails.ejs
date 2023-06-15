@@ -94,7 +94,7 @@ table, th, td {
     <h2><%=liveCricket.eventData.name%></h2><h3><%=liveCricket.eventData.league%></h3>
 
     <%if(liveCricket.marketList.match_odd != null){%>
-        <table>
+        <table class="market" id="<%=liveCricket.marketList.match_odd.marketId%>">
             <thead style="text-align: center;font-size: 11px;">
               <tr>
                 <th colspan="5">MATCH ODDS      MIN:<%=liveCricket.marketList.match_odd.min_stack%> MAX:<%=liveCricket.marketList.match_odd.max_stack%></th>
@@ -117,7 +117,7 @@ table, th, td {
                     <tr>
                         <td class="name1"> <%=runners1[i]%></td>
                         <%for(let i = 0; i < secIds.length; i++){%>
-                            <td class="<%=i%>" id="<%=secIds[i]%>" name="<%=liveCricket.marketList.marketId%>" ></td>
+                            <td class="<%=i%>" id="<%=secIds[i]%>"  ></td>
                         <%}%>
                     </tr>
                 <%}%>
