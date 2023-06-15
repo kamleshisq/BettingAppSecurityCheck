@@ -2330,8 +2330,8 @@ socket.on('connect', () => {
             $(document).ready(function() {
           
                 $(".0").each(function() {
-                  const update = data.find(subArray => subArray.selectionId === this.id)
-                  console.log(this)
+                  const update = data.find(item => item.odds.find(item => item.selectionId === this.id))
+                  console.log(this.id)
                   console.log(update)
                 this.innerHTML = ` updating`
 
