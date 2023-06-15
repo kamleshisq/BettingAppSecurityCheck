@@ -99,7 +99,7 @@ table, th, td {
           <td class="name1" id="<%=LiveCricket[i].marketList.match_odd.marketId%>"><%=LiveCricket[i].eventData.name%></td>
             <% const result = marketdetails1.data.items.find(item => item.market_id === LiveCricket[i].marketList.match_odd.marketId) %>
             <%for(let i = 0; i < result.odds.length; i++){%>
-              <td class="<%=i%>" id="<%=result.odds[i].selectionId%>"><%=result.odds[i].backPrice3%>, <%=result.odds[i].layPrice3%></td>
+              <td class="<%=i%>" id="<%=result.odds[i].selectionId%>"><%=result.odds[i].backPrice1%>, <%=result.odds[i].layPrice1%></td>
             <%}%>
             <%}else{%>
             <td><%=LiveCricket[i].eventData.name%></td>
