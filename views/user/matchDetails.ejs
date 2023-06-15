@@ -15,6 +15,19 @@
   text-decoration: none;
 }
 
+.popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      padding: 20px;
+      background-color: #f2f2f2;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
 .vertical-menu a:hover {
   background-color: #ccc;
 }
@@ -91,7 +104,7 @@ table, th, td {
 </div>
 
 <div id="Score">
-    
+
 </div>
 
 <div id="details">
@@ -130,6 +143,28 @@ table, th, td {
     
 </div>
 
+
+ <!-- Popup form -->
+ <div id="popupForm" class="popup">
+    <h2>Popup Form</h2>
+    <form>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+      <br>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+
+
+  <script>
+    document.getElementsByClassName('showFormButton').addEventListener('click', function() {
+      var popup = document.getElementById('popupForm');
+      popup.style.display = 'block';
+    });
+  </script>
 <script src="../userJs/logOut.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/webSocket.js"></script>
