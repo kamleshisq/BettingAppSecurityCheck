@@ -149,7 +149,15 @@ table, th, td {
                   <td><%= Date(upcomingCricket[i].eventData.time)  %></td>
                   <% if(upcomingCricket[i].marketList.match_odd != null){ %>
                   <td class="name1" id="<%=upcomingCricket[i].marketList.match_odd.marketId%>"><%=upcomingCricket[i].eventData.name%></td>
-                    <td colspan="3">null</td>
+                  <% let runners = JSON.parse(liveCricket[i].marketList.match_odd.runners); %>
+                  <% const runners1 = []; %>
+                  <%const secIds = []; %>
+                  <%runners.forEach(item => {%>
+                    <%runners1.push(item.runner);%>
+                    <%secIds.push(item.secId);%>
+                  <%});%>
+                  <%for(let i = 0; i < runners1.length; i++){%>
+                        <td class="<%=i%>" id="<%=secIds[i]%>"  ></td>
                     <%}else{%>
                     <td><%=upcomingCricket[i].eventData.name%></td>
                     <td colspan="3">null</td>
