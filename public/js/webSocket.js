@@ -2335,6 +2335,19 @@ socket.on('connect', () => {
                 const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
                 this.innerHTML = `${foundItem.odds[0].backPrice3}, ${foundItem.odds[0].layPrice3}`
                 });
+
+                $(".1").each(function() {
+                    let id = this.id
+                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                    this.innerHTML = `${foundItem.odds[1].backPrice3}, ${foundItem.odds[1].layPrice3}`
+                });
+
+                $(".2").each(function() {
+                    let id = this.id
+                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                    this.innerHTML = `${foundItem.odds[2].backPrice3}, ${foundItem.odds[2].layPrice3}`
+                });
+
             })
         })
     }
