@@ -2435,6 +2435,14 @@ socket.on('connect', () => {
               popup.style.display = 'block';
             });
           });
+
+          document.addEventListener('click', function(event) {
+            if (!popup.contains(event.target) && !Array.from(buttons).some(button => button.contains(event.target))) {
+              popup.style.display = 'none';
+            }
+          });
+
+          
     }
 
     if(pathname === "/exchange_sports/cricket"){
