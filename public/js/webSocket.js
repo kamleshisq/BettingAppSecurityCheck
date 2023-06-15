@@ -2396,6 +2396,9 @@ socket.on('connect', () => {
                     for(let i = 0; i < 3; i++){
                         if($(this).hasClass(`${i}`)){
                             // this.innerHTML = `<button id="123">${foundItem.odds[i].layPrice1}</button>, <button id="123">${foundItem.odds[i].layPrice2}</button>, <button id="123">${foundItem.odds[i].layPrice3}</button>`
+                            document.getElementById(`${this.id}0`).innerHTML = `${foundItem.odds[i].backSize1}`
+                            document.getElementById(`${this.id}1`).innerHTML = `${foundItem.odds[i].backSize2}`
+                            document.getElementById(`${this.id}2`).innerHTML = `${foundItem.odds[i].backSize3}`
                         }
                     }
                     });
@@ -2406,9 +2409,9 @@ socket.on('connect', () => {
         function eventID(){
             let eventId = $(".eventName").attr("id")
             socket.emit("eventId", eventId)
-            // setTimeout(()=>{
-            //     eventID()
-            //   }, 500)
+            setTimeout(()=>{
+                eventID()
+              }, 500)
 
         }
         eventID()
@@ -2419,7 +2422,7 @@ socket.on('connect', () => {
             }
         })
 
-        document.getElementById('123').addEventListener('click', function() {
+        document.getElementsByClassName('button').addEventListener('click', function() {
             console.log("1234")
           var popup = document.getElementById('popupForm');
           popup.style.display = 'block';
