@@ -2370,6 +2370,7 @@ socket.on('connect', () => {
                 marketId()
               }, 500)
         }
+        marketId()
     }
 
 
