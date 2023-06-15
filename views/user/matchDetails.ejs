@@ -91,7 +91,25 @@ table, th, td {
 </div>
 
 <div id="details">
-    <h3></h3>
+    <h3><%=liveCricket.eventData.name></h3><h2><%=liveCricket.eventData.league></h2>
+
+    <%if(liveCricket.marketList.match_odd != null){%>
+        <table>
+            <thead style="text-align: center;font-size: 11px;">
+              <tr>
+                <th colspan="5">MATCH ODDS      MIN:<%=liveCricket.marketList.match_odd.min_stack%> MAX:<%=liveCricket.marketList.match_odd.max_stack%></th>
+              </tr>
+            </thead>
+            <tbody class="new-body">
+                <tr>
+                  <td>MARKET</td>
+                  <td>BACK</td>
+                  <td>LAY</td>
+                </tr>
+                
+              </tbody>
+            </table>
+    <%}%>
 </div>
 
 <script src="../userJs/logOut.js"></script>
