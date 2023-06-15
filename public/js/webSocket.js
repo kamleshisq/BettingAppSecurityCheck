@@ -2375,27 +2375,27 @@ socket.on('connect', () => {
 
         socket.on("marketId", async(data) => {
             // console.log(data)
-            $(document).ready(function() {
+            // $(document).ready(function() {
           
-                $(".0").each(function() {
-                let id = this.id
-                const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[0].backPrice2}, ${foundItem.odds[0].backPrice3}`
-                });
+            //     $(".0").each(function() {
+            //     let id = this.id
+            //     const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+            //     this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[0].backPrice2}, ${foundItem.odds[0].backPrice3}`
+            //     });
 
-                $(".1").each(function() {
-                    let id = this.id
-                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    this.innerHTML = `${foundItem.odds[1].backPrice1}, ${foundItem.odds[1].backPrice2}, ${foundItem.odds[1].backPrice3}`
-                });
+            //     $(".1").each(function() {
+            //         let id = this.id
+            //         const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+            //         this.innerHTML = `${foundItem.odds[1].backPrice1}, ${foundItem.odds[1].backPrice2}, ${foundItem.odds[1].backPrice3}`
+            //     });
 
-                $(".2").each(function() {
-                    let id = this.id
-                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    this.innerHTML = `${foundItem.odds[2].backPrice1}, ${foundItem.odds[2].backPrice2}, ${foundItem.odds[2].backPrice3}`
-                });
+            //     $(".2").each(function() {
+            //         let id = this.id
+            //         const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+            //         this.innerHTML = `${foundItem.odds[2].backPrice1}, ${foundItem.odds[2].backPrice2}, ${foundItem.odds[2].backPrice3}`
+            //     });
 
-            })
+            // })
         })
     }
 
