@@ -2360,7 +2360,7 @@ socket.on('connect', () => {
             $(document).ready(function() {
                 var ids = [];
           
-                $(".name1").each(function() {
+                $(".market").each(function() {
                   ids.push(this.id);
                 });
                 console.log(ids)
