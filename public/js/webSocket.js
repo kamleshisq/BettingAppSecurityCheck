@@ -2379,12 +2379,14 @@ socket.on('connect', () => {
           
                 $(".BACK").each(function() {
                 let id = this.id
-                const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                if(foundItem.odds.length === 3){
-                    this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[1].backPrice2}, ${foundItem.odds[2].backPrice3}`
-                }else{
-                    this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[1].backPrice2}`
-                }
+                const foundItem = data.items.filter(item => item.odds.find(odd => odd.selectionId == id));
+                foundItem.map(Element => {
+                    if(Element.odds.length === 3){
+                        this.innerHTML = `${Element.odds[0].backPrice1}, ${Element.odds[1].backPrice2}, ${Element.odds[2].backPrice3}`
+                    }else{
+                        this.innerHTML = `${Element.odds[0].backPrice1}, ${Element.odds[1].backPrice2}`
+                    }
+                })
                 });
              
             })
