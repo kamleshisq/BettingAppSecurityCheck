@@ -2423,11 +2423,18 @@ socket.on('connect', () => {
             }
         })
 
-        document.getElementsByClassName('button').addEventListener('click', function() {
-            console.log("1234")
-          var popup = document.getElementById('popupForm');
-          popup.style.display = 'block';
-        });
+        // document.getElementsByClassName('button').addEventListener('click', function() {
+        //     console.log("1234")
+        //   var popup = document.getElementById('popupForm');
+        //   popup.style.display = 'block';
+        // });
+        const buttons = document.getElementsByClassName('button');
+        Array.from(buttons).forEach(function(button) {
+            button.addEventListener('click', function() {
+              var popup = document.getElementById('popupForm');
+              popup.style.display = 'block';
+            });
+          });
     }
 
     if(pathname === "/exchange_sports/cricket"){
