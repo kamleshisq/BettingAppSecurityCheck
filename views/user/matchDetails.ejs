@@ -116,8 +116,8 @@ table, th, td {
                 <%for(let i = 0; i < runners1.length; i++){%>
                     <tr>
                         <td class="name1"> <%=runners1[i]%></td>
-                        <td class="BACK" id="<%=secIds[i]%>"  ></td>
-                        <td class="LAY" id="<%=secIds[i]%>"  ></td>
+                        <td class="BACK <%=i>" id="<%=secIds[i]%>"  ></td>
+                        <td class="LAY <%=i>" id="<%=secIds[i]%>"  ></td>
                     </tr>
                 <%}%>
               </tbody>

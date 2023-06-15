@@ -2382,13 +2382,11 @@ socket.on('connect', () => {
                 console.log(this)
                 const foundItem = data.items.filter(item => item.odds.find(odd => odd.selectionId == id));
                 console.log(foundItem)
-                // foundItem.map(Element => {
-                //     if(Element.odds.length === 3){
-                //         this.innerHTML = `${Element.odds[0].backPrice1}, ${Element.odds[1].backPrice2}, ${Element.odds[2].backPrice3}`
-                //     }else{
-                //         this.innerHTML = `${Element.odds[0].backPrice1}, ${Element.odds[1].backPrice2}`
-                //     }
-                // })
+                for(let i = 0; i < 3; i++){
+                    if(this.hasClass(`${i}`)){
+                        this.innerHTML = `${foundItem.odds[i].backPrice1}, ${foundItem.odds[i].backPrice2}, ${foundItem.odds[i].backPrice3}`
+                    }
+                }
                 });
              
             })
