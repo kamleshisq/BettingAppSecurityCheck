@@ -2332,7 +2332,8 @@ socket.on('connect', () => {
           
                 $(".0").each(function() {
                 //   const update = data.items.find(item => item.odds.some(item1 => item1.selectionId === this.id))
-                  const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId === this.id));
+                //   const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId === this.id));
+                const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId === this.id));
                 //   const foundMainArray = data.find(mainArray =>
                 //     mainArray.find(mainItem => mainItem.odds.some(item => item.selectionId === selectionIdToFind))
                 //   );
