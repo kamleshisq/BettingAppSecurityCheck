@@ -107,14 +107,14 @@ table, th, td {
                   <td>LAY</td>
                 </tr>
                 <% let runners = JSON.parse(liveCricket.marketList.match_odd.runners); %>
-                <% const runners = []; %>
+                <% const runners1 = []; %>
                 <%const secIds = []; %>
-                <%data.forEach(item => {%>
-                    <%runners.push(item.runner);%>
+                <%runners.forEach(item => {%>
+                    <%runners1.push(item.runner);%>
                     <%secIds.push(item.secId);%>
                 <%});%>
                 <tr>
-                    <td><%=runners%></td>
+                    <td><%=runners1%></td>
                 </tr>
               </tbody>
             </table>
