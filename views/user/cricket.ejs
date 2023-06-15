@@ -108,11 +108,24 @@ table, th, td {
             <tr>
               <td><%= Date(liveCricket[i].eventData.time)  %></td>
               <% if(liveCricket[i].marketList.match_odd != null){ %>
-              <td class="name1" id="<%=liveCricket[i].marketList.match_odd.marketId%>"><%=liveCricket[i].eventData.name%></td>
-                <td colspan="3">null</td>
+                  <td class="name1" id="<%=liveCricket[i].marketList.match_odd.marketId%>"><%=liveCricket[i].eventData.name%></td>
+                  <% let runners = JSON.parse(liveCricket[i].marketList.match_odd.runners); %>
+                  <% const runners1 = []; %>
+                  <%const secIds = []; %>
+                  <%runners.forEach(item => {%>
+                    <%runners1.push(item.runner);%>
+                    <%secIds.push(item.secId);%>
+                  <%});%>
+                  <%for(let i = 0; i < runners1.length; i++){%>
+                    <tr>
+                        <td class="name1"> <%=runners1[i]%></td>
+                        <td class="BACK <%=i%>" id="<%=secIds[i]%>"  ></td>
+                        <td class="LAY <%=i%>" id="<%=secIds[i]%>"  ></td>
+                    </tr>
+                <%}%>
                 <%}else{%>
-                <td><%=liveCricket[i].eventData.name%></td>
-                <td colspan="3">null</td>
+                  <td><%=liveCricket[i].eventData.name%></td>
+                  <td colspan="3">null</td>
               <%}%>
             </tr>
         <%}%>
