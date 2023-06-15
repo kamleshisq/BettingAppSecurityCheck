@@ -2401,7 +2401,8 @@ socket.on('connect', () => {
         })
 
 
-        console.log($(".eventName").attr("id"))
+        let eventId = $(".eventName").attr("id")
+        socket.emit("eventId", eventId)
     }
 
     if(pathname === "/exchange_sports/cricket"){

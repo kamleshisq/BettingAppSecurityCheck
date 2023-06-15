@@ -12,6 +12,7 @@ const userController = require("./websocketController/userController");
 const accountControl = require("./controller/accountController");
 const getmarketDetails = require("./utils/getmarketsbymarketId");
 const marketDetailsBymarketID = require("./utils/getmarketsbymarketId");
+const scores = require("./utils/Scores")
 const loginlogs = require('./model/loginLogs');
 const gameModel = require('./model/gameModel');
 const getCrkAndAllData = require("./utils/getSportAndCricketList");
@@ -768,6 +769,11 @@ io.on('connection', (socket) => {
 
 
         }
+    });
+
+    socket.on("eventId", async(data) => {
+        let matchScore = await scores(data)
+        console.log(matchScore)
     })
 
     // socket.on('logOutUser',async(id) => {
