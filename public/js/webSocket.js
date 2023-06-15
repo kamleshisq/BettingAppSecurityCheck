@@ -2409,14 +2409,19 @@ socket.on('connect', () => {
                 $(".name1").each(function() {
                   ids.push(this.id);
                 });
-                console.log(ids)
-                // socket.emit("marketId", ids)
+                // console.log(ids)
+                socket.emit("marketId", ids)
               });
               setTimeout(()=>{
                 marketId()
               }, 500)
         }
         marketId()
+
+
+        socket.on("marketId", async(data) => {
+            console.log(data)
+        })
     }
 
 
