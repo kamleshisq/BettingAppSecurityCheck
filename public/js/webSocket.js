@@ -2415,6 +2415,12 @@ socket.on('connect', () => {
                 document.getElementById("Score").innerHTML = score[0].data
             }
         })
+
+        document.getElementById('123').addEventListener('click', function() {
+            console.log("1234")
+          var popup = document.getElementById('popupForm');
+          popup.style.display = 'block';
+        });
     }
 
     if(pathname === "/exchange_sports/cricket"){
