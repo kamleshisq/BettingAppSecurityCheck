@@ -113,9 +113,12 @@ table, th, td {
                     <%runners1.push(item.runner);%>
                     <%secIds.push(item.secId);%>
                 <%});%>
-                <tr>
-                    <td><%=runners1%></td>
-                </tr>
+                <%for(let i = 0; i < runners1.length){%>
+                    <tr>
+                        <td class="name1"> <%runners1[i]%></td>
+                        <td><%=secIds%></td>
+                    </tr>
+                <%}%>
               </tbody>
             </table>
     <%}%>
