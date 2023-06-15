@@ -2380,7 +2380,7 @@ socket.on('connect', () => {
                 $(".BACK").each(function() {
                 let id = this.id
                 console.log(this)
-                const foundItem = data.items.filter(item => item.odds.find(odd => odd.selectionId == id));
+                const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
                 console.log(foundItem)
                 for(let i = 0; i < 3; i++){
                     if($(this).hasClass(`${i}`)){
