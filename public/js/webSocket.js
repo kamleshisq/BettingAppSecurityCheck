@@ -2443,6 +2443,10 @@ socket.on('connect', () => {
 
             })
 
+            $(document).on("click", ".click", function(){
+                window.location.href = `/exchange_sports/live_match?id=${this.id}`
+            })
+
         })
     }
 
