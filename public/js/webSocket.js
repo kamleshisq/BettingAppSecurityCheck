@@ -2331,7 +2331,7 @@ socket.on('connect', () => {
             $(document).ready(function() {
           
                 $(".0").each(function() {
-                  const update = data.find(item => item.odds.some(item => item.selectionId === this.id))
+                  const update = data.items.find(item => item.odds.some(item1 => item1.selectionId === this.id))
                 //   const foundMainArray = data.find(mainArray =>
                 //     mainArray.find(mainItem => mainItem.odds.some(item => item.selectionId === selectionIdToFind))
                 //   );
