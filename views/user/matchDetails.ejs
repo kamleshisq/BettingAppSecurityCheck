@@ -106,7 +106,10 @@ table, th, td {
                   <td>BACK</td>
                   <td>LAY</td>
                 </tr>
-                
+                <% let runners = JSON.parse(liveCricket.marketList.match_odd.runners); %>
+                <tr>
+                    <td><%=runners%></td>
+                </tr>
               </tbody>
             </table>
     <%}%>
