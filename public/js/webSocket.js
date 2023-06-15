@@ -2392,8 +2392,8 @@ socket.on('connect', () => {
                     const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
                     for(let i = 0; i < 3; i++){
                         if($(this).hasClass(`${i}`)){
-                            // this.innerHTML = `<button id="123">${foundItem.odds[i].layPrice1}</button>, <button id="123">${foundItem.odds[i].layPrice2}</button>, <button id="123">${foundItem.odds[i].layPrice3}</button>`
-                            document.getElementById(`${this.id}0`).innerHTML = `${foundItem.odds[i].layPrice1}`
+                            this.innerHTML = `<button id="123">${foundItem.odds[i].layPrice1}</button>, <button id="123">${foundItem.odds[i].layPrice2}</button>, <button id="123">${foundItem.odds[i].layPrice3}</button>`
+                            // document.getElementById(`${this.id}0`).innerHTML = `${foundItem.odds[i].layPrice1}`
                         }
                     }
                     });
