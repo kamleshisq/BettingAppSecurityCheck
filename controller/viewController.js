@@ -965,4 +965,9 @@ exports.getCricketpage = catchAsync(async(req, res, next) => {
         liveCricket,
         upcomingCricket
     })
+});
+
+
+exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
+    console.log(req.query);
 })
