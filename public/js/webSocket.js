@@ -2402,20 +2402,7 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/exchange_sports/cricket"){
-        function marketId(){
-            $(document).ready(function() {
-                var ids = [];
-          
-                $(".name1").each(function() {
-                  ids.push(this.id);
-                });
-                console.log(ids)
-                // socket.emit("marketId", ids)
-              });
-              setTimeout(()=>{
-                marketId()
-              }, 500)
-        }
+        console.log("Working")
     }
 
 
