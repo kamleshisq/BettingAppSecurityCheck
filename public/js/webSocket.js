@@ -2401,6 +2401,9 @@ socket.on('connect', () => {
         })
     }
 
+    if(pathname === "/exchange_sports/cricket"){
+        console.log("Working")
+    }
 
 
     // if(pathname === "/exchange_sports/cricket"){
