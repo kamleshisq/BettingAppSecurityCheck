@@ -107,6 +107,12 @@ table, th, td {
                   <td>LAY</td>
                 </tr>
                 <% let runners = JSON.parse(liveCricket.marketList.match_odd.runners); %>
+                <% const runners = []; %>
+                <%const secIds = []; %>
+                <%data.forEach(item => {%>
+                    <%runners.push(item.runner);%>
+                    <%secIds.push(item.secId);%>
+                <%});%>
                 <tr>
                     <td><%=runners%></td>
                 </tr>
