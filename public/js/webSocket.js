@@ -2383,7 +2383,7 @@ socket.on('connect', () => {
                 const foundItem = data.items.filter(item => item.odds.find(odd => odd.selectionId == id));
                 console.log(foundItem)
                 for(let i = 0; i < 3; i++){
-                    if(this.hasClass(`${i}`)){
+                    if($(this).hasClass(`${i}`)){
                         this.innerHTML = `${foundItem.odds[i].backPrice1}, ${foundItem.odds[i].backPrice2}, ${foundItem.odds[i].backPrice3}`
                     }
                 }
