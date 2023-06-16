@@ -2459,12 +2459,7 @@ socket.on('connect', () => {
         // form.find('input[name = "id"]').val(betLimit._id)
 
         async function checkOdd() {
-            if(form.find('input[name = "odds"]').val() != $(this).text() && form.find('input[name = "odds"]').val() != "")
-            alert("odds value change") 
-            form.find('input[name = "odds"]').val($(this).text())
-            setTimeout(()=>{
-                checkOdd()
-              }, 300)
+            console.log(form.find('input[name = "odds"]').val())
         }
         checkOdd()
     })
