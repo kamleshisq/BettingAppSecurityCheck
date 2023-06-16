@@ -2454,21 +2454,24 @@ socket.on('connect', () => {
         let marketId = $(".match_odd").attr('id')
         let x = $(this).text()
         let id = $(this).attr("id")
-        let sectionId = id.slice(0, -1);
         form.find('input[name = "title"]').val(eventName)
-        form.find('input[name = "title"]').attr( "id", sectionId)
         form.find('input[name = "odds"]').val(x)
-        form.find('input[name = "button"]').attr( "id", marketId)
+        form.find('input[name = "title"]').addClass(id);
+        form.find('input[name = "button"]').addClass(marketId);
     })
 
     async function checkOdd() {
     //    console.log('working')
+        let modleName = $(".popup")
+        let form = $(modleName).find('#bet-form')
+        let formOdds = form.find('input[name = "odds"]').val()
+        let buttonId 
 
        setTimeout(()=>{
         checkOdd()
       }, 300)
     }
-    checkOdd()
+    // checkOdd()
 
     }
 
