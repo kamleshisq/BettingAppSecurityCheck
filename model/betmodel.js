@@ -4,11 +4,9 @@ const mongoose = require('mongoose');
 const betSchema = mongoose.Schema({
     operatorId:{
         type:String,
-        required:true
     },
     token:{
         type:String,
-        required:true
     },
     userId:{
         type:String,
@@ -19,7 +17,6 @@ const betSchema = mongoose.Schema({
     },
     transactionId:{
         type:String,
-        required:true
     },
     gameId:{
         type:String       
