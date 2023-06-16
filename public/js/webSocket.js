@@ -2450,7 +2450,7 @@ socket.on('connect', () => {
         console.log(modleName)
         let form = $(modleName).find('#bet-form')
         console.log(form)
-        let eventName = $(".eventName").value
+        let eventName = $(".eventName").val()
         console.log(eventName)
         form.find('input[name = "title"]').val(eventName)
         // form.find('input[name = "max_stake"]').val(betLimit.max_stake)
