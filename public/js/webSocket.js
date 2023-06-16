@@ -2463,6 +2463,7 @@ socket.on('connect', () => {
             alert("odds value change")
             form.find('input[name = "odds"]').val($(`#${id}`).text())
            }
+           console.log(form.find('input[name = "odds"]').val())
            setTimeout(()=>{
             checkOdd()
           }, 300)
