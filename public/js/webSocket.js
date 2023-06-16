@@ -2430,6 +2430,7 @@ socket.on('connect', () => {
         // });
         const buttons = document.getElementsByClassName('button');
         let popup = document.getElementById('popupForm');
+        let form = document.getElementById('bet-form');
         Array.from(buttons).forEach(function(button) {
             button.addEventListener('click', function() {
               popup.style.display = 'block';
@@ -2440,7 +2441,7 @@ socket.on('connect', () => {
     document.addEventListener('click', function(event) {
         if (!popup.contains(event.target) && !Array.from(buttons).some(button => button.contains(event.target))) {
           popup.style.display = 'none';
-          popup.find('input[name = "odds"]').val("")
+          form.find('input[name = "odds"]').val("")
         }
       });
 
