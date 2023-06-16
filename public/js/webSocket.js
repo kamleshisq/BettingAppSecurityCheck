@@ -2455,6 +2455,7 @@ socket.on('connect', () => {
         let id = $(this).attr("id")
         form.find('input[name = "title"]').val(eventName)
         form.find('input[name = "odds"]').val(x)
+        form.attr('id') = marketId
         // form.find('input[name = "max_profit"]').val(betLimit.max_profit)
         // form.find('input[name = "max_odd"]').val(betLimit.max_odd)
         // form.find('input[name = "delay"]').val(betLimit.delay)
