@@ -2457,6 +2457,15 @@ socket.on('connect', () => {
         // form.find('input[name = "delay"]').val(betLimit.delay)
         // form.find('input[name = "type"]').val(betLimit.type)
         // form.find('input[name = "id"]').val(betLimit._id)
+
+        async function checkOdd() {
+            if(form.find('input[name = "odds"]').val() != $(this).text())
+            alert("odds value change") 
+            setTimeout(()=>{
+                checkOdd()
+              }, 300)
+        }
+        checkOdd()
     })
 
     }
