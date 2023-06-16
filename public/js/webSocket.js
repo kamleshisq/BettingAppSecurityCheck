@@ -2490,7 +2490,8 @@ socket.on('connect', () => {
         let data = Object.fromEntries(fd.entries());
         data.secId = $("#bet-title").attr("class").slice(0, -1);
         data.market = $("#SUBMIT").attr("class");
-        console.log(data)
+        let eventId = $('.eventName')
+        console.log(eventId)
     })
 
 
