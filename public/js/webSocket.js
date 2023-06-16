@@ -2452,18 +2452,17 @@ socket.on('connect', () => {
         let form = $(modleName).find('#bet-form')
         let eventName = $(".eventName").text()
         let marketId = $(".match_odd").attr('id')
-        console.log(marketId);
         let x = $(this).text()
         let id = $(this).attr("id")
         form.find('input[name = "title"]').val(eventName)
         form.find('input[name = "odds"]').val(x)
+        form.find('input[name = "button"]').val(marketId)
 
         async function checkOdd() {
            if($(`#${id}`).text() != form.find('input[name = "odds"]').val() && form.find('input[name = "odds"]').val() != ""){
             alert("odds value change")
             form.find('input[name = "odds"]').val($(`#${id}`).text())
            }
-           console.log(form.find('input[name = "odds"]').val())
            setTimeout(()=>{
             checkOdd()
           }, 300)
