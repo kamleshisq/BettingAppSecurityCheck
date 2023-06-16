@@ -2439,9 +2439,11 @@ socket.on('connect', () => {
 
           
     document.addEventListener('click', function(event) {
-        if (!popup.contains(event.target) && !Array.from(buttons).some(button => button.contains(event.target))) {
+        if (!popup.contains(event.target)) {
           popup.style.display = 'none';
           form.find('input[name = "odds"]').val("")
+          form.find('input[name = "title"]').removeClass()
+          form.find('input[name = "button"]').removeClass
         }
       });
 
