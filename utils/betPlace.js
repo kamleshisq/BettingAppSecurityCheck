@@ -17,6 +17,16 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
 
 async function placeBet(data){
     let uniqueToken = generateString(5)
+    const sportData = await cricketAndOtherSport()
+    let gameList
+    let bettype
+    if(data.data.spoetId == 4){
+        gameList = sportData[0].gameList[0].eventList
+        bettype = 'Cricket'
+    }
+    let liveBetGame = gameList.find(item => item.eventData.eventId == data.data.eventId);
+    let marketDetails = liveBetGame.marketList.find(item => item.marketId === data.data.market);
+    console.log(marketDetails)
     let betPlaceData = {
         userId : data.LOGINDATA.LOGINUSER._id,
         userName : data.LOGINDATA.LOGINUSER.userName,
@@ -27,18 +37,11 @@ async function placeBet(data){
         status : "OPEN",
         returns : -(data.data.stake),
         role_type : data.LOGINDATA.LOGINUSER.role_type,
-        match : data.data.title
+        match : data.data.title,
+        betType : bettype,
+        event : liveBetGame.eventData.league,
+        gameId : liveBetGame.eventData.sportId,
     }
-    const sportData = await cricketAndOtherSport()
-    let gameList
-    if(data.data.spoetId == 4){
-        gameList = sportData[0].gameList[0].eventList
-    }
-    let liveBetGame = gameList.find(item => item.eventData.eventId == data.data.eventId);
-
-    console.log(liveBetGame)
-    console.log(betPlaceData)
-
 }
 
 module.exports = placeBet
