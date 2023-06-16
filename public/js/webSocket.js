@@ -2447,7 +2447,6 @@ socket.on('connect', () => {
         if(Array.from(buttons).some(button => button.contains(event.target))){
             form.find('input[name = "odds"]').val("")
           form.find('input[name = "title"]').removeClass()
-          form.find('input[name = "button"]').removeClass()
         }
       });
 
@@ -2473,6 +2472,7 @@ socket.on('connect', () => {
         let form = $(modleName).find('#bet-form')
         let formOddsbuttonId = form.find('input[name = "title"]').attr("class");
         let odds = $(`#${formOddsbuttonId}`).text()
+        console.log(form.find('input[name = "odds"]').val())
         if(form.find('input[name = "odds"]').val() != odds && form.find('input[name = "odds"]').val() != ''){
             alert('odds value change')
             form.find('input[name = "odds"]').val(odds)
@@ -2491,7 +2491,7 @@ socket.on('connect', () => {
         let data = Object.fromEntries(fd.entries());
         data.secId = $("#bet-title").attr("class").slice(0, -1);
         data.market = $("#SUBMIT").attr("class");
-        console.log(data)
+        
     })
 
 
