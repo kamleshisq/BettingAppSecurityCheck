@@ -2489,7 +2489,7 @@ socket.on('connect', () => {
         let form = $(this)[0];
         let fd = new FormData(form);
         let data = Object.fromEntries(fd.entries());
-        let secId = form.find('input[name = "title"]').attr("class");
+        let secId = $("#bet-title").attr("class");
         console.log(secId)
     })
 
