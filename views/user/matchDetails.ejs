@@ -146,8 +146,8 @@ table, th, td {
 
  <!-- Popup form -->
  <div id="popupForm" class="popup">
-    <h2>Popup Form</h2>
-    <form>
+  <h2>Bet Slip</h2>
+  <form>
       <div>
           <label for="bet-title">Title:</label>
           <input type="text" id="bet-title" name="title" required>
@@ -162,15 +162,14 @@ table, th, td {
       </div>
       <div>
           <label for="bet-stake-options">Stake Options:</label>
-          <select id="bet-stake-options" onchange="addStake(this)">
-              <option value="">-- Select a stake option --</option>
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-              <option value="200">200</option>
-          </select>
+          <div>
+              <button type="button" onclick="updateStake('5')">5</button>
+              <button type="button" onclick="updateStake('10')">10</button>
+              <button type="button" onclick="updateStake('20')">20</button>
+              <button type="button" onclick="updateStake('50')">50</button>
+              <button type="button" onclick="updateStake('100')">100</button>
+              <button type="button" onclick="updateStake('200')">200</button>
+          </div>
       </div>
       <div>
           <input type="submit" value="Place Bet">
@@ -179,7 +178,12 @@ table, th, td {
   </div>
 
 
-
+  <script>
+    function updateStake(value) {
+        var stakeLabel = document.getElementById("bet-stake-label");
+        stakeLabel.textContent = value;
+    }
+</script>
 <script src="../userJs/logOut.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/webSocket.js"></script>
