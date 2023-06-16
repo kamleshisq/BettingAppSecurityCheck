@@ -2483,6 +2483,15 @@ socket.on('connect', () => {
       }, 300)
     }
 
+
+    $(document).on('submit', '#bet-form', async function(e){
+        e.preventDefault()
+        console.log("working")
+    })
+
+
+
+
     }
 
     if(pathname === "/exchange_sports/cricket"){
