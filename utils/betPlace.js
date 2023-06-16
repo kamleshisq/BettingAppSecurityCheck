@@ -31,10 +31,9 @@ async function placeBet(data){
         if (marketList.hasOwnProperty(key)) {
           const marketData = marketList[key];
           if (marketData.marketId === data.data.market) {
-            // Found the matching data
-            console.log("Matching data found for marketId:", marketIdToFind);
+            console.log("Matching data found for marketId:", data.data.market);
             console.log(marketData);
-            break; // Exit the loop since we found the data
+            break;
           }
         }
       }
