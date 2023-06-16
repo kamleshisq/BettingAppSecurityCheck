@@ -2442,6 +2442,7 @@ socket.on('connect', () => {
         if (!popup.contains(event.target) && !Array.from(buttons).some(button => button.contains(event.target))) {
           popup.style.display = 'none';
           
+          form.find('input[name = "odds"]').val("")
         }
 
         if(Array.from(buttons).some(button => button.contains(event.target))){
