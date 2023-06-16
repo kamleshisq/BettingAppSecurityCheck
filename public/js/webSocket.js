@@ -2462,7 +2462,7 @@ socket.on('connect', () => {
         async function checkOdd() {
            if($(`#${id}`).text() != form.find('input[name = "odds"]').val()){
             alert("odds value change")
-            form.find('input[name = "odds"]').val(x)
+            form.find('input[name = "odds"]').val($(`#${id}`).text())
            }
            setTimeout(()=>{
             checkOdd()
