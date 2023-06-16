@@ -2469,6 +2469,7 @@ socket.on('connect', () => {
         console.log(formOdds)
 
        setTimeout(()=>{
+        formOdds = null
         checkOdd()
       }, 300)
     }
