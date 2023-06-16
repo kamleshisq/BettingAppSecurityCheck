@@ -2454,13 +2454,15 @@ socket.on('connect', () => {
         let marketId = $(".match_odd").attr('id')
         let x = $(this).text()
         let id = $(this).attr("id")
+        console.log(id)
         form.find('input[name = "title"]').val(eventName)
         form.find('input[name = "odds"]').val(x)
         form.find('input[name = "button"]').addClass(marketId)
     })
 
     async function checkOdd() {
-       console.log('working')
+    //    console.log('working')
+
        setTimeout(()=>{
         checkOdd()
       }, 300)
