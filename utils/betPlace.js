@@ -38,7 +38,6 @@ async function placeBet(data){
       }
 let runnersData = JSON.parse(marketDetails.runners)
 let betOn = runnersData.find(item => item.secId == data.data.secId)
-console.log(betOn)
     let betPlaceData = {
         userId : data.LOGINDATA.LOGINUSER._id,
         userName : data.LOGINDATA.LOGINUSER.userName,
@@ -54,8 +53,9 @@ console.log(betOn)
         event : liveBetGame.eventData.league,
         gameId : liveBetGame.eventData.sportId,
         marketName : marketDetails.title,
-
+        selectionName : betOn.runner
     }
+    console.log(betPlaceData)
 }
 
 module.exports = placeBet
