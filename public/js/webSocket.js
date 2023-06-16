@@ -2441,12 +2441,10 @@ socket.on('connect', () => {
     document.addEventListener('click', function(event) {
         if (!popup.contains(event.target) && !Array.from(buttons).some(button => button.contains(event.target))) {
           popup.style.display = 'none';
-          
           form.find('input[name = "odds"]').val("")
         }
 
         if(Array.from(buttons).some(button => button.contains(event.target))){
-            console.log("working")
             form.find('input[name = "odds"]').val("")
             form.find('input[name = "title"]').removeClass()
         }
@@ -2474,7 +2472,6 @@ socket.on('connect', () => {
         let form = $(modleName).find('#bet-form')
         let formOddsbuttonId = form.find('input[name = "title"]').attr("class");
         let odds = $(`#${formOddsbuttonId}`).text()
-        console.log(form.find('input[name = "odds"]').val())
         if(form.find('input[name = "odds"]').val() != odds && form.find('input[name = "odds"]').val() != ''){
             alert('odds value change')
             form.find('input[name = "odds"]').val(odds)
