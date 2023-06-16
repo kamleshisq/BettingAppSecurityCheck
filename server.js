@@ -13,6 +13,7 @@ const accountControl = require("./controller/accountController");
 const getmarketDetails = require("./utils/getmarketsbymarketId");
 const marketDetailsBymarketID = require("./utils/getmarketsbymarketId");
 const scores = require("./utils/Scores")
+const placeBet = require('./utils/betPlace');
 const loginlogs = require('./model/loginLogs');
 const gameModel = require('./model/gameModel');
 const getCrkAndAllData = require("./utils/getSportAndCricketList");
@@ -830,7 +831,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('betDetails', async(data) => {
-        console.log(data)
+         placeBet(data)
     })
 })
 
