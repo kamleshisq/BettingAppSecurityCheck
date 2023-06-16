@@ -2454,7 +2454,9 @@ socket.on('connect', () => {
         let marketId = $(".match_odd").attr('id')
         let x = $(this).text()
         let id = $(this).attr("id")
-        console.log(id)
+        let sectionId = id.slice(0, -1);
+        console.log(sectionId)
+        form.find('input[name = "title"]').val(eventName)
         form.find('input[name = "title"]').val(eventName)
         form.find('input[name = "odds"]').val(x)
         form.find('input[name = "button"]').addClass(marketId)
