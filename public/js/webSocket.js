@@ -2447,7 +2447,7 @@ socket.on('connect', () => {
         if(Array.from(buttons).some(button => button.contains(event.target))){
             form.find('input[name = "odds"]').val("")
           form.find('input[name = "title"]').removeClass()
-          form.find('input[name = "button"]').removeClass
+          form.find('input[name = "button"]').removeClass()
         }
       });
 
