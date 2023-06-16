@@ -2430,7 +2430,7 @@ socket.on('connect', () => {
         // });
         const buttons = document.getElementsByClassName('button');
         let popup = document.getElementById('popupForm');
-        let form = document.getElementById('bet-form');
+        let form = $(popup).find('#bet-form')
         Array.from(buttons).forEach(function(button) {
             button.addEventListener('click', function() {
               popup.style.display = 'block';
