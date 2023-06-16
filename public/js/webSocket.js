@@ -2486,7 +2486,10 @@ socket.on('connect', () => {
 
     $(document).on('submit', '#bet-form', async function(e){
         e.preventDefault()
-        console.log("working")
+        let form = $(this)[0];
+        let fd = new FormData(form);
+        let data = Object.fromEntries(fd.entries());
+        console.log(data)
     })
 
 
