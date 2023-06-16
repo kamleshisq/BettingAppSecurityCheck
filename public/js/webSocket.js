@@ -2492,7 +2492,7 @@ socket.on('connect', () => {
         data.market = $("#SUBMIT").attr("class");
         data.eventId = $('.eventName')[0].id
         data.spoetId = $('.details')[0].id
-        console.log(data)
+        socket.emit('betDetails', {data, LOGINDATA});
     })
 
 

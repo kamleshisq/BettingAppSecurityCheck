@@ -815,6 +815,23 @@ io.on('connection', (socket) => {
     //     socket.emit('load1', response)
 
     // })    
+
+
+
+
+
+
+
+
+
+
+
+    //BETTING DETAILS SOCKETS//
+
+
+    socket.on('betDetails', async(data) => {
+        console.log(data)
+    })
 })
 
 http.listen(8000,()=> {
