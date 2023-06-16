@@ -37,7 +37,8 @@ async function placeBet(data){
         }
       }
 let runnersData = JSON.parse(marketDetails.runners)
-console.log(runnersData)
+let betOn = runnersData.find(item => item.secId == data.data.secId)
+console.log(betOn)
     let betPlaceData = {
         userId : data.LOGINDATA.LOGINUSER._id,
         userName : data.LOGINDATA.LOGINUSER.userName,
