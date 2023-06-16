@@ -2440,6 +2440,7 @@ socket.on('connect', () => {
     document.addEventListener('click', function(event) {
         if (!popup.contains(event.target) && !Array.from(buttons).some(button => button.contains(event.target))) {
           popup.style.display = 'none';
+          popup.find('input[name = "odds"]').val("")
         }
       });
 
@@ -2455,15 +2456,9 @@ socket.on('connect', () => {
         let id = $(this).attr("id")
         form.find('input[name = "title"]').val(eventName)
         form.find('input[name = "odds"]').val(x)
-        form.find('input[value = "Place Bet"]').val(marketId)
-        // form.find('input[name = "max_profit"]').val(betLimit.max_profit)
-        // form.find('input[name = "max_odd"]').val(betLimit.max_odd)
-        // form.find('input[name = "delay"]').val(betLimit.delay)
-        // form.find('input[name = "type"]').val(betLimit.type)
-        // form.find('input[name = "id"]').val(betLimit._id)
 
         async function checkOdd() {
-           if($(`#${id}`).text() != form.find('input[name = "odds"]').val()){
+           if($(`#${id}`).text() != form.find('input[name = "odds"]').val() && form.find('input[name = "odds"]').val() != ""){
             alert("odds value change")
             form.find('input[name = "odds"]').val($(`#${id}`).text())
            }
