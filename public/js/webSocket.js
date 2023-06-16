@@ -2455,11 +2455,10 @@ socket.on('connect', () => {
         let x = $(this).text()
         let id = $(this).attr("id")
         let sectionId = id.slice(0, -1);
-        console.log(sectionId)
         form.find('input[name = "title"]').val(eventName)
-        form.find('input[name = "title"]').val(eventName)
+        form.find('input[name = "title"]').attr( "id", sectionId)
         form.find('input[name = "odds"]').val(x)
-        form.find('input[name = "button"]').addClass(marketId)
+        form.find('input[name = "button"]').attr( "id", marketId)
     })
 
     async function checkOdd() {
