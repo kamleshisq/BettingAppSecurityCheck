@@ -2383,9 +2383,9 @@ socket.on('connect', () => {
                 for(let i = 0; i < 3; i++){
                     if($(this).hasClass(`${i}`)){
                         // this.innerHTML = `<button id="123">${foundItem.odds[i].backPrice1}</button>, <button id="123">${foundItem.odds[i].backPrice2}</button>, <button id="123">${foundItem.odds[i].backPrice3}</button>`
-                        document.getElementById(`${this.id}0`).innerHTML = `${foundItem.odds[i].backPrice1}`
+                        document.getElementById(`${this.id}0`).innerHTML = `${foundItem.odds[i].backPrice3}`
                         document.getElementById(`${this.id}1`).innerHTML = `${foundItem.odds[i].backPrice2}`
-                        document.getElementById(`${this.id}2`).innerHTML = `${foundItem.odds[i].backPrice3}`
+                        document.getElementById(`${this.id}2`).innerHTML = `${foundItem.odds[i].backPrice1}`
 
                     }
                 }
