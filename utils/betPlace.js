@@ -36,7 +36,8 @@ async function placeBet(data){
           }
         }
       }
-    console.log(marketDetails)
+let runnersData = JSON.parse(marketDetails.runners)
+console.log(runnersData)
     let betPlaceData = {
         userId : data.LOGINDATA.LOGINUSER._id,
         userName : data.LOGINDATA.LOGINUSER.userName,
@@ -51,6 +52,8 @@ async function placeBet(data){
         betType : bettype,
         event : liveBetGame.eventData.league,
         gameId : liveBetGame.eventData.sportId,
+        marketName : marketDetails.title,
+
     }
 }
 
