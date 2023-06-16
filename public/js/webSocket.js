@@ -2444,6 +2444,20 @@ socket.on('connect', () => {
       });
 
 
+
+      $(document).on('click','.button',function(e){
+        let modleName = $(".popup")
+        let form = $(modleName).find('#bet-form')
+        let eventName = $(".eventName").value
+        form.find('input[name = "title"]').val(eventName)
+        // form.find('input[name = "max_stake"]').val(betLimit.max_stake)
+        // form.find('input[name = "max_profit"]').val(betLimit.max_profit)
+        // form.find('input[name = "max_odd"]').val(betLimit.max_odd)
+        // form.find('input[name = "delay"]').val(betLimit.delay)
+        // form.find('input[name = "type"]').val(betLimit.type)
+        // form.find('input[name = "id"]').val(betLimit._id)
+    })
+
     }
 
     if(pathname === "/exchange_sports/cricket"){
