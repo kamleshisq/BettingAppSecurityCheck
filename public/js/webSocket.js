@@ -2449,9 +2449,9 @@ socket.on('connect', () => {
         let modleName = $(".popup")
         let form = $(modleName).find('#bet-form')
         let eventName = $(".eventName").text()
-        console.log($(this).text())
+        let x = $(this).text()
         form.find('input[name = "title"]').val(eventName)
-        form.find('input[name = "odds"]').val($(this).text())
+        form.find('input[name = "odds"]').val(x)
         // form.find('input[name = "max_profit"]').val(betLimit.max_profit)
         // form.find('input[name = "max_odd"]').val(betLimit.max_odd)
         // form.find('input[name = "delay"]').val(betLimit.delay)
@@ -2459,7 +2459,7 @@ socket.on('connect', () => {
         // form.find('input[name = "id"]').val(betLimit._id)
 
         async function checkOdd() {
-           console.log($(this).text())
+           console.log(x)
         }
         checkOdd()
     })
