@@ -2460,7 +2460,7 @@ socket.on('connect', () => {
 
         async function checkOdd() {
             console.log($(this).text(),form.find('input[name = "odds"]').val())
-            if($(this).text()*1 != ${form.find('input[name = "odds"]').val()*1 && form.find('input[name = "odds"]').val() != ""){
+            if($(this).text()*1 != form.find('input[name = "odds"]').val()*1 && form.find('input[name = "odds"]').val() != ""){
                 alert("odds value change") 
                 form.find('input[name = "odds"]').val($(this).text())
             }
