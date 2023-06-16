@@ -2449,6 +2449,8 @@ socket.on('connect', () => {
         let modleName = $(".popup")
         let form = $(modleName).find('#bet-form')
         let eventName = $(".eventName").text()
+        let marketId = $(".match_odd").attr('id')
+        console.log(marketId);
         let x = $(this).text()
         let id = $(this).attr("id")
         form.find('input[name = "title"]').val(eventName)

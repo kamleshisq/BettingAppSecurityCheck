@@ -174,7 +174,7 @@ body {
     <h2 class="eventName" id="<%=liveCricket.eventData.eventId%>"><%=liveCricket.eventData.name%></h2><h3><%=liveCricket.eventData.league%></h3>
 
     <%if(liveCricket.marketList.match_odd != null){%>
-        <table class="market" id="<%=liveCricket.marketList.match_odd.marketId%>">
+        <table class="market match_odd" id="<%=liveCricket.marketList.match_odd.marketId%>">
             <thead style="text-align: center;font-size: 11px;">
               <tr>
                 <th colspan="5">MATCH ODDS      MIN:<%=liveCricket.marketList.match_odd.min_stack%> MAX:<%=liveCricket.marketList.match_odd.max_stack%></th>
