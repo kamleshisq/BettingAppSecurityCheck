@@ -55,7 +55,7 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
         marketName : marketDetails.title,
         selectionName : betOn.runner
     }
-    console.log(betPlaceData)
+    await betmodel.create(betPlaceData)
 }
 
 module.exports = placeBet
