@@ -16,6 +16,7 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
     }
 
 async function placeBet(data){
+    console.log(data)
     let uniqueToken = generateString(5)
     const sportData = await cricketAndOtherSport()
     let gameList
@@ -55,7 +56,7 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
         marketName : marketDetails.title,
         selectionName : betOn.runner
     }
-    await betmodel.create(betPlaceData)
+    // let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1}})
 }
 
 module.exports = placeBet
