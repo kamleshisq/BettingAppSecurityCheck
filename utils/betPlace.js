@@ -25,7 +25,14 @@ async function placeBet(data){
         bettype = 'Cricket'
     }
     let liveBetGame = gameList.find(item => item.eventData.eventId == data.data.eventId);
-    let marketDetails = liveBetGame.marketList.find(item => item.marketId === data.data.market);
+    // let marketDetails = liveBetGame.marketList.find(item => item.marketId === data.data.market);
+    for (let key in liveBetGame.marketList) {
+        if (liveBetGame.marketList.hasOwnProperty(key)) {
+          const marketData = liveBetGame.marketList[key];
+          // Do something with the market data
+          console.log(key, marketData);
+        }
+      }
     console.log(marketDetails)
     let betPlaceData = {
         userId : data.LOGINDATA.LOGINUSER._id,
