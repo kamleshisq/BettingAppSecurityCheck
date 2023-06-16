@@ -2471,9 +2471,12 @@ socket.on('connect', () => {
     //    console.log('working')
         let modleName = $(".popup")
         let form = $(modleName).find('#bet-form')
-        let formOdds = form.find('input[name = "title"]').attr("class");
-        console.log(formOdds)
-
+        let formOddsbuttonId = form.find('input[name = "title"]').attr("class");
+        let odds = $(`#${formOddsbuttonId}`).val()
+        if(form.find('input[name = "odds"]').val() != odds && form.find('input[name = "odds"]').val() != ''){
+            alert('odds value change')
+            form.find('input[name = "odds"]').val(odds)
+        }
        setTimeout(()=>{
         formOdds = null
         checkOdd()
