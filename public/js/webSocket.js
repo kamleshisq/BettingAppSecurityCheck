@@ -2446,7 +2446,7 @@ socket.on('connect', () => {
 
         if(Array.from(buttons).some(button => button.contains(event.target))){
             form.find('input[name = "odds"]').val("")
-            form.find('input[name = "odds"]').removeClass()
+            form.find('input[name = "title"]').removeClass()
         }
       });
 
@@ -2461,7 +2461,7 @@ socket.on('connect', () => {
         let id = $(this).attr("id")
         form.find('input[name = "title"]').val(eventName)
         form.find('input[name = "odds"]').val(x)
-        form.find('input[name = "odds"]').addClass(id);
+        form.find('input[name = "title"]').addClass(id);
         form.find('input[name = "button"]').addClass(marketId);
         checkOdd()
     })
@@ -2470,7 +2470,7 @@ socket.on('connect', () => {
     //    console.log('working')
         let modleName = $(".popup")
         let form = $(modleName).find('#bet-form')
-        let formOddsbuttonId = form.find('input[name = "odds"]').attr("class");
+        let formOddsbuttonId = form.find('input[name = "title"]').attr("class");
         let odds = $(`#${formOddsbuttonId}`).text()
         if(form.find('input[name = "odds"]').val() != odds && form.find('input[name = "odds"]').val() != ''){
             alert('odds value change')
@@ -2488,9 +2488,9 @@ socket.on('connect', () => {
         let form = $(this)[0];
         let fd = new FormData(form);
         let data = Object.fromEntries(fd.entries());
-        data.secId = $("#bet-odds").attr("class").slice(0, -1);
+        data.secId = $("#bet-title").attr("class").slice(0, -1);
         data.market = $("#SUBMIT").attr("class");
-        console.log(data)
+        
     })
 
 
