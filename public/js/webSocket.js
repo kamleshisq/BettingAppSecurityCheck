@@ -1,6 +1,4 @@
-// const { countDocuments } = require("../../model/userModel");
 
-import { doc } from "prettier";
 
 
 
