@@ -2457,18 +2457,15 @@ socket.on('connect', () => {
         form.find('input[name = "title"]').val(eventName)
         form.find('input[name = "odds"]').val(x)
         form.find('input[name = "button"]').addClass(marketId)
-
-        async function checkOdd() {
-           if($(`#${id}`).text() != form.find('input[name = "odds"]').val() && form.find('input[name = "odds"]').val() != ""){
-            alert("odds value change")
-            form.find('input[name = "odds"]').val($(`#${id}`).text())
-           }
-           setTimeout(()=>{
-            checkOdd()
-          }, 300)
-        }
-        checkOdd()
     })
+
+    async function checkOdd() {
+       console.log('working')
+       setTimeout(()=>{
+        checkOdd()
+      }, 300)
+    }
+    checkOdd()
 
     }
 
