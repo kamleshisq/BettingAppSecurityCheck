@@ -2456,7 +2456,7 @@ socket.on('connect', () => {
         let id = $(this).attr("id")
         form.find('input[name = "title"]').val(eventName)
         form.find('input[name = "odds"]').val(x)
-        form.find('input[name = "button"]').val(marketId)
+        form.find('input[name = "button"]').addClass(marketId)
 
         async function checkOdd() {
            if($(`#${id}`).text() != form.find('input[name = "odds"]').val() && form.find('input[name = "odds"]').val() != ""){
