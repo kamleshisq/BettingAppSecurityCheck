@@ -2450,6 +2450,7 @@ socket.on('connect', () => {
         let form = $(modleName).find('#bet-form')
         let eventName = $(".eventName").text()
         let x = $(this).text()
+        console.log($(this).attr("id"))
         form.find('input[name = "title"]').val(eventName)
         form.find('input[name = "odds"]').val(x)
         // form.find('input[name = "max_profit"]').val(betLimit.max_profit)
@@ -2459,7 +2460,10 @@ socket.on('connect', () => {
         // form.find('input[name = "id"]').val(betLimit._id)
 
         async function checkOdd() {
-           console.log(x)
+           if(x != form.find('input[name = "odds"]').val()){
+            alert("odds value change")
+            form.find('input[name = "odds"]').val(x)
+           }
         }
         checkOdd()
     })
