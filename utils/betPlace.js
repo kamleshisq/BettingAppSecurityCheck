@@ -26,11 +26,16 @@ async function placeBet(data){
     }
     let liveBetGame = gameList.find(item => item.eventData.eventId == data.data.eventId);
     // let marketDetails = liveBetGame.marketList.find(item => item.marketId === data.data.market);
-    for (let key in liveBetGame.marketList) {
-        if (liveBetGame.marketList.hasOwnProperty(key)) {
-          const marketData = liveBetGame.marketList[key];
-          // Do something with the market data
-          console.log(key, marketData);
+    let marketList = liveBetGame.marketList
+    for (let key in marketList) {
+        if (marketList.hasOwnProperty(key)) {
+          const marketData = marketList[key];
+          if (marketData.marketId === data.data.market) {
+            // Found the matching data
+            console.log("Matching data found for marketId:", marketIdToFind);
+            console.log(marketData);
+            break; // Exit the loop since we found the data
+          }
         }
       }
     console.log(marketDetails)
