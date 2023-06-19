@@ -21,7 +21,8 @@ module.exports = () => {
         .then(data => {
             result = data
         })
-        
+        console.log(result.data.length)
+        // if(result.data.length != 0)
 
     })
 }
