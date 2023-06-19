@@ -2494,8 +2494,11 @@ socket.on('connect', () => {
         let modleName = $(".popup")
         let form1 = $(modleName).find('#bet-form')
         let formOddsbuttonId = form1.find('input[name = "title"]').attr("class");
+        console.log(formOddsbuttonId)
         let odds = $(`#${formOddsbuttonId}`).text()
-        // if(odds != data)
+        if(odds != data.odds){
+            alert('odds value change')
+        }
         console.log(data)
 
         // socket.emit('betDetails', {data, LOGINDATA});
