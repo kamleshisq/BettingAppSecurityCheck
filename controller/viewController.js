@@ -909,7 +909,7 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
 
 
 exports.getMarketResult = catchAsync(async(req, res, next) => {
-    let body = JSON.stringify(["1.215179889", "4.695918984-F2"]);
+    let body = JSON.stringify(["1.215179889", "4.695918984-F2", "4.1966816382-F2"]);
     // console.log(body)
     let fullUrl = "https://admin-api.dreamexch9.com/api/dream/markets/result";
     fetch(fullUrl, {
