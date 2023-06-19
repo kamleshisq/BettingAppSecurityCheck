@@ -59,7 +59,7 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
     if(!user){
         return next(new AppError("There is no user with that id", 404))
     }
-    await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
+    await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
     let whiteLabelParent
     if(user.parentUsers.length < 1){
         whiteLabelParent = await userModel.findById(user.parentUsers[0])
