@@ -16,7 +16,6 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
     }
 
 async function placeBet(data){
-    console.log(data.LOGINDATA.LOGINUSER)
     let uniqueToken = generateString(5)
     const sportData = await cricketAndOtherSport()
     let gameList
@@ -56,11 +55,11 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
         marketName : marketDetails.title,
         selectionName : betOn.runner
     }
-    let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{balance: -data.data.stake, availableBalance: -data.data.stake, myPL: -data.data.stake, Bets : 1}})
-    if(!user){
-        return next(new AppError("There is no user with that id", 404))
-    }
-    await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
+    // let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{balance: -data.data.stake, availableBalance: -data.data.stake, myPL: -data.data.stake, Bets : 1}})
+    // if(!user){
+    //     return next(new AppError("There is no user with that id", 404))
+    // }
+    // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
     let whiteLabelParent
     if(user.parentUsers.length < 1){
         whiteLabelParent = await userModel.findById(user.parentUsers[0])
