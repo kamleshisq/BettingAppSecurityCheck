@@ -1,5 +1,6 @@
 const userModel = require('../model/userModel');
 const betmodel = require('../model/betmodel');
+const accountStatementByUserModel = require("../model/accountStatementByUserModel");
 const betLimitModel = require('../model/betLimitModel');
 const cricketAndOtherSport = require('../utils/getSportAndCricketList');
 
@@ -72,9 +73,29 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
         marketName : marketDetails.title,
         selectionName : betOn.runner
     }
+    let description = `Bet for ${data.data.title}, stake = ${data.data.stake}`
+
+    let Acc = {
+        "user_id":data.LOGINDATA.LOGINUSER._id,
+        "description": description,
+        "creditDebitamount" : -data.data.stake,
+        "balance" : user.availableBalance - data.data.stake,
+        "date" : Date.now(),
+        "userName" : user.userName,
+        "role_type" : user.role_type,
+        "Remark":"-",
+        "stake": data.data.stake,
+        "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`
+    }
+    let bets = await betmodel.create(betPlaceData)
+    let accountStatement = await accountStatementByUserModel.create(Acc)
+    if(!bets && !accountStatement){
+        return "Please try again later"
+    }
+    
     let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{balance: -data.data.stake, availableBalance: -data.data.stake, myPL: -data.data.stake, Bets : 1}})
     if(!user){
-        return next(new AppError("There is no user with that id", 404))
+        return "There is no user with that id"
     }
     let whiteLabelParent
     if(user.parentUsers.length < 2){
@@ -86,6 +107,7 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
         await userModel.updateMany({ _id: { $in: user.parentUsers.slice(1) } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
         await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:data.data.stake}})
     }
+
     return "Bet place successfully"
 }
 
