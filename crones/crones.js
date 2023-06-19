@@ -21,11 +21,12 @@ module.exports = () => {
         .then(data => {
             result = data
         })
-        console.log(result.data)
         if(result.data.length != 0){
             marketIds.forEach(async(marketIds) => {
                 const marketresult = result.find(item => item.mid === marketIds)
-                let betsWithMarketId = await betModel.find({status:"OPEN", marketId : marketresult.mid})
+                let betsWithMarketId = await betModel.find({status:"OPEN", marketId : marketresult.mid});
+
+                
             });
             
 
