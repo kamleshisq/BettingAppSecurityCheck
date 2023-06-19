@@ -61,7 +61,7 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
     }
     await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
     let whiteLabelParent
-    console.log(user.parentUsers[0], user.parentUsers.length)
+    console.log(user.parentUsers[1], user.parentUsers.length)
     if(user.parentUsers.length < 1){
         whiteLabelParent = await userModel.findById(user.parentUsers[0])
     }else{
