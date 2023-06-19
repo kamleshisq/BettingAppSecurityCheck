@@ -27,6 +27,7 @@
     "mongodb": "^5.5.0",
     "mongoose": "^7.0.3",
     "morgan": "^1.10.0",
+    "node-cron": "^3.0.2",
     "node-fetch": "^2.6.7",
     "parcel-bundler": "^1.12.5",
     "path": "^0.12.7",
