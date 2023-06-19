@@ -3,6 +3,7 @@ const catchAsync = require('../utils/catchAsync');
 const betModel = require('../model/betmodel');
 const accModel = require('../model/accountStatementByUserModel');
 const userModel = require("../model/userModel");
+const { date } = require('joi');
 
 module.exports = () => {
     cron.schedule('*/5 * * * * *', async() => {
@@ -21,11 +22,12 @@ module.exports = () => {
         .then(data => {
             result = data
         })
+        console.log(result)
         if(result.data.length != 0){
             marketIds.forEach(async(marketIds) => {
                 const marketresult = result.find(item => item.mid === marketIds)
                 let betsWithMarketId = await betModel.find({status:"OPEN", marketId : marketresult.mid});
-                
+
                 
             });
             
