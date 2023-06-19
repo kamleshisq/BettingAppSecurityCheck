@@ -25,7 +25,7 @@ module.exports = () => {
             marketIds.forEach(async(marketIds) => {
                 const marketresult = result.find(item => item.mid === marketIds)
                 let betsWithMarketId = await betModel.find({status:"OPEN", marketId : marketresult.mid});
-
+                
                 
             });
             
