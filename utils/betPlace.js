@@ -71,7 +71,8 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
         gameId : liveBetGame.eventData.sportId,
         marketName : marketDetails.title,
         selectionName : betOn.runner,
-        marketId : data.data.market
+        marketId : data.data.market,
+        secId : data.data.secId
     }
     let description = `Bet for ${data.data.title}, stake = ${data.data.stake}`
 
