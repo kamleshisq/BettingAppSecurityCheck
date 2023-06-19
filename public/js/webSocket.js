@@ -2503,9 +2503,8 @@ socket.on('connect', () => {
             form1.find('input[name = "odds"]').val(odds)
             data.odds = odds
         }
-        console.log(data)
 
-        // socket.emit('betDetails', {data, LOGINDATA});
+        socket.emit('betDetails', {data, LOGINDATA});
     })
 
 
