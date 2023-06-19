@@ -2507,6 +2507,10 @@ socket.on('connect', () => {
         socket.emit('betDetails', {data, LOGINDATA});
     })
 
+    socket.on("betDetails" , (data) => {
+        alert(data)
+    })
+
 
 
 

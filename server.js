@@ -831,7 +831,8 @@ io.on('connection', (socket) => {
 
 
     socket.on('betDetails', async(data) => {
-         placeBet(data)
+        let result = await placeBet(data)
+        socket.emit("betDetails", result)
     })
 })
 
