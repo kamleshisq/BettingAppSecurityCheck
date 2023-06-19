@@ -2497,7 +2497,7 @@ socket.on('connect', () => {
         let odds = $(`#${formOddsbuttonId}`).text()
         if(odds != data.odds){
             alert('odds value change')
-            form.find('input[name = "odds"]').val(odds)
+            form1.find('input[name = "odds"]').val(odds)
             data.odds = odds
         }
         console.log(data)
