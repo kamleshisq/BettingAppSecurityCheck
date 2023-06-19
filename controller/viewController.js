@@ -868,7 +868,7 @@ exports.getFootballData = catchAsync(async(req, res, next) => {
 
 exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
     let body = JSON.stringify([ '1.215179889' ]);
-    console.log(body)
+    // console.log(body)
     var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
     fetch(fullUrl, {
         method: 'POST',
@@ -910,6 +910,7 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
 
 exports.getMarketResult = catchAsync(async(req, res, next) => {
     let body = JSON.stringify(["1.215179889"]);
+    console.log(body)
     let fullUrl = "https://admin-api.dreamexch9.com/api/dream/markets/result";
     fetch(fullUrl, {
         method: 'POST',
