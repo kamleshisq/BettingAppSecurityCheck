@@ -86,23 +86,16 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
         "stake": data.data.stake,
         "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`
     }
-    let bets = await betmodel.create(betPlaceData)
-    let accountStatement = await accountStatementByUserModel.create(Acc)
-    if(!bets && !accountStatement){
-        return "Please try again later"
-    }
-    
+    await betmodel.create(betPlaceData)
+    await accountStatementByUserModel.create(Acc)
     let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{balance: -data.data.stake, availableBalance: -data.data.stake, myPL: -data.data.stake, Bets : 1}})
     if(!user){
         return "There is no user with that id"
     }
-    let whiteLabelParent
     if(user.parentUsers.length < 2){
-        whiteLabelParent = await userModel.findById(user.parentUsers[0])
         await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
         await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:data.data.stake}})
     }else{
-        whiteLabelParent = await userModel.findById(user.parentUsers[1])
         await userModel.updateMany({ _id: { $in: user.parentUsers.slice(1) } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
         await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:data.data.stake}})
     }
