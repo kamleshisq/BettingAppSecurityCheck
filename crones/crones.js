@@ -21,8 +21,11 @@ module.exports = () => {
         .then(data => {
             result = data
         })
-        console.log(result.data.length)
-        // if(result.data.length != 0)
+        // console.log(result.data.length)
+        if(result.data.length != 0){
+            let data = marketIds.map(item => result.data.find(item1 => item1.mid(item)))
+            console.log(data)
+        }
 
     })
 }
