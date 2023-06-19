@@ -10,7 +10,7 @@ module.exports = () => {
         const marketIds = [...new Set(openBets.map(item => item.marketId))];
         const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
         let result;
-        fetch(fullUrl, {
+        await fetch(fullUrl, {
             method:'POST',
             headers: { 
                 'Content-Type': 'application/json',
@@ -19,7 +19,6 @@ module.exports = () => {
             body:JSON.stringify(marketIds)
         }).then(res =>res.json())
         .then(data => {
-            console.log(data)
             result = data
         })
 
