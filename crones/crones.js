@@ -7,6 +7,7 @@ const userModel = require("../model/userModel");
 module.exports = () => {
     cron.schedule('*/5 * * * * *', async() => {
         const openBets = await betModel.find({status:"OPEN"});
-        console.log(openBets)
+        // const marketIds = [...new Set(openBets.map(item => item.name))];
+
     })
 }

@@ -18,6 +18,7 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
     }
 
 async function placeBet(data){
+    console.log(data)
     if(data.LOGINDATA.LOGINUSER.availableBalance < data.data.stake){
         return "You do not have sufficient balance for bet"
     }
