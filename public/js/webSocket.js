@@ -2495,8 +2495,11 @@ socket.on('connect', () => {
         let form1 = $(modleName).find('#bet-form')
         let formOddsbuttonId = form1.find('input[name = "title"]').attr("class");
         let odds = $(`#${formOddsbuttonId}`).text()
-        if(odds != data.odds){
+        if(odds != data.odds && !data.option1){
             alert('odds value change')
+            form1.find('input[name = "odds"]').val(odds)
+            data.odds = odds
+        }else{
             form1.find('input[name = "odds"]').val(odds)
             data.odds = odds
         }
