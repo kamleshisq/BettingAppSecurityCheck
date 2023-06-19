@@ -1,5 +1,6 @@
 const userModel = require('../model/userModel');
 const betmodel = require('../model/betmodel');
+const betLimitModel = require('../model/betLimitModel');
 const cricketAndOtherSport = require('../utils/getSportAndCricketList');
 
 
@@ -16,7 +17,15 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
     }
 
 async function placeBet(data){
-    console.log(data)
+    if(data.LOGINDATA.LOGINUSER.availableBalance < data.data.stake){
+        return "You do not have sufficient balance for bet"
+    }
+    let betLimit
+    if(data.data.spoetId){
+        betLimit = await betLimitModel.find({type:"Sport"})
+    }
+    console.log(betLimit)
+
 //     let uniqueToken = generateString(5)
 //     const sportData = await cricketAndOtherSport()
 //     let gameList
