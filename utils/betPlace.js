@@ -18,7 +18,7 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
     }
 
 async function placeBet(data){
-    console.log(data)
+    // console.log(data)
     if(data.LOGINDATA.LOGINUSER.availableBalance < data.data.stake){
         return "You do not have sufficient balance for bet"
     }
@@ -71,7 +71,8 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
         event : liveBetGame.eventData.league,
         gameId : liveBetGame.eventData.sportId,
         marketName : marketDetails.title,
-        selectionName : betOn.runner
+        selectionName : betOn.runner,
+        marketId : data.data.market
     }
     let description = `Bet for ${data.data.title}, stake = ${data.data.stake}`
 
