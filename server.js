@@ -834,6 +834,11 @@ io.on('connection', (socket) => {
         let result = await placeBet(data)
         socket.emit("betDetails", result)
     })
+
+    socket.on('voidBet', async(data) => {
+        let bet = await Bet.findById(data)
+        console.log(bet)
+    })
 })
 
 http.listen(8000,()=> {

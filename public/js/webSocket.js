@@ -2122,8 +2122,7 @@ socket.on('connect', () => {
     
     $(document).on('click', '.voidBet', async function(e){
         e.preventDefault()
-        console.log("working")
-        console.log(this.id)
+        socket.emit('voidBet', this.id)
     })
 
 
