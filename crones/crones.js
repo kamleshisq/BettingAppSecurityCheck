@@ -19,6 +19,7 @@ module.exports = () => {
             body:JSON.stringify(marketIds)
         }).then(res =>res.json())
         .then(data => {
+            console.log(data)
             result = data
         })
 
