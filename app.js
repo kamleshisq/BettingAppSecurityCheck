@@ -20,6 +20,7 @@ const path = require('path');
 const middlewares = require("./middleWares/middleware");
 const fileUpload = require('express-fileupload');
 const requestIp = require("request-ip");
+const crone = require('./crones/crones');
 // const ejs = require("ejs");
 app.use(requestIp.mw());
 app.set('trust proxy', true);
@@ -40,6 +41,7 @@ app.use(fileUpload());
 app.use(express.urlencoded({ extended:true, limit: '10kb'}))
 app.use(cookieParser());
 app.use(middlewares);
+crone();
 // app.get("/", (req, res)=> {
     //     res.send("hello word")
     // })
