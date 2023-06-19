@@ -26,7 +26,7 @@ async function placeBet(data){
     if(data.data.spoetId){
         betLimit = await betLimitModel.findOne({type:"Sport"})
     }
-    console.log(betLimit)
+    console.log(betLimit.min_stake <= (data.data.stake * 1) )
     if(betLimit.min_stake <= (data.data.stake * 1) ){
         return `Invalide stake, Please play with atleast minimum stake (${betLimit.min_stake})`
     }else if(betLimit.max_stake >= (data.data.stake * 1)){
