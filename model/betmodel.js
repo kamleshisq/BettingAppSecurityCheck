@@ -61,6 +61,9 @@ const betSchema = mongoose.Schema({
     },
     marketId:{
         type:String
+    },
+    secId:{
+        type : String
     }
 })
 
