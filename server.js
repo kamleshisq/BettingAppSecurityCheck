@@ -836,7 +836,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('voidBet', async(data) => {
-        let bet = await Bet.findById(data)
+        let bet = await Bet.findByIdAndUpdate(data, {status:"CANCEL"})
         console.log(bet)
     })
 })
