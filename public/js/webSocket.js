@@ -2125,6 +2125,7 @@ socket.on('connect', () => {
         socket.emit('voidBet', this.id)
     })
     socket.on("voidBet", (data)=>{
+        alert("Bet Canceled successfully")
         window.location.href = "/admin/betmoniter"
     })
 
