@@ -2463,7 +2463,6 @@ socket.on('connect', () => {
         form.find('input[name = "odds"]').val(x)
         form.find('input[name = "title"]').addClass(id);
         form.find('input[name = "button"]').addClass(marketId);
-        checkOdd()
     })
 
     async function checkOdd() {
