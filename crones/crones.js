@@ -8,6 +8,20 @@ module.exports = () => {
     cron.schedule('*/5 * * * * *', async() => {
         const openBets = await betModel.find({status:"OPEN"});
         const marketIds = [...new Set(openBets.map(item => item.marketId))];
-        console.log(marketIds)
+        const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
+        let result;
+        fetch(fullUrl, {
+            method:'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'accept': 'application/json'
+                },
+            body:JSON.stringify(marketIds)
+        }).then(res =>res.json())
+        .then(data => {
+            result = data
+        })
+
+        console.log(result)
     })
 }
