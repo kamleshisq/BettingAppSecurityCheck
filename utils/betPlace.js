@@ -18,7 +18,6 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
     }
 
 async function placeBet(data){
-    console.log(data)
     if(data.LOGINDATA.LOGINUSER.availableBalance < data.data.stake){
         return "You do not have sufficient balance for bet"
     }
@@ -26,7 +25,6 @@ async function placeBet(data){
     if(data.data.spoetId){
         betLimit = await betLimitModel.findOne({type:"Sport"})
     }
-    console.log(betLimit.min_stake <= (data.data.stake * 1) )
     if(betLimit.min_stake > (data.data.stake * 1) ){
         return `Invalide stake, Please play with atleast minimum stake (${betLimit.min_stake})`
     }else if(betLimit.max_stake < (data.data.stake * 1)){
@@ -80,10 +78,10 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
         "user_id":data.LOGINDATA.LOGINUSER._id,
         "description": description,
         "creditDebitamount" : -data.data.stake,
-        "balance" : user.availableBalance - data.data.stake,
+        "balance" : data.LOGINDATA.LOGINUSER.availableBalance - data.data.stake,
         "date" : Date.now(),
-        "userName" : user.userName,
-        "role_type" : user.role_type,
+        "userName" : data.LOGINDATA.LOGINUSER.userName,
+        "role_type" : data.LOGINDATA.LOGINUSER.role_type,
         "Remark":"-",
         "stake": data.data.stake,
         "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`
