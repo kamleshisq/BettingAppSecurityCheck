@@ -2491,7 +2491,14 @@ socket.on('connect', () => {
         data.market = $("#SUBMIT").attr("class");
         data.eventId = $('.eventName')[0].id
         data.spoetId = $('.details')[0].id
-        console.log(data)
+        let modleName = $(".popup")
+        let form1 = $(modleName).find('#bet-form')
+        let formOddsbuttonId = form1.find('input[name = "title"]').attr("class");
+        let odds = $(`#${formOddsbuttonId}`).text()
+        console.log(odds)
+
+        // console.log(data)
+
         // socket.emit('betDetails', {data, LOGINDATA});
     })
 
