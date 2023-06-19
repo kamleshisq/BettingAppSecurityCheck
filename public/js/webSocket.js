@@ -2124,7 +2124,9 @@ socket.on('connect', () => {
         e.preventDefault()
         socket.emit('voidBet', this.id)
     })
-
+    socket.on("voidBet", (data)=>{
+        window.location.href = "/admin/betmoniter"
+    })
 
             
 

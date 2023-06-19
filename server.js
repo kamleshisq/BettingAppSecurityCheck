@@ -836,8 +836,17 @@ io.on('connection', (socket) => {
     })
 
     socket.on('voidBet', async(data) => {
-        let bet = await Bet.findByIdAndUpdate(data, {status:"CANCEL"})
-        console.log(bet)
+        let bet = await Bet.findByIdAndUpdate(data, {status:"CANCEL"});
+        let user = await User.findByIdAndUpdate(bet.userId, {$inc:{balance: bet.Stake, availableBalance: bet.Stake, myPL: bet.Stake}})
+        if(user.parentUsers.length < 2){
+            await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: bet.Stake, downlineBalance: bet.Stake}})
+            await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:-bet.Stake}})
+        }else{
+            await userModel.updateMany({ _id: { $in: user.parentUsers.slice(1) } }, {$inc:{balance: bet.Stake, downlineBalance: bet.Stake}})
+            await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-bet.Stake}})
+        }
+        await AccModel.findOneAndDelete({transactionId:bet.transactionId})
+        socket.emit("voidBet", "data")
     })
 })
 
