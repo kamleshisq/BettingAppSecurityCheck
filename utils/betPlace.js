@@ -75,6 +75,7 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
         secId : data.data.secId
     }
     let description = `Bet for ${data.data.title}, stake = ${data.data.stake}`
+    let description2 = `Bet for ${data.data.title}, stake = ${data.data.stake}, user = ${data.LOGINDATA.LOGINUSER.userName} `
 
     let Acc = {
         "user_id":data.LOGINDATA.LOGINUSER._id,
@@ -90,18 +91,31 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
     }
     await betmodel.create(betPlaceData)
     await accountStatementByUserModel.create(Acc)
+    let parentUser
     let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{balance: -data.data.stake, availableBalance: -data.data.stake, myPL: -data.data.stake, Bets : 1}})
     if(!user){
         return "There is no user with that id"
     }
     if(user.parentUsers.length < 2){
         await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
-        await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:data.data.stake}})
+        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:data.data.stake}})
     }else{
         await userModel.updateMany({ _id: { $in: user.parentUsers.slice(1) } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
-        await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:data.data.stake}})
+        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:data.data.stake}})
     }
-
+    let Acc2 = {
+        "user_id":parentUser._id,
+        "description": description2,
+        "creditDebitamount" : data.data.stake,
+        "balance" : parentUser.availableBalance + data.data.stake,
+        "date" : Date.now(),
+        "userName" : parentUser.userName,
+        "role_type" : parentUser.role_type,
+        "Remark":"-",
+        "stake": data.data.stake,
+        "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}Parent`
+    }
+    await accountStatementByUserModel.create(Acc2)
     return "Bet place successfully"
 }
 

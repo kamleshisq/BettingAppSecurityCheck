@@ -1199,7 +1199,8 @@ socket.on('connect', () => {
             })
     
             $(window).scroll(function() {
-                if($(document).height()-$(window).scrollTop() == window.innerHeight){
+                if($(window).scrollTop() + $(window).height() >= $(document).height()){
+                    console.log("working")
                     let page = parseInt($('.pageId').attr('data-pageid'));
                     $('.pageId').attr('data-pageid',page + 1)
                     let data = {}

@@ -25,7 +25,7 @@ const crone = require('./crones/crones');
 app.use(requestIp.mw());
 app.set('trust proxy', true);
 dotenv.config({path: './config.env'});
-mongoose.connect(process.env.db1,{
+mongoose.connect(process.env.db,{
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(()=>{
@@ -41,7 +41,7 @@ app.use(fileUpload());
 app.use(express.urlencoded({ extended:true, limit: '10kb'}))
 app.use(cookieParser());
 app.use(middlewares);
-crone();
+// crone();
 // app.get("/", (req, res)=> {
     //     res.send("hello word")
     // })
