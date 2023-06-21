@@ -6367,18 +6367,17 @@ $(document).on('submit', '.form-betLimit', /*#__PURE__*/function () {
           e.preventDefault();
           form = $(this)[0];
           fd = new FormData(form);
-          data = Object.fromEntries(fd.entries());
-          console.log(data);
-          _context2.next = 7;
+          data = Object.fromEntries(fd.entries()); // console.log(data)
+          _context2.next = 6;
           return (0, _betLimit2.betLimit)(data);
-        case 7:
+        case 6:
           res = _context2.sent;
           if (res) {
             _betLimit = res;
             rowId = $('.rowId').attr('data-rowid');
             $('#' + rowId).html("\n            <td class=\"btn-filter\">".concat(_betLimit.type, "</td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.min_stake, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.max_stake, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.max_profit, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.max_odd, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.delay, "'></td>\n            <td data-details='").concat(JSON.stringify(_betLimit), "'><button type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#myModal2\"class=\"updateBetLimit\">Update</button></td>"));
           }
-        case 9:
+        case 8:
         case "end":
           return _context2.stop();
       }
@@ -6730,7 +6729,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49900" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49901" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

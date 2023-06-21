@@ -17,6 +17,7 @@ const placeBet = require('./utils/betPlace');
 const loginlogs = require('./model/loginLogs');
 const gameModel = require('./model/gameModel');
 const getCrkAndAllData = require("./utils/getSportAndCricketList");
+const { date } = require('joi');
 
 // http(req, res) => {}
 io.on('connection', (socket) => {
@@ -848,6 +849,58 @@ io.on('connection', (socket) => {
         await AccModel.findOneAndDelete({transactionId:bet.transactionId})
         socket.emit("voidBet", "data")
     })
+
+
+    socket.on('createNotification', async(data) => {
+        data.data.userId = data.LOGINDATA.LOGINUSER._id
+        let bodyData = JSON.stringify(data.data)
+        const fullUrl = 'http://127.0.0.1:8000/api/v1/notification/createNotification'
+        fetch(fullUrl, {
+            method: 'POST',
+            headers: { 
+                'Authorization': `Bearer ` + data.LOGINDATA.LOGINTOKEN,
+                'Content-Type': 'application/json',
+                'accept': 'application/json' },
+            body:bodyData
+        }).then(res => res.json())
+        .then(Data =>{
+            socket.emit("createNotification", Data)
+        })  
+    })
+
+    socket.on('updateStatus', async(data) => {
+        const fullUrl = 'http://127.0.0.1:8000/api/v1/notification/updateStatus?id=' + `${data.id}`
+        fetch(fullUrl, {
+            method: 'GET',
+            headers: { 
+                'Authorization': `Bearer ` + data.LOGINDATA.LOGINTOKEN,
+                'Content-Type': 'application/json',
+                'accept': 'application/json' },
+        }).then(res => res.json())
+        .then(Data =>{
+            socket.emit('updateStatus', Data)
+        })
+    });
+
+    socket.on("deleteNotification", async(data) => {
+        let id = data.id.slice(0, -1);
+        const fullUrl = 'http://127.0.0.1:8000/api/v1/notification/deleteNotification?id=' + `${id}`
+        fetch(fullUrl, {
+            method: 'GET',
+            headers: { 
+                'Authorization': `Bearer ` + data.LOGINDATA.LOGINTOKEN,
+                'Content-Type': 'application/json',
+                'accept': 'application/json' },
+        }).then(res => res.json())
+        .then(Data =>{
+            socket.emit('deleteNotification', Data)
+        })
+    })
+
+
+
+
+
 })
 
 http.listen(8000,()=> {

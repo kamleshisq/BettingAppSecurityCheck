@@ -6,7 +6,7 @@
     <div class="container-fluid">
     <section>
       <div class="align-fix"> 
-          <h1 class="main-heading"> Operation</h1>
+          <h1 class="main-heading"> <%=title%></h1>
           <form action="" style="display: flex;height: 30px;">
             <div class="input-group">
               <div class="input-group-prepend">
@@ -55,92 +55,7 @@
                 <h3 class="fix-h3"><img src="../images/tp.png" alt=""> &nbsp; Top Player</h3>
                 
             </div> -->
-              <table>
-                <thead>
-                    <tr style="text-align: center;font-size: 11px;">
-                      <th>S.No</th>
-                      <th>Event</th>
-                      <th>Message </th>
-                      <th >Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="new-body">
-                  <tr style="text-align: center;" class="blue">
-                    <td>1</td>
-                    <td>Book </td>
-                    <td>SPORTS BOOK IS LIVE ON OUR EXCH.!! ALL SPORTS <br> ADVANCE BETTING AVAILABLE WITH BET LIMIT AS LOW AS Rs 10/-.!!</td>
-                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
-                  </tr>
-                  <tr style="text-align: center;">
-                    <td>2</td>
-                    <td>Maintenance Message </td>
-                    <td>SYSTEM UNDER MAINTAINENCE SORRY FOR  INCONVINENCE CAUSED</td>
-                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
-
-                  </tr>
-                  <tr style="text-align: center;" class="blue">
-                    <td>1</td>
-                    <td>Book </td>
-                    <td>SPORTS BOOK IS LIVE ON OUR EXCH.!! ALL SPORTS <br> ADVANCE BETTING AVAILABLE WITH BET LIMIT AS LOW AS Rs 10/-.!!</td>
-                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
-
-                    
-                  </tr>
-                  <tr style="text-align: center;">
-                    <td>2</td>
-                    <td>Maintenance Message </td>
-                    <td>SYSTEM UNDER MAINTAINENCE SORRY FOR  INCONVINENCE CAUSED</td>
-                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
-
-                  </tr>
-                  <tr style="text-align: center;" class="blue">
-                    <td>1</td>
-                    <td>Book </td>
-                    <td>SPORTS BOOK IS LIVE ON OUR EXCH.!! ALL SPORTS <br> ADVANCE BETTING AVAILABLE WITH BET LIMIT AS LOW AS Rs 10/-.!!</td>
-                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
-
-                    
-                  </tr>
-                  <tr style="text-align: center;">
-                    <td>2</td>
-                    <td>Maintenance Message </td>
-                    <td>SYSTEM UNDER MAINTAINENCE SORRY FOR  INCONVINENCE CAUSED</td>
-                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
-
-                  </tr>
-                  <tr style="text-align: center;" class="blue">
-                    <td>1</td>
-                    <td>Book </td>
-                    <td>SPORTS BOOK IS LIVE ON OUR EXCH.!! ALL SPORTS <br> ADVANCE BETTING AVAILABLE WITH BET LIMIT AS LOW AS Rs 10/-.!!</td>
-                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
-
-                    
-                  </tr>
-                  <tr style="text-align: center;">
-                    <td>2</td>
-                    <td>Maintenance Message </td>
-                    <td>SYSTEM UNDER MAINTAINENCE SORRY FOR  INCONVINENCE CAUSED</td>
-                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
-
-                  </tr>
-                  <tr style="text-align: center;" class="blue">
-                    <td>1</td>
-                    <td>Book </td>
-                    <td>SPORTS BOOK IS LIVE ON OUR EXCH.!! ALL SPORTS <br> ADVANCE BETTING AVAILABLE WITH BET LIMIT AS LOW AS Rs 10/-.!!</td>
-                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
-
-                    
-                  </tr>
-                  <tr style="text-align: center;">
-                    <td>2</td>
-                    <td>Maintenance Message </td>
-                    <td>SYSTEM UNDER MAINTAINENCE SORRY FOR  INCONVINENCE CAUSED</td>
-                    <td><a class="btn-green">Enable </a> &nbsp; <a class="btn-green">Delete  </a></td>
-
-                  </tr>
-                 
-                </tbody>
-              </table>
+              <%- include('./table') %>
               </div>
             </div>
 
@@ -165,28 +80,28 @@
         <h4 class="modal-title" style="color: #fff;">Add Notification</h4>
       </div>
       <div class="modal-body">
-        <form class="form-data">
+        <form class="form-data addNotification" id="addNotification">
           <div class="row">
             <div class="col">
               <label for="">Title</label>
-              <input type="text" class="form-control ml0" placeholder="" name="email">
+              <input type="text" class="form-control ml0" placeholder="" name="title">
             </div>
           </div>
           <div class="row">
             <div class="col">
               <label for="">Message</label>
-              <input type="text" class="form-control ml0" placeholder="" name="email">
+              <input type="text" class="form-control ml0" placeholder="" name="message">
             </div>
           </div>
           <div class="row mt-2">
             <div class="col">
-              <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+              <input type="checkbox" id="vehicle1" name="sports" value="sports">
               <label for="vehicle1"> Sports</label>
               
               
             </div>
             <div class="col">
-              <input type="checkbox" id="vehicle2" name="vehicle2" value="Car"> 
+              <input type="checkbox" id="vehicle2" name="Casino" value="Casino"> 
               <label for="vehicle2"> Casino</label>
               
             </div>
@@ -197,17 +112,17 @@
           <div class="row">
             <div class="col">
               <label for="">Start Date & Time</label>
-              <input type="text" class="form-control ml0" placeholder="January 10th 03:44 PM" name="email">
+              <input type="date" class="form-control ml0"  name="Sdate">
             </div>
           </div>
           <div class="row">
             <div class="col">
               <label for="">End Date & Time</label>
-              <input type="text" class="form-control ml0" placeholder="January 10th 03:44 PM" name="email">
+              <input type="date" class="form-control ml0"  name="Edate">
             </div>
           </div>
           
-                   <button type="button" class="btn-green mt-3 btn-ju"  style="">Save</button>
+            <button type="submit" class="btn-green mt-3 btn-ju" >Save</button>
         </form>
       </div>
     </div>

@@ -711,9 +711,21 @@ exports.getStreamManagementPage = catchAsync(async(req, res, next) => {
 
 exports.getNotificationsPage = catchAsync(async(req, res, next) => {
     const me = global._User
+    let notifications
+    var fullUrl = "http://127.0.0.1:8000/api/v1/notification/myNotifications"
+    await fetch(fullUrl, {
+        method:"GET",
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': `Bearer ` + req.token, // notice the Bearer before your token
+        }
+    }).then(resp => resp.json()).then(result => {
+        notifications = result
+    })
     res.status(200).render("./Notifications/Notification",{
         title:"Notification",
-        me
+        me,
+        notifications:notifications.notifications
     })
 })
 

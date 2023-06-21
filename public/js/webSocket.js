@@ -2580,6 +2580,70 @@ socket.on('connect', () => {
     }
 
 
+
+
+    if(pathname === '/admin/Notification'){
+
+        $(document).on('submit', '.addNotification', async function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            socket.emit("createNotification", {data, LOGINDATA})
+        })
+
+        socket.on('createNotification', async(data)=>{
+            if(data.status != "success"){
+                alert(data.message)
+            }else{
+                alert("Notification added successfully")
+                window.location.href = '/admin/Notification'
+            }
+        })
+
+        $(document).on('click', '.update', async function(){
+            let id = $(this).attr('id')
+            socket.emit('updateStatus', {id, LOGINDATA})
+        })
+
+        $(document).on('click', '.Delete', async function(){
+            let id = $(this).attr('id')
+            socket.emit('deleteNotification', {id, LOGINDATA})
+        })
+
+        socket.on('updateStatus', async(data)=>{
+            let html = ``
+            if(data.status){
+                html += `<a class="btn-green">Enable </a>`
+            }else{
+                html += `<a class="btn-green">Disable </a>`
+            }
+            document.getElementById(`${data.id}`).innerHTML = html
+        })
+
+        socket.on('deleteNotification', async(data)=>{
+            if(data.status === 'success'){
+                alert("Deleted successfully")
+                window.setTimeout(()=>{
+                    window.location = '/admin/Notification'
+                },500)
+            }else{
+                alert(data.message)
+            }
+        })
+
+
+
+
+    };
+
+
+
+
+
+
+
+
     // if(pathname === "/exchange_sports/cricket"){
     //     socket.emit("SPORTDATA", "cricket")
     //     socket.on("SPORTDATA", async(data) => {
@@ -2596,8 +2660,4 @@ socket.on('connect', () => {
 
     
 })
-
-
 })
-
-
