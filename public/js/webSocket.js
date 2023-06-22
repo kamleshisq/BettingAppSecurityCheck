@@ -1967,6 +1967,15 @@ socket.on('connect', () => {
 
         socket.on('OnlineUser', async(data) => {
             console.log(data)
+            let html = `<tr style="text-align: center;" class="blue">
+            <td>1</td>
+            <td><%=users[i].userName%></td>
+            <td>
+
+                <button type="button" id="<%=users[i]._id%>" class="logout">Logout</button>
+            </td>
+        </tr>`
+
         })
     }
 
