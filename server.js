@@ -419,8 +419,9 @@ io.on('connection', (socket) => {
         if(acc.transactionId){
             bet = await Bet.findOne({transactionId:acc.transactionId})
             if(!bet){
-               console.log(acc.transactionId)
-            }
+                const result = acc.transactionId.replace(/Parent$/, '');
+                bet = await Bet.findOne({transactionId:result})
+        }
         }else{
             bet = acc
         }
