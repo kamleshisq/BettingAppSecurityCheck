@@ -12,7 +12,7 @@ module.exports = () => {
         // console.log(marketIds)
         // const marketIds = ["1.215179889", "4.1966816382-F2", "4.695918984-F2"]
         const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
-        let result;
+        
         // await fetch(fullUrl, {
         //     method:'POST',
         //     headers: { 
@@ -24,8 +24,7 @@ module.exports = () => {
         // .then(data => {
         //     result = data
         // })
-        result = {
-          "result": {
+        let result = {
           "status": 1,
           "data": [
           {
@@ -73,8 +72,7 @@ module.exports = () => {
           "4.625200744-F2"
           ]
           }
-          }
-          console.log(result.data.length)
+          console.log(result)
         if(result.data.length != 0){
           console.log(marketIds)
             marketIds.forEach(async(marketIds) => {
