@@ -419,7 +419,7 @@ io.on('connection', (socket) => {
         if(acc.transactionId){
             bet = await Bet.findOne({transactionId:acc.transactionId})
             if(!bet){
-                console.log("not get bet")
+               console.log(acc.transactionId)
             }
         }else{
             bet = acc
