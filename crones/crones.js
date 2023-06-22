@@ -49,7 +49,7 @@ module.exports = () => {
                           "user_id":user._id,
                           "description": description,
                           "creditDebitamount" : (entry.Stake * entry.oddValue),
-                          "balance" : user.availableBalance - (entry.Stake * entry.oddValue),
+                          "balance" : user.availableBalance + (entry.Stake * entry.oddValue),
                           "date" : Date.now(),
                           "userName" : user.userName,
                           "role_type" : user.role_type,

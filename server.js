@@ -850,7 +850,7 @@ io.on('connection', (socket) => {
             "user_id":user._id,
             "description": description,
             "creditDebitamount" : bet.Stake,
-            "balance" : user.availableBalance - bet.Stake,
+            "balance" : user.availableBalance + bet.Stake,
             "date" : Date.now(),
             "userName" : user.userName,
             "role_type" : user.role_type,
