@@ -107,7 +107,7 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
         "user_id":parentUser._id,
         "description": description2,
         "creditDebitamount" : data.data.stake,
-        "balance" : parentUser.availableBalance + data.data.stake,
+        "balance" : parentUser.availableBalance + (data.data.stake * 1),
         "date" : Date.now(),
         "userName" : parentUser.userName,
         "role_type" : parentUser.role_type,
