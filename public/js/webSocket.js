@@ -2041,6 +2041,17 @@ socket.on('connect', () => {
 
         })
 
+        $(document).on("click", ".searchList", function(){
+            // console.log("working")
+            // console.log(this.textContent)
+            document.getElementById("searchUser").value = this.textContent
+            filterData = {}
+            filterData.userName = this.textContent
+            $('.pageId').attr('data-pageid','1')
+            socket.emit('betMoniter',{filterData,LOGINDATA,page:0})
+            
+        })
+
         $(window).scroll(function() {
             if($(document).height()-$(window).scrollTop() == window.innerHeight){
                 let page = parseInt($('.pageId').attr('data-pageid'));

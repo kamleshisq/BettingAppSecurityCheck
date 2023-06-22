@@ -640,7 +640,6 @@ io.on('connection', (socket) => {
 
 
     socket.on('betMoniter',async(data)=>{
-        console.log(data, 123)
         let limit = 10;
         let page = data.page;
         const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
