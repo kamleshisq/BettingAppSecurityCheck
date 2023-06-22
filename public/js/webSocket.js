@@ -1961,7 +1961,7 @@ socket.on('connect', () => {
             filterData = {}
             filterData.userName = this.textContent
             $('.pageId').attr('data-pageid','1')
-            socket.emit('SearchOnlineUser',{filterData,LOGINDATA,page:0})
+            socket.emit('OnlineUser',{filterData,LOGINDATA,page:0})
             
         })
     }

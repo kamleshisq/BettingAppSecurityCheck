@@ -745,6 +745,10 @@ io.on('connection', (socket) => {
         socket.emit("SearchOnlineUser",{onlineUsers, page})
     })
 
+    socket.on('OnlineUser', async(data) => {
+        console.log(data)
+    })
+
     socket.on("marketId", async(data) => {
         const result = await marketDetailsBymarketID(data)
         let finalResult = result.data
