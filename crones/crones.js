@@ -5,7 +5,9 @@ const userModel = require("../model/userModel");
 
 module.exports = () => {
     cron.schedule('*/5 * * * * *', async() => {
+        console.log("working")
         const openBets = await betModel.find({status:"OPEN"});
+        console.log(openBets)
         const marketIds = [...new Set(openBets.map(item => item.marketId))];
         const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
         let result;
