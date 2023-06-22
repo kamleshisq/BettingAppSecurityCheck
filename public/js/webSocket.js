@@ -1925,7 +1925,7 @@ socket.on('connect', () => {
             let html = ``
     if(data.page === 1){
         for(let i = 0; i < data.onlineUsers.length; i++){
-            html += `<li class="searchList" id="${data.onlineUsers[i]._id}">${data.onlineUsers[i].onlineUsersName}</li>`
+            html += `<li class="searchList" id="${data.onlineUsers[i]._id}">${data.onlineUsers[i].userName}</li>`
         }
         document.getElementById('search').innerHTML = html
         document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
@@ -1934,7 +1934,7 @@ socket.on('connect', () => {
     }else{
         html = document.getElementById('search').innerHTML
         for(let i = 0; i < data.onlineUsers.length; i++){
-            html += `<li class="searchList" id="${data.onlineUsers[i]._id}">${data.onlineUsers[i].onlineUsersName}</li>`
+            html += `<li class="searchList" id="${data.onlineUsers[i]._id}">${data.onlineUsers[i].userName}</li>`
         }
         document.getElementById('search').innerHTML = html
         document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
