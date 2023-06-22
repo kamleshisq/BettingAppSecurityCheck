@@ -1921,7 +1921,7 @@ socket.on('connect', () => {
             }
         })
         socket.on("SearchOnlineUser", (data) =>{
-            // console.log(data, 565464)
+            console.log(data, 565464)
             let html = ``
     if(data.page === 1){
         for(let i = 0; i < data.user.length; i++){
