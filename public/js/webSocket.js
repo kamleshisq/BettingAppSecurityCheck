@@ -2004,9 +2004,8 @@ socket.on('connect', () => {
                   }
 
                 if(match){
-                    console.log(match.text())
                     filterData = {}
-                    filterData.userName = match.text()
+                    filterData.userName = val
                     $('.pageId').attr('data-pageid','1')
                     socket.emit('betMoniter',{filterData,LOGINDATA,page:0})
                 }
