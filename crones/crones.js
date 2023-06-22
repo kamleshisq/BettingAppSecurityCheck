@@ -73,6 +73,7 @@ module.exports = () => {
           ]
           }
           }
+          console.log(result.data.length)
         if(result.data.length != 0){
           console.log(marketIds)
             marketIds.forEach(async(marketIds) => {
