@@ -76,7 +76,7 @@ module.exports = () => {
         if(result.data.length != 0){
             marketIds.forEach(async(marketIds) => {
                 let marketresult = result.find(item => item.mid === marketIds)
-                console.log(marketresult)
+                console.log(marketresult, 123)
                 if(marketresult === []){
                     return
                 }
