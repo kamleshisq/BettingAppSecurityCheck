@@ -1952,6 +1952,17 @@ socket.on('connect', () => {
                 window.setTimeout(()=>{
                     window.location = '/admin/onlineUsers '
                 },500)
+        });
+
+        $(document).on("click", ".searchList", function(){
+            // console.log("working")
+            // console.log(this.textContent)
+            document.getElementById("searchUser").value = this.textContent
+            filterData = {}
+            filterData.userName = this.textContent
+            $('.pageId').attr('data-pageid','1')
+            socket.emit('SearchOnlineUser',{filterData,LOGINDATA,page:0})
+            
         })
     }
 
