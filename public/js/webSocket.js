@@ -1978,6 +1978,14 @@ socket.on('connect', () => {
         $('.new-body').html(html)
 
         })
+
+
+        $(document).on("click", ".next", function(e){
+            e.preventDefault()
+            let page = $(this).attr("id")
+            let x = $("#searchUser").val()
+            socket.emit("SearchOnlineUser", {x, LOGINDATA, page})
+        })
     }
 
     if(pathname == "/admin/betmoniter"){
