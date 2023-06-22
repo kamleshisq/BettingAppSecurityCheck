@@ -18,7 +18,8 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
     }
 
 async function placeBet(data){
-    if(data.LOGINDATA.LOGINUSER.availableBalance < data.data.stake){
+    let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
+    if(check.availableBalance < data.data.stake){
         return "You do not have sufficient balance for bet"
     }
     let betLimit
