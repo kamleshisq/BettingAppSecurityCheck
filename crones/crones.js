@@ -8,9 +8,9 @@ module.exports = () => {
       console.log("Working")
         const openBets = await betModel.find({status:"OPEN"});
         // console.log(openBets)
-        const marketIds = [...new Set(openBets.map(item => item.marketId))];
+        // const marketIds = [...new Set(openBets.map(item => item.marketId))];
         // console.log(marketIds)
-        // const marketIds = ["1.215179889", "4.1966816382-F2", "4.695918984-F2"]
+        const marketIds = ["1.215179889", "4.1966816382-F2", "4.695918984-F2"]
         const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
         
         // await fetch(fullUrl, {
@@ -72,19 +72,16 @@ module.exports = () => {
           "4.625200744-F2"
           ]
           }
-          console.log(result)
         if(result.data.length != 0){
-          console.log(marketIds)
             marketIds.forEach(async(marketIds) => {
-                let marketresult = result.data.find(item => console.log(item, 123))
-                // console.log(marketresult, 123)
+                let marketresult = result.data.find(item => item.mid === marketIds)
                 if(marketresult === []){
                     return
                 }
                 let betsWithMarketId = await betModel.find({status:"OPEN", marketId : marketresult.mid});
                 // let betsWithMarketId = await betModel.find({oddValue:{$ne:undefined}});
                 // const groupedData = {};
-
+                console.log(betsWithMarketId)
                 betsWithMarketId.forEach(async(entry) => {
                     if(entry.selectionName ==  item.runners){
                         await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue)})
