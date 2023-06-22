@@ -2520,7 +2520,7 @@ socket.on('connect', () => {
             data.odds = odds
         }
         console.log(data)
-        socket.emit('betDetails', {data, LOGINDATA});
+        // socket.emit('betDetails', {data, LOGINDATA});
     })
 
     socket.on("betDetails" , (data) => {
