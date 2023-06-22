@@ -842,6 +842,7 @@ io.on('connection', (socket) => {
 
     socket.on('voidBet', async(data) => {
         let bet = await Bet.findByIdAndUpdate(data, {status:"CANCEL"});
+        console.log(bet);
         let user = await User.findByIdAndUpdate(bet.userId, {$inc:{balance: bet.Stake, availableBalance: bet.Stake, myPL: bet.Stake}})
         if(user.parentUsers.length < 2){
             await User.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: bet.Stake, downlineBalance: bet.Stake}})
