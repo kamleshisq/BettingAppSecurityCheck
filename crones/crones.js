@@ -11,18 +11,67 @@ module.exports = () => {
         const marketIds = [...new Set(openBets.map(item => item.marketId))];
         const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
         let result;
-        await fetch(fullUrl, {
-            method:'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'accept': 'application/json'
-                },
-            body:JSON.stringify(marketIds)
-        }).then(res =>res.json())
-        .then(data => {
-            result = data
-        })
-        console.log(result)
+        // await fetch(fullUrl, {
+        //     method:'POST',
+        //     headers: { 
+        //         'Content-Type': 'application/json',
+        //         'accept': 'application/json'
+        //         },
+        //     body:JSON.stringify(marketIds)
+        // }).then(res =>res.json())
+        // .then(data => {
+        //     result = data
+        // })
+        result = {
+          "result": {
+          "status": 1,
+          "data": [
+          {
+          "result": "Bangladesh",
+          "mid": "1.215179889",
+          "mType": "match_odd",
+          "secId": 7659,
+          "resultType": 0
+          },
+          {
+          "result": "0",
+          "mid": "4.1966816382-F2",
+          "mType": "fancy2",
+          "secId": 0,
+          "resultType": 2
+          },
+          {
+          "result": "0",
+          "mid": "4.695918984-F2",
+          "mType": "fancy2",
+          "secId": 0,
+          "resultType": 2
+          }
+          ],
+          "recallMarkets": [
+          "1.215183306",
+          "1.215183316",
+          "1.215183320",
+          "1.215183310",
+          "4.51854722-F2",
+          "4.859051118-F2",
+          "4.287959817-F2",
+          "4.730182582-F2",
+          "4.2130804111-F2",
+          "4.749989595-F2",
+          "4.815493958-F2",
+          "4.1643605500-F2",
+          "4.2022184736-F2",
+          "4.1818534366-F2",
+          "4.248392616-F2",
+          "4.328341980-F2",
+          "4.1222487579-F2",
+          "4.973284114-F2",
+          "4.21097103-F2",
+          "4.625200744-F2"
+          ]
+          }
+          }
         if(result.data.length != 0){
             marketIds.forEach(async(marketIds) => {
                 let marketresult = result.find(item => item.mid === marketIds)
