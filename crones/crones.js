@@ -7,7 +7,7 @@ module.exports = () => {
     cron.schedule('*/5 * * * * *', async() => {
         console.log("working")
         const openBets = await betModel.find({status:"OPEN"});
-        console.log(openBets)
+        // console.log(openBets)
         const marketIds = [...new Set(openBets.map(item => item.marketId))];
         const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
         let result;
@@ -22,6 +22,7 @@ module.exports = () => {
         .then(data => {
             result = data
         })
+        console.log(result)
         if(result.data.length != 0){
             marketIds.forEach(async(marketIds) => {
                 let marketresult = result.find(item => item.mid === marketIds)
