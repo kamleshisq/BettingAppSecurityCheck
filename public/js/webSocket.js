@@ -1964,6 +1964,10 @@ socket.on('connect', () => {
             socket.emit('OnlineUser',{filterData,LOGINDATA,page:0})
             
         })
+
+        socket.on('OnlineUser', async(data) => {
+            console.log(data)
+        })
     }
 
     if(pathname == "/admin/betmoniter"){

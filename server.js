@@ -724,7 +724,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("SearchOnlineUser", async(data) => {
-        console.log(data)
+        // console.log(data)
         let page
         page = data.page
         if(!page){
@@ -746,7 +746,24 @@ io.on('connection', (socket) => {
     })
 
     socket.on('OnlineUser', async(data) => {
-        console.log(data)
+        let page
+        page = data.page
+        if(!page){
+            page = 0
+        }
+        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        let onlineUsers
+        if(data.LOGINDATA.LOGINUSER.role_type === 1){
+            onlineUsers = await User.findOne({is_Online:true, userName:data.filterData.userName})
+        }else{
+            onlineUsers = await User.find({is_Online:true, role_type:{$in:role_type}, userName:data.filterData.userName})
+        }
+        page++
+        socket.emit("OnlineUser",{onlineUsers, page})
     })
 
     socket.on("marketId", async(data) => {
