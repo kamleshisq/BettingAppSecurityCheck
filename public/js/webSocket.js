@@ -2004,7 +2004,7 @@ socket.on('connect', () => {
                   }
 
                 if(match){
-                    // console.log(match.text())
+                    console.log(match.text())
                     filterData = {}
                     filterData.userName = match.text()
                     $('.pageId').attr('data-pageid','1')
