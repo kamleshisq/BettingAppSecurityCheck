@@ -1915,18 +1915,30 @@ socket.on('connect', () => {
                     // console.log(x)
                     socket.emit("SearchOnlineUser", {x, LOGINDATA})
                 }else{
-                    // document.getElementById('select').innerHTML = ``
+                    document.getElementById('search').innerHTML = ``
+                    document.getElementById("button").innerHTML = ''
                 }
             }
         })
         socket.on("SearchOnlineUser", (data) =>{
-            console.log(data)
-            // if(data.page == 0){
-            //     let html = ``
-            //     for(let i = 0; i < data.onlineUsers.length; i++){
-            //         html += ``
-            //     }
-            // }
+            // console.log(data, 565464)
+            let html = ``
+    if(data.page === 1){
+        for(let i = 0; i < data.user.length; i++){
+            html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+        }
+        document.getElementById('search').innerHTML = html
+        document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+    }else if(data.page === null){
+        document.getElementById("button").innerHTML = ``
+    }else{
+        html = document.getElementById('search').innerHTML
+        for(let i = 0; i < data.user.length; i++){
+            html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+        }
+        document.getElementById('search').innerHTML = html
+        document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+    }
         })
 
         $(".logout").click(function(){
