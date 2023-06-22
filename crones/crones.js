@@ -78,6 +78,7 @@ module.exports = () => {
                 if(marketresult === []){
                     return
                 }
+                console.log(marketresult)
                 let betsWithMarketId = await betModel.find({status:"OPEN", marketId : marketresult.mid});
                 // let betsWithMarketId = await betModel.find({oddValue:{$ne:undefined}});
                 // const groupedData = {};
