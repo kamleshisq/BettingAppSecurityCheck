@@ -699,15 +699,14 @@ socket.on('connect', () => {
             socket.emit("SearchACC", {x, LOGINDATA, page})
         })
         let model 
+
         $(document).on('click','.ownAccDetails',function(e){
-            // console.log($(this))
             let modelId = $(this).attr('id')
             let modelId1 = $(this).attr("data-bs-target")
             model =  $(modelId1)
-            // console.log(model)
-            // console.log(modelId)
             socket.emit("ElementID", modelId)
         })
+
         socket.on('getMyBetDetails',(data)=>{
             // console.log(data)
             let html = ``
