@@ -1969,12 +1969,13 @@ socket.on('connect', () => {
             console.log(data)
             let html = `<tr style="text-align: center;" class="blue">
             <td>1</td>
-            <td><%=users[i].userName%></td>
+            <td>${data.onlineUsers.userName}</td>
             <td>
 
-                <button type="button" id="<%=users[i]._id%>" class="logout">Logout</button>
+                <button type="button" id="${data.onlineUsers._id}" class="logout">Logout</button>
             </td>
         </tr>`
+        $('.new-body').html(html)
 
         })
     }
