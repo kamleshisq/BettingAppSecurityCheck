@@ -730,6 +730,7 @@ io.on('connection', (socket) => {
         if(!page){
             page = 0
         }
+        limit = 10
         const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
         let role_type =[]
         for(let i = 0; i < roles.length; i++){
@@ -737,9 +738,9 @@ io.on('connection', (socket) => {
         }
         let onlineUsers
         if(data.LOGINDATA.LOGINUSER.role_type === 1){
-            onlineUsers = await User.find({is_Online:true, userName:new RegExp(data.x)})
+            onlineUsers = await User.find({is_Online:true, userName:new RegExp(data.x)}).skip(page * limit).limit(limit)
         }else{
-            onlineUsers = await User.find({is_Online:true, role_type:{$in:role_type}, userName:new RegExp(data.x)})
+            onlineUsers = await User.find({is_Online:true, role_type:{$in:role_type}, userName:new RegExp(data.x)}).skip(page * limit).limit(limit)
         }
         page++
         socket.emit("SearchOnlineUser",{onlineUsers, page})
