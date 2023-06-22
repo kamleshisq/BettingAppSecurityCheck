@@ -1953,45 +1953,37 @@ socket.on('connect', () => {
                     // console.log(x)
                     socket.emit("SearchACC", {x, LOGINDATA})
                 }else{
-                    // document.getElementById('select').innerHTML = ``
+                    document.getElementById('search').innerHTML = ``
+                    document.getElementById("button").innerHTML = ''
                 }
             }
         })
 
+        $(document).on("click", ".next", function(e){
+            e.preventDefault()
+            let page = $(this).attr("id")
+            let x = $("#searchUser").val()
+            socket.emit("SearchACC", {x, LOGINDATA, page})
+        })
+
 
         socket.on("ACCSEARCHRES", async(data)=>{
-            // console.log(data)
-            let html = ` `
-            for(let i = 0; i < data.length; i++){
-                html += `<option><button onclick="myFunction(${data[i].userName})">${data[i].userName}</button>`
-            }
-            // console.log(html)
-            document.getElementById('select').innerHTML = html
-
-            let datalist = document.querySelector('#text_editors');
-            // console.log(datalist)
-            let  select = document.querySelector('#select');
-            // console.log(select)
-            let options = select.options;
-            // console.log(options)
-
-
-
-            / when user selects an option from DDL, write it to text field /
-            select.addEventListener('change', fill_input);
-
-            function fill_input() {
-                    input.value = options[this.selectedIndex].value;
-            hide_select();
-            }
-
-            / when user wants to type in text field, hide DDL /
-            let input = document.querySelector('.searchUser');
-            input.addEventListener('focus', hide_select);
-
-            function hide_select() {
-            datalist.style.display = '';
-            //   button.textContent = "▼";
+            let html = ``
+            if(data.page === 1){
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }else if(data.page === null){
+                document.getElementById("button").innerHTML = ``
+            }else{
+                html = document.getElementById('search').innerHTML
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
             }
         })
 
@@ -2000,13 +1992,18 @@ socket.on('connect', () => {
         let filterData = {}
         $(".searchUser").on('input', function(e){
             var $input = $(this),
-                val = $input.val();
-                list = $input.attr('list'),
-                match = $('#'+list + ' option').filter(function() {
-                    return ($(this).val() === val);
-                });
+                    val = $input.val();
+                    var listItems = document.getElementsByTagName("li");
+                for (var i = 0; i < listItems.length; i++) {
+                    if (listItems[i].textContent === val) {
+                        match = ($(this).val() === val);
+                      break; 
+                    }else{
+                        match = false
+                    }
+                  }
 
-                if(match.length > 0){
+                if(match){
                     // console.log(match.text())
                     filterData = {}
                     filterData.userName = match.text()
