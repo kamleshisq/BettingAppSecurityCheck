@@ -102,7 +102,7 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
         // parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:data.data.stake}})
         parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0],{$inc:{availableBalance:data.data.stake, downlineBalance: -data.data.stake}})
     }else{
-        await userModel.updateMany({ _id: { $in: user.parentUsers.slice(1) } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
+        await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
         parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:data.data.stake, downlineBalance: -data.data.stake}})
     }
     let Acc2 = {
