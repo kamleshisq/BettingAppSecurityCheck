@@ -679,24 +679,23 @@ socket.on('connect', () => {
 
 
         function generatePDF(table) {
-            const canvas = document.createElement('canvas');
-            const tableHTML = table.outerHTML;
-            canvas.width = table.offsetWidth;
-            canvas.height = table.offsetHeight;
-            const context = canvas.getContext('2d');
-            context.fillStyle = '#ffffff';
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            context.font = '12px Arial';
-            context.fillStyle = '#000000';
-            context.fillText(tableHTML, 0, 0);
-            
-            const dataURL = canvas.toDataURL('image/png');
-            
-            const link = document.createElement('a');
-            link.href = dataURL;
-            link.download = 'table_data.pdf';
-            
-            link.click();
+            const printWindow = window.open('', '_blank');
+                    printWindow.document.open();
+                    printWindow.document.write(`
+                    <html>
+                        <head>
+                        <title>Table Data</title>
+                        </head>
+                        <body>
+                        ${table.outerHTML}
+                        </body>
+                    </html>
+                    `);
+                    printWindow.document.close();
+
+                    // Trigger the print dialog
+                    printWindow.print();
+                }
           }
 
         document.getElementById('pdfDownload').addEventListener('click', function() {
