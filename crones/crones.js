@@ -27,10 +27,9 @@ module.exports = () => {
                 if(marketresult === undefined){
                     return
                 }
-                console.log(marketresult)
                 let betsWithMarketId = await betModel.find({status:"OPEN", marketId : marketresult.mid});
                 betsWithMarketId.forEach(async(entry) => {
-                    if(entry.selectionName ==  marketresult.runners){
+                    if(entry.selectionName ==  marketresult.result){
 
                         let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue)})
                         let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{balance: (entry.Stake * entry.oddValue), availableBalance: (entry.Stake * entry.oddValue), myPL: (entry.Stake * entry.oddValue), Won:1}})
