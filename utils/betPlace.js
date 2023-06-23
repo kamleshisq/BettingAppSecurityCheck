@@ -75,8 +75,8 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
         marketId : data.data.market,
         secId : data.data.secId
     }
-    let description = `Bet for ${data.data.title}, stake = ${data.data.stake}`
-    let description2 = `Bet for ${data.data.title}, stake = ${data.data.stake}, user = ${data.LOGINDATA.LOGINUSER.userName} `
+    let description = `Bet for ${data.data.title}/stake = ${data.data.stake}`
+    let description2 = `Bet for ${data.data.title}/stake = ${data.data.stake}/user = ${data.LOGINDATA.LOGINUSER.userName} `
 
     let Acc = {
         "user_id":data.LOGINDATA.LOGINUSER._id,

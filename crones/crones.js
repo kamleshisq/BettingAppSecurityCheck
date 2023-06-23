@@ -36,8 +36,8 @@ module.exports = () => {
 
                         let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue)})
                         let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{balance: (entry.Stake * entry.oddValue), availableBalance: (entry.Stake * entry.oddValue), myPL: (entry.Stake * entry.oddValue), Won:1}})
-                        let description = `Bet for ${bet.match}, stake = ${bet.Stake}, CANCEL`
-                        let description2 = `Bet for ${bet.match}, stake = ${bet.Stake}, user = ${user.userName}, CANCEL `
+                        let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
+                        let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/CANCEL `
                         let parentUser
 
                         if(user.parentUsers.length < 2){

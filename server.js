@@ -866,8 +866,8 @@ io.on('connection', (socket) => {
         let bet = await Bet.findByIdAndUpdate(data, {status:"CANCEL"});
         // console.log(bet);
         let user = await User.findByIdAndUpdate(bet.userId, {$inc:{balance: bet.Stake, availableBalance: bet.Stake, myPL: bet.Stake}})
-        let description = `Bet for ${bet.match}, stake = ${bet.Stake}, CANCEL`
-        let description2 = `Bet for ${bet.match}, stake = ${bet.Stake}, user = ${user.userName}, CANCEL `
+        let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
+        let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/CANCEL `
         let userAcc = {
             "user_id":user._id,
             "description": description,
