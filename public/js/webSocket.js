@@ -695,7 +695,7 @@ socket.on('connect', () => {
 
                     // Trigger the print dialog
                     printWindow.print();
-                }
+                
           }
 
         document.getElementById('pdfDownload').addEventListener('click', function() {
