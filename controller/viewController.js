@@ -940,7 +940,8 @@ exports.getMarketResult = catchAsync(async(req, res, next) => {
     "4.1262440187-F2",
     "4.1163021821-F2",
     "4.1752871120-F2",
-    "4.1377109610-F2" ]);
+    "4.1377109610-F2",
+    "1.215361885" ]);
     // console.log(body)
     let fullUrl = "https://admin-api.dreamexch9.com/api/dream/markets/result";
     fetch(fullUrl, {
