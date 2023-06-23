@@ -82,7 +82,7 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
         "user_id":data.LOGINDATA.LOGINUSER._id,
         "description": description,
         "creditDebitamount" : -data.data.stake,
-        "balance" : data.LOGINDATA.LOGINUSER.availableBalance - data.data.stake,
+        "balance" : check.availableBalance - data.data.stake,
         "date" : Date.now(),
         "userName" : data.LOGINDATA.LOGINUSER.userName,
         "role_type" : data.LOGINDATA.LOGINUSER.role_type,
