@@ -817,7 +817,7 @@ socket.on('connect', () => {
                 </tr>
             </thead>`
                 html += `<tbody class="new-body" style="font-size: 11px;">
-                <tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>
+                <tr style="text-align: center;" class="blue"><td>${new Date(data.date).getTime()}</td>
                 <td>${data.event}</td>`
                 if(data.marketName){
                     html += `<td>${data.marketName}</td>`
