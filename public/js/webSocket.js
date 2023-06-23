@@ -676,6 +676,15 @@ socket.on('connect', () => {
 
 
     if(pathname == "/admin/useracount"){
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            console.log("working")
+            // const table = document.getElementById('yourTableId');             
+            // if (table) {
+            //   const csvContent = convertToCSV(table);
+            //   downloadCSV(csvContent, 'table_data.csv');
+            // }
+          });
+
         // console.log($('.searchUser'))
         $('.searchUser').keyup(function(){
             // console.log('working')
