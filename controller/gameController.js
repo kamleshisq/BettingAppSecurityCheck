@@ -89,7 +89,7 @@ exports.sport = catchAsync(async(req, res, next) => {
     .then(result => {
       DATA = result
     })
-    // console.log(DATA)
+    console.log(DATA)
     // return DATA
     req.body.url = DATA.url
     next()
