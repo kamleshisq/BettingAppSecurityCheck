@@ -676,13 +676,41 @@ socket.on('connect', () => {
 
 
     if(pathname == "/admin/useracount"){
+
+        function downloadCSV(csvContent, fileName) {
+            const link = document.createElement('a');
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+          }          
+
+        function convertToCSV(table) {
+            const rows = table.querySelectorAll('tr');
+            const csv = [];
+            
+            for (const row of rows) {
+              const rowData = [];
+              const columns = row.querySelectorAll('td, th');
+              
+              for (const column of columns) {
+                rowData.push(column.innerText);
+              }
+              
+              csv.push(rowData.join(','));
+            }
+            
+            return csv.join('\n');
+          }
+
+
         document.getElementById('downloadBtn').addEventListener('click', function() {
-            console.log("working")
-            // const table = document.getElementById('yourTableId');             
-            // if (table) {
-            //   const csvContent = convertToCSV(table);
-            //   downloadCSV(csvContent, 'table_data.csv');
-            // }
+            const table = document.getElementById('table12');             
+            if (table) {
+              const csvContent = convertToCSV(table);
+              downloadCSV(csvContent, 'table_data.csv');
+            }
           });
 
         // console.log($('.searchUser'))
