@@ -686,7 +686,15 @@ socket.on('connect', () => {
                         <head>
                         <title>Account Statement</title>
                         <style>
-                            /* Add your custom CSS styles here */
+                            .ownAccDetails {
+                                color: black;
+                                border: none;
+                                background-color: inherit;
+                                padding: 14px 28px;
+                                font-size: 16px;
+                                cursor: pointer;
+                                display: inline-block;
+                            }
                             body {
                             font-family: Arial, sans-serif;
                             margin: 20px;
