@@ -714,7 +714,6 @@ socket.on('connect', () => {
                         </style>
                         </head>
                         <body>
-                        <h1>Account Statement</h1>
                         ${table.outerHTML}
                         </body>
                     </html>
