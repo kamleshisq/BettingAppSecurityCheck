@@ -684,7 +684,21 @@ socket.on('connect', () => {
                     printWindow.document.write(`
                     <html>
                         <head>
-                        <title>Table Data</title>
+                        <style>
+                            table {
+                            border-collapse: collapse;
+                            width: 100%;
+                            }
+
+                            th, td {
+                            padding: 8px;
+                            text-align: left;
+                            border-bottom: 1px solid #DDD;
+                            }
+
+                            tr:hover {background-color: #D6EEEE;}
+                        </style>
+                        <title>Account Statement/title>
                         </head>
                         <body>
                         ${table.outerHTML}
@@ -693,7 +707,6 @@ socket.on('connect', () => {
                     `);
                     printWindow.document.close();
 
-                    // Trigger the print dialog
                     printWindow.print();
                 
           }
