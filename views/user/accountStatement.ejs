@@ -12,7 +12,9 @@ table, th, td {
 <h2><%= title %></h2>
 <!-- <button class="logOut">logout</button> -->
 <button><a href="/">User Dashboard</a></button>
-<table style="width:100%">
+<button  id="downloadBtn" >Download CSV</button>
+<button  id="pdfDownload" >Download PDF</button>
+<table style="width:100%" id="123456">
   <tr>
     <th>S.No</th>
     <th>Date & Time</th>
@@ -41,7 +43,6 @@ table, th, td {
   <%}}%>
 </table>
 
-
-<script type="text/javascript" src="js/bundle.js"></script>
+<script type="text/javascript" src="userJs/accountStatement.js"></script>
 </body>
 </html>
