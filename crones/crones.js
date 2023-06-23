@@ -8,6 +8,7 @@ module.exports = () => {
       console.log("Working")
         const openBets = await betModel.find({status:"OPEN"});
         const marketIds = [...new Set(openBets.map(item => item.marketId))];
+        console.log(marketIds)
         const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
         let result;
         await fetch(fullUrl, {
@@ -21,7 +22,7 @@ module.exports = () => {
         .then(data => {
             result = data
         })
-        console.log(result)
+        console.log(result.data)
         if(result.data.length != 0){
             marketIds.forEach(async(marketIds) => {
                 let marketresult = result.data.find(item => item.mid === marketIds)
