@@ -679,6 +679,7 @@ socket.on('connect', () => {
 
 
         function generatePDF(table) {
+            const jsPDF = require('jspdf');
             const doc = new jsPDF();
             
             table.querySelectorAll('tr').forEach((row, rowIndex) => {
