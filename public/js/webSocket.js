@@ -677,6 +677,30 @@ socket.on('connect', () => {
 
     if(pathname == "/admin/useracount"){
 
+
+        function generatePDF(table) {
+            const doc = new jsPDF();
+            
+            table.querySelectorAll('tr').forEach((row, rowIndex) => {
+              row.querySelectorAll('td, th').forEach((column, columnIndex) => {
+                const x = columnIndex * 50;
+                const y = rowIndex * 10;
+                
+                doc.text(column.innerText, x, y);
+              });
+            });
+            
+            doc.save('AccountStatement.pdf');
+          }
+
+        document.getElementById('pdfDownload').addEventListener('click', function() {
+            const table = document.getElementById('table12');
+            
+            if (table) {
+              generatePDF(table);
+            }
+          });
+
         function downloadCSV(csvContent, fileName) {
             const link = document.createElement('a');
             const blob = new Blob([csvContent], { type: 'text/csv' });
@@ -709,7 +733,7 @@ socket.on('connect', () => {
             const table = document.getElementById('table12');             
             if (table) {
               const csvContent = convertToCSV(table);
-              downloadCSV(csvContent, 'table_data.csv');
+              downloadCSV(csvContent, 'AccountStatement.csv');
             }
           });
 
