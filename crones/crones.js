@@ -8,7 +8,7 @@ module.exports = () => {
       console.log("Working")
         const openBets = await betModel.find({status:"OPEN"});
         const marketIds = [...new Set(openBets.map(item => item.marketId))];
-        console.log(marketIds)
+        // console.log(marketIds)
         const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
         let result;
         await fetch(fullUrl, {
@@ -22,14 +22,14 @@ module.exports = () => {
         .then(data => {
             result = data
         })
-        console.log(result.data)
+        // console.log(result.data)
         if(result.data.length != 0){
             marketIds.forEach(async(marketIds) => {
                 let marketresult = result.data.find(item => item.mid === marketIds)
                 if(marketresult === undefined){
                     return
                 }
-                console.log(marketIds)
+                // console.log(marketIds)
                 let betsWithMarketId = await betModel.find({status:"OPEN", marketId : marketresult.mid});
                 betsWithMarketId.forEach(async(entry) => {
                     if(entry.selectionName ==  marketresult.result){
