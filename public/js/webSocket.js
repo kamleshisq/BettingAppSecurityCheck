@@ -684,23 +684,29 @@ socket.on('connect', () => {
                     printWindow.document.write(`
                     <html>
                         <head>
+                        <title>Account Statement</title>
                         <style>
+                            /* Add your custom CSS styles here */
+                            body {
+                            font-family: Arial, sans-serif;
+                            margin: 20px;
+                            }
                             table {
                             border-collapse: collapse;
                             width: 100%;
                             }
-
                             th, td {
+                            border: 1px solid #ccc;
                             padding: 8px;
-                            text-align: left;
-                            border-bottom: 1px solid #DDD;
                             }
-
-                            tr:hover {background-color: #D6EEEE;}
+                            th {
+                            background-color: #f2f2f2;
+                            font-weight: bold;
+                            }
                         </style>
-                        <title>Account Statement/title>
                         </head>
                         <body>
+                        <h1>Account Statement</h1>
                         ${table.outerHTML}
                         </body>
                     </html>
