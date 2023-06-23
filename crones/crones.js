@@ -24,10 +24,10 @@ module.exports = () => {
         if(result.data.length != 0){
             marketIds.forEach(async(marketIds) => {
                 let marketresult = result.data.find(item => item.mid === marketIds)
-                console.log(marketresult, 456)
-                if(marketresult === []){
+                if(marketresult === undefined){
                     return
                 }
+                console.log(marketresult)
                 let betsWithMarketId = await betModel.find({status:"OPEN", marketId : marketresult.mid});
                 betsWithMarketId.forEach(async(entry) => {
                     if(entry.selectionName ==  marketresult.runners){
