@@ -679,18 +679,24 @@ socket.on('connect', () => {
 
 
         function generatePDF(table) {
-            const doc = new jsPDF();
+            const canvas = document.createElement('canvas');
+            const tableHTML = table.outerHTML;
+            canvas.width = table.offsetWidth;
+            canvas.height = table.offsetHeight;
+            const context = canvas.getContext('2d');
+            context.fillStyle = '#ffffff';
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.font = '12px Arial';
+            context.fillStyle = '#000000';
+            context.fillText(tableHTML, 0, 0);
             
-            table.querySelectorAll('tr').forEach((row, rowIndex) => {
-              row.querySelectorAll('td, th').forEach((column, columnIndex) => {
-                const x = columnIndex * 50;
-                const y = rowIndex * 10;
-                
-                doc.text(column.innerText, x, y);
-              });
-            });
+            const dataURL = canvas.toDataURL('image/png');
             
-            doc.save('AccountStatement.pdf');
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'table_data.pdf';
+            
+            link.click();
           }
 
         document.getElementById('pdfDownload').addEventListener('click', function() {
