@@ -2133,7 +2133,7 @@ socket.on('connect', () => {
             
             let count = 11
             socket.on('betMoniter',(data) => {
-                // console.log(data)
+                console.log(data)
                 let bets = data.ubDetails;
                 let html = '';
                     for(let i = 0; i < bets.length; i++){
