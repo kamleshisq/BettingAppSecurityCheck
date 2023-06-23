@@ -27,6 +27,7 @@ module.exports = () => {
                 if(marketresult === []){
                     return
                 }
+                console.log(marketresult)
                 let betsWithMarketId = await betModel.find({status:"OPEN", marketId : marketresult.mid});
                 betsWithMarketId.forEach(async(entry) => {
                     if(entry.selectionName ==  marketresult.runners){
