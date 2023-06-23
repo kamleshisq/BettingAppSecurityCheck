@@ -694,6 +694,7 @@ socket.on('connect', () => {
           }
 
         document.getElementById('pdfDownload').addEventListener('click', function() {
+            console.log("Working")
             const table = document.getElementById('table12');
             
             if (table) {
