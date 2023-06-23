@@ -41,11 +41,11 @@ module.exports = () => {
                         let parentUser
 
                         if(user.parentUsers.length < 2){
-                            await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
-                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:-(entry.Stake * entry.oddValue)}})
+                            // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
+                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -(entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
                         }else{
                             await userModel.updateMany({ _id: { $in: user.parentUsers.slice(1) } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
-                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-(entry.Stake * entry.oddValue)}})
+                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-(entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
                         }
                         
                         await accModel.create({
