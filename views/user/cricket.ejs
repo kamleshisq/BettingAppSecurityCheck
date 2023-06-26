@@ -108,7 +108,7 @@ table, th, td {
           <td></td>
         </tr>
         <%for(let i = 0; i < liveCricket.length; i++){%>
-          <% let date = new Date(liveCricket[i].eventData.time) %>
+          <% let date = new Date(liveCricket[i].eventData.time * 1) %>
             <tr>
               <td><%= date %></td>
               <% if(liveCricket[i].marketList.match_odd != null){ %>
