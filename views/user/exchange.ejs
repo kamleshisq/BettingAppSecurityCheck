@@ -134,6 +134,43 @@ table, th, td {
   </table>
 <%}%>
 
+
+<%if(liveFootBall){%>
+  <table>
+    <thead style="text-align: center;font-size: 11px;">
+      <tr>
+        <th colspan="5">Football</th>
+      </tr>
+    </thead>
+    <tbody class="new-body">
+      <tr>
+        <td>Schedule</td>
+        <td>Teams</td>
+        <td>1</td>
+        <td>2</td>
+        <td>X</td>
+        <td></td>
+      </tr>
+      <%for(let i = 0; i < liveFootBall.length; i++){%>
+          <tr>
+            <td><%= Date(liveFootBall[i].eventData.time)  %></td>
+            <% if(liveFootBall[i].marketList.match_odd != null){ %>
+            <td class="name1" id="<%=liveFootBall[i].marketList.match_odd.marketId%>"><%=liveFootBall[i].eventData.name%></td>
+              <% const result = marketdetails1.data.items.find(item => item.market_id === liveFootBall[i].marketList.match_odd.marketId) %>
+              <%for(let i = 0; i < result.odds.length; i++){%>
+                <td class="<%=i%>" id="<%=result.odds[i].selectionId%>"><%=result.odds[i].backPrice1%>, <%=result.odds[i].layPrice1%></td>
+              <%}%>
+              <%}else{%>
+              <td><%=liveFootBall[i].eventData.name%></td>
+              <td colspan="3">null</td>
+            <%}%>
+            <td><button class="click" id="<%=liveFootBall[i].eventData.eventId%>"</button> <i class="arrow right"></button></td>
+          </tr>
+      <%}%>
+    </tbody>
+  </table>
+<%}%>
+
 <script src="../userJs/logOut.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/webSocket.js"></script>

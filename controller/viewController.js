@@ -962,23 +962,12 @@ exports.getExchangePage = catchAsync(async(req, res, next) => {
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList
     let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
-    // // console.log(LiveCricket1[0].marketList.match_odd)
-    // const {LiveCricket, marketArray} = cricket.reduce(
-    //     (acc, item) => {
-    //       if (item.eventData.type === "IN_PLAY") {
-    //         acc.LiveCricket.push(item);
-    //         // console.log(item.marketList.match_odd)
-    //         if(item.marketList.match_odd != null){
-    //             acc.marketArray.push(item.marketList.match_odd.marketId);
-    //         }
-    //       }
-    //       return acc;
-    //     },
-    //     { LiveCricket: [], marketArray: [] }
-    //   );
+    const footBall = sportData[1].gameList.find(item => item.sport_name === "Football")
+    let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
     res.status(200).render("./user/exchange",{
         user,
-        LiveCricket
+        LiveCricket,
+        liveFootBall
     })
 });
 
