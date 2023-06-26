@@ -1043,5 +1043,7 @@ exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
 
 
 exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
-    res.status(200).render("./liveMarket/liveMarket")
+    res.status(200).render("./liveMarket/liveMarket", {
+        title:"Live Market"
+    })
 })
