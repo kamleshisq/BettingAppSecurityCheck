@@ -199,13 +199,7 @@ table, th, td {
             <td><%= Date(liveFootBall[i].eventData.time)  %></td>
             <% if(liveFootBall[i].marketList.match_odd != null){ %>
             <td class="name1" id="<%=liveFootBall[i].marketList.match_odd.marketId%>"><%=liveFootBall[i].eventData.name%></td>
-              <% const result = marketdetails1.data.items.find(item => item.market_id === liveFootBall[i].marketList.match_odd.marketId) %>
-              <%for(let i = 0; i < result.odds.length; i++){%>
-                <td class="<%=i%>" id="<%=result.odds[i].selectionId%>"><%=result.odds[i].backPrice1%>, <%=result.odds[i].layPrice1%></td>
-              <%}%>
-              <%}else{%>
-              <td><%=liveFootBall[i].eventData.name%></td>
-              <td colspan="3">null</td>
+             
             <%}%>
             <td><button class="click" id="<%=liveFootBall[i].eventData.eventId%>"</button> <i class="arrow right"></button></td>
           </tr>
