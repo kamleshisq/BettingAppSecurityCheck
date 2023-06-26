@@ -1043,7 +1043,12 @@ exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
 
 
 exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
+    const sportData = await getCrkAndAllData()
+    const cricket = sportData[0].gameList[0].eventList
+    let liveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY");
+    console.log(liveCricket)
     res.status(200).render("./liveMarket/liveMarket", {
-        title:"Live Market"
+        title:"Live Market",
+        liveCricket
     })
 })
