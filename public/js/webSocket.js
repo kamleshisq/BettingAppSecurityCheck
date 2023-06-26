@@ -2471,6 +2471,10 @@ socket.on('connect', () => {
     }
 
 
+    if(pathname === "/exchange_sports/tennis"){
+        console.log("Working")
+    }
+
 
 
     if(pathname === "/exchange_sports/inplay"){
