@@ -1031,6 +1031,7 @@ exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
         // console.log(football)
         liveCricket = football.eventList.find(item => item.eventData.eventId == req.query.id)
     }
+    console.log(liveCricket)
     let user = req.currentUser
     res.status(200).render("./user/matchDetails", {
         user,
