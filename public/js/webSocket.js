@@ -2730,6 +2730,11 @@ socket.on('connect', () => {
     }
 
 
+    if(pathname === "/exchange_sports/football"){
+        console.log("working")
+    }
+
+
 
 
     if(pathname === '/admin/Notification'){
