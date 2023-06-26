@@ -38,7 +38,7 @@ async function placeBet(data){
     const sportData = await cricketAndOtherSport()
     let gameList
     let bettype
-    console.log(data.data)
+    // console.log(data.data)
     if(data.data.spoetId == 4){
         gameList = sportData[0].gameList[0].eventList
         bettype = 'Cricket'
@@ -47,6 +47,10 @@ async function placeBet(data){
         let footballdata = sportData[1].gameList.find(item => item.sport_name === "Football")
         gameList = footballdata.eventList
         bettype = "Football"
+    }else if (data.data.spoetId == 2){
+        let tennisData = sportData[1].gameList.find(item => item.sport_name === "Tennis")
+        gameList = tennisData.eventList
+        bettype = "Tennis"
     }
     let liveBetGame = gameList.find(item => item.eventData.eventId == data.data.eventId);
     let marketDetails
