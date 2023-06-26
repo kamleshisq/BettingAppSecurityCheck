@@ -64,7 +64,8 @@ router.get("/", authController.isLogin, viewController.userdashboard);
 router.get("/exchange_sports/inplay", authController.isLogin, viewController.getExchangePage);
 router.get("/exchange_sports/cricket", authController.isProtected, viewController.getCricketpage);
 router.get("/exchange_sports/footBall", authController.isProtected, viewController.getFootballData);
-router.get("/exchange_sports/live_match", authController.isProtected, viewController.getMatchDetailsPage);
+router.get("/exchange_sports/footBall", authController.isProtected, viewController.getFootballData);
+router.get("/exchange_sports/tennis", authController.isProtected, viewController.getTennisData);
 router.get("/edit", authController.isProtected, viewController.edit);
 router.get("/myAccountStatment", authController.isProtected, viewController.myAccountStatment);
 

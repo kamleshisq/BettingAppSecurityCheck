@@ -999,7 +999,20 @@ exports.getFootballData = catchAsync(async(req, res, next) => {
         liveFootBall,
         upcomingFootBall
     })
-})
+});
+
+exports.getTennisData = catchAsync(async(req, res, next) => {
+    const sportData = await getCrkAndAllData()
+    const Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis")
+    let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY");
+    let upcomingTennis = Tennis.eventList.filter(item => item.eventData.type === "UPCOMING");
+    let user = req.currentUser
+    res.status(200).render("./user/tennis", {
+        user,
+        liveTennis,
+        upcomingTennis
+    })
+});
 
 
 exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {

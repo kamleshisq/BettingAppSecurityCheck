@@ -88,8 +88,8 @@ table, th, td {
 <div class="vertical-menu">
   <a href="/exchange_sports/inplay" >In Play</a>
   <a href="/exchange_sports/cricket" >cricket</a>
-  <a href="/exchange_sports/tennis">Tennis</a>
-  <a href="/exchange_sports/football" class="active">Football</a>
+  <a href="/exchange_sports/tennis" class="active">Tennis</a>
+  <a href="/exchange_sports/football" >Football</a>
 </div>
 <div class="live">
 <table>
@@ -107,12 +107,12 @@ table, th, td {
           <td>2</td>
           <td></td>
         </tr>
-        <%for(let i = 0; i < liveFootBall.length; i++){%>
+        <%for(let i = 0; i < liveTennis.length; i++){%>
             <tr>
-              <td><%= Date(liveFootBall[i].eventData.time)  %></td>
-              <% if(liveFootBall[i].marketList.match_odd != null){ %>
-                  <td class="name1" id="<%=liveFootBall[i].marketList.match_odd.marketId%>"><%=liveFootBall[i].eventData.name%></td>
-                  <% let runners = JSON.parse(liveFootBall[i].marketList.match_odd.runners); %>
+              <td><%= Date(liveTennis[i].eventData.time)  %></td>
+              <% if(liveTennis[i].marketList.match_odd != null){ %>
+                  <td class="name1" id="<%=liveTennis[i].marketList.match_odd.marketId%>"><%=liveTennis[i].eventData.name%></td>
+                  <% let runners = JSON.parse(liveTennis[i].marketList.match_odd.runners); %>
                   <% const runners1 = []; %>
                   <%const secIds = []; %>
                   <%runners.forEach(item => {%>
@@ -123,10 +123,10 @@ table, th, td {
                         <td class="<%=i%>" id="<%=secIds[i]%>"  ></td>
                 <%}%>
                 <%}else{%>
-                  <td><%=liveFootBall[i].eventData.name%></td>
+                  <td><%=liveTennis[i].eventData.name%></td>
                   <td colspan="3">null</td>
               <%}%>
-              <td><button class="click" id="<%=liveFootBall[i].eventData.eventId%>"</button> <i class="arrow right"></button></td>
+              <td><button class="click" id="<%=liveTennis[i].eventData.eventId%>"</button> <i class="arrow right"></button></td>
             </tr>
         <%}%>
       </tbody>
@@ -149,12 +149,12 @@ table, th, td {
               <td>X</td>
               <td></td>
             </tr>
-            <%for(let i = 0; i < upcomingFootBall.length; i++){%>
+            <%for(let i = 0; i < upcomingTennis.length; i++){%>
                 <tr>
-                  <td><%= Date(upcomingFootBall[i].eventData.time)  %></td>
-                  <% if(upcomingFootBall[i].marketList.match_odd != null){ %>
-                  <td class="name1" id="<%=upcomingFootBall[i].marketList.match_odd.marketId%>"><%=upcomingFootBall[i].eventData.name%></td>
-                  <% let runners = JSON.parse(upcomingFootBall[i].marketList.match_odd.runners); %>
+                  <td><%= Date(upcomingTennis[i].eventData.time)  %></td>
+                  <% if(upcomingTennis[i].marketList.match_odd != null){ %>
+                  <td class="name1" id="<%=upcomingTennis[i].marketList.match_odd.marketId%>"><%=upcomingTennis[i].eventData.name%></td>
+                  <% let runners = JSON.parse(upcomingTennis[i].marketList.match_odd.runners); %>
                   <% const runners1 = []; %>
                   <%const secIds = []; %>
                   <%runners.forEach(item => {%>
@@ -165,10 +165,10 @@ table, th, td {
                         <td class="<%=i%>" id="<%=secIds[i]%>"  ></td>
                 <%}%>
                     <%}else{%>
-                    <td><%=upcomingFootBall[i].eventData.name%></td>
+                    <td><%=upcomingTennis[i].eventData.name%></td>
                     <td colspan="3">null</td>
                   <%}%>
-                  <td><button class="click" id="<%=upcomingFootBall[i].eventData.eventId%>"</button> <i class="arrow right"></button></td>
+                  <td><button class="click" id="<%=upcomingTennis[i].eventData.eventId%>"</button> <i class="arrow right"></button></td>
                 </tr>
             <%}%>
           </tbody>
