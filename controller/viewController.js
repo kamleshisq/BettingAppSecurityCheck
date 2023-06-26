@@ -1029,8 +1029,8 @@ exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
     if(liveCricket === undefined){
         football = sportData[1].gameList.filter(item => item.sport_name != "Cricket")
         // console.log(football)
-        liveCricket = football.eventList.find(item => item.eventData.eventId == req.query.id)
-        liveCricket = football.find(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
+        // liveCricket = football.eventList.find(item => item.eventData.eventId == req.query.id)
+        liveCricket = football.map(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
     }
     console.log(liveCricket)
     let user = req.currentUser
