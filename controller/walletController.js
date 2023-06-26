@@ -58,7 +58,7 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 
 exports.betrequest = catchAsync(async(req, res, next) => {
     // console.log(req.body)
-    let betDetails = await betLimitModel.find()
+    // let betDetails = await betLimitModel.find()
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let date = Date.now()
     let game
