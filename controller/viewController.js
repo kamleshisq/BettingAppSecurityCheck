@@ -1004,7 +1004,14 @@ exports.getCricketpage = catchAsync(async(req, res, next) => {
 exports.getFootballData = catchAsync(async(req, res, next) => {
     const sportData = await getCrkAndAllData()
     const footBall = sportData[1].gameList.find(item => item.sport_name === "Football")
-    console.log(footBall)
+    let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
+    let upcomingFootBall = footBall.eventList.filter(item => item.eventData.type === "UPCOMING");
+    let user = req.currentUser
+    res.status(200).render("./user/football", {
+        user,
+        liveFootBall,
+        upcomingFootBall
+    })
 })
 
 
