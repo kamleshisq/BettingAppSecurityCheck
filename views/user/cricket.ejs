@@ -108,10 +108,9 @@ table, th, td {
           <td></td>
         </tr>
         <%for(let i = 0; i < liveCricket.length; i++){%>
-          <% let date = new Date(liveFootBall[i].eventData.time)%>
             <tr>
+              <td><%= Date(liveCricket[i].eventData.time)  %></td>
               <% if(liveCricket[i].marketList.match_odd != null){ %>
-                <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()  : date.getHours() + ':' + date.getMinutes()%></td>
                   <td class="name1" id="<%=liveCricket[i].marketList.match_odd.marketId%>"><%=liveCricket[i].eventData.name%></td>
                   <% let runners = JSON.parse(liveCricket[i].marketList.match_odd.runners); %>
                   <% const runners1 = []; %>
