@@ -1,13 +1,13 @@
-const userModel = require('../../model/userModel');
-const AppError = require('../../utils/AppError');
-const catchAsync = require('../../utils/catchAsync');
-const betModel = require("../../model/betmodel");
-const betLimitModel = require("../../model/betLimitModel");
-const accountStatement = require('../../model/accountStatementByUserModel');
-const gameModel = require("../../model/gameModel");
+const userModel = require('../model/userModel');
+const AppError = require('../utils/AppError');
+const catchAsync = require('../utils/catchAsync');
+const betModel = require("../model/betmodel");
+// const betLimitModel = require("../model/betLimitModel");
+const accountStatement = require('../model/accountStatementByUserModel');
+const gameModel = require("../model/gameModel");
 const path = require('path');
 const fs = require('fs');
-const verify = require("../../utils/verify");//
+const verify = require("../utils/verify");//
 // const { use } = require('../app');
 function readPem (filename) {
     return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename), 'utf8')
