@@ -962,13 +962,16 @@ exports.getExchangePage = catchAsync(async(req, res, next) => {
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList
     let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
-    const footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
+    const footBall = sportListData[1].gameList.find(item => item.sport_name === "Football");
+    const Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis");
     let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
+    let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
     console.log(liveFootBall.length != 0)
     res.status(200).render("./user/exchange",{
         user,
         LiveCricket,
-        liveFootBall
+        liveFootBall,
+        liveTennis
     })
 });
 

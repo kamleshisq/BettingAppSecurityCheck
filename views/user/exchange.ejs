@@ -135,6 +135,49 @@ table, th, td {
 <%}%>
 
 
+<% if(liveTennis.length != 0){%>
+  <table>
+    <thead style="text-align: center;font-size: 11px;">
+      <tr>
+        <th colspan="5">cricket</th>
+      </tr>
+    </thead>
+    <tbody class="new-body">
+      <tr>
+        <td>Schedule</td>
+        <td>Teams</td>
+        <td>1</td>
+        <td>X</td>
+        <td>2</td>
+        <td></td>
+      </tr>
+      <%for(let i = 0; i < liveTennis.length; i++){%>
+          <tr>
+            <td><%= Date(liveTennis[i].eventData.time)  %></td>
+            <% if(liveTennis[i].marketList.match_odd != null){ %>
+                <td class="name1" id="<%=liveTennis[i].marketList.match_odd.marketId%>"><%=liveTennis[i].eventData.name%></td>
+                <% let runners = JSON.parse(liveTennis[i].marketList.match_odd.runners); %>
+                <% const runners1 = []; %>
+                <%const secIds = []; %>
+                <%runners.forEach(item => {%>
+                  <%runners1.push(item.runner);%>
+                  <%secIds.push(item.secId);%>
+                <%});%>
+                <%for(let i = 0; i < runners1.length; i++){%>
+                      <td class="<%=i%>" id="<%=secIds[i]%>"  ></td>
+              <%}%>
+              <%}else{%>
+                <td><%=liveTennis[i].eventData.name%></td>
+                <td colspan="3">null</td>
+            <%}%>
+            <td><button class="click" id="<%=liveTennis[i].eventData.eventId%>"</button> <i class="arrow right"></button></td>
+          </tr>
+      <%}%>
+    </tbody>
+  </table>
+<%}%>
+
+
 <%if(liveFootBall.length != 0){%>
   <table>
     <thead style="text-align: center;font-size: 11px;">
