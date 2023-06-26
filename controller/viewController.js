@@ -1024,7 +1024,7 @@ exports.getTennisData = catchAsync(async(req, res, next) => {
 exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
     const sportData = await getCrkAndAllData()
     const cricket = sportData[0].gameList[0].eventList
-    let football 
+    // let football 
     let liveCricket = cricket.find(item => item.eventData.eventId == req.query.id);
     if(liveCricket === undefined){
         // football = sportData[1].gameList.filter(item => item.sport_name != "Cricket")
