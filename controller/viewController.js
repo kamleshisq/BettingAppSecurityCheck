@@ -966,7 +966,8 @@ exports.getExchangePage = catchAsync(async(req, res, next) => {
     const Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis");
     let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
     let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
-    console.log(liveFootBall.length != 0)
+    console.log(liveTennis.length != 0)
+    console.log(liveTennis)
     res.status(200).render("./user/exchange",{
         user,
         LiveCricket,
