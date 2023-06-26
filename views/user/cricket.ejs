@@ -109,7 +109,7 @@ table, th, td {
         </tr>
         <%for(let i = 0; i < liveCricket.length; i++){%>
             <tr>
-              <td><%= Date(liveCricket[i].eventData.time)  %></td>
+              <td><%= liveCricket[i].eventData.time %></td>
               <% if(liveCricket[i].marketList.match_odd != null){ %>
                   <td class="name1" id="<%=liveCricket[i].marketList.match_odd.marketId%>"><%=liveCricket[i].eventData.name%></td>
                   <% let runners = JSON.parse(liveCricket[i].marketList.match_odd.runners); %>
