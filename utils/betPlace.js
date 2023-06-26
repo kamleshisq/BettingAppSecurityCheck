@@ -43,9 +43,10 @@ async function placeBet(data){
         gameList = sportData[0].gameList[0].eventList
         bettype = 'Cricket'
     }else if(data.data.spoetId == 1){
-        console.log(sportData[1])
+        // console.log(sportData[1].gameList)
         let footballdata = sportData[1].gameList.find(item => item.sport_name === "Football")
         gameList = footballdata.eventList
+        bettype = "Football"
     }
     let liveBetGame = gameList.find(item => item.eventData.eventId == data.data.eventId);
     let marketDetails
