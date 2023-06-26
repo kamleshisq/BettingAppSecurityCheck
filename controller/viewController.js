@@ -964,7 +964,7 @@ exports.getExchangePage = catchAsync(async(req, res, next) => {
     let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
     const footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
     let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
-    console.log(liveFootBall != [])
+    console.log(liveFootBall.length != 0)
     res.status(200).render("./user/exchange",{
         user,
         LiveCricket,
