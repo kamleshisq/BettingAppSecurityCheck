@@ -38,6 +38,7 @@ async function placeBet(data){
     const sportData = await cricketAndOtherSport()
     let gameList
     let bettype
+    console.log(data.data.spoetId)
     if(data.data.spoetId == 4){
         gameList = sportData[0].gameList[0].eventList
         bettype = 'Cricket'
