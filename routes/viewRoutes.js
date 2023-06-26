@@ -16,7 +16,7 @@ router.get('/API', viewController.APIcall);
 router.get('/API2', viewController.APIcall2);
 router.get("/sportDetails", viewController.getSportList);
 router.get("/getCricketData", viewController.getCricketData);
-router.get("/getFootballData", viewController.getFootballData);
+// router.get("/getFootballData", viewController.getFootballData);
 router.get("/getMarketDetails", viewController.getmarketDetailsByMarketId);
 router.get("/getLiveTv", viewController.getLiveTv);
 router.get("/getMarketResult", viewController.getMarketResult);
@@ -63,6 +63,7 @@ router.get("/admin/onlineUsers", authController.isProtected, authController.isAd
 router.get("/", authController.isLogin, viewController.userdashboard);
 router.get("/exchange_sports/inplay", authController.isLogin, viewController.getExchangePage);
 router.get("/exchange_sports/cricket", authController.isProtected, viewController.getCricketpage);
+router.get("/exchange_sports/footBall", authController.isProtected, viewController.getFootballData);
 router.get("/exchange_sports/live_match", authController.isProtected, viewController.getMatchDetailsPage);
 router.get("/edit", authController.isProtected, viewController.edit);
 router.get("/myAccountStatment", authController.isProtected, viewController.myAccountStatment);

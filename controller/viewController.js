@@ -864,19 +864,19 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
     })
 });
 
-exports.getFootballData = catchAsync(async(req, res, next) => {
-    var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-footballdata';
-    fetch(fullUrl, {
-        method: 'GET'
-    })
-    .then(res =>console.log(res))
-    // .then(result => {
-    //     console.log(result)
-    //     res.status(200).json({
-    //         result
-    //     })
-    // })
-});
+// exports.getFootballData = catchAsync(async(req, res, next) => {
+//     var fullUrl = 'https://admin-api.dreamexch9.com/api/dream/cron/get-footballdata';
+//     fetch(fullUrl, {
+//         method: 'GET'
+//     })
+//     .then(res =>console.log(res))
+//     // .then(result => {
+//     //     console.log(result)
+//     //     res.status(200).json({
+//     //         result
+//     //     })
+//     // })
+// });
 
 exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
     let body = JSON.stringify([ '1.207867704' ]);
@@ -992,13 +992,19 @@ exports.getCricketpage = catchAsync(async(req, res, next) => {
     let liveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY");
     let upcomingCricket = cricket.filter(item => item.eventData.type == "UPCOMING");
     let user = req.currentUser
-    console.log(liveCricket, "live")
+    // console.log(liveCricket, "live")
     res.status(200).render("./user/cricket", {
         user,
         liveCricket,
         upcomingCricket
     })
 });
+
+
+exports.getFootballData = catchAsync(async(req, res, next) => {
+    const sportData = await getCrkAndAllData()
+    console.log(sportData)
+})
 
 
 exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
