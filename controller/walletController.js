@@ -1,13 +1,13 @@
-const userModel = require('../model/userModel');
-const AppError = require('../utils/AppError');
-const catchAsync = require('../utils/catchAsync');
-const betModel = require("../model/betmodel");
-const betLimitModel = require("../model/betLimitModel");
-const accountStatement = require('../model/accountStatementByUserModel');
-const gameModel = require("../model/gameModel");
+const userModel = require('../../model/userModel');
+const AppError = require('../../utils/AppError');
+const catchAsync = require('../../utils/catchAsync');
+const betModel = require("../../model/betmodel");
+const betLimitModel = require("../../model/betLimitModel");
+const accountStatement = require('../../model/accountStatementByUserModel');
+const gameModel = require("../../model/gameModel");
 const path = require('path');
 const fs = require('fs');
-const verify = require("../utils/verify");//
+const verify = require("../../utils/verify");//
 // const { use } = require('../app');
 function readPem (filename) {
     return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename), 'utf8')
@@ -58,26 +58,38 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 
 exports.betrequest = catchAsync(async(req, res, next) => {
     // console.log(req.body)
+    let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1}})
     // let betDetails = await betLimitModel.find()
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let date = Date.now()
     let game
     let description
+    let description2
     if(req.body.gameId){
         let game1 = await gameModel.findOne({game_id:req.body.gameId})
         game = game1.game_name
-        description = `Bet for game ${game.game_name}, amount ${req.body.debitAmount}`
+        description = `Bet for game ${game.game_name}/amount ${req.body.debitAmount}`
+        description2 = `Bet for game ${game.game_name}/amount ${req.body.debitAmount}/user = ${user.userName}`
     }else{
         game = req.body.competitionName
-        description = `Bet for game ${req.body.eventName}, amount ${req.body.debitAmount}`
+        description = `Bet for game ${req.body.eventName}/amount ${req.body.debitAmount}`
+        description2 = `Bet for game ${req.body.eventName}/amount ${req.body.debitAmount}/user = ${user.userName}`
     }
     // console.log(game)
-    let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1}})
     // console.log(user)
     if(!user){
         return next(new AppError("There is no user with that id", 404))
     }
-    await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
+    let parentUser
+    if(user.parentUsers.length < 2){
+        // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
+        // parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:data.data.stake}})
+        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0],{$inc:{availableBalance:req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
+    }else{
+        await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: -req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
+        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
+    }
+    // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
     // let A = await userModel.find({_id:user.parentUsers[0]})
     // console.log(A,123)
     // req.body.result = "Pending"
@@ -106,7 +118,20 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         "stake": req.body.debitAmount,
         "transactionId":req.body.transactionId
     }
+    let Acc2 = {
+        "user_id":parentUser._id,
+        "description": description2,
+        "creditDebitamount" : req.body.debitAmount,
+        "balance" : parentUser.availableBalance + (req.body.debitAmount * 1),
+        "date" : Date.now(),
+        "userName" : parentUser.userName,
+        "role_type" : parentUser.role_type,
+        "Remark":"-",
+        "stake": req.body.debitAmount,
+        "transactionId":`${req.body.transactionId}Parent`
+    }
     accountStatement.create(Acc)
+    accountStatement.create(Acc2)
 
     if(clientIP == "::ffff:3.9.120.247"){
         res.status(200).json({
@@ -150,19 +175,29 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             }
         }
         balance = user.balance
-        let Acc = {
-            // "user_id":req.body.userId,
-            description:`Bet for game ${game.game_name} LOSS`,
-            // "creditDebitamount" : req.body.creditAmount,
-            // "balance" : balance,
-            // "date" : Date.now(),
-            // "userName" : user.userName,
-            // "role_type" : user.role_type
-        }
-        await accountStatement.findOneAndUpdate({transactionId:req.body.transactionId},Acc)
+        // let Acc = {
+        //     // "user_id":req.body.userId,
+        //     description:`Bet for game ${game.game_name} LOSS`,
+        //     // "creditDebitamount" : req.body.creditAmount,
+        //     // "balance" : balance,
+        //     // "date" : Date.now(),
+        //     // "userName" : user.userName,
+        //     // "role_type" : user.role_type
+        // }
+        // await accountStatement.findOneAndUpdate({transactionId:req.body.transactionId},Acc)
     }else{
-        await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:req.body.creditAmount})
-        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance: req.body.creditAmount, availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1}})
+        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance: req.body.creditAmount, availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1}});
+        let parentUser
+        let bet = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:req.body.creditAmount});
+        let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
+        let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/WON `
+        if(user.parentUsers.length < 2){
+            // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
+            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -req.body.creditAmount, downlineBalance: req.body.creditAmount}})
+        }else{
+            await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: req.body.creditAmount, downlineBalance: req.body.creditAmount}})
+            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-req.body.creditAmount, downlineBalance: req.body.creditAmount}})
+        }
         // console.log(user.parentUsers)
         if(!user){
             if(clientIP == "::ffff:3.9.120.247"){
@@ -178,18 +213,46 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             }
         }
         balance = user.availableBalance + req.body.creditAmount
-        let Acc = {
-            // "user_id":req.body.userId,
-            description:`Bet for game ${game.game_name} WON and creditAmount is ${req.body.creditAmount}`,
-            creditDebitamount: req.body.creditAmount,
-            balance: balance,
-            // "date" : Date.now(),
-            // "userName" : user.userName,
-            // "role_type" : user.role_type
-        }
+
+        await accountStatement.create({
+            "user_id":user._id,
+            "description": description,
+            "creditDebitamount" : req.body.creditAmount,
+            "balance" : user.availableBalance + req.body.creditAmount,
+            "date" : Date.now(),
+            "userName" : user.userName,
+            "role_type" : user.role_type,
+            "Remark":"-",
+            "stake": bet.Stake,
+            "transactionId":`${bet.transactionId}`
+          })
+
+          await accountStatement.create({
+            "user_id":parentUser._id,
+            "description": description2,
+            "creditDebitamount" : -req.body.creditAmount,
+            "balance" : parentUser.availableBalance - req.body.creditAmount,
+            "date" : Date.now(),
+            "userName" : parentUser.userName,
+            "role_type" : parentUser.role_type,
+            "Remark":"-",
+            "stake": bet.Stake,
+            "transactionId":`${bet.transactionId}Parent`
+          })
+
+
+        // let Acc = {
+        //     // "user_id":req.body.userId,
+        //     description:`Bet for game ${game.game_name} WON and creditAmount is ${req.body.creditAmount}`,
+        //     creditDebitamount: req.body.creditAmount,
+        //     balance: balance,
+        //     // "date" : Date.now(),
+        //     // "userName" : user.userName,
+        //     // "role_type" : user.role_type
+        // }
         // console.log(user.parentUsers);
-        await accountStatement.findOneAndUpdate({transactionId:req.body.transactionId},Acc)
-        await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: req.body.creditAmount, downlineBalance: req.body.creditAmount}})
+        // await accountStatement.findOneAndUpdate({transactionId:req.body.transactionId},Acc)
+        // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: req.body.creditAmount, downlineBalance: req.body.creditAmount}})
         // console.log(A)
         // console.log(user, 132)
     }
