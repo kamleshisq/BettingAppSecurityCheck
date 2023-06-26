@@ -1039,4 +1039,9 @@ exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
         user,
         liveCricket
     })
+});
+
+
+exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
+    res.status(200).render("./liveMarket/liveMarket")
 })

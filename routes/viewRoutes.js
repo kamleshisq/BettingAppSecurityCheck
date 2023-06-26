@@ -56,6 +56,7 @@ router.get("/admin/betmoniter", authController.isProtected, authController.isAdm
 router.get("/admin/voidbet", authController.isProtected, authController.isAdmin, viewController.getVoidBetPage);
 router.get("/admin/betlimit", authController.isProtected, authController.isAdmin, viewController.getBetLimitPage);
 router.get("/admin/onlineUsers", authController.isProtected, authController.isAdmin, viewController.onlineUsers);
+router.get("/admin/liveMarket", authController.isProtected, authController.isAdmin, viewController.getLiveMarketsPage);
 //user routs
 
 
