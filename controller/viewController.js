@@ -983,7 +983,8 @@ exports.getCricketpage = catchAsync(async(req, res, next) => {
     let liveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY");
     let upcomingCricket = cricket.filter(item => item.eventData.type == "UPCOMING");
     let user = req.currentUser
-    // console.log(liveCricket, "live")
+    let date = new Date(liveFootBall[0].eventData.time)
+    console.log(date)
     res.status(200).render("./user/cricket", {
         user,
         liveCricket,
