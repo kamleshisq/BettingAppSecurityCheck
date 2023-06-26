@@ -1003,7 +1003,7 @@ exports.getCricketpage = catchAsync(async(req, res, next) => {
 
 exports.getFootballData = catchAsync(async(req, res, next) => {
     const sportData = await getCrkAndAllData()
-    console.log(sportData[0].sportList)
+    console.log(sportData[1].sportList)
 })
 
 
