@@ -1046,9 +1046,14 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     const sportData = await getCrkAndAllData()
     const cricket = sportData[0].gameList[0].eventList
     let liveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY");
-    console.log(liveCricket)
+    const footBall = sportListData[1].gameList.find(item => item.sport_name === "Football");
+    const Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis");
+    let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
+    let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
-        liveCricket
+        liveCricket,
+        liveFootBall,
+        liveTennis
     })
 })
