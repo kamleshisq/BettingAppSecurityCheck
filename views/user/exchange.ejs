@@ -92,39 +92,47 @@ table, th, td {
   <a href="/exchange_sports/football">Football</a>
 </div>
 
-<table>
-  <thead style="text-align: center;font-size: 11px;">
-    <tr>
-      <th colspan="5">cricket</th>
-    </tr>
-  </thead>
-  <tbody class="new-body">
-    <tr>
-      <td>Schedule</td>
-      <td>Teams</td>
-      <td>1</td>
-      <td>2</td>
-      <td>X</td>
-      <td></td>
-    </tr>
-    <%for(let i = 0; i < LiveCricket.length; i++){%>
-        <tr>
-          <td><%= Date(LiveCricket[i].eventData.time)  %></td>
-          <% if(LiveCricket[i].marketList.match_odd != null){ %>
-          <td class="name1" id="<%=LiveCricket[i].marketList.match_odd.marketId%>"><%=LiveCricket[i].eventData.name%></td>
-            <% const result = marketdetails1.data.items.find(item => item.market_id === LiveCricket[i].marketList.match_odd.marketId) %>
-            <%for(let i = 0; i < result.odds.length; i++){%>
-              <td class="<%=i%>" id="<%=result.odds[i].selectionId%>"><%=result.odds[i].backPrice1%>, <%=result.odds[i].layPrice1%></td>
+<% if(LiveCricket){%>
+  <table>
+    <thead style="text-align: center;font-size: 11px;">
+      <tr>
+        <th colspan="5">cricket</th>
+      </tr>
+    </thead>
+    <tbody class="new-body">
+      <tr>
+        <td>Schedule</td>
+        <td>Teams</td>
+        <td>1</td>
+        <td>X</td>
+        <td>2</td>
+        <td></td>
+      </tr>
+      <%for(let i = 0; i < liveCricket.length; i++){%>
+          <tr>
+            <td><%= Date(liveCricket[i].eventData.time)  %></td>
+            <% if(liveCricket[i].marketList.match_odd != null){ %>
+                <td class="name1" id="<%=liveCricket[i].marketList.match_odd.marketId%>"><%=liveCricket[i].eventData.name%></td>
+                <% let runners = JSON.parse(liveCricket[i].marketList.match_odd.runners); %>
+                <% const runners1 = []; %>
+                <%const secIds = []; %>
+                <%runners.forEach(item => {%>
+                  <%runners1.push(item.runner);%>
+                  <%secIds.push(item.secId);%>
+                <%});%>
+                <%for(let i = 0; i < runners1.length; i++){%>
+                      <td class="<%=i%>" id="<%=secIds[i]%>"  ></td>
+              <%}%>
+              <%}else{%>
+                <td><%=liveCricket[i].eventData.name%></td>
+                <td colspan="3">null</td>
             <%}%>
-            <%}else{%>
-            <td><%=LiveCricket[i].eventData.name%></td>
-            <td colspan="3">null</td>
-          <%}%>
-          <td><button class="click" id="<%=LiveCricket[i].eventData.eventId%>"</button> <i class="arrow right"></button></td>
-        </tr>
-    <%}%>
-  </tbody>
-</table>
+            <td><button class="click" id="<%=liveCricket[i].eventData.eventId%>"</button> <i class="arrow right"></button></td>
+          </tr>
+      <%}%>
+    </tbody>
+  </table>
+<%}%>
 
 <script src="../userJs/logOut.js"></script>
 <script src="/socket.io/socket.io.js"></script>
