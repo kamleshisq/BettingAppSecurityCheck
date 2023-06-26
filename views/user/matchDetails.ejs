@@ -206,36 +206,7 @@ body {
             </table>
     <%}%>
     <br><br><br>
-    <%if(liveCricket.marketList.bookmaker != null){%>
-      <table class="market bookmaker" id="<%=liveCricket.marketList.bookmaker.marketId%>">
-        <thead style="text-align: center;font-size: 11px;">
-          <tr>
-            <th colspan="5">MATCH STAKES      MIN:<%=liveCricket.marketList.bookmaker.min_stack%> MAX:<%=liveCricket.marketList.bookmaker.max_stack%></th>
-          </tr>
-        </thead>
-        <tbody class="new-body">
-            <tr>
-              <td>MARKET</td>
-              <td>BACK</td>
-              <td>LAY</td>
-            </tr>
-            <% let runners = JSON.parse(liveCricket.marketList.bookmaker.runners); %>
-            <% const runners1 = []; %>
-            <%const secIds = []; %>
-            <%runners.forEach(item => {%>
-                <%runners1.push(item.runner);%>
-                <%secIds.push(item.secId);%>
-            <%});%>
-            <%for(let i = 0; i < runners1.length; i++){%>
-                <tr>
-                    <td class="name1"> <%=runners1[i]%></td>
-                    <td class="BACK <%=i%>" id="<%=secIds[i]%>"  ><button class="button" id="<%=secIds[i]%>0"></button> <button class="button" id="<%=secIds[i]%>1"></button><button class="button" id="<%=secIds[i]%>2"></button></td>
-                    <td class="LAY <%=i%>" id="<%=secIds[i]%>"  ><button class="button" id="<%=secIds[i]%>3"></button> <button class="button" id="<%=secIds[i]%>4"></button><button class="button" id="<%=secIds[i]%>5"></button></td>
-                </tr>
-            <%}%>
-          </tbody>
-        </table>
-    <%}%>
+    
 </div>
 
 
