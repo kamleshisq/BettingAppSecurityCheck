@@ -2472,7 +2472,50 @@ socket.on('connect', () => {
 
 
     if(pathname === "/exchange_sports/tennis"){
-        console.log("Working")
+        function marketId(){
+            $(document).ready(function() {
+                var ids = [];
+          
+                $(".name1").each(function() {
+                  ids.push(this.id);
+                });
+                // console.log(ids)
+                socket.emit("marketId", ids)
+              });
+              setTimeout(()=>{
+                marketId()
+              }, 500)
+        }
+        marketId()
+
+        socket.on("marketId", async(data) => {
+            $(document).ready(function() {
+          
+                $(".0").each(function() {
+                let id = this.id
+                const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[0].layPrice1}`
+                });
+
+                $(".1").each(function() {
+                    let id = this.id
+                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                    this.innerHTML = `${foundItem.odds[1].backPrice1}, ${foundItem.odds[1].layPrice1}`
+                });
+
+                $(".2").each(function() {
+                    let id = this.id
+                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                    this.innerHTML = `${foundItem.odds[2].backPrice1}, ${foundItem.odds[2].layPrice1}`
+                });
+
+            })
+
+            $(document).on("click", ".click", function(){
+                window.location.href = `/exchange_sports/live_match?id=${this.id}`
+            })
+            
+        })
     }
 
 
