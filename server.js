@@ -968,7 +968,7 @@ io.on('connection', (socket) => {
     //For Promotion//
 
     socket.on("PromotionId", async(data) => {
-        let ads = await Promotion.findById(data)
+        let ads = await Promotion.findByIdAndUpdate(data, {$inc:{click:1}})
         socket.emit("PromotionId", ads)
     })
     socket.on("PromotionIdByData", async(data) => {
