@@ -570,6 +570,7 @@ const hashedOutput = SHA256(privateKey, textToSign);
 
 exports.getPromotionPage = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find()
+    console.log(data)
     res.status(200).render("./promotion/promotion",{
         title:"Promotion",
         data
