@@ -296,6 +296,7 @@ socket.on('connect', () => {
                         "<th>Downlevel Balance</th>"+
                         "<th>Client P/L</th>"+
                         "<th>Upline P/L</th>"+
+                        "<th>Exposure Limit</th>"+
                         "<th>Exposure</th>"+
                         "<th>Lifetime Credit</th>"+
                     " <th>Lifetime Deposite</th>"+
@@ -330,6 +331,7 @@ socket.on('connect', () => {
                     <td> ${response[i].downlineBalance}</td>
                     <td style="color:#FE3030;"> ${response[i].clientPL}</td>
                     <td> ${response[i].uplinePL}</td>
+                    <td> ${response[i].exposureLimit}</td>
                     <td> ${response[i].exposure}</td>
         
                     <td> ${response[i].lifeTimeCredit}</td>
