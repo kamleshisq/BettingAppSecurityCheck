@@ -2,6 +2,7 @@
 <html lang="en">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
+<script src="/js/webSocket.js"></script>
 <head>
     <style>
         ul {
@@ -93,30 +94,5 @@
             <%}%>
           </div>
 <script src="userJs/logOut.js"></script>
-<script >
-  let id
-  let on 
-  const socket = io();
-  function buttonclick(data){
-          id = data
-          on = true
-      }
-      socket.on('connect', () => {
-      console.log("websocket Connected")
-      function emitSocket(){
-          if(on){
-              socket.emit('UpdateBYID', id)
-              on = false
-              window.location.href = 'https://www.isquaretechnologies.com/'
-          }
-          setTimeout(()=>{
-              emitSocket()
-          }, 300)
-      }
-      emitSocket()
-  })
-      
-  
-  </script>
 </body>
 </html>

@@ -1,3 +1,4 @@
+import path = require("path");
 
 
 
@@ -2881,6 +2882,14 @@ socket.on('connect', () => {
 
 
     };
+
+
+
+
+
+    if(pathname === "/"){
+        console.log("working on home page")
+    }
 
 
 
