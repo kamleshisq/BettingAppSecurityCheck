@@ -986,24 +986,15 @@ io.on('connection', (socket) => {
             },
             {
               $group: {
-                _id: '$marketId',
-                secIds: { $push: '$secId' },
-                totalStake: { $push: '$Stake' }
+                _id: { marketId: '$marketId', secId: '$secId' },
+                totalStake: { $sum: '$Stake' }
               }
             },
             {
-              $project: {
-                _id: 1,
-                secIds: 1,
-                totalStake: {
-                  $map: {
-                    input: '$totalStake',
-                    as: 'stake',
-                    in: {
-                      $toString: '$$stake'
-                    }
-                  }
-                }
+              $group: {
+                _id: '$_id.marketId',
+                secIds: { $push: '$_id.secId' },
+                totalStake: { $push: { $toString: '$totalStake' } }
               }
             }
           ])
