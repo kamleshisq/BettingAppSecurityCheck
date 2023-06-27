@@ -405,9 +405,9 @@ $(document).on('click','.promotionDetails', function(){
         form.find('input[name = "check"]').attr("checked", "checked");
     }
     if(PMD.video){
-        form.find('#img').html(`<video src="img/${PMD.position}.mp4" type="video/mp4" height=100 width=100>`)
+        form.find('#img').html(`<video src="../img/${PMD.position}.mp4" type="video/mp4" height=100 width=100>`)
     }else{
-        form.find('#img').html(`<img src="img/${PMD.position}.png" height=100 width=100>`)
+        form.find('#img').html(`<img src="../img/${PMD.position}.png" height=100 width=100>`)
     }
 });
 
