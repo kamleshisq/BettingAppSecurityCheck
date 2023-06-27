@@ -2898,6 +2898,13 @@ socket.on('connect', () => {
     }
 
 
+    if(pathname === "/admin/promotion"){
+        $(document).on('click','.promotionDetails', function(){
+            let id = $(this).attr('id')
+            console.log(id)
+        });
+    }
+
 
 
 
