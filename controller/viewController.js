@@ -310,9 +310,11 @@ exports.registration = catchAsync(async(req, res, next) => {
 
 exports.userdashboard = catchAsync(async(req, res, next) => {
     let user = req.currentUser
+    const data = await promotionModel.find()
     // console.log(user)
     res.status(200).render("./user/userDashboard",{
-        user
+        user,
+        data
     })
 })
 
