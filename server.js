@@ -986,20 +986,15 @@ io.on('connection', (socket) => {
             },
             {
               $group: {
-                _id: { marketId: '$marketId', secId: '$secId' },
-                totalStake: { $sum: '$Stake' }
-              }
-            },
-            {
-              $group: {
-                _id: '$_id.marketId',
-                secIds: { $push: '$_id.secId' },
-                totalStake: { $push: { $toString: '$totalStake' } }
+                _id: '$secId',
+                totalStake: { $sum: '$Stake' },
+                count: { $sum: 1 }
               }
             }
           ])
             .then(result => {
-              socket.emit("aggreat", result)
+                console.log(result)
+            //   socket.emit("aggreat", result)
             })
     })
 

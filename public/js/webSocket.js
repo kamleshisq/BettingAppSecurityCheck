@@ -2939,7 +2939,7 @@ socket.on('connect', () => {
         
 
         socket.on("aggreat", async(data) => {
-            console.log(data)
+            
         })
     }
 
