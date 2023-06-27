@@ -21,6 +21,8 @@ async function placeBet(data){
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
     if(check.availableBalance < data.data.stake){
         return "You do not have sufficient balance for bet"
+    }else if(check.exposureLimit === exposure){
+        return "Please try again later, Your exposure Limit is full"
     }
     let betLimit
     if(data.data.spoetId){
@@ -103,7 +105,7 @@ let betOn = runnersData.find(item => item.secId == data.data.secId)
     await betmodel.create(betPlaceData)
     await accountStatementByUserModel.create(Acc)
     let parentUser
-    let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{balance: -data.data.stake, availableBalance: -data.data.stake, myPL: -data.data.stake, Bets : 1}})
+    let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{balance: -data.data.stake, availableBalance: -data.data.stake, myPL: -data.data.stake, Bets : 1, exposure:data.data.stake}})
     if(!user){
         return "There is no user with that id"
     }
