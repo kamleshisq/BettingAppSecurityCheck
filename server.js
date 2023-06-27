@@ -999,7 +999,9 @@ io.on('connection', (socket) => {
                   $map: {
                     input: '$totalStake',
                     as: 'stake',
-                    in: { $toString: '$$stake' }
+                    in: {
+                      $toString: '$$stake'
+                    }
                   }
                 }
               }
