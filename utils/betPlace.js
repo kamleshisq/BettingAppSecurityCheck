@@ -21,7 +21,7 @@ async function placeBet(data){
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
     if(check.availableBalance < data.data.stake){
         return "You do not have sufficient balance for bet"
-    }else if(check.exposureLimit === exposure){
+    }else if(check.exposureLimit === check.exposure){
         return "Please try again later, Your exposure Limit is full"
     }
     let betLimit
