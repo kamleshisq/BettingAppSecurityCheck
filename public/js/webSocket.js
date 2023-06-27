@@ -2928,7 +2928,9 @@ socket.on('connect', () => {
 
 
 
-
+    if(pathname === "/admin/liveMarket"){
+        console.log("Working")
+    }
 
 
 
