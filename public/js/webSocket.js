@@ -2893,7 +2893,7 @@ socket.on('connect', () => {
         })
 
         socket.on("PromotionId", async(data) => {
-            console.log(data)
+            window.location.href = `${data.link}`
         })
     }
 
