@@ -349,6 +349,7 @@ $(document).on('click','.UserDetails',function(){
     form.find('input[name = "name"]').attr('value',userData.name)
     form.find('input[name = "userName"]').attr('value',userData.userName)
     form.find('input[name = "id"]').attr('value',userData._id)
+    form.find('input[name = "exposureLimit"]').attr('value',userData.exposureLimit)
     form.find('select option[value="'+userData.role._id+'"]').attr('selected','selected')
     let rowId = $(this).parent().parent().attr('id')
     // console.log(rowId)
