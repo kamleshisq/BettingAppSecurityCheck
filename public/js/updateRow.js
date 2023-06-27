@@ -27,6 +27,7 @@ export const updateRow = (user,rowId,currentUser) => {
       <td> ${user.downlineBalance}</td>
       <td style="color:#FE3030;"> ${user.clientPL}</td>
       <td> ${user.uplinePL}</td>
+      <td> ${user.exposureLimit}</td>
       <td> ${user.exposure}</td>
 
       <td> ${user.lifeTimeCredit}</td>

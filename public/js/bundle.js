@@ -6008,7 +6008,7 @@ var updateRow = function updateRow(user, rowId, currentUser) {
   } else {
     html += "".concat(user.userName);
   }
-  html += "</td>\n      <td> ".concat(user.whiteLabel, "</td>\n      <td> ").concat(user.creditReference, "</td>\n      <td> ").concat(user.balance, "</td>\n      <td> ").concat(user.availableBalance, "</td>\n      <td> ").concat(user.downlineBalance, "</td>\n      <td style=\"color:#FE3030;\"> ").concat(user.clientPL, "</td>\n      <td> ").concat(user.uplinePL, "</td>\n      <td> ").concat(user.exposure, "</td>\n\n      <td> ").concat(user.lifeTimeCredit, "</td>\n      <td> ").concat(user.lifeTimeDeposit, "</td>");
+  html += "</td>\n      <td> ".concat(user.whiteLabel, "</td>\n      <td> ").concat(user.creditReference, "</td>\n      <td> ").concat(user.balance, "</td>\n      <td> ").concat(user.availableBalance, "</td>\n      <td> ").concat(user.downlineBalance, "</td>\n      <td style=\"color:#FE3030;\"> ").concat(user.clientPL, "</td>\n      <td> ").concat(user.uplinePL, "</td>\n      <td> ").concat(user.exposureLimit, "</td>\n      <td> ").concat(user.exposure, "</td>\n\n      <td> ").concat(user.lifeTimeCredit, "</td>\n      <td> ").concat(user.lifeTimeDeposit, "</td>");
   if (currentUser.role.authorization.includes('accountControl')) {
     html += "<td><button data-bs-toggle=\"modal\" data-bs-target=\"#myModal\" class=\"Withdraw\"> D/W \n              </button></td>";
   }
