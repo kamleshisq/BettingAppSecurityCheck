@@ -49,8 +49,8 @@
             <li><button class="account"><a href="/exchange_sports/inplay">Exchange</a></button></li>
       </ul>
 
+      <div class="box_section">
       <%for(let i = 0; i < data.length; i++){%>
-        <div class="box_section">
         <%if(data[i].status){%>
             <%if(data[i].video){%>
               <div class="box">
@@ -69,8 +69,8 @@
                 </div>
             <%}%>
             <%}%>
+            <%}%>
           </div>
-    <%}%>
 <script src="userJs/logOut.js"></script>
 <script >
   let id
