@@ -966,6 +966,12 @@ io.on('connection', (socket) => {
     })
 
 
+    //For Promotion//
+
+    socket.on("PromotionId", async(date) => {
+        console.log(data)
+    })
+
 
 
 

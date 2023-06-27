@@ -2889,7 +2889,7 @@ socket.on('connect', () => {
     if(pathname === "/"){
         $(document).on('click', '.foo', async function(){
             let id = $(this).attr('id')
-            console.log(id)
+            socket.emit("PromotionId", id)
         })
     }
 
