@@ -210,9 +210,9 @@ input:checked + .slider:before {
                     <td><%=i + 1%></td>
                     <td class="promotionData" data-bs-dismiss="<%=JSON.stringify(data[i])%>"><%=data[i].position%></td>
                     <%if(data[i].video){%>
-                      <td><video src="img/<%=data[i].position%>.mp4" type="video/mp4" class="form__user-photo"></td>
+                      <td><video src="../img/<%=data[i].position%>.mp4" type="video/mp4" class="form__user-photo"></td>
                     <%}else{%>
-                      <td><img src="img/<%=data[i].position%>.png" alt="img" class="form__user-photo"></td>
+                      <td><img src="../img/<%=data[i].position%>.png" alt="img" class="form__user-photo"></td>
                     <%}%>
                     <td><button data-bs-toggle="modal" data-bs-target="#myModal5" class="promotionDetails"><i class="fa-solid fa-database"></i></button>
                     <button class="Delete" id="<%=data[i].id%>"><i class="fa-solid fa-trash-can" ></i></button></td>
