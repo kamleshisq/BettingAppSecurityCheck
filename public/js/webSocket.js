@@ -2893,7 +2893,7 @@ socket.on('connect', () => {
         })
 
         socket.on("PromotionId", async(data) => {
-            window.location.href = `${data.link}`
+            window.open(`${data.link}`, "_blank");
         })
     }
 
