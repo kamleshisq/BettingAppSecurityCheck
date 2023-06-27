@@ -76,7 +76,7 @@
         <%if(data[i].status){%>
             <%if(data[i].video){%>
               <div class="box">
-                <a id="foo" class="foo" onclick="buttonclick('<%=data[i]._id%>');"  >
+                <a id="<%=data[i]._id%>" class="foo" onclick="buttonclick('<%=data[i]._id%>');"  >
                     <video width="400" controls >
                         <source src="img/<%=data[i].position%>.mp4" type="video/mp4">
                     </video>
@@ -85,7 +85,7 @@
             <%}else{%>
               <div class="box">
             
-                <a id="foo" class="foo"  onclick="buttonclick('<%=data[i]._id%>');">
+                <a id="<%=data[i]._id%>" class="foo"  onclick="buttonclick('<%=data[i]._id%>');">
                     <img src="img/<%=data[i].position%>.png" alt="img"  width="500" height="600"><br>
                 </a>
                 </div>

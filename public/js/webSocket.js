@@ -2887,7 +2887,9 @@ socket.on('connect', () => {
 
 
     if(pathname === "/"){
-        console.log("working on home page")
+        $(document).on('click', '.foo', async function(){
+            console.log("click Working")
+        })
     }
 
 
