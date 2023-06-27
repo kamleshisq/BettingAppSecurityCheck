@@ -50,8 +50,8 @@
       </ul>
 
       <%for(let i = 0; i < data.length; i++){%>
+        <div class="box_section">
         <%if(data[i].status){%>
-          <div class="box_section">
             <%if(data[i].video){%>
               <div class="box">
                 <a id="foo" class="foo" onclick="buttonclick('<%=data[i]._id%>');"  >
@@ -68,8 +68,8 @@
                 </a>
                 </div>
             <%}%>
+            <%}%>
           </div>
-        <%}%>
     <%}%>
 <script src="userJs/logOut.js"></script>
 <script >
