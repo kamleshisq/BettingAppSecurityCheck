@@ -6684,6 +6684,7 @@ $(document).on('submit', ".form-data1", function (e) {
   var form = new FormData();
   form.append('Id', id);
   form.append('position', document.getElementById('name').value);
+  form.append("link", document.getElementById('link').value);
   if (check.checked == true) {
     form.append('status', "on");
   } else {
