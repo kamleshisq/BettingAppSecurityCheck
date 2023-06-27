@@ -6330,24 +6330,20 @@ $(document).on('submit', '.passReset-form', function (e) {
 });
 $(document).on('submit', '#edit-form', /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
-    var form, fd, formDataObj, rowId, user, currentUser;
+    var form, fd, formDataObj, rowId, currentUser;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           e.preventDefault();
           form = $(this)[0];
           fd = new FormData(form);
-          formDataObj = Object.fromEntries(fd.entries()); // console.log(formDataObj);
-          rowId = $('.rowId').attr('data-rowid');
-          _context.next = 7;
-          return (0, _editUser.editUser)(formDataObj);
-        case 7:
-          user = _context.sent;
+          formDataObj = Object.fromEntries(fd.entries());
+          console.log(formDataObj);
+          rowId = $('.rowId').attr('data-rowid'); // const user = await editUser(formDataObj)
           // console.log(user)
-          currentUser = $('#currentUserDetails').data('currentuser');
-          console.log(user);
+          currentUser = $('#currentUserDetails').data('currentuser'); // console.log(user)
           // updateRow(user,rowId,currentUser)
-        case 10:
+        case 7:
         case "end":
           return _context.stop();
       }
