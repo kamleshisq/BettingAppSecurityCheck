@@ -2891,6 +2891,10 @@ socket.on('connect', () => {
             let id = $(this).attr('id')
             socket.emit("PromotionId", id)
         })
+
+        socket.on("PromotionId", async(data) => {
+            console.log(data)
+        })
     }
 
 

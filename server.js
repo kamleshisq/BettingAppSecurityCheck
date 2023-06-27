@@ -17,7 +17,6 @@ const placeBet = require('./utils/betPlace');
 const loginlogs = require('./model/loginLogs');
 const gameModel = require('./model/gameModel');
 const getCrkAndAllData = require("./utils/getSportAndCricketList");
-const { date } = require('joi');
 
 // http(req, res) => {}
 io.on('connection', (socket) => {
@@ -969,7 +968,8 @@ io.on('connection', (socket) => {
     //For Promotion//
 
     socket.on("PromotionId", async(data) => {
-        console.log(data)
+        let ads = await Promotion.findById(data)
+        socket.emit("PromotionId", ads)
     })
 
 
