@@ -6661,23 +6661,7 @@ $(document).on('click', '.RoleDetails', function () {
 });
 // console.log($(".RoleDetails"))
 // console.log($(".load"))
-$(document).on('click', '.promotionDetails', function () {
-  var modleName = $(this).data('bs-target');
-  var form = $(modleName).find('.form-data1');
-  var PMD = $(this).parent('td').siblings('.promotionData').data('bs-dismiss');
-  form.attr('id', PMD._id);
-  form.find('input[name = "check"]').removeAttr('checked');
-  form.find('input[name = "name"]').attr('value', PMD.position);
-  form.find('input[name = "link"]').attr('value', PMD.link);
-  if (PMD.status) {
-    form.find('input[name = "check"]').attr("checked", "checked");
-  }
-  if (PMD.video) {
-    form.find('#img').html("<video src=\"../img/".concat(PMD.position, ".mp4\" type=\"video/mp4\" height=100 width=100>"));
-  } else {
-    form.find('#img').html("<img src=\"../img/".concat(PMD.position, ".png\" height=100 width=100>"));
-  }
-});
+
 $(document).on('submit', ".form-data1", function (e) {
   e.preventDefault();
   var id = $('.form-data1').attr('id');

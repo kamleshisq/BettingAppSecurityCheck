@@ -2901,8 +2901,27 @@ socket.on('connect', () => {
     if(pathname === "/admin/promotion"){
         $(document).on('click','.promotionDetails', function(){
             let id = $(this).attr('id')
-            console.log(id)
+            socket.emit("PromotionIdByData", id)
         });
+
+        socket.on("PromotionIdByData", async(data) => {
+            
+                let modleName = "#myModal5"
+                let form = $(modleName).find('.form-data1')
+                let PMD = data
+                form.attr('id', PMD._id);
+                form.find('input[name = "check"]').removeAttr('checked');
+                form.find('input[name = "name"]').attr('value',PMD.position)
+                form.find('input[name = "link"]').attr('value',PMD.link)
+                if(PMD.status){
+                    form.find('input[name = "check"]').attr("checked", "checked");
+                }
+                if(PMD.video){
+                    form.find('#img').html(`<video src="../img/${PMD.position}.mp4" type="video/mp4" height=100 width=100>`)
+                }else{
+                    form.find('#img').html(`<img src="../img/${PMD.position}.png" height=100 width=100>`)
+                }
+        })
     }
 
 

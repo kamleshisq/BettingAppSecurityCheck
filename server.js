@@ -971,7 +971,10 @@ io.on('connection', (socket) => {
         let ads = await Promotion.findById(data)
         socket.emit("PromotionId", ads)
     })
-
+    socket.on("PromotionIdByData", async(data) => {
+        let ads = await Promotion.findById(data)
+        socket.emit("PromotionIdByData", ads)
+    })
 
 
 
