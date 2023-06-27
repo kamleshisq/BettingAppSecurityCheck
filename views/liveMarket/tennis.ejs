@@ -8,8 +8,9 @@
               <h3 class="head-hr"><%= liveTennis[i].eventData.name %></h3>
               <a class="btn-filter" href="/admin/viewall?id=<%=liveTennis[i].eventData.eventId%>">View Details &nbsp;<i class="fa-solid fa-chevron-right"></i></a>
             </div>
+            <%if(liveTennis[i].marketList.match_odd != null){%>
               <div class="video-section-1">
-                
+              
                 <div class="video-play">
                   
                   <div class="hed-data">
@@ -28,34 +29,29 @@
                           </tr>
                       </thead>
                       <tbody>
-                        <tr style="text-align: center;" class="blue">
-                          
-                          <td style="text-align: left;">Pisa</td>
-                          <td style="color:#46BCAA;">46.00</td>
-                          <td>00</td>
-                        </tr>
-                        <tr style="text-align: center;">
-                          
-                          <td style="text-align: left;">Brescia</td>
-                          <td style="color:#FE3030;">-100.00</td>
-                          <td>00</td>
-                        </tr>
-                        <tr style="text-align: center;" class="blue">
-                          
-                          <td style="text-align: left;">The Draw</td>
-                          <td style="color:#FE3030;">-100.00</td>
-                          <td>00</td>
-                        </tr>
-                       
+                      <% let runners = JSON.parse(liveTennis[i].marketList.match_odd.runners); %>
+                      <% const runners1 = []; %>
+                      <%const secIds = []; %>
+                      <%runners.forEach(item => {%>
+                          <%runners1.push(item.runner);%>
+                          <%secIds.push(item.secId);%>
+                      <%});%>
+                      <%for(let j = 0; j < runners1.length; j++){%>
+                        <%if((j%2)===1){%>
+                          <tr style="text-align: center;" class="blue">
+                        <%}else{%>
+                          <tr style="text-align: center;">
+                        <%}%>
+                        <td style="text-align: left;"><%=runners1[j]%></td>
+                        <td style="color:#46BCAA;" id="<%=secIds[j]%>"></td>
+                        <td id="<%=secIds[j]%>B">00</td>
+                      <%}%>
                       </tbody>
                     </table>
                   </div>
                 </div>
-        
-                
-        
-        
-            </div> 
+            </div>
+            <%}%>
           </div> 
           </section>
     <%}%>
