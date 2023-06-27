@@ -53,8 +53,8 @@ e.preventDefault();
 const form = document.getElementById('Add-User');
 let data = new FormData(form) 
 const formDataObj = Object.fromEntries(data.entries());
-// console.log(formDataObj)
-createUser(formDataObj)
+console.log(formDataObj)
+// createUser(formDataObj)
 });
 
 $(document).on('click','.updateBetLimit',function(e){
