@@ -977,6 +977,27 @@ io.on('connection', (socket) => {
     })
 
 
+    socket.on("aggreat", async(data) => {
+        Bet.aggregate([
+            {
+              $group: {
+                _id: '$marketId',
+                secIds: { $push: '$secId' },
+                totalStake: { $push: '$Stake' }
+              }
+            }
+          ])
+            .then(result => {
+              const formattedResult = result.map(item => ({
+                _id: item._id,
+                secIds: item.secIds,
+                totalStake: item.totalStake
+              }));
+              console.log(formattedResult);
+            })
+    })
+
+
 
 })
 
