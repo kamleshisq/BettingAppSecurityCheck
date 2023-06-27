@@ -200,6 +200,8 @@ input:checked + .slider:before {
                     <tr style="text-align: center;font-size: 11px;">
                       <th>S.No</th>
                       <th>Name</th>
+                      <th>Link</th>
+                      <th>clik</th>
                       <th>Image</th>
                       <th>Actions</th>
                     </tr>
@@ -209,6 +211,8 @@ input:checked + .slider:before {
                   <tr style="text-align: center;" class="blue">
                     <td><%=i + 1%></td>
                     <td class="promotionData" ><%=data[i].position%></td>
+                    <td  ><%=data[i].link%></td>
+                    <td  ><%=data[i].clik%></td>
                     <%if(data[i].video){%>
                       <td><video src="../img/<%=data[i].position%>.mp4" type="video/mp4" class="form__user-photo"></td>
                     <%}else{%>
