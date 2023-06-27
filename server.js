@@ -980,20 +980,33 @@ io.on('connection', (socket) => {
     socket.on("aggreat", async(data) => {
         Bet.aggregate([
             {
+              $match: {
+                status: 'OPEN'
+              }
+            },
+            {
               $group: {
                 _id: '$marketId',
-                secIds: { $push: '$secId' },
+                secIds: { $addToSet: '$secId' },
                 totalStake: { $push: '$Stake' }
+              }
+            },
+            {
+              $project: {
+                _id: 1,
+                secIds: 1,
+                totalStake: {
+                  $reduce: {
+                    input: '$totalStake',
+                    initialValue: 0,
+                    in: { $sum: ['$$value', '$$this'] }
+                  }
+                }
               }
             }
           ])
             .then(result => {
-              const formattedResult = result.map(item => ({
-                _id: item._id,
-                secIds: item.secIds,
-                totalStake: item.totalStake
-              }));
-              console.log(formattedResult);
+              console.log(result);
             })
     })
 
