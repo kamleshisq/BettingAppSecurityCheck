@@ -2929,7 +2929,14 @@ socket.on('connect', () => {
 
 
     if(pathname === "/admin/liveMarket"){
-        socket.emit("aggreat", "data")
+        function marketId(){
+            socket.emit("aggreat", "data")
+              setTimeout(()=>{
+                marketId()
+              }, 500)
+        }
+        marketId()
+        
 
         socket.on("aggreat", async(data) => {
             console.log(data)
