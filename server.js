@@ -999,7 +999,7 @@ io.on('connection', (socket) => {
             }
           ])
             .then(result => {
-              console.log(result);
+              socket.emit("aggreat", result)
             })
     })
 

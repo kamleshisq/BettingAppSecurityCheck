@@ -2930,6 +2930,10 @@ socket.on('connect', () => {
 
     if(pathname === "/admin/liveMarket"){
         socket.emit("aggreat", "data")
+
+        socket.on("aggreat", async(data) => {
+            console.log(data)
+        })
     }
 
 
