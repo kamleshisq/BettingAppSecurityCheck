@@ -968,7 +968,7 @@ io.on('connection', (socket) => {
 
     //For Promotion//
 
-    socket.on("PromotionId", async(date) => {
+    socket.on("PromotionId", async(data) => {
         console.log(data)
     })
 
