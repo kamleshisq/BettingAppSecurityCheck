@@ -382,30 +382,31 @@ exports.getUser = catchAsync(async(req, res, next) => {
 })
 
 exports.updateUser = catchAsync(async(req, res, next) => {
-    console.log(req.body)
-    // const user = await User.findById(req.body.id)
-    // const role = await Role.findById(req.body.role)
-    // if(!user){
-    //     return(next(new AppError('user not find with this id',400)))
-    // }
-    // if(user.role.role_level < req.currentUser.role.role_level || role.role_level < req.currentUser.role.role_level){
-    //     return(next(new AppError('You do not have permission to perform this action',400)))
-    // }
-    // let data = {
-    //     name:req.body.name,
-    //     userName:req.body.userName,
-    //     role_type:role.role_type,
-    //     role:req.body.role,
-    //     roleName:role.roleName
-    // }
+    // console.log(req.body)
+    const user = await User.findById(req.body.id)
+    const role = await Role.findById(req.body.role)
+    if(!user){
+        return(next(new AppError('user not find with this id',400)))
+    }
+    if(user.role.role_level < req.currentUser.role.role_level || role.role_level < req.currentUser.role.role_level){
+        return(next(new AppError('You do not have permission to perform this action',400)))
+    }
+    let data = {
+        name:req.body.name,
+        userName:req.body.userName,
+        role_type:role.role_type,
+        role:req.body.role,
+        roleName:role.roleName,
+        exposureLimit:req.body.exposureLimit
+    }
 
-    // const updatedUser = await User.findByIdAndUpdate(req.body.id,data,{new:true})
-    // // console.log(updatedUser)
-    // res.status(200).json({
-    //     status:'success',
-    //     user:updatedUser
+    const updatedUser = await User.findByIdAndUpdate(req.body.id,data,{new:true})
+    // console.log(updatedUser)
+    res.status(200).json({
+        status:'success',
+        user:updatedUser
 
-    // })
+    })
 });
 
 exports.createUser10000 = catchAsync(async(req, res, next) => {
