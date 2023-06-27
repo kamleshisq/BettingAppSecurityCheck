@@ -2888,7 +2888,8 @@ socket.on('connect', () => {
 
     if(pathname === "/"){
         $(document).on('click', '.foo', async function(){
-            console.log("click Working")
+            let id = $(this).attr('id')
+            console.log(id)
         })
     }
 
