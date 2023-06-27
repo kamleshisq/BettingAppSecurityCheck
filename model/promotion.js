@@ -23,6 +23,10 @@ const promotionSchema = mongoose.Schema({
     click:{
         type:Number,
         default:0
+    },
+    link:{
+        type:String,
+        required:true
     }
 });
 
