@@ -39,7 +39,6 @@ exports.createPosition = catchAsync(async(req, res, next) => {
 });
 
 exports.updatePosition = catchAsync(async(req, res, next) => {
-    console.log(req.body)
     let data = {}
     if(req.files){
         if(req.files.image.mimetype.startsWith('image')){
