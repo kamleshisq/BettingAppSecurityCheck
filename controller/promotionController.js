@@ -28,6 +28,7 @@ exports.createPosition = catchAsync(async(req, res, next) => {
 
         data.position = req.body.position
         data.Image = req.body.position
+        data.link = req.body.link
         const newPosition = await promotion.create(data)
         res.status(200).json({
             status:"success",

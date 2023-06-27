@@ -419,6 +419,7 @@ $(document).on('submit', '.form-data2', function(e){
     e.preventDefault()
     const form = new FormData();
     form.append('position', document.getElementById('name1').value)
+    form.append('link', document.getElementById('url1').value)
     form.append('image', document.getElementById('file1').files[0])
     createPromotion(form)
 });
