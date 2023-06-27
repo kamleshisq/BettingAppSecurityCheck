@@ -401,6 +401,7 @@ $(document).on('click','.promotionDetails', function(){
     form.attr('id', PMD._id);
     form.find('input[name = "check"]').removeAttr('checked');
     form.find('input[name = "name"]').attr('value',PMD.position)
+    form.find('input[name = "link"]').attr('value',PMD.link)
     if(PMD.status){
         form.find('input[name = "check"]').attr("checked", "checked");
     }
