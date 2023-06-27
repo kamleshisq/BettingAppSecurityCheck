@@ -6346,8 +6346,9 @@ $(document).on('submit', '#edit-form', /*#__PURE__*/function () {
         case 7:
           user = _context.sent;
           // console.log(user)
-          currentUser = $('#currentUserDetails').data('currentuser'); // console.log(currentUser)
-          (0, _updateRow.updateRow)(user, rowId, currentUser);
+          currentUser = $('#currentUserDetails').data('currentuser');
+          console.log(currentUser);
+          // updateRow(user,rowId,currentUser)
         case 10:
         case "end":
           return _context.stop();

@@ -93,8 +93,8 @@ $(document).on('submit','#edit-form',async function(e){
     const user = await editUser(formDataObj)
     // console.log(user)
     let currentUser = $('#currentUserDetails').data('currentuser')
-    // console.log(currentUser)
-    updateRow(user,rowId,currentUser)
+    console.log(currentUser)
+    // updateRow(user,rowId,currentUser)
 });
 
 $(document).on('submit','.form-betLimit',async function(e){
