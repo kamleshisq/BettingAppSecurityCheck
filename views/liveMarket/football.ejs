@@ -1,0 +1,68 @@
+<div id="Cricket" class="tabcontent" style="margin-bottom:15px">
+  <div class="row" style="padding:10px 0px">
+  <%for(let i = 0; i < liveFootBall.length; i++){%>
+      <section style="background-color: #fff;padding: 10px;border-radius:10px;margin-top: 15px;">
+          <div class="container-fluid">
+          <div class="new-head">
+            <h3 class="head-hr"><%= liveFootBall[i].eventData.name %></h3>
+            <a class="btn-filter" href="/admin/viewall?id=<%=liveFootBall[i].eventData.eventId%>">View Details &nbsp;<i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+            <div class="video-section-1">
+              
+              <div class="video-play">
+                
+                <div class="hed-data">
+                  <h3 class="fix-h3 live-head"> MATCH ODDS </h3>
+                  
+              </div>
+                <div class="full-adta">
+                  <table>
+                    <thead>
+                        <tr style="text-align: center;">
+                        
+                          <th style="text-align: left;">OUTCOMES/RUNNER</th>
+                          <th>EXPOSURE</th>
+                          <th>TOTAL BETS</th>
+                          
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="text-align: center;" class="blue">
+                        
+                        <td style="text-align: left;">Pisa</td>
+                        <td style="color:#46BCAA;">46.00</td>
+                        <td>00</td>
+                      </tr>
+                      <tr style="text-align: center;">
+                        
+                        <td style="text-align: left;">Brescia</td>
+                        <td style="color:#FE3030;">-100.00</td>
+                        <td>00</td>
+                      </tr>
+                      <tr style="text-align: center;" class="blue">
+                        
+                        <td style="text-align: left;">The Draw</td>
+                        <td style="color:#FE3030;">-100.00</td>
+                        <td>00</td>
+                      </tr>
+                     
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+      
+              
+      
+      
+          </div> 
+        </div> 
+        </section>
+  <%}%> 
+    
+
+
+    
+
+</div>
+<!-- <button class="btn btn-view-all">View All</button> -->
+</div>
