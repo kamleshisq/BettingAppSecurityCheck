@@ -987,7 +987,7 @@ io.on('connection', (socket) => {
             {
               $group: {
                 _id: '$marketId',
-                secIds: { $addToSet: '$secId' },
+                secIds: { $push: '$secId' },
                 totalStake: { $push: '$Stake' }
               }
             },
@@ -996,10 +996,10 @@ io.on('connection', (socket) => {
                 _id: 1,
                 secIds: 1,
                 totalStake: {
-                  $reduce: {
+                  $map: {
                     input: '$totalStake',
-                    initialValue: 0,
-                    in: { $sum: ['$$value', '$$this'] }
+                    as: 'stake',
+                    in: { $toString: '$$stake' }
                   }
                 }
               }
