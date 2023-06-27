@@ -424,8 +424,8 @@ $(document).on('submit', ".form-data1", function(e){
         form.append('status',"off")
     }
     form.append('image',document.getElementById('file').files[0])
-    console.log(form)
-    // updatePromotion(form)
+    // console.log(form)
+    updatePromotion(form)
 });
 
 
