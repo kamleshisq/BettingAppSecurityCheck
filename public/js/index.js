@@ -91,7 +91,7 @@ $(document).on('submit','#edit-form',async function(e){
     const user = await editUser(formDataObj)
     // console.log(user)
     let currentUser = $('#currentUserDetails').data('currentuser')
-    console.log(currentUser)
+    console.log(user)
     // updateRow(user,rowId,currentUser)
 });
 
