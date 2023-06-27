@@ -82,8 +82,6 @@ $(document).on('submit','.passReset-form',function(e){
 
 
 $(document).on('submit','#edit-form',async function(e){
-    // $('#edit-form').on('submit', async function(e){
-    // console.log("working")
     e.preventDefault();
     let form = $(this)[0];
     let fd = new FormData(form);

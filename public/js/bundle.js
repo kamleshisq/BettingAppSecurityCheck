@@ -6334,8 +6334,6 @@ $(document).on('submit', '#edit-form', /*#__PURE__*/function () {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          // $('#edit-form').on('submit', async function(e){
-          // console.log("working")
           e.preventDefault();
           form = $(this)[0];
           fd = new FormData(form);
