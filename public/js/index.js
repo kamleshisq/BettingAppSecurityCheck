@@ -86,13 +86,13 @@ $(document).on('submit','#edit-form',async function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     let formDataObj = Object.fromEntries(fd.entries());
-    console.log(formDataObj);
+    // console.log(formDataObj);
     let rowId = $('.rowId').attr('data-rowid')
-    // const user = await editUser(formDataObj)
+    const user = await editUser(formDataObj)
     // console.log(user)
     let currentUser = $('#currentUserDetails').data('currentuser')
     // console.log(user)
-    // updateRow(user,rowId,currentUser)
+    updateRow(user,rowId,currentUser)
 });
 
 $(document).on('submit','.form-betLimit',async function(e){
