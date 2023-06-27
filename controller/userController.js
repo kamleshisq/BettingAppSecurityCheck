@@ -40,11 +40,12 @@ exports.createUser = catchAsync(async(req, res, next)=>{
         req.body.parentUsers = req.currentUser.parentUsers
     }
     req.body.parentUsers.push(req.currentUser._id)
-    const newUser = await User.create(req.body);
-    res.status(200).json({
-        status:'success',
-        User: newUser
-    })
+    console.log(req.body)
+    // const newUser = await User.create(req.body);
+    // res.status(200).json({
+    //     status:'success',
+    //     User: newUser
+    // })
 })
 
 exports.deletUser = catchAsync(async(req, res, next) =>{
@@ -424,7 +425,7 @@ exports.createUser10000 = catchAsync(async(req, res, next) => {
     // console.log('working')
     let array = []
     array.push("648193f1cb86f71eede0b201")
-    console.log(array)
+    // console.log(array)
     for(let i = 0; i < 15000; i++){
         let x = generateString(7)
         // console.log(x)
