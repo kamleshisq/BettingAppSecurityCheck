@@ -2,7 +2,7 @@ const userModel = require('../model/userModel');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 const betModel = require("../model/betmodel");
-// const betLimitModel = require("../model/betLimitModel");
+const betLimitModel = require("../model/betLimitModel");
 const accountStatement = require('../model/accountStatementByUserModel');
 const gameModel = require("../model/gameModel");
 const path = require('path');
@@ -59,15 +59,27 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 
 exports.betrequest = catchAsync(async(req, res, next) => {
     const check = await userModel.findById(req.body.userId)
+    let betLimit
+    if(req.body.sportId){
+        betLimit = await betLimitModel.findOne({type:"Sport"})
+    }else{
+        betLimit = await betLimitModel.findOne({type:"Casino"})
+    }
     if(check.exposureLimit === check.exposure){
         console.log("Working")
         await alert.alert("Please try again later, Your exposure Limit is full")
         res.status(404).json({
             "status":"RS_ERRORbalance"
         })
+    }else if(betLimit.min_stake > req.body.debitAmount ){
+        return `Invalide stake, Please play with atleast minimum stake (${betLimit.min_stake})`
+    }else if(betLimit.max_stake < req.body.debitAmount){
+        return `Invalide stake, Please play with atmost maximum stake (${betLimit.max_stake})`
+    }else if(betLimit.max_odd < req.body.oddValue ){
+        return `Invalide odds valur, Please play with atmost maximum odds (${betLimit.max_odd})`
     }
     // console.log(req.body)
-    let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1}})
+    let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1, exposure:req.body.debitAmount}})
     // let betDetails = await betLimitModel.find()
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let date = Date.now()
@@ -168,8 +180,8 @@ exports.betResult = catchAsync(async(req, res, next) =>{
     let user;
     let balance;
     if(req.body.creditAmount === 0){
-        await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"LOSS"})
-        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{Loss:1}})
+        let betforStake = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"LOSS"})
+        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{Loss:1, exposure: -betforStake.Stake}})
         console.log(user)
         if(!user){
             if(clientIP == "::ffff:3.9.120.247"){
@@ -196,9 +208,9 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         // }
         // await accountStatement.findOneAndUpdate({transactionId:req.body.transactionId},Acc)
     }else{
-        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance: req.body.creditAmount, availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1}});
-        let parentUser
         let bet = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:req.body.creditAmount});
+        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance: req.body.creditAmount, availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1, exposure:-bet.Stake}});
+        let parentUser
         let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
         let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/WON `
         if(user.parentUsers.length < 2){
@@ -284,7 +296,8 @@ exports.rollBack = catchAsync(async(req, res, next) => {
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let user;
     let balance;
-    user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance:req.body.rollbackAmount, availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount}});
+    let parentUser;
+    user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance:req.body.rollbackAmount, availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount, exposure:-req.body.rollbackAmount}});
     // console.log(user.parentUsers)
     if(!user){
         if(clientIP == "::ffff:3.9.120.247"){
@@ -299,16 +312,48 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             })
         }
     }else{
-        await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance:req.body.rollbackAmount, downlineBalance:req.body.rollbackAmount}})
+        if(user.parentUsers.length < 2){
+            // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
+            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -req.body.rollbackAmount, downlineBalance: req.body.rollbackAmount}})
+        }else{
+            await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: req.body.rollbackAmount, downlineBalance: req.body.rollbackAmount}})
+            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-req.body.rollbackAmount, downlineBalance: req.body.rollbackAmount}})
+        }
         balance = user.balance + req.body.rollbackAmount;
         let bet =  await betModel.findOne({transactionId:req.body.transactionId})
         let acc = await accountStatement.find({transactionId:req.body.transactionId})
         if(bet){
             await betModel.findByIdAndUpdate(bet._id,{returns:0, status:"CANCEL"})
         }
-
+        let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
+        let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/CANCEL `
         if(acc){
-            await accountStatement.findByIdAndDelete(acc._id)
+            let Acc2 = {
+                "user_id":parentUser._id,
+                "description": description2,
+                "creditDebitamount" : -req.body.rollbackAmount,
+                "balance" : parentUser.availableBalance - req.body.rollbackAmount,
+                "date" : Date.now(),
+                "userName" : parentUser.userName,
+                "role_type" : parentUser.role_type,
+                "Remark":"-",
+                "stake": req.body.rollbackAmount,
+                "transactionId":req.body.transactionId
+            }
+            let Acc = {
+                "user_id":req.body.userId,
+                "description": description,
+                "creditDebitamount" : req.body.rollbackAmount,
+                "balance" : user.availableBalance + req.body.rollbackAmount,
+                "date" : Date.now(),
+                "userName" : user.userName,
+                "role_type" : user.role_type,
+                "Remark":"-",
+                "stake": req.body.rollbackAmount,
+                "transactionId":req.body.transactionId
+            }
+            await accountStatement.create(Acc)
+            await accountStatement.create(Acc2)
         }
         console.log(balance)
         if(clientIP == "::ffff:3.9.120.247"){
