@@ -1030,6 +1030,11 @@ io.on('connection', (socket) => {
     socket.on('updateVerticalMenu', async(data) => {
         let data1
         try{
+            if(data.check){
+                data.status = true
+            }else{
+                data.status = false
+            }
             data1 = await verticalMenuModel.findByIdAndUpdate(data.id, data)
             socket.emit("updateVerticalMenu", data1)
         }catch(err){
