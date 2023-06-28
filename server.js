@@ -1042,6 +1042,15 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on("deleteVerticalMenu", async(data) => {
+        try{
+            await verticalMenuModel.findByIdAndDelete(data)
+            socket.emit("deleteVerticalMenu", "done")
+        }catch(err){
+            console.log(err)
+        }
+    })
+
 
 })
 

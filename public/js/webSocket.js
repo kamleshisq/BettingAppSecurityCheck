@@ -3012,7 +3012,17 @@ socket.on('connect', () => {
                     },500)
         })
 
+        $(document).on('click', ".deleteVerticalMenuDetails", function(e){
+            let id = $(this).attr('id')
+            socket.emit("deleteVerticalMenu", id)
+        })
 
+        socket.on("deleteVerticalMenu", async(data) => {
+            alert("Menu Deleted Successfully")
+            window.setTimeout(()=>{
+                window.location = '/admin/cms'
+            },500)
+        })
     }
 
 
