@@ -8,7 +8,13 @@ exports.createVerticalMenu = catchAsync(async(req, res, next) => {
         req.body.num = (allMenu.length + 1)
     }
     console.log(req.body)
-    let newMenu = await verticalMenuModel.create(req.body);
+    let newMenu
+    try{
+        newMenu = await verticalMenuModel.create(req.body);
+        
+    }catch(err){
+        console.log(err)
+    }
     console.log(newMenu)
     res.status(200).json({
         status:"success",
