@@ -1000,6 +1000,7 @@ io.on('connection', (socket) => {
 
 
     module.exports = function alert(data){
+        console.log(data)
         socket.emit("alertMessage", data)
     }
 

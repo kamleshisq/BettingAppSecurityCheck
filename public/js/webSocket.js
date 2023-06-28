@@ -35,7 +35,9 @@ socket.on('connect', () => {
 
    
 
-
+    socket.on("alertMessage", async(data) => {
+        alert(data)
+    })
 
     if(pathname == "/admin/updateRole"){
         let x = "121"
