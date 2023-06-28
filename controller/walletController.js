@@ -168,6 +168,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
 });
 
 exports.betResult = catchAsync(async(req, res, next) =>{
+    const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let check = await userModel.findById(req.body.userId);
     if(!check){
         if(clientIP == "::ffff:3.9.120.247"){
@@ -182,7 +183,6 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             })
         }
     }
-    const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let game = {}
     if(req.body.gameId){
         game = await gameModel.findOne({game_id:req.body.gameId})
