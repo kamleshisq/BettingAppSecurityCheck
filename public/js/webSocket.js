@@ -2995,7 +2995,7 @@ socket.on('connect', () => {
                 }
         })
 
-        $(document).on('submit', ".form-data", function(e){
+        $(document).on('submit', ".form-data1", function(e){
             e.preventDefault()
             let form = $(this)[0];
             let fd = new FormData(form);
