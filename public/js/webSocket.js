@@ -3023,6 +3023,16 @@ socket.on('connect', () => {
                 window.location = '/admin/cms'
             },500)
         })
+
+
+        //FOR HORIZONTAL MENU//
+        $(document).on('submit', ".form-data2", function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            console.log(data)
+        })
     }
 
 
