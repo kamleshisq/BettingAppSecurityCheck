@@ -17,6 +17,7 @@ const placeBet = require('./utils/betPlace');
 const loginlogs = require('./model/loginLogs');
 const gameModel = require('./model/gameModel');
 const getCrkAndAllData = require("./utils/getSportAndCricketList");
+const { date } = require('joi');
 
 // http(req, res) => {}
 io.on('connection', (socket) => {
@@ -1003,6 +1004,22 @@ io.on('connection', (socket) => {
         console.log(data)
         socket.emit("alertMessage", data)
     }
+
+
+    socket.on("createVerticalMenu", async(data) => {
+        let fullUrl = "http://127.0.0.1/api/v1/verticalMenu/createVerticalMenu"
+        fetch(fullUrl, {
+            method: 'POST',
+            headers: { 
+                'Authorization': `Bearer ` + data.LOGINDATA.LOGINTOKEN,
+                'Content-Type': 'application/json',
+                'accept': 'application/json' },
+            body:JSON.stringify(data.data)
+        }).then(res => res.json())
+        .then(Data =>{
+            console.log(Data)
+        })
+    })
 
 
 })
