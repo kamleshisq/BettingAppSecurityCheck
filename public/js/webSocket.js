@@ -2979,7 +2979,17 @@ socket.on('connect', () => {
         });
 
         socket.on("VerticalMenuIdByData", async(data) => {
-            console.log(data)
+                let modleName = "#myModal5"
+                let form = $(modleName).find('.form-data1')
+                let PMD = data
+                form.attr('id', PMD._id);
+                form.find('input[name = "check"]').removeAttr('checked');
+                form.find('input[name = "menuName"]').attr('value',PMD.menuName)
+                form.find('input[name = "url"]').attr('value',PMD.url)
+                form.find('input[name = "num"]').attr('value',PMD.num)
+                if(PMD.status){
+                    form.find('input[name = "check"]').attr("checked", "checked");
+                }
         })
     }
 
