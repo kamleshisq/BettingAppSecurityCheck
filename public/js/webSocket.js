@@ -2982,7 +2982,7 @@ socket.on('connect', () => {
 
         socket.on("VerticalMenuIdByData", async(data) => {
                 let modleName = "#myModal5"
-                let form = $(modleName).find('.form-data')
+                let form = $(modleName).find('.form-data1')
                 let PMD = data
                 form.attr('id', PMD._id);
                 form.find('input[name = "check"]').removeAttr('checked');
