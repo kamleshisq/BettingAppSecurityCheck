@@ -3002,7 +3002,7 @@ socket.on('connect', () => {
             let data = Object.fromEntries(fd.entries());
             let id  = $(this).attr('id')
             data.id = id
-            console.log(data)
+            socket.emit("updateVerticalMenu", data)
         });
         
 

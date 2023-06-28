@@ -1027,6 +1027,10 @@ io.on('connection', (socket) => {
         socket.emit("VerticalMenuIdByData", verticalMenu)
     })
 
+    socket.on('updateVerticalMenu', async(data) => {
+        console.log(data)
+    })
+
 
 })
 
