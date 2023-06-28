@@ -9,6 +9,7 @@ exports.createVerticalMenu = catchAsync(async(req, res, next) => {
     }
     console.log(req.body)
     let newMenu = await verticalMenuModel.create(req.body);
+    console.log(newMenu)
     res.status(200).json({
         status:"success",
         newMenu
