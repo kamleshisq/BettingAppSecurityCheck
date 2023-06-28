@@ -60,6 +60,7 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 exports.betrequest = catchAsync(async(req, res, next) => {
     const check = await userModel.findById(req.body.userId)
     if(check.exposureLimit === check.exposure){
+        console.log("Working")
         await alert.alert("Please try again later, Your exposure Limit is full")
         res.status(404).json({
             "status":"RS_ERRORbalance"
