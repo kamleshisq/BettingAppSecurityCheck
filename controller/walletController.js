@@ -172,12 +172,12 @@ exports.betResult = catchAsync(async(req, res, next) =>{
     let check = await userModel.findById(req.body.userId);
     if(!check){
         if(clientIP == "::ffff:3.9.120.247"){
-            res.status(200).json({
+            return res.status(200).json({
                 "balance": 0,
                 "status": "RS_OK"
             })
         }else{
-            res.status(200).json({
+            return res.status(200).json({
                 "balance": 0,
                 "status": "OP_SUCCESS"
             })
