@@ -2959,6 +2959,13 @@ socket.on('connect', () => {
             // console.log(data)
             socket.emit("createVerticalMenu", {data, LOGINDATA})
         })
+
+        socket.on("createVerticalMenu", async(data)=>{
+            alert("Menu Added Successfully")
+                window.setTimeout(()=>{
+                    window.location = '/admin/cms'
+                },500)
+        })
     }
 
 

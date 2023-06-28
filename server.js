@@ -1017,7 +1017,7 @@ io.on('connection', (socket) => {
             body:JSON.stringify(data.data)
         }).then(res => res.json())
         .then(Data =>{
-            console.log(Data)
+            socket.emit("createVerticalMenu", Data)
         })
     })
 

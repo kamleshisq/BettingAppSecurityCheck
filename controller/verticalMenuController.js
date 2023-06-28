@@ -4,5 +4,12 @@ const AppError = require("../utils/AppError");
 
 exports.createVerticalMenu = catchAsync(async(req, res, next) => {
     let allMenu = await verticalMenuModel.find()
-    console.log(allMenu.length)
+    if((req.body.num * 1) > (allMenu.length + 1) ){
+        req.body.num = (allMenu.length + 1)
+    }
+    let newMenu = await verticalMenuModel.create(req.body);
+    res.status(200).json({
+        status:"success",
+        newMenu
+    })
 })
