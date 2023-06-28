@@ -27,71 +27,32 @@
           <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
         </div>
         <div class="modal-header" style="text-align: center;">
-          <h4 class="modal-title" style="color: #fff;">Add Account</h4>
+          <h4 class="modal-title" style="color: #fff;">Add Menu</h4>
         </div>
         <div class="modal-body">
           <form class="form-data" id="Add-User">
             <div class="row">
               <div class="col">
-                <label for="">Name</label>
-                <input type="text" class="form-control ml0" placeholder="" name="name">
+                <label for="menuName">Name</label>
+                <input type="text" class="form-control ml0" placeholder="" name="menuName">
               </div>
             </div>
             <div class="row mt-2">
               <div class="col">
-                <label for="">User ID</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="userName">
-              </div>
-              <div class="col">
-                <label for="">User Role</label>
-                
+                <label for="url">url</label>
+                <input type="url" class="form-control ml0" placeholder="Abitest" name="url">
               </div>
             </div>
             <div class="row mt-2">
               <div class="col">
-                <label for="">Password</label>
-                <input type="password" class="form-control ml0" placeholder="" name="password">
-              </div>
-              <div class="col">
-                <label for="">Confirm Password</label>
-                <input type="password" class="form-control ml0" placeholder="" name="passwordConfirm">
+                <label for="num">Number</label>
+                <input type="number" class="form-control ml0" placeholder="" name="num">
               </div>
             </div>
             <div class="row mt-2">
               <div class="col">
-                <label for="">Share</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="email">
-              </div>
-              <div class="col">
-                <label for="">Visible</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="pswd">
-              </div>
-              <div class="col">
-                <label for="">Actual</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="pswd">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Credit Reference</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="email">
-              </div>
-              <div class="col">
-                <label for="exposureLimit">Expose Limits</label>
-                <input type="number" class="form-control ml0" placeholder="0" name="exposureLimit">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Note</label>
-                <input type="text" class="form-control ml0" placeholder="" name="email">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Password</label>
-                <input type="password" class="form-control ml0" placeholder="" name="email">
-                <i class="bi bi-eye-slash" id="togglePassword"></i>
+                <label for="page">Page</label>
+                <input type="text" class="form-control ml0" placeholder="0" name="page">
               </div>
             </div>
             <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Add</button>
