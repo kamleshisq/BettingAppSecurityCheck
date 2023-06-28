@@ -6,6 +6,7 @@ const gameAPI = require('./utils/gameAPI');
 const Role = require('./model/roleModel');
 const User = require("./model/userModel");
 const Bet = require("./model/betmodel");
+const verticalMenuModel = require("./model/verticalMenuModel");
 const AccModel  = require("./model/accountStatementByUserModel");
 const Promotion = require("./model/promotion")
 const userController = require("./websocketController/userController");
@@ -1019,6 +1020,11 @@ io.on('connection', (socket) => {
         .then(Data =>{
             socket.emit("createVerticalMenu", Data)
         })
+    })
+
+    socket.on("VerticalMenuIdByData", async(date) => {
+        let verticalMenu = await verticalMenuModel.findById(date)
+        socket.emit("VerticalMenuIdByData", verticalMenu)
     })
 
 

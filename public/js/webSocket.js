@@ -2974,9 +2974,13 @@ socket.on('connect', () => {
 
         $(document).on('click','.getVerticalMenuDetails', function(){
             let id = $(this).attr('id')
-            // socket.emit("PromotionIdByData", id)
-            console.log(id)
+            socket.emit("VerticalMenuIdByData", id)
+            // console.log(id)
         });
+
+        socket.on("VerticalMenuIdByData", async(data) => {
+            console.log(data)
+        })
     }
 
 
