@@ -61,6 +61,9 @@ exports.betrequest = catchAsync(async(req, res, next) => {
     const check = await userModel.findById(req.body.userId)
     if(check.exposureLimit === check.exposure){
         await alert.alert("Please try again later, Your exposure Limit is full")
+        res.status(404).json({
+            "status":"RS_ERRORbalance"
+        })
     }
     // console.log(req.body)
     let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1}})
