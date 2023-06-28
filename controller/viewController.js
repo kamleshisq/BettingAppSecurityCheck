@@ -1060,3 +1060,8 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
         liveTennis
     })
 })
+
+
+exports.getCmsPage = catchAsync(async(req, res, next) => {
+    res.status(200).render("./Cms/cms")
+})
