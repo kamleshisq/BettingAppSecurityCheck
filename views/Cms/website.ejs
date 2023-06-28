@@ -89,3 +89,76 @@
       </div>
     </div>
   </div>
+
+
+
+  <div class="modal fade" id="myModal5" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header" style="text-align: center;">
+          <h4 class="modal-title" style="color: #fff;">User Details</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-data" id="edit-form">
+            <div class="row">
+              <div class="col">
+                <label for="">Name</label>
+                <input type="text" class="form-control ml0" name="name">
+                <input type="hidden" id="id" name="id">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">User Name</label>
+                <input type="text" class="form-control ml0" name="userName">
+              </div>
+              <div class="col">
+                <label for="">User Role</label>
+              </div>
+            </div>
+            
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Share <span style="color: #46BCAA;">100</span></label>
+                <input type="text" class="form-control ml0" placeholder="90" name="share">
+              </div>
+              <div class="col">
+                <label for="">My Share</label>
+                <input type="text" class="form-control ml0" placeholder="10" name="myShare">
+              </div>
+              <div class="col">
+                <label for="">Actual</label>
+                <input type="text" class="form-control ml0" placeholder="10" name="actual">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Credit Reference</label>
+                <input type="text" class="form-control ml0" name="cdReference">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="exposureLimit">Expose Limits</label>
+                <input type="number" class="form-control ml0" placeholder="0" name="exposureLimit">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Note</label>
+                <textarea id="w3review" placeholder="" name="w3review" rows="3" cols="50" style="width: 100%;border-radius: 5px;"></textarea>
+              </div>
+            </div>
+          
+  
+            <button type="submit" class="btn-submit mt-3">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
