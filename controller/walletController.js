@@ -168,6 +168,20 @@ exports.betrequest = catchAsync(async(req, res, next) => {
 });
 
 exports.betResult = catchAsync(async(req, res, next) =>{
+    let check = await userModel.findById(req.body.userId);
+    if(!check){
+        if(clientIP == "::ffff:3.9.120.247"){
+            res.status(200).json({
+                "balance": 0,
+                "status": "RS_OK"
+            })
+        }else{
+            res.status(200).json({
+                "balance": 0,
+                "status": "OP_SUCCESS"
+            })
+        }
+    }
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let game = {}
     if(req.body.gameId){
@@ -182,20 +196,6 @@ exports.betResult = catchAsync(async(req, res, next) =>{
     if(req.body.creditAmount === 0){
         let betforStake = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"LOSS"})
         user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{Loss:1, exposure: -betforStake.Stake}})
-        console.log(user)
-        if(!user){
-            if(clientIP == "::ffff:3.9.120.247"){
-                res.status(200).json({
-                    "balance": 0,
-                    "status": "RS_OK"
-                })
-            }else{
-                res.status(200).json({
-                    "balance": 0,
-                    "status": "OP_SUCCESS"
-                })
-            }
-        }
         balance = user.balance
         // let Acc = {
         //     // "user_id":req.body.userId,
