@@ -2951,6 +2951,8 @@ socket.on('connect', () => {
 
 
     if(pathname === "/admin/cms"){
+
+        //FOR VERTICLE MENU//
         $(document).on('submit', '.form-data', async function(e){
             e.preventDefault()
             let form = $(this)[0];
@@ -2992,6 +2994,17 @@ socket.on('connect', () => {
                     form.find('input[name = "check"]').attr("checked", "checked");
                 }
         })
+
+        $(document).on('submit', ".form-data", function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            console.log(data)
+        });
+        
+
+
     }
 
 
