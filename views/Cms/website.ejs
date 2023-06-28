@@ -22,6 +22,7 @@
                         <th>Number</th>
                         <th>Page Name</th>
                         <th>Edit</th>
+                        <th>Delete</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -36,6 +37,7 @@
                             <td><%=verticalMenus[i].num%></td>
                             <td><%=verticalMenus[i].page%></td>
                             <td><button data-bs-toggle="modal" data-bs-target="#myModal5" id="<%=verticalMenus[i]._id%>" class="getVerticalMenuDetails"><i class="fa-solid fa-database"></i></button></td>
+                            <td><button class="deleteVerticalMenuDetails" id="<%=verticalMenus[i]._id%>">Delete</button></td>
                           </tr>
                       <%}%>
                     </tbody>
