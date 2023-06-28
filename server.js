@@ -290,9 +290,9 @@ io.on('connection', (socket) => {
         if(data.id){
             let id = await User.findOne({userName:data.id})
             // console.log()
-            fullUrl = 'http://127.0.0.1:8000/api/v1/Account/getUserAccStatement?id=' + id.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
+            fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement?id=' + id.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
         }else{
-            fullUrl = 'http://127.0.0.1:8000/api/v1/Account/getUserAccStatement?id=' + data.LOGINDATA.LOGINUSER._id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
+            fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement?id=' + data.LOGINDATA.LOGINUSER._id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
 
         }
 
@@ -346,7 +346,7 @@ io.on('connection', (socket) => {
     socket.on("UserSearchId", async(data) => {
         // console.log(data, 123545)
         let user = await User.findOne({userName:data.userName})
-        let fullUrl = 'http://127.0.0.1:8000/api/v1/Account/getUserAccStatement?id=' + user.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate
+        let fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement?id=' + user.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate
         // console.log(fullUrl)
         urlRequestAdd(`/api/v1/Account/getUserAccStatement?id = ${data.id}&page=${data.page}&from = ${data.from}&from = ${data.from}&to = ${data.to}`,'GET', data.LOGINDATA.LOGINTOKEN)
 
@@ -372,7 +372,7 @@ io.on('connection', (socket) => {
     socket.on("bettingList", async(data) => {
         let user = await User.findOne({userName:data.val})
         // console.log(user)
-        let fullUrl = "http://127.0.0.1:8000/api/v1/bets/betListByUserId?id=" + user._id;
+        let fullUrl = "http://127.0.0.1/api/v1/bets/betListByUserId?id=" + user._id;
         // console.log(fullUrl)
         fetch(fullUrl, {
             method: 'GET',
@@ -921,7 +921,7 @@ io.on('connection', (socket) => {
     socket.on('createNotification', async(data) => {
         data.data.userId = data.LOGINDATA.LOGINUSER._id
         let bodyData = JSON.stringify(data.data)
-        const fullUrl = 'http://127.0.0.1:8000/api/v1/notification/createNotification'
+        const fullUrl = 'http://127.0.0.1/api/v1/notification/createNotification'
         fetch(fullUrl, {
             method: 'POST',
             headers: { 
@@ -936,7 +936,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('updateStatus', async(data) => {
-        const fullUrl = 'http://127.0.0.1:8000/api/v1/notification/updateStatus?id=' + `${data.id}`
+        const fullUrl = 'http://127.0.0.1/api/v1/notification/updateStatus?id=' + `${data.id}`
         fetch(fullUrl, {
             method: 'GET',
             headers: { 
@@ -951,7 +951,7 @@ io.on('connection', (socket) => {
 
     socket.on("deleteNotification", async(data) => {
         let id = data.id.slice(0, -1);
-        const fullUrl = 'http://127.0.0.1:8000/api/v1/notification/deleteNotification?id=' + `${id}`
+        const fullUrl = 'http://127.0.0.1/api/v1/notification/deleteNotification?id=' + `${id}`
         fetch(fullUrl, {
             method: 'GET',
             headers: { 
@@ -1002,6 +1002,6 @@ io.on('connection', (socket) => {
 
 })
 
-http.listen(8000,()=> {
-    console.log('app is running on port 8000')
+http.listen(80,()=> {
+    console.log('app is running on port 80')
 })
