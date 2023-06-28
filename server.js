@@ -999,6 +999,10 @@ io.on('connection', (socket) => {
     })
 
 
+    module.exports = function alert(data){
+        socket.emit("alertMessage", data)
+    }
+
 
 })
 

@@ -8,6 +8,7 @@ const gameModel = require("../model/gameModel");
 const path = require('path');
 const fs = require('fs');
 const verify = require("../utils/verify");//
+const alert = require("../server");
 // const { use } = require('../app');
 function readPem (filename) {
     return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename), 'utf8')
@@ -57,6 +58,10 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 });
 
 exports.betrequest = catchAsync(async(req, res, next) => {
+    const check = await userModel.findById(req.body.userId)
+    if(check.exposureLimit === check.exposure){
+        await alert.alert("Please try again later, Your exposure Limit is full")
+    }
     // console.log(req.body)
     let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1}})
     // let betDetails = await betLimitModel.find()
