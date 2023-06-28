@@ -3026,7 +3026,7 @@ socket.on('connect', () => {
 
 
         //FOR HORIZONTAL MENU//
-        $(document).on('submit', ".form-data2", function(e){
+        $(document).on('submit',  ".form-data2", function(e){
             e.preventDefault()
             let form = $(this)[0];
             let fd = new FormData(form);
