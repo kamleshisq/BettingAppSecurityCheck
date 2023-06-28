@@ -21,6 +21,6 @@ const vertixalMenu = mongoose.Schema({
     }
 })
 
-const verticalMenuModel = mongoose.model("vertixalMenuModel", vertixalMenu)
+const verticalMenuModel = mongoose.model("verticalMenuModel", vertixalMenu)
 
 module.exports = verticalMenuModel
