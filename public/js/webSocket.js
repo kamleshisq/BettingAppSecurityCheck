@@ -3005,6 +3005,12 @@ socket.on('connect', () => {
             socket.emit("updateVerticalMenu", data)
         });
         
+        socket.on("updateVerticalMenu", async(data)=>{
+            alert("Menu updated Successfully")
+                    window.setTimeout(()=>{
+                        window.location = '/admin/cms'
+                    },500)
+        })
 
 
     }

@@ -1028,7 +1028,13 @@ io.on('connection', (socket) => {
     })
 
     socket.on('updateVerticalMenu', async(data) => {
-        console.log(data)
+        let data1
+        try{
+            data1 = await verticalMenuModel.findByIdAndUpdate(data.id, data)
+            socket.emit("updateVerticalMenu", data1)
+        }catch(err){
+            console.log(err)
+        }
     })
 
 
