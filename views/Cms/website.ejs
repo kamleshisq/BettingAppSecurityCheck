@@ -13,6 +13,32 @@
                     <h3 style="font-weight: 700;font-size: 24px;">Vertical Menu Management</h3>
                     <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add Menu</button>
                 </div>
+                <div class="table_data_details_ col-lg-12">
+                  <table>
+                    <thead>
+                      <tr style="font-size: 11px;">
+                        <th>Menu Name</th>
+                        <th>Url</th>
+                        <th>Number</th>
+                        <th>Page Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <%for(let i = 0; i < verticalMenus.length; i++){%>
+                        <%if((i%2)===0){%>
+                          <tr class="blue">
+                        <%}else{%>
+                          <tr>
+                        <%}%>
+                            <td><%=verticalMenus[i].menuName%></td>
+                            <td><%=verticalMenus[i].url%></td>
+                            <td><%=verticalMenus[i].num%></td>
+                            <td><%=verticalMenus[i].page%></td>
+                          </tr>
+                      <%}%>
+                    </tbody>
+                  </table>
+                </div>
             </section>
         </div>
     </div>
