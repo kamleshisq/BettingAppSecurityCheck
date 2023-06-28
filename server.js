@@ -1051,6 +1051,21 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on("createHorizontalMenu", async(data) => {
+        const fullUrl = "http://127.0.0.1/api/v1/horizontalMenu/createMenu"
+        fetch(fullUrl, {
+            method: 'POST',
+            headers: { 
+                'Authorization': `Bearer ` + data.LOGINDATA.LOGINTOKEN,
+                'Content-Type': 'application/json',
+                'accept': 'application/json' },
+            body:JSON.stringify(data.data)
+        }).then(res => res.json())
+        .then(Data =>{
+            console.log(data, 123456456)
+        })
+    })
+
 
 })
 
