@@ -2961,10 +2961,14 @@ socket.on('connect', () => {
         })
 
         socket.on("createVerticalMenu", async(data)=>{
-            alert("Menu Added Successfully")
-                window.setTimeout(()=>{
-                    window.location = '/admin/cms'
-                },500)
+            if(data.status === "success"){
+                alert("Menu Added Successfully")
+                    window.setTimeout(()=>{
+                        window.location = '/admin/cms'
+                    },500)
+            }else{
+                alert(`${data.err.message}`)
+            }
         })
     }
 
