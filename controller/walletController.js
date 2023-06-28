@@ -158,9 +158,10 @@ exports.betResult = catchAsync(async(req, res, next) =>{
     // console.log(req.body)
     let user;
     let balance;
-    if(req.body.creditAmount == 0){
+    if(req.body.creditAmount === 0){
         await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"LOSS"})
         user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{Loss:1}})
+        console.log(user)
         if(!user){
             if(clientIP == "::ffff:3.9.120.247"){
                 res.status(200).json({
