@@ -2950,6 +2950,10 @@ socket.on('connect', () => {
     }
 
 
+    if(pathname === "/admin/cms"){
+        console.log("working")
+    }
+
 
    
 
