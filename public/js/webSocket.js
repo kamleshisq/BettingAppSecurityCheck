@@ -2970,6 +2970,13 @@ socket.on('connect', () => {
                 alert(`${data.err.message}`)
             }
         })
+
+
+        $(document).on('click','.getVerticalMenuDetails', function(){
+            let id = $(this).attr('id')
+            // socket.emit("PromotionIdByData", id)
+            console.log(id)
+        });
     }
 
 
