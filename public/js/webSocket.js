@@ -36,6 +36,7 @@ socket.on('connect', () => {
    
 
     socket.on("alertMessage", async(data) => {
+        console.log(data)
         alert(data)
     })
 
