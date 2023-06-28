@@ -14,6 +14,7 @@ const promotionRoutes = require('./routes/promotionRoute');
 const accountRoutes = require("./routes/accountRoutes");
 const deshBoardRoutes = require("./routes/deshboardRoutes");
 const betLimtRoutes = require("./routes/betLimitRoutes");
+const verticalMenuRoutes = require("./routes/verticalMenuRoutes");
 const dotenv =require('dotenv');
 const cookieParser = require('cookie-parser');
 const globleErrorHandler = require('./controller/errorController');
@@ -64,6 +65,7 @@ app.use("/api/v1/games", gameRoutes);
 app.use("/api/v1/bets", betRRoutes);
 app.use("/api/v1/betLimit", betLimtRoutes);
 app.use("/api/v1/notification", notificationRoutes);
+app.use("/api/v1/verticalMenu", verticalMenuRoutes);
 app.use("/", viewRoutes);
 // console.log(globleErrorHandler)
 
