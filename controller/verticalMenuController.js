@@ -3,5 +3,6 @@ const catchAsync = require("../utils/catchAsync")
 const AppError = require("../utils/AppError");
 
 exports.createVerticalMenu = catchAsync(async(req, res, next) => {
-    console.log(req.body, 2335455)
+    let allMenu = await verticalMenuModel.find()
+    console.log(allMenu.length)
 })
