@@ -1063,5 +1063,9 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
 
 
 exports.getCmsPage = catchAsync(async(req, res, next) => {
-    res.status(200).render("./Cms/cms")
+    let user = req.currentUser
+    res.status(200).render("./Cms/cms",{
+        title:"CMS",
+        user
+    })
 })
