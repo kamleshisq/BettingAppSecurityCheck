@@ -65,6 +65,21 @@
                     <th>Edit</th>
                     <th>Delete</th>
                   </thead>
+                  <%for(let i = 0; i < hosriZontalMenu.length; i++){%>
+                    <%if((i%2)===0){%>
+                      <tr class="blue">
+                    <%}else{%>
+                      <tr>
+                    <%}%>
+                        <td><%=hosriZontalMenu[i].menuName%></td>
+                        <td><%=hosriZontalMenu[i].url%></td>
+                        <td><%=hosriZontalMenu[i].icon%></td>
+                        <td><%=hosriZontalMenu[i].Number%></td>
+                        <td><%=hosriZontalMenu[i].page%></td>
+                        <td><button data-bs-toggle="modal" data-bs-target="#myModal5" id="<%=hosriZontalMenu[i]._id%>" class="getVerticalMenuDetails"><i class="fa-solid fa-database"></i></button></td>
+                        <td><button class="deleteVerticalMenuDetails" id="<%=hosriZontalMenu[i]._id%>">Delete</button></td>
+                      </tr>
+                  <%}%>
                 </table>
               </div>
           </section>

@@ -9,6 +9,7 @@ const roleAuth = require('../model/authorizationModel');
 const gameModel = require('../model/gameModel');
 const betLimitModel = require("../model/betLimitModel");
 const verticalMenuModel = require("../model/verticalMenuModel");
+const horizontalMenuModel = require("../model/horizontalMenuModel");
 const fetch = require("node-fetch")
 const whiteLabel = require('../model/whitelableModel');
 const mongoose = require("mongoose");
@@ -1066,9 +1067,11 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
 exports.getCmsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find()
+    let hosriZontalMenu = await horizontalMenuModel.find()
     res.status(200).render("./Cms/cms",{
         title:"CMS",
         user,
-        verticalMenus
+        verticalMenus,
+        hosriZontalMenu
     })
 })
