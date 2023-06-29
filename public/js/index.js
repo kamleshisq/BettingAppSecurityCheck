@@ -443,10 +443,17 @@ $(document).on('submit', '.form-data22', function(e){
 
 $(document).on('submit', ".form-data23", function(e){
     e.preventDefault()
-    let form = $(this)[0];
-    let fd = new FormData(form);
-    let data = Object.fromEntries(fd.entries());
-    let id  = $(this).attr('id')
-    data.id = id
+    let id = $('.form-data23').attr('id')
+    let check = document.getElementById('check')
+    const form = new FormData();
+    form.append('Id', id)
+    form.append('position',document.getElementById('name').value)
+    form.append("link", document.getElementById('link').value)
+    if(check.checked == true){
+        form.append('status',"on")
+    }else{
+        form.append('status',"off")
+    }
+    form.append('image',document.getElementById('file').files[0])
     console.log(data)
 })

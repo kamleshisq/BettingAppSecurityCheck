@@ -19,6 +19,10 @@ const horizontalMenu = mongoose.Schema({
     Number:{
         type:Number,
         required:true
+    },
+    status:{
+        type:Boolean,
+        default:true
     }
 });
 
