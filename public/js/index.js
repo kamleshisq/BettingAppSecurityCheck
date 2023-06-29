@@ -447,7 +447,7 @@ $(document).on('submit', ".form-data23", function(e){
     let id = $('.form-data23').attr('id')
     let form1 = $(this)
     let check = form1.find("input[name = check]")
-    console.log(check.checked)
+    console.log(form1.find("input[name = check]").checked)
     const form = new FormData();
     form.append('Id', id)
     form.append('menuName', document.getElementById('menuName').value)
