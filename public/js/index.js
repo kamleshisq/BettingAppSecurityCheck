@@ -16,6 +16,7 @@ import { createPromotion } from "./createPromotion";
 import { deletePromotion } from "./deletePormotion";
 import { betLimit } from "./betLimit";
 import { createHorizontalMenu } from "./createHorizontalMenu";
+import { updateHorizontalMenu } from "./updateHorizonatlMenu";
 // import { func } from "joi";
 
 
@@ -458,5 +459,6 @@ $(document).on('submit', ".form-data23", function(e){
         form.append('status',"off")
     }
     // form.append('image',document.getElementById('file').files[0])
-    console.log(form)
+    // console.log(form)
+    updateHorizontalMenu(form)
 })

@@ -29,4 +29,10 @@ exports.createHorizontalMenu = catchAsybc(async(req, res, next) => {
         status:"success",
         newMenu
     })
+});
+
+
+
+exports.updateHorizontalMenu = catchAsybc(async(req, rws, next) => {
+    console.log(req.body, "WORKING")
 })
