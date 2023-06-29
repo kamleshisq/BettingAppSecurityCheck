@@ -445,21 +445,7 @@ $(document).on('submit', '.form-data22', function(e){
 $(document).on('submit', ".form-data23", function(e){
     e.preventDefault()
     let id = $('.form-data23').attr('id')
-    let form1 = $(this)
-    let check = form1.find("input[name = check]")
-    console.log(form1.find("input[name = check]").checked)
-    const form = new FormData();
-    form.append('Id', id)
-    form.append('menuName', document.getElementById('menuName').value)
-    form.append('url', document.getElementById('url').value)
-    form.append('num', document.getElementById('num').value)
-    form.append('page', document.getElementById('page').value)
-    form.append('Icon', document.getElementById('Icon').files[0])
-    if(check.checked == true){
-        form.append('status',"on")
-    }else{
-        form.append('status',"off")
-    }
+    console.log(id)
     // form.append('image',document.getElementById('file').files[0])
     // console.log(form)
     updateHorizontalMenu(form)
