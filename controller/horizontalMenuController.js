@@ -39,13 +39,14 @@ exports.updateHorizontalMenu = catchAsybc(async(req, res, next) => {
     let check = await horizontalMenuModel.findById(req.body.id);
     if(!(check.Number == req.body.num)){
         if(req.body.num > allMenu.length ){
-
+            req.body.Number = allMenu.length
+            await horizontalMenuModel.findOneAndUpdate({Number:req.body.Number}, {Number:check.Number})
         }else if(req.body.num < 1){
             return next(new AppError("Please provide positive number"))
         }else{
             let newNumber = req.body.num
             await horizontalMenuModel.findOneAndUpdate({Number:newNumber}, {Number:check.Number})
-            req.body.Number = req.body.num
+            req.body.Number = req.body.num  
         }
     }
     if(req.files){
