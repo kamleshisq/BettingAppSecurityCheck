@@ -3050,6 +3050,12 @@ socket.on('connect', () => {
             let id = $(this).attr("id")
             socket.emit("deleteHorizontalMenu", id)
         })
+        socket.on('deleteHorizontalMenu', async(data)=>{
+            alert("Menu deleted")
+            window.setTimeout(()=>{
+                window.location = '/admin/cms'
+            },200)
+        })
 
     }
 

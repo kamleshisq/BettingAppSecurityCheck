@@ -1057,7 +1057,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on('deleteHorizontalMenu', async(data) => {
-        console.log(data)
+        await horizontalMenuModel.findByIdAndDelete(data)
+        socket.emit("deleteHorizontalMenu", "success")
     })
 
 })
