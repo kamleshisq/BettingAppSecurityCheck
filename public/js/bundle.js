@@ -6816,7 +6816,7 @@ $(document).on('submit', ".form-data23", function (e) {
   var id = $('.form-data23').attr('id');
   var form1 = $(this);
   var check = form1.find("input[name = check]");
-  console.log(check);
+  console.log(check.checke);
   var form = new FormData();
   form.append('Id', id);
   form.append('menuName', document.getElementById('menuName').value);
