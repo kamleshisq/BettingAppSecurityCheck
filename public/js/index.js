@@ -447,10 +447,10 @@ $(document).on('submit', ".form-data23", function(e){
     let id = $('.form-data23').attr('id')
     let form = $(this)[0];
     let fd = new FormData(form);
+    fd.append('id', id)
     let data = Object.fromEntries(fd.entries());
-    data.id = id
     console.log(data)
     // form.append('image',document.getElementById('file').files[0])
     // console.log(form)
-    updateHorizontalMenu(data)
+    // updateHorizontalMenu(data)
 })
