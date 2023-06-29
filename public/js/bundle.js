@@ -6756,23 +6756,25 @@ $(document).on('submit', '.form-data22', function (e) {
   form.append('Icon', document.getElementById('Icon').files[0]);
   (0, _createHorizontalMenu.createHorizontalMenu)(form);
 });
-
-// $(document).on('submit', ".form-data23", function(e){
-//     e.preventDefault()
-//     let id = $('.form-data23').attr('id')
-//     let check = document.getElementById('check')
-//     const form = new FormData();
-//     form.append('Id', id)
-//     form.append('position',document.getElementById('name').value)
-//     form.append("link", document.getElementById('link').value)
-//     if(check.checked == true){
-//         form.append('status',"on")
-//     }else{
-//         form.append('status',"off")
-//     }
-//     form.append('image',document.getElementById('file').files[0])
-//     console.log(data)
-// })
+$(document).on('submit', ".form-data23", function (e) {
+  e.preventDefault();
+  var id = $('.form-data23').attr('id');
+  var check = document.getElementById('check');
+  var form = new FormData();
+  form.append('Id', id);
+  form.append('menuName', document.getElementById('menuName').value);
+  form.append('url', document.getElementById('url').value);
+  form.append('num', document.getElementById('num').value);
+  form.append('page', document.getElementById('page').value);
+  form.append('Icon', document.getElementById('Icon').files[0]);
+  if (check.checked == true) {
+    form.append('status', "on");
+  } else {
+    form.append('status', "off");
+  }
+  // form.append('image',document.getElementById('file').files[0])
+  console.log(data);
+});
 },{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./betLock":"betLock.js","./updateRow":"updateRow.js","./updatePromotion":"updatePromotion.js","./createPromotion":"createPromotion.js","./deletePormotion":"deletePormotion.js","./betLimit":"betLimit.js","./createHorizontalMenu":"createHorizontalMenu.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

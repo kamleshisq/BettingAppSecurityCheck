@@ -441,19 +441,22 @@ $(document).on('submit', '.form-data22', function(e){
     createHorizontalMenu(form)
 });
 
-// $(document).on('submit', ".form-data23", function(e){
-//     e.preventDefault()
-//     let id = $('.form-data23').attr('id')
-//     let check = document.getElementById('check')
-//     const form = new FormData();
-//     form.append('Id', id)
-//     form.append('position',document.getElementById('name').value)
-//     form.append("link", document.getElementById('link').value)
-//     if(check.checked == true){
-//         form.append('status',"on")
-//     }else{
-//         form.append('status',"off")
-//     }
-//     form.append('image',document.getElementById('file').files[0])
-//     console.log(data)
-// })
+$(document).on('submit', ".form-data23", function(e){
+    e.preventDefault()
+    let id = $('.form-data23').attr('id')
+    let check = document.getElementById('check')
+    const form = new FormData();
+    form.append('Id', id)
+    form.append('menuName', document.getElementById('menuName').value)
+    form.append('url', document.getElementById('url').value)
+    form.append('num', document.getElementById('num').value)
+    form.append('page', document.getElementById('page').value)
+    form.append('Icon', document.getElementById('Icon').files[0])
+    if(check.checked == true){
+        form.append('status',"on")
+    }else{
+        form.append('status',"off")
+    }
+    // form.append('image',document.getElementById('file').files[0])
+    console.log(data)
+})
