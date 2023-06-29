@@ -4,7 +4,8 @@ const AppError = require("../utils/AppError");
 
 
 exports.createHorizontalMenu = catchAsybc(async(req, res, next) => {
-    console.log(req.files.Icon.mimetype)
+    console.log(req.files)
+    console.log(req.body)
     // let data = {}
     // if(req.files){
     //     if(req.files.image.mimetype.startsWith('image')){
