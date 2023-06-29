@@ -445,7 +445,8 @@ $(document).on('submit', '.form-data22', function(e){
 $(document).on('submit', ".form-data23", function(e){
     e.preventDefault()
     let id = $('.form-data23').attr('id')
-    let check = document.getElementById('check')
+    let form1 = $(this)
+    let check = form1.find("input[name = check]")
     const form = new FormData();
     form.append('Id', id)
     form.append('menuName', document.getElementById('menuName').value)

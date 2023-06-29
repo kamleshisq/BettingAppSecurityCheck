@@ -6814,7 +6814,8 @@ $(document).on('submit', '.form-data22', function (e) {
 $(document).on('submit', ".form-data23", function (e) {
   e.preventDefault();
   var id = $('.form-data23').attr('id');
-  var check = document.getElementById('check');
+  var form1 = $(this);
+  var check = form1.find("input[name = check]");
   var form = new FormData();
   form.append('Id', id);
   form.append('menuName', document.getElementById('menuName').value);
