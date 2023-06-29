@@ -6545,13 +6545,13 @@ $('.createRole-form').submit(function (e) {
   e.preventDefault();
   var authorization = [];
   var authCheck = document.querySelectorAll("input[name='authorization']:checked");
-  for (var _i = 0; _i < authCheck.length; _i++) {
-    authorization.push(authCheck[_i].value);
+  for (var i = 0; i < authCheck.length; i++) {
+    authorization.push(authCheck[i].value);
   }
   var roleAuthorization = [];
   var checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-  for (var _i2 = 0; _i2 < checkboxes.length; _i2++) {
-    roleAuthorization.push(checkboxes[_i2].value);
+  for (var _i = 0; _i < checkboxes.length; _i++) {
+    roleAuthorization.push(checkboxes[_i].value);
   }
   var roleName = $('#roleName').val();
   var data = {
@@ -6575,12 +6575,12 @@ if (document.querySelector(".updateRole")) {
     var authorization = [];
     var roleAuthorization = [];
     var authCheck = document.querySelectorAll("input[name='authorization']:checked");
-    for (var _i3 = 0; _i3 < authCheck.length; _i3++) {
-      roleAuthorization.push(authCheck[_i3].value);
+    for (var i = 0; i < authCheck.length; i++) {
+      roleAuthorization.push(authCheck[i].value);
     }
     var checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-    for (var _i4 = 0; _i4 < checkboxes.length; _i4++) {
-      authorization.push(checkboxes[_i4].value);
+    for (var _i2 = 0; _i2 < checkboxes.length; _i2++) {
+      authorization.push(checkboxes[_i2].value);
     }
     var data = {
       authorization: authorization,
@@ -6760,11 +6760,11 @@ $(document).on('click', '.RoleDetails', function () {
   var roledata = $(this).parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
   form.find('input[name = "name"]').attr('value', roledata.roleName);
   // console.log(roledata.authorization)
-  for (var _i5 = 0; _i5 < roledata.authorization.length; _i5++) {
-    form.find("input[value = \"".concat(roledata.authorization[_i5], "\"]")).attr("checked", "checked");
+  for (var i = 0; i < roledata.authorization.length; i++) {
+    form.find("input[value = \"".concat(roledata.authorization[i], "\"]")).attr("checked", "checked");
   }
-  for (var _i6 = 0; _i6 < roledata.userAuthorization.length; _i6++) {
-    form.find("input[value = \"".concat(roledata.userAuthorization[_i6], "\"]")).attr("checked", "checked");
+  for (var _i3 = 0; _i3 < roledata.userAuthorization.length; _i3++) {
+    form.find("input[value = \"".concat(roledata.userAuthorization[_i3], "\"]")).attr("checked", "checked");
   }
   document.getElementById("role_controller").innerHTML = "\n            <label for=\"level\"> <h3>Role Level </h3></label><br>\n            <input type=\"number\" name=\"level\" placeholder='".concat(roledata.role_level, "' id='role_level'>");
 });
@@ -6814,7 +6814,7 @@ $(document).on('submit', '.form-data22', function (e) {
 $(document).on('submit', ".form-data23", function (e) {
   e.preventDefault();
   var id = $('.form-data23').attr('id');
-  console.log(i);
+  console.log(id);
   // form.append('image',document.getElementById('file').files[0])
   // console.log(form)
   (0, _updateHorizonatlMenu.updateHorizontalMenu)(form);
