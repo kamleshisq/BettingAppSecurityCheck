@@ -10,13 +10,17 @@ exports.createHorizontalMenu = catchAsybc(async(req, res, next) => {
             // console.log(logo)
             image.mv(`public/imgForHMenu/${req.body.menuName}.png`, (err)=>{
                 if(err) 
-                // return next(new AppError("Something went wrong please try again later", 400))
-                console.log(err)
+                return next(new AppError("Something went wrong please try again later", 400))
+                // console.log(err)
             })
         }else{
             return next(new AppError("Please upload an image file", 400))
         }
         req.body.Icon = req.body.menuName
     }
-    console.log(req.body)
+    const newMenu = await horizontalMenuModel.create(req.body);
+    res.status(200).json({
+        status:"success",
+        newMenu
+    })
 })

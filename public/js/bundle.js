@@ -6276,7 +6276,7 @@ var createHorizontalMenu = /*#__PURE__*/function () {
 
             window.setTimeout(function () {
               location.assign('/admin/cms');
-            }, 100);
+            }, 200);
           }
           _context.next = 11;
           break;

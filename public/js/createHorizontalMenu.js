@@ -13,7 +13,7 @@ export const createHorizontalMenu = async(data)=>{
 
             window.setTimeout(()=>{
                 location.assign('/admin/cms')
-            }, 100)
+            }, 200)
         }
 
     }catch(err){
