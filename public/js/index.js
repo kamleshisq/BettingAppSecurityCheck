@@ -445,7 +445,7 @@ $(document).on('submit', '.form-data22', function(e){
 $(document).on('submit', ".form-data23", function(e){
     e.preventDefault()
     let id = $('.form-data23').attr('id')
-    console.log(id)
+    console.log(i)
     // form.append('image',document.getElementById('file').files[0])
     // console.log(form)
     updateHorizontalMenu(form)
