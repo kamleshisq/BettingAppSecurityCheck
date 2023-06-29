@@ -90,8 +90,8 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         let game1 = await gameModel.findOne({game_id:(req.body.gameId)*1})
         console.log(game1)
         game = game1.game_name
-        description = `Bet for game ${game.game_name}/amount ${req.body.debitAmount}`
-        description2 = `Bet for game ${game.game_name}/amount ${req.body.debitAmount}/user = ${user.userName}`
+        description = `Bet for game ${game}/amount ${req.body.debitAmount}`
+        description2 = `Bet for game ${game}/amount ${req.body.debitAmount}/user = ${user.userName}`
     }else{
         game = req.body.competitionName
         description = `Bet for game ${req.body.eventName}/amount ${req.body.debitAmount}`
@@ -186,7 +186,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
     }
     let game = {}
     if(req.body.gameId){
-        game = await gameModel.findOne({game_id:req.body.gameId})
+        game = await gameModel.findOne({game_id:(req.body.gameId)*1})
     }else{
         let game1 = await betModel.findOne({transactionId:req.body.transactionId})
         game.game_name = game1.match
