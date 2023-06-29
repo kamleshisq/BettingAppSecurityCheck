@@ -17,10 +17,12 @@ exports.createHorizontalMenu = catchAsybc(async(req, res, next) => {
         }else{
             return next(new AppError("Please upload an image file", 400))
         }
-        req.body.Icon = req.body.menuName
+        req.body.icon = req.body.menuName
     }
     if(req.body.num > (allMenu.length + 1)){
-        req.body.num = (allMenu.length + 1)
+        req.body.Number = (allMenu.length + 1)
+    }else{
+        req.body.Number = req.body.num
     }
     const newMenu = await horizontalMenuModel.create(req.body);
     res.status(200).json({
