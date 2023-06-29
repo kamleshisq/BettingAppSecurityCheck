@@ -3034,7 +3034,7 @@ socket.on('connect', () => {
             form.append('url',form1.find('input[name = "url"]').val)
             form.append('num',form1.find('input[name = "num"]').val)
             form.append('page',form1.find('input[name = "page"]').val)
-            form.append('Icon',form1.find('input[name = "Icon"]').files[0])
+            form.append('Icon',form1.find('input[name = "Icon"]').files)
             console.log(form)
         })
     }
