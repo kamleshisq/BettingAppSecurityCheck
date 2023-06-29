@@ -8,7 +8,7 @@ exports.createHorizontalMenu = catchAsybc(async(req, res, next) => {
         if(req.files.Icon.mimetype.startsWith('image')){
             const image = req.files.Icon
             // console.log(logo)
-            image.mv(`/public/imgForHMenu/${req.body.menuName}.png`, (err)=>{
+            image.mv(`public/imgForHMenu/${req.body.menuName}.png`, (err)=>{
                 if(err) 
                 // return next(new AppError("Something went wrong please try again later", 400))
                 console.log(err)
