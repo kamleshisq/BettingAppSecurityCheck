@@ -1052,6 +1052,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("createHorizontalMenu", async(data) => {
+        console.log(data.form)
         // let fetchData = {
         //     menuName:data.data.menuName,
         //     url:data.data.url,

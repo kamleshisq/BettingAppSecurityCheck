@@ -4,5 +4,5 @@ const AppError = require("../utils/AppError");
 
 
 exports.createHorizontalMenu = catchAsybc(async(req, res, next) => {
-    console.log(req.body)
+    console.log(req.body, 98765430)
 })
