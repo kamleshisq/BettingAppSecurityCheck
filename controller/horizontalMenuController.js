@@ -45,6 +45,7 @@ exports.updateHorizontalMenu = catchAsybc(async(req, res, next) => {
         }else{
             let newNumber = req.body.num
             await horizontalMenuModel.findOneAndUpdate({Number:newNumber}, {Number:check.Number})
+            req.body.Number = req.body.num
         }
     }
     if(req.files){
