@@ -3024,15 +3024,6 @@ socket.on('connect', () => {
             },500)
         })
 
-
-        //FOR HORIZONTAL MENU//
-        $(document).on('submit',  ".form-data2", function(e){
-            e.preventDefault()
-            let form = $(this)[0];
-            let fd = new FormData(form);
-            let data = Object.fromEntries(fd.entries());
-            socket.emit("createHorizontalMenu", {data, LOGINDATA})
-        })
     }
 
 

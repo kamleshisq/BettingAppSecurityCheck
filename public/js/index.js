@@ -15,6 +15,7 @@ import {updatePromotion} from "./updatePromotion";
 import { createPromotion } from "./createPromotion";
 import { deletePromotion } from "./deletePormotion";
 import { betLimit } from "./betLimit";
+import { createHorizontalMenu } from "../../controller/horizontalMenuController";
 // import { func } from "joi";
 
 
@@ -428,4 +429,15 @@ $(document).on('click', ".Delete", function(){
     data.id = $(this).attr('id')
     deletePromotion(data)
 })
+
+$(document).on('submit', '.form-data22', function(e){
+    e.preventDefault()
+    const form = new FormData();
+    form.append('menuName', document.getElementById('menuName').value)
+    form.append('url', document.getElementById('url').value)
+    form.append('num', document.getElementById('num').value)
+    form.append('page', document.getElementById('page').value)
+    form.append('Icon', document.getElementById('Icon').files[0])
+    createHorizontalMenu(form)
+});
 
