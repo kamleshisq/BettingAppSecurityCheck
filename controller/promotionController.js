@@ -5,19 +5,19 @@ const catchAsync = require('../utils/catchAsync');
 
 exports.createPosition = catchAsync(async(req, res, next) => {
     console.log(req.files)
-    if(req.files){
-        if(req.files.Icon.mimetype.startsWith('image')){
-            const image = req.files.Icon
-            // console.log(logo)
-            image.mv(`public/imgForHMenu/${req.body.menuName}.png`, (err)=>{
-                if(err) return next(new AppError("Something went wrong please try again later", 400))
-            })
-        }else{
-            return next(new AppError("Please upload an Image file", 400))
-        }
-        req.body.Icon = req.body.menuName
-    }
-    console.log(req.body)
+    // if(req.files){
+    //     if(req.files.Icon.mimetype.startsWith('image')){
+    //         const image = req.files.Icon
+    //         // console.log(logo)
+    //         image.mv(`public/imgForHMenu/${req.body.menuName}.png`, (err)=>{
+    //             if(err) return next(new AppError("Something went wrong please try again later", 400))
+    //         })
+    //     }else{
+    //         return next(new AppError("Please upload an Image file", 400))
+    //     }
+    //     req.body.Icon = req.body.menuName
+    // }
+    // console.log(req.body)
 
 });
 
