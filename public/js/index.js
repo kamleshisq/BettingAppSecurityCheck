@@ -15,7 +15,7 @@ import {updatePromotion} from "./updatePromotion";
 import { createPromotion } from "./createPromotion";
 import { deletePromotion } from "./deletePormotion";
 import { betLimit } from "./betLimit";
-import { createHorizontalMenu } from "../../controller/horizontalMenuController";
+import { createHorizontalMenu } from "./createHorizontalMenu";
 // import { func } from "joi";
 
 
