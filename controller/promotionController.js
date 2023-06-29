@@ -4,7 +4,7 @@ const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 
 exports.createPosition = catchAsync(async(req, res, next) => {
-    console.log(req.files.Icon)
+    console.log(req.files)
     if(req.files){
         if(req.files.Icon.mimetype.startsWith('image')){
             const image = req.files.Icon
