@@ -212,8 +212,8 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         let bet = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:req.body.creditAmount});
         user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance: req.body.creditAmount, availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1, exposure:-bet.Stake}});
         let parentUser
-        let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
-        let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/WON `
+        let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/WON`
+        let description2 = `Bet for ${game.game_name}/stake = ${bet.Stake}/user = ${user.userName}/WON `
         if(user.parentUsers.length < 2){
             // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
             parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -req.body.creditAmount, downlineBalance: req.body.creditAmount}})
@@ -313,6 +313,13 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             })
         }
     }else{
+        let game = {}
+        if(req.body.gameId){
+            game = await gameModel.findOne({game_id:(req.body.gameId)*1})
+        }else{
+            let game1 = await betModel.findOne({transactionId:req.body.transactionId})
+            game.game_name = game1.match
+        }
         if(user.parentUsers.length < 2){
             // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
             parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -req.body.rollbackAmount, downlineBalance: req.body.rollbackAmount}})
@@ -326,8 +333,8 @@ exports.rollBack = catchAsync(async(req, res, next) => {
         if(bet){
             await betModel.findByIdAndUpdate(bet._id,{returns:0, status:"CANCEL"})
         }
-        let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
-        let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/CANCEL `
+        let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/CANCEL`
+        let description2 = `Bet for ${game.game_name}/stake = ${bet.Stake}/user = ${user.userName}/CANCEL `
         if(acc){
             let Acc2 = {
                 "user_id":parentUser._id,
