@@ -7,6 +7,7 @@ const Role = require('./model/roleModel');
 const User = require("./model/userModel");
 const Bet = require("./model/betmodel");
 const verticalMenuModel = require("./model/verticalMenuModel");
+const horizontalMenuModel = require("./model/horizontalMenuModel");
 const AccModel  = require("./model/accountStatementByUserModel");
 const Promotion = require("./model/promotion")
 const userController = require("./websocketController/userController");
@@ -1048,6 +1049,11 @@ io.on('connection', (socket) => {
         }catch(err){
             console.log(err)
         }
+    })
+
+    socket.on("HorizontalMenuIdByData", async(data) => {
+        let horizontalMenu = await horizontalMenuModel.findById(data);
+        socket.emit('HorizontalMenuIdByData', horizontalMenu)
     })
 
 })

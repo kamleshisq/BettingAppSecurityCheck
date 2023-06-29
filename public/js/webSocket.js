@@ -3024,6 +3024,26 @@ socket.on('connect', () => {
             },500)
         })
 
+
+        $(document).on('click', ".getHorizontalMenuDetails", function(e){
+            let id = $(this).attr('id')
+            socket.emit("HorizontalMenuIdByData", id)
+        })
+        socket.on('HorizontalMenuIdByData', async(data) => {
+                let modleName = "#myModal6"
+                let form = $(modleName).find('.form-data21')
+                let PMD = data
+                form.attr('id', PMD._id);
+                form.find('input[name = "check"]').removeAttr('checked');
+                form.find('input[name = "menuName"]').attr('value',PMD.menuName)
+                form.find('input[name = "url"]').attr('value',PMD.url)
+                form.find('input[name = "num"]').attr('value',PMD.Number)
+                form.find('input[name = "page"]').attr('value',PMD.page)
+                if(PMD.status){
+                    form.find('input[name = "check"]').attr("checked", "checked");
+                }
+        })
+
     }
 
 
