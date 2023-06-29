@@ -3035,7 +3035,7 @@ socket.on('connect', () => {
             form.append('num',form1.find('input[name = "num"]').val)
             form.append('page',form1.find('input[name = "page"]').val)
             form.append('Icon',form1.find('input[name = "Icon"]').files)
-            console.log(form)
+            socket.emit("createHorizontalMenu", {form, LOGINDATA})
         })
     }
 
