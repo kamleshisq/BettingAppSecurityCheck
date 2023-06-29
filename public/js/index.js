@@ -452,5 +452,5 @@ $(document).on('submit', ".form-data23", function(e){
     console.log(data)
     // form.append('image',document.getElementById('file').files[0])
     // console.log(form)
-    updateHorizontalMenu(f)
+    updateHorizontalMenu(fd)
 })
