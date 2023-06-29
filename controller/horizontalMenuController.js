@@ -37,7 +37,7 @@ exports.updateHorizontalMenu = catchAsybc(async(req, rws, next) => {
     console.log(req.body, "WORKING")
     console.log(req.files, 45)
     if(req.files){
-        if(req.files.Icon.mimetype.startsWith('image')){
+        if(req.files.file.mimetype.startsWith('image')){
             const image = req.files.file
             // console.log(logo)
             image.mv(`public/imgForHMenu/${req.body.menuName}.png`, (err)=>{
