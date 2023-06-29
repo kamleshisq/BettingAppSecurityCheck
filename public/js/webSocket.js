@@ -3028,10 +3028,14 @@ socket.on('connect', () => {
         //FOR HORIZONTAL MENU//
         $(document).on('submit',  ".form-data2", function(e){
             e.preventDefault()
-            let form = $(this)[0];
-            let fd = new FormData(form);
-            let data = Object.fromEntries(fd.entries());
-            socket.emit("createHorizontalMenu", {data, LOGINDATA})
+            const form = new FormData();
+            let form1 = $(this)[0];
+            form.append('menuName',form1.find('input[name = "menuName"]').val)
+            form.append('url',form1.find('input[name = "url"]').val)
+            form.append('num',form1.find('input[name = "num"]').val)
+            form.append('page',form1.find('input[name = "page"]').val)
+            form.append('Icon',form1.find('input[name = "Icon"]').files[0])
+            console.log(form)
         })
     }
 
