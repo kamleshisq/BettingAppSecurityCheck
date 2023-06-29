@@ -3045,6 +3045,12 @@ socket.on('connect', () => {
                 }
         })
 
+        $(document).on('click', ".deleteHorizontalMenu", function(e){
+            e.preventDefault()
+            let id = $(this).attr("id")
+            socket.emit("deleteHorizontalMenu", id)
+        })
+
     }
 
 

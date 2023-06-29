@@ -1056,6 +1056,10 @@ io.on('connection', (socket) => {
         socket.emit('HorizontalMenuIdByData', horizontalMenu)
     })
 
+    socket.on('deleteHorizontalMenu', async(data) => {
+        console.log(data)
+    })
+
 })
 
 http.listen(80,()=> {
