@@ -76,7 +76,7 @@ module.exports = () => {
 
                     }else{
                         await betModel.findByIdAndUpdate(entry._id,{status:"LOSS"})
-                        await userModel.findByIdAndUpdate(entry.userId,{$inc:{Loss:1}})
+                        await userModel.findByIdAndUpdate(entry.userId,{$inc:{Loss:1, exposure:-entry.Stake}})
                     }
                     // const userName = entry.userName;
                     // const stake = entry.Stake;
