@@ -441,3 +441,12 @@ $(document).on('submit', '.form-data22', function(e){
     createHorizontalMenu(form)
 });
 
+$(document).on('submit', ".form-data23", function(e){
+    e.preventDefault()
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    let data = Object.fromEntries(fd.entries());
+    let id  = $(this).attr('id')
+    data.id = id
+    console.log(data)
+})
