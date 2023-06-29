@@ -7,7 +7,6 @@ exports.createVerticalMenu = catchAsync(async(req, res, next) => {
     if((req.body.num * 1) > (allMenu.length + 1) ){
         req.body.num = (allMenu.length + 1)
     }
-    console.log(req.body)
     let newMenu
     try{
         newMenu = await verticalMenuModel.create(req.body);
