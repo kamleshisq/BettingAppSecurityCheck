@@ -1052,13 +1052,13 @@ io.on('connection', (socket) => {
     })
 
     socket.on("createHorizontalMenu", async(data) => {
-        let fetchData = {
-            menuName:data.data.menuName,
-            url:data.data.url,
-            num:(data.data.num * 1),
-            page:data.data. page,
-            Icon:data.data.Icon.toString('base64')
-        }
+        // let fetchData = {
+        //     menuName:data.data.menuName,
+        //     url:data.data.url,
+        //     num:(data.data.num * 1),
+        //     page:data.data. page,
+        //     Icon:data.data.Icon.toString('base64')
+        // }
         const fullUrl = "http://127.0.0.1/api/v1/horizontalMenu/createMenu"
         fetch(fullUrl, {
             method: 'POST',
@@ -1066,7 +1066,7 @@ io.on('connection', (socket) => {
                 'Authorization': `Bearer ` + data.LOGINDATA.LOGINTOKEN,
                 'Content-Type': 'application/json',
                 'accept': 'application/json' },
-            body:JSON.stringify(fetchData)
+            body:JSON.stringify(data.form)
         }).then(res => res.json())
         .then(Data =>{
             console.log(Data, 123456456)
