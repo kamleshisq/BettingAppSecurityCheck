@@ -7,7 +7,7 @@ export const updateHorizontalMenu = async(data)=>{
             data
         });
         if(res.data.status === 'success'){
-            alert('user created successfully!!!!');
+            alert('Updated successfully!!!!');
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(()=>{

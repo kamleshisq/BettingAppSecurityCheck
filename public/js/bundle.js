@@ -6271,7 +6271,7 @@ var createHorizontalMenu = /*#__PURE__*/function () {
         case 3:
           res = _context.sent;
           if (res.data.status === 'success') {
-            alert('user created successfully!!!!');
+            alert('Men created successfully!!!!');
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
@@ -6325,7 +6325,7 @@ var updateHorizontalMenu = /*#__PURE__*/function () {
         case 3:
           res = _context.sent;
           if (res.data.status === 'success') {
-            alert('user created successfully!!!!');
+            alert('Updated successfully!!!!');
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
