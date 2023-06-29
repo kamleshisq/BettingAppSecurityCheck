@@ -33,7 +33,7 @@ exports.createHorizontalMenu = catchAsybc(async(req, res, next) => {
 
 
 
-exports.updateHorizontalMenu = catchAsybc(async(req, rws, next) => {
+exports.updateHorizontalMenu = catchAsybc(async(req, res, next) => {
     console.log(req.body, "WORKING")
     console.log(req.files, 45)
     if(req.files){
