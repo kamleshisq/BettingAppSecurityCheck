@@ -2982,7 +2982,7 @@ socket.on('connect', () => {
 
         socket.on("VerticalMenuIdByData", async(data) => {
                 let modleName = "#myModal5"
-                let form = $(modleName).find('.form-data1')
+                let form = $(modleName).find('.form-data21')
                 let PMD = data
                 form.attr('id', PMD._id);
                 form.find('input[name = "check"]').removeAttr('checked');
@@ -2995,7 +2995,7 @@ socket.on('connect', () => {
                 }
         })
 
-        $(document).on('submit', ".form-data1", function(e){
+        $(document).on('submit', ".form-data21", function(e){
             e.preventDefault()
             let form = $(this)[0];
             let fd = new FormData(form);
