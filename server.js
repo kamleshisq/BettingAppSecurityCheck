@@ -1051,44 +1051,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("createHorizontalMenu", async(data) => {
-        // console.log(data)
-        // let fetchData = {
-        //     menuName:data.data.menuName,
-        //     url:data.data.url,
-        //     num:(data.data.num * 1),
-        //     page:data.data. page,
-        //     Icon:data.data.Icon.toString('base64')
-        // }
-        let formData = new FormData();
-        formData.append("menuName", data.data.menuName)
-        formData.append("url", data.data.url)
-        formData.append("num", data.data.num)
-        formData.append("page", data.data.page)
-        formData.append("Icon", data.data.Icon)
-        const fullUrl = "http://127.0.0.1/api/v1/horizontalMenu/createMenu"
-        // fetch(fullUrl, {
-        //     method: 'POST',
-        //     headers: { 
-        //         'Authorization': `Bearer ` + data.LOGINDATA.LOGINTOKEN,
-        //         'Content-Type': 'multipart/form-data',
-        //     },
-        //     body:formData
-        // }).then(res => res.json())
-        // .then(Data =>{
-        //     console.log(Data, 123456456)
-        // })
-
-        request.post({
-            url:fullUrl,
-            formData:formData
-        }, (error, response, body) => {
-            if (error) {
-              console.error(error);
-            } else {
-              const data = JSON.parse(body);
-              console.log(data);
-            }
-          });
+       console.log(data.data)
     })
 
 
