@@ -458,5 +458,5 @@ $(document).on('submit', ".form-data23", function(e){
         form.append('status',"off")
     }
     // form.append('image',document.getElementById('file').files[0])
-    console.log(data)
+    console.log(form)
 })
