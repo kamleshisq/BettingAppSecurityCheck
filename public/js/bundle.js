@@ -6818,10 +6818,10 @@ $(document).on('submit', ".form-data23", function (e) {
   var fd = new FormData(form);
   var data = Object.fromEntries(fd.entries());
   data.id = id;
-  console.log(id);
+  console.log(data);
   // form.append('image',document.getElementById('file').files[0])
   // console.log(form)
-  // updateHorizontalMenu(form)
+  (0, _updateHorizonatlMenu.updateHorizontalMenu)(data);
 });
 },{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./betLock":"betLock.js","./updateRow":"updateRow.js","./updatePromotion":"updatePromotion.js","./createPromotion":"createPromotion.js","./deletePormotion":"deletePormotion.js","./betLimit":"betLimit.js","./createHorizontalMenu":"createHorizontalMenu.js","./updateHorizonatlMenu":"updateHorizonatlMenu.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];

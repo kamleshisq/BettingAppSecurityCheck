@@ -449,8 +449,8 @@ $(document).on('submit', ".form-data23", function(e){
     let fd = new FormData(form);
     let data = Object.fromEntries(fd.entries());
     data.id = id
-    console.log(id)
+    console.log(data)
     // form.append('image',document.getElementById('file').files[0])
     // console.log(form)
-    // updateHorizontalMenu(form)
+    updateHorizontalMenu(data)
 })
