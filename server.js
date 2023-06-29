@@ -1062,7 +1062,7 @@ io.on('connection', (socket) => {
             body:JSON.stringify(data.data)
         }).then(res => res.json())
         .then(Data =>{
-            console.log(data, 123456456)
+            console.log(Data, 123456456)
         })
     })
 
