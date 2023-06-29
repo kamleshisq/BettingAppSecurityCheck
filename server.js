@@ -1072,6 +1072,7 @@ io.on('connection', (socket) => {
             headers: { 
                 'Authorization': `Bearer ` + data.LOGINDATA.LOGINTOKEN,
                 'Content-Type': 'multipart/form-data',
+            },
             body:formData
         }).then(res => res.json())
         .then(Data =>{
