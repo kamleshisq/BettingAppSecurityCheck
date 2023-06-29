@@ -1067,7 +1067,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
 exports.getCmsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find()
-    let hosriZontalMenu = await horizontalMenuModel.find()
+    let hosriZontalMenu = await horizontalMenuModel.find().sort({Number:1})
     res.status(200).render("./Cms/cms",{
         title:"CMS",
         user,
