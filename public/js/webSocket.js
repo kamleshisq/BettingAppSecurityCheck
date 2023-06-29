@@ -3039,7 +3039,7 @@ socket.on('connect', () => {
                 form.find('input[name = "url"]').attr('value',PMD.url)
                 form.find('input[name = "num"]').attr('value',PMD.Number)
                 form.find('input[name = "page"]').attr('value',PMD.page)
-                form.find('div[name = "img"]').innerHTML = `<img src="../imgForHMenu/${PMD.icon}.png" alt="img" class="form__user-photo">`
+                document.getElementById('img').innerHTML = `<img src="../imgForHMenu/${PMD.icon}.png" alt="img" class="form__user-photo">`
                 if(PMD.status){
                     form.find('input[name = "check"]').attr("checked", "checked");
                 }
