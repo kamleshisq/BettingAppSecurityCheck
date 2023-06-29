@@ -18,8 +18,7 @@ const placeBet = require('./utils/betPlace');
 const loginlogs = require('./model/loginLogs');
 const gameModel = require('./model/gameModel');
 const getCrkAndAllData = require("./utils/getSportAndCricketList");
-const { date } = require('joi');
-
+const request = require('request');
 // http(req, res) => {}
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -1067,17 +1066,29 @@ io.on('connection', (socket) => {
         formData.append("page", data.data.page)
         formData.append("Icon", data.data.Icon)
         const fullUrl = "http://127.0.0.1/api/v1/horizontalMenu/createMenu"
-        fetch(fullUrl, {
-            method: 'POST',
-            headers: { 
-                'Authorization': `Bearer ` + data.LOGINDATA.LOGINTOKEN,
-                'Content-Type': 'multipart/form-data',
-            },
-            body:formData
-        }).then(res => res.json())
-        .then(Data =>{
-            console.log(Data, 123456456)
-        })
+        // fetch(fullUrl, {
+        //     method: 'POST',
+        //     headers: { 
+        //         'Authorization': `Bearer ` + data.LOGINDATA.LOGINTOKEN,
+        //         'Content-Type': 'multipart/form-data',
+        //     },
+        //     body:formData
+        // }).then(res => res.json())
+        // .then(Data =>{
+        //     console.log(Data, 123456456)
+        // })
+
+        request.post({
+            url:fullUrl,
+            formData:formData
+        }, (error, response, body) => {
+            if (error) {
+              console.error(error);
+            } else {
+              const data = JSON.parse(body);
+              console.log(data);
+            }
+          });
     })
 
 
