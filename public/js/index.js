@@ -17,6 +17,7 @@ import { deletePromotion } from "./deletePormotion";
 import { betLimit } from "./betLimit";
 import { createHorizontalMenu } from "./createHorizontalMenu";
 import { updateHorizontalMenu } from "./updateHorizonatlMenu";
+import { createBanner } from "./createBanner";
 // import { func } from "joi";
 
 
@@ -453,4 +454,12 @@ $(document).on('submit', ".form-data23", function(e){
     // form.append('image',document.getElementById('file').files[0])
     // console.log(form)
     updateHorizontalMenu(fd)
+})
+
+$(document).on('submit', ".form-data24", function(e){
+    e.preventDefault()
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    console.log(fd)
+    createBanner(fd)
 })
