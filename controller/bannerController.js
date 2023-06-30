@@ -11,15 +11,15 @@ exports.createBanner = catchAsync(async(req, res, next) => {
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
             })
             req.body.banner = req.body.bannerName
+            const newBanner = await bannerModel.create(req.body);
+            res.status(200).json({
+                status:"success",
+                newBanner
+            })
         }else{
             return next(new AppError("Please upload a midea file", 400))
         }
     }else{
         return next(new AppError("Please Provide Image", 404))
     }
-    const newBanner = await bannerModel.create(req.body);
-    res.status(200).json({
-        status:"success",
-        newBanner
-    })
 })
