@@ -20,6 +20,8 @@ const loginlogs = require('./model/loginLogs');
 const gameModel = require('./model/gameModel');
 const getCrkAndAllData = require("./utils/getSportAndCricketList");
 const request = require('request');
+const { date } = require('joi');
+const bannerModel = require('./model/bannerModel');
 // http(req, res) => {}
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -1074,6 +1076,11 @@ io.on('connection', (socket) => {
     socket.on('deleteHorizontalMenu', async(data) => {
         await horizontalMenuModel.findByIdAndDelete(data)
         socket.emit("deleteHorizontalMenu", "success")
+    })
+
+    socket.on("getBannerDetails", async(data) => {
+        let details = await bannerModel.findById(data)
+        socket.emit("getBannerDetails", details)
     })
 
 })

@@ -3057,6 +3057,16 @@ socket.on('connect', () => {
             },200)
         })
 
+        $(document).on("click", ".getBannerDetails", function(e){
+            e.preventDefault()
+            let id = $(this).attr("id")
+            socket.emit("getBannerDetails", id)
+        })
+
+        socket.on("getBannerDetails", async(data) => {
+            console.log(data)
+        })
+
     }
 
 
