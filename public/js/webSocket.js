@@ -3085,7 +3085,7 @@ socket.on('connect', () => {
             alert(data)
             window.setTimeout(()=>{
                 window.location = '/admin/cms'
-            },500)
+            },200)
         })
     }
 
