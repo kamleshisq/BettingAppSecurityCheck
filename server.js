@@ -1041,7 +1041,7 @@ io.on('connection', (socket) => {
             }
             if(!(check.num == data.num)){
                 console.log("Not Same")
-                if(!(data.num > allMenu.length)){
+                if(data.num > allMenu.length){
                     data.num = allMenu.length
                     await verticalMenuModel.findOneAndUpdate({num:data.num},{num:check.num})
                 }else if(data.num < 1){
