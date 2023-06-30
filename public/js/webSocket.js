@@ -3077,6 +3077,16 @@ socket.on('connect', () => {
                 }
         })
 
+        $(document).on("click", ".deleteBanner", function(e){
+            let id = $(this).attr('id')
+            socket.emit("deleteBanner", id)
+        })
+        socket.on("deleteBanner", data =>{
+            alert(data)
+            window.setTimeout(()=>{
+                window.location = '/admin/cms'
+            },500)
+        })
     }
 
 

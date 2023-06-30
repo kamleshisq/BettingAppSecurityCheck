@@ -1077,12 +1077,23 @@ io.on('connection', (socket) => {
             await horizontalMenuModel.updateMany({Number:{$gt:deleteMenu.Number}},{$inc:{Number:-1}})
             socket.emit("deleteHorizontalMenu", "success")
 
-        }catch(err){}
+        }catch(err){
+            console.log(err)
+        }
     })
 
     socket.on("getBannerDetails", async(data) => {
         let details = await bannerModel.findById(data)
         socket.emit("getBannerDetails", details)
+    })
+
+    socket.on("deleteBanner", async(data) => {
+        try{
+            await bannerModel.findByIdAndDelete(data)
+            socket.emit("deleteBanner", "Deleted Successfully")
+        }catch(err){
+            console.log(err)
+        }
     })
 
 })
