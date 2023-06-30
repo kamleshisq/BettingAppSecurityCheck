@@ -414,7 +414,7 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
             $group:{
                 _id:{
                     userName:'$userName',
-                    gameId: '$event'
+                    gameId: '$gameId'
                 },
                 gameCount:{$sum:1},
                 loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
