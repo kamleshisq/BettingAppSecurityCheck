@@ -1008,7 +1008,6 @@ io.on('connection', (socket) => {
 
 
     socket.on("createVerticalMenu", async(data) => {
-        console.log(data, 456)
         let fullUrl = "http://127.0.0.1/api/v1/verticalMenu/createVerticalMenu"
         fetch(fullUrl, {
             method: 'POST',
@@ -1039,7 +1038,7 @@ io.on('connection', (socket) => {
             }else{
                 data.status = false
             }
-            if(check.num == data.num){
+            if(!(check.num == data.num)){
                 if(!(data.num > allMenu.length)){
                     data.num = allMenu.length
                     await verticalMenuModel.findOneAndUpdate({num:data.num},{num:check.num})
