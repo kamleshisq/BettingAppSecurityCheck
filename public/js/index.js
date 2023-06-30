@@ -18,6 +18,7 @@ import { betLimit } from "./betLimit";
 import { createHorizontalMenu } from "./createHorizontalMenu";
 import { updateHorizontalMenu } from "./updateHorizonatlMenu";
 import { createBanner } from "./createBanner";
+import { updateBanner } from "./updateBanner";
 // import { func } from "joi";
 
 
@@ -467,5 +468,5 @@ $(document).on("submit", ".form-data25", function(e){
     e.preventDefault()
     let form = $(this)[0];
     let fd = new FormData(form);
-    createBanner(fd)
+    updateBanner(fd)
 })

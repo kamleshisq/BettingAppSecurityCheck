@@ -28,4 +28,5 @@ exports.createBanner = catchAsync(async(req, res, next) => {
 exports.updateBanner = catchAsync(async(req, res, next) => {
     console.log(req.body),
     console.log(req.files);
+    
 })
