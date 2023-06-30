@@ -2953,7 +2953,7 @@ socket.on('connect', () => {
     if(pathname === "/admin/cms"){
 
         //FOR VERTICLE MENU//
-        $(document).on('submit', '.form-data', async function(e){
+        $(document).on('submit', '.form-data20', async function(e){
             e.preventDefault()
             let form = $(this)[0];
             let fd = new FormData(form);
