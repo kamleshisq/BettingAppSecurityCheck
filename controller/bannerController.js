@@ -33,7 +33,7 @@ exports.updateBanner = catchAsync(async(req, res, next) => {
     }
     if(req.files){
         if(req.files.file.mimetype.startsWith('image')){
-            const image = req.files.banner
+            const image = req.files.file
             // console.log(logo)
             image.mv(`public/banner/${req.body.bannerName}.png`, (err)=>{
                 if(err) return next(new AppError("Something went wrong please try again later", 400))
