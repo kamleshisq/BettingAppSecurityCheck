@@ -1030,14 +1030,26 @@ io.on('connection', (socket) => {
     socket.on('updateVerticalMenu', async(data) => {
         console.log(data)
         let data1
+        let check = await verticalMenuModel.findById(data.id);
+        let allMenu =  await verticalMenuModel.find()
         try{
             if(data.check){
                 data.status = true
             }else{
                 data.status = false
             }
+            if(check.num == data.num){
+                if(!(data.num > allMenu.length)){
+                    data.num = allMenu.length
+                    await verticalMenuModel.findOneAndUpdate({num:data.num},{num:check.num})
+                }else if(data.num < 1){
+                    socket.emit("updateVerticalMenu", "Please provide positive number")
+                }else{
+                    await verticalMenuModel.findOneAndUpdate({num:data.num},{num:check.num})
+                }
+            }
             data1 = await verticalMenuModel.findByIdAndUpdate(data.id, data)
-            socket.emit("updateVerticalMenu", data1)
+            socket.emit("updateVerticalMenu", "Updated Successfully")
         }catch(err){
             console.log(err)
         }
