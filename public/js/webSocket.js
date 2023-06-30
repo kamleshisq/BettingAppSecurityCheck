@@ -3064,6 +3064,7 @@ socket.on('connect', () => {
         })
 
         socket.on("getBannerDetails", async(data) => {
+            console.log(data)
             let modleName = "#myModal7"
                 let form = $(modleName).find('.form-data25')
                 let PMD = data
