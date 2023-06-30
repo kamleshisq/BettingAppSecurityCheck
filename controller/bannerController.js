@@ -17,7 +17,7 @@ exports.createBanner = catchAsync(async(req, res, next) => {
                 newBanner
             })
         }else{
-            return next(new AppError("Please upload a midea file", 400))
+            return next(new AppError("Please Provide Image", 400))
         }
     }else{
         return next(new AppError("Please Provide Image", 404))
