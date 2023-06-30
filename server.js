@@ -1061,7 +1061,8 @@ io.on('connection', (socket) => {
 
     socket.on("deleteVerticalMenu", async(data) => {
         try{
-            await verticalMenuModel.findByIdAndDelete(data)
+            let deletedMenu = await verticalMenuModel.findByIdAndDelete(data)
+            await verticalMenuModel.update({num:{$gt:deletedMenu.num}},{$inc:{num:1}})
             socket.emit("deleteVerticalMenu", "done")
         }catch(err){
             console.log(err)
