@@ -26,7 +26,22 @@ exports.createBanner = catchAsync(async(req, res, next) => {
 
 
 exports.updateBanner = catchAsync(async(req, res, next) => {
-    console.log(req.body),
-    console.log(req.files);
+    if(req.files){
+        if(req.files.banner.mimetype.startsWith('image')){
+            const image = req.files.banner
+            // console.log(logo)
+            image.mv(`public/banner/${req.body.bannerName}.png`, (err)=>{
+                if(err) return next(new AppError("Something went wrong please try again later", 400))
+            })
+            req.body.banner = req.body.bannerName
+        }else{
+            return next(new AppError("Please Provide Image", 400))
+        }
+        }
+        const updatedBanner = await bannerModel.findByIdAndUpdate(req.body.id,req.body);
+        res.status(200).json({
+            status:"success",
+            updatedBanner
+        })
     
 })
