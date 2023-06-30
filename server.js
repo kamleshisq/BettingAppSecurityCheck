@@ -1031,6 +1031,7 @@ io.on('connection', (socket) => {
         console.log(data)
         let data1
         let check = await verticalMenuModel.findById(data.id);
+        console.log(check)
         let allMenu =  await verticalMenuModel.find()
         try{
             if(data.check){
