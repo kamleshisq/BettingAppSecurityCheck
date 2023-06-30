@@ -95,7 +95,28 @@
               <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser2"><i class="fa-solid fa-plus"></i> &nbsp; Add Banner</button>
           </div>
           <div class="table_data_details_ col-lg-12">
-            
+            <table>
+              <thead>
+                <th>banner Name</th>
+                <th>Url</th>
+                <th>Banner</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </thead>
+              <%for(let i = 0; i < banner.length; i++){%>
+                <%if((i%2)===0){%>
+                  <tr class="blue">
+                <%}else{%>
+                  <tr>
+                <%}%>
+                    <td><%=banner[i].bannerName%></td>
+                    <td><%=banner[i].url%></td>
+                    <td><img src="../banner/<%=banner[i].banner%>.png" alt="img" class="form__user-photo"></td>
+                    <td><button data-bs-toggle="modal" data-bs-target="#myModal7" id="<%=banner[i]._id%>" class="getBannerDetails"><i class="fa-solid fa-database"></i></button></td>
+                    <td><button class="deleteBanner" id="<%=banner[i]._id%>">Delete</button></td>
+                  </tr>
+              <%}%>
+            </table>
           </div>
       </section>
   </div>

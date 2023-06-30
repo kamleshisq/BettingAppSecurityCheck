@@ -19,6 +19,7 @@ const getCrkAndAllData = require("../utils/getSportAndCricketList");
 const getmarketDetails = require("../utils/getmarketsbymarketId");
 const fs = require('fs');
 const path = require('path');
+const bannerModel = require('../model/bannerModel');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -1068,10 +1069,12 @@ exports.getCmsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1})
     let hosriZontalMenu = await horizontalMenuModel.find().sort({Number:1})
+    let banner = await bannerModel.find().sort()
     res.status(200).render("./Cms/cms",{
         title:"CMS",
         user,
         verticalMenus,
-        hosriZontalMenu
+        hosriZontalMenu,
+        banner
     })
 })
