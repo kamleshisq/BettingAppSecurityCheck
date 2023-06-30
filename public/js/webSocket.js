@@ -3064,7 +3064,6 @@ socket.on('connect', () => {
         })
 
         socket.on("getBannerDetails", async(data) => {
-            console.log(data)
             let modleName = "#myModal7"
                 let form = $(modleName).find('.form-data25')
                 let PMD = data
@@ -3072,8 +3071,7 @@ socket.on('connect', () => {
                 form.find('input[name = "check"]').removeAttr('checked');
                 form.find('input[name = "bannerName"]').attr('value',PMD.bannerName)
                 form.find('input[name = "url"]').attr('value',PMD.url)
-                document.getElementById('banner').innerHTML = `<img src="../banner/${PMD.banner}.png" alt="img" class="form__user-photo">`
-                console.log(document.getElementById('banner'))
+                document.getElementById('banner12').innerHTML = `<img src="../banner/${PMD.banner}.png" alt="img" class="form__user-photo">`
                 if(PMD.status){
                     form.find('input[name = "check"]').attr("checked", "checked");
                 }
