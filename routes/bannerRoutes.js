@@ -5,6 +5,7 @@ const authController = require("../controller/authorizationController");
 
 
 route.post("/createBanner", authController.isProtected, authController.isAdmin, bannerController.createBanner);
+route.post("/updateBanner", authController.isProtected, authController.isAdmin, bannerController.updateBanner);
 
 
 module.exports = route

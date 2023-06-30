@@ -6881,7 +6881,13 @@ $(document).on('submit', ".form-data24", function (e) {
   e.preventDefault();
   var form = $(this)[0];
   var fd = new FormData(form);
-  console.log(fd);
+  // console.log(fd)
+  (0, _createBanner.createBanner)(fd);
+});
+$(document).on("submit", ".form-data25", function (e) {
+  e.preventDefault();
+  var form = $(this)[0];
+  var fd = new FormData(form);
   (0, _createBanner.createBanner)(fd);
 });
 },{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./betLock":"betLock.js","./updateRow":"updateRow.js","./updatePromotion":"updatePromotion.js","./createPromotion":"createPromotion.js","./deletePormotion":"deletePormotion.js","./betLimit":"betLimit.js","./createHorizontalMenu":"createHorizontalMenu.js","./updateHorizonatlMenu":"updateHorizonatlMenu.js","./createBanner":"createBanner.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {

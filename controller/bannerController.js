@@ -22,4 +22,10 @@ exports.createBanner = catchAsync(async(req, res, next) => {
     }else{
         return next(new AppError("Please Provide Image", 404))
     }
+});
+
+
+exports.updateBanner = catchAsync(async(req, res, next) => {
+    console.log(req.body),
+    console.log(req.files);
 })

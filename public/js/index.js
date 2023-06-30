@@ -459,6 +459,13 @@ $(document).on('submit', ".form-data24", function(e){
     e.preventDefault()
     let form = $(this)[0];
     let fd = new FormData(form);
-    console.log(fd)
+    // console.log(fd)
+    createBanner(fd)
+})
+
+$(document).on("submit", ".form-data25", function(e){
+    e.preventDefault()
+    let form = $(this)[0];
+    let fd = new FormData(form);
     createBanner(fd)
 })
