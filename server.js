@@ -1030,10 +1030,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on('updateVerticalMenu', async(data) => {
-        console.log(data)
         let data1
         let check = await verticalMenuModel.findById(data.id);
-        console.log(check)
         let allMenu =  await verticalMenuModel.find()
         try{
             if(data.check){
@@ -1042,7 +1040,6 @@ io.on('connection', (socket) => {
                 data.status = false
             }
             if(!(check.num == data.num)){
-                console.log("Not Same")
                 if(data.num > allMenu.length){
                     data.num = allMenu.length
                     await verticalMenuModel.findOneAndUpdate({num:data.num},{num:check.num})
@@ -1075,8 +1072,12 @@ io.on('connection', (socket) => {
     })
 
     socket.on('deleteHorizontalMenu', async(data) => {
-        await horizontalMenuModel.findByIdAndDelete(data)
-        socket.emit("deleteHorizontalMenu", "success")
+        try{
+            let deleteMenu = await horizontalMenuModel.findByIdAndDelete(data)
+            await horizontalMenuModel.updateMany({Number:{$gt:deleteMenu.Number}},{$inc:{Number:-1}})
+            socket.emit("deleteHorizontalMenu", "success")
+
+        }catch(err){}
     })
 
     socket.on("getBannerDetails", async(data) => {

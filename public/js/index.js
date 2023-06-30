@@ -437,7 +437,6 @@ $(document).on('submit', '.form-data22', function(e){
     const form = new FormData();
     form.append('menuName', document.getElementById('menuName').value)
     form.append('url', document.getElementById('url').value)
-    form.append('num', document.getElementById('num').value)
     form.append('page', document.getElementById('page').value)
     form.append('Icon', document.getElementById('Icon').files[0])
     createHorizontalMenu(form)
