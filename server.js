@@ -1008,6 +1008,7 @@ io.on('connection', (socket) => {
 
 
     socket.on("createVerticalMenu", async(data) => {
+        console.log(data)
         let fullUrl = "http://127.0.0.1/api/v1/verticalMenu/createVerticalMenu"
         fetch(fullUrl, {
             method: 'POST',
