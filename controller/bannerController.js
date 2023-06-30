@@ -26,6 +26,11 @@ exports.createBanner = catchAsync(async(req, res, next) => {
 
 
 exports.updateBanner = catchAsync(async(req, res, next) => {
+    if(req.body.check === 'on'){
+        req.body.status = true
+    }else{
+        req.body.status = false
+    }
     if(req.files){
         if(req.files.banner.mimetype.startsWith('image')){
             const image = req.files.banner
