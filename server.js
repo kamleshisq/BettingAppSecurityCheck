@@ -1028,6 +1028,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('updateVerticalMenu', async(data) => {
+        console.log(data)
         let data1
         try{
             if(data.check){
