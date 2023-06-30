@@ -3073,6 +3073,7 @@ socket.on('connect', () => {
                 form.find('input[name = "bannerName"]').attr('value',PMD.bannerName)
                 form.find('input[name = "url"]').attr('value',PMD.url)
                 document.getElementById('banner').innerHTML = `<img src="../banner/${PMD.banner}.png" alt="img" class="form__user-photo">`
+                console.log(document.getElementById('banner'))
                 if(PMD.status){
                     form.find('input[name = "check"]').attr("checked", "checked");
                 }
