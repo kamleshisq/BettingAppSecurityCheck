@@ -25,12 +25,13 @@ const handleValidationErrorDB = err => {
 const sendErrorDev = (err, req,res) => {
     // console.log('abc')
     if(req.originalUrl.startsWith('/api')){
-    return res.status(err.statusCode).json({
-        status : err.status,
-        error: err,
-        message : err.message,
-        stack: err.stack
-    })
+    // return res.status(err.statusCode).json({
+    //     status : err.status,
+    //     error: err,
+    //     message : err.message,
+    //     stack: err.stack
+    // })
+    console.log(err)
     }
     if(err.message == "Please log in to access"){
         return res.status(err.statusCode).json({
