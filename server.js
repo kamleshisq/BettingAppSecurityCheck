@@ -93,11 +93,12 @@ io.on('connection', (socket) => {
 
     socket.on("search", async(data) => {
         // console.log(data.LOGINDATA.LOGINTOKEN);
-        console.log(data.filterData);
+        // console.log(data.filterData);
         let page = data.page; 
         let limit = 10
         // const me = await User.findById(data.id)
         const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        data.filterData.parentUsers = `{ $in: [data.LOGINDATA.LOGINUSER._id] }`
         let role_type =[]
         for(let i = 0; i < roles.length; i++){
             role_type.push(roles[i].role_type)
