@@ -1999,7 +1999,7 @@ socket.on('connect', () => {
                   html += `<td style="color: #FE3030;">${games[i].returns}</td>`
                 }
                 html += `</tr>`
-                count ++
+                count++
             }
 
             if(data.page == 0){
