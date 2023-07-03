@@ -1055,7 +1055,8 @@ io.on('connection', (socket) => {
               Bet.aggregate([
                 {
                   $match: {
-                    userId: { $in: userIds } 
+                    userId: { $in: userIds },
+                    status: 'OPEN'
                   }
                 },
                 {
