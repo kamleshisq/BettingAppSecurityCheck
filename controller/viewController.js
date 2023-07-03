@@ -20,7 +20,6 @@ const getmarketDetails = require("../utils/getmarketsbymarketId");
 const fs = require('fs');
 const path = require('path');
 const bannerModel = require('../model/bannerModel');
-const verticalMenuModel = require("../model/verticalMenuModel");
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
