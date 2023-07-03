@@ -1009,7 +1009,7 @@ io.on('connection', (socket) => {
             },
             {
                 $lookup: {
-                  from: 'betModel', 
+                  from: 'betModels', 
                   localField: '_id',
                   foreignField: 'userId',
                   as: 'bets'
