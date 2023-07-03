@@ -447,7 +447,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('gameReport',async(data)=>{
-        // console.log(data)
+        console.log(data)
         let page = data.page;
         let limit = 10;
         const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
