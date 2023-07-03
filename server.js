@@ -614,28 +614,28 @@ io.on('connection', (socket) => {
         // console.log(data)
         let limit = 10;
         let page = data.page;
-        console.log(data.filterData)
-        const roles = await Role.find({role_type: {$gt:data.LOGINDATA.LOGINUSER.role.role_type}});
-        let role_type =[]
-        for(let i = 0; i < roles.length; i++){
-            role_type.push(roles[i].role_type)
-        }
-        data.filterData.role_type = {
-            $in:role_type
-        }
-        data.filterData.status = {
-            $ne:"OPEN"
-        }
-        const user = await User.findOne({userName:data.filterData.userName})
-        if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
-            delete data.filterData['userName']
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('userBetDetail',{ubDetails,page})
-        }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('userBetDetail',{ubDetails,page})
+        // console.log(data.filterData)
+        // const roles = await Role.find({role_type: {$gt:data.LOGINDATA.LOGINUSER.role.role_type}});
+        // let role_type =[]
+        // for(let i = 0; i < roles.length; i++){
+        //     role_type.push(roles[i].role_type)
+        // }
+        // data.filterData.role_type = {
+        //     $in:role_type
+        // }
+        // data.filterData.status = {
+        //     $ne:"OPEN"
+        // }
+        // const user = await User.findOne({userName:data.filterData.userName})
+        // if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
+        //     delete data.filterData['userName']
+        //     let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+        //     socket.emit('userBetDetail',{ubDetails,page})
+        // }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
+        //     let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+        //     socket.emit('userBetDetail',{ubDetails,page})
 
-        }
+        // }
         
         User.aggregate([
             {
@@ -652,20 +652,33 @@ io.on('connection', (socket) => {
           ])
             .then((userResult) => {
               const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-          
-              Bet.aggregate([
-                {
-                  $match: {
+              let Name123
+              if(data.filterData.userName === data.LOGINDATA.LOGINUSER.userName){
+                  Name123 = {
+                      userId: { $in: userIds },
+                      status: {$ne:"OPEN"}
+                    }
+              }else{
+                Name123 = {
                     userId: { $in: userIds },
                     status: {$ne:"OPEN"},
                     userName: data.filterData.userName
-                  }
+              }}
+              Bet.aggregate([
+                {
+                  $match: Name123
                 },
-                { $limit : 10 }
+                {
+                    $skip:(page * limit)
+                },
+                {
+                    $limit:limit
+                }
               ])
                 .then((betResult) => {
                 //   socket.emit("aggreat", betResult)
-                    console.log(betResult)
+                    let ubDetails = betResult
+                    socket.emit('userBetDetail',{ubDetails,page})
                 })
                 .catch((error) => {
                   console.error(error);
