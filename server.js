@@ -1062,7 +1062,7 @@ io.on('connection', (socket) => {
                 {
                     $group:{
                         _id: '$secId',
-                        totalStake: { $sum: '$bets.Stake' },
+                        totalStake: { $sum: '$Stake' },
                         count: { $sum: 1 }
                     }
                 }
