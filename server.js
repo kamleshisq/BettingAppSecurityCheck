@@ -496,6 +496,7 @@ io.on('connection', (socket) => {
             }
           ]).then((betResult) => {
             //   socket.emit("aggreat", betResult)
+            console.log(betResult)
             let games = betResult
             socket.emit('gameReport',{games,page})
             })
