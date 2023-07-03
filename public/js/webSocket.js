@@ -1975,6 +1975,7 @@ socket.on('connect', () => {
             let page = data.page;
             let games = data.games;
             let html = '';
+            console.log(page)
             for(let i = 0;i<games.length;i++){
                 if(i % 2 == 0){
                   html += `<tr style="text-align: center;">`
