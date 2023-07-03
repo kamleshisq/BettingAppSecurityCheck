@@ -434,59 +434,130 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
 
 exports.gameReportPage = catchAsync(async(req, res, next) => {
     const currentUser = global._User
-    let roles
-    if(currentUser.role_type == 1){
-        roles = await Role.find();
-    }else{
-        roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
-    }
-        let role_type =[]
-        for(let i = 0; i < roles.length; i++){
-            role_type.push(roles[i].role_type)
-        }
-    const games = await betModel.aggregate([
-        {
-            $match:{
-                role_type:{$in:role_type}
-            }
-        },
-        {
-            $group:{
-                _id:{
-                    userName:'$userName',
-                    gameId: '$event'
-                },
-                gameCount:{$sum:1},
-                loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
-                won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
-                returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
-                
-            }
-        },
-        {
-            $group:{
-                _id:'$_id.userName',
-                gameCount:{$sum:1},
-                betCount:{$sum:'$gameCount'},
-                loss:{$sum:'$loss'},
-                won:{$sum:'$won'},
-                returns:{$sum:'$returns'}
 
-            }
+    User.aggregate([
+        {
+          $match: {
+            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
+          }
         },
         {
-            $skip:0
-        },
-        {
-            $limit:10
+          $group: {
+            _id: null,
+            userIds: { $push: '$userName' } 
+          }
         }
-    ])
-    // console.log(games)
-    res.status(200).render('./gamereports/gamereport',{
-        title:"gameReports",
-        me:currentUser,
-        games
-    })
+      ])
+        .then((userResult) => {
+          const userIds = userResult.length > 0 ? userResult[0].userIds : [];
+      
+          betModel.aggregate([
+            {
+              $match: {
+                userName: { $in: userIds },
+                status: {$ne:"OPEN"}
+              }
+            },
+            {
+                $group:{
+                    _id:{
+                        userName:'$userName',
+                        gameId: '$event'
+                    },
+                    gameCount:{$sum:1},
+                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:'$_id.userName',
+                    gameCount:{$sum:1},
+                    betCount:{$sum:'$gameCount'},
+                    loss:{$sum:'$loss'},
+                    won:{$sum:'$won'},
+                    returns:{$sum:'$returns'}
+    
+                }
+            },
+            {
+                $skip:0
+            },
+            {
+                $limit:10
+            }
+          ])
+            .then((betResult) => {
+            //   socket.emit("aggreat", betResult)
+            res.status(200).render('./gamereports/gamereport',{
+                title:"gameReports",
+                me:currentUser,
+                games:betResult
+            })
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+        });    
+
+    // let roles
+    // if(currentUser.role_type == 1){
+    //     roles = await Role.find();
+    // }else{
+    //     roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
+    // }
+    //     let role_type =[]
+    //     for(let i = 0; i < roles.length; i++){
+    //         role_type.push(roles[i].role_type)
+    //     }
+    // const games = await betModel.aggregate([
+    //     {
+    //         $match:{
+    //             role_type:{$in:role_type}
+    //         }
+    //     },
+    //     {
+    //         $group:{
+    //             _id:{
+    //                 userName:'$userName',
+    //                 gameId: '$event'
+    //             },
+    //             gameCount:{$sum:1},
+    //             loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+    //             won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+    //             returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+                
+    //         }
+    //     },
+    //     {
+    //         $group:{
+    //             _id:'$_id.userName',
+    //             gameCount:{$sum:1},
+    //             betCount:{$sum:'$gameCount'},
+    //             loss:{$sum:'$loss'},
+    //             won:{$sum:'$won'},
+    //             returns:{$sum:'$returns'}
+
+    //         }
+    //     },
+    //     {
+    //         $skip:0
+    //     },
+    //     {
+    //         $limit:10
+    //     }
+    // ])
+    // // console.log(games)
+    // res.status(200).render('./gamereports/gamereport',{
+    //     title:"gameReports",
+    //     me:currentUser,
+    //     games
+    // })
 })
 
 exports.useracount = catchAsync(async(req, res, next) => {
