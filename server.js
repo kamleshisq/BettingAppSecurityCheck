@@ -1043,13 +1043,14 @@ io.on('connection', (socket) => {
             {
               $group: {
                 _id: null,
-                userIds: { $push: '$_id' } 
+                userIds: { $push: '$id' } 
               }
             }
           ])
             .then((userResult) => {
-                console.log(userResult)
+                console.log(userResult.length)
               const userIds = userResult.length > 0 ? userResult[0].userIds : [];
+                console.log(userIds)
           
               Bet.aggregate([
                 {
