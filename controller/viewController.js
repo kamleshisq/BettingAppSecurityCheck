@@ -617,7 +617,7 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
         }
       ])
         .then((userResult) => {
-          const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
+          const userIds = userResult.length > 0 ? userResult[0].userIds : [];
         loginLogs.aggregate([
             {
               $match:{

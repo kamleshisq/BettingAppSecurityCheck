@@ -612,7 +612,7 @@ io.on('connection', (socket) => {
             }
           ])
             .then((userResult) => {
-              const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id) : [];
+              const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
               let Name123
               if(data.filterData.userName === data.LOGINDATA.LOGINUSER.userName){
                   Name123 = {
