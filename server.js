@@ -479,6 +479,11 @@ io.on('connection', (socket) => {
                 }
             },
             {
+                $sort:{
+                    _id:1
+                }
+            },
+            {
                 $group:{
                     _id:'$_id.userName',
                     gameCount:{$sum:1},
@@ -487,11 +492,6 @@ io.on('connection', (socket) => {
                     won:{$sum:'$won'},
                     returns:{$sum:'$returns'}
     
-                }
-            },
-            {
-                $sort:{
-                    '$_id':1
                 }
             },
             {
