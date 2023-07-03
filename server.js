@@ -1007,14 +1007,14 @@ io.on('connection', (socket) => {
                     parentUsers:{$elemMatch:{$eq:data.LOGINUSER._id}}
                 }
             },
-            // {
-            //     $lookup: {
-            //       from: 'betModel', 
-            //       localField: '_id',
-            //       foreignField: 'userId',
-            //       as: 'bets'
-            //     }
-            // },
+            {
+                $lookup: {
+                  from: 'betModel', 
+                  localField: '_id',
+                  foreignField: 'userId',
+                  as: 'bets'
+                }
+            },
             // {
             //     $unwind: '$bets'
             // },
