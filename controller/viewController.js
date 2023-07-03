@@ -378,18 +378,58 @@ exports.APIcall = catchAsync(async(req, res, next) => {
 
 exports.ReportPage = catchAsync(async(req, res, next) => {
     const currentUser = global._User
-    const role_type = []
-    const roles = await Role.find({role_type: {$gt:currentUser.role_type}});
-    // let role_type =[]
-    for(let i = 0; i < roles.length; i++){
-        role_type.push(roles[i].role_type)
-    }
-    const bets = await betModel.find({role_type:{$in:role_type}, status:{$ne:"OPEN"}}).limit(10)
-    res.status(200).render('./reports/reports',{
-        title:"Reports",
-        me:currentUser,
-        bets
-    })
+    // const role_type = []
+    // const roles = await Role.find({role_type: {$gt:currentUser.role_type}});
+    // // let role_type =[]
+    // for(let i = 0; i < roles.length; i++){
+    //     role_type.push(roles[i].role_type)
+    // }
+    // const bets = await betModel.find({role_type:{$in:role_type}, status:{$ne:"OPEN"}}).limit(10)
+    User.aggregate([
+        {
+          $match: {
+            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            userIds: { $push: '$_id' } 
+          }
+        }
+      ])
+        .then((userResult) => {
+          const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
+      
+          betModel.aggregate([
+            {
+              $match: {
+                userId: { $in: userIds },
+                status: {$ne:"OPEN"}
+              }
+            },
+            { $limit : 10 }
+          ])
+            .then((betResult) => {
+            //   socket.emit("aggreat", betResult)
+                res.status(200).render("./reports/reports",{
+                    title:"Reports",
+                    bets:betResult,
+                    me : currentUser
+                })
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    // res.status(200).render('./reports/reports',{
+    //     title:"Reports",
+    //     me:currentUser,
+    //     bets
+    // })
 })
 
 exports.gameReportPage = catchAsync(async(req, res, next) => {
