@@ -466,9 +466,6 @@ io.on('connection', (socket) => {
               $match: dataM
             },
             {
-                $sort:{userName:1}
-            },
-            {
                 $group:{
                     _id:{
                         userName:'$userName',
@@ -490,6 +487,11 @@ io.on('connection', (socket) => {
                     won:{$sum:'$won'},
                     returns:{$sum:'$returns'}
     
+                }
+            },
+            {
+                $sort:{
+                    _id:1
                 }
             },
             {
