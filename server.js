@@ -735,7 +735,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('userPLDetail',async(data)=>{
-        // console.log(data)
+        console.log(data)
         let page = data.page;
         let limit = 10;
         let user = await User.findOne({userName:`${data.filterData.userName}`, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}}})
