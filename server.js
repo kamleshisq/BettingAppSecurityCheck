@@ -466,6 +466,9 @@ io.on('connection', (socket) => {
               $match: dataM
             },
             {
+                $sort:{userName:1}
+            },
+            {
                 $group:{
                     _id:{
                         userName:'$userName',
@@ -494,9 +497,6 @@ io.on('connection', (socket) => {
             },
             {
                 $limit:limit
-            },
-            {
-                $sort:{userName:1}
             }
           ]).then((betResult) => {
             //   socket.emit("aggreat", betResult)
