@@ -1043,7 +1043,7 @@ io.on('connection', (socket) => {
             {
               $group: {
                 _id: null,
-                userIds: { $push: '$id' } 
+                userIds: { $push: '$_id' } 
               }
             }
           ])
