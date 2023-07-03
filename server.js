@@ -744,7 +744,7 @@ io.on('connection', (socket) => {
             let users = await User.find({parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}}}).skip(page * limit).limit(limit)
             socket.emit('userPLDetail',{users,page})
         }else{
-            let users = user
+            let users = [user]
             socket.emit('userPLDetail', {users, page})
         }
     })
