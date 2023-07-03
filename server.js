@@ -743,7 +743,7 @@ io.on('connection', (socket) => {
         if(data.LOGINDATA.LOGINUSER.role_type === 1){
             onlineUsers = await User.find({is_Online:true, userName:new RegExp(data.x)}).skip(page * limit).limit(limit)
         }else{
-            onlineUsers = await User.find({is_Online:true, role_type:{$in:role_type}, userName:new RegExp(data.x)}).skip(page * limit).limit(limit)
+            onlineUsers = await User.find({is_Online:true, role_type:{$in:role_type}, userName:new RegExp(data.x), parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}}}).skip(page * limit).limit(limit)
         }
         page++
         socket.emit("SearchOnlineUser",{onlineUsers, page})
