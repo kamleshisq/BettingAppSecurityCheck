@@ -451,6 +451,7 @@ io.on('connection', (socket) => {
         let limit = 10
         let dataM 
         console.log(data.filterData)
+        console.log(data.LOGINDATA.LOGINUSER.userName)
         
         User.aggregate([
             {
