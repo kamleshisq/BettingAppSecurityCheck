@@ -492,7 +492,7 @@ io.on('connection', (socket) => {
             {
                 $sort: {
                   _id: 1,
-                  gameCount: 1
+                  returns: 1
                 }
             },
             {

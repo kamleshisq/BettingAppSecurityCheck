@@ -483,6 +483,12 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
                 }
             },
             {
+                $sort: {
+                  _id: 1,
+                  returns: 1
+                }
+            },
+            {
                 $skip:0
             },
             {
