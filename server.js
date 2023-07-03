@@ -451,7 +451,7 @@ io.on('connection', (socket) => {
         let limit = 10
         let dataM 
         console.log(data.filterData)
-        if(data.filterData.userName === data.LOGINDATA.LOGINUSER){
+        if(data.filterData.userName === data.LOGINDATA.LOGINUSER.userName){
             dataM = {
                 status:{$ne:"OPEN"}
             }
