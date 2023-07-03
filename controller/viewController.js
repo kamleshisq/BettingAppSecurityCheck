@@ -849,13 +849,6 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
                 status: 'CANCEL'
               }
             },
-            {
-                $group:{
-                    _id: '$secId',
-                    totalStake: { $sum: '$Stake' },
-                    count: { $sum: 1 }
-                }
-            },
             { $limit : 10 }
           ])
             .then((betResult) => {
