@@ -447,6 +447,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('gameReport',async(data)=>{
+        let page = data.page
         let dataM 
         if(data.filterData.userName === data.LOGINDATA.LOGINUSER){
             dataM = {
@@ -485,11 +486,16 @@ io.on('connection', (socket) => {
                     returns:{$sum:'$returns'}
     
                 }
+            },
+            {
+                $skip:(page * limit)
+            },
+            {
+                $limit:limit
             }
           ]).then((betResult) => {
             //   socket.emit("aggreat", betResult)
             let games = betResult
-            let page = 0
             socket.emit('gameReport',{games,page})
             })
             .catch((error) => {
