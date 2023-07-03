@@ -1048,6 +1048,7 @@ io.on('connection', (socket) => {
             }
           ])
             .then((userResult) => {
+                console.log(userResult)
               const userIds = userResult.length > 0 ? userResult[0].userIds : [];
           
               Bet.aggregate([
