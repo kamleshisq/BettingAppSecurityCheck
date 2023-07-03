@@ -1975,14 +1975,19 @@ socket.on('connect', () => {
             let page = data.page;
             let games = data.games;
             let html = '';
-            console.log(page)
+            let count 
+            if(page != 0){
+                count = (10 * page) + 1
+            }else{
+                count = 1
+            }
             for(let i = 0;i<games.length;i++){
                 if(i % 2 == 0){
                   html += `<tr style="text-align: center;">`
                 }else{
                   html += `<tr style="text-align: center;" class="blue">`
                 }
-                  html += `<td>${i + 1}</td>
+                  html += `<td>${count + 1}</td>
                   <td>${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].betCount}</td>
@@ -1994,6 +1999,7 @@ socket.on('connect', () => {
                   html += `<td style="color: #FE3030;">${games[i].returns}</td>`
                 }
                 html += `</tr>`
+                count ++
             }
 
             if(data.page == 0){
