@@ -2935,7 +2935,9 @@ socket.on('connect', () => {
         function marketId(){
             socket.emit("aggreat", LOGINDATA)
               setTimeout(()=>{
-                marketId()
+                if(pathname === "/admin/liveMarket"){
+                    marketId()
+                }
               }, 500)
         }
         marketId()
