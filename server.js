@@ -1034,7 +1034,7 @@ io.on('connection', (socket) => {
         //     console.log(result)
         //   socket.emit("aggreat", result)
         // })
-        UserModel.aggregate([
+        User.aggregate([
             {
               $match: {
                 parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id } }
@@ -1050,7 +1050,7 @@ io.on('connection', (socket) => {
             .then((userResult) => {
               const userIds = userResult.length > 0 ? userResult[0].userIds : [];
           
-              BetModel.aggregate([
+              Bet.aggregate([
                 {
                   $match: {
                     userId: { $in: userIds } 
