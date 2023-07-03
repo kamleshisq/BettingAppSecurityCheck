@@ -612,7 +612,7 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
         {
           $group: {
             _id: null,
-            userIds: { $push: '$userName' } 
+            userIds: { $push: '$_id' } 
           }
         }
       ])
