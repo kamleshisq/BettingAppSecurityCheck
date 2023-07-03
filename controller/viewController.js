@@ -20,6 +20,7 @@ const getmarketDetails = require("../utils/getmarketsbymarketId");
 const fs = require('fs');
 const path = require('path');
 const bannerModel = require('../model/bannerModel');
+const verticalMenuModel = require("../model/verticalMenuModel");
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -314,10 +315,12 @@ exports.registration = catchAsync(async(req, res, next) => {
 exports.userdashboard = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     const data = await promotionModel.find()
-    // console.log(user)
+    let verticalMenus = await verticalMenuModel.find()
+    console.log(verticalMenus)
     res.status(200).render("./user/index",{
         user,
-        data
+        data,
+        verticalMenus
     })
 })
 
