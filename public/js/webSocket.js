@@ -1987,7 +1987,7 @@ socket.on('connect', () => {
                 }else{
                   html += `<tr style="text-align: center;" class="blue">`
                 }
-                  html += `<td>${count + 1}</td>
+                  html += `<td>${count + i}</td>
                   <td>${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].betCount}</td>
