@@ -739,25 +739,66 @@ exports.getNotificationsPage = catchAsync(async(req, res, next) => {
 
 exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
     // console.log(req.currentUser)
-    const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
-    let role_type =[]
-    for(let i = 0; i < roles.length; i++){
-        role_type.push(roles[i].role_type)
-    }
-    // console.log(await betModel.find({status:'OPEN'}).limit(10))
-    let bets
-    if(req.currentUser.role.role_level == 1){
-        bets = await betModel.find({status:'OPEN'}).limit(10)
-    }else{
-        bets = await betModel.find({role_type:{$in:role_type},status:'OPEN'}).limit(10)
-    }
-    console.log(bets)
-    const me = global._User
-    res.status(200).render("./betMonitering/betmoniter",{
-        title:"Betmoniter",
-        bets,
-        me
-    })
+    // const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
+    // let role_type =[]
+    // for(let i = 0; i < roles.length; i++){
+    //     role_type.push(roles[i].role_type)
+    // }
+    // // console.log(await betModel.find({status:'OPEN'}).limit(10))
+    // let bets
+    // if(req.currentUser.role.role_level == 1){
+    //     bets = await betModel.find({status:'OPEN'}).limit(10)
+    // }else{
+    //     bets = await betModel.find({role_type:{$in:role_type},status:'OPEN'}).limit(10)
+    // }
+    // console.log(bets)
+    User.aggregate([
+        {
+          $match: {
+            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            userIds: { $push: '$_id' } 
+          }
+        }
+      ])
+        .then((userResult) => {
+          const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
+      
+          betModel.aggregate([
+            {
+              $match: {
+                userId: { $in: userIds },
+                status: 'OPEN'
+              }
+            },
+            { $limit : 10 }
+          ])
+            .then((betResult) => {
+            //   socket.emit("aggreat", betResult)
+              let me = global._User
+                res.status(200).render("./betMonitering/betmoniter",{
+                    title:"Betmoniter",
+                    bets:betResult,
+                    me
+                })
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    // const me = global._User
+    // res.status(200).render("./betMonitering/betmoniter",{
+    //     title:"Betmoniter",
+    //     bets,
+    //     me
+    // })
 })
 
 // exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
