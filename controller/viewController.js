@@ -600,7 +600,7 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
     if(currentUser.role_type == 1){
         Logs = await loginLogs.find().limit(10)
     }else{
-        Logs = await loginLogs.find({role_Type:{$in:role_type}}).limit(10)
+        Logs = await loginLogs.find({role_Type:{$in:role_type}, parentUsers:{$elemMatch:{$eq:req.currentUser.id}}}).limit(10)
     }
     res.status(200).render('./userHistory/userhistoryreport',{
         title:"UserHistory",
