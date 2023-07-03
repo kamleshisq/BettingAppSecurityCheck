@@ -735,27 +735,15 @@ io.on('connection', (socket) => {
     })
 
     socket.on('userPLDetail',async(data)=>{
-        console.log(data)
+        // console.log(data)
         let page = data.page;
         let limit = 10;
-        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
-        let role_type =[]
-        for(let i = 0; i < roles.length; i++){
-            role_type.push(roles[i].role_type)
-        }
-        data.filterData.role_type = {
-            $in:role_type
-        }
-        // console.log(data.filterData)
-        const user = await User.findOne({userName:data.filterData.userName})
-        if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
-            delete data.filterData['userName']
-            let users = await User.find(data.filterData).skip(page * limit).limit(limit)
+        let user = await User.findOne({userName:`${data.filterData.userName}`, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}}})
+        if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName && !user){
+            let users = await User.find({parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}}}).skip(page * limit).limit(limit)
             socket.emit('userPLDetail',{users,page})
-        }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
-            let users = await User.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('userPLDetail',{users,page})
-
+        }else{
+            socket.emit('userPLDetail', {user, page:0})
         }
     })
 
