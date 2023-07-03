@@ -661,7 +661,7 @@ exports.plreport = catchAsync(async(req, res, next) => {
     if(currentUser.role_type == 1){
         users = await User.find({isActive:true}).limit(10)
     }else{
-        users = await User.find({role_type:{$in:role_type},isActive:true , whiteLabel:currentUser.whiteLabel}).limit(10)
+        users = await User.find({role_type:{$in:role_type},isActive:true , parentUsers:{$elemMatch:{$eq:req.currentUser.id}}}).limit(10)
     }
         // console.log(users)
     res.status(200).render('./PL_Report/plreport',{
