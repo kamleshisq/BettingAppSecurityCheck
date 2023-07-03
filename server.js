@@ -450,6 +450,7 @@ io.on('connection', (socket) => {
         let page = data.page
         let limit = 10
         let dataM 
+        console.log(data.filterData)
         if(data.filterData.userName === data.LOGINDATA.LOGINUSER){
             dataM = {
                 status:{$ne:"OPEN"}
