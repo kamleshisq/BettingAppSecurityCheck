@@ -751,6 +751,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
     }else{
         bets = await betModel.find({role_type:{$in:role_type},status:'OPEN', parentUsers:{$elemMatch:{$eq:req.currentUser.id}}}).limit(10)
     }
+    console.log(bets)
     const me = global._User
     res.status(200).render("./betMonitering/betmoniter",{
         title:"Betmoniter",
