@@ -749,7 +749,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
     if(req.currentUser.role.role_level == 1){
         bets = await betModel.find({status:'OPEN'}).limit(10)
     }else{
-        bets = await betModel.find({role_type:{$in:role_type},status:'OPEN', parentUsers:{$elemMatch:{$eq:req.currentUser.id}}}).limit(10)
+        bets = await betModel.find({role_type:{$in:role_type},status:'OPEN'}).limit(10)
     }
     console.log(bets)
     const me = global._User
