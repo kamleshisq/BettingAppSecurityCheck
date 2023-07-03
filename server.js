@@ -448,7 +448,7 @@ io.on('connection', (socket) => {
 
     socket.on('gameReport',async(data)=>{
         console.log(data)
-        betModel.aggregate([
+        Bet.aggregate([
             {
               $match: {
                 userName: data.filterData.userName,
