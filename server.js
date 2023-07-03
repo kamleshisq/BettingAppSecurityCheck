@@ -448,6 +448,7 @@ io.on('connection', (socket) => {
 
     socket.on('gameReport',async(data)=>{
         let page = data.page
+        let limit = 10
         let dataM 
         if(data.filterData.userName === data.LOGINDATA.LOGINUSER){
             dataM = {
