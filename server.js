@@ -451,66 +451,87 @@ io.on('connection', (socket) => {
         let limit = 10
         let dataM 
         console.log(data.filterData)
-        if(data.filterData.userName === data.LOGINDATA.LOGINUSER.userName){
-            dataM = {
-                status:{$ne:"OPEN"}
-            }
-        }else{
-            dataM = {
-                userName: data.filterData.userName,
-                status: {$ne:"OPEN"}
+        
+        User.aggregate([
+            {
+              $match: {
+                parentUsers: { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER.userName } }
               }
-        }
-        Bet.aggregate([
-            {
-              $match: dataM
             },
             {
-                $group:{
-                    _id:{
-                        userName:'$userName',
-                        gameId: '$event'
-                    },
-                    gameCount:{$sum:1},
-                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
-                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
-                    returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
-                    
-                }
-            },
-            {
-                $group:{
-                    _id:'$_id.userName',
-                    gameCount:{$sum:1},
-                    betCount:{$sum:'$gameCount'},
-                    loss:{$sum:'$loss'},
-                    won:{$sum:'$won'},
-                    returns:{$sum:'$returns'}
-    
-                }
-            },
-            {
-                $sort: {
-                  _id: 1,
-                  returns: 1
-                }
-            },
-            {
-                $skip:(page * limit)
-            },
-            {
-                $limit:limit
+              $group: {
+                _id: null,
+                userIds: { $push: '$userName' } 
+              }
             }
-          ]).then((betResult) => {
-            //   socket.emit("aggreat", betResult)
-            console.log(betResult)
-            let games = betResult
-            socket.emit('gameReport',{games,page})
+          ])
+            .then((userResult) => {
+              const userIds = userResult.length > 0 ? userResult[0].userIds : [];
+                if(data.filterData.userName === data.LOGINDATA.LOGINUSER.userName){
+                    dataM = {
+                        status:{$ne:"OPEN"},
+                        userName: { $in: userIds }
+                    }
+                }else{
+                    dataM = {
+                        userName: data.filterData.userName,
+                        status: {$ne:"OPEN"}
+                    }
+                }
+              Bet.aggregate([
+                {
+                  $match:dataM
+                },
+                {
+                    $group:{
+                        _id:{
+                            userName:'$userName',
+                            gameId: '$event'
+                        },
+                        gameCount:{$sum:1},
+                        loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                        won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                        returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+                        
+                    }
+                },
+                {
+                    $group:{
+                        _id:'$_id.userName',
+                        gameCount:{$sum:1},
+                        betCount:{$sum:'$gameCount'},
+                        loss:{$sum:'$loss'},
+                        won:{$sum:'$won'},
+                        returns:{$sum:'$returns'}
+        
+                    }
+                },
+                {
+                    $sort: {
+                      _id: 1,
+                      returns: 1
+                    }
+                },
+                {
+                    $skip:(page * limit)
+                },
+                {
+                    $limit:limit
+                }
+              ])
+                .then((betResult) => {
+                //   socket.emit("aggreat", betResult)
+                let games = betResult
+                socket.emit('gameReport',{games,page})
+                })
+                .catch((error) => {
+                  console.error(error);
+                });
             })
             .catch((error) => {
               console.error(error);
             });
-    })
+        })
 
     socket.on("SearchACC", async(data) => {
         let page = data.page
