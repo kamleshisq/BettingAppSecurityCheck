@@ -627,6 +627,9 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
                 $sort:{
                     login_time:-1
                 }
+            },
+            {
+                $limit:10
             }
           ])
             .then((Logs) => {
