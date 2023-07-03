@@ -1015,21 +1015,21 @@ io.on('connection', (socket) => {
                   as: 'bets'
                 }
             },
-            {
-                $unwind: '$bets'
-            },
-            {
-                $match: {
-                    'bets.status': 'OPEN'
-                }
-            },
-            {
-                $group: {
-                  _id: '$secId',
-                  totalStake: { $sum: '$Stake' },
-                  count: { $sum: 1 }
-                }
-            }
+            // {
+            //     $unwind: '$bets'
+            // },
+            // {
+            //     $match: {
+            //         'bets.status': 'OPEN'
+            //     }
+            // },
+            // {
+            //     $group: {
+            //       _id: '$secId',
+            //       totalStake: { $sum: '$Stake' },
+            //       count: { $sum: 1 }
+            //     }
+            // }
         ]).then(result => {
             console.log(result)
           socket.emit("aggreat", result)
