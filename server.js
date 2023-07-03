@@ -1018,11 +1018,11 @@ io.on('connection', (socket) => {
             {
                 $unwind: '$bets'
             },
-            {
-                $match: {
-                    'bets.status': 'OPEN'
-                }
-            },
+            // {
+            //     $match: {
+            //         'bets.status': 'OPEN'
+            //     }
+            // },
             // {
             //     $group: {
             //       _id: '$secId',
