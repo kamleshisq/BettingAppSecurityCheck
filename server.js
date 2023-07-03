@@ -1001,39 +1001,80 @@ io.on('connection', (socket) => {
             //     // console.log(result)
             //   socket.emit("aggreat", result)
             // })
-            User.aggregate([
+        //     User.aggregate([
+        //         {
+        //           $match: {
+                    // parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id } }
+        //           }
+        //         },
+        //         {
+        //           $lookup: {
+        //             from: 'betmodels',
+        //             localField: '_id',
+        //             foreignField: 'userId',
+        //             as: 'bets'
+        //           }
+        //         },
+        //         {
+        //           $unwind: '$bets'
+        //         },
+        //         {
+        //           $match: {
+        //             'bets.status': 'OPEN'
+        //           }
+        //         },
+        //         {
+        //           $group: {
+                    // _id: '$secId',
+                    // totalStake: { $sum: '$bets.Stake' },
+                    // count: { $sum: 1 }
+        //           }
+        //         }
+        // ]).then(result => {
+        //     console.log(result)
+        //   socket.emit("aggreat", result)
+        // })
+        UserModel.aggregate([
+            {
+              $match: {
+                parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id } }
+              }
+            },
+            {
+              $group: {
+                _id: null,
+                userIds: { $push: '$_id' } 
+              }
+            }
+          ])
+            .then((userResult) => {
+              const userIds = userResult.length > 0 ? userResult[0].userIds : [];
+          
+              BetModel.aggregate([
                 {
                   $match: {
-                    parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id } }
+                    userId: { $in: userIds } 
                   }
                 },
                 {
-                  $lookup: {
-                    from: 'betmodels',
-                    localField: '_id',
-                    foreignField: 'userId',
-                    as: 'bets'
-                  }
-                },
-                {
-                  $unwind: '$bets'
-                },
-                {
-                  $match: {
-                    'bets.status': 'OPEN'
-                  }
-                },
-                {
-                  $group: {
-                    _id: '$secId',
-                    totalStake: { $sum: '$bets.Stake' },
-                    count: { $sum: 1 }
-                  }
+                    $group:{
+                        _id: '$secId',
+                        totalStake: { $sum: '$bets.Stake' },
+                        count: { $sum: 1 }
+                    }
                 }
-        ]).then(result => {
-            console.log(result)
-          socket.emit("aggreat", result)
-        })
+              ])
+                .then((betResult) => {
+                  console.log(betResult);
+                  socket.emit("aggreat", result)
+                })
+                .catch((error) => {
+                  console.error(error);
+                });
+            })
+            .catch((error) => {
+              console.error(error);
+            });
     })
 
 
