@@ -812,24 +812,68 @@ exports.getSpoertPage = catchAsync(async(req, res, next) => {
 
 
 exports.getVoidBetPage = catchAsync(async(req, res, next) => {
-    const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
-    let role_type =[]
-    for(let i = 0; i < roles.length; i++){
-        role_type.push(roles[i].role_type)
-    }
-    // console.log(await betModel.find({status:'OPEN'}).limit(10))
-    let bets
-    if(req.currentUser.role.role_level == 1){
-        bets = await betModel.find({status:'CANCEL'}).limit(10)
-    }else{
-        bets = await betModel.find({role_type:{$in:role_type},status:'CANCEL'}).limit(10)
-    }
-    let me = global._User
-    res.status(200).render("./voidBet/voidBet",{
-        title:"Void Bets",
-        bets,
-        me
-    })
+    // const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
+    // let role_type =[]
+    // for(let i = 0; i < roles.length; i++){
+    //     role_type.push(roles[i].role_type)
+    // }
+    // // console.log(await betModel.find({status:'OPEN'}).limit(10))
+    // let bets
+    // if(req.currentUser.role.role_level == 1){
+    //     bets = await betModel.find({status:'CANCEL'}).limit(10)
+    // }else{
+    //     bets = await betModel.find({role_type:{$in:role_type},status:'CANCEL'}).limit(10)
+    // }
+
+
+    User.aggregate([
+        {
+          $match: {
+            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            userIds: { $push: '$_id' } 
+          }
+        }
+      ])
+        .then((userResult) => {
+          const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
+      
+          betModel.aggregate([
+            {
+              $match: {
+                userId: { $in: userIds },
+                status: 'CANCEL'
+              }
+            },
+            {
+                $group:{
+                    _id: '$secId',
+                    totalStake: { $sum: '$Stake' },
+                    count: { $sum: 1 }
+                }
+            },
+            { $limit : 10 }
+          ])
+            .then((betResult) => {
+            //   socket.emit("aggreat", betResult)
+              let me = global._User
+                res.status(200).render("./voidBet/voidBet",{
+                    title:"Void Bets",
+                    betResult,
+                    me
+                })
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
 });
 
 
