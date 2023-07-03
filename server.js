@@ -19,8 +19,6 @@ const placeBet = require('./utils/betPlace');
 const loginlogs = require('./model/loginLogs');
 const gameModel = require('./model/gameModel');
 const getCrkAndAllData = require("./utils/getSportAndCricketList");
-const request = require('request');
-const { date } = require('joi');
 const bannerModel = require('./model/bannerModel');
 // http(req, res) => {}
 io.on('connection', (socket) => {
@@ -984,24 +982,57 @@ io.on('connection', (socket) => {
 
 
     socket.on("aggreat", async(data) => {
-        Bet.aggregate([
+        // Bet.aggregate([
+        //     {
+        //       $match: {
+        //         status: 'OPEN'
+        //       }
+        //     },
+            // {
+            //   $group: {
+            //     _id: '$secId',
+            //     totalStake: { $sum: '$Stake' },
+            //     count: { $sum: 1 }
+            //   }
+            // }
+        //   ])
+            // .then(result => {
+            //     // console.log(result)
+            //   socket.emit("aggreat", result)
+            // })
+        User.aggregate([
             {
-              $match: {
-                status: 'OPEN'
-              }
+                $match:{
+                    parentUsers:{$elemMatch:{$eq:data.LOGINUSER._id}}
+                }
             },
             {
-              $group: {
-                _id: '$secId',
-                totalStake: { $sum: '$Stake' },
-                count: { $sum: 1 }
-              }
+                $lookup: {
+                  from: 'Bet', 
+                  localField: '_id',
+                  foreignField: 'userId',
+                  as: 'bets'
+                }
+            },
+            {
+                $unwind: '$bets'
+            },
+            {
+                $match: {
+                    status: 'OPEN'
+                }
+            },
+            {
+                $group: {
+                  _id: '$secId',
+                  totalStake: { $sum: '$Stake' },
+                  count: { $sum: 1 }
+                }
             }
-          ])
-            .then(result => {
-                // console.log(result)
-              socket.emit("aggreat", result)
-            })
+        ]).then(result => {
+            // console.log(result)
+          socket.emit("aggreat", result)
+        })
     })
 
 
