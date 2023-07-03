@@ -603,7 +603,7 @@ io.on('connection', (socket) => {
                 // xfiletr.userName = regexp
                 // console.log(data.filterData)
                 // console.log(xfiletr)
-                user = await User.find({ role_type:{$in: role_type}, userName: regexp }).skip(page * limit).limit(limit)
+                user = await User.find({ role_type:{$in: role_type}, userName: regexp, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER.id}} })
         }
         page++
         if(user.length === 0 ){
