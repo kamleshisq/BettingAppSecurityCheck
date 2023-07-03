@@ -1009,7 +1009,7 @@ io.on('connection', (socket) => {
             },
             {
                 $lookup: {
-                  from: 'Bet', 
+                  from: 'betModel', 
                   localField: '_id',
                   foreignField: 'userId',
                   as: 'bets'
@@ -1018,11 +1018,11 @@ io.on('connection', (socket) => {
             {
                 $unwind: '$bets'
             },
-            // {
-            //     $match: {
-            //         'bets.status': 'OPEN'
-            //     }
-            // },
+            {
+                $match: {
+                    'bets.status': 'OPEN'
+                }
+            },
             // {
             //     $group: {
             //       _id: '$secId',
