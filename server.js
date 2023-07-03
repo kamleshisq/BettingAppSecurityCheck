@@ -456,7 +456,7 @@ io.on('connection', (socket) => {
         User.aggregate([
             {
               $match: {
-                parentUsers: { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER.userName } }
+                parentUsers: { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
               }
             },
             {
