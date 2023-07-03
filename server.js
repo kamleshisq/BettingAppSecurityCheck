@@ -496,7 +496,7 @@ io.on('connection', (socket) => {
                 $limit:limit
             },
             {
-                $sort:_id
+                $sort:'$_id'
             }
           ]).then((betResult) => {
             //   socket.emit("aggreat", betResult)
