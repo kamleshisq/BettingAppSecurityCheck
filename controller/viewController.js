@@ -280,12 +280,12 @@ exports.onlineUsers = catchAsync(async(req, res, next) => {
     for(let i = 0; i < roles.length; i++){
         role_type.push(roles[i].role_type)
     }
-    const currentUser = global._User
+    const currentUser = req.currentUser
     let users
-    if(currentUser.role_type == 1){
+    if(req.currentUser.role_type == 1){
         users = await User.find({is_Online:true})
     }else{
-        users = await User.find({role_type:{$in:role_type},is_Online:true , whiteLabel:currentUser.whiteLabel})
+        users = await User.find({role_type:{$in:role_type},is_Online:true , whiteLabel:req.currentUser.whiteLabel, parentUsers:{$elemMatch:{$eq:req.currentUser.id}}})
     }
     let me = global._User
     res.status(200).render('./onlineUsers/onlineUsers',{
