@@ -146,7 +146,7 @@ io.on('connection', (socket) => {
                     $in:role_type
                 }
                 data.filterData.role_type = role_Type
-                // console.log(data.filterData)
+                console.log(data.filterData)
                 user = await User.find(data.filterData).skip(page * limit).limit(limit)
             }
         }
