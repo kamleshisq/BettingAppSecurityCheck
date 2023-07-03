@@ -1019,14 +1019,14 @@ io.on('connection', (socket) => {
             },
             {
                 $match: {
-                    status: 'OPEN'
+                    'bets.status': 'OPEN'
                 }
             },
             {
                 $group: {
-                  _id: '$secId',
-                  totalStake: { $sum: '$Stake' },
-                  count: { $sum: 1 }
+                  'bets._id': '$secId',
+                  'bets.totalStake': { $sum: '$Stake' },
+                  'bets.count': { $sum: 1 }
                 }
             }
         ]).then(result => {
