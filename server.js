@@ -1022,13 +1022,13 @@ io.on('connection', (socket) => {
                     'bets.status': 'OPEN'
                 }
             },
-            {
-                $group: {
-                  _id: '$secId',
-                  totalStake: { $sum: '$Stake' },
-                  count: { $sum: 1 }
-                }
-            }
+            // {
+            //     $group: {
+            //       _id: '$secId',
+            //       totalStake: { $sum: '$Stake' },
+            //       count: { $sum: 1 }
+            //     }
+            // }
         ]).then(result => {
             console.log(result)
           socket.emit("aggreat", result)
