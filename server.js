@@ -1001,35 +1001,35 @@ io.on('connection', (socket) => {
             //     // console.log(result)
             //   socket.emit("aggreat", result)
             // })
-        User.aggregate([
-            {
-                $match:{
-                    parentUsers:{$elemMatch:{$eq:data.LOGINUSER._id}}
+            User.aggregate([
+                {
+                  $match: {
+                    parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id } }
+                  }
+                },
+                {
+                  $lookup: {
+                    from: 'betmodels',
+                    localField: '_id',
+                    foreignField: 'userId',
+                    as: 'bets'
+                  }
+                },
+                {
+                  $unwind: '$bets'
+                },
+                {
+                  $match: {
+                    'bets.status': 'OPEN'
+                  }
+                },
+                {
+                  $group: {
+                    _id: '$secId',
+                    totalStake: { $sum: '$bets.Stake' },
+                    count: { $sum: 1 }
+                  }
                 }
-            },
-            {
-                $lookup: {
-                  from: 'betmodels', 
-                  localField: '_id',
-                  foreignField: 'userId',
-                  as: 'bets'
-                }
-            },
-            // {
-            //     $unwind: '$bets'
-            // },
-            // {
-            //     $match: {
-            //         'bets.status': 'OPEN'
-            //     }
-            // },
-            // {
-            //     $group: {
-            //       _id: '$secId',
-            //       totalStake: { $sum: '$Stake' },
-            //       count: { $sum: 1 }
-            //     }
-            // }
         ]).then(result => {
             console.log(result)
           socket.emit("aggreat", result)
