@@ -315,7 +315,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     const data = await promotionModel.find()
     // console.log(user)
-    res.status(200).render("./user/userDashboard",{
+    res.status(200).render("./user/index",{
         user,
         data
     })
