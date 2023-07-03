@@ -161,29 +161,50 @@ io.on('connection', (socket) => {
     socket.on('userHistory',async(data)=>{
         let page = data.page;
         let limit = 10;
-        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
-        let role_type =[]
-        for(let i = 0; i < roles.length; i++){
-            role_type.push(roles[i].role_type)
-        }
-        data.filterData.role_Type = {
-            $in:role_type
-        }
-        // console.log(data.filterData)
-        const user = await User.findOne({userName:data.filterData.userName})
-        if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == "admin"){
-            let users = await loginlogs.find().skip(page * limit).limit(limit)
-            socket.emit('userHistory',{users,page})
-        }else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
-            delete data.filterData['userName']
-            // console.log(data.filterData)
-            let users = await loginlogs.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('userHistory',{users,page})
-        }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
-            let users = await loginlogs.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('userHistory',{users,page})
-
-        }
+        User.aggregate([
+            {
+              $match: {
+                parentUsers: { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
+              }
+            },
+            {
+              $group: {
+                _id: null,
+                userIds: { $push: '$_id' } 
+              }
+            }
+          ])
+            .then((userResult) => {
+              const userIds = userResult.length > 0 ? userResult[0].userIds : [];
+              loginlogs.aggregate([
+                {
+                  $match:{
+                    user_id:{$in:userIds}
+                  }
+                },{
+                    $sort:{
+                        login_time:-1
+                    }
+                },
+                {
+                    $skip:(limit * page)
+                },
+                {
+                    $limit:limit
+                }
+              ])
+                .then((Logs) => {
+                //   socket.emit("aggreat", betResult)
+                let users = Logs
+                socket.emit('userHistory',{users,page})
+                })
+                .catch((error) => {
+                  console.error(error);
+                });
+            })
+            .catch((error) => {
+              console.error(error);
+            });
     })
     
     // status:'success',
