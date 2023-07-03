@@ -653,11 +653,12 @@ io.on('connection', (socket) => {
             .then((userResult) => {
               const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
           
-              betModel.aggregate([
+              Bet.aggregate([
                 {
                   $match: {
                     userId: { $in: userIds },
-                    status: {$ne:"OPEN"}
+                    status: {$ne:"OPEN"},
+                    userName: data.filterData.userName
                   }
                 },
                 { $limit : 10 }
