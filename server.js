@@ -982,6 +982,7 @@ io.on('connection', (socket) => {
 
 
     socket.on("aggreat", async(data) => {
+        console.log(data)
         // Bet.aggregate([
         //     {
         //       $match: {
