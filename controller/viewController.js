@@ -853,6 +853,7 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
           ])
             .then((betResult) => {
             //   socket.emit("aggreat", betResult)
+            console.log(betResult)
               let me = global._User
                 res.status(200).render("./voidBet/voidBet",{
                     title:"Void Bets",
