@@ -590,25 +590,61 @@ exports.useracount = catchAsync(async(req, res, next) => {
 exports.userhistoryreport = catchAsync(async(req, res, next) => {
     // const currentUser = global._User
     const currentUser = global._User
-    const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
-    let role_type =[]
-    for(let i = 0; i < roles.length; i++){
-        role_type.push(roles[i].role_type)
-    }
-    // console.log(role_type)
-    let Logs
-    if(currentUser.role_type == 1){
-        Logs = await loginLogs.find().limit(10)
-    }else{
-        Logs = await loginLogs.find({ parentUsers:{$elemMatch:{$eq:req.currentUser.id}}}).limit(10)
-    }
-    console.log(Logs)
-    res.status(200).render('./userHistory/userhistoryreport',{
-        title:"UserHistory",
-        me:currentUser,
-        Logs
+    // const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
+    // let role_type =[]
+    // for(let i = 0; i < roles.length; i++){
+    //     role_type.push(roles[i].role_type)
+    // }
+    // // console.log(role_type)
+    // let Logs
+    // if(currentUser.role_type == 1){
+    //     Logs = await loginLogs.find().limit(10)
+    // }else{
+    //     Logs = await loginLogs.find({ parentUsers:{$elemMatch:{$eq:req.currentUser.id}}}).limit(10)
+    // }
+    // console.log(Logs)
+    User.aggregate([
+        {
+          $match: {
+            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            userIds: { $push: '$userName' } 
+          }
+        }
+      ])
+        .then((userResult) => {
+          const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
+        loginLogs.aggregate([
+            {
+              $match:{
+                user_id:{$in:userIds}
+              }
+            },{
+                $sort:{
+                    login_time:-1
+                }
+            }
+          ])
+            .then((Logs) => {
+            //   socket.emit("aggreat", betResult)
+            res.status(200).render('./userHistory/userhistoryreport',{
+                title:"UserHistory",
+                me:currentUser,
+                Logs
+            })
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     })
-})
 
 exports.plreport = catchAsync(async(req, res, next) => {
     const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
