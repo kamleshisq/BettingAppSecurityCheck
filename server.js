@@ -447,13 +447,20 @@ io.on('connection', (socket) => {
     })
 
     socket.on('gameReport',async(data)=>{
-        console.log(data)
-        Bet.aggregate([
-            {
-              $match: {
+        let dataM 
+        if(data.filterData.userName === data.LOGINDATA.LOGINUSER){
+            dataM = {
+                status:{$ne:"OPEN"}
+            }
+        }else{
+            dataM = {
                 userName: data.filterData.userName,
                 status: {$ne:"OPEN"}
               }
+        }
+        Bet.aggregate([
+            {
+              $match: dataM
             },
             {
                 $group:{
