@@ -321,7 +321,8 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     res.status(200).render("./userSideEjs/homePage",{
         user,
         data,
-        verticalMenus
+        verticalMenus,
+        banner
     })
 })
 
