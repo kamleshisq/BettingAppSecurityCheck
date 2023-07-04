@@ -3109,6 +3109,7 @@ socket.on('connect', () => {
 
     if(pathname === "/admin/pageManager"){
         $(document).on("click", ".UploadEjs", async function(e){
+            console.log($(this).attr('id'))
             e.preventDefault()
             let modelName = "uploadFile"
             let form = $(modelName).find('.uploadEJS')
