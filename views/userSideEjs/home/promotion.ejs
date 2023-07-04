@@ -11,7 +11,8 @@
                   250 CASINO GAMES
                 </h4>
                 <div class="explore-sec-col1-btn-dv">
-                  <a href="#">BROWSE CASINO</a>
+                    <% let banner1 = banner.find(item => item.position == "homePosition1") %> 
+                  <a href="<%=banner1.link%>">BROWSE CASINO</a>
                 </div>
               </div>
             </div>
@@ -25,7 +26,8 @@
                   SPORT AND MAKE MONEY  
                 </h4>
                 <div class="explore-sec-col1-btn-dv">
-                  <a href="#">BROWSE CASINO</a>
+                    <% let banner2 = banner.find(item => item.position == "homePosition2") %> 
+                  <a href="<%=banner1.link%>">BROWSE CASINO</a>
                 </div>
               </div>
             </div>
