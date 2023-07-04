@@ -1325,6 +1325,5 @@ exports.getPageManagement = catchAsync(async(req, res, next) => {
     res.status(200).render("./Cms/pageManager", {
         title:"Page Management",
         user
-
     })
 })
