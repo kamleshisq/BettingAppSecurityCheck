@@ -317,6 +317,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find();
     let verticalMenus = await verticalMenuModel.find();
     const banner = await bannerModel.find()
+    console.log(banner)
     let banner1 = banner.find(item => item.position == "homePosition1") 
     console.log(banner1)
     // console.log(verticalMenus)
