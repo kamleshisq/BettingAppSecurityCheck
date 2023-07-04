@@ -40,8 +40,7 @@ socket.on('connect', () => {
         alert(data)
     })
 
-    $(document).on('click', ".promotionLink", function(e){
-        e.preventDefault()
+    $(document).on('click', ".promotionLink", function(){
         let id = $(this).attr('id')
         socket.emit("updatePromotion", id)
     })
