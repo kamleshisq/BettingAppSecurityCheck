@@ -1317,4 +1317,9 @@ exports.getCmsPage = catchAsync(async(req, res, next) => {
         hosriZontalMenu,
         banner
     })
+});
+
+
+exports.getPageManagement = catchAsync(async(req, res, next) => {
+    res.status(200).render("./Cms/pageManager")
 })
