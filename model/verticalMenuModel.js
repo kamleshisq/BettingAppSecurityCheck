@@ -11,8 +11,7 @@ const vertixalMenu = mongoose.Schema({
         required:true
     },
     page:{
-        type:String,
-        required:true
+        type:String
     },
     status:{
         type:Boolean,
