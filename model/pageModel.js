@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 const pages = mongoose.Schema({
     Name:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     }
 })
 
