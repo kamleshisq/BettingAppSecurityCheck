@@ -318,7 +318,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     let verticalMenus = await verticalMenuModel.find();
     const banner = await bannerModel.find()
     // console.log(verticalMenus)
-    res.status(200).render("./userSideEjs/homePage",{
+    res.status(200).render("./userSideEjs/home/homePage",{
         user,
         data,
         verticalMenus,
