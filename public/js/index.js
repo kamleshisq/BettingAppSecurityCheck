@@ -19,6 +19,7 @@ import { createHorizontalMenu } from "./createHorizontalMenu";
 import { updateHorizontalMenu } from "./updateHorizonatlMenu";
 import { createBanner } from "./createBanner";
 import { updateBanner } from "./updateBanner";
+import { createPage } from "./createpage";
 // import { func } from "joi";
 
 
@@ -471,4 +472,12 @@ $(document).on("submit", ".form-data25", function(e){
     let fd = new FormData(form);
     fd.append('id', id)
     updateBanner(fd)
+})
+
+
+$(document).on('submit', ".uploadEJS", function(e){
+    e.preventDefault()
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    createPage(fd)
 })
