@@ -616,7 +616,7 @@ a{
 }
 
 .explore-sec-col1-wrp{
-    background-image: url("../img/home/explore-bg1.png");
+    background-image: url("../../img/homePosition1.png");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -624,7 +624,7 @@ a{
 }
 
 .explore-sec-col1-wrp2{
-    background-image: url("../img/home/explore-bg2.png");
+    background-image: url("../../img/homePosition2.png");
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
