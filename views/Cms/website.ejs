@@ -144,8 +144,11 @@
             <div class="row">
               <div class="col">
                 <label for="page"></label>
-                <select class="form-control m10" name="page" id="page"></select>
-                <option value="jk">jk</option>
+                <select class="form-control m10" name="page" id="page">
+                  <%for(let i=0; i < pages.length; i++){%>
+                    <option value="<%=pages[i].name%>"><%=pages[i].name%></option>
+                  <%}%>
+                </select>
               </div>
             </div>
             <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Add</button>
