@@ -1309,6 +1309,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
 exports.getCmsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let pages = await pagesModel.find()
+    console.log(pages)
     let verticalMenus = await verticalMenuModel.find().sort({num:1})
     let hosriZontalMenu = await horizontalMenuModel.find().sort({Number:1})
     let banner = await bannerModel.find().sort()
