@@ -6487,12 +6487,14 @@ var createPage = /*#__PURE__*/function () {
         case 3:
           res = _context.sent;
           if (res.data.status === 'success') {
-            alert('Page created successfully!!!!');
+            alert(res.data.message);
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
               location.assign('/admin/pageManager');
             }, 200);
+          } else {
+            alert(res.data.message);
           }
           _context.next = 11;
           break;

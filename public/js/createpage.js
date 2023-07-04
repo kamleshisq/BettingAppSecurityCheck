@@ -8,12 +8,14 @@ export const createPage = async(data)=>{
             data
         });
         if(res.data.status === 'success'){
-            alert('Page created successfully!!!!');
+            alert(res.data.message);
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(()=>{
                 location.assign('/admin/pageManager')
             }, 200)
+        }else{
+            alert(res.data.message)
         }
 
     }catch(err){

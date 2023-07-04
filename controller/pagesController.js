@@ -7,21 +7,27 @@ exports.createPage = catchAsync(async(req, res, next) =>{
     console.log(req.body)
     console.log(req.files)
     const ejsFile = req.files.ejsFile;
-    console.log(ejsFile.name.split('.')[1])
-    const fileName = `${req.body.Name}`
-    ejsFile.mv('views/pages/' + fileName, async(err) => {
-      if (err) {
-        console.error(err);
-        res.status(500).json({
-            status:'error',
-            message:"File upload failed."
-        })
-      } else {
-        let page = await pageModel.create(req.body)
+    if(ejsFile.name.split('.')[-1] == 'ejs'){
+        const fileName = `${req.body.Name}`
+        ejsFile.mv('views/pages/' + fileName, async(err) => {
+          if (err) {
+            console.error(err);
+            res.status(500).json({
+                status:'error',
+                message:"File upload failed."
+            })
+          } else {
+            let page = await pageModel.create(req.body)
+            res.status(200).json({
+                status:"success",
+                message:"Page created successfully"
+            })
+          }
+        });
+    }else{
         res.status(200).json({
-            status:"success",
-            message:"Page created successfully"
+            status:'error',
+            message:"Please upload EJS file"
         })
-      }
-    });
+    }
 })
