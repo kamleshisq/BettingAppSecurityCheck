@@ -3112,7 +3112,7 @@ socket.on('connect', () => {
             console.log($(this).attr('id'))
             e.preventDefault()
             let modelName = "uploadFile"
-            let form = $(modelName).find('.uploadEJS')
+            let form = $(modelName).find('.uploadEJS123')
             console.log(form)
             form.attr('id', $(this).attr('id'));
         })
