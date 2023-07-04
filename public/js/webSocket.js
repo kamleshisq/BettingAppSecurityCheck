@@ -3113,6 +3113,7 @@ socket.on('connect', () => {
             e.preventDefault()
             let modelName = "uploadFile"
             let form = $(modelName).find('.uploadEJS')
+            console.log(form)
             form.attr('id', $(this).attr('id'));
         })
     }
