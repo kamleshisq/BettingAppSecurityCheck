@@ -173,9 +173,15 @@
               id="navbarSupportedContent"
             >
               <ul class="navbar-nav m-auto mb-2 mb-lg-0 my-nav-ul">
-                <li class="nav-item my-nav-ul-li">
+                <%for(let i = 0; i < verticalMenus.length; i++){%>
+                  <li class="nav-item my-nav-ul-li">
+                    <a class="nav-link my-nav-ul-li-a" href="#"><%=verticalMenus[i].menuName%> </a>
+                  </li>
+                <%}%>
+                <!-- <li class="nav-item my-nav-ul-li">
                   <a
                     class="nav-link my-nav-ul-li-a active-mnu-nav"
+                    aria-current="page"
                     href="#"
                     >Exchange</a
                   >
@@ -205,7 +211,7 @@
                 </li>
                 <li class="nav-item my-nav-ul-li">
                   <a class="nav-link my-nav-ul-li-a" href="#">Other</a>
-                </li>
+                </li> -->
               </ul>
 
               <div class="nav-login-regstr-btn-dv">
