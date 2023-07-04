@@ -144,7 +144,7 @@
               </div>
             </div>
             <div class="logo-col-dv">
-              <a class="navbar-brand my-navbrand" href="index.html">
+              <a class="navbar-brand my-navbrand" href="/">
                 <img
                   class="my-nav-logo"
                   src="assets/img/Royal777.png"
@@ -173,7 +173,14 @@
               id="navbarSupportedContent"
             >
               <ul class="navbar-nav m-auto mb-2 mb-lg-0 my-nav-ul">
-                <li class="nav-item my-nav-ul-li">
+                <%for(let i = 0; i < verticalMenus.length; i++){%>
+                  <%if(verticalMenus[i].status){%>
+                  <li class="nav-item my-nav-ul-li">
+                    <a class="nav-link my-nav-ul-li-a" href="/<%=verticalMenus[i].menuName%>"><%=verticalMenus[i].menuName%> </a>
+                  </li>
+                  <%}%>
+                <%}%>
+                <!-- <li class="nav-item my-nav-ul-li">
                   <a
                     class="nav-link my-nav-ul-li-a active-mnu-nav"
                     aria-current="page"
@@ -206,7 +213,7 @@
                 </li>
                 <li class="nav-item my-nav-ul-li">
                   <a class="nav-link my-nav-ul-li-a" href="#">Other</a>
-                </li>
+                </li> -->
               </ul>
 
               <div class="nav-login-regstr-btn-dv">
