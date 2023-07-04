@@ -5,9 +5,7 @@ const pageModel = require("../model/pageModel");
 
 exports.createPage = catchAsync(async(req, res, next) =>{
     const ejsFile = req.files.ejsFile;
-    console.log(ejsFile.name.split('.'))
-    console.log(ejsFile.name.split('.')[1])
-    if(ejsFile.name.split('.')[-1] == 'ejs'){
+    if(ejsFile.name.split('.')[1] == 'ejs'){
         const fileName = `${req.body.Name}`
         ejsFile.mv('views/pages/' + fileName, async(err) => {
           if (err) {
