@@ -1338,10 +1338,10 @@ exports.getPageManagement = catchAsync(async(req, res, next) => {
 exports.verticalMenusContent = catchAsync(async(req, res, next) => {
    req.url
    const verticalMenus = await verticalMenuModel.find()
-   const found = verticalMenus.find(obj => obj.menuName === req.url.substring(1));
-   console.log(found)
-   if(verticalMenus.includes(req.url.substring(1))){
-    console.log("working")
+   let found = verticalMenus.find(obj => obj.menuName === req.url.substring(1));
+   if(found){
+        console.log(found)
+        console.log("working")
    }else{
        next()
    }
