@@ -14,6 +14,7 @@ exports.createVerticalMenu = catchAsync(async(req, res, next) => {
         })
         
     }catch(err){
+        console.log(err)
         res.status(err.status).json({
             status:"Error",
             err
