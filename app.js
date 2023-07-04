@@ -16,6 +16,7 @@ const deshBoardRoutes = require("./routes/deshboardRoutes");
 const betLimtRoutes = require("./routes/betLimitRoutes");
 const verticalMenuRoutes = require("./routes/verticalMenuRoutes");
 const horizontalMenuRoutes = require("./routes/horizontalMenuRoures");
+const pagesRoutes = require("./routes/pagesRoutes");
 const bannerRoutes = require("./routes/bannerRoutes");
 const dotenv =require('dotenv');
 const cookieParser = require('cookie-parser');
@@ -70,6 +71,7 @@ app.use("/api/v1/notification", notificationRoutes);
 app.use("/api/v1/verticalMenu", verticalMenuRoutes);
 app.use("/api/v1/horizontalMenu", horizontalMenuRoutes);
 app.use("/api/v1/banner", bannerRoutes);
+app.use("/api/v1/pages", pagesRoutes);
 app.use("/", viewRoutes);
 // console.log(globleErrorHandler)
 
