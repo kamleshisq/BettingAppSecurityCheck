@@ -1341,7 +1341,7 @@ exports.verticalMenusContent = catchAsync(async(req, res, next) => {
    let found = verticalMenus.find(obj => obj.menuName === req.url.substring(1));
    if(found){
     console.log(found)
-        res.status(200).render(`./pages/${found.page}`,{
+        res.status(200).render(`./pages/Cards`,{
             verticalMenus,
             page:found.page
         })
