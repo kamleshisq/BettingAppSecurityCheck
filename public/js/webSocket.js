@@ -3003,9 +3003,9 @@ socket.on('connect', () => {
                 let html = ``
                 for(let i =0 ; i<data.page.length; i++){
                     if(data.page[i].Name === data.verticalMenu.page){
-                        html += `<option selected value="${data.page[i].Name}>">${data.page[i].Name}</option>`
+                        html += `<option selected value="${data.page[i].Name}">${data.page[i].Name}</option>`
                     }else{
-                        html += `<option value="${data.page[i].Name}>">${data.page[i].Name}</option>`
+                        html += `<option value="${data.page[i].Name}">${data.page[i].Name}</option>`
                     }
                 }
                 document.getElementById('page123').innerHTML = html
