@@ -3111,7 +3111,7 @@ socket.on('connect', () => {
         $(document).on("click", ".UploadEjs", async function(e){
             console.log($(this).attr('id'))
             e.preventDefault()
-            let modelName = "uploadFile"
+            let modelName = "#uploadFile"
             let form = $(modelName).find('.uploadEJS123')
             console.log(form)
             form.attr('id', $(this).attr('id'));
