@@ -1340,6 +1340,7 @@ exports.verticalMenusContent = catchAsync(async(req, res, next) => {
    let verticalMenus = await verticalMenuModel.find()
    let found = verticalMenus.find(obj => obj.menuName === req.url.substring(1));
    if(found){
+    console.log(found)
         res.status(200).render(`./pages/${found.page}`,{
             verticalMenus,
             page:found.page
