@@ -40,6 +40,12 @@ socket.on('connect', () => {
         alert(data)
     })
 
+    $(document).on('click', ".promotionLink", function(e){
+        e.preventDefault()
+        let id = $(this).attr('id')
+        socket.emit("updatePromotion", id)
+    })
+
     if(pathname == "/admin/updateRole"){
         let x = "121"
         // let y = document.getElementById("mySelect").value

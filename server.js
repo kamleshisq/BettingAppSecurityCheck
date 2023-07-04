@@ -21,6 +21,7 @@ const loginlogs = require('./model/loginLogs');
 const gameModel = require('./model/gameModel');
 const getCrkAndAllData = require("./utils/getSportAndCricketList");
 const bannerModel = require('./model/bannerModel');
+const { cpSync } = require('fs');
 // http(req, res) => {}
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -1192,6 +1193,10 @@ io.on('connection', (socket) => {
         }catch(err){
             console.log(err)
         }
+    })
+
+    socket.on('updatePromotion', async(data) => {
+        console.log(data)
     })
 
 })
