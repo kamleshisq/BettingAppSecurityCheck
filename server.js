@@ -9,6 +9,7 @@ const Bet = require("./model/betmodel");
 const verticalMenuModel = require("./model/verticalMenuModel");
 const horizontalMenuModel = require("./model/horizontalMenuModel");
 const AccModel  = require("./model/accountStatementByUserModel");
+const pagesModel = require("./model/pageModel");
 const Promotion = require("./model/promotion")
 const userController = require("./websocketController/userController");
 const accountControl = require("./controller/accountController");
@@ -1122,7 +1123,8 @@ io.on('connection', (socket) => {
 
     socket.on("VerticalMenuIdByData", async(date) => {
         let verticalMenu = await verticalMenuModel.findById(date)
-        socket.emit("VerticalMenuIdByData", verticalMenu)
+        let page = await pagesModel.find()
+        socket.emit("VerticalMenuIdByData", {verticalMenu, page})
     })
 
     socket.on('updateVerticalMenu', async(data) => {

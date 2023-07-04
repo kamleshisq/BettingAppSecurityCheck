@@ -2992,16 +2992,23 @@ socket.on('connect', () => {
         socket.on("VerticalMenuIdByData", async(data) => {
                 let modleName = "#myModal5"
                 let form = $(modleName).find('.form-data21')
-                let PMD = data
+                let PMD = data.verticalMenu
                 form.attr('id', PMD._id);
                 form.find('input[name = "check"]').removeAttr('checked');
                 form.find('input[name = "menuName"]').attr('value',PMD.menuName)
-                form.find('input[name = "url"]').attr('value',PMD.url)
                 form.find('input[name = "num"]').attr('value',PMD.num)
-                form.find('input[name = "page"]').attr('value',PMD.page)
                 if(PMD.status){
                     form.find('input[name = "check"]').attr("checked", "checked");
                 }
+                let html = ``
+                for(let i =0 ; i<data.page.length; i++){
+                    if(data.page[i].Name === data.verticalMenu.page){
+                        html += `<option selected value="${data.pages[i].Name}>">${data.pages[i].Name}</option>`
+                    }else{
+                        html += `<option value="${data.pages[i].Name}>">${data.pages[i].Name}</option>`
+                    }
+                }
+                document.getElementById('page123').innerHTML = html
         })
 
         $(document).on('submit', ".form-data21", function(e){
