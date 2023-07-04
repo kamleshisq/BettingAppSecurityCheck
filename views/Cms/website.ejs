@@ -187,8 +187,12 @@
             </div>
             <div class="row mt-2">
               <div class="col">
-                <label for="page">Page</label>
-                <input type="text" id="page" class="form-control ml0" placeholder="0" name="page">
+                <label for="page"></label>
+                <select class="form-control m10" name="page" id="page">
+                  <%for(let i=0; i < pages.length; i++){%>
+                    <option value="<%=pages[i].Name%>"><%=pages[i].Name%></option>
+                  <%}%>
+                </select>
               </div>
             </div>
             <div class="row mt-2">
@@ -227,22 +231,11 @@
             </div>
             <div class="row mt-2">
               <div class="col">
-                <label for="url">url</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="url">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
                 <label for="num">Number</label>
                 <input type="number" class="form-control ml0" placeholder="" name="num">
               </div>
             </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="page">Page</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="page">
-              </div>
-            </div>
+            
             <div class="row mt-2">
               <div class="col">
                 <label for="check">Status</label>
