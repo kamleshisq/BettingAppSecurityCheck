@@ -1337,5 +1337,10 @@ exports.getPageManagement = catchAsync(async(req, res, next) => {
 
 exports.verticalMenusContent = catchAsync(async(req, res, next) => {
    req.url
-   next()
+   const verticalMenus = verticalMenuModel.find()
+   if(verticalMenus.includes(req.url.substring(1))){
+    console.log("working")
+   }else{
+       next()
+   }
 })
