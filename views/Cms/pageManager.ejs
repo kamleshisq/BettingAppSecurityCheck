@@ -42,6 +42,7 @@
                                 <th>Sr. No.</th>
                                 <th>Name</th>
                                 <th>Delete</th>
+                                <th>Upload New File</th>
                               </thead>
                               <tbody>
                                 <%for(let i = 0; i < pages.length; i++){%>
@@ -49,6 +50,7 @@
                                     <th><%= i+1 %></th>
                                     <th><%=pages[i].Name%></th>
                                     <th><button class="deletePage" id="<%=pages[i]._id%>">Delete</button></th>
+                                    <th><button data-bs-toggle="modal" data-bs-target="#uploadFile" id="<%=pages[i]._id%>" class="UploadEjs"><i class="fa-solid fa-database"></i></button></th>
                                   </tr>
                                 <%}%>
                               </tbody>
@@ -92,6 +94,35 @@
             </div>
             </div>
         </div>
+
+
+        <div class="modal fade" id="uploadFile" role="dialog">
+          <div class="modal-dialog">
+          
+          <!-- Modal content-->
+          <div class="modal-content">
+              <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-header" style="text-align: center;">
+              <h4 class="modal-title" style="color: #fff;">Upload EJS file</h4>
+              </div>
+              <div class="modal-body">
+              <form class="uploadEJS">
+                  <div class="row mt-2">
+                  <div class="col">
+                      <label for="ejsFile">Upload EJS File</label>
+                      <input type="file" class="form-control ml0" placeholder="Abitest" name="ejsFile">
+                  </div>
+                  </div>
+                  <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Add</button>
+              </form>
+              </div>
+          </div>
+          </div>
+      </div>
+
+
 
     </div>
 </section>
