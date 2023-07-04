@@ -1333,3 +1333,9 @@ exports.getPageManagement = catchAsync(async(req, res, next) => {
         pages
     })
 })
+
+
+exports.verticalMenusContent = catchAsync(async(req, res, next) => {
+   req.url
+   next()
+})
