@@ -96,7 +96,6 @@
             <table>
               <thead>
                 <th>banner Name</th>
-                <th>Url</th>
                 <th>Banner</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -108,7 +107,6 @@
                   <tr>
                 <%}%>
                     <td><%=banner[i].bannerName%></td>
-                    <td><%=banner[i].url%></td>
                     <td><img src="../banner/<%=banner[i].banner%>.png" alt="img" class="form__user-photo"></td>
                     <td><button data-bs-toggle="modal" data-bs-target="#myModal7" id="<%=banner[i]._id%>" class="getBannerDetails"><i class="fa-solid fa-database"></i></button></td>
                     <td><button class="deleteBanner" id="<%=banner[i]._id%>">Delete</button></td>
@@ -377,12 +375,6 @@
               <div class="col">
                 <label for="bannerName">Name</label>
                 <input type="text" class="form-control ml0" placeholder="" name="bannerName">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="url">url</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="url">
               </div>
             </div>
             <div class="row mt-2">

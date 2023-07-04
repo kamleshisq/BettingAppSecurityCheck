@@ -314,8 +314,9 @@ exports.registration = catchAsync(async(req, res, next) => {
 
 exports.userdashboard = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    const data = await promotionModel.find()
-    let verticalMenus = await verticalMenuModel.find()
+    const data = await promotionModel.find();
+    let verticalMenus = await verticalMenuModel.find();
+    const banner = await bannerModel.find()
     // console.log(verticalMenus)
     res.status(200).render("./userSideEjs/homePage",{
         user,
