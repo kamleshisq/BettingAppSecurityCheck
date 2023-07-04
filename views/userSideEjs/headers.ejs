@@ -66,3 +66,161 @@
   </head>
   <body>
     <main class="main-tg-dv">
+      <!-- ----= NAVBAR SECTION START =-----   -->
+      <div class="navbar-wrp">
+        <nav class="navbar navbar-expand-lg my-nav-bg">
+          <div class="container-fluid my-nav-contnr">
+            <div class="mob-sidevar-mnu-btn-dv">
+              <span class="fa-solid fa-bars mob-offcanvas-mnu" id="offsetmenubtnn"></span>
+              <div class="mob-sidevar-mnu-offset-body" id="offsetmenubody">
+                <span class="overlay-offset-mnu" id="ofsetoverlaydv"></span>
+                <div class="mob-sidevar-mnu-offset-mnu-wrp">
+                  <div class="sidebar-menue-col1">
+                    <div class="sidebar-menue-col1-data">
+                      <span class="sidebar-menue-active-spn">
+                        <a href="#" class="sidebar-menue-active-a">
+                          <img class="img-fluid" src="assets/img/home/side-menuimg01.svg" alt="menu icon">
+                        </a>
+                        <h6 class="side-menu-nm">Home</h6>
+                        <!-- <span class="avtive-curve-spn"></span> -->
+                      </span>
+                      <span class="sidebar-menu-option-spn">
+                        <a href="#" class="sidebar-menu-option-a">
+                          <img class="img-fluid hover-img-side-menu1" src="assets/img/home/side-menuimg02.svg" alt="menu icon">
+                          <img class="img-fluid hover-img-side-menu2" src="assets/img/home/bx_cricket-ball.svg" alt="menu icon">
+                        </a>
+                        <h6 class="side-menu-nm">Cricket</h6>
+                        <!-- <span class="avtive-curve-spn"></span> -->
+                      </span>
+                      <span class="sidebar-menu-option-spn">
+                        <a href="#" class="sidebar-menu-option-a">
+                          <img class="img-fluid hover-img-side-menu1" src="assets/img/home/side-menuimg03.svg" alt="menu icon">
+                          <img class="img-fluid hover-img-side-menu2" src="assets/img/home/side-menuimg03blk.svg" alt="menu icon">
+                        </a>
+                        <h6 class="side-menu-nm">Football</h6>
+                      </span>
+                      <span class="sidebar-menu-option-spn">
+                        <a href="#" class="sidebar-menu-option-a">
+                          <img class="img-fluid hover-img-side-menu1" src="assets/img/home/side-menuimg04.svg" alt="menu icon">
+                          <img class="img-fluid hover-img-side-menu2" src="assets/img/home/side-menuimg04blk.svg" alt="menu icon">
+                        </a>
+                        <h6 class="side-menu-nm">Tennis</h6>
+                      </span>
+                      <span class="sidebar-menu-option-spn">
+                        <a href="#" class="sidebar-menu-option-a">
+                          <img class="img-fluid hover-img-side-menu1" src="assets/img/home/side-menuimg05.svg" alt="menu icon">
+                          <img class="img-fluid hover-img-side-menu2" src="assets/img/home/side-menuimg05blk.svg" alt="menu icon">
+                        </a>
+                        <h6 class="side-menu-nm">Basketball</h6>
+                      </span>
+                      <span class="sidebar-menu-option-spn">
+                        <a href="#" class="sidebar-menu-option-a">
+                          <img class="img-fluid hover-img-side-menu1" src="assets/img/home/side-menuimg06.svg" alt="menu icon">
+                          <img class="img-fluid hover-img-side-menu2" src="assets/img/home/side-menuimg06blk.svg" alt="menu icon">
+                        </a>
+                        <h6 class="side-menu-nm">Baseball</h6>
+                      </span>
+                      <span class="sidebar-menu-option-spn">
+                        <a href="#" class="sidebar-menu-option-a">
+                          <img class="img-fluid hover-img-side-menu1" src="assets/img/home/side-menuimg07.png" alt="menu icon">
+                          <img class="img-fluid hover-img-side-menu2" src="assets/img/home/side-menuimg07blk.png" alt="menu icon">
+                        </a>
+                        <h6 class="side-menu-nm">Horse Racing</h6>
+                      </span>
+                      <span class="sidebar-menu-option-spn">
+                        <a href="#" class="sidebar-menu-option-a">
+                          <img class="img-fluid hover-img-side-menu1" src="assets/img/home/side-menuimg08.png" alt="menu icon">
+                          <img class="img-fluid hover-img-side-menu2" src="assets/img/home/side-menuimg08blk.png" alt="menu icon">
+                        </a>
+                        <h6 class="side-menu-nm">Grey Hound</h6>
+                      </span>
+                    </div>
+
+                  </div>
+                  <div class="mob-sidevar-mnu-offset-mnu-clos-btn-dv">
+                    <span id="offsertmnuclosbtn">Close</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="logo-col-dv">
+              <a class="navbar-brand my-navbrand" href="/">
+                <img
+                  class="my-nav-logo"
+                  src="assets/img/Royal777.png"
+                  alt="logo"
+                />
+              </a>
+            </div>
+            <!-- <button
+              class="navbar-toggler my-nav-togl-btnn"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="fa-solid fa-bars"></span>
+            </button> -->
+
+            <div class="mbl-login-reg-btnn-dv">
+              <button class="mbl-login-reg-btnn-dv-a" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">SIGN IN / REGISTER</button>
+            </div>
+            
+            <div
+              class="collapse navbar-collapse my-nav-ul-dv"
+              id="navbarSupportedContent"
+            >
+              <ul class="navbar-nav m-auto mb-2 mb-lg-0 my-nav-ul">
+                <%for(let i = 0; i < verticalMenus.length; i++){%>
+                  <%if(verticalMenus[i].status){%>
+                  <li class="nav-item my-nav-ul-li">
+                    <a class="nav-link my-nav-ul-li-a" href="/<%=verticalMenus[i].menuName%>"><%=verticalMenus[i].menuName%> </a>
+                  </li>
+                  <%}%>
+                <%}%>
+                <!-- <li class="nav-item my-nav-ul-li">
+                  <a
+                    class="nav-link my-nav-ul-li-a active-mnu-nav"
+                    aria-current="page"
+                    href="#"
+                    >Exchange</a
+                  >
+                </li>
+                <li class="nav-item my-nav-ul-li">
+                  <a class="nav-link my-nav-ul-li-a" href="#">Sportsbook</a>
+                </li>
+                <li class="nav-item my-nav-ul-li">
+                  <a class="nav-link my-nav-ul-li-a blink-nav-mnu" href="#"
+                    >In-Play</a
+                  >
+                </li>
+                <li class="nav-item my-nav-ul-li">
+                  <a class="nav-link my-nav-ul-li-a" href="cards.html">Cards</a>
+                </li>
+                <li class="nav-item my-nav-ul-li">
+                  <a class="nav-link my-nav-ul-li-a" href="#">Live Casino</a>
+                </li>
+                <li class="nav-item my-nav-ul-li">
+                  <a class="nav-link my-nav-ul-li-a" href="royal-casino.html">Royal Casino</a>
+                </li>
+                <li class="nav-item my-nav-ul-li">
+                  <a class="nav-link my-nav-ul-li-a" href="#">Virtuals</a>
+                </li>
+                <li class="nav-item my-nav-ul-li">
+                  <a class="nav-link my-nav-ul-li-a" href="#">Slots</a>
+                </li>
+                <li class="nav-item my-nav-ul-li">
+                  <a class="nav-link my-nav-ul-li-a" href="#">Other</a>
+                </li> -->
+              </ul>
+
+              <div class="nav-login-regstr-btn-dv">
+                <a class="nav-login-regstr-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" href="#">SIGN IN / REGISTER</a>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <!-- ----= NAVBAR SECTION END =-----   -->
