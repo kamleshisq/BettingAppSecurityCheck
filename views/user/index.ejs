@@ -144,7 +144,7 @@
               </div>
             </div>
             <div class="logo-col-dv">
-              <a class="navbar-brand" href="index.html">
+              <a class="navbar-brand my-navbrand" href="index.html">
                 <img
                   class="my-nav-logo"
                   src="assets/img/Royal777.png"
@@ -165,7 +165,7 @@
             </button> -->
 
             <div class="mbl-login-reg-btnn-dv">
-              <a href="#">SIGN IN / REGISTER</a>
+              <button class="mbl-login-reg-btnn-dv-a" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">SIGN IN / REGISTER</button>
             </div>
             
             <div
@@ -173,12 +173,7 @@
               id="navbarSupportedContent"
             >
               <ul class="navbar-nav m-auto mb-2 mb-lg-0 my-nav-ul">
-                <% for(let i = 0; i < verticalMenus.length; i++){%>
-                  <li class="nav-item my-nav-ul-li">
-                    <a class="nav-link my-nav-ul-li-a" href="#"><%= verticalMenus[i].menuName %></a>
-                  </li>
-                <%}%>
-                <!-- <li class="nav-item my-nav-ul-li">
+                <li class="nav-item my-nav-ul-li">
                   <a
                     class="nav-link my-nav-ul-li-a active-mnu-nav"
                     aria-current="page"
@@ -195,13 +190,13 @@
                   >
                 </li>
                 <li class="nav-item my-nav-ul-li">
-                  <a class="nav-link my-nav-ul-li-a" href="#">Cards</a>
+                  <a class="nav-link my-nav-ul-li-a" href="cards.html">Cards</a>
                 </li>
                 <li class="nav-item my-nav-ul-li">
                   <a class="nav-link my-nav-ul-li-a" href="#">Live Casino</a>
                 </li>
                 <li class="nav-item my-nav-ul-li">
-                  <a class="nav-link my-nav-ul-li-a" href="#">Royal Casino</a>
+                  <a class="nav-link my-nav-ul-li-a" href="royal-casino.html">Royal Casino</a>
                 </li>
                 <li class="nav-item my-nav-ul-li">
                   <a class="nav-link my-nav-ul-li-a" href="#">Virtuals</a>
@@ -211,11 +206,11 @@
                 </li>
                 <li class="nav-item my-nav-ul-li">
                   <a class="nav-link my-nav-ul-li-a" href="#">Other</a>
-                </li> -->
+                </li>
               </ul>
 
               <div class="nav-login-regstr-btn-dv">
-                <a class="nav-login-regstr-btn" href="#">SIGN IN / REGISTER</a>
+                <a class="nav-login-regstr-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle" href="#">SIGN IN / REGISTER</a>
               </div>
             </div>
           </div>
@@ -814,7 +809,7 @@
             </span>
             <span>
               <a href="#">
-                <img class="img-fluid" src="assets/img/home/mbl_botom_mnu_icon03.svg" alt="">
+                <img id="botommainmnubtnn" class="img-fluid mzin-mnu-botom" src="assets/img/home/main-menu-botom.svg" alt="" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
               </a>
             </span>
             <span>
@@ -830,9 +825,193 @@
               </a>
             </span>
           </div>
+
+          
+
+          <div class="offcanvas offcanvas-bottom my-off-canvas-botm-mnu" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+            <!-- <div class="offcanvas-header my-offcanvas-head">
+              <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div> -->
+            <div class="offcanvas-body small my-offcanvas-body">
+              <div id="botommnuwrp" class="mbl-botm-mnu-wrp-dv">
+                <div class="mbl-botm-mnu-wrp-dv-inn">
+                  <div class="mbl-botm-mnu-wrp-dv-txt">
+                    <ul>
+                      <li>
+                        <a class="botom-mnu-active" href="index.html">Home</a>
+                      </li>
+                      <li>
+                        <a href="#">Exchange</a>
+                      </li>
+                      <li>
+                        <a href="#">Sportsbook</a>
+                      </li>
+                      <li>
+                        <a href="#">In-Play</a>
+                      </li>
+                      <li>
+                        <a href="cards.html">Cards</a>
+                      </li>
+                      <li>
+                        <a href="#">Live Casino</a>
+                      </li>
+                      <li>
+                        <a href="royal-casino.html">Royal Casino</a>
+                      </li>
+                      <li>
+                        <a href="#">Virtuals</a>
+                      </li>
+                      <li>
+                        <a href="#">Slots</a>
+                      </li>
+                      <li>
+                        <a href="#">Other</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
       <!-- ----= MOBILE BOTTOM MENU SECTION END =-----   -->
+
+
+      <!-- ----=MODEL1 SECTION START =-----   -->
+      <!-- Modal -->
+      <div class="modal fade my-model-loginmodl" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content myloginmodl-content">
+            <!-- <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Modal 1</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> -->
+            <div class="modal-body myloginmodl-body">
+              <div class="myloginmodl-body-txt-wrp">
+                <div class="myloginmodl-body-txt-ro">
+                  <div class="col-lg-6 col-md-6 col-12 myloginmodl-body-txt-col">
+                    <div class="myloginmodl-body-txt-col-txtimg">
+                      <img class="img-fluid mymodelloginimg" src="assets/img/home/mymodelloginimg.png" alt="">
+                      <img class="img-fluid mymodelloginimg-mbl" src="assets/img/home/mymodelloginimg-mbl.png" alt="">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-12 myloginmodl-body-txt-col2">
+                    <div class="myloginmodl-body-txt-col-txtform container">
+                      <div class="myloginmodl-form-logodv">
+                        <img class="myloginmodl-form-logo" src="assets/img/Royal77701.png" alt="">
+                      </div>
+                      <form class="myloginmodl-form-dv">
+                        <div class="mb-3">
+                          <label for="exampleInputEmail1" class="form-label myloginmodl-lbl">E-mail / username</label>
+                          <input type="email" class="form-control myloginmodl-input" id="exampleInputEmail1" aria-describedby="emailHelp">
+                          
+                        </div>
+                        <div class="mb-3 ">
+                          <label for="exampleInputPassword1" class="form-label myloginmodl-lbl">Password</label>
+                          <div class="input-group mb-3 myloginmodl-formgroup">
+                            <input type="password" class="form-control myloginmodl-formgroup-input" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+                            <span class="input-group-text myloginmodl-formgroup-input-spn" id="basic-addon1"><i class="fa-solid fa-eye-slash"></i></span>
+                          </div>
+                        </div>
+                        <div class="myloginmodl-form-btn-dv">
+                          <button type="submit" class="btn myloginmodl-loginbtnn">LOGIN</button>
+                          <button type="submit" class="btn myloginmodl-demo-loginbtnn">DEMO LOGIN</button>
+                        </div>
+                        <div class="myloginmodl-form-regesterbtn-dv">
+                          <p>Don’t have an account? <a class="myloginmodl-form-regesterbtn" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" >Register.</a></p>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer myloginmodl-fotr">
+              <!-- <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button> -->
+              <button type="button" class="myloginmodl-fotr-closbtn" data-bs-dismiss="modal" aria-label="Close">BACK TO HOME</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade my-model-regestermodl" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content regestermodl-content">
+            <!-- <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modal 2</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> -->
+            <div class="modal-body regestermodl-body">
+              <div class="regestermodl-body-wrp">
+                <div class="myloginmodl-form-logodv">
+                  <img class="myloginmodl-form-logo2" src="assets/img/Royal77701.png" alt="">
+                </div>
+                <form class="row g-3 regestermodl-form">
+
+                  <div class="col-md-6">
+                    <label for="inputCity" class="form-label regestermodl-forminput-labl">Full Name</label>
+                    <input type="text" class="form-control regestermodl-forminput" id="inputCity">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputCity" class="form-label regestermodl-forminput-labl">Username</label>
+                    <input type="text" class="form-control regestermodl-forminput" id="inputCity">
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <label for="inputPassword4" class="form-label regestermodl-forminput-labl">Password</label>
+                    <input type="password" class="form-control regestermodl-forminput" id="inputPassword4">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputCity" class="form-label regestermodl-forminput-labl">Country</label>
+                    <input type="text" class="form-control regestermodl-forminput" id="inputCity">
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <label for="inputCity" class="form-label regestermodl-forminput-labl">State</label>
+                    <input type="text" class="form-control regestermodl-forminput" id="inputCity">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputCity" class="form-label regestermodl-forminput-labl">City</label>
+                    <input type="text" class="form-control regestermodl-forminput" id="inputCity">
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <label for="inputCity" class="form-label regestermodl-forminput-labl">Phone No.</label>
+                    <input type="number" class="form-control regestermodl-forminput" id="inputCity">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label regestermodl-forminput-labl">E-Mail</label>
+                    <input type="email" class="form-control regestermodl-forminput" id="inputEmail4">
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <label for="inputEmail4" class="form-label regestermodl-forminput-labl">Captcha Code</label>
+                      <div class="input-group mb-3 myloginmodl-formgroup2">
+                        <span id="captchaCode"></span>
+                        <span class="input-group-text myloginmodl-formgroup-input-spn" id="basic-addon1"><button type="button" class="captcha-ref-btn" id="refreshCaptcha"><i class="fa-solid fa-arrows-rotate"></i></button></span>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputCity" class="form-label regestermodl-forminput-labl">Enter Captcha</label>
+                    <input type="text" class="form-control regestermodl-forminput" id="captchaInput" name="captchaInput">
+                  </div>
+                  
+                  <div class="col-12 regestermodl-submit-btn-dv">
+                    <button type="submit" class="btn regestermodl-submit-btn">REGISTER</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer regestermodl-fotr">
+              <button type="button" class="myloginmodl-fotr-closbtn" data-bs-dismiss="modal" aria-label="Close">BACK TO HOME</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- ----=MODEL1 SECTION END =-----   -->
 
     </main>
 
@@ -1041,6 +1220,59 @@
         });
       });
     </script>
+    
+    <!-- <script>
+      $(document).ready(function(){
+        $("#botommainmnubtnn").click(function(){
+          $("#botommnuwrp").toggleClass("botom-mnu-wrp");
+        });
+      });
+    </script> -->
+
+    <!-- ---------- CAPTCHA CODE ----------  -->
+    <script>
+      // Generate a random CAPTCHA code
+      function generateCaptcha() {
+        var captcha = '';
+        var possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        for (var i = 0; i < 6; i++) {
+          captcha += possibleChars.charAt(Math.floor(Math.random() * possibleChars.length));
+        }
+        return captcha;
+      }
+    
+      // Display the CAPTCHA code on the page
+      function displayCaptcha() {
+        var captchaCode = document.getElementById('captchaCode');
+        captcha = generateCaptcha();
+        captchaCode.textContent = captcha;
+      }
+    
+      // Validate the user's input
+      function validateCaptcha() {
+        var userInput = document.getElementById('captchaInput').value;
+        if (userInput === captcha) {
+          alert('CAPTCHA code is correct. Form submitted!');
+        } else {
+          alert('CAPTCHA code is incorrect. Please try again.');
+          displayCaptcha(); // Refresh CAPTCHA on incorrect input
+        }
+        return false; // Prevent form submission
+      }
+    
+      // Refresh the CAPTCHA code
+      document.getElementById('refreshCaptcha').addEventListener('click', displayCaptcha);
+    
+      // Generate a new CAPTCHA code when the page loads
+      var captcha = generateCaptcha();
+      displayCaptcha();
+    
+      // Attach the validation function to the form's submit event
+      document.getElementById('captchaForm').addEventListener('submit', validateCaptcha);
+    </script>
+    
+    
+    <!-- ---------- CAPTCHA CODE ----------  -->
 
 
   </body>

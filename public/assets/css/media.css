@@ -30,9 +30,13 @@
     }
 
     /* ---------- HOME PAGE ----------  */
-
+    
     .logo-col-dv{
         width: fit-content;
+    }
+
+    .my-navbrand{
+        margin-right: 0px;
     }
 
     .bg-elemnt-dv{
@@ -157,7 +161,7 @@
         display: block;
     }
 
-    .mbl-login-reg-btnn-dv>a{
+    .mbl-login-reg-btnn-dv-a{
         display: inline-flex;
         padding: 8px 16px;
         justify-content: center;
@@ -166,6 +170,7 @@
         border-radius: 30px;
         background: #FFF;
         font-size: 10px;
+        border: none;
     }
 
     .featured-sec-ro--titl-txt-tg{
@@ -239,6 +244,8 @@
         bottom: 0;
         z-index: 999;
         width: 100%;
+        background-color: var(--color3);
+        border-radius: 40px 40px 0px 0px;
     }
 
     .mbl-botm-mnu-sec-contnr{
@@ -247,6 +254,7 @@
         justify-content: space-between;
         width: 100%;
         background-color: var(--color3);
+        position: relative;
     }
 
     .mbl-botm-mnu-sec-wrp{
@@ -254,13 +262,117 @@
         align-items: center;
         justify-content: space-between;
         width: 100%;
+        padding: 10px 0px;
     }
 
     .mbl-botm-mnu-sec-wrp>span{
         text-align: center;
     }
 
+    .mzin-mnu-botom{
+        padding: 10px 10px;
+        border-radius: 40px;
+        background-color: var(--color2);
+        position: relative;
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+    }
+
+    .mbl-botm-mnu-wrp-dv{
+        /* position: absolute;
+        bottom: -350px;
+        left: 50%;
+        transform: translate(-50%); */
+        display: block;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .mbl-botm-mnu-wrp-dv-txt{
+        padding: 10px 10px;
+        background-color: var(--color3);
+        border-radius: 20px;
+        width: fit-content;
+    }
+
+    .mbl-botm-mnu-wrp-dv-txt>ul{
+        list-style: none;
+        padding-left: 0px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 0px;
+        border-radius: 20px;
+    }
+
+    .mbl-botm-mnu-wrp-dv-txt>ul>li>a{
+        padding: 2px 10px;
+    }
+
+    .botom-mnu-active{
+        background-color: var(--color2);
+        color: var(--color3);
+        border-radius: 30px;
+    }
+
+    .botom-mnu-wrp{
+        bottom: 20%;
+        transform: translate(-50%, -20%);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .my-off-canvas-botm-mnu{
+        bottom: 100px;
+        height: fit-content !important;
+        background-color: transparent;
+    }
+
+    .my-offcanvas-body{
+        padding: 0px;
+    }
+
+    .mbl-botm-mnu-wrp-dv-inn{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* ---------- HOME PAGE MODEL ----------  */
+    .myloginmodl-body-txt-ro{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .mymodelloginimg{
+        display: none;
+    }
+
+    .mymodelloginimg-mbl{
+        display: block;
+    }
+
+    /* ---------- HOME PAGE MODEL ----------  */
+
     /* ---------- HOME PAGE ----------  */
+
+
+    /* ---------- CARDS PAGE ----------  */
+
+    .cards-pg-sec{
+        padding: 1em 0em;
+    }
+
+    /* ---------- CARDS PAGE ----------  */
+
+
+    /* ---------- ROYAL CASINO PAGE ----------  */
+    .royal-cassino-pg-sec{
+        padding: 1em 0em;
+    }
+    /* ---------- ROYAL CASINO PAGE ----------  */
 
 }
 

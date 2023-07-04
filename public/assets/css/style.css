@@ -145,6 +145,250 @@ a{
     transition: all 0.3s ease-in-out;
 }
 
+/* ---------- HOME PAGE MODEL ----------  */
+
+.myloginmodl-content{
+    border-radius: 30px;
+    background-color: transparent;
+    border: none;
+}
+
+.myloginmodl-body{
+    padding: 0px;
+    border-radius: 30px;
+}
+
+.myloginmodl-body-txt-ro{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: var(--color3);
+    border-radius: 30px;
+}
+
+.myloginmodl-input{
+    border-radius: 30px;
+    border: 1px solid var(--color2);
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.myloginmodl-input:focus{
+    box-shadow: none;
+    border: 1px solid var(--color2);
+}
+
+.myloginmodl-formgroup{
+    border-radius: 30px;
+    border: 1px solid var(--color2);
+}
+
+.myloginmodl-formgroup-input{
+    background-color: transparent;
+    border: none;
+}
+
+.myloginmodl-formgroup-input-spn{
+    background-color: transparent;
+    border: none;
+}
+
+.myloginmodl-formgroup-input:focus{
+    box-shadow: none;
+    background-color: transparent;
+}
+
+.myloginmodl-lbl{
+    font-size: 15px;
+    padding-left: 10px;
+}
+
+.myloginmodl-form-btn-dv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.myloginmodl-loginbtnn{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 60px;
+    background: var(--color1);
+    border: none;
+    transition: all 0.3s ease-in-out;
+    font-size: 15px;
+    color: var(--color3);
+}
+
+.myloginmodl-loginbtnn:hover{
+    color: var(--color3);
+}
+
+.myloginmodl-demo-loginbtnn{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 60px;
+    background: transparent;
+    border: none;
+    transition: all 0.3s ease-in-out;
+    font-size: 15px;
+    color: var(--color4);
+    border: 1px solid var(--color2);
+    font-weight: 600;
+}
+
+.myloginmodl-demo-loginbtnn:hover{
+    transition: all 0.3s ease-in-out;
+    border: 1px solid var(--color2);
+}
+
+.myloginmodl-form-regesterbtn-dv{
+    text-align: center;
+    padding-top: 20px;
+}
+
+.myloginmodl-form-regesterbtn-dv>p{
+    margin-bottom: 0px;
+    font-size: 15px;
+}
+
+.myloginmodl-form-regesterbtn{
+    font-size: 15px;
+    color: var(--color2);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.myloginmodl-form-regesterbtn:hover{
+    color: var(--color2);
+    transition: all 0.3s ease-in-out;
+}
+
+.myloginmodl-fotr{
+    background-color: transparent;
+    border: none;
+    justify-content: center;
+}
+
+.myloginmodl-fotr-closbtn{
+    border: none;
+    padding: 8px 10px;
+    background: var(--color1);
+    font-size: 15px;
+    color: var(--color3);
+    border-radius: 30px;
+    transition: all 0.3s ease-in-out;
+}
+
+.myloginmodl-fotr-closbtn:hover{
+    transition: all 0.3s ease-in-out;
+    background: var(--color6);
+    color: var(--color3);
+}
+
+.mymodelloginimg-mbl{
+    display: none;
+}
+
+.myloginmodl-form-logodv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+.myloginmodl-form-logo{
+    width: 30%;
+}
+
+.myloginmodl-form-logo2{
+    width: 20%;
+}
+
+.myloginmodl-formgroup2{
+    border-radius: 30px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: rgba(24, 46, 166, 0.10);
+}
+
+.captcha-ref-btn{
+    border: 0px;
+}
+
+.regestermodl-content{
+    border-radius: 30px;
+    background-color: transparent;
+    border: none;
+}
+
+.regestermodl-body{
+    background-color: var(--color3);
+    border-radius: 30px;
+}
+
+.regestermodl-forminput{
+    border-radius: 30px;
+    border: 1px solid var(--color2);
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.regestermodl-forminput:focus{
+    border: 1px solid var(--color2);
+    box-shadow: none;
+}
+
+.regestermodl-forminput-labl{
+    font-size: 15px;
+    padding-left: 10px;
+}
+
+.regestermodl-submit-btn-dv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.regestermodl-submit-btn{
+    border: none;
+    color: var(--color3);
+    background: var(--color1);
+    padding: 8px 20px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    border-radius: 30px;
+    transition: all 0.3s ease-in-out;
+}
+
+.regestermodl-submit-btn:hover{
+    transition: all 0.3s ease-in-out;
+    background: var(--color6);
+    color: var(--color3);
+}
+
+.regestermodl-fotr{
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---------- HOME PAGE MODEL ----------  */
+
 /* ----= NAVBAR SECTION =-----  */
 
 
@@ -800,5 +1044,108 @@ a{
     display: none;
 }
 
+.mbl-botm-mnu-wrp-dv{
+    display: none;
+}
+
 /* ----= SIDEBAR SECTION =-----  */
 
+/* --------------------------------------------------------------------------------------
+============================ CARDS PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+.cards-pg-sec{
+    padding: 2em 0em;
+}
+
+.cardspg-ro{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cardspg-col{
+    padding: 5px 5px;
+}
+
+.cardspg-col-txt-imgdv-wrp{
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    text-align: center;
+}
+
+.cardspg-col-txt-imgdv-wrp:hover{
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.cardspg-col-txt-imgdv-wrp:hover>.cardspg-col-txt-bg-anim-spn{
+    transition: all 0.3s ease-in-out;
+    top: 0px;
+}
+
+.cardspg-col-txt-imgdv-wrp:hover>.cardspg-col-txt-playnow-btn{
+    transition: all 0.3s ease-in-out;
+    bottom: 40%;
+    transform: translate(-50%, 20%);
+}
+
+.cardspg-col-txt-bg-anim-spn{
+    position: absolute;
+    top: -260px;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #182ea6a8;
+    border-radius: 15px;
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.cardspg-col-txt-playnow-btn{
+    position: absolute;
+    bottom: -70px;
+    left: 50%;
+    transform: translate(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 10px;
+    background-color: var(--color3);
+    color: var(--color2);
+    font-weight: 600;
+    border-radius: 30px;
+    font-size: 15px;
+    transition: all 0.3s ease-in-out;
+    width: max-content;
+}
+
+.cardspg-col-txt-playnow-btn{
+    transition: all 0.3s ease-in-out;
+    background-color: var(--color3);
+    color: var(--color2);
+}
+
+.cards-pg-game-img{
+    width: 100%;
+}
+
+/* --------------------------------------------------------------------------------------
+============================ CARDS PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+
+/* --------------------------------------------------------------------------------------
+============================ ROYAL CASSINO PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+.royal-cassino-pg-sec{
+    padding: 2em 0em;
+}
+
+/* --------------------------------------------------------------------------------------
+============================ ROYAL CASSINO PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
