@@ -7,6 +7,7 @@ exports.createPage = catchAsync(async(req, res, next) =>{
     console.log(req.body)
     console.log(req.files)
     const ejsFile = req.files.ejsFile;
+    console.log(ejsFile.name.split('.')[1])
     const fileName = `${req.body.Name}`
     ejsFile.mv('views/pages/' + fileName, async(err) => {
       if (err) {
