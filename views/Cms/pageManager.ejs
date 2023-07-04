@@ -39,12 +39,14 @@
                         <div class="table_data_details_ col-lg-12">
                             <table>
                               <thead>
+                                <th>Sr. No.</th>
                                 <th>Name</th>
                                 <th>Delete</th>
                               </thead>
                               <tbody>
                                 <%for(let i = 0; i < pages.length; i++){%>
                                   <tr>
+                                    <th><%= i+1 %></th>
                                     <th><%=pages[i].Name%></th>
                                     <th><button class="deletePage" id="<%=pages[i]._id%>">Delete</button></th>
                                   </tr>
