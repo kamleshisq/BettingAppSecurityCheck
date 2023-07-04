@@ -1321,5 +1321,10 @@ exports.getCmsPage = catchAsync(async(req, res, next) => {
 
 
 exports.getPageManagement = catchAsync(async(req, res, next) => {
-    res.status(200).render("./Cms/pageManager")
+    let user = req.currentUser
+    res.status(200).render("./Cms/pageManager", {
+        title:"Page Management",
+        user
+
+    })
 })
