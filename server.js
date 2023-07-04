@@ -1196,7 +1196,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('updatePromotion', async(data) => {
-        console.log(data)
+        await Promotion.findByIdAndUpdate(data,{$inc:{click:1}})
     })
 
 })
