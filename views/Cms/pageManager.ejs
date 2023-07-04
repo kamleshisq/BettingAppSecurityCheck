@@ -37,7 +37,20 @@
                             <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add Page</button>
                         </div>
                         <div class="table_data_details_ col-lg-12">
-                            
+                            <table>
+                              <thead>
+                                <th>Name</th>
+                                <th>Delete</th>
+                              </thead>
+                              <tbody>
+                                <%for(let i = 0; i < pages.length; i++){%>
+                                  <tr>
+                                    <th><%=pages[i].Name%></th>
+                                    <th><button class="deletePage" id="<%=pages[i]._id%>">Delete</button></th>
+                                  </tr>
+                                <%}%>
+                              </tbody>
+                            </table>
                         </div>
                     </section>
                 </div>

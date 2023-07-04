@@ -10,6 +10,7 @@ const gameModel = require('../model/gameModel');
 const betLimitModel = require("../model/betLimitModel");
 const verticalMenuModel = require("../model/verticalMenuModel");
 const horizontalMenuModel = require("../model/horizontalMenuModel");
+const pagesModel = require("../model/pageModel");
 const fetch = require("node-fetch")
 const whiteLabel = require('../model/whitelableModel');
 const mongoose = require("mongoose");
@@ -1322,8 +1323,10 @@ exports.getCmsPage = catchAsync(async(req, res, next) => {
 
 exports.getPageManagement = catchAsync(async(req, res, next) => {
     let user = req.currentUser
+    const pages = await pagesModel.find()
     res.status(200).render("./Cms/pageManager", {
         title:"Page Management",
-        user
+        user,
+        pages
     })
 })
