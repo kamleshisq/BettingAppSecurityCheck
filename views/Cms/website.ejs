@@ -142,10 +142,10 @@
               </div>
             </div>
             <div class="row mt-2">
-              <div class="col">
-                <label for="page">Page</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="page">
-              </div>
+              <select name="pages" id="pages">
+                <%for(let i=0; i < pages.length; i++){%>
+                  <option value="<%=pages[i].Name%>"><%=pages[i].Name%></option>
+                <%}%>
             </div>
             <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Add</button>
           </form>
