@@ -315,12 +315,10 @@ exports.registration = catchAsync(async(req, res, next) => {
 exports.userdashboard = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     const data = await promotionModel.find()
-    let verticalMenus = await verticalMenuModel.find().sort({num:1})
     // console.log(verticalMenus)
-    res.status(200).render("./user/index",{
+    res.status(200).render("./userSideEjs/homePage",{
         user,
         data,
-        verticalMenus
     })
 })
 
@@ -1332,22 +1330,4 @@ exports.getPageManagement = catchAsync(async(req, res, next) => {
         user,
         pages
     })
-})
-
-
-exports.verticalMenusContent = catchAsync(async(req, res, next) => {
-   req.url
-   let verticalMenus = await verticalMenuModel.find()
-   let found = verticalMenus.find(obj => obj.menuName === req.url.substring(1));
-   if(found){
-    const CardData = await gameModel.find();
-    console.log(found)
-        res.status(200).render(`./pages/${found.page}`,{
-            verticalMenus,
-            page:found.page,
-            CardData
-        })
-   }else{
-       next()
-   }
 })

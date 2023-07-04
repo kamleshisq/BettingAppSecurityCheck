@@ -5,7 +5,7 @@ const authController = require('../controller/authorizationController')
 const gameController = require("../controller/gameController");
 
 
-router.use(viewController.verticalMenusContent)
+
 
 router.get('/adminLogin/', viewController.login);
 router.get('/userlogin',viewController.userLogin );
