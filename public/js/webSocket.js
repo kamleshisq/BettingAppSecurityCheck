@@ -3097,11 +3097,22 @@ socket.on('connect', () => {
             let id = $(this).attr('id')
             socket.emit("deleteBanner", id)
         })
+
         socket.on("deleteBanner", data =>{
             alert(data)
             window.setTimeout(()=>{
                 window.location = '/admin/cms'
             },200)
+        })
+    }
+
+
+    if(pathname === "/admin/pageManager"){
+        $(document).on("click", ".UploadEjs", async function(e){
+            e.preventDefault()
+            let modelName = "uploadFile"
+            let form = $(modelName).find('.uploadEJS')
+            form.attr('id', $(this).attr('id'));
         })
     }
 
