@@ -13,7 +13,7 @@
                 <div class="explore-sec-col1-btn-dv">
                     <% let banner1 = data.find(item => item.position == "homePosition1") %> 
                     <%if(banner1){%>
-                        <a href="<%=banner1.link%>">BROWSE CASINO</a>
+                        <a href="<%=banner1.link%>" class="promotionLink" id="<%=banner2._id%>">BROWSE CASINO</a>
                     <%}%>
                 </div>
               </div>
@@ -29,7 +29,7 @@
                 </h4>
                 <div class="explore-sec-col1-btn-dv">
                     <% let banner2 = data.find(item => item.position == "homePosition2") %> 
-                  <a href="<%=banner2.link%>">BROWSE CASINO</a>
+                  <a href="<%=banner2.link%>" class="promotionLink" id="<%=banner2._id%>">BROWSE CASINO</a>
                 </div>
               </div>
             </div>
