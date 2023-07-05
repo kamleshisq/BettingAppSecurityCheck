@@ -119,6 +119,9 @@
 </div>
 <br><br>
 <div class="row" style="padding:10px 0px;background-color: #ffff;border-radius: 10px;">
+  <%let Sport = sliders.find(item => item.name == "Sport")%>
+  <%let Casino = sliders.find(item => item.name == "Casino")%>
+  <%let Royal_Gaming = sliders.find(item => item.name == "Royal_Gaming")%>
   <div class="container-fluid" id="verticalMenuManager"> 
       <section class="verticalMenuManager" >
           <div class="new-head">
@@ -565,7 +568,7 @@
           <h4 class="modal-title" style="color: #fff;">Add image</h4>
         </div>
         <div class="modal-body">
-          <form class="form-data20" id="Add-User0">
+          <form class="form-data26" id="<%=Sport._id%>">
             <div class="row">
               <div class="col">
                 <label for="menuName">Name</label>
