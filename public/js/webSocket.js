@@ -3121,7 +3121,7 @@ socket.on('connect', () => {
            let Sform = $('.SF')
            console.log(Sform)
            console.log(Sport)
-           Sform.find('input[name = "url"]').attr('value', Sport.url)
+           Sform.find('input[name = "url"]').attr('value', Sport.mainUrl)
         })
 
 
