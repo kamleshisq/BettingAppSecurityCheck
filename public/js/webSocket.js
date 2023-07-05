@@ -3002,6 +3002,7 @@ socket.on('connect', () => {
                 form.find('input[name = "check"]').removeAttr('checked');
                 form.find('input[name = "menuName"]').attr('value',PMD.menuName)
                 form.find('input[name = "num"]').attr('value',PMD.num)
+                form.find('input[name = "url"]').attr('value',PMD.url)
                 if(PMD.status){
                     form.find('input[name = "check"]').attr("checked", "checked");
                 }
