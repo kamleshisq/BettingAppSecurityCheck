@@ -20,6 +20,7 @@ import { updateHorizontalMenu } from "./updateHorizonatlMenu";
 import { createBanner } from "./createBanner";
 import { updateBanner } from "./updateBanner";
 import { createPage } from "./createpage";
+import { addImage } from "./addImage";
 // import { func } from "joi";
 
 
