@@ -143,7 +143,21 @@
                       <div id="panelsStayOpen-collapsetwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingtwo">
                         <div class="accordion-body" style="gap: 5px;display: flex;flex-direction: column;">
                           <div class="row" id="RGVd">
-
+                            <% let Oc = sliders.find(item => item.name = "Casino") %>
+                            <form class="OC" id="OCF">
+                              <div class="row">
+                                <div class="col">
+                                  <label for="name"><%=Oc.name%></label>
+                                  <input type="text" class="form-control ml0" placeholder="" name="name">
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  <label for="url"><%=Oc.name%></label>
+                                  <input type="text" id="url" class="form-control ml0" placeholder="Abitest" name="url">
+                                </div>
+                              </div>
+                            </form>
                           </div>
                         </div>
                       </div>

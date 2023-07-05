@@ -10,6 +10,7 @@ const gameModel = require('../model/gameModel');
 const betLimitModel = require("../model/betLimitModel");
 const verticalMenuModel = require("../model/verticalMenuModel");
 const horizontalMenuModel = require("../model/horizontalMenuModel");
+const sliderModel = require("../model/sliderModel");
 const pagesModel = require("../model/pageModel");
 const fetch = require("node-fetch")
 const whiteLabel = require('../model/whitelableModel');
@@ -1311,17 +1312,18 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
 exports.getCmsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let pages = await pagesModel.find()
-    console.log(pages)
     let verticalMenus = await verticalMenuModel.find().sort({num:1})
     let hosriZontalMenu = await horizontalMenuModel.find().sort({Number:1})
-    let banner = await bannerModel.find().sort()
+    let banner = await bannerModel.find()
+    let sliders = await sliderModel.find()
     res.status(200).render("./Cms/cms",{
         title:"CMS",
         user,
         verticalMenus,
         hosriZontalMenu,
         banner,
-        pages
+        pages,
+        sliders
     })
 });
 
