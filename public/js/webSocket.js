@@ -3119,9 +3119,11 @@ socket.on('connect', () => {
 
 
            let Sform = $('.SF')
-           console.log(Sform)
-           console.log(Sport)
+           let Cform = $('.OCF')
+           let Rform = $('.RGF')
            Sform.find('input[name = "url"]').attr('value', Sport.mainUrl)
+           Cform.find('input[name = "url"]').attr('value', Casino.mainUrl)
+           Rform.find('input[name = "url"]').attr('value', Royal_Gaming.mainUrl)
         })
 
 
