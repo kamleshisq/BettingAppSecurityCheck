@@ -11,3 +11,9 @@ exports.createNewSlider = catchAsync(async(req, res, next) => {
         })
     }
 })
+
+
+exports.addImage = catchAsync(async(req, res, next) =>{
+    console.log(req.body)
+    console.log(req.files)
+})

@@ -481,3 +481,13 @@ $(document).on('submit', ".uploadEJS", function(e){
     let fd = new FormData(form);
     createPage(fd)
 })
+
+
+
+$(document).on('submit', ".form-data26", function(e){
+    e.preventDefault()
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    fd.append('id', id)
+    addImage(fd)
+})
