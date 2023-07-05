@@ -3172,6 +3172,15 @@ socket.on('connect', () => {
         })
 
 
+        $(document).on('submit', ".SF", function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            socket.emit("UpdateSport", data)
+        })
+
+
 
     }
 
