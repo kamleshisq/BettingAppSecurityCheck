@@ -10,6 +10,9 @@ const vertixalMenu = mongoose.Schema({
         type:Number,
         required:true
     },
+    url:{
+        type:String
+    },
     page:{
         type:String
     },
