@@ -21,7 +21,7 @@ exports.addImage = catchAsync(async(req, res, next) =>{
             image.mv(`public/sliderImages/${req.body.menuName}.png`, (err)=>{
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
-                // console.log(err)
+                console.log(err)
             })
             let slider = await sliderModel.findById(req.body.id)
             slider.images.push({name:req.body.menuName, url: req.body.url})
