@@ -23,7 +23,7 @@ exports.addImage = catchAsync(async(req, res, next) =>{
                 return next(new AppError("Something went wrong please try again later", 400))
             })
             let slider = await sliderModel.findById(req.body.id)
-            let check = slider.image.find(item => item.name == req.body.menuName)
+            let check = slider.images.find(item => item.name == req.body.menuName)
             if(!check){
                 slider.images.push({name:req.body.menuName, url: req.body.url})
                 let updatedSlider = await sliderModel.findByIdAndUpdate(req.body.id, slider)
