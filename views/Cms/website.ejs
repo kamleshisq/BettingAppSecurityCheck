@@ -147,14 +147,8 @@
                             <form class="OC" id="OCF" >
                               <div class="row">
                                 <div class="col">
-                                  <label for="name" style="color: #6359CA;">name</label>
-                                  <input type="text" class="form-control ml0" placeholder="<%=Oc.name%>" readonly name="name">
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col">
                                   <label for="url" style="color: #6359CA;">Url</label>
-                                  <input type="text" id="url" class="form-control ml0" placeholder="<%=Oc.url%>" name="url">
+                                  <input type="text" id="url" class="form-control ml0" name="url">
                                 </div>
                               </div>
                             </form>
@@ -180,7 +174,15 @@
                       <div id="panelsStayOpen-collapsetwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingtwo">
                         <div class="accordion-body" style="gap: 5px;display: flex;flex-direction: column;">
                           <div class="row" id="RGVd">
-
+                            <% let RG = sliders.find(item => item.name = "Royal_Gaming") %>
+                            <form class="OC" id="OCF" >
+                              <div class="row">
+                                <div class="col">
+                                  <label for="url" style="color: #6359CA;">Url</label>
+                                  <input type="text" id="url" class="form-control ml0" name="url">
+                                </div>
+                              </div>
+                            </form>
                           </div>
                         </div>
                       </div>
@@ -204,7 +206,15 @@
                       <div id="panelsStayOpen-collapsetwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingtwo">
                         <div class="accordion-body" style="gap: 5px;display: flex;flex-direction: column;">
                           <div class="row" id="RGVd">
-
+                            <% let PS = sliders.find(item => item.name = "Sport") %>
+                            <form class="OC" id="OCF" >
+                              <div class="row">
+                                <div class="col">
+                                  <label for="url" style="color: #6359CA;">Url</label>
+                                  <input type="text" id="url" class="form-control ml0" name="url">
+                                </div>
+                              </div>
+                            </form>
                           </div>
                         </div>
                       </div>
