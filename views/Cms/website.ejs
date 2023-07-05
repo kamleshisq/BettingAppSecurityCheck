@@ -168,7 +168,13 @@
                                 <th>delete</th>
                               </thead>
                               <tbody>
-                                
+                                <%for(let i=0; i < Sport.images.length; i++){%>
+                                  <tr>
+                                    <td><%=Sport.images[i].name%></td>
+                                    <td><%=Sport.images[i].url%></td>
+                                    <td><img src="../sliderImages/<%=Sport.images[i].name%>.png" alt="img" class="form__user-photo"></td>
+                                  </tr>
+                                <%}%>
                               </tbody>
                             </table>
                           </div>
