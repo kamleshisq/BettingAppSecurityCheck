@@ -318,12 +318,14 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find();
     let verticalMenus = await verticalMenuModel.find();
     const banner = await bannerModel.find()
+    let sliders = await sliderModel.find().sort({Number:1})
     // console.log(verticalMenus)
     res.status(200).render("./userSideEjs/home/homePage",{
         user,
         data,
         verticalMenus,
-        banner
+        banner,
+        sliders
     })
 })
 
