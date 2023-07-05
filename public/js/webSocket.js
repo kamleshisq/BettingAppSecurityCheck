@@ -3141,6 +3141,9 @@ socket.on('connect', () => {
         })
         socket.on('dleteImageSport', async(data)=>{
             alert(data)
+            window.setTimeout(()=>{
+                window.location = '/admin/cms'
+            },200)
         })
 
         $(document).on('click', '.dleteImageRoyal', function(e){
@@ -3150,6 +3153,9 @@ socket.on('connect', () => {
         })
         socket.on('dleteImageRoyal', async(data)=>{
             alert(data)
+            window.setTimeout(()=>{
+                window.location = '/admin/cms'
+            },200)
         })
 
         $(document).on('click', '.dleteImageCasino', function(e){
@@ -3159,6 +3165,9 @@ socket.on('connect', () => {
         })
         socket.on('dleteImageCasino', async(data)=>{
             alert(data)
+            window.setTimeout(()=>{
+                window.location = '/admin/cms'
+            },200)
         })
 
 
