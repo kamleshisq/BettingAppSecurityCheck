@@ -22,6 +22,7 @@ const gameModel = require('./model/gameModel');
 const getCrkAndAllData = require("./utils/getSportAndCricketList");
 const bannerModel = require('./model/bannerModel');
 const { cpSync } = require('fs');
+const sliderModel = require('./model/sliderModel');
 // http(req, res) => {}
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -1197,6 +1198,11 @@ io.on('connection', (socket) => {
 
     socket.on('updatePromotion', async(data) => {
         await Promotion.findByIdAndUpdate(data,{$inc:{click:1}})
+    })
+
+    socket.on("CmsPage", async(data) => {
+        let sliders = await sliderModel.find();
+        socket.emit('CmsPage', sliders)
     })
 
 })

@@ -3110,6 +3110,16 @@ socket.on('connect', () => {
                 window.location = '/admin/cms'
             },200)
         })
+
+        socket.emit("CmsPage", "Connected")
+        socket.on('CmsPage', async(data) => {
+            console.log(data)
+        })
+
+
+
+
+
     }
 
 
