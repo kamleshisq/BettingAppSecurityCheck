@@ -3118,7 +3118,7 @@ socket.on('connect', () => {
             let Royal_Gaming = data.find(item => item.name == "Royal_Gaming")
 
 
-           let Sform = document.getElementById('SF')
+           let Sform = $('#accordion-body').find('.SF')
            Sform.find('input[name = "url"]').attr('value', Sport.name)
         })
 
