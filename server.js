@@ -21,7 +21,6 @@ const loginlogs = require('./model/loginLogs');
 const gameModel = require('./model/gameModel');
 const getCrkAndAllData = require("./utils/getSportAndCricketList");
 const bannerModel = require('./model/bannerModel');
-const { cpSync } = require('fs');
 const sliderModel = require('./model/sliderModel');
 // http(req, res) => {}
 io.on('connection', (socket) => {
@@ -1205,8 +1204,40 @@ io.on('connection', (socket) => {
         socket.emit('CmsPage', sliders)
     })
 
-    socket.on("deleteImage", async(data) => {
-        console.log(data)
+    socket.on("dleteImageSport", async(data) => {
+        let slider = await sliderModel.findOne({name:"Sport"})
+        let index = slider.images.findIndex(item => item.name == data)
+        if(index !== -1) {
+            slider.images.splice(index, 1);
+            await sliderModel.findByIdAndUpdate(slider._id, slider)
+            socket.emit('dleteImageSport', "image deleted")
+        }else{
+            socket.emit('dleteImageSport', "Please try again later")
+        }
+    })
+
+    socket.on("dleteImageRoyal", async(data) => {
+        let slider = await sliderModel.findOne({name:"Royal_Gaming"})
+        let index = slider.images.findIndex(item => item.name == data)
+        if(index !== -1) {
+            slider.images.splice(index, 1);
+            await sliderModel.findByIdAndUpdate(slider._id, slider)
+            socket.emit('dleteImageRoyal', "image deleted")
+        }else{
+            socket.emit('dleteImageRoyal', "Please try again later")
+        }
+    })
+
+    socket.on("dleteImageCasino", async(data) => {
+        let slider = await sliderModel.findOne({name:"Casino"})
+        let index = slider.images.findIndex(item => item.name == data)
+        if(index !== -1) {
+            slider.images.splice(index, 1);
+            await sliderModel.findByIdAndUpdate(slider._id, slider)
+            socket.emit('dleteImageCasino', "image deleted")
+        }else{
+            socket.emit('dleteImageCasino', "Please try again later")
+        }
     })
 
 })

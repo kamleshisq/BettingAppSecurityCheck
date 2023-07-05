@@ -3134,10 +3134,31 @@ socket.on('connect', () => {
             form.attr('id', id);
         })
 
-        $(document).on('click', '.dleteImage', function(e){
+        $(document).on('click', '.dleteImageSport', function(e){
             e.preventDefault()
             let id = $(this).attr("id")
-            socket.emit("deleteImage" , id)
+            socket.emit("dleteImageSport" , id)
+        })
+        socket.on('dleteImageSport', async(data)=>{
+            alert(data)
+        })
+
+        $(document).on('click', '.dleteImageRoyal', function(e){
+            e.preventDefault()
+            let id = $(this).attr("id")
+            socket.emit("dleteImageRoyal" , id)
+        })
+        socket.on('dleteImageRoyal', async(data)=>{
+            alert(data)
+        })
+
+        $(document).on('click', '.dleteImageCasino', function(e){
+            e.preventDefault()
+            let id = $(this).attr("id")
+            socket.emit("dleteImageCasino" , id)
+        })
+        socket.on('dleteImageCasino', async(data)=>{
+            alert(data)
         })
 
 
