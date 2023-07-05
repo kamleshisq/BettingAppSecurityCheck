@@ -23,12 +23,17 @@ exports.addImage = catchAsync(async(req, res, next) =>{
                 return next(new AppError("Something went wrong please try again later", 400))
             })
             let slider = await sliderModel.findById(req.body.id)
-            slider.images.push({name:req.body.menuName, url: req.body.url})
-            let updatedSlider = await sliderModel.findByIdAndUpdate(req.body.id, slider)
-            if(updatedSlider){
-                res.status(200).json({
-                    status:"success"
-                })
+            let check = slider.image.some(item => item.name == req.body.menuName)
+            if(!check){
+                slider.images.push({name:req.body.menuName, url: req.body.url})
+                let updatedSlider = await sliderModel.findByIdAndUpdate(req.body.id, slider)
+                if(updatedSlider){
+                    res.status(200).json({
+                        status:"success"
+                    })
+                }
+            }else{
+                return next(new AppError("Image name is already exist"))
             }
         }else{
             return next(new AppError("Please upload an image file", 400))
