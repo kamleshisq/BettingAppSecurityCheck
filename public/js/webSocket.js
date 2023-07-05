@@ -3119,7 +3119,9 @@ socket.on('connect', () => {
 
 
            let Sform = $('#accordion-body').find('.SF')
-           Sform.find('input[name = "url"]').attr('value', Sport.name)
+           console.log(Sform)
+           console.log(Sport)
+           Sform.find('input[name = "url"]').attr('value', Sport.url)
         })
 
 
