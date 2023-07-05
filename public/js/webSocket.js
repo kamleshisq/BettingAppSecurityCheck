@@ -3116,11 +3116,10 @@ socket.on('connect', () => {
             let Sport = data.find(item => item.name == "Sport")
             let Casino = data.find(item => item.name == "Casino")
             let Royal_Gaming = data.find(item => item.name == "Royal_Gaming")
-            console.log(
-                Sport,
-                Casino,
-                Royal_Gaming
-            )
+
+
+           let Sform = document.getElementById('SF')
+           Sform.find('input[name = "url"]').attr('value', Sport.name)
         })
 
 
