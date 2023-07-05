@@ -12,6 +12,9 @@ const slider = mongoose.Schema({
     mainUrl:{
         type:String,
         required:true
+    },
+    Number:{
+        type:Number
     }
 });
 
