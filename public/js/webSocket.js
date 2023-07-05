@@ -3200,6 +3200,14 @@ socket.on('connect', () => {
             data.N = "Casino"
             socket.emit("UpdateSport", data)
         })
+
+        socket.on('UpdateSport', async(data) => {
+            alert(data)
+            window.setTimeout(()=>{
+                window.location = '/admin/cms'
+            },200)
+        })
+
     }
 
 
