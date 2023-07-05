@@ -156,7 +156,7 @@
                             </form>
                             <div class="new-head">
                               <h3 style="font-weight: 700;font-size: 24px; color: #ffffff;">Images</h3>
-                              <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#addImage"><i class="fa-solid fa-plus"></i> &nbsp; Add Image</button>
+                              <button class="btn-filter-image" id="<%=Sport._id%>" data-bs-toggle="modal" data-bs-target="#addImage"><i class="fa-solid fa-plus"></i> &nbsp; Add Image</button>
                             </div>
                             <!-- <label >Images</label> -->
                             <table style="color: rgb(255, 255, 255);">
@@ -207,7 +207,10 @@
                                 </div>
                               </div>
                             </form>
-                            <label  >Images</label>
+                            <div class="new-head">
+                              <h3 style="font-weight: 700;font-size: 24px; color: #ffffff;">Images</h3>
+                              <button class="btn-filter-image" id="<%=Royal_Gaming._id%>" data-bs-toggle="modal" data-bs-target="#addImage"><i class="fa-solid fa-plus"></i> &nbsp; Add Image</button>
+                            </div>
                             <table style="color: rgb(255, 255, 255);">
                               <thead>
                                 <th>name</th>
@@ -217,7 +220,13 @@
                                 <th>delete</th>
                               </thead>
                               <tbody>
-
+                                <%for(let i=0; i < Royal_Gaming.images.length; i++){%>
+                                  <tr>
+                                    <td><%=Royal_Gaming.images[i].name%></td>
+                                    <td><%=Royal_Gaming.images[i].url%></td>
+                                    <td><img src="../sliderImages/<%=Royal_Gaming.images[i].name%>.png" alt="img" class="form__user-photo"></td>
+                                  </tr>
+                                <%}%>
                               </tbody>
                             </table>
                           </div>
@@ -251,7 +260,10 @@
                                 </div>
                               </div>
                             </form>
-                            <label  >Images</label>
+                            <div class="new-head">
+                              <h3 style="font-weight: 700;font-size: 24px; color: #ffffff;">Images</h3>
+                              <button class="btn-filter-image" id="<%=Casino._id%>" data-bs-toggle="modal" data-bs-target="#addImage"><i class="fa-solid fa-plus"></i> &nbsp; Add Image</button>
+                            </div>
                             <table style="color: rgb(255, 255, 255);">
                               <thead>
                                 <th>name</th>
@@ -261,7 +273,13 @@
                                 <th>delete</th>
                               </thead>
                               <tbody>
-                                
+                                <%for(let i=0; i < Casino.images.length; i++){%>
+                                  <tr>
+                                    <td><%=Casino.images[i].name%></td>
+                                    <td><%=Casino.images[i].url%></td>
+                                    <td><img src="../sliderImages/<%=Casino.images[i].name%>.png" alt="img" class="form__user-photo"></td>
+                                  </tr>
+                                <%}%>
                               </tbody>
                             </table>
                           </div>
@@ -574,7 +592,7 @@
           <h4 class="modal-title" style="color: #fff;">Add image</h4>
         </div>
         <div class="modal-body">
-          <form class="form-data26" id="<%=Sport._id%>">
+          <form class="form-data26" >
             <div class="row">
               <div class="col">
                 <label for="menuName">Name</label>

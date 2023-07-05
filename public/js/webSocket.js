@@ -3126,7 +3126,14 @@ socket.on('connect', () => {
            Rform.find('input[name = "url"]').attr('value', Royal_Gaming.mainUrl)
         })
 
+        $(document).on('click', ".btn-filter", function(e){
+            e.preventDefault()
+            let id = $(this).attr("id")
+            let modleName = "#addImage"
+            let form = $(modleName).find('.form-data26')
+            form.attr('id', id);
 
+        })
 
 
 
