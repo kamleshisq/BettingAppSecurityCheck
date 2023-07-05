@@ -25,15 +25,7 @@ exports.addImage = catchAsync(async(req, res, next) =>{
             })
             let slider = await sliderModel.findById(req.body.id)
             slider.images.push({name:req.body.menuName, url: req.body.url})
-            slider.save((err) => {
-                if (err) {
-                  console.error(err);
-                } else {
-                  res.status(200).json({
-                    status:'success'
-                  })
-                }
-              });
+            let updatedSlider = await sliderModel.findByIdAndUpdate(req.body.id, slider)
         }else{
             return next(new AppError("Please upload an image file", 400))
         }
