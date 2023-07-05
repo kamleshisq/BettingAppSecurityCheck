@@ -1,3 +1,4 @@
+const { sport } = require("../../controller/gameController");
 
 
 
@@ -3113,7 +3114,14 @@ socket.on('connect', () => {
 
         socket.emit("CmsPage", "Connected")
         socket.on('CmsPage', async(data) => {
-            console.log(data)
+            let Sport = data.find(item => item.name == "Sport")
+            let Casino = data.find(item => item.name == "Casino")
+            let Royal_Gaming = data.find(item => item.name == "Royal_Gaming")
+            console.log(
+                Sport,
+                Casino,
+                Royal_Gaming
+            )
         })
 
 
