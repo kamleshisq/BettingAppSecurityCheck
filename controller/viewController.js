@@ -1315,7 +1315,7 @@ exports.getCmsPage = catchAsync(async(req, res, next) => {
     let verticalMenus = await verticalMenuModel.find().sort({num:1})
     let hosriZontalMenu = await horizontalMenuModel.find().sort({Number:1})
     let banner = await bannerModel.find()
-    let sliders = await sliderModel.find()
+    let sliders = await sliderModel.find().sort({Number:1})
     res.status(200).render("./Cms/cms",{
         title:"CMS",
         user,
