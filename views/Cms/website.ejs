@@ -18,6 +18,7 @@
                     <thead>
                       <tr style="font-size: 11px;">
                         <th>Menu Name</th>
+                        <th>url</th>
                         <th>Number</th>
                         <th>Edit</th>
                         <th>Delete</th>
@@ -31,6 +32,7 @@
                           <tr>
                         <%}%>
                             <td><%=verticalMenus[i].menuName%></td>
+                            <td><%=verticalMenus[i].url%></td>
                             <td><%=verticalMenus[i].num%></td>
                             <td><button data-bs-toggle="modal" data-bs-target="#myModal5" id="<%=verticalMenus[i]._id%>" class="getVerticalMenuDetails"><i class="fa-solid fa-database"></i></button></td>
                             <td><button class="deleteVerticalMenuDetails" id="<%=verticalMenus[i]._id%>">Delete</button></td>
