@@ -14,6 +14,30 @@ exports.createNewSlider = catchAsync(async(req, res, next) => {
 
 
 exports.addImage = catchAsync(async(req, res, next) =>{
-    console.log(req.body)
-    console.log(req.files)
+    if(req.files){
+        if(req.files.image.mimetype.startsWith('image')){
+            const image = req.files.image
+            // console.log(logo)
+            image.mv(`public/sliderImages/${req.body.menuName}.png`, (err)=>{
+                if(err) 
+                return next(new AppError("Something went wrong please try again later", 400))
+                // console.log(err)
+            })
+            let slider = await sliderModel.findbyId(req.body.id)
+            slider.images.push({name:req.body.menuName, url: req.body.url})
+            slider.save((err) => {
+                if (err) {
+                  console.error(err);
+                } else {
+                  res.status(200).json({
+                    status:'success'
+                  })
+                }
+              });
+        }else{
+            return next(new AppError("Please upload an image file", 400))
+        }
+    }else{
+    return next(new AppError("Aplease Uploade Image"))
+   } 
 })

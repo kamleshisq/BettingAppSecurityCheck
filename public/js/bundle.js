@@ -6543,7 +6543,7 @@ var addImage = /*#__PURE__*/function () {
         case 3:
           res = _context.sent;
           if (res.data.status === 'success') {
-            alert('Menu created successfully!!!!');
+            alert('image added successfully!!!!');
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
