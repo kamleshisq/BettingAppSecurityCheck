@@ -3122,6 +3122,7 @@ socket.on('connect', () => {
            let Cform = $('.OCF')
            let Rform = $('.RGF')
            Sform.find('input[name = "url"]').attr('value', Sport.mainUrl)
+           Sform.find('input[name = "Number"]').attr('value', Sport.Number)
            Cform.find('input[name = "url"]').attr('value', Casino.mainUrl)
            Rform.find('input[name = "url"]').attr('value', Royal_Gaming.mainUrl)
         })
