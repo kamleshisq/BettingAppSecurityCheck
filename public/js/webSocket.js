@@ -3129,6 +3129,7 @@ socket.on('connect', () => {
         $(document).on('click', ".btn-filter", function(e){
             e.preventDefault()
             let id = $(this).attr("id")
+            console.log(id)
             let modleName = "#addImage"
             let form = $(modleName).find('.form-data26')
             form.attr('id', id);
