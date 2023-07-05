@@ -1241,6 +1241,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("UpdateSport", async(data) => {
+        console.log(data)
         let updatedSport =   await sliderModel.findOneAndUpdate({name:"Sport"},data)
         if(updatedSport){
             socket.emit("UpdateSport", "Updated Successfully")
