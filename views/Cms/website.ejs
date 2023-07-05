@@ -174,7 +174,7 @@
                                     <td><%=Sport.images[i].url%></td>
                                     <td><img src="../sliderImages/<%=Sport.images[i].name%>.png" alt="img" class="form__user-photo"></td>
                                     <td></td>
-                                    <td><button class="dleteImage" id="<%=Sport._id%>">Delete</button></td>
+                                    <td><button class="dleteImage" id="<%=Sport._id%>/<%=Sport.images[i].name%>">Delete</button></td>
                                   </tr>
                                 <%}%>
                               </tbody>
@@ -227,6 +227,8 @@
                                     <td><%=Royal_Gaming.images[i].name%></td>
                                     <td><%=Royal_Gaming.images[i].url%></td>
                                     <td><img src="../sliderImages/<%=Royal_Gaming.images[i].name%>.png" alt="img" class="form__user-photo"></td>
+                                    <td></td>
+                                    <td><button class="dleteImage" id="<%=Royal_Gaming._id%>/<%=Royal_Gaming.images[i].name%>">Delete</button></td>
                                   </tr>
                                 <%}%>
                               </tbody>
@@ -281,7 +283,7 @@
                                     <td><%=Casino.images[i].url%></td>
                                     <td><img src="../sliderImages/<%=Casino.images[i].name%>.png" alt="img" class="form__user-photo"></td>
                                     <td></td>
-                                    <td><button class="dleteImage" id="<%=Casino._id%>">Delete</button></td>
+                                    <td><button class="dleteImage" id="<%=Casino._id%>/<%=Casino.images[i].name%>">Delete</button></td>
                                   </tr>
                                 <%}%>
                               </tbody>

@@ -1205,6 +1205,10 @@ io.on('connection', (socket) => {
         socket.emit('CmsPage', sliders)
     })
 
+    socket.on("deleteImage", async(data) => {
+        console.log(data)
+    })
+
 })
 
 http.listen(80,()=> {

@@ -1,3 +1,4 @@
+const { func } = require("joi");
 
 
 
@@ -3132,7 +3133,12 @@ socket.on('connect', () => {
             let modleName = "#addImage"
             let form = $(modleName).find('.form-data26')
             form.attr('id', id);
+        })
 
+        $(document).on('click', '.dleteImage', function(e){
+            e.preventDefault()
+            let id = $(this).attr("id")
+            socket.emit("deleteImage" , id)
         })
 
 
