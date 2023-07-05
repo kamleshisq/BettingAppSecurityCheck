@@ -7012,6 +7012,7 @@ $(document).on('submit', ".uploadEJS", function (e) {
 });
 $(document).on('submit', ".form-data26", function (e) {
   e.preventDefault();
+  var id = $(this).attr('id');
   var form = $(this)[0];
   var fd = new FormData(form);
   fd.append('id', id);

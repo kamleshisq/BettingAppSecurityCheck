@@ -486,6 +486,7 @@ $(document).on('submit', ".uploadEJS", function(e){
 
 $(document).on('submit', ".form-data26", function(e){
     e.preventDefault()
+    let id = $(this).attr('id')
     let form = $(this)[0];
     let fd = new FormData(form);
     fd.append('id', id)
