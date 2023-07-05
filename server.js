@@ -22,6 +22,7 @@ const gameModel = require('./model/gameModel');
 const getCrkAndAllData = require("./utils/getSportAndCricketList");
 const bannerModel = require('./model/bannerModel');
 const sliderModel = require('./model/sliderModel');
+const { sport } = require('./controller/gameController');
 // http(req, res) => {}
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -1241,12 +1242,20 @@ io.on('connection', (socket) => {
     })
 
     socket.on("UpdateSport", async(data) => {
-        console.log(data)
-        let updatedSport =   await sliderModel.findOneAndUpdate({name:"Sport"},data)
-        if(updatedSport){
-            socket.emit("UpdateSport", "Updated Successfully")
+        let newNum = data.Number
+        let Sport = await sliderModel.findOne({name:`${data.N}`})
+        if(newNum == Sport.Number){
+             await sliderModel.findByIdAndUpdate(Sport._id, {mainUrl:data.url})
+             socket.emit("UpdateSport", "Updated Successfully")
+        }else if(newNum < 1){
+            socket.emit("UpdateSport", "Please provide positive number")
         }else{
-            socket.emit("UpdateSport", "Please try again later")
+            if(newNum > 3){
+                newNum = 3
+            }
+            await sliderModel.findByIdAndUpdate(Sport._id,{mainUrl:data.url, Number:newNum})
+            await sliderModel.findOneAndUpdate({Number:Sport.newNum}, {Number:sport.Number})
+            socket.emit("UpdateSport", "Updated Successfully")
         }
     })
 

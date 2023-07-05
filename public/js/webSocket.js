@@ -3124,7 +3124,9 @@ socket.on('connect', () => {
            Sform.find('input[name = "url"]').attr('value', Sport.mainUrl)
            Sform.find('input[name = "Number"]').attr('value', Sport.Number)
            Cform.find('input[name = "url"]').attr('value', Casino.mainUrl)
+           Cform.find('input[name = "Number"]').attr('value', Casino.Number)
            Rform.find('input[name = "url"]').attr('value', Royal_Gaming.mainUrl)
+           Rform.find('input[name = "Number"]').attr('value', Royal_Gaming.Number)
         })
 
         $(document).on('click', ".btn-filter-image", function(e){
@@ -3177,11 +3179,27 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
+            data.N = "Sport"
             socket.emit("UpdateSport", data)
         })
 
+        $(document).on('submit', ".RGF", function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            data.N = "Royal_Gaming"
+            socket.emit("UpdateSport", data)
+        })
 
-
+        $(document).on('submit', ".OCF", function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            data.N = "Casino"
+            socket.emit("UpdateSport", data)
+        })
     }
 
 
