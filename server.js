@@ -1254,7 +1254,7 @@ io.on('connection', (socket) => {
                 newNum = 3
             }
             await sliderModel.findByIdAndUpdate(Sport._id,{mainUrl:data.url, Number:newNum})
-            await sliderModel.findOneAndUpdate({Number:Sport.newNum}, {Number:sport.Number})
+            await sliderModel.findOneAndUpdate({Number:newNum}, {Number:sport.Number})
             socket.emit("UpdateSport", "Updated Successfully")
         }
     })
