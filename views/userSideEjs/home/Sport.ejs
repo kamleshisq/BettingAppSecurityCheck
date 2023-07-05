@@ -10,9 +10,10 @@
                 <!-- <span class="titl-bhind-txt-spn">featured sports</span> -->
               </div>
             </div>
+            <%let Sports = sliders.find(item => item.name == "Sport")%>
             <div class="featured-sec-ro--titl2">
               <div class="featured-sec-ro--titl-brows-all-btn-dv">
-                <a class="featured-sec-ro--titl-brows-all-btn" href="">BROWSE ALL</a>
+                <a class="featured-sec-ro--titl-brows-all-btn" href="<%=Sports.mainUrl%>">BROWSE ALL</a>
               </div>
             </div>
             <div class="bg-elemnt-dv">
@@ -22,16 +23,18 @@
           </div>
 
           <div class="featured-sec-slide-ro hiroslide">
-
-            <div class="featured-sec-card-col-dv">
-              <div class="featured-sec-card-col-inn">
-                <div class="featured-sec-card-col-img-dv">
-                  <a href="#">
-                    <img class="img-fluid featured-sec-card-col-img-tg" src="assets/img/home/featured-slideimg01.png" alt="">
-                  </a>
+            <%for(let i = 0; i < Sports.images.length; i++){%>
+                <div class="featured-sec-card-col-dv">
+                  <div class="featured-sec-card-col-inn">
+                    <div class="featured-sec-card-col-img-dv">
+                      <a href="<%=Sports.images[i].url%>">
+                        <img class="img-fluid featured-sec-card-col-img-tg" src="sliderImages/<%=name.images[i].url%>.png" alt="">
+                      </a>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+            <%}%>
+
             
             <div class="featured-sec-card-col-dv">
               <div class="featured-sec-card-col-inn">
