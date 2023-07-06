@@ -19,9 +19,9 @@
                         </section>
                         <section class="exchange-pg-tranding-maches-nav-sec">
                             <%for(let i = 0; i < LiveCricket.length; i++){%>
-                                <a href="#">
+                                <a href="/exchange_sports/live_match?id=<%=LiveCricket[i].eventData.eventId%>">
                                     <img src="/assets/img/home/side-menuimg02.svg" alt="">
-                                    Bangladesh v Afghanistan
+                                    <%=LiveCricket[i].eventData.name%>
                                 </a>
                             <%}%>
                             <a href="#">
