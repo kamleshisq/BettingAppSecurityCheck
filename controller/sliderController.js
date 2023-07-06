@@ -47,6 +47,49 @@ exports.addImage = catchAsync(async(req, res, next) =>{
 exports.updateSlider = catchAsync(async(req, res, next) => {
     console.log(req.body)
     console.log(req.files)
+    if(req.files){
+        if(req.files.file.mimetype.startsWith('image')){
+            const image = req.files.file
+            // console.log(logo)
+            image.mv(`public/sliderBackgroundImages/${req.body.name.split(' ')[0]}.png`, (err)=>{
+                req.body.backGroundImage = req.body.name.split(' ')[0]
+                if(err) 
+                return next(new AppError("Something went wrong please try again later", 400))
+            })
+        }
+    }else{
+        let newNum = req.body.Number
+        let Sport = await sliderModel.findById(req.body.id)
+        if(newNum == Sport.Number){
+            let status
+            if(req.body.check){
+                 status = true
+            }else{
+                status = false
+            }
+             await sliderModel.findByIdAndUpdate(Sport._id, {mainUrl:req.body.url, name:req.body.name, status:status})
+             res.status(200).json({
+                status:"success"
+             })
+        }else if(newNum < 1){
+            return next(new AppError("Please provide a positive number", 404))
+        }else{
+            if(newNum > 3){
+                newNum = 3
+            }
+            let status
+            if(req.body.check){
+                 status = true
+            }else{
+                status = false
+            }
+            await sliderModel.findByIdAndUpdate(Sport._id,{mainUrl:req.body.url, name:req.body.name, status:status, Number:newNum})
+            await sliderModel.findOneAndUpdate({Number:newNum}, {Number:Sport.Number})
+            res.status(200).json({
+                status:"success"
+             })
+        }
+    }
     // socket.on("UpdateSport", async(data) => {
     //     let newNum = data.Number
     //     let Sport = await sliderModel.findOne({name:`${data.N}`})
