@@ -11,7 +11,9 @@
                             <div class="exchange-pg-banner-sec-wrp">
                                 <% let banner1 = data.find(item => item.position == "Exchange_Page_top") %> 
                                 <%if(banner1.status){%>
-                                    <img class="hiro-banner-img img-fluid" href="<%=banner1.link%>" src="/img/<%=banner1.Image%>.png" alt="banner image">
+                                    <a class="promotionLink" id="<%=banner1._id%>"  href="<%=banner1.link%>">
+                                        <img class="hiro-banner-img img-fluid" src="/img/<%=banner1.Image%>.png" alt="banner image">
+                                    </a>
                                 <%}%>
                             </div>
                         </section>
