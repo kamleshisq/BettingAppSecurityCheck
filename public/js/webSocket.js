@@ -2686,8 +2686,9 @@ socket.on('connect', () => {
         let form = $(modleName).find('#bet-form')
         let eventName = $(".eventName").text()
         let marketId = $(".match_odd").attr('id')
-        let x = parseInt($(this).text())
+        let x = ($(this).text() * 1)
         let id = $(this).attr("id")
+        console.log(x, id, marketId, eventID)
         form.find('input[name = "odds"]').val(x)
         form.find('input[name = "title"]').addClass(id);
         form.find('input[name = "button"]').addClass(marketId);
