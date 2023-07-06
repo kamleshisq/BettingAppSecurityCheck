@@ -2689,6 +2689,7 @@ socket.on('connect', () => {
         let x = $(this).text()
         console.log(x)
         let id = $(this).attr("id")
+        console.log(id)
         form.find('input[name = "title"]').val(eventName)
         form.find('input[name = "odds"]').val(x)
         form.find('input[name = "title"]').addClass(id);
