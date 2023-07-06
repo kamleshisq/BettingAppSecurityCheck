@@ -37,47 +37,13 @@
           <div class="services-sec-col-dv col-lg-11 col-md-11 col-12">
             <div class="services-sec-card-ro">
 
-              <div class="services-sec-card-col col-lg-4 col-md-4 col-12 pad-r-10">
-                <div class="services-sec-card-wrp">
-                  <div class="services-sec-card-img-dv">
-                    <span>
-                      <img class="img-fluid" src="assets/img/home/services-icon01.svg" alt="services">
-                    </span>
-                  </div>
-                  <h5>24x7 ONLINE SUPPORT</h5>
-                  <p>
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
-                  </p>
-                </div>
-              </div>
+              <%for(let i = 0; i < pages.length; i++){%>
+                <%-include(`../pages/${pages.Name}`)%>
+              <%}%>
               
-              <div class="services-sec-card-col col-lg-4 col-md-4 col-12 ">
-                <div class="services-sec-card-wrp">
-                  <div class="services-sec-card-img-dv">
-                    <span>
-                      <img class="img-fluid" src="assets/img/home/services-icon04.svg" alt="services">
-                    </span>
-                  </div>
-                  <h5>MULTIPLE PAYMENT METHODS</h5>
-                  <p>
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
-                  </p>
-                </div>
-              </div>
               
-              <div class="services-sec-card-col col-lg-4 col-md-4 col-12 pad-l-10">
-                <div class="services-sec-card-wrp">
-                  <div class="services-sec-card-img-dv">
-                    <span>
-                      <img class="img-fluid" src="assets/img/home/services-icon03.svg" alt="services">
-                    </span>
-                  </div>
-                  <h5>100% SECURE</h5>
-                  <p>
-                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
-                  </p>
-                </div>
-              </div>
+              
+              
 
             </div>
           </div>
