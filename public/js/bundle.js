@@ -7189,13 +7189,13 @@ $(document).on('submit', ".slider-form", function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   fd.append('id', id);
-  (0, _updateSlider.updateSlider)(fd);
+  (0, _updateSlider.updateSlider)(f);
 });
 $(document).on('submit', ".addSlider-form", function (e) {
   e.preventDefault();
   var form = $(this)[0];
   var fd = new FormData(form);
-  (0, _addSlider.createSlider)(f);
+  (0, _addSlider.createSlider)(fd);
 });
 },{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./betLock":"betLock.js","./updateRow":"updateRow.js","./updatePromotion":"updatePromotion.js","./createPromotion":"createPromotion.js","./deletePormotion":"deletePormotion.js","./betLimit":"betLimit.js","./createHorizontalMenu":"createHorizontalMenu.js","./updateHorizonatlMenu":"updateHorizonatlMenu.js","./createBanner":"createBanner.js","./updateBanner":"updateBanner.js","./createpage":"createpage.js","./addImage":"addImage.js","./updateSlider":"updateSlider.js","./addSlider":"addSlider.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
