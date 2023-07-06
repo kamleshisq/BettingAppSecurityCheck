@@ -3,7 +3,26 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require("../utils/AppError");
 
 exports.createNewSlider = catchAsync(async(req, res, next) => {
-    console.log(req.body)
+    req.body.mainUrl = req.body.url
+    if(req.files){
+        if(req.files.file.mimetype.startsWith('image')){
+            const image = req.files.file
+            // console.log(logo)
+            image.mv(`public/sliderBackgroundImages/${req.body.name.split(' ')[0]}.png`, (err)=>{
+                req.body.backGroundImage = req.body.name.split(' ')[0]
+                if(err) 
+                return next(new AppError("Something went wrong please try again later", 400))
+            })
+            let newSlider = await sliderModel.create(req.body)
+            if(newSlider){
+                res.status(200).json({
+                    status:"success"
+                })
+            }
+        }else{
+            return next(new AppError("Please Upload an image", 404))
+        }
+    }
 })
 
 
