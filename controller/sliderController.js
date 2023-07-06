@@ -45,8 +45,6 @@ exports.addImage = catchAsync(async(req, res, next) =>{
 
 
 exports.updateSlider = catchAsync(async(req, res, next) => {
-    console.log(req.body)
-    console.log(req.files)
     if(req.files){
         if(req.files.file.mimetype.startsWith('image')){
             const image = req.files.file
@@ -62,9 +60,8 @@ exports.updateSlider = catchAsync(async(req, res, next) => {
     }
 
         let newNum = parseInt(req.body.Number)
-        console.log(newNum, 456654)
         let Sport = await sliderModel.findById(req.body.id)
-        console.log(Sport)
+        console.log(Sport, 456)
         if(newNum == Sport.Number){
             let status
             if(req.body.check){
@@ -91,7 +88,6 @@ exports.updateSlider = catchAsync(async(req, res, next) => {
             console.log(newNum, "jkl")
             let newSlider = await sliderModel.findByIdAndUpdate(Sport._id,{mainUrl:req.body.url, name:req.body.name, status:status, Number:newNum})
             let oldSlider = await sliderModel.findOneAndUpdate({Number:newNum}, {Number:Sport.Number})
-            console.log(newSlider, oldSlider)
             res.status(200).json({
                 status:"success"
              })
