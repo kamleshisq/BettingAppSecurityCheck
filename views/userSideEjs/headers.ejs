@@ -177,9 +177,15 @@
               <ul class="navbar-nav m-auto mb-2 mb-lg-0 my-nav-ul">
                 <%for(let i = 0; i < verticalMenus.length; i++){%>
                   <%if(verticalMenus[i].status){%>
-                  <li class="nav-item my-nav-ul-li">
-                    <a class="nav-link my-nav-ul-li-a" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
-                  </li>
+                    <%if(verticalMenus[i].menuName == "In-Play")%>
+                    <li class="nav-item my-nav-ul-li">
+                      <a class="nav-link my-nav-ul-li-a blink-nav-mnu" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
+                    </li>
+                    <%}else{%>
+                      <li class="nav-item my-nav-ul-li">
+                        <a class="nav-link my-nav-ul-li-a" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
+                      </li>
+                    <%}%>
                   <%}%>
                 <%}%>
                 <!-- <li class="nav-item my-nav-ul-li">
