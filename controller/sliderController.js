@@ -60,6 +60,7 @@ exports.addImage = catchAsync(async(req, res, next) =>{
 
 
 exports.updateSlider = catchAsync(async(req, res, next) => {
+    let allSlider = await sliderModel.find()
     if(req.files){
         if(req.files.file.mimetype.startsWith('image')){
             const image = req.files.file
@@ -89,8 +90,8 @@ exports.updateSlider = catchAsync(async(req, res, next) => {
         }else if(newNum < 1){
             return next(new AppError("Please provide a positive number", 404))
         }else{
-            if(newNum > 3){
-                newNum = 3
+            if(newNum > (allSlider.length + 1)){
+                newNum = allSlider.length
             }
             await sliderModel.findOneAndUpdate({Number:newNum},{Number:Sport.Number})
             await sliderModel.findByIdAndUpdate(Sport._id, {mainUrl:req.body.url, name:req.body.name, status:status, Number:newNum})
