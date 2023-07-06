@@ -181,7 +181,11 @@
                     <li class="nav-item my-nav-ul-li">
                       <a class="nav-link my-nav-ul-li-a blink-nav-mnu" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
                     </li>
-                    <%}else{%>
+                    <%}else if(check == verticalMenus[i].menuName){%>
+                      <li class="nav-item my-nav-ul-li">
+                        <a class="nav-link my-nav-ul-li-a active-mnu-nav" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
+                      </li>
+                    <%} else{%>
                       <li class="nav-item my-nav-ul-li">
                         <a class="nav-link my-nav-ul-li-a" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
                       </li>
