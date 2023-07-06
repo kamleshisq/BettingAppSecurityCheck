@@ -2691,10 +2691,19 @@ socket.on('connect', () => {
         console.log(x, id, marketId, eventID)
         console.log(form.find('input[name = "odds"]'))
         console.log(form.find('input[name = "title"]'))
-        form.find('input[name = "odds"]').val(456)
-        form.find('input[name = "title"]').addClass(id);
-        form.find('input[name = "button"]').addClass(marketId);
-        form.find('input[name = "title"]').val("jk jk")
+        // form.find('input[name = "odds"]').val(456)
+        // form.find('input[name = "title"]').addClass(id);
+        // form.find('input[name = "button"]').addClass(marketId);
+        // form.find('input[name = "title"]').val("jk jk")
+        const oddsInput = form.querySelector('input[name="odds"]');
+        oddsInput.value = x;
+
+        const titleInput = form.querySelector('input[name="title"]');
+        titleInput.classList.add(id);
+        titleInput.value = eventName;
+
+        const buttonInput = form.querySelector('input[name="button"]');
+        buttonInput.classList.add(marketId);
     })
 
     async function checkOdd() {
