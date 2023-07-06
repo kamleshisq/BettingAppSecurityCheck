@@ -2687,13 +2687,11 @@ socket.on('connect', () => {
         let eventName = $(".eventName").text()
         let marketId = $(".match_odd").attr('id')
         let x = $(this).text()
-        console.log(x)
         let id = $(this).attr("id")
-        console.log(id)
-        form.find('input[name = "title"]').val("jkjk")
-        form.find('input[name = "odds"]').val(x)
-        form.find('input[name = "title"]').addClass(id);
-        form.find('input[name = "button"]').addClass(marketId);
+         form.find('input[name = "odds"]').val(x)
+         form.find('input[name = "title"]').addClass(id);
+         form.find('input[name = "button"]').addClass(marketId);
+        form.find('input[name = "title"]').val("jk jk")
     })
 
     async function checkOdd() {
