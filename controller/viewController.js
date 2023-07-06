@@ -1345,10 +1345,12 @@ exports.getPageManagement = catchAsync(async(req, res, next) => {
 
 exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let user = req.currentUser;
+    const data = await promotionModel.find();
     let verticalMenus = await verticalMenuModel.find();
     res.status(200).render('./userSideEjs/exchangePage/main',{
         user,
         verticalMenus,
-        check:"Exchange"
+        check:"Exchange",
+        data
     })
 })
