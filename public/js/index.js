@@ -502,7 +502,7 @@ $(document).on('submit', ".slider-form", function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     fd.append('id', id)
-    updateSlider(fd)
+    updateSlider(fd )
 })
 
 $(document).on('submit', ".addSlider-form", function(e){

@@ -7189,7 +7189,7 @@ $(document).on('submit', ".slider-form", function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   fd.append('id', id);
-  (0, _updateSlider.updateSlider)(f);
+  (0, _updateSlider.updateSlider)(fd);
 });
 $(document).on('submit', ".addSlider-form", function (e) {
   e.preventDefault();
