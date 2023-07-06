@@ -8,8 +8,8 @@ exports.createNewSlider = catchAsync(async(req, res, next) => {
         if(req.files.backgroundImage.mimetype.startsWith('image')){
             const image = req.files.backgroundImage
             // console.log(logo)
+            req.body.backGroundImage = req.body.name.split(' ')[0]
             image.mv(`public/sliderBackgroundImages/${req.body.name.split(' ')[0]}.png`, (err)=>{
-                req.body.backGroundImage = req.body.name.split(' ')[0]
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
             })
