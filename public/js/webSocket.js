@@ -2670,10 +2670,10 @@ socket.on('connect', () => {
         if (!popup.contains(event.target) && !Array.from(buttons).some(button => button.contains(event.target))) {
           popup.style.display = 'none';
           form.find('input[name = "odds"]').val("")
-          console.log('WORKING')
         }
 
         if(Array.from(buttons).some(button => button.contains(event.target))){
+            console.log("Working")
             form.find('input[name = "odds"]').val("")
             form.find('input[name = "title"]').removeClass()
         }
