@@ -15,6 +15,10 @@ const slider = mongoose.Schema({
     },
     Number:{
         type:Number
+    },
+    backGroundImage:{
+        type:String,
+        required:true
     }
 });
 
