@@ -24,18 +24,19 @@
                                     <%=LiveCricket[i].eventData.name%>
                                 </a>
                             <%}%>
-                            <a href="#">
-                                <img src="/assets/img/home/side-menuimg03.svg" alt="">
-                                China v Myanmar
-                            </a>
-                            <a href="#">
-                                <img src="/assets/img/home/side-menuimg03.svg" alt="">
-                                Chinese Taipei v Thailand
-                            </a>
-                            <a href="#">
-                                <img src="/assets/img/home/side-menuimg04.svg" alt="">
-                                Mackenzie v Hazikata
-                            </a>
+                            <%for(let i = 0; i < liveFootBall.length; i++){%>
+                                <a href="/exchange_sports/live_match?id=<%=liveFootBall[i].eventData.eventId%>">
+                                    <img src="/assets/img/home/side-menuimg03.svg" alt="">
+                                    <%=liveFootBall[i].eventData.name%>
+                                </a>
+                            <%}%> 
+                            <%for(let i = 0; i < liveTennis.length; i++){%>
+                                <a href="/exchange_sports/live_match?id=<%=liveTennis[i].eventData.eventId%>">
+                                    <img src="/assets/img/home/side-menuimg04.svg" alt="">
+                                    <%=liveTennis[i].eventData.name%>
+                                </a>
+                            <%}%>
+                            
                         </section>
                         <section class="exchange-pg-tbl-dvwrp">
                             <div class="exchange-pg-tbl-ro1">
