@@ -3113,20 +3113,16 @@ socket.on('connect', () => {
 
         socket.emit("CmsPage", "Connected")
         socket.on('CmsPage', async(data) => {
-            let Sport = data.find(item => item.name == "Sport")
-            let Casino = data.find(item => item.name == "Casino")
-            let Royal_Gaming = data.find(item => item.name == "Royal_Gaming")
-
-
-           let Sform = $('.SF')
-           let Cform = $('.OCF')
-           let Rform = $('.RGF')
-           Sform.find('input[name = "url"]').attr('value', Sport.mainUrl)
-           Sform.find('input[name = "Number"]').attr('value', Sport.Number)
-           Cform.find('input[name = "url"]').attr('value', Casino.mainUrl)
-           Cform.find('input[name = "Number"]').attr('value', Casino.Number)
-           Rform.find('input[name = "url"]').attr('value', Royal_Gaming.mainUrl)
-           Rform.find('input[name = "Number"]').attr('value', Royal_Gaming.Number)
+            for(let i = 0; i < data.length; i++){
+                let form = $(`${data[i].Number}`)
+                form.find('input[name = "url"]').attr('value', data[i].mainUrl)
+                form.find('input[name = "name"]').attr('value', data[i].name)
+                form.find('input[name = "Number"]').attr('value', data[i].Number)
+                form.find('input[name = "check"]').removeAttr('checked');
+                if(data[i].status){
+                    form.find('input[name = "check"]').attr("checked", "checked");
+                }
+            }
         })
 
         $(document).on('click', ".btn-filter-image", function(e){
