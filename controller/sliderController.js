@@ -13,6 +13,7 @@ exports.createNewSlider = catchAsync(async(req, res, next) => {
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
             })
+            console.log(req.body)
             let newSlider = await sliderModel.create(req.body)
             if(newSlider){
                 res.status(200).json({
