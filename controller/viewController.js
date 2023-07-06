@@ -327,7 +327,8 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         verticalMenus,
         banner,
         sliders,
-        pages
+        pages,
+        check:"Nothing"
     })
 })
 
