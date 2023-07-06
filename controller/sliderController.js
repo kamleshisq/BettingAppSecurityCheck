@@ -88,7 +88,7 @@ exports.updateSlider = catchAsync(async(req, res, next) => {
             }else{
                 status = false
             }
-            console.log(console.log(newNum))
+            console.log(newNum, jkl)
             let newSlider = await sliderModel.findByIdAndUpdate(Sport._id,{mainUrl:req.body.url, name:req.body.name, status:status, Number:newNum})
             let oldSlider = await sliderModel.findOneAndUpdate({Number:newNum}, {Number:Sport.Number})
             console.log(newSlider, oldSlider)
