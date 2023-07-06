@@ -5,8 +5,8 @@ const AppError = require("../utils/AppError");
 exports.createNewSlider = catchAsync(async(req, res, next) => {
     req.body.mainUrl = req.body.url
     if(req.files){
-        if(req.files.file.mimetype.startsWith('image')){
-            const image = req.files.file
+        if(req.files.backgroundImage.mimetype.startsWith('image')){
+            const image = req.files.backgroundImage
             // console.log(logo)
             image.mv(`public/sliderBackgroundImages/${req.body.name.split(' ')[0]}.png`, (err)=>{
                 req.body.backGroundImage = req.body.name.split(' ')[0]
