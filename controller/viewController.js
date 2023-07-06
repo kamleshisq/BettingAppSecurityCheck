@@ -1344,13 +1344,24 @@ exports.getPageManagement = catchAsync(async(req, res, next) => {
 });
 
 exports.getUserExchangePage = catchAsync(async(req, res, next) => {
-    let user = req.currentUser;
+    let user = req.currentUser
+    const sportListData = await getCrkAndAllData()
+    const cricket = sportListData[0].gameList[0].eventList
+    let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
+    const footBall = sportListData[1].gameList.find(item => item.sport_name === "Football");
+    const Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis");
+    let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
+    let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
     const data = await promotionModel.find();
     let verticalMenus = await verticalMenuModel.find();
+    console.log(LiveCricket)
     res.status(200).render('./userSideEjs/exchangePage/main',{
         user,
         verticalMenus,
         check:"Exchange",
-        data
+        data,
+        liveFootBall,
+        liveTennis,
+        LiveCricket
     })
 })
