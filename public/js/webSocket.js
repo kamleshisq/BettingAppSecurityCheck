@@ -3122,8 +3122,6 @@ socket.on('connect', () => {
                 if(data[i].status){
                     form.find('input[name = "check"]').attr("checked", "checked");
                 }
-                form.find('div[name = "backgroundImage"]').innerHTML = `<label>Background Image</label>
-                <img src="../sliderBackgroundImages/${data[i].backGroundImage}.png" alt="img" class="form__user-photo">`
             }
         })
 
