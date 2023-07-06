@@ -58,16 +58,15 @@ exports.updateSlider = catchAsync(async(req, res, next) => {
             return next(new AppError("Please Upload an image", 404))
         }
     }
-
+        let status
+        if(req.body.check){
+            status = true
+        }else{
+            status = false
+        }
         let newNum = parseInt(req.body.Number)
         let Sport = await sliderModel.findById(req.body.id)
         if(newNum == Sport.Number){
-            let status
-            if(req.body.check){
-                 status = true
-            }else{
-                status = false
-            }
              await sliderModel.findByIdAndUpdate(Sport._id, {mainUrl:req.body.url, name:req.body.name, status:status})
              res.status(200).json({
                 status:"success"
@@ -78,20 +77,9 @@ exports.updateSlider = catchAsync(async(req, res, next) => {
             if(newNum > 3){
                 newNum = 3
             }
-            let status
-            if(req.body.check){
-                 status = true
-            }else{
-                status = false
-            }
-            try{
-                await sliderModel.findByIdAndUpdate(Sport._id,{mainUrl:req.body.url, name:req.body.name, status:status})
-                await sliderModel.findByIdAndUpdate(Sport._id,{Number:newNum})
-
-            }catch(err){
-                console.log(err)
-            }
-            await sliderModel.findOneAndUpdate({Number:newNum}, {Number:Sport.Number})
+            await sliderModel.findOneAndUpdate({Number:newNum},{Number:Sport.Number})
+            await sliderModel.findByIdAndUpdate(Sport._id, {mainUrl:req.body.url, name:req.body.name, status:status, Number:newNum})
+            
             res.status(200).json({
                 status:"success"
              })
