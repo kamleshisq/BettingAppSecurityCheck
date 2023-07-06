@@ -1242,12 +1242,14 @@ io.on('connection', (socket) => {
     })
 
     socket.on('deleteSlider', async(data) => {
+        console.log(data)
         try{
             let deleted = await sliderModel.findByIdAndDelete(data)
             await sliderModel.updateMany({$gt:deleted.Number},{$inc:{Number:-1}})
                 socket.emit("deleteSlider", "Deleted successfully")
             }catch(err){
             if(err){
+                console.log(err)
                 socket.emit("deleteSlider", "Please try again leter")
             }
         }
