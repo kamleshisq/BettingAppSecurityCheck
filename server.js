@@ -1240,25 +1240,6 @@ io.on('connection', (socket) => {
             socket.emit('dleteImageCasino', "Please try again later")
         }
     })
-
-    socket.on("UpdateSport", async(data) => {
-        let newNum = data.Number
-        let Sport = await sliderModel.findOne({name:`${data.N}`})
-        if(newNum == Sport.Number){
-             await sliderModel.findByIdAndUpdate(Sport._id, {mainUrl:data.url})
-             socket.emit("UpdateSport", "Updated Successfully")
-        }else if(newNum < 1){
-            socket.emit("UpdateSport", "Please provide positive number")
-        }else{
-            if(newNum > 3){
-                newNum = 3
-            }
-            await sliderModel.findByIdAndUpdate(Sport._id,{mainUrl:data.url, Number:newNum})
-            await sliderModel.findOneAndUpdate({Number:newNum}, {Number:sport.Number})
-            socket.emit("UpdateSport", "Updated Successfully")
-        }
-    })
-
 })
 
 http.listen(80,()=> {
