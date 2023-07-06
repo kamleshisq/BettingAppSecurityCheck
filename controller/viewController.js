@@ -1340,4 +1340,8 @@ exports.getPageManagement = catchAsync(async(req, res, next) => {
         user,
         pages
     })
+});
+
+exports.getUserExchangePage = catchAsync(async(req, res, next) => {
+    res.status(200).render('./userSideEjs/exchangePage')
 })
