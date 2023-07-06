@@ -3114,8 +3114,7 @@ socket.on('connect', () => {
         socket.emit("CmsPage", "Connected")
         socket.on('CmsPage', async(data) => {
             for(let i = 0; i < data.length; i++){
-                console.log("Working")
-                let form = $(`${data[i].Number}`)
+                let form = $(`.${data[i].Number}`)
                 form.find('input[name = "url"]').attr('value', data[i].mainUrl)
                 form.find('input[name = "name"]').attr('value', data[i].name)
                 form.find('input[name = "Number"]').attr('value', data[i].Number)
