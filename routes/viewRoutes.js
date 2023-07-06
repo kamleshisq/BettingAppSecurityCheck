@@ -62,8 +62,11 @@ router.get("/admin/pageManager", authController.isProtected, authController.isAd
 //user routs
 
 
-
+//Real??
 router.get("/", authController.isLogin, viewController.userdashboard);
+router.get('//exchange/inplay', authController.isLogin, viewController.getUserExchangePage);
+
+//Testing//
 router.get("/exchange_sports/inplay", authController.isLogin, viewController.getExchangePage);
 router.get("/exchange_sports/cricket", authController.isProtected, viewController.getCricketpage);
 router.get("/exchange_sports/footBall", authController.isProtected, viewController.getFootballData);

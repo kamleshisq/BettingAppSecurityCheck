@@ -1343,5 +1343,5 @@ exports.getPageManagement = catchAsync(async(req, res, next) => {
 });
 
 exports.getUserExchangePage = catchAsync(async(req, res, next) => {
-    res.status(200).render('./userSideEjs/exchangePage')
+    res.status(200).render('./userSideEjs/exchangePage/main')
 })
