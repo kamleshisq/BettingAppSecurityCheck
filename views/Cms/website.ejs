@@ -128,17 +128,17 @@
         <div class="row" style="padding:10px 0px">
           <div class="tabs">
             <%for(let i = 0; i < sliders.length; i++){%>
-              <span data-tab-value="#tab_<%=slider[i].Number%>" style="background-color: #6359CA; color: #fff;" id="FS"><%=slider[i].name%></span>
+              <span data-tab-value="#tab_<%=sliders[i].Number%>" style="background-color: #6359CA; color: #fff;" id="FS"><%=sliders[i].name%></span>
             <%}%>
           </div>
-          <%for(let i = 0; i < slider.length; i++){%>
+          <%for(let i = 0; i < sliders.length; i++){%>
             <div class="tab-content">
-              <div class="tabs__tab " id="tab_<%=slider[i].Number%>" data-tab-info>
+              <div class="tabs__tab " id="tab_<%=sliders[i].Number%>" data-tab-info>
                 <div class="accordion" id="accordionPanelsStayOpenExample">
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="panelsStayOpen-headingtwo">
                       <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsetwo" aria-expanded="true" aria-controls="panelsStayOpen-collapsetwo">
-                        <%=slider[i].name%>
+                        <%=sliders[i].name%>
                       </button>
                     </h2>
                     <div id="panelsStayOpen-collapsetwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingtwo">
@@ -183,13 +183,13 @@
                               <th>delete</th>
                             </thead>
                             <tbody>
-                              <%for(let j=0; j < slider[i].images.length; j++){%>
+                              <%for(let j=0; j < sliders[i].images.length; j++){%>
                                 <tr>
-                                  <td><%=slider[i].images[j].name%></td>
-                                  <td><%=slider[i].images[j].url%></td>
-                                  <td><img src="../sliderImages/<%=slider[i].images[j].name%>.png" alt="img" class="form__user-photo"></td>
+                                  <td><%=sliders[i].images[j].name%></td>
+                                  <td><%=sliders[i].images[j].url%></td>
+                                  <td><img src="../sliderImages/<%=sliders[i].images[j].name%>.png" alt="img" class="form__user-photo"></td>
                                   <td></td>
-                                  <td><button class="dleteImageSport" id="<%=slider[i].images[j].name%>">Delete</button></td>
+                                  <td><button class="dleteImageSport" id="<%=sliders[i].images[j].name%>">Delete</button></td>
                                 </tr>
                               <%}%>
                             </tbody>
