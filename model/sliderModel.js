@@ -19,6 +19,10 @@ const slider = mongoose.Schema({
     backGroundImage:{
         type:String,
         required:true
+    },
+    status:{
+        type:Boolean,
+        default:true
     }
 });
 
