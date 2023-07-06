@@ -85,7 +85,8 @@ exports.updateSlider = catchAsync(async(req, res, next) => {
                 status = false
             }
             try{
-                await sliderModel.findByIdAndUpdate(Sport._id,{mainUrl:req.body.url, name:req.body.name, status:status, Number:newNum})
+                await sliderModel.findByIdAndUpdate(Sport._id,{mainUrl:req.body.url, name:req.body.name, status:status})
+                await sliderModel.findByIdAndUpdate(Sport._id,{Number:newNum})
 
             }catch(err){
                 console.log(err)
