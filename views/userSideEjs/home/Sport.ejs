@@ -1,5 +1,5 @@
 <%for(let i = 0; i < sliders.length; i++){%>
-  <%if(sliders.status){%>
+  <%if(sliders[i].status){%>
 <section class="featured-sec">
   <div class="container-fluid featured-sec-contnr">
     <div class="featured-sec-coldv col-lg-11 col-md-11 col-12">
@@ -8,7 +8,7 @@
           <div class="featured-sec-ro--titl1">
             <div class="featured-sec-ro--titl-txt">
               <span class="titl-bodr-lft-spn"></span>
-              <h3 class="featured-sec-ro--titl-txt-tg"><%=sliders.name%></h3>
+              <h3 class="featured-sec-ro--titl-txt-tg"><%=sliders[i].name%></h3>
               <!-- <span class="titl-bhind-txt-spn">featured sports</span> -->
             </div>
           </div>
