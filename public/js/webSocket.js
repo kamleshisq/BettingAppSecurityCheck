@@ -2695,15 +2695,57 @@ socket.on('connect', () => {
         // form.find('input[name = "title"]').addClass(id);
         // form.find('input[name = "button"]').addClass(marketId);
         // form.find('input[name = "title"]').val("jk jk")
-        const oddsInput = form.querySelector('input[name="odds"]');
-        oddsInput.value = x;
+        // const oddsInput = form.querySelector('input[name="odds"]');
+        // oddsInput.value = x;
 
-        const titleInput = form.querySelector('input[name="title"]');
-        titleInput.classList.add(id);
-        titleInput.value = eventName;
+        // const titleInput = form.querySelector('input[name="title"]');
+        // titleInput.classList.add(id);
+        // titleInput.value = eventName;
 
-        const buttonInput = form.querySelector('input[name="button"]');
-        buttonInput.classList.add(marketId);
+        // const buttonInput = form.querySelector('input[name="button"]');
+        // buttonInput.classList.add(marketId);
+
+        const inputs = form.getElementsByTagName('input');
+
+// Find the input element with name "odds"
+let oddsInput;
+for (let i = 0; i < inputs.length; i++) {
+  if (inputs[i].name === 'odds') {
+    oddsInput = inputs[i];
+    break;
+  }
+}
+
+if (oddsInput) {
+  oddsInput.value = 456;
+}
+
+// Find the input element with name "title"
+let titleInput;
+for (let i = 0; i < inputs.length; i++) {
+  if (inputs[i].name === 'title') {
+    titleInput = inputs[i];
+    break;
+  }
+}
+
+if (titleInput) {
+  titleInput.classList.add(id);
+  titleInput.value = "jk jk";
+}
+
+// Find the input element with name "button"
+let buttonInput;
+for (let i = 0; i < inputs.length; i++) {
+  if (inputs[i].name === 'button') {
+    buttonInput = inputs[i];
+    break;
+  }
+}
+
+if (buttonInput) {
+  buttonInput.classList.add(marketId);
+}
     })
 
     async function checkOdd() {
