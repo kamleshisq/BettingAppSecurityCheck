@@ -22,6 +22,7 @@ import { updateBanner } from "./updateBanner";
 import { createPage } from "./createpage";
 import { addImage } from "./addImage";
 import { updateSlider } from "./updateSlider";
+import { createSlider } from "./addSlider";
 // import { func } from "joi";
 
 
@@ -502,4 +503,11 @@ $(document).on('submit', ".slider-form", function(e){
     let fd = new FormData(form);
     fd.append('id', id)
     updateSlider(fd)
+})
+
+$(document).on('submit', ".addSlider-form", function(e){
+    e.preventDefault()
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    createSlider(fd)
 })
