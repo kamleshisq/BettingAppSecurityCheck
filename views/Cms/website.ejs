@@ -144,7 +144,7 @@
                     <div id="panelsStayOpen-collapsetwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingtwo">
                       <div class="accordion-body" style="gap: 5px;display: flex;flex-direction: column; background-color: #6359CA;">
                         <div class="row" id="RGVd">
-                          <form class="<%=sliders[i].Number%>" id="<%=sliders[i].Number%>" >
+                          <form class="slider-form" id="<%=sliders[i].Number%>" >
                             <div class="row">
                               <div class="col">
                                 <label for="name" >Name</label>
@@ -171,8 +171,8 @@
                               </div>
                             </div>
                             <div class="row mt-2">
-                              <div class="col" id="backgroundImage">
-                                <label>Background Image</label>
+                              <div class="col" id="backgroundImage" name="backgroundImage">
+                                
                               </div>
                               <div class="col" >
                                 <input type="file" name="file" id="file">

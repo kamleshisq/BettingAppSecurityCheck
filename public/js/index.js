@@ -493,3 +493,9 @@ $(document).on('submit', ".form-data26", function(e){
     fd.append('id', id)
     addImage(fd)
 })
+
+$(document).on('submit', ".slider-form", function(e){
+    e.preventDefault()
+    let id = $(this).attr("id")
+    
+})

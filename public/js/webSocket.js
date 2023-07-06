@@ -3122,6 +3122,8 @@ socket.on('connect', () => {
                 if(data[i].status){
                     form.find('input[name = "check"]').attr("checked", "checked");
                 }
+                form.find('div[name = "backgroundImage"]').innerHTML = `<label>Background Image</label>
+                <img src="../sliderBackgroundImages/${data[i].backGroundImage}.png" alt="img" class="form__user-photo">`
             }
         })
 
@@ -3167,34 +3169,6 @@ socket.on('connect', () => {
             window.setTimeout(()=>{
                 window.location = '/admin/cms'
             },200)
-        })
-
-
-        $(document).on('submit', ".SF", function(e){
-            e.preventDefault()
-            let form = $(this)[0];
-            let fd = new FormData(form);
-            let data = Object.fromEntries(fd.entries());
-            data.N = "Sport"
-            socket.emit("UpdateSport", data)
-        })
-
-        $(document).on('submit', ".RGF", function(e){
-            e.preventDefault()
-            let form = $(this)[0];
-            let fd = new FormData(form);
-            let data = Object.fromEntries(fd.entries());
-            data.N = "Royal_Gaming"
-            socket.emit("UpdateSport", data)
-        })
-
-        $(document).on('submit', ".OCF", function(e){
-            e.preventDefault()
-            let form = $(this)[0];
-            let fd = new FormData(form);
-            let data = Object.fromEntries(fd.entries());
-            data.N = "Casino"
-            socket.emit("UpdateSport", data)
         })
 
         socket.on('UpdateSport', async(data) => {
