@@ -61,7 +61,7 @@ exports.updateSlider = catchAsync(async(req, res, next) => {
         }
     }
 
-        let newNum = req.body.Number
+        let newNum = parseInt(req.body.Number)
         let Sport = await sliderModel.findById(req.body.id)
         console.log(Sport)
         if(newNum == Sport.Number){
@@ -87,6 +87,7 @@ exports.updateSlider = catchAsync(async(req, res, next) => {
             }else{
                 status = false
             }
+            console.log("working")
             await sliderModel.findByIdAndUpdate(Sport._id,{mainUrl:req.body.url, name:req.body.name, status:status, Number:newNum})
             await sliderModel.findOneAndUpdate({Number:newNum}, {Number:Sport.Number})
             res.status(200).json({
