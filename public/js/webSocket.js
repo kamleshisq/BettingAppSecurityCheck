@@ -2686,6 +2686,7 @@ socket.on('connect', () => {
         let eventName = $(".eventName").text()
         let marketId = $(".match_odd").attr('id')
         let x = $(this).text()
+        console.log(x)
         let id = $(this).attr("id")
         form.find('input[name = "title"]').val(eventName)
         form.find('input[name = "odds"]').val(x)
