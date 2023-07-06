@@ -56,8 +56,11 @@ exports.updateSlider = catchAsync(async(req, res, next) => {
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
             })
+        }else{
+            return next(new AppError("Please Upload an image", 404))
         }
-    }else{
+    }
+
         let newNum = req.body.Number
         let Sport = await sliderModel.findById(req.body.id)
         if(newNum == Sport.Number){
@@ -88,7 +91,6 @@ exports.updateSlider = catchAsync(async(req, res, next) => {
             res.status(200).json({
                 status:"success"
              })
-        }
     }
     // socket.on("UpdateSport", async(data) => {
     //     let newNum = data.Number
