@@ -2673,7 +2673,6 @@ socket.on('connect', () => {
         }
 
         if(Array.from(buttons).some(button => button.contains(event.target))){
-            console.log("Working")
             form.find('input[name = "odds"]').val("")
             form.find('input[name = "title"]').removeClass()
         }
@@ -2682,6 +2681,7 @@ socket.on('connect', () => {
 
 
       $(document).on('click','.button',function(e){
+        e.preventDefault()
         let modleName = $(".popup")
         let form = $(modleName).find('#bet-form')
         let eventName = $(".eventName").text()
