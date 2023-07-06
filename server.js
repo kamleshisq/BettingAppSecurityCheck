@@ -1240,6 +1240,17 @@ io.on('connection', (socket) => {
             socket.emit('dleteImageCasino', "Please try again later")
         }
     })
+
+    socket.on('deleteSlider', async(data) => {
+        try{
+            await sliderModel.findByIdAndDelete(data)
+                socket.emit("deleteSlider", "Deleted successfully")
+            }catch(err){
+            if(err){
+                socket.emit("deleteSlider", "Please try again leter")
+            }
+        }
+    })
 })
 
 http.listen(80,()=> {

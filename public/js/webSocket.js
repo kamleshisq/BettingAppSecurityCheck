@@ -1,3 +1,4 @@
+const { doc } = require("prettier");
 
 
 
@@ -3176,6 +3177,18 @@ socket.on('connect', () => {
             },200)
         })
 
+
+        $(document).on('click', ".deleteSlider", function(e){
+            e.preventDefault()
+            let id = $(this).attr('id')
+            socket.emit('deleteSlider', id)
+        })
+        socket.on('deleteSlider', async(data) => {
+            alert(data)
+            window.setTimeout(()=>{
+                window.location = '/admin/cms'
+            },200)
+        })
     }
 
 
