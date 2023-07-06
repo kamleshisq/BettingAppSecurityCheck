@@ -7073,6 +7073,14 @@ $(document).on('submit', ".form-data26", function (e) {
   fd.append('id', id);
   (0, _addImage.addImage)(fd);
 });
+$(document).on('submit', ".slider-form", function (e) {
+  e.preventDefault();
+  var id = $(this).attr("id");
+  var form = $(this)[0];
+  var fd = new FormData(form);
+  fd.append('id', id);
+  console.log(fd);
+});
 },{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./betLock":"betLock.js","./updateRow":"updateRow.js","./updatePromotion":"updatePromotion.js","./createPromotion":"createPromotion.js","./deletePormotion":"deletePormotion.js","./betLimit":"betLimit.js","./createHorizontalMenu":"createHorizontalMenu.js","./updateHorizonatlMenu":"updateHorizonatlMenu.js","./createBanner":"createBanner.js","./updateBanner":"updateBanner.js","./createpage":"createpage.js","./addImage":"addImage.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
