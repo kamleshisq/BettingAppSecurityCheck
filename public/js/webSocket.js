@@ -2667,10 +2667,10 @@ socket.on('connect', () => {
 
           
     document.addEventListener('click', function(event) {
-        console.log(event)
         if (!popup.contains(event.target) && !Array.from(buttons).some(button => button.contains(event.target))) {
           popup.style.display = 'none';
           form.find('input[name = "odds"]').val("")
+          console.log('WORKING')
         }
 
         if(Array.from(buttons).some(button => button.contains(event.target))){
