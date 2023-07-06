@@ -63,6 +63,7 @@ exports.updateSlider = catchAsync(async(req, res, next) => {
 
         let newNum = req.body.Number
         let Sport = await sliderModel.findById(req.body.id)
+        console.log(Sport)
         if(newNum == Sport.Number){
             let status
             if(req.body.check){
