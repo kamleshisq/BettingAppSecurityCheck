@@ -59,7 +59,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             const login = await loginLogs.findOne({session_id:req.cookies.JWT, isOnline:true})
             // console.log(req.cookies.JWT)
             if(login == null){
-                return next(new AppError("Please Login to get access", 404))
+                return next()
             }
             const user = await User.findById(login.user_id._id)
             var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl
