@@ -43,6 +43,7 @@
           <div id="botommnuwrp" class="mbl-botm-mnu-wrp-dv">
             <div class="mbl-botm-mnu-wrp-dv-inn">
               <div class="mbl-botm-mnu-wrp-dv-txt">
+                  <ul>
                     <%if(check == "Home"){%>
                         <li>
                             <a class="botom-mnu-active" href="/">Home</a>
@@ -52,7 +53,6 @@
                             <a  href="/">Home</a>
                         </li>
                     <%}%>
-                <ul>
                     <%for(let i = 0; i < verticalMenus.length; i++){%>
                         <%if(verticalMenus[i].status){%>
                             <%if(check == verticalMenus[i].menuName){%>
@@ -67,33 +67,7 @@
                         <%}%>
                     <%}%>
                   
-                  <li>
-                    <a href="#">Exchange</a>
-                  </li>
-                  <li>
-                    <a href="#">Sportsbook</a>
-                  </li>
-                  <li>
-                    <a href="#">In-Play</a>
-                  </li>
-                  <li>
-                    <a href="cards.html">Cards</a>
-                  </li>
-                  <li>
-                    <a href="#">Live Casino</a>
-                  </li>
-                  <li>
-                    <a href="royal-casino.html">Royal Casino</a>
-                  </li>
-                  <li>
-                    <a href="#">Virtuals</a>
-                  </li>
-                  <li>
-                    <a href="#">Slots</a>
-                  </li>
-                  <li>
-                    <a href="#">Other</a>
-                  </li>
+                  
                 </ul>
               </div>
             </div>
