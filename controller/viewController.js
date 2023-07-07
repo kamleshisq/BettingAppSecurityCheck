@@ -1350,7 +1350,8 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
-    console.log(footBall)
+    footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
+    Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
     let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
     let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
