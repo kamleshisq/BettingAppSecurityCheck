@@ -9,16 +9,29 @@
     </thead>
     <tbody class="exchange-pg-mytbl-body">
         <%for(let i = 0; i < LiveCricket.length; i++){%>
+            <%
+                var timestamp = `${LiveCricket[i].eventData.time}` * 1000; 
+                var date = new Date(timestamp);
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+            %>
             <tr class="exchange-pg-mytbl-body-tr">
               <!-- <th scope="row"></th> -->
               <td>
                   <div class="exchange-pg-mytbl-body-cricket-data-dv">
                       <span class="exchange-pg-mytbl-body-liv-dot"></span>
                       <p>
-                          16 June, 9:30 AM
+                          <%=formattedTime%>
                       </p>
                       <p>
-                          <b>Bangladesh v Afghanistan</b>
+                          <b><%=LiveCricket[i].eventData.name%></b>
                       </p>
                   </div>
               </td>
