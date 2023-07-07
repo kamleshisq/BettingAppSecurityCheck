@@ -45,8 +45,14 @@
                       <%runners1.push(item.runner);%>
                       <%secIds.push(item.secId);%>
                   <%});%>
+                  <%if(runners1.length === 2){%>
+                    <td class="0" id="<%=secIds[0]%>"></td>
+                    <td class="">-</td>
+                    <td class="1" id="<%=secIds[1]%>"></td>
+                    <%}else{%>
                   <%for(let j = 0; j < runners1.length; j++){%>
                       <td class="<%=j%>" id="<%=secIds[j]%>"  ></td>
+                  <%}%>
                   <%}%>
           </tr>
           <%cricketNum++%>
