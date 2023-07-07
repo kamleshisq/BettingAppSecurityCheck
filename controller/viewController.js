@@ -1354,6 +1354,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
     const data = await promotionModel.find();
     let verticalMenus = await verticalMenuModel.find();
+    console.log(LiveCricket)
     res.status(200).render('./userSideEjs/exchangePage/main',{
         user,
         verticalMenus,
