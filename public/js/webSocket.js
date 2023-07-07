@@ -3263,7 +3263,7 @@ socket.on('connect', () => {
                 marketId()
               }, 500)
         }
-        marketId()
+        // marketId()
 
         socket.on("marketId", (data) => {
             console.log(data)
