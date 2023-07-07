@@ -73,7 +73,7 @@
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
             %>
-            <tr class="exchange-pg-mytbl-body-tr" href="/exchange_sports/live_match?id=<%=liveTennis[i].eventData.eventId%>">
+            <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = "/exchange_sports/live_match?id=<%=liveTennis[i].eventData.eventId%>">
               <!-- <th scope="row"></th> -->
               <td>
                   <div class="exchange-pg-mytbl-body-cricket-data-dv">
@@ -122,7 +122,7 @@
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
             %>
-            <tr class="exchange-pg-mytbl-body-tr" href="/exchange_sports/live_match?id=<%=liveFootBall[i].eventData.eventId%>">
+            <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = "/exchange_sports/live_match?id=<%=liveFootBall[i].eventData.eventId%>">
               <!-- <th scope="row"></th> -->
               <td>
                   <div class="exchange-pg-mytbl-body-cricket-data-dv">
