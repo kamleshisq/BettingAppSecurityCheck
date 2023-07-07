@@ -3221,7 +3221,7 @@ socket.on('connect', () => {
         marketId()
 
         socket.on('liveData', async(data) => {
-            console.log(data.LiveCricket, 456)
+            console.log(data, 456)
             let html = ``
             for(let i = 0; i < data.LiveCricket.length; i++){
                 if(data.LiveCricket[i].marketList.match_odd != null){
