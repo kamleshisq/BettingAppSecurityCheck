@@ -1350,8 +1350,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
-    footBall = [...footBall.eventList].sort((a, b) => a.eventData.time - b.eventData.time);
-    Tennis = [...Tennis.eventList].sort((a, b) => a.eventData.time - b.eventData.time);
+    console.log(footBall)
     let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
     let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
     let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
@@ -1359,7 +1358,6 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let upcomintTennis = cricket.filter(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
     let verticalMenus = await verticalMenuModel.find();
-    console.log(LiveCricket)
     res.status(200).render('./userSideEjs/exchangePage/main',{
         user,
         verticalMenus,
