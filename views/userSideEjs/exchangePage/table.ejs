@@ -45,10 +45,11 @@
                 </tr>
                 <%}%>
                 <%}%>
+                <% j = cricketNum %>
                 <%for(let i = 0; i < cricket.length; i++){%>
-                    <%if(cricket[i].marketList.match_odd != null){%>
+                    <%if(upcomintCricket[i].marketList.match_odd != null){%>
                         <%
-                        var timestamp = `${cricket[i].eventData.time}` * 1000; 
+                        var timestamp = `${upcomintCricket[i].eventData.time}` * 1000; 
                         var date = new Date(timestamp);
                         var options = { 
                             year: 'numeric',
@@ -60,16 +61,16 @@
                         };
                         var formattedTime = date.toLocaleString('en-US', options);
                     %>
-                        <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = '/exchange_sports/live_match?id=<%=cricket[i].eventData.eventId%>'; ">
+                        <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = '/exchange_sports/live_match?id=<%=upcomintCricket[i].eventData.eventId%>'; ">
                             <!-- <th scope="row">2</th> -->
                             <td>
                                 <div class="exchange-pg-mytbl-body-cricket-data-dv">
-                                    <%= cricketNum + 1 + i%>)
+                                    <%= j%>)
                                     <p>
                                         <%=formattedTime%>
                                     </p>
                                     <p>
-                                        <b><%=cricket[i].eventData.name%></b>
+                                        <b><%=upcomintCricket[i].eventData.name%></b>
                                     </p>
                                 </div>
                             </td>
@@ -77,6 +78,7 @@
                             <td>Thornton</td>
                             <td>@fat</td>
                           </tr>
+                          <%j++%>
                     <%}%>
                 <%}%>
             </tbody>
