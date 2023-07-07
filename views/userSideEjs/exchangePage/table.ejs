@@ -62,14 +62,7 @@
                     %>
                         <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = '/exchange_sports/live_match?id=<%=cricket[i].eventData.eventId%>'; ">
                             <!-- <th scope="row">2</th> -->
-                            <td><%= cricketNum + 1%> 
-                                <p>
-                                    <%=formattedTime%>
-                                </p>
-                                <p>
-                                    <b><%=cricket[i].eventData.name%></b>
-                                </p>
-                            </td>
+                            <td><%= cricketNum + i%> <%=formattedTime%> <%=cricket[i].eventData.name%></td>
                             <td>Jacob</td>
                             <td>Thornton</td>
                             <td>@fat</td>
