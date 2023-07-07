@@ -28,7 +28,7 @@
                 <% cricketNum++ %>
                 <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = '/exchange_sports/live_match?id=<%=LiveCricket[i].eventData.eventId%>'; ">
                     <!-- <th scope="row"></th> -->
-                    <td>
+                    <td class="name1" id="<%=LiveCricket[i].marketList.match_odd.marketId%>">
                         <div class="exchange-pg-mytbl-body-cricket-data-dv">
                             <span class="exchange-pg-mytbl-body-liv-dot"></span>
                             <p>
@@ -70,7 +70,7 @@
                     %>
                         <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = '/exchange_sports/live_match?id=<%=upcomintCricket[i].eventData.eventId%>'; ">
                             <!-- <th scope="row">2</th> -->
-                            <td>
+                            <td class="name1" id="<%=upcomintCricket[i].marketList.match_odd.marketId%>">
                                 <div class="exchange-pg-mytbl-body-cricket-data-dv">
                                     <%= j%>)
                                     <p>
@@ -128,7 +128,7 @@
             %>
             <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = '/exchange_sports/live_match?id=<%=liveTennis[i].eventData.eventId%>'; ">
               <!-- <th scope="row"></th> -->
-              <td>
+              <td class="name1" id="<%=liveTennis[i].marketList.match_odd.marketId%>">
                   <div class="exchange-pg-mytbl-body-cricket-data-dv">
                       <span class="exchange-pg-mytbl-body-liv-dot"></span>
                       <p>
@@ -171,7 +171,7 @@
             %>
                 <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = '/exchange_sports/live_match?id=<%=upcomintTennis[i].eventData.eventId%>'; ">
                     <!-- <th scope="row">2</th> -->
-                    <td>
+                    <td  class="name1" id="<%=upcomintTennis[i].marketList.match_odd.marketId%>"></td>
                         <div class="exchange-pg-mytbl-body-cricket-data-dv">
                             <%= j%>)
                             <p>
@@ -229,7 +229,7 @@
             %>
             <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = '/exchange_sports/live_match?id=<%=liveFootBall[i].eventData.eventId%>'; ">
               <!-- <th scope="row"></th> -->
-              <td>
+              <td class="name1" id="<%=liveFootBall[i].liveFootBall.match_odd.marketId%>">
                   <div class="exchange-pg-mytbl-body-cricket-data-dv">
                       <span class="exchange-pg-mytbl-body-liv-dot"></span>
                       <p>
@@ -272,7 +272,7 @@
             %>
                 <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = '/exchange_sports/live_match?id=<%=upcomintFootball[i].eventData.eventId%>'; ">
                     <!-- <th scope="row">2</th> -->
-                    <td>
+                    <td class="name1" id="<%=upcomintFootball[i].liveFootBall.match_odd.marketId%>">
                         <div class="exchange-pg-mytbl-body-cricket-data-dv">
                             <%= j%>)
                             <p>
