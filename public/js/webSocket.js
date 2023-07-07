@@ -2680,19 +2680,37 @@ socket.on('connect', () => {
 
 
 
-      $(document).on('click','.button',function(e){
-        let modleName = $(".popup")
-        let form = $(modleName).find('#bet-form')
-        let eventName = $(".eventName").text()
-        let marketId = $(".match_odd").attr('id')
-        let x = parseFloat($(this).text())
-        let id = parseFloat($(this).attr("id"))
-        // form.find('input[name = "odds"]').val(x)
-        form.find('input[name="odds"]').prop('value', x)
-        form.find('input[name = "title"]').addClass(id);
-        form.find('input[name = "button"]').addClass(marketId);
-        form.find('input[name = "title"]').val(eventName)
-    })
+    //   $(document).on('click','.button',function(e){
+    //     let modleName = $(".popup")
+    //     let form = $(modleName).find('#bet-form')
+    //     let eventName = $(".eventName").text()
+    //     let marketId = $(".match_odd").attr('id')
+    //     let x = parseFloat($(this).text())
+    //     let id = parseFloat($(this).attr("id"))
+    //     // form.find('input[name = "odds"]').val(x)
+    //     form.find('input[name="odds"]').prop('value', x)
+    //     form.find('input[name = "title"]').addClass(id);
+    //     form.find('input[name = "button"]').addClass(marketId);
+    //     form.find('input[name = "title"]').val(eventName)
+    // })
+
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('button')) {
+          e.preventDefault();
+      
+          var modleName = document.querySelector('.popup');
+          var form = modleName.querySelector('#bet-form');
+          var eventName = document.querySelector('.eventName').textContent;
+          var marketId = document.querySelector('.match_odd').getAttribute('id');
+          var x = parseFloat(e.target.textContent.trim());
+          var id = e.target.getAttribute('id');
+      
+          form.querySelector('input[name="odds"]').value = x;
+          form.querySelector('input[name="title"]').classList.add(id);
+          form.querySelector('input[name="button"]').classList.add(marketId);
+          form.querySelector('input[name="title"]').value = eventName;
+        }
+      });      
 
     async function checkOdd() {
     //    console.log('working')
