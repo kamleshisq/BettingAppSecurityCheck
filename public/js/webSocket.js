@@ -3270,7 +3270,7 @@ socket.on('connect', () => {
             $(document).ready(function() {
           
                 $(".0").each(function() {
-                    if(this.val() != "-"){
+                    if($(this).val() != "-"){
                         let id = this.id
                         const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
                         this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[0].layPrice1}`
@@ -3278,7 +3278,7 @@ socket.on('connect', () => {
                 });
 
                 $(".1").each(function() {
-                    if(this.val() != "-" ){
+                    if($(this).val() != "-" ){
                         let id = this.id
                         const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
                         this.innerHTML = `${foundItem.odds[1].backPrice1}, ${foundItem.odds[1].layPrice1}`
@@ -3286,7 +3286,7 @@ socket.on('connect', () => {
                 });
 
                 $(".2").each(function() {
-                    if(this.val() != "-" ){
+                    if($(this).val() != "-" ){
                         let id = this.id
                         const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
                         this.innerHTML = `${foundItem.odds[2].backPrice1}, ${foundItem.odds[2].layPrice1}`
