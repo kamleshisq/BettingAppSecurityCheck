@@ -96,6 +96,7 @@
       </tr>
     </thead>
     <tbody class="exchange-pg-mytbl-body">
+        <% let tennisNum = 1 %>
         <%for(let i = 0; i < liveTennis.length; i++){%>
             <%if(liveTennis[i].marketList.match_odd != null){%>
             <%
@@ -128,7 +129,44 @@
               <td>Otto</td>
               <td>@mdo</td>
             </tr>
+            <%tennisNum%>
         <%}%>
+        <%}%>
+        <%j = tennisNum %>
+        <%for(let i = 0; i < upcomintTennis.length; i++){%>
+            <%if(upcomintTennis[i].marketList.match_odd != null){%>
+                <%
+                var timestamp = `${upcomintTennis[i].eventData.time}` * 1000; 
+                var date = new Date(timestamp);
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+            %>
+                <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = '/exchange_sports/live_match?id=<%=upcomintTennis[i].eventData.eventId%>'; ">
+                    <!-- <th scope="row">2</th> -->
+                    <td>
+                        <div class="exchange-pg-mytbl-body-cricket-data-dv">
+                            <%= j%>)
+                            <p>
+                                <%=formattedTime%>
+                            </p>
+                            <p>
+                                <b><%=upcomintTennis[i].eventData.name%></b>
+                            </p>
+                        </div>
+                    </td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <%j++%>
+            <%}%>
         <%}%>
     </tbody>
   </table>
@@ -145,6 +183,7 @@
       </tr>
     </thead>
     <tbody class="exchange-pg-mytbl-body">
+        <% let FootballNum = 1 %>
         <%for(let i = 0; i < liveFootBall.length; i++){%>
             <%if(liveFootBall[i].marketList.match_odd != null){%>
             <%
@@ -177,7 +216,44 @@
               <td>Otto</td>
               <td>@mdo</td>
             </tr>
+            <%FootballNum++%>
         <%}%>
+        <%}%>
+        <% j = FootballNum %>
+        <%for(let i = 0; i < upcomintFootball.length; i++){%>
+            <%if(upcomintFootball[i].marketList.match_odd != null){%>
+                <%
+                var timestamp = `${upcomintFootball[i].eventData.time}` * 1000; 
+                var date = new Date(timestamp);
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+            %>
+                <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = '/exchange_sports/live_match?id=<%=upcomintFootball[i].eventData.eventId%>'; ">
+                    <!-- <th scope="row">2</th> -->
+                    <td>
+                        <div class="exchange-pg-mytbl-body-cricket-data-dv">
+                            <%= j%>)
+                            <p>
+                                <%=formattedTime%>
+                            </p>
+                            <p>
+                                <b><%=upcomintFootball[i].eventData.name%></b>
+                            </p>
+                        </div>
+                    </td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <%j++%>
+            <%}%>
         <%}%>
     </tbody>
   </table>
