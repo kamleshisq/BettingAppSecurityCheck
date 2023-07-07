@@ -3231,19 +3231,19 @@ socket.on('connect', () => {
                                 </a>`
                 }
             }
-            for(let i = 0; i < data.liveTennis.length; i++){
-                if(data.liveTennis[i].marketList.match_odd != null){
-                   html += `<a href="/exchange_sports/live_match?id=${data.liveTennis[i].eventData.eventId}">
-                                    <img src="/assets/img/home/side-menuimg02.svg" alt="">
-                                    ${data.liveTennis[i].eventData.name}
-                                </a>`
-                }
-            }
             for(let i = 0; i < data.liveFootBall.length; i++){
                 if(data.liveFootBall[i].marketList.match_odd != null){
                    html += `<a href="/exchange_sports/live_match?id=${data.liveFootBall[i].eventData.eventId}">
-                                    <img src="/assets/img/home/side-menuimg02.svg" alt="">
+                                    <img src="/assets/img/home/side-menuimg03.svg" alt="">
                                     ${data.liveFootBall[i].eventData.name}
+                                </a>`
+                }
+            }
+            for(let i = 0; i < data.liveTennis.length; i++){
+                if(data.liveTennis[i].marketList.match_odd != null){
+                   html += `<a href="/exchange_sports/live_match?id=${data.liveTennis[i].eventData.eventId}">
+                                    <img src="/assets/img/home/side-menuimg04.svg" alt="">
+                                    ${data.liveTennis[i].eventData.name}
                                 </a>`
                 }
             }
