@@ -328,7 +328,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         banner,
         sliders,
         pages,
-        check:"Nothing"
+        check:"Home"
     })
 })
 
