@@ -121,7 +121,7 @@ $(document).on('submit','.form-betLimit',async function(e){
             <td><input type="text" class="form-datas" value='${betLimit.max_odd}'></td>
             <td><input type="text" class="form-datas" value='${betLimit.delay}'></td>
             <td data-details='${JSON.stringify(betLimit)}'><button type="button" data-bs-toggle="modal" data-bs-target="#myModal2"class="updateBetLimit">Update</button></td>`)
-        
+        alert("updated SuccessFully")
     }
     
 })
