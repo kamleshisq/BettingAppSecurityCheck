@@ -9,6 +9,7 @@
             </tr>
         </thead>
         <tbody class="exchange-pg-mytbl-body">
+            <% let cricketNum = 0 %>
             <%for(let i = 0; i < LiveCricket.length; i++){%>
                 <%if(LiveCricket[i].marketList.match_odd != null){%>
                 <%
@@ -24,6 +25,7 @@
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
                 %>
+                <% let cricketNum++ %>
                 <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = '/exchange_sports/live_match?id=<%=LiveCricket[i].eventData.eventId%>'; ">
                     <!-- <th scope="row"></th> -->
                     <td>
@@ -42,6 +44,37 @@
                     <td>@mdo</td>
                 </tr>
                 <%}%>
+                <%}%>
+                <%for(let i = 0; i < cricket.length; i++){%>
+                    <%if(cricket[i].marketList.match_odd != null){%>
+                        <%
+                        var timestamp = `${cricket[i].eventData.time}` * 1000; 
+                        var date = new Date(timestamp);
+                        var options = { 
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric',
+                            hour12: true
+                        };
+                        var formattedTime = date.toLocaleString('en-US', options);
+                    %>
+                        <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = '/exchange_sports/live_match?id=<%=cricket[i].eventData.eventId%>'; ">
+                            <!-- <th scope="row">2</th> -->
+                            <td><%= cricketNum + 1%> 
+                                <p>
+                                    <%=formattedTime%>
+                                </p>
+                                <p>
+                                    <b><%=cricket[i].eventData.name%></b>
+                                </p>
+                            </td>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                          </tr>
+                    <%}%>
                 <%}%>
             </tbody>
         </table>
