@@ -10,6 +10,7 @@
         </thead>
         <tbody class="exchange-pg-mytbl-body">
             <%for(let i = 0; i < LiveCricket.length; i++){%>
+                <%if(LiveCricket[i].marketList.match_odd != null){%>
                 <%
                 var timestamp = `${LiveCricket[i].eventData.time}` * 1000; 
                 var date = new Date(timestamp);
@@ -41,6 +42,7 @@
                     <td>@mdo</td>
                 </tr>
                 <%}%>
+                <%}%>
             </tbody>
         </table>
         <%}%>
@@ -57,6 +59,7 @@
     </thead>
     <tbody class="exchange-pg-mytbl-body">
         <%for(let i = 0; i < liveTennis.length; i++){%>
+            <%if(liveTennis[i].marketList.match_odd != null){%>
             <%
                 var timestamp = `${liveTennis[i].eventData.time}` * 1000; 
                 var date = new Date(timestamp);
@@ -88,6 +91,7 @@
               <td>@mdo</td>
             </tr>
         <%}%>
+        <%}%>
     </tbody>
   </table>
   <%}%>
@@ -104,6 +108,7 @@
     </thead>
     <tbody class="exchange-pg-mytbl-body">
         <%for(let i = 0; i < liveFootBall.length; i++){%>
+            <%if(liveFootBall[i].marketList.match_odd != null){%>
             <%
                 var timestamp = `${liveFootBall[i].eventData.time}` * 1000; 
                 var date = new Date(timestamp);
@@ -134,6 +139,7 @@
               <td>Otto</td>
               <td>@mdo</td>
             </tr>
+        <%}%>
         <%}%>
     </tbody>
   </table>
