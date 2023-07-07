@@ -3210,6 +3210,11 @@ socket.on('connect', () => {
     }
 
 
+    if(pathname === "/exchange"){
+        console.log("working")
+    }
+
+
     
 
 
