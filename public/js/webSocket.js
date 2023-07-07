@@ -3249,20 +3249,20 @@ socket.on('connect', () => {
             document.getElementById('liveMatch_data').innerHTML = html
         })
 
-        function marketId(){
-            $(document).ready(function() {
-                var ids = [];
+        // function marketId(){
+        //     $(document).ready(function() {
+        //         var ids = [];
           
-                $(".name1").each(function() {
-                  ids.push(this.id);
-                });
+        //         $(".name1").each(function() {
+        //           ids.push(this.id);
+        //         });
           
-                socket.emit("marketId", ids)
-              });
-              setTimeout(()=>{
-                marketId()
-              }, 500)
-        }
+        //         socket.emit("marketId", ids)
+        //       });
+        //       setTimeout(()=>{
+        //         marketId()
+        //       }, 500)
+        // }
         // marketId()
 
         socket.on("marketId", (data) => {
