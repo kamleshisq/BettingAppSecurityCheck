@@ -1362,6 +1362,9 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         data,
         liveFootBall,
         liveTennis,
-        LiveCricket
+        LiveCricket,
+        cricket,
+        footBall,
+        Tennis
     })
 })
