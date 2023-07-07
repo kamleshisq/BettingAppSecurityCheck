@@ -2681,7 +2681,6 @@ socket.on('connect', () => {
 
 
       $(document).on('click','.button',function(e){
-        e.preventDefault()
         let modleName = $(".popup")
         let form = $(modleName).find('#bet-form')
         let eventName = $(".eventName").text()
