@@ -39,9 +39,16 @@
                             </p>
                         </div>
                     </td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <% let runners = JSON.parse(LiveCricket[i].marketList.match_odd.runners); %>
+                    <% const runners1 = []; %>
+                    <%const secIds = []; %>
+                    <%runners.forEach(item => {%>
+                        <%runners1.push(item.runner);%>
+                        <%secIds.push(item.secId);%>
+                    <%});%>
+                    %for(let i = 0; i < runners1.length; i++){%>
+                        <td class="<%=i%>" id="<%=secIds[i]%>"  ></td>
+                    <%}%>
                 </tr>
                 <%}%>
                 <%}%>
@@ -74,9 +81,16 @@
                                     </p>
                                 </div>
                             </td>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
+                            <% let runners = JSON.parse(upcomintCricket[i].marketList.match_odd.runners); %>
+                            <% const runners1 = []; %>
+                            <%const secIds = []; %>
+                            <%runners.forEach(item => {%>
+                                <%runners1.push(item.runner);%>
+                                <%secIds.push(item.secId);%>
+                            <%});%>
+                            %for(let i = 0; i < runners1.length; i++){%>
+                                <td class="<%=i%>" id="<%=secIds[i]%>"  ></td>
+                            <%}%>
                           </tr>
                           <%j++%>
                     <%}%>
@@ -125,9 +139,16 @@
                       </p>
                   </div>
               </td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+                <% let runners = JSON.parse(liveTennis[i].marketList.match_odd.runners); %>
+                <% const runners1 = []; %>
+                <%const secIds = []; %>
+                <%runners.forEach(item => {%>
+                    <%runners1.push(item.runner);%>
+                    <%secIds.push(item.secId);%>
+                <%});%>
+                %for(let i = 0; i < runners1.length; i++){%>
+                    <td class="<%=i%>" id="<%=secIds[i]%>"  ></td>
+                <%}%>
             </tr>
             <%tennisNum++ %>
         <%}%>
@@ -161,9 +182,16 @@
                             </p>
                         </div>
                     </td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
+                    <% let runners = JSON.parse(upcomintTennis[i].marketList.match_odd.runners); %>
+                    <% const runners1 = []; %>
+                    <%const secIds = []; %>
+                    <%runners.forEach(item => {%>
+                        <%runners1.push(item.runner);%>
+                        <%secIds.push(item.secId);%>
+                    <%});%>
+                    %for(let i = 0; i < runners1.length; i++){%>
+                        <td class="<%=i%>" id="<%=secIds[i]%>"  ></td>
+                    <%}%>
                   </tr>
                   <%j++%>
             <%}%>
@@ -212,9 +240,16 @@
                       </p>
                   </div>
               </td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+              <% let runners = JSON.parse(liveFootBall[i].marketList.match_odd.runners); %>
+                    <% const runners1 = []; %>
+                    <%const secIds = []; %>
+                    <%runners.forEach(item => {%>
+                        <%runners1.push(item.runner);%>
+                        <%secIds.push(item.secId);%>
+                    <%});%>
+                    %for(let i = 0; i < runners1.length; i++){%>
+                        <td class="<%=i%>" id="<%=secIds[i]%>"  ></td>
+                    <%}%>
             </tr>
             <%FootballNum++%>
         <%}%>
@@ -248,9 +283,16 @@
                             </p>
                         </div>
                     </td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
+                    <% let runners = JSON.parse(upcomintFootball[i].marketList.match_odd.runners); %>
+                    <% const runners1 = []; %>
+                    <%const secIds = []; %>
+                    <%runners.forEach(item => {%>
+                        <%runners1.push(item.runner);%>
+                        <%secIds.push(item.secId);%>
+                    <%});%>
+                    %for(let i = 0; i < runners1.length; i++){%>
+                        <td class="<%=i%>" id="<%=secIds[i]%>"  ></td>
+                    <%}%>
                   </tr>
                   <%j++%>
             <%}%>
