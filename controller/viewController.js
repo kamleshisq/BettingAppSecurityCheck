@@ -1348,11 +1348,15 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
-    const footBall = sportListData[1].gameList.find(item => item.sport_name === "Football").sort((a, b) => a.eventData.time - b.eventData.time);;
-    const Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis").sort((a, b) => a.eventData.time - b.eventData.time);;
+    const footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
+    const Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
+    footBall = footBall.sort((a, b) => a.eventData.time - b.eventData.time);
+    Tennis = Tennis.sort((a, b) => a.eventData.time - b.eventData.time);
     let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
     let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
     let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
+    let upcomintFootball = cricket.filter(item => item.eventData.type != "IN_PLAY")
+    let upcomintTennis = cricket.filter(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
     let verticalMenus = await verticalMenuModel.find();
     console.log(LiveCricket)
@@ -1364,7 +1368,9 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         liveFootBall,
         liveTennis,
         LiveCricket,
-        upcomintCricket
+        upcomintCricket,
+        upcomintFootball,
+        upcomintTennis
         
     })
 })
