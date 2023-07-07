@@ -89,8 +89,11 @@
                       <%secIds.push(item.secId);%>
                   <%});%>
                   <%console.log(runners1.length)%>
+                  <%if(runners1.length === 2){%>
+                    <%}else{%>
                   <%for(let j = 0; j < runners1.length; j++){%>
                       <td class="<%=j%>" id="<%=secIds[j]%>"  ></td>
+                  <%}%>
                   <%}%>
                 </tr>
                 <%j++%>
