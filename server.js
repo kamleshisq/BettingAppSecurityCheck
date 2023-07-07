@@ -1257,18 +1257,13 @@ io.on('connection', (socket) => {
 
     socket.on('liveData', async(data) => {
         let sportListData = await getCrkAndAllData()
-        const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
+        const cricket = sportListData[0].gameList[0].eventList
         let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
         let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
         let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
-        footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-        Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-        let liveFootBall = footBall.filter(item => item.eventData.type === "IN_PLAY");
-        let liveTennis = Tennis.filter(item => item.eventData.type === "IN_PLAY")
-        let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
-        let upcomintFootball = cricket.filter(item => item.eventData.type != "IN_PLAY")
-        let upcomintTennis = cricket.filter(item => item.eventData.type != "IN_PLAY")
-        socket.emit("liveData", {liveFootBall, liveTennis, upcomintCricket, upcomintFootball, upcomintTennis, LiveCricket})
+        let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
+        let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
+        socket.emit("liveData", {liveFootBall, liveTennis, LiveCricket})
     })
 })
 
