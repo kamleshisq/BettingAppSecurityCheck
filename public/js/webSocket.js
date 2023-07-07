@@ -3216,7 +3216,7 @@ socket.on('connect', () => {
             socket.emit("liveData" , "data12")
               setTimeout(()=>{
                 marketId()
-              }, 500)
+              }, 1000)
         }
         marketId()
 
