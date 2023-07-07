@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody class="exchange-pg-mytbl-body">
-      <% let FootballNum = 1 %>
+      <% let cricketNum = 1 %>
       <%for(let i = 0; i < LiveCricket.length; i++){%>
           <%if(LiveCricket[i].marketList.match_odd != null){%>
           <%
@@ -49,10 +49,10 @@
                       <td class="<%=j%>" id="<%=secIds[j]%>"  ></td>
                   <%}%>
           </tr>
-          <%FootballNum++%>
+          <%cricketNum++%>
       <%}%>
       <%}%>
-      <% j = FootballNum %>
+      <% j = cricketNum %>
       <%for(let i = 0; i < upcomintCricket.length; i++){%>
           <%if(upcomintCricket[i].marketList.match_odd != null){%>
               <%
