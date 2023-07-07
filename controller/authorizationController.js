@@ -152,7 +152,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
         token = req.cookies.JWT;
         // console.log(token)
     }
-    // console.log(token)
+    console.log(token, "working")
     if(!token){
         return next()
     }
