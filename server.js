@@ -1268,7 +1268,7 @@ io.on('connection', (socket) => {
         let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
         let upcomintFootball = cricket.filter(item => item.eventData.type != "IN_PLAY")
         let upcomintTennis = cricket.filter(item => item.eventData.type != "IN_PLAY")
-        socket.emit("liveData", {liveFootBall, liveTennis, upcomintCricket, upcomintFootball, upcomintTennis})
+        socket.emit("liveData", {liveFootBall, liveTennis, upcomintCricket, upcomintFootball, upcomintTennis, LiveCricket})
     })
 })
 
