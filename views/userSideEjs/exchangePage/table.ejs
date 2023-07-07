@@ -68,30 +68,7 @@
                         };
                         var formattedTime = date.toLocaleString('en-US', options);
                     %>
-                        <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = '/exchange_sports/live_match?id=<%=upcomintCricket[i].eventData.eventId%>'; ">
-                            <!-- <th scope="row">2</th> -->
-                            <td class="name1" id="<%=upcomintCricket[i].marketList.match_odd.marketId%>">
-                                <div class="exchange-pg-mytbl-body-cricket-data-dv">
-                                    <%= j%>)
-                                    <p>
-                                        <%=formattedTime%>
-                                    </p>
-                                    <p>
-                                        <b><%=upcomintCricket[i].eventData.name%></b>
-                                    </p>
-                                </div>
-                            </td>
-                            <% let runners = JSON.parse(upcomintCricket[i].marketList.match_odd.runners); %>
-                            <% let runners1 = []; %>
-                            <%let secIds = []; %>
-                            <%runners.forEach(item => {%>
-                                <%runners1.push(item.runner);%>
-                                <%secIds.push(item.secId);%>
-                            <%});%>
-                            <%for(let j = 0; j < runners1.length; j++){%>
-                                <td class="<%=j%>" id="<%=secIds[j]%>"  ></td>
-                            <%}%>
-                          </tr>
+                        
                           <%j++%>
                     <%}%>
                 <%}%>
