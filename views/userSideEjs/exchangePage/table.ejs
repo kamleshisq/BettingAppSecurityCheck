@@ -190,8 +190,14 @@
                         <%runners1.push(item.runner);%>
                         <%secIds.push(item.secId);%>
                     <%});%>
+                    <%if(runners1.length === 2){%>
+                        <td class="1" id="<%=secIds[1]%>"  ></td>
+                        <td  > - </td>
+                        <td class="2" id="<%=secIds[2]%>"  ></td>
+                    <%} else{%>
                     <%for(let j = 0; j < runners1.length; j++){%>
                         <td class="<%=j%>" id="<%=secIds[j]%>"  ></td>
+                    <%}%>
                     <%}%>
                   </tr>
                   <%j++%>
