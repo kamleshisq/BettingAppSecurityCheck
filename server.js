@@ -1268,13 +1268,13 @@ io.on('connection', (socket) => {
 
 
     socket.on('Login', async(data) => {
-        let fullUrl = "http://127.0.0.1/api/v1/auth/login"
+        let fullUrl = "http://127.0.0.1/api/v1/auth/userLogin"
         fetch(fullUrl, {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
                 'accept': 'application/json' },
-            body:JSON.stringify(data)
+            body:JSON.userLogin(data)
         }).then(res => res.json())
         .then(Data =>{
             socket.emit("Login", Data)
