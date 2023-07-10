@@ -1,0 +1,499 @@
+
+
+
+:root{
+    --color1: linear-gradient(135deg, #182EA6 0%, #0063D8 100%);
+    --color2: #182EA6;
+    --color3: #FFFFFF;
+    --color4: #1A1D21;
+    --color5: #EFEFEF;
+    --color6: linear-gradient(135deg, #182EA6 0%, #182EA6 100%);
+    --color7: #182ea61a;
+    --color8: #D7D7D7;
+    --color9: #A1CDF5;
+}
+
+.c-gren{
+    color: #32962A;
+}
+
+.c-reed{
+    color: #CB1B1C;
+}
+
+.c-activee{
+    color: var(--color2);
+}
+
+a{
+    text-decoration: none;
+    color: var(--color4);
+}
+
+.pad-r-5{
+    padding-right: 5px;
+}
+
+.pad-l-5{
+    padding-left: 5px;
+}
+
+.pad-r-10{
+    padding-right: 10px;
+}
+
+.pad-l-10{
+    padding-left: 10px;
+}
+
+.img-bdr-red15{
+    border-radius: 15px;
+}
+
+
+/* --------------------------------------------------------------------------------------
+============================ HOME PAGE PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+.my-nav-profiel-btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 8px 10px;
+    background-color: var(--color3);
+    border-radius: 30px;
+    font-size: 15px;
+    transition: all 0.3s ease-in-out;
+    color: var(--color4);
+}
+
+.my-nav-profiel-btn:hover{
+    transition: all 0.3s ease-in-out;
+    background-color: var(--color3);
+    color: var(--color4);
+}
+
+.my-nav-profiel-btn:focus{
+    transition: all 0.3s ease-in-out;
+    background-color: var(--color3);
+    color: var(--color4);
+}
+
+.my-nav-profiel-btn.show{
+    transition: all 0.3s ease-in-out;
+    background-color: var(--color3);
+    color: var(--color4);
+}
+
+.my-nav-profiel-btn:active{
+    transition: all 0.3s ease-in-out;
+    background-color: var(--color3) !important;
+    color: var(--color4) !important;
+}
+
+.my-nav-profiel-btn:focus-visible{
+    transition: all 0.3s ease-in-out;
+    background-color: var(--color3) !important;
+    color: var(--color4) !important;
+}
+
+.nav-profile-img{
+    width: 20px;
+}
+
+.profile-contnt-wrper{
+    transition: all 0.3s ease-in-out;
+    /* transform: translateX(-10px); */
+    border-radius: 30px;
+}
+
+.profile-contnt-wrper-ro{
+    padding: 0px 10px;
+}
+
+.profile-contnt-amount-dv{
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.profile-contnt-amount{
+    text-align: center;
+    font-size: 13px;
+    padding: 5px 10px;
+    background-color: var(--color7);
+    border-radius: 15px;
+    width: fit-content;
+    margin: 0 auto;
+    display: inline-flex;
+    gap: 5px;
+}
+
+.profile-contnt-amount>span{
+    color: var(--color2);
+    font-weight: 600;
+}
+
+.profile-contnt-mnu-option-dv{
+    font-size: 13px;
+    text-align: center;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.profile-contnt-mnu-option-dv>ul{
+    list-style: none;
+    padding-left: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 0px;
+}
+
+.profile-contnt-mnu-option-dv>ul>li{
+    text-align: center;
+    width: 100%;
+}
+
+.profile-contnt-mnu-option-dv>ul>li>a{
+    font-size: 15px;
+    transition: all 0.3s ease-in-out;
+}
+
+.profile-contnt-mnu-option-dv>ul>li>a:hover{
+    transition: all 0.3s ease-in-out;
+    color: var(--color2);
+}
+
+.profile-bord-botm{
+    border-bottom: 1px solid var(--color8);
+    margin-top: 5px;
+}
+
+.profile-contnt-mnu-option-logout-btn{
+    color: var(--color2);
+    font-size: 15px;
+    font-weight: 600;
+    padding-top: 10px;
+}
+
+/* --------------------------------------------------------------------------------------
+============================ HOME PAGE PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+
+/* --------------------------------------------------------------------------------------
+============================ ACCOUNT STATMENT PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+.acount-stat-sec-wrp{
+    background-color: var(--color5);
+    padding: 1em 0em;
+}
+
+.acount-stat-ro-titl{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 1em 1em;
+    border-radius: 30px;
+    background-color: var(--color3);
+    border: 1px solid var(--color8);
+    flex-wrap: wrap;
+}
+
+.titl-bodr-lft-spn2{
+    height: 20px;
+    width: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color2);
+}
+
+.featured-sec-ro--titl-txt-tg2{
+    margin-bottom: 0px;
+    color: var(--color2);
+    font-weight: 600;
+    font-size: 25px;
+    position: relative;
+    text-transform: uppercase;
+}
+
+.acount-stat-ro-titlselect-form{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.acount-stat-ro-form-input{
+    background-color: var(--color7);
+    color: var(--color4);
+    font-size: 15px;
+    border: none;
+    border-radius: 30px;
+}
+
+.acount-stat-ro-form-input:focus{
+    box-shadow: none;
+    border: none;
+    background-color: var(--color7);
+}
+
+.acount-stat-ro-titl-form-btnn{
+    display: inline-flex;
+    padding: 5px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 30px;
+    background: var(--color1);
+    transition: all 0.3s ease-in-out;
+    color: var(--color3);
+}
+
+.acount-stat-ro-titl-form-btnn:hover{
+    transition: all 0.3s ease-in-out;
+    color: var(--color3);
+    background: var(--color6);
+}
+
+.acount-stat-ro2{
+    padding: 1em 1em;
+    border-radius: 30px;
+    background-color: var(--color3);
+    border: 1px solid var(--color8);
+    margin-top: 20px;
+}
+
+.acount-stat-tbl{
+    width: 100%;
+}
+
+.acount-stat-tbl-hed{
+    text-align: center;
+    background: var(--color1);
+}
+
+.acount-stat-tbl-hed-tr>th{
+    color: var(--color3);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 10px;
+}
+
+.acount-stat-tbl-body{
+    text-align: center;
+}
+
+.bod-red-lft{
+    border-radius: 30px 0px 0px 30px;
+}
+
+.bod-red-rit{
+    border-radius: 0px 30px 30px 0px;
+}
+
+.acount-stat-tbl-body-tr>td{
+    padding: 5px 5px;
+    font-size: 15px;
+    border-bottom: 1px solid var(--color8);
+}
+
+/* --------------------------------------------------------------------------------------
+============================ ACCOUNT STATMENT PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+
+/* --------------------------------------------------------------------------------------
+============================ CURRENT BET PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+.cur-bet-amount-dv{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cur-bet-amount-spn{
+    font-size: 15px;
+}
+
+.cur-bet-amount-spn>span{
+    font-weight: 600;
+    color: var(--color2);
+}
+
+.tbl-data-href{
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.tbl-data-href:hover{
+    transition: all 0.3s ease-in-out;
+    background-color: var(--color5);
+}
+
+.game-statment-inn-pg-titl>a{
+    color: var(--color2);
+}
+
+.tbl-td-bg-blu-spn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    background-color: var(--color9);
+    border-radius: 30px;
+}
+
+/* --------------------------------------------------------------------------------------
+============================ CURRENT BET PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+
+/* --------------------------------------------------------------------------------------
+============================ CHANGE PASSWORD MODEL STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+.change-pass-model-txt{
+    border-radius: 30px;
+}
+
+.change-pass-model-hed{
+    border: none;
+}
+
+.featured-sec-ro--titl-txt-tg-model{
+    margin-bottom: 0px;
+    color: var(--color2);
+    font-weight: 600;
+    font-size: 20px;
+    position: relative;
+    text-transform: uppercase;
+}
+
+.titl-bodr-lft-spn-model{
+    height: 15px;
+    width: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color2);
+}
+
+.change-pass-clos-btnn{
+    color: var(--color2);
+    border: none;
+    font-size: 20px;
+    background-color: transparent;
+}
+
+.change-pass-model-form-inputgrup{
+    border: 1px solid var(--color2);
+    background-color: var(--color3);
+    border-radius: 30px;
+    padding: 0px 0px;
+}
+
+.change-pass-model-form-inputgrup>input{
+    border: none;
+    background-color: transparent;
+    font-size: 13px;
+    color: var(--color4);
+}
+
+.change-pass-model-form-inputgrup>input:focus{
+    box-shadow: none;
+    border: none;
+}
+
+.change-pass-model-form-inputgrup>span{
+    border: none;
+    background-color: transparent;
+    font-size: 13px;
+    color: var(--color4);
+}
+
+.change-pass-model-form-inputs>label{
+    font-size: 15px;
+    margin-bottom: 0px;
+    padding-left: 5px;
+}
+
+.change-pass-model-form-submit-btn{
+    display: flex;
+    background: var(--color1);
+    color: var(--color3);
+    border-radius: 30px;
+    font-size: 15px;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.change-pass-model-form-submit-btn:hover{
+    transition: all 0.3s ease-in-out;
+    color: var(--color3);
+    background: var(--color6);
+}
+
+.set-stake-form-input1{
+    border: none;
+    background-color: var(--color7);
+    font-size: 13px;
+    color: var(--color4);
+    border-radius: 30px;
+}
+
+.set-stake-form-input1:focus{
+    box-shadow: none;
+    border: none;
+    background-color: var(--color7);
+}
+
+.set-stake-form-input1::placeholder{
+   color: var(--color2); 
+   text-align: center;
+}
+
+.set-stake-form-input2{
+    border: 1px solid var(--color2);
+    background-color: var(--color3);
+    border-radius: 30px;
+    font-size: 13px;
+    color: var(--color4);
+    text-align: center;
+}
+
+.set-stake-form-input2:focus{
+    box-shadow: none;
+    color: var(--color4);
+    border: 1px solid var(--color2);
+}
+
+.set-stake-form-input2::placeholder{
+    color: var(--color2); 
+    text-align: center;
+ }
+ 
+
+/* --------------------------------------------------------------------------------------
+============================ CHANGE PASSWORD MODEL STYLE ========================================
+-------------------------------------------------------------------------------------- */

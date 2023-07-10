@@ -8,6 +8,7 @@
 
 body{
     font-family: 'Kanit', sans-serif;
+    background-color: var(--color5);
 }
 
 :root{
@@ -18,6 +19,22 @@ body{
     --color5: #EFEFEF;
     --color6: linear-gradient(135deg, #182EA6 0%, #182EA6 100%);
     --color7: #182ea61a;
+    --color8: #D7D7D7;
+    --color9: #A1CDF5;
+    --color10: #FF9393;
+    --color11: #0063D8;
+}
+
+.c-gren{
+    color: #32962A;
+}
+
+.c-reed{
+    color: #CB1B1C;
+}
+
+.c-activee{
+    color: var(--color2);
 }
 
 a{
@@ -1094,6 +1111,7 @@ a{
     transition: all 0.3s ease-in-out;
     width: 100%;
     text-align: center;
+    border-radius: 15px;
 }
 
 .cardspg-col-txt-imgdv-wrp:hover{
@@ -1104,12 +1122,17 @@ a{
 .cardspg-col-txt-imgdv-wrp:hover>.cardspg-col-txt-bg-anim-spn{
     transition: all 0.3s ease-in-out;
     top: 0px;
+    opacity: 1;
 }
 
 .cardspg-col-txt-imgdv-wrp:hover>.cardspg-col-txt-playnow-btn{
     transition: all 0.3s ease-in-out;
     bottom: 40%;
     transform: translate(-50%, 20%);
+}
+
+.cardspg-col-txt-imgdv-wrp>img{
+    width: 100%;
 }
 
 .cardspg-col-txt-bg-anim-spn{
@@ -1122,6 +1145,7 @@ a{
     border-radius: 15px;
     pointer-events: none;
     transition: all 0.3s ease-in-out;
+    opacity: 0;
 }
 
 .cardspg-col-txt-playnow-btn{
@@ -1284,8 +1308,19 @@ a{
     justify-content: right;
 }
 
+.exchange-pg-main-col-ro{
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 .exchange-pg-tranding-maches-nav-sec{
     padding-top: 20px;
+}
+
+.exchange-pg-main-col-big{
+    padding-right: 15px;
 }
 
 .exchange-pg-tranding-maches-nav-sec>a{
@@ -1321,6 +1356,14 @@ a{
     animation: none;
 }
 
+.exchange-pg-tbl-ro1{
+    padding: 10px 10px;
+    background-color: var(--color3);
+    border: 1px solid var(--color8);
+    border-radius: 30px;
+    overflow-x: scroll;
+}
+
 .exchange-pg-tbl-dvwrp{
     padding-top: 20px;
 }
@@ -1351,6 +1394,417 @@ a{
     font-size: 15px;
 }
 
+.exchange-pg-mytbl-body-cricket-data-dv>p>span{
+    color: var(--color2);
+}
+
+.exchange-td2-txtdv{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.exchange-td2-txtdv-inn1>p{
+    margin-bottom: 0;
+}
+
+.exchange-td2-txtdv-inn1>span{
+    border-radius: 5px;
+    background-color: var(--color2);
+    padding: 0px 5px;
+    font-size: 13px;
+    color: var(--color3);
+    font-weight: 400;
+}
+
+.tbl-td-bg-pich-spn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    background-color: var(--color10);
+    border-radius: 30px;
+}
+
+.exchange-pg-tbl-ro2{
+    padding: 10px 10px;
+    background-color: var(--color3);
+    border: 1px solid var(--color8);
+    border-radius: 30px;
+    margin-top: 20px;
+    overflow-x: scroll;
+}
+
+.ctbal-scor-spn-wrp{
+    display: inline-flex;
+    border-radius: 30px;
+    overflow: hidden;
+    width: max-content;
+}
+
+.ctbal-scor-spn1{
+    padding: 2px 5px;
+    background-color: var(--color2);
+    font-size: 12px;
+    color: var(--color3);
+}
+
+.ctbal-scor-spn2{
+    padding: 2px 5px;
+    background-color: var(--color11);
+    font-size: 12px;
+    color: var(--color3);
+}
+
+/* --------- right section ---------  */
+
+.exchange-pg-rit-ro{
+    padding: 15px 15px;
+    background-color: var(--color3);
+    border: 1px solid var(--color8);
+    border-radius: 30px;
+}
+
+.exchange-pg-main-col-mini{
+    position: sticky;
+    top: 10%;
+}
+
+.exc-pg-rit-tabdv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color5);
+    border-radius: 30px;
+}
+
+.exc-pg-rit-tabli{
+    border-radius: 30px;
+}
+
+.exc-pg-rit-tabli>.active{
+    border: none;
+    padding: 8px 30px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: var(--color3);
+    background: var(--color1);
+    transition: all 0.3s ease-in-out;
+}
+
+.exc-pg-rit-tab-btn{
+    border: none;
+    padding: 8px 30px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: var(--color4);
+    background: transparent;
+    transition: all 0.0s ease-in-out;
+}
+
+.exc-pg-rit-tab-btn:hover{
+    transition: all 0.0s ease-in-out;
+    border-radius: 30px;
+    color: var(--color3);
+    background: var(--color1);
+}
+
+.exc-pg-rit-tabtxt-dat-ro1{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color5);
+}
+
+.exc-pg-rit-tabtxt-dat-ro1-col{
+    font-size: 13px;
+}
+
+.exc-pg-rit-tabtxt-dat-ro1-col>span>span{
+    color: var(--color2);
+    font-weight: 600;
+}
+
+.exc-pg-rit-tabtxt-dat-ro1-col>a{
+    font-weight: 600;
+    color: var(--color2);
+}
+
+.exc-pg-rit-tabtxt-dat-ro1-col>a:hover{
+    color: var(--color2);
+}
+
+.exc-pg-rit-tabtxt-dat-ro1{
+    padding-top: 10px;
+}
+
+.ecc-pg-rit-ods-data-col>p{
+    font-size: 13px;
+    margin-bottom: 0px;
+    padding-left: 5px;
+}
+
+.ecc-pg-rit-ods-data-opration{
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 5px;
+    background-color: var(--color2);
+    border-radius: 30px;
+}
+
+.ecc-pg-rit-ods-data-opration-spn{
+    color: var(--color3);
+}
+
+.ecc-pg-rit-ods-data-opration-spn>i{
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.ecc-pg-rit-ods-data-opration-spn2{
+    padding: 0px 20px;
+    background-color: var(--color3);
+}
+
+.ecc-pg-rit-ods-data-ro{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.ecc-pg-rit-ods-data-opration2{
+    border: 1px solid var(--color2);
+    border-radius: 30px;
+    padding: 2px 30px;
+}
+
+.exc-pg-rit-tabtxt-dat-ro2{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border-bottom: 0px solid var(--color5);
+}
+
+.exc-pg-rit-tabtxt-data-stack-num-rowrp{
+    padding-top: 10px;
+}
+
+.exc-pg-rit-tabtxt-data-stack-num-ro{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.exc-pg-rit-tabtxt-data-stack-num-col{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0px;
+}
+
+.exc-pg-rit-tabtxt-data-stack-num-col>span{
+    font-size: 13px;
+    background-color: var(--color7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 30px;
+    border-radius: 30px;
+}
+
+.exc-pg-rit-tabtxt-data-stack-minmax{
+    padding-top: 10px;
+}
+
+.exc-pg-rit-tabtxt-data-stack-minmax-ro{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.exc-pg-rit-tabtxt-data-stack-minmax-col{
+    padding: 5px;
+}
+
+.exc-pg-rit-tabtxt-data-stack-minmax-col>a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 30px;
+    background-color: var(--color2);
+    transition: all 0.3s ease-in-out;
+    font-size: 13px;
+    color: var(--color3);
+    border-radius: 30px;
+}
+
+.exc-pg-rit-tabtxt-data-place-bet-btndv{
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.exc-pg-rit-tabtxt-data-place-bet-btndv>a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    border-radius: 30px;
+    background: var(--color1);
+    padding: 5px 10px;
+    color: var(--color3);
+    transition: all 0.3s ease-in-out;
+}
+
+.exc-pg-rit-tabtxt-data-place-bet-btndv>a:hover{
+    transition: all 0.3s ease-in-out;
+    color: var(--color3);
+    background: var(--color6);
+}
+
+/* --------- right section ---------  */
+
 /* --------------------------------------------------------------------------------------
 ============================ EXCHANGE PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+
+/* --------------------------------------------------------------------------------------
+============================ EXCHANGE-INNSIDE PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+.exchange-pg-inn-banner-col{
+    padding: 10px 10px;
+    background-color: var(--color3);
+    border: 1px solid var(--color8);
+    border-radius: 30px;
+    position: sticky;
+    top: 9%;
+    z-index: 50;
+}
+
+.exchange-pg-inn-banner-col-titi{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background: var(--color1);
+    padding: 10px 10px;
+    border-radius: 30px;
+}
+
+.exchange-pg-inn-banner-col-titi-txt-tim{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.exchange-pg-inn-banner-col-titi-txt>h6{
+    margin-bottom: 0px;
+    color: var(--color3);
+    font-size: 15px;
+    font-weight: 200;
+}
+
+.exchange-pg-inn-banner-col-titi-txt>h6>span{
+    font-weight: 600;
+}
+
+.exchange-pg-inn-banner-col-titi-txt-tim>h6{
+    margin-bottom: 0px;
+    color: var(--color3);
+    font-size: 15px;
+    font-weight: 200;
+}
+
+.exchange-pg-inn-banner-col-titi-txt-tim>i{
+    color: var(--color3);
+    font-size: 15px;
+}
+
+.exchange-pg-inn-banner-tv{
+    padding-top: 10px;
+}
+
+.exchange-pg-inn-banner-tv-inn{
+    height: 100px;
+    background: var(--color4);
+    border-radius: 15px;
+}
+
+.exchange-pg-inn-banner-col2{
+    padding: 10px 10px;
+    background-color: var(--color3);
+    border: 1px solid var(--color8);
+    border-radius: 30px;
+    margin-top: 10px;
+}
+
+.exchange-pg-inn-tbl{
+    padding-top: 5px;
+}
+
+.acount-stat-tbl-hed2{
+    color: var(--color4);
+}
+
+.acount-stat-tbl-hed-tr2>th{
+    color: var(--color4);
+    font-weight: 400;
+    font-weight: 600;
+}
+
+.tbl-bg-blu-spn{
+    padding: 0px 20px;
+    background-color: var(--color9);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    border-radius: 30px;
+}
+
+.tbl-bg-pech-spn{
+    padding: 0px 20px;
+    background-color: var(--color10);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    border-radius: 30px;
+}
+
+.exchange-pg-inn-tbl-marqq-dv{
+    padding-top: 10px;
+}
+
+.exchange-pg-inn-tbl-marqq-dv-wrp{
+    padding: 10px 10px;
+    background-color: var(--color7);
+    border-radius: 30px;
+}
+
+.exchange-pg-inn-tbl-marqq-dv-wrp>marquee{
+    color: var(--color2);
+}
+
+/* --------------------------------------------------------------------------------------
+============================ EXCHANGE-INNSIDE PAGE STYLE ========================================
 -------------------------------------------------------------------------------------- */

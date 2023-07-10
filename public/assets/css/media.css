@@ -26,7 +26,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding-top: 10px;
     }
 
     /* ---------- HOME PAGE ----------  */
@@ -44,7 +43,8 @@
     }
 
     .sidebar-main-sec{
-        display: none;
+        transform: translateX(-80px);
+        transition: all 0.3s ease-in-out;
     }
 
     .mob-sidevar-mnu-btn-dv{
@@ -410,6 +410,24 @@
 
 }
 
+@media (min-width: 360px) and (max-width: 991px){
+    .sidebar-main-sec {
+        transform: translateX(-80px);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .mob-sidevar-mnu-btn-dv {
+        display: block;
+    }
+}
+
+@media (max-width: 991px){
+    .mob-sidevar-mnu-btn-dv {
+        display: block;
+        cursor: pointer;
+    }
+}
+
 @media (min-width: 768px) and (max-width: 1152px){
     
     .my-nav-togl-btnn>span{
@@ -430,14 +448,13 @@
     }
 
     .my-nav-ul-dv{
-        padding-bottom: 10px;
+        padding-bottom: 0px;
     }
 
     .nav-login-regstr-btn-dv{
         display: flex;
         align-items: center;
         justify-content: center;
-        padding-top: 10px;
     }
 
     /* ---------- HOME PAGE ----------  */
@@ -454,14 +471,14 @@
         display: none;
     }
 
-    .sidebar-main-sec{
+    /* .sidebar-main-sec{
         display: none;
-    }
+    } */
 
-    .mob-sidevar-mnu-btn-dv{
+    /* .mob-sidevar-mnu-btn-dv{
         display: block;
         position: relative;
-    }
+    } */
 
     .mob-offcanvas-mnu{
         padding: 10px;
@@ -738,6 +755,7 @@
         bottom: 100px;
         height: fit-content !important;
         background-color: transparent;
+        border: none;
     }
 
     .my-offcanvas-body{
@@ -820,10 +838,10 @@
 
 }
 
-@media (min-width: 1084px) and (max-width: 1200px){
+@media (min-width: 1084px) and (max-width: 1300px){
 
     .my-nav-ul-li-a{
-        font-size: 13px;
+        font-size: 10px;
     }
 
     .nav-login-regstr-btn{
@@ -886,9 +904,41 @@
 
 /* DESCTOP DEVICE  */
 
+@media (min-width: 992px) and (max-width: 1152px){
+    .w-100-md{
+        width: 100%;
+    }
+
+    .mbl-featured-sec-card-col-dv {
+        text-align: center;
+    }
+}
+
 @media (min-width: 992px) and (max-width: 1180px){
     .mbl-login-reg-btnn-dv {
         display: none;
+    }
+
+    .mbl-botm-mnu-sec {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1125px){
+    .explore-sec-col-innro-col2{
+        padding: 5px;
+    }
+
+    .services-sec-card-wrp {
+        padding: 1em 1em;
+    }
+
+    .mbl-featured-sec-card-col-dv {
+        text-align: center;
+    }
+    
+    .featured-sec-card-col-dv {
+        text-align: center;
     }
 }
 
@@ -902,3 +952,58 @@
 }
 
 /* EXTRA LARGE DESCTOP DEVICE  */
+
+
+/* --------------------------------------------------------------------------------------
+============================ LOGGEDIN PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+@media (min-width: 360px) and (max-width: 767px){
+
+    .my-nav-logo {
+        width: 120px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .my-nav-bg>.my-nav-contnr{
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .acount-stat-ro2{
+        overflow-x: scroll;
+    }
+
+    .acount-stat-tbl-txt-wrp{
+        width: max-content;
+        margin: 0 auto;
+    }
+
+    .acount-stat-tbl-hed-tr>th{
+        padding: 10px 10px;
+        font-size: 13px;
+        font-weight: 400;
+    }
+
+    .acount-stat-tbl-body-tr>td{
+        font-size: 13px;
+    }
+
+    .dropdown-menu[data-bs-popper] {
+        top: 100%;
+        right: 0;
+        margin-top: var(--bs-dropdown-spacer);
+    }
+
+    .profile-contnt-wrper-ro {
+        padding: 0px 10px;
+        width: fit-content;
+        flex-direction: column;
+        display: inline-flex;
+    }
+}
+
+/* --------------------------------------------------------------------------------------
+============================ LOGGEDIN PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
