@@ -1265,6 +1265,22 @@ io.on('connection', (socket) => {
         let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
         socket.emit("liveData", {liveFootBall, liveTennis, LiveCricket})
     })
+
+
+    socket.on('Login', async(data) => {
+        let fullUrl = "http://127.0.0.1/api/v1/auth/login"
+        fetch(fullUrl, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'accept': 'application/json' },
+            body:JSON.stringify(data)
+        }).then(res => res.json())
+        .then(Data =>{
+            // socket.emit("createVerticalMenu", Data)
+            console.log(data)
+        })
+    })
 })
 
 http.listen(80,()=> {
