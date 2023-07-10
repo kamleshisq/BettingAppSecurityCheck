@@ -6271,7 +6271,7 @@ var createHorizontalMenu = /*#__PURE__*/function () {
         case 3:
           res = _context.sent;
           if (res.data.status === 'success') {
-            alert('Men created successfully!!!!');
+            alert('Menu created successfully!!!!');
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
@@ -7223,7 +7223,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58705" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63926" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
