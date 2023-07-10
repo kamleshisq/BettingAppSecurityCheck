@@ -42,10 +42,14 @@ socket.on('connect', () => {
     })
 
     socket.on("Login", data=>{
-        alert(`${data.message}`)
-        window.setTimeout(()=>{
-            window.location = pathname
-        },200)
+        if(data.status === "error"){
+            alert(`${data.message}`)
+            window.setTimeout(()=>{
+                window.location = pathname
+            },200)
+        }else{
+            console.log(data)
+        }
     })
 
     socket.on("alertMessage", async(data) => {
