@@ -33,22 +33,7 @@ socket.on('connect', () => {
 
     //....................FOR UPDATE ROLE...................//
 
-   $(document).on('submit', ".myloginmodl-form-dv", function(e){
-    e.preventDefault()
-    let form = $(this)[0];
-    let fd = new FormData(form);
-    let data = Object.fromEntries(fd.entries());
-    socket.emit('Login', data);
-    })
-
-    socket.on("Login", data=>{
-        if(data.status === "error"){
-            alert(`${data.message}`)
-        }else{
-            document.cookie = `token=${data.token}; path=/;`;
-            console.log(data.count)
-        }
-    })
+   
 
     socket.on("alertMessage", async(data) => {
         console.log(data)
