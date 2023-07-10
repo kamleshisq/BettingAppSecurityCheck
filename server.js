@@ -1268,6 +1268,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('Login', async(data) => {
+        "WORKING, 1234"
         let fullUrl = "http://127.0.0.1/api/v1/auth/login"
         fetch(fullUrl, {
             method: 'POST',
