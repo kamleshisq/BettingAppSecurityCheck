@@ -1274,7 +1274,7 @@ io.on('connection', (socket) => {
             headers: { 
                 'Content-Type': 'application/json',
                 'accept': 'application/json' },
-            body:JSON.userLogin(data)
+            body:JSON.stringify(data)
         }).then(res => res.json())
         .then(Data =>{
             socket.emit("Login", Data)
