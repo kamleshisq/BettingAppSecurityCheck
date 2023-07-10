@@ -6798,6 +6798,13 @@ $(document).on('submit', '#edit-form', /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }());
+$(document).on('submit', ".myloginmodl-form-dv", function (e) {
+  e.preventDefault();
+  var form = $(this)[0];
+  var fd = new FormData(form);
+  var data = Object.fromEntries(fd.entries());
+  socket.emit('Login', data);
+});
 $(document).on('submit', '.form-betLimit', /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
     var form, fd, data, res, _betLimit, rowId;

@@ -44,11 +44,9 @@ socket.on('connect', () => {
     socket.on("Login", data=>{
         if(data.status === "error"){
             alert(`${data.message}`)
-            window.setTimeout(()=>{
-                window.location = pathname
-            },200)
         }else{
-            console.log(data)
+            document.cookie = `token=${data.token}; path=/;`;
+            console.log(data.count)
         }
     })
 
