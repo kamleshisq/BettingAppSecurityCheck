@@ -33,7 +33,10 @@ socket.on('connect', () => {
 
     //....................FOR UPDATE ROLE...................//
 
-   
+   $(document).on('submit', ".myloginmodl-form-dv", function(e){
+    e.preventDefault()
+    console.log("working")
+    })
 
     socket.on("alertMessage", async(data) => {
         console.log(data)
