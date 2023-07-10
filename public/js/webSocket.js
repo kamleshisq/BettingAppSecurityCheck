@@ -3275,19 +3275,19 @@ socket.on('connect', () => {
                     
                         let id = this.id
                         const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                        this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[0].layPrice1}`
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[0].backPrice1}</span>, <span class="tbl-td-bg-pich-spn">${foundItem.odds[0].layPrice1}</span>`
                 });
 
                 $(".1").each(function() {
                         let id = this.id
                         const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                        this.innerHTML = `${foundItem.odds[1].backPrice1}, ${foundItem.odds[1].layPrice1}`
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[1].backPrice1}</span>, <span class="tbl-td-bg-pich-spn">${foundItem.odds[1].layPrice1}</span>`
                 });
 
                 $(".2").each(function() {
                         let id = this.id
                         const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                        this.innerHTML = `${foundItem.odds[2].backPrice1}, ${foundItem.odds[2].layPrice1}`
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[2].backPrice1}</span>, <span class="tbl-td-bg-pich-spn">${foundItem.odds[2].layPrice1}</span>`
                 });
 
             })
