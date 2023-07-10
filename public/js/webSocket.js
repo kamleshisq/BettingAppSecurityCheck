@@ -3268,13 +3268,13 @@ socket.on('connect', () => {
         marketId()
 
         socket.on("marketId", (data) => {
-            console.log(data)
             $(document).ready(function() {
           
                 $(".0L").each(function() {
                     
                         let id = this.id
                         const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == `${id}L`));
+                        console.log(foundItem)
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[0].layPrice1}</span>`
                 });
 
