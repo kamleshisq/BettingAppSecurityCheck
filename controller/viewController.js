@@ -1355,8 +1355,8 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let liveFootBall = footBall.filter(item => item.eventData.type === "IN_PLAY");
     let liveTennis = Tennis.filter(item => item.eventData.type === "IN_PLAY")
     let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
-    let upcomintFootball = cricket.filter(item => item.eventData.type != "IN_PLAY")
-    let upcomintTennis = cricket.filter(item => item.eventData.type != "IN_PLAY")
+    let upcomintFootball = footBall.filter(item => item.eventData.type != "IN_PLAY")
+    let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
     let verticalMenus = await verticalMenuModel.find();
     res.status(200).render('./userSideEjs/exchangePage/main',{
