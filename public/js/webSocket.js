@@ -41,6 +41,13 @@ socket.on('connect', () => {
     socket.emit('Login', data);
     })
 
+    socket.on("Login", data=>{
+        alert(`${data.message}`)
+        window.setTimeout(()=>{
+            window.location = pathname
+        },200)
+    })
+
     socket.on("alertMessage", async(data) => {
         console.log(data)
         alert(data)
