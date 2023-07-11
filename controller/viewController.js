@@ -1386,7 +1386,8 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
 
 
 exports.userPlReports = catchAsync(async(req, res, next) => {
-    console.log(req.currentUser._id)
+    let verticalMenus = await verticalMenuModel.find();
+
     let data = await betModel.aggregate([
         {
             $match:{
@@ -1400,7 +1401,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
                 $sum: { $cond: [{ $eq: ["$status", "WON"] }, 1, 0] }
               },
               losses: {
-                $sum: { $cond: [{ $eq: ["$status", "LOST"] }, 1, 0] }
+                $sum: { $cond: [{ $eq: ["$status", "LOSS"] }, 1, 0] }
               },
               profit: {
                 $sum: "$returns"
@@ -1409,5 +1410,9 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
         }
     ])
 
-    console.log(data)
+    res.status(200).render("./userSideEjs/plStatemenet/main",{
+        user: req.currentUser,
+        data,
+        verticalMenus
+    })
 })
