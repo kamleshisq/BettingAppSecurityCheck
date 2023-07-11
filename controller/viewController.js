@@ -352,7 +352,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         title:"Account Statement",
         data:json.userAcc,
         user:req.currentUser,
-        verticalMenus
+        verticalMenus,
+        check:"nothing"
     }));
 });
 
