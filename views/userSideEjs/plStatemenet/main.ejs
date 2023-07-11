@@ -51,12 +51,18 @@
                         </thead>
 
                         <tbody class="acount-stat-tbl-body">
-                            <tr class="acount-stat-tbl-body-tr">
-                                <td>Sportsbook</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td class="c-gren">+95.00</td>
-                            </tr>
+                            <%for(let i = 0; i < data.length; i++){%>
+                                <tr class="acount-stat-tbl-body-tr">
+                                    <td><%=data[i]._id%></td>
+                                    <td><%=data[i].losses%></td>
+                                    <td><%=data[i].wins%></td>
+                                    <%if(data[i].profit < 0){%>
+                                        <td class="c-reed"><%=data[i].profit%></td>
+                                    <%}else{%>
+                                        <td class="c-gren"><%=data[i].profit%></td>
+                                    <%}%>
+                                </tr>
+                            <%}%>
                         </tbody>
 
                     </table>
