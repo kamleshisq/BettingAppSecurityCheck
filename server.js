@@ -1267,7 +1267,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on("UserUpdatePass", async(data) => {
-        console.log(data)
         let fullUrl = "http://127.0.0.1/api/v1/users/updateCurrentUserPass"
         fetch(fullUrl, {
             method: 'POST',
@@ -1275,7 +1274,7 @@ io.on('connection', (socket) => {
                 'Authorization': `Bearer ` + data.LOGINDATA.LOGINTOKEN,
                 'Content-Type': 'application/json',
                 'accept': 'application/json' },
-            body:data.data
+            body:JSON.stringify(data.data)
         }).then(res => res.json())
         .then(Data =>{
             socket.emit('UserUpdatePass', Data)
