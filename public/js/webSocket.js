@@ -45,7 +45,7 @@ socket.on('connect', () => {
     if(data.status === "success"){
         alert("password updated")
     }else{
-        console.log(data)
+        alert(data.message)
     }
    })
 
