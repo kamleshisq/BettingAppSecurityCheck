@@ -1395,49 +1395,18 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
         },
         {
             $group: {
-              _id: '$gameId',
-              gameName: { $first: '$event' },
-              numberOfLoss: {
-                $sum: {
-                  $cond: [
-                    { $eq: ['$status', 'LOST'] },
-                    1,
-                    0
-                  ]
-                }
+              _id: "$userId",
+              wins: {
+                $sum: { $cond: [{ $eq: ["$status", "WON"] }, 1, 0] }
               },
-              numberOfWon: {
-                $sum: {
-                  $cond: [
-                    { $eq: ['$status', 'WON'] },
-                    1,
-                    0
-                  ]
-                }
+              losses: {
+                $sum: { $cond: [{ $eq: ["$status", "LOST"] }, 1, 0] }
               },
               profit: {
-                $sum: {
-                  $cond: [
-                    { $eq: ['$status', 'WON'] },
-                    '$returns',
-                    { $multiply: ['$returns', -1] }
-                  ]
-                }
+                $sum: "$returns"
               }
             }
-          },
-          {
-            $project: {
-              _id: 0,
-              gameName: 1,
-              numberOfLoss: 1,
-              numberOfWon: 1,
-              profit: 1,
-              loss: {
-                $multiply: ['$numberOfLoss', -1]
-              }
-            }
-          }
+        }
     ])
 
     console.log(data)
