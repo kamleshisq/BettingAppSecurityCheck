@@ -590,7 +590,7 @@ exports.useracount = catchAsync(async(req, res, next) => {
         const data = json.userAcc
         res.status(200).render('./userAccountStatement/useracount',{
         title:"UserAccountStatement",
-        me:currentUser,
+        user:currentUser,
         data
     })
 });
