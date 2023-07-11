@@ -461,11 +461,10 @@ exports.currentUserPasswordupdate = catchAsync(async(req, res, next) => {
     // console.log(user)
     user.password = req.body.newPass
     user.passwordConfirm = req.body.confPass
-    try{
-        await user.save();
-    }catch(err){
-        console.log(err)
+    if(req.body.newPass != req.body.confPass){
+        return next(new AppError("Please Provide a same passwords"))
     }
+    await user.save();
     res.status(200).json({
         status:'success',
         user
