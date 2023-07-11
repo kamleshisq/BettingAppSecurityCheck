@@ -342,6 +342,7 @@ exports.edit = catchAsync(async(req, res, next) => {
 exports.myAccountStatment = catchAsync(async(req, res, next) => {
     // let id = req.originalUrl.split("=")[1]
     // console.log(req.query.id)
+    let verticalMenus = await verticalMenuModel.find();
     var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getMyAccStatement'
     fetch(fullUrl, {
         method: 'POST',
@@ -350,7 +351,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     .then(json => res.status(200).render("./userSideEjs/AccountStatements/main", {
         title:"Account Statement",
         data:json.userAcc,
-        user:req.currentUser
+        user:req.currentUser,
+        verticalMenus
     }));
 });
 
