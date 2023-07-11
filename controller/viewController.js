@@ -1413,6 +1413,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
     res.status(200).render("./userSideEjs/plStatemenet/main",{
         user: req.currentUser,
         data,
-        verticalMenus
+        verticalMenus,
+        check:"Nothing"
     })
 })
