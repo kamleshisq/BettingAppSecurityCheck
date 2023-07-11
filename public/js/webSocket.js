@@ -33,7 +33,10 @@ socket.on('connect', () => {
 
     //....................FOR UPDATE ROLE...................//
 
-   
+   $(document).on('submit', ".change-pass-model-form", function(e){
+    e.preventDefault()
+    console.log("Working")
+   })
 
     socket.on("alertMessage", async(data) => {
         console.log(data)
