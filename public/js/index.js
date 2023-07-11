@@ -23,6 +23,7 @@ import { createPage } from "./createpage";
 import { addImage } from "./addImage";
 import { updateSlider } from "./updateSlider";
 import { createSlider } from "./addSlider";
+import { userLogin } from "./userLogin";
 // import { func } from "joi";
 
 
@@ -518,4 +519,13 @@ $(document).on('submit', ".addSlider-form", function(e){
     let form = $(this)[0];
     let fd = new FormData(form);
     createSlider(fd)
+});
+
+$(document).on('submit', ".myloginmodl-form-dv", function(e){
+    e.preventDefault()
+    console.log("Working")
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    let data = Object.fromEntries(fd.entries());
+    userLogin(data)
 })
