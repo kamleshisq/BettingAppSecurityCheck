@@ -1266,6 +1266,21 @@ io.on('connection', (socket) => {
         socket.emit("liveData", {liveFootBall, liveTennis, LiveCricket})
     })
 
+    socket.on("UserUpdatePass", async(data) => {
+        let fullUrl = "http://127.0.0.1/api/v1/users/updateCurrentUserPass"
+        fetch(fullUrl, {
+            method: 'POST',
+            headers: { 
+                'Authorization': `Bearer ` + data.LOGINDATA.LOGINTOKEN,
+                'Content-Type': 'application/json',
+                'accept': 'application/json' },
+            body:data.data
+        }).then(res => res.json())
+        .then(Data =>{
+            console.log("data", Data)
+        })
+    })
+
 
     
 })

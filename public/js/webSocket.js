@@ -35,7 +35,10 @@ socket.on('connect', () => {
 
    $(document).on('submit', ".change-pass-model-form", function(e){
     e.preventDefault()
-    console.log("Working")
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    let data = Object.fromEntries(fd.entries());
+    socket.emit('UserUpdatePass', {data, LOGINDATA});
    })
 
     socket.on("alertMessage", async(data) => {
