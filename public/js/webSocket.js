@@ -42,7 +42,11 @@ socket.on('connect', () => {
    })
 
    socket.on('UserUpdatePass', async(data)=>{
-    console.log(data)
+    if(data.status === "success"){
+        alert("password updated")
+    }else{
+        console.log(data)
+    }
    })
 
     socket.on("alertMessage", async(data) => {

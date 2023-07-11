@@ -1278,7 +1278,7 @@ io.on('connection', (socket) => {
         }).then(res => res.json())
         .then(Data =>{
             socket.emit('UserUpdatePass', Data)
-            console.log(Data)
+            // console.log(Data)
         })
     })
 
