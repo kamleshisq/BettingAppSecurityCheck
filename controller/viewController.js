@@ -348,13 +348,16 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         method: 'POST',
         headers: { 'Authorization': `Bearer ` + req.token }
     }).then(res => res.json())
-    .then(json => res.status(200).render("./userSideEjs/AccountStatements/main", {
-        title:"Account Statement",
-        data:json.userAcc,
-        user:req.currentUser,
-        verticalMenus,
-        check:"nothing"
-    }));
+    .then(json =>
+        console.log(json) 
+    //     res.status(200).render("./userSideEjs/AccountStatements/main", {
+    //     title:"Account Statement",
+    //     data:json.userAcc,
+    //     user:req.currentUser,
+    //     verticalMenus,
+    //     check:"nothing"
+    // })
+    );
 });
 
 
