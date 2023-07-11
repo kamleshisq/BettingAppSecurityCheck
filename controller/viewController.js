@@ -1396,7 +1396,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
         },
         {
             $group: {
-              _id: "$userId",
+              _id: "$event",
               wins: {
                 $sum: { $cond: [{ $eq: ["$status", "WON"] }, 1, 0] }
               },
@@ -1409,7 +1409,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
             }
         }
     ])
-
+    console.log(data)
     res.status(200).render("./userSideEjs/plStatemenet/main",{
         user: req.currentUser,
         data,
