@@ -452,9 +452,9 @@ exports.createUser10000 = catchAsync(async(req, res, next) => {
 });
 
 exports.currentUserPasswordupdate = catchAsync(async(req, res, next) => {
-    // console.log(req.body)
+    console.log(req.body, "working")
     const user = await User.findById(global._User._id).select('+password')
-    // console.log(user)
+    console.log(user)
     if(!await user.correctPassword(req.body.oldPass,user.password)){
         return next(new AppError('your old password is wrong',400))
     }
