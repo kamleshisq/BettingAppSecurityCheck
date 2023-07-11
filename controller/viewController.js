@@ -1386,6 +1386,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
 
 
 exports.userPlReports = catchAsync(async(req, res, next) => {
+    console.log(req.currentUser._id)
     let data = await betModel.aggregate([
         {
             $match:{
