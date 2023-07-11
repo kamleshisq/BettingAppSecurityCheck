@@ -349,7 +349,8 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     }).then(res => res.json())
     .then(json => res.status(200).render("./userSideEjs/AccountStatements/main", {
         title:"Account Statement",
-        data:json.userAcc
+        data:json.userAcc,
+        user:req.currentUser
     }));
 });
 
@@ -590,7 +591,7 @@ exports.useracount = catchAsync(async(req, res, next) => {
         const data = json.userAcc
         res.status(200).render('./userAccountStatement/useracount',{
         title:"UserAccountStatement",
-        user:currentUser,
+        me:currentUser,
         data
     })
 });
