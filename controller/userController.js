@@ -461,7 +461,11 @@ exports.currentUserPasswordupdate = catchAsync(async(req, res, next) => {
     // console.log(user)
     user.password = req.body.newPass
     user.passwordConfirm = req.body.confPass
-    await user.save();
+    try{
+        await user.save();
+    }catch(err){
+        console.log(err)
+    }
     res.status(200).json({
         status:'success',
         user
