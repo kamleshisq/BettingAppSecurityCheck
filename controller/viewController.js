@@ -1390,7 +1390,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
     let data = await betModel.aggregate([
         {
             $match:{
-                userId:req.currentUser._id
+                userId:req.currentUser.id
             }
         },
         {
