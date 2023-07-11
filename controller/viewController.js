@@ -349,14 +349,14 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         headers: { 'Authorization': `Bearer ` + req.token }
     }).then(res => res.json())
     .then(json =>
-        console.log(json) 
-    //     res.status(200).render("./userSideEjs/AccountStatements/main", {
-    //     title:"Account Statement",
-    //     data:json.userAcc,
-    //     user:req.currentUser,
-    //     verticalMenus,
-    //     check:"nothing"
-    // })
+        // console.log(json) 
+        res.status(200).render("./userSideEjs/AccountStatements/main", {
+        title:"Account Statement",
+        data:json.userAcc,
+        user:req.currentUser,
+        verticalMenus,
+        check:"nothing"
+    })
     );
 });
 
