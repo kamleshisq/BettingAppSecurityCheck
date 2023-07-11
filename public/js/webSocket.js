@@ -41,6 +41,10 @@ socket.on('connect', () => {
     socket.emit('UserUpdatePass', {data, LOGINDATA});
    })
 
+   socket.on('UserUpdatePass', async(data)=>{
+    console.log(data)
+   })
+
     socket.on("alertMessage", async(data) => {
         console.log(data)
         alert(data)
