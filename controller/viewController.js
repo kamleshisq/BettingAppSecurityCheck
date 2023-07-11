@@ -1380,3 +1380,64 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         
     })
 })
+
+
+
+
+
+exports.userPlReports = catchAsync(async(req, res, next) => {
+    let data = await betModel.aggregate([
+        {
+            $match:{
+                userId:req.currentUser._id
+            }
+        },
+        {
+            $group: {
+              _id: '$gameId',
+              gameName: { $first: '$event' },
+              numberOfLoss: {
+                $sum: {
+                  $cond: [
+                    { $eq: ['$status', 'LOST'] },
+                    1,
+                    0
+                  ]
+                }
+              },
+              numberOfWon: {
+                $sum: {
+                  $cond: [
+                    { $eq: ['$status', 'WON'] },
+                    1,
+                    0
+                  ]
+                }
+              },
+              profit: {
+                $sum: {
+                  $cond: [
+                    { $eq: ['$status', 'WON'] },
+                    '$returns',
+                    { $multiply: ['$returns', -1] }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              gameName: 1,
+              numberOfLoss: 1,
+              numberOfWon: 1,
+              profit: 1,
+              loss: {
+                $multiply: ['$numberOfLoss', -1]
+              }
+            }
+          }
+    ])
+
+    console.log(data)
+})
