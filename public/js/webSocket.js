@@ -3444,15 +3444,31 @@ socket.on('connect', () => {
                 id = id.slice(0, -1);
                 let section = null;
                 data.items.some(item => {
-                    if(item.runners){
-                        section = item.runners.find(item2 => item2.secId == id)
+                    if(item.market_id == id){
+                        section = item
                     }
                 })
-                if(this.id == `${section.secId}2` ){
-                    this.innerHTML = `<span><b>${section.layPrice}</b></span> 
-                                    <span>${section.laySize}</span>`
+                if(this.id == `${section.secId}1` ){
+                    this.innerHTML = `<span><b>${section.odd}</b></span>`
                 }
             })
+
+            $(".odd_even_red").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.items.some(item => {
+                    if(item.market_id == id){
+                        section = item
+                    }
+                })
+                if(this.id == `${section.secId}1` ){
+                    this.innerHTML = `<span><b>${section.even}</b></span>`
+                }
+            })
+
+
         })
 
         
