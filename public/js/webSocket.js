@@ -3415,6 +3415,7 @@ socket.on('connect', () => {
                     section = item.runners.find(odd => odd.secId == id);
                     return section !== undefined;
                 });
+                console.log(section)
                 if(this.id == `${section.secId}1` ){
                     this.innerHTML = `<span><b>${section.layPrice1}</b></span> 
                                     <span>${section.laySize1}</span>`
