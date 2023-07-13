@@ -3329,7 +3329,8 @@ socket.on('connect', () => {
 
 
     if(pathname === '/exchange_inPlay/match'){
-        console.log(search)
+        let id = search.split('=')[1]
+        console.log(id)
     }
 
 
