@@ -3367,9 +3367,13 @@ socket.on('connect', () => {
                     
                 let id = this.id
                 id = id.slice(0, -1);
-                console.log(id)
-                let data1 = data.items.map(item => item.odds.find(item1 => item1.selectionId === id))
-                console.log(data1)
+                let section = null;
+                data.items.some(item => {
+                    section = item.odds.find(odd => odd.selectionId === selectionId);
+                    return section !== undefined;
+                });
+                // let data1 = data.items.map(item => item.odds.find(item1 => item1.selectionId === id))
+                console.log(section)
             })
         })
 
