@@ -3463,7 +3463,7 @@ socket.on('connect', () => {
                         section = item
                     }
                 })
-                if(this.id == `${section.market_id}1` ){
+                if(this.id == `${section.market_id}2` ){
                     this.innerHTML = `<span><b>${section.even}</b></span>`
                 }
             })
