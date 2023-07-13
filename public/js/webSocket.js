@@ -3438,7 +3438,21 @@ socket.on('connect', () => {
                 }
             })
 
-
+            $(".odd_even_blue").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.items.some(item => {
+                    if(item.runners){
+                        section = item.runners.find(item2 => item2.secId == id)
+                    }
+                })
+                if(this.id == `${section.secId}2` ){
+                    this.innerHTML = `<span><b>${section.layPrice}</b></span> 
+                                    <span>${section.laySize}</span>`
+                }
+            })
         })
 
         
