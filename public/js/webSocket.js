@@ -3373,7 +3373,16 @@ socket.on('connect', () => {
                     return section !== undefined;
                 });
                 // // let data1 = data.items.map(item => item.odds.find(item1 => item1.selectionId === id))
-                console.log(section)
+                if(this.id == `${this.id}1` ){
+                    this.innerHTML = `<span><b>${section.backPrice1}</b></span> 
+                                    <span>${section.backSize1}</span>`
+                }else if(this.id == `${this.id}2`){
+                    this.innerHTML = `<span><b>${section.backPrice2}</b></span> 
+                    <span>${section.backSize2}</span>`
+                }else if (this.id == `${this.id}3`){
+                    this.innerHTML = `<span><b>${section.backPrice3}</b></span> 
+                    <span>${section.backSize3}</span>`
+                }
             })
         })
 
