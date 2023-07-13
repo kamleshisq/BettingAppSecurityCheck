@@ -1401,6 +1401,25 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
 })
 
 
+exports.footBallPage = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    let verticalMenus = await verticalMenuModel.find();
+    const sportListData = await getCrkAndAllData()
+    let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
+    footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
+    let liveFootBall = footBall.filter(item => item.eventData.type === "IN_PLAY");
+    let upcomintFootball = footBall.filter(item => item.eventData.type != "IN_PLAY")
+    res.status(200).render('.//userSideEjs/footballPage/main',{
+        user,
+        verticalMenus,
+        check:"Exchange",
+        data,
+        liveFootBall,
+        upcomintFootball
+    })
+})
+
+
 
 
 
