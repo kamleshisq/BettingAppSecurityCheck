@@ -3371,7 +3371,7 @@ socket.on('connect', () => {
                 console.log(id)
                 console.log(data.items[0].odds)
                 data.items.some(item => {
-                    section = item.odds.find(odd => odd.selectionId === id);
+                    section = item.odds.find(odd => odd.selectionId == id);
                     console.log(section)
                     return section !== undefined;
                 });
