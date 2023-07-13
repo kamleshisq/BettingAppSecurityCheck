@@ -3330,7 +3330,20 @@ socket.on('connect', () => {
 
     if(pathname === '/exchange_inPlay/match'){
         let id = search.split('=')[1]
-        console.log(id)
+        function eventID(){
+            socket.emit("eventId", id)
+            setTimeout(()=>{
+                eventID()
+              }, 500)
+
+        }
+        eventID()
+        socket.on("eventId", async(data)=>{
+            if(data != ""){
+                let score = JSON.parse(data)
+                document.getElementById("score").innerHTML = score[0].data
+            }
+        })
     }
 
 
