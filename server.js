@@ -796,7 +796,6 @@ io.on('connection', (socket) => {
     socket.on("marketId", async(data) => {
         const result = await marketDetailsBymarketID(data)
         let finalResult = result.data
-        console.log(finalResult.items[1].runners)
         socket.emit("marketId", finalResult)
     })
 
