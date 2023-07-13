@@ -3406,6 +3406,21 @@ socket.on('connect', () => {
                 }
             })
 
+            $(".bookmaker_blue").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.items.some(item => {
+                    section = item.runners.find(odd => odd.secId == id);
+                    return section !== undefined;
+                });
+                if(this.id == `${section.secId}1` ){
+                    this.innerHTML = `<span><b>${section.layPrice1}</b></span> 
+                                    <span>${section.laySize1}</span>`
+                }
+            })
+
 
         })
 
