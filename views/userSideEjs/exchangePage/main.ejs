@@ -18,6 +18,7 @@
                             </div>
                         </section>
                         <section class="exchange-pg-tranding-maches-nav-sec" id="liveMatch_data">
+                          <div class="exchange-pg-tranding-maches-nav-sec-wrp">
                             <%for(let i = 0; i < LiveCricket.length; i++){%>
                               <%if(LiveCricket[i].marketList.match_odd != null){%>
                                 <a href="/exchange_sports/live_match?id=<%=LiveCricket[i].eventData.eventId%>">
@@ -42,6 +43,7 @@
                                 </a>
                               <%}%>
                             <%}%>
+                          </div>
                         </section>
                         <section class="exchange-pg-tbl-dvwrp">
                                 <%-include('./table')%>
