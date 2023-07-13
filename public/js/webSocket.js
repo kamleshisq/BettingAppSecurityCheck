@@ -3448,7 +3448,7 @@ socket.on('connect', () => {
                         section = item
                     }
                 })
-                if(this.id == `${section.secId}1` ){
+                if(this.id == `${section.market_id}1` ){
                     this.innerHTML = `<span><b>${section.odd}</b></span>`
                 }
             })
@@ -3463,7 +3463,7 @@ socket.on('connect', () => {
                         section = item
                     }
                 })
-                if(this.id == `${section.secId}1` ){
+                if(this.id == `${section.market_id}1` ){
                     this.innerHTML = `<span><b>${section.even}</b></span>`
                 }
             })
