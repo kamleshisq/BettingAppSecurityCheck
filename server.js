@@ -22,8 +22,7 @@ const gameModel = require('./model/gameModel');
 const getCrkAndAllData = require("./utils/getSportAndCricketList");
 const bannerModel = require('./model/bannerModel');
 const sliderModel = require('./model/sliderModel');
-const { sport } = require('./controller/gameController');
-// http(req, res) => {}
+const liveStream = require("./utils/getLiveStream");
 io.on('connection', (socket) => {
     console.log('connected to client')
     let loginData = {}

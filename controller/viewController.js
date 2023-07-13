@@ -22,7 +22,7 @@ const getmarketDetails = require("../utils/getmarketsbymarketId");
 const fs = require('fs');
 const path = require('path');
 const bannerModel = require('../model/bannerModel');
-
+const liveStreameData = require("../utils/getLiveStream");
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -1428,6 +1428,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         let data1liveCricket = sportData[1].gameList.map(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
         match = data1liveCricket.find(item => item != undefined)
     }
+    const liveStream = await liveStreameData(match.eventData.channelId)
+    console.log(liveStream)
     console.log(match)
     res.status(200).render("./userSideEjs/userMatchDetails/main",{
         user: req.currentUser,

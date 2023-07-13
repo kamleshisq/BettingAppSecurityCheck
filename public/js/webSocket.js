@@ -3344,6 +3344,7 @@ socket.on('connect', () => {
                 document.getElementById("score").innerHTML = score[0].data
             }
         })
+        
     }
 
 
