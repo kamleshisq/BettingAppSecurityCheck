@@ -3394,13 +3394,13 @@ socket.on('connect', () => {
                     section = item.odds.find(odd => odd.selectionId == id);
                     return section !== undefined;
                 });
-                if(this.id == `${section.selectionId}1` ){
+                if(this.id == `${section.selectionId}4` ){
                     this.innerHTML = `<span><b>${section.backPrice1}</b></span> 
                                     <span>${section.backSize1}</span>`
-                }else if(this.id == `${section.selectionId}2`){
+                }else if(this.id == `${section.selectionId}5`){
                     this.innerHTML = `<span><b>${section.backPrice2}</b></span> 
                     <span>${section.backSize2}</span>`
-                }else if (this.id == `${section.selectionId}3`){
+                }else if (this.id == `${section.selectionId}6`){
                     this.innerHTML = `<span><b>${section.backPrice3}</b></span> 
                     <span>${section.backSize3}</span>`
                 }
