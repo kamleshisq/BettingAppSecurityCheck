@@ -20,8 +20,9 @@
                               <%-include("./bookmaker")%>
                             <%}%>
 
-                          
-                            <%-include("./fency")%>
+                            <%if(match.marketList.odd_even != null){%>
+                              <%-include("./fency")%>
+                            <%}%>
 
                         </section>
                         

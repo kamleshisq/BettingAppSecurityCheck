@@ -352,29 +352,31 @@
                 </thead>
 
                 <tbody class="acount-stat-tbl-body">
-                    <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                        <td colspan="2" style="text-align: left;">
-                          1st inning runs Bangladesh
-                        </td>
-
-                        <td><span class="c-activee">Min : 100, Max : 5K</span></td>
-                        
-                        <td >
-                            <span class="tbl-bg-blu-spn">
-                                <span><b>75.5</b></span> 
-                                <span>517.00</span>
-                            </span> 
-                        </td>
-
-                        
-
-                        <td >
-                            <span class="tbl-bg-pech-spn">
-                                <span><b>75.5</b></span> 
-                                <span>517.00</span>
-                            </span> 
-                        </td>  
-                    </tr>
+                    <%for(let i = 0; i < match.marketList.odd_even.length; i++){%>
+                        <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                            <td colspan="2" style="text-align: left;">
+                              1st inning runs Bangladesh
+                            </td>
+    
+                            <td><span class="c-activee">Min : 100, Max : 5K</span></td>
+                            
+                            <td >
+                                <span class="tbl-bg-blu-spn">
+                                    <span><b>75.5</b></span> 
+                                    <span>517.00</span>
+                                </span> 
+                            </td>
+    
+                            
+    
+                            <td >
+                                <span class="tbl-bg-pech-spn">
+                                    <span><b>75.5</b></span> 
+                                    <span>517.00</span>
+                                </span> 
+                            </td>  
+                        </tr>
+                    <%}%>
                     
                 </tbody>
 
