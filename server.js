@@ -1283,7 +1283,7 @@ io.on('connection', (socket) => {
 
 
     socket.on("matchDetails", async(data)=>{
-        console.log(data)
+        
     })
 
 
