@@ -3411,10 +3411,13 @@ socket.on('connect', () => {
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
+                // data.items.some(item => {
+                //     section = item.runners.find(odd => odd.secId == id);
+                //     return section !== undefined;
+                // });
                 data.items.some(item => {
-                    section = item.runners.find(odd => odd.secId == id);
-                    return section !== undefined;
-                });
+                    console.log(item, 2)
+                })
                 console.log(section)
                 if(this.id == `${section.secId}1` ){
                     this.innerHTML = `<span><b>${section.layPrice1}</b></span> 
