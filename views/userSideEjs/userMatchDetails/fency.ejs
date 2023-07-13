@@ -355,24 +355,20 @@
                     <%for(let i = 0; i < match.marketList.odd_even.length; i++){%>
                         <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
                             <td colspan="2" style="text-align: left;">
-                              1st inning runs Bangladesh
+                              <%=match.marketList.odd_even[i].title%>
                             </td>
     
-                            <td><span class="c-activee">Min : 100, Max : 5K</span></td>
+                            <td><span class="c-activee">Min : <%=SportLimits.min_stake%>, Max : <%=SportLimits.max_stake%></span></td>
                             
                             <td >
-                                <span class="tbl-bg-blu-spn">
-                                    <span><b>75.5</b></span> 
-                                    <span>517.00</span>
+                                <span class="tbl-bg-blu-spn odd_even_blue" id="<%=match.marketList.odd_even[i].id%>1">
+                                    
                                 </span> 
                             </td>
     
-                            
-    
                             <td >
-                                <span class="tbl-bg-pech-spn">
-                                    <span><b>75.5</b></span> 
-                                    <span>517.00</span>
+                                <span class="tbl-bg-pech-spn odd_even_red" id="<%=match.marketList.odd_even[i].id%>2">
+                                    
                                 </span> 
                             </td>  
                         </tr>
