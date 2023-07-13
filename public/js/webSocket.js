@@ -3416,7 +3416,9 @@ socket.on('connect', () => {
                 //     return section !== undefined;
                 // });
                 data.items.some(item => {
-                    console.log(item, 2)
+                    if(item.runners){
+                        section = item.runners.find(item2 => item2.secId == id)
+                    }
                 })
                 console.log(section)
                 if(this.id == `${section.secId}1` ){
