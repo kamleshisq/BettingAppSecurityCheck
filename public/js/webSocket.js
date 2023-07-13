@@ -3411,19 +3411,30 @@ socket.on('connect', () => {
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
-                // data.items.some(item => {
-                //     section = item.runners.find(odd => odd.secId == id);
-                //     return section !== undefined;
-                // });
                 data.items.some(item => {
                     if(item.runners){
                         section = item.runners.find(item2 => item2.secId == id)
                     }
                 })
-                console.log(section)
                 if(this.id == `${section.secId}1` ){
-                    this.innerHTML = `<span><b>${section.layPrice1}</b></span> 
-                                    <span>${section.laySize1}</span>`
+                    this.innerHTML = `<span><b>${section.backPrice}</b></span> 
+                                    <span>${section.backSize}</span>`
+                }
+            })
+
+            $(".bookmaker_red").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.items.some(item => {
+                    if(item.runners){
+                        section = item.runners.find(item2 => item2.secId == id)
+                    }
+                })
+                if(this.id == `${section.secId}1` ){
+                    this.innerHTML = `<span><b>${section.layPrice}</b></span> 
+                                    <span>${section.laySize}</span>`
                 }
             })
 
