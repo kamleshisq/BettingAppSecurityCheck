@@ -1420,6 +1420,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
 
 
 exports.getExchangePageIn = catchAsync(async(req, res, next) => {
+    console.log(req.query.id)
     let verticalMenus = await verticalMenuModel.find();
     res.status(200).render("./userSideEjs/userMatchDetails/main",{
         user: req.currentUser,
