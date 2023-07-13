@@ -24,7 +24,6 @@
                     let StringData = match.marketList.bookmaker[0].runners
                     const cleanedString = StringData.replace(/'/g, '');
                     const jsonData = JSON.parse(cleanedString);
-                    console.log(jsonData, 456)
                 %>
                 <%for(let i = 0; i < jsonData.length; i++){%>
                     <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
