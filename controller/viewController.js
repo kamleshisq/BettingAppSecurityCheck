@@ -1430,11 +1430,12 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     }
     const liveStream = await liveStreameData(match.eventData.channelId)
     const betLimit = await betLimitModel.find()
-    console.log(betLimit)
+    let SportLimits = betLimit.find(item => item.type === "Sport")
     res.status(200).render("./userSideEjs/userMatchDetails/main",{
         user: req.currentUser,
         verticalMenus,
         check:"Exchange",
-        match
+        match,
+        SportLimits
     })
 })
