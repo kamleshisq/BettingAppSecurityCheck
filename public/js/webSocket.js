@@ -3372,8 +3372,6 @@ socket.on('connect', () => {
                     section = item.odds.find(odd => odd.selectionId == id);
                     return section !== undefined;
                 });
-                console.log(section)
-                // // let data1 = data.items.map(item => item.odds.find(item1 => item1.selectionId === id))
                 if(this.id == `${section.selectionId}1` ){
                     this.innerHTML = `<span><b>${section.backPrice1}</b></span> 
                                     <span>${section.backSize1}</span>`
@@ -3385,6 +3383,30 @@ socket.on('connect', () => {
                     <span>${section.backSize3}</span>`
                 }
             })
+
+
+            $(".match_odd_Red").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.items.some(item => {
+                    section = item.odds.find(odd => odd.selectionId == id);
+                    return section !== undefined;
+                });
+                if(this.id == `${section.selectionId}1` ){
+                    this.innerHTML = `<span><b>${section.backPrice1}</b></span> 
+                                    <span>${section.backSize1}</span>`
+                }else if(this.id == `${section.selectionId}2`){
+                    this.innerHTML = `<span><b>${section.backPrice2}</b></span> 
+                    <span>${section.backSize2}</span>`
+                }else if (this.id == `${section.selectionId}3`){
+                    this.innerHTML = `<span><b>${section.backPrice3}</b></span> 
+                    <span>${section.backSize3}</span>`
+                }
+            })
+
+
         })
 
         
