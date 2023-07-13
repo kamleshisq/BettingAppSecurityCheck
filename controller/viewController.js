@@ -355,7 +355,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         data:json.userAcc,
         user:req.currentUser,
         verticalMenus,
-        check:"nothing"
+        check:"ACCC"
     })
     );
 });
@@ -1409,11 +1409,11 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
             }
         }
     ])
-    console.log(data)
+    // console.log(data)
     res.status(200).render("./userSideEjs/plStatemenet/main",{
         user: req.currentUser,
         data,
         verticalMenus,
-        check:"Nothing"
+        check:"plStatemenet"
     })
 })
