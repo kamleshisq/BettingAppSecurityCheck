@@ -20,150 +20,63 @@
             </thead>
 
             <tbody class="acount-stat-tbl-body">
-                <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                    <td style=" text-align: left;">
-                        Bangladesh
-                    </td>
-                    
-                    <td >
-                        <span class="tbl-bg-blu-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-
-                    <td >
-                        <span class="tbl-bg-blu-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-
-                    <td >
-                        <span class="tbl-bg-blu-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-
-                    <td >
-                        <span class="tbl-bg-pech-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-                    
-                    <td >
-                        <span class="tbl-bg-pech-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-                    
-                    <td >
-                        <span class="tbl-bg-pech-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-                    
-                </tr>
-                <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                    <td style=" text-align: left;">
-                        Bangladesh
-                    </td>
-                    
-                    <td >
-                        <span class="tbl-bg-blu-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-
-                    <td >
-                        <span class="tbl-bg-blu-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-
-                    <td >
-                        <span class="tbl-bg-blu-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-
-                    <td >
-                        <span class="tbl-bg-pech-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-                    
-                    <td >
-                        <span class="tbl-bg-pech-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-                    
-                    <td >
-                        <span class="tbl-bg-pech-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-                    
-                </tr>
-                <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                    <td style=" text-align: left;">
-                        Bangladesh
-                    </td>
-                    
-                    <td >
-                        <span class="tbl-bg-blu-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-
-                    <td >
-                        <span class="tbl-bg-blu-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-
-                    <td >
-                        <span class="tbl-bg-blu-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-
-                    <td >
-                        <span class="tbl-bg-pech-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-                    
-                    <td >
-                        <span class="tbl-bg-pech-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-                    
-                    <td >
-                        <span class="tbl-bg-pech-spn">
-                            <span><b>75.5</b></span> 
-                            <span>517.00</span>
-                        </span> 
-                    </td>
-                    
-                </tr>
+                <% let runners = JSON.parse(match.marketList.match_odd.runners); %>
+                <% const runners1 = []; %>
+                <%const secIds = []; %>
+                <%runners.forEach(item => {%>
+                    <%runners1.push(item.runner);%>
+                    <%secIds.push(item.secId);%>
+                <%});%>
+                <%for(let i = 0; i < runners1.length; i++){%>
+                    <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                        <td style=" text-align: left;">
+                            <%=runners1[i]%>
+                        </td>
+                        
+                        <td >
+                            <span class="tbl-bg-blu-spn" >
+                                <span><b>75.5</b></span> 
+                                <span>517.00</span>
+                            </span> 
+                        </td>
+    
+                        <td >
+                            <span class="tbl-bg-blu-spn">
+                                <span><b>75.5</b></span> 
+                                <span>517.00</span>
+                            </span> 
+                        </td>
+    
+                        <td >
+                            <span class="tbl-bg-blu-spn">
+                                <span><b>75.5</b></span> 
+                                <span>517.00</span>
+                            </span> 
+                        </td>
+    
+                        <td >
+                            <span class="tbl-bg-pech-spn">
+                                <span><b>75.5</b></span> 
+                                <span>517.00</span>
+                            </span> 
+                        </td>
+                        
+                        <td >
+                            <span class="tbl-bg-pech-spn">
+                                <span><b>75.5</b></span> 
+                                <span>517.00</span>
+                            </span> 
+                        </td>
+                        
+                        <td >
+                            <span class="tbl-bg-pech-spn">
+                                <span><b>75.5</b></span> 
+                                <span>517.00</span>
+                            </span> 
+                        </td>
+                        
+                    </tr>
+                <%}%>
                 
             </tbody>
 
