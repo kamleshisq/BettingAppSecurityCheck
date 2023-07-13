@@ -400,7 +400,103 @@
         padding: 1em 0em;
     }
 
+    .liv-casino-nav-tabcol{
+        overflow-x: scroll;
+        margin-bottom: 10px;
+    }
+
+    .liv-casino-nav-tab-ul{
+        background-color: var(--color3);
+        margin-bottom: 0px;
+        display: flex;
+        flex-wrap: nowrap;
+        width: max-content;
+    }
+
     /* ---------- LIVE CASINO PAGE ----------  */
+
+    /* ---------- EXCHANGE PAGE PAGE ----------  */
+    .exchange-pg-main-col-ro{
+        flex-direction: column-reverse;
+    }
+
+    .mob-dis-no{
+        display: none;
+    }
+
+    .exchange-pg-main-col-mini{
+        position: relative;
+        top: 0;
+        padding-bottom: 10px;
+    }
+
+    .exchange-pg-main-col-big{
+        padding-right: 0px;
+    }
+
+    .nav2menu-dv{
+        padding-top: 20px;
+        display: block;
+    }
+
+    .nav2menu-dv-wrp{
+        display: flex;
+        align-items: center;
+        overflow-x: scroll;
+    }
+
+    .nav2menu-dv-wrp2{
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        width: max-content;
+    }
+
+    .nav2menu-item{
+        text-align: center;
+        width: max-content;
+    }
+
+    .nav2menu-item>img{
+        padding: 5px 5px;
+        background-color: var(--color2);
+        border-radius: 30px;
+    }
+
+    .nav2menu-item>p{
+        margin-bottom: 0;
+        font-size: 13px;
+        color: var(--color4);
+    }
+
+    /* ---------- EXCHANGE PAGE PAGE ----------  */
+
+
+    /* ---------- sports book PAGE PAGE ----------  */
+    .spots-bok-tbl-td-datadv1-inn2{
+        width: max-content;
+    }
+    .spots-bok-tbl-td-datadv1-inn{
+        width: max-content;
+    }
+    .spots-bok-tbl-td-datadv2{
+        width: max-content;
+    }
+
+    .spots-bok-inn-inply-col2{
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .spots-bok-inn-inply-ro{
+        flex-direction: column-reverse;
+    }
+
+    .spots-bok-inn-inply-col{
+        padding-right: 0px;
+    }
+
+    /* ---------- sports book PAGE PAGE ----------  */
 
 }
 
@@ -425,6 +521,15 @@
     .mob-sidevar-mnu-btn-dv {
         display: block;
         cursor: pointer;
+    }
+
+    .side-menu-show{
+        display: block;
+    }
+
+    .nav2menu-dv{
+        padding-top: 20px;
+        display: block;
     }
 }
 
@@ -829,7 +934,33 @@
         padding: 1em 0em;
     }
 
+    .exchange-pg-main-contnr{
+        justify-content: center;
+    }
+
+    .exc-pg-rit-tab-btn{
+        padding: 5px 10px;
+        font-size: 13px;
+    }
+    
+    .exc-pg-rit-tabli>.active{
+        padding: 5px 20px;
+        font-size: 13px;
+    }
+
     /* ---------- LIVE CASINO PAGE ----------  */
+
+
+    /* ---------- EXCHANGE PAGE PAGE ----------  */
+    .exchange-pg-main-sec{
+        justify-content: center;
+    }
+
+    .exchange-pg-inn-banner-col{
+        top: 4.5%;
+    }
+
+    /* ---------- EXCHANGE PAGE PAGE ----------  */
 
 }
 
@@ -1002,6 +1133,10 @@
         flex-direction: column;
         display: inline-flex;
     }
+}
+
+@media (min-width: 768px) and (max-width: 1152px){
+
 }
 
 /* --------------------------------------------------------------------------------------

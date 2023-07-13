@@ -1,0 +1,118 @@
+<%if(liveFootBall.length > 0 && upcomintFootball.length > 0){%>
+    <table class="table table-hover exchange-pg-mytbl">
+    <thead class="exchange-pg-mytbl-hed">
+      <tr class="exchange-pg-mytbl-hed-tr">
+        <th scope="col">Football</th>
+        <th scope="col">1</th>
+        <th scope="col">X</th>
+        <th scope="col">2</th>
+      </tr>
+    </thead>
+    <tbody class="exchange-pg-mytbl-body">
+        <% let cricketNum = 1 %>
+        <%for(let i = 0; i < liveFootBall.length; i++){%>
+            <%if(liveFootBall[i].marketList.match_odd != null){%>
+            <%
+                var timestamp = `${liveFootBall[i].eventData.time}` * 1000; 
+                var date = new Date(timestamp);
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+            %>
+            <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = '/exchange_sports/live_match?id=<%=liveFootBall[i].eventData.eventId%>'; ">
+              <!-- <th scope="row"></th> -->
+              <td class="name1" id="<%=liveFootBall[i].marketList.match_odd.marketId%>">
+                  <div class="exchange-pg-mytbl-body-cricket-data-dv">
+                      <span class="exchange-pg-mytbl-body-liv-dot"></span>
+                      <p>
+                          <%=formattedTime%>
+                      </p>
+                      <p>
+                          <b><%=liveFootBall[i].eventData.name%></b>
+                      </p>
+                  </div>
+              </td>
+              <% let runners = JSON.parse(liveFootBall[i].marketList.match_odd.runners); %>
+                    <% let runners1 = []; %>
+                    <%let secIds = []; %>
+                    <%runners.forEach(item => {%>
+                        <%runners1.push(item.runner);%>
+                        <%secIds.push(item.secId);%>
+                    <%});%>
+                    <%if(runners1.length === 2){%>
+                      <td class="0" id="<%=secIds[0]%>"></td>
+                      <td class="">-</td>
+                      <td class="1" id="<%=secIds[1]%>"></td>
+                      <%}else{%>
+                    <%for(let j = 0; j < runners1.length; j++){%>
+                        <td class="<%=j%>" id="<%=secIds[j]%>"  ></td>
+                    <%}%>
+                    <%}%>
+            </tr>
+            <%cricketNum++%>
+        <%}%>
+        <%}%>
+        <% j = cricketNum %>
+        <%for(let i = 0; i < upcomintFootball.length; i++){%>
+            <%if(upcomintFootball[i].marketList.match_odd != null){%>
+                <%
+                var timestamp = `${upcomintFootball[i].eventData.time}` * 1000; 
+                var date = new Date(timestamp);
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+            %>
+                <tr class="exchange-pg-mytbl-body-tr" onclick="window.location.href = '/exchange_sports/live_match?id=<%=upcomintFootball[i].eventData.eventId%>'; ">
+                    <!-- <th scope="row">2</th> -->
+                    <td class="name1" id="<%=upcomintFootball[i].marketList.match_odd.marketId%>">
+                        <div class="exchange-pg-mytbl-body-cricket-data-dv">
+                            <%= j%>)
+                            <p>
+                                <%=formattedTime%>
+                            </p>
+                            <p>
+                                <b><%=upcomintFootball[i].eventData.name%></b>
+                            </p>
+                        </div>
+                    </td>
+                    <% let runners = JSON.parse(upcomintFootball[i].marketList.match_odd.runners); %>
+                    <% let runners1 = []; %>
+                    <%let secIds = []; %>
+                    <%runners.forEach(item => {%>
+                        <%runners1.push(item.runner);%>
+                        <%secIds.push(item.secId);%>
+                    <%});%>
+                    <%console.log(runners1.length)%>
+                    <%if(runners1.length === 2){%>
+                      <td class="0" id="<%=secIds[0]%>"></td>
+                      <td class="">-</td>
+                      <td class="1" id="<%=secIds[1]%>"></td>
+                      <%}else{%>
+                    <%for(let j = 0; j < runners1.length; j++){%>
+                        <td class="<%=j%>" id="<%=secIds[j]%>"  ></td>
+                    <%}%>
+                    <%}%>
+                  </tr>
+                  <%j++%>
+            <%}%>
+        <%}%>
+    </tbody>
+  </table>
+  <%}%>
+  
+  
+  
+  
+  
