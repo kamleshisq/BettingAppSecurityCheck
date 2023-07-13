@@ -1409,6 +1409,7 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
     footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let liveFootBall = footBall.filter(item => item.eventData.type === "IN_PLAY");
     let upcomintFootball = footBall.filter(item => item.eventData.type != "IN_PLAY")
+    const data = await promotionModel.find();
     res.status(200).render('.//userSideEjs/footballPage/main',{
         user,
         verticalMenus,
