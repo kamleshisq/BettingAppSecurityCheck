@@ -1429,8 +1429,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         match = data1liveCricket.find(item => item != undefined)
     }
     const liveStream = await liveStreameData(match.eventData.channelId)
-    console.log(liveStream)
-    console.log(match)
+    const betLimit = await betLimitModel.find()
+    console.log(betLimit)
     res.status(200).render("./userSideEjs/userMatchDetails/main",{
         user: req.currentUser,
         verticalMenus,
