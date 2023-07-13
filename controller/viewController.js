@@ -1428,7 +1428,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         let data1liveCricket = sportData[1].gameList.map(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
         match = data1liveCricket.find(item => item != undefined)
     }
-    console.log(match.marketList.odd_even)
+    console.log(match)
     const liveStream = await liveStreameData(match.eventData.channelId)
     console.log(liveStream)
     const betLimit = await betLimitModel.find()
