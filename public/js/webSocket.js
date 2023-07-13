@@ -3370,6 +3370,7 @@ socket.on('connect', () => {
                 let section = null;
                 data.items.some(item => {
                     section = item.odds.find(odd => odd.selectionId === id);
+                    console.log(section)
                     return section !== undefined;
                 });
                 // let data1 = data.items.map(item => item.odds.find(item1 => item1.selectionId === id))
