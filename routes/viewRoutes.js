@@ -66,6 +66,7 @@ router.get("/admin/pageManager", authController.isProtected, authController.isAd
 router.get("/", authController.isLogin, viewController.userdashboard);
 router.get('/exchange', authController.isLogin, viewController.getUserExchangePage);
 router.get('/MyPlStatement', authController.isProtected, viewController.userPlReports );
+router.get("/exchange_inPlay/match", authController.isLogin, viewController.getExchangePageIn);
 
 //Testing//
 router.get("/exchange_sports/inplay", authController.isLogin, viewController.getExchangePage);

@@ -1416,4 +1416,9 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
         verticalMenus,
         check:"plStatemenet"
     })
+});
+
+
+exports.getExchangePageIn = catchAsync(async(req, res, next) => {
+    res.status(200).render("./userSideEjs/userMatchDetails/main")
 })
