@@ -3344,6 +3344,16 @@ socket.on('connect', () => {
                 document.getElementById("score").innerHTML = score[0].data
             }
         })
+
+        function matchDetails(){
+            socket.emit("matchDetails", id)
+            setTimeout(()=>{
+                matchDetails()
+              }, 500)
+
+        }
+        matchDetails()
+
         
     }
 
