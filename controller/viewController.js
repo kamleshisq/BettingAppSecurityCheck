@@ -1420,7 +1420,24 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
     })
 })
 
-
+exports.TennisPage = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    let verticalMenus = await verticalMenuModel.find();
+    const sportListData = await getCrkAndAllData()
+    let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
+    Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
+    let liveTennis = Tennis.filter(item => item.eventData.type === "IN_PLAY")
+    let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY")
+    const data = await promotionModel.find();
+    res.status(200).render('.//userSideEjs/tennisPage/main',{
+        user,
+        verticalMenus,
+        check:"Exchange",
+        data,
+        liveTennis,
+        upcomintTennis
+    })
+})
 
 
 
