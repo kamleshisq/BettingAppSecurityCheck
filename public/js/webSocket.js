@@ -3432,7 +3432,7 @@ socket.on('connect', () => {
                         section = item.runners.find(item2 => item2.secId == id)
                     }
                 })
-                if(this.id == `${section.secId}1` ){
+                if(this.id == `${section.secId}2` ){
                     this.innerHTML = `<span><b>${section.layPrice}</b></span> 
                                     <span>${section.laySize}</span>`
                 }
