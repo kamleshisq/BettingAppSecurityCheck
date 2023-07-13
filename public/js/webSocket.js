@@ -3372,6 +3372,7 @@ socket.on('connect', () => {
                     section = item.odds.find(odd => odd.selectionId == id);
                     return section !== undefined;
                 });
+                console.log(section)
                 // // let data1 = data.items.map(item => item.odds.find(item1 => item1.selectionId === id))
                 if(this.id == `${this.id}1` ){
                     this.innerHTML = `<span><b>${section.backPrice1}</b></span> 
