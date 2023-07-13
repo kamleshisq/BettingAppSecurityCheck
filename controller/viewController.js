@@ -1429,7 +1429,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         match = data1liveCricket.find(item => item != undefined)
     }
     console.log(match.marketList.session.slice(-5))
-    console.log(match.marketList.odd_even)
+    console.log(match.marketList)
     const liveStream = await liveStreameData(match.eventData.channelId)
     console.log(liveStream)
     const betLimit = await betLimitModel.find()
