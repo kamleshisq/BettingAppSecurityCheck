@@ -1,3 +1,4 @@
+const path = require("path");
 
 
 
@@ -3325,6 +3326,11 @@ socket.on('connect', () => {
                 });
             })
         })
+    }
+
+
+    if(pathname === '/exchange_inPlay/match'){
+        console.log(search)
     }
 
 
