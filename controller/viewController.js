@@ -1382,6 +1382,25 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
 })
 
 
+exports.cricketPage = catchAsync(async(req, res, next)=>{
+    let user = req.currentUser
+    const sportListData = await getCrkAndAllData()
+    const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
+    let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
+    let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
+    let verticalMenus = await verticalMenuModel.find();
+    const data = await promotionModel.find();
+    res.status(200).render("./userSideEjs/cricketPage/main", {
+        user,
+        verticalMenus,
+        check:"Exchange",
+        data,
+        LiveCricket,
+        upcomintCricket
+    })
+})
+
+
 
 
 
