@@ -1432,7 +1432,6 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         match = eventListArray?.eventList.find(event => event.eventData.eventId === req.query.id)?.eventData;
         console.log(match);
     }
-    console.log(otherSport)
     res.status(200).render("./userSideEjs/userMatchDetails/main",{
         user: req.currentUser,
         verticalMenus,
