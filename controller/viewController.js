@@ -1428,7 +1428,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     if(match === undefined){
         // const otherSport = sportData[1]
         // match =  sportData[1].gameList.map(item => item.eventList.find(item1))
-        const eventListArray = mainArray.find(obj => obj.eventList.some(event => event.eventData.eventId === req.query.id));
+        const eventListArray = sportData[1].gameList.find(obj => obj.eventList.some(event => event.eventData.eventId === req.query.id));
         match = eventListArray?.eventList.find(event => event.eventData.eventId === req.query.id)?.eventData;
         console.log(match);
     }
