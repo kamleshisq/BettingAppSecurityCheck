@@ -1424,7 +1424,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     const sportData = await getCrkAndAllData()
     const cricket = sportData[0].gameList[0].eventList
     let match = cricket.find(item => item.eventData.eventId == req.query.id);
-    console.log(match)
+    console.log( sportData[1].gameList)
     if(match === undefined){
         // const otherSport = sportData[1]
         // match =  sportData[1].gameList.map(item => item.eventList.find(item1))
