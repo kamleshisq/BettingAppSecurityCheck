@@ -3366,7 +3366,9 @@ socket.on('connect', () => {
             $(".match_odd_Blue").each(function() {
                     
                 let id = this.id
-                console.log(id)
+                id = id.slice(0, -1);
+                let data1 = items.map(item => item.odds.find(item1 => item1.selectionId === id))
+                console.log(data1)
             })
         })
 
