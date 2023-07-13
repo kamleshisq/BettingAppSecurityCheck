@@ -1425,6 +1425,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     const cricket = sportData[0].gameList[0].eventList
     let match = cricket.find(item => item.eventData.eventId == req.query.id);
     console.log(match)
+    const otherSport = sportData[1]
+    console.log(otherSport)
     res.status(200).render("./userSideEjs/userMatchDetails/main",{
         user: req.currentUser,
         verticalMenus,
