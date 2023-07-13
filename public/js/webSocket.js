@@ -3374,13 +3374,13 @@ socket.on('connect', () => {
                 });
                 console.log(section)
                 // // let data1 = data.items.map(item => item.odds.find(item1 => item1.selectionId === id))
-                if(this.id == `${this.id}1` ){
+                if(this.id == `${section.selectionId}1` ){
                     this.innerHTML = `<span><b>${section.backPrice1}</b></span> 
                                     <span>${section.backSize1}</span>`
-                }else if(this.id == `${this.id}2`){
+                }else if(this.id == `${section.selectionId}2`){
                     this.innerHTML = `<span><b>${section.backPrice2}</b></span> 
                     <span>${section.backSize2}</span>`
-                }else if (this.id == `${this.id}3`){
+                }else if (this.id == `${section.selectionId}3`){
                     this.innerHTML = `<span><b>${section.backPrice3}</b></span> 
                     <span>${section.backSize3}</span>`
                 }
