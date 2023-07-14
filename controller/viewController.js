@@ -1420,7 +1420,7 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
     res.status(200).render("./userSideEjs/cricketPage/main", {
         user,
         verticalMenus,
-        check:"Exchange",
+        check:"Cricket",
         data,
         LiveCricket,
         upcomintCricket
@@ -1454,7 +1454,7 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
     res.status(200).render('.//userSideEjs/footballPage/main',{
         user,
         verticalMenus,
-        check:"Exchange",
+        check:"Football",
         data,
         liveFootBall,
         upcomintFootball
@@ -1473,7 +1473,7 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
     res.status(200).render('.//userSideEjs/tennisPage/main',{
         user,
         verticalMenus,
-        check:"Exchange",
+        check:"Tennis",
         data,
         liveTennis,
         upcomintTennis
