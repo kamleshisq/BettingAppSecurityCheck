@@ -4,7 +4,7 @@ async function getLiveStream(id){
     let DATA
     // console.log(id)
     let body = {
-            "ipv4":"172.105.58.243",
+            "ipv4":"ollscores.com",
             "channel":`${id}`
         };
     var fullUrl = `https://score-session.dbm9.com/api/tv-stream-2`;
