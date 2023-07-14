@@ -1534,4 +1534,16 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         match,
         SportLimits
     })
+});
+
+exports.getCardInplayGame = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    let verticalMenus = await verticalMenuModel.find();
+    const data = await promotionModel.find();
+    res.status(200).render("./userSideEjs/cards/main",{
+        user,
+        verticalMenus,
+        data,
+        check:"Cards",
+    })
 })
