@@ -8,6 +8,7 @@ async function getLiveStream(id, ipv4){
             "ipv4":`${ipv4}`,
             "channel":`${id}`
         };
+    console.log("body = ", body)
     var fullUrl = `https://score-session.dbm9.com/api/tv-stream-2`;
     await fetch(fullUrl, {
         method: 'POST',
