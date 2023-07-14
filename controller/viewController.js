@@ -1018,6 +1018,7 @@ exports.url123 = catchAsync(async(req, res, next) => {
 })
 
 exports.getSpoertPage = catchAsync(async(req, res, next) => {
+    
     // console.log(req.body.url)
     global.url123 = "/SPORT"
     let user = req.currentUser
@@ -1552,6 +1553,54 @@ exports.getCardInplayGame = catchAsync(async(req, res, next) => {
     let verticalMenus = await verticalMenuModel.find();
     const data = await promotionModel.find();
     res.status(200).render("./userSideEjs/CardInplayPage/main",{
+        user,
+        verticalMenus,
+        data,
+        check:"Cards",
+        urldata
+    })
+})
+
+exports.getSportBookGame = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    let urldata
+    let body = {
+        clientIp: `${req.ip}`,
+        currency: "INR",
+        operatorId: "sheldon",
+        partnerId: "SHPID01",
+        platformId: "DESKTOP",
+        userId: user._id,
+        username: user.userName
+    }
+    function readPem (filename) {
+        return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename)).toString('ascii');
+      }
+
+    const privateKey = readPem('private.pem');
+    const textToSign = JSON.stringify(body);
+    const hashedOutput = SHA256(privateKey, textToSign);
+    // console.log(hashedOutput)
+    var fullUrl = 'https://stage-api.mysportsfeed.io/api/v1/feed/user-login';
+    await fetch(fullUrl, {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Signature': hashedOutput ,
+            'accept': 'application/json'
+            },
+        body:JSON.stringify(body)
+
+    })
+    .then(res => res.json())
+    .then(result => {
+      urldata = result
+    })
+    // console.log(DATA)
+    // return DATA
+    let verticalMenus = await verticalMenuModel.find();
+    const data = await promotionModel.find();
+    res.status(200).render("./userSideEjs/SportBook/main",{
         user,
         verticalMenus,
         data,
