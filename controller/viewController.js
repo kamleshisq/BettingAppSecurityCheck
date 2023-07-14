@@ -1556,5 +1556,6 @@ exports.getCardInplayGame = catchAsync(async(req, res, next) => {
         verticalMenus,
         data,
         check:"Cards",
+        urldata
     })
 })
