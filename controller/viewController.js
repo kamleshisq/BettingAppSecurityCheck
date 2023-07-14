@@ -1604,7 +1604,7 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
         user,
         verticalMenus,
         data,
-        check:"Cards",
+        check:"Sportsbook",
         urldata
     })
 })
