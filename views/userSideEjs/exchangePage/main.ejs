@@ -9,9 +9,14 @@
                 <div class="exchange-pg-main-col-big col-lg-8 col-md-8 col-12">
                     <div class="exchange-pg-main-col-big-wrp">
                         <section class="exchange-pg-banner-sec">
-                            <div class="exchange-pg-banner-sec-wrp">
-                              <img class="hiro-banner-img img-fluid" src="../../assets/img/exchange/exchange-pg-banner.png" alt="banner image">
-                            </div>
+                          <div class="exchange-pg-banner-sec-wrp">
+                            <% let banner1 = data.find(item => item.position == "Exchange_Page_top") %> 
+                            <%if(banner1.status){%>
+                              <a class="promotionLink" id="<%=banner1._id%>"  href="<%=banner1.link%>">
+                                <img class="hiro-banner-img img-fluid" src="/img/<%=banner1.Image%>.png" alt="banner image">
+                              </a>
+                            <%}%>
+                          </div>
                         </section>
                         <section class="exchange-pg-tranding-maches-nav-sec">
                             <div class="exchange-pg-tranding-maches-nav-sec-wrp">
