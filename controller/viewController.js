@@ -1540,7 +1540,7 @@ exports.getCardInplayGame = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find();
     const data = await promotionModel.find();
-    res.status(200).render("./userSideEjs/cards/main",{
+    res.status(200).render("./userSideEjs/CardInplayPage/main",{
         user,
         verticalMenus,
         data,
