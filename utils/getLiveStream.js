@@ -5,7 +5,7 @@ async function getLiveStream(id, ipv4){
     let DATA
     // console.log(id)
     let body = {
-            "ipv4":`${ipv4}`,
+            "ipv4":`172.105.58.243`,
             "channel":`${id}`
         };
     console.log("body = ", body)
