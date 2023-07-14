@@ -3172,6 +3172,12 @@ socket.on('connect', () => {
             let id = $(this).attr("id")
             socket.emit("dleteImageSport", id)
         })
+        socket.on("dleteImageSport", async(data)=>{
+            alert(data)
+            window.setTimeout(()=>{
+                window.location = '/admin/cms'
+            },200)
+        })
 
         socket.on('UpdateSport', async(data) => {
             alert(data)
