@@ -11,7 +11,11 @@
                         <div class="cardspg-col-txt-imgdv-wrp">
                             <span class="cardspg-col-txt-bg-anim-spn"></span>
                             <img class="img-fluid cards-pg-game-img" src="<%=games[i].url_thumb%>" alt="">
+                            <%if(user){%>
                             <a class="cardspg-col-txt-playnow-btn" href="/cards?gameId=<%=games[i]._id%>">PLAY NOW</a>
+                            <%}else{%>
+                            <a class="cardspg-col-txt-playnow-btn" href="/cards?gameId=<%=games[i]._id%>">LOG IN TO CONTINUE</a>
+                            <%}%>
                         </div>
                     </div>
                 </div>
