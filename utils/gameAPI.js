@@ -20,8 +20,7 @@ let body = {
     "username":user.userName,
     "lobby":false,
     "clientIp":"46.101.225.192",
-    "gameId":`${data.game_id}`,
-    "balance":5000
+    "gameId":`${data.game_id}`
    }
 //    console.log(body)
 //    return body
