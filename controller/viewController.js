@@ -1395,7 +1395,7 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
     let liveTennis = Tennis.filter(item => item.eventData.type === "IN_PLAY")
     const data = await promotionModel.find();
     let verticalMenus = await verticalMenuModel.find();
-    res.status(200).render('./userSideEjs/exchangePage/main',{
+    res.status(200).render('./userSideEjs/inplayPage/main',{
         user,
         verticalMenus,
         check:"Exchange",
