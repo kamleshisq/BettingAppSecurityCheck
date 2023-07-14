@@ -1207,6 +1207,7 @@ io.on('connection', (socket) => {
 
     socket.on("dleteImageSport", async(data) => {
         let slider = await sliderModel.findOne({name:"Sport"})
+        console.log()
         let index = slider.images.findIndex(item => item.name == data)
         if(index !== -1) {
             slider.images.splice(index, 1);
