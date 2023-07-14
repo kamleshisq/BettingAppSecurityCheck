@@ -3170,7 +3170,7 @@ socket.on('connect', () => {
         $(document).on('click', ".dleteImageSport", function(e){
             e.preventDefault()
             let id = $(this).attr("id")
-            console.log(id)
+            socket.emit("dleteImageSport", id)
         })
 
         socket.on('UpdateSport', async(data) => {

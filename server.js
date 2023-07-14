@@ -1206,16 +1206,17 @@ io.on('connection', (socket) => {
     })
 
     socket.on("dleteImageSport", async(data) => {
-        let slider = await sliderModel.findOne({name:"Sport"})
-        console.log()
-        let index = slider.images.findIndex(item => item.name == data)
-        if(index !== -1) {
-            slider.images.splice(index, 1);
-            await sliderModel.findByIdAndUpdate(slider._id, slider)
-            socket.emit('dleteImageSport', "image deleted")
-        }else{
-            socket.emit('dleteImageSport', "Please try again later")
-        }
+        let name = data.split("//")[1]
+        let slider = await sliderModel.findOne({name:name})
+        console.log(slider)
+        // let index = slider.images.findIndex(item => item.name == data)
+        // if(index !== -1) {
+        //     slider.images.splice(index, 1);
+        //     await sliderModel.findByIdAndUpdate(slider._id, slider)
+        //     socket.emit('dleteImageSport', "image deleted")
+        // }else{
+        //     socket.emit('dleteImageSport', "Please try again later")
+        // }
     })
 
     socket.on("dleteImageRoyal", async(data) => {
