@@ -1515,7 +1515,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
 
 
 exports.getExchangePageIn = catchAsync(async(req, res, next) => {
-    console.log(req.ipv4, 456)
+    console.log(req.ip, 456)
     let verticalMenus = await verticalMenuModel.find();
     const sportData = await getCrkAndAllData()
     const cricket = sportData[0].gameList[0].eventList
