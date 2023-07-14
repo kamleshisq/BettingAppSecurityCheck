@@ -1484,9 +1484,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         let data1liveCricket = sportData[1].gameList.map(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
         match = data1liveCricket.find(item => item != undefined)
     }
-    console.log(match.marketList.session.sort((a, b) => new Date(b.updated_on) - new Date(a.updated_on)))
     const liveStream = await liveStreameData(match.eventData.channelId)
-    console.log(liveStream)
     const betLimit = await betLimitModel.find()
     let SportLimits = betLimit.find(item => item.type === "Sport")
     res.status(200).render("./userSideEjs/userMatchDetails/main",{
