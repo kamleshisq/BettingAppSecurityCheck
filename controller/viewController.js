@@ -1433,7 +1433,8 @@ exports.cardsPage = catchAsync(async(req, res, next) => {
     res.status(200).render("./userSideEjs/cards/main",{
         user,
         verticalMenus,
-        data
+        data,
+        check:"Cards"
     })
 })
 
