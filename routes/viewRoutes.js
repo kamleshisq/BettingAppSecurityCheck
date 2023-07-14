@@ -71,6 +71,7 @@ router.get('/exchange/tennis', authController.isLogin, viewController.TennisPage
 router.get('/exchange/inPlay', authController.isLogin, viewController.inplayMatches);
 router.get("/allCards", authController.isLogin, viewController.cardsPage);
 router.get("/cards", authController.isProtected, viewController.getCardInplayGame);
+router.get("/premium_sports", authController.isProtected, viewController.getSportBookGame);
 router.get('/MyPlStatement', authController.isProtected, viewController.userPlReports );
 router.get("/exchange_inPlay/match", authController.isLogin, viewController.getExchangePageIn);
 
