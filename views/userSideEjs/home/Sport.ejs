@@ -8,82 +8,34 @@
               <div class="featured-sec-ro--titl1">
                 <div class="featured-sec-ro--titl-txt">
                   <span class="titl-bodr-lft-spn"></span>
-                  <h3 class="featured-sec-ro--titl-txt-tg">FEATURED SPORTS</h3>
+                  <h3 class="featured-sec-ro--titl-txt-tg"><%=sliders[i].name%></h3>
                   <!-- <span class="titl-bhind-txt-spn">featured sports</span> -->
                 </div>
               </div>
               <div class="featured-sec-ro--titl2">
                 <div class="featured-sec-ro--titl-brows-all-btn-dv">
-                  <a class="featured-sec-ro--titl-brows-all-btn" href="">BROWSE ALL</a>
+                  <a class="featured-sec-ro--titl-brows-all-btn" href="<%=sliders[i].mainUrl%>">BROWSE ALL</a>
                 </div>
               </div>
               <div class="bg-elemnt-dv">
-                <h2 class="bg-elemnt-dv-titl">featured sports</h2>
-                <img class="bg-elemnt-dv-img img-fluid" src="assets/img/home/featured-back-element.png" alt="">
+                <h2 class="bg-elemnt-dv-titl"><%=sliders[i].name%></h2>
+                <img class="bg-elemnt-dv-img img-fluid" src="sliderBackgroundImages/<%=sliders[i].backGroundImage%>.png" alt="">
               </div>
             </div>
 
             <div class="featured-sec-slide-ro hiroslide">
 
-              <div class="featured-sec-card-col-dv">
-                <div class="featured-sec-card-col-inn">
-                  <div class="featured-sec-card-col-img-dv">
-                    <a href="#">
-                      <img class="img-fluid featured-sec-card-col-img-tg" src="assets/img/home/featured-slideimg01.png" alt="">
-                    </a>
+              <%for(let j = 0; j < sliders[i].images.length; j++){%>
+                <div class="featured-sec-card-col-dv">
+                  <div class="featured-sec-card-col-inn">
+                    <div class="featured-sec-card-col-img-dv">
+                      <a href="<%=sliders[i].images[j].url%>">
+                        <img class="img-fluid featured-sec-card-col-img-tg" src="sliderImages/<%=sliders[i].images[j].name%>.png" alt="">
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              <div class="featured-sec-card-col-dv">
-                <div class="featured-sec-card-col-inn">
-                  <div class="featured-sec-card-col-img-dv">
-                    <a href="#">
-                      <img class="img-fluid featured-sec-card-col-img-tg" src="assets/img/home/featured-slideimg02.png" alt="">
-                    </a>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="featured-sec-card-col-dv">
-                <div class="featured-sec-card-col-inn">
-                  <div class="featured-sec-card-col-img-dv">
-                    <a href="#">
-                      <img class="img-fluid featured-sec-card-col-img-tg" src="assets/img/home/featured-slideimg03.png" alt="">
-                    </a>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="featured-sec-card-col-dv">
-                <div class="featured-sec-card-col-inn">
-                  <div class="featured-sec-card-col-img-dv">
-                    <a href="#">
-                      <img class="img-fluid featured-sec-card-col-img-tg" src="assets/img/home/featured-slideimg04.png" alt="">
-                    </a>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="featured-sec-card-col-dv">
-                <div class="featured-sec-card-col-inn">
-                  <div class="featured-sec-card-col-img-dv">
-                    <a href="#">
-                      <img class="img-fluid featured-sec-card-col-img-tg" src="assets/img/home/featured-slideimg05.png" alt="">
-                    </a>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="featured-sec-card-col-dv">
-                <div class="featured-sec-card-col-inn">
-                  <div class="featured-sec-card-col-img-dv">
-                    <a href="#">
-                      <img class="img-fluid featured-sec-card-col-img-tg" src="assets/img/home/featured-slideimg01.png" alt="">
-                    </a>
-                  </div>
-                </div>
-              </div>
+              <%}%>
 
             </div>
 
