@@ -1398,7 +1398,7 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
     res.status(200).render('./userSideEjs/inplayPage/main',{
         user,
         verticalMenus,
-        check:"Exchange",
+        check:"In-Play",
         data,
         liveFootBall,
         liveTennis,
