@@ -1549,7 +1549,6 @@ exports.getCardInplayGame = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let gameData = await gameModel.findById(req.query.gameId)
     let urldata = await gameAPI(gameData, user)
-    let dataOfgame = `<iframe src="${urldata.url}" ></iframe>`
     let verticalMenus = await verticalMenuModel.find();
     const data = await promotionModel.find();
     res.status(200).render("./userSideEjs/CardInplayPage/main",{
@@ -1557,6 +1556,5 @@ exports.getCardInplayGame = catchAsync(async(req, res, next) => {
         verticalMenus,
         data,
         check:"Cards",
-        dataOfgame
     })
 })
