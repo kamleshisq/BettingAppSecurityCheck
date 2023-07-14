@@ -1431,7 +1431,6 @@ exports.cardsPage = catchAsync(async(req, res, next) => {
     let verticalMenus = await verticalMenuModel.find();
     const data = await promotionModel.find();
     let games = await gameModel.find();
-    console.log(games)
     res.status(200).render("./userSideEjs/cards/main",{
         user,
         verticalMenus,
