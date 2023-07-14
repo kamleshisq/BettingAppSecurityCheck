@@ -1,10 +1,10 @@
 const fetch = require('node-fetch');
 
-async function getLiveStream(id){
+async function getLiveStream(id, ipv4){
     let DATA
     // console.log(id)
     let body = {
-            "ipv4":"172.105.58.243",
+            "ipv4":`${ipv4}`,
             "channel":`${id}`
         };
     var fullUrl = `https://score-session.dbm9.com/api/tv-stream-2`;
@@ -15,7 +15,7 @@ async function getLiveStream(id){
             'accept': 'application/json' },
         body:JSON.stringify(body)
     })
-    .then(res =>res.text())
+    .then(res =>res.json())
     .then(result => {
         DATA = result
     })

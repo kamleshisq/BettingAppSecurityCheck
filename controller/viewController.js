@@ -1515,7 +1515,14 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
 
 
 exports.getExchangePageIn = catchAsync(async(req, res, next) => {
-    console.log(req.ip, 456)
+    let ip = req.ip
+    let ipv4
+    if (ip.indexOf('::ffff:') === 0) {
+        // Extract the IPv4 portion from the IPv6 address
+        ipv4 = ip.split('::ffff:')[1];
+    }else{
+        ipv4 = ip
+    }
     let verticalMenus = await verticalMenuModel.find();
     const sportData = await getCrkAndAllData()
     const cricket = sportData[0].gameList[0].eventList
@@ -1524,7 +1531,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         let data1liveCricket = sportData[1].gameList.map(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
         match = data1liveCricket.find(item => item != undefined)
     }
-    const liveStream = await liveStreameData(match.eventData.channelId)
+    const liveStream = await liveStreameData(match.eventData.channelId, ipv4)
     console.log(liveStream)
     const betLimit = await betLimitModel.find()
     let SportLimits = betLimit.find(item => item.type === "Sport")
