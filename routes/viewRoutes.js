@@ -69,6 +69,7 @@ router.get('/exchange/cricket', authController.isLogin, viewController.cricketPa
 router.get('/exchange/football', authController.isLogin, viewController.footBallPage);
 router.get('/exchange/tennis', authController.isLogin, viewController.TennisPage);
 router.get('/exchange/inPlay', authController.isLogin, viewController.inplayMatches);
+router.get("/allCards", authController.isLogin, viewController.cardsPage);
 router.get('/MyPlStatement', authController.isProtected, viewController.userPlReports );
 router.get("/exchange_inPlay/match", authController.isLogin, viewController.getExchangePageIn);
 

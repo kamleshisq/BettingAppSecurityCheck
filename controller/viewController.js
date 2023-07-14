@@ -1426,6 +1426,10 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
 })
 
 
+exports.cardsPage = catchAsync(async(req, res, next) => {
+    res.status(200).render("./userSideEjs/cards/main")
+})
+
 exports.footBallPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find();
