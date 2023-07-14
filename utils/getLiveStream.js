@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 
 async function getLiveStream(id, ipv4){
+    console.log(id, ipv4)
     let DATA
     // console.log(id)
     let body = {
