@@ -1535,6 +1535,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     }
     const liveStream = await liveStreameData(match.eventData.channelId, ipv4)
     const betLimit = await betLimitModel.find()
+    console.log(match.marketList)
     let session = match.marketList.session.filter(item => {
         let date = new Date(item.updated_on);
         return date < Date.now() - 1000 * 60 * 60;
