@@ -37,7 +37,20 @@
           <div class="services-sec-col-dv col-lg-11 col-md-11 col-12">
             <div class="services-sec-card-ro">
 
-              
+              <div class="services-sec-card-col col-lg-4 col-md-4 col-12 pad-r-10">
+                <div class="services-sec-card-wrp">
+                  <div class="services-sec-card-img-dv">
+                    <span>
+                      <img class="img-fluid" src="assets/img/home/services-icon01.svg" alt="services">
+                    </span>
+                  </div>
+                  <% let right = = pages.find(item => item.Name === "home_bottom_right")%>
+                  <h5><%=right.heading%></h5>
+                  <p>
+                    <%=right.details%>
+                  </p>
+                </div>
+              </div>
               
             </div>
           </div>
