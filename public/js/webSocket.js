@@ -3480,7 +3480,7 @@ socket.on('connect', () => {
             if(data === "success"){
                 alert("Page updates")
                 setTimeout(()=>{
-                    marketId()
+                    window.location = '/admin/pageManager'
                   }, 500)
             }else{
                 alert("Something Went Wrong Please try again later")
