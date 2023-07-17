@@ -3472,8 +3472,18 @@ socket.on('connect', () => {
             let data = Object.fromEntries(fd.entries());
             let id  = $(this).attr('id')
             data.id = id
-            console.log(data)
-            // socket.emit("updateVerticalMenu", data)
+            socket.emit("updatePage", data)
+        })
+
+        socket.on("updatePage", async(data) => {
+            if(data === "success"){
+                alert("Page updates")
+                setTimeout(()=>{
+                    marketId()
+                  }, 500)
+            }else{
+                alert("Something Went Wrong Please try again later")
+            }
         })
 
     }

@@ -1289,7 +1289,14 @@ io.on('connection', (socket) => {
         socket.emit("checkPage", page)
     })
 
-
+    socket.on("updatePage", async(data) => {
+        let page = await pagesModel.findByIdAndUpdate(data.id,data)
+        if(page){
+            socket.on("updatePage", "success")
+        }else{
+            socket.on("updatePage", "error")
+        }
+    })
 
     
 })
