@@ -9,11 +9,13 @@
     <div class="exch-pg-inn-fancy-tab-wrp">
       <ul class="nav nav-pills mb-3 exch-pg-inn-fancy-tab-ul" id="pills-tab" role="tablist">
         <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
-          <button class="nav-link active exch-pg-inn-fancy-tab-btn" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">tab-01</button>
+          <button class="nav-link active exch-pg-inn-fancy-tab-btn" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">All</button>
         </li>
-        <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
-          <button class="nav-link exch-pg-inn-fancy-tab-btn" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">tab-02</button>
-        </li>
+        <%if(match.marketList.odd_even != null){%>
+          <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
+            <button class="nav-link exch-pg-inn-fancy-tab-btn" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Odd/Even</button>
+          </li>
+        <%}%>
         <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
           <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab4-tab" data-bs-toggle="pill" data-bs-target="#fancytab4" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">tab-03</button>
         </li>
@@ -384,7 +386,7 @@
           </div>
         </div>
         <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-          tab 02
+          Odd/Even
         </div>
         <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab3" role="tabpanel" aria-labelledby="fancytab3-tab" tabindex="0">
           tab 03
