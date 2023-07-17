@@ -3462,7 +3462,7 @@ socket.on('connect', () => {
             console.log(form)
             console.log(data)
             form.find('input[name = "heading"]').attr('value', data.heading)
-            form.find('textarea[name = "details"]').attr('value', data.details)
+            console.log(form.find('textarea[name = "details"]'))
         })
 
     }
