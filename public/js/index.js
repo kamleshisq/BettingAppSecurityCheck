@@ -40,7 +40,6 @@ if(document.querySelector('.loginForm')){
 
 $(document).on('click', ".logOut", function(e){
     e.preventDefault()
-    console.log('Working')
     logout()
 })
 

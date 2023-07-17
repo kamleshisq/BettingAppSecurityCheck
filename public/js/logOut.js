@@ -10,7 +10,7 @@ export const logout = async() => {
             // alert('Logged out successfully!!!!');
             window.setTimeout(()=>{
                 location.href = '/'
-            },1000)
+            },100)
         }
     }catch(err){
         console.log(err);

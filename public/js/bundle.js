@@ -5513,7 +5513,7 @@ var logout = /*#__PURE__*/function () {
             // alert('Logged out successfully!!!!');
             window.setTimeout(function () {
               location.href = '/';
-            }, 1000);
+            }, 100);
           }
           _context.next = 11;
           break;
@@ -6786,7 +6786,6 @@ if (document.querySelector('.loginForm')) {
 ;
 $(document).on('click', ".logOut", function (e) {
   e.preventDefault();
-  console.log('Working');
   (0, _logOut.logout)();
 });
 
