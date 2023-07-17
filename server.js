@@ -1284,6 +1284,11 @@ io.on('connection', (socket) => {
         })
     })
 
+    socket.on("checkPage", async(data) => {
+        let page = await pagesModel.findById(data)
+        socket.emit("checkPage", page)
+    })
+
 
 
     

@@ -3451,6 +3451,21 @@ socket.on('connect', () => {
     }
 
 
+    if(pathname === "/admin/pageManager"){
+        $(document).on("click", ".UploadEjs", async function(){
+            let id = $(this).attr('id')
+            socket.emit("checkPage", id)
+        })
+
+        socket.on("page", async(data) => {
+            let form = $(`#updatePages`)
+                form.find('input[name = "heading"]').attr('value', data.heading)
+                form.find('textarea[name = "details"]').attr('value', data.details)
+        })
+
+    }
+
+
     
 
 
