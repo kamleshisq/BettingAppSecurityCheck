@@ -1286,6 +1286,7 @@ io.on('connection', (socket) => {
 
     socket.on("checkPage", async(data) => {
         let page = await pagesModel.findById(data)
+        console.log(page)
         socket.emit("checkPage", page)
     })
 
