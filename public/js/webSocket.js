@@ -3459,7 +3459,7 @@ socket.on('connect', () => {
 
         socket.on("checkPage", async(data) => {
             let form = $(`.updatePages`)
-            form.attr('id', data.id);
+            form.attr('id', data._id);
             form.find('input[name = "heading"]').attr('value', data.heading)
             form.find('textarea[name = "details"]').html(data.details)
         })
