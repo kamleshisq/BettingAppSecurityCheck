@@ -1292,9 +1292,9 @@ io.on('connection', (socket) => {
     socket.on("updatePage", async(data) => {
         let page = await pagesModel.findByIdAndUpdate(data.id,data)
         if(page){
-            socket.on("updatePage", "success")
+            socket.emit("updatePage", "success")
         }else{
-            socket.on("updatePage", "error")
+            socket.emit("updatePage", "error")
         }
     })
 
