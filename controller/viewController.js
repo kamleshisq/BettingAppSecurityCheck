@@ -1607,4 +1607,10 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
         check:"Sportsbook",
         urldata
     })
-})
+});
+
+
+
+exports.royalGamingPage = catchAsync(async(req, res, next) => {
+    res.status(200).render("./userSideEjs/royalGamingPage/main")
+});
