@@ -74,6 +74,7 @@ router.get("/Royal_casino", authController.isLogin, viewController.royalGamingPa
 router.get("/virtuals", authController.isLogin, viewController.virtualsPage);
 router.get("/cards", authController.isProtected, viewController.getCardInplayGame);
 router.get("/Royal_casinoInplay", authController.isProtected, viewController.getCardInplayGame);
+router.get("/virtualsInPlay", authController.isProtected, viewController.getCardInplayGame);
 router.get("/premium_sports", authController.isProtected, viewController.getSportBookGame);
 router.get('/MyPlStatement', authController.isProtected, viewController.userPlReports );
 router.get("/exchange_inPlay/match", authController.isLogin, viewController.getExchangePageIn);
