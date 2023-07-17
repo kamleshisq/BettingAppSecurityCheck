@@ -3470,7 +3470,7 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
-            let id  = form.find('input[name = "heading"]').attr('id')
+            let id  = $('#heading').attr('id')
             data.id = id
             socket.emit("updatePage", data)
         })
