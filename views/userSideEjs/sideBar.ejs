@@ -1,4 +1,8 @@
-<div class="sidebar-main-sec" id="offsetmenubody">
+<%if(check === "Cards" || check === "Sportsbook"){%>
+  <div class="sidebar-main-sec side-menu-show" id="offsetmenubody">
+<%}else{%>
+  <div class="sidebar-main-sec" id="offsetmenubody">
+<%}%>
   <div class="navigation">
     <ul class="listWrap">
       <%if(check === "Home"){%>
