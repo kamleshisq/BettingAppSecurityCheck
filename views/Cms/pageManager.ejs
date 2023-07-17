@@ -41,7 +41,6 @@
                               <thead>
                                 <th>Sr. No.</th>
                                 <th>Name</th>
-                                <th>Delete</th>
                                 <th>Update</th>
                               </thead>
                               <tbody>
@@ -49,7 +48,6 @@
                                   <tr>
                                     <th><%= i+1 %></th>
                                     <th><%=pages[i].Name%></th>
-                                    <th><button class="deletePage" id="<%=pages[i]._id%>">Delete</button></th>
                                     <th><button data-bs-toggle="modal" data-bs-target="#uploadFile" id="<%=pages[i]._id%>" class="UploadEjs"><i class="fa-solid fa-database"></i></button></th>
                                   </tr>
                                 <%}%>
