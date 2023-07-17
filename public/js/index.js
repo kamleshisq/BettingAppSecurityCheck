@@ -41,7 +41,7 @@ if(document.querySelector('.loginForm')){
 if(document.querySelector('.logOut')){
     document.querySelector('.logOut').addEventListener('click', function(e){
         e.preventDefault()
-        // console.log("working")
+        console.log("working")
         logout()
     })
 };
