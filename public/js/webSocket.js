@@ -3459,6 +3459,8 @@ socket.on('connect', () => {
 
         socket.on("page", async(data) => {
             let form = $(`#updatePages`)
+            console.log(form)
+            console.log(data)
             form.find('input[name = "heading"]').attr('value', data.heading)
             form.find('textarea[name = "details"]').attr('value', data.details)
         })
