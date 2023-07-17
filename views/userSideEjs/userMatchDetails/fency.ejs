@@ -386,7 +386,45 @@
           </div>
         </div>
         <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-          Odd/Even
+          <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
+            <table class="acount-stat-tbl mt-2">
+
+              <thead class="acount-stat-tbl-hed3">
+                  <tr class="acount-stat-tbl-hed-tr3" >
+                      <th colspan="2" style="text-align: left;" class="bod-red-lft " >Odd/Even</th>
+                      <th style="text-align: center;" colspan=""></th>
+                      <th style="text-align: center;" colspan="">Odd</th>
+                      <th style="text-align: center;" colspan="" class="bod-red-rit">Even</th>
+                  </tr>
+              </thead>
+
+              <tbody class="acount-stat-tbl-body">
+                  <%for(let i = 0; i < match.marketList.odd_even.length; i++){%>
+                      <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                          <td colspan="2" style="text-align: left;" class="market" id="<%=match.marketList.odd_even[i].marketId%>">
+                            <%=match.marketList.odd_even[i].title%>
+                          </td>
+  
+                          <td><span class="c-activee">Min : <%=SportLimits.min_stake%>, Max : <%=SportLimits.max_stake%></span></td>
+                          
+                          <td >
+                              <span class="tbl-bg-blu-spn odd_even_blue" id="<%=match.marketList.odd_even[i].marketId%>1">
+                                  
+                              </span> 
+                          </td>
+  
+                          <td >
+                              <span class="tbl-bg-pech-spn odd_even_red" id="<%=match.marketList.odd_even[i].marketId%>2">
+                                  
+                              </span> 
+                          </td>  
+                      </tr>
+                  <%}%>
+                  
+              </tbody>
+
+            </table>
+          </div>
         </div>
         <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab3" role="tabpanel" aria-labelledby="fancytab3-tab" tabindex="0">
           tab 03
