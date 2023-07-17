@@ -1647,3 +1647,16 @@ exports.virtualsPage = catchAsync(async(req, res, next) => {
         games
     })
 });
+
+
+exports.OthersGames = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    let verticalMenus = await verticalMenuModel.find();
+    const data = await promotionModel.find();
+    res.status(200).render("./userSideEjs/others/main",{
+        user,
+        verticalMenus,
+        data,
+        check:"Other",
+    })
+});
