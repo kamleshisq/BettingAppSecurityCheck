@@ -1290,6 +1290,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("updatePage", async(data) => {
+        console.log(data)
         let page = await pagesModel.findByIdAndUpdate(data.id,data)
         if(page){
             socket.emit("updatePage", "success")
