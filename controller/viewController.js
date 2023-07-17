@@ -1547,7 +1547,12 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
 });
 
 exports.getCardInplayGame = catchAsync(async(req, res, next) => {
-    console.log(req.url, "URLLLLLLLLL")
+    let check
+    if(req.url.startsWith('/cards')){
+        check = "Cards"
+    }else if(req.url.startsWith('/Royal_casinoInplay')){
+        check ="Royal Casino"
+    }
     let user = req.currentUser
     let gameData = await gameModel.findById(req.query.gameId)
     let urldata = await gameAPI(gameData, user)
@@ -1557,7 +1562,7 @@ exports.getCardInplayGame = catchAsync(async(req, res, next) => {
         user,
         verticalMenus,
         data,
-        check:"Cards",
+        check,
         urldata
     })
 })
