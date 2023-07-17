@@ -3457,7 +3457,7 @@ socket.on('connect', () => {
             socket.emit("checkPage", id)
         })
 
-        socket.on("page", async(data) => {
+        socket.on("checkPage", async(data) => {
             let form = $(`#updatePages`)
             console.log(form)
             console.log(data)
