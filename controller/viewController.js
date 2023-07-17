@@ -1547,6 +1547,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
 });
 
 exports.getCardInplayGame = catchAsync(async(req, res, next) => {
+    console.log(req.url)
     let user = req.currentUser
     let gameData = await gameModel.findById(req.query.gameId)
     let urldata = await gameAPI(gameData, user)
