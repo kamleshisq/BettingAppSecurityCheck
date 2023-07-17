@@ -8,10 +8,17 @@
           </a>
         </span>
         <span>
-          <a href="#">
-            <img class="img-fluid" src="/assets/img/home/mbl_botom_mnu_icon02.svg" alt="">
-            <h6>Sports</h6>
-          </a>
+          <%if(user){%>
+            <a href="/premium_sports">
+              <img class="img-fluid" src="/assets/img/home/mbl_botom_mnu_icon02.svg" alt="">
+              <h6>Sports</h6>
+            </a>
+            <%}else{%>
+              <a data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+                <img class="img-fluid" src="/assets/img/home/mbl_botom_mnu_icon02.svg" alt="">
+                <h6>Sports</h6>
+              </a>
+            <%}%>
         </span>
         <span>
           <a href="#">
@@ -19,7 +26,7 @@
           </a>
         </span>
         <span>
-          <a href="#">
+          <a href="/Royal_casino">
             <img class="img-fluid" src="/assets/img/home/mbl_botom_mnu_icon03.svg" alt="">
             <h6>Casino</h6>
           </a>
