@@ -1630,3 +1630,18 @@ exports.royalGamingPage = catchAsync(async(req, res, next) => {
         games
     })
 });
+
+
+exports.virtualsPage = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    let verticalMenus = await verticalMenuModel.find();
+    const data = await promotionModel.find();
+    let games = await gameModel.find({category: 'Virtual'});
+    res.status(200).render("./userSideEjs/virtuals/main",{
+        user,
+        verticalMenus,
+        data,
+        check:"Virtuals",
+        games
+    })
+});
