@@ -29,9 +29,15 @@
                 <div class="featured-sec-card-col-dv">
                   <div class="featured-sec-card-col-inn">
                     <div class="featured-sec-card-col-img-dv">
-                      <a href="<%=sliders[i].images[j].url%>">
-                        <img class="img-fluid featured-sec-card-col-img-tg" src="sliderImages/<%=sliders[i].images[j].name%>.png" alt="">
-                      </a>
+                      <%if(sliders[i].name === " ROYAL GAMING" && !user)%{>
+                        <a data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+                          <img class="img-fluid featured-sec-card-col-img-tg" src="sliderImages/<%=sliders[i].images[j].name%>.png" alt="">
+                        </a>
+                      <%}else{%>
+                        <a href="<%=sliders[i].images[j].url%>">
+                          <img class="img-fluid featured-sec-card-col-img-tg" src="sliderImages/<%=sliders[i].images[j].name%>.png" alt="">
+                        </a>
+                      <%}%>
                     </div>
                   </div>
                 </div>
