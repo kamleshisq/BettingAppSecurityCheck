@@ -1537,7 +1537,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     const betLimit = await betLimitModel.find()
     let session = match.marketList.session.filter(item => {
         let date = new Date(item.updated_on);
-        return date > Date.now() - 1000 * 60 * 60;
+        return date < Date.now() - 1000 * 60 * 60;
     });
     console.log(session)
     let SportLimits = betLimit.find(item => item.type === "Sport")
