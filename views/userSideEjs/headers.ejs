@@ -252,6 +252,10 @@
                       <li class="nav-item my-nav-ul-li">
                         <a class="nav-link my-nav-ul-li-a blink-nav-mnu" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
                       </li>
+                      <%}else if(check == "Sportsbook"){%>
+                        <li class="nav-item my-nav-ul-li">
+                          <a class="nav-link my-nav-ul-li-a blink-nav-mnu" data-bs-toggle="modal" data-bs-target="#exampleModalToggle"><%=verticalMenus[i].menuName%> </a>
+                        </li>
                       <%}else if(check == verticalMenus[i].menuName){%>
                         <li class="nav-item my-nav-ul-li">
                           <a class="nav-link my-nav-ul-li-a active-mnu-nav" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
