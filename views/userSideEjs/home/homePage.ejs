@@ -52,6 +52,35 @@
                 </div>
               </div>
               
+              <div class="services-sec-card-col col-lg-4 col-md-4 col-12 ">
+                <div class="services-sec-card-wrp">
+                  <div class="services-sec-card-img-dv">
+                    <span>
+                      <img class="img-fluid" src="assets/img/home/services-icon04.svg" alt="services">
+                    </span>
+                  </div>
+                  <% let middle = pages.find(item => item.Name === "home_bottom_middle")%>
+                  <h5><%=middle.heading%></h5>
+                  <p>
+                    <%=middle.details%>
+                  </p>
+                </div>
+              </div>
+              
+              <div class="services-sec-card-col col-lg-4 col-md-4 col-12 pad-l-10">
+                <div class="services-sec-card-wrp">
+                  <div class="services-sec-card-img-dv">
+                    <span>
+                      <img class="img-fluid" src="assets/img/home/services-icon03.svg" alt="services">
+                    </span>
+                  </div>
+                  <% let left = pages.find(item => item.Name === "home_bottom_left")%>
+                  <h5><%=left.heading%></h5>
+                  <p>
+                    <%=left.details%>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
