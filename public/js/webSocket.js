@@ -3459,6 +3459,8 @@ socket.on('connect', () => {
 
         socket.on("checkPage", async(data) => {
             let form = $(`#updatePages`)
+            console.log(form)
+            console.log(data)
             form.find('input[name = "heading"]').attr('value', data.heading)
             form.find('textarea[name = "details"]').html(data.details)
             form.find('input[name = "heading"]').attr('id', data._id)
@@ -3471,7 +3473,6 @@ socket.on('connect', () => {
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
             let id  = $('.heading').attr('id')
-            console.log(id)
             data.id = id
             socket.emit("updatePage", data)
         })
