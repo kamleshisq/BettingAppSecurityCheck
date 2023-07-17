@@ -13,7 +13,7 @@
                                 <span class="cardspg-col-txt-bg-anim-spn"></span>
                                 <img class="img-fluid cards-pg-game-img" src="<%=games[i].url_thumb%>" alt="">
                                 <%if(user){%>
-                                <a class="cardspg-col-txt-playnow-btn" href="/cards?gameId=<%=games[i]._id%>">PLAY NOW</a>
+                                <a class="cardspg-col-txt-playnow-btn" href="/virtualsInPlay?gameId=<%=games[i]._id%>">PLAY NOW</a>
                                 <%}else{%>
                                 <!-- <a class="cardspg-col-txt-playnow-btn" href="/cards?gameId=<%=games[i]._id%>">CONTINUE TO LOGIN</a> -->
                                 <a class="cardspg-col-txt-playnow-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">CONTINUE TO LOGIN</a>
