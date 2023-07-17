@@ -1612,5 +1612,15 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
 
 
 exports.royalGamingPage = catchAsync(async(req, res, next) => {
-    res.status(200).render("./userSideEjs/royalGamingPage/main")
+    let user = req.currentUser
+    let verticalMenus = await verticalMenuModel.find();
+    const data = await promotionModel.find();
+    let games = await gameModel.find({provider_name:"RG"});
+    res.status(200).render("./userSideEjs/royalGamingPage/main",{
+        user,
+        verticalMenus,
+        data,
+        check:"Royal Casino",
+        games
+    })
 });
