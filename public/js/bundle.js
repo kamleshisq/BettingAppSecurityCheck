@@ -5511,9 +5511,9 @@ var logout = /*#__PURE__*/function () {
           res = _context.sent;
           if (res.data.status === 'success') {
             // alert('Logged out successfully!!!!');
-            window.setTimeout(function () {
-              location.href = '/';
-            }, 100);
+            // window.setTimeout(()=>{
+            location.href = '/';
+            // },100)
           }
           _context.next = 11;
           break;
