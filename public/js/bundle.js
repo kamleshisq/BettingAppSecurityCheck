@@ -5510,10 +5510,7 @@ var logout = /*#__PURE__*/function () {
         case 3:
           res = _context.sent;
           if (res.data.status === 'success') {
-            // alert('Logged out successfully!!!!');
-            // window.setTimeout(()=>{
             location.href = '/';
-            // },100)
           }
           _context.next = 11;
           break;
