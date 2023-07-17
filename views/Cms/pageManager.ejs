@@ -42,7 +42,7 @@
                                 <th>Sr. No.</th>
                                 <th>Name</th>
                                 <th>Delete</th>
-                                <th>Upload New File</th>
+                                <th>Update</th>
                               </thead>
                               <tbody>
                                 <%for(let i = 0; i < pages.length; i++){%>
@@ -83,9 +83,15 @@
                     </div>
                     </div>
                     <div class="row mt-2">
-                    <div class="col">
-                        <label for="ejsFile">Upload EJS File</label>
-                        <input type="file" class="form-control ml0" placeholder="Abitest" name="ejsFile">
+                      <div class="col">
+                        <label for="heading">Heading</label>
+                        <input type="text" class="form-control ml0" placeholder="" name="heading">
+                    </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col">
+                        <label for="details">Details</label>
+                        <input type="text" class="form-control ml0" placeholder="" name="details">
                     </div>
                     </div>
                     <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Add</button>
@@ -100,25 +106,7 @@
           <div class="modal-dialog">
           
           <!-- Modal content-->
-          <div class="modal-content">
-              <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-              </div>
-              <div class="modal-header" style="text-align: center;">
-              <h4 class="modal-title" style="color: #fff;">Upload EJS file</h4>
-              </div>
-              <div class="modal-body">
-              <form class="uploadEJS123">
-                  <div class="row mt-2">
-                  <div class="col">
-                      <label for="ejsFile">Upload EJS File</label>
-                      <input type="file" class="form-control ml0" placeholder="Abitest" name="ejsFile">
-                  </div>
-                  </div>
-                  <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Add</button>
-              </form>
-              </div>
-          </div>
+          
           </div>
       </div>
 

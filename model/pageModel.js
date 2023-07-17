@@ -6,6 +6,14 @@ const pages = mongoose.Schema({
         type:String,
         required:true,
         unique:true
+    },
+    details:{
+        type:String,
+        required:true
+    },
+    heading:{
+        type:String,
+        required:true
     }
 })
 
