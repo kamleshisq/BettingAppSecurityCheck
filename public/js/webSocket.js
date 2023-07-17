@@ -3458,9 +3458,22 @@ socket.on('connect', () => {
         })
 
         socket.on("checkPage", async(data) => {
-            let form = $(`#updatePages`)
+            let form = $(`.updatePages`)
+            form.attr('id', data.id);
             form.find('input[name = "heading"]').attr('value', data.heading)
             form.find('textarea[name = "details"]').html(data.details)
+        })
+
+
+        $(document).on("submit", ".updatePages", async function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            let id  = $(this).attr('id')
+            data.id = id
+            console.log(data)
+            // socket.emit("updateVerticalMenu", data)
         })
 
     }
