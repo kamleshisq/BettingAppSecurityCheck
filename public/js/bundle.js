@@ -6784,14 +6784,19 @@ if (document.querySelector('.loginForm')) {
   });
 }
 ;
-if (document.querySelector('.logOut')) {
-  document.querySelector('.logOut').addEventListener('click', function (e) {
-    e.preventDefault();
-    console.log("working");
-    (0, _logOut.logout)();
-  });
-}
-;
+
+// if(document.querySelector('.logOut')){
+//     document.querySelector('.logOut').addEventListener('click', function(e){
+//         e.preventDefault()
+//         console.log("working")
+//         logout()
+//     })
+// };
+
+$(document).on('click', ".logOut", function (e) {
+  e.preventDefault();
+  (0, _logOut.logout)();
+});
 
 // if(document.querySelector("ResetFORM")){
 //     document.querySelector("ResetFORM").addEventListener("submit", e => {

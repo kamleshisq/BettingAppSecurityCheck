@@ -38,13 +38,18 @@ if(document.querySelector('.loginForm')){
     login(email, password);
 })};
 
-if(document.querySelector('.logOut')){
-    document.querySelector('.logOut').addEventListener('click', function(e){
-        e.preventDefault()
-        console.log("working")
-        logout()
-    })
-};
+// if(document.querySelector('.logOut')){
+//     document.querySelector('.logOut').addEventListener('click', function(e){
+//         e.preventDefault()
+//         console.log("working")
+//         logout()
+//     })
+// };
+
+$(document).on('click', ".logOut", function(e){
+    e.preventDefault()
+    logout()
+})
 
 // if(document.querySelector("ResetFORM")){
 //     document.querySelector("ResetFORM").addEventListener("submit", e => {
