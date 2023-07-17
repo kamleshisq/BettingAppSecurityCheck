@@ -38,16 +38,9 @@ if(document.querySelector('.loginForm')){
     login(email, password);
 })};
 
-// if(document.querySelector('.logOut')){
-//     document.querySelector('.logOut').addEventListener('click', function(e){
-//         e.preventDefault()
-//         console.log("working")
-//         logout()
-//     })
-// };
-
 $(document).on('click', ".logOut", function(e){
     e.preventDefault()
+    console.log('Working')
     logout()
 })
 

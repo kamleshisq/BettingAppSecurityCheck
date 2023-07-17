@@ -5510,7 +5510,7 @@ var logout = /*#__PURE__*/function () {
         case 3:
           res = _context.sent;
           if (res.data.status === 'success') {
-            alert('Logged out successfully!!!!');
+            // alert('Logged out successfully!!!!');
             window.setTimeout(function () {
               location.href = '/';
             }, 1000);
@@ -6784,17 +6784,9 @@ if (document.querySelector('.loginForm')) {
   });
 }
 ;
-
-// if(document.querySelector('.logOut')){
-//     document.querySelector('.logOut').addEventListener('click', function(e){
-//         e.preventDefault()
-//         console.log("working")
-//         logout()
-//     })
-// };
-
 $(document).on('click', ".logOut", function (e) {
   e.preventDefault();
+  console.log('Working');
   (0, _logOut.logout)();
 });
 

@@ -7,7 +7,7 @@ export const logout = async() => {
             url:'/api/v1/auth/logOut'
         });
         if(res.data.status === 'success'){
-            alert('Logged out successfully!!!!');
+            // alert('Logged out successfully!!!!');
             window.setTimeout(()=>{
                 location.href = '/'
             },1000)
