@@ -1,3 +1,4 @@
+const { doc } = require("prettier");
 
 
 
@@ -3459,6 +3460,7 @@ socket.on('connect', () => {
               console.log('Button ID:', buttonId);
               console.log('Span Inner Text:', spanInnerText);
               document.getElementById("betOn").innerHTML = `Bet on  :${teamName}@${spanInnerText}`
+              document.getElementById("oddsValue").innerHTML = spanInnerText
             });
           });
 
