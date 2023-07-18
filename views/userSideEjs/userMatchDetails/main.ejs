@@ -53,38 +53,92 @@
                     <div class="tab-content exc-pg-rit-tabtxt" id="pills-tabContent">
                       <div class="tab-pane fade show active exc-pg-rit-tabtxt-datadv" id="pills-homea" role="tabpanel" aria-labelledby="pills-homea-tab" tabindex="0">
 
-                        <form id="bet-form">
-                          <div>
-                              <label for="bet-title">Title:</label>
-                              <input type="text" id="bet-title" name="title" required>
+                        <form class="exc-pg-rit-tabtxt-form" >
+                          <div class="exc-pg-rit-tabtxt-dat-ro1">
+                            <div class="exc-pg-rit-tabtxt-dat-ro1-col">
+                              <label for="betOn">Bet on:</label>
+                              <input type="text" id="betOn" name="betOn" value="Bangladesh @ 1.75" readonly>
+                            </div>
+                            <div class="exc-pg-rit-tabtxt-dat-ro1-col">
+                              <button type="button" class="clear-all-btn">Clear All</button>
+                            </div>
                           </div>
-                          <div>
-                              <label for="bet-odds">Odds:</label>
-                              <input type="number" id="bet-odds" name="odds" step="0.01" required>
-                          </div>
-                          <div>
-                              <label for="bet-stake">Stake:</label>
-                              <input type="number" id="bet-stake" name="stake" step="0.01" required>
-                          </div>
-                          <div>
-                            <input type="checkbox" id="option1" name="option1" value="Option 1">
-                            <label for="option1">Auto change Odds value </label><br>
-                          </div>
-                          <div>
-                              <label for="bet-stake-options">Stake Options:</label>
-                              <div>
-                                  <button type="button" onclick="updateStake('5')">5</button>
-                                  <button type="button" onclick="updateStake('10')">10</button>
-                                  <button type="button" onclick="updateStake('20')">20</button>
-                                  <button type="button" onclick="updateStake('50')">50</button>
-                                  <button type="button" onclick="updateStake('100')">100</button>
-                                  <button type="button" onclick="updateStake('200')">200</button>
+                        
+                          <div class="exc-pg-rit-tabtxt-dat-ro2">
+                            <div class="ecc-pg-rit-ods-data-ro">
+                              <div class="ecc-pg-rit-ods-data-col">
+                                <p>Odds</p>
+                                <div class="ecc-pg-rit-ods-data-opration">
+                                  <button type="button" class="plus-btn"><i class="fa-solid fa-plus"></i></button>
+                                  <input type="text" id="odds" name="odds" value="1.75" readonly>
+                                  <button type="button" class="minus-btn"><i class="fa-solid fa-minus"></i></button>
+                                </div>
                               </div>
+                        
+                              <div class="ecc-pg-rit-ods-data-col">
+                                <p>Stake</p>
+                                <div class="ecc-pg-rit-ods-data-opration2">
+                                  <input type="text" id="stake" name="stake" value="500">
+                                </div>
+                              </div>
+                        
+                              <div class="ecc-pg-rit-ods-data-col">
+                                <p>Profit</p>
+                                <div class="ecc-pg-rit-ods-data-opration2">
+                                  <span class="c-gren">500.00</span>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                          <div>
-                              <input type="submit" name="button" value="Place Bet" id="SUBMIT">
+                        
+                          <div class="exc-pg-rit-tabtxt-data-stack-num-rowrp">
+                            <div class="exc-pg-rit-tabtxt-data-stack-num-ro">
+                              <div class="exc-pg-rit-tabtxt-data-stack-num-col">
+                                <span>100</span>
+                              </div>
+                              <div class="exc-pg-rit-tabtxt-data-stack-num-col">
+                                <span>500</span>
+                              </div>
+                              <div class="exc-pg-rit-tabtxt-data-stack-num-col">
+                                <span>1000</span>
+                              </div>
+                              <div class="exc-pg-rit-tabtxt-data-stack-num-col">
+                                <span>5000</span>
+                              </div>
+                            </div>
+                        
+                            <div class="exc-pg-rit-tabtxt-data-stack-num-ro">
+                              <div class="exc-pg-rit-tabtxt-data-stack-num-col">
+                                <span>10,000</span>
+                              </div>
+                              <div class="exc-pg-rit-tabtxt-data-stack-num-col">
+                                <span>50,000</span>
+                              </div>
+                              <div class="exc-pg-rit-tabtxt-data-stack-num-col">
+                                <span>1,00,000</span>
+                              </div>
+                              <div class="exc-pg-rit-tabtxt-data-stack-num-col">
+                                <span>5,00,000</span>
+                              </div>
+                            </div>
                           </div>
-                      </form>
+                        
+                          <div class="exc-pg-rit-tabtxt-data-stack-minmax">
+                            <div class="exc-pg-rit-tabtxt-data-stack-minmax-ro">
+                              <div class="exc-pg-rit-tabtxt-data-stack-minmax-col">
+                                <button type="button" class="min-stake-btn">MIN STAKE</button>
+                              </div>
+                              <div class="exc-pg-rit-tabtxt-data-stack-minmax-col">
+                                <button type="button" class="max-stake-btn">MAX STAKE</button>
+                              </div>
+                              <div class="exc-pg-rit-tabtxt-data-stack-minmax-col">
+                                <button type="button" class="all-in-btn">ALL IN</button>
+                              </div>
+                            </div>
+                          </div>
+                        
+                          <button type="submit" class="submit-btn">Submit</button>
+                        </form>
 
                       </div>
                       <div class="tab-pane fade exc-pg-rit-tabtxt-datadv" id="pills-profileb" role="tabpanel" aria-labelledby="pills-profileb-tab" tabindex="0">
