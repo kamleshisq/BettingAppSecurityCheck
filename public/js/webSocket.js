@@ -3447,6 +3447,10 @@ socket.on('connect', () => {
 
         })
 
+
+        const buttons = document.getElementsByClassName('button');
+        let popup = document.getElementById('');
+
         
     }
 
