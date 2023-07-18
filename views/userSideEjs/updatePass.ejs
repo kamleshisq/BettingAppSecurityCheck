@@ -42,14 +42,12 @@
     </div>
   </div>
   <% if (userLog && userLog.length === 1) { %>
+    <%if(userLog[0].logs.length === 0)%>
     <script>
       $(document).ready(function() {
-        var modalShown = localStorage.getItem('modalShown');
-        if (!modalShown) {
           $('#navmod1').modal('show');
-          localStorage.setItem('modalShown', true);
         }
-      });
+      );
     </script>
   <% } %>
   
