@@ -3522,6 +3522,7 @@ socket.on('connect', () => {
                              </a>
                             </div>`
             }
+            console.log(html)
             document.getElementById("games").innerHTML = html
           })
     }
