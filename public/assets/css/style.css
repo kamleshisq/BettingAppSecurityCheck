@@ -1541,7 +1541,7 @@ a{
     font-size: 13px;
 }
 
-.exc-pg-rit-tabtxt-dat-ro1-col>span>span{
+.exc-pg-rit-tabtxt-dat-ro1-col>input>input{
     color: var(--color2);
     font-weight: 600;
 }
@@ -1551,7 +1551,7 @@ a{
     color: var(--color2);
 }
 
-.exc-pg-rit-tabtxt-dat-ro1-col>a:hover{
+.exc-pg-rit-tabtxt-dat-ro1-col>button:hover{
     color: var(--color2);
 }
 
