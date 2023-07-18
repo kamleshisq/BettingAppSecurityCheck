@@ -3486,7 +3486,11 @@ socket.on('connect', () => {
 
         $(document).on("click", ".PLACEBET", function(e){
             e.preventDefault()
-            
+            let data = {}
+            let title = document.getElementsByClassName("eventTitle")
+            data.title = title[0].innerText.trim();
+            data.eventId = title[0].id
+            console.log(data)
         })
         
     }
