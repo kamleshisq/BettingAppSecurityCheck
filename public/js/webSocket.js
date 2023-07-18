@@ -3489,10 +3489,14 @@ socket.on('connect', () => {
             let data = {}
             let title = document.getElementsByClassName("eventTitle")
             let odd = document.getElementsByClassName("oddsvalue")
+            let market = document.getElementsByClassName("betOn")
             data.title = title[0].innerText.trim();
             data.eventId = title[0].id
             data.odds = odd[0].innerText.trim();
             data.secId = odd[0].id.slice(0,-1)
+            data.market = market[0].id
+            data.stake = document.getElementById("stakeSpan").innerText.trim();
+            data.spoetId = this.id
             console.log(data)
         })
         
