@@ -347,8 +347,8 @@ exports.edit = catchAsync(async(req, res, next) => {
 exports.myAccountStatment = catchAsync(async(req, res, next) => {
     // let id = req.originalUrl.split("=")[1]
     let userLog
-    if(req.createUser){
-        userLog = await loginLogs.find({user_id:req.createUser._id})
+    if(req.currentUser){
+        userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
     // console.log(req.query.id)
     let verticalMenus = await verticalMenuModel.find();
@@ -1548,7 +1548,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
     let userLog
     console.log(req.currentUser)
     if(req.currentUser){
-        userLog = await loginLogs.find({user_id:req.createUser.id})
+        userLog = await loginLogs.find({user_id:req.currentUser.id})
     }
     // console.log(data)
     res.status(200).render("./userSideEjs/plStatemenet/main",{
