@@ -41,11 +41,18 @@
       </div>
     </div>
   </div>
-  <% if (userLog && userLog.length === 1 && !sessionStorage.getItem('modalShown')) { %>
+  <% if (userLog && userLog.length === 1) { %>
     <script>
       $(document).ready(function() {
-        $('#navmod1').modal('show');
-        sessionStorage.setItem('modalShown', true);
+        var modalShown = localStorage.getItem('modalShown');
+        if (!modalShown) {
+          $('#navmod1').modal('show');
+          localStorage.setItem('modalShown', true);
+        }
       });
     </script>
   <% } %>
+  
+  
+  
+  
