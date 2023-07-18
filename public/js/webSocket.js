@@ -3525,7 +3525,7 @@ socket.on('connect', () => {
             document.getElementById("games").innerHTML = html
 
             let vertuals = games.filter(item => item.category == "Virtual")
-            let htmlV
+            let htmlV = ""
             for(let i = 0; i < vertuals.length; i++){
                 htmlV += `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
                 <a class="liv-casino-games-cards-a" href="#">
