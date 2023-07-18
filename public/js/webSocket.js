@@ -3460,7 +3460,7 @@ socket.on('connect', () => {
               console.log('Button ID:', buttonId);
               console.log('Span Inner Text:', spanInnerText);
               elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
-              elements[0].id = 
+              elements[0].id = parentRow.querySelector('td:first-child').id;
               document.getElementById("oddsValue").innerHTML = spanInnerText
             });
           });
