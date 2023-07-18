@@ -3464,7 +3464,7 @@ socket.on('connect', () => {
           });
 
             var spans = document.querySelectorAll('.exc-pg-rit-tabtxt-data-stack-num-col span');
-            var stakeSpan = document.querySelector('.ecc-pg-rit-ods-data-col p:contains("Stake") + div span');
+            var stakeSpan = document.querySelector('#stakeSpan');
             spans.forEach(function(span) {
             span.addEventListener('click', function() {
                 var spanInnerText = span.innerText.trim();
