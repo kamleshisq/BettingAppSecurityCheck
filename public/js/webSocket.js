@@ -3463,6 +3463,7 @@ socket.on('connect', () => {
               elements[0].id = parentRow.querySelector('td:first-child').id;
               var elements2 = document.getElementsByClassName('oddsvalue');
               elements2[0].innerHTML = spanInnerText
+              elements2[0].id = this.id;
             });
           });
 
