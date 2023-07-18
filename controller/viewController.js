@@ -1547,7 +1547,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
     ])
     let userLog
     if(req.currentUser){
-        userLog = await loginLogs.find({user_id:req.createUser._id})
+        userLog = await loginLogs.find({user_id:req.createUser.id})
     }
     // console.log(data)
     res.status(200).render("./userSideEjs/plStatemenet/main",{
