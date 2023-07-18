@@ -518,144 +518,31 @@
                                   </div>
                                 </div>
                                 <div class="tab-pane fade" id="pills-contact3" role="tabpanel" aria-labelledby="pills-contact3-tab" tabindex="0">
-                                  <div class="liv-casino-nav-tab-txtcards-dv">
-
-                                    <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
-                                      <a class="liv-casino-games-cards-a" href="#">
-                                        <div class="liv-casino-games-cards-imgdv">
-                                          <img class="img-fluid img-bdr-red15" src="assets/img/live-casino/live-casino-games.png" alt="">
-                                          <div class="liv-casino-games-cards-txt">
-                                            <div class="liv-casino-games-cards-txtcol">
-                                              <h6>Game Name</h6>
-                                              <i class="fa-regular fa-heart"></i>
+                                  <div class="liv-casino-nav-tab-txtcards-dv" id="vertuals">
+                                    <%let vertuals = games.filter(item => item.category == "Virtual")%>
+                                    <%for(let i = 0; i < vertuals.length; i++){%>
+                                      <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
+                                        <a class="liv-casino-games-cards-a" href="#">
+                                          <div class="liv-casino-games-cards-imgdv">
+                                            <img class="img-fluid img-bdr-red15" src="<%=vertuals[i].url_thumb%>" alt="">
+                                            <div class="liv-casino-games-cards-txt">
+                                              <div class="liv-casino-games-cards-txtcol">
+                                                <h6><%=vertuals[i].game_name%></h6>
+                                                <i class="fa-regular fa-heart"></i>
+                                              </div>
+                                            </div>
+                                            <div class="liv-casino-games-cards-txt2">
+                                              <%if(user){%>
+                                                <a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=<%=vertuals[i]._id%>">PLAY NOW</a>
+                                                <%}else{%>
+                                                <!-- <a class="liv-casino-games-cards-txt2-btn" href="/cards?gameId=<%=games[i]._id%>">LOGIN TO CONTINUE</a> -->
+                                                <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
+                                                <%}%>
                                             </div>
                                           </div>
-                                          <div class="liv-casino-games-cards-txt2">
-                                            <a class="liv-casino-games-cards-txt2-btn" href="#"> PLAY NOW </a>
-                                          </div>
-                                        </div>
-                                      </a>
-                                    </div>
-                                    
-                                    <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
-                                      <a class="liv-casino-games-cards-a" href="#">
-                                        <div class="liv-casino-games-cards-imgdv">
-                                          <img class="img-fluid img-bdr-red15" src="assets/img/live-casino/live-casino-games.png" alt="">
-                                          <div class="liv-casino-games-cards-txt">
-                                            <div class="liv-casino-games-cards-txtcol">
-                                              <h6>Game Name</h6>
-                                              <i class="fa-regular fa-heart"></i>
-                                            </div>
-                                          </div>
-                                          <div class="liv-casino-games-cards-txt2">
-                                            <a class="liv-casino-games-cards-txt2-btn" href="#"> PLAY NOW </a>
-                                          </div>
-                                        </div>
-                                      </a>
-                                    </div>
-
-                                    <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
-                                      <a class="liv-casino-games-cards-a" href="#">
-                                        <div class="liv-casino-games-cards-imgdv">
-                                          <img class="img-fluid img-bdr-red15" src="assets/img/live-casino/live-casino-games.png" alt="">
-                                          <div class="liv-casino-games-cards-txt">
-                                            <div class="liv-casino-games-cards-txtcol">
-                                              <h6>Game Name</h6>
-                                              <i class="fa-regular fa-heart"></i>
-                                            </div>
-                                          </div>
-                                          <div class="liv-casino-games-cards-txt2">
-                                            <a class="liv-casino-games-cards-txt2-btn" href="#"> PLAY NOW </a>
-                                          </div>
-                                        </div>
-                                      </a>
-                                    </div>
-
-                                    <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
-                                      <a class="liv-casino-games-cards-a" href="#">
-                                        <div class="liv-casino-games-cards-imgdv">
-                                          <img class="img-fluid img-bdr-red15" src="assets/img/live-casino/live-casino-games.png" alt="">
-                                          <div class="liv-casino-games-cards-txt">
-                                            <div class="liv-casino-games-cards-txtcol">
-                                              <h6>Game Name</h6>
-                                              <i class="fa-regular fa-heart"></i>
-                                            </div>
-                                          </div>
-                                          <div class="liv-casino-games-cards-txt2">
-                                            <a class="liv-casino-games-cards-txt2-btn" href="#"> PLAY NOW </a>
-                                          </div>
-                                        </div>
-                                      </a>
-                                    </div>
-
-                                    <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
-                                      <a class="liv-casino-games-cards-a" href="#">
-                                        <div class="liv-casino-games-cards-imgdv">
-                                          <img class="img-fluid img-bdr-red15" src="assets/img/live-casino/live-casino-games.png" alt="">
-                                          <div class="liv-casino-games-cards-txt">
-                                            <div class="liv-casino-games-cards-txtcol">
-                                              <h6>Game Name</h6>
-                                              <i class="fa-regular fa-heart"></i>
-                                            </div>
-                                          </div>
-                                          <div class="liv-casino-games-cards-txt2">
-                                            <a class="liv-casino-games-cards-txt2-btn" href="#"> PLAY NOW </a>
-                                          </div>
-                                        </div>
-                                      </a>
-                                    </div>
-
-                                    <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
-                                      <a class="liv-casino-games-cards-a" href="#">
-                                        <div class="liv-casino-games-cards-imgdv">
-                                          <img class="img-fluid img-bdr-red15" src="assets/img/live-casino/live-casino-games.png" alt="">
-                                          <div class="liv-casino-games-cards-txt">
-                                            <div class="liv-casino-games-cards-txtcol">
-                                              <h6>Game Name</h6>
-                                              <i class="fa-regular fa-heart"></i>
-                                            </div>
-                                          </div>
-                                          <div class="liv-casino-games-cards-txt2">
-                                            <a class="liv-casino-games-cards-txt2-btn" href="#"> PLAY NOW </a>
-                                          </div>
-                                        </div>
-                                      </a>
-                                    </div>
-
-                                    <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
-                                      <a class="liv-casino-games-cards-a" href="#">
-                                        <div class="liv-casino-games-cards-imgdv">
-                                          <img class="img-fluid img-bdr-red15" src="assets/img/live-casino/live-casino-games.png" alt="">
-                                          <div class="liv-casino-games-cards-txt">
-                                            <div class="liv-casino-games-cards-txtcol">
-                                              <h6>Game Name</h6>
-                                              <i class="fa-regular fa-heart"></i>
-                                            </div>
-                                          </div>
-                                          <div class="liv-casino-games-cards-txt2">
-                                            <a class="liv-casino-games-cards-txt2-btn" href="#"> PLAY NOW </a>
-                                          </div>
-                                        </div>
-                                      </a>
-                                    </div>
-
-                                    <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
-                                      <a class="liv-casino-games-cards-a" href="#">
-                                        <div class="liv-casino-games-cards-imgdv">
-                                          <img class="img-fluid img-bdr-red15" src="assets/img/live-casino/live-casino-games.png" alt="">
-                                          <div class="liv-casino-games-cards-txt">
-                                            <div class="liv-casino-games-cards-txtcol">
-                                              <h6>Game Name</h6>
-                                              <i class="fa-regular fa-heart"></i>
-                                            </div>
-                                          </div>
-                                          <div class="liv-casino-games-cards-txt2">
-                                            <a class="liv-casino-games-cards-txt2-btn" href="#"> PLAY NOW </a>
-                                          </div>
-                                        </div>
-                                      </a>
-                                    </div>
-
+                                        </a>
+                                      </div>
+                                    <%}%>
                                   </div>
                                 </div>
                                 

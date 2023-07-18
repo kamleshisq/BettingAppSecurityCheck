@@ -1,0 +1,11 @@
+body: {
+  betType: 'Casino',
+  gameId: '200138',
+  operatorId: 'sheldon',
+  reqId: 'b73f9d78-b808-4058-9c52-893a3e7323ab',
+  rollbackAmount: 0.4,
+  roundId: 'aea05645-b4f7-5d8d-9977-27433f8efd19',
+  token: '074545a3-a425-412a-876a-c7df1c1eac56',
+  transactionId: '97e4e244-e2c5-5a3a-8b05-4ec731ec2a39',
+  userId: '6493e047c3e2ff53a3b431fb'
+}
