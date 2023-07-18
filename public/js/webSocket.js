@@ -3449,7 +3449,7 @@ socket.on('connect', () => {
 
 
         var buttons = document.querySelectorAll('.tbl-data-href button');
-        var betOnElement = document.querySelector('.betOn');
+        const elements = document.getElementsByClassName("betOn");
         buttons.forEach(function(button) {
             button.addEventListener('click', function() {
               var parentRow = button.closest('tr');
@@ -3459,7 +3459,7 @@ socket.on('connect', () => {
               console.log('Team Name:', teamName);
               console.log('Button ID:', buttonId);
               console.log('Span Inner Text:', spanInnerText);
-              betOnElement.innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
+              elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
               document.getElementById("oddsValue").innerHTML = spanInnerText
             });
           });
