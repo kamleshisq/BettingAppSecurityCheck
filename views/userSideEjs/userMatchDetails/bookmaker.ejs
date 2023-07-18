@@ -27,7 +27,7 @@
                 %>
                 <%for(let i = 0; i < jsonData.length; i++){%>
                     <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                        <td colspan="2" style=" text-align: left;">
+                        <td id="<%=match.marketList.bookmaker[0].marketId%>" colspan="2" style=" text-align: left;">
                             <%=jsonData[i].runner%>
                         </td>
                         
