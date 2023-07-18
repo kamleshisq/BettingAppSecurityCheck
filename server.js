@@ -885,8 +885,9 @@ io.on('connection', (socket) => {
 
 
     socket.on('betDetails', async(data) => {
-        let result = await placeBet(data)
-        socket.emit("betDetails", result)
+        console.log(data)
+        // let result = await placeBet(data)
+        // socket.emit("betDetails", result)
     })
 
     socket.on('voidBet', async(data) => {
