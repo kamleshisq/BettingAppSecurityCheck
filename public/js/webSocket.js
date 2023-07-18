@@ -3458,6 +3458,7 @@ socket.on('connect', () => {
               var spanInnerText = button.querySelector('span:first-child').innerText.trim();
               console.log('Team Name:', teamName);
               console.log('Button ID:', buttonId);
+              console.log(this.id)
               console.log('Span Inner Text:', spanInnerText);
               elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
               elements[0].id = parentRow.querySelector('td:first-child').id;
@@ -3485,7 +3486,7 @@ socket.on('connect', () => {
 
         $(document).on("click", ".PLACEBET", function(e){
             e.preventDefault()
-            console.log("working")
+            
         })
         
     }
