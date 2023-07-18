@@ -104,7 +104,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     const data = await Promise.all(requests)
     const users = data[0].child;
     const roles = data[1].roles;
-    const currentUser = global._User
+    const currentUser = req.currentUser
     const rows = data[0].rows
     const me = data[0].me
     res.status(200).render('./userManagement/main',{
