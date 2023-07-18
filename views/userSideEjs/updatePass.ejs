@@ -42,9 +42,10 @@
     </div>
   </div>
 
+<%if(userLog.length == 0){%>
   <script>
     $(document).ready(function() {
-    $('#navmod1').modal('show');
-  });
-    // console.log("userLog == " ,userLog)
-  </script>
+      $('#navmod1').modal('show');
+    });
+    </script>
+<%}%>
