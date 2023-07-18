@@ -3464,7 +3464,7 @@ socket.on('connect', () => {
           });
 
             var spans = document.querySelectorAll('.exc-pg-rit-tabtxt-data-stack-num-col span');
-            var stakeSpan = document.querySelector('#stakeSpan');
+            var stakeSpan = document.querySelector('#stakeSpan'); 
             var resultElement = document.querySelector('.c-gren');
             spans.forEach(function(span) {
             span.addEventListener('click', function() {
