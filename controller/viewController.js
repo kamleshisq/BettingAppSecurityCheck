@@ -1669,5 +1669,13 @@ exports.OthersGames = catchAsync(async(req, res, next) => {
 
 
 exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
-    res.status(200).render("./userSideEjs/liveCasino/main")
+    let user = req.currentUser
+    let verticalMenus = await verticalMenuModel.find();
+    const data = await promotionModel.find();
+    res.status(200).render("./userSideEjs/liveCasino/main", {
+        user,
+        verticalMenus,
+        data,
+        check:"Live Casino"
+    })
 })
