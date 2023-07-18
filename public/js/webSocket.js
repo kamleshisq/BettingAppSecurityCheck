@@ -3511,20 +3511,18 @@ socket.on('connect', () => {
                         <i class="fa-regular fa-heart"></i>
                       </div>
                     </div>
-                    <div class="liv-casino-games-cards-txt2">
-                        <%if(user){%>
-                            <a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=<%=games[i]._id%>">PLAY NOW</a>
-                            <%}else{%>
-                            <!-- <a class="liv-casino-games-cards-txt2-btn" href="/cards?gameId=<%=games[i]._id%>">LOGIN TO CONTINUE</a> -->
-                            <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
-                            <%}%>
-                    </div>
-                  </div>
-                </a>
-              </div>`
-
-              console.log(LOGINDATA)
+                    <div class="liv-casino-games-cards-txt2">`
+                    if(LOGINDATA.LOGINUSER === ""){
+                      html +=  `<a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>`
+                    }else{
+                        html += `<a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=<%=games[i]._id%>">PLAY NOW</a>`
+                    }
+                    html += `</div>
+                            </div>
+                             </a>
+                            </div>`
             }
+            document.getElementById("games").innerHTML = html
           })
     }
 
