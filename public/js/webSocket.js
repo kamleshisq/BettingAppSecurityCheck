@@ -3490,11 +3490,12 @@ socket.on('connect', () => {
 
 
     if(pathname === "/live_casino"){
-        function getSelectedValue() {
-            var selectElement = document.querySelector('.form-select');
-            var selectedValue = selectElement.value;
-            console.log(selectedValue);
-        }
+        $(document).ready(function() {
+            $('.form-select').on('change', function() {
+              var selectedValue = $(this).val();
+              console.log('Selected value: ' + selectedValue);
+            });
+          });
     }
 
 
