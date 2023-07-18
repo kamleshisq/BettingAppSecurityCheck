@@ -154,9 +154,9 @@
 
                         <div class="exc-pg-rit-tabtxt-data-place-bet-btndv">
                           <%if(user){%>
-                          <a href="#">PLACE BET</a>
+                          <a id="<%=match.eventData.sportId%>" class="PLACEBET">PLACE BET</a>
                           <%}else{%>
-                            <a id="<%=match.eventData.sportId%>" class="mbl-login-reg-btnn-dv-a" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">PLACE BET TO LOGIN</a>
+                            <a  class="mbl-login-reg-btnn-dv-a" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">PLACE BET TO LOGIN</a>
                           <%}%>
                         </div>
                       </div>
