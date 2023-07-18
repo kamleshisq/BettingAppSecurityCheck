@@ -1560,6 +1560,8 @@ exports.getCardInplayGame = catchAsync(async(req, res, next) => {
         check ="Royal Casino"
     }else if(req.url.startsWith('/virtualsInPlay')){
         check = "Virtuals"
+    }else if(req.url.startsWith("/live_casinoInPlay")){
+        check = "Live Casino"
     }
     let user = req.currentUser
     let gameData = await gameModel.findById(req.query.gameId)
