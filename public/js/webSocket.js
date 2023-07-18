@@ -3461,8 +3461,8 @@ socket.on('connect', () => {
               console.log('Span Inner Text:', spanInnerText);
               elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
               elements[0].id = parentRow.querySelector('td:first-child').id;
-              var elements = document.getElementsByClassName('oddsvalue');
-              elements[0].innerHTML = spanInnerText
+              var elements2 = document.getElementsByClassName('oddsvalue');
+              elements2[0].innerHTML = spanInnerText
             });
           });
 
@@ -3475,8 +3475,8 @@ socket.on('connect', () => {
                 var currentStake = parseFloat(stakeSpan.innerText.trim());
                 var newStake = currentStake + parseFloat(spanInnerText.replace(/,/g, ''));
                 stakeSpan.innerText = newStake.toFixed(2);
-                var elements = document.getElementsByClassName('oddsvalue');
-                var multiplicationResult = newStake * parseFloat(elements[0].innerText);
+                var elements3 = document.getElementsByClassName('oddsvalue');
+                var multiplicationResult = newStake * parseFloat(elements3[0].innerText);
                 resultElement.innerText = multiplicationResult.toFixed(2);
             });
             });
