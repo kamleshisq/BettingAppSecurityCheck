@@ -45,6 +45,13 @@
   <script>
     console.log("userLog == " ,userLog)
     $(document).ready(function() {
-    $('#navmod1').modal('show');
-  });
+      // Check if the modal has been shown before
+      var modalShown = localStorage.getItem('modalShown');
+      if (!modalShown) {
+        // Show the modal
+        $('#navmod1').modal('show');
+        // Set a flag in local storage to indicate that the modal has been shown
+        localStorage.setItem('modalShown', true);
+      }
+    });
   </script>
