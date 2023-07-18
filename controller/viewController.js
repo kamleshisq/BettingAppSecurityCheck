@@ -1666,3 +1666,8 @@ exports.OthersGames = catchAsync(async(req, res, next) => {
         check:"Other",
     })
 });
+
+
+exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
+    res.status(200).render("./userSideEjs/liveCasino/main")
+})
