@@ -1299,6 +1299,16 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('liveCasinoPage', async(data) => {
+        let games
+        if(data === "All"){
+             games = await gameModel.find()
+        }else{
+            games = await gameModel.find({provider_name:data})
+        }
+        socket.emit("liveCasinoPage", games)
+    })
+
     
 })
 

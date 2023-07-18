@@ -3493,9 +3493,39 @@ socket.on('connect', () => {
         $(document).ready(function() {
             $('.form-select').on('change', function() {
               var selectedValue = $(this).val();
-              console.log('Selected value: ' + selectedValue);
+              socket.emit("liveCasinoPage", selectedValue)
             });
           });
+
+
+          socket.on("liveCasinoPage", async(games) =>{
+            let html 
+            for(let i = 0; i < games.length; i++){
+                html += `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
+                <a class="liv-casino-games-cards-a" href="#">
+                  <div class="liv-casino-games-cards-imgdv">
+                    <img class="img-fluid img-bdr-red15" src="${games[i].url_thumb}" alt="">
+                    <div class="liv-casino-games-cards-txt">
+                      <div class="liv-casino-games-cards-txtcol">
+                        <h6>${games[i].game_name}</h6>
+                        <i class="fa-regular fa-heart"></i>
+                      </div>
+                    </div>
+                    <div class="liv-casino-games-cards-txt2">
+                        <%if(user){%>
+                            <a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=<%=games[i]._id%>">PLAY NOW</a>
+                            <%}else{%>
+                            <!-- <a class="liv-casino-games-cards-txt2-btn" href="/cards?gameId=<%=games[i]._id%>">LOGIN TO CONTINUE</a> -->
+                            <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
+                            <%}%>
+                    </div>
+                  </div>
+                </a>
+              </div>`
+
+              console.log(LOGINDATA)
+            }
+          })
     }
 
 
