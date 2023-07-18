@@ -182,7 +182,6 @@ exports.isLogin = catchAsync( async (req, res, next) => {
         return next()
     }
     req.currentUser = currentUser
-    console.log(req.currentUser)
     req.token = token
     next()
 });

@@ -322,7 +322,10 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     let sliders = await sliderModel.find().sort({Number:1})
     let pages = await pagesModel.find()
     console.log(user)
-    const userLog = await loginLogs.find({user_id:user._id})
+    let userLog
+    if(user){
+        userLog = await loginLogs.find({user_id:user._id})
+    }
 
     res.status(200).render("./userSideEjs/home/homePage",{
         user,
@@ -1371,7 +1374,10 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
     let verticalMenus = await verticalMenuModel.find();
-    const userLog = await loginLogs.find({user_id:user._id})
+    let userLog
+    if(user){
+        userLog = await loginLogs.find({user_id:user._id})
+    }
     res.status(200).render('./userSideEjs/exchangePage/main',{
         user,
         verticalMenus,
@@ -1402,7 +1408,10 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
     let liveTennis = Tennis.filter(item => item.eventData.type === "IN_PLAY")
     const data = await promotionModel.find();
     let verticalMenus = await verticalMenuModel.find();
-    const userLog = await loginLogs.find({user_id:user._id})
+    let userLog
+    if(user){
+        userLog = await loginLogs.find({user_id:user._id})
+    }
     res.status(200).render('./userSideEjs/inplayPage/main',{
         user,
         verticalMenus,
@@ -1424,7 +1433,10 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
     let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
     let verticalMenus = await verticalMenuModel.find();
     const data = await promotionModel.find();
-    const userLog = await loginLogs.find({user_id:user._id})
+    let userLog
+    if(user){
+        userLog = await loginLogs.find({user_id:user._id})
+    }
     res.status(200).render("./userSideEjs/cricketPage/main", {
         user,
         verticalMenus,
@@ -1442,7 +1454,10 @@ exports.cardsPage = catchAsync(async(req, res, next) => {
     let verticalMenus = await verticalMenuModel.find();
     const data = await promotionModel.find();
     let games = await gameModel.find();
-    const userLog = await loginLogs.find({user_id:user._id})
+    let userLog
+    if(user){
+        userLog = await loginLogs.find({user_id:user._id})
+    }
     res.status(200).render("./userSideEjs/cards/main",{
         user,
         verticalMenus,
@@ -1462,7 +1477,10 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
     let liveFootBall = footBall.filter(item => item.eventData.type === "IN_PLAY");
     let upcomintFootball = footBall.filter(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
-    const userLog = await loginLogs.find({user_id:user._id})
+    let userLog
+    if(user){
+        userLog = await loginLogs.find({user_id:user._id})
+    }
     res.status(200).render('.//userSideEjs/footballPage/main',{
         user,
         verticalMenus,
@@ -1483,7 +1501,10 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
     let liveTennis = Tennis.filter(item => item.eventData.type === "IN_PLAY")
     let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
-    const userLog = await loginLogs.find({user_id:user._id})
+    let userLog
+    if(user){
+        userLog = await loginLogs.find({user_id:user._id})
+    }
     res.status(200).render('.//userSideEjs/tennisPage/main',{
         user,
         verticalMenus,
@@ -1649,7 +1670,10 @@ exports.royalGamingPage = catchAsync(async(req, res, next) => {
     let verticalMenus = await verticalMenuModel.find();
     const data = await promotionModel.find();
     let games = await gameModel.find({provider_name:"RG"});
-    const userLog = await loginLogs.find({user_id:user._id})
+    let userLog
+    if(user){
+        userLog = await loginLogs.find({user_id:user._id})
+    }
     res.status(200).render("./userSideEjs/royalGamingPage/main",{
         user,
         verticalMenus,
@@ -1666,7 +1690,10 @@ exports.virtualsPage = catchAsync(async(req, res, next) => {
     let verticalMenus = await verticalMenuModel.find();
     const data = await promotionModel.find();
     let games = await gameModel.find({category: 'Virtual'});
-    const userLog = await loginLogs.find({user_id:user._id})
+    let userLog
+    if(user){
+        userLog = await loginLogs.find({user_id:user._id})
+    }
     res.status(200).render("./userSideEjs/virtuals/main",{
         user,
         verticalMenus,
@@ -1682,7 +1709,10 @@ exports.OthersGames = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find();
     const data = await promotionModel.find();
-    const userLog = await loginLogs.find({user_id:user._id})
+    let userLog
+    if(user){
+        userLog = await loginLogs.find({user_id:user._id})
+    }
     res.status(200).render("./userSideEjs/others/main",{
         user,
         verticalMenus,
@@ -1698,7 +1728,10 @@ exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
     let verticalMenus = await verticalMenuModel.find();
     const data = await promotionModel.find();
     let games = await gameModel.find();
-    const userLog = await loginLogs.find({user_id:user._id})
+    let userLog
+    if(user){
+        userLog = await loginLogs.find({user_id:user._id})
+    }
     res.status(200).render("./userSideEjs/liveCasino/main", {
         user,
         verticalMenus,
