@@ -10,6 +10,13 @@
                     <div class="exchange-pg-main-col-big-wrp">
                         <section class="exchange-pg-banner-sec">
                             <div class="exchange-pg-banner-sec-wrp">
+                                <%let topbanner = data.find(item => item.position === "livecasino_Top")%>
+                                <%if(topbanner){%>
+                                    <a class="promotionLink" id="<%=topbanner._id%>"  href="<%=topbanner.link%>">
+                                        <img class="hiro-banner-img img-fluid" src="/img/<%=topbanner.Image%>.png" alt="banner image">
+                                      </a>
+                                    <!-- <img class="hiro-banner-img img-fluid" src="assets/img/live-casino/live-casino-banner2.png" alt="banner image"> -->
+                                <%}%>
                             </div>
                         </section>
                         
