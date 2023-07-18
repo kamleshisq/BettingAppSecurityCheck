@@ -3465,12 +3465,15 @@ socket.on('connect', () => {
 
             var spans = document.querySelectorAll('.exc-pg-rit-tabtxt-data-stack-num-col span');
             var stakeSpan = document.querySelector('#stakeSpan');
+            var resultElement = document.querySelector('.c-gren');
             spans.forEach(function(span) {
             span.addEventListener('click', function() {
                 var spanInnerText = span.innerText.trim();
                 var currentStake = parseFloat(stakeSpan.innerText.trim());
                 var newStake = currentStake + parseFloat(spanInnerText.replace(/,/g, ''));
                 stakeSpan.innerText = newStake.toFixed(2);
+                var multiplicationResult = newStake * parseFloat(document.getElementById('oddsValue').innerText);
+                resultElement.innerText = multiplicationResult.toFixed(2);
             });
             });
 
