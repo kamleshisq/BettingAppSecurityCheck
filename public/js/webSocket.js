@@ -3522,8 +3522,33 @@ socket.on('connect', () => {
                              </a>
                             </div>`
             }
-            console.log(html)
             document.getElementById("games").innerHTML = html
+
+            let vertuals = games.filter(item => item.category == "Virtual")
+            let htmlV
+            for(let i = 0; i < vertuals.length; i++){
+                htmlV += `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
+                <a class="liv-casino-games-cards-a" href="#">
+                  <div class="liv-casino-games-cards-imgdv">
+                    <img class="img-fluid img-bdr-red15" src="${vertuals[i].url_thumb}" alt="">
+                    <div class="liv-casino-games-cards-txt">
+                      <div class="liv-casino-games-cards-txtcol">
+                        <h6>${vertuals[i].game_name}</h6>
+                        <i class="fa-regular fa-heart"></i>
+                      </div>
+                    </div>
+                    <div class="liv-casino-games-cards-txt2">`
+                    if(LOGINDATA.LOGINUSER === ""){
+                      htmlV +=  `<a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>`
+                    }else{
+                        htmlV += `<a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=${vertuals[i]._id}">PLAY NOW</a>`
+                    }
+                    htmlV += `</div>
+                            </div>
+                             </a>
+                            </div>`
+            }
+            document.getElementById("vertuals").innerHTML = htmlV
           })
     }
 
