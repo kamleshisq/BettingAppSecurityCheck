@@ -321,7 +321,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     const banner = await bannerModel.find()
     let sliders = await sliderModel.find().sort({Number:1})
     let pages = await pagesModel.find()
-    // console.log(verticalMenus)
+    console.log(user)
     const userLog = await loginLogs.find({user_id:user._id})
 
     res.status(200).render("./userSideEjs/home/homePage",{
