@@ -321,7 +321,6 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     const banner = await bannerModel.find()
     let sliders = await sliderModel.find().sort({Number:1})
     let pages = await pagesModel.find()
-    console.log(user)
     let userLog
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
