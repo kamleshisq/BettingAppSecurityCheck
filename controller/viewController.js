@@ -1672,10 +1672,12 @@ exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find();
     const data = await promotionModel.find();
+    let games = await gameModel.find();
     res.status(200).render("./userSideEjs/liveCasino/main", {
         user,
         verticalMenus,
         data,
-        check:"Live Casino"
+        check:"Live Casino",
+        games
     })
 })
