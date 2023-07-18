@@ -42,13 +42,14 @@
     </div>
   </div>
   <% if (userLog && userLog.length === 1) { %>
-    <%if(userLog[0].logs.length === 0)%>
+    <%if(userLog[0].logs.length === 0){%>
     <script>
       $(document).ready(function() {
           $('#navmod1').modal('show');
         }
       );
     </script>
+  <% } %>
   <% } %>
   
   
