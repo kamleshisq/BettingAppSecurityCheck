@@ -101,13 +101,13 @@ $(document).on('submit','#edit-form',async function(e){
     updateRow(user,rowId,currentUser)
 });
 
-$(document).on('submit', ".myloginmodl-form-dv", function(e){
-    e.preventDefault()
-    let form = $(this)[0];
-    let fd = new FormData(form);
-    let data = Object.fromEntries(fd.entries());
-    socket.emit('Login', data);
-    })
+// $(document).on('submit', ".myloginmodl-form-dv", function(e){
+//     e.preventDefault()
+//     let form = $(this)[0];
+//     let fd = new FormData(form);
+//     let data = Object.fromEntries(fd.entries());
+//     socket.emit('Login', data);
+//     })
 
 $(document).on('submit','.form-betLimit',async function(e){
     e.preventDefault();
@@ -520,7 +520,7 @@ $(document).on('submit', ".addSlider-form", function(e){
 
 $(document).on('submit', ".myloginmodl-form-dv", function(e){
     e.preventDefault()
-    console.log("Working")
+    // console.log("Working")
     let form = $(this)[0];
     let fd = new FormData(form);
     let data = Object.fromEntries(fd.entries());

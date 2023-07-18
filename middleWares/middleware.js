@@ -42,18 +42,20 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             })
         }
         const userLog = await loginLogs.find({user_id:id._id})
-        global._count = userLog.length
+        req._count = userLog.length
         global._admin = false
-    }else if(global._count == 0){
-            global._count = 2
-            if(global._admin){
+    }
+    // else if(global._count == 0){
+    //         global._count = 2
+    //         if(global._admin){
 
-                res.status(200).render('updatePassword')
-            }else{
-                res.status(200).render('./user/passwordUpdate')
+    //             res.status(200).render('updatePassword')
+    //         }else{
+    //             res.status(200).render('./user/passwordUpdate')
 
-            }
-    }else if(req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin"){
+    //         }
+    // }
+    else if(req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin"){
         if(req.cookies.JWT && !req.originalUrl.startsWith("/wallet")){
             // console.log(global._loggedInToken)
             const login = await loginLogs.findOne({session_id:req.cookies.JWT, isOnline:true})

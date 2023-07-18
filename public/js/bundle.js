@@ -6707,15 +6707,15 @@ var userLogin = /*#__PURE__*/function () {
             sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
-            if (res.data.count) {
-              window.setTimeout(function () {
-                location.assign('/updatePassWord');
-              }, 100);
-            } else {
-              setTimeout(function () {
-                location.reload();
-              }, 300);
-            }
+            // if(res.data.count){
+            //     window.setTimeout(()=>{
+            //         location.assign('/updatePassWord')
+            //     }, 100)
+            // }else{
+            setTimeout(function () {
+              location.reload();
+            }, 300);
+            // }
           }
           _context.next = 11;
           break;
@@ -6854,13 +6854,15 @@ $(document).on('submit', '#edit-form', /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }());
-$(document).on('submit', ".myloginmodl-form-dv", function (e) {
-  e.preventDefault();
-  var form = $(this)[0];
-  var fd = new FormData(form);
-  var data = Object.fromEntries(fd.entries());
-  socket.emit('Login', data);
-});
+
+// $(document).on('submit', ".myloginmodl-form-dv", function(e){
+//     e.preventDefault()
+//     let form = $(this)[0];
+//     let fd = new FormData(form);
+//     let data = Object.fromEntries(fd.entries());
+//     socket.emit('Login', data);
+//     })
+
 $(document).on('submit', '.form-betLimit', /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
     var form, fd, data, res, _betLimit, rowId;
@@ -7263,7 +7265,7 @@ $(document).on('submit', ".addSlider-form", function (e) {
 });
 $(document).on('submit', ".myloginmodl-form-dv", function (e) {
   e.preventDefault();
-  console.log("Working");
+  // console.log("Working")
   var form = $(this)[0];
   var fd = new FormData(form);
   var data = Object.fromEntries(fd.entries());
