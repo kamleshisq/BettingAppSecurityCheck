@@ -3489,6 +3489,11 @@ socket.on('connect', () => {
     }
 
 
+    if(pathname === "/live_casino"){
+        console.log("working")
+    }
+
+
     
 
 
