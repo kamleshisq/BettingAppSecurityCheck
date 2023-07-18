@@ -1546,7 +1546,7 @@ a{
     font-weight: 600;
 }
 
-.exc-pg-rit-tabtxt-dat-ro1-col>a{
+.exc-pg-rit-tabtxt-dat-ro1-col>button{
     font-weight: 600;
     color: var(--color2);
 }
