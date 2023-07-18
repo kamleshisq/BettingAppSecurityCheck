@@ -41,13 +41,15 @@
       </div>
     </div>
   </div>
-<%if(userLog){%>
-  <%if(userLog.logs.length == 0){%>
-    <script>
-      console.log("Eorking")
-      $(document).ready(function() {
-        $('#navmod1').modal('show');
-      });
-      </script>
-<%}%>
-<%}%>
+  <% if (userLog) { %>
+    <% if (userLog.length == 1) { %>
+      <% if (!sessionStorage.getItem('modalShown')) { %>
+        <script>
+          $(document).ready(function() {
+            $('#navmod1').modal('show');
+            sessionStorage.setItem('modalShown', true);
+          });
+        </script>
+      <% } %>
+    <% } %>
+  <% } %>
