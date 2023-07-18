@@ -3482,6 +3482,11 @@ socket.on('connect', () => {
             });
             });
 
+
+        $(document).on("click", ".PLACEBET", function(e){
+            e.preventDefault()
+            console.log("working")
+        })
         
     }
 
