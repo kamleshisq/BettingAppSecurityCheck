@@ -3497,7 +3497,7 @@ socket.on('connect', () => {
             data.market = market[0].id
             data.stake = document.getElementById("stakeSpan").innerText.trim();
             data.spoetId = this.id
-            socket.emit("betDetails", data)
+            socket.emit("betDetails", {data, LOGINDATA})
         })
 
         socket.on("betDetails" , (data) => {
