@@ -325,7 +325,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
     }
-    console.log(loginLogs)
+    console.log(loginLogs, 456)
     res.status(200).render("./userSideEjs/home/homePage",{
         user,
         data,
