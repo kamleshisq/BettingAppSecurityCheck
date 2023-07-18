@@ -1546,6 +1546,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
         }
     ])
     let userLog
+    console.log(req.currentUser)
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.createUser.id})
     }
