@@ -56,7 +56,7 @@
                         <form >
                         <div class="exc-pg-rit-tabtxt-dat-ro1">
                           <div class="exc-pg-rit-tabtxt-dat-ro1-col">
-                            <span><span>Bet on</span>  : Bangladesh @ <b>1.75</b></span>
+                            <input type="text" id="bet-title" name="title" required>
                           </div>
                           <div class="exc-pg-rit-tabtxt-dat-ro1-col">
                             <a href="#" class="">Clear All</a>
@@ -72,7 +72,7 @@
                                 <span class="ecc-pg-rit-ods-data-opration-spn">
                                   <i class="fa-solid fa-plus"></i>
                                 </span>
-                                <span class="ecc-pg-rit-ods-data-opration-spn2">1.75</span>
+                                <input class="ecc-pg-rit-ods-data-opration-spn2" type="number" id="bet-odds" name="odds" step="0.01" required>
                                 <span class="ecc-pg-rit-ods-data-opration-spn">
                                   <i class="fa-solid fa-minus"></i>
                                 </span>
@@ -82,14 +82,14 @@
                             <div class="ecc-pg-rit-ods-data-col">
                               <p>Stake</p>
                               <div class="ecc-pg-rit-ods-data-opration2">
-                                <span>500</span>
+                                <input type="number" id="bet-stake" name="stake" step="0.01" required>
                               </div>
                             </div>
                             
                             <div class="ecc-pg-rit-ods-data-col">
                               <p>Profit</p>
                               <div class="ecc-pg-rit-ods-data-opration2">
-                                <span class="c-gren">500.00</span>
+                                <input type="number" class="c-gren">
                               </div>
                             </div>
 
@@ -99,31 +99,31 @@
                         <div class="exc-pg-rit-tabtxt-data-stack-num-rowrp">
                           <div class="exc-pg-rit-tabtxt-data-stack-num-ro">
                             <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                              <span>100</span>
+                              <button>100</button>
                             </div>
                             <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                              <span>500</span>
+                              <button>500</button>
                             </div>
                             <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                              <span>1000</span>
+                              <button>1000</button>
                             </div>
                             <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                              <span>5000</span>
+                              <button>5000</button>
                             </div>
                           </div>
                           
                           <div class="exc-pg-rit-tabtxt-data-stack-num-ro">
                             <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                              <span>10,000</span>
+                              <button>10,000</button>
                             </div>
                             <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                              <span>50,000</span>
+                              <button>50,000</button>
                             </div>
                             <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                              <span>1,00,000</span>
+                              <button>1,00,000</button>
                             </div>
                             <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                              <span>5,00,000</span>
+                              <button>5,00,000</button>
                             </div>
                           </div>
                         </div>
@@ -131,19 +131,19 @@
                         <div class="exc-pg-rit-tabtxt-data-stack-minmax">
                           <div class="exc-pg-rit-tabtxt-data-stack-minmax-ro">
                             <div class="exc-pg-rit-tabtxt-data-stack-minmax-col">
-                              <a href="#">
+                              <button href="#">
                                 MIN STAKE
-                              </a>
+                              </button>
                             </div>
                             <div class="exc-pg-rit-tabtxt-data-stack-minmax-col">
-                              <a href="#">
+                              <button href="#">
                                 MAX STAKE
-                              </a>
+                              </button>
                             </div>
                             <div class="exc-pg-rit-tabtxt-data-stack-minmax-col">
-                              <a href="#">
+                              <button href="#">
                                 ALL IN
-                              </a>
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -152,7 +152,7 @@
                           <%if(user){%>
                           <a href="#">PLACE BET</a>
                           <%}else{%>
-                            <a class="mbl-login-reg-btnn-dv-a" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">PLACE BET TO LOGIN</a>
+                            <button class="mbl-login-reg-btnn-dv-a" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">PLACE BET TO LOGIN</button>
                           <%}%>
                         </div>
                       </form>
