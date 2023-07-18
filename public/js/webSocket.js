@@ -3463,16 +3463,16 @@ socket.on('connect', () => {
             });
           });
 
-          var spans = document.querySelectorAll('.exc-pg-rit-tabtxt-data-stack-num-col span');
-          var stakeSpan = document.querySelector('.ecc-pg-rit-ods-data-col p');
-          spans.forEach(function(span) {
+            var spans = document.querySelectorAll('.exc-pg-rit-tabtxt-data-stack-num-col span');
+            var stakeSpan = document.querySelector('.ecc-pg-rit-ods-data-col p:contains("Stake") + div span');
+            spans.forEach(function(span) {
             span.addEventListener('click', function() {
-              var spanInnerText = span.innerText.trim();
-              var currentStake = parseFloat(stakeSpan.nextElementSibling.innerText.trim());
-              var newStake = currentStake + parseFloat(spanInnerText.replace(/,/g, ''));
-              stakeSpan.nextElementSibling.innerText = newStake.toFixed(2);
+                var spanInnerText = span.innerText.trim();
+                var currentStake = parseFloat(stakeSpan.innerText.trim());
+                var newStake = currentStake + parseFloat(spanInnerText.replace(/,/g, ''));
+                stakeSpan.innerText = newStake.toFixed(2);
             });
-          });
+            });
 
         
     }
