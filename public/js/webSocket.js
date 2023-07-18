@@ -3448,8 +3448,18 @@ socket.on('connect', () => {
         })
 
 
-        const buttons = document.getElementsByClassName('button');
-        let popup = document.getElementById('');
+        var buttons = document.querySelectorAll('.tbl-data-href button');
+        buttons.forEach(function(button) {
+            button.addEventListener('click', function() {
+              var parentRow = button.closest('tr');
+              var teamName = parentRow.querySelector('td:first-child').innerText.trim();
+              var buttonId = button.id;
+              var spanInnerText = button.querySelector('span:first-child').innerText.trim();
+              console.log('Team Name:', teamName);
+              console.log('Button ID:', buttonId);
+              console.log('Span Inner Text:', spanInnerText);
+            });
+          });
 
         
     }
