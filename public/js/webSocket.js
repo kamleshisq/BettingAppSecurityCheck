@@ -3515,7 +3515,7 @@ socket.on('connect', () => {
                     if(LOGINDATA.LOGINUSER === ""){
                       html +=  `<a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>`
                     }else{
-                        html += `<a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=<%=games[i]._id%>">PLAY NOW</a>`
+                        html += `<a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=${games[i]._id}">PLAY NOW</a>`
                     }
                     html += `</div>
                             </div>
