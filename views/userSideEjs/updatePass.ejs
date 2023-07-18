@@ -44,14 +44,5 @@
 
   <script>
     console.log("userLog == " ,userLog)
-    $(document).ready(function() {
-      // Check if the modal has been shown before in session storage
-      var modalShown = sessionStorage.getItem('modalShown');
-      if (!modalShown) {
-        // Show the modal
-        $('#navmod1').modal('show');
-        // Set a flag in session storage to indicate that the modal has been shown
-        sessionStorage.setItem('modalShown', true);
-      }
-    });
+    $('#navmod1').modal('show');
   </script>
