@@ -3499,7 +3499,7 @@ socket.on('connect', () => {
 
 
           socket.on("liveCasinoPage", async(games) =>{
-            let html 
+            let html = ""
             for(let i = 0; i < games.length; i++){
                 html += `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
                 <a class="liv-casino-games-cards-a" href="#">
