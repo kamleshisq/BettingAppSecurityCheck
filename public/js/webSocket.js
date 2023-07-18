@@ -3492,7 +3492,7 @@ socket.on('connect', () => {
             data.title = title[0].innerText.trim();
             data.eventId = title[0].id
             data.odds = odd[0].innerText.trim();
-            data.secId = odd[0].id.slice(-1)
+            data.secId = odd[0].id.slice(0,-1)
             console.log(data)
         })
         
