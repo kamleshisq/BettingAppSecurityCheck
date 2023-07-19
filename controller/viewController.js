@@ -352,21 +352,22 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     }
     // console.log(req.query.id)
     let verticalMenus = await verticalMenuModel.find();
-    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getMyAccStatement'
-    fetch(fullUrl, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ` + req.token }
-    }).then(res => res.json())
-    .then(json =>
-        console.log(json) 
-        // res.status(200).render("./userSideEjs/AccountStatements/main", {
-        // title:"Account Statement",
-        // data:json.userAcc,
-        // user:req.currentUser,
-        // verticalMenus,
-        // check:"ACCC",
-        // userLog})
-    );
+    let userAcc = await accountStatement.find({user_id:req.currentUser._id}).limit(20)
+    // var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getMyAccStatement'
+    // fetch(fullUrl, {
+    //     method: 'POST',
+    //     headers: { 'Authorization': `Bearer ` + req.token }
+    // }).then(res => res.json())
+    // .then(json =>
+    //     console.log(json) 
+        res.status(200).render("./userSideEjs/AccountStatements/main", {
+        title:"Account Statement",
+        data:userAcc,
+        user:req.currentUser,
+        verticalMenus,
+        check:"ACCC",
+        userLog})
+    // )
 });
 
 
