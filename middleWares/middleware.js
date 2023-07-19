@@ -17,6 +17,7 @@ function parseCookies(cookieString) {
   }
 
 const LoginLogs = catchAsync(async(req, res, next) => {
+    console.log(req.headers.cookie)
     console.log(parseCookies(req.headers.cookie).JWT)
     if(!req.originalUrl.startsWith("/api/v1") && !req.originalUrl.startsWith("/wallet")){
         const clientIP1 = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
