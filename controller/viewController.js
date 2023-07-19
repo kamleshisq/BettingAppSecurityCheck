@@ -74,11 +74,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
         }
         urls = [
             {
-                url:`http://172.105.58.243//api/v1/users/getOwnChild?id=${id}`,
+                url:`http://172.105.58.243/api/v1/users/getOwnChild?id=${id}`,
                 name:'user'
             },
             {
-                url:`http://172.105.58.243//api/v1/role/getAuthROle`,
+                url:`http://172.105.58.243/api/v1/role/getAuthROle`,
                 name:'role'
             }
         ]
@@ -86,11 +86,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
     else{
         urls = [
             {
-                url:`http://172.105.58.243//api/v1/users/getOwnChild`,
+                url:`http://172.105.58.243/api/v1/users/getOwnChild`,
                 name:'user'
             },
             {
-                url:`http://172.105.58.243//api/v1/role/getAuthROle`,
+                url:`http://172.105.58.243/api/v1/role/getAuthROle`,
                 name:'role'
             }
         ]
