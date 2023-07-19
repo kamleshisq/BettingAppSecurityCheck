@@ -101,7 +101,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
             'Content-type': 'application/json',
             'authorization': `Bearer ` + req.token, // notice the Bearer before your token
         }
-    }).then(data => data.json()));
+    }).then(data => console.log(data)));
     const data = await Promise.all(requests)
     const users = data[0].child;
     const roles = data[1].roles;
