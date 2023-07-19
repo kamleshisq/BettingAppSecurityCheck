@@ -1315,6 +1315,8 @@ io.on('connection', (socket) => {
         console.log("Working")
     let limit = 20;
     let page = data.page;
+    console.log(page)
+    console.log(data.LOGINDATA.LOGINUSER.id)
     let userAcc = await AccModel.find({user_id:data.LOGINDATA.LOGINUSER.id}).skip(page * limit).limit(limit)
     socket.emit("ACCSTATEMENTUSERSIDE", {userAcc, page})
     })
