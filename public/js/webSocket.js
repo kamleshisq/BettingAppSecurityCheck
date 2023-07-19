@@ -3737,6 +3737,7 @@ socket.on('connect', () => {
                     <td>${data[i].description}</td>
                     <td>-</td>`
             }
+            console.log(html)
             count += 20
             if(data.page == 0){
                 $('.acount-stat-tbl-body').html(html)
