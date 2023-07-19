@@ -3684,7 +3684,14 @@ socket.on('connect', () => {
 
 
     if(pathname === "/myAccountStatment"){
-        console.log("Working")
+        $(window).scroll(function() {
+            var scroll = $(window).scrollTop();
+            var windowHeight = $(window).height() * window.devicePixelRatio;
+            var documentHeight = $(document).height() * window.devicePixelRatio;
+            if(scroll + windowHeight >= documentHeight){
+                console.log("working")
+            }
+         }); 
     }
 
 
