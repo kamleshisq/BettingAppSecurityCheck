@@ -3717,7 +3717,7 @@ socket.on('connect', () => {
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
                 html += `<tr class="acount-stat-tbl-body-tr">
-                    <td>${i+1}</td>
+                    <td>${i+count}</td>
                     <td>${formattedTime}</td>`
                     if(userAcc[i].creditDebitamount > 0){
                         html += `<td>${userAcc[i].creditDebitamount}</td>
