@@ -1152,7 +1152,7 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 // });
 
 exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
-    let body = JSON.stringify([ '1.207867704' , "4.854018998-OE", "1.215707520"]);
+    let body = JSON.stringify([ '1.207867704' , "4.854018998-OE", "1.215707520", "1.216155969"]);
     // console.log(body)
     var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
     fetch(fullUrl, {
