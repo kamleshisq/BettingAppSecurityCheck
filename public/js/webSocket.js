@@ -3478,7 +3478,7 @@ socket.on('connect', () => {
                 var newStake = currentStake + parseFloat(spanInnerText.replace(/,/g, ''));
                 stakeSpan.innerText = newStake.toFixed(2);
                 var elements3 = document.getElementsByClassName('oddsvalue');
-                var multiplicationResult = newStake * parseFloat(elements3[0].innerText);
+                var multiplicationResult = (newStake * parseFloat(elements3[0].innerText)) - parseFloat(stakeSpan.innerText);
                 resultElement.innerText = multiplicationResult.toFixed(2);
             });
             });
