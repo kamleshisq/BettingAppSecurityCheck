@@ -129,7 +129,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         return next(new AppError('Please log in to access', 404))
     }
     console.log(req.headers.cookie, "working")
-    console.log(parseCookies(req.headers.cookie).JWT, working2)
+    console.log(parseCookies(req.headers.cookie).JWT, "working2")
     const tokenId = await loginLogs.findOne({session_id:token})
     console.log(tokenId.isOnline)
     if(!tokenId.isOnline){
