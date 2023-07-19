@@ -3683,7 +3683,9 @@ socket.on('connect', () => {
     }
 
 
-    
+    if(pathname === "/myAccountStatment"){
+        console.log("Working")
+    }
 
 
    
