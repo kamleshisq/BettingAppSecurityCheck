@@ -184,6 +184,7 @@ socket.on('connect', () => {
     // console.log(window.location.href)
 
     if(pathname.startsWith('/admin/userManagement')){
+        console.log(LOGINDATA, 45654654)
         function getOwnChild(id,page,token) {
             socket.emit(token,{
                 id,
@@ -627,7 +628,6 @@ socket.on('connect', () => {
 
     //for inactive users//
     if(pathname == "/admin/inactiveUser"){
-        console.log(LOGINDATA)
         $(document).on('click','.userStatusActive',function(e){
             e.preventDefault();
             let id = $(this).data('id')
