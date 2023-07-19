@@ -59,7 +59,8 @@ async function placeBet(data){
     let marketList = liveBetGame.marketList
     for (let key in marketList) {
         if (data.data.secId === "odd_Eve"){
-            console.log(marketList)
+            const oddEvenData = marketList.odd_even;
+            console.log(oddEvenData)
         }else if(marketList.hasOwnProperty(key)) {
             const marketData = marketList[key];
             if (marketData.marketId === data.data.market) {
