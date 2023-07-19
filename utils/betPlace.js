@@ -54,6 +54,7 @@ async function placeBet(data){
         gameList = tennisData.eventList
         bettype = "Tennis"
     }
+    console.log(gameList)
     let liveBetGame = gameList.find(item => item.eventData.eventId == data.data.eventId);
     let marketDetails
     let marketList = liveBetGame.marketList
