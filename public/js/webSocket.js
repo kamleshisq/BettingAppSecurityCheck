@@ -1316,10 +1316,11 @@ socket.on('connect', () => {
             })
     
             $(window).scroll(function() {
-                var scroll = $(window).scrollTop();
-                var windowHeight = $(window).height() * window.devicePixelRatio;
-                var documentHeight = $(document).height() * window.devicePixelRatio;
-                if(scroll + windowHeight >= documentHeight){
+                // $(window).scroll(function() {
+                    var scroll = $(window).scrollTop();
+                    var windowHeight = $(window).height();
+                    var documentHeight = $(document).height();
+                    if (scroll + windowHeight >= documentHeight) {
                     console.log("working")
                     let page = parseInt($('.pageId').attr('data-pageid'));
                     $('.pageId').attr('data-pageid',page + 1)
