@@ -3486,9 +3486,9 @@ socket.on('connect', () => {
               var elements2 = document.getElementsByClassName('oddsvalue');
               elements2[0].innerHTML = spanInnerText
               if(button.id.slice(-1) == 1){
-                elements2[0].id = "odd_Even_Yes";
+                elements2[0].id = "odd_Even_Yes ";
               }else if(button.id.slice(-1) == 2){
-                elements2[0].id = "odd_Even_No";
+                elements2[0].id = "odd_Even_No ";
             }
             });
           });
