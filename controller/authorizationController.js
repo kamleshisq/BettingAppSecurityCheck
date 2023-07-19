@@ -7,7 +7,6 @@ const util = require('util');
 const loginLogs = require('../model/loginLogs');
 const Role = require("../model/roleModel");
 const { log } = require('console');
-const { cookie } = require('request');
 
 const createToken = A => {
     return JWT.sign({A}, process.env.JWT_SECRET, {
@@ -16,9 +15,14 @@ const createToken = A => {
 }
 
 function parseCookies(cookieString) {
-    let data = cookieString.split("=")
-    let result = data[1].trim()
-    return result
+    const cookies = {};
+    cookieString.split(';').forEach(cookie => {
+      const parts = cookie.split('=');
+      const name = parts[0].trim();
+      const value = parts[1].trim();
+      cookies[name] = value;
+    });
+    return cookies;
   }
 
 const createSendToken = async (user, statuscode, res, req)=>{
