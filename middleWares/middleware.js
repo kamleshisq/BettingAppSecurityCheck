@@ -74,6 +74,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         }else{
             const login = await loginLogs.findOne({session_id:req.cookies.JWT, isOnline:true})
             // console.log(req.cookies.JWT)
+            console.log(login, "MIDDLEWARE")
             if(login == null){
                 global._token = ""
                 global._protocol = req.protocol
