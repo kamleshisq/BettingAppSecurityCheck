@@ -1312,6 +1312,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
+        console.log("Working")
     let limit = 20;
     let page = data.page;
     let userAcc = await AccModel.find({user_id:data.LOGINDATA.LOGINUSER.id}).skip(page * limit).limit(limit)
