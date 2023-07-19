@@ -64,7 +64,6 @@ exports.userTable = catchAsync(async(req, res, next) => {
     // var roles = await Role.find({role_level:{$gt : req.currentUser.role.role_level}})
     let id = req.query.id;
     let page = req.query.page;
-    console.log(req.token, "reqToken")
     // console.log(req.query)
     let urls;
     if(id && id != req.currentUser.parent_id){
@@ -100,7 +99,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     let requests = urls.map(item => fetch(item.url, {
         headers: {
             'Content-type': 'application/json',
-            'Authorization': `Bearer ` + req.token, // notice the Bearer before your token
+            'authorization': `Bearer ` + req.token, // notice the Bearer before your token
         }
     }).then(data => data.json()));
     const data = await Promise.all(requests)
