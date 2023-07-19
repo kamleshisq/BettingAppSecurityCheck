@@ -22,6 +22,7 @@ const getmarketDetails = require("../utils/getmarketsbymarketId");
 const fs = require('fs');
 const path = require('path');
 const bannerModel = require('../model/bannerModel');
+const accountStatement = require("../model/accountStatementByUserModel");
 const liveStreameData = require("../utils/getLiveStream");
 const gameAPI = require("../utils/gameAPI");
 // exports.userTable = catchAsync(async(req, res, next) => {
