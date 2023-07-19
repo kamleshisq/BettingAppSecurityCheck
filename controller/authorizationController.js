@@ -118,9 +118,10 @@ exports.login = catchAsync (async(req, res, next) => {
 
 exports.isProtected = catchAsync( async (req, res, next) => {
     let token 
-    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
-        token = req.headers.authorization.split(' ')[1];
-    }else if(parseCookies(req.headers.cookie).JWT){
+    // if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+    //     token = req.headers.authorization.split(' ')[1];
+    // }else 
+    if(parseCookies(req.headers.cookie).JWT){
         token = parseCookies(req.headers.cookie).JWT;
         // console.log(token)
     }
@@ -128,6 +129,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         return next(new AppError('Please log in to access', 404))
     }
     console.log(req.headers.cookie, "working")
+    console.log(parseCookies(req.headers.cookie).JWT, working2)
     const tokenId = await loginLogs.findOne({session_id:token})
     console.log(tokenId.isOnline)
     if(!tokenId.isOnline){
