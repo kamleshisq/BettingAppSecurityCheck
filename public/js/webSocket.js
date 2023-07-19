@@ -3339,6 +3339,7 @@ socket.on('connect', () => {
 
 
         socket.on("marketId", async(data) => {
+            console.log(data)
             $(".match_odd_Blue").each(function() {
                     
                 let id = this.id
