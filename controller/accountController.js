@@ -184,7 +184,7 @@ exports.getMyAccountStatement = catchAsync(async(req, res, next) => {
     // if(req.currentUser.role.role_level > user.role.role_level){
     //     return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
     // }
-    let userAcc = await accountStatement.find({user_id:req.currentUser._id})
+    let userAcc = await accountStatement.find({user_id:req.currentUser._id}).limit(20)
     // if(req.body.from && req.body.to){
     //     userAcc = await accountStatement.find({$or:[{to_user_id:req.body.id},{from_user_id:req.body.id}],date:{$gte:req.body.from,$lte:req.body.to}})
     // }else{
