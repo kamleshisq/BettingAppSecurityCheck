@@ -3383,48 +3383,48 @@ socket.on('connect', () => {
                 }
             })
 
-            $(".tied_match_Blue").each(function() {
+            // $(".tied_match_Blue").each(function() {
                     
-                let id = this.id
-                id = id.slice(0, -1);
-                let section = null;
-                data.items.some(item => {
-                    section = item.odds.find(odd => odd.selectionId == id);
-                    return section !== undefined;
-                });
-                if(this.id == `${section.selectionId}1` ){
-                    this.innerHTML = `<span><b>${section.backPrice1}</b></span> 
-                                    <span>${section.backSize1}</span>`
-                }else if(this.id == `${section.selectionId}2`){
-                    this.innerHTML = `<span><b>${section.backPrice2}</b></span> 
-                    <span>${section.backSize2}</span>`
-                }else if (this.id == `${section.selectionId}3`){
-                    this.innerHTML = `<span><b>${section.backPrice3}</b></span> 
-                    <span>${section.backSize3}</span>`
-                }
-            })
+            //     let id = this.id
+            //     id = id.slice(0, -1);
+            //     let section = null;
+            //     data.items.some(item => {
+            //         section = item.odds.find(odd => odd.selectionId == id);
+            //         return section !== undefined;
+            //     });
+            //     if(this.id == `${section.selectionId}1` ){
+            //         this.innerHTML = `<span><b>${section.backPrice1}</b></span> 
+            //                         <span>${section.backSize1}</span>`
+            //     }else if(this.id == `${section.selectionId}2`){
+            //         this.innerHTML = `<span><b>${section.backPrice2}</b></span> 
+            //         <span>${section.backSize2}</span>`
+            //     }else if (this.id == `${section.selectionId}3`){
+            //         this.innerHTML = `<span><b>${section.backPrice3}</b></span> 
+            //         <span>${section.backSize3}</span>`
+            //     }
+            // })
 
 
-            $(".tied_match_Red").each(function() {
+            // $(".tied_match_Red").each(function() {
                     
-                let id = this.id
-                id = id.slice(0, -1);
-                let section = null;
-                data.items.some(item => {
-                    section = item.odds.find(odd => odd.selectionId == id);
-                    return section !== undefined;
-                });
-                if(this.id == `${section.selectionId}4` ){
-                    this.innerHTML = `<span><b>${section.layPrice1}</b></span> 
-                                    <span>${section.laySize1}</span>`
-                }else if(this.id == `${section.selectionId}5`){
-                    this.innerHTML = `<span><b>${section.layPrice2}</b></span> 
-                    <span>${section.laySize2}</span>`
-                }else if (this.id == `${section.selectionId}6`){
-                    this.innerHTML = `<span><b>${section.layPrice3}</b></span> 
-                    <span>${section.laySize3}</span>`
-                }
-            })
+            //     let id = this.id
+            //     id = id.slice(0, -1);
+            //     let section = null;
+            //     data.items.some(item => {
+            //         section = item.odds.find(odd => odd.selectionId == id);
+            //         return section !== undefined;
+            //     });
+            //     if(this.id == `${section.selectionId}4` ){
+            //         this.innerHTML = `<span><b>${section.layPrice1}</b></span> 
+            //                         <span>${section.laySize1}</span>`
+            //     }else if(this.id == `${section.selectionId}5`){
+            //         this.innerHTML = `<span><b>${section.layPrice2}</b></span> 
+            //         <span>${section.laySize2}</span>`
+            //     }else if (this.id == `${section.selectionId}6`){
+            //         this.innerHTML = `<span><b>${section.layPrice3}</b></span> 
+            //         <span>${section.laySize3}</span>`
+            //     }
+            // })
 
             $(".bookmaker_blue").each(function() {
                     
