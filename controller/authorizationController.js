@@ -161,9 +161,10 @@ exports.isProtected = catchAsync( async (req, res, next) => {
 
 exports.isLogin = catchAsync( async (req, res, next) => {
     let token 
-    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
-        token = req.headers.authorization.split(' ')[1];
-    }else if(parseCookies(req.headers.cookie).JWT){
+    // if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+    //     token = req.headers.authorization.split(' ')[1];
+    // }else 
+    if(parseCookies(req.headers.cookie).JWT){
         token = parseCookies(req.headers.cookie).JWT;
         // console.log(token)
     }
