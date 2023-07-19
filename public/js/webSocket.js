@@ -8,6 +8,7 @@ socket.on('connect', () => {
     console.log("websocket Connected")
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
+        console.log('WORKING')
         LOGINDATA.LOGINUSER = data.loginData.User
         LOGINDATA.LOGINTOKEN = data.loginData.Token
         const {
