@@ -26,7 +26,7 @@ const liveStream = require("./utils/getLiveStream");
 io.on('connection', (socket) => {
     console.log('connected to client')
     let loginData = {}
-    console.log(global)
+    // console.log(global)
     loginData.User = global._User
     loginData.Token = global._token
 
