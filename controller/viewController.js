@@ -77,7 +77,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
         req.query.id = id
         child =  UserController.getOwnChild(req, res, next)
     }
-    console.log(child)
+    console.log(child, 45645)
     const data = await Promise.all(requests)
     const users = data[0].child;
     const roles = data[1].roles;
