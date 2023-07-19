@@ -64,6 +64,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     // var roles = await Role.find({role_level:{$gt : req.currentUser.role.role_level}})
     let id = req.query.id;
     let page = req.query.page;
+    console.log(req.token)
     // console.log(req.query)
     let urls;
     if(id && id != req.currentUser.parent_id){
