@@ -77,7 +77,46 @@ module.exports = () => {
                         })
 
                     }else if((entry.secId === "odd_Even_No" && marketresult.result === "lay") || (entry.secId === "odd_Even_Yes" && marketresult.result === "back")){
-                        console.log(entry)
+                        let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue)})
+                        let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{balance: (entry.Stake * entry.oddValue), availableBalance: (entry.Stake * entry.oddValue), myPL: (entry.Stake * entry.oddValue), Won:1, exposure:-entry.Stake}})
+                        console.log(user)
+                        let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
+                        let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/WON `
+                        let parentUser
+
+                        if(user.parentUsers.length < 2){
+                            // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
+                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -(entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
+                        }else{
+                            await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
+                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-(entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
+                        }
+                        
+                        await accModel.create({
+                          "user_id":user._id,
+                          "description": description,
+                          "creditDebitamount" : (entry.Stake * entry.oddValue),
+                          "balance" : user.availableBalance + (entry.Stake * entry.oddValue),
+                          "date" : Date.now(),
+                          "userName" : user.userName,
+                          "role_type" : user.role_type,
+                          "Remark":"-",
+                          "stake": bet.Stake,
+                          "transactionId":`${bet.transactionId}`
+                        })
+
+                        await accModel.create({
+                          "user_id":parentUser._id,
+                          "description": description2,
+                          "creditDebitamount" : -(entry.Stake * entry.oddValue),
+                          "balance" : parentUser.availableBalance - (entry.Stake * entry.oddValue),
+                          "date" : Date.now(),
+                          "userName" : parentUser.userName,
+                          "role_type" : parentUser.role_type,
+                          "Remark":"-",
+                          "stake": bet.Stake,
+                          "transactionId":`${bet.transactionId}Parent`
+                        })
                     }else{
                         await betModel.findByIdAndUpdate(entry._id,{status:"LOSS"})
                         await userModel.findByIdAndUpdate(entry.userId,{$inc:{Loss:1, exposure:-entry.Stake}})
