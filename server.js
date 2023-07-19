@@ -97,6 +97,7 @@ io.on('connection', (socket) => {
         let page = data.page; 
         let limit = 10
         // const me = await User.findById(data.id)
+        console.log(data.LOGINDATA)
         const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
         data.filterData.parentUsers = { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
         let role_type =[]
