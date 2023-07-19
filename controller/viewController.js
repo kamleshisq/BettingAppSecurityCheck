@@ -25,6 +25,7 @@ const bannerModel = require('../model/bannerModel');
 const accountStatement = require("../model/accountStatementByUserModel");
 const liveStreameData = require("../utils/getLiveStream");
 const gameAPI = require("../utils/gameAPI");
+const UserController = require("../controller/userController");
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -66,42 +67,17 @@ exports.userTable = catchAsync(async(req, res, next) => {
     let page = req.query.page;
     // console.log(req.query)
     let urls;
+    let child
     if(id && id != req.currentUser.parent_id){
         var isValid = mongoose.Types.ObjectId.isValid(id)
-
+    
         if(!isValid){
             return next(new AppError('id is not valid'))
         }
-        urls = [
-            {
-                url:`http://127.0.0.1/api/v1/users/getOwnChild?id=${id}`,
-                name:'user'
-            },
-            {
-                url:`http://127.0.0.1/api/v1/role/getAuthROle`,
-                name:'role'
-            }
-        ]
+        req.query.id = id
+        child =  UserController.getOwnChild(req, res, next)
     }
-    else{
-        urls = [
-            {
-                url:`http://127.0.0.1/api/v1/users/getOwnChild`,
-                name:'user'
-            },
-            {
-                url:`http://127.0.0.1/api/v1/role/getAuthROle`,
-                name:'role'
-            }
-        ]
-    }
-    // console.log(fullUrl)
-    let requests = urls.map(item => fetch(item.url, {
-        headers: {
-            'Content-type': 'application/json',
-            'authorization': `Bearer ` + req.token, // notice the Bearer before your token
-        }
-    }).then(data => console.log(data)));
+    console.log(child)
     const data = await Promise.all(requests)
     const users = data[0].child;
     const roles = data[1].roles;
