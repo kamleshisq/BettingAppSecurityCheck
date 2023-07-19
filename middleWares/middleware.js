@@ -72,22 +72,10 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             global._host = req.get('host')
             global._User = user
         }else{
-            const login = await loginLogs.findOne({session_id:req.cookies.JWT, isOnline:true})
-            console.log(req.cookies, "cookie in middleware")
-            console.log(login, "MIDDLEWARE")
-            if(login == null){
-                global._token = ""
-                global._protocol = req.protocol
-                global._host = req.get('host')
-                global._User = ""
-                return next()
-            }
-
-            const user = await User.findById(login.user_id._id)
-            global._token = req.cookies.JWT
+            global._token = ""
             global._protocol = req.protocol
             global._host = req.get('host')
-            global._User = user
+            global._User = ""
         }
     }
     
