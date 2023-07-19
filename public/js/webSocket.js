@@ -3692,9 +3692,58 @@ socket.on('connect', () => {
             if (scroll + windowHeight >= documentHeight) {
                 let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
-                console.log(page)
+                socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA})
             }
         });
+        
+        let count = 11
+        socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
+            if(data.page === 0){
+                count = 1
+            }
+            let page = data.page
+            let userAcc = data.userAcc;
+            let html = '';
+             for(let i = 0; i < userAcc.length; i++){
+                var date = new Date(userAcc[i].date);
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+                html += `<tr class="acount-stat-tbl-body-tr">
+                    <td>${i+1}</td>
+                    <td>${formattedTime}</td>`
+                    if(userAcc[i].creditDebitamount > 0){
+                        html += `<td>${userAcc[i].creditDebitamount}</td>
+                        <td>0</td>`
+                    }else{
+                        html += ` <td>0</td>
+                        <td>${data[i].creditDebitamount}</td>`
+                    }
+
+                    if(userAcc[i].stake){
+                        html += `<td>${data[i].stake}</td>`
+                    }else{
+                        html += "<td>-</td>"
+                    }
+
+                    html += `<td>0</td>
+                    <td>${data[i].balance}</td>
+                    <td>${data[i].description}</td>
+                    <td>-</td>`
+            }
+            count += 20
+            if(data.page == 0){
+                $('.acount-stat-tbl-body').html(html)
+            }else{
+                $('.acount-stat-tbl-body').append(html)         
+            }
+        })
     }
 
 

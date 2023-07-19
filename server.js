@@ -1311,6 +1311,13 @@ io.on('connection', (socket) => {
         socket.emit("liveCasinoPage", games)
     })
 
+    socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
+    let limit = 20;
+    let page = data.page;
+    let userAcc = await accountStatement.find({user_id:data.LOGINDATA.LOGINUSER.id}).skip(page * limit).limit(limit)
+    socket.emit("ACCSTATEMENTUSERSIDE", {userAcc, page})
+    })
+
     
 })
 
