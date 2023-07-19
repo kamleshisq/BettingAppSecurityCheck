@@ -118,7 +118,7 @@ exports.login = catchAsync (async(req, res, next) => {
 
 exports.isProtected = catchAsync( async (req, res, next) => {
     let token 
-    console.log(req.cookies.JWT, 123546)
+    // console.log(req.cookies.JWT, 123546)
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         // console.log(req.headers.authorization.split(' ')[1].split("=")[1])
         token = req.headers.authorization.split(' ')[1].split("=")[1];
