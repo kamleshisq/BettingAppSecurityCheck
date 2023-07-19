@@ -78,12 +78,13 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             global._protocol = req.protocol
             global._host = req.get('host')
             global._User = user
-        }else{
-            global._token = ""
-            global._protocol = req.protocol
-            global._host = req.get('host')
-            global._User = ""
         }
+        // else{
+        //     global._token = ""
+        //     global._protocol = req.protocol
+        //     global._host = req.get('host')
+        //     global._User = ""
+        // }
     }
     
     
