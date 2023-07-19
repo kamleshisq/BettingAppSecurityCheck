@@ -13,6 +13,18 @@ const createToken = A => {
         expiresIn:process.env.JWT_EXPIRES
     })
 }
+
+function parseCookies(cookieString) {
+    const cookies = {};
+    cookieString.split(';').forEach(cookie => {
+      const parts = cookie.split('=');
+      const name = parts[0].trim();
+      const value = parts[1].trim();
+      cookies[name] = value;
+    });
+    return cookies;
+  }
+
 const createSendToken = async (user, statuscode, res, req)=>{
     const token = createToken(user._id);
     // req.token = token
@@ -108,8 +120,8 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     let token 
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1];
-    }else if(req.cookies.JWT){
-        token = req.cookies.JWT;
+    }else if(parseCookies(req.headers.cookie).JWT){
+        token = parseCookies(req.headers.cookie).JWT;
         // console.log(token)
     }
     if(!token){
@@ -148,8 +160,8 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     let token 
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1];
-    }else if(req.cookies.JWT){
-        token = req.cookies.JWT;
+    }else if(parseCookies(req.headers.cookie).JWT){
+        token = parseCookies(req.headers.cookie).JWT;
         // console.log(token)
     }
     
