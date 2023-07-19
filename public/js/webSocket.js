@@ -3686,12 +3686,12 @@ socket.on('connect', () => {
     if(pathname === "/myAccountStatment"){
         $(window).scroll(function() {
             var scroll = $(window).scrollTop();
-            var windowHeight = $(window).height() * window.devicePixelRatio;
-            var documentHeight = $(document).height() * window.devicePixelRatio;
-            if(scroll + windowHeight >= documentHeight){
-                console.log("working")
+            var windowHeight = $(window).height();
+            var documentHeight = $(document).height();
+            if (scroll + windowHeight >= documentHeight) {
+                console.log("working");
             }
-         }); 
+        });
     }
 
 
