@@ -97,10 +97,9 @@ exports.userTable = catchAsync(async(req, res, next) => {
     }
     // console.log(fullUrl)
     let requests = urls.map(item => fetch(item.url, {
-        method: 'GET',
         headers: {
             'Content-type': 'application/json',
-            'authorization': `Bearer ` + req.token, // notice the Bearer before your token
+            'Authorization': `Bearer ` + req.token, 
         }
     }).then(data => console.log(data)));
     const data = await Promise.all(requests)
