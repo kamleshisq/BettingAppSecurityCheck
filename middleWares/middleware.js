@@ -73,7 +73,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             global._User = user
         }else{
             const login = await loginLogs.findOne({session_id:req.cookies.JWT, isOnline:true})
-            // console.log(req.cookies.JWT)
+            console.log(req.cookies.JWT)
             console.log(login, "MIDDLEWARE")
             if(login == null){
                 global._token = ""
