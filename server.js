@@ -157,7 +157,7 @@ io.on('connection', (socket) => {
         // console.log(user)
         // console.log(page)
         let response = user;
-        urlRequestAdd(`/api/v1/users/searchUser?username = ${data.filterData.userName}& role=${data.filterData.role}& whiteLable = ${data.filterData.whiteLabel}`,'GET', data.LOGINDATA.LOGINTOKEN)
+        //urlRequestAdd(`/api/v1/users/searchUser?username = ${data.filterData.userName}& role=${data.filterData.role}& whiteLable = ${data.filterData.whiteLabel}`,'GET', data.LOGINDATA.LOGINTOKEN)
         socket.emit("getOwnChild", {status : 'success',response, currentUser,page,roles})
     })
 
@@ -283,7 +283,7 @@ io.on('connection', (socket) => {
         }else{
             Users = await User.find({role_type:{$in:role_type},isActive:false , whiteLabel:global._User.whiteLabel})
         }
-        urlRequestAdd(`/api/v1/users/updateUserStatusActive`,'POST', id.LOGINDATA.LOGINTOKEN)
+        //urlRequestAdd(`/api/v1/users/updateUserStatusActive`,'POST', id.LOGINDATA.LOGINTOKEN)
         socket.emit("inActiveUserDATA", Users)
 
     });
@@ -304,7 +304,7 @@ io.on('connection', (socket) => {
             Users = await User.find({role_type:{$in:role_type},isActive:false , whiteLabel:global._User.whiteLabel})
         }
         socket.emit("inActiveUserDATA1", Users)
-        urlRequestAdd(`/api/v1/users/deleteUser`,'POST', id.LOGINDATA.LOGINTOKEN)
+        //urlRequestAdd(`/api/v1/users/deleteUser`,'POST', id.LOGINDATA.LOGINTOKEN)
     });
 
 
@@ -325,7 +325,7 @@ io.on('connection', (socket) => {
 
         }
 
-        urlRequestAdd(`/api/v1/Account/getUserAccStatement?id = ${data.id}&page=${data.page}&from = ${data.from}&from = ${data.from}&to = ${data.to}&search = ${data.search}`,'GET', data.LOGINDATA.LOGINTOKEN)
+        //urlRequestAdd(`/api/v1/Account/getUserAccStatement?id = ${data.id}&page=${data.page}&from = ${data.from}&from = ${data.from}&to = ${data.to}&search = ${data.search}`,'GET', data.LOGINDATA.LOGINTOKEN)
 
 
         // console.log(fullUrl)
@@ -377,7 +377,7 @@ io.on('connection', (socket) => {
         let user = await User.findOne({userName:data.userName})
         let fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement?id=' + user.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate
         // console.log(fullUrl)
-        urlRequestAdd(`/api/v1/Account/getUserAccStatement?id = ${data.id}&page=${data.page}&from = ${data.from}&from = ${data.from}&to = ${data.to}`,'GET', data.LOGINDATA.LOGINTOKEN)
+        //urlRequestAdd(`/api/v1/Account/getUserAccStatement?id = ${data.id}&page=${data.page}&from = ${data.from}&from = ${data.from}&to = ${data.to}`,'GET', data.LOGINDATA.LOGINTOKEN)
 
 
         // console.log(fullUrl)
@@ -860,7 +860,7 @@ io.on('connection', (socket) => {
     //     // }else{
     //     //     users = await User.find({role_type:{$in:role_type},is_Online:true , whiteLabel:currentUser.whiteLabel})
     //     // }
-    //     urlRequestAdd(`/api/v1/users/logOutSelectedUser`,'POST')
+    //     //urlRequestAdd(`/api/v1/users/logOutSelectedUser`,'POST')
     //     socket.emit('logOutUser',{status:'success'})
     // })
 
