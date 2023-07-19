@@ -3339,7 +3339,7 @@ socket.on('connect', () => {
 
 
         socket.on("marketId", async(data) => {
-            console.log(data)
+            // console.log(data)
             $(".match_odd_Blue").each(function() {
                     
                 let id = this.id
@@ -3368,6 +3368,7 @@ socket.on('connect', () => {
                 id = id.slice(0, -1);
                 let section = null;
                 data.items.some(item => {
+                    console.log(id)
                     section = item.odds.find(odd => odd.selectionId == id);
                     return section !== undefined;
                 });
