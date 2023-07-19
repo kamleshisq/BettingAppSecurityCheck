@@ -627,6 +627,7 @@ socket.on('connect', () => {
 
     //for inactive users//
     if(pathname == "/admin/inactiveUser"){
+        console.log(LOGINDATA)
         $(document).on('click','.userStatusActive',function(e){
             e.preventDefault();
             let id = $(this).data('id')
