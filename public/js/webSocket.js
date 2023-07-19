@@ -3724,18 +3724,18 @@ socket.on('connect', () => {
                         <td>0</td>`
                     }else{
                         html += ` <td>0</td>
-                        <td>${data[i].creditDebitamount}</td>`
+                        <td>${userAcc[i].creditDebitamount}</td>`
                     }
 
                     if(userAcc[i].stake){
-                        html += `<td>${data[i].stake}</td>`
+                        html += `<td>${userAcc[i].stake}</td>`
                     }else{
                         html += "<td>-</td>"
                     }
 
                     html += `<td>0</td>
-                    <td>${data[i].balance}</td>
-                    <td>${data[i].description}</td>
+                    <td>${userAcc[i].balance}</td>
+                    <td>${userAcc[i].description}</td>
                     <td>-</td>`
             }
             console.log(html)
