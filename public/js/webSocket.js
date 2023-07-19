@@ -3698,7 +3698,7 @@ socket.on('connect', () => {
         
         let count = 11
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
-            console.log(data)
+            console.log(data.page)
             if(data.page === 0){
                 count = 1
             }
@@ -3738,7 +3738,6 @@ socket.on('connect', () => {
                     <td>${userAcc[i].description}</td>
                     <td>-</td>`
             }
-            console.log(html)
             count += 20
             if(data.page == 0){
                 $('.acount-stat-tbl-body').html(html)
