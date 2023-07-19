@@ -3698,6 +3698,7 @@ socket.on('connect', () => {
         
         let count = 11
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
+            console.log(data)
             if(data.page === 0){
                 count = 1
             }
