@@ -119,8 +119,8 @@ exports.login = catchAsync (async(req, res, next) => {
 exports.isProtected = catchAsync( async (req, res, next) => {
     let token 
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
-        console.log(req.headers.authorization.split(' ')[1].split("=")[1])
-        token = req.headers.authorization.split(' ')[1];
+        // console.log(req.headers.authorization.split(' ')[1].split("=")[1])
+        token = req.headers.authorization.split(' ')[1].split("=")[1];
     }else if(parseCookies(req.headers.cookie).JWT){
         token = parseCookies(req.headers.cookie).JWT;
         // console.log(token)
@@ -159,7 +159,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
 exports.isLogin = catchAsync( async (req, res, next) => {
     let token 
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
-        token = req.headers.authorization.split(' ')[1];
+        token = req.headers.authorization.split(' ')[1].split("=")[1];
     }else if(parseCookies(req.headers.cookie).JWT){
         token = parseCookies(req.headers.cookie).JWT;
         // console.log(token)
