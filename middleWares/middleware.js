@@ -56,6 +56,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
     //         }
     // }
     else if(req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin"){
+        console.log(req.cookies.JWT, "MIDDLEWARES")
         if(req.cookies.JWT && !req.originalUrl.startsWith("/wallet")){
             // console.log(global._loggedInToken)
             const login = await loginLogs.findOne({session_id:req.cookies.JWT, isOnline:true})
