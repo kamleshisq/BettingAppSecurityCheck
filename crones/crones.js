@@ -75,6 +75,8 @@ module.exports = () => {
                           "transactionId":`${bet.transactionId}Parent`
                         })
 
+                    }else if((entry.secId === "odd_Even_No" && marketresult.result === "lay") || (entry.secId === "odd_Even_Yes" && marketresult.result === "back")){
+                        console.log(entry)
                     }else{
                         await betModel.findByIdAndUpdate(entry._id,{status:"LOSS"})
                         await userModel.findByIdAndUpdate(entry.userId,{$inc:{Loss:1, exposure:-entry.Stake}})
