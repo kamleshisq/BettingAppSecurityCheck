@@ -3485,7 +3485,11 @@ socket.on('connect', () => {
               elementsforOddEven[0].id = parentRow.querySelector('td:first-child').id;
               var elements2 = document.getElementsByClassName('oddsvalue');
               elements2[0].innerHTML = spanInnerText
-              elements2[0].id = "odd_Even";
+              if(button.id.slice(-1) == 1){
+                elements2[0].id = "odd_Even_Yes";
+              }else if(button.id.slice(-1) == 2){
+                elements2[0].id = "odd_Even_No";
+            }
             });
           });
 

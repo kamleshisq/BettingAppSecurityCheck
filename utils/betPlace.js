@@ -58,7 +58,7 @@ async function placeBet(data){
     let marketDetails
     let marketList = liveBetGame.marketList
     for (let key in marketList) {
-        if (data.data.secId === "odd_Eve"){
+        if (data.data.secId === "odd_Even_Yes" || data.data.secId === "odd_Even_No"){
             const oddEvenData = marketList.odd_even;
             marketDetails = oddEvenData.find(item => item.marketId === data.data.market)
             console.log(marketDetails)
