@@ -20,38 +20,59 @@
             </thead>
 
             <tbody class="acount-stat-tbl-body">
-                <%
-                    let StringData = match.marketList.tied_match.runners
-                    const cleanedString = StringData.replace(/'/g, '');
-                    const jsonData = JSON.parse(cleanedString);
-                %>
-                <%for(let i = 0; i < jsonData.length; i++){%>
+                <% let runners = JSON.parse(match.marketList.tied_match.runners); %>
+                <% const runners1 = []; %>
+                <%const secIds = []; %>
+                <%runners.forEach(item => {%>
+                    <%runners1.push(item.runner);%>
+                    <%secIds.push(item.secId);%>
+                <%});%>
+                <%for(let i = 0; i < runners1.length; i++){%>
                     <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                        <td id="<%=match.marketList.tied_match.marketId%>" colspan="2" style=" text-align: left;">
-                            <%=jsonData[i].runner%>
+                        <td id="<%=match.marketList.tied_match.marketId%>" class="runnerName" style=" text-align: left;">
+                            <%=runners1[i]%>
                         </td>
                         
                         <td >
-                            <button class="tbl-bg-blu-spn bookmaker_blue button" id="<%=jsonData[i].secId%>1">
+                            <button class="tbl-bg-blu-spn match_odd_Blue button" id="<%=secIds[i]%>1" >
                                 
                             </button> 
                         </td>
     
-                        
+                        <td >
+                            <button class="tbl-bg-blu-spn match_odd_Blue button" id="<%=secIds[i]%>2">
+                                
+                            </button> 
+                        </td>
     
                         <td >
-                            <button class="tbl-bg-pech-spn bookmaker_red button" id="<%=jsonData[i].secId%>2">
+                            <button class="tbl-bg-blu-spn match_odd_Blue button" id="<%=secIds[i]%>3">
+                                
+                            </button> 
+                        </td>
+    
+                        <td >
+                            <button class="tbl-bg-pech-spn match_odd_Red button" id="<%=secIds[i]%>4">
                                 
                             </button> 
                         </td>
                         
+                        <td >
+                            <button class="tbl-bg-pech-spn match_odd_Red button" id="<%=secIds[i]%>5">
+                                
+                            </button> 
+                        </td>
                         
+                        <td >
+                            <button class="tbl-bg-pech-spn match_odd_Red button" id="<%=secIds[i]%>6">
+                                
+                            </button> 
+                        </td>
                         
                     </tr>
                 <%}%>
                 
             </tbody>
-
           </table>
     </div>
 
