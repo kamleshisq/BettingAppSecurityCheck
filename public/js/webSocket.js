@@ -3388,7 +3388,7 @@ socket.on('connect', () => {
                 id = id.slice(0, -1);
                 let section = null;
                 data.items.some(item => {
-                    console.log(item.odds)
+                    console.log(item)
                     section = item.odds.find(odd => odd.selectionId == id);
                     return section !== undefined;
                 });
