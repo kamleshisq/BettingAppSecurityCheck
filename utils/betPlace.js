@@ -64,6 +64,8 @@ async function placeBet(data){
             marketDetails =  marketData;
             break;
           }
+        }else if(data.data.secId === "odd_Eve"){
+            console.log(marketList)
         }
       }
 let runnersData = JSON.parse(marketDetails.runners)
