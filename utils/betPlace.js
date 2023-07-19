@@ -60,7 +60,7 @@ async function placeBet(data){
     for (let key in marketList) {
         if (marketList.hasOwnProperty(key)) {
           const marketData = marketList[key];
-          console.log(marketData.marketId)
+          console.log(marketData)
           if (marketData.marketId === data.data.market) {
             marketDetails =  marketData;
             break;
