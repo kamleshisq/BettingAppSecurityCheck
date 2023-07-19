@@ -47,7 +47,7 @@ app.use(fileUpload());
 app.use(express.urlencoded({ extended:true, limit: '10kb'}));
 app.use(cookieParser());
 app.use(middlewares);
-// crone();
+crone();
 // app.get("/", (req, res)=> {
     //     res.send("hello word")
     // })
