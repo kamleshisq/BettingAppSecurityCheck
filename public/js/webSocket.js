@@ -3795,9 +3795,12 @@ socket.on('connect', () => {
                 $('.pageId').attr('data-pageid',page + 1)
                 let fromDate = $('#Fdate').val()
                 let toDate = $('#toDate').val()
-                // if(fromDate === "" && toDate === ""){
-                    socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA})
-                // }
+                let type = $("#select").val()
+                let filterData = {}
+                filterData.fromDate = fromDate,
+                filterData.toDate = toDate
+                filterData.type = type
+                socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData})
             }
         });
         

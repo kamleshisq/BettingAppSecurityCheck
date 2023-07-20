@@ -1314,7 +1314,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
-        // console.log("Working")
+        console.log(data.filterData)
     let limit = 20;
     let page = data.page;
     // console.log(page)
