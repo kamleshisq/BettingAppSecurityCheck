@@ -3794,6 +3794,8 @@ socket.on('connect', () => {
                 let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
                 socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA})
+                fromDate = $('#Fdate').val()
+                console.log(fromDate)
             }
         });
         
