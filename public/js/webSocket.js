@@ -3752,6 +3752,11 @@ socket.on('connect', () => {
             link.click();
           }          
 
+          function sanitizeCellValue(value) {
+            // Remove unwanted characters like non-breaking spaces
+            return value.replace(/\u00a0/g, '').trim();
+          }
+          
           function convertToCSV(table) {
             const rows = table.querySelectorAll('tr');
             
@@ -3760,15 +3765,14 @@ socket.on('connect', () => {
               const columns = row.querySelectorAll('td, th');
               let rowData = '';
               for (const column of columns) {
-                const data = column.innerText;
-                rowData += (data.includes(',') ? `${data}` : data) + ',';
+                const data = sanitizeCellValue(column.innerText);
+                rowData += (data.includes(',') ? `"${data}"` : data) + ',';
               }
               csv += rowData.slice(0, -1) + '\n';
             }
             
             return csv;
           }
-
 
         document.getElementById('downloadBtn').addEventListener('click', function(e) {
             e.preventDefault()
