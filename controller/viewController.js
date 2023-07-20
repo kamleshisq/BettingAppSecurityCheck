@@ -1787,6 +1787,19 @@ exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find();
     let games = await gameModel.find();
     let userLog = await loginLogs.find({user_id:user._id})
+    let bets = await betModel.aggregate([
+        {
+          $group: {
+            _id: '$event',
+            totalData: { $sum: 1 },
+            won: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
+            loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
+            sumOfReturns: { $sum: '$returns' }
+          }
+        }
+      ])
+
+    console.log(bets) 
     res.status(200).render("./userSideEjs/gameReportPage/main",{
         user,
         verticalMenus,
