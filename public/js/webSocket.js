@@ -3803,7 +3803,22 @@ socket.on('connect', () => {
                 socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData})
             }
         });
-        
+
+
+        const FdateInput = document.getElementById('Fdate');
+        const TdateInput = document.getElementById('Tdate');
+        const selectElement = document.getElementById('select');
+        FdateInput.addEventListener('change', handleInputChange);
+        TdateInput.addEventListener('change', handleInputChange);
+        selectElement.addEventListener('change', handleInputChange);
+        function handleInputChange(event) {
+            let fromDate = $('#Fdate').val()
+            let toDate = $('#Tdate').val()
+            let type = $("#select").val()
+            console.log(fromDate, toDate, type)
+          }
+
+          
         let count = 21
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
             console.log(data.page)
