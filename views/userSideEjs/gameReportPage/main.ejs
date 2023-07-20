@@ -67,9 +67,9 @@
                                 <td><%=bets[i].loss%></td>
                                 <td><%=bets[i].Cancel%></td>
                                 <%if(bets[i].sumOfReturns > 0){%>
-                                  <td class="c-gren">bets[i].sumOfReturns</td>
+                                  <td class="c-gren"><%=bets[i].sumOfReturns%></td>
                                 <%}else{%>
-                                  <td class="c-reed">bets[i].sumOfReturns</td>
+                                  <td class="c-reed"><%=bets[i].sumOfReturns%></td>
                                   <%}%>
                             </tr>
                           <%}%>
