@@ -3786,33 +3786,49 @@ socket.on('connect', () => {
           });
 
 
-          function debounce(func, delay) {
-            let timeoutId;
-            return function (...args) {
-              clearTimeout(timeoutId);
-              timeoutId = setTimeout(() => {
-                func.apply(this, args);
-              }, delay);
-            };
-          }
-          
-          // Function to handle the scroll event
-          function handleScroll() {
-            var scroll = $(window).scrollTop();
-            var windowHeight = $(window).height();
-            var documentHeight = $(document).height();
-            if (scroll + windowHeight >= documentHeight) {
-              let page = parseInt($('.pageId').attr('data-pageid'));
-              $('.pageId').attr('data-pageid', page + 1);
-              socket.emit("ACCSTATEMENTUSERSIDE", { page, LOGINDATA });
-            }
-          }
-          
-          // Set the debounce time (in milliseconds) as needed
-          const debounceTime = 300;
-          
-          // Attach the debounced scroll event handler
-          $(window).scroll(debounce(handleScroll, debounceTime));
+          // Function to handle the scroll action when the element is in the viewport
+function handleScrollAction() {
+    let page = parseInt($('.pageId').attr('data-pageid'));
+    $('.pageId').attr('data-pageid', page + 1);
+    socket.emit("ACCSTATEMENTUSERSIDE", { page, LOGINDATA });
+  }
+  
+  // Create an Intersection Observer
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          handleScrollAction();
+        }
+      });
+    },
+    {
+      root: null, // Use the viewport as the root
+      rootMargin: '0px', // No margin around the root
+      threshold: 0.5, // When 50% of the target is visible, trigger the callback
+    }
+  );
+  
+  // Observe the element
+  observer.observe(document.querySelector('.pageId'));
+  
+  // Function to handle the scroll event with debouncing
+  function handleScroll() {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+  
+    timeoutId = setTimeout(() => {
+      observer.observe(document.querySelector('.pageId'));
+    }, debounceTime);
+  }
+  
+  // Set the debounce time (in milliseconds) as needed
+  const debounceTime = 300;
+  var timeoutId = null;
+  
+  // Attach the debounced scroll event handler
+  $(window).scroll(handleScroll);
         
         let count = 21
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
