@@ -1319,6 +1319,14 @@ io.on('connection', (socket) => {
     let page = data.page;
     // console.log(page)
     // console.log(data.LOGINDATA.LOGINUSER)
+    let filter
+    if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
+        console.log("Working1")
+    }else if(data.filterData.fromDate == "" && data.filterData.toDate != ""){
+        console.log("Working2")
+    }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
+        console.log("Working3")
+    }
     let userAcc = await AccModel.find({user_id:data.LOGINDATA.LOGINUSER._id}).skip(page * limit).limit(limit)
     socket.emit("ACCSTATEMENTUSERSIDE", {userAcc, page})
     })
