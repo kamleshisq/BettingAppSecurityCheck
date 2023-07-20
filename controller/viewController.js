@@ -1797,7 +1797,7 @@ exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
               Open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
               Cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
               sumOfReturns: { $sum: '$returns' },
-              uniqueMarketCount: { $addToSet: '$marketName' } // Add unique marketNames to the array
+              uniqueMarketCount: { $addToSet: '$marketName' } 
             }
           },
           {
@@ -1809,8 +1809,11 @@ exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
               Open: 1,
               Cancel: 1,
               sumOfReturns: 1,
-              uniqueMarketCount: { $size: '$uniqueMarketCount' } // Get the count of unique marketNames
+              uniqueMarketCount: { $size: '$uniqueMarketCount' } 
             }
+          },
+          {
+            $limit: 20 
           }
       ])
     //   console.log(bets)
