@@ -3786,7 +3786,7 @@ socket.on('connect', () => {
           });
 
 
-      // Custom debounce function to limit the scroll event frequency
+    // Custom debounce function to limit the event frequency
 function debounce(func, delay) {
     let timeoutId;
     return function (...args) {
@@ -3797,7 +3797,7 @@ function debounce(func, delay) {
     };
   }
   
-  // Function to handle the scroll action when the element is in the viewport
+  // Function to handle the scroll action
   function handleScrollAction() {
     let page = parseInt($('.pageId').attr('data-pageid'));
     $('.pageId').attr('data-pageid', page + 1);
@@ -3808,10 +3808,17 @@ function debounce(func, delay) {
   const debounceTime = 300;
   var timeoutId = null;
   
-  // Attach the debounced scroll event handler
-  $(window).scroll(debounce(handleScroll, debounceTime));
+  // Check if the user is on a mobile device
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   
-  // Function to handle the scroll event with debouncing
+  // Attach the debounced event handler based on the device type
+  if (isMobile) {
+    $(window).on('touchmove', debounce(handleScroll, debounceTime));
+  } else {
+    $(window).scroll(debounce(handleScroll, debounceTime));
+  }
+  
+  // Function to handle the event with debouncing
   function handleScroll() {
     if (timeoutId) {
       clearTimeout(timeoutId);
@@ -3826,6 +3833,7 @@ function debounce(func, delay) {
       }
     }, debounceTime);
   }
+  
   
         
         let count = 21
