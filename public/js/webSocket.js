@@ -3820,6 +3820,7 @@ socket.on('connect', () => {
             filterData.toDate = toDate
             filterData.type = type
             page = 0
+            $('.pageId').attr('data-pageid',1)
             socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData})
           }
 
@@ -3912,6 +3913,7 @@ socket.on('connect', () => {
             filterData.toDate = toDate
             filterData.type = type
             page = 0
+            $('.pageId').attr('data-pageid', 1)
             socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
           }
 
