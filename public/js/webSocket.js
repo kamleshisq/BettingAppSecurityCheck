@@ -3795,9 +3795,9 @@ socket.on('connect', () => {
                 $('.pageId').attr('data-pageid',page + 1)
                 let fromDate = $('#Fdate').val()
                 let toDate = $('#toDate').val()
-                if(fromDate === "" && toDate === ""){
+                // if(fromDate === "" && toDate === ""){
                     socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA})
-                }
+                // }
             }
         });
         
