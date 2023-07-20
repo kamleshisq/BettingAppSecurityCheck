@@ -1371,9 +1371,9 @@ io.on('connection', (socket) => {
     if(data.filterData.type != "All Bets"){
         filter.status = data.filterData.type
     }
-    // console.log(filter)
+    console.log(filter)
     let MyBets = await Bet.find(filter).skip(page * limit).limit(limit)
-    console.log(MyBets)
+    // console.log(MyBets)
     socket.emit("BETSFORUSER", {MyBets, page})
     })
 
