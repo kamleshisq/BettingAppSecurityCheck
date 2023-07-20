@@ -3786,31 +3786,30 @@ socket.on('connect', () => {
           });
 
 
-          // Function to handle the scroll action when the element is in the viewport
-function handleScrollAction() {
+         // Custom debounce function to limit the scroll event frequency
+function debounce(func, delay) {
+    let timeoutId;
+    return function (...args) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func.apply(this, args);
+      }, delay);
+    };
+  }
+  
+  // Function to handle the scroll action when the element is in the viewport
+  function handleScrollAction() {
     let page = parseInt($('.pageId').attr('data-pageid'));
     $('.pageId').attr('data-pageid', page + 1);
     socket.emit("ACCSTATEMENTUSERSIDE", { page, LOGINDATA });
   }
   
-  // Create an Intersection Observer
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          handleScrollAction();
-        }
-      });
-    },
-    {
-      root: null, // Use the viewport as the root
-      rootMargin: '0px', // No margin around the root
-      threshold: 0.5, // When 50% of the target is visible, trigger the callback
-    }
-  );
+  // Set the debounce time (in milliseconds) as needed
+  const debounceTime = 300;
+  var timeoutId = null;
   
-  // Observe the element
-  observer.observe(document.querySelector('.pageId'));
+  // Attach the debounced scroll event handler
+  $(window).scroll(debounce(handleScroll, debounceTime));
   
   // Function to handle the scroll event with debouncing
   function handleScroll() {
@@ -3819,16 +3818,32 @@ function handleScrollAction() {
     }
   
     timeoutId = setTimeout(() => {
-      observer.observe(document.querySelector('.pageId'));
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      if (isMobile) {
+        // For mobile devices, check if the user has scrolled to the bottom
+        if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
+          handleScrollAction();
+        }
+      } else {
+        // For desktop devices, use Intersection Observer
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                handleScrollAction();
+              }
+            });
+          },
+          {
+            root: null, // Use the viewport as the root
+            rootMargin: '0px', // No margin around the root
+            threshold: 0.5, // When 50% of the target is visible, trigger the callback
+          }
+        );
+        observer.observe(document.querySelector('.pageId'));
+      }
     }, debounceTime);
   }
-  
-  // Set the debounce time (in milliseconds) as needed
-  const debounceTime = 300;
-  var timeoutId = null;
-  
-  // Attach the debounced scroll event handler
-  $(window).scroll(handleScroll);
         
         let count = 21
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
