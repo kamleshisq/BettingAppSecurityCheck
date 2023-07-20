@@ -3753,8 +3753,8 @@ socket.on('connect', () => {
           }          
 
           function sanitizeCellValue(value) {
-            // Remove unwanted characters like non-breaking spaces
-            return value.replace(/\u00a0/g, '').trim();
+            // Replace unwanted character â€¯ (character code \u00a0) with a space
+            return value.replace(/\u00a0/g, ' ').trim();
           }
           
           function convertToCSV(table) {
