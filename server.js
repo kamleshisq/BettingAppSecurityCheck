@@ -1353,7 +1353,7 @@ io.on('connection', (socket) => {
     let filter = {}
     // console.log(data)
     filter.userId = data.LOGINDATA.LOGINUSER._id
-    console.log(filter)
+    // console.log(filter)
     if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
         filter.date = {
             $gt : new Date(data.filterData.fromDate)
@@ -1371,8 +1371,9 @@ io.on('connection', (socket) => {
     if(data.filterData.type != "All Bets"){
         filter.status = data.filterData.type
     }
-    console.log(filter)
+    // console.log(filter)
     let MyBets = await Bet.find(filter).skip(page * limit).limit(limit)
+    console.log(MyBets)
     socket.emit("BETSFORUSER", {MyBets, page})
     })
 
