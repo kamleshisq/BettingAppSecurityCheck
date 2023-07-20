@@ -1813,13 +1813,14 @@ exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
             }
           }
       ])
-      console.log(bets)
+    //   console.log(bets)
     res.status(200).render("./userSideEjs/gameReportPage/main",{
         user,
         verticalMenus,
         data,
         check:"My game",
         games,
-        bets
+        bets,
+        userLog
     })
 })
