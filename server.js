@@ -1314,7 +1314,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
-        console.log(data.filterData)
     let limit = 20;
     let page = data.page;
     // console.log(page)
@@ -1342,6 +1341,7 @@ io.on('connection', (socket) => {
     }else if (data.filterData.type === "1"){
         filter.stake = undefined
     }
+    console.log(filter)
     let userAcc = await AccModel.find(filter).skip(page * limit).limit(limit)
     socket.emit("ACCSTATEMENTUSERSIDE", {userAcc, page})
     })
