@@ -1319,15 +1319,30 @@ io.on('connection', (socket) => {
     let page = data.page;
     // console.log(page)
     // console.log(data.LOGINDATA.LOGINUSER)
-    let filter
+    let filter = {}
+    filter.user_id = data.LOGINDATA.LOGINUSER._id
     if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
-        console.log("Working1")
+        filter.date = {
+            $gt : new Date(data.filterData.fromDate)
+        }
     }else if(data.filterData.fromDate == "" && data.filterData.toDate != ""){
-        console.log("Working2")
+        filter.date = {
+            $lt : new Date(data.filterData.toDate)
+        }
     }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
-        console.log("Working3")
+        filter.date = {
+            $gte : new Date(data.filterData.fromDate),
+            $lt : new Date(data.filterData.toDate)
+        }
     }
-    let userAcc = await AccModel.find({user_id:data.LOGINDATA.LOGINUSER._id}).skip(page * limit).limit(limit)
+    if(data.filterData.type === "2"){
+        filter.stake = {
+            $ne:undefined
+        }
+    }else if (data.filterData.type === "1"){
+        filter.stake = undefined
+    }
+    let userAcc = await AccModel.find(filter).skip(page * limit).limit(limit)
     socket.emit("ACCSTATEMENTUSERSIDE", {userAcc, page})
     })
 
