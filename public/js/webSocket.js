@@ -3815,10 +3815,15 @@ socket.on('connect', () => {
             let fromDate = $('#Fdate').val()
             let toDate = $('#Tdate').val()
             let type = $("#select").val()
-            console.log(fromDate, toDate, type)
+            let filterData = {}
+            filterData.fromDate = fromDate,
+            filterData.toDate = toDate
+            filterData.type = type
+            page = 0
+            socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData})
           }
 
-          
+
         let count = 21
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
             console.log(data.page)
