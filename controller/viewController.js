@@ -118,6 +118,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
         });
       });
     const data = await Promise.all(requests);
+    console.log(data)
     const users = data[0].child;
     const roles = data[1].roles;
     const currentUser = req.currentUser
