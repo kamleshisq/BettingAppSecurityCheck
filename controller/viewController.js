@@ -1759,4 +1759,9 @@ exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
         games,
         userLog
     })
+});
+
+
+exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
+    res.status(200).render("./userSideEjs/myBetsPage/main")
 })
