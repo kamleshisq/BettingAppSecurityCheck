@@ -57,7 +57,8 @@
 
                         <tbody class="acount-stat-tbl-body">
                           <%for(let i = 0; i < bets.length; i++){%>
-                            <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/event<%encodeURIComponent(bets[i]._id)%>'>
+                            <% let encodedEventName = encodeURIComponent(bets[i]._id); %>
+                            <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/event/<%=encodedEventName%>'>
                                 <td><%=i + 1%></td>
                                 <td><%=bets[i]._id%></td>
                                 <td><%=bets[i].uniqueMarketCount%></td>
