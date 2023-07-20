@@ -1342,7 +1342,7 @@ io.on('connection', (socket) => {
         filter.stake = undefined
     }
     console.log(filter)
-    let userAcc = await AccModel.find(filter).skip(page * limit).limit(limit)
+    let userAcc = await AccModel.find({ user_id: '649575081109042453f3cf31', stake: undefined }).skip(page * limit).limit(limit)
     socket.emit("ACCSTATEMENTUSERSIDE", {userAcc, page})
     })
 
