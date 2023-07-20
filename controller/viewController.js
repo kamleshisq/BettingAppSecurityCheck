@@ -1768,12 +1768,14 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find();
     let games = await gameModel.find();
     let userLog = await loginLogs.find({user_id:user._id})
+    let bets = await betModel.find({userId:user._id}).limit(20)
     res.status(200).render("./userSideEjs/myBetsPage/main", {
         user,
         verticalMenus,
         data,
         check:"My Bets",
         games,
-        userLog
+        userLog,
+        bets
     })
 })

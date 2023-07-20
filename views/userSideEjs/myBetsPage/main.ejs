@@ -52,117 +52,73 @@
 
                         <thead class="acount-stat-tbl-hed">
                             <tr class="acount-stat-tbl-hed-tr">
-                                <th class="bod-red-lft">Date & Time</th>
+                                <th class="bod-red-lft">S.No</th>
+                                <th>Date & Time</th>
                                 <th>Sports</th>
                                 <th>Event</th>
+                                <th>Match</th>
                                 <th>Market</th>
-                                <th>Nation</th>
-                                <th>User Rate</th>
-                                <th class="bod-red-rit">Amount</th>
+                                <th>Bet On</th>
+                                <th>Odds</th>
+                                <th>Status</th>
+                                <th>Stake</th>
+                                <th class="bod-red-rit">Returns</th>
+                                <!-- <th >Amount</th> -->
                             </tr>
                         </thead>
 
                         <tbody class="acount-stat-tbl-body">
-                            <tr class="acount-stat-tbl-body-tr">
-                                <td>22/06/2023, 15:05:47</td>
-                                <td>Cricket</td>
-                                <td>Ashes Common Market 2023</td>
-                                <td>Fancy</td>
-                                <td>England Common Only 1 Win <br>
-                                    in 5 Matches</td>
-                                <td>1.17</td>
-                                <td class="c-gren">1,000</td>
-                            </tr>
-                            <tr class="acount-stat-tbl-body-tr">
-                                <td>22/06/2023, 15:05:47</td>
-                                <td>Cricket</td>
-                                <td>Ashes Common Market 2023</td>
-                                <td>Fancy</td>
-                                <td>England Common Only 1 Win <br>
-                                    in 5 Matches</td>
-                                <td>1.17</td>
-                                <td class="c-gren">1,000</td>
-                            </tr>
-                            <tr class="acount-stat-tbl-body-tr">
-                                <td>22/06/2023, 15:05:47</td>
-                                <td>Cricket</td>
-                                <td>Ashes Common Market 2023</td>
-                                <td>Fancy</td>
-                                <td>England Common Only 1 Win <br>
-                                    in 5 Matches</td>
-                                <td>1.17</td>
-                                <td class="c-gren">1,000</td>
-                            </tr>
-                            <tr class="acount-stat-tbl-body-tr">
-                                <td>22/06/2023, 15:05:47</td>
-                                <td>Cricket</td>
-                                <td>Ashes Common Market 2023</td>
-                                <td>Fancy</td>
-                                <td>England Common Only 1 Win <br>
-                                    in 5 Matches</td>
-                                <td>1.17</td>
-                                <td class="c-gren">1,000</td>
-                            </tr>
-                            <tr class="acount-stat-tbl-body-tr">
-                                <td>22/06/2023, 15:05:47</td>
-                                <td>Cricket</td>
-                                <td>Ashes Common Market 2023</td>
-                                <td>Fancy</td>
-                                <td>England Common Only 1 Win <br>
-                                    in 5 Matches</td>
-                                <td>1.17</td>
-                                <td class="c-gren">1,000</td>
-                            </tr>
-                            <tr class="acount-stat-tbl-body-tr">
-                                <td>22/06/2023, 15:05:47</td>
-                                <td>Cricket</td>
-                                <td>Ashes Common Market 2023</td>
-                                <td>Fancy</td>
-                                <td>England Common Only 1 Win <br>
-                                    in 5 Matches</td>
-                                <td>1.17</td>
-                                <td class="c-gren">1,000</td>
-                            </tr>
-                            <tr class="acount-stat-tbl-body-tr">
-                                <td>22/06/2023, 15:05:47</td>
-                                <td>Cricket</td>
-                                <td>Ashes Common Market 2023</td>
-                                <td>Fancy</td>
-                                <td>England Common Only 1 Win <br>
-                                    in 5 Matches</td>
-                                <td>1.17</td>
-                                <td class="c-gren">1,000</td>
-                            </tr>
-                            <tr class="acount-stat-tbl-body-tr">
-                                <td>22/06/2023, 15:05:47</td>
-                                <td>Cricket</td>
-                                <td>Ashes Common Market 2023</td>
-                                <td>Fancy</td>
-                                <td>England Common Only 1 Win <br>
-                                    in 5 Matches</td>
-                                <td>1.17</td>
-                                <td class="c-gren">1,000</td>
-                            </tr>
-                            <tr class="acount-stat-tbl-body-tr">
-                                <td>22/06/2023, 15:05:47</td>
-                                <td>Cricket</td>
-                                <td>Ashes Common Market 2023</td>
-                                <td>Fancy</td>
-                                <td>England Common Only 1 Win <br>
-                                    in 5 Matches</td>
-                                <td>1.17</td>
-                                <td class="c-gren">1,000</td>
-                            </tr>
-                            <tr class="acount-stat-tbl-body-tr">
-                                <td>22/06/2023, 15:05:47</td>
-                                <td>Cricket</td>
-                                <td>Ashes Common Market 2023</td>
-                                <td>Fancy</td>
-                                <td>England Common Only 1 Win <br>
-                                    in 5 Matches</td>
-                                <td>1.17</td>
-                                <td class="c-gren">1,000</td>
-                            </tr>
+                            <%if(bets.length != 0){%>
+                                <%for(let i = 0; i < bets.length; i++){%>
+                                    <%
+                                    <!-- var timestamp = `${data[i].time}`;  -->
+                                    var date = new Date(bets[i].date);
+                                    var options = { 
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: 'numeric',
+                                        minute: 'numeric',
+                                        hour12: true
+                                    };
+                                    var formattedTime = date.toLocaleString('en-US', options);
+                                %>
+                                    <tr class="acount-stat-tbl-body-tr">
+                                        <td><%= i + 1%></td>
+                                        <td><%=formattedTime%></td>
+                                        <%if(bets[i].betType === "Casino"){%>
+                                        <td>-</td>
+                                        <%}else{%>
+                                            <td><%=bets[i].betType%></td>
+                                        <%}%>
+                                            <td><%=bets[i].event%></td>
+                                        <%if(bets[i].match){%>
+                                            <td><%=bets[i].match%></td>
+                                        <%}else{%>
+                                            <td>-</td>
+                                        <%}%>
+                                        <%if(bets[i].marketName){%>
+                                            <td><%=bets[i].marketName%></td>
+                                        <%}else{%>
+                                            <td>-</td>
+                                        <%}%>
+                                        <%if(bets[i].selectionName){%>
+                                            <td><%=bets[i].selectionName%></td>
+                                            <td><%=bets[i].oddValue%></td>
+                                        <%}else{%>
+                                            <td>-</td>
+                                            <td>-</td>
+                                        <%}%>
+                                        <td><%=bets[i].status%></td>
+                                        <td><%=bets[i].Stake%></td>
+                                        <%if(bets[i].returns > 0){%>
+                                            <td class="c-gren"><%=bets[i].returns%></td>
+                                        <%}else{%>
+                                            <td class="c-reed"><%=bets[i].returns%></td>
+                                        <%}%>
+                                    </tr>
+                                <%}%>
+                            <%}%>
                             
                         </tbody>
 
