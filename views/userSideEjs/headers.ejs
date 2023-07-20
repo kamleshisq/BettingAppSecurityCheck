@@ -134,7 +134,11 @@
                                   <%}else{%>
                                   <li class="profile-bord-botm"><a href="/mybets" title=""> My Bets</a></li>
                                 <%}%>
-                                <li class="profile-bord-botm"><a href="my-walet-pg.html" title=""> My Wallet</a></li>
+                                <%if(check === "My game"){%>
+                                  <li class="profile-bord-botm"><a class="c-activee" href="/myGameReport" title=""> Game Report</a></li>
+                                  <%}else{%>
+                                  <li class="profile-bord-botm"><a href="/myGameReport" title=""> Game Report</a></li>
+                                <%}%>
                                 <li class="profile-bord-botm"><a href="game-report-pg.html" title=""> Game Report</a></li>
                                 <li class=""><a href="#" title="" data-bs-toggle="modal" data-bs-target="#navmod2"> Set Button Stake</a></li>
                             </ul>
@@ -203,7 +207,11 @@
                                             <li class="profile-bord-botm"><a href="/mybets" title=""> My Bets</a></li>
                                           <%}%>
                                           <li class="profile-bord-botm"><a href="my-walet-pg.html" title=""> My Wallet</a></li>
-                                          <li class="profile-bord-botm"><a href="game-report-pg.html" title=""> Game Report</a></li>
+                                          <%if(check === "My game"){%>
+                                            <li class="profile-bord-botm"><a class="c-activee" href="/myGameReport" title=""> Game Report</a></li>
+                                            <%}else{%>
+                                            <li class="profile-bord-botm"><a href="/myGameReport" title=""> Game Report</a></li>
+                                          <%}%>
                                           <li class=""><a href="#" title="" data-bs-toggle="modal" data-bs-target="#navmod2"> Set Button Stake</a></li>
                                       </ul>
                                       <a class="logOut profile-contnt-mnu-option-logout-btn">logOut</a>

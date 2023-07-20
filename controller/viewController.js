@@ -1782,5 +1782,17 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
 
 
 exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
-    res.status(200).render("./userSideEjs/gameReportPage/main")
+    let user = req.currentUser
+    let verticalMenus = await verticalMenuModel.find();
+    const data = await promotionModel.find();
+    let games = await gameModel.find();
+    let userLog = await loginLogs.find({user_id:user._id})
+    res.status(200).render("./userSideEjs/gameReportPage/main",{
+        user,
+        verticalMenus,
+        data,
+        check:"My game",
+        games,
+        userLog
+    })
 })
