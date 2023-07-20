@@ -3734,8 +3734,8 @@ socket.on('connect', () => {
                 
           }
 
-        document.getElementById('pdfDownload').addEventListener('click', function() {
-            console.log("Working")
+        document.getElementById('pdfDownload').addEventListener('click', function(e) {
+            e.preventDefault()
             const table = document.getElementById('table12');
             
             if (table) {
@@ -3771,7 +3771,8 @@ socket.on('connect', () => {
           }
 
 
-        document.getElementById('downloadBtn').addEventListener('click', function() {
+        document.getElementById('downloadBtn').addEventListener('click', function(e) {
+            e.preventDefault()
             const table = document.getElementById('table12');             
             if (table) {
               const csvContent = convertToCSV(table);
