@@ -3786,7 +3786,7 @@ socket.on('connect', () => {
           });
 
 
-    // Custom debounce function to limit the event frequency
+  // Custom debounce function to limit the event frequency
 function debounce(func, delay) {
     let timeoutId;
     return function (...args) {
@@ -3805,18 +3805,11 @@ function debounce(func, delay) {
   }
   
   // Set the debounce time (in milliseconds) as needed
-  const debounceTime = 300;
+  const debounceTime = 100;
   var timeoutId = null;
   
   // Check if the user is on a mobile device
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  
-  // Attach the debounced event handler based on the device type
-  if (isMobile) {
-    $(window).on('touchmove', debounce(handleScroll, debounceTime));
-  } else {
-    $(window).scroll(debounce(handleScroll, debounceTime));
-  }
   
   // Function to handle the event with debouncing
   function handleScroll() {
@@ -3833,6 +3826,16 @@ function debounce(func, delay) {
       }
     }, debounceTime);
   }
+  
+  // Attach the event handler based on the device type
+  if (isMobile) {
+    // For mobile devices, use both scroll and touchmove events
+    $(window).on('scroll touchmove', debounce(handleScroll, debounceTime));
+  } else {
+    // For desktop devices, use the scroll event
+    $(window).scroll(debounce(handleScroll, debounceTime));
+  }
+  
   
   
         
