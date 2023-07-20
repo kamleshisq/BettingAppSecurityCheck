@@ -3820,6 +3820,8 @@ socket.on('connect', () => {
             filterData.toDate = toDate
             filterData.type = type
             page = 0
+            let page = parseInt($('.pageId').attr('data-pageid'));
+            $('.pageId').attr('data-pageid',1)
             socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA, filterData})
           }
 
@@ -3912,6 +3914,8 @@ socket.on('connect', () => {
             filterData.toDate = toDate
             filterData.type = type
             page = 0
+            let page = parseInt($('.pageId').attr('data-pageid'));
+            $('.pageId').attr('data-pageid',1)
             socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
           }
 
