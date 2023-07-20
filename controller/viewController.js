@@ -25,6 +25,7 @@ const bannerModel = require('../model/bannerModel');
 const accountStatement = require("../model/accountStatementByUserModel");
 const liveStreameData = require("../utils/getLiveStream");
 const gameAPI = require("../utils/gameAPI");
+const request = require('request');
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
