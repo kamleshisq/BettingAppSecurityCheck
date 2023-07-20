@@ -1794,6 +1794,8 @@ exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
             totalData: { $sum: 1 },
             won: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
             loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
+            Open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
+            Cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
             sumOfReturns: { $sum: '$returns' }
           }
         }
