@@ -129,7 +129,11 @@
                                   <%}else{%>
                                   <li class="profile-bord-botm"><a href="/MyPlStatement" title=""> P/L Statement</a></li>
                                 <%}%>
-                                <li class="profile-bord-botm"><a href="/mybets" title=""> My Bets</a></li>
+                                <%if(check === "My Bets"){%>
+                                  <li class="profile-bord-botm"><a class="c-activee" href="/mybets" title=""> My Bets</a></li>
+                                  <%}else{%>
+                                  <li class="profile-bord-botm"><a href="/mybets" title=""> My Bets</a></li>
+                                <%}%>
                                 <li class="profile-bord-botm"><a href="my-walet-pg.html" title=""> My Wallet</a></li>
                                 <li class="profile-bord-botm"><a href="game-report-pg.html" title=""> Game Report</a></li>
                                 <li class=""><a href="#" title="" data-bs-toggle="modal" data-bs-target="#navmod2"> Set Button Stake</a></li>
@@ -193,7 +197,11 @@
                                             <%}else{%>
                                             <li class="profile-bord-botm"><a href="/MyPlStatement" title=""> P/L Statement</a></li>
                                           <%}%>
-                                          <li class="profile-bord-botm"><a href="/mybets" title=""> My Bets</a></li>
+                                          <%if(check === "My Bets"){%>
+                                            <li class="profile-bord-botm"><a class="c-activee" href="/mybets" title=""> My Bets</a></li>
+                                            <%}else{%>
+                                            <li class="profile-bord-botm"><a href="/mybets" title=""> My Bets</a></li>
+                                          <%}%>
                                           <li class="profile-bord-botm"><a href="my-walet-pg.html" title=""> My Wallet</a></li>
                                           <li class="profile-bord-botm"><a href="game-report-pg.html" title=""> Game Report</a></li>
                                           <li class=""><a href="#" title="" data-bs-toggle="modal" data-bs-target="#navmod2"> Set Button Stake</a></li>
