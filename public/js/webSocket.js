@@ -3752,22 +3752,25 @@ socket.on('connect', () => {
             link.click();
           }          
 
-        function convertToCSV(table) {
+          function convertToCSV(table) {
             const rows = table.querySelectorAll('tr');
-            const csv = [];
             
+            let csv = '';
             for (const row of rows) {
-              const rowData = [];
               const columns = row.querySelectorAll('td, th');
-              
+              let rowData = '';
               for (const column of columns) {
-                rowData.push(column.innerText);
+                const data = column.innerText;
+                if (data.includes(',')) {
+                  rowData += `"${data}",`;
+                } else {
+                  rowData += `${data},`;
+                }
               }
-              
-              csv.push(rowData.join(','));
+              csv += rowData.slice(0, -1) + '\n';
             }
             
-            return csv.join('\n');
+            return csv;
           }
 
 
