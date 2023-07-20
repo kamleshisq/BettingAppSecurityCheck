@@ -1368,7 +1368,7 @@ io.on('connection', (socket) => {
             $lt : new Date(data.filterData.toDate)
         }
     }
-    if(data.filterData.type != "All Reports"){
+    if(data.filterData.type != "All Bets"){
         filter.status = data.filterData.type
     }
     console.log(filter)
