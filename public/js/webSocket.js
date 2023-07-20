@@ -3786,7 +3786,7 @@ socket.on('connect', () => {
           });
 
 
-         // Custom debounce function to limit the scroll event frequency
+      // Custom debounce function to limit the scroll event frequency
 function debounce(func, delay) {
     let timeoutId;
     return function (...args) {
@@ -3818,32 +3818,15 @@ function debounce(func, delay) {
     }
   
     timeoutId = setTimeout(() => {
-      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      if (isMobile) {
-        // For mobile devices, check if the user has scrolled to the bottom
-        if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
-          handleScrollAction();
-        }
-      } else {
-        // For desktop devices, use Intersection Observer
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                handleScrollAction();
-              }
-            });
-          },
-          {
-            root: null, // Use the viewport as the root
-            rootMargin: '0px', // No margin around the root
-            threshold: 0.5, // When 50% of the target is visible, trigger the callback
-          }
-        );
-        observer.observe(document.querySelector('.pageId'));
+      // Check if the user has scrolled to the bottom
+      const scrollPosition = $(window).scrollTop() + $(window).height();
+      const documentHeight = $(document).height();
+      if (scrollPosition >= documentHeight) {
+        handleScrollAction();
       }
     }, debounceTime);
   }
+  
         
         let count = 21
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
