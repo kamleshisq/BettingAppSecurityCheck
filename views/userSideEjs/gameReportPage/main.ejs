@@ -57,7 +57,7 @@
 
                         <tbody class="acount-stat-tbl-body">
                           <%for(let i = 0; i < bets.length; i++){%>
-                            <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='game-report-inn-pg.html'>
+                            <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/<%encodeURIComponent(bets[i]._id)%>'>
                                 <td><%=i + 1%></td>
                                 <td><%=bets[i]._id%></td>
                                 <td><%=bets[i].uniqueMarketCount%></td>
