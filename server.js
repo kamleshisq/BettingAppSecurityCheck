@@ -23,6 +23,7 @@ const getCrkAndAllData = require("./utils/getSportAndCricketList");
 const bannerModel = require('./model/bannerModel');
 const sliderModel = require('./model/sliderModel');
 const liveStream = require("./utils/getLiveStream");
+const { cookie } = require('request');
 io.on('connection', (socket) => {
     console.log('connected to client')
     let loginData = {}
@@ -1352,6 +1353,7 @@ io.on('connection', (socket) => {
     let filter = {}
     // console.log(data)
     filter.userId = data.LOGINDATA.LOGINUSER._id
+    console.log(filter)
     if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
         filter.date = {
             $gt : new Date(data.filterData.fromDate)
