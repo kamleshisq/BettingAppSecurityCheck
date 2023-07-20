@@ -3876,7 +3876,7 @@ socket.on('connect', () => {
     }
 
 
-    if(pathname === "/myAccountStatment"){
+    if(pathname === "/mybets"){
         console.log("WORKING")
         $(window).scroll(function() {
             var scroll = $(window).scrollTop();
