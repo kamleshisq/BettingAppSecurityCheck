@@ -1350,7 +1350,7 @@ io.on('connection', (socket) => {
     let limit = 20;
     let page = data.page;
     let filter = {}
-    console.log(data)
+    // console.log(data)
     filter.userId = data.LOGINDATA.LOGINUSER._id
     if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
         filter.date = {
@@ -1370,6 +1370,7 @@ io.on('connection', (socket) => {
         filter.status = data.filterData.type
     }
     let MyBets = await Bet.find(filter).skip(page * limit).limit(limit)
+    console.log(MyBets)
     socket.emit("BETSFORUSER", {MyBets, page})
     })
 
