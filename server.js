@@ -1367,8 +1367,10 @@ io.on('connection', (socket) => {
         }
     }
     if(data.filterData.type != "All Reports"){
-        
+        filter.status = data.filterData.type
     }
+    let MyBets = await Bet.find(filter).skip(page * limit).limit(limit)
+    socket.emit("BETSFORUSER", {MyBets, page})
     })
 
     

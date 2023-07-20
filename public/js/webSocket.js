@@ -3877,7 +3877,7 @@ socket.on('connect', () => {
 
 
     if(pathname === "/mybets"){
-        console.log("WORKING")
+        // console.log("WORKING")
         $(window).scroll(function() {
             var scroll = $(window).scrollTop();
             var windowHeight = $(window).height();
@@ -3895,6 +3895,89 @@ socket.on('connect', () => {
                 socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
             }
         });
+
+
+        const FdateInput = document.getElementById('Fdate');
+        const TdateInput = document.getElementById('Tdate');
+        const selectElement = document.getElementById('select');
+        FdateInput.addEventListener('change', handleInputChange);
+        TdateInput.addEventListener('change', handleInputChange);
+        selectElement.addEventListener('change', handleInputChange);
+        function handleInputChange(event) {
+            let fromDate = $('#Fdate').val()
+            let toDate = $('#Tdate').val()
+            let type = $("#select").val()
+            let filterData = {}
+            filterData.fromDate = fromDate,
+            filterData.toDate = toDate
+            filterData.type = type
+            page = 0
+            socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
+          }
+
+
+        let count = 21
+        socket.on("BETSFORUSER", async(data) => {
+            // console.log(data.page)
+            if(data.page === 0){
+                count = 1
+            }
+            let page = data.page
+            let bets = data.MyBets;
+            let html = '';
+             for(let i = 0; i < bets.length; i++){
+                var date = new Date(bets[i].date);
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+                html += `<tr class="acount-stat-tbl-body-tr">
+                    <td>${i+count}</td>
+                    <td>${formattedTime}</td>`
+                if(bets[i].betType === "Casino"){
+                        html += "<td>-</td>"
+                }else{
+                        html += `<td>${bets[i].betType}</td>`
+                }
+                html += `<td>${bets[i].event}</td>`
+                if(bets[i].match){
+                        html +=  `<td>${bets[i].match}</td>`
+                }else{
+                        html += "<td>-</td>"
+                }
+                if(bets[i].marketName){
+                        html += `<td>${bets[i].marketName}</td>`
+                }else{
+                        html += "<td>-</td>"
+                }
+                if(bets[i].selectionName){
+                        html +=    `<td>${bets[i].selectionName}</td>
+                            <td>${bets[i].oddValue}</td>`
+                }else{
+                        html +=    "<td>-</td><td>-</td>"
+                }
+                html += ` <td>${bets[i].status}</td>
+                        <td>${bets[i].Stake}</td>`
+                        if(bets[i].returns > 0){
+                           html += `<td class="c-gren">${bets[i].returns}</td>`
+                        }else{
+                            html += `<td class="c-reed">${bets[i].returns}</td>`
+                        }
+                   html +=  "</tr>"
+                    
+            }
+            count += 20
+            if(data.page == 0){
+                $('.acount-stat-tbl-body').html(html)
+            }else{
+                $('.acount-stat-tbl-body').append(html)         
+            }
+        })
     }
 
 
