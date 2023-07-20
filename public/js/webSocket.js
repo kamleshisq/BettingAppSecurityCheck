@@ -3761,11 +3761,7 @@ socket.on('connect', () => {
               let rowData = '';
               for (const column of columns) {
                 const data = column.innerText;
-                if (data.includes(',')) {
-                  rowData += `"${data}",`;
-                } else {
-                  rowData += `${data},`;
-                }
+                rowData += (data.includes(',') ? `"${data}"` : data) + ',';
               }
               csv += rowData.slice(0, -1) + '\n';
             }
