@@ -3786,24 +3786,33 @@ socket.on('connect', () => {
           });
 
 
-          var timeoutId = null;
-
-          $(window).scroll(function() {
-              if (timeoutId) {
-                  clearTimeout(timeoutId);
-              }
+          function debounce(func, delay) {
+            let timeoutId;
+            return function (...args) {
+              clearTimeout(timeoutId);
+              timeoutId = setTimeout(() => {
+                func.apply(this, args);
+              }, delay);
+            };
+          }
           
-              timeoutId = setTimeout(function() {
-                  var scroll = $(window).scrollTop();
-                  var windowHeight = $(window).height();
-                  var documentHeight = $(document).height();
-                  if (scroll + windowHeight >= documentHeight) {
-                      let page = parseInt($('.pageId').attr('data-pageid'));
-                      $('.pageId').attr('data-pageid', page + 1);
-                      socket.emit("ACCSTATEMENTUSERSIDE", { page, LOGINDATA });
-                  }
-              }, 300); // Adjust the debounce time (in milliseconds) as needed
-          });
+          // Function to handle the scroll event
+          function handleScroll() {
+            var scroll = $(window).scrollTop();
+            var windowHeight = $(window).height();
+            var documentHeight = $(document).height();
+            if (scroll + windowHeight >= documentHeight) {
+              let page = parseInt($('.pageId').attr('data-pageid'));
+              $('.pageId').attr('data-pageid', page + 1);
+              socket.emit("ACCSTATEMENTUSERSIDE", { page, LOGINDATA });
+            }
+          }
+          
+          // Set the debounce time (in milliseconds) as needed
+          const debounceTime = 300;
+          
+          // Attach the debounced scroll event handler
+          $(window).scroll(debounce(handleScroll, debounceTime));
         
         let count = 21
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
