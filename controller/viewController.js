@@ -1778,4 +1778,9 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
         userLog,
         bets
     })
+});
+
+
+exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
+    res.status(200).render("./userSideEjs/gameReportPage/main")
 })

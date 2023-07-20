@@ -82,6 +82,7 @@ router.get('/MyPlStatement', authController.isProtected, viewController.userPlRe
 router.get("/exchange_inPlay/match", authController.isLogin, viewController.getExchangePageIn);
 router.get("/live_casino", authController.isLogin, viewController.getLiveCasinoPage);
 router.get("/mybets", authController.isProtected, viewController.getMyBetsPageUser);
+router.get("/myGameReport", authController.isProtected, viewController.getGameReportPageUser);
 
 //Testing//
 router.get("/exchange_sports/inplay", authController.isLogin, viewController.getExchangePage);
