@@ -3793,9 +3793,11 @@ socket.on('connect', () => {
             if (scroll + windowHeight >= documentHeight) {
                 let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
-                socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA})
-                fromDate = $('#Fdate').val()
-                console.log(fromDate)
+                let fromDate = $('#Fdate').val()
+                let toDate = $('#toDate').val()
+                if(fromDate === "" && toDate === ""){
+                    socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA})
+                }
             }
         });
         
