@@ -1341,9 +1341,32 @@ io.on('connection', (socket) => {
     }else if (data.filterData.type === "1"){
         filter.stake = undefined
     }
-    console.log(filter)
+    // console.log(filter)
     let userAcc = await AccModel.find(filter).skip(page * limit).limit(limit)
     socket.emit("ACCSTATEMENTUSERSIDE", {userAcc, page})
+    })
+
+    socket.on("BETSFORUSER", async(data) => {
+    let limit = 20;
+    let page = data.page;
+    let filter = {}
+    console.log(data)
+    filter.userId = data.LOGINDATA.LOGINUSER._id
+    if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
+        filter.date = {
+            $gt : new Date(data.filterData.fromDate)
+        }
+    }else if(data.filterData.fromDate == "" && data.filterData.toDate != ""){
+        filter.date = {
+            $lt : new Date(data.filterData.toDate)
+        }
+    }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
+        filter.date = {
+            $gte : new Date(data.filterData.fromDate),
+            $lt : new Date(data.filterData.toDate)
+        }
+    }
+    // if()
     })
 
     

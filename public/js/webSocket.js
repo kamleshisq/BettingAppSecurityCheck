@@ -3876,6 +3876,27 @@ socket.on('connect', () => {
     }
 
 
+    if(pathname === "/myAccountStatment"){
+        $(window).scroll(function() {
+            var scroll = $(window).scrollTop();
+            var windowHeight = $(window).height();
+            var documentHeight = $(document).height();
+            if (scroll + windowHeight >= documentHeight) {
+                let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                let fromDate = $('#Fdate').val()
+                let toDate = $('#Tdate').val()
+                let type = $("#select").val()
+                let filterData = {}
+                filterData.fromDate = fromDate,
+                filterData.toDate = toDate
+                filterData.type = type
+                socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
+            }
+        });
+    }
+
+
    
 
 
