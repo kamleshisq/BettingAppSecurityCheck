@@ -43,7 +43,8 @@
 
                         <thead class="acount-stat-tbl-hed">
                             <tr class="acount-stat-tbl-hed-tr">
-                                <th class="bod-red-lft">Event</th>
+                                <th class="bod-red-lft">S.No</th>
+                                <th>Event</th>
                                 <th>Market Count</th>
                                 <th>Bets</th>
                                 <th>Open</th>
@@ -57,6 +58,7 @@
                         <tbody class="acount-stat-tbl-body">
                           <%for(let i = 0; i < bets.length; i++){%>
                             <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='game-report-inn-pg.html'>
+                                <td><%=i + 1%></td>
                                 <td><%=bets[i]._id%></td>
                                 <td><%=bets[i].uniqueMarketCount%></td>
                                 <td><%=bets[i].totalData%></td>
