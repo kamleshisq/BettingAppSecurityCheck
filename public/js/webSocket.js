@@ -3877,6 +3877,7 @@ socket.on('connect', () => {
 
 
     if(pathname === "/myAccountStatment"){
+        console.log("WORKING")
         $(window).scroll(function() {
             var scroll = $(window).scrollTop();
             var windowHeight = $(window).height();

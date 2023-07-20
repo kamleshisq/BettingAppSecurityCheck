@@ -1366,7 +1366,9 @@ io.on('connection', (socket) => {
             $lt : new Date(data.filterData.toDate)
         }
     }
-    // if()
+    if(data.filterData.type != "All Reports"){
+        
+    }
     })
 
     
