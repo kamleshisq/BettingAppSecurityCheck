@@ -3786,16 +3786,24 @@ socket.on('connect', () => {
           });
 
 
-        $(window).scroll(function() {
-            var scroll = $(window).scrollTop();
-            var windowHeight = $(window).height();
-            var documentHeight = $(document).height();
-            if (scroll + windowHeight >= documentHeight) {
-                let page = parseInt($('.pageId').attr('data-pageid'));
-                $('.pageId').attr('data-pageid',page + 1)
-                socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA})
-            }
-        });
+          var timeoutId = null;
+
+          $(window).scroll(function() {
+              if (timeoutId) {
+                  clearTimeout(timeoutId);
+              }
+          
+              timeoutId = setTimeout(function() {
+                  var scroll = $(window).scrollTop();
+                  var windowHeight = $(window).height();
+                  var documentHeight = $(document).height();
+                  if (scroll + windowHeight >= documentHeight) {
+                      let page = parseInt($('.pageId').attr('data-pageid'));
+                      $('.pageId').attr('data-pageid', page + 1);
+                      socket.emit("ACCSTATEMENTUSERSIDE", { page, LOGINDATA });
+                  }
+              }, 300); // Adjust the debounce time (in milliseconds) as needed
+          });
         
         let count = 21
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
