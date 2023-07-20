@@ -3918,7 +3918,7 @@ socket.on('connect', () => {
 
         let count = 21
         socket.on("BETSFORUSER", async(data) => {
-            // console.log(data.page)
+            console.log(data.page)
             if(data.page === 0){
                 count = 1
             }
