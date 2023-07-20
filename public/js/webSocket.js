@@ -3786,58 +3786,16 @@ socket.on('connect', () => {
           });
 
 
-  // Custom debounce function to limit the event frequency
-function debounce(func, delay) {
-    let timeoutId;
-    return function (...args) {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        func.apply(this, args);
-      }, delay);
-    };
-  }
-  
-  // Function to handle the scroll action
-  function handleScrollAction() {
-    let page = parseInt($('.pageId').attr('data-pageid'));
-    $('.pageId').attr('data-pageid', page + 1);
-    socket.emit("ACCSTATEMENTUSERSIDE", { page, LOGINDATA });
-  }
-  
-  // Set the debounce time (in milliseconds) as needed
-  const debounceTime = 100;
-  var timeoutId = null;
-  
-  // Check if the user is on a mobile device
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  
-  // Function to handle the event with debouncing
-  function handleScroll() {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-  
-    timeoutId = setTimeout(() => {
-      // Check if the user has scrolled to the bottom
-      const scrollPosition = $(window).scrollTop() + $(window).height();
-      const documentHeight = $(document).height();
-      if (scrollPosition >= documentHeight) {
-        handleScrollAction();
-      }
-    }, debounceTime);
-  }
-  
-  // Attach the event handler based on the device type
-  if (isMobile) {
-    // For mobile devices, use both scroll and touchmove events
-    $(window).on('scroll touchmove', debounce(handleScroll, debounceTime));
-  } else {
-    // For desktop devices, use the scroll event
-    $(window).scroll(debounce(handleScroll, debounceTime));
-  }
-  
-  
-  
+        $(window).scroll(function() {
+            var scroll = $(window).scrollTop();
+            var windowHeight = $(window).height();
+            var documentHeight = $(document).height();
+            if (scroll + windowHeight >= documentHeight) {
+                let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                socket.emit("ACCSTATEMENTUSERSIDE", {page, LOGINDATA})
+            }
+        });
         
         let count = 21
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
