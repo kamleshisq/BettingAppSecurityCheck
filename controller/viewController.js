@@ -25,6 +25,8 @@ const bannerModel = require('../model/bannerModel');
 const accountStatement = require("../model/accountStatementByUserModel");
 const liveStreameData = require("../utils/getLiveStream");
 const gameAPI = require("../utils/gameAPI");
+const request = require('request');
+const util = require('util');
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -96,14 +98,27 @@ exports.userTable = catchAsync(async(req, res, next) => {
         ]
     }
     // console.log(fullUrl)
-    let requests = urls.map(item => fetch(item.url, {
-        method: "GET",
-        headers: {
-            'Content-type': 'application/json',
-            'Authorization': `Bearer ` + req.token, 
-        }
-    }).then(data => console.log(data)));
-    const data = await Promise.all(requests)
+    // let requests = urls.map(item => fetch(item.url, {
+    //     method: "GET",
+    //     headers: {
+    //         'Content-type': 'application/json',
+    //         'Authorization': `Bearer ` + req.token, 
+    //     }
+    // }).then(data => console.log(data)));
+    const requests = urls.map(async (item) => {
+        const options = {
+            method: 'GET',
+            url: item.url,
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${req.token}`,
+            },
+        };
+    })
+    const fetchAsync = util.promisify(requests);
+    const data = await fetchAsync(options);
+    console.Console(data)
+    // const data = await Promise.all(requests)
     const users = data[0].child;
     const roles = data[1].roles;
     const currentUser = req.currentUser
