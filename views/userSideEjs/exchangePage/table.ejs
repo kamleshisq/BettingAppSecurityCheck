@@ -102,6 +102,38 @@
                   };
                   var formattedTime = date.toLocaleString('en-US', options);
                 %>
+                <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                  <td style="border-bottom: 0px;" class="name1" id="<%=LiveCricket[i].marketList.match_odd.marketId%>">
+                    <div class="exchange-pg-mytbl-body-cricket-data-dv">
+                      <span class="exchange-pg-mytbl-body-liv-dot"></span>
+                      <p>
+                        <span><%=upcomintCricket[i].eventData.league%></span> • <%=formattedTime%>
+                      </p>
+                      <p>
+                          <b><%=upcomintCricket[i].eventData.name%></b>
+                      </p>
+                  </div>
+                  </td>
+                  <td style="border-bottom: 0px;">
+                    <div class="exchange-td2-txtdv">
+                      <div class="exchange-td2-txtdv-inn1">
+                        <p> MO </p>
+                        <span>35</span>
+                      </div>
+                      <div class="exchange-td2-txtdv-inn1">
+                        <p> F </p>
+                        <span>1</span>
+                      </div>
+                      <div class="exchange-td2-txtdv-inn1">
+                        <p> M </p>
+                        <span>1</span>
+                      </div>
+                      <div class="exchange-td2-txtdv-inn1">
+                        <p> L </p>
+                        <span>1</span>
+                      </div>
+                    </div>
+                  </td>
               <%}%>
             <%}%>
               
