@@ -213,8 +213,6 @@
                 
                     <% scoreOfGame = liveFootBall[i].marketList.score[0].data.match(/<span class="football-score">([^<]+)<\/span>/); %>
                     <% scoreOfGame = scoreOfGame ? scoreOfGame[1].trim() : 'N/A'; %>
-                      <%console.log(scoreOfGame, 456)%>
-                      <%console.log(timeOfGame, 789) %>
                 <%}%>
                   <!-- Displaying the extracted time and score -->
                   
@@ -228,6 +226,10 @@
                         <p>
                             <b><%=liveFootBall[i].eventData.name%></b>
                         </p>
+                        <span class="ctbal-scor-spn-wrp">
+                          <span class="ctbal-scor-spn1"><%=timeOfGame%></span>
+                          <span class="ctbal-scor-spn2"><%=scoreOfGame%></span>
+                        </span>
                     </div>
                     </td>
                     <td style="border-bottom: 0px;" >
