@@ -28,15 +28,20 @@
             <% let player1Score = 'N/A'; %>
             <% let player2Score = 'N/A'; %>
             <%if(liveTennis[i].marketList.score != null){%>
-              <% const scoreRegex = /<span class="set current">(\d+)<\/span>/g; %>
-                <% const matchData = liveTennis[i].marketList.score[0].data; %>
+              let scoreRegex = /<span class="set current">(\d+)<\/span>/g;
+                let scores = [];
+                let match;
                 
-                <% const scores = matchData.match(scoreRegex); %>
+                while ((match = scoreRegex.exec(liveTennis[i].marketList.score[0].data))) {
+                  scores.push(match[1]);
+                }
                 
-                <% if (scores && scores.length >= 4) { %>
-                  <% player1Score = parseInt(scores[2], 10) - parseInt(scores[0], 10); %>
-                  <% player2Score = parseInt(scores[3], 10) - parseInt(scores[1], 10); %>
-                <% } %>
+                
+                if (scores.length >= 4) {
+                  player1Score = parseInt(scores[2], 10) - parseInt(scores[0], 10);
+                  player2Score = parseInt(scores[3], 10) - parseInt(scores[1], 10);
+                }
+                %>
             <%}%>
 
 
