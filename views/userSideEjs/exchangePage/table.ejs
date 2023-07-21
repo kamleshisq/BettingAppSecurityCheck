@@ -134,6 +134,13 @@
                       </div>
                     </div>
                   </td>
+                  <% let runners = JSON.parse(upcomintCricket[i].marketList.match_odd.runners); %>
+                  <% let runners1 = []; %>
+                  <%let secIds = []; %>
+                  <%runners.forEach(item => {%>
+                      <%runners1.push(item.runner);%>
+                      <%secIds.push(item.secId);%>
+                  <%});%>
               <%}%>
             <%}%>
               
