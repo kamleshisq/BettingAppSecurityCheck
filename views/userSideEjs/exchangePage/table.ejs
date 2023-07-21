@@ -3,7 +3,7 @@
 
   <table class="acount-stat-tbl">
   <thead class="acount-stat-tbl-hed">
-    <tr class="acount-stat-tbl-hed-tr">
+    <tr class="acount-stat-tbl-hed-tr" data-href='/exchange/cricket'>
       <th style="text-align: left;" class="bod-red-lft ">Cricket</th>
       <th></th>
       <th colspan="2">1</th>
@@ -15,18 +15,14 @@
       <% let cricketNum = 1 %>
       <%for(let i = 0; i < LiveCricket.length; i++){%>
           <%if(LiveCricket[i].marketList.match_odd != null){%>
-          <%
-              var timestamp = `${LiveCricket[i].eventData.time}` * 1000; 
-              var date = new Date(timestamp);
-              var options = { 
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                  hour: 'numeric',
-                  minute: 'numeric',
-                  hour12: true
-              };
-              var formattedTime = date.toLocaleString('en-US', options);
+            <%
+            var timestamp = `${LiveCricket[i].eventData.time}` * 1000; 
+            var date = new Date(timestamp);
+            var options = { 
+              day: '2-digit',
+              month: 'short'
+            };
+            var formattedTime = date.toLocaleString('en-US', options);
           %>
           <tr class="acount-stat-tbl-body-tr tbl-data-href" onclick="window.location.href = '/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>'; ">
             <!-- <th scope="row"></th> -->
@@ -34,7 +30,7 @@
                 <div class="exchange-pg-mytbl-body-cricket-data-dv">
                     <span class="exchange-pg-mytbl-body-liv-dot"></span>
                     <p>
-                        <%=formattedTime%>
+                      <span><%=LiveCricket[i].eventData.league%></span> • <%=formattedTime%>
                     </p>
                     <p>
                         <b><%=LiveCricket[i].eventData.name%></b>
@@ -90,18 +86,14 @@
       <% j = cricketNum %>
       <%for(let i = 0; i < upcomintCricket.length; i++){%>
           <%if(upcomintCricket[i].marketList.match_odd != null){%>
-              <%
-              var timestamp = `${upcomintCricket[i].eventData.time}` * 1000; 
-              var date = new Date(timestamp);
-              var options = { 
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                  hour: 'numeric',
-                  minute: 'numeric',
-                  hour12: true
-              };
-              var formattedTime = date.toLocaleString('en-US', options);
+            <%
+            var timestamp = `${upcomintCricket[i].eventData.time}` * 1000; 
+            var date = new Date(timestamp);
+            var options = { 
+              day: '2-digit',
+              month: 'short'
+            };
+            var formattedTime = date.toLocaleString('en-US', options);
           %>
               <tr class="acount-stat-tbl-body-tr tbl-data-href" onclick="window.location.href = '/exchange_inPlay/match?id=<%=upcomintCricket[i].eventData.eventId%>'; ">
                   <!-- <th scope="row" class="bod-red-rit" >2</th> -->
@@ -109,7 +101,7 @@
                       <div class="exchange-pg-mytbl-body-cricket-data-dv">
                           <%= j%>)
                           <p>
-                              <%=formattedTime%>
+                            <span><%=upcomintCricket[i].eventData.league%></span> • <%=formattedTime%>
                           </p>
                           <p>
                               <b><%=upcomintCricket[i].eventData.name%></b>
