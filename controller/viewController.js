@@ -1148,7 +1148,7 @@ exports.getSportList = catchAsync(async(req, res, next) => {
         let data2 = data[0].eventList.filter(item => item.eventData.type == "IN_PLAY")
         console.log(data2)
         res.status(200).json({
-            result
+            data2
         })
     })
 });
