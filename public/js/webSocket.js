@@ -3984,13 +3984,13 @@ socket.on('connect', () => {
 
 
     if(pathname === "/exchange/inPlay" ){
-        function marketId(){
+        function marketId1(){
             socket.emit("liveData" , "data12")
               setTimeout(()=>{
-                marketId()
+                marketId1()
               }, 60000)
         }
-        marketId()
+        marketId1()
 
         socket.on('liveData', async(data) => {
             let html = ``
@@ -4086,14 +4086,14 @@ socket.on('connect', () => {
 
 
     if(pathname === "/exchange/cricket"){
-        function marketId(){
+        function marketId1(){
             socket.emit("liveData" , "data12")
             console.log("working")
               setTimeout(()=>{
-                marketId()
+                marketId1()
               }, 1000)
         }
-        marketId()
+        marketId1()
 
         socket.on('liveData', async(data) => {
             let html = ``
