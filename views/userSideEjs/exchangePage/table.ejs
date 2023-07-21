@@ -212,7 +212,7 @@
                   // Extracting all matches in the HTML
                   const matches = [];
                   let match;
-                  while ((match = timeScoreRegex.exec(html)) !== null) {
+                  while ((match = timeScoreRegex.exec(liveFootBall[i].marketList.score[0].data)) !== null) {
                     const time = match[1];
                     const extraTime = match[2];
                     const score = match[3];
