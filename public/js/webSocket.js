@@ -4088,10 +4088,9 @@ socket.on('connect', () => {
     if(pathname === "/exchange/cricket"){
         function marketId1(){
             socket.emit("liveData" , "data12")
-            console.log("working")
               setTimeout(()=>{
                 marketId1()
-              }, 1000)
+              }, 60000)
         }
         marketId1()
 
