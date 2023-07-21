@@ -28,6 +28,7 @@
             <% let player1Score = 'N/A'; %>
             <% let player2Score = 'N/A'; %>
             <%if(liveTennis[i].marketList.score != null){%>
+              <%
               let scoreRegex = /<span class="set current">(\d+)<\/span>/g;
                 let scores = [];
                 let match;
