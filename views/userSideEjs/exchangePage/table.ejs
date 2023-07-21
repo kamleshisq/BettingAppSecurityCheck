@@ -39,10 +39,12 @@
                     </td>
                     <td style="border-bottom: 0px;" >
                       <div class="exchange-td2-txtdv">
-                        <div class="exchange-td2-txtdv-inn1">
-                          <p> </p>
-                          <img src="/assets/img/fontisto_tv.png" alt="">
-                        </div>
+                        <%if(LiveCricket[i].eventData.isTv){%>
+                          <div class="exchange-td2-txtdv-inn1">
+                            <p> </p>
+                            <img src="/assets/img/fontisto_tv.png" alt="">
+                          </div>
+                        <%}%>
                         <div class="exchange-td2-txtdv-inn1">
                           <p> MO </p>
                           <span>35</span>
@@ -217,6 +219,12 @@
                     </td>
                     <td style="border-bottom: 0px;" >
                       <div class="exchange-td2-txtdv">
+                        <%if(liveFootBall[i].eventData.isTv){%>
+                          <div class="exchange-td2-txtdv-inn1">
+                            <p> </p>
+                            <img src="/assets/img/fontisto_tv.png" alt="">
+                          </div>
+                        <%}%>
                         <div class="exchange-td2-txtdv-inn1">
                           <p> MO </p>
                           <span>35</span>
@@ -391,6 +399,12 @@
                     </td>
                     <td style="border-bottom: 0px;" >
                       <div class="exchange-td2-txtdv">
+                        <%if(liveTennis[i].eventData.isTv){%>
+                          <div class="exchange-td2-txtdv-inn1">
+                            <p> </p>
+                            <img src="/assets/img/fontisto_tv.png" alt="">
+                          </div>
+                        <%}%>
                         <div class="exchange-td2-txtdv-inn1">
                           <p> MO </p>
                           <span>35</span>
