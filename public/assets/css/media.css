@@ -517,7 +517,55 @@
     }
 }
 
-@media (max-width: 991px){
+@media (min-width: 767px){
+    .nav2menu-dv{
+        padding-top: 20px;
+        display: none;
+    }
+
+    .exchange-pg-rit-rombl{
+        display: none;
+    }
+
+    .mbl-exchange-pg-main-col-mini{
+        display: block;
+    }
+    
+    .mbl-see-no-exchange-pg-inn-banner-col{
+        display: block;
+    }
+
+    .mbl-exc-inn-tab-dv{
+        display: none
+    }
+
+    .exchange-pg-inn-banner-col2{
+        display: block;
+    }
+
+    .mbl-exc-inn-tab-dv-main{
+        display: none;
+    }
+
+    /* ---------- HOME PAGE ----------  */
+    .hiro-banner-sec{
+        display: flex;
+    }
+
+    .mbl-hiro-banner{
+        display: none;
+    }
+
+    .hiro-nanner-sec-slide-ro{
+        display: none;
+    }
+    /* ---------- HOME PAGE ----------  */
+
+    
+
+}
+
+@media (max-width: 767px){
     .mob-sidevar-mnu-btn-dv {
         display: block;
         cursor: pointer;
@@ -531,6 +579,194 @@
         padding-top: 20px;
         display: block;
     }
+
+    .mbl-exchange-pg-main-col-mini{
+        display: none;
+    }
+    
+    .mbl-see-no-exchange-pg-inn-banner-col{
+        display: none;
+    }
+
+    .mbl-exc-inn-tab-dv{
+        display: block;
+        padding: 10px 10px;
+        background-color: var(--color3);
+        border: 1px solid var(--color8);
+        border-radius: 30px;
+    }
+
+    .exc-pg-rit-tabdv-mbl{
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .exc-pg-rit-tab-btn-mbl{
+        padding: 5px 15px;
+        font-size: 12px;
+    }
+
+    .exc-pg-rit-tabli-mbl>.active{
+        padding: 5px 15px;
+        font-size: 12px;
+    }
+
+    .exchange-pg-inn-banner-col2{
+        display: none;
+    }
+
+    .titl-overflow-mbl-exc-inn{
+        overflow-x: scroll;
+    }
+
+    .titl-overflow-mbl-exc-inn2{
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+        width: max-content;
+        gap: 5px;
+    }
+
+    .exchange-pg-inn-banner-col-titi-txt-tim>h6{
+        width: max-content;
+    }
+
+    .exchange-pg-inn-banner-col-titi-txt>h6{
+        width: max-content;
+    }
+
+    .mbl-exc-inn-tbl-datadv{
+        padding-top: 10px;
+    }
+    
+    .mbl-exc-inn-tbl-datadv-wrp{
+        display: block;
+        padding: 10px 10px;
+        background-color: var(--color3);
+        border: 1px solid var(--color8);
+        border-radius: 30px;
+    }
+
+    .exchange-pg-inn-tbl-marqq-dv-wrp{
+        padding: 5px 5px;
+    }
+
+    .mbl-odt-sli-reltiv-dv{
+        position: relative;
+    }
+
+    .show-bet-slip-mbl-data{
+        display: block !important;
+        opacity: 1 !important;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .mbl-odt-sli-wrp-dv{
+        position: absolute;
+        position: absolute;
+        top: 40px;
+        right: -145px;
+        width: max-content;
+        z-index: 999;
+        display: none;
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .mbl-odt-sli-wrp-dv-inn{
+        position: relative;
+        background-color: var(--color3);
+        box-shadow: 0px 0px 2px;
+        padding: 5px;
+    }
+
+    .exc-pg-rit-tabtxt-dat-ro2{
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .ecc-pg-rit-ods-data-ro{
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        display: inline-flex;
+    }
+
+    .exc-pg-rit-tabtxt-data-stack-num-col>span{
+        padding: 5px 10px;
+    }
+
+    .exc-pg-rit-tabtxt-data-stack-num-col{
+        padding: 5px 5px;
+    }
+
+    .exc-pg-rit-tabtxt-data-place-bet-btndv{
+        width: 100%;
+    }
+
+    .exchange-pg-inn-banner-col3{
+        padding: 10px 10px;
+        background-color: var(--color3);
+        border: 1px solid var(--color8);
+        border-radius: 30px;
+        margin-top: 10px;
+    }
+
+    .exch-pg-inn-fancy-tab-ul{
+        overflow-x: scroll;
+    }
+
+    .exch-pg-inn-fancy-tab-ul2-inn{
+        display: flex;
+        align-items: center;
+        width: max-content;
+    }
+
+    .exch-pg-inn-fancy-tab-btn{
+        width: max-content;
+    }
+
+    .tbl-bg-blu-spn{
+        padding: 0px 10px;
+        font-size: 12px;
+    }
+    
+    .tbl-bg-pech-spn{
+        padding: 0px 10px;
+        font-size: 12px;
+    }
+
+    .mbl-exc-inn-tab-dv-main{
+        display: block;
+    }
+
+    /* ---------- HOME PAGE ----------  */
+    .hiro-banner-sec{
+        display: none;
+    }
+
+    .mbl-hiro-banner{
+        display: block;
+    }
+
+    .hiro-nanner-sec-slide-ro{
+        padding: 8px 8px;
+        z-index: 20;
+        position: relative;
+        display: flex;
+    }
+
+    .royalgaming-sec2{
+        padding-top: 1em;
+    }
+
+    .featured-sec-ro{
+        padding: 0px 0px;
+    }
+
+    /* ---------- HOME PAGE ----------  */
+
 }
 
 @media (min-width: 768px) and (max-width: 1152px){
@@ -1118,7 +1354,7 @@
     }
 
     .acount-stat-tbl-body-tr>td{
-        font-size: 13px;
+        font-size: 12px;
     }
 
     .dropdown-menu[data-bs-popper] {
@@ -1133,6 +1369,8 @@
         flex-direction: column;
         display: inline-flex;
     }
+
+    
 }
 
 @media (min-width: 768px) and (max-width: 1152px){

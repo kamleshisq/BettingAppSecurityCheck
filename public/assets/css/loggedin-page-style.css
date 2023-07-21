@@ -10,7 +10,9 @@
     --color6: linear-gradient(135deg, #182EA6 0%, #182EA6 100%);
     --color7: #182ea61a;
     --color8: #D7D7D7;
-    --color9: #A1CDF5;
+    --color9: #72BBEF;
+    --color10: #F994BA;
+    --color11: #0063D8;
 }
 
 .c-gren{
@@ -60,7 +62,7 @@ a{
     align-items: center;
     justify-content: center;
     gap: 5px;
-    padding: 8px 10px;
+    padding: 5px 5px;
     background-color: var(--color3);
     border-radius: 30px;
     font-size: 15px;
@@ -98,8 +100,12 @@ a{
     color: var(--color4) !important;
 }
 
+.my-nav-profiel-btn::after{
+    display: none;
+}
+
 .nav-profile-img{
-    width: 20px;
+    width: 25px;
 }
 
 .profile-contnt-wrper{
@@ -186,6 +192,61 @@ a{
     font-size: 15px;
     font-weight: 600;
     padding-top: 10px;
+}
+
+.bet-blns-nav-wrp{
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.bet-blns-nav-wrp:hover>.bet-blns-nav-wrp-txt{
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
+}
+
+.bet-blns-nav-wrp>i{
+    padding: 10px 10px;
+    background-color: var(--color3);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.bet-blns-nav-wrp-txt{
+    position: absolute;
+    top: 30px;
+    right: -5px;
+    padding: 5px 5px;
+    border-radius: 10px;
+    pointer-events: none;
+    opacity: 0;
+    background-color: var(--color3);
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 0px 5px;
+}
+
+.bet-blns-nav-wrp-txt:hover{
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
+}
+
+.bet-blns-nav-wrp-txt>span{
+    width: max-content;
+    display: inline-flex;
+    font-size: 13px;
+}
+
+.bet-blns-nav-wrp-amount-num>span{
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    width: max-content;
+    font-size: 13px;
+    padding: 5px 5px;
+    border-radius: 20px;
+    background-color: var(--color3);
+    color: var(--color4);
 }
 
 /* --------------------------------------------------------------------------------------
@@ -309,7 +370,7 @@ a{
 
 .acount-stat-tbl-body-tr>td{
     padding: 5px 5px;
-    font-size: 15px;
+    font-size: 13px;
     border-bottom: 1px solid var(--color8);
 }
 
@@ -357,7 +418,7 @@ a{
     justify-content: center;
     padding: 5px 10px;
     background-color: var(--color9);
-    border-radius: 30px;
+    border-radius: 5px;
 }
 
 /* --------------------------------------------------------------------------------------
@@ -492,8 +553,14 @@ a{
     color: var(--color2); 
     text-align: center;
  }
-
-
+ .exchange-pg-rit-ro-livetv-dv-wrp1{
+    height: 80vh;
+    overflow-x: scroll;
+ }
+.exchange-pg-rit-ro-livetv-dv-wrp1>img{
+    margin-bottom: 10px;
+    width: 100%;
+}
  
 
 /* --------------------------------------------------------------------------------------

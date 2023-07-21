@@ -20,9 +20,10 @@ body{
     --color6: linear-gradient(135deg, #182EA6 0%, #182EA6 100%);
     --color7: #182ea61a;
     --color8: #D7D7D7;
-    --color9: #A1CDF5;
-    --color10: #FF9393;
+    --color9: #72BBEF;
+    --color10: #F994BA;
     --color11: #0063D8;
+    --color12: #32962A;
 }
 
 .c-gren{
@@ -61,6 +62,16 @@ a{
 .img-bdr-red15{
     border-radius: 15px;
 }
+
+.tbl-td-with{
+    width: 8%;
+}
+
+.tbl-td-with5{
+    width: 5%;
+}
+
+
 
 /* ----= MAIN SECTION =-----  */
 .main-tg-dv{
@@ -155,6 +166,7 @@ a{
     display: flex;
     align-items: center;
     justify-content: right;
+    gap: 10px;
 }
 
 .nav-login-regstr-btn{
@@ -419,6 +431,77 @@ a{
     justify-content: center;
 }
 
+.exchange-pg-inn-tbl-marqq-dv2>.exchange-pg-inn-tbl-marqq-dv-wrp2{
+    padding: 10px 10px;
+    background-color: var(--color7);
+    color: var(--color2);
+}
+
+.liv-casino-txt-ro-aded{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.hiro-feture-tab--tab-li>.active{
+    border: none;
+    padding: 8px 30px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: var(--color3);
+    background: var(--color1);
+    transition: all 0.0s ease-in-out;
+}
+
+.hiro-feture-tab--btnn{
+    border: none;
+    padding: 8px 30px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: var(--color4);
+    background: transparent;
+    transition: all 0.0s ease-in-out;
+    font-weight: 600;
+}
+
+.hiro-feture-tab--btnn:hover{
+    color: var(--color2);
+}
+
+.home-ro2-spots-casino-btns{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.home-ro2-spots-casino-btns1{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    border-radius: 15px;
+    background: var(--color1);
+    color: var(--color3);
+    font-weight: 500;
+}
+
+.home-ro2-spots-casino-btns2{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    border-radius: 15px;
+    border: 1px solid var(--color2);
+    color: var(--color4);
+    font-weight: 600;
+}
+
 /* ---------- HOME PAGE MODEL ----------  */
 
 /* ----= NAVBAR SECTION =-----  */
@@ -427,6 +510,10 @@ a{
 /* ----= HIRO BANNER SECTION =-----  */
 .hiro-banner-sec{
     scroll-behavior: smooth;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    padding-top: 2em;
 }
 /* ----= HIRO BANNER SECTION =-----  */
 
@@ -617,6 +704,11 @@ a{
 /* ----= ROYAL GAMING SECTION =-----  */
 .royalgaming-sec{
     padding-bottom: 2em;
+    background-color: var(--color5);
+}
+
+.royalgaming-sec2{
+    padding-TOP: 2em;
     background-color: var(--color5);
 }
 
@@ -885,7 +977,14 @@ a{
 /* ----= SIDEBAR SECTION =-----  */
 .sidebar-main-sec{
     position: fixed;
-    top: 10%;
+    top: 20%;
+    left: 1%;
+    z-index: 999;
+}
+
+.sidebar-main-secnew{
+    position: fixed;
+    top: 20%;
     left: 1%;
     z-index: 999;
 }
@@ -958,6 +1057,16 @@ a{
     transition: all 0.3s ease-in-out;
 } */
 
+.sidebar-menue-active-a>.hover-img-side-menu1{
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+}
+
+.sidebar-menue-active-a>.hover-img-side-menu2{
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
+}
+
 .sidebar-menu-option-a{
     display: inline-flex;
     padding: 5px;
@@ -966,6 +1075,50 @@ a{
     transition: all 0.3s ease-in-out;
     opacity: 1;
     position: relative;
+}
+.sidebar-menu-option-baded{
+    display: inline-flex;
+    padding: 15px 15px;
+    border-radius: 50px;
+    background-color: var(--color3);
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
+    position: relative;
+}
+
+.sidebar-menu-option-baded:hover{
+    transition: all 0.3s ease-in-out;
+    background-color: var(--color2);
+}
+
+.hover-img-side-menu2nw{
+    width: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
+}
+
+.hover-img-side-menu1nw{
+    width: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+}
+
+.sidebar-menu-option-baded:hover>.hover-img-side-menu2nw{
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+}
+
+.sidebar-menu-option-baded:hover>.hover-img-side-menu1nw{
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
 }
 
 .sidebar-menu-option-a:hover{
@@ -978,7 +1131,10 @@ a{
     transition: all 0.3s ease-in-out;
     opacity: 1;
 }
-
+.d-flex-gap{
+    display: flex;
+    gap: 10px;
+}
 .hover-img-side-menu2{
     transition: all 0.3s ease-in-out;
     opacity: 0;
@@ -1323,7 +1479,7 @@ a{
 
 .exchange-pg-tranding-maches-nav-sec{
     padding-top: 20px;
-    overflow-x: scroll;
+    /* overflow-x: scroll; */
 }
 
 .exchange-pg-tranding-maches-nav-sec-wrp{
@@ -1378,7 +1534,7 @@ a{
 }
 
 .exchange-pg-tbl-dvwrp{
-    padding-top: 20px;
+    padding-top: 0px;
 }
 
 .exchange-pg-mytbl-hed-tr>th{
@@ -1404,7 +1560,7 @@ a{
 
 .exchange-pg-mytbl-body-cricket-data-dv>p{
     margin-bottom: 0px;
-    font-size: 15px;
+    font-size: 13px;
 }
 
 .exchange-pg-mytbl-body-cricket-data-dv>p>span{
@@ -1413,9 +1569,9 @@ a{
 
 .exchange-td2-txtdv{
     display: inline-flex;
-    align-items: center;
+    align-items: end;
     justify-content: center;
-    gap: 5px;
+    gap: 10px;
 }
 
 .exchange-td2-txtdv-inn1>p{
@@ -1437,7 +1593,7 @@ a{
     justify-content: center;
     padding: 5px 10px;
     background-color: var(--color10);
-    border-radius: 30px;
+    border-radius: 5px;
 }
 
 .exchange-pg-tbl-ro2{
@@ -1541,17 +1697,17 @@ a{
     font-size: 13px;
 }
 
-.exc-pg-rit-tabtxt-dat-ro1-col>input>input{
+.exc-pg-rit-tabtxt-dat-ro1-col>span>span{
     color: var(--color2);
     font-weight: 600;
 }
 
-.exc-pg-rit-tabtxt-dat-ro1-col>button{
+.exc-pg-rit-tabtxt-dat-ro1-col>a{
     font-weight: 600;
     color: var(--color2);
 }
 
-.exc-pg-rit-tabtxt-dat-ro1-col>button:hover{
+.exc-pg-rit-tabtxt-dat-ro1-col>a:hover{
     color: var(--color2);
 }
 
@@ -1571,11 +1727,19 @@ a{
     gap: 5px;
     padding: 5px 5px;
     background-color: var(--color2);
+    border-radius: 5px;
+}
+.ecc-pg-rit-ods-data-opration1{
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 5px;
+    background-color: var(--color10);
     border-radius: 30px;
 }
 
 .ecc-pg-rit-ods-data-opration-spn{
-    color: var(--color3);
+    color: var(--color4);
 }
 
 .ecc-pg-rit-ods-data-opration-spn>i{
@@ -1584,7 +1748,7 @@ a{
 }
 
 .ecc-pg-rit-ods-data-opration-spn2{
-    padding: 0px 20px;
+    padding: 0px 10px;
     background-color: var(--color3);
 }
 
@@ -1598,7 +1762,20 @@ a{
 .ecc-pg-rit-ods-data-opration2{
     border: 1px solid var(--color2);
     border-radius: 30px;
-    padding: 2px 30px;
+    padding: 2px 5px;
+    width: 110px;
+}
+
+.ecc-pg-rit-ods-data-opration2>input{
+    font-size: 15px;
+    border:  none;
+    background-color: transparent;
+}
+
+.ecc-pg-rit-ods-data-opration2>input:focus{
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
 }
 
 .exc-pg-rit-tabtxt-dat-ro2{
@@ -1639,7 +1816,7 @@ a{
 }
 
 .exc-pg-rit-tabtxt-data-stack-minmax{
-    padding-top: 10px;
+    padding-top: 5px;
 }
 
 .exc-pg-rit-tabtxt-data-stack-minmax-ro{
@@ -1657,12 +1834,13 @@ a{
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 5px 25px;
+    padding: 5px 10px;
     background-color: var(--color2);
     transition: all 0.3s ease-in-out;
     font-size: 13px;
     color: var(--color3);
-    border-radius: 30px;
+    border-radius: 5px;
+    font-size: 12px;
 }
 
 .exc-pg-rit-tabtxt-data-place-bet-btndv{
@@ -1764,7 +1942,7 @@ a{
 }
 
 .exchange-pg-inn-banner-tv{
-    padding-top: 10px;
+    padding: 10px 0px;
 }
 
 .exchange-pg-inn-banner-tv-inn{
@@ -1796,26 +1974,72 @@ a{
     font-weight: 600;
 }
 
+.nw-betslip-spnn{
+    cursor: pointer;
+}
+
 .tbl-bg-blu-spn{
-    padding: 0px 20px;
+    padding: 0px 5px;
     background-color: var(--color9);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     flex-direction: column;
-    border-radius: 30px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.tbl-bg-blu-spn>span{
+    font-size: 10px;
+}
+
+.tbl-bg-blu-spn>span>b{
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.tbl-bg-blu-spn>a>span{
+    font-size: 10px;
+}
+
+.tbl-bg-blu-spn>a>span>b{
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1;
 }
 
 .tbl-bg-pech-spn{
-    padding: 0px 20px;
+    padding: 0px 5px;
     background-color: var(--color10);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     flex-direction: column;
-    border-radius: 30px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.tbl-bg-pech-spn>a>span{
+    font-size: 10px;
+}
+
+.tbl-bg-pech-spn>a>span>b{
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.tbl-bg-pech-spn>span{
+    font-size: 10px;
+}
+
+.tbl-bg-pech-spn>span>b{
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1;
 }
 
 .exchange-pg-inn-tbl-marqq-dv{
@@ -1886,9 +2110,9 @@ a{
     overflow-x: scroll;
 }
 
-.nav2menu-dv{
+/* .nav2menu-dv{
     display: none;
-}
+} */
 
 /* --------------------------------------------------------------------------------------
 ============================ EXCHANGE-INNSIDE PAGE STYLE ========================================
@@ -2111,7 +2335,7 @@ a{
 }
 
 .liv-casino-txt-ro-contnr{
-    padding: 20px 20px;
+    padding: 10px 10px;
     border-radius: 30px;
     background-color: var(--color3);
     border: 1px solid var(--color5);
@@ -2270,6 +2494,657 @@ a{
     display: none;
  }
  
+
+/* --------------------------------------------------------------------------------------
+============================ LIVE CASINO PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+/* .mob-sidevar-mnu-btn-dv {
+    display: block;
+    cursor: pointer;
+} */
+
+/* .side-menu-show{
+    display: block;
+} */
+
+/* .nav2menu-dv{
+    padding-top: 20px;
+    display: block;
+}
+
+.mbl-exchange-pg-main-col-mini{
+    display: none;
+}
+
+.mbl-see-no-exchange-pg-inn-banner-col{
+    display: none;
+}
+
+.mbl-exc-inn-tab-dv{
+    display: block;
+    padding: 10px 10px;
+    background-color: var(--color3);
+    border: 1px solid var(--color8);
+    border-radius: 30px;
+}
+
+.exc-pg-rit-tabdv-mbl{
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.exc-pg-rit-tab-btn-mbl{
+    padding: 5px 15px;
+    font-size: 12px;
+}
+
+.exc-pg-rit-tabli-mbl>.active{
+    padding: 5px 15px;
+    font-size: 12px;
+}
+
+.exchange-pg-inn-banner-col2{
+    display: none;
+}
+
+.titl-overflow-mbl-exc-inn{
+    overflow-x: scroll;
+}
+
+.titl-overflow-mbl-exc-inn2{
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: max-content;
+    gap: 5px;
+}
+
+.exchange-pg-inn-banner-col-titi-txt-tim>h6{
+    width: max-content;
+}
+
+.exchange-pg-inn-banner-col-titi-txt>h6{
+    width: max-content;
+}
+
+.mbl-exc-inn-tbl-datadv{
+    padding-top: 10px;
+}
+
+.mbl-exc-inn-tbl-datadv-wrp{
+    display: block;
+    padding: 10px 10px;
+    background-color: var(--color3);
+    border: 1px solid var(--color8);
+    border-radius: 30px;
+}
+
+.exchange-pg-inn-tbl-marqq-dv-wrp{
+    padding: 5px 5px;
+}
+
+.mbl-odt-sli-reltiv-dv{
+    position: relative;
+}
+
+.show-bet-slip-mbl-data{
+    display: block !important;
+    opacity: 1 !important;
+    transition: all 0.3s ease-in-out;
+}
+
+.mbl-odt-sli-wrp-dv{
+    position: absolute;
+    position: absolute;
+    top: 40px;
+    right: -145px;
+    width: max-content;
+    z-index: 999;
+    display: none;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+.mbl-odt-sli-wrp-dv1{
+    position: absolute;
+    position: absolute;
+    width: max-content;
+    z-index: 999;
+    display: none;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    top: 20%;
+    left: 25%;
+}
+
+.mbl-odt-sli-wrp-dv-inn{
+    position: relative;
+    background-color: var(--color3);
+    box-shadow: 0px 0px 2px;
+    padding: 5px;
+}
+
+.exc-pg-rit-tabtxt-dat-ro2{
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ecc-pg-rit-ods-data-ro{
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    display: inline-flex;
+}
+
+.exc-pg-rit-tabtxt-data-stack-num-col>span{
+    padding: 5px 10px;
+}
+
+.exc-pg-rit-tabtxt-data-stack-num-col{
+    padding: 5px 5px;
+}
+
+.exc-pg-rit-tabtxt-data-place-bet-btndv{
+    width: 100%;
+}
+
+.exchange-pg-inn-banner-col3{
+    padding: 10px 10px;
+    background-color: var(--color3);
+    border: 1px solid var(--color8);
+    border-radius: 30px;
+    margin-top: 10px;
+}
+
+.exch-pg-inn-fancy-tab-ul{
+    overflow-x: scroll;
+}
+
+.exch-pg-inn-fancy-tab-ul2-inn{
+    display: flex;
+    align-items: center;
+    width: max-content;
+}
+
+.exch-pg-inn-fancy-tab-btn{
+    width: max-content;
+}
+
+.tbl-bg-blu-spn{
+    padding: 0px 10px;
+    font-size: 12px;
+}
+
+.tbl-bg-pech-spn{
+    padding: 0px 10px;
+    font-size: 12px;
+}
+
+.mbl-exc-inn-tab-dv-main{
+    display: block;
+}    */
+.exchange-pg-inn-banner-tv-inn1 {
+    height: 100px;
+    background: var(--color3);
+    border-radius: 15px;
+}
+.exchange-pg-inn-banner-col-titi1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: var(--color1);
+    padding: 10px 10px;
+    border-radius: 30px;
+    font-weight: bold !important;
+}
+.exchange-pg-inn-banner-col-titi-txt1>h6 {
+    margin-bottom: 0px;
+    color: var(--color3);
+    font-size: 18px;
+    font-weight: 600;
+}
+.exchange-pg-inn-banner-col1 {
+    padding: 10px 10px;
+    background-color: var(--color3);
+    height: 83vh;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+.exchange-pg-inn-banner-col1>img {
+    width: 100%;
+}
+td>.green{
+    color: #32962A;
+    text-align: left !important;
+}
+.table-data{
+    display: grid;
+    grid-template-columns: repeat(1, 250px 1fr);
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--color5);
+    margin-bottom: 2px;
+}
+
+.table-data-2{
+    position: relative;
+    display: flex;
+    align-items: end;
+    justify-content: right;
+    flex-direction: column;
+}
+
+.table-data-2>.table-data-2-inn{
+    display: grid;
+    grid-template-columns: repeat(2 , 200px);
+    gap: 10px;
+    padding-bottom: 5px;
+}
+.table-data-2-inn-col{
+    display: grid;
+    grid-template-columns: repeat(3 , 1fr);
+    gap: 5px;
+}
+
+.table-data-2-inn{
+    text-align: center;
+}
+
+.table-data-1>p{
+    margin-bottom: 0px;
+}
+
+.ecc-pg-rit-ods-data-ro-aded{
+    display: flex;
+    align-items: end;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.ecc-pg-rit-ods-data-opration2-aded{
+    border: 1px solid var(--color2);
+    border-radius: 5px;
+    padding: 2px 10px;
+    font-size: 12px;
+}
+
+.exc-pg-rit-tabtxt-data-stack-num-ro-aded{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.exc-pg-rit-tabtxt-data-stack-num-col-aded{
+    font-size: 12px;
+    background-color: var(--color7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 5px;
+}
+
+.ecc-pg-rit-ods-data-col-aded>a{
+    text-decoration: none;
+    color: var(--color3);
+    border-radius: 5px;
+    border: none;
+    background: var(--color1);
+    padding: 4px 10px;
+    font-size: 12px;
+}
+
+.ecc-pg-rit-ods-data-opration-spn2{
+    font-size: 12px;
+}
+
+.ecc-pg-rit-ods-data-opration-spn{
+    font-size: 12px;
+}
+
+.ecc-pg-rit-ods-data-opration-aded{
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 5px;
+    background-color: var(--color9);
+    border-radius: 5px;
+}
+
+.table-data-2{
+    position: relative;
+}
+
+.new-bet-slip-dropdown-dvwrp{
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 0px;
+    opacity: 0;
+    display: none;
+    transition: height 0.3s ease-in-out;
+}
+
+.new-betslip-witt{
+    opacity: 1;
+    height: max-content;
+    display: block;
+    transition: height 0.3s ease-in-out;
+}
+
+.my-exc-inn-colaps-txt-body{
+    width: 100%;
+}
+
+.exc-inn-colaps-data-titl{
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--color5);
+}
+
+.exc-inn-colaps-data-titl>p{
+    margin-bottom: 0px;
+    font-size: 13px;
+}
+
+.my-exc-inn-colaps-txt-dv{
+    margin: 0px 2px;
+}
+
+.my-exc-inn-colaps-txt-body{
+    border: none;
+    box-shadow: 0px 0px 5px;
+}
+
+.exch-pg-inn-fancy-tab-ul-aded>.exch-pg-inn-fancy-tab-ul2-inn{
+    background-color: var(--color2);
+    border-radius: 30px;
+    padding: 5px 5px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+}
+
+.bet-blns-nav-wrp>span{
+    width: max-content;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color3);
+}
+
+.liv-casino-txt-ro-contnr-neww{
+    padding: 10px 10px;
+    border: 1px solid var(--color5);
+}
+
+/* ----- NEW BET SLIP -----  */
+.nww-bet-slip-wrp-col1{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 10px;
+    background-color: var(--color7);
+    border-radius: 30px;
+}
+
+.nww-bet-slip-wrp-col1-txt{
+    font-size: 13px;
+}
+
+.nww-bet-slip-wrp-col1-txt{
+ display: flex;
+ align-items: center;
+ gap: 10px;
+}
+
+.nww-bet-slip-wrp-col1-txt-icons{
+    padding: 0px 5px;
+    border-radius: 5px;
+    background-color: var(--color8);
+    font-size: 15px;
+}
+
+.nww-bet-slip-wrp-col1-txt-num{
+    font-size: 13px;
+}
+
+.nww-bet-slip-wrp-col1-txt-inn>.set-stake-form-input2{
+    width: 100px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--color8);
+}
+
+.nww-bet-slip-wrp-col2{
+    padding-top: 10px;
+}
+
+.nww-bet-slip-wrp-col2-inn{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: right;
+}
+
+.nww-bet-slip-wrp-col2-inn>span{
+    font-size: 13px;
+    padding: 2px 5px;
+    background-color: var(--color9);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.nww-bet-slip-wrp-col3{
+    padding-top: 10px;
+    display: flex;
+    align-items: start;
+}
+
+.nww-bet-slip-wrp-col3-txt1>p{
+    margin-bottom: 0px;
+    font-size: 13px;
+}
+
+.nww-bet-slip-wrp-col3-txt1>a{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: var(--color1);
+    width: max-content;
+    color: var(--color3);
+}
+
+/* ----- NEW BET SLIP -----  */
+.table-new-d{
+    width: 100%;
+    border: 1px solid transparent;
+    padding: 5px;
+    border-radius: 10px;
+    /* box-shadow: 0px 0px 5px; */
+
+}
+.thead-border{
+    border-bottom: 1px solid #b2b2b2;
+}
+.new-tqabl-di{
+    text-align: center;
+    padding: 10px 0px;
+}
+.new-tqabl-di>p{
+margin-bottom: 0px;
+}
+
+.my-open-bet-trr>td{
+    font-size: 13px;
+    text-align: center;
+}
+
+/* --------------------------------------------------------------------------------------
+============================ HORCE RIDING PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+.exch-horce-ride-sec-wrp{
+    padding-top: 20px;
+}
+
+.exch-horce-ride-sec-ro{
+    padding: 10px 10px;
+    background-color: var(--color3);
+    border: 1px solid var(--color8);
+    border-radius: 30px;
+}
+
+.exch-horce-ride-sec-titl{
+    padding: 10px 10px;
+    border-radius: 30px;
+    background: var(--color1);
+}
+
+.exch-horce-ride-sec-titl>h6{
+    margin-bottom: 0px;
+    color: var(--color3);
+}
+
+.exch-horce-ride-txttab-ul{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.exch-horce-ride-sec-txttab-dv{
+    padding-top: 10px;
+}
+
+.exch-horce-ride-txttab-li>.active{
+    background: var(--color1);
+}
+
+.exch-horce-ride-txttab-btnn{
+    background-color: var(--color7);
+    padding: 5px 15px;
+    border-radius: 15px;
+    color: var(--color4);
+    transition: all 0.0s ease-in-out;
+}
+
+.exch-horce-ride-txttab-btnn:hover{
+    color: var(--color3);
+    background: var(--color1);
+    transition: all 0.0s ease-in-out;
+}
+
+.exch-horce-ride-contnt-wrp{
+    padding-top: 10px;
+}
+
+.exch-horce-ride-contnt-dv{
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 2px solid var(--color5);
+}
+
+.exch-horce-ride-contnt-dv-a{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding: 5px;
+}
+
+.exch-horce-ride-contnt-dv-titl>p{
+    margin-bottom: 0px;
+    font-size: 13px;
+}
+
+.exch-horce-ride-contnt-dv-titl>p>span{
+    color: var(--color2);
+}
+
+.exch-horce-ride-contnt-dv-data{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.exch-horce-ride-contnt-dv-data>.exch-horce-ride-contnt-dv-data-spn1{
+    padding: 8px 15px;
+    border-radius: 15px;
+    background-color: var(--color12);
+    color: var(--color3);
+    font-size: 13px;
+}
+
+.exch-horce-ride-contnt-dv-data>.exch-horce-ride-contnt-dv-data-spn2{
+    padding: 8px 15px;
+    border-radius: 15px;
+    background-color: var(--color8);
+    color: var(--color4);
+    font-size: 13px;
+}
+
+/* --------------------------------------------------------------------------------------
+============================ HORCE RIDING PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+
+/* --------------------------------------------------------------------------------------
+============================ binary PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+/* .binry-main-wrp{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+} */
+
+.table-data-2-inn-nw{
+    display: grid;
+    grid-template-columns: repeat(2 , 200px);
+    gap: 10px;
+    padding-bottom: 5px;
+}
+
+.table-data-2-inn-col2{
+    display: grid;
+    grid-template-columns: repeat(2 , 1fr);
+    gap: 5px;
+}
+
+.table-data-2-inn-col3{
+    display: grid;
+    grid-template-columns: repeat(2 , 1fr);
+    gap: 5px;
+    justify-content: right;
+}
+
+.binry-tbl-hed{
+    color: var(--color2);
+    background: var(--color1);
+    margin-bottom: 5px;
+}
+
+.binry-tbl-hed-tr>th{
+    color: var(--color3);
+    padding: 5px 10px;
+    font-weight: normal;
+}
+
+/* --------------------------------------------------------------------------------------
+============================ binary PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
 
 /* --------------------------------------------------------------------------------------
 ============================ LIVE CASINO PAGE STYLE ========================================
