@@ -402,6 +402,19 @@
                   };
                   var formattedTime = date.toLocaleString('en-US', options);
                 %>
+                <% let player1Score = 'N/A'; %>
+                <% let player2Score = 'N/A'; %>
+                <%if(liveTennis[i].marketList.score != null){%>
+                  <% const scoreRegex = /<span class="set current">(\d+)<\/span>/g; %>
+                  <% const scores = html.match(scoreRegex); %>
+  
+                  <% if (scores && scores.length >= 4) { %>
+                      <% player1Score = parseInt(scores[2], 10) - parseInt(scores[0], 10); %>
+                      <% player2Score = parseInt(scores[3], 10) - parseInt(scores[1], 10); %>
+                  <% } %>
+                <%}%>
+
+
                 <tr class="acount-stat-tbl-body-tr tbl-data-href" onclick="window.location.href = '/exchange_inPlay/match?id=<%=liveTennis[i].eventData.eventId%>'; ">
                     <td style="border-bottom: 0px;" class="name1" id="<%=liveTennis[i].marketList.match_odd.marketId%>" >
                       <div class="exchange-pg-mytbl-body-cricket-data-dv">
@@ -412,6 +425,12 @@
                         <p>
                             <b><%=liveTennis[i].eventData.name%></b>
                         </p>
+                        <%if(liveTennis[i].marketList.score != null){%>
+                          <span class="ctbal-scor-spn-wrp">
+                            <span class="ctbal-scor-spn1"><%=player1Score%></span>
+                            <span class="ctbal-scor-spn2"><%=player2Score%></span>
+                          </span>
+                        <% }%>
                     </div>
                     </td>
                     <td style="border-bottom: 0px;" >
