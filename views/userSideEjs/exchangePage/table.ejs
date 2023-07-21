@@ -208,7 +208,7 @@
                 <%let timeOfGame%>
                 <% let scoreOfGame%>
                 <%if(liveFootBall[i].marketList.score != null){%>
-                  <% let timeOfGame = liveFootBall[i].marketList.score[0].data.match(/<span class="football-time">([^<]+)'/); %>
+                  <%timeOfGame = liveFootBall[i].marketList.score[0].data.match(/<span class="football-time">([^<]+)'/); %>
                     <% timeOfGame = timeOfGame ? timeOfGame[1].trim() + "'" : 'N/A'; %>
                 
                     <% scoreOfGame = liveFootBall[i].marketList.score[0].data.match(/<span class="football-score">([^<]+)<\/span>/); %>
@@ -226,10 +226,12 @@
                         <p>
                             <b><%=liveFootBall[i].eventData.name%></b>
                         </p>
-                        <span class="ctbal-scor-spn-wrp">
-                          <span class="ctbal-scor-spn1"><%=timeOfGame%></span>
-                          <span class="ctbal-scor-spn2"><%=scoreOfGame%></span>
-                        </span>
+                        <%if(liveFootBall[i].marketList.score != null){%>
+                          <span class="ctbal-scor-spn-wrp">
+                            <span class="ctbal-scor-spn1"><%=timeOfGame%></span>
+                            <span class="ctbal-scor-spn2"><%=scoreOfGame%></span>
+                          </span>
+                        <%} %>
                     </div>
                     </td>
                     <td style="border-bottom: 0px;" >
