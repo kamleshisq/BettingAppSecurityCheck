@@ -1,5 +1,5 @@
 <%if(LiveCricket.length > 0 || upcomintCricket.length > 0){%>
-  <div class="exchange-pg-tbl-ro2">
+  <div class="exchange-pg-tbl-ro1">
     <a href="exchange-page-inn.html">
         <table class="acount-stat-tbl">
 
@@ -92,18 +92,7 @@
             <%}%>
             <% j = cricketNum %>
             <%for(let i = 0; i < upcomintCricket.length; i++){%>
-              <%if(upcomintCricket[i].marketList.match_odd != null){%>
-                <%
-                  var timestamp = `${upcomintCricket[i].eventData.time}` * 1000; 
-                  var date = new Date(timestamp);
-                  var options = { 
-                    day: '2-digit',
-                    month: 'short'
-                  };
-                  var formattedTime = date.toLocaleString('en-US', options);
-                %>
-                
-              <%}>
+              
             <%}>
               
           </tbody>
