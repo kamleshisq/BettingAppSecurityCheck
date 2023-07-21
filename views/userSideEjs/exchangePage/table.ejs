@@ -208,7 +208,7 @@
                 <%let timeOfGame%>
                 <% let scoreOfGame%>
                 <%if(liveFootBall[i].marketList.score != null){%>
-                  <% let timeOfGame = html.match(/<span class="football-time">([^<]+)'/); %>
+                  <% let timeOfGame = liveFootBall[i].marketList.score[0].data.match(/<span class="football-time">([^<]+)'/); %>
                     <% timeOfGame = timeOfGame ? timeOfGame[1].trim() + "'" : 'N/A'; %>
                 
                     <% scoreOfGame = liveFootBall[i].marketList.score[0].data.match(/<span class="football-score">([^<]+)<\/span>/); %>
