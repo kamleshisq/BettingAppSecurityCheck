@@ -210,6 +210,7 @@
                   const timeScoreRegex = /<span class="football-time">(\d+)'(?:\s*<span class="extra-time">\s*\+\s*(\d+)\s*<\/span>)?.*?<span class="football-score">(\d+-\d+)<\/span>/;
 
                   // Extracting the time and score using the regular expression
+                  console.log(liveFootBall[i].marketList.score[0].data)
                   const match = liveFootBall[i].marketList.score[0].data.match(timeScoreRegex);
                   const time = match ? match[1] : null;
                   const extraTime = match ? match[2] : null;
