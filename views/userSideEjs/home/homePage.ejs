@@ -8,16 +8,18 @@
             <div class="">
   
               <div class="featured-sec-slide-ro hiroslide3">
-                <%if(banner[0].status){%>
-                  <div class="featured-sec-card-col-dv">
-                    <div class="featured-sec-card-col-inn">
-                      <div class="featured-sec-card-col-img-dv">
-                        <a href="#">
-                          <img class="img-fluid featured-sec-card-col-img-tg" src="../banner/<%=banner[0].banner%>.png" alt="">
-                        </a>
+                <%for(let i = 0; i < banner.length; i++){%>
+                  <%if(banner[i].status){%>
+                    <div class="featured-sec-card-col-dv">
+                      <div class="featured-sec-card-col-inn">
+                        <div class="featured-sec-card-col-img-dv">
+                          <a href="banner[i].url">
+                            <img class="img-fluid featured-sec-card-col-img-tg" src="../banner/<%=banner[i].banner%>.png" alt="">
+                          </a>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  <%}%>
                 <%}%>
   
               </div>
