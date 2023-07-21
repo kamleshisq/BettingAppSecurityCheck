@@ -25,23 +25,21 @@
               };
               var formattedTime = date.toLocaleString('en-US', options);
             %>
-            <% let player1Score = 'N/A'; %>
-            <% let player2Score = 'N/A'; %>
+            <% let pointsData  %>
             <%if(liveTennis[i].marketList.score != null){%>
               <%
               let scoreRegex = /<span class="set current">(\d+)<\/span>/g;
-                let scores = [];
-                let match;
-                
-                while ((match = scoreRegex.exec(liveTennis[i].marketList.score[0].data))) {
-                  scores.push(match[1]);
+
+                // Helper function to extract points data from the HTML data
+                function getPointsData(data, regex) {
+                  const matches = data.match(regex);
+                  if (matches) {
+                    return matches.map(match => parseInt(match.replace(scoreRegex, "$1"), 10));
+                  }
+                  return [];
                 }
                 
-                
-                if (scores.length >= 4) {
-                  player1Score = parseInt(scores[2], 10) - parseInt(scores[0], 10);
-                  player2Score = parseInt(scores[3], 10) - parseInt(scores[1], 10);
-                }
+                pointsData = getPointsData(liveTennis[i].marketList.score[0].data, scoreRegex);
                 %>
             <%}%>
 
@@ -58,8 +56,8 @@
                     </p>
                     <%if(liveTennis[i].marketList.score != null){%>
                       <span class="ctbal-scor-spn-wrp">
-                        <span class="ctbal-scor-spn1"><%=player1Score%></span>
-                        <span class="ctbal-scor-spn2"><%=player2Score%></span>
+                        <span class="ctbal-scor-spn1"><%=pointsData[0]%></span>
+                        <span class="ctbal-scor-spn2"><%=pointsData[1]%></span>
                       </span>
                     <% }%>
                 </div>
