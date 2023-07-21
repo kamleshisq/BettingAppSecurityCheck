@@ -4120,6 +4120,7 @@ socket.on('connect', () => {
                                 </a>`
                 }
             }
+            console.log(html)
             document.getElementById('liveMatch_data').innerHTML = html
         })
 
