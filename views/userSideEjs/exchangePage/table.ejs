@@ -205,29 +205,12 @@
                   };
                   var formattedTime = date.toLocaleString('en-US', options);
                 %>
-                <%
-                  // Regular expression to match the time and score
-                  const timeScoreRegex = /<span class="football-time">(\d+)'(?:\s*<span class="extra-time">\s*\+\s*(\d+)\s*<\/span>)?.*?<span class="football-score">(\d+-\d+)<\/span>/g;
-
-                  // Extracting all matches in the HTML
-                  const matches = [];
-                  let match;
-                  while ((match = timeScoreRegex.exec(liveFootBall[i].marketList.score[0].data)) !== null) {
-                    const time = match[1];
-                    const extraTime = match[2];
-                    const score = match[3];
-                    matches.push({ time, extraTime, score });
-                  }
-                  %>
-
-                  <!-- Displaying the extracted times and scores -->
-                  <% for (const match of matches) { %>
-                  Time: <%= match.time %>' <%= match.extraTime ? `(+ ${match.extraTime})` : '' %>
-                  Score: <%= match.score %>
-                  console.log(Time, 5465464)
-                  console.log(Score, 46879879)
-                  <% } %>
-
+                <% let timeOfGame = liveFootBall[i].marketList.score[0].data.match(/<span class="football-time">([^<]+)<span class="extra-time">/); %>
+                  <% timeOfGame = timeOfGame ? timeOfGame[1].trim() : 'N/A'; %>
+              
+                  <% let scoreOfGame = liveFootBall[i].marketList.score[0].data.match(/<span class="football-score">([^<]+)<\/span>/); %>
+                  <% scoreOfGame = scoreOfGame ? scoreOfGame[1].trim() : 'N/A'; %>
+                    <%console.log(scoreOfGame, 456)%>
                   <!-- Displaying the extracted time and score -->
                   
                 <tr class="acount-stat-tbl-body-tr tbl-data-href" onclick="window.location.href = '/exchange_inPlay/match?id=<%=liveFootBall[i].eventData.eventId%>'; ">
