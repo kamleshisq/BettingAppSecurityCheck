@@ -205,6 +205,19 @@
                   };
                   var formattedTime = date.toLocaleString('en-US', options);
                 %>
+                <%
+                  // Regular expression to match the time and score
+                  const timeScoreRegex = /<span class="football-time">(\d+)'(?:\s*<span class="extra-time">\s*\+\s*(\d+)\s*<\/span>)?.*?<span class="football-score">(\d+-\d+)<\/span>/;
+
+                  // Extracting the time and score using the regular expression
+                  const match = liveFootBall[i].marketList.score[0].data.match(timeScoreRegex);
+                  const time = match ? match[1] : null;
+                  const extraTime = match ? match[2] : null;
+                  const score = match ? match[3] : null;
+                %>
+
+                  <!-- Displaying the extracted time and score -->
+                  
                 <tr class="acount-stat-tbl-body-tr tbl-data-href" onclick="window.location.href = '/exchange_inPlay/match?id=<%=liveFootBall[i].eventData.eventId%>'; ">
                     <td style="border-bottom: 0px;" class="name1" id="<%=liveFootBall[i].marketList.match_odd.marketId%>" >
                       <div class="exchange-pg-mytbl-body-cricket-data-dv">
@@ -213,7 +226,8 @@
                           <span><%=liveFootBall[i].eventData.league%></span> • <%=formattedTime%>
                         </p>
                         <p>
-                            <b><%=liveFootBall[i].eventData.name%></b>
+                            <b><%= time %>' <%= extraTime ? `(+ ${extraTime})` : '' %>
+                              <%= score %></b>
                         </p>
                     </div>
                     </td>
