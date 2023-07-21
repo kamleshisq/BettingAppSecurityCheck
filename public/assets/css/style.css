@@ -1505,6 +1505,7 @@ a{
     font-weight: normal;
     transition: all 0.3s ease-in-out;
     animation: blinker2 2s linear infinite alternate;
+    width: max-content
 }
 
 @keyframes blinker2 {
