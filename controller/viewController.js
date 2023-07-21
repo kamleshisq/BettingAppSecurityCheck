@@ -1144,7 +1144,8 @@ exports.getSportList = catchAsync(async(req, res, next) => {
     })
     .then(res =>res.json())
     .then(result => {
-        console.log(result)
+        let data = result.gameList.filter(item => item.sport_name == "Football")
+        console.log(data)
         res.status(200).json({
             result
         })
