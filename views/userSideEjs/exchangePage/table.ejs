@@ -406,7 +406,7 @@
                 <% let player2Score = 'N/A'; %>
                 <%if(liveTennis[i].marketList.score != null){%>
                   <% const scoreRegex = /<span class="set current">(\d+)<\/span>/g; %>
-                  <% const scores = html.match(scoreRegex); %>
+                  <% const scores = liveTennis[i].marketList.score[0].data.match(scoreRegex); %>
   
                   <% if (scores && scores.length >= 4) { %>
                       <% player1Score = parseInt(scores[2], 10) - parseInt(scores[0], 10); %>
