@@ -25,7 +25,7 @@
                   };
                   var formattedTime = date.toLocaleString('en-US', options);
                 %>
-                <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>">
+                <tr class="acount-stat-tbl-body-tr tbl-data-href" onclick="window.location.href = '/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>'; ">
                     <td style="border-bottom: 0px;" class="name1" id="<%=LiveCricket[i].marketList.match_odd.marketId%>" >
                       <div class="exchange-pg-mytbl-body-cricket-data-dv">
                         <span class="exchange-pg-mytbl-body-liv-dot"></span>
@@ -101,7 +101,7 @@
                   };
                   var formattedTime = date.toLocaleString('en-US', options);
                 %>
-                <tr class="acount-stat-tbl-body-tr tbl-data-href"  data-href="/exchange_inPlay/match?id=<%=upcomintCricket[i].eventData.eventId%>">
+                <tr class="acount-stat-tbl-body-tr tbl-data-href"  onclick="window.location.href = '/exchange_inPlay/match?id=<%=upcomintCricket[i].eventData.eventId%>'; ">
                   <td style="border-bottom: 0px;" class="name1" id="<%=upcomintCricket[i].marketList.match_odd.marketId%>" >
                     <div class="exchange-pg-mytbl-body-cricket-data-dv">
                       <%= j%>)
