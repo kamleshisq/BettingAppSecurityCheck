@@ -4085,6 +4085,108 @@ socket.on('connect', () => {
     }
 
 
+    if(pathname === "/exchange/cricket"){
+        function marketId(){
+            socket.emit("liveData" , "data12")
+              setTimeout(()=>{
+                marketId()
+              }, 60000)
+        }
+        marketId()
+
+        socket.on('liveData', async(data) => {
+            let html = ``
+            for(let i = 0; i < data.LiveCricket.length; i++){
+                if(data.LiveCricket[i].marketList.match_odd != null){
+                   html += `<a href="/exchange_sports/live_match?id=${data.LiveCricket[i].eventData.eventId}">
+                                    <img src="/assets/img/home/side-menuimg02.svg" alt="">
+                                    ${data.LiveCricket[i].eventData.name}
+                                </a>`
+                }
+            }
+            for(let i = 0; i < data.liveFootBall.length; i++){
+                if(data.liveFootBall[i].marketList.match_odd != null){
+                   html += `<a href="/exchange_sports/live_match?id=${data.liveFootBall[i].eventData.eventId}">
+                                    <img src="/assets/img/home/side-menuimg03.svg" alt="">
+                                    ${data.liveFootBall[i].eventData.name}
+                                </a>`
+                }
+            }
+            for(let i = 0; i < data.liveTennis.length; i++){
+                if(data.liveTennis[i].marketList.match_odd != null){
+                   html += `<a href="/exchange_sports/live_match?id=${data.liveTennis[i].eventData.eventId}">
+                                    <img src="/assets/img/home/side-menuimg04.svg" alt="">
+                                    ${data.liveTennis[i].eventData.name}
+                                </a>`
+                }
+            }
+            document.getElementById('liveMatch_data').innerHTML = html
+        })
+
+        function marketId(){
+            $(document).ready(function() {
+                var ids = [];
+          
+                $(".name1").each(function() {
+                    if($(this).val() != "-"){
+                        ids.push(this.id);
+                    }
+                });
+          
+                socket.emit("marketId", ids)
+              });
+              setTimeout(()=>{
+                marketId()
+              }, 500)
+        }
+        marketId()
+        socket.on("marketId", (data) => {
+            $(document).ready(function() {
+          
+                $(".0L").each(function() {
+                    
+                        let id = this.id
+                        const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                        console.log(foundItem)
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[0].layPrice1}</span>`
+                });
+
+                $(".0B").each(function() {
+                    
+                    let id = this.id
+                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                    this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[0].backPrice1}</span>`
+                });
+
+                $(".1L").each(function() {
+                        let id = this.id
+                        const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[1].layPrice1}</span>`
+                });
+
+                $(".1B").each(function() {
+                    let id = this.id
+                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                    this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[1].backPrice1}</span>`
+                });
+
+                $(".2B").each(function() {
+                        let id = this.id
+                        const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[2].backPrice1}</span>`
+                });
+
+                $(".2L").each(function() {
+                    let id = this.id
+                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                    this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[2].layPrice1}</span>`
+                });
+            })
+        })
+
+    }
+
+
    
 
 
