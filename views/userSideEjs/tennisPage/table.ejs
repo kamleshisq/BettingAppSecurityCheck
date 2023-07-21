@@ -28,12 +28,23 @@
             <% let player1Score = 'N/A'; %>
             <% let player2Score = 'N/A'; %>
             <%if(liveTennis[i].marketList.score != null){%>
-              <% const scoreRegex = /<span class="set current">(\d+)<\/span>/g; %>
-              <% const scores = liveTennis[i].marketList.score[0].data.match(scoreRegex); %>
+              <% const cheerio = require('cheerio'); %>
+              <% const $ = cheerio.load(liveTennis[i].marketList.score[0].data); %>
 
-              <% if (scores && scores.length >= 4) { %>
-                  <% player1Score = parseInt(scores[2], 10) - parseInt(scores[0], 10); %>
-                  <% player2Score = parseInt(scores[3], 10) - parseInt(scores[1], 10); %>
+
+              <% const player1Sets = $('.tennis-player').first().find('.set.current'); %>
+              <% const player2Sets = $('.tennis-player').eq(1).find('.set.current'); %>
+
+              <% if (player1Sets.length === 3 && player2Sets.length === 3) { %>
+                  <% const p1Set1 = parseInt(player1Sets.eq(0).text(), 10); %>
+                  <% const p1Set2 = parseInt(player1Sets.eq(1).text(), 10); %>
+                  <% const p1Set3 = parseInt(player1Sets.eq(2).text(), 10); %>
+                  <% const p2Set1 = parseInt(player2Sets.eq(0).text(), 10); %>
+                  <% const p2Set2 = parseInt(player2Sets.eq(1).text(), 10); %>
+                  <% const p2Set3 = parseInt(player2Sets.eq(2).text(), 10); %>
+
+                  <% player1Score = p1Set3 - p1Set1; %>
+                  <% player2Score = p2Set3 - p2Set1; %>
               <% } %>
             <%}%>
 
