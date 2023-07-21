@@ -4148,7 +4148,6 @@ socket.on('connect', () => {
                     
                         let id = this.id
                         const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                        console.log(foundItem)
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[0].layPrice1}</span>`
                 });
 
