@@ -404,7 +404,7 @@
                 %>
                 <% let player1Score = 'N/A'; %>
                 <% let player2Score = 'N/A'; %>
-                <%if(liveTennis[i].marketList.score != null){%>
+                <!-- <%if(liveTennis[i].marketList.score != null){%> -->
                   <% const scoreRegex = /<span class="set current">(\d+)<\/span>/g; %>
                   <% const scores = liveTennis[i].marketList.score[0].data.match(scoreRegex); %>
   
@@ -412,7 +412,7 @@
                       <% player1Score = parseInt(scores[2], 10) - parseInt(scores[0], 10); %>
                       <% player2Score = parseInt(scores[3], 10) - parseInt(scores[1], 10); %>
                   <% } %>
-                <%}%>
+                <!-- <%}%> -->
 
 
                 <tr class="acount-stat-tbl-body-tr tbl-data-href" onclick="window.location.href = '/exchange_inPlay/match?id=<%=liveTennis[i].eventData.eventId%>'; ">
