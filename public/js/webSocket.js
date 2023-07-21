@@ -3988,7 +3988,7 @@ socket.on('connect', () => {
             socket.emit("liveData" , "data12")
               setTimeout(()=>{
                 marketId()
-              }, 1000)
+              }, 60000)
         }
         marketId()
 
@@ -4020,6 +4020,26 @@ socket.on('connect', () => {
             }
             document.getElementById('liveMatch_data').innerHTML = html
         })
+
+        function marketId(){
+            $(document).ready(function() {
+                var ids = [];
+          
+                $(".name1").each(function() {
+                    if($(this).val() != "-"){
+                        ids.push(this.id);
+                    }
+                });
+          
+                socket.emit("marketId", ids)
+              });
+              setTimeout(()=>{
+                marketId()
+              }, 500)
+        }
+        marketId()
+
+
     }
 
 
