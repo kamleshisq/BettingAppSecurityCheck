@@ -205,12 +205,16 @@
                   };
                   var formattedTime = date.toLocaleString('en-US', options);
                 %>
-                <% let timeOfGame = liveFootBall[i].marketList.score[0].data.match(/<span class="football-time">([^<]+)<span class="extra-time">/); %>
-                  <% timeOfGame = timeOfGame ? timeOfGame[1].trim() : 'N/A'; %>
-              
-                  <% let scoreOfGame = liveFootBall[i].marketList.score[0].data.match(/<span class="football-score">([^<]+)<\/span>/); %>
-                  <% scoreOfGame = scoreOfGame ? scoreOfGame[1].trim() : 'N/A'; %>
-                    <%console.log(scoreOfGame, 456)%>
+                <%let timeOfGame%>
+                <% let scoreOfGame%>
+                <%if(liveFootBall[i].marketList.score != null){%>
+                  <% timeOfGame = liveFootBall[i].marketList.score[0].data.match(/<span class="football-time">([^<]+)<span class="extra-time">/); %>
+                    <% timeOfGame = timeOfGame ? timeOfGame[1].trim() : 'N/A'; %>
+                
+                    <% scoreOfGame = liveFootBall[i].marketList.score[0].data.match(/<span class="football-score">([^<]+)<\/span>/); %>
+                    <% scoreOfGame = scoreOfGame ? scoreOfGame[1].trim() : 'N/A'; %>
+                      <%console.log(scoreOfGame, 456)%>
+                <%}%>
                   <!-- Displaying the extracted time and score -->
                   
                 <tr class="acount-stat-tbl-body-tr tbl-data-href" onclick="window.location.href = '/exchange_inPlay/match?id=<%=liveFootBall[i].eventData.eventId%>'; ">
