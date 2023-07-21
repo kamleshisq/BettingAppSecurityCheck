@@ -1484,9 +1484,7 @@ a{
 
 .exchange-pg-tranding-maches-nav-sec-wrp{
     display: flex;
-    width: max-content;
     gap: 5px;
-    overflow-x: scroll;
 }
 
 .exchange-pg-main-col-big{
