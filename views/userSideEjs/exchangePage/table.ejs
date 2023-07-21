@@ -207,15 +207,26 @@
                 %>
                 <%
                   // Regular expression to match the time and score
-                  const timeScoreRegex = /<span class="football-time">(\d+)'(?:\s*<span class="extra-time">\s*\+\s*(\d+)\s*<\/span>)?.*?<span class="football-score">(\d+-\d+)<\/span>/;
+                  const timeScoreRegex = /<span class="football-time">(\d+)'(?:\s*<span class="extra-time">\s*\+\s*(\d+)\s*<\/span>)?.*?<span class="football-score">(\d+-\d+)<\/span>/g;
 
-                  // Extracting the time and score using the regular expression
-                  console.log(liveFootBall[i].marketList.score[0].data)
-                  const match = liveFootBall[i].marketList.score[0].data.match(timeScoreRegex);
-                  const time = match ? match[1] : null;
-                  const extraTime = match ? match[2] : null;
-                  const score = match ? match[3] : null;
-                %>
+                  // Extracting all matches in the HTML
+                  const matches = [];
+                  let match;
+                  while ((match = timeScoreRegex.exec(html)) !== null) {
+                    const time = match[1];
+                    const extraTime = match[2];
+                    const score = match[3];
+                    matches.push({ time, extraTime, score });
+                  }
+                  %>
+
+                  <!-- Displaying the extracted times and scores -->
+                  <% for (const match of matches) { %>
+                  Time: <%= match.time %>' <%= match.extraTime ? `(+ ${match.extraTime})` : '' %>
+                  Score: <%= match.score %>
+                  console.log(Time, 5465464)
+                  console.log(Score, 46879879)
+                  <% } %>
 
                   <!-- Displaying the extracted time and score -->
                   
@@ -227,8 +238,7 @@
                           <span><%=liveFootBall[i].eventData.league%></span> • <%=formattedTime%>
                         </p>
                         <p>
-                            <b><%= time %>' <%= extraTime ? `(+ ${extraTime})` : '' %>
-                              <%= score %></b>
+                            <b><%=liveFootBall[i].eventData.name%></b>
                         </p>
                     </div>
                     </td>
