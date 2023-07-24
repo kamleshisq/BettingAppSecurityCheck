@@ -3627,13 +3627,13 @@ socket.on('connect', () => {
             const clickedLink = event.target;
             const parentContainer = clickedLink.closest(".nww-bet-slip-wrp");
             let data = {
-             sportId : clickedLink.dataset.sportId,
-             title : parentContainer.querySelector(".eventTitle").textContent,
-             eventId : parentContainer.querySelector(".eventTitle").id,
-             odds : parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").textContent,
-             secId : parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").id,
-             market : parentContainer.querySelector("[class^='betOn']").id,
-             stake : parentContainer.querySelector(".set-stake-form-input2").value,
+                spoetId : clickedLink.dataset.sportId,
+                title : parentContainer.querySelector(".eventTitle").textContent,
+                eventId : parentContainer.querySelector(".eventTitle").id,
+                odds : parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").textContent,
+                secId : parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").id,
+                market : parentContainer.querySelector("[class^='betOn']").id,
+                stake : parentContainer.querySelector(".set-stake-form-input2").value,
             }
             socket.emit("betDetails", {data, LOGINDATA})
           }
