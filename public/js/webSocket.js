@@ -3626,23 +3626,16 @@ socket.on('connect', () => {
         function handlePlaceBetClick(event) {
             const clickedLink = event.target;
             const parentContainer = clickedLink.closest(".nww-bet-slip-wrp");
-            const sportId = clickedLink.dataset.sportId;
-            const title = parentContainer.querySelector(".eventTitle").textContent;
-            const eventId = parentContainer.querySelector(".eventTitle").id;
-            const odds = parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").textContent;
-            const secId = parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").id;
-            const market = parentContainer.querySelector("[class^='betOn']").id;
-            const stake = parentContainer.querySelector(".set-stake-form-input2").value;
-            
-            console.log("Sport ID:", sportId);
-            console.log("Title:", title);
-            console.log("Event ID:", eventId);
-            console.log("Odds:", odds);
-            console.log("secId:", secId);
-            console.log("Market:", market);
-            console.log("Stake:", stake);
-            
-            // Perform any other actions based on the extracted data here
+            let data = {
+             sportId : clickedLink.dataset.sportId,
+             title : parentContainer.querySelector(".eventTitle").textContent,
+             eventId : parentContainer.querySelector(".eventTitle").id,
+             odds : parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").textContent,
+             secId : parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").id,
+             market : parentContainer.querySelector("[class^='betOn']").id,
+             stake : parentContainer.querySelector(".set-stake-form-input2").value,
+            }
+            socket.emit("betDetails", {data, LOGINDATA})
           }
         
           // Get all the "PLACE BET" links
