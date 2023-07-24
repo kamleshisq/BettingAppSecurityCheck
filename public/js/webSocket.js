@@ -3560,9 +3560,11 @@ socket.on('connect', () => {
               console.log('Button ID:', buttonId);
               console.log('Span Inner Text:', spanInnerText);
           
-              const betOnElement = container.querySelector(`.betOn${marketId.slice(-1)}`);
-              betOnElement.innerHTML = `Bet on: ${teamName}@${spanInnerText}`;
-              betOnElement.id = marketId.slice(0, -1);
+              const betOnElements = container.querySelectorAll(`.betOn${marketId.slice(-1)}`);
+              betOnElements.forEach(function (element) {
+                element.innerHTML = `Bet on: ${teamName}@${spanInnerText}`;
+                element.id = marketId.slice(0, -1);
+              });
           
               const oddsElements = container.querySelectorAll(`.oddsvalue${marketId.slice(-1)}`);
               oddsElements.forEach(function (element) {
@@ -3571,6 +3573,9 @@ socket.on('connect', () => {
               });
             }
           });
+          
+
+        
           
 
 
