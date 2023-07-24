@@ -169,6 +169,9 @@
           
                           <div class="nww-bet-slip-wrp">
                             <div class="nww-bet-slip-wrp-col3">
+                              <span class="eventTitle" id="<%=match.eventData.eventId%>"><%=match.eventData.name%></span>
+                            </div>
+                            <div class="nww-bet-slip-wrp-col3">
                                 <div class="nww-bet-slip-wrp-col3-txt1">
                                     <span class="betOn<%=i%>">Bet on  :</span>
                                 </div>
@@ -218,7 +221,7 @@
           
                               <div class="nww-bet-slip-wrp-col3-txt1">
                                 <%if(user){%>
-                                  <a id="<%=match.eventData.sportId%>" class="PLACEBET">PLACE BET</a>
+                                  <a data-sport-id="<%=match.eventData.sportId%>" class="PLACEBET">PLACE BET</a>
                                   <%}else{%>
                                     <a  class="mbl-login-reg-btnn-dv-a" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">PLACE BET TO LOGIN</a>
                                   <%}%>
