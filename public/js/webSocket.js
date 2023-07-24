@@ -3530,6 +3530,7 @@ socket.on('connect', () => {
               elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
               elements[0].id = marketId;
               var elements2 = document.getElementsByClassName('oddsvalue');
+              console.log(elements2)
               elements2[0].innerHTML = spanInnerText
               elements2[0].id = this.id;
             });
