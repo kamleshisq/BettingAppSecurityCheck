@@ -3519,22 +3519,19 @@ socket.on('connect', () => {
         buttons.forEach(function(button) {
             button.addEventListener('click', function() {
             const runnerNameElement = this.closest('.table-data').querySelector('.runnerName');
-            const runnerName = runnerNameElement.textContent.trim();
-            const odds = this.querySelector('b').textContent.trim();
+            const teamName = runnerNameElement.textContent.trim();
+            const spanInnerText = this.querySelector('b').textContent.trim();
             const marketId = runnerNameElement.getAttribute('id');
-            console.log(runnerName, odds, marketId)
-            //   var teamName = parentRow.querySelector('td:first-child').innerText.trim();
-            //   var buttonId = button.id;
-            //   var spanInnerText = button.querySelector('span:first-child').innerText.trim();
-            //   console.log('Team Name:', teamName);
-            //   console.log('Button ID:', buttonId);
-            //   console.log(this.id)
-            //   console.log('Span Inner Text:', spanInnerText);
-            //   elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
-            //   elements[0].id = parentRow.querySelector('td:first-child').id;
-            //   var elements2 = document.getElementsByClassName('oddsvalue');
-            //   elements2[0].innerHTML = spanInnerText
-            //   elements2[0].id = this.id;
+              var buttonId = button.id;
+              console.log('Team Name:', teamName);
+              console.log('Button ID:', buttonId);
+              console.log(this.id)
+              console.log('Span Inner Text:', spanInnerText);
+              elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
+              elements[0].id = marketId;
+              var elements2 = document.getElementsByClassName('oddsvalue');
+              elements2[0].innerHTML = spanInnerText
+              elements2[0].id = this.id;
             });
           });
 
