@@ -3514,24 +3514,27 @@ socket.on('connect', () => {
         //     });
         //   });
 
-        var buttons = document.querySelectorAll('.button1');
+        const buttons = document.querySelectorAll('.button1');
         let elements = document.getElementsByClassName("betOn");
         buttons.forEach(function(button) {
             button.addEventListener('click', function() {
-              var parentRow = document.getElementsByClassName("runnerName");
-              console.log(parentRow, "parent")
-              var teamName = parentRow.querySelector('td:first-child').innerText.trim();
-              var buttonId = button.id;
-              var spanInnerText = button.querySelector('span:first-child').innerText.trim();
-              console.log('Team Name:', teamName);
-              console.log('Button ID:', buttonId);
-              console.log(this.id)
-              console.log('Span Inner Text:', spanInnerText);
-              elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
-              elements[0].id = parentRow.querySelector('td:first-child').id;
-              var elements2 = document.getElementsByClassName('oddsvalue');
-              elements2[0].innerHTML = spanInnerText
-              elements2[0].id = this.id;
+            const runnerNameElement = this.closest('.table-data').querySelector('.runnerName');
+            const runnerName = runnerNameElement.textContent.trim();
+            const odds = this.querySelector('b').textContent.trim();
+            const marketId = runnerNameElement.parentElement.getAttribute('id');
+            console.log(runnerName, odds, marketId)
+            //   var teamName = parentRow.querySelector('td:first-child').innerText.trim();
+            //   var buttonId = button.id;
+            //   var spanInnerText = button.querySelector('span:first-child').innerText.trim();
+            //   console.log('Team Name:', teamName);
+            //   console.log('Button ID:', buttonId);
+            //   console.log(this.id)
+            //   console.log('Span Inner Text:', spanInnerText);
+            //   elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
+            //   elements[0].id = parentRow.querySelector('td:first-child').id;
+            //   var elements2 = document.getElementsByClassName('oddsvalue');
+            //   elements2[0].innerHTML = spanInnerText
+            //   elements2[0].id = this.id;
             });
           });
 
