@@ -3574,26 +3574,17 @@ socket.on('connect', () => {
             // });
             // });
 
-            // Add an event listener to execute the code once the DOM is loaded
-            // Add an event listener to execute the code once the DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Get the parent container that wraps all the instances of the HTML structure
-    const parentContainer = document.querySelector('.parent-container');
-
-    // Function to handle the click event for the entire container
-    function handleContainerClick(event) {
-        const clickedSpan = event.target;
-        if (clickedSpan.tagName === 'SPAN' && clickedSpan.classList.contains('nww-bet-slip-wrp-col2-inn')) {
-            const stakeAmount = clickedSpan.textContent.trim();
-            const customInput = clickedSpan.closest('.nww-bet-slip-wrp').querySelector('.set-stake-form-input2');
-            customInput.value = stakeAmount;
-        }
-    }
-
-    // Attach click event listener to the parent container
-    parentContainer.addEventListener('click', handleContainerClick);
-});
-
+            document.addEventListener('DOMContentLoaded', function() {
+                const stakeAmountSpans = document.querySelectorAll('.nww-bet-slip-wrp-col2-inn span');
+                stakeAmountSpans.forEach(span => {
+                    span.addEventListener('click', () => {
+                        console.log("working")
+                        const stakeAmount = span.textContent.trim();
+                        const profitElement = span.closest('.my-exc-inn-colaps-txt-body').querySelector('.c-gren');
+                        profitElement.textContent = stakeAmount;
+                    });
+                });
+            });
 
 
         $(document).on("click", ".PLACEBET", function(e){
