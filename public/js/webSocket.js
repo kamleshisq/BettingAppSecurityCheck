@@ -3521,7 +3521,7 @@ socket.on('connect', () => {
             const runnerNameElement = this.closest('.table-data').querySelector('.runnerName');
             const runnerName = runnerNameElement.textContent.trim();
             const odds = this.querySelector('b').textContent.trim();
-            const marketId = runnerNameElement.parentElement.getAttribute('id');
+            const marketId = runnerNameElement.getAttribute('id');
             console.log(runnerName, odds, marketId)
             //   var teamName = parentRow.querySelector('td:first-child').innerText.trim();
             //   var buttonId = button.id;
