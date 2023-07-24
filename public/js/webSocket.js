@@ -3596,6 +3596,7 @@ socket.on('connect', () => {
               // Attach a click event listener to the document to handle the clicks on the spans in all sets
               document.addEventListener("click", function (event) {
                 if (event.target.classList.contains("clickable-span")) {
+                    console.log("WORKING")
                   handleClickableSpans(event);
                 }
               });
