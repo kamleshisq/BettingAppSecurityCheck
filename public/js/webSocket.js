@@ -3323,10 +3323,10 @@ socket.on('connect', () => {
                 let score = JSON.parse(data)
                 let element = document.getElementsByClassName("score")
                 console.log(element)
-                element.forEach(item => {
-                    item.innerHTML = score[0].data
-                })
-                document.getElementById("score").innerHTML = score[0].data
+                for(let i = 0; i < element.length; i++){
+                    element[i].innerHTML = score[0].data
+                }
+                // document.getElementById("score").innerHTML = score[0].data
             }
         })
 
