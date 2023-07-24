@@ -3590,6 +3590,11 @@ socket.on('connect', () => {
                 const clickedSpan = event.target;
                 const customStakeInput = clickedSpan.closest(".nww-bet-slip-wrp").querySelector(".set-stake-form-input2");
                 customStakeInput.value = clickedSpan.textContent;
+                const oddsValue = parseFloat(clickedSpan.textContent);
+                const stakeValue = parseFloat(customStakeInput.value);
+                const profitValue = (oddsValue * stakeValue) - oddsValue;
+                const profitElement = clickedSpan.closest(".nww-bet-slip-wrp").querySelector(".nww-bet-slip-wrp-col1-txt b");
+                profitElement.textContent = profitValue.toFixed(2);
               }
             
               // Get all the clickable spans
