@@ -3586,17 +3586,19 @@ socket.on('connect', () => {
             //     });
             // });
 
-            function handleClickableSpans(event) {
+            function handleClickableSpan(event) {
                 const clickedSpan = event.target;
-                if (clickedSpan.classList.contains("nww-bet-slip-wrp-col2-inn")) {
-                  const customStakeInput = clickedSpan.parentElement.nextElementSibling.querySelector(".set-stake-form-input2");
-                  customStakeInput.value = clickedSpan.textContent;
-                }
+                const customStakeInput = clickedSpan.parentElement.nextElementSibling.querySelector(".set-stake-form-input2");
+                customStakeInput.value = clickedSpan.textContent;
               }
             
-              // Attach a click event listener to the document to handle the clicks on the spans in all sets
-              document.addEventListener("click", handleClickableSpans);
-
+              // Get all the clickable spans
+              const clickableSpans = document.querySelectorAll(".nww-bet-slip-wrp-col2-inn span");
+            
+              // Attach a click event listener to each clickable span
+              clickableSpans.forEach((span) => {
+                span.addEventListener("click", handleClickableSpan);
+              });
 
         $(document).on("click", ".PLACEBET", function(e){
             e.preventDefault()
