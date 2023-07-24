@@ -3527,7 +3527,6 @@ socket.on('connect', () => {
                 console.log(this.id.slice(-1))
                 console.log('Span Inner Text:', spanInnerText);
                 let elements = document.getElementsByClassName(`betOn${marketId.slice(-1)}`);
-                console.log(elements)
                 elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
                 elements[0].id = marketId.slice(0,-1);
                 var elements2 = document.getElementsByClassName(`oddsvalue${marketId.slice(-1)}`);
@@ -3560,19 +3559,30 @@ socket.on('connect', () => {
             });
           });
 
-            var spans = document.querySelectorAll('.exc-pg-rit-tabtxt-data-stack-num-col span');
-            var stakeSpan = document.querySelector('#stakeSpan'); 
-            var resultElement = document.querySelector('.c-gren');
-            spans.forEach(function(span) {
-            span.addEventListener('click', function() {
-                var spanInnerText = span.innerText.trim();
-                var currentStake = parseFloat(stakeSpan.innerText.trim());
-                var newStake = currentStake + parseFloat(spanInnerText.replace(/,/g, ''));
-                stakeSpan.innerText = newStake.toFixed(2);
-                var elements3 = document.getElementsByClassName('oddsvalue');
-                var multiplicationResult = (newStake * parseFloat(elements3[0].innerText)) - parseFloat(stakeSpan.innerText);
-                resultElement.innerText = multiplicationResult.toFixed(2);
-            });
+            // var spans = document.querySelectorAll('.exc-pg-rit-tabtxt-data-stack-num-col span');
+            // var stakeSpan = document.querySelector('#stakeSpan'); 
+            // var resultElement = document.querySelector('.c-gren');
+            // spans.forEach(function(span) {
+            // span.addEventListener('click', function() {
+            //     var spanInnerText = span.innerText.trim();
+            //     var currentStake = parseFloat(stakeSpan.innerText.trim());
+            //     var newStake = currentStake + parseFloat(spanInnerText.replace(/,/g, ''));
+            //     stakeSpan.innerText = newStake.toFixed(2);
+            //     var elements3 = document.getElementsByClassName('oddsvalue');
+            //     var multiplicationResult = (newStake * parseFloat(elements3[0].innerText)) - parseFloat(stakeSpan.innerText);
+            //     resultElement.innerText = multiplicationResult.toFixed(2);
+            // });
+            // });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                const stakeAmountSpans = document.querySelectorAll('.nww-bet-slip-wrp-col2-inn span');
+                stakeAmountSpans.forEach(span => {
+                    span.addEventListener('click', () => {
+                        const stakeAmount = span.textContent.trim();
+                        const profitElement = span.closest('.my-exc-inn-colaps-txt-body').querySelector('.c-gren');
+                        profitElement.textContent = stakeAmount;
+                    });
+                });
             });
 
 
