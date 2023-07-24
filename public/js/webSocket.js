@@ -3538,11 +3538,12 @@ socket.on('connect', () => {
         //     });
         //   });
 
+
         document.addEventListener('click', function(event) {
             const target = event.target;
           
-            // Check if the clicked element has class 'button1'
-            if (target.classList.contains('button1')) {
+            // Check if the clicked element has class 'PLACEBET'
+            if (target.classList.contains('PLACEBET')) {
               const container = target.closest('.card-body');
               
               if (!container) {
@@ -3550,23 +3551,22 @@ socket.on('connect', () => {
                 return;
               }
           
-              const runnerNameElement = container.querySelector('.eventTitle');
-              const teamName = runnerNameElement.textContent.trim();
-              const spanInnerText = target.parentNode.querySelector('b').textContent.trim();
-              const marketId = runnerNameElement.getAttribute('id');
+              const teamName = container.querySelector('.eventTitle').textContent.trim();
+              const spanInnerText = container.querySelector('.oddsvalue0').textContent.trim();
+              const marketId = target.getAttribute('data-sport-id');
               const buttonId = target.id;
           
               console.log('Team Name:', teamName);
               console.log('Button ID:', buttonId);
               console.log('Span Inner Text:', spanInnerText);
           
-              const betOnElements = container.querySelectorAll(`.betOn${marketId.slice(-1)}`);
+              const betOnElements = container.querySelectorAll(`.betOn${marketId}`);
               betOnElements.forEach(function (element) {
                 element.innerHTML = `Bet on: ${teamName}@${spanInnerText}`;
-                element.id = marketId.slice(0, -1);
+                element.id = marketId;
               });
           
-              const oddsElements = container.querySelectorAll(`.oddsvalue${marketId.slice(-1)}`);
+              const oddsElements = container.querySelectorAll(`.oddsvalue${marketId}`);
               oddsElements.forEach(function (element) {
                 element.innerHTML = spanInnerText;
                 element.id = buttonId;
@@ -3574,6 +3574,7 @@ socket.on('connect', () => {
             }
           });
           
+
 
         
           
