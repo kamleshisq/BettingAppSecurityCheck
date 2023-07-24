@@ -3526,11 +3526,10 @@ socket.on('connect', () => {
                 console.log('Button ID:', buttonId);
                 console.log(this.id.slice(-1))
                 console.log('Span Inner Text:', spanInnerText);
-                let elements = document.getElementsByClassName("betOn");
+                let elements = document.getElementsByClassName(`betOn${this.id.slice(-1)}`);
                 elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
                 elements[0].id = marketId;
-                var elements2 = document.getElementsByClassName('oddsvalue');
-                console.log(elements2)
+                var elements2 = document.getElementsByClassName(`oddsvalue${this.id.slice(-1)}`);
                 elements2[0].innerHTML = spanInnerText
                 elements2[0].id = this.id;
             });
