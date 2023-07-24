@@ -62,11 +62,9 @@ async function placeBet(data){
         if (data.data.secId === "odd_Even_Yes" || data.data.secId === "odd_Even_No"){
             const oddEvenData = marketList.odd_even;
             marketDetails = oddEvenData.find(item => item.marketId === data.data.market)
-            console.log(marketDetails)
             break;
         }else if(marketList.hasOwnProperty(key)) {
             const marketData = marketList[key];
-            console.log(marketData)
             if (marketData.marketId === data.data.market) {
               marketDetails =  marketData;
               break;
