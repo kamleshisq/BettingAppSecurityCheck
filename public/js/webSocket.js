@@ -3530,11 +3530,17 @@ socket.on('connect', () => {
                 console.log(this.id.slice(-1))
                 console.log('Span Inner Text:', spanInnerText);
                 let elements = document.getElementsByClassName(`betOn${marketId.slice(-1)}`);
-                elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
-                elements[0].id = marketId.slice(0,-1);
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].innerHTML = `Bet on: ${teamName}@${spanInnerText}`;
+                    elements[i].id = marketId.slice(0, -1);
+                  }
                 var elements2 = document.getElementsByClassName(`oddsvalue${marketId.slice(-1)}`);
-                elements2[0].innerHTML = spanInnerText
-                elements2[0].id = this.id;
+                for (let i = 0; i < elements2.length; i++) {
+                    elements2[i].innerHTML = spanInnerText
+                    elements2[i].id = this.id;
+                  }
+                
+                
             });
           });
 
