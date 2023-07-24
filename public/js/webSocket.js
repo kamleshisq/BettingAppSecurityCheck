@@ -3494,12 +3494,32 @@ socket.on('connect', () => {
         })
 
 
+        // var buttons = document.querySelectorAll('.button1');
+        // let elements = document.getElementsByClassName("betOn");
+        // buttons.forEach(function(button) {
+        //     button.addEventListener('click', function() {
+        //       var parentRow = button.closest('tr');
+        //       var teamName = parentRow.querySelector('td:first-child').innerText.trim();
+        //       var buttonId = button.id;
+        //       var spanInnerText = button.querySelector('span:first-child').innerText.trim();
+        //       console.log('Team Name:', teamName);
+        //       console.log('Button ID:', buttonId);
+        //       console.log(this.id)
+        //       console.log('Span Inner Text:', spanInnerText);
+        //       elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
+        //       elements[0].id = parentRow.querySelector('td:first-child').id;
+        //       var elements2 = document.getElementsByClassName('oddsvalue');
+        //       elements2[0].innerHTML = spanInnerText
+        //       elements2[0].id = this.id;
+        //     });
+        //   });
+
         var buttons = document.querySelectorAll('.button1');
         let elements = document.getElementsByClassName("betOn");
         buttons.forEach(function(button) {
             button.addEventListener('click', function() {
-                console.log("clickWorking")
               var parentRow = button.closest('tr');
+              console.log(parentRow, "parent")
               var teamName = parentRow.querySelector('td:first-child').innerText.trim();
               var buttonId = button.id;
               var spanInnerText = button.querySelector('span:first-child').innerText.trim();
@@ -3514,7 +3534,6 @@ socket.on('connect', () => {
               elements2[0].id = this.id;
             });
           });
-
 
           var buttonsforOddEven = document.querySelectorAll('.odd_even button');
         let elementsforOddEven = document.getElementsByClassName("betOn");
