@@ -3590,7 +3590,8 @@ socket.on('connect', () => {
                 const clickedSpan = event.target;
                 const customStakeInput = clickedSpan.closest(".nww-bet-slip-wrp").querySelector(".set-stake-form-input2");
                 customStakeInput.value = clickedSpan.textContent;
-                const oddsValue = parseFloat(clickedSpan.textContent);
+                const oddsElement = clickedSpan.closest(".nww-bet-slip-wrp").querySelector(".nww-bet-slip-wrp-col1-txt-num");
+                const oddsValue = parseFloat(oddsElement.textContent);
                 const stakeValue = parseFloat(customStakeInput.value);
                 console.log(oddsValue, stakeValue)
                 const profitValue = (oddsValue * stakeValue) - oddsValue;
