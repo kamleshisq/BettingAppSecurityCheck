@@ -3520,6 +3520,7 @@ socket.on('connect', () => {
         const buttons = document.querySelectorAll('.button1');
         buttons.forEach(function(button) {
             button.addEventListener('click', function() {
+                console.log("WORKING")
                 const runnerNameElement = this.closest('.table-data').querySelector('.runnerName');
                 const teamName = runnerNameElement.textContent.trim();
                 const spanInnerText = this.querySelector('b').textContent.trim();
