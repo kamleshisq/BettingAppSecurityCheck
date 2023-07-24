@@ -3552,7 +3552,7 @@ buttons.forEach(function (button) {
     console.log('Button ID:', buttonId);
     console.log('Span Inner Text:', spanInnerText);
 
-    const container = this.closest('.card-body');
+    const container = this.parentNode;
     const betOnElement = container.querySelector(`.betOn${buttonId}`);
     betOnElement.innerHTML = `Bet on: ${teamName}@${spanInnerText}`;
     betOnElement.id = marketId.slice(0, -1);
@@ -3562,6 +3562,7 @@ buttons.forEach(function (button) {
     oddsElement.id = buttonId;
   });
 });
+
 
 
        // Add a common class to the containers that wrap each section of the HTML
