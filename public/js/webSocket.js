@@ -3575,20 +3575,25 @@ socket.on('connect', () => {
             // });
 
             // Add an event listener to execute the code once the DOM is loaded
-            document.addEventListener('DOMContentLoaded', function() {
-                const betSlipWrappers = document.querySelectorAll('.nww-bet-slip-wrp');
-                function handleBetSlipClick(event) {
-                    const clickedSpan = event.target;
-                    if (clickedSpan.tagName === 'SPAN' && clickedSpan.classList.contains('nww-bet-slip-wrp-col2-inn')) {
-                        const stakeAmount = clickedSpan.textContent.trim();
-                        const customInput = clickedSpan.closest('.nww-bet-slip-wrp').querySelector('.set-stake-form-input2');
-                        customInput.value = stakeAmount;
-                    }
-                }
-                betSlipWrappers.forEach(betSlipWrapper => {
-                    betSlipWrapper.addEventListener('click', handleBetSlipClick);
-                });
-            });
+            // Add an event listener to execute the code once the DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the parent container that wraps all the instances of the HTML structure
+    const parentContainer = document.querySelector('.parent-container');
+
+    // Function to handle the click event for the entire container
+    function handleContainerClick(event) {
+        const clickedSpan = event.target;
+        if (clickedSpan.tagName === 'SPAN' && clickedSpan.classList.contains('nww-bet-slip-wrp-col2-inn')) {
+            const stakeAmount = clickedSpan.textContent.trim();
+            const customInput = clickedSpan.closest('.nww-bet-slip-wrp').querySelector('.set-stake-form-input2');
+            customInput.value = stakeAmount;
+        }
+    }
+
+    // Attach click event listener to the parent container
+    parentContainer.addEventListener('click', handleContainerClick);
+});
+
 
 
         $(document).on("click", ".PLACEBET", function(e){
