@@ -3517,51 +3517,26 @@ socket.on('connect', () => {
         //     });
         //   });
 
-        // Attach a click event listener to the document, handling clicks on elements with class "button1"
-document.addEventListener('click', function (event) {
-    if (event.target.classList.contains('button1')) {
-      // Find the container element with class "nww-bet-slip-wrp" that contains the clicked button
-      const container = event.target.closest('.nww-bet-slip-wrp');
-      if (!container) {
-        console.error('Container not found.');
-        return;
-      }
-  
-      // Find the element with class "runnerName" inside the container
-      const runnerNameElement = container.querySelector('.runnerName');
-      if (!runnerNameElement) {
-        console.error('Runner Name Element not found.');
-        return;
-      }
-  
-      const teamName = runnerNameElement.textContent.trim();
-      const spanInnerText = event.target.querySelector('b').textContent.trim();
-      const marketId = runnerNameElement.getAttribute('id');
-      const buttonId = event.target.id;
-  
-      console.log('Team Name:', teamName);
-      console.log('Button ID:', buttonId);
-      console.log('Span Inner Text:', spanInnerText);
-  
-      // Find the element with class "betOnX" (where X is the last character of marketId) inside the container
-      const elements = container.querySelector(`.betOn${marketId.slice(-1)}`);
-      if (!elements) {
-        console.error('Elements not found.');
-        return;
-      }
-  
-      elements.innerHTML = `Bet on: ${teamName}@${spanInnerText}`;
-      elements.id = marketId.slice(0, -1);
-  
-      // Find all elements with class "oddsvalueX" (where X is the last character of marketId) inside the container
-      const oddsElements = container.querySelectorAll(`.oddsvalue${marketId.slice(-1)}`);
-      oddsElements.forEach(function (element) {
-        element.innerHTML = spanInnerText;
-        element.id = buttonId;
-      });
-    }
-  });
-  
+        const buttons = document.querySelectorAll('.button1');
+        buttons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                const runnerNameElement = this.closest('.table-data').querySelector('.runnerName');
+                const teamName = runnerNameElement.textContent.trim();
+                const spanInnerText = this.querySelector('b').textContent.trim();
+                const marketId = runnerNameElement.getAttribute('id');
+                var buttonId = button.id;
+                console.log('Team Name:', teamName);
+                console.log('Button ID:', buttonId);
+                console.log(this.id.slice(-1))
+                console.log('Span Inner Text:', spanInnerText);
+                let elements = document.getElementsByClassName(`betOn${marketId.slice(-1)}`);
+                elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
+                elements[0].id = marketId.slice(0,-1);
+                var elements2 = document.getElementsByClassName(`oddsvalue${marketId.slice(-1)}`);
+                elements2[0].innerHTML = spanInnerText
+                elements2[0].id = this.id;
+            });
+          });
 
           var buttonsforOddEven = document.querySelectorAll('.odd_even button');
         let elementsforOddEven = document.getElementsByClassName("betOn");
