@@ -3540,29 +3540,33 @@ socket.on('connect', () => {
 
         const buttons = document.querySelectorAll('.button1');
 
-buttons.forEach(function (button) {
-  button.addEventListener('click', function () {
-    const runnerNameElement = this.closest('.table-data').querySelector('.runnerName');
-    const teamName = runnerNameElement.textContent.trim();
-    const spanInnerText = this.querySelector('b').textContent.trim();
-    const marketId = runnerNameElement.getAttribute('id');
-    const buttonId = this.id;
+buttons.forEach(function(button) {
+    button.addEventListener('click', function() {
+        const container = this.closest('.nww-bet-slip-wrp');
 
-    console.log('Team Name:', teamName);
-    console.log('Button ID:', buttonId);
-    console.log('Span Inner Text:', spanInnerText);
+        if (container) {
+            const runnerNameElement = container.querySelector('.eventTitle');
+            const teamName = runnerNameElement.textContent.trim();
+            const spanInnerText = container.querySelector('.oddsvalue0').textContent.trim();
+            const marketId = runnerNameElement.getAttribute('id');
+            const buttonId = this.id.slice(-1);
 
-    const parentElement = this.parentNode.parentNode.parentNode;
+            console.log('Team Name:', teamName);
+            console.log('Button ID:', buttonId);
+            console.log('Span Inner Text:', spanInnerText);
 
-    const betOnElement = parentElement.querySelector(`.betOn${buttonId}`);
-    betOnElement.innerHTML = `Bet on: ${teamName}@${spanInnerText}`;
-    betOnElement.id = marketId.slice(0, -1);
+            const betOnElement = container.querySelector(`.betOn${buttonId}`);
+            betOnElement.innerHTML = `Bet on: ${teamName}@${spanInnerText}`;
+            betOnElement.id = marketId.slice(0, -1);
 
-    const oddsElement = parentElement.querySelector(`.oddsvalue${buttonId}`);
-    oddsElement.innerHTML = spanInnerText;
-    oddsElement.id = buttonId;
-  });
+            const oddsElement = container.querySelector(`.oddsvalue${buttonId}`);
+            oddsElement.innerHTML = spanInnerText;
+            oddsElement.id = buttonId;
+        }
+    });
 });
+
+
 
 
 
