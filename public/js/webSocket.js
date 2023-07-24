@@ -3588,7 +3588,7 @@ socket.on('connect', () => {
 
             function handleClickableSpan(event) {
                 const clickedSpan = event.target;
-                const customStakeInput = clickedSpan.parentElement.nextElementSibling.querySelector(".set-stake-form-input2");
+                const customStakeInput = clickedSpan.closest(".nww-bet-slip-wrp").querySelector(".set-stake-form-input2");
                 customStakeInput.value = clickedSpan.textContent;
               }
             
