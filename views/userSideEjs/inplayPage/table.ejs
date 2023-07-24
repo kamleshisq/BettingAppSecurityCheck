@@ -1,4 +1,11 @@
-<%if(LiveCricket.length > 0){%>
+<% let showTable = false; %>
+<% for (let i = 0; i < LiveCricket.length; i++) { %>
+  <% if (LiveCricket[i].marketList.match_odd != null) { %>
+    <% showTable = true; %>
+    <% break; %>
+  <% } %>
+<% } %>
+<%if(LiveCricket.length > 0 && showTable){%>
   <div class="exchange-pg-tbl-ro2">
     <table class="acount-stat-tbl">
 
@@ -102,8 +109,14 @@
 
 
 
-
-<%if(liveFootBall.length > 0){%>
+<% let showTable1 = false; %>
+<% for (let i = 0; i < liveFootBall.length; i++) { %>
+  <% if (liveFootBall[i].marketList.match_odd != null) { %>
+    <% showTable1 = true; %>
+    <% break; %>
+  <% } %>
+<% } %>
+<%if(liveFootBall.length > 0 && showTable1){%>
   <div class="exchange-pg-tbl-ro2">
     <table class="acount-stat-tbl">
 
@@ -207,8 +220,14 @@
   
   
   
-  
-  <%if(liveTennis.length > 0){%>
+<% let showTable2 = false; %>
+<% for (let i = 0; i < liveTennis.length; i++) { %>
+  <% if (liveTennis[i].marketList.match_odd != null) { %>
+    <% showTable2 = true; %>
+    <% break; %>
+  <% } %>
+<% } %>
+  <%if(liveTennis.length > 0 && showTable2){%>
     <div class="exchange-pg-tbl-ro2">
       <table class="acount-stat-tbl">
   
