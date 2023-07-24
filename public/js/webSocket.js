@@ -3518,28 +3518,39 @@ socket.on('connect', () => {
         //   });
 
         const buttons = document.querySelectorAll('.button1');
-        buttons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                const runnerNameElement = this.closest('.table-data').querySelector('.runnerName');
-                const teamName = runnerNameElement.textContent.trim();
-                const spanInnerText = this.querySelector('b').textContent.trim();
-                const marketId = runnerNameElement.getAttribute('id');
-                var buttonId = button.id;
-                console.log('Team Name:', teamName);
-                console.log('Button ID:', buttonId);
-                console.log(this.id.slice(-1))
-                console.log('Span Inner Text:', spanInnerText);
-                const container = this.closest('.nww-bet-slip-wrp');
-                const elements = container.querySelector(`.betOn${marketId.slice(-1)}`);
-                elements.innerHTML = `Bet on  :${teamName}@${spanInnerText}`;
-                elements.id = marketId.slice(0, -1);
-                const oddsElements = container.querySelectorAll(`.oddsvalue${marketId.slice(-1)}`);
-                oddsElements.forEach(function (element) {
-                element.innerHTML = spanInnerText;
-                element.id = buttonId;
-                });
-            });
-          });
+buttons.forEach(function (button) {
+  button.addEventListener('click', function () {
+    const runnerNameElement = this.closest('.table-data')?.querySelector('.runnerName');
+    if (!runnerNameElement) {
+      console.error('Runner Name Element not found.');
+      return;
+    }
+
+    const teamName = runnerNameElement.textContent.trim();
+    const spanInnerText = this.querySelector('b').textContent.trim();
+    const marketId = runnerNameElement.getAttribute('id');
+    const buttonId = button.id;
+    console.log('Team Name:', teamName);
+    console.log('Button ID:', buttonId);
+    console.log(this.id.slice(-1));
+    console.log('Span Inner Text:', spanInnerText);
+
+    const container = this.closest('.nww-bet-slip-wrp');
+    const elements = container.querySelector(`.betOn${marketId.slice(-1)}`);
+    if (!elements) {
+      console.error('Elements not found.');
+      return;
+    }
+    elements.innerHTML = `Bet on  :${teamName}@${spanInnerText}`;
+    elements.id = marketId.slice(0, -1);
+
+    const oddsElements = container.querySelectorAll(`.oddsvalue${marketId.slice(-1)}`);
+    oddsElements.forEach(function (element) {
+      element.innerHTML = spanInnerText;
+      element.id = buttonId;
+    });
+  });
+});
 
           var buttonsforOddEven = document.querySelectorAll('.odd_even button');
         let elementsforOddEven = document.getElementsByClassName("betOn");
