@@ -3538,39 +3538,33 @@ socket.on('connect', () => {
         //     });
         //   });
 
+        const buttons = document.querySelectorAll('.button1');
 
-       // Add a common class to the containers that wrap each section of the HTML
-const betSlipContainers = document.querySelectorAll('.bet-slip-container');
-
-document.addEventListener('click', function(event) {
-  const target = event.target;
-
-  // Check if the clicked element has class 'PLACEBET' and is inside a bet-slip-container
-  if (target.classList.contains('PLACEBET') && target.closest('.bet-slip-container')) {
-    const container = target.closest('.bet-slip-container');
-
-    const teamName = container.querySelector('.eventTitle').textContent.trim();
-    const spanInnerText = container.querySelector('.oddsvalue0').textContent.trim();
-    const marketId = target.getAttribute('data-sport-id');
-    const buttonId = target.id;
+buttons.forEach(function (button) {
+  button.addEventListener('click', function () {
+    const runnerNameElement = this.closest('.table-data').querySelector('.runnerName');
+    const teamName = runnerNameElement.textContent.trim();
+    const spanInnerText = this.querySelector('b').textContent.trim();
+    const marketId = runnerNameElement.getAttribute('id');
+    const buttonId = this.id.slice(-1);
 
     console.log('Team Name:', teamName);
     console.log('Button ID:', buttonId);
     console.log('Span Inner Text:', spanInnerText);
 
-    const betOnElements = container.querySelectorAll(`.betOn${marketId}`);
-    betOnElements.forEach(function (element) {
-      element.innerHTML = `Bet on: ${teamName}@${spanInnerText}`;
-      element.id = marketId;
-    });
+    const betOnElement = this.closest('.nww-bet-slip-wrp').querySelector(`.betOn${buttonId}`);
+    betOnElement.innerHTML = `Bet on: ${teamName}@${spanInnerText}`;
+    betOnElement.id = marketId.slice(0, -1);
 
-    const oddsElements = container.querySelectorAll(`.oddsvalue${marketId}`);
-    oddsElements.forEach(function (element) {
-      element.innerHTML = spanInnerText;
-      element.id = buttonId;
-    });
-  }
+    const oddsElement = this.closest('.nww-bet-slip-wrp').querySelector(`.oddsvalue${buttonId}`);
+    oddsElement.innerHTML = spanInnerText;
+    oddsElement.id = buttonId;
+  });
 });
+
+
+       // Add a common class to the containers that wrap each section of the HTML
+
 
           
 
