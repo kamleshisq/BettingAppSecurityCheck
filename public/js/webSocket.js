@@ -3529,13 +3529,15 @@ socket.on('connect', () => {
                 console.log('Button ID:', buttonId);
                 console.log(this.id.slice(-1))
                 console.log('Span Inner Text:', spanInnerText);
-                let elements = document.getElementsByClassName(`betOn${marketId.slice(-1)}`);
-                console.log(elements)
-                elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
-                elements[0].id = marketId.slice(0,-1);
-                var elements2 = document.getElementsByClassName(`oddsvalue${marketId.slice(-1)}`);
-                elements2[0].innerHTML = spanInnerText
-                elements2[0].id = this.id;
+                const container = this.closest('.nww-bet-slip-wrp');
+                const elements = container.querySelector(`.betOn${marketId.slice(-1)}`);
+                elements.innerHTML = `Bet on  :${teamName}@${spanInnerText}`;
+                elements.id = marketId.slice(0, -1);
+                const oddsElements = container.querySelectorAll(`.oddsvalue${marketId.slice(-1)}`);
+                oddsElements.forEach(function (element) {
+                element.innerHTML = spanInnerText;
+                element.id = buttonId;
+                });
             });
           });
 
