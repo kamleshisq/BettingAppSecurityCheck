@@ -3581,7 +3581,7 @@ socket.on('connect', () => {
                         console.log("working")
                         const stakeAmount = span.textContent.trim();
                         const profitElement = span.closest('.my-exc-inn-colaps-txt-body').querySelector('.c-gren');
-                        profitElement.textContent = stakeAmount;
+                        document.getElementById("Stake").value = stakeAmount;
                     });
                 });
             });
