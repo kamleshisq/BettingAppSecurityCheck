@@ -3444,8 +3444,7 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.secId}1` ){
-                    this.innerHTML = `<span><b>${section.backPrice}</b></span> 
-                                    <span>${section.backSize}</span>`
+                    this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
                 }
             })
 
@@ -3460,8 +3459,7 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.secId}2` ){
-                    this.innerHTML = `<span><b>${section.layPrice}</b></span> 
-                                    <span>${section.laySize}</span>`
+                    this.innerHTML = `<b>${section.layPrice}</b> <br> ${section.laySize}`
                 }
             })
 
