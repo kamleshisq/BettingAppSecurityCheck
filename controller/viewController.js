@@ -1426,9 +1426,9 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
     }
-    console.log(liveFootBall.length)
-    console.log(liveTennis.length)
-    console.log(LiveCricket.length)
+    console.log(liveFootBall)
+    // console.log(liveTennis.length)
+    // console.log(LiveCricket.length)
     res.status(200).render('./userSideEjs/inplayPage/main',{
         user,
         verticalMenus,
