@@ -3494,7 +3494,7 @@ socket.on('connect', () => {
         })
 
 
-        var buttons = document.querySelectorAll('.tbl-data-href button');
+        var buttons = document.querySelectorAll('.button1');
         let elements = document.getElementsByClassName("betOn");
         buttons.forEach(function(button) {
             button.addEventListener('click', function() {
