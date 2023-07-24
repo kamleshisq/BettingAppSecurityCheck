@@ -3588,18 +3588,15 @@ socket.on('connect', () => {
 
             function handleClickableSpans(event) {
                 const clickedSpan = event.target;
-                const setDiv = clickedSpan.closest(".nww-bet-slip-wrp-col2");
-                const customStakeInput = setDiv.nextElementSibling.querySelector(".set-stake-form-input2");
-                customStakeInput.value = clickedSpan.textContent;
+                if (clickedSpan.classList.contains("clickable-span")) {
+                  const setDiv = clickedSpan.closest(".nww-bet-slip-wrp-col2");
+                  const customStakeInput = setDiv.nextElementSibling.querySelector(".set-stake-form-input2");
+                  customStakeInput.value = clickedSpan.textContent;
+                }
               }
             
               // Attach a click event listener to the document to handle the clicks on the spans in all sets
-              document.addEventListener("click", function (event) {
-                if (event.target.classList.contains("clickable-span")) {
-                    console.log("WORKING")
-                  handleClickableSpans(event);
-                }
-              });
+              document.addEventListener("click", handleClickableSpans);
 
 
         $(document).on("click", ".PLACEBET", function(e){
