@@ -95,25 +95,26 @@ if(!marketDetails.runners){
 }else{
     let runnersData = JSON.parse(marketDetails.runners)
     let betOn = runnersData.find(item => item.secId == data.data.secId)
-        betPlaceData = {
-            userId : data.LOGINDATA.LOGINUSER._id,
-            userName : data.LOGINDATA.LOGINUSER.userName,
-            transactionId : `${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`,
-            date : Date.now(),
-            oddValue : parseFloat(data.data.odds),
-            Stake : parseFloat(data.data.stake),
-            status : "OPEN",
-            returns : -parseFloat(data.data.stake),
-            role_type : data.LOGINDATA.LOGINUSER.role_type,
-            match : data.data.title,
-            betType : bettype,
-            event : liveBetGame.eventData.league,
-            gameId : liveBetGame.eventData.sportId,
-            marketName : marketDetails.title,
-            selectionName : betOn.runner,
-            marketId : data.data.market,
-            secId : data.data.secId
-        }
+    console.log(betOn, 456)
+        // betPlaceData = {
+        //     userId : data.LOGINDATA.LOGINUSER._id,
+        //     userName : data.LOGINDATA.LOGINUSER.userName,
+        //     transactionId : `${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`,
+        //     date : Date.now(),
+        //     oddValue : parseFloat(data.data.odds),
+        //     Stake : parseFloat(data.data.stake),
+        //     status : "OPEN",
+        //     returns : -parseFloat(data.data.stake),
+        //     role_type : data.LOGINDATA.LOGINUSER.role_type,
+        //     match : data.data.title,
+        //     betType : bettype,
+        //     event : liveBetGame.eventData.league,
+        //     gameId : liveBetGame.eventData.sportId,
+        //     marketName : marketDetails.title,
+        //     selectionName : betOn.runner,
+        //     marketId : data.data.market,
+        //     secId : data.data.secId
+        // }
 }
     let description = `Bet for ${data.data.title}/stake = ${data.data.stake}`
     let description2 = `Bet for ${data.data.title}/stake = ${data.data.stake}/user = ${data.LOGINDATA.LOGINUSER.userName} `
