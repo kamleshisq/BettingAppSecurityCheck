@@ -3322,11 +3322,11 @@ socket.on('connect', () => {
             if(data != ""){
                 let score = JSON.parse(data)
                 let element = document.getElementsByClassName("score")
-                console.log(element)
-                // element.forEach(item => {
-                //     item.innerHTML = score[0].data
-                // })
-                // document.getElementById("score").innerHTML = score[0].data
+                // console.log(element)
+                element.forEach(item => {
+                    item.innerHTML = score[0].data
+                })
+                document.getElementById("score").innerHTML = score[0].data
             }
         })
 
