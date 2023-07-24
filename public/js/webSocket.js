@@ -3578,6 +3578,7 @@ socket.on('connect', () => {
                 const stakeAmountSpans = document.querySelectorAll('.nww-bet-slip-wrp-col2-inn span');
                 stakeAmountSpans.forEach(span => {
                     span.addEventListener('click', () => {
+                        console.log("working")
                         const stakeAmount = span.textContent.trim();
                         const profitElement = span.closest('.my-exc-inn-colaps-txt-body').querySelector('.c-gren');
                         profitElement.textContent = stakeAmount;
