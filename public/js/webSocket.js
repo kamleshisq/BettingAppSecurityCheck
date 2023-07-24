@@ -3574,17 +3574,31 @@ socket.on('connect', () => {
             // });
             // });
 
-            document.addEventListener('DOMContentLoaded', function() {
-                const stakeAmountSpans = document.querySelectorAll('.nww-bet-slip-wrp-col2-inn span');
-                stakeAmountSpans.forEach(span => {
-                    span.addEventListener('click', () => {
-                        console.log("working")
-                        const stakeAmount = span.textContent.trim();
-                        const profitElement = span.closest('.my-exc-inn-colaps-txt-body').querySelector('.c-gren');
-                        document.getElementById("Stake").value = stakeAmount;
-                    });
-                });
-            });
+            // document.addEventListener('DOMContentLoaded', function() {
+            //     const stakeAmountSpans = document.querySelectorAll('.nww-bet-slip-wrp-col2-inn span');
+            //     stakeAmountSpans.forEach(span => {
+            //         span.addEventListener('click', () => {
+            //             console.log("working")
+            //             const stakeAmount = span.textContent.trim();
+            //             const profitElement = span.closest('.my-exc-inn-colaps-txt-body').querySelector('.c-gren');
+            //             document.getElementById("Stake").value = stakeAmount;
+            //         });
+            //     });
+            // });
+
+            function handleClickableSpans(event) {
+                const clickedSpan = event.target;
+                const setDiv = clickedSpan.closest(".nww-bet-slip-wrp-col2");
+                const customStakeInput = setDiv.nextElementSibling.querySelector(".set-stake-form-input2");
+                customStakeInput.value = clickedSpan.textContent;
+              }
+            
+              // Attach a click event listener to the document to handle the clicks on the spans in all sets
+              document.addEventListener("click", function (event) {
+                if (event.target.classList.contains("clickable-span")) {
+                  handleClickableSpans(event);
+                }
+              });
 
 
         $(document).on("click", ".PLACEBET", function(e){
