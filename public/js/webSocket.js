@@ -3520,7 +3520,6 @@ socket.on('connect', () => {
         const buttons = document.querySelectorAll('.button1');
         buttons.forEach(function(button) {
             button.addEventListener('click', function() {
-                console.log("WORKING")
                 const runnerNameElement = this.closest('.table-data').querySelector('.runnerName');
                 const teamName = runnerNameElement.textContent.trim();
                 const spanInnerText = this.querySelector('b').textContent.trim();
@@ -3531,6 +3530,7 @@ socket.on('connect', () => {
                 console.log(this.id.slice(-1))
                 console.log('Span Inner Text:', spanInnerText);
                 let elements = document.getElementsByClassName(`betOn${marketId.slice(-1)}`);
+                console.log(elements)
                 elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
                 elements[0].id = marketId.slice(0,-1);
                 var elements2 = document.getElementsByClassName(`oddsvalue${marketId.slice(-1)}`);
