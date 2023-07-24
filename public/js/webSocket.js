@@ -3606,22 +3606,52 @@ socket.on('connect', () => {
                 span.addEventListener("click", handleClickableSpan);
               });
 
-        $(document).on("click", ".PLACEBET", function(e){
-            e.preventDefault()
-            let data = {}
-            let title = document.getElementsByClassName("eventTitle")
-            let odd = document.getElementsByClassName("oddsvalue")
-            let market = document.getElementsByClassName("betOn")
-            data.title = title[0].innerText.trim();
-            data.eventId = title[0].id
-            data.odds = odd[0].innerText.trim();
-            data.secId = odd[0].id.slice(0,-1)
-            data.market = market[0].id
-            data.stake = document.getElementById("stakeSpan").innerText.trim();
-            data.spoetId = this.id
-            // console.log(data)
-            socket.emit("betDetails", {data, LOGINDATA})
-        })
+        // $(document).on("click", ".PLACEBET", function(e){
+        //     e.preventDefault()
+        //     let data = {}
+        //     let title = document.getElementsByClassName("eventTitle")
+        //     let odd = document.getElementsByClassName("oddsvalue")
+        //     let market = document.getElementsByClassName("betOn")
+        //     data.title = title[0].innerText.trim();
+        //     data.eventId = title[0].id
+        //     data.odds = odd[0].innerText.trim();
+        //     data.secId = odd[0].id.slice(0,-1)
+        //     data.market = market[0].id
+        //     data.stake = document.getElementById("stakeSpan").innerText.trim();
+        //     data.spoetId = this.id
+        //     // console.log(data)
+        //     socket.emit("betDetails", {data, LOGINDATA})
+        // })
+
+        function handlePlaceBetClick(event) {
+            const clickedLink = event.target;
+            const parentContainer = clickedLink.closest(".nww-bet-slip-wrp");
+            const sportId = clickedLink.dataset.sportId;
+            const title = parentContainer.querySelector(".eventTitle").textContent;
+            const eventId = parentContainer.querySelector(".eventTitle").id;
+            const odds = parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").textContent;
+            const secId = parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").id;
+            const market = parentContainer.querySelector("[class^='betOn']").id;
+            const stake = parentContainer.querySelector(".set-stake-form-input2").value;
+            
+            console.log("Sport ID:", sportId);
+            console.log("Title:", title);
+            console.log("Event ID:", eventId);
+            console.log("Odds:", odds);
+            console.log("secId:", secId);
+            console.log("Market:", market);
+            console.log("Stake:", stake);
+            
+            // Perform any other actions based on the extracted data here
+          }
+        
+          // Get all the "PLACE BET" links
+          const placeBetLinks = document.querySelectorAll(".PLACEBET");
+        
+          // Attach a click event listener to each link
+          placeBetLinks.forEach((link) => {
+            link.addEventListener("click", handlePlaceBetClick);
+          });
 
         socket.on("betDetails" , (data) => {
             alert(data)
