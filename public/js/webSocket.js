@@ -3631,7 +3631,7 @@ socket.on('connect', () => {
                 title : parentContainer.querySelector(".eventTitle").textContent,
                 eventId : parentContainer.querySelector(".eventTitle").id,
                 odds : parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").textContent,
-                secId : parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").id,
+                secId : parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").id.slice(0,-1),
                 market : parentContainer.querySelector("[class^='betOn']").id,
                 stake : parentContainer.querySelector(".set-stake-form-input2").value,
             }
