@@ -3576,12 +3576,13 @@ socket.on('connect', () => {
 
             document.addEventListener('DOMContentLoaded', function() {
                 const stakeAmountSpans = document.querySelectorAll('.nww-bet-slip-wrp-col2-inn span');
+                const customInput = document.querySelector('.set-stake-form-input2');
                 stakeAmountSpans.forEach(span => {
                     span.addEventListener('click', () => {
                         console.log("working")
                         const stakeAmount = span.textContent.trim();
                         const profitElement = span.closest('.my-exc-inn-colaps-txt-body').querySelector('.c-gren');
-                        profitElement.textContent = stakeAmount;
+                        customInput.value = stakeAmount;
                     });
                 });
             });
