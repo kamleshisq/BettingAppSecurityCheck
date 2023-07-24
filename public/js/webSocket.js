@@ -3515,24 +3515,24 @@ socket.on('connect', () => {
         //   });
 
         const buttons = document.querySelectorAll('.button1');
-        let elements = document.getElementsByClassName("betOn");
         buttons.forEach(function(button) {
             button.addEventListener('click', function() {
-            const runnerNameElement = this.closest('.table-data').querySelector('.runnerName');
-            const teamName = runnerNameElement.textContent.trim();
-            const spanInnerText = this.querySelector('b').textContent.trim();
-            const marketId = runnerNameElement.getAttribute('id');
-              var buttonId = button.id;
-              console.log('Team Name:', teamName);
-              console.log('Button ID:', buttonId);
-              console.log(this.id)
-              console.log('Span Inner Text:', spanInnerText);
-              elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
-              elements[0].id = marketId;
-              var elements2 = document.getElementsByClassName('oddsvalue');
-              console.log(elements2)
-              elements2[0].innerHTML = spanInnerText
-              elements2[0].id = this.id;
+                const runnerNameElement = this.closest('.table-data').querySelector('.runnerName');
+                const teamName = runnerNameElement.textContent.trim();
+                const spanInnerText = this.querySelector('b').textContent.trim();
+                const marketId = runnerNameElement.getAttribute('id');
+                var buttonId = button.id;
+                console.log('Team Name:', teamName);
+                console.log('Button ID:', buttonId);
+                console.log(this.id.slice(-1))
+                console.log('Span Inner Text:', spanInnerText);
+                let elements = document.getElementsByClassName("betOn");
+                elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
+                elements[0].id = marketId;
+                var elements2 = document.getElementsByClassName('oddsvalue');
+                console.log(elements2)
+                elements2[0].innerHTML = spanInnerText
+                elements2[0].id = this.id;
             });
           });
 
