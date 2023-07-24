@@ -3538,33 +3538,40 @@ socket.on('connect', () => {
         //     });
         //   });
 
-        const buttons = document.querySelectorAll('.button1');
-
-buttons.forEach(function (button) {
-  button.addEventListener('click', function () {
-    const container = this.closest('.nww-bet-slip-wrp');
-    console.log(container, 45654654)
-    const runnerNameElement = container.querySelector('.eventTitle');
-    const teamName = runnerNameElement.textContent.trim();
-    const spanInnerText = this.parentNode.querySelector('b').textContent.trim();
-    const marketId = runnerNameElement.getAttribute('id');
-    const buttonId = button.id;
-
-    console.log('Team Name:', teamName);
-    console.log('Button ID:', buttonId);
-    console.log('Span Inner Text:', spanInnerText);
-
-    const betOnElement = container.querySelector(`.betOn${marketId.slice(-1)}`);
-    betOnElement.innerHTML = `Bet on: ${teamName}@${spanInnerText}`;
-    betOnElement.id = marketId.slice(0, -1);
-
-    const oddsElements = container.querySelectorAll(`.oddsvalue${marketId.slice(-1)}`);
-    oddsElements.forEach(function (element) {
-      element.innerHTML = spanInnerText;
-      element.id = buttonId;
-    });
-  });
-});
+        document.addEventListener('click', function(event) {
+            const target = event.target;
+          
+            // Check if the clicked element has class 'button1'
+            if (target.classList.contains('button1')) {
+              const container = target.closest('.card-body');
+              
+              if (!container) {
+                console.error("Container not found!");
+                return;
+              }
+          
+              const runnerNameElement = container.querySelector('.eventTitle');
+              const teamName = runnerNameElement.textContent.trim();
+              const spanInnerText = target.parentNode.querySelector('b').textContent.trim();
+              const marketId = runnerNameElement.getAttribute('id');
+              const buttonId = target.id;
+          
+              console.log('Team Name:', teamName);
+              console.log('Button ID:', buttonId);
+              console.log('Span Inner Text:', spanInnerText);
+          
+              const betOnElement = container.querySelector(`.betOn${marketId.slice(-1)}`);
+              betOnElement.innerHTML = `Bet on: ${teamName}@${spanInnerText}`;
+              betOnElement.id = marketId.slice(0, -1);
+          
+              const oddsElements = container.querySelectorAll(`.oddsvalue${marketId.slice(-1)}`);
+              oddsElements.forEach(function (element) {
+                element.innerHTML = spanInnerText;
+                element.id = buttonId;
+              });
+            }
+          });
+          
 
 
           var buttonsforOddEven = document.querySelectorAll('.odd_even button');
