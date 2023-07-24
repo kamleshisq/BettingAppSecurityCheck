@@ -3498,6 +3498,7 @@ socket.on('connect', () => {
         let elements = document.getElementsByClassName("betOn");
         buttons.forEach(function(button) {
             button.addEventListener('click', function() {
+                console.log("clickWorking")
               var parentRow = button.closest('tr');
               var teamName = parentRow.querySelector('td:first-child').innerText.trim();
               var buttonId = button.id;
