@@ -3552,11 +3552,12 @@ buttons.forEach(function (button) {
     console.log('Button ID:', buttonId);
     console.log('Span Inner Text:', spanInnerText);
 
-    const betOnElement = this.closest('.nww-bet-slip-wrp').querySelector(`.betOn${buttonId}`);
+    const container = this.closest('.card-body');
+    const betOnElement = container.querySelector(`.betOn${buttonId}`);
     betOnElement.innerHTML = `Bet on: ${teamName}@${spanInnerText}`;
     betOnElement.id = marketId.slice(0, -1);
 
-    const oddsElement = this.closest('.nww-bet-slip-wrp').querySelector(`.oddsvalue${buttonId}`);
+    const oddsElement = container.querySelector(`.oddsvalue${buttonId}`);
     oddsElement.innerHTML = spanInnerText;
     oddsElement.id = buttonId;
   });
