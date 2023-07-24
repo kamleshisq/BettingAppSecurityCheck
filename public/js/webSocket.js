@@ -3593,7 +3593,6 @@ socket.on('connect', () => {
                 const oddsElement = clickedSpan.closest(".nww-bet-slip-wrp").querySelector(".nww-bet-slip-wrp-col1-txt-num");
                 const oddsValue = parseFloat(oddsElement.textContent);
                 const stakeValue = parseFloat(customStakeInput.value);
-                console.log(oddsValue, stakeValue)
                 const profitValue = (oddsValue * stakeValue) - stakeValue;
                 const profitElement = clickedSpan.closest(".nww-bet-slip-wrp").querySelector(".nww-bet-slip-wrp-col1-txt b");
                 profitElement.textContent = profitValue.toFixed(2);

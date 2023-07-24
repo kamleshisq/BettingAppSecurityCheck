@@ -217,7 +217,11 @@
                               </div>
           
                               <div class="nww-bet-slip-wrp-col3-txt1">
-                                <a href="#"> Place Bet </a>
+                                <%if(user){%>
+                                  <a id="<%=match.eventData.sportId%>" class="PLACEBET">PLACE BET</a>
+                                  <%}else{%>
+                                    <a  class="mbl-login-reg-btnn-dv-a" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">PLACE BET TO LOGIN</a>
+                                  <%}%>
                               </div>
           
                             </div>
