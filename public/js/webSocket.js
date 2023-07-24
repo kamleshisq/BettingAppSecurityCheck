@@ -3543,7 +3543,7 @@ socket.on('connect', () => {
 buttons.forEach(function (button) {
   button.addEventListener('click', function () {
     const container = this.closest('.nww-bet-slip-wrp');
-
+    console.log(container, 45654654)
     const runnerNameElement = container.querySelector('.eventTitle');
     const teamName = runnerNameElement.textContent.trim();
     const spanInnerText = this.parentNode.querySelector('b').textContent.trim();
