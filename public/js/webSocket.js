@@ -3574,16 +3574,19 @@ socket.on('connect', () => {
             // });
             // });
 
+            // Add an event listener to execute the code once the DOM is loaded
             document.addEventListener('DOMContentLoaded', function() {
-                const stakeAmountSpans = document.querySelectorAll('.nww-bet-slip-wrp-col2-inn span');
-                const customInput = document.querySelector('.set-stake-form-input2');
-                stakeAmountSpans.forEach(span => {
-                    span.addEventListener('click', () => {
-                        console.log("working")
-                        const stakeAmount = span.textContent.trim();
-                        const profitElement = span.closest('.my-exc-inn-colaps-txt-body').querySelector('.c-gren');
+                const betSlipWrappers = document.querySelectorAll('.nww-bet-slip-wrp');
+                function handleBetSlipClick(event) {
+                    const clickedSpan = event.target;
+                    if (clickedSpan.tagName === 'SPAN' && clickedSpan.classList.contains('nww-bet-slip-wrp-col2-inn')) {
+                        const stakeAmount = clickedSpan.textContent.trim();
+                        const customInput = clickedSpan.closest('.nww-bet-slip-wrp').querySelector('.set-stake-form-input2');
                         customInput.value = stakeAmount;
-                    });
+                    }
+                }
+                betSlipWrappers.forEach(betSlipWrapper => {
+                    betSlipWrapper.addEventListener('click', handleBetSlipClick);
                 });
             });
 
