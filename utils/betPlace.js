@@ -94,9 +94,9 @@ if(!marketDetails.runners){
     }
 }else{
     let runnersData = JSON.parse(marketDetails.runners)
-    console.log(runnersData)
-    return 123
     let betOn = runnersData.find(item => item.secId == data.data.secId)
+    console.log(betOn)
+    return 123
     // console.log(betOn, 456)
         // betPlaceData = {
         //     userId : data.LOGINDATA.LOGINUSER._id,
