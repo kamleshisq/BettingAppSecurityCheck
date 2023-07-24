@@ -3546,22 +3546,24 @@ buttons.forEach(function (button) {
     const teamName = runnerNameElement.textContent.trim();
     const spanInnerText = this.querySelector('b').textContent.trim();
     const marketId = runnerNameElement.getAttribute('id');
-    const buttonId = this.id.slice(-1);
+    const buttonId = this.id;
 
     console.log('Team Name:', teamName);
     console.log('Button ID:', buttonId);
     console.log('Span Inner Text:', spanInnerText);
 
-    const container = this.parentNode;
-    const betOnElement = container.querySelector(`.betOn${buttonId}`);
+    const parentElement = this.parentNode.parentNode.parentNode;
+
+    const betOnElement = parentElement.querySelector(`.betOn${buttonId}`);
     betOnElement.innerHTML = `Bet on: ${teamName}@${spanInnerText}`;
     betOnElement.id = marketId.slice(0, -1);
 
-    const oddsElement = container.querySelector(`.oddsvalue${buttonId}`);
+    const oddsElement = parentElement.querySelector(`.oddsvalue${buttonId}`);
     oddsElement.innerHTML = spanInnerText;
     oddsElement.id = buttonId;
   });
 });
+
 
 
 
