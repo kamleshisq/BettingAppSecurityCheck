@@ -3527,6 +3527,7 @@ socket.on('connect', () => {
                 console.log(this.id.slice(-1))
                 console.log('Span Inner Text:', spanInnerText);
                 let elements = document.getElementsByClassName(`betOn${this.id.slice(-1)}`);
+                console.log(elements)
                 elements[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
                 elements[0].id = marketId;
                 var elements2 = document.getElementsByClassName(`oddsvalue${this.id.slice(-1)}`);
