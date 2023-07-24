@@ -3322,7 +3322,7 @@ socket.on('connect', () => {
             if(data != ""){
                 let score = JSON.parse(data)
                 let element = document.getElementsByClassName("score")
-                // console.log(element)
+                console.log(element)
                 element.forEach(item => {
                     item.innerHTML = score[0].data
                 })
