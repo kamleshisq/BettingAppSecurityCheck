@@ -3346,14 +3346,14 @@ socket.on('connect', () => {
             $(".match_odd_Blue").each(function() {
                     
                 let id = this.id
-                console.log(id)
 
-                // id = id.slice(0, -1);
-                // let section = null;
-                // data.items.some(item => {
-                //     section = item.odds.find(odd => odd.selectionId == id);
-                //     return section !== undefined;
-                // });
+                id = id.slice(0, -1);
+                let section = null;
+                data.items.some(item => {
+                    section = item.odds.find(odd => odd.selectionId == id);
+                    return section !== undefined;
+                });
+                console.log(section)
                 // if(this.id == `${section.selectionId}1` ){
                 //     this.innerHTML = `<b>${section.backPrice1}</b> <br> ${section.backSize1}`
                 // }else if(this.id == `${section.selectionId}2`){
