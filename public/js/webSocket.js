@@ -2665,11 +2665,8 @@ socket.on('connect', () => {
         socket.on("eventId", async(data)=>{
             if(data != ""){
                 let score = JSON.parse(data)
-                let element = document.getElementsByClassName("Score")
-                element.forEach(item => {
-                    item.innerHTML = score[0].data
-                })
-                // document.getElementById("Score").innerHTML = score[0].data
+                
+                document.getElementById("Score").innerHTML = score[0].data
             }
         })
 
@@ -3324,7 +3321,11 @@ socket.on('connect', () => {
         socket.on("eventId", async(data)=>{
             if(data != ""){
                 let score = JSON.parse(data)
-                document.getElementById("score").innerHTML = score[0].data
+                let element = document.getElementsByClassName("Score")
+                element.forEach(item => {
+                    item.innerHTML = score[0].data
+                })
+                // document.getElementById("score").innerHTML = score[0].data
             }
         })
 
