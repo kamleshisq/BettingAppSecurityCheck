@@ -4572,13 +4572,8 @@ socket.on('connect', () => {
             }
         });
 
-          let count = 21
           socket.on("GAMEREPORTMATCHPAGEUSER", async(data) => {
             console.log(data.result)
-            if(data.page === 0){
-                count = 1
-            }
-            let page = data.page
             let result = data.result;
             let html = '';
             for(let i = 0; i < result.length; i++){
@@ -4608,7 +4603,7 @@ socket.on('connect', () => {
                     }
                 html += "</tr>"
             }
-            count += 20
+            console.log(html)
             if(data.page == 0){
                 $('.acount-stat-tbl-body').html(html)
             }else{
