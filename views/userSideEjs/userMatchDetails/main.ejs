@@ -1803,22 +1803,30 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   // Function to handle the click event for the "tbl-bg-blu-spn" spans
-  function handleSpanClick() {
-    const $span = $(this).closest('.tbl-bg-blu-spn');
-    if (!$span.length) return;
+  function handleSpanClick(event) {
+    const span = event.target;
+    if (!span.classList.contains('tbl-bg-blu-spn')) return;
 
-    const targetId = $span.attr('href');
-    const $targetCollapseDiv = $(targetId);
+    event.preventDefault();
+    const targetId = span.getAttribute('href');
+    const targetCollapseDiv = document.querySelector(targetId);
 
-    // Hide all other "my-exc-inn-colaps-txt-dv collapse" divs
-    const $collapseDivs = $('.my-exc-inn-colaps-txt-dv.collapse').not($targetCollapseDiv);
-    $collapseDivs.removeClass('show');
+    // Get the closest "table-data-2" div
+    const tableDataDiv = span.closest('.table-data-2');
 
-    $targetCollapseDiv.toggleClass('show');
+    // Hide all other "my-exc-inn-colaps-txt-dv collapse" divs within the same "table-data-2" div
+    const collapseDivs = tableDataDiv.querySelectorAll('.my-exc-inn-colaps-txt-dv.collapse');
+    collapseDivs.forEach(div => {
+      if (div !== targetCollapseDiv) {
+        div.classList.remove('show');
+      }
+    });
+
+    targetCollapseDiv.classList.toggle('show');
   }
 
-  // Add a single click event listener to all "tbl-bg-blu-spn" spans using jQuery
-  $(document).on('click', '.tbl-bg-blu-spn', handleSpanClick);
+  // Add a single click event listener to the document to handle all clicks
+  document.addEventListener('click', handleSpanClick);
 </script>
 <script>
   $(document).ready(function () {
