@@ -1440,7 +1440,7 @@ io.on('connection', (socket) => {
           socket.emit("GAMEREPORTUSER", {bets, page})
     })
     
-    socket.on("GAMEREPORTMATCHPAGEUSER", async(date) => {
+    socket.on("GAMEREPORTMATCHPAGEUSER", async(data) => {
         console.log(data)
     })
 
