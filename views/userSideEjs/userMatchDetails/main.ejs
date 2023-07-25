@@ -1809,7 +1809,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
    $(document).ready(function () {
- $("#offsetmenubtnn, #offsertmnuclosbtn").click(function () {
+    $("#offsetmenubtnn, #offsertmnuclosbtn").click(function () {
       $("#offsetmenubody").toggleClass("offset-mnu-width");
       $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
     });
@@ -1823,11 +1823,17 @@
     $('span[data-bs-toggle="collapse"]').click(function () {
       var targetDivId = $(this).attr('href');
 
-      // Toggle the visibility of the target div
-      $(targetDivId).toggle();
+      // If the target div is already visible, hide it and return
+      if ($(targetDivId).is(':visible')) {
+        $(targetDivId).hide();
+        return;
+      }
 
       // Hide all other divs with class 'my-exc-inn-colaps-txt-dv' that are not the target div
       $('.my-exc-inn-colaps-txt-dv').not(targetDivId).hide();
+
+      // Show the target div
+      $(targetDivId).show();
     });
 
 
