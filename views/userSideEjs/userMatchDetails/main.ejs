@@ -1808,8 +1808,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  $(document).ready(function () {
-    $("#offsetmenubtnn, #offsertmnuclosbtn").click(function () {
+ $("#offsetmenubtnn, #offsertmnuclosbtn").click(function () {
       $("#offsetmenubody").toggleClass("offset-mnu-width");
       $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
     });
@@ -1819,14 +1818,15 @@
       $("#mblbetslipdata").toggleClass("show-bet-slip-mbl-data");
     });
 
-    // Toggle corresponding div when td is clicked
-    $('.table-data-2 td[data-bs-toggle="collapse"]').click(function () {
-      var parentTable = $(this).closest('.table-data-2');
-      var targetDiv = parentTable.find('.my-exc-inn-colaps-txt-dv');
-      targetDiv.toggle();
+    // Toggle corresponding div when span is clicked
+    $('span[data-bs-toggle="collapse"]').click(function () {
+      var targetDivId = $(this).attr('href');
+
+      // Toggle the visibility of the target div
+      $(targetDivId).toggle();
 
       // Hide all other divs with class 'my-exc-inn-colaps-txt-dv' that are not the target div
-      $('.my-exc-inn-colaps-txt-dv').not(targetDiv).hide();
+      $('.my-exc-inn-colaps-txt-dv').not(targetDivId).hide();
     });
 
 
