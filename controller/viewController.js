@@ -1920,7 +1920,7 @@ exports.getGameReportInINPageUser = catchAsync(async(req, res, next) => {
     let games = await gameModel.find();
     let userLog = await loginLogs.find({user_id:user._id})
     // console.log(req.query)
-    let result = await betModel.find({event:req.query.eventName, match:matchName}).limit(20)
+    let result = await betModel.find({event:req.query.eventName, match:req.query.matchName}).limit(20)
     console.log(result)
     //   console.log(result)
     res.status(200).render("./userSideEjs/gameReportmatch/main",{
