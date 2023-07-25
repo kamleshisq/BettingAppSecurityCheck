@@ -1444,7 +1444,7 @@ io.on('connection', (socket) => {
         let page = data.page
         limit = 20
         let result =  await Bet.find({event:data.jsonData.eventName, match:data.jsonData.matchName, userId:data.LOGINDATA.LOGINUSER._id}).skip(page * limit).limit(limit)
-        socket.emit("GAMEREPORTMATCHPAGEUSER", result)
+        socket.emit("GAMEREPORTMATCHPAGEUSER", {result, page})
     })
 
     

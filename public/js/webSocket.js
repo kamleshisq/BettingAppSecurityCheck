@@ -4572,8 +4572,47 @@ socket.on('connect', () => {
             }
         });
 
-        socket.on("GAMEREPORTMATCHPAGEUSER", async(data) => {
-            console.log(data)
+          let count = 21
+          socket.on("GAMEREPORTMATCHPAGEUSER", async(data) => {
+            if(data.page === 0){
+                count = 1
+            }
+            let page = data.page
+            let result = data.result;
+            let html = '';
+            for(let i = 0; i < result.length; i++){
+                
+                    var date = new Date(result[i].date);
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
+                
+                html =+ `<tr class="acount-stat-tbl-body-tr" >
+                    <td>${formattedTime}</td>
+                    <td>${result[i].marketName}</td>
+                    <td>${result[i].selectionName}</td>
+                    <td><span class="tbl-td-bg-blu-spn">${result[i].oddValue}</span></td>
+                    <td>${result[i].status}</td>
+                    <td class="c-gren">${result[i].Stake}</td>`
+                    if(result[i].returns > 0){
+                        html += `<td class="c-gren">${result[i].returns}</td>`
+                    }else{
+                        html += `<td class="c-reed">-${result[i].Stake}</td>`
+                    }
+                html += "</tr>"
+            }
+            count += 20
+            if(data.page == 0){
+                $('.acount-stat-tbl-body').html(html)
+            }else{
+                $('.acount-stat-tbl-body').append(html)         
+            }
         })
           
     }
