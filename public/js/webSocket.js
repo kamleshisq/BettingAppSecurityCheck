@@ -4479,6 +4479,11 @@ socket.on('connect', () => {
         })
     }
 
+
+    if(pathname === "/myGameReport"){
+        console.log("Working")
+    }
+
     
 
 
