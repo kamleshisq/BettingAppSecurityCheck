@@ -24,6 +24,7 @@ const bannerModel = require('./model/bannerModel');
 const sliderModel = require('./model/sliderModel');
 const liveStream = require("./utils/getLiveStream");
 const { cookie } = require('request');
+const { date } = require('joi');
 io.on('connection', (socket) => {
     console.log('connected to client')
     let loginData = {}
@@ -1437,6 +1438,10 @@ io.on('connection', (socket) => {
           ]);
 
           socket.emit("GAMEREPORTUSER", {bets, page})
+    })
+    
+    socket.on("GAMEREPORTMATCHPAGEUSER", async(date) => {
+        console.log(data)
     })
 
     

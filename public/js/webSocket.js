@@ -4559,8 +4559,19 @@ socket.on('connect', () => {
             }
             return jsonData;
           }
-          const jsonData = getJSONDataFromQueryString(search);
-          console.log(jsonData)
+          let jsonData = getJSONDataFromQueryString(search);
+
+          $(window).scroll(function() {
+            var scroll = $(window).scrollTop();
+            var windowHeight = $(window).height();
+            var documentHeight = $(document).height();
+            if (scroll + windowHeight >= documentHeight) {
+                let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                socket.emit("GAMEREPORTMATCHPAGEUSER", {page, LOGINDATA, jsonData})
+            }
+        });
+          
     }
 
     
