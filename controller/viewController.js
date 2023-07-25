@@ -1865,7 +1865,7 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
         {
           $match: {
             event: req.query.eventname,
-            userId:user._id
+            // userId:user._id
           }
         },
         {
