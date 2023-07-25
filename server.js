@@ -1381,7 +1381,8 @@ io.on('connection', (socket) => {
 
 
     socket.on("GAMEREPORTUSER", async(data) => {
-        console.log(data)
+        let page = data.page
+        let limit = 20
         let matchStage = {};
         // matchStage.userId = data.LOGINDATA.LOGINUSER._id
         if(data.filterData.fromDate != ""){
@@ -1425,9 +1426,17 @@ io.on('connection', (socket) => {
               }
             },
             {
-              $limit: 20 
+                $sort: { totalData: -1 , _id: 1}
+            },
+            {
+                $skip:(page * limit)
+            },
+            {
+                $limit:limit
             }
           ]);
+
+          socket.emit("GAMEREPORTUSER", {bets, page})
     })
 
     

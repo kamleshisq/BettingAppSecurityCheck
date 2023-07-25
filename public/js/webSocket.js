@@ -4512,6 +4512,11 @@ socket.on('connect', () => {
             $('.pageId').attr('data-pageid',1)
             socket.emit("GAMEREPORTUSER", {page, LOGINDATA, filterData})
           }
+
+
+          socket.on("GAMEREPORTUSER", async(data) => {
+            console.log(data)
+          })
     }
 
     
