@@ -44,9 +44,9 @@
                                     <td><%=result[i].cancel%></td>
                                     <td><%=result[i].open%></td>
                                     <%if(result[i].totalSumOfReturns > 0){%>
-                                        <td class="c-gren">+result[i].totalSumOfReturns</td>
+                                        <td class="c-gren"><%=result[i].totalSumOfReturns%></td>
                                     <%}else{%>
-                                        <td class="c-reed">result[i].totalSumOfReturns</td>
+                                        <td class="c-reed"><%=result[i].totalSumOfReturns%></td>
                                     <%}%>
                                 </tr>
                             <%}>
