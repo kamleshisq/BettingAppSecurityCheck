@@ -4574,6 +4574,7 @@ socket.on('connect', () => {
 
           let count = 21
           socket.on("GAMEREPORTMATCHPAGEUSER", async(data) => {
+            console.log(data.result)
             if(data.page === 0){
                 count = 1
             }
