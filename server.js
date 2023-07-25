@@ -1381,44 +1381,45 @@ io.on('connection', (socket) => {
 
 
     socket.on("GAMEREPORTUSER", async(data) => {
-        let bets = await betModel.aggregate([
-            {
-              $match: {
-                // Add a condition to filter by date range
-                date: {
-                  $gte: fromDate, // Filter documents with date greater than or equal to 'fromDate'
-                  $lte: toDate    // Filter documents with date less than or equal to 'toDate'
-                }
-              }
-            },
-            {
-              $group: {
-                _id: '$event',
-                totalData: { $sum: 1 },
-                won: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
-                loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
-                Open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
-                Cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
-                sumOfReturns: { $sum: '$returns' },
-                uniqueMarketCount: { $addToSet: '$marketName' } 
-              }
-            },
-            {
-              $project: {
-                _id: 1,
-                totalData: 1,
-                won: 1,
-                loss: 1,
-                Open: 1,
-                Cancel: 1,
-                sumOfReturns: 1,
-                uniqueMarketCount: { $size: '$uniqueMarketCount' } 
-              }
-            },
-            {
-              $limit: 20 
-            }
-          ]);
+        console.log(data)
+        // let bets = await betModel.aggregate([
+        //     {
+        //       $match: {
+        //         // Add a condition to filter by date range
+        //         date: {
+        //           $gte: fromDate, // Filter documents with date greater than or equal to 'fromDate'
+        //           $lte: toDate    // Filter documents with date less than or equal to 'toDate'
+        //         }
+        //       }
+        //     },
+        //     {
+        //       $group: {
+        //         _id: '$event',
+        //         totalData: { $sum: 1 },
+        //         won: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
+        //         loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
+        //         Open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
+        //         Cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
+        //         sumOfReturns: { $sum: '$returns' },
+        //         uniqueMarketCount: { $addToSet: '$marketName' } 
+        //       }
+        //     },
+        //     {
+        //       $project: {
+        //         _id: 1,
+        //         totalData: 1,
+        //         won: 1,
+        //         loss: 1,
+        //         Open: 1,
+        //         Cancel: 1,
+        //         sumOfReturns: 1,
+        //         uniqueMarketCount: { $size: '$uniqueMarketCount' } 
+        //       }
+        //     },
+        //     {
+        //       $limit: 20 
+        //     }
+        //   ]);
     })
 
     
