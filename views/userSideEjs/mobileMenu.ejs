@@ -67,11 +67,23 @@
                                     <a class="botom-mnu-active" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%></a>
                                 </li>
                             <%} else{%>
-                              
+                              <%if(verticalMenus[i].menuName == "Sportsbook"){%>
+                                <%if(user){%>
+                                  <li>
+                                    <a  href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%></a>
+                                  </li>
+                                <%}else{%>
+                                  <li>
+                                    <a class="nav-link my-nav-ul-li-a " data-bs-toggle="modal" data-bs-target="#exampleModalToggle"><%=verticalMenus[i].menuName%> </a>
+                                </li>
+                                <%}%>
+                              <%}else%>
+                              <li>
+                                  <a  href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%></a>
+                              </li>
                               <%}%>
                             <%}%>
                         <%}%>
-                    <%}%>
                   
                   
                 </ul>
