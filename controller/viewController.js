@@ -1860,49 +1860,38 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
     let games = await gameModel.find();
     let userLog = await loginLogs.find({user_id:user._id})
     let bets2 = await betModel.find({event:req.query.eventname})
-    console.log(bets2)
-    let bets = await betModel.aggregate([
-        {
-          $match: {
-            event: req.query.eventname,
-            userId: `${user._id}`
-          }
-        },
+    let result = await betModel.aggregate([
         {
           $group: {
-            _id: '$match',
+            _id: {
+              match: '$match',
+              userId: '$userId',
+              event: '$event'
+            },
             totalData: { $sum: 1 },
             won: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
             loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
             Open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
             Cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
-            sumOfReturns: { $sum: '$returns' },
-            dates: { $addToSet: '$date' } // Add the 'createdAt' field to the result
+            sumOfReturns: { $sum: '$returns' }
           }
         },
         {
-          $unwind: '$dates' // Unwind the 'dates' array
-        },
-        {
           $project: {
-            _id: 1,
+            _id: 0,
+            match: '$_id.match',
+            userId: '$_id.userId',
+            event: '$_id.event',
             totalData: 1,
             won: 1,
             loss: 1,
             Open: 1,
             Cancel: 1,
-            sumOfReturns: 1,
-            date: '$dates' // Rename the 'dates' field to 'date'
+            sumOfReturns: 1
           }
-        },
-        {
-          $sort: { totalData: -1, date: 1 } // Sort by 'totalData' in descending order and 'date' in ascending order
-        },
-        {
-          $limit: 20
         }
       ]);
-      console.log(bets)
+      console.log(result)
     res.status(200).render("./userSideEjs/gameReportEvent/main",{
         user,
         verticalMenus,
