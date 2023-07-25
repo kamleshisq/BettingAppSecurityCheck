@@ -1796,6 +1796,12 @@
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
+    <!-- Add the Bootstrap CSS in the head section -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- Add the Bootstrap JS at the end of the body section -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-ASkcGvB6zNkEx3GVyVR4B8kCI5NCf/xEeMBrRkfsBQRNUmfp8Nz2l0uf2Kj9j6aH" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-pzOodU3KqD8eX3dVKOrA9UJzz+XF8HN/Nv3vS6YtSBQeMo9YRRvT0uHOjV5mFd6G" crossorigin="anonymous"></script>
+
     
     <!-- <script>
       $('#offsetmenubtnn').click(function() {
@@ -1819,21 +1825,15 @@
       $("#mblbetslipdata").toggleClass("show-bet-slip-mbl-data");
     });
 
-    // Toggle corresponding div when span is clicked
-    $('span[data-bs-toggle="collapse"]').click(function () {
+    // Initialize Bootstrap Collapse plugin
+    $('[data-bs-toggle="collapse"]').collapse();
+
+    // Show the corresponding div when span is clicked
+    $('[data-bs-toggle="collapse"]').on('click', function () {
       var targetDivId = $(this).attr('href');
 
-      // If the target div is already visible, hide it and return
-      if ($(targetDivId).is(':visible')) {
-        $(targetDivId).hide();
-        return;
-      }
-
       // Hide all other divs with class 'my-exc-inn-colaps-txt-dv' that are not the target div
-      $('.my-exc-inn-colaps-txt-dv').not(targetDivId).hide();
-
-      // Show the target div
-      $(targetDivId).show();
+      $('.my-exc-inn-colaps-txt-dv').not(targetDivId).collapse('hide');
     });
 
 
