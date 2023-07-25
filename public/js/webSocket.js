@@ -4589,7 +4589,7 @@ socket.on('connect', () => {
                     };
                     var formattedTime = date.toLocaleString('en-US', options);
                 
-                html =+ `<tr class="acount-stat-tbl-body-tr" >
+                html += `<tr class="acount-stat-tbl-body-tr" >
                     <td>${formattedTime}</td>
                     <td>${result[i].marketName}</td>
                     <td>${result[i].selectionName}</td>
