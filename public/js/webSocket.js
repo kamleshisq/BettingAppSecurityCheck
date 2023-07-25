@@ -4516,7 +4516,6 @@ socket.on('connect', () => {
 
           let count = 21
         socket.on("GAMEREPORTUSER", async(data) => {
-            console.log(data.page)
             if(data.page === 0){
                 count = 1
             }
@@ -4526,7 +4525,7 @@ socket.on('connect', () => {
              for(let i = 0; i < bets.length; i++){
                 let encodedEventName = encodeURIComponent(bets[i]._id);
                 html += `
-                <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/event/${encodedEventName}'>
+                <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/event/?eventname=${encodedEventName}'>
                     <td>${i + 1}</td>
                     <td>${bets[i]._id}</td>
                     <td>${bets[i].uniqueMarketCount}</td>
