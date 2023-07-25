@@ -4571,6 +4571,10 @@ socket.on('connect', () => {
                 socket.emit("GAMEREPORTMATCHPAGEUSER", {page, LOGINDATA, jsonData})
             }
         });
+
+        socket.on("GAMEREPORTMATCHPAGEUSER", async(data) => {
+            console.log(data)
+        })
           
     }
 

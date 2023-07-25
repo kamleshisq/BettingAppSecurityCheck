@@ -1441,7 +1441,10 @@ io.on('connection', (socket) => {
     })
     
     socket.on("GAMEREPORTMATCHPAGEUSER", async(data) => {
-        console.log(data)
+        let page = data.page
+        limit = 20
+        let result =  await Bet.find({event:eventName, match:matchName, userId:data.LOGINDATA.LOGINUSER._id}).skip(page * limit).limit(limit)
+        socket.emit("GAMEREPORTMATCHPAGEUSER", result)
     })
 
     
