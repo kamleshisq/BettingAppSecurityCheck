@@ -4514,9 +4514,41 @@ socket.on('connect', () => {
           }
 
 
-          socket.on("GAMEREPORTUSER", async(data) => {
-            console.log(data)
-          })
+          let count = 21
+        socket.on("GAMEREPORTUSER", async(data) => {
+            console.log(data.page)
+            if(data.page === 0){
+                count = 1
+            }
+            let page = data.page
+            let bets = data.bets;
+            let html = '';
+             for(let i = 0; i < bets.length; i++){
+                let encodedEventName = encodeURIComponent(bets[i]._id);
+                html += `
+                <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/event/${encodedEventName}'>
+                    <td>${i + 1}</td>
+                    <td>${bets[i]._id}</td>
+                    <td>${bets[i].uniqueMarketCount}</td>
+                    <td>${bets[i].totalData}</td>
+                    <td>${bets[i].Open}</td>
+                    <td>${bets[i].won}</td>
+                    <td>${bets[i].loss}</td>
+                    <td>${bets[i].Cancel}</td>`
+                    if(bets[i].sumOfReturns > 0){
+                      html += `<td class="c-gren">${bets[i].sumOfReturns}</td>`
+                    }else{
+                      html += `<td class="c-reed">${bets[i].sumOfReturns}</td>`
+                      }
+                html += "</tr>"
+            }
+            count += 20
+            if(data.page == 0){
+                $('.acount-stat-tbl-body').html(html)
+            }else{
+                $('.acount-stat-tbl-body').append(html)         
+            }
+        })
     }
 
     
