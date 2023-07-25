@@ -1859,13 +1859,11 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find();
     let games = await gameModel.find();
     let userLog = await loginLogs.find({user_id:user._id})
-    let bets2 = await betModel.find({event:req.query.eventname})
-    console.log(user.id)
     let result = await betModel.aggregate([
         {
           $match: {
             event: req.query.eventname,
-            userId:user._id
+            userId:user.id
           }
         },
         {
