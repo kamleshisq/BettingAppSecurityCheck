@@ -1912,3 +1912,63 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
         result
     })
 })
+
+exports.getGameReportInINPageUser = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    let verticalMenus = await verticalMenuModel.find();
+    const data = await promotionModel.find();
+    let games = await gameModel.find();
+    let userLog = await loginLogs.find({user_id:user._id})
+    // let result = await betModel.aggregate([
+    //     {
+    //       $match: {
+    //         event: req.query.eventname,
+    //         userId:user.id
+    //       }
+    //     },
+    //     {
+    //         $group: {
+    //           _id: {
+    //             match: '$match',
+    //             event: '$event'
+    //           },
+    //           totalData: { $sum: 1 },
+    //           win: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
+    //           loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
+    //           cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
+    //           open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
+    //           totalSumOfReturns: { $sum: '$returns' }
+    //         }
+    //       },
+    //       {
+    //         $project: {
+    //           _id: 0,
+    //           match: '$_id.match',
+    //           event: '$_id.event',
+    //           totalData: 1,
+    //           win: 1,
+    //           loss: 1,
+    //           cancel: 1,
+    //           open: 1,
+    //           totalSumOfReturns: 1
+    //         }
+    //       },
+    //     {
+    //         $sort: { totalData: -1 , _id: 1}
+    //       },
+    //       {
+    //         $limit: 20 
+    //       }
+    //   ]);
+      
+    //   console.log(result)
+    res.status(200).render("./userSideEjs/gameReportmatch/main",{
+        user,
+        verticalMenus,
+        data,
+        check:"My game",
+        games,
+        userLog,
+        result
+    })
+})
