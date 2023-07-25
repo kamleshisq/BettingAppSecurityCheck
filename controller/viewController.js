@@ -1806,6 +1806,11 @@ exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
     let userLog = await loginLogs.find({user_id:user._id})
     let bets = await betModel.aggregate([
         {
+            $match: {
+              userId: `${user._id}` 
+            }
+          },
+        {
             $group: {
               _id: '$event',
               totalData: { $sum: 1 },
