@@ -1801,34 +1801,28 @@
 <!-- Add Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-  // Function to handle the click event for a specific section
-  function handleSectionClick(section) {
-    const tableDataSpans = section.querySelectorAll('.tbl-bg-blu-spn');
-    const collapseDivs = section.querySelectorAll('.my-exc-inn-colaps-txt-dv.collapse');
+  // Function to handle the click event for the "tbl-bg-blu-spn" spans
+  function handleSpanClick(event) {
+    const span = event.target.closest('.tbl-bg-blu-spn');
+    if (!span) return;
 
-    tableDataSpans.forEach(span => {
-      span.addEventListener('click', () => {
-        const targetId = span.getAttribute('href');
-        const targetCollapseDiv = section.querySelector(targetId);
+    event.preventDefault();
+    const targetId = span.getAttribute('href');
+    const targetCollapseDiv = document.querySelector(targetId);
 
-        collapseDivs.forEach(div => {
-          if (div !== targetCollapseDiv) {
-            div.classList.remove('show');
-          }
-        });
-
-        targetCollapseDiv.classList.toggle('show');
-      });
+    // Hide all other "my-exc-inn-colaps-txt-dv collapse" divs
+    const collapseDivs = document.querySelectorAll('.my-exc-inn-colaps-txt-dv.collapse');
+    collapseDivs.forEach(div => {
+      if (div !== targetCollapseDiv) {
+        div.classList.remove('show');
+      }
     });
+
+    targetCollapseDiv.classList.toggle('show');
   }
 
-  // Get all the elements with the class "table-data-2"
-  const tableDataSections = document.querySelectorAll('.table-data-2');
-
-  // Loop through each section and call the handleSectionClick function
-  tableDataSections.forEach(section => {
-    handleSectionClick(section);
-  });
+  // Add a single click event listener to the document to handle all clicks on "tbl-bg-blu-spn" spans
+  document.addEventListener('click', handleSpanClick);
 </script>
 <script>
   $(document).ready(function () {
