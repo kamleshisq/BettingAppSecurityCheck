@@ -1863,7 +1863,7 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
     let result = await betModel.aggregate([
         {
           $match: {
-            event: 'Tamil Nadu Premier League',
+            event: req.query.eventname,
             userId:user._id
           }
         },
