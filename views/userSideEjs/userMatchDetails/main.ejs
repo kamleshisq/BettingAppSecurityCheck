@@ -1825,15 +1825,15 @@
       $("#mblbetslipdata").toggleClass("show-bet-slip-mbl-data");
     });
 
-    // Initialize Bootstrap Collapse plugin
-    $('[data-bs-toggle="collapse"]').collapse();
-
-    // Show the corresponding div when span is clicked
-    $('[data-bs-toggle="collapse"]').on('click', function () {
-      var targetDivId = $(this).attr('href');
+    // Toggle corresponding div when span is clicked
+    $('[data-bs-toggle="collapse"]').click(function () {
+      var targetDivId = $(this).data('bs-target');
 
       // Hide all other divs with class 'my-exc-inn-colaps-txt-dv' that are not the target div
-      $('.my-exc-inn-colaps-txt-dv').not(targetDivId).collapse('hide');
+      $('.my-exc-inn-colaps-txt-dv').not(targetDivId).hide();
+
+      // Toggle the visibility of the target div
+      $(targetDivId).toggle();
     });
 
 
