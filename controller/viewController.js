@@ -1968,7 +1968,6 @@ exports.getGameReportInINPageUser = catchAsync(async(req, res, next) => {
         data,
         check:"My game",
         games,
-        userLog,
-        result
+        userLog
     })
 })
