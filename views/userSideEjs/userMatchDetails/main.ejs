@@ -1801,28 +1801,33 @@
 <!-- Add Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-  // Get all the elements with the class "tbl-bg-blu-spn"
-  const tableDataSpans = document.querySelectorAll('.table-data-2 .tbl-bg-blu-spn');
+  // Function to handle the click event for a specific section
+  function handleSectionClick(section) {
+    const tableDataSpans = section.querySelectorAll('.tbl-bg-blu-spn');
+    const collapseDivs = section.querySelectorAll('.my-exc-inn-colaps-txt-dv.collapse');
 
-  // Loop through each span and add a click event listener
-  tableDataSpans.forEach(span => {
-    span.addEventListener('click', () => {
-      // Get the target collapse div based on the "href" attribute of the clicked span
-      const targetId = span.getAttribute('href');
-      const targetCollapseDiv = document.querySelector(targetId);
+    tableDataSpans.forEach(span => {
+      span.addEventListener('click', () => {
+        const targetId = span.getAttribute('href');
+        const targetCollapseDiv = section.querySelector(targetId);
 
-      // Hide all other "my-exc-inn-colaps-txt-dv collapse" divs within the same "table-data-2" div
-      const tableDataDiv = span.closest('.table-data-2');
-      const collapseDivs = tableDataDiv.querySelectorAll('.my-exc-inn-colaps-txt-dv.collapse');
-      collapseDivs.forEach(div => {
-        if (div !== targetCollapseDiv) {
-          div.classList.remove('show');
-        }
+        collapseDivs.forEach(div => {
+          if (div !== targetCollapseDiv) {
+            div.classList.remove('show');
+          }
+        });
+
+        targetCollapseDiv.classList.toggle('show');
       });
-
-      // Toggle the visibility of the target collapse div
-      targetCollapseDiv.classList.toggle('show');
     });
+  }
+
+  // Get all the elements with the class "table-data-2"
+  const tableDataSections = document.querySelectorAll('.table-data-2');
+
+  // Loop through each section and call the handleSectionClick function
+  tableDataSections.forEach(section => {
+    handleSectionClick(section);
   });
 </script>
 <script>
