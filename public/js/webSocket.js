@@ -3270,11 +3270,11 @@ socket.on('connect', () => {
                         let id = this.id
                         const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
                         if(data.betLimits[0].max_odd < foundItem.odds[0].layPrice1){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn ">
+                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                         }else if (foundItem.odds[0].layPrice1 == "-"){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn ">
+                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                         }else{
@@ -3287,11 +3287,11 @@ socket.on('connect', () => {
                     let id = this.id
                     const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
                     if(data.betLimits[0].max_odd < foundItem.odds[0].backPrice1){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn ">
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                     }else if (foundItem.odds[0].backPrice1 == "-"){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn ">
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                     }else{
@@ -3303,11 +3303,11 @@ socket.on('connect', () => {
                         let id = this.id
                         const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
                         if(data.betLimits[0].max_odd < foundItem.odds[1].layPrice1){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn ">
+                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                         }else if (foundItem.odds[1].layPrice1 == "-"){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn ">
+                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                         }else{
@@ -3320,11 +3320,11 @@ socket.on('connect', () => {
                     let id = this.id
                     const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
                     if(data.betLimits[0].max_odd < foundItem.odds[1].backPrice1){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn ">
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                     }else if (foundItem.odds[1].backPrice1 == "-"){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn ">
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                     }else{
@@ -3337,11 +3337,11 @@ socket.on('connect', () => {
                         let id = this.id
                         const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
                         if(data.betLimits[0].max_odd < foundItem.odds[2].backPrice1){
-                            this.innerHTML = `<span class="tbl-td-bg-blu-spn ">
+                            this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                         }else if (foundItem.odds[2].backPrice1 == "-"){
-                            this.innerHTML = `<span class="tbl-td-bg-blu-spn ">
+                            this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                         }else{
@@ -3354,11 +3354,11 @@ socket.on('connect', () => {
                     let id = this.id
                     const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
                     if(data.betLimits[0].max_odd < foundItem.odds[2].layPrice1){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn ">
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                     }else if (foundItem.odds[2].layPrice1 == "-"){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn ">
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                     }else{
