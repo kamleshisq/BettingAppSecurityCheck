@@ -1877,7 +1877,7 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
             Open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
             Cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
             sumOfReturns: { $sum: '$returns' },
-            dates: { $addToSet: '$createdAt' } // Add the 'createdAt' field to the result
+            dates: { $addToSet: '$date' } // Add the 'createdAt' field to the result
           }
         },
         {
