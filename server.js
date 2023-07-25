@@ -22,6 +22,7 @@ const gameModel = require('./model/gameModel');
 const getCrkAndAllData = require("./utils/getSportAndCricketList");
 const bannerModel = require('./model/bannerModel');
 const sliderModel = require('./model/sliderModel');
+const betLimit = require("./model/betLimitModel");
 const liveStream = require("./utils/getLiveStream");
 const { cookie } = require('request');
 const { date } = require('joi');
@@ -801,8 +802,9 @@ io.on('connection', (socket) => {
         // console.log(data)
         const result = await marketDetailsBymarketID(data)
         let finalResult = result.data
+        const betLimits = await betLimit.find({type:"Sport"})
         // console.log(finalResult)
-        socket.emit("marketId", finalResult)
+        socket.emit("marketId", {finalResult,betLimits})
     })
 
     socket.on("SPORTDATA", async(data) => {
