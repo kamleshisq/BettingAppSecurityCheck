@@ -1835,7 +1835,7 @@ exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
             }
           },
           {
-            $sort: { totalData: -1 }
+            $sort: { totalData: -1 , _id: 1}
           },
           {
             $limit: 20 
