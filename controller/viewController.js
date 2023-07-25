@@ -1867,28 +1867,38 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
           }
         },
         {
-          $group: {
-            _id: '$match',
-            totalData: { $sum: 1 },
-            win: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
-            loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
-            cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
-            open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
-            totalSumOfReturns: { $sum: '$returns' }
-          }
-        },
+            $group: {
+              _id: {
+                match: '$match',
+                event: '$event'
+              },
+              totalData: { $sum: 1 },
+              win: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
+              loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
+              cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
+              open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
+              totalSumOfReturns: { $sum: '$returns' }
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              match: '$_id.match',
+              event: '$_id.event',
+              totalData: 1,
+              win: 1,
+              loss: 1,
+              cancel: 1,
+              open: 1,
+              totalSumOfReturns: 1
+            }
+          },
         {
-          $project: {
-            _id: 0,
-            match: '$_id',
-            totalData: 1,
-            win: 1,
-            loss: 1,
-            cancel: 1,
-            open: 1,
-            totalSumOfReturns: 1
+            $sort: { totalData: -1 , _id: 1}
+          },
+          {
+            $limit: 20 
           }
-        }
       ]);
       
       console.log(result)
@@ -1898,6 +1908,7 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
         data,
         check:"My game",
         games,
-        userLog
+        userLog,
+        result
     })
 })
