@@ -561,7 +561,581 @@
     }
     /* ---------- HOME PAGE ----------  */
 
+    /* ---------- EXCHANGE PAGE ----------  */
+    .exch-pg-mob-sec-main{
+        display: none;
+    }
+    /* ---------- EXCHANGE PAGE ----------  */
+
+    /* ---------- binary PAGE ----------  */
+    .binary-page-mob-data-main{
+        display: none;
+    }
+    /* ---------- binary PAGE ----------  */
+
+    /* ---------- SPORTS BOOK PAGE ----------  */
+    .mbl-spotd-book-wrp{
+        display: none;
+    }
+    /* ---------- SPORTS BOOK PAGE ----------  */
+
     
+
+}
+
+@media only screen and (max-width: 767px){
+
+    /* ---------- HOME PAGE ----------  */
+    .liv-casino-nav-serchcol{
+        overflow-x: scroll;
+    }
+
+    .exchange-pg-tranding-maches-nav-sec-wrp{
+        width: max-content;
+    }
+    
+    .exchange-pg-tranding-maches-nav-sec-wrp>a{
+        width: max-content;
+    }
+
+    .featured-sec-card-col-img-dv {
+        padding: 5px;
+    }
+
+    .liv-casino-nav-tabcol{
+        width: 100%;
+    }
+    
+    .home-ro2-spots-casino-btns{
+        width: 100%;
+    }
+
+    .home-ro2-spots-casino-btns1{
+        flex: 1;
+    }
+    
+    .home-ro2-spots-casino-btns2{
+        flex: 1;
+    }
+
+    .mbl-login-reg-btnn-dv {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .mbl-login-reg-btnn-dv {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: auto;
+    } 
+
+    .sidebar-main-sec{
+        top: 8%;
+    }
+
+    /* ---------- HOME PAGE ----------  */
+
+    /* ---------- exchange PAGE ----------  */
+    .exch-mob-data-tbl-ro{
+        padding: 10px 10px;
+        background-color: var(--color3);
+        border: 1px solid var(--color8);
+        border-radius: 30px;
+        margin-top: 10px;
+    }
+
+    .exch-mob-data-tbl-ro-titl{
+        padding: 8px 10px;
+        background: var(--color1);
+        border-radius: 30px;
+    }
+
+    .exch-mob-data-tbl-ro-titl>h6{
+        margin-bottom: 0px;
+        color: var(--color3);
+    }
+
+    .exch-mob-data-tbl-card-wrp{
+        padding: 10px 0px;
+        border-bottom: 2px solid var(--color5);
+    }
+
+    .exch-mob-data-tbl-card-ro{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .exch-mob-data-tbl-card-wrp-a{
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .exch-mob-data-tbl-card-dv>p{
+        margin-bottom: 0px;
+        font-size: 13px;
+    }
+
+    .exch-mob-data-tbl-card-dv2{
+        display: flex;
+        align-items: end;
+        gap: 5px;
+    }
+
+    .exch-mob-data-tbl-card-dv2-spns>p{
+        margin-bottom: 0px;
+        line-height: 1.5;
+    }
+
+    .exch-mob-data-tbl-card-dv2-spns>span{
+        background-color: var(--color2);
+        color: var(--color3);
+        height: 18px;
+        width: 20px;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+    }
+
+    .exch-mob-data-tbl-card-dv2-spns>a{
+        text-decoration: none;
+        display: inline-flex;
+    }
+
+    .exch-mob-data-tbl-card-dv2-spns>button{
+        border: none;
+        background-color: transparent;
+    }
+
+    .exch-mob-data-tbl-card-ro2{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 10px;
+        width: 100%;
+    }
+    
+    .exch-mob-data-tbl-card-ro2-dv{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .data-pink-spntg{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 10px;
+        background-color: var(--color10);
+        border-radius: 8px;
+    }
+    
+    .data-blu-spntg{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 10px;
+        background-color: var(--color9);
+        border-radius: 8px;
+    }
+
+    /* ---------- exchange PAGE ----------  */
+
+    /* ---------- exchange PAGE INNER ----------  */
+    .mbl-exch-inn-top-spot-optino-dv{
+        padding: 10px 0px;
+        overflow-x: scroll;
+    }
+
+    .table-data{
+        grid-template-columns: repeat(1, 100px 1fr);
+        position: relative;
+    }
+
+    .table-data-2-inn-col{
+        grid-template-columns: repeat(1 , 1fr);
+    }
+
+    .table-data-2>.table-data-2-inn{
+        display: grid;
+        grid-template-columns: repeat(2 , 70px);
+        gap: 10px;
+        padding-bottom: 5px;
+    }
+
+    .nww-bet-slip-wrp-col1{
+        width: 100%;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .nww-bet-slip-wrp-col2-inn{
+        flex-wrap: wrap;
+        justify-content: start;
+    }
+
+    .nww-bet-slip-wrp-col2-inn>span{
+        font-size: 10px;
+    }
+
+    .my-exc-inn-colaps-txt-dv {
+        margin: 0px 2px;
+        position: relative;
+    }
+    
+    .my-exc-inn-colaps-txt-body{
+        width: 100%;
+        padding: 10px 10px;
+    }
+
+    .nww-bet-slip-wrp-col1-txt{
+        font-size: 12px;
+    }
+
+    .nww-bet-slip-wrp-col1-txt-icons{
+        font-size: 12px;
+    }
+    
+    .nww-bet-slip-wrp-col1-txt-num{
+        font-size: 12px;
+    }
+
+    .nww-bet-slip-wrp-col1-txt-inn>.set-stake-form-input2{
+        width: 80px;
+    }
+
+    /* ---------- exchange PAGE INNER ----------  */
+
+    /* ---------- LIVE CASINO PAGE INNER ----------  */
+    .mob-exchange-pg-main-col-ro{
+        flex-direction: column;
+    }
+
+    .liv-casino-txt-ro-contnr{
+        margin-bottom: 10px;
+    }
+
+    /* ---------- LIVE CASINO PAGE INNER ----------  */
+
+
+    /* ---------- LOGEDINN INDEX PAGE INNER ----------  */
+    .bet-blns-nav-wrp-amount-num>span{
+        font-size: 10px;
+    }
+
+    .nav-login-regstr-btn-dv{
+        gap: 5px;
+    }
+
+    .nav-login-regstr-btn{
+        padding: 5px 5px;
+    }
+
+    /* ---------- LOGEDINN INDEX PAGE INNER ----------  */
+
+
+    /* ---------- LOGEDINN SPORTS BOOK PAGE ----------  */
+    .mbl-spotd-book-wrp{
+        display: block;
+    }
+    /* ---------- LOGEDINN SPORTS BOOK PAGE ----------  */
+
+
+    /* ---------- LOGEDINN SPORTS BOOK PAGE INNER ----------  */
+    .mbl-spotd-book-walet-nav{
+        padding-top: 10px;
+    }
+
+    .acount-stat-ro-titl{
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        border-radius: 15px;
+        padding: 10px 10px;
+    }
+
+    .featured-sec-ro--titl-txt{
+        width: max-content;
+    }
+    
+    .featured-sec-ro--titl-txt-tg2{
+        width: max-content;
+    }
+    
+    .acount-stat-ro-titlselect-dv2{
+        width: max-content;
+    }
+    
+    .sport-bok-mywalet-dv{
+        width: max-content;
+    }
+    
+    .sport-bok-mywalet-dv>span{
+        width: max-content;
+    }
+    
+    .acount-stat-ro-titl-form-btnn{
+        width: max-content;
+    }
+
+    .mbl-spotd-book-card-wrp-col{
+        padding: 10px;
+        border-bottom: 2px solid var(--color5);
+    }
+
+    .mbl-spotd-book-card-wrp-col-a>p{
+        margin-bottom: 0;
+        font-size: 13px;
+        padding-bottom: 10px;
+    }
+
+    .mbl-spotd-book-card-wrp-col-inn{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .mbl-spotd-book-card-wrp-col-inndv>h6{
+        margin-bottom: 0px;
+        font-weight: 600;
+    }
+
+    .mbl-spotd-book-card-wrp-col-inndv>p{
+        font-size: 13px;
+    }
+
+    .mbl-spotd-book-card-wrp-col-inndv2{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .mbl-spotd-book-card-wrp-col-inndv2-inn{
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .mbl-spotd-book-card-wrp-col-inndv2-inn>h6{
+        font-weight: 600;
+        color: var(--color2);
+    }
+
+    .mbl-spotd-book-card-wrp-col-inndv2-inn>span{
+        height: 30px;
+        width: 80px;
+        background-color: var(--color7);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* ---------- LOGEDINN SPORTS BOOK PAGE INNER ----------  */
+
+    /* ---------- LOGEDINN SPORTS BOOK INNER PAGE INNER ----------  */
+    .sports-bokinn-data-main{
+        padding-top: 10px;
+    }
+
+    .sports-bokinn-data-main-ro{
+        padding: 10px 10px;
+        background-color: var(--color3);
+        border: 1px solid var(--color8);
+        border-radius: 30px;
+    }
+
+    .sports-bokinn-data-main-titl{
+        padding: 10px 10px;
+        border-radius: 15px;
+        background: var(--color1);
+        overflow-x: scroll;
+    }
+
+    .sports-bokinn-data-main-titl>h6{
+        margin-bottom: 0px;
+        color: var(--color3);
+        width: max-content;
+    }
+
+    .sports-bokinn-data-tabdv{
+        padding-top: 10px;
+    }
+
+    .sports-bokinn-data-tabul{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .sports-bokinn-data-tabli>button{
+        font-size: 13px;
+        padding: 5px 15px;
+        color: var(--color4);
+        background-color: var(--color5);
+    }
+
+    .sports-bokinn-data-tabli>.active{
+        background: var(--color1);
+    }
+
+    .titl-bodr-lft-spn2{
+        height: 20px;
+        width: 5px;
+    }
+
+    .featured-sec-ro--titl-txt-tg2{
+        font-size: 20px;
+    }
+
+    /* ---------- LOGEDINN SPORTS BOOK INNER PAGE INNER ----------  */
+
+    /* ---------- LOGEDINN PROFILE PAGE INNER ----------  */
+    .profile-pg-contnt-wrp{
+        padding-top: 10px;
+    }
+
+    .profile-pg-contnt-ro{
+        padding: 10px 10px;
+        border-radius: 30px;
+        background-color: var(--color3);
+        border: 1px solid var(--color5);
+    }
+
+    .profile-pg-contnt-txt{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .profile-pg-contnt-txt-inn{
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .profile-pg-contnt-txt-inn-a{
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        width: 100%;
+        padding: 5px;
+        border-bottom: 1px solid var(--color5);
+    }
+    
+    .profile-pg-contnt-txt-inntxt1{
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .profile-pg-contnt-txt-inntxt1>span{
+        height: 30px;
+        width: 30px;
+        border-radius: 40px;
+        background-color: var(--color7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .profile-pg-contnt-txt-inntxt1>h6{
+        margin-bottom: 0px;
+        font-size: 15px;
+    }
+
+    .profile-pg-contnt-txt-inntxt1>i{
+        margin-left: auto;
+        color: var(--color2);
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    /* ---------- LOGEDINN PROFILE PAGE INNER ----------  */
+
+
+    /* ---------- LOGEDINN ACCOUNT STATMENT PAGE INNER ----------  */
+    .mbll-acount-stat-ro-titl{
+        flex-wrap: wrap;
+    }
+
+    /* ---------- LOGEDINN ACCOUNT STATMENT PAGE INNER ----------  */
+
+    /* ---------- LOGEDINN P/L STATMENT PAGE INNER ----------  */
+    .acount-stat-ro-titl-form-btnn-nww{
+        width: 100%;
+    }
+
+    /* ---------- LOGEDINN P/L STATMENT PAGE INNER ----------  */
+
+
+    /* ---------- BINARY PAGE  ----------  */
+    .binary-page-mob-data-main{
+        display: block;
+    }
+
+    .binary-page-mob-data-contnr{
+        padding-top: 10px;
+    }
+
+    .binary-mob-data-card-ro{
+        padding: 10px 10px;
+        background-color: var(--color3);
+        border: 1px solid var(--color8);
+        border-radius: 30px;
+        margin-bottom: 10px;
+    }
+
+    .abinary-mob-dta-card-coldv{
+        padding-top: 10px;
+    }
+
+    .binary-mob-data-card-tbldata{
+        padding-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .binary-mob-data-card-tbldata1{
+        display: flex;
+        align-items: end;
+        gap: 5px;
+    }
+
+    .binary-mob-data-card-tbldata1>.exch-mob-data-tbl-card-dv2-spns>p{
+        text-align: center;
+    }
+
+    /* ---------- BINARY PAGE  ----------  */
+
+
+    /* ---------- BINARY INNER PAGE  ----------  */
+    .my-pos-rel-tr{
+        position: relative;
+    }
+
+    /* ---------- BINARY INNER PAGE  ----------  */
+
+    /* ---------- BASE BALL PAGE  ----------  */
+    .exchange-pg-tranding-maches-nav-sec-innnww{
+        overflow-x: scroll;
+    }
+
+    /* ---------- BASE BALL PAGE  ----------  */
+
+    /* ---------- HORCE RIDING PAGE  ----------  */
+    .exch-horce-ride-contnt-dv-a{
+        gap: 25px;
+    }
+
+    /* ---------- HORCE RIDING PAGE  ----------  */
 
 }
 
@@ -576,7 +1150,7 @@
     }
 
     .nav2menu-dv{
-        padding-top: 20px;
+        padding-top: 0px;
         display: block;
     }
 
@@ -762,7 +1336,7 @@
     }
 
     .featured-sec-ro{
-        padding: 0px 0px;
+        padding: 15px 15px;
     }
 
     /* ---------- HOME PAGE ----------  */
@@ -927,7 +1501,9 @@
     }
 
     .mbl-login-reg-btnn-dv{
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
 
     .mbl-login-reg-btnn-dv-a{
@@ -959,7 +1535,7 @@
     }
     
     .featured-sec-slide-ro{
-        display: none;
+        display: block;
     }
 
     .diss-no{
@@ -967,7 +1543,7 @@
     }
 
     .featured-sec-card-col-img-dv{
-        padding: 0px;
+        padding: 5px;
     }
 
     .explore-sec-col1-bg {
@@ -1123,6 +1699,7 @@
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
+        padding: 5px;
     }
 
     .mymodelloginimg{
@@ -1131,6 +1708,11 @@
 
     .mymodelloginimg-mbl{
         display: block;
+    }
+
+    .liv-casino-txt-ro-aded{
+        justify-content: center;
+        padding-top: 10px;
     }
 
     /* ---------- HOME PAGE MODEL ----------  */
@@ -1194,6 +1776,18 @@
 
     .exchange-pg-inn-banner-col{
         top: 4.5%;
+    }
+
+    .exchange-pg-rit-ro-livetv-titl>h5{
+        font-size: 13px;
+    }
+
+    .nav2menu-dv2{
+        display: none;
+    }
+    
+    .exchange-pg-tranding-maches-nav-sec{
+        display: none;
     }
 
     /* ---------- EXCHANGE PAGE PAGE ----------  */
@@ -1335,7 +1929,7 @@
     .my-nav-bg>.my-nav-contnr{
         display: inline-flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: start;
     }
 
     .acount-stat-ro2{

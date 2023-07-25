@@ -249,6 +249,92 @@ a{
     color: var(--color4);
 }
 
+.nav-login-regstr-btn-anim{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-sv-nav-seting-wrp{
+    position: absolute;
+    top: -70px;
+    right: 0px;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s ease-in-out;
+}
+
+.search-sv-nav-seting-inn{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 5px;
+    background-color: var(--color3);
+    border-radius: 15px 0px 15px 15px;
+    transition: all 0.3s ease-in-out;
+}
+
+.search-sv-nav-seting-inn-col2{
+    padding-left: 5px;
+    border-left: 2px solid var(--color5);
+}
+
+.search-sv-nav-seting-inn-col2>a{
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    gap: 5px;
+    padding: 8px 10px;
+    background: var(--color1);
+    border-radius: 30px;
+    color: var(--color3);
+    transition: all 0.3s ease-in-out;
+    font-weight: normal;
+}
+
+.my-setting-nav-form{
+    width: 150px;
+    font-size: 10px;
+    background-color: var(--color7);
+    border-radius: 30px;
+}
+
+.my-setting-nav-form>input{
+    border: 0px;
+    background-color: transparent;
+    font-size: 10px;
+    box-shadow: none;
+}
+
+.my-setting-nav-form::placeholder{
+    font-size: 10px;
+}
+
+.my-setting-nav-form>span{
+    border: 0px;
+    background-color: transparent;
+    font-size: 10px;
+    box-shadow: none;
+}
+
+.my-setting-nav-form>input:focus{
+    border: 0px;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.setting-btn-nav-contnt{
+    top: 45px;
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-login-regstr-btn{
+    cursor: pointer;
+}
+
 /* --------------------------------------------------------------------------------------
 ============================ HOME PAGE PAGE STYLE ========================================
 -------------------------------------------------------------------------------------- */
@@ -416,7 +502,8 @@ a{
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 5px 10px;
+    height: 30px;
+    width: 40px;
     background-color: var(--color9);
     border-radius: 5px;
 }
@@ -554,7 +641,7 @@ a{
     text-align: center;
  }
  .exchange-pg-rit-ro-livetv-dv-wrp1{
-    height: 80vh;
+    height: 400px;
     overflow-x: scroll;
  }
 .exchange-pg-rit-ro-livetv-dv-wrp1>img{
