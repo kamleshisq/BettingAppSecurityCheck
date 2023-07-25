@@ -1,0 +1,248 @@
+<div class="exchange-pg-inn-banner-col2">
+    <div class="exchange-pg-inn-banner-col-titi">
+        <div class="exchange-pg-inn-banner-col-titi-txt">
+            <h6 class="market" id="<%=match.marketList.match_odd.marketId%>"><span>Match Odds</span> &nbsp; <i class="fa-solid fa-circle-info"></i></h6>
+        </div>
+        <div class="exchange-pg-inn-banner-col-titi-txt-tim">
+            <h6><b>Min : <%=SportLimits.min_stake%>, Max : <%=SportLimits.max_stake%></b></h6>
+        </div>
+    </div>
+
+    <div class="exchange-pg-inn-tbl">
+      <div class="exc-inn-colaps-data-wrpdv">
+
+        <table class="acount-stat-tbl">
+
+          <thead class="acount-stat-tbl-hed2">
+              <tr class="acount-stat-tbl-hed-tr2">
+                  <th style="text-align: left;" class="bod-red-lft ">Market</th>
+                  <th style="text-align: center;" colspan="3">Back</th>
+                  <th style="text-align: center;" colspan="3" class="bod-red-rit">Lay</th>
+              </tr>
+          </thead>
+        </table>
+
+        <% let runners = JSON.parse(match.marketList.match_odd.runners); %>
+        <% const runners1 = []; %>
+        <%const secIds = []; %>
+        <%runners.forEach(item => {%>
+            <%runners1.push(item.runner);%>
+            <%secIds.push(item.secId);%>
+            <%});%>
+            <%for(let i = 0; i < runners1.length; i++){%>
+                <div class="table-data">
+                    <div class="table-data-1">
+                      <p id="<%=match.marketList.match_odd.marketId%><%=i%>" class="runnerName" ><%=runners1[i]%></p>
+                    </div>
+                    <div class="table-data-2">
+                      <div class="table-data-2-inn">
+                        <div class="table-data-2-inn-col">
+                          <span data-bs-toggle="collapse" href="#bt-slp-colps<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps<%=i%>" class="tbl-bg-blu-spn">
+                            <span id="<%=secIds[i]%>1" class="match_odd_Blue button1"></span>
+                            
+                          </span>
+                          <span data-bs-toggle="collapse" href="#bt-slp-colps<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps<%=i%>" class="tbl-bg-blu-spn">
+                            <span id="<%=secIds[i]%>2" class="match_odd_Blue button1" ></span>
+                            
+                          </span>
+                          <span data-bs-toggle="collapse" href="#bt-slp-colps<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps<%=i%>" class="tbl-bg-blu-spn">
+                            <span id="<%=secIds[i]%>3" class="match_odd_Blue button1" ></span>
+                            
+                          </span>
+                          
+                        </div>
+                        
+                        <div class="table-data-2-inn-col">
+                          <span class="tbl-bg-pech-spn">
+                            <a data-bs-toggle="collapse" href="#bt-slp-colps<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps<%=i%>">
+                            <span id="<%=secIds[i]%>4" class="match_odd_Red button1"></span>
+                            </a>
+                          </span>
+                          <span class="tbl-bg-pech-spn">
+                            <a data-bs-toggle="collapse" href="#bt-slp-colps<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps<%=i%>">
+                            <span id="<%=secIds[i]%>5" class="match_odd_Red button1"></span>
+                            </a>
+                          </span>
+                          <span class="tbl-bg-pech-spn">
+                            <a data-bs-toggle="collapse" href="#bt-slp-colps<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps<%=i%>">
+                            <span id="<%=secIds[i]%>6" class="match_odd_Red button1"></span>
+                            </a>
+                          </span>
+                        </div>
+                      </div>
+          
+                      <div class="collapse my-exc-inn-colaps-txt-dv" id="bt-slp-colps<%=i%>">
+                        <div class="card card-body my-exc-inn-colaps-txt-body">
+                          <!-- <div class="exc-pg-rit-tabtxt-dat-ro4">
+                            <div class="exc-inn-colaps-data-titl">
+                              <p><span class="c-activee">Bet on</span> : Bangladesh @ <b>1.75</b></p>
+                            </div>
+                            <div class="ecc-pg-rit-ods-data-ro-aded">
+          
+                              <div class="ecc-pg-rit-ods-data-col">
+                                <p>Profit</p>
+                                <div class="ecc-pg-rit-ods-data-opration2-aded">
+                                  <span class="c-gren">500.00</span>
+                                </div>
+                              </div>
+          
+          
+                              <div class="ecc-pg-rit-ods-data-col">
+                                <p>Odds</p>
+                                <div class="ecc-pg-rit-ods-data-opration-aded">
+                                  <span class="ecc-pg-rit-ods-data-opration-spn">
+                                    <i class="fa-solid fa-plus"></i>
+                                  </span>
+                                  <span class="ecc-pg-rit-ods-data-opration-spn2">1.75</span>
+                                  <span class="ecc-pg-rit-ods-data-opration-spn">
+                                    <i class="fa-solid fa-minus"></i>
+                                  </span>
+                                </div>
+                              </div>
+                              
+                              <div class="ecc-pg-rit-ods-data-col">
+                                <p>Stake</p>
+                                <div class="ecc-pg-rit-ods-data-opration2-aded">
+                                  <span>500</span>
+                                </div>
+                              </div>
+                              
+                              
+                              
+                              <div class="ecc-pg-rit-ods-data-col-aded">
+                                <a href="">PLACE BET</a>
+                              </div>
+          
+                            </div>
+          
+                            <div class="exc-pg-rit-tabtxt-data-stack-num-rowrp">
+                              <div class="exc-pg-rit-tabtxt-data-stack-num-ro-aded ">
+                                <div class="exc-pg-rit-tabtxt-data-stack-num-col-aded">
+                                  <span>100</span>
+                                </div>
+                                <div class="exc-pg-rit-tabtxt-data-stack-num-col-aded">
+                                  <span>500</span>
+                                </div>
+                                <div class="exc-pg-rit-tabtxt-data-stack-num-col-aded">
+                                  <span>1000</span>
+                                </div>
+                                <div class="exc-pg-rit-tabtxt-data-stack-num-col-aded">
+                                  <span>5000</span>
+                                </div>
+                                <div class="exc-pg-rit-tabtxt-data-stack-num-col-aded">
+                                  <span>10,000</span>
+                                </div>
+                                <div class="exc-pg-rit-tabtxt-data-stack-num-col-aded">
+                                  <span>50,000</span>
+                                </div>
+                                <div class="exc-pg-rit-tabtxt-data-stack-num-col-aded">
+                                  <span>1,00,000</span>
+                                </div>
+                                <div class="exc-pg-rit-tabtxt-data-stack-num-col-aded">
+                                  <span>5,00,000</span>
+                                </div>
+                              </div> 
+          
+                            </div>
+          
+                            <div class="exc-pg-rit-tabtxt-data-stack-minmax">
+                              <div class="exc-pg-rit-tabtxt-data-stack-minmax-ro">
+                                <div class="exc-pg-rit-tabtxt-data-stack-minmax-col">
+                                  <a href="#">
+                                    MIN STAKE
+                                  </a>
+                                </div>
+                                <div class="exc-pg-rit-tabtxt-data-stack-minmax-col">
+                                  <a href="#">
+                                    MAX STAKE
+                                  </a>
+                                </div>
+                                <div class="exc-pg-rit-tabtxt-data-stack-minmax-col">
+                                  <a href="#">
+                                    ALL IN
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+          
+                          </div> -->
+          
+                          <div class="nww-bet-slip-wrp">
+                            <div class="nww-bet-slip-wrp-col3">
+                              <span class="eventTitle" id="<%=match.eventData.eventId%>"><%=match.eventData.name%></span>
+                            </div>
+                            <div class="nww-bet-slip-wrp-col3">
+                                <div class="nww-bet-slip-wrp-col3-txt1">
+                                    <span class="betOn<%=i%>">Bet on  :</span>
+                                </div>
+                            </div>
+                            <div class="nww-bet-slip-wrp-col1">
+                              <div class="nww-bet-slip-wrp-col1-txt">
+                                <span>Profit <b class="c-gren"></b></span>
+                              </div>
+          
+                              <div class="nww-bet-slip-wrp-col1-txt">
+                                <span class="nww-bet-slip-wrp-col1-txt-icons">
+                                  <i class="fa-solid fa-plus"></i>
+                                </span>
+                                <span class="nww-bet-slip-wrp-col1-txt-num oddsvalue<%=i%>">1.75</span>
+                                <span class="nww-bet-slip-wrp-col1-txt-icons">
+                                  <i class="fa-solid fa-minus"></i>
+                                </span>
+                              </div>
+          
+                              <div class="nww-bet-slip-wrp-col1-txt">
+                                <div class="nww-bet-slip-wrp-col1-txt-inn input-group-sm">
+                                  <input type="number"  class="form-control set-stake-form-input2" id="Stake<%=i%>" placeholder="Custom" aria-label="Last name">
+                                </div>
+                              </div>
+                            </div>
+          
+                            <div class="nww-bet-slip-wrp-col2" id="<%=i%>">
+                              <div class="nww-bet-slip-wrp-col2-inn">
+                                <span>50</span>
+                                <span>100</span>
+                                <span>150</span>
+                                <span>200</span>
+                                <span>250</span>
+                                <span>500</span>
+                                <span>1000</span>
+                                <span>1500</span>
+                                <span>2000</span>
+                              </div>
+                            </div>
+          
+                            <div class="nww-bet-slip-wrp-col3">
+                              <div class="nww-bet-slip-wrp-col3-txt1">
+                                <p>
+                                  Please select a Stake Amount. Enter a custom amount by clicking on the custom box.
+                                </p>
+                              </div>
+          
+                              <div class="nww-bet-slip-wrp-col3-txt1">
+                                <%if(user){%>
+                                  <a data-sport-id="<%=match.eventData.sportId%>" class="PLACEBET">PLACE BET</a>
+                                  <%}else{%>
+                                    <a  class="mbl-login-reg-btnn-dv-a" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">PLACE BET TO LOGIN</a>
+                                  <%}%>
+                              </div>
+          
+                            </div>
+          
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+            <%}%>
+
+      </div>
+    </div>
+
+    <div class="exchange-pg-inn-tbl-marqq-dv">
+        <div class="exchange-pg-inn-tbl-marqq-dv-wrp">
+            <marquee>West Indies Women vs Ireland Women : Advance Toss & Fancy Bets Started in Our Exchange 🏏</marquee>
+        </div>
+    </div>
+
+</div>
