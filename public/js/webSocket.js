@@ -3328,7 +3328,7 @@ socket.on('connect', () => {
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                     }else{
-                        // this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[0].backPrice1}</span>`
+                        console.log("WORKING 4564654")
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[1].backPrice1}</span>`
                     }
                 });
