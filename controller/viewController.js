@@ -1862,35 +1862,36 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
     let bets2 = await betModel.find({event:req.query.eventname})
     let result = await betModel.aggregate([
         {
+          $match: {
+            event: 'Tamil Nadu Premier League',
+            userId:user._id
+          }
+        },
+        {
           $group: {
-            _id: {
-              match: '$match',
-              userId: '$userId',
-              event: '$event'
-            },
+            _id: '$match',
             totalData: { $sum: 1 },
-            won: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
+            win: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
             loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
-            Open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
-            Cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
-            sumOfReturns: { $sum: '$returns' }
+            cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
+            open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
+            totalSumOfReturns: { $sum: '$returns' }
           }
         },
         {
           $project: {
             _id: 0,
-            match: '$_id.match',
-            userId: '$_id.userId',
-            event: '$_id.event',
+            match: '$_id',
             totalData: 1,
-            won: 1,
+            win: 1,
             loss: 1,
-            Open: 1,
-            Cancel: 1,
-            sumOfReturns: 1
+            cancel: 1,
+            open: 1,
+            totalSumOfReturns: 1
           }
         }
       ]);
+      
       console.log(result)
     res.status(200).render("./userSideEjs/gameReportEvent/main",{
         user,
