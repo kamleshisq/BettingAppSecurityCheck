@@ -8,7 +8,8 @@
                 <div class="acount-stat-ro-titl">
                     <div class="featured-sec-ro--titl-txt">
                         <!-- <span class="titl-bodr-lft-spn2"></span> -->
-                        <h3 class="featured-sec-ro--titl-txt-tg2 game-statment-inn-pg-titl"><a href="game-report-inn-pg.html"><i class="fa-solid fa-arrow-left"></i>  BANGLADESH V AFGHANISTAN  |  MATCH ODDS</a></h3>
+                        <% let encodedEventName = encodeURIComponent(result[0].event); %>
+                        <h3 class="featured-sec-ro--titl-txt-tg2 game-statment-inn-pg-titl"><a href="/event/?eventname=<%=encodedEventName%>"><i class="fa-solid fa-arrow-left"></i>  <%=result[0].match%>  |  MATCH ODDS</a></h3>
                         <!-- <span class="titl-bhind-txt-spn">featured sports</span> -->
                     </div>
                     <div class="acount-stat-ro-titlselect-dv">
@@ -24,21 +25,44 @@
                         <thead class="acount-stat-tbl-hed">
                             <tr class="acount-stat-tbl-hed-tr" >
                                 <th class="bod-red-lft">Settlement Date</th>
+                                <th>Market</th>
                                 <th>Bet On</th>
                                 <th>Odds</th>
+                                <th>Status</th>
                                 <th>Amount</th>
                                 <th class="bod-red-rit">Profit/Loss</th>
                             </tr>
                         </thead>
-
+                        
                         <tbody class="acount-stat-tbl-body">
-                            <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                                <td>23 June 2023, 4:38:58</td>
-                                <td>Bangladesh</td>
-                                <td><span class="tbl-td-bg-blu-spn">1.75</span></td>
-                                <td class="c-gren">100</td>
-                                <td class="c-reed">-50</td>
-                            </tr>
+                            <%for(let i = 0; i < result.length; i++){%>
+                                <%
+                                    <!-- var timestamp = `${data[i].time}`;  -->
+                                    var date = new Date(result[i].date);
+                                    var options = { 
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: 'numeric',
+                                        minute: 'numeric',
+                                        hour12: true
+                                    };
+                                    var formattedTime = date.toLocaleString('en-US', options);
+                                %>
+                                <tr class="acount-stat-tbl-body-tr tbl-data-href" >
+                                    <td><%=formattedTime%></td>
+                                    <td><%=result[i].marketName%></td>
+                                    <td><%=result[i].selectionName%></td>
+                                    <td><span class="tbl-td-bg-blu-spn"><%=result[i].oddValue%></span></td>
+                                    <td><%=result[i].status%></td>
+                                    <td class="c-gren"><%=result[i].Stake%></td>
+                                    <%if(result[i].returns > 0){%>
+                                        <td class="c-gren"><%=result[i].returns%></td>
+                                    <%}else{%>
+                                    <td class="c-reed"><%=result[i].Stake%></td>
+                                    <%}%>
+                                </tr>
+                            <%}%>
                             
                         </tbody>
 
