@@ -1800,29 +1800,25 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Add Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   // Function to handle the click event for the "tbl-bg-blu-spn" spans
-  function handleSpanClick(event) {
-    const span = event.target.closest('.tbl-bg-blu-spn');
-    if (!span) return;
+  function handleSpanClick() {
+    const $span = $(this).closest('.tbl-bg-blu-spn');
+    if (!$span.length) return;
 
-    event.preventDefault();
-    const targetId = span.getAttribute('href');
-    const targetCollapseDiv = document.querySelector(targetId);
+    const targetId = $span.attr('href');
+    const $targetCollapseDiv = $(targetId);
 
     // Hide all other "my-exc-inn-colaps-txt-dv collapse" divs
-    const collapseDivs = document.querySelectorAll('.my-exc-inn-colaps-txt-dv.collapse');
-    collapseDivs.forEach(div => {
-      if (div !== targetCollapseDiv) {
-        div.classList.remove('show');
-      }
-    });
+    const $collapseDivs = $('.my-exc-inn-colaps-txt-dv.collapse').not($targetCollapseDiv);
+    $collapseDivs.removeClass('show');
 
-    targetCollapseDiv.classList.toggle('show');
+    $targetCollapseDiv.toggleClass('show');
   }
 
-  // Add a single click event listener to the document to handle all clicks on "tbl-bg-blu-spn" spans
-  document.addEventListener('click', handleSpanClick);
+  // Add a single click event listener to all "tbl-bg-blu-spn" spans using jQuery
+  $(document).on('click', '.tbl-bg-blu-spn', handleSpanClick);
 </script>
 <script>
   $(document).ready(function () {
