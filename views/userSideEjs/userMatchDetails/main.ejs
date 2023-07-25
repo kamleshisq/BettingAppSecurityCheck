@@ -1797,86 +1797,95 @@
       crossorigin="anonymous"
     ></script>
     <!-- Add the Bootstrap CSS in the head section -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<!-- Add the Bootstrap JS at the end of the body section -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-ASkcGvB6zNkEx3GVyVR4B8kCI5NCf/xEeMBrRkfsBQRNUmfp8Nz2l0uf2Kj9j6aH" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-pzOodU3KqD8eX3dVKOrA9UJzz+XF8HN/Nv3vS6YtSBQeMo9YRRvT0uHOjV5mFd6G" crossorigin="anonymous"></script>
-
-    
-    <!-- <script>
-      $('#offsetmenubtnn').click(function() {
-          $('#offsetmenubody').css({
-              'transform': 'translateX(0px)',
-              'transition': 'all 0.3s ease-in-out',
-          });
+    <script>
+      $(document).ready(function(){
+        $("#offsetmenubtnn").click(function(){
+          $("#offsetmenubody").toggleClass("offset-mnu-width");
+        });
       });
-    </script> -->
+    </script>
+    
+    <script>
+      $(document).ready(function(){
+        $("#offsetmenubtnn").click(function(){
+          $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
+        });
+      });
+    </script>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-   $(document).ready(function () {
-    $("#offsetmenubtnn, #offsertmnuclosbtn").click(function () {
-      $("#offsetmenubody").toggleClass("offset-mnu-width");
-      $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
-    });
+    <script>
+      $(document).ready(function(){
+        $("#offsertmnuclosbtn").click(function(){
+          $("#offsetmenubody").toggleClass("offset-mnu-width");
+        });
+      });
+    </script>
 
-    // Script for mobile bet slip toggle
-    $("#mblbetslipdataclik, #mblbetslipdataclik2").click(function () {
-      $("#mblbetslipdata").toggleClass("show-bet-slip-mbl-data");
-    });
+    <script>
+      $(document).ready(function(){
+        $("#offsertmnuclosbtn").click(function(){
+          $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
+        });
+      });
+    </script>
+    
+    <script>
+      $(document).ready(function(){
+        $("#mblbetslipdataclik").click(function(){
+          $("#mblbetslipdata").toggleClass("show-bet-slip-mbl-data");
+        });
+      });
+    </script>
+    
+    <script>
+      $(document).ready(function(){
+        $("#mblbetslipdataclik2").click(function(){
+          $("#mblbetslipdata").toggleClass("show-bet-slip-mbl-data");
+        });
+      });
+    </script>
 
-    // Toggle corresponding div when span is clicked
-    $('[data-bs-toggle="collapse"]').click(function () {
-      var targetDivId = $(this).data('bs-target');
-
-      // Hide all other divs with class 'my-exc-inn-colaps-txt-dv' that are not the target div
-      $('.my-exc-inn-colaps-txt-dv').not(targetDivId).hide();
-
-      // Toggle the visibility of the target div
-      $(targetDivId).toggle();
-    });
-
-
-    // Generate a random CAPTCHA code
-    function generateCaptcha() {
-      var captcha = '';
-      var possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      for (var i = 0; i < 6; i++) {
-        captcha += possibleChars.charAt(Math.floor(Math.random() * possibleChars.length));
+    <!-- ---------- CAPTCHA CODE ----------  -->
+    <script>
+      // Generate a random CAPTCHA code
+      function generateCaptcha() {
+        var captcha = '';
+        var possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        for (var i = 0; i < 6; i++) {
+          captcha += possibleChars.charAt(Math.floor(Math.random() * possibleChars.length));
+        }
+        return captcha;
       }
-      return captcha;
-    }
-
-    // Display the CAPTCHA code on the page
-    function displayCaptcha() {
-      var captchaCode = document.getElementById('captchaCode');
-      captcha = generateCaptcha();
-      captchaCode.textContent = captcha;
-    }
-
-    // Validate the user's input
-    function validateCaptcha(event) {
-      event.preventDefault();
-      var userInput = document.getElementById('captchaInput').value;
-      if (userInput === captcha) {
-        alert('CAPTCHA code is correct. Form submitted!');
-      } else {
-        alert('CAPTCHA code is incorrect. Please try again.');
-        displayCaptcha(); // Refresh CAPTCHA on incorrect input
+    
+      // Display the CAPTCHA code on the page
+      function displayCaptcha() {
+        var captchaCode = document.getElementById('captchaCode');
+        captcha = generateCaptcha();
+        captchaCode.textContent = captcha;
       }
-    }
-
-    // Refresh the CAPTCHA code
-    $('#refreshCaptcha').click(displayCaptcha);
-
-    // Generate a new CAPTCHA code when the page loads
-    var captcha = generateCaptcha();
-    displayCaptcha();
-
-    // Attach the validation function to the form's submit event
-    $('#captchaForm').submit(validateCaptcha);
-  });
-</script>
+    
+      // Validate the user's input
+      function validateCaptcha() {
+        var userInput = document.getElementById('captchaInput').value;
+        if (userInput === captcha) {
+          alert('CAPTCHA code is correct. Form submitted!');
+        } else {
+          alert('CAPTCHA code is incorrect. Please try again.');
+          displayCaptcha(); // Refresh CAPTCHA on incorrect input
+        }
+        return false; // Prevent form submission
+      }
+    
+      // Refresh the CAPTCHA code
+      document.getElementById('refreshCaptcha').addEventListener('click', displayCaptcha);
+    
+      // Generate a new CAPTCHA code when the page loads
+      var captcha = generateCaptcha();
+      displayCaptcha();
+    
+      // Attach the validation function to the form's submit event
+      document.getElementById('captchaForm').addEventListener('submit', validateCaptcha);
+    </script>
 
     
     
