@@ -28,6 +28,30 @@
           </div>
         </div>
       </section>
+
+      <section class="royalgaming-sec2 mbl-hiro-banner">
+        <div class="container-fluid featured-sec-contnr">
+          <div class="featured-sec-coldv col-lg-11 col-md-12 col-12 w-100-md">
+            <div class="featured-sec-ro-mob">
+              <div class="hiro-nanner-sec-slide-ro hiroslide3">
+                <%for(let i = 0; i < banner.length; i++){%>
+                  <%if(banner[i].status){%>
+                    <div class="featured-sec-card-col-dv">
+                      <div class="featured-sec-card-col-inn">
+                        <div class="featured-sec-card-col-img-dv">
+                          <a href="<%=banner[i].url%>">
+                            <img class="img-fluid featured-sec-card-col-img-tg" src="../banner/<%=banner[i].banner%>.png" alt="">
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  <%}%>
+                <%}%>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <!-- ----= HIRO BANNER SECTION END =-----   -->
 
 
