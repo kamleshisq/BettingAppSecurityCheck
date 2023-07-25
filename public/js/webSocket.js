@@ -4550,6 +4550,10 @@ socket.on('connect', () => {
         })
     }
 
+    if(pathname === "/gameReport/match"){
+        console.log(search)
+    }
+
     
 
 
