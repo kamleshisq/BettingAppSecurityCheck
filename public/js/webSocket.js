@@ -4551,7 +4551,16 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/gameReport/match"){
-        console.log(search)
+        function getJSONDataFromQueryString(queryString) {
+            const urlParams = new URLSearchParams(queryString);
+            const jsonData = {};
+            for (const [key, value] of urlParams.entries()) {
+              jsonData[key] = value;
+            }
+            return jsonData;
+          }
+          const jsonData = getJSONDataFromQueryString(search);
+          console.log(jsonData)
     }
 
     
