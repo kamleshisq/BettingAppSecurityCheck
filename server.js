@@ -1377,6 +1377,13 @@ io.on('connection', (socket) => {
     socket.emit("BETSFORUSER", {MyBets, page})
     })
 
+
+
+
+    socket.on("GAMEREPORTUSER", async(data) => {
+        console.log(data)
+    })
+
     
 })
 

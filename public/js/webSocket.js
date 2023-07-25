@@ -4481,7 +4481,37 @@ socket.on('connect', () => {
 
 
     if(pathname === "/myGameReport"){
-        console.log("Working")
+        $(window).scroll(function() {
+            var scroll = $(window).scrollTop();
+            var windowHeight = $(window).height();
+            var documentHeight = $(document).height();
+            if (scroll + windowHeight >= documentHeight) {
+                let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                let fromDate = $('#Fdate').val()
+                let toDate = $('#Tdate').val()
+                let filterData = {}
+                filterData.fromDate = fromDate,
+                filterData.toDate = toDate
+                socket.emit("GAMEREPORTUSER", {page, LOGINDATA, filterData})
+            }
+        });
+
+
+        const FdateInput = document.getElementById('Fdate');
+        const TdateInput = document.getElementById('Tdate');
+        FdateInput.addEventListener('change', handleInputChange);
+        TdateInput.addEventListener('change', handleInputChange);
+        function handleInputChange(event) {
+            let fromDate = $('#Fdate').val()
+            let toDate = $('#Tdate').val()
+            let filterData = {}
+            filterData.fromDate = fromDate,
+            filterData.toDate = toDate
+            page = 0
+            $('.pageId').attr('data-pageid',1)
+            socket.emit("GAMEREPORTUSER", {page, LOGINDATA, filterData})
+          }
     }
 
     
