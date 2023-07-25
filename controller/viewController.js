@@ -1859,45 +1859,48 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find();
     let games = await gameModel.find();
     let userLog = await loginLogs.find({user_id:user._id})
-    console.log(req.query)
-    // let bets = await betModel.aggregate([
-    //     {
-    //         $match: {
-    //           userId: `${user._id}` 
-    //         }
-    //       },
-    //     {
-    //         $group: {
-    //           _id: '$event',
-    //           totalData: { $sum: 1 },
-    //           won: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
-    //           loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
-    //           Open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
-    //           Cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
-    //           sumOfReturns: { $sum: '$returns' },
-    //           uniqueMarketCount: { $addToSet: '$marketName' } 
-    //         }
-    //       },
-    //       {
-    //         $project: {
-    //           _id: 1,
-    //           totalData: 1,
-    //           won: 1,
-    //           loss: 1,
-    //           Open: 1,
-    //           Cancel: 1,
-    //           sumOfReturns: 1,
-    //           uniqueMarketCount: { $size: '$uniqueMarketCount' } 
-    //         }
-    //       },
-    //       {
-    //         $sort: { totalData: -1 , _id: 1}
-    //       },
-    //       {
-    //         $limit: 20 
-    //       }
-    //   ])
-    //   console.log(bets)
+    let bets = await betModel.aggregate([
+        {
+          $match: {
+            event: req.query.eventname,
+            userId: `${user._id}`
+          }
+        },
+        {
+          $group: {
+            _id: '$match',
+            totalData: { $sum: 1 },
+            won: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
+            loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
+            Open: { $sum: { $cond: [{ $eq: ['$status', 'OPEN'] }, 1, 0] } },
+            Cancel: { $sum: { $cond: [{ $eq: ['$status', 'CANCEL'] }, 1, 0] } },
+            sumOfReturns: { $sum: '$returns' },
+            dates: { $addToSet: '$createdAt' } // Add the 'createdAt' field to the result
+          }
+        },
+        {
+          $unwind: '$dates' // Unwind the 'dates' array
+        },
+        {
+          $project: {
+            _id: 1,
+            totalData: 1,
+            won: 1,
+            loss: 1,
+            Open: 1,
+            Cancel: 1,
+            sumOfReturns: 1,
+            date: '$dates' // Rename the 'dates' field to 'date'
+          }
+        },
+        {
+          $sort: { totalData: -1, date: 1 } // Sort by 'totalData' in descending order and 'date' in ascending order
+        },
+        {
+          $limit: 20
+        }
+      ]);
+      console.log(bets)
     res.status(200).render("./userSideEjs/gameReportEvent/main",{
         user,
         verticalMenus,
