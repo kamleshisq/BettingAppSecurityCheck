@@ -4359,7 +4359,7 @@ socket.on('connect', () => {
               }, 500)
         }
         marketId()
-        ssocket.on("marketId", (data) => {
+        socket.on("marketId", (data) => {
             $(document).ready(function() {
           
                 $(".0L").each(function() {
