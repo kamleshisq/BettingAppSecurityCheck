@@ -4780,19 +4780,24 @@ socket.on('connect', () => {
                 $(".2B").each(function() {
                         let id = this.id
                         const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+                        console.log(foundItem.odds[2].backPrice1)
                         if(data.betLimits[0].max_odd < foundItem.odds[2].backPrice1){
+                            console.log("WORKING", 1)
                             this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                         }else if (foundItem.odds[2].backPrice1 == "-"){
+                            console.log("Wirkinf", 2)
                             this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                         }else if(foundItem.odds[2].backPrice1=="1,000.00"){
+                            console.log("Wirkinf", 3)
                             this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
                             <i class="fa-solid fa-lock"></i>
                           </span>`
                         }else{
+                            console.log("Wirkinf", 4)
                             this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[2].backPrice1}</span>`
                         }
                 });
@@ -5128,7 +5133,6 @@ socket.on('connect', () => {
                     }
                 html += "</tr>"
             }
-            console.log(html)
             if(data.page == 0){
                 $('.acount-stat-tbl-body').html(html)
             }else{
