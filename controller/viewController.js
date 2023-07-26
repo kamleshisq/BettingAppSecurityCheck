@@ -332,7 +332,6 @@ exports.registration = catchAsync(async(req, res, next) => {
 });
 
 exports.userdashboard = catchAsync(async(req, res, next) => {
-    console.log(req.notifications, 456)
     let user = req.currentUser
     const data = await promotionModel.find();
     let verticalMenus = await verticalMenuModel.find();
@@ -363,7 +362,8 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         userLog,
         LiveCricket,
         liveFootBall,
-        liveTennis
+        liveTennis,
+        notifications:req.notifications
     })
 })
 
@@ -396,7 +396,9 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
         user:req.currentUser,
         verticalMenus,
         check:"ACCC",
-        userLog})
+        userLog,
+        notifications:req.notifications
+    })
     // )
 });
 
@@ -1404,7 +1406,8 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         upcomintCricket,
         upcomintFootball,
         upcomintTennis,
-        userLog
+        userLog,
+        notifications:req.notifications
         
     })
 })
@@ -1438,7 +1441,8 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
         liveFootBall,
         liveTennis,
         LiveCricket,
-        userLog      
+        userLog,
+        notifications:req.notifications      
     })
 })
 
@@ -1462,7 +1466,8 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
         data,
         LiveCricket,
         upcomintCricket,
-        userLog
+        userLog,
+        notifications:req.notifications
     })
 })
 
@@ -1482,7 +1487,8 @@ exports.cardsPage = catchAsync(async(req, res, next) => {
         data,
         check:"Cards",
         games,
-        userLog
+        userLog,
+        notifications:req.notifications
     })
 })
 
@@ -1506,7 +1512,8 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
         data,
         liveFootBall,
         upcomintFootball,
-        userLog
+        userLog,
+        notifications:req.notifications
     })
 })
 
@@ -1530,7 +1537,8 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
         data,
         liveTennis,
         upcomintTennis,
-        userLog
+        userLog,
+        notifications:req.notifications
     })
 })
 
@@ -1571,7 +1579,8 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
         data,
         verticalMenus,
         check:"plStatemenet",
-        userLog
+        userLog,
+        notifications:req.notifications
     })
 });
 
@@ -1613,7 +1622,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         match,
         SportLimits,
         liveStream,
-        userLog
+        userLog,
+        notifications:req.notifications
     })
 });
 
@@ -1643,7 +1653,8 @@ exports.getCardInplayGame = catchAsync(async(req, res, next) => {
         data,
         check,
         urldata,
-        userLog
+        userLog,
+        notifications:req.notifications
     })
 })
 
@@ -1696,7 +1707,8 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
         data,
         check:"Sportsbook",
         urldata,
-        userLog
+        userLog,
+        notifications:req.notifications
     })
 });
 
@@ -1717,7 +1729,8 @@ exports.royalGamingPage = catchAsync(async(req, res, next) => {
         data,
         check:"Royal Casino",
         games,
-        userLog
+        userLog,
+        notifications:req.notifications
     })
 });
 
@@ -1737,7 +1750,8 @@ exports.virtualsPage = catchAsync(async(req, res, next) => {
         data,
         check:"Virtuals",
         games,
-        userLog
+        userLog,
+        notifications:req.notifications
     })
 });
 
@@ -1755,7 +1769,8 @@ exports.OthersGames = catchAsync(async(req, res, next) => {
         verticalMenus,
         data,
         check:"Other",
-        userLog
+        userLog,
+        notifications:req.notifications
     })
 });
 
@@ -1775,7 +1790,8 @@ exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
         data,
         check:"Live Casino",
         games,
-        userLog
+        userLog,
+        notifications:req.notifications
     })
 });
 
@@ -1794,7 +1810,8 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
         check:"My Bets",
         games,
         userLog,
-        bets
+        bets,
+        notifications:req.notifications
     })
 });
 
@@ -1850,7 +1867,8 @@ exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
         check:"My game",
         games,
         bets,
-        userLog
+        userLog,
+        notifications:req.notifications
     })
 })
 
@@ -1910,7 +1928,8 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
         check:"My game",
         games,
         userLog,
-        result
+        result,
+        notifications:req.notifications
     })
 })
 
@@ -1930,6 +1949,7 @@ exports.getGameReportInINPageUser = catchAsync(async(req, res, next) => {
         check:"My game",
         games,
         userLog,
-        result
+        result,
+        notifications:req.notifications
     })
 })

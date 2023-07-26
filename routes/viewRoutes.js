@@ -64,7 +64,7 @@ router.get("/admin/pageManager", authController.isProtected, authController.isAd
 
 
 //Real??
-router.get("/", authController.isLogin, notificationController.myNotifications ,notificationController.myNotifications ,viewController.userdashboard);
+router.get("/", authController.isLogin, notificationController.myNotifications ,viewController.userdashboard);
 router.get('/exchange', authController.isLogin, notificationController.myNotifications ,viewController.getUserExchangePage);
 router.get('/exchange/cricket', authController.isLogin, notificationController.myNotifications ,viewController.cricketPage);
 router.get('/exchange/football', authController.isLogin, notificationController.myNotifications ,viewController.footBallPage);
