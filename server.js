@@ -974,7 +974,7 @@ io.on('connection', (socket) => {
             let updatedNotification = await notificationModel.findOne({ _id: data.id });
             updatedNotification.status = !updatedNotification.status;
             await updatedNotification.save();
-            socket.emit("updateStatus", {id:updatedNotification.id, message:"updated"})
+            socket.emit("updateStatus", {id:updatedNotification.id, message:"updated",status:updatedNotification.status})
         }catch(err){
             socket.emit("updateStatus", "Please try again later")
         }
