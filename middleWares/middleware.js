@@ -86,7 +86,18 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         //     global._User = ""
         // }
     }else if(req.originalUrl == "/"){
-        console.log(req.headers.cookie, 88888888888888888888888888)
+        if(req.headers.cookie){
+            const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).JWT, isOnline:true})
+            // //console.log(req.headers.cookie)
+            if(login == null){
+                return next()
+            }
+            const user = await User.findById(login.user_id._id)
+            global._token = req.headers.cookie
+            global._protocol = req.protocol
+            global._host = req.get('host')
+            global._User = user
+        }
     }
     
     
