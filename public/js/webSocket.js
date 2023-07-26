@@ -2912,7 +2912,7 @@ socket.on('connect', () => {
         })
 
         socket.on('updateStatus', async(data)=>{
-            if(data === "updated"){
+            if(data.message === "updated"){
                 let html = ``
                 if(data.status){
                     html += `<a class="btn-green">Enable </a>`
