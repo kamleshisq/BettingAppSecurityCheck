@@ -1,725 +1,746 @@
 <div class="mbl-exc-inn-tab-dv-main">
-  <div class="mbl-exc-inn-tab-dv">
-    <div class="exchange-pg-inn-banner-col-titi titl-overflow-mbl-exc-inn mb-2">
-      <div class="exchange-pg-inn-banner-col-titi2 titl-overflow-mbl-exc-inn2">
-          <span class="exchange-pg-inn-banner-col-titi-txt">
-            <h6>Test Matches / <span>Bangladesh v Afghanistan</span></h6>
-          </span>
-          <span class="exchange-pg-inn-banner-col-titi-txt-tim">
-            <i class="fa-regular fa-clock"></i>
-            <h6>16 June 2023, 9:30 AM</h6>
-          </span>
-      </div>
-    </div>
-    <div class="mbl-exc-inn-tab-dvwrp">
-      <ul class="nav nav-pills mb-3 exc-pg-rit-tabdv exc-pg-rit-tabdv-mbl" id="pills-tab" role="tablist">
-        <li class="nav-item exc-pg-rit-tabli exc-pg-rit-tabli-mbl" role="presentation">
-          <button class="nav-link active exc-pg-rit-tab-btn exc-pg-rit-tab-btn-mbl" id="pills-homea-tab" data-bs-toggle="pill" data-bs-target="#pills-homea" type="button" role="tab" aria-controls="pills-homea" aria-selected="true">Score</button>
-        </li>
-        <li class="nav-item exc-pg-rit-tabli exc-pg-rit-tabli-mbl" role="presentation">
-          <button class="nav-link exc-pg-rit-tab-btn exc-pg-rit-tab-btn-mbl" id="pills-profileb-tab" data-bs-toggle="pill" data-bs-target="#pills-profileb" type="button" role="tab" aria-controls="pills-profileb" aria-selected="false">Live Stream</button>
-        </li>
-        <li class="nav-item exc-pg-rit-tabli exc-pg-rit-tabli-mbl" role="presentation">
-          <button class="nav-link exc-pg-rit-tab-btn exc-pg-rit-tab-btn-mbl" id="pills-profilebb-tab" data-bs-toggle="pill" data-bs-target="#pills-profilebb" type="button" role="tab" aria-controls="pills-profilebb" aria-selected="false">Open Bets (0)</button>
-        </li>
-      </ul>
-      <div class="tab-content exc-pg-rit-tabtxt" id="pills-tabContent">
-        <div class="tab-pane fade show active exc-pg-rit-tabtxt-datadv" id="pills-homea" role="tabpanel" aria-labelledby="pills-homea-tab" tabindex="0">
-          <div class="exchange-pg-inn-banner-tv score">
-            
-          </div>
-        </div>
-        <div class="tab-pane fade exc-pg-rit-tabtxt-datadv" id="pills-profileb" role="tabpanel" aria-labelledby="pills-profileb-tab" tabindex="0">
-          <div class="exchange-pg-rit-ro-mbll">
-            <div class="exchange-pg-rit-ro-livetv-dv">
-              <div class="exchange-pg-rit-ro-livetv-titl">
-                <h5>Live Stream</h5>
-              </div>
-              <div class="exchange-pg-rit-ro-livetv-dv-wrp">
-                <%-liveStream.data%>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="tab-pane fade exc-pg-rit-tabtxt-datadv" id="pills-profilebb" role="tabpanel" aria-labelledby="pills-profilebb-tab" tabindex="0">
-          tab 03
+  <div class="container-fluid">
+    <%-include("../navbar2")%>
+    <div class="mbl-exc-inn-tab-dv">
+      <div class="exchange-pg-inn-banner-col-titi titl-overflow-mbl-exc-inn mb-2">
+        <div class="exchange-pg-inn-banner-col-titi2 titl-overflow-mbl-exc-inn2">
+            <span class="exchange-pg-inn-banner-col-titi-txt">
+              <h6><%=match.eventData.league%> / <span><%=match.eventData.name%></span></h6>
+            </span>
+            <span class="exchange-pg-inn-banner-col-titi-txt-tim">
+              <i class="fa-regular fa-clock"></i>
+              <%
+              var timestamp = `${match.eventData.time}` * 1000; 
+              var date = new Date(timestamp);
+              var options = { 
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true
+              };
+              var formattedTime = date.toLocaleString('en-US', options);
+          %>
+              <h6><%=formattedTime%></h6>
+            </span>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="mbl-exc-inn-tbl-datadv">
-    <div class="mbl-exc-inn-tbl-datadv-wrp">
-      <div class="exchange-pg-inn-banner-col-titi">
-        <div class="exchange-pg-inn-banner-col-titi-txt">
-            <h6><span>Match Odds</span> &nbsp; <i class="fa-solid fa-circle-info"></i></h6>
-        </div>
-        <div class="exchange-pg-inn-banner-col-titi-txt-tim">
-            <h6><b>Min : 100, Max : 5K</b></h6>
-        </div>
-      </div>
-
-      <table class="acount-stat-tbl">
-
-        <thead class="acount-stat-tbl-hed2">
-            <tr class="acount-stat-tbl-hed-tr2" >
-                <th style="text-align: left;" class="bod-red-lft ">Market</th>
-                <th style="text-align: center;" colspan="">Back</th>
-                <th style="text-align: center;" colspan="" class="bod-red-rit">Lay</th>
-            </tr>
-        </thead>
-
-        <tbody class="acount-stat-tbl-body">
-            <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                <td style=" text-align: left;">
-                    Bangladesh
-                </td>
-                
-                <td class="tbl-td-with" >
-                    <span id="mblbetslipdataclik" class="tbl-bg-blu-spn mbl-odt-sli-reltiv-dv">
-                        <span><b>75.5</b></span> 
-                        <span>517.00</span>
-                        <div id="mblbetslipdata" class="mbl-odt-sli-wrp-dv">
-                          <div class="mbl-odt-sli-wrp-dv-inn">
-                            <div class="exc-pg-rit-tabtxt-dat-ro2">
-                              <div class="ecc-pg-rit-ods-data-ro">
-    
-                                <div class="ecc-pg-rit-ods-data-col">
-                                  <p>Odds</p>
-                                  <div class="ecc-pg-rit-ods-data-opration">
-                                    <span class="ecc-pg-rit-ods-data-opration-spn">
-                                      <i class="fa-solid fa-plus"></i>
-                                    </span>
-                                    <span class="ecc-pg-rit-ods-data-opration-spn2">1.75</span>
-                                    <span class="ecc-pg-rit-ods-data-opration-spn">
-                                      <i class="fa-solid fa-minus"></i>
-                                    </span>
-                                  </div>
-                                </div>
-                                
-                                <div class="ecc-pg-rit-ods-data-col">
-                                  <p>Stake</p>
-                                  <div class="ecc-pg-rit-ods-data-opration2">
-                                    <span>500</span>
-                                  </div>
-                                </div>
-                                
-                                <div class="ecc-pg-rit-ods-data-col">
-                                  <p>Profit</p>
-                                  <div class="ecc-pg-rit-ods-data-opration2">
-                                    <span class="c-gren">500.00</span>
-                                  </div>
-                                </div>
-    
-                              </div>
-
-                              <div class="exc-pg-rit-tabtxt-data-stack-num-rowrp">
-                                <div class="exc-pg-rit-tabtxt-data-stack-num-ro">
-                                  <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                                    <span>100</span>
-                                  </div>
-                                  <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                                    <span>500</span>
-                                  </div>
-                                  <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                                    <span>1000</span>
-                                  </div>
-                                  <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                                    <span>5000</span>
-                                  </div>
-                                </div>
-                                
-                                <div class="exc-pg-rit-tabtxt-data-stack-num-ro">
-                                  <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                                    <span>10,000</span>
-                                  </div>
-                                  <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                                    <span>50,000</span>
-                                  </div>
-                                  <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                                    <span>1,00,000</span>
-                                  </div>
-                                  <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                                    <span>5,00,000</span>
-                                  </div>
-                                </div>
-                              </div>
-      
-                              <div class="exc-pg-rit-tabtxt-data-stack-minmax">
-                                <div class="exc-pg-rit-tabtxt-data-stack-minmax-ro">
-                                  <div class="exc-pg-rit-tabtxt-data-stack-minmax-col">
-                                    <a href="#">
-                                      MIN STAKE
-                                    </a>
-                                  </div>
-                                  <div class="exc-pg-rit-tabtxt-data-stack-minmax-col">
-                                    <a href="#">
-                                      MAX STAKE
-                                    </a>
-                                  </div>
-                                  <div class="exc-pg-rit-tabtxt-data-stack-minmax-col">
-                                    <a href="#">
-                                      ALL IN
-                                    </a>
-                                  </div>
-                                </div>
-                              </div>
-      
-                              <div class="exc-pg-rit-tabtxt-data-place-bet-btndv">
-                                <a href="#">PLACE BET</a>
-                              </div>
-
-                            </div>
-                          </div>
-                        </div>
-                    </span> 
-                </td>
-
-                <td class="tbl-td-with" >
-                  <span id="mblbetslipdataclik2" class="tbl-bg-pech-spn mbl-odt-sli-reltiv-dv">
-                    <span><b>75.5</b></span> 
-                    <span>517.00</span>
-
-                    <div id="mblbetslipdata" class="mbl-odt-sli-wrp-dv">
-                      <div class="mbl-odt-sli-wrp-dv-inn">
-                        <div class="exc-pg-rit-tabtxt-dat-ro2">
-                          <div class="ecc-pg-rit-ods-data-ro">
-
-                            <div class="ecc-pg-rit-ods-data-col">
-                              <p>Odds</p>
-                              <div class="ecc-pg-rit-ods-data-opration">
-                                <span class="ecc-pg-rit-ods-data-opration-spn">
-                                  <i class="fa-solid fa-plus"></i>
-                                </span>
-                                <span class="ecc-pg-rit-ods-data-opration-spn2">1.75</span>
-                                <span class="ecc-pg-rit-ods-data-opration-spn">
-                                  <i class="fa-solid fa-minus"></i>
-                                </span>
-                              </div>
-                            </div>
-                            
-                            <div class="ecc-pg-rit-ods-data-col">
-                              <p>Stake</p>
-                              <div class="ecc-pg-rit-ods-data-opration2">
-                                <span>500</span>
-                              </div>
-                            </div>
-                            
-                            <div class="ecc-pg-rit-ods-data-col">
-                              <p>Profit</p>
-                              <div class="ecc-pg-rit-ods-data-opration2">
-                                <span class="c-gren">500.00</span>
-                              </div>
-                            </div>
-
-                          </div>
-
-                          <div class="exc-pg-rit-tabtxt-data-stack-num-rowrp">
-                            <div class="exc-pg-rit-tabtxt-data-stack-num-ro">
-                              <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                                <span>100</span>
-                              </div>
-                              <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                                <span>500</span>
-                              </div>
-                              <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                                <span>1000</span>
-                              </div>
-                              <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                                <span>5000</span>
-                              </div>
-                            </div>
-                            
-                            <div class="exc-pg-rit-tabtxt-data-stack-num-ro">
-                              <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                                <span>10,000</span>
-                              </div>
-                              <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                                <span>50,000</span>
-                              </div>
-                              <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                                <span>1,00,000</span>
-                              </div>
-                              <div class="exc-pg-rit-tabtxt-data-stack-num-col">
-                                <span>5,00,000</span>
-                              </div>
-                            </div>
-                          </div>
-  
-                          <div class="exc-pg-rit-tabtxt-data-stack-minmax">
-                            <div class="exc-pg-rit-tabtxt-data-stack-minmax-ro">
-                              <div class="exc-pg-rit-tabtxt-data-stack-minmax-col">
-                                <a href="#">
-                                  MIN STAKE
-                                </a>
-                              </div>
-                              <div class="exc-pg-rit-tabtxt-data-stack-minmax-col">
-                                <a href="#">
-                                  MAX STAKE
-                                </a>
-                              </div>
-                              <div class="exc-pg-rit-tabtxt-data-stack-minmax-col">
-                                <a href="#">
-                                  ALL IN
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-  
-                          <div class="exc-pg-rit-tabtxt-data-place-bet-btndv">
-                            <a href="#">PLACE BET</a>
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-
-                  </span> 
-                </td>
-                
-            </tr>
-            
-        </tbody>
-
-      </table>
-
-      <div class="exchange-pg-inn-tbl-marqq-dv">
-        <div class="exchange-pg-inn-tbl-marqq-dv-wrp">
-            <marquee>West Indies Women vs Ireland Women : Advance Toss & Fancy Bets Started in Our Exchange 🏏</marquee>
-        </div>
-      </div>
-    </div>
-    <div class="mbl-exc-inn-tbl-datadv-wrp2">
-      <div class="mbl-exc-inn-tbl-datadv-wrp2-inn">
-        <div class="exchange-pg-inn-banner-col3">
-          <div class="exchange-pg-inn-banner-col-titi">
-            <div class="exchange-pg-inn-banner-col-titi-txt">
-                <h6><span>Fancy</span> &nbsp; <i class="fa-solid fa-circle-info"></i></h6>
-            </div>
-            
-          </div>
-
-          <div class="exch-pg-inn-fancy-tab-wrp">
-            <ul class="nav nav-pills mb-3 exch-pg-inn-fancy-tab-ul" id="pills-tab" role="tablist">
-
-              <div class="exch-pg-inn-fancy-tab-ul2-inn">
-                <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
-                  <button class="nav-link active exch-pg-inn-fancy-tab-btn" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">All</button>
-                </li>
-                <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
-                  <button class="nav-link exch-pg-inn-fancy-tab-btn" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Sessions</button>
-                </li>
-                <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
-                  <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab4-tab" data-bs-toggle="pill" data-bs-target="#fancytab4" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">W/P Market</button>
-                </li>
-                <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
-                  <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab3-tab" data-bs-toggle="pill" data-bs-target="#fancytab3" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Only Over</button>
-                </li>
-                <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
-                  <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab5-tab" data-bs-toggle="pill" data-bs-target="#fancytab5" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Ball by Ball</button>
-                </li>
-                <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
-                  <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab6-tab" data-bs-toggle="pill" data-bs-target="#fancytab6" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Odd/Even </button>
-                </li>
-              </div>
+      <div class="mbl-exc-inn-tab-dvwrp">
+        <ul class="nav nav-pills mb-3 exc-pg-rit-tabdv exc-pg-rit-tabdv-mbl" id="pills-tab" role="tablist">
+          <li class="nav-item exc-pg-rit-tabli exc-pg-rit-tabli-mbl" role="presentation">
+            <button class="nav-link active exc-pg-rit-tab-btn exc-pg-rit-tab-btn-mbl" id="pills-homea-tab" data-bs-toggle="pill" data-bs-target="#pills-homea" type="button" role="tab" aria-controls="pills-homea" aria-selected="true">Score</button>
+          </li>
+          <li class="nav-item exc-pg-rit-tabli exc-pg-rit-tabli-mbl" role="presentation">
+            <button class="nav-link exc-pg-rit-tab-btn exc-pg-rit-tab-btn-mbl" id="pills-profileb-tab" data-bs-toggle="pill" data-bs-target="#pills-profileb" type="button" role="tab" aria-controls="pills-profileb" aria-selected="false">Live Stream</button>
+          </li>
+          <li class="nav-item exc-pg-rit-tabli exc-pg-rit-tabli-mbl" role="presentation">
+            <button class="nav-link exc-pg-rit-tab-btn exc-pg-rit-tab-btn-mbl" id="pills-profilebb-tab" data-bs-toggle="pill" data-bs-target="#pills-profilebb" type="button" role="tab" aria-controls="pills-profilebb" aria-selected="false">Open Bets (0)</button>
+          </li>
+        </ul>
+        <div class="tab-content exc-pg-rit-tabtxt" id="pills-tabContent">
+          <div class="tab-pane fade show active exc-pg-rit-tabtxt-datadv" id="pills-homea" role="tabpanel" aria-labelledby="pills-homea-tab" tabindex="0">
+            <div class="exchange-pg-inn-banner-tv score">
               
-            </ul>
-            <div class="tab-content exch-pg-inn-fancy-tab-txt" id="pills-tabContent">
-              <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-                <div class="exch-pg-inn-fancy-tab-txt-inn">
-                  <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
-                    <table class="acount-stat-tbl">
-
-                      <thead class="acount-stat-tbl-hed3">
-                          <tr class="acount-stat-tbl-hed-tr3" >
-                              <th colspan="2" style="text-align: left;" class="bod-red-lft ">Sessions</th>
-                              <th style="text-align: center;" colspan=""></th>
-                              <th style="text-align: center;" colspan="">No</th>
-                              <th style="text-align: center;" colspan="" class="bod-red-rit">Yes</th>
-                          </tr>
-                      </thead>
-
-                      <tbody class="acount-stat-tbl-body">
-                          <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                              <td colspan="2" style="text-align: left;">
-                                1st inning runs Bangladesh
-                              </td>
-
-                              <td><span class="c-activee">Min : 100, Max : 5K</span></td>
-                              
-                              <td >
-                                  <span class="tbl-bg-blu-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>
-
-                              
-
-                              <td >
-                                  <span class="tbl-bg-pech-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>  
-                          </tr>
-                          <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                              <td colspan="2" style="text-align: left;">
-                                1st inning runs Bangladesh
-                              </td>
-
-                              <td><span class="c-activee">Min : 100, Max : 5K</span></td>
-                              
-                              <td >
-                                  <span class="tbl-bg-blu-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>
-
-                              
-
-                              <td >
-                                  <span class="tbl-bg-pech-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>  
-                          </tr>
-                          <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                              <td colspan="2" style="text-align: left;">
-                                1st inning runs Bangladesh
-                              </td>
-
-                              <td><span class="c-activee">Min : 100, Max : 5K</span></td>
-                              
-                              <td >
-                                  <span class="tbl-bg-blu-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>
-
-                              
-
-                              <td >
-                                  <span class="tbl-bg-pech-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>  
-                          </tr>
-                          
-                          
-                      </tbody>
-
-                    </table>
-                    <div class="exchange-pg-inn-tbl-marqq-dv">
-                      <div class="exchange-pg-inn-tbl-marqq-dv-wrp">
-                          <marquee>West Indies Women vs Ireland Women : Advance Toss & Fancy Bets Started in Our Exchange 🏏</marquee>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
-                    <table class="acount-stat-tbl mt-2">
-
-                      <thead class="acount-stat-tbl-hed3">
-                          <tr class="acount-stat-tbl-hed-tr3" >
-                              <th colspan="2" style="text-align: left;" class="bod-red-lft ">W/P Market</th>
-                              <th style="text-align: center;" colspan=""></th>
-                              <th style="text-align: center;" colspan="">No</th>
-                              <th style="text-align: center;" colspan="" class="bod-red-rit">Yes</th>
-                          </tr>
-                      </thead>
-
-                      <tbody class="acount-stat-tbl-body">
-                          <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                              <td colspan="2" style="text-align: left;">
-                                1st inning runs Bangladesh
-                              </td>
-
-                              <td><span class="c-activee">Min : 100, Max : 5K</span></td>
-                              
-                              <td >
-                                  <span class="tbl-bg-blu-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>
-
-                              
-
-                              <td >
-                                  <span class="tbl-bg-pech-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>  
-                          </tr>
-                          <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                              <td colspan="2" style="text-align: left;">
-                                1st inning runs Bangladesh
-                              </td>
-
-                              <td><span class="c-activee">Min : 100, Max : 5K</span></td>
-                              
-                              <td >
-                                  <span class="tbl-bg-blu-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>
-
-                              
-
-                              <td >
-                                  <span class="tbl-bg-pech-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>  
-                          </tr>
-                          <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                              <td colspan="2" style="text-align: left;">
-                                1st inning runs Bangladesh
-                              </td>
-
-                              <td><span class="c-activee">Min : 100, Max : 5K</span></td>
-                              
-                              <td >
-                                  <span class="tbl-bg-blu-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>
-
-                              
-
-                              <td >
-                                  <span class="tbl-bg-pech-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>  
-                          </tr>
-                          
-                          
-                      </tbody>
-
-                    </table>
-                    <div class="exchange-pg-inn-tbl-marqq-dv">
-                      <div class="exchange-pg-inn-tbl-marqq-dv-wrp">
-                          <marquee>West Indies Women vs Ireland Women : Advance Toss & Fancy Bets Started in Our Exchange 🏏</marquee>
-                      </div>
-                    </div>
-                  </div>
-                  
-
-                  <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
-                    <table class="acount-stat-tbl mt-2">
-
-                      <thead class="acount-stat-tbl-hed3">
-                          <tr class="acount-stat-tbl-hed-tr3" >
-                              <th colspan="2" style="text-align: left;" class="bod-red-lft ">Only Over</th>
-                              <th style="text-align: center;" colspan=""></th>
-                              <th style="text-align: center;" colspan="">No</th>
-                              <th style="text-align: center;" colspan="" class="bod-red-rit">Yes</th>
-                          </tr>
-                      </thead>
-
-                      <tbody class="acount-stat-tbl-body">
-                          <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                              <td colspan="2" style="text-align: left;">
-                                1st inning runs Bangladesh
-                              </td>
-
-                              <td><span class="c-activee">Min : 100, Max : 5K</span></td>
-                              
-                              <td >
-                                  <span class="tbl-bg-blu-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>
-
-                              
-
-                              <td >
-                                  <span class="tbl-bg-pech-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>  
-                          </tr>
-                          
-                      </tbody>
-
-                    </table>
-                    <div class="exchange-pg-inn-tbl-marqq-dv">
-                      <div class="exchange-pg-inn-tbl-marqq-dv-wrp">
-                          <marquee>West Indies Women vs Ireland Women : Advance Toss & Fancy Bets Started in Our Exchange 🏏</marquee>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
-                    <table class="acount-stat-tbl mt-2">
-
-                      <thead class="acount-stat-tbl-hed3">
-                          <tr class="acount-stat-tbl-hed-tr3" >
-                              <th colspan="2" style="text-align: left;" class="bod-red-lft ">Ball by Ball</th>
-                              <th style="text-align: center;" colspan=""></th>
-                              <th style="text-align: center;" colspan="">No</th>
-                              <th style="text-align: center;" colspan="" class="bod-red-rit">Yes</th>
-                          </tr>
-                      </thead>
-
-                      <tbody class="acount-stat-tbl-body">
-                          <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                              <td colspan="2" style="text-align: left;">
-                                1st inning runs Bangladesh
-                              </td>
-
-                              <td><span class="c-activee">Min : 100, Max : 5K</span></td>
-                              
-                              <td >
-                                  <span class="tbl-bg-blu-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>
-
-                              
-
-                              <td >
-                                  <span class="tbl-bg-pech-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>  
-                          </tr>
-                          <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                              <td colspan="2" style="text-align: left;">
-                                1st inning runs Bangladesh
-                              </td>
-
-                              <td><span class="c-activee">Min : 100, Max : 5K</span></td>
-                              
-                              <td >
-                                  <span class="tbl-bg-blu-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>
-
-                              
-
-                              <td >
-                                  <span class="tbl-bg-pech-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>  
-                          </tr>
-                          <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                              <td colspan="2" style="text-align: left;">
-                                1st inning runs Bangladesh
-                              </td>
-
-                              <td><span class="c-activee">Min : 100, Max : 5K</span></td>
-                              
-                              <td >
-                                  <span class="tbl-bg-blu-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>
-
-                              
-
-                              <td >
-                                  <span class="tbl-bg-pech-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>  
-                          </tr>
-                          
-                      </tbody>
-
-                    </table>
-                    <div class="exchange-pg-inn-tbl-marqq-dv">
-                      <div class="exchange-pg-inn-tbl-marqq-dv-wrp">
-                          <marquee>West Indies Women vs Ireland Women : Advance Toss & Fancy Bets Started in Our Exchange 🏏</marquee>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
-                    <table class="acount-stat-tbl mt-2">
-
-                      <thead class="acount-stat-tbl-hed3">
-                          <tr class="acount-stat-tbl-hed-tr3" >
-                              <th colspan="2" style="text-align: left;" class="bod-red-lft ">Odd/Even</th>
-                              <th style="text-align: center;" colspan=""></th>
-                              <th style="text-align: center;" colspan="">No</th>
-                              <th style="text-align: center;" colspan="" class="bod-red-rit">Yes</th>
-                          </tr>
-                      </thead>
-
-                      <tbody class="acount-stat-tbl-body">
-                          <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                              <td colspan="2" style="text-align: left;">
-                                1st inning runs Bangladesh
-                              </td>
-
-                              <td><span class="c-activee">Min : 100, Max : 5K</span></td>
-                              
-                              <td >
-                                  <span class="tbl-bg-blu-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>
-
-                              
-
-                              <td >
-                                  <span class="tbl-bg-pech-spn">
-                                      <span><b>75.5</b></span> 
-                                      <span>517.00</span>
-                                  </span> 
-                              </td>  
-                          </tr>
-                          
-                      </tbody>
-
-                    </table>
-                    <div class="exchange-pg-inn-tbl-marqq-dv">
-                      <div class="exchange-pg-inn-tbl-marqq-dv-wrp">
-                          <marquee>West Indies Women vs Ireland Women : Advance Toss & Fancy Bets Started in Our Exchange 🏏</marquee>
-                      </div>
-                    </div>
-                  </div>
-
+            </div>
+          </div>
+          <div class="tab-pane fade exc-pg-rit-tabtxt-datadv" id="pills-profileb" role="tabpanel" aria-labelledby="pills-profileb-tab" tabindex="0">
+            <div class="exchange-pg-rit-ro-mbll">
+              <div class="exchange-pg-rit-ro-livetv-dv">
+                <div class="exchange-pg-rit-ro-livetv-titl">
+                  <h5>Live Stream</h5>
+                </div>
+                <div class="exchange-pg-rit-ro-livetv-dv-wrp">
+                  <img class="img-bdr-red15 img-fluid" src="assets/img/exchange/live-tv-img.png" alt="">
                 </div>
               </div>
-              <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-                tab 02
+            </div>
+          </div>
+          
+          <div class="tab-pane fade exc-pg-rit-tabtxt-datadv" id="pills-profilebb" role="tabpanel" aria-labelledby="pills-profilebb-tab" tabindex="0">
+            <div class="exchange-pg-inn-banner-tv pt-0">
+                
+              <table class="table-new-d">
+                <thead>
+                  <tr class="thead-border my-open-bet-trr">
+                    <td>Selection</td>
+                    <td>Odds</td>
+                    <td>Stake</td>
+                    <td>P/L</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    
+                  </tr>
+                </tbody>
+              </table>
+                  
               </div>
-              <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab3" role="tabpanel" aria-labelledby="fancytab3-tab" tabindex="0">
-                tab 03
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mbl-exc-inn-tbl-datadv">
+      <div class="mbl-exc-inn-tbl-datadv-wrp">
+        <div class="exchange-pg-inn-banner-col-titi">
+          <div class="exchange-pg-inn-banner-col-titi-txt">
+              <h6><span>Match Odds</span> &nbsp; <i class="fa-solid fa-circle-info"></i></h6>
+          </div>
+          <div class="exchange-pg-inn-banner-col-titi-txt-tim">
+              <h6><b>Min : 100, Max : 5K</b></h6>
+          </div>
+        </div>
+
+        <div class="exc-inn-colaps-data-wrpdv">
+
+          <table class="acount-stat-tbl">
+
+            <thead class="acount-stat-tbl-hed2">
+                <tr class="acount-stat-tbl-hed-tr2">
+                    <th style="text-align: left;" class="bod-red-lft ">Market</th>
+                    <th style="text-align: center;" colspan="2">Back</th>
+                    <th style="text-align: center;" colspan="2" class="bod-red-rit">Lay</th>
+                </tr>
+            </thead>
+
+            <tbody class="acount-stat-tbl-body">
+              <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href="#">
+                  <td colspan="2" style=" text-align: left;">
+                      Bangladesh
+                  </td>
+                  
+                  <td>
+                      <span data-bs-toggle="collapse" href="#bt-slp-colps2" role="button" aria-expanded="false" aria-controls="bt-slp-colps2" class="tbl-bg-blu-spn collapsed">
+                          <span><b>75.5</b></span> 
+                          <span>517.00</span>
+                          
+                      </span> 
+                  </td>
+
+                  
+
+                  <td>
+                      <span class="tbl-bg-pech-spn collapsed" data-bs-toggle="collapse" href="#bt-slp-colps2" role="button" aria-expanded="false" aria-controls="bt-slp-colps2">
+                          <span><b>75.5</b></span> 
+                          <span>517.00</span>
+                      </span> 
+                  </td>
+                  
+                  
+                  
+              </tr>
+              <tr>
+                <td colspan="4">
+                  <div class="my-exc-inn-colaps-txt-dv collapse" id="bt-slp-colps2" >
+                    <div class="card card-body my-exc-inn-colaps-txt-body">
+                      <div class="nww-bet-slip-wrp">
+                        <div class="nww-bet-slip-wrp-col1">
+                          <div class="nww-bet-slip-wrp-col1-txt">
+                            <span>Profit <b class="c-gren">2000.00</b></span>
+                          </div>
+
+                          <div class="nww-bet-slip-wrp-col1-txt">
+                            <span class="nww-bet-slip-wrp-col1-txt-icons">
+                              <i class="fa-solid fa-plus"></i>
+                            </span>
+                            <span class="nww-bet-slip-wrp-col1-txt-num">1.75</span>
+                            <span class="nww-bet-slip-wrp-col1-txt-icons">
+                              <i class="fa-solid fa-minus"></i>
+                            </span>
+                          </div>
+
+                          <div class="nww-bet-slip-wrp-col1-txt">
+                            <div class="nww-bet-slip-wrp-col1-txt-inn input-group-sm">
+                              <input type="number" class="form-control set-stake-form-input2" placeholder="Custom" aria-label="Last name">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="nww-bet-slip-wrp-col2">
+                          <div class="nww-bet-slip-wrp-col2-inn">
+                            <span>500</span>
+                            <span>1000</span>
+                            <span>2000</span>
+                            <span>5000</span>
+                            <span>10000</span>
+                            <span>20000</span>
+                            <span>50000</span>
+                            <span>100000</span>
+                            <span>200000</span>
+                          </div>
+                        </div>
+
+                        <div class="nww-bet-slip-wrp-col3">
+                          <div class="nww-bet-slip-wrp-col3-txt1">
+                            <p>
+                              Please select a Stake Amount. Enter a custom amount by clicking on the custom box.
+                            </p>
+                          </div>
+
+                          <div class="nww-bet-slip-wrp-col3-txt1">
+                            <a href="#"> Place Bet </a>
+                          </div>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href="#">
+                  <td colspan="2" style=" text-align: left;">
+                      Bangladesh
+                  </td>
+                  
+                  <td>
+                      <span class="tbl-bg-blu-spn">
+                          <span><b>75.5</b></span> 
+                          <span>517.00</span>
+                      </span> 
+                  </td>
+
+                  
+
+                  <td>
+                      <span class="tbl-bg-pech-spn">
+                          <span><b>75.5</b></span> 
+                          <span>517.00</span>
+                      </span> 
+                  </td>
+                  
+                  
+                  
+              </tr>
+              <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href="#">
+                  <td colspan="2" style=" text-align: left;">
+                      Bangladesh
+                  </td>
+                  
+                  <td>
+                      <span class="tbl-bg-blu-spn">
+                          <span><b>75.5</b></span> 
+                          <span>517.00</span>
+                      </span> 
+                  </td>
+
+                  
+
+                  <td>
+                      <span class="tbl-bg-pech-spn">
+                          <span><b>75.5</b></span> 
+                          <span>517.00</span>
+                      </span> 
+                  </td>
+                  
+                  
+                  
+              </tr>
+              
+          </tbody>
+          </table>
+
+          
+        </div>
+
+        <div class="exchange-pg-inn-tbl-marqq-dv">
+          <div class="exchange-pg-inn-tbl-marqq-dv-wrp">
+              <marquee>West Indies Women vs Ireland Women : Advance Toss & Fancy Bets Started in Our Exchange 🏏</marquee>
+          </div>
+        </div>
+      </div>
+      <div class="mbl-exc-inn-tbl-datadv-wrp2">
+        <div class="mbl-exc-inn-tbl-datadv-wrp2-inn">
+          <div class="exchange-pg-inn-banner-col3">
+            <div class="exchange-pg-inn-banner-col-titi">
+              <div class="exchange-pg-inn-banner-col-titi-txt">
+                  <h6><span>Fancy</span> &nbsp; <i class="fa-solid fa-circle-info"></i></h6>
               </div>
-              <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab4" role="tabpanel" aria-labelledby="fancytab4-tab" tabindex="0">
-                tab 04
-              </div>
-              <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab5" role="tabpanel" aria-labelledby="fancytab5-tab" tabindex="0">
-                tab 05
-              </div>
-              <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab6" role="tabpanel" aria-labelledby="fancytab6-tab" tabindex="0">
-                tab 06
+              
+            </div>
+
+            <div class="exch-pg-inn-fancy-tab-wrp">
+              <ul class="nav nav-pills mb-3 exch-pg-inn-fancy-tab-ul" id="pills-tab" role="tablist">
+
+                <div class="exch-pg-inn-fancy-tab-ul2-inn">
+                  <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
+                    <button class="nav-link active exch-pg-inn-fancy-tab-btn" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">All</button>
+                  </li>
+                  <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
+                    <button class="nav-link exch-pg-inn-fancy-tab-btn" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Sessions</button>
+                  </li>
+                  <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
+                    <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab4-tab" data-bs-toggle="pill" data-bs-target="#fancytab4" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">W/P Market</button>
+                  </li>
+                  <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
+                    <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab3-tab" data-bs-toggle="pill" data-bs-target="#fancytab3" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Only Over</button>
+                  </li>
+                  <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
+                    <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab5-tab" data-bs-toggle="pill" data-bs-target="#fancytab5" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Ball by Ball</button>
+                  </li>
+                  <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
+                    <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab6-tab" data-bs-toggle="pill" data-bs-target="#fancytab6" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Odd/Even </button>
+                  </li>
+                </div>
+                
+              </ul>
+              <div class="tab-content exch-pg-inn-fancy-tab-txt" id="pills-tabContent">
+                <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+                  <div class="exch-pg-inn-fancy-tab-txt-inn">
+                    <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
+                      <table class="acount-stat-tbl">
+
+                        <thead class="acount-stat-tbl-hed3">
+                            <tr class="acount-stat-tbl-hed-tr3" >
+                                <th colspan="2" style="text-align: left;" class="bod-red-lft ">Sessions</th>
+                                <th style="text-align: center;" colspan=""></th>
+                                <th style="text-align: center;" colspan="">No</th>
+                                <th style="text-align: center;" colspan="" class="bod-red-rit">Yes</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="acount-stat-tbl-body">
+                          <tr class="acount-stat-tbl-body-tr tbl-data-href my-pos-rel-tr" data-href='#'>
+                            <td colspan="2" style="text-align: left;">
+                              1st inning runs Bangladesh
+                            </td>
+
+                            <td><span class="c-activee">Min : 100, Max : 5K</span></td>
+                            
+                            <td >
+                                <span data-bs-toggle="collapse" href="#bt-slp-colps3" role="button" aria-expanded="false" aria-controls="bt-slp-colps3" class="tbl-bg-blu-spn">
+                                    <span><b>75.5</b></span> 
+                                    <span>517.00</span>
+                                </span> 
+                            </td>
+
+
+                            <td >
+                                <span class="tbl-bg-pech-spn">
+                                    <span><b>75.5</b></span> 
+                                    <span>517.00</span>
+                                </span> 
+                            </td>  
+                        </tr>
+                        <tr>
+                          <td colspan="6">
+                            <div class="collapse my-exc-inn-colaps-txt-dv" id="bt-slp-colps3">
+                              <div class="card card-body my-exc-inn-colaps-txt-body">
+          
+                                <div class="nww-bet-slip-wrp">
+                                  <div class="nww-bet-slip-wrp-col1">
+                                    <div class="nww-bet-slip-wrp-col1-txt">
+                                      <span>Profit <b class="c-gren">2000.00</b></span>
+                                    </div>
+          
+                                    <div class="nww-bet-slip-wrp-col1-txt">
+                                      <span class="nww-bet-slip-wrp-col1-txt-icons">
+                                        <i class="fa-solid fa-plus"></i>
+                                      </span>
+                                      <span class="nww-bet-slip-wrp-col1-txt-num">1.75</span>
+                                      <span class="nww-bet-slip-wrp-col1-txt-icons">
+                                        <i class="fa-solid fa-minus"></i>
+                                      </span>
+                                    </div>
+          
+                                    <div class="nww-bet-slip-wrp-col1-txt">
+                                      <div class="nww-bet-slip-wrp-col1-txt-inn input-group-sm">
+                                        <input type="number" class="form-control set-stake-form-input2" placeholder="Custom" aria-label="Last name">
+                                      </div>
+                                    </div>
+                                  </div>
+          
+                                  <div class="nww-bet-slip-wrp-col2">
+                                    <div class="nww-bet-slip-wrp-col2-inn">
+                                      <span>500</span>
+                                      <span>1000</span>
+                                      <span>2000</span>
+                                      <span>5000</span>
+                                      <span>10000</span>
+                                      <span>20000</span>
+                                      <span>50000</span>
+                                      <span>100000</span>
+                                      <span>200000</span>
+                                    </div>
+                                  </div>
+          
+                                  <div class="nww-bet-slip-wrp-col3">
+                                    <div class="nww-bet-slip-wrp-col3-txt1">
+                                      <p>
+                                        Please select a Stake Amount. Enter a custom amount by clicking on the custom box.
+                                      </p>
+                                    </div>
+          
+                                    <div class="nww-bet-slip-wrp-col3-txt1">
+                                      <a href="#"> Place Bet </a>
+                                    </div>
+          
+                                  </div>
+          
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                            <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                                <td colspan="2" style="text-align: left;">
+                                  1st inning runs Bangladesh
+                                </td>
+
+                                <td><span class="c-activee">Min : 100, Max : 5K</span></td>
+                                
+                                <td >
+                                    <span class="tbl-bg-blu-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>
+
+                                
+
+                                <td >
+                                    <span class="tbl-bg-pech-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>  
+                            </tr>
+                            <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                                <td colspan="2" style="text-align: left;">
+                                  1st inning runs Bangladesh
+                                </td>
+
+                                <td><span class="c-activee">Min : 100, Max : 5K</span></td>
+                                
+                                <td >
+                                    <span class="tbl-bg-blu-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>
+
+                                
+
+                                <td >
+                                    <span class="tbl-bg-pech-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>  
+                            </tr>
+                            
+                            
+                        </tbody>
+
+                      </table>
+                      <div class="exchange-pg-inn-tbl-marqq-dv">
+                        <div class="exchange-pg-inn-tbl-marqq-dv-wrp">
+                            <marquee>West Indies Women vs Ireland Women : Advance Toss & Fancy Bets Started in Our Exchange 🏏</marquee>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
+                      <table class="acount-stat-tbl mt-2">
+
+                        <thead class="acount-stat-tbl-hed3">
+                            <tr class="acount-stat-tbl-hed-tr3" >
+                                <th colspan="2" style="text-align: left;" class="bod-red-lft ">W/P Market</th>
+                                <th style="text-align: center;" colspan=""></th>
+                                <th style="text-align: center;" colspan="">No</th>
+                                <th style="text-align: center;" colspan="" class="bod-red-rit">Yes</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="acount-stat-tbl-body">
+                            <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                                <td colspan="2" style="text-align: left;">
+                                  1st inning runs Bangladesh
+                                </td>
+
+                                <td><span class="c-activee">Min : 100, Max : 5K</span></td>
+                                
+                                <td >
+                                    <span class="tbl-bg-blu-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>
+
+                                
+
+                                <td >
+                                    <span class="tbl-bg-pech-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>  
+                            </tr>
+                            <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                                <td colspan="2" style="text-align: left;">
+                                  1st inning runs Bangladesh
+                                </td>
+
+                                <td><span class="c-activee">Min : 100, Max : 5K</span></td>
+                                
+                                <td >
+                                    <span class="tbl-bg-blu-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>
+
+                                
+
+                                <td >
+                                    <span class="tbl-bg-pech-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>  
+                            </tr>
+                            <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                                <td colspan="2" style="text-align: left;">
+                                  1st inning runs Bangladesh
+                                </td>
+
+                                <td><span class="c-activee">Min : 100, Max : 5K</span></td>
+                                
+                                <td >
+                                    <span class="tbl-bg-blu-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>
+
+                                
+
+                                <td >
+                                    <span class="tbl-bg-pech-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>  
+                            </tr>
+                            
+                            
+                        </tbody>
+
+                      </table>
+                      <div class="exchange-pg-inn-tbl-marqq-dv">
+                        <div class="exchange-pg-inn-tbl-marqq-dv-wrp">
+                            <marquee>West Indies Women vs Ireland Women : Advance Toss & Fancy Bets Started in Our Exchange 🏏</marquee>
+                        </div>
+                      </div>
+                    </div>
+                    
+
+                    <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
+                      <table class="acount-stat-tbl mt-2">
+
+                        <thead class="acount-stat-tbl-hed3">
+                            <tr class="acount-stat-tbl-hed-tr3" >
+                                <th colspan="2" style="text-align: left;" class="bod-red-lft ">Only Over</th>
+                                <th style="text-align: center;" colspan=""></th>
+                                <th style="text-align: center;" colspan="">No</th>
+                                <th style="text-align: center;" colspan="" class="bod-red-rit">Yes</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="acount-stat-tbl-body">
+                            <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                                <td colspan="2" style="text-align: left;">
+                                  1st inning runs Bangladesh
+                                </td>
+
+                                <td><span class="c-activee">Min : 100, Max : 5K</span></td>
+                                
+                                <td >
+                                    <span class="tbl-bg-blu-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>
+
+                                
+
+                                <td >
+                                    <span class="tbl-bg-pech-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>  
+                            </tr>
+                            
+                        </tbody>
+
+                      </table>
+                      <div class="exchange-pg-inn-tbl-marqq-dv">
+                        <div class="exchange-pg-inn-tbl-marqq-dv-wrp">
+                            <marquee>West Indies Women vs Ireland Women : Advance Toss & Fancy Bets Started in Our Exchange 🏏</marquee>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
+                      <table class="acount-stat-tbl mt-2">
+
+                        <thead class="acount-stat-tbl-hed3">
+                            <tr class="acount-stat-tbl-hed-tr3" >
+                                <th colspan="2" style="text-align: left;" class="bod-red-lft ">Ball by Ball</th>
+                                <th style="text-align: center;" colspan=""></th>
+                                <th style="text-align: center;" colspan="">No</th>
+                                <th style="text-align: center;" colspan="" class="bod-red-rit">Yes</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="acount-stat-tbl-body">
+                            <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                                <td colspan="2" style="text-align: left;">
+                                  1st inning runs Bangladesh
+                                </td>
+
+                                <td><span class="c-activee">Min : 100, Max : 5K</span></td>
+                                
+                                <td >
+                                    <span class="tbl-bg-blu-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>
+
+                                
+
+                                <td >
+                                    <span class="tbl-bg-pech-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>  
+                            </tr>
+                            <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                                <td colspan="2" style="text-align: left;">
+                                  1st inning runs Bangladesh
+                                </td>
+
+                                <td><span class="c-activee">Min : 100, Max : 5K</span></td>
+                                
+                                <td >
+                                    <span class="tbl-bg-blu-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>
+
+                                
+
+                                <td >
+                                    <span class="tbl-bg-pech-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>  
+                            </tr>
+                            <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                                <td colspan="2" style="text-align: left;">
+                                  1st inning runs Bangladesh
+                                </td>
+
+                                <td><span class="c-activee">Min : 100, Max : 5K</span></td>
+                                
+                                <td >
+                                    <span class="tbl-bg-blu-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>
+
+                                
+
+                                <td >
+                                    <span class="tbl-bg-pech-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>  
+                            </tr>
+                            
+                        </tbody>
+
+                      </table>
+                      <div class="exchange-pg-inn-tbl-marqq-dv">
+                        <div class="exchange-pg-inn-tbl-marqq-dv-wrp">
+                            <marquee>West Indies Women vs Ireland Women : Advance Toss & Fancy Bets Started in Our Exchange 🏏</marquee>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
+                      <table class="acount-stat-tbl mt-2">
+
+                        <thead class="acount-stat-tbl-hed3">
+                            <tr class="acount-stat-tbl-hed-tr3" >
+                                <th colspan="2" style="text-align: left;" class="bod-red-lft ">Odd/Even</th>
+                                <th style="text-align: center;" colspan=""></th>
+                                <th style="text-align: center;" colspan="">No</th>
+                                <th style="text-align: center;" colspan="" class="bod-red-rit">Yes</th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="acount-stat-tbl-body">
+                            <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                                <td colspan="2" style="text-align: left;">
+                                  1st inning runs Bangladesh
+                                </td>
+
+                                <td><span class="c-activee">Min : 100, Max : 5K</span></td>
+                                
+                                <td >
+                                    <span class="tbl-bg-blu-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>
+
+                                
+
+                                <td >
+                                    <span class="tbl-bg-pech-spn">
+                                        <span><b>75.5</b></span> 
+                                        <span>517.00</span>
+                                    </span> 
+                                </td>  
+                            </tr>
+                            
+                        </tbody>
+
+                      </table>
+                      <div class="exchange-pg-inn-tbl-marqq-dv">
+                        <div class="exchange-pg-inn-tbl-marqq-dv-wrp">
+                            <marquee>West Indies Women vs Ireland Women : Advance Toss & Fancy Bets Started in Our Exchange 🏏</marquee>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+                  tab 02
+                </div>
+                <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab3" role="tabpanel" aria-labelledby="fancytab3-tab" tabindex="0">
+                  tab 03
+                </div>
+                <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab4" role="tabpanel" aria-labelledby="fancytab4-tab" tabindex="0">
+                  tab 04
+                </div>
+                <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab5" role="tabpanel" aria-labelledby="fancytab5-tab" tabindex="0">
+                  tab 05
+                </div>
+                <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab6" role="tabpanel" aria-labelledby="fancytab6-tab" tabindex="0">
+                  tab 06
+                </div>
               </div>
             </div>
           </div>
