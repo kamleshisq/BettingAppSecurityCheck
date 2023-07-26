@@ -26,22 +26,6 @@
                                 </a>
                               <%}%>
                             <%}%>
-                            <%for(let i = 0; i < liveFootBall.length; i++){%>
-                              <%if(liveFootBall[i].marketList.match_odd != null){%>
-                                <a href="/exchange_inPlay/match?id=<%=liveFootBall[i].eventData.eventId%>">
-                                    <img src="/assets/img/home/side-menuimg03.svg" alt="">
-                                    <%=liveFootBall[i].eventData.name%>
-                                </a>
-                              <%}%> 
-                            <%}%> 
-                            <%for(let i = 0; i < liveTennis.length; i++){%>
-                              <%if(liveTennis[i].marketList.match_odd != null){%>
-                                <a href="/exchange_inPlay/match?id=<%=liveTennis[i].eventData.eventId%>">
-                                    <img src="/assets/img/home/side-menuimg04.svg" alt="">
-                                    <%=liveTennis[i].eventData.name%>
-                                </a>
-                              <%}%>
-                            <%}%>
                           </div>
                       </section>
                       <section class="exchange-pg-tbl-dvwrp pt-3 mob-dis-no">
@@ -63,6 +47,7 @@
         <div class="container-fluid">
 
           <%-include("../navbar2")%>
+
           <section class="exch-mob-data-tbl-dv">
             <%-include("./tableMobile")%>
           </section>
