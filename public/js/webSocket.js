@@ -4657,7 +4657,9 @@ socket.on('connect', () => {
                     
                     let id = this.id
                     const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
-
+                    if(foundItem.odds[0].backPrice1 == "1,000.00"){
+                        console.log("Working")
+                    }
                     if(data.betLimits[0].max_odd < foundItem.odds[0].backPrice1){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                                         <i class="fa-solid fa-lock"></i>
