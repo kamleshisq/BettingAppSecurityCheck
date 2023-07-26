@@ -332,6 +332,7 @@ exports.registration = catchAsync(async(req, res, next) => {
 });
 
 exports.userdashboard = catchAsync(async(req, res, next) => {
+    console.log(req.notifications, 456)
     let user = req.currentUser
     const data = await promotionModel.find();
     let verticalMenus = await verticalMenuModel.find();
