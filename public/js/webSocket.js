@@ -63,7 +63,12 @@ socket.on('connect', () => {
 
     $(document).on("submit", ".set-stake-form", function(e){
         e.preventDefault()
-        console.log("Working")
+        const input1Elements = document.querySelectorAll('.set-stake-form-input1');
+        const input2Elements = document.querySelectorAll('.set-stake-form-input2');
+
+        const input1Values = Array.from(input1Elements).map((element) => element.value);
+        const input2Values = Array.from(input2Elements).map((element) => element.value);
+        
     })
 
     if(pathname == "/admin/updateRole"){
