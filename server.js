@@ -1446,7 +1446,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on("STAKELABEL", async(data) => {
-        console.log(data)
+        let stakeArray = data.input1Values.map((key, index) => ({ [key]: data.input2Values[index] }));
+        console.log(stakeArray, data.LOGINDATA)
     })
 
     
