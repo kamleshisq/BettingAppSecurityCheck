@@ -6,7 +6,7 @@
         <div class="container-fluid exchange-pg-main-contnr">
           <div class="col-lg-11 col-md-11 col-12 exchange-pg-main-col">
             <div class="exchange-pg-main-col-ro">
-                <div class="exchange-pg-main-col-big col-lg-9 col-md-9 col-12">
+                <div class="exchange-pg-main-col-big 9 col-md-10 col-12">
                     <div class="exchange-pg-main-col-big-wrp">
                         <section class="exchange-pg-banner-sec">
                           <% let banner1 = data.find(item => item.position == "Exchange_Page_top") %> 
@@ -17,54 +17,21 @@
                           <%}%>
                         </section>
                         <section class="exchange-pg-tranding-maches-nav-sec">
-                            <div class="exchange-pg-tranding-maches-nav-sec-wrp" id="liveMatch_data">
-                              <%for(let i = 0; i < LiveCricket.length; i++){%>
-                                <%if(LiveCricket[i].marketList.match_odd != null){%>
-                                  <a href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>">
-                                      <img src="/assets/img/home/side-menuimg02.svg" alt="">
-                                      <%=LiveCricket[i].eventData.name%>
-                                  </a>
-                                <%}%>
+                          <div class="exchange-pg-tranding-maches-nav-sec-wrp" id="liveMatch_data">
+                            <%for(let i = 0; i < LiveCricket.length; i++){%>
+                              <%if(LiveCricket[i].marketList.match_odd != null){%>
+                                <a href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>">
+                                    <img src="/assets/img/home/side-menuimg02.svg" alt="">
+                                    <%=LiveCricket[i].eventData.name%>
+                                </a>
                               <%}%>
-                            </div>
-                        </section>
-                        <!-- <section class="nav2menu-dv">
-                          <div class="nav2menu-dv-wrp container-fluid">
-                            <div class="nav2menu-dv-wrp2">
-                              <div class="nav2menu-item">
-                                <img class="img-fluid" src="../../assets/img/home/side-menuimg02.svg" alt="">
-                                <p>In-play</p>
-                              </div>
-                              <div class="nav2menu-item">
-                                <img class="img-fluid" src="../../assets/img/home/side-menuimg03.svg" alt="">
-                                <p>Cricket</p>
-                              </div>
-                              <div class="nav2menu-item">
-                                <img class="img-fluid" src="../../assets/img/home/side-menuimg04.svg" alt="">
-                                <p>Football</p>
-                              </div>
-                              <div class="nav2menu-item">
-                                <img class="img-fluid" src="../../assets/img/home/side-menuimg05.svg" alt="">
-                                <p>Tennis</p>
-                              </div>
-                              <div class="nav2menu-item">
-                                <img class="img-fluid" src="../../assets/img/home/side-menuimg06.svg" alt="">
-                                <p>Basketball</p>
-                              </div>
-                              <div class="nav2menu-item">
-                                <img class="img-fluid" src="../../assets/img/home/side-menuimg07.png" alt="">
-                                <p>Basketball</p>
-                              </div>
-                              <div class="nav2menu-item">
-                                <img class="img-fluid" src="../../assets/img/home/side-menuimg08.png" alt="">
-                                <p>Basketball</p>
-                              </div>
-                            </div>
+                            <%}%>
                           </div>
-                        </section> -->
-                        <section class="exchange-pg-tbl-dvwrp">
-                          <%-include('./table')%>
-                        </section>
+                      </section>
+                      <section class="exchange-pg-tbl-dvwrp pt-3 mob-dis-no">
+                        <%-include('./table')%>
+                      </section>
+                        
                     </div>
                 </div>
 
@@ -74,6 +41,53 @@
         </div>
       </section>
       <!-- ----= EXCHANGE PAGE BANNER SECTION END =-----   -->
+
+      <!-- ----= MOBILE EXCHANGE PAGE BANNER SECTION START =-----   -->
+      <div class="exch-pg-mob-sec-main">
+        <div class="container-fluid">
+
+          <section class="nav2menu-dv2">
+            <div class="nav2menu-dv-wrp container-fluid">
+              <div class="nav2menu-dv-wrp2">
+                <div class="nav2menu-item" onclick="window.location.href = '/exchange/inPlay'; ">
+                  <img class="img-fluid" src="assets/img/home/side-menuimg02.svg" alt="">
+                  <p>In-play</p>
+                </div>
+                <div class="nav2menu-item" onclick="window.location.href = '/exchange/cricket'; ">
+                  <img class="img-fluid" src="assets/img/home/side-menuimg03.svg" alt="">
+                  <p>Cricket</p>
+                </div>
+                <div class="nav2menu-item" onclick="window.location.href = '/exchange/football'; ">
+                  <img class="img-fluid" src="assets/img/home/side-menuimg04.svg" alt="">
+                  <p>Football</p>
+                </div>
+                <div class="nav2menu-item" onclick="window.location.href = '/exchange/tennis'; ">
+                  <img class="img-fluid" src="assets/img/home/side-menuimg05.svg" alt="">
+                  <p>Tennis</p>
+                </div>
+                <div class="nav2menu-item" onclick="window.location.href = '/exchange/inPlay'; ">
+                  <img class="img-fluid" src="assets/img/home/side-menuimg06.svg" alt="">
+                  <p>Basketball</p>
+                </div>
+                <div class="nav2menu-item" onclick="window.location.href = '/exchange/inPlay'; ">
+                  <img class="img-fluid" src="assets/img/home/side-menuimg07.png" alt="">
+                  <p>Basketball</p>
+                </div>
+                <div class="nav2menu-item" onclick="window.location.href = '/exchange/inPlay'; ">
+                  <img class="img-fluid" src="assets/img/home/side-menuimg08.png" alt="">
+                  <p>Basketball</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="exch-mob-data-tbl-dv">
+            <%-include("./tableMobile")%>
+          </section>
+        </div>
+
+      </div>
+      <!-- ----= MOBILE EXCHANGE PAGE BANNER SECTION END =-----   -->
 
 
       
@@ -96,97 +110,6 @@
       <%-include('../updatePass')%>
       
       <!-- ----=MODEL1 SECTION END =-----   -->
-
-      <!-- ----=MODEL2 CHANGE PASSWORE =-----   -->
-      <!-- Modal -->
-      
-    <!-- ----=MODEL2 CHANGE PASSWORE =-----   -->
-
-    <!-- ----=MODEL2 SET STAKE =-----   -->
-    <!-- Modal -->
-    <div class="modal fade change-pass-model" id="navmod2" tabindex="-1" aria-labelledby="navmod1Label" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered change-pass-model-inn">
-        <div class="modal-content change-pass-model-txt">
-          <div class="modal-header change-pass-model-hed">
-            <div class="featured-sec-ro--titl-txt">
-              <span class="titl-bodr-lft-spn-model"></span>
-              <h3 class="featured-sec-ro--titl-txt-tg-model">SET BUTTON STAKE</h3>
-            </div>
-            <button type="button" class="change-pass-clos-btnn fa-regular fa-circle-xmark" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body change-pass-model-body">
-            <form class="set-stake-form">
-              <div class="row mb-2 set-stake-form-ro">
-                <div class="col set-stake-form-col">
-                  <fieldset disabled>
-                    <label for="exampleInputEmail1" class="form-label">Label Name</label>
-                    <input type="text" class="form-control set-stake-form-input1" placeholder="100" aria-label="First name" id="disabledTextInput">
-                  </fieldset>
-                </div>
-                <div class="col set-stake-form-col">
-                  <label for="exampleInputPassword1" class="form-label">Value</label>
-                  <input type="text" class="form-control set-stake-form-input2" placeholder="100" aria-label="Last name">
-                </div>
-              </div>
-              <div class="row mb-2 set-stake-form-ro">
-                <div class="col set-stake-form-col">
-                  <fieldset disabled>
-                    <input type="text" class="form-control set-stake-form-input1" placeholder="500" aria-label="First name" id="disabledTextInput">
-                  </fieldset>
-                </div>
-                <div class="col set-stake-form-col">
-                  <input type="text" class="form-control set-stake-form-input2" placeholder="500" aria-label="Last name">
-                </div>
-              </div>
-              <div class="row mb-2 set-stake-form-ro">
-                <div class="col set-stake-form-col">
-                  <fieldset disabled>
-                    <input type="text" class="form-control set-stake-form-input1" placeholder="1000" aria-label="First name" id="disabledTextInput">
-                  </fieldset>
-                </div>
-                <div class="col set-stake-form-col">
-                  <input type="text" class="form-control set-stake-form-input2" placeholder="1000" aria-label="Last name">
-                </div>
-              </div>
-              <div class="row mb-2 set-stake-form-ro">
-                <div class="col set-stake-form-col">
-                  <fieldset disabled>
-                    <input type="text" class="form-control set-stake-form-input1" placeholder="5000" aria-label="First name" id="disabledTextInput">
-                  </fieldset>
-                </div>
-                <div class="col set-stake-form-col">
-                  <input type="text" class="form-control set-stake-form-input2" placeholder="5000" aria-label="Last name">
-                </div>
-              </div>
-              <div class="row mb-2 set-stake-form-ro">
-                <div class="col set-stake-form-col">
-                  <fieldset disabled>
-                    <input type="text" class="form-control set-stake-form-input1" placeholder="10,000" aria-label="First name" id="disabledTextInput">
-                  </fieldset>
-                </div>
-                <div class="col set-stake-form-col">
-                  <input type="text" class="form-control set-stake-form-input2" placeholder="10,000" aria-label="Last name">
-                </div>
-              </div>
-              <div class="row mb-2 set-stake-form-ro">
-                <div class="col set-stake-form-col">
-                  <fieldset disabled>
-                    <input type="text" class="form-control set-stake-form-input1" placeholder="50,000" aria-label="First name" id="disabledTextInput">
-                  </fieldset>
-                </div>
-                <div class="col set-stake-form-col">
-                  <input type="text" class="form-control set-stake-form-input2" placeholder="50,000" aria-label="Last name">
-                </div>
-              </div>
-              
-              
-              <button type="submit" class="btn change-pass-model-form-submit-btn">SAVE</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  <!-- ----=MODEL2 SET STAKE =-----   -->
 
     </main>
 
