@@ -972,17 +972,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('updateStatus', async(data) => {
-        const fullUrl = 'http://127.0.0.1/api/v1/notification/updateStatus?id=' + `${data.id}`
-        fetch(fullUrl, {
-            method: 'GET',
-            headers: { 
-                'Authorization': `Bearer ` + data.LOGINDATA.LOGINTOKEN,
-                'Content-Type': 'application/json',
-                'accept': 'application/json' },
-        }).then(res => res.json())
-        .then(Data =>{
-            socket.emit('updateStatus', Data)
-        })
+        console.log(data)
     });
 
     socket.on("deleteNotification", async(data) => {
