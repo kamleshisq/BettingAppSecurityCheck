@@ -58,6 +58,7 @@ exports.myNotifications = catchAsync(async(req, res, next) => {
         req.notifications = notifications
         next()
     }else{
+        const today = new Date();
         let notifications = await notificationModel.find({userId:{$in:"6492fd6cd09db28e00761691"},startDate: { $lte: today },endDate: { $gte: today },status:true})
         req.notifications = notifications
         next()
