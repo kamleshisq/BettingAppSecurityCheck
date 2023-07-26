@@ -1739,7 +1739,7 @@ exports.virtualsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find();
     const data = await promotionModel.find();
-    let games = await gameModel.find({category: 'Virtual'});
+    let games = await gameModel.find();
     let userLog
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
