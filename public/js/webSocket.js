@@ -3843,6 +3843,109 @@ socket.on('connect', () => {
                             </div>`
             }
             document.getElementById("vertuals").innerHTML = htmlV
+
+            let roulette = games.filter(item => 
+                {
+                    const gameName = item.game_name.toLowerCase();
+                    const category = item.category.toLowerCase();
+                    return gameName.includes('roulette') || category.includes('roulette');
+                  }
+                )
+            let htmlr = ""
+            for(let i = 0; i < roulette.length; i++){
+                htmlr += `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
+                <a class="liv-casino-games-cards-a" href="#">
+                  <div class="liv-casino-games-cards-imgdv">
+                    <img class="img-fluid img-bdr-red15" src="${roulette[i].url_thumb}" alt="">
+                    <div class="liv-casino-games-cards-txt">
+                      <div class="liv-casino-games-cards-txtcol">
+                        <h6>${roulette[i].game_name}</h6>
+                        <i class="fa-regular fa-heart"></i>
+                      </div>
+                    </div>
+                    <div class="liv-casino-games-cards-txt2">`
+                    if(LOGINDATA.LOGINUSER === ""){
+                      htmlr +=  `<a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>`
+                    }else{
+                        htmlr += `<a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=${roulette[i]._id}">PLAY NOW</a>`
+                    }
+                    htmlr += `</div>
+                            </div>
+                             </a>
+                            </div>`
+            }
+            document.getElementById("roulette").innerHTML = htmlr
+
+
+
+
+            let baccarat = games.filter(item => 
+                {
+                    const gameName = item.game_name.toLowerCase();
+                    const category = item.category.toLowerCase();
+                    return gameName.includes('baccarat') || category.includes('baccarat');
+                  }
+                )
+            let htmlb = ""
+            for(let i = 0; i < baccarat.length; i++){
+                htmlb += `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
+                <a class="liv-casino-games-cards-a" href="#">
+                  <div class="liv-casino-games-cards-imgdv">
+                    <img class="img-fluid img-bdr-red15" src="${baccarat[i].url_thumb}" alt="">
+                    <div class="liv-casino-games-cards-txt">
+                      <div class="liv-casino-games-cards-txtcol">
+                        <h6>${baccarat[i].game_name}</h6>
+                        <i class="fa-regular fa-heart"></i>
+                      </div>
+                    </div>
+                    <div class="liv-casino-games-cards-txt2">`
+                    if(LOGINDATA.LOGINUSER === ""){
+                      htmlb +=  `<a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>`
+                    }else{
+                        htmlb += `<a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=${baccarat[i]._id}">PLAY NOW</a>`
+                    }
+                    htmlb += `</div>
+                            </div>
+                             </a>
+                            </div>`
+            }
+            document.getElementById("baccarat").innerHTML = htmlb
+
+
+
+            let live = games.filter(item => 
+                {
+                    const gameName = item.game_name.toLowerCase();
+                    const category = item.category.toLowerCase();
+                    return gameName.includes('live') || category.includes('live');
+                  }
+                )
+            let htmll = ""
+            for(let i = 0; i < live.length; i++){
+                htmll += `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
+                <a class="liv-casino-games-cards-a" href="#">
+                  <div class="liv-casino-games-cards-imgdv">
+                    <img class="img-fluid img-bdr-red15" src="${live[i].url_thumb}" alt="">
+                    <div class="liv-casino-games-cards-txt">
+                      <div class="liv-casino-games-cards-txtcol">
+                        <h6>${live[i].game_name}</h6>
+                        <i class="fa-regular fa-heart"></i>
+                      </div>
+                    </div>
+                    <div class="liv-casino-games-cards-txt2">`
+                    if(LOGINDATA.LOGINUSER === ""){
+                      htmll +=  `<a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>`
+                    }else{
+                        htmll += `<a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=${live[i]._id}">PLAY NOW</a>`
+                    }
+                    htmll += `</div>
+                            </div>
+                             </a>
+                            </div>`
+            }
+            document.getElementById("live").innerHTML = htmll
+
+
           })
     }
 
