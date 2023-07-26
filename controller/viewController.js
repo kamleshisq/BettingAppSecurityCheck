@@ -1147,7 +1147,7 @@ exports.getSportList = catchAsync(async(req, res, next) => {
     })
     .then(res =>res.json())
     .then(result => {
-        let data = result.gameList.filter(item => item.sport_name == "Tennis")
+        let data = result.gameList.filter(item => item.sport_name == "Football")
         let data2 = data[0].eventList.filter(item => item.eventData.type == "IN_PLAY")
         // console.log(data2[0].marketList.score[0].data)
         res.status(200).json({
@@ -1609,7 +1609,6 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     //     let date = new Date(item.updated_on);
     //     return date < Date.now() - 1000 * 60 * 60;
     // });
-    console.log(liveStream)
     let SportLimits = betLimit.find(item => item.type === "Sport")
     let userLog
     if(req.currentUser){
