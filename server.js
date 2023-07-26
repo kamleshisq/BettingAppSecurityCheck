@@ -23,9 +23,7 @@ const getCrkAndAllData = require("./utils/getSportAndCricketList");
 const bannerModel = require('./model/bannerModel');
 const sliderModel = require('./model/sliderModel');
 const betLimit = require("./model/betLimitModel");
-const liveStream = require("./utils/getLiveStream");
-const { cookie } = require('request');
-const { date } = require('joi');
+const notificationModel = require("./model/notificationModel");
 io.on('connection', (socket) => {
     console.log('connected to client')
     let loginData = {}
@@ -972,7 +970,15 @@ io.on('connection', (socket) => {
     })
 
     socket.on('updateStatus', async(data) => {
-        console.log(data)
+        try{
+            let updatedNotification = await notificationModel.findOne({ _id: req.query.id });
+            updatedNotification.status = !updatedNotification.status;
+            await updatedNotification.save();
+            socket.emit("updateStatus", "updated")
+        }catch(err){
+            socket.emit("updateStatus", "Please try again later")
+        }
+
     });
 
     socket.on("deleteNotification", async(data) => {

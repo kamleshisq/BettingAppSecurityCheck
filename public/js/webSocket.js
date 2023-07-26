@@ -2912,13 +2912,17 @@ socket.on('connect', () => {
         })
 
         socket.on('updateStatus', async(data)=>{
-            let html = ``
-            if(data.status){
-                html += `<a class="btn-green">Enable </a>`
+            if(data === "updated"){
+                let html = ``
+                if(data.status){
+                    html += `<a class="btn-green">Enable </a>`
+                }else{
+                    html += `<a class="btn-green">Disable </a>`
+                }
+                document.getElementById(`${data.id}`).innerHTML = html
             }else{
-                html += `<a class="btn-green">Disable </a>`
+                alert(data)
             }
-            document.getElementById(`${data.id}`).innerHTML = html
         })
 
         socket.on('deleteNotification', async(data)=>{
