@@ -307,6 +307,7 @@ exports.onlineUsers = catchAsync(async(req, res, next) => {
     }else{
         users = await User.find({role_type:{$in:role_type},is_Online:true , whiteLabel:req.currentUser.whiteLabel, parentUsers:{$elemMatch:{$eq:req.currentUser.id}}})
     }
+    console.log(users)
     let me = global._User
     res.status(200).render('./onlineUsers/onlineUsers',{
         title:"Online Users",
