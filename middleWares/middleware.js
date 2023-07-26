@@ -85,6 +85,8 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         //     global._host = req.get('host')
         //     global._User = ""
         // }
+    }else if(req.originalUrl == "/"){
+        console.log(req.headers.cookie)
     }
     
     
