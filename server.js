@@ -971,7 +971,7 @@ io.on('connection', (socket) => {
 
     socket.on('updateStatus', async(data) => {
         try{
-            let updatedNotification = await notificationModel.findOne({ _id: req.query.id });
+            let updatedNotification = await notificationModel.findOne({ _id: data.id });
             updatedNotification.status = !updatedNotification.status;
             await updatedNotification.save();
             socket.emit("updateStatus", {id:updatedNotification.id, message:"updated"})
