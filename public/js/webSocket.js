@@ -4317,6 +4317,8 @@ socket.on('connect', () => {
                             this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
+                        }else if(foundItem.odds[0].layPrice1=="1,000.00"){
+                            this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[0].layPrice1}</span>`
                         }else{
                             this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[0].layPrice1}</span>`
                         }
