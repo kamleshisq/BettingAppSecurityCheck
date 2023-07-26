@@ -1445,6 +1445,10 @@ io.on('connection', (socket) => {
         socket.emit("GAMEREPORTMATCHPAGEUSER", {result, page})
     })
 
+    socket.on("STAKELABEL", async(data) => {
+        console.log(data)
+    })
+
     
 })
 
