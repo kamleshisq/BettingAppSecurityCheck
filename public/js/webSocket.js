@@ -4779,6 +4779,7 @@ socket.on('connect', () => {
 
                 $(".2B").each(function() {
                         let id = this.id
+                        console.log(id)
                         const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
                         console.log(foundItem.odds[2].backPrice1)
                         if(data.betLimits[0].max_odd < foundItem.odds[2].backPrice1){
