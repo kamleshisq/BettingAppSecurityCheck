@@ -7265,7 +7265,6 @@ $(document).on('submit', ".addSlider-form", function (e) {
 });
 $(document).on('submit', ".myloginmodl-form-dv", function (e) {
   e.preventDefault();
-  console.log("Working");
   var form = $(this)[0];
   var fd = new FormData(form);
   var data = Object.fromEntries(fd.entries());
