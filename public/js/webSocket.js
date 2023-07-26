@@ -61,6 +61,11 @@ socket.on('connect', () => {
         socket.emit("updatePromotion", id)
     })
 
+    $(document).on("submit", ".set-stake-form", function(e){
+        e.preventDefault()
+        console.log("Working")
+    })
+
     if(pathname == "/admin/updateRole"){
         let x = "121"
         // let y = document.getElementById("mySelect").value
