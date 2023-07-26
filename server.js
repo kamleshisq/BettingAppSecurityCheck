@@ -24,6 +24,7 @@ const bannerModel = require('./model/bannerModel');
 const sliderModel = require('./model/sliderModel');
 const betLimit = require("./model/betLimitModel");
 const notificationModel = require("./model/notificationModel");
+const stakeLabelModel = require("./model/stakeLabelModel");
 io.on('connection', (socket) => {
     console.log('connected to client')
     let loginData = {}
@@ -1447,7 +1448,9 @@ io.on('connection', (socket) => {
 
     socket.on("STAKELABEL", async(data) => {
         let stakeArray = data.input1Values.map((key, index) => ({ [key]: data.input2Values[index] }));
-        console.log(stakeArray, data.LOGINDATA)
+        let userId = data.LOGINDATA.LOGINUSER._id
+        let check = await stakeLabelModel.find({userId})
+        console.log(check)
     })
 
     
