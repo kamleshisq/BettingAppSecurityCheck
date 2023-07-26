@@ -60,7 +60,13 @@
             </div>
             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
               <div class="liv-casino-nav-tab-txtcards-dv">
-                  <%let data1array = games.filter(item => item.game_name.toLowerCase().includes('roulette'));%>
+                  <%
+                    let data1array = games.filter(item => 
+                    let gameName = item.game_name.toLowerCase();
+                    let category = item.category.toLowerCase();
+                    return gameName.includes('roulette') || category.includes('roulette');
+                    );
+                  %>
                   <%for(let i = 0; i < data1array.length; i++){%>
                   <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
                     <a class="liv-casino-games-cards-a" href="#">
