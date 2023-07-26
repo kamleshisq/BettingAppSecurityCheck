@@ -71,6 +71,10 @@ socket.on('connect', () => {
         socket.emit("STAKELABEL", {input1Values, input2Values, LOGINDATA})
     })
 
+    socket.on("STAKELABEL", data =>{
+        alert(data)
+    })
+
     if(pathname == "/admin/updateRole"){
         let x = "121"
         // let y = document.getElementById("mySelect").value
