@@ -3,6 +3,7 @@ const router = express.Router();
 const viewController = require('./../controller/viewController')
 const authController = require('../controller/authorizationController')
 const gameController = require("../controller/gameController");
+const notificationController =  require("../controller/notificationController");
 
 
 
@@ -63,28 +64,29 @@ router.get("/admin/pageManager", authController.isProtected, authController.isAd
 
 
 //Real??
-router.get("/", authController.isLogin, viewController.userdashboard);
-router.get('/exchange', authController.isLogin, viewController.getUserExchangePage);
-router.get('/exchange/cricket', authController.isLogin, viewController.cricketPage);
-router.get('/exchange/football', authController.isLogin, viewController.footBallPage);
-router.get('/exchange/tennis', authController.isLogin, viewController.TennisPage);
-router.get('/exchange/inPlay', authController.isLogin, viewController.inplayMatches);
-router.get("/allCards", authController.isLogin, viewController.cardsPage);
-router.get("/Royal_casino", authController.isLogin, viewController.royalGamingPage);
-router.get("/virtuals", authController.isLogin, viewController.virtualsPage);
-router.get("/OtherGames", authController.isLogin, viewController.OthersGames);
-router.get("/cards", authController.isProtected, viewController.getCardInplayGame);
-router.get("/Royal_casinoInplay", authController.isProtected, viewController.getCardInplayGame);
-router.get("/live_casinoInPlay", authController.isProtected, viewController.getCardInplayGame);
-router.get("/virtualsInPlay", authController.isProtected, viewController.getCardInplayGame);
-router.get("/premium_sports", authController.isProtected, viewController.getSportBookGame);
-router.get('/MyPlStatement', authController.isProtected, viewController.userPlReports );
-router.get("/exchange_inPlay/match", authController.isLogin, viewController.getExchangePageIn);
-router.get("/live_casino", authController.isLogin, viewController.getLiveCasinoPage);
-router.get("/mybets", authController.isProtected, viewController.getMyBetsPageUser);
-router.get("/myGameReport", authController.isProtected, viewController.getGameReportPageUser);
-router.get("/event", authController.isProtected, viewController.getGameReportInPageUser);
-router.get("/gameReport/match", authController.isProtected, viewController.getGameReportInINPageUser);
+router.get("/", authController.isLogin, notificationController.myNotifications ,notificationController.myNotifications ,viewController.userdashboard);
+router.get('/exchange', authController.isLogin, notificationController.myNotifications ,viewController.getUserExchangePage);
+router.get('/exchange/cricket', authController.isLogin, notificationController.myNotifications ,viewController.cricketPage);
+router.get('/exchange/football', authController.isLogin, notificationController.myNotifications ,viewController.footBallPage);
+router.get('/exchange/tennis', authController.isLogin, notificationController.myNotifications ,viewController.TennisPage);
+router.get('/exchange/inPlay', authController.isLogin, notificationController.myNotifications ,viewController.inplayMatches);
+router.get("/allCards", authController.isLogin, notificationController.myNotifications ,viewController.cardsPage);
+router.get("/Royal_casino", authController.isLogin, notificationController.myNotifications ,viewController.royalGamingPage);
+router.get("/virtuals", authController.isLogin, notificationController.myNotifications ,viewController.virtualsPage);
+router.get("/OtherGames", authController.isLogin, notificationController.myNotifications ,viewController.OthersGames);
+router.get("/cards", authController.isProtected, notificationController.myNotifications ,viewController.getCardInplayGame);
+router.get("/Royal_casinoInplay", authController.isProtected, notificationController.myNotifications ,viewController.getCardInplayGame);
+router.get("/live_casinoInPlay", authController.isProtected, notificationController.myNotifications ,viewController.getCardInplayGame);
+router.get("/virtualsInPlay", authController.isProtected, notificationController.myNotifications ,viewController.getCardInplayGame);
+router.get("/premium_sports", authController.isProtected, notificationController.myNotifications ,viewController.getSportBookGame);
+router.get('/MyPlStatement', authController.isProtected, notificationController.myNotifications ,viewController.userPlReports );
+router.get("/exchange_inPlay/match", authController.isLogin, notificationController.myNotifications ,viewController.getExchangePageIn);
+router.get("/live_casino", authController.isLogin, notificationController.myNotifications ,viewController.getLiveCasinoPage);
+router.get("/mybets", authController.isProtected, notificationController.myNotifications ,viewController.getMyBetsPageUser);
+router.get("/myGameReport", authController.isProtected, notificationController.myNotifications ,viewController.getGameReportPageUser);
+router.get("/event", authController.isProtected, notificationController.myNotifications ,viewController.getGameReportInPageUser);
+router.get("/gameReport/match", authController.isProtected, notificationController.myNotifications ,viewController.getGameReportInINPageUser);
+router.get("/myAccountStatment", authController.isProtected, notificationController.myNotifications ,viewController.myAccountStatment);
 
 //Testing//
 router.get("/exchange_sports/inplay", authController.isLogin, viewController.getExchangePage);
@@ -93,6 +95,5 @@ router.get("/exchange_sports/footBall", authController.isProtected, viewControll
 router.get("/exchange_sports/tennis", authController.isProtected, viewController.getTennisData);
 router.get("/exchange_sports/live_match", authController.isProtected, viewController.getMatchDetailsPage);
 router.get("/edit", authController.isProtected, viewController.edit);
-router.get("/myAccountStatment", authController.isProtected, viewController.myAccountStatment);
 
 module.exports = router

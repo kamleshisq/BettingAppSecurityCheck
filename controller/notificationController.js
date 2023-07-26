@@ -47,4 +47,11 @@ exports.deleteNotification = catchAsync(async(req, res, next) => {
     res.status(200).json({
         status:'success'
     })
+});
+
+
+exports.myNotifications = catchAsync(async(req, res, next) => {
+    let user = req.currentUser;
+    console.log(user)
+    next()
 })
