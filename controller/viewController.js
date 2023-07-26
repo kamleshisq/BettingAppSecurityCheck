@@ -1622,6 +1622,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     //     let date = new Date(item.updated_on);
     //     return date < Date.now() - 1000 * 60 * 60;
     // });
+    console.log(liveStream)
     let SportLimits = betLimit.find(item => item.type === "Sport")
     let userLog
     if(req.currentUser){
@@ -1932,7 +1933,6 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
           }
       ]);
       
-      console.log(result)
     res.status(200).render("./userSideEjs/gameReportEvent/main",{
         user,
         verticalMenus,
