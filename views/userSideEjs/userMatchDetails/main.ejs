@@ -21,6 +21,9 @@
                           <%if(match.marketList.bookmaker != null){%>
                             <%-include("./bookmaker")%>
                           <%}%>
+                          <%if(match.marketList.tied_match != null){%>
+                            <%-include("./tied_match")%>
+                          <%}%>
   
                               <div class="exchange-pg-inn-banner-col2">
                                 <div class="exchange-pg-inn-banner-col-titi">
