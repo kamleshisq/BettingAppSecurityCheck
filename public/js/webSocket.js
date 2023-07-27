@@ -3460,11 +3460,11 @@ socket.on('connect', () => {
                     return section !== undefined;
                 });
                 if(this.id == `${section.selectionId}1` ){
-                    this.innerHTML = `<b>${section.backPrice1}</b> <br> ${section.backSize1}`
+                    this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                 }else if(this.id == `${section.selectionId}2`){
-                    this.innerHTML = `<b>${section.backPrice2}</b> <br> ${section.backSize2}`
+                    this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                 }else if (this.id == `${section.selectionId}3`){
-                    this.innerHTML = `<b>${section.backPrice3}</b> <br> ${section.backSize3}`
+                    this.innerHTML = `<span><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                 }
             })
 
