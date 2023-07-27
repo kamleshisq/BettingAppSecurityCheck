@@ -3460,11 +3460,29 @@ socket.on('connect', () => {
                     return section !== undefined;
                 });
                 if(this.id == `${section.selectionId}1` ){
-                    this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                    if(data.betLimits[0].max_odd < section.backPrice1 || section.backPrice1 == "-" || section.backPrice1 == "1,000.00"){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                    }
                 }else if(this.id == `${section.selectionId}2`){
-                    this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
+                    if(data.betLimits[0].max_odd < section.backPrice2 || section.backPrice2 == "-" || section.backPrice2 == "1,000.00"){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
+                    }
                 }else if (this.id == `${section.selectionId}3`){
-                    this.innerHTML = `<span><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
+                    if(data.betLimits[0].max_odd < section.backPrice3 || section.backPrice3 == "-" || section.backPrice3 == "1,000.00"){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        this.innerHTML = `<span><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
+                    }
                 }
             })
 
