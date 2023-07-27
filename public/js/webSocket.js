@@ -3674,13 +3674,12 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.market_id}1` ){
-                    console.log(section)
-                    if(data.betLimits[0].max_odd < section.even || section.even == "-" || section.even == "1,000.00" || section.even == "0"){
+                    if(data.betLimits[0].max_odd < section.odd || section.odd == "-" || section.odd == "1,000.00" || section.odd == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
-                        this.innerHTML = `<span><b>${section.even}</b></span>` 
+                        this.innerHTML = `<span><b>${section.odd}</b></span>` 
                     }
                 }
             })
