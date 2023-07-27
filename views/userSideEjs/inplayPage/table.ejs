@@ -47,7 +47,11 @@
                       </td>
                       <td style="border-bottom: 0px;" >
                         <div class="exchange-td2-txtdv">
-                           
+                          <%if(LiveCricket[i].eventData.isTv){%>
+                            <div class="exchange-td2-txtdv-tv">
+                              <i class="fa-solid fa-tv c-activee"></i>
+                            </div>
+                          <%}%>
                           <%if(LiveCricket[i].marketList.match_odd != null){%>
                           <div class="exchange-td2-txtdv-inn1">
                             <p> MO </p>
@@ -320,24 +324,24 @@
                       </td>
                       <td style="border-bottom: 0px;" >
                         <div class="exchange-td2-txtdv">
-                          <%if(LiveCricket[i].eventData.isTv){%>
+                          <%if(liveTennis[i].eventData.isTv){%>
                             <div class="exchange-td2-txtdv-tv">
                               <i class="fa-solid fa-tv c-activee"></i>
                             </div>
                           <%}%>
-                          <%if(LiveCricket[i].marketList.match_odd != null){%>
+                          <%if(liveTennis[i].marketList.match_odd != null){%>
                           <div class="exchange-td2-txtdv-inn1">
                             <p> MO </p>
                             <span>35</span>
                           </div>
                           <%} %>
-                          <%if(LiveCricket[i].marketList.fancy != null){%>
+                          <%if(liveTennis[i].marketList.fancy != null){%>
                             <div class="exchange-td2-txtdv-inn1">
                               <p> F </p>
                               <span>1</span>
                             </div>
                           <%}%>
-                          <%if(LiveCricket[i].marketList.bookmaker != null){%>
+                          <%if(liveTennis[i].marketList.bookmaker != null){%>
                             <div class="exchange-td2-txtdv-inn1">
                               <p> B </p>
                               <span>1</span>
