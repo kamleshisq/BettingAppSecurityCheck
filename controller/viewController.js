@@ -402,6 +402,32 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     // )
 });
 
+exports.myProfile = catchAsync(async(req, res, next) => {
+    // let id = req.originalUrl.split("=")[1]
+    let userLog
+    if(req.currentUser){
+        userLog = await loginLogs.find({user_id:req.currentUser._id})
+    }
+    // console.log(req.query.id)
+    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    // var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getMyAccStatement'
+    // fetch(fullUrl, {
+    //     method: 'POST',
+    //     headers: { 'Authorization': `Bearer ` + req.token }
+    // }).then(res => res.json())
+    // .then(json =>
+    //     console.log(json) 
+        res.status(200).render("./userSideEjs/myProfile/main", {
+        title:"Account Statement",
+        user:req.currentUser,
+        verticalMenus,
+        check:"ACCC",
+        userLog,
+        notifications:req.notifications
+    })
+    // )
+});
+
 
 exports.APIcall = catchAsync(async(req, res, next) => {
     var fullUrl = 'https://stage-api.mysportsfeed.io/api/v1/feed/user-login';
