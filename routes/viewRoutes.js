@@ -71,6 +71,7 @@ router.get('/exchange/football', authController.isLogin, notificationController.
 router.get('/exchange/tennis', authController.isLogin, notificationController.myNotifications ,viewController.TennisPage);
 router.get('/exchange/inPlay', authController.isLogin, notificationController.myNotifications ,viewController.inplayMatches);
 router.get("/allCards", authController.isLogin, notificationController.myNotifications ,viewController.cardsPage);
+router.get("/slots", authController.isLogin, notificationController.myNotifications ,viewController.cardsPage);
 router.get("/Royal_casino", authController.isLogin, notificationController.myNotifications ,viewController.royalGamingPage);
 router.get("/virtuals", authController.isLogin, notificationController.myNotifications ,viewController.virtualsPage);
 router.get("/OtherGames", authController.isLogin, notificationController.myNotifications ,viewController.OthersGames);

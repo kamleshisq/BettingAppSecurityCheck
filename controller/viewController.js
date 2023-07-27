@@ -1494,6 +1494,8 @@ exports.cardsPage = catchAsync(async(req, res, next) => {
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
     }
+    let check = req.req.originalUrl
+    console.log(check)
     res.status(200).render("./userSideEjs/cards/main",{
         user,
         verticalMenus,
