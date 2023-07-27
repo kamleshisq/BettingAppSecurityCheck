@@ -1663,7 +1663,7 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
-    res.status(200).render("./userSideEjs/userMatchDetails/main",{
+    res.status(200).render("./userSideEjs/multimarkets/main",{
         user: req.currentUser,
         verticalMenus,
         check:"Multi Markets",
