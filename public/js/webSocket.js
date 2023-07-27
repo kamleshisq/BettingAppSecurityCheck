@@ -3460,7 +3460,9 @@ socket.on('connect', () => {
                     return section !== undefined;
                 });
                 if(this.id == `${section.selectionId}1` ){
-                    this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                    this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                    <i class="fa-solid fa-lock"></i>
+                  </span>`
                 }else if(this.id == `${section.selectionId}2`){
                     this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                 }else if (this.id == `${section.selectionId}3`){
