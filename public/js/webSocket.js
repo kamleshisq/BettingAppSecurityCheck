@@ -3585,7 +3585,7 @@ socket.on('connect', () => {
                 })
                 if(this.id == `${section.secId}1` ){
                     if(data.betLimits[0].max_odd < section.backPrice || section.backPrice == "-" || section.backPrice == "1,000.00" || section.backPrice == "0"){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
