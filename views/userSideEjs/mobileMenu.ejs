@@ -32,10 +32,17 @@
           </a>
         </span>
         <span>
-          <a href="#">
-            <img class="img-fluid" src="/assets/img/home/mbl_botom_mnu_icon04.svg" alt="">
-            <h6>Profile</h6>
-          </a>
+          <%if(user){%>
+            <a href="/myProfile">
+              <img class="img-fluid" src="/assets/img/home/mbl_botom_mnu_icon04.svg" alt="">
+              <h6>Profile</h6>
+            </a>
+            <%}else{%>
+              <a data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+                <img class="img-fluid" src="/assets/img/home/mbl_botom_mnu_icon04.svg" alt="">
+                <h6>Profile</h6>
+              </a>
+            <%}%>
         </span>
       </div>
 
