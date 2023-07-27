@@ -24,8 +24,11 @@
                           <%if(match.marketList.tied_match != null){%>
                             <%-include("./tied_match")%>
                           <%}%>
+                          <%if(match.marketList.odd_even != null){%>
+                            <%-include("./fency")%>
+                          <%}%>
   
-                              <div class="exchange-pg-inn-banner-col2">
+                              <!-- <div class="exchange-pg-inn-banner-col2">
                                 <div class="exchange-pg-inn-banner-col-titi">
                                   <div class="exchange-pg-inn-banner-col-titi-txt">
                                       <h6><span>Fancy</span> &nbsp; <i class="fa-solid fa-circle-info"></i></h6>
@@ -451,7 +454,7 @@
                                     </div>
                                   </div>
                                 </div>
-                              </div>
+                              </div> -->
                             
 
                         </section>

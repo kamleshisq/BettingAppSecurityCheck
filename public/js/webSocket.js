@@ -2903,7 +2903,7 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
-            console.log(LOGINDATA)
+            // console.log(LOGINDATA)
             socket.emit("createNotification", {data, LOGINDATA})
         })
 
@@ -3668,13 +3668,19 @@ socket.on('connect', () => {
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
-                data.items.some(item => {
+                data.finalResult.items.some(item => {
                     if(item.market_id == id){
                         section = item
                     }
                 })
                 if(this.id == `${section.market_id}1` ){
-                    this.innerHTML = `<span><b>${section.odd}</b></span>`
+                    if(data.betLimits[0].max_odd < section.even || section.even == "-" || section.even == "1,000.00" || section.even == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        this.innerHTML = `<span><b>${section.even}</b></span>` 
+                    }
                 }
             })
 
@@ -3683,13 +3689,19 @@ socket.on('connect', () => {
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
-                data.items.some(item => {
+                data.finalResult.items.some(item => {
                     if(item.market_id == id){
                         section = item
                     }
                 })
                 if(this.id == `${section.market_id}2` ){
-                    this.innerHTML = `<span><b>${section.even}</b></span>`
+                    if(data.betLimits[0].max_odd < section.even || section.even == "-" || section.even == "1,000.00" || section.even == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        this.innerHTML = `<span><b>${section.even}</b></span>` 
+                    }
                 }
             })
 
