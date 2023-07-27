@@ -1507,7 +1507,8 @@ exports.cardsPage = catchAsync(async(req, res, next) => {
         data,
         games,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        check
     })
 })
 
