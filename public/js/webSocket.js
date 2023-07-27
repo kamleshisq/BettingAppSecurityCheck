@@ -3584,7 +3584,15 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.secId}1` ){
-                    this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
+                    if(data.betLimits[0].max_odd < section.backPrice || section.backPrice == "-" || section.backPrice == "1,000.00"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        this.innerHTML = `<span><b>${section.backPrice}</b></span> <span> ${section.backSize}</span>`
+                        // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
+                    }
                 }
             })
 
@@ -3599,7 +3607,16 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.secId}2` ){
-                    this.innerHTML = `<b>${section.layPrice}</b> <br> ${section.laySize}`
+                    if(data.betLimits[0].max_odd < section.layPrice || section.layPrice == "-" || section.layPrice == "1,000.00"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        this.innerHTML = `<span><b>${section.layPrice}</b></span> <span> ${section.laySize}</span>`
+                        // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
+                        // this.innerHTML = `<b>${section.layPrice}</b> <br> ${section.laySize}`
+                    }
                 }
             })
 
