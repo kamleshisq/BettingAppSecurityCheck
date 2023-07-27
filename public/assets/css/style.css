@@ -3192,7 +3192,7 @@ margin-bottom: 0px;
 .navigation .listWrap li:active a .svg_icon.Home path, .navigation .listWrap li.active a .svg_icon.Home path { fill: transparent; stroke: #1a1d21; }
 .navigation .listWrap li:active a .text, .navigation .listWrap li.active a .text {
     color: #fff;
-    margin: 0 0 0 10px;
+    margin: 0;
     background: #182ea6;
     padding: 5px;
     border-radius: 5px;
