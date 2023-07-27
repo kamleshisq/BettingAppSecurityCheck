@@ -17,9 +17,10 @@ async function getSportDATA(){
     ]
     let requests = urls.map(item => fetch(item.url, {
         method: 'GET'
-    }).then(data => console.log(data.json())));
+    }).then(data => data.json()));
     const data = await Promise.all(requests)
-    // return data
+    console.log(data)
+    return data
 }
 
 module.exports = getSportDATA
