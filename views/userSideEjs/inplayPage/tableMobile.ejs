@@ -1,4 +1,12 @@
 <%if(LiveCricket.length > 0 ){%>
+  <% let hasNonNullMatchOdd = false; %>
+  <% for (let i = 0; i < LiveCricket.length; i++) { %>
+    <% if (LiveCricket[i].marketList.match_odd !== null) { %>
+      <% hasNonNullMatchOdd = true; %>
+      <% break; %>
+    <% } %>
+  <% } %>
+  <%if(hasNonNullMatchOdd){%>
     <div class="exch-mob-data-tbl-ro">
         <div class="exch-mob-data-tbl-ro-titl">
           <h6>Cricket</h6>
@@ -102,10 +110,19 @@
             <%}%>
         <%}%>
     </div>
+  <%} %>
 <%}%>
 
 
 <%if(liveFootBall.length > 0 ){%>
+  <% let hasNonNullMatchOdd = false; %>
+  <% for (let i = 0; i < liveFootBall.length; i++) { %>
+    <% if (liveFootBall[i].marketList.match_odd !== null) { %>
+      <% hasNonNullMatchOdd = true; %>
+      <% break; %>
+    <% } %>
+  <% } %>
+  <%if(hasNonNullMatchOdd){%>
     <div class="exch-mob-data-tbl-ro">
         <div class="exch-mob-data-tbl-ro-titl">
           <h6>Football</h6>
@@ -209,9 +226,18 @@
             <%}%>
         <%}%>
     </div>
+  <%} %>
 <%}%>
 
-<%if(liveTennis.length > 0 || upcomintTennis.length > 0){%>
+<%if(liveTennis.length > 0 ){%>
+  <% let hasNonNullMatchOdd = false; %>
+  <% for (let i = 0; i < liveTennis.length; i++) { %>
+    <% if (liveTennis[i].marketList.match_odd !== null) { %>
+      <% hasNonNullMatchOdd = true; %>
+      <% break; %>
+    <% } %>
+  <% } %>
+  <%if(hasNonNullMatchOdd){%>
     <div class="exch-mob-data-tbl-ro">
         <div class="exch-mob-data-tbl-ro-titl">
           <h6>Tennis</h6>
@@ -315,4 +341,5 @@
             <%}%>
         <%}%>
     </div>
+  <%} %>
 <%}%>
