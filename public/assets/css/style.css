@@ -3181,11 +3181,22 @@ margin-bottom: 0px;
 .navigation .listWrap li a svg { position: relative; display: block; line-height: 1; text-align: center; transition: 0.6s; width: 26px; height: 26px; opacity: 1; visibility: visible; }
 .navigation .listWrap li a .icon ion-icon { font-size: 2.2rem; }
 .navigation .listWrap li a .text { font-family: 'Kanit', sans-serif; font-weight: 400; font-size: 14px; line-height: 12px; color: #ffffff; letter-spacing: 0; transition: 0.6s; transform: translateX(0); opacity: 1; z-index: 1; margin: 8px 0 0; }
-.navigation .listWrap li:active a, .navigation .listWrap li.active a { transform: translateX(20px); }
+.navigation .listWrap li:active a, .navigation .listWrap li.active a {
+    transform: translateX(40px);
+    display: flex;
+    flex-direction: row;
+    width: 140px !important;
+}
 .navigation .listWrap li:active a .svg_icon, .navigation .listWrap li.active a .svg_icon { margin: 0; background: #ffffff; width: 45px; height: 45px; }
 .navigation .listWrap li:active a svg path, .navigation .listWrap li.active a svg path { fill: #1a1d21; }
 .navigation .listWrap li:active a .svg_icon.Home path, .navigation .listWrap li.active a .svg_icon.Home path { fill: transparent; stroke: #1a1d21; }
-.navigation .listWrap li:active a .text, .navigation .listWrap li.active a .text { color: transparent; font-size: 0; opacity: 0; visibility: hidden; display: none; }
+.navigation .listWrap li:active a .text, .navigation .listWrap li.active a .text {
+    color: #fff;
+    margin: 0 0 0 10px;
+    background: #182ea6;
+    padding: 5px;
+    border-radius: 5px;
+}
 .navigation .listWrap li a .svg_icon img.Black_icon { display: none; }
 .navigation .listWrap li:active a .svg_icon img.White_icon, .navigation .listWrap li.active a .svg_icon img.White_icon { display: none; }
 .navigation .listWrap li:active a .svg_icon img.Black_icon, .navigation .listWrap li.active a .svg_icon img.Black_icon { display: block; }
