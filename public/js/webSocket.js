@@ -42,6 +42,11 @@ socket.on('connect', () => {
     socket.emit('UserUpdatePass', {data, LOGINDATA});
    })
 
+   $(document).on("click", ".multi_market", function(e) {
+    e.preventDefault()
+    console.log(this.id)
+   })
+
    socket.on('UserUpdatePass', async(data)=>{
     console.log(data)
     if(data.status === "success"){
