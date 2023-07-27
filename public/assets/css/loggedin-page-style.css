@@ -641,7 +641,7 @@ a{
     text-align: center;
  }
  .exchange-pg-rit-ro-livetv-dv-wrp1{
-    height: 400px;
+    /* height: 400px; */
     overflow-x: scroll;
  }
 .exchange-pg-rit-ro-livetv-dv-wrp1>img{
