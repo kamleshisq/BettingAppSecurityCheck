@@ -3841,6 +3841,7 @@ socket.on('connect', () => {
                       </div>
                     </div>
                     <div class="liv-casino-games-cards-txt2">`
+                    console.log(LOGINDATA)
                     if(LOGINDATA.LOGINUSER === ""){
                       html +=  `<a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>`
                     }else{
