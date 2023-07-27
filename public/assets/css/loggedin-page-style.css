@@ -642,7 +642,7 @@ a{
  }
  .exchange-pg-rit-ro-livetv-dv-wrp1{
     /* height: 400px; */
-    overflow-x: scroll;
+    /* overflow-x: scroll; */
  }
 .exchange-pg-rit-ro-livetv-dv-wrp1>img{
     margin-bottom: 10px;
