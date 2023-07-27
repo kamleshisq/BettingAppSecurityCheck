@@ -19,7 +19,6 @@ async function getSportDATA(){
         method: 'GET'
     }).then(data => data.json()));
     const data = await Promise.all(requests)
-    console.log(data)
     return data
 }
 
