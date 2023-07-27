@@ -19,7 +19,7 @@ async function getSportDATA(){
         method: 'GET'
     }).then(data => console.log(data, 456454)));
     const data = await Promise.all(requests)
-    return data
+    // return data
 }
 
 module.exports = getSportDATA
