@@ -63,22 +63,24 @@
                             <i class="fa-solid fa-tv c-activee"></i>
                           </div>
                         <%}%>
+                        <%if(liveTennis[i].marketList.match_odd != null){%>
                         <div class="exchange-td2-txtdv-inn1">
                           <p> MO </p>
                           <span>35</span>
                         </div>
-                        <div class="exchange-td2-txtdv-inn1">
-                          <p> F </p>
-                          <span>1</span>
-                        </div>
-                        <div class="exchange-td2-txtdv-inn1">
-                          <p> M </p>
-                          <span>1</span>
-                        </div>
-                        <div class="exchange-td2-txtdv-inn1">
-                          <p> L </p>
-                          <span>1</span>
-                        </div>
+                        <%} %>
+                        <%if(liveTennis[i].marketList.fancy != null){%>
+                          <div class="exchange-td2-txtdv-inn1">
+                            <p> F </p>
+                            <span>1</span>
+                          </div>
+                        <%}%>
+                        <%if(liveTennis[i].marketList.bookmaker != null){%>
+                          <div class="exchange-td2-txtdv-inn1">
+                            <p> B </p>
+                            <span>1</span>
+                          </div>
+                        <%} %>
                       </div>
                     </td>
                     <% let runners = JSON.parse(liveTennis[i].marketList.match_odd.runners); %>
@@ -147,22 +149,29 @@
                   </td>
                   <td style="border-bottom: 0px;" >
                     <div class="exchange-td2-txtdv">
+                      <%if(upcomintTennis[i].eventData.isTv){%>
+                        <div class="exchange-td2-txtdv-tv">
+                          <i class="fa-solid fa-tv c-activee"></i>
+                        </div>
+                      <%}%>
+                      <%if(upcomintTennis[i].marketList.match_odd != null){%>
                       <div class="exchange-td2-txtdv-inn1">
                         <p> MO </p>
                         <span>35</span>
                       </div>
-                      <div class="exchange-td2-txtdv-inn1">
-                        <p> F </p>
-                        <span>1</span>
-                      </div>
-                      <div class="exchange-td2-txtdv-inn1">
-                        <p> M </p>
-                        <span>1</span>
-                      </div>
-                      <div class="exchange-td2-txtdv-inn1">
-                        <p> L </p>
-                        <span>1</span>
-                      </div>
+                      <%} %>
+                      <%if(upcomintTennis[i].marketList.fancy != null){%>
+                        <div class="exchange-td2-txtdv-inn1">
+                          <p> F </p>
+                          <span>1</span>
+                        </div>
+                      <%}%>
+                      <%if(upcomintTennis[i].marketList.bookmaker != null){%>
+                        <div class="exchange-td2-txtdv-inn1">
+                          <p> B </p>
+                          <span>1</span>
+                        </div>
+                      <%} %>
                     </div>
                   </td>
                   <% let runners = JSON.parse(upcomintTennis[i].marketList.match_odd.runners); %>
