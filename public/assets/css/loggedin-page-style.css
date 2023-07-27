@@ -640,10 +640,10 @@ a{
     color: var(--color2); 
     text-align: center;
  }
- .exchange-pg-rit-ro-livetv-dv-wrp1{
+ /* .exchange-pg-rit-ro-livetv-dv-wrp1{ */
     /* height: 400px; */
     /* overflow-x: scroll; */
- }
+ /* } */
 .exchange-pg-rit-ro-livetv-dv-wrp1>img{
     margin-bottom: 10px;
     width: 100%;
