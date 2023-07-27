@@ -1646,6 +1646,33 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     })
 });
 
+
+exports.multimarkets = catchAsync(async(req, res, next) => {
+    
+    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    const sportData = await getCrkAndAllData()
+    const cricket = sportData[0].gameList[0].eventList
+    const betLimit = await betLimitModel.find()
+    // console.log(match.marketList.goals)
+    // let session = match.marketList.session.filter(item => {
+    //     let date = new Date(item.updated_on);
+    //     return date < Date.now() - 1000 * 60 * 60;
+    // });
+    let SportLimits = betLimit.find(item => item.type === "Sport")
+    let userLog
+    if(req.currentUser){
+        userLog = await loginLogs.find({user_id:req.currentUser._id})
+    }
+    res.status(200).render("./userSideEjs/userMatchDetails/main",{
+        user: req.currentUser,
+        verticalMenus,
+        check:"Multi Markets",
+        SportLimits,
+        userLog,
+        notifications:req.notifications
+    })
+});
+
 exports.getCardInplayGame = catchAsync(async(req, res, next) => {
     let check
     if(req.url.startsWith('/cards')){

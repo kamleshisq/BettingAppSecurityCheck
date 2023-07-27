@@ -82,6 +82,7 @@ router.get("/virtualsInPlay", authController.isProtected, notificationController
 router.get("/premium_sports", authController.isProtected, notificationController.myNotifications ,viewController.getSportBookGame);
 router.get('/MyPlStatement', authController.isProtected, notificationController.myNotifications ,viewController.userPlReports );
 router.get("/exchange_inPlay/match", authController.isLogin, notificationController.myNotifications ,viewController.getExchangePageIn);
+router.get("/exchange/multimarkets", authController.isLogin, notificationController.myNotifications ,viewController.multimarkets);
 router.get("/live_casino", authController.isLogin, notificationController.myNotifications ,viewController.getLiveCasinoPage);
 router.get("/mybets", authController.isProtected, notificationController.myNotifications ,viewController.getMyBetsPageUser);
 router.get("/myGameReport", authController.isProtected, notificationController.myNotifications ,viewController.getGameReportPageUser);
