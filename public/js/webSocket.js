@@ -3578,7 +3578,7 @@ socket.on('connect', () => {
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
-                data.items.some(item => {
+                data.finalResult.items.some(item => {
                     if(item.runners){
                         section = item.runners.find(item2 => item2.secId == id)
                     }
@@ -3601,7 +3601,7 @@ socket.on('connect', () => {
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
-                data.items.some(item => {
+                data.finalResult.items.some(item => {
                     if(item.runners){
                         section = item.runners.find(item2 => item2.secId == id)
                     }
