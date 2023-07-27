@@ -63,7 +63,6 @@ const LoginLogs = catchAsync(async(req, res, next) => {
     // }
     else if(req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin"){
         //console.log(req.headers.cookie, "MIDDLEWARES")
-        console.log(req.headers.cookie, req.originalUrl)
         if(req.headers.cookie && !req.originalUrl.startsWith("/wallet")){
             // //console.log(global._loggedInToken)
             const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).JWT, isOnline:true})
@@ -80,7 +79,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             global._host = req.get('host')
             global._User = user
         }
-        else{
+        else if (!req.originalUrl.startsWith("/api/v1")){
             global._token = ""
             global._protocol = req.protocol
             global._host = req.get('host')
