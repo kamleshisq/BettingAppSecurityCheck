@@ -3538,14 +3538,38 @@ socket.on('connect', () => {
                     }
                 });
                 if(this.id == `${section.selectionId}1` ){
-                    this.innerHTML = `<span><b>${section.backPrice1}</b></span> 
-                                    <span>${section.backSize1}</span>`
+                    if(data.betLimits[0].max_odd < section.backPrice1 || section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        // this.innerHTML = `<span><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
+                        this.innerHTML = `<span><b>${section.backPrice1}</b></span> 
+                                        <span>${section.backSize1}</span>`
+                    }
                 }else if(this.id == `${section.selectionId}2`){
-                    this.innerHTML = `<span><b>${section.backPrice2}</b></span> 
-                    <span>${section.backSize2}</span>`
+                    if(data.betLimits[0].max_odd < section.backPrice2 || section.backPrice2 == "-" || section.backPrice2 == "1,000.00" || section.backPrice2 == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        // this.innerHTML = `<span><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
+                        this.innerHTML = `<span><b>${section.backPrice2}</b></span> 
+                        <span>${section.backSize2}</span>`
+                    }
                 }else if (this.id == `${section.selectionId}3`){
-                    this.innerHTML = `<span><b>${section.backPrice3}</b></span> 
-                    <span>${section.backSize3}</span>`
+                    if(data.betLimits[0].max_odd < section.backPrice3 || section.backPrice3 == "-" || section.backPrice3 == "1,000.00" || section.backPrice3 == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        // this.innerHTML = `<span><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
+                        this.innerHTML = `<span><b>${section.backPrice3}</b></span> 
+                        <span>${section.backSize3}</span>`
+                    }
                 }
             })
 
