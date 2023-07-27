@@ -1494,13 +1494,17 @@ exports.cardsPage = catchAsync(async(req, res, next) => {
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
     }
-    let check = req.originalUrl
-    console.log(check)
+    let checkUrl = req.originalUrl
+    let check
+    if(checkUrl === "/allCards"){
+        check = "Cards"
+    }else{
+        check = "Slots"
+    }
     res.status(200).render("./userSideEjs/cards/main",{
         user,
         verticalMenus,
         data,
-        check:"Cards",
         games,
         userLog,
         notifications:req.notifications
