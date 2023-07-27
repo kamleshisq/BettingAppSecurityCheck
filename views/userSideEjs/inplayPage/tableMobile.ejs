@@ -36,31 +36,33 @@
                           </p>
                         </div>
                         <div class="exch-mob-data-tbl-card-dv2">
-                            <%if(LiveCricket[i].eventData.isTv){%>
-                                <span class="exch-mob-data-tbl-card-dv2-spns">
-                                  <i class="fa-solid fa-tv c-activee"></i>
-                                </span>
-                            <%}%>
-                          <span class="exch-mob-data-tbl-card-dv2-spns">
-                            <p> MO </p>
-                            <span>35</span>
-                          </span>
-                          <span class="exch-mob-data-tbl-card-dv2-spns">
-                            <p> F </p>
-                            <span>1</span>
-                          </span>
-                          <span class="exch-mob-data-tbl-card-dv2-spns">
-                            <p> F </p>
-                            <span>1</span>
-                          </span>
-                          <span class="exch-mob-data-tbl-card-dv2-spns">
-                            <p> F </p>
-                            <span>1</span>
-                          </span>
-                          <span class="exch-mob-data-tbl-card-dv2-spns">
-                            <button href="multimarket.html"><img src="assets/img/exchange/Vector.png" alt=""/></button> 
-                          </span>
-                        </div>
+                          <%if(LiveCricket[i].eventData.isTv){%>
+                              <span class="exch-mob-data-tbl-card-dv2-spns">
+                                <i class="fa-solid fa-tv c-activee"></i>
+                              </span>
+                          <%}%>
+                          <%if(LiveCricket[i].marketList.match_odd != null){%>
+                            <span class="exch-mob-data-tbl-card-dv2-spns">
+                              <p> MO </p>
+                              <span>35</span>
+                            </span>
+                          <%} %>
+                          <%if(LiveCricket[i].marketList.fancy != null){%>
+                            <span class="exch-mob-data-tbl-card-dv2-spns">
+                              <p> F </p>
+                              <span>1</span>
+                            </span>
+                            <%} %>
+                            <%if(LiveCricket[i].marketList.bookmaker != null){%>
+                              <span class="exch-mob-data-tbl-card-dv2-spns">
+                                <p> B </p>
+                                <span>1</span>
+                              </span>
+                            <%} %>
+                        <span class="exch-mob-data-tbl-card-dv2-spns">
+                          <button href="multimarket.html"><img src="assets/img/exchange/Vector.png" alt=""/></button> 
+                        </span>
+                      </div>
                       </div>
                         <% let runners = JSON.parse(LiveCricket[i].marketList.match_odd.runners); %>
                         <% let runners1 = []; %>
@@ -152,31 +154,33 @@
                           </p>
                         </div>
                         <div class="exch-mob-data-tbl-card-dv2">
-                            <%if(liveFootBall[i].eventData.isTv){%>
-                                <span class="exch-mob-data-tbl-card-dv2-spns">
-                                  <i class="fa-solid fa-tv c-activee"></i>
-                                </span>
-                            <%}%>
-                          <span class="exch-mob-data-tbl-card-dv2-spns">
-                            <p> MO </p>
-                            <span>35</span>
-                          </span>
-                          <span class="exch-mob-data-tbl-card-dv2-spns">
-                            <p> F </p>
-                            <span>1</span>
-                          </span>
-                          <span class="exch-mob-data-tbl-card-dv2-spns">
-                            <p> F </p>
-                            <span>1</span>
-                          </span>
-                          <span class="exch-mob-data-tbl-card-dv2-spns">
-                            <p> F </p>
-                            <span>1</span>
-                          </span>
-                          <span class="exch-mob-data-tbl-card-dv2-spns">
-                            <button href="multimarket.html"><img src="assets/img/exchange/Vector.png" alt=""/></button> 
-                          </span>
-                        </div>
+                          <%if(liveFootBall[i].eventData.isTv){%>
+                              <span class="exch-mob-data-tbl-card-dv2-spns">
+                                <i class="fa-solid fa-tv c-activee"></i>
+                              </span>
+                          <%}%>
+                          <%if(liveFootBall[i].marketList.match_odd != null){%>
+                            <span class="exch-mob-data-tbl-card-dv2-spns">
+                              <p> MO </p>
+                              <span>35</span>
+                            </span>
+                          <%} %>
+                          <%if(liveFootBall[i].marketList.fancy != null){%>
+                            <span class="exch-mob-data-tbl-card-dv2-spns">
+                              <p> F </p>
+                              <span>1</span>
+                            </span>
+                            <%} %>
+                            <%if(liveFootBall[i].marketList.bookmaker != null){%>
+                              <span class="exch-mob-data-tbl-card-dv2-spns">
+                                <p> B </p>
+                                <span>1</span>
+                              </span>
+                            <%} %>
+                        <span class="exch-mob-data-tbl-card-dv2-spns">
+                          <button href="multimarket.html"><img src="assets/img/exchange/Vector.png" alt=""/></button> 
+                        </span>
+                      </div>
                       </div>
                         <% let runners = JSON.parse(liveFootBall[i].marketList.match_odd.runners); %>
                         <% let runners1 = []; %>
@@ -267,31 +271,33 @@
                           </p>
                         </div>
                         <div class="exch-mob-data-tbl-card-dv2">
-                            <%if(liveTennis[i].eventData.isTv){%>
-                                <span class="exch-mob-data-tbl-card-dv2-spns">
-                                  <i class="fa-solid fa-tv c-activee"></i>
-                                </span>
-                            <%}%>
-                          <span class="exch-mob-data-tbl-card-dv2-spns">
-                            <p> MO </p>
-                            <span>35</span>
-                          </span>
-                          <span class="exch-mob-data-tbl-card-dv2-spns">
-                            <p> F </p>
-                            <span>1</span>
-                          </span>
-                          <span class="exch-mob-data-tbl-card-dv2-spns">
-                            <p> F </p>
-                            <span>1</span>
-                          </span>
-                          <span class="exch-mob-data-tbl-card-dv2-spns">
-                            <p> F </p>
-                            <span>1</span>
-                          </span>
-                          <span class="exch-mob-data-tbl-card-dv2-spns">
-                            <button href="multimarket.html"><img src="assets/img/exchange/Vector.png" alt=""/></button> 
-                          </span>
-                        </div>
+                          <%if(liveTennis[i].eventData.isTv){%>
+                              <span class="exch-mob-data-tbl-card-dv2-spns">
+                                <i class="fa-solid fa-tv c-activee"></i>
+                              </span>
+                          <%}%>
+                          <%if(liveTennis[i].marketList.match_odd != null){%>
+                            <span class="exch-mob-data-tbl-card-dv2-spns">
+                              <p> MO </p>
+                              <span>35</span>
+                            </span>
+                          <%} %>
+                          <%if(liveTennis[i].marketList.fancy != null){%>
+                            <span class="exch-mob-data-tbl-card-dv2-spns">
+                              <p> F </p>
+                              <span>1</span>
+                            </span>
+                            <%} %>
+                            <%if(liveTennis[i].marketList.bookmaker != null){%>
+                              <span class="exch-mob-data-tbl-card-dv2-spns">
+                                <p> B </p>
+                                <span>1</span>
+                              </span>
+                            <%} %>
+                        <span class="exch-mob-data-tbl-card-dv2-spns">
+                          <button href="multimarket.html"><img src="assets/img/exchange/Vector.png" alt=""/></button> 
+                        </span>
+                      </div>
                       </div>
                         <% let runners = JSON.parse(liveTennis[i].marketList.match_odd.runners); %>
                         <% let runners1 = []; %>
