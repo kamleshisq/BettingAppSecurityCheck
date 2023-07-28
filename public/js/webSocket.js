@@ -43,15 +43,13 @@ socket.on('connect', () => {
    })
 
    const multiMarketTd = document.querySelectorAll('.multi_market');
-   if(multiMarketTd != null){
-    console.log(multiMarketTd)
-       multiMarketTd.addEventListener('click', function (event) {
-         event.preventDefault();
-         console.log(this.id)
-         // Add your custom logic here for what you want to happen when the cell is clicked
-         // For example, you could open a modal or perform some other action.
-       });
-   }
+   multiMarketTd.forEach((multiMarketTd) => {
+    multiMarketTd.addEventListener('click', function (event) {
+      event.preventDefault();
+      console.log(this.id);
+      
+    });
+  });
  
    // JavaScript event delegation using the parent <table> element
    const myTable = document.querySelectorAll('.myTable');
