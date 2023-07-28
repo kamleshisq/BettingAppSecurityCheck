@@ -1406,7 +1406,6 @@ exports.getPageManagement = catchAsync(async(req, res, next) => {
 
 exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    let userMultimarkets = await multimarkets.findOne({userId:user.id})
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
@@ -1422,7 +1421,9 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find();
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     let userLog
+    let userMultimarkets
     if(user){
+        userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render('./userSideEjs/exchangePage/main',{
@@ -1458,7 +1459,9 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find();
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     let userLog
+    let userMultimarkets
     if(user){
+        userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
     }
     // console.log(liveFootBall)
@@ -1473,7 +1476,8 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
         liveTennis,
         LiveCricket,
         userLog,
-        notifications:req.notifications      
+        notifications:req.notifications,
+        userMultimarkets      
     })
 })
 
@@ -1487,7 +1491,9 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
     let userLog
+    let userMultimarkets
     if(user){
+        userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render("./userSideEjs/cricketPage/main", {
@@ -1498,7 +1504,8 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
         LiveCricket,
         upcomintCricket,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        userMultimarkets
     })
 })
 
@@ -1540,7 +1547,9 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
     let upcomintFootball = footBall.filter(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
     let userLog
+    let userMultimarkets
     if(user){
+        userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render('.//userSideEjs/footballPage/main',{
@@ -1551,7 +1560,8 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
         liveFootBall,
         upcomintFootball,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        userMultimarkets
     })
 })
 
@@ -1565,7 +1575,9 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
     let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
     let userLog
+    let userMultimarkets
     if(user){
+        userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render('.//userSideEjs/tennisPage/main',{
@@ -1576,7 +1588,8 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
         liveTennis,
         upcomintTennis,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        userMultimarkets
     })
 })
 
