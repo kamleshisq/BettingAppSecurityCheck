@@ -5318,7 +5318,7 @@ socket.on('connect', () => {
                     footBall = footBall.eventList
                     result = footBall.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == data.multimarket.marketIds[i])
                     if(!result){
-                        let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
+                        let Tennis = data.sportListData[1].gameList.find(item => item.sport_name === "Tennis")
                         Tennis = Tennis.eventList
                         result = Tennis.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == data.multimarket.marketIds[i])
                     }
