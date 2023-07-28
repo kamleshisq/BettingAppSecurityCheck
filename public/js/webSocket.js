@@ -3754,15 +3754,15 @@ socket.on('connect', () => {
 
         })
 
-        const buttons = document.querySelectorAll(".button");
-        buttons.forEach((button) => {
-          button.addEventListener("click", (event) => {
-            const clickedButton = event.target;
-            const firstChildValue = clickedButton.firstElementChild.innerText;
-            const numSpan = document.querySelector(".nww-bet-slip-wrp-col1-txt-num");
-            numSpan.innerText = firstChildValue;
-          });
-        });
+        // const buttons = document.querySelectorAll(".button");
+        // buttons.forEach((button) => {
+        //   button.addEventListener("click", (event) => {
+        //     const clickedButton = event.target;
+        //     const firstChildValue = clickedButton.firstElementChild.innerText;
+        //     const numSpan = document.querySelector(".nww-bet-slip-wrp-col1-txt-num");
+        //     numSpan.innerText = firstChildValue;
+        //   });
+        // });
       
         // jQuery approach
         $(document).ready(function () {
