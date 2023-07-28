@@ -55,7 +55,9 @@ socket.on('connect', () => {
   });
 
   socket.on("MULTIPLEMARKET", (data) => {
-    console.log(data)
+    for(let i = 0; i < data.length; i++){
+        document.getElementById(data[i]).innerHTML = `<a ><img src="../../assets/img/exchange/Vector2.png" alt=""></a>`
+    }
   })
  
    // JavaScript event delegation using the parent <table> element
