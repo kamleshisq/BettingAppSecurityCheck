@@ -5313,6 +5313,16 @@ socket.on('connect', () => {
             for(let i = 0; i < data.multimarket.marketIds.length; i++){
                 let result
                 result = data.sportListData[0].gameList[0].eventList.find(item => item.marketList.match_odd.marketId == data.multimarket.marketIds[i])
+                if(!result){
+                    let footBall = data.sportListData[1].gameList.find(item => item.sport_name === "Football")
+                    footBall = footBall.eventList
+                    result = footBall.find(item => item.marketList.match_odd.marketId == data.multimarket.marketIds[i])
+                    if(!result){
+                        let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
+                        Tennis = Tennis.eventList
+                        result = Tennis.find(item => item.marketList.match_odd.marketId == data.multimarket.marketIds[i])
+                    }
+                }
                 if(result){
                     html += `<div class="exchange-pg-inn-banner-col2">
                     <div class="exchange-pg-inn-banner-col-titi">
@@ -5395,7 +5405,8 @@ socket.on('connect', () => {
                                 </tr>`
                             }
                             html += "</tbody></table></div></div>"
-                }
+                        }
+                
                 
             }
 
