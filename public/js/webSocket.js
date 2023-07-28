@@ -5304,7 +5304,9 @@ socket.on('connect', () => {
 
 
     if(pathname === "/exchange/multimarkets"){
-        console.log("working")
+        if(LOGINDATA.LOGINUSER != ""){
+            socket.emit("MultiMarketPage", LOGINDATA)
+        }
     }
 
     

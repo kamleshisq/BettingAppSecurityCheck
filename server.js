@@ -1483,6 +1483,10 @@ io.on('connection', (socket) => {
         }catch(err){
             socket.emit("MULTIPLEMARKET", "err")
         }
+    });
+
+    socket.on("MultiMarketPage", async(data) => {
+        console.log(data)
     })
 
     
