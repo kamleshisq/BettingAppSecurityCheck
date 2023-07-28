@@ -25,8 +25,8 @@
                   };
                   var formattedTime = date.toLocaleString('en-US', options);
                 %>
-                <tr class="acount-stat-tbl-body-tr tbl-data-href" onclick="window.location.href = '/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>'; ">
-                    <td style="border-bottom: 0px;" class="name1" id="<%=LiveCricket[i].marketList.match_odd.marketId%>" >
+                <tr class="acount-stat-tbl-body-tr tbl-data-href" >
+                    <td style="border-bottom: 0px;" class="name1" id="<%=LiveCricket[i].marketList.match_odd.marketId%>" data-href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>">
                       <div class="exchange-pg-mytbl-body-cricket-data-dv">
                         <span class="exchange-pg-mytbl-body-liv-dot"></span>
                         <p>
@@ -37,7 +37,7 @@
                         </p>
                     </div>
                     </td>
-                    <td style="border-bottom: 0px;" >
+                    <td style="border-bottom: 0px;" data-href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>" >
                       <div class="exchange-td2-txtdv">
                         <%if(LiveCricket[i].eventData.isTv){%>
                           <div class="exchange-td2-txtdv-tv">
@@ -72,30 +72,30 @@
                         <%secIds.push(item.secId);%>
                     <%});%>
                     <%if(runners1.length === 2){%>
-                    <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
-                    <td style="border-bottom: 0px;"  class="0L" id="<%=secIds[0]%>"></td>
+                    <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>" data-href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>"></td>
+                    <td style="border-bottom: 0px;"  class="0L" id="<%=secIds[0]%>" data-href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>"></td>
                     <td style="border-bottom: 0px;"  class="">
                       <span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>
                     </td>
-                    <td style="border-bottom: 0px;"  class="">
+                    <td style="border-bottom: 0px;"  class="" data-href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>">
                       <span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>
                     </td>
-                    <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
-                    <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
+                    <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>" data-href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>"></td>
+                    <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>" data-href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>"></td>
                     <td style="border-bottom: 0px;">
                       <a href="multi-market.html"><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
                     </td>
                     <%}else{%>
-                      <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
-                        <td style="border-bottom: 0px;"  class="0L" id="<%=secIds[0]%>"></td>
-                        <td style="border-bottom: 0px;"  class="2B" id="<%=secIds[2]%>"></td>
-                        <td style="border-bottom: 0px;"  class="2L" id="<%=secIds[2]%>"></td>
-                        <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
-                        <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
+                      <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>" data-href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>"></td>
+                        <td style="border-bottom: 0px;"  class="0L" id="<%=secIds[0]%>" data-href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>"></td>
+                        <td style="border-bottom: 0px;"  class="2B" id="<%=secIds[2]%>" data-href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>"></td>
+                        <td style="border-bottom: 0px;"  class="2L" id="<%=secIds[2]%>" data-href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>"></td>
+                        <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>" data-href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>"></td>
+                        <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>" data-href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>"></td>
                         <td style="border-bottom: 0px;" class="multi_market" id="<%=LiveCricket[i].marketList.match_odd.marketId%>">
                           <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
                         </td>

@@ -46,8 +46,18 @@ socket.on('connect', () => {
   myTable.addEventListener('click', function (event) {
     const targetElement = event.target;
     if (targetElement.classList.contains('multi_market')) {
-      event.stopPropagation();
-      console.log("Working")
+      event.preventDefault();
+      console.log("working")
+      // Add your custom logic here for what you want to happen when the cell is clicked
+      // For example, you could open a modal or perform some other action.
+    } else if (targetElement.tagName === 'TD') {
+      // For other TD elements (excluding the one with class "multi_market")
+      // Perform page change or any other desired behavior here
+      const trElement = targetElement.parentElement;
+      const dataHref = trElement.getAttribute('data-href');
+      if (dataHref) {
+        window.location.href = dataHref;
+      }
     }
   });
    socket.on('UserUpdatePass', async(data)=>{
