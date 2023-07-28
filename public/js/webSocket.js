@@ -45,6 +45,7 @@ socket.on('connect', () => {
    const multiMarketTd = document.querySelector('.multi_market');
    multiMarketTd.addEventListener('click', function (event) {
      event.preventDefault();
+     console.log(this.id)
      // Add your custom logic here for what you want to happen when the cell is clicked
      // For example, you could open a modal or perform some other action.
    });
