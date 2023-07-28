@@ -45,6 +45,7 @@ socket.on('connect', () => {
    const multiMarketTd = document.querySelector('.multi_market');
     multiMarketTd.addEventListener('click', function (event) {
      event.preventDefault(); 
+     console.log("Working")
    });
 
    socket.on('UserUpdatePass', async(data)=>{
