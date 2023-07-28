@@ -2580,7 +2580,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 500)
+              }, 60000)
         }
         marketId()
 
@@ -2629,7 +2629,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 500)
+              }, 60000)
         }
         marketId()
 
@@ -2675,7 +2675,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 500)
+              }, 60000)
         }
         marketId()
 
@@ -2856,7 +2856,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 500)
+              }, 60000)
         }
         marketId()
 
@@ -2906,7 +2906,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 500)
+              }, 60000)
         }
         marketId()
 
@@ -3324,7 +3324,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 500)
+              }, 60000)
         }
         marketId()
 
@@ -3490,7 +3490,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 500)
+              }, 60000)
         }
         marketId()
 
@@ -4515,7 +4515,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 500)
+              }, 60000)
         }
         marketId()
         socket.on("marketId", (data) => {
@@ -4700,7 +4700,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 500)
+              }, 60000)
         }
         marketId()
         socket.on("marketId", (data) => {
@@ -4884,7 +4884,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 500)
+              }, 60000)
         }
         marketId()
         socket.on("marketId", (data) => {
@@ -5069,7 +5069,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 500)
+              }, 60000)
         }
         marketId()
         socket.on("marketId", (data) => {

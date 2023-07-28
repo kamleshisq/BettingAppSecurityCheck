@@ -3160,6 +3160,416 @@ margin-bottom: 0px;
     width: 100%;
 }
 
+
+
+/* --------------------------------------------------------------------------------------
+============================ USER PROFILE PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+.user-pro-sec-main{
+    padding-top: 10px;
+}
+
+.user-pro-sec-ro{
+    display: flex;
+    align-items: start;
+    flex-wrap: wrap;
+}
+
+.user-pro-sec-col1-inn{
+    padding: 0px 5px;
+}
+
+.user-pro-sec-col1-inn-ro{
+    padding: 10px 10px;
+    background-color: var(--color3);
+    border: 1px solid var(--color8);
+    border-radius: 30px;
+}
+
+.user-pro-sec-col1-inn-titl{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    background: var(--color1);
+    padding: 10px 10px;
+    border-radius: 30px;
+}
+
+.user-pro-sec-col1-inn-titl>h6{
+    margin-bottom: 0px;
+    color: var(--color3);
+}
+
+.user-pro-sec-col1-inn-txt{
+    padding-top: 10px;
+}
+
+.user-pro-sec-col1-inn-txtinn1{
+    text-align: center;
+}
+
+.user-detl-profil-avtar-dv{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-bottom: 5px;
+}
+
+.user-pro-sec-col1-inn-txtinn2{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0px;
+    flex-wrap: wrap;
+}
+
+.user-pro-sec-col1-inn-txtinn2>h6>a>img{
+    width: 20px;
+}
+
+.user-pro-sec-col1-inn-txtinn2>h6{
+    font-size: 13px;
+    margin-bottom: 0px;
+}
+
+.user-pro-sec-col1-inn-txtinn2>h6>a{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.user-pro-sec-col1-inn-txtinn3{
+    padding: 10px 0;
+}
+
+.change-pass-usr-prof-btn-dv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.change-pass-usr-prof-btn-dv>a{
+    text-decoration: none;
+    color: var(--color2);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.user-pro-sec-col1-inn-txt-discription>p{
+    margin-bottom: 0px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.user-prof-statistik-data-wrp{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 10px;
+}
+
+.user-prof-statistik-data-col{
+    padding: 0 5px;
+}
+
+.user-prof-statistik-data-col--inn{
+    background-color: var(--color7);
+    text-align: center;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+}
+
+.user-prof-statistik-data-wrp2{
+    padding-top: 10px;
+}
+
+.user-prof-statistik-data-col--inn>h6{
+    font-weight: 600;
+    color: var(--color2);
+}
+
+.user-prof-statistik-data-wrp2-col{
+    background-color: var(--color7);
+    text-align: center;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+}
+
+.user-prof-statistik-data-wrp2-col>h6{
+    font-weight: 600;
+    color: var(--color2);
+}
+
+/* --------------------------------------------------------------------------------------
+============================ USER PROFILE PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------------------
+============================ WITHDROWAL PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+.withdrow-txt-ro{
+    display: flex;
+    align-items: start;
+    flex-wrap: wrap;
+    padding-top: 10px;
+}
+
+.withdrow-txt-col{
+    padding: 0px 5px;
+}
+
+.withdrow-txt-formselect-dv{
+    font-size: 15px;
+}
+
+.withdrow-txt-formselect-dv>label{
+    padding-left: 5px;
+}
+
+.withdrow-txt-formselect{
+    border: 1px solid var(--color2);
+    border-radius: 30px;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+.withdrow-txt-formselect:focus{
+    border: 1px solid var(--color2);
+    box-shadow: none;
+}
+
+.withdrow-txt-formpass-dv{
+    font-size: 15px;
+}
+
+.withdrow-txt-formpass-dv>label{
+    padding-left: 5px;
+}
+
+.withdrow-txt-formpass-dv>input{
+    border: 1px solid var(--color2);
+    border-radius: 30px;
+    font-size: 15px;
+}
+
+.withdrow-txt-formpass-dv>input:focus{
+    border: 1px solid var(--color2);
+    box-shadow: none;
+}
+
+.withdrow-txt-doc-upload-ro{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0px 5px;
+}
+
+.withdrow-txt-doc-upload-col-inn{
+    background-color: var(--color7);
+    height: 150px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.withdrow-txt-doc-upload-input-lbl{
+    cursor: pointer;
+    padding: 10px 10px;
+}
+
+.withdrow-txt-doc-upload-input-lbl:active{
+    transform: scale(0.9);
+    box-shadow: 0px 0px 5px var(--color2);
+    border-radius: 15px;
+}
+
+.withdrow-txt-doc-upload-input-lbl>i{
+    color: var(--color2);
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+.withdrow-txt-doc-upload-input-lbl>h6{
+    font-size: 15px;
+}
+
+.withdrow-txt-doc-upload-col-inn{
+    text-align: center;
+}
+
+.withdrow-txt-doc-upload-input>input{
+    display: none;
+}
+
+.withdrow-txt-doc-upload-col{
+    padding: 0px 5px;
+}
+
+.withdrow-txt-doc-upload-col-btn-dv{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.withdrow-txt-doc-upload-col-btn-dv>a{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 20px;
+    border-radius: 30px;
+    background: var(--color1);
+    color: var(--color3);
+    font-size: 15px;
+    transition: all 0.3s ease-in-out;
+}
+
+.withdrow-txt-doc-upload-col-btn-dv>a:hover{
+    transition: all 0.3s ease-in-out;
+    background: var(--color6);
+}
+
+/* --------------------------------------------------------------------------------------
+============================ WITHDROWAL PAGE STYLE ========================================
+-------------------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------------------
+============================ GAME RULES POPUP ========================================
+-------------------------------------------------------------------------------------- */
+
+.game-info-popup-spn{
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.gam-rul-pop-data-wrp-titl{
+    padding: 10px 10px;
+    background-color: var(--color2);
+    border-radius: 30px;
+    color: var(--color3);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.gam-rul-pop-data-wrp-titl>h6{
+    font-size: 15px;
+    margin-bottom: 0px;
+}
+
+.gam-rul-pop-data-btnn{
+    font-size: 15px;
+}
+
+.gam-rul-pop-data-btnn:focus{
+    box-shadow: none;
+    background-color: var(--color3);
+}
+
+.gam-rul-pop-data-btnn:active{
+    border-bottom: 1px solid var(--color5);
+}
+
+.gam-rul-pop-data-btnnh2-item{
+    padding: 10px;
+}
+
+.gam-rul-pop-data-txt-dv{
+    padding: 5px 5px;
+    background-color: var(--color7);
+    border-radius: 15px;
+}
+
+.gam-rul-pop-data-txt-dv>ol>li{
+    font-size: 13px;
+}
+
+/* --------------------------------------------------------------------------------------
+============================ GAME RULES POPUP ========================================
+-------------------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------------------
+============================ footer contact row ========================================
+-------------------------------------------------------------------------------------- */
+
+.footer-sec--contact-ro{
+    text-align: center;
+}
+
+.footer-sec--contact-col>h6{
+    color: var(--color2);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.footer-sec--contact-col2>a{
+    color: var(--color4);
+    font-size: 15px;
+}
+
+.footer-sec--contact-col2>span{
+    color: var(--color4);
+}
+
+/* --------------------------------------------------------------------------------------
+============================ footer contact row ========================================
+-------------------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------------------
+============================ EXCHANGE INNER FANCY TAB ========================================
+-------------------------------------------------------------------------------------- */
+.exch-inn-fancy-tab-wrpmain{
+    padding: 10px 0px;
+}
+
+.exch-inn-fancy-tab-ul{
+    background-color: var(--color3);
+    border: 1px solid var(--color8);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.exch-inn-fancy-tab-li>button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    padding: 10px 150px;
+    color: var(--color4);
+    font-weight: 600;
+    transition: all 0.0s ease-in-out;
+}
+
+.exch-inn-fancy-tab-li>button:hover{
+    transition: all 0.0s ease-in-out;
+    background-color: var(--color12) !important;
+    color: var(--color3);
+    border-radius: 30px;
+}
+
+.exch-inn-fancy-tab-li>.active{
+    padding: 10px 150px;
+    background-color: var(--color12) !important;
+    border-radius: 30px;
+}
+
+/* --------------------------------------------------------------------------------------
+============================ EXCHANGE INNER FANCY TAB ========================================
+-------------------------------------------------------------------------------------- */
+
 /* --------------------------------------------------------------------------------------
 ============================ binary PAGE STYLE ========================================
 -------------------------------------------------------------------------------------- */
