@@ -33,82 +33,98 @@
                     };
                     var formattedTime = date.toLocaleString('en-US', options);
                   %>
-                  <tr class="acount-stat-tbl-body-tr tbl-data-href" onclick="window.location.href = '/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>'; ">
-                      <td style="border-bottom: 0px;" class="name1" id="<%=LiveCricket[i].marketList.match_odd.marketId%>" >
-                        <div class="exchange-pg-mytbl-body-cricket-data-dv">
-                          <span class="exchange-pg-mytbl-body-liv-dot"></span>
-                          <p>
-                            <span><%=LiveCricket[i].eventData.league%></span> • <%=formattedTime%>
-                          </p>
-                          <p>
-                              <b><%=LiveCricket[i].eventData.name%></b>
-                          </p>
-                      </div>
-                      </td>
-                      <td style="border-bottom: 0px;" >
-                        <div class="exchange-td2-txtdv">
-                          <%if(LiveCricket[i].eventData.isTv){%>
-                            <div class="exchange-td2-txtdv-tv">
-                              <i class="fa-solid fa-tv c-activee"></i>
-                            </div>
-                          <%}%>
-                          <%if(LiveCricket[i].marketList.match_odd != null){%>
-                          <div class="exchange-td2-txtdv-inn1">
-                            <p> MO </p>
-                            <span>35</span>
+                  <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>'>
+                    <td style="border-bottom: 0px;" class="name1" id="<%=LiveCricket[i].marketList.match_odd.marketId%>" >
+                      <div class="exchange-pg-mytbl-body-cricket-data-dv">
+                        <span class="exchange-pg-mytbl-body-liv-dot"></span>
+                        <p>
+                          <span><%=LiveCricket[i].eventData.league%></span> • <%=formattedTime%>
+                        </p>
+                        <p>
+                            <b><%=LiveCricket[i].eventData.name%></b>
+                        </p>
+                    </div>
+                    </td>
+                    <td style="border-bottom: 0px;" >
+                      <div class="exchange-td2-txtdv">
+                        <%if(LiveCricket[i].eventData.isTv){%>
+                          <div class="exchange-td2-txtdv-tv">
+                            <i class="fa-solid fa-tv c-activee"></i>
                           </div>
-                          <%} %>
-                          <%if(LiveCricket[i].marketList.fancy != null){%>
-                            <div class="exchange-td2-txtdv-inn1">
-                              <p> F </p>
-                              <span>1</span>
-                            </div>
-                          <%}%>
-                          <%if(LiveCricket[i].marketList.bookmaker != null){%>
-                            <div class="exchange-td2-txtdv-inn1">
-                              <p> B </p>
-                              <span>1</span>
-                            </div>
-                          <%} %>
+                        <%}%>
+                        <%if(LiveCricket[i].marketList.match_odd != null){%>
+                        <div class="exchange-td2-txtdv-inn1">
+                          <p> MO </p>
+                          <span>35</span>
                         </div>
-                      </td>
-                      <% let runners = JSON.parse(LiveCricket[i].marketList.match_odd.runners); %>
-                      <% let runners1 = []; %>
-                      <%let secIds = []; %>
-                      <%runners.forEach(item => {%>
-                          <%runners1.push(item.runner);%>
-                          <%secIds.push(item.secId);%>
-                      <%});%>
-                      <%if(runners1.length === 2){%>
-                      <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
-                      <td style="border-bottom: 0px;"  class="0L" id="<%=secIds[0]%>"></td>
-                      <td style="border-bottom: 0px;"  class="">
-                        <span class="tbl-td-bg-blu-spn mylock-data">
-                          <i class="fa-solid fa-lock"></i>
-                        </span>
-                      </td>
-                      <td style="border-bottom: 0px;"  class="">
-                        <span class="tbl-td-bg-pich-spn mylock-data">
-                          <i class="fa-solid fa-lock"></i>
-                        </span>
-                      </td>
-                      <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
-                      <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
-                      <td style="border-bottom: 0px;">
-                        <a href="multi-market.html"><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
-                      </td>
+                        <%} %>
+                        <%if(LiveCricket[i].marketList.fancy != null){%>
+                          <div class="exchange-td2-txtdv-inn1">
+                            <p> F </p>
+                            <span>1</span>
+                          </div>
+                        <%}%>
+                        <%if(LiveCricket[i].marketList.bookmaker != null){%>
+                          <div class="exchange-td2-txtdv-inn1">
+                            <p> B </p>
+                            <span>1</span>
+                          </div>
+                        <%} %>
+                      </div>
+                    </td>
+                    <% let runners = JSON.parse(LiveCricket[i].marketList.match_odd.runners); %>
+                    <% let runners1 = []; %>
+                    <%let secIds = []; %>
+                    <%runners.forEach(item => {%>
+                        <%runners1.push(item.runner);%>
+                        <%secIds.push(item.secId);%>
+                    <%});%>
+                    <%if(runners1.length === 2){%>
+                    <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
+                    <td style="border-bottom: 0px;"  class="0L" id="<%=secIds[0]%>"></td>
+                    <td style="border-bottom: 0px;"  class="">
+                      <span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>
+                    </td>
+                    <td style="border-bottom: 0px;"  class="">
+                      <span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>
+                    </td>
+                    <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
+                    <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
+                    <td style="border-bottom: 0px;" class="multi_market" id="<%=LiveCricket[i].marketList.match_odd.marketId%>">
+                      <%if(user){ %>
+                        <%let check = userMultimarkets.marketIds.find(item => item == LiveCricket[i].marketList.match_odd.marketId) %>
+                        <%if(check){%>
+                          <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
+                        <%}else{%>
+                          <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
+                        <%}%>
                       <%}else{%>
-                        <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
-                          <td style="border-bottom: 0px;"  class="0L" id="<%=secIds[0]%>"></td>
-                          <td style="border-bottom: 0px;"  class="2B" id="<%=secIds[2]%>"></td>
-                          <td style="border-bottom: 0px;"  class="2L" id="<%=secIds[2]%>"></td>
-                          <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
-                          <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
-                          <td style="border-bottom: 0px;">
-                            <a href="multi-market.html"><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
-                          </td>
                       <%}%>
-                  </tr>
+                    </td>
+                    <%}else{%>
+                      <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
+                        <td style="border-bottom: 0px;"  class="0L" id="<%=secIds[0]%>"></td>
+                        <td style="border-bottom: 0px;"  class="2B" id="<%=secIds[2]%>"></td>
+                        <td style="border-bottom: 0px;"  class="2L" id="<%=secIds[2]%>"></td>
+                        <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
+                        <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
+                        <td style="border-bottom: 0px;" class="multi_market" id="<%=LiveCricket[i].marketList.match_odd.marketId%>">
+                          <%if(user){ %>
+                            <%let check = userMultimarkets.marketIds.find(item => item == LiveCricket[i].marketList.match_odd.marketId) %>
+                          <%if(check){%>
+                            <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
+                          <%}else{%>
+                            <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
+                          <%}%>
+                          <%}else{%>
+                          <%}%>
+                        </td>
+                    <%}%>
+                </tr>
                   <%cricketNum++%>
                 <%}%>
               <%}%>
@@ -165,7 +181,7 @@
                   <%}%>
                     <!-- Displaying the extracted time and score -->
                     
-                  <tr class="acount-stat-tbl-body-tr tbl-data-href" onclick="window.location.href = '/exchange_inPlay/match?id=<%=liveFootBall[i].eventData.eventId%>'; ">
+                    <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/exchange_inPlay/match?id=<%=liveFootBall[i].eventData.eventId%>'>
                       <td style="border-bottom: 0px;" class="name1" id="<%=liveFootBall[i].marketList.match_odd.marketId%>" >
                         <div class="exchange-pg-mytbl-body-cricket-data-dv">
                           <span class="exchange-pg-mytbl-body-liv-dot"></span>
@@ -232,8 +248,16 @@
                       </td>
                       <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
                       <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
-                      <td style="border-bottom: 0px;">
-                        <a href="multi-market.html"><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
+                      <td style="border-bottom: 0px;" class="multi_market" id="<%=liveFootBall[i].marketList.match_odd.marketId%>">
+                        <%if(user){ %>
+                          <%let check = userMultimarkets.marketIds.find(item => item == liveFootBall[i].marketList.match_odd.marketId) %>
+                        <%if(check){%>
+                          <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
+                        <%}else{%>
+                          <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
+                        <%}%>
+                        <%}else{%>
+                        <%}%>
                       </td>
                       <%}else{%>
                         <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
@@ -242,8 +266,16 @@
                           <td style="border-bottom: 0px;"  class="2L" id="<%=secIds[2]%>"></td>
                           <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
                           <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
-                          <td style="border-bottom: 0px;">
-                            <a href="multi-market.html"><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
+                          <td style="border-bottom: 0px;" class="multi_market" id="<%=liveFootBall[i].marketList.match_odd.marketId%>">
+                            <%if(user){ %>
+                              <%let check = userMultimarkets.marketIds.find(item => item == liveFootBall[i].marketList.match_odd.marketId) %>
+                            <%if(check){%>
+                              <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
+                            <%}else{%>
+                              <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
+                            <%}%>
+                            <%}else{%>
+                            <%}%>
                           </td>
                       <%}%>
                   </tr>
@@ -306,88 +338,104 @@
                   <%}%>
   
   
-                  <tr class="acount-stat-tbl-body-tr tbl-data-href" onclick="window.location.href = '/exchange_inPlay/match?id=<%=liveTennis[i].eventData.eventId%>'; ">
-                      <td style="border-bottom: 0px;" class="name1" id="<%=liveTennis[i].marketList.match_odd.marketId%>" >
-                        <div class="exchange-pg-mytbl-body-cricket-data-dv">
-                          <span class="exchange-pg-mytbl-body-liv-dot"></span>
-                          <p>
-                            <span><%=liveTennis[i].eventData.league%></span> • <%=formattedTime%>
-                          </p>
-                          <p>
-                              <b><%=liveTennis[i].eventData.name%></b>
-                          </p>
-                          <%if(liveTennis[i].marketList.score != null){%>
-                            <!-- <span class="ctbal-scor-spn-wrp">
-                              <span class="ctbal-scor-spn1"><%=player1Score%></span>
-                              <span class="ctbal-scor-spn2"><%=player2Score%></span>
-                            </span> -->
-                          <% }%>
-                      </div>
-                      </td>
-                      <td style="border-bottom: 0px;" >
-                        <div class="exchange-td2-txtdv">
-                          <%if(liveTennis[i].eventData.isTv){%>
-                            <div class="exchange-td2-txtdv-tv">
-                              <i class="fa-solid fa-tv c-activee"></i>
-                            </div>
-                          <%}%>
-                          <%if(liveTennis[i].marketList.match_odd != null){%>
-                          <div class="exchange-td2-txtdv-inn1">
-                            <p> MO </p>
-                            <span>35</span>
+                  <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/exchange_inPlay/match?id=<%=liveTennis[i].eventData.eventId%>'>
+                    <td style="border-bottom: 0px;" class="name1" id="<%=liveTennis[i].marketList.match_odd.marketId%>" >
+                      <div class="exchange-pg-mytbl-body-cricket-data-dv">
+                        <span class="exchange-pg-mytbl-body-liv-dot"></span>
+                        <p>
+                          <span><%=liveTennis[i].eventData.league%></span> • <%=formattedTime%>
+                        </p>
+                        <p>
+                            <b><%=liveTennis[i].eventData.name%></b>
+                        </p>
+                        <%if(liveTennis[i].marketList.score != null){%>
+                          <!-- <span class="ctbal-scor-spn-wrp">
+                            <span class="ctbal-scor-spn1"><%=player1Score%></span>
+                            <span class="ctbal-scor-spn2"><%=player2Score%></span>
+                          </span> -->
+                        <% }%>
+                    </div>
+                    </td>
+                    <td style="border-bottom: 0px;" >
+                      <div class="exchange-td2-txtdv">
+                        <%if(liveTennis[i].eventData.isTv){%>
+                          <div class="exchange-td2-txtdv-tv">
+                            <i class="fa-solid fa-tv c-activee"></i>
                           </div>
-                          <%} %>
-                          <%if(liveTennis[i].marketList.fancy != null){%>
-                            <div class="exchange-td2-txtdv-inn1">
-                              <p> F </p>
-                              <span>1</span>
-                            </div>
-                          <%}%>
-                          <%if(liveTennis[i].marketList.bookmaker != null){%>
-                            <div class="exchange-td2-txtdv-inn1">
-                              <p> B </p>
-                              <span>1</span>
-                            </div>
-                          <%} %>
+                        <%}%>
+                        <%if(liveTennis[i].marketList.match_odd != null){%>
+                        <div class="exchange-td2-txtdv-inn1">
+                          <p> MO </p>
+                          <span>35</span>
                         </div>
-                      </td>
-                      <% let runners = JSON.parse(liveTennis[i].marketList.match_odd.runners); %>
-                      <% let runners1 = []; %>
-                      <%let secIds = []; %>
-                      <%runners.forEach(item => {%>
-                          <%runners1.push(item.runner);%>
-                          <%secIds.push(item.secId);%>
-                      <%});%>
-                      <%if(runners1.length === 2){%>
-                      <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
-                      <td style="border-bottom: 0px;"  class="0L" id="<%=secIds[0]%>"></td>
-                      <td style="border-bottom: 0px;"  class="">
-                        <span class="tbl-td-bg-blu-spn mylock-data">
-                          <i class="fa-solid fa-lock"></i>
-                        </span>
-                      </td>
-                      <td style="border-bottom: 0px;"  class="">
-                        <span class="tbl-td-bg-pich-spn mylock-data">
-                          <i class="fa-solid fa-lock"></i>
-                        </span>
-                      </td>
-                      <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
-                      <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
-                      <td style="border-bottom: 0px;">
-                        <a href="multi-market.html"><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
-                      </td>
+                        <%} %>
+                        <%if(liveTennis[i].marketList.fancy != null){%>
+                          <div class="exchange-td2-txtdv-inn1">
+                            <p> F </p>
+                            <span>1</span>
+                          </div>
+                        <%}%>
+                        <%if(liveTennis[i].marketList.bookmaker != null){%>
+                          <div class="exchange-td2-txtdv-inn1">
+                            <p> B </p>
+                            <span>1</span>
+                          </div>
+                        <%} %>
+                      </div>
+                    </td>
+                    <% let runners = JSON.parse(liveTennis[i].marketList.match_odd.runners); %>
+                    <% let runners1 = []; %>
+                    <%let secIds = []; %>
+                    <%runners.forEach(item => {%>
+                        <%runners1.push(item.runner);%>
+                        <%secIds.push(item.secId);%>
+                    <%});%>
+                    <%if(runners1.length === 2){%>
+                    <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
+                    <td style="border-bottom: 0px;"  class="0L" id="<%=secIds[0]%>"></td>
+                    <td style="border-bottom: 0px;"  class="">
+                      <span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>
+                    </td>
+                    <td style="border-bottom: 0px;"  class="">
+                      <span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>
+                    </td>
+                    <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
+                    <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
+                    <td style="border-bottom: 0px;" class="multi_market" id="<%=liveTennis[i].marketList.match_odd.marketId%>">
+                      <%if(user){ %>
+                        <%let check = userMultimarkets.marketIds.find(item => item == liveTennis[i].marketList.match_odd.marketId) %>
+                      <%if(check){%>
+                        <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
                       <%}else{%>
-                        <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
-                          <td style="border-bottom: 0px;"  class="0L" id="<%=secIds[0]%>"></td>
-                          <td style="border-bottom: 0px;"  class="2B" id="<%=secIds[2]%>"></td>
-                          <td style="border-bottom: 0px;"  class="2L" id="<%=secIds[2]%>"></td>
-                          <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
-                          <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
-                          <td style="border-bottom: 0px;">
-                            <a href="multi-market.html"><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
-                          </td>
+                        <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
                       <%}%>
-                  </tr>
+                      <%}else{%>
+                      <%}%>
+                    </td>
+                    <%}else{%>
+                      <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
+                        <td style="border-bottom: 0px;"  class="0L" id="<%=secIds[0]%>"></td>
+                        <td style="border-bottom: 0px;"  class="2B" id="<%=secIds[2]%>"></td>
+                        <td style="border-bottom: 0px;"  class="2L" id="<%=secIds[2]%>"></td>
+                        <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
+                        <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
+                        <td style="border-bottom: 0px;" class="multi_market" id="<%=liveTennis[i].marketList.match_odd.marketId%>">
+                          <%if(user){ %>
+                            <%let check = userMultimarkets.marketIds.find(item => item == liveTennis[i].marketList.match_odd.marketId) %>
+                          <%if(check){%>
+                            <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
+                          <%}else{%>
+                            <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
+                          <%}%>
+                          <%}else{%>
+                          <%}%>
+                        </td>
+                    <%}%>
+                </tr>
                   <%cricketNum++%>
                 <%}%>
               <%}%>           
