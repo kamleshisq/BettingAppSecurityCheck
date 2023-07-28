@@ -46,7 +46,7 @@ socket.on('connect', () => {
    multiMarketTd.forEach((multiMarketTd) => {
     multiMarketTd.addEventListener('click', function (event) {
       event.preventDefault();
-      console.log(this.id);
+      
       
     });
   });
