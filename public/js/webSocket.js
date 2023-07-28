@@ -56,6 +56,7 @@ socket.on('connect', () => {
 
   socket.on("MULTIPLEMARKET", (data) => {
     for(let i = 0; i < data.id.length; i++){
+        console.log(data.id[i])
         document.getElementById(data.id[i]).innerHTML = `<a ><img src"/assets/img/exchange/Vector2.svg" alt=""></a>`
     }
   })
