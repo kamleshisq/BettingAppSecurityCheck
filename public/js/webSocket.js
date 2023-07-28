@@ -5309,9 +5309,19 @@ socket.on('connect', () => {
         }
 
         socket.on("MultiMarketPage", (data)=>{
-            console.log(data.sportListData)
+            function findDataByMarketId(dataArray, marketIdToFind) {
+                for (const item of dataArray) {
+                  for (const event of item.eventList) {
+                    if (event.marketList && event.marketList.match_odd && event.marketList.match_odd.marketId === marketIdToFind) {
+                      return event;
+                    }
+                  }
+                }
+                return null; // If the data with the given marketId is not found
+              }
             for(let i = 0; i < data.multimarket.marketIds; i++){
-                let data = data.sportListData[0].gameList
+                const result = findDataByMarketId(data.sportListData[0], data.multimarket.marketIds[i]);
+                console.log(result)
             }
         })
     }
