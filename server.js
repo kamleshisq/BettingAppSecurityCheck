@@ -1453,6 +1453,7 @@ io.on('connection', (socket) => {
         let check = await stakeLabelModel.find({userId})
         console.log(check)
         if(check == []){
+            console.log("WORKING")
             try{
                 await stakeLabelModel.create({stakeArray,userId})
                 socket.emit("STAKELABEL", "Updated")
@@ -1462,7 +1463,6 @@ io.on('connection', (socket) => {
         }else{
             try{
                 const data = await stakeLabelModel.findOneAndUpdate({userId}, {stakeArray})
-                console.log(data)
                 socket.emit("STAKELABEL", "Updated")
             }catch(err){
                 socket.emit("STAKELABEL", "Please try again later")
