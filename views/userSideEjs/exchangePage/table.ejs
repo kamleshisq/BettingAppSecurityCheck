@@ -240,7 +240,7 @@
                 <%}%>
                   <!-- Displaying the extracted time and score -->
                   
-                <tr class="acount-stat-tbl-body-tr tbl-data-href" onclick="window.location.href = '/exchange_inPlay/match?id=<%=liveFootBall[i].eventData.eventId%>'; ">
+                <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/exchange_inPlay/match?id=<%=liveFootBall[i].eventData.eventId%>'>
                     <td style="border-bottom: 0px;" class="name1" id="<%=liveFootBall[i].marketList.match_odd.marketId%>" >
                       <div class="exchange-pg-mytbl-body-cricket-data-dv">
                         <span class="exchange-pg-mytbl-body-liv-dot"></span>
@@ -307,8 +307,8 @@
                     </td>
                     <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
                     <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
-                    <td style="border-bottom: 0px;">
-                      <a href="multi-market.html"><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
+                    <td style="border-bottom: 0px;" class="multi_market" id="<%=liveFootBall[i].marketList.match_odd.marketId%>">
+                      <a ><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
                     </td>
                     <%}else{%>
                       <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
@@ -317,8 +317,8 @@
                         <td style="border-bottom: 0px;"  class="2L" id="<%=secIds[2]%>"></td>
                         <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
                         <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
-                        <td style="border-bottom: 0px;">
-                          <a href="multi-market.html"><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
+                        <td style="border-bottom: 0px;" class="multi_market" id="<%=liveFootBall[i].marketList.match_odd.marketId%>">
+                          <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
                         </td>
                     <%}%>
                 </tr>
@@ -337,7 +337,7 @@
                   };
                   var formattedTime = date.toLocaleString('en-US', options);
                 %>
-                <tr class="acount-stat-tbl-body-tr tbl-data-href"  onclick="window.location.href = '/exchange_inPlay/match?id=<%=upcomintFootball[i].eventData.eventId%>'; ">
+                <tr class="acount-stat-tbl-body-tr tbl-data-href"  data-href= '/exchange_inPlay/match?id=<%=upcomintFootball[i].eventData.eventId%>'>
                   <td style="border-bottom: 0px;" class="name1" id="<%=upcomintFootball[i].marketList.match_odd.marketId%>" >
                     <div class="exchange-pg-mytbl-body-cricket-data-dv">
                       <%= j%>)
@@ -398,8 +398,8 @@
                     </td>
                     <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
                     <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
-                    <td style="border-bottom: 0px;">
-                      <a href="multi-market.html"><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
+                    <td style="border-bottom: 0px;" class="multi_market" id="<%=upcomintFootball[i].marketList.match_odd.marketId%>">
+                      <a ><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
                     </td>
                     <%}else{%>
                         <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
@@ -463,7 +463,7 @@
                 <%}%>
 
 
-                <tr class="acount-stat-tbl-body-tr tbl-data-href" onclick="window.location.href = '/exchange_inPlay/match?id=<%=liveTennis[i].eventData.eventId%>'; ">
+                <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/exchange_inPlay/match?id=<%=liveTennis[i].eventData.eventId%>'>
                     <td style="border-bottom: 0px;" class="name1" id="<%=liveTennis[i].marketList.match_odd.marketId%>" >
                       <div class="exchange-pg-mytbl-body-cricket-data-dv">
                         <span class="exchange-pg-mytbl-body-liv-dot"></span>
@@ -530,8 +530,8 @@
                     </td>
                     <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
                     <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
-                    <td style="border-bottom: 0px;">
-                      <a href="multi-market.html"><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
+                    <td style="border-bottom: 0px;" class="multi_market" id="<%=liveTennis[i].marketList.match_odd.marketId%>">
+                      <a ><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
                     </td>
                     <%}else{%>
                       <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
@@ -540,8 +540,8 @@
                         <td style="border-bottom: 0px;"  class="2L" id="<%=secIds[2]%>"></td>
                         <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
                         <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
-                        <td style="border-bottom: 0px;">
-                          <a href="multi-market.html"><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
+                        <td style="border-bottom: 0px;" class="multi_market" id="<%=liveTennis[i].marketList.match_odd.marketId%>">
+                          <a ><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
                         </td>
                     <%}%>
                 </tr>
@@ -560,7 +560,7 @@
                   };
                   var formattedTime = date.toLocaleString('en-US', options);
                 %>
-                <tr class="acount-stat-tbl-body-tr tbl-data-href"  onclick="window.location.href = '/exchange_inPlay/match?id=<%=upcomintTennis[i].eventData.eventId%>'; ">
+                <tr class="acount-stat-tbl-body-tr tbl-data-href"  data-href='/exchange_inPlay/match?id=<%=upcomintTennis[i].eventData.eventId%>'>
                   <td style="border-bottom: 0px;" class="name1" id="<%=upcomintTennis[i].marketList.match_odd.marketId%>" >
                     <div class="exchange-pg-mytbl-body-cricket-data-dv">
                       <%= j%>)
@@ -621,8 +621,8 @@
                     </td>
                     <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
                     <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
-                    <td style="border-bottom: 0px;">
-                      <a href="multi-market.html"><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
+                    <td style="border-bottom: 0px;" class="multi_market" id="<%=upcomintTennis[i].marketList.match_odd.marketId%>">
+                      <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
                     </td>
                     <%}else{%>
                         <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
@@ -631,8 +631,8 @@
                         <td style="border-bottom: 0px;"  class="2L" id="<%=secIds[2]%>"></td>
                         <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
                         <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
-                        <td style="border-bottom: 0px;">
-                          <a href="multi-market.html"><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
+                        <td style="border-bottom: 0px;" class="multi_market" id="<%=upcomintTennis[i].marketList.match_odd.marketId%>">
+                          <a ><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
                         </td>
                   <%}%>
                 </tr>
