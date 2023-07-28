@@ -42,26 +42,28 @@ socket.on('connect', () => {
     socket.emit('UserUpdatePass', {data, LOGINDATA});
    })
 
+   const multiMarketTd = document.querySelector('.multi_market');
+   multiMarketTd.addEventListener('click', function (event) {
+     event.preventDefault();
+     // Add your custom logic here for what you want to happen when the cell is clicked
+     // For example, you could open a modal or perform some other action.
+   });
+ 
+   // JavaScript event delegation using the parent <table> element
    const myTable = document.querySelector('.myTable');
    console.log(myTable)
-  myTable.addEventListener('click', function (event) {
-    const targetElement = event.target;
-    if (targetElement.classList.contains('multi_market')) {
-      event.preventDefault();
-      console.log("working")
-      // Add your custom logic here for what you want to happen when the cell is clicked
-      // For example, you could open a modal or perform some other action.
-    } else if (targetElement.tagName === 'TD') {
-        console.log("working123584654979")
-      // For other TD elements (excluding the one with class "multi_market")
-      // Perform page change or any other desired behavior here
-      const trElement = targetElement.parentElement;
-      const dataHref = trElement.getAttribute('data-href');
-      if (dataHref) {
-        window.location.href = dataHref;
-      }
-    }
-  });
+   myTable.addEventListener('click', function (event) {
+     const targetElement = event.target;
+     if (targetElement.tagName === 'A' || targetElement.tagName === 'IMG') {
+       // Allow page reload for <a> or <img> elements inside the <tr> other than "multi_market"
+       const trElement = targetElement.closest('tr');
+       const dataHref = trElement.getAttribute('data-href');
+       if (dataHref) {
+         window.location.href = dataHref;
+       }
+     }
+   });
+
    socket.on('UserUpdatePass', async(data)=>{
     console.log(data)
     if(data.status === "success"){
