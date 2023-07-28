@@ -44,6 +44,7 @@ socket.on('connect', () => {
 
    const multiMarketTd = document.querySelector('.multi_market');
    if(multiMarketTd != []){
+    console.log(multiMarketTd)
        multiMarketTd.addEventListener('click', function (event) {
          event.preventDefault();
          console.log(this.id)
