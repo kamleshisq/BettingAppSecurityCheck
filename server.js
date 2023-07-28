@@ -1473,9 +1473,19 @@ io.on('connection', (socket) => {
         try{
             let userMultimarket = await multimarketModel.findOne({userId:data.LOGINDATA.LOGINUSER._id})
             if(userMultimarket){
-                userMultimarket.marketIds.push(data.id)
-                await userMultimarket.save()
-                socket.emit("MULTIPLEMARKET", {id:data.id,})
+                const index = userMultimarket.marketIds.indexOf(data.id);
+                    if (index !== -1) {
+                        // If data.id is found in the array, remove it using splice
+                        userMultimarket.marketIds.splice(index, 1);
+                        await userMultimarket.save()
+                        socket.emit("MULTIPLEMARKET", {id:data.id,remove:true})
+                    } else {
+                        // If data.id is not found in the array, add it
+                        userMultimarket.marketIds.push(data.id);
+                        await userMultimarket.save()
+                        socket.emit("MULTIPLEMARKET", {id:data.id,remove:false})
+                    }
+                
             }else{
                 await multimarketModel.create({userId:data.LOGINDATA.LOGINUSER._id, marketIds:[`${data.id}`]})
                 socket.emit("MULTIPLEMARKET", {id:data.id,})

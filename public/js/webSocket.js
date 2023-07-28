@@ -57,12 +57,20 @@ socket.on('connect', () => {
   socket.on("MULTIPLEMARKET", (data) => {
     // for(let i = 0; i < data.id.length; i++){
         // console.log(data.id[i])
-        const multiMarketTd = document.querySelectorAll('.multi_market');
-        multiMarketTd.forEach((multiMarketTd) => {
-            if(multiMarketTd.id == data.id){
-                multiMarketTd.innerHTML = `<a ><img src="/assets/img/exchange/Vector2.svg" alt=""></a>`
-            }
-        })
+        let multiMarketTd = document.querySelectorAll('.multi_market');
+        if(data.remove){
+            multiMarketTd.forEach((multiMarketTd) => {
+                if(multiMarketTd.id == data.id){
+                    multiMarketTd.innerHTML = `<a ><img src="/assets/img/exchange/Vector.svg" alt=""></a>`
+                }
+            })
+        }else{
+            multiMarketTd.forEach((multiMarketTd) => {
+                if(multiMarketTd.id == data.id){
+                    multiMarketTd.innerHTML = `<a ><img src="/assets/img/exchange/Vector2.svg" alt=""></a>`
+                }
+            })
+        }
     // }
   })
  
