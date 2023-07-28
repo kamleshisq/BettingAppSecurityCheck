@@ -1467,6 +1467,11 @@ io.on('connection', (socket) => {
         }
     })
 
+
+    socket.on("MULTIPLEMARKET", async(data) => {
+        console.log(data)
+    })
+
     
 })
 

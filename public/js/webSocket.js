@@ -46,7 +46,10 @@ socket.on('connect', () => {
    multiMarketTd.forEach((multiMarketTd) => {
     multiMarketTd.addEventListener('click', function (event) {
       event.preventDefault();
-      
+      let id = this.id
+      if(LOGINDATA.LOGINUSER != ""){
+        socket.emit("MULTIPLEMARKET", {id, LOGINDATA})
+      }
       
     });
   });
