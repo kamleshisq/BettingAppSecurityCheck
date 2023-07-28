@@ -1406,8 +1406,8 @@ exports.getPageManagement = catchAsync(async(req, res, next) => {
 
 exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    console.log(user)
     let userMultimarkets = await multimarkets.findOne({userId:user.id})
+    console.log(userMultimarkets)
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
