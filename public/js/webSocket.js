@@ -42,10 +42,10 @@ socket.on('connect', () => {
     socket.emit('UserUpdatePass', {data, LOGINDATA});
    })
 
-   $(document).on("click", ".multi_market", function(e) {
-    e.preventDefault()
-    console.log(this.id)
-   })
+   const multiMarketTd = document.querySelector('.multi_market');
+    multiMarketTd.addEventListener('click', function (event) {
+     event.preventDefault(); 
+   });
 
    socket.on('UserUpdatePass', async(data)=>{
     console.log(data)
