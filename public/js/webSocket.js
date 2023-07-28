@@ -5321,7 +5321,7 @@ socket.on('connect', () => {
               }
             for(let i = 0; i < data.multimarket.marketIds; i++){
                 const result = findDataByMarketId(data.sportListData[0], data.multimarket.marketIds[i]);
-                console.log(result)
+                console.log(result, 456)
             }
         })
     }
