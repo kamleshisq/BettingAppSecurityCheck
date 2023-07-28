@@ -5317,7 +5317,7 @@ socket.on('connect', () => {
                     html += `<div class="exchange-pg-inn-banner-col2">
                     <div class="exchange-pg-inn-banner-col-titi">
                         <div class="exchange-pg-inn-banner-col-titi-txt">
-                            <h6 class="market" id="${result.marketList.match_odd.marketId}"><span>Match Odds</span> &nbsp; <i class="fa-solid fa-circle-info"></i></h6>
+                            <h6 class="market" id="${result.marketList.match_odd.marketId}"><span> ${result.eventData.name} || Match Odds</span> &nbsp; <i class="fa-solid fa-circle-info"></i></h6>
                         </div>
                         <div class="exchange-pg-inn-banner-col-titi-txt-tim">
                             <h6><b>Min : ${data.SportLimits.min_stake}, Max : ${data.SportLimits.max_stake}</b></h6>
