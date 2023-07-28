@@ -52,21 +52,20 @@ socket.on('connect', () => {
   });
  
    // JavaScript event delegation using the parent <table> element
-   const myTable = document.querySelectorAll('.myTable');
-   console.log(myTable)
-   if(myTable != null){
-       myTable.addEventListener('click', function (event) {
-         const targetElement = event.target;
-         if (targetElement.tagName === 'A' || targetElement.tagName === 'SPAN' || targetElement.tagName === 'TD') {
-           // Allow page reload for <a> or <img> elements inside the <tr> other than "multi_market"
-           const trElement = targetElement.closest('tr');
-           const dataHref = trElement.getAttribute('data-href');
-           if (dataHref) {
-             window.location.href = dataHref;
-           }
-         }
-       });
-   }
+   const allTables = document.querySelectorAll('.myTable');
+   allTables.forEach((table) => {
+    table.addEventListener('click', function (event) {
+      const targetElement = event.target;
+      if (targetElement.tagName === 'A' || targetElement.tagName === 'SPAN' || targetElement.tagName === 'TD') {
+        // Allow page reload for <a>, <span>, or <td> elements inside the <tr> other than "multi_market"
+        const trElement = targetElement.closest('tr');
+        const dataHref = trElement.getAttribute('data-href');
+        if (dataHref) {
+          window.location.href = dataHref;
+        }
+      }
+    });
+  });
 
    socket.on('UserUpdatePass', async(data)=>{
     if(data.status === "success"){
