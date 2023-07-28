@@ -45,7 +45,6 @@ socket.on('connect', () => {
    const myTable = document.querySelector('.myTable');
    console.log(myTable)
   myTable.addEventListener('click', function (event) {
-    console.log("Working")
     const targetElement = event.target;
     if (targetElement.classList.contains('multi_market')) {
       event.preventDefault();
