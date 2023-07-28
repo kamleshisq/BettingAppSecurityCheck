@@ -42,13 +42,14 @@ socket.on('connect', () => {
     socket.emit('UserUpdatePass', {data, LOGINDATA});
    })
 
-   const multiMarketTd = document.querySelector('.multi_market');
-    multiMarketTd.addEventListener('click', function (event) {
-     event.preventDefault(); 
-     console.log("Working")
-     return false;
-   });
-
+   const myTable = document.querySelector('.myTable');
+  myTable.addEventListener('click', function (event) {
+    const targetElement = event.target;
+    if (targetElement.classList.contains('multi_market')) {
+      event.stopPropagation();
+      console.log("Working")
+    }
+  });
    socket.on('UserUpdatePass', async(data)=>{
     console.log(data)
     if(data.status === "success"){
