@@ -5333,28 +5333,29 @@ socket.on('connect', () => {
                                     <th style="text-align: center;" colspan="3">Back</th>
                                     <th style="text-align: center;" colspan="3" class="bod-red-rit">Lay</th>
                                 </tr>
-                            </thead>
-                            <% let runners = JSON.parse(result.marketList.match_odd.runners); 
-                                  <% const runners1 = []; 
-                                  <%const secIds = []; 
-                                  <%runners.forEach(item => {
-                                      <%runners1.push(item.runner);
-                                      <%secIds.push(item.secId);
-                                  <%});
-                            <tbody class="acount-stat-tbl-body">
-                              <%for(let i = 0; i < runners1.length; i++){
+                            </thead>`
+                            let runners = JSON.parse(result.marketList.match_odd.runners); 
+                                  const runners1 = []; 
+                                  const secIds = []; 
+                                  runners.forEach(item => {
+                                      runners1.push(item.runner);
+                                      secIds.push(item.secId);
+                                  });
+                            html += `<tbody class="acount-stat-tbl-body">`
+                              for(let i = 0; i < runners1.length; i++){
+                                html += `
                                 <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
                                     <td colspan="2" style=" text-align: left;">
-                                      runners1[i]
+                                      ${runners1[i]}
                                     </td>
                                     
                                     <td class="tbl-td-with5" >
-                                      <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-i" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-i" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="secIds[i]1" >
+                                      <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-i" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-i" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="${secIds[i]}1" >
                                                   
                                       </span>
                                     </td>
                                     <td class="tbl-td-with5" >
-                                      <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-i" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-i" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="secIds[i]2">
+                                      <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-i" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-i" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="${secIds[i]}2">
                                                   
                                       </span> 
                                     </td>
@@ -5362,22 +5363,22 @@ socket.on('connect', () => {
                                     
                   
                                     <td class="tbl-td-with5" >
-                                      <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-i" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-i" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="secIds[i]3">
+                                      <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-i" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-i" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="${secIds[i]}3">
                                                   
                                       </span>
                                     </td>
                                     <td class="tbl-td-with5" >
-                                      <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-i" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-i" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="secIds[i]4">
+                                      <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-i" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-i" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="${secIds[i]}4">
                                                   
                                       </span>  
                                     </td>
                                     <td class="tbl-td-with5" >
-                                      <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-i" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-i" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="secIds[i]5">
+                                      <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-i" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-i" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="${secIds[i]}5">
                                                   
                                       </span>
                                     </td>
                                     <td class="tbl-td-with5" >
-                                      <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-i" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-i" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="secIds[i]6">
+                                      <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-i" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-i" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="${secIds[i]}6">
                                                   
                                       </span>  
                                     </td>
@@ -5392,7 +5393,6 @@ socket.on('connect', () => {
                                     </div>
                                   </td>
                                 </tr>
-                              <%}
                             </tbody>
                   
                           </table>
