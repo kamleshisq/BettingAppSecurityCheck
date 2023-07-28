@@ -3767,10 +3767,10 @@ socket.on('connect', () => {
         // jQuery approach
         $(document).ready(function () {
             $(".button").click(function () {
-              const firstChildValue = $(this).children("span:first-child").text();
-              const firstTdInnerText = $(this).closest("tr").find("td:first-child").text();
-              const secondPTag = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col3-txt1 p:last-child");
-              const numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
+              let firstChildValue = $(this).children("span:first-child").text();
+              let firstTdInnerText = $(this).closest("tr").find("td:first-child").text();
+              let secondPTag = $(this).closest("tr").next().find(".name");
+              let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
               secondPTag.text(`Bet on :${firstTdInnerText}@${firstChildValue}`);
               numSpan.text(firstChildValue);
             });
