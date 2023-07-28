@@ -222,6 +222,11 @@
                                       <li class="profile-bord-botm">
                                         <a href="" title="" data-bs-toggle="modal" data-bs-target="#navmod1"> Change Password</a>
                                       </li>
+                                      <%if(check === "userP"){%>
+                                        <li class="profile-bord-botm"><a class="c-activee" href="/profile" title=""> User Profile</a></li>
+                                      <%}else{%>
+                                        <li class="profile-bord-botm"><a  href="/profile" title=""> User Profile</a></li>
+                                      <%}%>
                                       <%if(check === "ACCC"){%>
                                         <li class="profile-bord-botm"><a class="c-activee" href="/myAccountStatment" title=""> Account Statement</a></li>
                                       <%}else{%>
