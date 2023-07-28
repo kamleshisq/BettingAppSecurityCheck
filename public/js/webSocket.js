@@ -5311,7 +5311,7 @@ socket.on('connect', () => {
         socket.on("MultiMarketPage", (data)=>{
             console.log(data.sportListData)
             for(let i = 0; i < data.multimarket.marketIds; i++){
-                
+                let data = data.sportListData[0].gameList
             }
         })
     }
