@@ -5309,7 +5309,10 @@ socket.on('connect', () => {
         }
 
         socket.on("MultiMarketPage", (data)=>{
-            console.log(data)
+            data.sportListData
+            for(let i = 0; i < data.multimarket.marketIds; i++){
+                
+            }
         })
     }
 
