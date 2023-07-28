@@ -5309,7 +5309,7 @@ socket.on('connect', () => {
         }
 
         socket.on("MultiMarketPage", (data)=>{
-            for(let i = 0; i < data.multimarket.marketIds; i++){
+            for(let i = 0; i < data.multimarket.marketIds.length; i++){
                 console.log(i)
                 // const result = data.sportListData[0].gameList[0].eventList.find(item => item.marketList.match_odd.marketId == data.multimarket.marketIds[i])
                 function findDataByMarketId(marketId) {
