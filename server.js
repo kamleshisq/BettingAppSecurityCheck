@@ -1451,8 +1451,8 @@ io.on('connection', (socket) => {
         let stakeArray = data.input1Values.map((key, index) => ({ [key]: data.input2Values[index] }));
         let userId = data.LOGINDATA.LOGINUSER._id
         let check = await stakeLabelModel.find({userId})
-        console.log(check)
-        if(check === []){
+        console.log(check.length)
+        if(check.length === 0){
             console.log("WORKING")
             try{
                 await stakeLabelModel.create({stakeArray,userId})
