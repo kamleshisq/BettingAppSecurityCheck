@@ -3767,12 +3767,14 @@ socket.on('connect', () => {
         // jQuery approach
         $(document).ready(function () {
             $(".button").click(function () {
-              let firstChildValue = $(this).children("span:first-child").text();
-              let firstTdInnerText = $(this).closest("tr").find("td:first-child").text();
-              let secondPTag = $(this).closest("tr").next().find(".name");
+              let odds = $(this).children("span:first-child").text();
+              let beton = $(this).closest("tr").find("td:first-child").text();
+              let secondPTag = $(this).closest("tr").next().find(".beton");
               let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
-              secondPTag.text(`Bet on :${firstTdInnerText}@${firstChildValue}`);
-              numSpan.text(firstChildValue);
+              let secId = this.id
+              secondPTag.text(`Bet on :${beton}@${odds}`);
+              secondPTag.id = secId
+              numSpan.text(odds);
             });
           });
 
