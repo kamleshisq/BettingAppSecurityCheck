@@ -1666,12 +1666,10 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
         stakeLabledata = await stakeLable.findOne({userId:req.currentUser._id})
-        console.log(stakeLabledata)
         if(stakeLabledata === null){
         stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
         }
     }
-    console.log(stakeLabledata, 456)
     res.status(200).render("./userSideEjs/userMatchDetails/main",{
         user: req.currentUser,
         verticalMenus,

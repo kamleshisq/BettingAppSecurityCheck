@@ -1,17 +1,16 @@
 const mongoose = require("mongoose");
 
-const KeyValueSchema = new mongoose.Schema({
-    key: Number,
-    value: Number
-  });
-const StakeModel = mongoose.Schema({
-    userId:{
-        type:String,
-        required:true
+const StakeSchema = new mongoose.Schema({
+    userId: {
+      type: String,
+      required: true
     },
-    stakeArray:[KeyValueSchema]
-})
+    stakeArray: [{
+      key: Number,
+      value: Number
+    }]
+  });
 
-const stakeModel = mongoose.model("stakeModel", StakeModel);
+const stakeModel = mongoose.model("stakeModel", StakeSchema);
 
 module.exports = stakeModel
