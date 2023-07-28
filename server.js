@@ -1475,12 +1475,12 @@ io.on('connection', (socket) => {
             if(userMultimarket){
                 userMultimarket.marketIds.push(data.id)
                 await userMultimarket.save()
-                socket.emit("MULTIPLEMARKET", {id:userMultimarket.marketIds,})
+                socket.emit("MULTIPLEMARKET", {id:data.id,})
             }else{
                 console.log(data.LOGINDATA.LOGINUSER._id)
                 let newmultimarket = await multimarketModel.create({userId:data.LOGINDATA.LOGINUSER._id, marketIds:[`${data.id}`]})
                 console.log(newmultimarket)
-                socket.emit("MULTIPLEMARKET", {id:[data.id],})
+                socket.emit("MULTIPLEMARKET", {id:data.id,})
             }
         }catch(err){
             socket.emit("MULTIPLEMARKET", "err")
