@@ -5330,7 +5330,7 @@ socket.on('connect', () => {
                             <h6 class="market" id="${result.marketList.match_odd.marketId}"><span> ${result.eventData.name} || Match Odds</span> &nbsp; <i class="fa-solid fa-circle-info"></i></h6>
                         </div>
                         <div class="exchange-pg-inn-banner-col-titi-txt-tim">
-                            <h6><b>Min : ${data.SportLimits.min_stake}, Max : ${data.SportLimits.max_stake}</b></h6>
+                            <h6><b>Min : ${data.SportLimits[0].min_stake}, Max : ${data.SportLimits[0].max_stake}</b></h6>
                         </div>
                     </div>
                   
