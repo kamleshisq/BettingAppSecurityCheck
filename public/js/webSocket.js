@@ -59,7 +59,7 @@ socket.on('connect', () => {
         console.log(data.id[i])
         const multiMarketTd = document.querySelectorAll('.multi_market');
         multiMarketTd.forEach((multiMarketTd) => {
-            if(multiMarketTd.id = data.id[i]){
+            if(multiMarketTd.id == data.id[i]){
                 multiMarketTd.innerHTML = `<a ><img src="/assets/img/exchange/Vector2.svg" alt=""></a>`
             }
         })
