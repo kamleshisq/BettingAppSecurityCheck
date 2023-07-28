@@ -1448,7 +1448,10 @@ io.on('connection', (socket) => {
     })
 
     socket.on("STAKELABEL", async(data) => {
-        let stakeArray = data.input1Values.map((key, index) => ({ [key]: data.input2Values[index] }));
+        let stakeArray = data.input1Values.map((key, index) => ({
+            key: parseInt(key.replace(/,/g, ''), 10),
+            value: parseInt(data.input2Values[index].replace(/,/g, ''), 10)
+          }));
         let userId = data.LOGINDATA.LOGINUSER._id
         let check = await stakeLabelModel.find({userId})
         console.log(check.length)
