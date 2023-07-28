@@ -5309,6 +5309,7 @@ socket.on('connect', () => {
         }
 
         socket.on("MultiMarketPage", (data)=>{
+            console.log(data.sportListData[0])
             function findDataByMarketId(dataArray, marketIdToFind) {
                 for (const item of dataArray) {
                   for (const event of item.eventList) {
