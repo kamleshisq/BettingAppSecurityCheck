@@ -1670,6 +1670,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
         }
     }
+    console.log(stakeLabledata)
     res.status(200).render("./userSideEjs/userMatchDetails/main",{
         user: req.currentUser,
         verticalMenus,
