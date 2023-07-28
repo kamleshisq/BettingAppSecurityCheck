@@ -25,6 +25,7 @@ const sliderModel = require('./model/sliderModel');
 const betLimit = require("./model/betLimitModel");
 const notificationModel = require("./model/notificationModel");
 const stakeLabelModel = require("./model/stakeLabelModel");
+const multimarketModel = require("./model/maltimarket");
 io.on('connection', (socket) => {
     console.log('connected to client')
     let loginData = {}
@@ -1469,7 +1470,19 @@ io.on('connection', (socket) => {
 
 
     socket.on("MULTIPLEMARKET", async(data) => {
-        console.log(data)
+        try{
+            let userMultimarket = await multimarketModel.findOne({userId:data.LOGINDATA.LOGINUSER._id})
+            if(userMultimarket){
+                userMultimarket.marketIds.push(data.id)
+                await userMultimarket.save()
+                socket.emit("MULTIPLEMARKET", {id:userMultimarket.marketIds,})
+            }else{
+                let newmultimarket = await multimarketModel.create({userId:data.LOGINDATA.LOGINUSER._id, marketIds:["data.id"]})
+                socket.emit("MULTIPLEMARKET", {id:[data.id],})
+            }
+        }catch(err){
+            socket.emit("MULTIPLEMARKET", "err")
+        }
     })
 
     

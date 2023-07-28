@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 const multimarket = mongoose.Schema({
     userId :{
         tyepe:String,
-        required:true
+        required:true,
+        unique:true
     },
     marketIds:[
         {

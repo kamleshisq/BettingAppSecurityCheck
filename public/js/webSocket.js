@@ -53,6 +53,10 @@ socket.on('connect', () => {
       
     });
   });
+
+  socket.on("MULTIPLEMARKET", (data) => {
+    console.log(data)
+  })
  
    // JavaScript event delegation using the parent <table> element
    const allTables = document.querySelectorAll('.myTable');
