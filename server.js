@@ -1489,7 +1489,7 @@ io.on('connection', (socket) => {
             console.log(data)
             let multimarket = await multimarketModel.findOne({userId:data.LOGINUSER._id})
             let sportListData = await getCrkAndAllData()
-            console.log(sportListData)
+            console.log(sportListData[0].gameList)
             socket.emit("MultiMarketPage", {multimarket, sportListData})
     })
 
