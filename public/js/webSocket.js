@@ -55,7 +55,7 @@ socket.on('connect', () => {
    console.log(myTable)
    myTable.addEventListener('click', function (event) {
      const targetElement = event.target;
-     if (targetElement.tagName === 'A' || targetElement.tagName === 'IMG') {
+     if (targetElement.tagName === 'A' || targetElement.tagName === 'SPAN' || targetElement.tagName === 'TD') {
        // Allow page reload for <a> or <img> elements inside the <tr> other than "multi_market"
        const trElement = targetElement.closest('tr');
        const dataHref = trElement.getAttribute('data-href');
