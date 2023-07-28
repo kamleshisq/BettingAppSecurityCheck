@@ -17,8 +17,17 @@ async function getSportDATA(){
     ]
     let requests = urls.map(item => fetch(item.url, {
         method: 'GET'
+    }).then(data => data.json()));
+    let requests2 = urls.map(item => fetch(item.url, {
+        method: 'GET'
     }).then(data => data.text()));
-    const data = await Promise.all(requests)
+    let data
+    try{
+        data = await Promise.all(requests)
+
+    }catch(err){
+        data = await Promise.all(requests2)
+    }
     console.log(data)
     return data
 }
