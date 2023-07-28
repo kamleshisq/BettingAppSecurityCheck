@@ -27,6 +27,7 @@ const liveStreameData = require("../utils/getLiveStream");
 const gameAPI = require("../utils/gameAPI");
 const request = require('request');
 const multimarkets = require("../model/maltimarket");
+const stakeLable = require("../model/stakeLabelModel");
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -1661,9 +1662,15 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     // });
     let SportLimits = betLimit.find(item => item.type === "Sport")
     let userLog
+    let stakeLabledata
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
+        stakeLabledata = await stakeLable.findOne({userId:req.currentUser._id})
+        if(!stakeLabledata){
+        stakeLabledata = await stakeLable.find({userId:"6492fd6cd09db28e00761691"})
+        }
     }
+    console.log(stakeLabledata)
     res.status(200).render("./userSideEjs/userMatchDetails/main",{
         user: req.currentUser,
         verticalMenus,
@@ -1672,7 +1679,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         SportLimits,
         liveStream,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        stakeLabledata
     })
 });
 
