@@ -43,7 +43,7 @@ socket.on('connect', () => {
    })
 
    const multiMarketTd = document.querySelector('.multi_market');
-   if(multiMarketTd != []){
+   if(multiMarketTd != null){
     console.log(multiMarketTd)
        multiMarketTd.addEventListener('click', function (event) {
          event.preventDefault();
@@ -56,7 +56,7 @@ socket.on('connect', () => {
    // JavaScript event delegation using the parent <table> element
    const myTable = document.querySelector('.myTable');
    console.log(myTable)
-   if(myTable != []){
+   if(myTable != null){
        myTable.addEventListener('click', function (event) {
          const targetElement = event.target;
          if (targetElement.tagName === 'A' || targetElement.tagName === 'SPAN' || targetElement.tagName === 'TD') {
