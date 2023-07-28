@@ -1452,7 +1452,7 @@ io.on('connection', (socket) => {
         let userId = data.LOGINDATA.LOGINUSER._id
         let check = await stakeLabelModel.find({userId})
         console.log(check)
-        if(check == []){
+        if(check === []){
             console.log("WORKING")
             try{
                 await stakeLabelModel.create({stakeArray,userId})
