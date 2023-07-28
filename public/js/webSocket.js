@@ -52,6 +52,7 @@ socket.on('connect', () => {
       // Add your custom logic here for what you want to happen when the cell is clicked
       // For example, you could open a modal or perform some other action.
     } else if (targetElement.tagName === 'TD') {
+        console.log("working123584654979")
       // For other TD elements (excluding the one with class "multi_market")
       // Perform page change or any other desired behavior here
       const trElement = targetElement.parentElement;
