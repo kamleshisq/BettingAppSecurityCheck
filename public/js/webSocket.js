@@ -42,33 +42,33 @@ socket.on('connect', () => {
     socket.emit('UserUpdatePass', {data, LOGINDATA});
    })
 
-   const multiMarketTd = document.querySelector('.multi_market');
-   if(multiMarketTd != null){
-    console.log(multiMarketTd)
-       multiMarketTd.addEventListener('click', function (event) {
-         event.preventDefault();
-         console.log(this.id)
-         // Add your custom logic here for what you want to happen when the cell is clicked
-         // For example, you could open a modal or perform some other action.
-       });
-   }
- 
-   // JavaScript event delegation using the parent <table> element
-   const myTable = document.querySelector('.myTable');
-   console.log(myTable)
-   if(myTable != null){
-       myTable.addEventListener('click', function (event) {
-         const targetElement = event.target;
-         if (targetElement.tagName === 'A' || targetElement.tagName === 'SPAN' || targetElement.tagName === 'TD') {
-           // Allow page reload for <a> or <img> elements inside the <tr> other than "multi_market"
-           const trElement = targetElement.closest('tr');
-           const dataHref = trElement.getAttribute('data-href');
-           if (dataHref) {
-             window.location.href = dataHref;
-           }
-         }
-       });
-   }
+   const allTables = document.querySelectorAll('.myTable');
+
+// Loop through each table to add the event listeners
+allTables.forEach(table => {
+  // JavaScript event delegation using the parent <table> element
+  table.addEventListener('click', function (event) {
+    const targetElement = event.target;
+    const trElement = targetElement.closest('.acount-stat-tbl-body-tr');
+    
+    // If the clicked element is <a>, <img>, or <td> inside the <tr>
+    if (trElement && (targetElement.tagName === 'A' || targetElement.tagName === 'SPAN' || targetElement.tagName === 'TD')) {
+      // Allow page reload for elements inside the <tr> other than "multi_market"
+      const dataHref = trElement.getAttribute('data-href');
+      if (dataHref) {
+        window.location.href = dataHref;
+      }
+    }
+    
+    // If the clicked element is the <td> with class "multi_market", prevent page reload
+    if (targetElement.classList.contains('multi_market')) {
+      event.preventDefault();
+      console.log(targetElement.id);
+      // Add your custom logic here for what you want to happen when the cell is clicked
+      // For example, you could open a modal or perform some other action.
+    }
+  });
+});
 
    socket.on('UserUpdatePass', async(data)=>{
     if(data.status === "success"){
