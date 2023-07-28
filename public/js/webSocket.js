@@ -5307,6 +5307,10 @@ socket.on('connect', () => {
         if(LOGINDATA.LOGINUSER != ""){
             socket.emit("MultiMarketPage", LOGINDATA)
         }
+
+        socket.on("MultiMarketPage", (data)=>{
+            console.log(data)
+        })
     }
 
     
