@@ -1670,7 +1670,6 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
         }
     }
-    console.log(stakeLabledata)
     res.status(200).render("./userSideEjs/userMatchDetails/main",{
         user: req.currentUser,
         verticalMenus,
@@ -2033,6 +2032,24 @@ exports.getGameReportInINPageUser = catchAsync(async(req, res, next) => {
         games,
         userLog,
         result,
+        notifications:req.notifications
+    })
+});
+
+exports.getMyProfileUser = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    const data = await promotionModel.find();
+    let games = await gameModel.find();
+    let userLog = await loginLogs.find({user_id:user._id})
+      
+    res.status(200).render("./userSideEjs/userProfile/main",{
+        user,
+        verticalMenus,
+        data,
+        check:"userP",
+        games,
+        userLog,
         notifications:req.notifications
     })
 })

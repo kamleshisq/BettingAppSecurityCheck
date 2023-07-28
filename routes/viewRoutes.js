@@ -90,6 +90,8 @@ router.get("/event", authController.isProtected, notificationController.myNotifi
 router.get("/gameReport/match", authController.isProtected, notificationController.myNotifications ,viewController.getGameReportInINPageUser);
 router.get("/myAccountStatment", authController.isProtected, notificationController.myNotifications ,viewController.myAccountStatment);
 router.get("/myProfile", authController.isProtected, notificationController.myNotifications ,viewController.myProfile);
+router.get("/profile", authController.isProtected, notificationController.myNotifications ,viewController.getMyProfileUser);
+
 
 //Testing//
 router.get("/exchange_sports/inplay", authController.isLogin, viewController.getExchangePage);
