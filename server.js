@@ -1460,7 +1460,8 @@ io.on('connection', (socket) => {
             }
         }else{
             try{
-                await stakeLabelModel.findOneAndUpdate({userId}, {stakeArray})
+                const data = await stakeLabelModel.findOneAndUpdate({userId}, {stakeArray})
+                console.log(data)
                 socket.emit("STAKELABEL", "Updated")
             }catch(err){
                 socket.emit("STAKELABEL", "Please try again later")
