@@ -107,6 +107,7 @@
                         <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
                         <td style="border-bottom: 0px;" class="multi_market" id="<%=LiveCricket[i].marketList.match_odd.marketId%>">
                           <%if(user){ %>
+                            console.log(userMultimarkets)
                             <%let check = userMultimarkets.marketIds.find(LiveCricket[i].marketList.match_odd.marketId) %>
                             <%console.log(check, 123, userMultimarkets) %>
                           <%if(check){%>
