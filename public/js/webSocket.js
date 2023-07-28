@@ -1,3 +1,4 @@
+const path = require("path");
 
 
 
@@ -5300,6 +5301,11 @@ socket.on('connect', () => {
             }
         })
           
+    }
+
+
+    if(pathname === "/exchange/multimarkets"){
+        console.log("working")
     }
 
     
