@@ -26,6 +26,7 @@ const accountStatement = require("../model/accountStatementByUserModel");
 const liveStreameData = require("../utils/getLiveStream");
 const gameAPI = require("../utils/gameAPI");
 const request = require('request');
+const multimarkets = require("../model/maltimarket");
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -1405,6 +1406,8 @@ exports.getPageManagement = catchAsync(async(req, res, next) => {
 
 exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
+    console.log(user)
+    let userMultimarkets = await multimarkets.findOne({userId:user.id})
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
@@ -1435,7 +1438,8 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         upcomintFootball,
         upcomintTennis,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        userMultimarkets
         
     })
 })
