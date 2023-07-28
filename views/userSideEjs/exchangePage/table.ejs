@@ -105,15 +105,7 @@
                         <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
                         <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
                         <td style="border-bottom: 0px;" class="multi_market" id="<%=LiveCricket[i].marketList.match_odd.marketId%>">
-                          <%if(user){ %>
-                            <%let check = userMultimarkets.marketIds.find(item => item == LiveCricket[i].marketList.match_odd.marketId) %>
-                          <%if(check){%>
-                            <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
-                          <%}else{%>
-                            <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
-                          <%}%>
-                          <%}else{%>
-                          <%}%>
+                          
                         </td>
                     <%}%>
                 </tr>
