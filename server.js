@@ -1488,7 +1488,7 @@ io.on('connection', (socket) => {
     socket.on("MultiMarketPage", async(data) => {
             console.log(data)
             let multimarket = multimarketModel.findOne({userId:data.LOGINUSER._id})
-            socket.emit("agvgvgvgv", "gfg")
+            socket.emit("MultiMarketPage", multimarket)
     })
 
     
