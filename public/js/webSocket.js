@@ -3754,6 +3754,25 @@ socket.on('connect', () => {
 
         })
 
+        const buttons = document.querySelectorAll(".button");
+        buttons.forEach((button) => {
+          button.addEventListener("click", (event) => {
+            const clickedButton = event.target;
+            const firstChildValue = clickedButton.firstElementChild.innerText;
+            const numSpan = document.querySelector(".nww-bet-slip-wrp-col1-txt-num");
+            numSpan.innerText = firstChildValue;
+          });
+        });
+      
+        // jQuery approach
+        $(document).ready(function () {
+            $(".button").click(function () {
+              const firstChildValue = $(this).children("span:first-child").text();
+              const numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
+              numSpan.text(firstChildValue);
+            });
+          });
+
 
         // var buttons = document.querySelectorAll('.button1');
         // let elements = document.getElementsByClassName("betOn");
@@ -3775,32 +3794,32 @@ socket.on('connect', () => {
         //     });
         //   });
 
-        const buttons = document.querySelectorAll('.button1');
-        buttons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                const runnerNameElement = this.closest('.table-data').querySelector('.runnerName');
-                const teamName = runnerNameElement.textContent.trim();
-                const spanInnerText = this.querySelector('b').textContent.trim();
-                const marketId = runnerNameElement.getAttribute('id');
-                var buttonId = button.id;
-                console.log('Team Name:', teamName);
-                console.log('Button ID:', buttonId);
-                console.log(this.id.slice(-1))
-                console.log('Span Inner Text:', spanInnerText);
-                let elements = document.getElementsByClassName(`betOn${marketId.slice(-1)}`);
-                for (let i = 0; i < elements.length; i++) {
-                    elements[i].innerHTML = `Bet on: ${teamName}@${spanInnerText}`;
-                    elements[i].id = marketId.slice(0, -1);
-                  }
-                var elements2 = document.getElementsByClassName(`oddsvalue${marketId.slice(-1)}`);
-                for (let i = 0; i < elements2.length; i++) {
-                    elements2[i].innerHTML = spanInnerText
-                    elements2[i].id = this.id;
-                  }
+        // const buttons = document.querySelectorAll('.button1');
+        // buttons.forEach(function(button) {
+        //     button.addEventListener('click', function() {
+        //         const runnerNameElement = this.closest('.table-data').querySelector('.runnerName');
+        //         const teamName = runnerNameElement.textContent.trim();
+        //         const spanInnerText = this.querySelector('b').textContent.trim();
+        //         const marketId = runnerNameElement.getAttribute('id');
+        //         var buttonId = button.id;
+        //         console.log('Team Name:', teamName);
+        //         console.log('Button ID:', buttonId);
+        //         console.log(this.id.slice(-1))
+        //         console.log('Span Inner Text:', spanInnerText);
+        //         let elements = document.getElementsByClassName(`betOn${marketId.slice(-1)}`);
+        //         for (let i = 0; i < elements.length; i++) {
+        //             elements[i].innerHTML = `Bet on: ${teamName}@${spanInnerText}`;
+        //             elements[i].id = marketId.slice(0, -1);
+        //           }
+        //         var elements2 = document.getElementsByClassName(`oddsvalue${marketId.slice(-1)}`);
+        //         for (let i = 0; i < elements2.length; i++) {
+        //             elements2[i].innerHTML = spanInnerText
+        //             elements2[i].id = this.id;
+        //           }
                 
                 
-            });
-          });
+        //     });
+        //   });
 
         
 
@@ -3819,29 +3838,29 @@ socket.on('connect', () => {
           
 
 
-          var buttonsforOddEven = document.querySelectorAll('.odd_even button');
-        let elementsforOddEven = document.getElementsByClassName("betOn");
-        buttonsforOddEven.forEach(function(button) {
-            button.addEventListener('click', function() {
-              var parentRow = button.closest('tr');
-              var teamName = parentRow.querySelector('td:first-child').innerText.trim();
-              var buttonId = button.id;
-              var spanInnerText = button.querySelector('span:first-child').innerText.trim();
-              console.log('Team Name:', teamName);
-              console.log('Button ID:', buttonId);
-              console.log(this.id)
-              console.log('Span Inner Text:', spanInnerText);
-              elementsforOddEven[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
-              elementsforOddEven[0].id = parentRow.querySelector('td:first-child').id;
-              var elements2 = document.getElementsByClassName('oddsvalue');
-              elements2[0].innerHTML = spanInnerText
-              if(button.id.slice(-1) == 1){
-                elements2[0].id = "odd_Even_Yes ";
-              }else if(button.id.slice(-1) == 2){
-                elements2[0].id = "odd_Even_No ";
-            }
-            });
-          });
+        //   var buttonsforOddEven = document.querySelectorAll('.odd_even button');
+        // let elementsforOddEven = document.getElementsByClassName("betOn");
+        // buttonsforOddEven.forEach(function(button) {
+        //     button.addEventListener('click', function() {
+        //       var parentRow = button.closest('tr');
+        //       var teamName = parentRow.querySelector('td:first-child').innerText.trim();
+        //       var buttonId = button.id;
+        //       var spanInnerText = button.querySelector('span:first-child').innerText.trim();
+        //       console.log('Team Name:', teamName);
+        //       console.log('Button ID:', buttonId);
+        //       console.log(this.id)
+        //       console.log('Span Inner Text:', spanInnerText);
+        //       elementsforOddEven[0].innerHTML  = `Bet on  :${teamName}@${spanInnerText}`
+        //       elementsforOddEven[0].id = parentRow.querySelector('td:first-child').id;
+        //       var elements2 = document.getElementsByClassName('oddsvalue');
+        //       elements2[0].innerHTML = spanInnerText
+        //       if(button.id.slice(-1) == 1){
+        //         elements2[0].id = "odd_Even_Yes ";
+        //       }else if(button.id.slice(-1) == 2){
+        //         elements2[0].id = "odd_Even_No ";
+        //     }
+        //     });
+        //   });
 
             // var spans = document.querySelectorAll('.exc-pg-rit-tabtxt-data-stack-num-col span');
             // var stakeSpan = document.querySelector('#stakeSpan'); 
@@ -3870,25 +3889,25 @@ socket.on('connect', () => {
             //     });
             // });
 
-            function handleClickableSpan(event) {
-                const clickedSpan = event.target;
-                const customStakeInput = clickedSpan.closest(".nww-bet-slip-wrp").querySelector(".set-stake-form-input2");
-                customStakeInput.value = clickedSpan.textContent;
-                const oddsElement = clickedSpan.closest(".nww-bet-slip-wrp").querySelector(".nww-bet-slip-wrp-col1-txt-num");
-                const oddsValue = parseFloat(oddsElement.textContent);
-                const stakeValue = parseFloat(customStakeInput.value);
-                const profitValue = (oddsValue * stakeValue) - stakeValue;
-                const profitElement = clickedSpan.closest(".nww-bet-slip-wrp").querySelector(".nww-bet-slip-wrp-col1-txt b");
-                profitElement.textContent = profitValue.toFixed(2);
-              }
+            // function handleClickableSpan(event) {
+            //     const clickedSpan = event.target;
+            //     const customStakeInput = clickedSpan.closest(".nww-bet-slip-wrp").querySelector(".set-stake-form-input2");
+            //     customStakeInput.value = clickedSpan.textContent;
+            //     const oddsElement = clickedSpan.closest(".nww-bet-slip-wrp").querySelector(".nww-bet-slip-wrp-col1-txt-num");
+            //     const oddsValue = parseFloat(oddsElement.textContent);
+            //     const stakeValue = parseFloat(customStakeInput.value);
+            //     const profitValue = (oddsValue * stakeValue) - stakeValue;
+            //     const profitElement = clickedSpan.closest(".nww-bet-slip-wrp").querySelector(".nww-bet-slip-wrp-col1-txt b");
+            //     profitElement.textContent = profitValue.toFixed(2);
+            //   }
             
-              // Get all the clickable spans
-              const clickableSpans = document.querySelectorAll(".nww-bet-slip-wrp-col2-inn span");
+            //   // Get all the clickable spans
+            //   const clickableSpans = document.querySelectorAll(".nww-bet-slip-wrp-col2-inn span");
             
-              // Attach a click event listener to each clickable span
-              clickableSpans.forEach((span) => {
-                span.addEventListener("click", handleClickableSpan);
-              });
+            //   // Attach a click event listener to each clickable span
+            //   clickableSpans.forEach((span) => {
+            //     span.addEventListener("click", handleClickableSpan);
+            //   });
 
         // $(document).on("click", ".PLACEBET", function(e){
         //     e.preventDefault()
@@ -3907,28 +3926,28 @@ socket.on('connect', () => {
         //     socket.emit("betDetails", {data, LOGINDATA})
         // })
 
-        function handlePlaceBetClick(event) {
-            const clickedLink = event.target;
-            const parentContainer = clickedLink.closest(".nww-bet-slip-wrp");
-            let data = {
-                spoetId : clickedLink.dataset.sportId,
-                title : parentContainer.querySelector(".eventTitle").textContent,
-                eventId : parentContainer.querySelector(".eventTitle").id,
-                odds : parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").textContent,
-                secId : parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").id.slice(0,-1),
-                market : parentContainer.querySelector("[class^='betOn']").id,
-                stake : parentContainer.querySelector(".set-stake-form-input2").value,
-            }
-            socket.emit("betDetails", {data, LOGINDATA})
-          }
+        // function handlePlaceBetClick(event) {
+        //     const clickedLink = event.target;
+        //     const parentContainer = clickedLink.closest(".nww-bet-slip-wrp");
+        //     let data = {
+        //         spoetId : clickedLink.dataset.sportId,
+        //         title : parentContainer.querySelector(".eventTitle").textContent,
+        //         eventId : parentContainer.querySelector(".eventTitle").id,
+        //         odds : parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").textContent,
+        //         secId : parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").id.slice(0,-1),
+        //         market : parentContainer.querySelector("[class^='betOn']").id,
+        //         stake : parentContainer.querySelector(".set-stake-form-input2").value,
+        //     }
+        //     socket.emit("betDetails", {data, LOGINDATA})
+        //   }
         
-          // Get all the "PLACE BET" links
-          const placeBetLinks = document.querySelectorAll(".PLACEBET");
+        //   // Get all the "PLACE BET" links
+        //   const placeBetLinks = document.querySelectorAll(".PLACEBET");
         
-          // Attach a click event listener to each link
-          placeBetLinks.forEach((link) => {
-            link.addEventListener("click", handlePlaceBetClick);
-          });
+        //   // Attach a click event listener to each link
+        //   placeBetLinks.forEach((link) => {
+        //     link.addEventListener("click", handlePlaceBetClick);
+        //   });
 
         socket.on("betDetails" , (data) => {
             alert(data)
