@@ -5392,15 +5392,9 @@ socket.on('connect', () => {
                                       <%-include("../betslip")
                                     </div>
                                   </td>
-                                </tr>
-                            </tbody>
-                  
-                          </table>
-                    </div>
-                  
-                   
-                  
-                  </div>`}
+                                </tr>`
+                            }
+                            html += "</tbody></table></div></div>"
                 }
                 
             }
