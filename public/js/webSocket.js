@@ -3970,6 +3970,11 @@ socket.on('connect', () => {
             data.spoetId = $(this).closest("tr").find(".c-gren").attr('id')
             if(data.market == undefined){
                 data.market = $(this).closest("table").find('.market').attr('id')
+                if(secId.slice(-1) == 1){
+                    data.secId = "odd_Even_Yes"
+                }else{
+                    data.secId = "odd_Even_No"
+                }
             }
             socket.emit("betDetails", {data, LOGINDATA})
             });
