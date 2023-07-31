@@ -106,7 +106,7 @@
                     <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
                     <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
                     <td style="border-bottom: 0px;" class="multi_market" id="<%=liveTennis[i].marketList.match_odd.marketId%>">
-                      <%if(user){ %>
+                      <%if(user && userMultimarkets != null){ %>
                         <%let check = userMultimarkets.marketIds.find(item => item == liveTennis[i].marketList.match_odd.marketId) %>
                       <%if(check){%>
                         <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
@@ -114,6 +114,7 @@
                         <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
                       <%}%>
                       <%}else{%>
+                        <a><img src="../../assets/img/exchange/Vector.png" alt=""></a>
                       <%}%>
                     </td>
                     <%}else{%>
@@ -124,7 +125,7 @@
                         <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
                         <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
                         <td style="border-bottom: 0px;" class="multi_market" id="<%=liveTennis[i].marketList.match_odd.marketId%>">
-                          <%if(user){ %>
+                          <%if(user && userMultimarkets != null){ %>
                             <%let check = userMultimarkets.marketIds.find(item => item == liveTennis[i].marketList.match_odd.marketId) %>
                           <%if(check){%>
                             <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
@@ -132,6 +133,7 @@
                             <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
                           <%}%>
                           <%}else{%>
+                            <a><img src="../../assets/img/exchange/Vector.png" alt=""></a>
                           <%}%>
                         </td>
                     <%}%>
@@ -213,7 +215,7 @@
                     <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
                     <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
                     <td style="border-bottom: 0px;" class="multi_market" id="<%=upcomintTennis[i].marketList.match_odd.marketId%>">
-                      <%if(user){ %>
+                      <%if(user && userMultimarkets != null){ %>
                         <%let check = userMultimarkets.marketIds.find(item => item == upcomintTennis[i].marketList.match_odd.marketId) %>
                       <%if(check){%>
                         <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
@@ -221,6 +223,7 @@
                         <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
                       <%}%>
                       <%}else{%>
+                        <a><img src="../../assets/img/exchange/Vector.png" alt=""></a>
                       <%}%>
                     </td>
                     <%}else{%>
@@ -231,7 +234,7 @@
                         <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
                         <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
                         <td style="border-bottom: 0px;" class="multi_market" id="<%=upcomintTennis[i].marketList.match_odd.marketId%>">
-                          <%if(user){ %>
+                          <%if(user && userMultimarkets != null){ %>
                             <%let check = userMultimarkets.marketIds.find(item => item == upcomintTennis[i].marketList.match_odd.marketId) %>
                           <%if(check){%>
                             <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
@@ -239,6 +242,7 @@
                             <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
                           <%}%>
                           <%}else{%>
+                            <a><img src="../../assets/img/exchange/Vector.png" alt=""></a>
                           <%}%>
                         </td>
                   <%}%>
