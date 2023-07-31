@@ -5463,9 +5463,9 @@ socket.on('connect', () => {
 
 
     if(pathname === "/exchange/multimarkets"){
-        if(LOGINDATA.LOGINUSER != ""){
-            socket.emit("MultiMarketPage", LOGINDATA)
-        }
+        // if(LOGINDATA.LOGINUSER != ""){
+        //     socket.emit("MultiMarketPage", LOGINDATA)
+        // }
 
        
     }
