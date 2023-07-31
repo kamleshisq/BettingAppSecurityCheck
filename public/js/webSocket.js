@@ -3717,6 +3717,7 @@ socket.on('connect', () => {
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
+                data.finalResult
                 data.finalResult.items.some(item => {
                     if(item.market_id == id){
                         section = item
