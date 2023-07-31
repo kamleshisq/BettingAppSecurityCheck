@@ -3717,7 +3717,6 @@ socket.on('connect', () => {
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
-                console.log(data.finalResult)
                 data.finalResult.items.some(item => {
                     if(item.market_id == id){
                         section = item
@@ -3753,7 +3752,50 @@ socket.on('connect', () => {
                         this.innerHTML = `<span><b>${section.even}</b></span>` 
                     }
                 }
-            })
+            });
+
+            $(".only_over_blue").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    if(item.market_id == id){
+                        section = item
+                    }
+                })
+                if(this.id == `${section.market_id}1` ){
+                    if(data.betLimits[0].max_odd < section.yes || section.yes == "-" || section.yes == "1,000.00" || section.yes == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        this.innerHTML = `<span><b>${section.yes}</b></span>` 
+                    }
+                }
+            });
+
+
+            $(".only_over_red").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    if(item.market_id == id){
+                        section = item
+                    }
+                })
+                if(this.id == `${section.market_id}2` ){
+                    if(data.betLimits[0].max_odd < section.no || section.no == "-" || section.no == "1,000.00" || section.no == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        this.innerHTML = `<span><b>${section.no}</b></span>` 
+                    }
+                }
+            });
 
 
         })
