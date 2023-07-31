@@ -3780,6 +3780,30 @@ socket.on('connect', () => {
             });
           });
 
+          $(document).ready(function() {
+            // Attach the click event handler to spans inside each row
+            $(".acount-stat-tbl-body-tr").each(function(index) {
+              const $row = $(this);
+              const $inputElement = $row.find(".set-stake-form-input2");
+              const $multiplierElement = $row.find(".nww-bet-slip-wrp-col1-txt-num");
+              const $resultElement = $row.find(".c-gren");
+        
+              $row.find(".tbl-td-with5 span").on("click", function() {
+                // Get the ID of the clicked span
+                const clickedId = $(this).attr("id");
+        
+                // Get the value from the element with class "nww-bet-slip-wrp-col1-txt-num"
+                const multiplier = parseFloat($multiplierElement.text());
+        
+                // Calculate the result
+                const result = parseFloat(clickedId) * multiplier;
+        
+                // Update the content of the element with class "c-gren"
+                $resultElement.text(result.toFixed(2));
+              });
+            });
+          });
+
 
         // var buttons = document.querySelectorAll('.button1');
         // let elements = document.getElementsByClassName("betOn");
