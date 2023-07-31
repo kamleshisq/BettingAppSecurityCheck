@@ -4072,6 +4072,7 @@ socket.on('connect', () => {
                   </tr>
                 </tbody>
               </table>`
+              document.getElementById('length1').innerHTML = html2
             }else{
                 for(let i = 0; i < data.openBet.length; i++){
                     html2 += `<tr>
