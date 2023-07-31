@@ -3781,20 +3781,12 @@ socket.on('connect', () => {
           });
 
           $(document).ready(function () {
-            // Add click event listener to the <span> elements inside class "nww-bet-slip-wrp-col2-inn"
             $(".nww-bet-slip-wrp-col2-inn span").click(function () {
-              // Get the clicked <span>'s ID
               var spanId = $(this).attr("id");
-        
-              // Get the value of class "nww-bet-slip-wrp-col1-txt-num" within the same <tr>
               var betValue = parseFloat(
                 $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
               );
-        
-              // Calculate the multiplication
-              var result = parseFloat(spanId) * betValue;
-        
-              // Update the value inside the <b> element with class "c-gren"
+              var result = (parseFloat(spanId) * betValue) - parseFloat(spanId);
               $(this)
                 .closest("tr")
                 .find(".c-gren")
