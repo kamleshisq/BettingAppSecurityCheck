@@ -478,10 +478,30 @@
                   </div>
                   <div class="exchange-pg-rit-ro mb-2">
                     <div class="exchange-pg-rit-ro-livetv-dv">
-                      <div class="exchange-pg-rit-ro-livetv-titl">
+                      <div class="exchange-pg-rit-ro-livetv-titl betsTitleSide">
                         <h5>Open Bets (<%=betsOnthisMatch.length%>)</h5>
                       </div>
                       <div class="exchange-pg-rit-ro-livetv-dv-wrp">
+                        <%if(betsOnthisMatch.length > 0){%>
+                          <table class="table-new-d">
+                            <thead>
+                              <tr class="thead-border my-open-bet-trr">
+                                <td>Selection</td>
+                                <td>Odds</td>
+                                <td>Stake</td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                             <%for(let i = 0; i < betsOnthisMatch.length; i++){%>
+                              <tr>
+                                <td><%= betsOnthisMatch.selectionName%></td>
+                                <td><%= betsOnthisMatch.oddValue %></td>
+                                <td><%= betsOnthisMatch.Stake %></td>
+                              </tr>
+                              <%} %>
+                            </tbody>
+                          </table>
+                        <%} %>
                         <!-- <img class="img-bdr-red15 img-fluid" src="../../assets/img/exchange/live-tv-img.png" alt=""> -->
                       </div>
                     </div>
