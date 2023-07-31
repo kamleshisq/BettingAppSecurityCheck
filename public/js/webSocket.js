@@ -3787,7 +3787,7 @@ socket.on('connect', () => {
                 $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
               );
               var result = (parseFloat(spanId) * betValue) - parseFloat(spanId);
-              $(this).closest("tr").find(".set-stake-form-input2").value(parseFloat(spanId))
+              $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
               $(this)
                 .closest("tr")
                 .find(".c-gren")
