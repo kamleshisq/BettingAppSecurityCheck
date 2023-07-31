@@ -28,6 +28,7 @@ const gameAPI = require("../utils/gameAPI");
 const request = require('request');
 const multimarkets = require("../model/maltimarket");
 const stakeLable = require("../model/stakeLabelModel");
+
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -1700,7 +1701,7 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const sportData = await getCrkAndAllData()
-    const cricket = sportData[0].gameList[0].eventList
+    
     const betLimit = await betLimitModel.find()
     // console.log(match.marketList.goals)
     // let session = match.marketList.session.filter(item => {
@@ -1709,8 +1710,10 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     // });
     let SportLimits = betLimit.find(item => item.type === "Sport")
     let userLog
+    let multimarket = []
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
+        multimarket = await multimarkets.findOne({userId:data.LOGINUSER._id})
     }
     res.status(200).render("./userSideEjs/multimarkets/main",{
         user: req.currentUser,
@@ -1718,7 +1721,9 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
         check:"Multi Markets",
         SportLimits,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        multimarket,
+        sportData
     })
 });
 
