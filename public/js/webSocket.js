@@ -3966,7 +3966,7 @@ socket.on('connect', () => {
             let secId = $(this).closest("tr").find(".beton").attr('id')
             data.secId = secId.slice(0,-1)
             data.market = $(this).closest("table").attr("id");
-            data.stake = $(this).closest("tr").find(".set-stake-form-input2").val
+            data.stake = $(this).closest("tr").find(".set-stake-form-input2").val()
             data.spoetId = $(this).closest("tr").find(".c-gren").attr('id')
             console.log(secId)
             console.log(data)
