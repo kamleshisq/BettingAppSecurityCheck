@@ -4019,6 +4019,7 @@ socket.on('connect', () => {
                     data.secId = "odd_Even_No"
                 }
             }
+            console.log(data.stake)
             socket.emit("betDetails", {data, LOGINDATA})
             });
           });
