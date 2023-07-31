@@ -115,6 +115,7 @@ socket.on('connect', () => {
 
         const input1Values = Array.from(input1Elements).map((element) => element.value);
         const input2Values = Array.from(input2Elements).map((element) => element.value);
+        console.log(input2Values)
         socket.emit("STAKELABEL", {input1Values, input2Values, LOGINDATA})
     })
 
