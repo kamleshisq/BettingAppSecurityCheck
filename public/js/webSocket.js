@@ -4047,7 +4047,18 @@ socket.on('connect', () => {
         //   });
 
         socket.on("betDetails" , (data) => {
-            alert(data)
+            alert(data.result)
+         
+            let html2 = ""
+            document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${data.openBet.length})</h5>`
+            for(let i = 0; i < data.openBet.length; i++){
+                html2 += `<tr>
+                <td>${ data.openBet[i].selectionName}</td>
+                <td>${ data.openBet[i].oddValue }</td>
+                <td>${ data.openBet[i].Stake }</td>
+              </tr>`
+            }
+            $("#tableBET")
         })
         
     }

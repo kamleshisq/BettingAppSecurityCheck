@@ -894,7 +894,8 @@ io.on('connection', (socket) => {
     socket.on('betDetails', async(data) => {
         console.log(data)
         let result = await placeBet(data)
-        socket.emit("betDetails", result)
+        let openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title})
+        socket.emit("betDetails", {result, openBet})
     })
 
     socket.on('voidBet', async(data) => {

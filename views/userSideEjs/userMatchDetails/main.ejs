@@ -478,10 +478,10 @@
                   </div>
                   <div class="exchange-pg-rit-ro mb-2">
                     <div class="exchange-pg-rit-ro-livetv-dv">
-                      <div class="exchange-pg-rit-ro-livetv-titl betsTitleSide">
+                      <div class="exchange-pg-rit-ro-livetv-titl" id="betsTitleSide">
                         <h5>Open Bets (<%=betsOnthisMatch.length%>)</h5>
                       </div>
-                      <div class="exchange-pg-rit-ro-livetv-dv-wrp">
+                      <div class="exchange-pg-rit-ro-livetv-dv-wrp ">
                         <%if(betsOnthisMatch.length > 0){%>
                           <table class="table-new-d">
                             <thead>
@@ -491,12 +491,12 @@
                                 <td>Stake</td>
                               </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tableBET">
                              <%for(let i = 0; i < betsOnthisMatch.length; i++){%>
                               <tr>
-                                <td><%= betsOnthisMatch.selectionName%></td>
-                                <td><%= betsOnthisMatch.oddValue %></td>
-                                <td><%= betsOnthisMatch.Stake %></td>
+                                <td><%= betsOnthisMatch[i].selectionName%></td>
+                                <td><%= betsOnthisMatch[i].oddValue %></td>
+                                <td><%= betsOnthisMatch[i].Stake %></td>
                               </tr>
                               <%} %>
                             </tbody>
