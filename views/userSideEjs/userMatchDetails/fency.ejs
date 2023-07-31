@@ -81,7 +81,6 @@
             <%if(match.marketList.session != null){%>
               <% let dataSessionOnly = match.marketList.session.filter(item => item.status == 1 && item.title.startsWith("Only")) %>
               <%if(dataSessionOnly.length != 0){%>
-                <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab3" role="tabpanel" aria-labelledby="fancytab3-tab" tabindex="0">
                   <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
                     <table class="acount-stat-tbl mt-2">
         
@@ -129,7 +128,6 @@
         
                     </table>
                   </div>
-                </div>
               <%} %>
             <%}%>
 
