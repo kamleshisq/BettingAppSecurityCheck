@@ -1711,9 +1711,16 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     let SportLimits = betLimit.find(item => item.type === "Sport")
     let userLog
     let multimarket 
+    let stakeLabledata
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
         multimarket = await multimarkets.findOne({userId:req.currentUser._id})
+        stakeLabledata = await stakeLable.findOne({userId:req.currentUser._id})
+        if(stakeLabledata === null){
+            stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
+        }
+    }else{
+        stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
     }
     // console.log(multimarket)
     res.status(200).render("./userSideEjs/multimarkets/main",{
@@ -1724,7 +1731,8 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
         userLog,
         notifications:req.notifications,
         multimarket,
-        sportData
+        sportData,
+        stakeLabledata
     })
 });
 
