@@ -3939,7 +3939,7 @@ socket.on('connect', () => {
             //     span.addEventListener("click", handleClickableSpan);
             //   });
 
-        // $(document).on("click", ".PLACEBET", function(e){
+        // $(document).on("click", ".eventId", function(e){
         //     e.preventDefault()
         //     let data = {}
         //     let title = document.getElementsByClassName("eventTitle")
@@ -3955,6 +3955,22 @@ socket.on('connect', () => {
         //     // console.log(data)
         //     socket.emit("betDetails", {data, LOGINDATA})
         // })
+
+        $(document).ready(function () {
+            $(".eventId").click(function () {
+            let data = {}
+            data.title = $(this).closest("tr").find(".name").text()
+            data.eventId = $(this).attr("id");
+            data.odds = $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+            let secId = $(this).closest("tr").find(".beton").attr('id')
+            data.secId = secId.slice(0,-1)
+            data.market = $(this).closest("table").attr("id");
+            data.stake = $(this).closest("tr").find(".set-stake-form-input2").val
+            data.spoetId = $(this).closest("tr").find(".c-gren").attr('id')
+            console.log(secId)
+            console.log(data)
+            });
+          });
 
         // function handlePlaceBetClick(event) {
         //     const clickedLink = event.target;
