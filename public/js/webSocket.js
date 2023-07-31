@@ -3968,6 +3968,9 @@ socket.on('connect', () => {
             data.market = $(this).closest("table").attr("id");
             data.stake = $(this).closest("tr").find(".set-stake-form-input2").val()
             data.spoetId = $(this).closest("tr").find(".c-gren").attr('id')
+            if(data.market == undefined){
+                data.market = $(this).closest("table").find('.market').attr('id')
+            }
             console.log(secId)
             console.log(data)
             });
