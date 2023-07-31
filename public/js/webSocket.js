@@ -4058,7 +4058,7 @@ socket.on('connect', () => {
                 <td>${ data.openBet[i].Stake }</td>
               </tr>`
             }
-            $("#tableBET")
+            $("#tableBET").html(html2)
         })
         
     }
