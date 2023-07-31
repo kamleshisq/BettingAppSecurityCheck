@@ -1715,6 +1715,7 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:req.currentUser._id})
         multimarket = await multimarkets.findOne({userId:req.currentUser._id})
     }
+    console.log(multimarket)
     res.status(200).render("./userSideEjs/multimarkets/main",{
         user: req.currentUser,
         verticalMenus,
