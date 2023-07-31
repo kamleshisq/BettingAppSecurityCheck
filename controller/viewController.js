@@ -1465,7 +1465,6 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
         userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
     }
-    console.log(userMultimarkets)
     // console.log(liveFootBall)
     // console.log(liveTennis.length)
     // console.log(LiveCricket.length)
@@ -1673,7 +1672,6 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     }else{
         stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
     }
-    console.log(stakeLabledata)
     res.status(200).render("./userSideEjs/userMatchDetails/main",{
         user: req.currentUser,
         verticalMenus,
