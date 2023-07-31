@@ -3780,28 +3780,28 @@ socket.on('connect', () => {
             });
           });
 
-          $(document).ready(function() {
-            // Attach the click event handler to spans inside each row
-            $(".acount-stat-tbl-body-tr").each(function(index) {
-              const $row = $(this);
-              const $inputElement = $row.find(".set-stake-form-input2");
-              const $multiplierElement = $row.find(".nww-bet-slip-wrp-col1-txt-num");
-              const $resultElement = $row.find(".c-gren");
+          function handleRowClick(row) {
+            const col2Spans = row.querySelectorAll(".nww-bet-slip-wrp-col2-inn span");
+            const cGrenElem = row.querySelector(".c-gren");
+            const customInput = row.querySelector(".set-stake-form-input2");
         
-              $row.find(".tbl-td-with5 span").on("click", function() {
-                // Get the ID of the clicked span
-                const clickedId = $(this).attr("id");
-        
-                // Get the value from the element with class "nww-bet-slip-wrp-col1-txt-num"
-                const multiplier = parseFloat($multiplierElement.text());
-        
-                // Calculate the result
-                const result = parseFloat(clickedId) * multiplier;
-        
-                // Update the content of the element with class "c-gren"
-                $resultElement.text(result.toFixed(2));
+            col2Spans.forEach(span => {
+              span.addEventListener("click", () => {
+                const spanId = span.id;
+                const col1InnerText = parseFloat(row.querySelector(".nww-bet-slip-wrp-col1-txt-num").innerText);
+                const result = parseFloat(spanId) * col1InnerText;
+                cGrenElem.innerText = result.toFixed(2);
+                customInput.value = spanId;
               });
             });
+          }
+        
+          // Get all the rows with class "acount-stat-tbl-body-tr"
+          const rows = document.querySelectorAll(".acount-stat-tbl-body-tr");
+        
+          // Iterate over each row and handle the click event
+          rows.forEach(row => {
+            handleRowClick(row);
           });
 
 
