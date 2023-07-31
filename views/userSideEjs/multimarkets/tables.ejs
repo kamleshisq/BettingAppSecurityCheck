@@ -12,7 +12,6 @@ for(let i = 0; i < multimarket.marketIds.length; i++){
             result = Tennis.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == multimarket.marketIds[i])
         }
     }
-}
 %>
 <%console.log(result, 45654) %>
 <%if(result){%>
@@ -105,4 +104,5 @@ for(let i = 0; i < multimarket.marketIds.length; i++){
        
       
       </div>
+<%}%>
 <%}%>
