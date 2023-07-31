@@ -2,8 +2,7 @@
     <div class="nww-bet-slip-wrp">
       <div class="nww-bet-slip-wrp-col3">
         <div class="nww-bet-slip-wrp-col3-txt1">
-          <%console.log(match)%>
-          <%if(match){%>
+          <%if(match != undefine){%>
             <p class="name" id=""><%=match.eventData.name%></p>
           <%}else{%>
             <p class="name" id=""><%=result.eventData.name%></p>
@@ -19,7 +18,7 @@
       </div>
       <div class="nww-bet-slip-wrp-col1">
         <div class="nww-bet-slip-wrp-col1-txt">
-          <%if(match){%>
+          <%if(match != undefine){%>
             <span>Profit <b class="c-gren" id="<%=match.eventData.sportId%>"></b></span>
           <%}else{%>
             <span>Profit <b class="c-gren" id="<%=result.eventData.sportId%>"></b></span>
@@ -60,7 +59,7 @@
 
         <div class="nww-bet-slip-wrp-col3-txt1">
           <%if(user){ %>
-            <%if(match){%>
+            <%if(match != undefine){%>
               <a class="eventId" id="<%=match.eventData.eventId%>"> Place Bet </a>
             <%}else{ %>
               <a class="eventId" id="<%=result.eventData.eventId%>"> Place Bet </a>
