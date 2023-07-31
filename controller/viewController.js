@@ -1465,6 +1465,7 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
         userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
     }
+    console.log(multimarkets)
     // console.log(liveFootBall)
     // console.log(liveTennis.length)
     // console.log(LiveCricket.length)
