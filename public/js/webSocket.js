@@ -3780,21 +3780,27 @@ socket.on('connect', () => {
             });
           });
 
-          function handleRowClick(row) {
-            const col2Spans = row.querySelectorAll(".nww-bet-slip-wrp-col2-inn span");
-            const cGrenElem = row.querySelector(".c-gren");
-            const customInput = row.querySelector(".set-stake-form-input2");
+          $(document).ready(function () {
+            // Add click event listener to the <span> elements inside class "nww-bet-slip-wrp-col2-inn"
+            $(".nww-bet-slip-wrp-col2-inn span").click(function () {
+              // Get the clicked <span>'s ID
+              var spanId = $(this).attr("id");
         
-            col2Spans.forEach(span => {
-              span.addEventListener("click", () => {
-                const spanId = span.id;
-                const col1InnerText = parseFloat(row.querySelector(".nww-bet-slip-wrp-col1-txt-num").innerText);
-                const result = parseFloat(spanId) * col1InnerText;
-                cGrenElem.innerText = result.toFixed(2);
-                customInput.value = spanId;
-              });
+              // Get the value of class "nww-bet-slip-wrp-col1-txt-num" within the same <tr>
+              var betValue = parseFloat(
+                $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+              );
+        
+              // Calculate the multiplication
+              var result = parseFloat(spanId) * betValue;
+        
+              // Update the value inside the <b> element with class "c-gren"
+              $(this)
+                .closest("tr")
+                .find(".c-gren")
+                .text(result.toFixed(2));
             });
-          }
+          });
         
           // Get all the rows with class "acount-stat-tbl-body-tr"
           const rows = document.querySelectorAll(".acount-stat-tbl-body-tr");
