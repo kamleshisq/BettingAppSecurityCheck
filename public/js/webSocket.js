@@ -3803,12 +3803,12 @@ socket.on('connect', () => {
           });
         
           // Get all the rows with class "acount-stat-tbl-body-tr"
-          const rows = document.querySelectorAll(".acount-stat-tbl-body-tr");
+        //   const rows = document.querySelectorAll(".acount-stat-tbl-body-tr");
         
-          // Iterate over each row and handle the click event
-          rows.forEach(row => {
-            handleRowClick(row);
-          });
+        //   // Iterate over each row and handle the click event
+        //   rows.forEach(row => {
+        //     handleRowClick(row);
+        //   });
 
 
         // var buttons = document.querySelectorAll('.button1');
