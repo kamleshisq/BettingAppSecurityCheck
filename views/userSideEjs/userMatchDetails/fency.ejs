@@ -14,7 +14,7 @@
           <button class="nav-link active exch-pg-inn-fancy-tab-btn" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">All</button>
         </li>
         <%if(match.marketList.session != null){%>
-          let dataSession = []
+          <% let dataSession = [] %>
           <% let hasNonNullmarketList = false; %>
           <% for (let i = 0; i < match.marketList.session.length; i++) { %>
             <% if (match.marketList.session[i].status == "1") { %>
