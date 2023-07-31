@@ -1664,31 +1664,34 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     const betLimit = await betLimitModel.find()
     // console.log(match.marketList.goals)
     // let session = match.marketList.session.filter(item => {
-    //     let date = new Date(item.updated_on);
-    //     return date < Date.now() - 1000 * 60 * 60;
-    // });
-    let SportLimits = betLimit.find(item => item.type === "Sport")
-    let userLog
-    let stakeLabledata
-    if(req.currentUser){
-        userLog = await loginLogs.find({user_id:req.currentUser._id})
-        stakeLabledata = await stakeLable.findOne({userId:req.currentUser._id})
-        if(stakeLabledata === null){
-        stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
+        //     let date = new Date(item.updated_on);
+        //     return date < Date.now() - 1000 * 60 * 60;
+        // });
+        let SportLimits = betLimit.find(item => item.type === "Sport")
+        let userLog
+        let stakeLabledata
+        let betsOnthisMatch = []
+        if(req.currentUser){
+            userLog = await loginLogs.find({user_id:req.currentUser._id})
+            stakeLabledata = await stakeLable.findOne({userId:req.currentUser._id})
+            if(stakeLabledata === null){
+                stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
+            }
+            betsOnthisMatch = await betModel.find({userId:req.currentUser._id, event:match.eventData.league, status: 'OPEN'})
+        }else{
+            stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
         }
-    }else{
-        stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
-    }
-    res.status(200).render("./userSideEjs/userMatchDetails/main",{
-        user: req.currentUser,
-        verticalMenus,
-        check:"Exchange",
-        match,
+        res.status(200).render("./userSideEjs/userMatchDetails/main",{
+            user: req.currentUser,
+            verticalMenus,
+            check:"Exchange",
+            match,
         SportLimits,
         liveStream,
         userLog,
         notifications:req.notifications,
-        stakeLabledata
+        stakeLabledata,
+        betsOnthisMatch
     })
 });
 
