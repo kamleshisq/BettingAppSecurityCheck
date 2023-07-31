@@ -42,54 +42,7 @@
       <div class="tab-content exch-pg-inn-fancy-tab-txt" id="pills-tabContent">
         <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
           <div class="exch-pg-inn-fancy-tab-txt-inn">
-            <%if(match.marketList.odd_even != null){%>
-            <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
-              <table class="acount-stat-tbl mt-2">
-
-                <thead class="acount-stat-tbl-hed3">
-                    <tr class="acount-stat-tbl-hed-tr3" >
-                        <th colspan="2" style="text-align: left;" class="bod-red-lft " >Odd/Even</th>
-                        <th style="text-align: center;" colspan=""></th>
-                        <th style="text-align: center;" colspan="">YES</th>
-                        <th style="text-align: center;" colspan="" class="bod-red-rit">NO</th>
-                    </tr>
-                </thead>
-
-                <tbody class="acount-stat-tbl-body">
-                    <%for(let i = 0; i < match.marketList.odd_even.length; i++){%>
-                        <tr class="acount-stat-tbl-body-tr odd_even" data-href='#'>
-                            <td colspan="2" style="text-align: left;" class="market" id="<%=match.marketList.odd_even[i].marketId%>">
-                              <%=match.marketList.odd_even[i].title%>
-                            </td>
-    
-                            <td><span class="c-activee">Min : <%=SportLimits.min_stake%>, Max : <%=SportLimits.max_stake%></span></td>
-                            
-                            <td >
-                                <snan data-bs-toggle="collapse" href="#bt-slp-colps-odd-even-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-odd-even-<%=i%>" class="tbl-bg-blu-spn button odd_even_blue" id="<%=match.marketList.odd_even[i].marketId%>1">
-                                    
-                                </snan> 
-                            </td>
-    
-                            <td >
-                                <snan data-bs-toggle="collapse" href="#bt-slp-colps-odd-even-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-odd-even-<%=i%>" class="tbl-bg-pech-spn button odd_even_red" id="<%=match.marketList.odd_even[i].marketId%>2">
-                                    
-                                </snan> 
-                            </td>  
-                        </tr>
-                        <tr>
-                          <td colspan="4">
-                            <div class="my-exc-inn-colaps-txt-dv collapse" id="bt-slp-colps-odd-even-<%=i%>" >
-                              <%-include("../betslip")%>
-                            </div>
-                          </td>
-                        </tr>
-                    <%}%>
-                    
-                </tbody>
-
-              </table>
-            </div>
-            <%}%>
+           
             <%if(match.marketList.session != null){%>
               <% let dataSessionOnly = match.marketList.session.filter(item => item.status == 1 && item.title.startsWith("Only")) %>
               <%if(dataSessionOnly.length > 0){%>
@@ -191,6 +144,54 @@
                 </table>
               </div>
             <%} %>
+            <%if(match.marketList.odd_even != null){%>
+              <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
+                <table class="acount-stat-tbl mt-2">
+  
+                  <thead class="acount-stat-tbl-hed3">
+                      <tr class="acount-stat-tbl-hed-tr3" >
+                          <th colspan="2" style="text-align: left;" class="bod-red-lft " >Odd/Even</th>
+                          <th style="text-align: center;" colspan=""></th>
+                          <th style="text-align: center;" colspan="">YES</th>
+                          <th style="text-align: center;" colspan="" class="bod-red-rit">NO</th>
+                      </tr>
+                  </thead>
+  
+                  <tbody class="acount-stat-tbl-body">
+                      <%for(let i = 0; i < match.marketList.odd_even.length; i++){%>
+                          <tr class="acount-stat-tbl-body-tr odd_even" data-href='#'>
+                              <td colspan="2" style="text-align: left;" class="market" id="<%=match.marketList.odd_even[i].marketId%>">
+                                <%=match.marketList.odd_even[i].title%>
+                              </td>
+      
+                              <td><span class="c-activee">Min : <%=SportLimits.min_stake%>, Max : <%=SportLimits.max_stake%></span></td>
+                              
+                              <td >
+                                  <snan data-bs-toggle="collapse" href="#bt-slp-colps-odd-even-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-odd-even-<%=i%>" class="tbl-bg-blu-spn button odd_even_blue" id="<%=match.marketList.odd_even[i].marketId%>1">
+                                      
+                                  </snan> 
+                              </td>
+      
+                              <td >
+                                  <snan data-bs-toggle="collapse" href="#bt-slp-colps-odd-even-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-odd-even-<%=i%>" class="tbl-bg-pech-spn button odd_even_red" id="<%=match.marketList.odd_even[i].marketId%>2">
+                                      
+                                  </snan> 
+                              </td>  
+                          </tr>
+                          <tr>
+                            <td colspan="4">
+                              <div class="my-exc-inn-colaps-txt-dv collapse" id="bt-slp-colps-odd-even-<%=i%>" >
+                                <%-include("../betslip")%>
+                              </div>
+                            </td>
+                          </tr>
+                      <%}%>
+                      
+                  </tbody>
+  
+                </table>
+              </div>
+              <%}%>
               
             <%}%>
 
