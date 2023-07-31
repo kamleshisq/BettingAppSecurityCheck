@@ -4055,14 +4055,33 @@ socket.on('connect', () => {
          
             let html2 = ""
             document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${data.openBet.length})</h5>`
-            for(let i = 0; i < data.openBet.length; i++){
-                html2 += `<tr>
-                <td>${ data.openBet[i].selectionName}</td>
-                <td>${ data.openBet[i].oddValue }</td>
-                <td>${ data.openBet[i].Stake }</td>
-              </tr>`
+            if(data.openBet.length === 1){
+                html2 = `<table class="table-new-d">
+                <thead>
+                  <tr class="thead-border my-open-bet-trr">
+                    <th>Selection</th>
+                    <th>Odds</th>
+                    <th>Stake</th>
+                  </tr>
+                </thead>
+                <tbody id="tableBET">
+                  <tr>
+                    <td>${ data.openBet[0].selectionName}</td>
+                    <td>${ data.openBet[0].oddValue }</td>
+                    <td>${ data.openBet[0].Stake }</td>
+                  </tr>
+                </tbody>
+              </table>`
+            }else{
+                for(let i = 0; i < data.openBet.length; i++){
+                    html2 += `<tr>
+                    <td>${ data.openBet[i].selectionName}</td>
+                    <td>${ data.openBet[i].oddValue }</td>
+                    <td>${ data.openBet[i].Stake }</td>
+                  </tr>`
+                }
+                document.getElementById('tableBET').innerHTML = html2
             }
-            document.getElementById('tableBET').innerHTML = html2
         })
         
     }
