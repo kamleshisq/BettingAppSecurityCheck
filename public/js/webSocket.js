@@ -3971,8 +3971,7 @@ socket.on('connect', () => {
             if(data.market == undefined){
                 data.market = $(this).closest("table").find('.market').attr('id')
             }
-            console.log(secId)
-            console.log(data)
+            socket.emit("betDetails", {data, LOGINDATA})
             });
           });
 
