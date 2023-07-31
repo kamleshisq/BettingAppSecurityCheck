@@ -14,7 +14,7 @@
           <button class="nav-link active exch-pg-inn-fancy-tab-btn" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">All</button>
         </li>
         <%if(match.marketList.session != null){%>
-          <% let dataSession = match.marketList.session.filter(item => item.status == 5) %>
+          <% let dataSession = match.marketList.session.filter(item => item.status == 1) %>
           <%console.log(dataSession) %>
         <%}%>
         <%if(match.marketList.odd_even != null){%>
