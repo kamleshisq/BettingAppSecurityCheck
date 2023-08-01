@@ -3721,8 +3721,11 @@ socket.on('connect', () => {
                 id = id.slice(0, -1);
                 let section = null;
                 data.finalResult.items.some(item => {
-                    if(item.market_id == id){
-                        section = item
+                    if(item){
+
+                        if(item.market_id == id){
+                            section = item
+                        }
                     }
                 })
                 if(this.id == `${section.market_id}1` ){
@@ -3742,8 +3745,11 @@ socket.on('connect', () => {
                 id = id.slice(0, -1);
                 let section = null;
                 data.finalResult.items.some(item => {
-                    if(item.market_id == id){
-                        section = item
+                    if(item){
+
+                        if(item.market_id == id){
+                            section = item
+                        }
                     }
                 })
                 if(this.id == `${section.market_id}2` ){
@@ -3763,8 +3769,11 @@ socket.on('connect', () => {
                 id = id.slice(0, -1);
                 let section = null;
                 data.finalResult.items.some(item => {
-                    if(item.market_id == id){
-                        section = item
+                    if(item){
+
+                        if(item.market_id == id){
+                            section = item
+                        }
                     }
                 })
                 if(this.id == `${section.market_id}1` ){
@@ -3785,8 +3794,11 @@ socket.on('connect', () => {
                 id = id.slice(0, -1);
                 let section = null;
                 data.finalResult.items.some(item => {
-                    if(item.market_id == id){
-                        section = item
+                    if(item){
+
+                        if(item.market_id == id){
+                            section = item
+                        }
                     }
                 })
                 if(this.id == `${section.market_id}2` ){
