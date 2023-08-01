@@ -1674,6 +1674,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         let userLog
         let stakeLabledata
         let betsOnthisMatch = []
+        let rules = await gamrRuleModel.find()
         if(req.currentUser){
             userLog = await loginLogs.find({user_id:req.currentUser._id})
             stakeLabledata = await stakeLable.findOne({userId:req.currentUser._id})
@@ -1694,7 +1695,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         userLog,
         notifications:req.notifications,
         stakeLabledata,
-        betsOnthisMatch
+        betsOnthisMatch,
+        rules
     })
 });
 
@@ -1715,6 +1717,7 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     let multimarket 
     let stakeLabledata
     let betsOnthisMatch = []
+    let rules = await gamrRuleModel.find()
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
         multimarket = await multimarkets.findOne({userId:req.currentUser._id})
@@ -1737,7 +1740,8 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
         multimarket,
         sportData,
         stakeLabledata,
-        betsOnthisMatch
+        betsOnthisMatch,
+        rules
     })
 });
 

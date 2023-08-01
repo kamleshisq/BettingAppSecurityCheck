@@ -12,39 +12,22 @@
             </div>
             <div class="gam-rul-pop-data-acc-sv">
               <div class="accordion accordion-flush gam-rul-pop-data-btnnh2-item" id="accordionFlushExample">
-                <div class="accordion-item ">
-                  <h2 class="accordion-header  gam-rul-pop-data-btnnh2" id="flush-headingOne">
-                    <button class="accordion-button gam-rul-pop-data-btnn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#gamrulpop01" aria-expanded="false" aria-controls="gamrulpop01">
-                      Match Odds
-                    </button>
-                  </h2>
-                  <div id="gamrulpop01" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
-                      <div class="gam-rul-pop-data-txt-dv">
-                        <ol>
-                          <li>
-                            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
-                          </li>
-                          <li>
-                            Praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias
-                          </li>
-                          <li>
-                            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
-                          </li>
-                          <li>
-                            Praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias.
-                          </li>
-                          <li>
-                            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
-                          </li>
-                          <li>
-                            Praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias.
-                          </li>
-                        </ol>
+                <%for(let i = 0; i < rules.length; i++){ %>
+                  <div class="accordion-item ">
+                    <h2 class="accordion-header  gam-rul-pop-data-btnnh2" id="flush-headingOne">
+                      <button class="accordion-button gam-rul-pop-data-btnn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#gamrulpop<%=i%>" aria-expanded="false" aria-controls="gamrulpop<%=i%>">
+                        <%=rules[i].name%>
+                      </button>
+                    </h2>
+                    <div id="gamrulpop<%=i%>" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">
+                        <div class="gam-rul-pop-data-txt-dv">
+                          <%-rules[i].description%>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                <%}>
                 <div class="accordion-item">
                   <h2 class="accordion-header gam-rul-pop-data-btnnh2" id="flush-headingTwo">
                     <button class="accordion-button gam-rul-pop-data-btnn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#gamrulpop02" aria-expanded="false" aria-controls="gamrulpop02">

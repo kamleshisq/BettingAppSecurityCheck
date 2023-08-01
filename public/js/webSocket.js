@@ -5789,7 +5789,7 @@ socket.on('connect', () => {
             if(data === "err"){
                 alert("Something wrong, please try again later")
             }else{
-                console.log(data)
+                // console.log(data)
                 const trElement = $(`tr:has(button#${data._id})`);
                 if (trElement.length) {
                     trElement.find('td:eq(0)').text(`${trElement.index() + 1}`);
