@@ -5473,7 +5473,7 @@ socket.on('connect', () => {
                 $(".name1").each(function() {
                   ids.push(this.id);
                 });
-                // console.log(ids)
+                console.log(ids)
                 socket.emit("marketId", ids)
               });
               setTimeout(()=>{
@@ -5488,7 +5488,6 @@ socket.on('connect', () => {
 
                 id = id.slice(0, -1);
                 let section = null;
-                console.log(data)
                 data.finalResult.items.some(item => {
                     section = item.odds.find(odd => odd.selectionId == id);
                     return section !== undefined;
