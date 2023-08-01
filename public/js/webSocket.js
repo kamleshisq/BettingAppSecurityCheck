@@ -5728,7 +5728,7 @@ socket.on('connect', () => {
         })
 
         socket.on("createNewRule", data => {
-            if(data === data.message){
+            if(data.message === "updated"){
                 
             }else{
                 alert("Something wrong, please try again later")

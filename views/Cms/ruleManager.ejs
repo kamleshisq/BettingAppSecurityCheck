@@ -39,7 +39,24 @@
                                 <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add New </button>
                             </div>
                             <div class="table_data_details_ col-lg-12">
-                                
+                              <table>
+                                <thead>
+                                  <th>Sr. No.</th>
+                                  <th>Name</th>
+                                  <th>description</th>
+                                  <th>Update</th>
+                                </thead>
+                                <tbody>
+                                  <%for(let i = 0; i < rules.length; i++){%>
+                                    <tr>
+                                      <td><%= i+1 %></td>
+                                      <td><%=rules[i].Name%></td>
+                                      <td><button data-bs-toggle="modal" data-bs-target="#uploadFile" id="<%=rules[i]._id%>" ><i class="fa-solid fa-database"></i></button></td>
+                                      <td></td>
+                                    </tr>
+                                  <%}%>
+                                </tbody>
+                              </table>
                             </div>
                         </section>
                     </div>

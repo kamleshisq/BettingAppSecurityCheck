@@ -28,6 +28,7 @@ const gameAPI = require("../utils/gameAPI");
 const request = require('request');
 const multimarkets = require("../model/maltimarket");
 const stakeLable = require("../model/stakeLabelModel");
+const gamrRuleModel = require("../model/gamesRulesModel");
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -2092,6 +2093,7 @@ exports.gameRulesPage = catchAsync(async(req, res, next) => {
     let hosriZontalMenu = await horizontalMenuModel.find().sort({Number:1})
     let banner = await bannerModel.find()
     let sliders = await sliderModel.find().sort({Number:1})
+    let rules = await gamrRuleModel.find()
     res.status(200).render("./Cms/ruleManager",{
         title:"CMS",
         user,
@@ -2099,6 +2101,7 @@ exports.gameRulesPage = catchAsync(async(req, res, next) => {
         hosriZontalMenu,
         banner,
         pages,
-        sliders
+        sliders,
+        rules
     })
 })
