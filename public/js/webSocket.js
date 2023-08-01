@@ -5742,7 +5742,10 @@ socket.on('connect', () => {
         })
 
         socket.on('getDetailsOfRUles', async(data) => {
-            console.log(data)
+            let form = $(`#updatePages`)
+            form.find('input[name = "name"]').attr('value', data.name)
+            form.find('textarea[name = "details"]').html(data.details)
+            form.find('input[name = "name"]').attr('id', data._id)
         })
     }
    
