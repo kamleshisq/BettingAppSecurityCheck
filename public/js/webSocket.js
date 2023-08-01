@@ -3677,8 +3677,11 @@ socket.on('connect', () => {
                     if(item){
                         // console.log(id)
                         if(item.runners){
-                            console.log(item)
-                            section = item.runners.find(item2 => item2.secId == id)
+                            // console.log(item)
+                            let section1 = item.runners.find(item2 => item2.secId == id)
+                            if(section1){
+                                section = section1
+                            }
                         }
                     }
                 })
@@ -3705,7 +3708,10 @@ socket.on('connect', () => {
                     if(item){
 
                         if(item.runners){
-                            section = item.runners.find(item2 => item2.secId == id)
+                            let section1 = item.runners.find(item2 => item2.secId == id)
+                            if(section1){
+                                section = section1
+                            }
                         }
                     }
                 })
