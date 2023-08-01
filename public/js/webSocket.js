@@ -5754,7 +5754,7 @@ socket.on('connect', () => {
           let form = $(`#updaterules`);
           form.find('input[name="name"]').attr('value', data.name);
           form.find('textarea[name="description"]').attr('value', data.description);
-          form.find('input[name="name"]').attr('id', data._id);
+          form.attr('id', data._id);
         
           if (textEditorInstance) {
             // Update the existing editor with new data
