@@ -5734,6 +5734,11 @@ socket.on('connect', () => {
                 alert("Something wrong, please try again later")
             }
         })
+
+        $(document).on("click", ".description", function(e){
+            e.preventDefault()
+            console.log(this.id)
+        })
     }
    
 
