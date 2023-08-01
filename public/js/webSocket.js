@@ -5741,21 +5741,24 @@ socket.on('connect', () => {
             socket.emit("getDetailsOfRUles", id)
         })
 
+        let textEditor = true
         socket.on('getDetailsOfRUles', async(data) => {
             let form = $(`#updatePages`)
             form.find('input[name = "name"]').attr('value', data.name)
             form.find('textarea[name = "description"]').html(data.description)
             form.find('input[name = "name"]').attr('id', data._id)
 
-
-            ClassicEditor
-            .create(document.getElementById('detailsTextArea1'))
-            .then(editor => {
-              console.log('ClassicEditor was initialized', editor);
-            })
-            .catch(error => {
-              console.error('Error initializing ClassicEditor', error);
-            });
+            if(textEditor){
+                textEditor = false
+                ClassicEditor
+                .create(document.getElementById('detailsTextArea1'))
+                .then(editor => {
+                    console.log('ClassicEditor was initialized', editor);
+                })
+                .catch(error => {
+                    console.error('Error initializing ClassicEditor', error);
+                });
+            }
         })
     }
    
