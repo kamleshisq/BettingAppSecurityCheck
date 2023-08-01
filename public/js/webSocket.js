@@ -5751,6 +5751,7 @@ socket.on('connect', () => {
         let textEditorInstance
         socket.on('getDetailsOfRUles', async(data) => {
             if(textEditorInstance){
+                console.log("Working")
                 textEditorInstance.destroy();
                 textEditorInstance = null;
             }
