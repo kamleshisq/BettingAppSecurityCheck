@@ -5751,26 +5751,29 @@ socket.on('connect', () => {
         let textEditorInstance = null; // Initialize a variable to store the editor instance
 
         socket.on('getDetailsOfRUles', async (data) => {
-          if (textEditorInstance) {
-            textEditorInstance.destroy(); // Destroy the previous editor instance if it exists
-            textEditorInstance = null;
-          }
-        
           let form = $(`#updaterules`);
           form.find('input[name="name"]').attr('value', data.name);
           form.find('textarea[name="description"]').attr('value', data.description);
           form.find('input[name="name"]').attr('id', data._id);
         
-          ClassicEditor
-            .create(document.getElementById('detailsTextArea1'))
-            .then(editor => {
-              textEditorInstance = editor; // Store the new editor instance in the variable
-              console.log('ClassicEditor was initialized', editor);
-            })
-            .catch(error => {
-              console.error('Error initializing ClassicEditor', error);
-            });
+          if (textEditorInstance) {
+            // Update the existing editor with new data
+            textEditorInstance.setData(data.description);
+          } else {
+            // If the editor is not initialized, create a new instance
+            ClassicEditor
+              .create(document.getElementById('detailsTextArea1'))
+              .then(editor => {
+                textEditorInstance = editor; // Store the new editor instance in the variable
+                textEditorInstance.setData(data.description); // Set initial data
+                console.log('ClassicEditor was initialized', editor);
+              })
+              .catch(error => {
+                console.error('Error initializing ClassicEditor', error);
+              });
+          }
         });
+        
     }
    
 
