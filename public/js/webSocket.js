@@ -5754,7 +5754,7 @@ socket.on('connect', () => {
             form.find('textarea[name = "description"]').html(data.description)
             form.find('input[name = "name"]').attr('id', data._id)
 
-            if(textEditor){
+            // if(textEditor){
                 textEditor = false
                 ClassicEditor
                 .create(document.getElementById('detailsTextArea1'))
@@ -5764,7 +5764,7 @@ socket.on('connect', () => {
                 .catch(error => {
                     console.error('Error initializing ClassicEditor', error);
                 });
-            }
+            // }
         })
     }
    
