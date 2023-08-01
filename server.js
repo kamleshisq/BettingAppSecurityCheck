@@ -26,6 +26,7 @@ const betLimit = require("./model/betLimitModel");
 const notificationModel = require("./model/notificationModel");
 const stakeLabelModel = require("./model/stakeLabelModel");
 const multimarketModel = require("./model/maltimarket");
+const gameRuleModel = require("./model/gamesRulesModel");
 io.on('connection', (socket) => {
     console.log('connected to client')
     let loginData = {}
@@ -1514,6 +1515,15 @@ io.on('connection', (socket) => {
             let sportListData = await getCrkAndAllData()
             const SportLimits = await betLimit.find({type :"Sport"})
             socket.emit("MultiMarketPage", {multimarket, sportListData, SportLimits})
+    })
+
+    socket.on("createNewRule", async(data) =>{
+        try{
+            await gameRuleModel.create(data.data)
+            socket.emit("createNewRule", "updated")
+        }catch(err){
+            socket.emit("createNewRule", "err")
+        }
     })
 
     
