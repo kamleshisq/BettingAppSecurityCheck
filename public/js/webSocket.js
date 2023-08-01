@@ -5791,6 +5791,7 @@ socket.on('connect', () => {
             }else{
                 console.log(data)
                 const trElement = $(`tr:has(button#${data._id})`);
+                console.log(trElement.length)
                 if (trElement.length) {
                     trElement.find('td:eq(0)').text(`${data.name}`);
                     trElement.find('td:eq(1)').text(`${data.description}`);
