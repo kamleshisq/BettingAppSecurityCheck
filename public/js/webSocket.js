@@ -5488,11 +5488,11 @@ socket.on('connect', () => {
 
                 id = id.slice(0, -1);
                 let section = null;
+                console.log(data)
                 data.finalResult.items.some(item => {
                     section = item.odds.find(odd => odd.selectionId == id);
                     return section !== undefined;
                 });
-                console.log()
                 if(this.id == `${section.selectionId}1` ){
                     if(data.betLimits[0].max_odd < section.backPrice1 || section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
