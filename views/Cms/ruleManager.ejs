@@ -1,4 +1,6 @@
 <%- include("../header") %>
+<script src="https://cdn.ckeditor.com/ckeditor5/30.0.0/classic/ckeditor.js"></script>
+<link href="https://cdn.ckeditor.com/ckeditor5/30.0.0/classic/ckeditor.css" rel="stylesheet">
   <!--Container Main start-->
   <div class="height-100" style="background-color: #EAEEF7;">
 
@@ -66,10 +68,14 @@
                         </div>
                         </div>
                         <div class="row mt-2">
-                          <div class="col">
-                            <label for="details">Details</label>
-                            <textarea  class="form-control ml0" name="details"></textarea>
-                        </div>
+                            <!-- <div class="col">
+                                <label for="details">Details</label>
+                                <textarea  class="form-control ml0" name="details"></textarea>
+                            </div> -->
+                            <div class="col">
+                                <label for="details">Details</label>
+                                <textarea id="detailsTextArea" class="form-control ml0" name="details"></textarea>
+                            </div>                              
                         </div>
                         <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Add</button>
                     </form>
@@ -146,10 +152,23 @@
     </div>
     
     </div>
+
+
 <script type="text/javascript" src="../js/bundle.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+<script>
+  // Initialize ClassicEditor
+  ClassicEditor
+    .create(document.getElementById('detailsTextArea'))
+    .then(editor => {
+      console.log('ClassicEditor was initialized', editor);
+    })
+    .catch(error => {
+      console.error('Error initializing ClassicEditor', error);
+    });
+</script>
 
 <script>
   function openCity(evt, cityName) {
