@@ -3675,7 +3675,7 @@ socket.on('connect', () => {
                 let section = null;
                 data.finalResult.items.some(item => {
                     if(item){
-
+                        console.log(id)
                         if(item.runners){
                             section = item.runners.find(item2 => item2.secId == id)
                         }
