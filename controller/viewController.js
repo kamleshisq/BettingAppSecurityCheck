@@ -2090,7 +2090,31 @@ exports.getMyProfileUser = catchAsync(async(req, res, next) => {
                 $lt: nextDate,
               }
             }
-          }
+          },
+          {
+            $group: {
+              _id: null,
+              totalReturns: { $sum: "$returns" },
+              totalReturns1: {
+                $sum: {
+                  $cond: [{ $ne: ["$betType", "Casino"] }, "$returns", 0]
+                }
+              },
+              totalReturns3: {
+                $sum: {
+                  $cond: [{ $eq: ["$betType", "Casino"] }, "$returns", 0]
+                }
+              },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
+              totalReturns: 1,
+              totalReturns1: 1,
+              totalReturns3: 1,
+            },
+          },
     ])
     console.log(userProfileContent)
     res.status(200).render("./userSideEjs/userProfile/main",{
