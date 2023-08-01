@@ -5758,7 +5758,7 @@ socket.on('connect', () => {
             }
             let form = $(`#updaterules`)
             form.find('input[name = "name"]').attr('value', data.name)
-            form.find('textarea[name = "description"]').html(data.description)
+            form.find('textarea[name = "description"]').attr('value', data.description)
             form.find('input[name = "name"]').attr('id', data._id)
 
             // if(textEditor){
