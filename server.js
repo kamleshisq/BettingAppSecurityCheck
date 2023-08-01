@@ -1528,6 +1528,11 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on("getDetailsOfRUles", async(data) => {
+        let data1 =  await gameRuleModel.findById(data)
+        socket.emit("getDetailsOfRUles", data1)
+    })
+
     
 })
 

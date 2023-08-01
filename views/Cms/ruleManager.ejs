@@ -44,7 +44,6 @@
                                   <th>Sr. No.</th>
                                   <th>Name</th>
                                   <th>description</th>
-                                  <th>Update</th>
                                 </thead>
                                 <tbody>
                                   <%for(let i = 0; i < rules.length; i++){%>
@@ -52,7 +51,6 @@
                                       <td><%= i+1 %></td>
                                       <td><%=rules[i].name%></td>
                                       <td><button class="description" data-bs-toggle="modal" data-bs-target="#uploadFile" id="<%=rules[i]._id%>" ><i class="fa-solid fa-database"></i></button></td>
-                                      <td></td>
                                     </tr>
                                   <%}%>
                                 </tbody>

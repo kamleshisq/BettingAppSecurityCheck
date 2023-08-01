@@ -5737,7 +5737,12 @@ socket.on('connect', () => {
 
         $(document).on("click", ".description", function(e){
             e.preventDefault()
-            console.log(this.id)
+            let id = this.id
+            socket.emit("getDetailsOfRUles", id)
+        })
+
+        socket.on('getDetailsOfRUles', async(data) => {
+            console.log(data)
         })
     }
    
