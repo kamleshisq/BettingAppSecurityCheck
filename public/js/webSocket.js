@@ -3668,52 +3668,58 @@ socket.on('connect', () => {
             //     }
             // })
 
-            // $(".bookmaker_blue").each(function() {
+            $(".bookmaker_blue").each(function() {
                     
-            //     let id = this.id
-            //     id = id.slice(0, -1);
-            //     let section = null;
-            //     data.finalResult.items.some(item => {
-            //         if(item.runners){
-            //             section = item.runners.find(item2 => item2.secId == id)
-            //         }
-            //     })
-            //     if(this.id == `${section.secId}1` ){
-            //         if(data.betLimits[0].max_odd < section.backPrice || section.backPrice == "-" || section.backPrice == "1,000.00" || section.backPrice == "0"){
-            //             this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-            //             <i class="fa-solid fa-lock"></i>
-            //           </span>`
-            //         }else{
-            //             // this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.backSize1}</span>`
-            //             this.innerHTML = `<span><b>${section.backPrice}</b></span> <span> ${section.backSize}</span>`
-            //             // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
-            //         }
-            //     }
-            // })
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    if(item){
 
-            // $(".bookmaker_red").each(function() {
+                        if(item.runners){
+                            section = item.runners.find(item2 => item2.secId == id)
+                        }
+                    }
+                })
+                if(this.id == `${section.secId}1` ){
+                    if(data.betLimits[0].max_odd < section.backPrice || section.backPrice == "-" || section.backPrice == "1,000.00" || section.backPrice == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        // this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        this.innerHTML = `<span><b>${section.backPrice}</b></span> <span> ${section.backSize}</span>`
+                        // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
+                    }
+                }
+            })
+
+            $(".bookmaker_red").each(function() {
                     
-            //     let id = this.id
-            //     id = id.slice(0, -1);
-            //     let section = null;
-            //     data.finalResult.items.some(item => {
-            //         if(item.runners){
-            //             section = item.runners.find(item2 => item2.secId == id)
-            //         }
-            //     })
-            //     if(this.id == `${section.secId}2` ){
-            //         if(data.betLimits[0].max_odd < section.layPrice || section.layPrice == "-" || section.layPrice == "1,000.00" || section.layPrice == "0"){
-            //             this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-            //             <i class="fa-solid fa-lock"></i>
-            //           </span>`
-            //         }else{
-            //             // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
-            //             this.innerHTML = `<span><b>${section.layPrice}</b></span> <span> ${section.laySize}</span>`
-            //             // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
-            //             // this.innerHTML = `<b>${section.layPrice}</b> <br> ${section.laySize}`
-            //         }
-            //     }
-            // })
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    if(item){
+
+                        if(item.runners){
+                            section = item.runners.find(item2 => item2.secId == id)
+                        }
+                    }
+                })
+                if(this.id == `${section.secId}2` ){
+                    if(data.betLimits[0].max_odd < section.layPrice || section.layPrice == "-" || section.layPrice == "1,000.00" || section.layPrice == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        this.innerHTML = `<span><b>${section.layPrice}</b></span> <span> ${section.laySize}</span>`
+                        // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
+                        // this.innerHTML = `<b>${section.layPrice}</b> <br> ${section.laySize}`
+                    }
+                }
+            })
 
             $(".odd_even_blue").each(function() {
                     
