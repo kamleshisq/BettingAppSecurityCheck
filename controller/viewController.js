@@ -1716,7 +1716,7 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
         multimarket = await multimarkets.findOne({userId:req.currentUser._id})
-        console.log(multimarket)
+        betsOnthisMatch = await betModel.find({userId:req.currentUser._id, status:"OPEN", marketId:{$in:multimarket.marketIds}})
         stakeLabledata = await stakeLable.findOne({userId:req.currentUser._id})
         if(stakeLabledata === null){
             stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
@@ -1725,6 +1725,7 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
         stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
     }
     // console.log(multimarket)
+    console.log(betsOnthisMatch)
     res.status(200).render("./userSideEjs/multimarkets/main",{
         user: req.currentUser,
         verticalMenus,
@@ -1734,7 +1735,8 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
         notifications:req.notifications,
         multimarket,
         sportData,
-        stakeLabledata
+        stakeLabledata,
+        betsOnthisMatch
     })
 });
 
