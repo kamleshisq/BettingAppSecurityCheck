@@ -2082,4 +2082,23 @@ exports.getMyProfileUser = catchAsync(async(req, res, next) => {
         userLog,
         notifications:req.notifications
     })
+});
+
+
+exports.gameRulesPage = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    let pages = await pagesModel.find()
+    let verticalMenus = await verticalMenuModel.find().sort({num:1})
+    let hosriZontalMenu = await horizontalMenuModel.find().sort({Number:1})
+    let banner = await bannerModel.find()
+    let sliders = await sliderModel.find().sort({Number:1})
+    res.status(200).render("./Cms/cms",{
+        title:"CMS",
+        user,
+        verticalMenus,
+        hosriZontalMenu,
+        banner,
+        pages,
+        sliders
+    })
 })
