@@ -3583,8 +3583,8 @@ socket.on('connect', () => {
                 let section = null;
                 console.log(data.finalResult)
                 data.finalResult.items.some(item => {
-                    console.log(item, 4564654654)
                     if(item && item.odds){
+                        console.log(item, 4564654654)
                         section = item.odds.find(odd => odd.selectionId == id);
                         return section !== undefined;
                     }
