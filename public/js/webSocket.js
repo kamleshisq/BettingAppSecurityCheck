@@ -3581,6 +3581,7 @@ socket.on('connect', () => {
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
+                console.log(data.finalResult)
                 data.finalResult.items.some(item => {
                     console.log(item, 4564654654)
                     if(item.odds){
