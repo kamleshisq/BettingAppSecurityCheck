@@ -5751,6 +5751,7 @@ socket.on('connect', () => {
         let textEditorInstance = null; // Initialize a variable to store the editor instance
 
         socket.on('getDetailsOfRUles', async (data) => {
+            console.log(data)
           let form = $(`#updaterules`);
           form.find('input[name="name"]').attr('value', data.name);
           form.attr('id', data._id);
