@@ -5726,6 +5726,14 @@ socket.on('connect', () => {
             // console.log(data)
             socket.emit("createNewRule", {data, LOGINDATA})
         })
+
+        socket.on("createNewRule", data => {
+            if(data === data.message){
+                
+            }else{
+                alert("Something wrong, please try again later")
+            }
+        })
     }
    
 
