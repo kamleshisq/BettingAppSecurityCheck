@@ -17,7 +17,7 @@ async function getmarketdetails(array){
         Data = result
     }).catch(error => {
         console.error("Error occurred while parsing JSON:", error);
-        return fetch(url);
+        return fetch(fullUrl);
     }).then(res => res.text())
     .then(result => {
       console.log(result); // Handle the response text from the second fetch
