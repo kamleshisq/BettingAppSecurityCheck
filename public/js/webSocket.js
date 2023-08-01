@@ -5734,7 +5734,7 @@ socket.on('connect', () => {
                 <td>${data.data1.name}</td>
                 <td><button class="description" data-bs-toggle="modal" data-bs-target="#uploadFile" id="${data.data1._id}" ><i class="fa-solid fa-database"></i></button></td>
               </tr>`
-              $('#')
+              $('#table123').append(html)
             }else{
                 alert("Something wrong, please try again later")
             }
