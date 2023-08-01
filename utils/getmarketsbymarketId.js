@@ -19,6 +19,7 @@ async function getmarketdetails(array){
             Data = result
         })
     }catch(err){
+        console.log(err, "fetchERROr")
         var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
         await fetch(fullUrl, {
             method: 'POST',
