@@ -12,7 +12,7 @@ async function getmarketdetails(array){
             },
         body:body 
     })
-    .then(res =>res.json())
+    .then(res =>res.text())
     .then(result => {
         Data = result
     })
