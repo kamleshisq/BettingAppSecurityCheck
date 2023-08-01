@@ -5752,10 +5752,10 @@ socket.on('connect', () => {
         let textEditorInstance
         socket.on('getDetailsOfRUles', async(data) => {
             if(textEditorInstance){
-                console.log("Working")
                 textEditorInstance.destroy();
                 textEditorInstance = null;
             }
+            console.log(data)
             let form = $(`#updaterules`)
             form.find('input[name = "name"]').attr('value', data.name)
             form.find('textarea[name = "description"]').attr('value', data.description)
