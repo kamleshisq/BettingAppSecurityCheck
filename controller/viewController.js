@@ -1431,12 +1431,10 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     let userLog
     let userMultimarkets
-    let betsOnthisMatch = []
     if(user){
         userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
     }
-    console.log(userMultimarkets)
     res.status(200).render('./userSideEjs/exchangePage/main',{
         user,
         verticalMenus,
@@ -1450,8 +1448,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         upcomintTennis,
         userLog,
         notifications:req.notifications,
-        userMultimarkets,
-        betsOnthisMatch
+        userMultimarkets
         
     })
 })
@@ -1715,9 +1712,11 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     let userLog
     let multimarket 
     let stakeLabledata
+    let betsOnthisMatch = []
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
         multimarket = await multimarkets.findOne({userId:req.currentUser._id})
+        console.log(multimarket)
         stakeLabledata = await stakeLable.findOne({userId:req.currentUser._id})
         if(stakeLabledata === null){
             stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
