@@ -5648,6 +5648,7 @@ socket.on('connect', () => {
                 alert(data.result)
              
                 let html2 = ""
+                let ids = []
                 $(".market").each(function() {
                     ids.push(this.id);
                   });
