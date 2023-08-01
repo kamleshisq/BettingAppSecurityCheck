@@ -1518,6 +1518,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("createNewRule", async(data) =>{
+        console.log(data.data)
         try{
             await gameRuleModel.create(data.data)
             socket.emit("createNewRule", {message:"updated"})
