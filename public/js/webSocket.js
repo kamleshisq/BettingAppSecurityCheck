@@ -5792,7 +5792,7 @@ socket.on('connect', () => {
                 console.log(data)
                 const trElement = $(`tr:has(button#${data._id})`);
                 if (trElement.length) {
-                    trElement.find('td:eq(0)').text(`${trElement.index()}`);
+                    trElement.find('td:eq(0)').text(`${trElement.index() + 1}`);
                     trElement.find('td:eq(1)').text(`${data.name}`);
                     // trElement.find('td:eq(1)').text(`${data.description}`);
                 }
