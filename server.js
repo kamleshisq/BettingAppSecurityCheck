@@ -892,9 +892,14 @@ io.on('connection', (socket) => {
 
 
     socket.on('betDetails', async(data) => {
-        console.log(data)
+        // console.log(data)
         let result = await placeBet(data)
-        let openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title})
+        let openBet = []
+        if(data.pathname === "/exchange/multimarkets"){
+            openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})
+        }else{
+            openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title})
+        }
         socket.emit("betDetails", {result, openBet})
     })
 
