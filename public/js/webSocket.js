@@ -5729,8 +5729,10 @@ socket.on('connect', () => {
 
         socket.on("createNewRule", data => {
             if(data.message === "updated"){
+                let num = $("#table123").find('tr').length;
+                console.log(num)
                 let html = `<tr>
-                <td> i+1 </td>
+                <td> ${num} </td>
                 <td>${data.data1.name}</td>
                 <td><button class="description" data-bs-toggle="modal" data-bs-target="#uploadFile" id="${data.data1._id}" ><i class="fa-solid fa-database"></i></button></td>
               </tr>`
