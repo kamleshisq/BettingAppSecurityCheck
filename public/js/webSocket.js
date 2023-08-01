@@ -79,7 +79,7 @@ socket.on('connect', () => {
    allTables.forEach((table) => {
     table.addEventListener('click', function (event) {
       const targetElement = event.target;
-      if (targetElement.tagName === 'A' || targetElement.tagName === 'SPAN' || targetElement.tagName === 'TD') {
+      if (targetElement.tagName === 'A' || targetElement.tagName === 'SPAN' || targetElement.tagName === 'TD' || targetElement.tagName === 'B' || targetElement.tagName === 'P') {
         // Allow page reload for <a>, <span>, or <td> elements inside the <tr> other than "multi_market"
         const trElement = targetElement.closest('tr');
         const dataHref = trElement.getAttribute('data-href');
