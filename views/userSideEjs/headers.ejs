@@ -308,7 +308,9 @@
                         <li class="nav-item my-nav-ul-li">
                           <a class="nav-link my-nav-ul-li-a " data-bs-toggle="modal" data-bs-target="#exampleModalToggle"><%=verticalMenus[i].menuName%> </a>
                         </li>
-                      <%}else if(check == verticalMenus[i].menuName){%>
+                      <%}else if(verticalMenus[i].menuName == "Multi Markets"){%>
+                        
+                      <%}if(check == verticalMenus[i].menuName){%>
                         <li class="nav-item my-nav-ul-li">
                           <a class="nav-link my-nav-ul-li-a active-mnu-nav" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%> </a>
                         </li>
