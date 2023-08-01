@@ -5752,7 +5752,7 @@ socket.on('connect', () => {
 
         socket.on('getDetailsOfRUles', async (data) => {
             // console.log(data)
-          let form = $(`#updaterules`);
+          let form = $(`.updaterules`);
           console.log(form)
           form.find('input[name="name"]').attr('value', data.name);
           form.attr('id', data._id);
