@@ -5558,6 +5558,36 @@ socket.on('connect', () => {
                     }
                 }
             })})
+
+
+
+
+            $(document).ready(function () {
+                $(".button").click(function () {
+                  let odds = $(this).children("span:first-child").text();
+                  let beton = $(this).closest("tr").find("td:first-child").text();
+                  let secondPTag = $(this).closest("tr").next().find(".beton");
+                  let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
+                  let secId = this.id
+                  secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", secId);;
+                  numSpan.text(odds);
+                });
+              });
+    
+              $(document).ready(function () {
+                $(".nww-bet-slip-wrp-col2-inn span").click(function () {
+                  var spanId = $(this).attr("id");
+                  var betValue = parseFloat(
+                    $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                  );
+                  var result = (parseFloat(spanId) * betValue) - parseFloat(spanId);
+                  $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
+                  $(this)
+                    .closest("tr")
+                    .find(".c-gren")
+                    .text(result.toFixed(2));
+                });
+              });
         
     }
 
