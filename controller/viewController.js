@@ -2092,7 +2092,7 @@ exports.gameRulesPage = catchAsync(async(req, res, next) => {
     let hosriZontalMenu = await horizontalMenuModel.find().sort({Number:1})
     let banner = await bannerModel.find()
     let sliders = await sliderModel.find().sort({Number:1})
-    res.status(200).render("./Cms/cms",{
+    res.status(200).render("./Cms/ruleManager",{
         title:"CMS",
         user,
         verticalMenus,
