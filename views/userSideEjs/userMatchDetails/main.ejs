@@ -21,9 +21,7 @@
                           <%if(match.marketList.bookmaker != null){%>
                             <%-include("./bookmaker")%>
                           <%}%>
-                          <%if(match.marketList.tied_match != null){%>
-                            <%-include("./tied_match")%>
-                          <%}%>
+                          
                           <%if(match.marketList.odd_even != null || match.marketList.session != null){%>
                             <%-include("./fency")%>
                           <%}%>
