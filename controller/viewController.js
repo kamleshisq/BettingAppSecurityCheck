@@ -2077,7 +2077,23 @@ exports.getMyProfileUser = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find();
     let games = await gameModel.find();
     let userLog = await loginLogs.find({user_id:user._id})
-      
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+    const nextDate = new Date(currentDate);
+    nextDate.setDate(currentDate.getDate() + 1);
+    let userProfileContent = await betModel.aggregate([
+        {
+            $match: {
+              event: req.query.eventname,
+              userId:user.id,
+              date: {
+                $gte: currentDate,
+                $lt: nextDate,
+              }
+            }
+          }
+    ])
+    console.log(userProfileContent)
     res.status(200).render("./userSideEjs/userProfile/main",{
         user,
         verticalMenus,
