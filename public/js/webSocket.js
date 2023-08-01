@@ -5503,6 +5503,14 @@ socket.on('connect', () => {
 
 
     if(pathname === "/exchange/multimarkets"){
+
+        function showLoader() {
+            document.getElementById("loader-overlay").style.display = "flex";
+          }
+          
+          function hideLoader() {
+            document.getElementById("loader-overlay").style.display = "none";
+          }
         // if(LOGINDATA.LOGINUSER != ""){
         //     socket.emit("MultiMarketPage", LOGINDATA)
         // }
@@ -5655,7 +5663,9 @@ socket.on('connect', () => {
                 if(data.stake === ""){
                     alert("Please select stake")
                 }else{
+                    
                     socket.emit("betDetails", {data, LOGINDATA, pathname})
+                    showLoader()
                     // console.log(data)
                 }
                 });
@@ -5685,6 +5695,7 @@ socket.on('connect', () => {
             //   });
     
             socket.on("betDetails" , (data) => {
+                hideLoader()
                 alert(data.result)
              
                 let html2 = ""
