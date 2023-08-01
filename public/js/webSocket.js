@@ -3461,6 +3461,16 @@ socket.on('connect', () => {
 
 
     if(pathname === '/exchange_inPlay/match'){
+
+        function showLoader() {
+            document.getElementById("loader-overlay").style.display = "flex";
+          }
+          
+          function hideLoader() {
+            document.getElementById("loader-overlay").style.display = "none";
+          }
+
+
         let id = search.split('=')[1]
         function eventID(){
             socket.emit("eventId", id)
@@ -4051,6 +4061,7 @@ socket.on('connect', () => {
                 alert("Please select stake")
             }else{
                 socket.emit("betDetails", {data, LOGINDATA})
+                showLoader();
             }
             });
           });
@@ -4079,8 +4090,9 @@ socket.on('connect', () => {
         //   });
 
         socket.on("betDetails" , (data) => {
+            hideLoader()
             alert(data.result)
-         
+            
             let html2 = ""
             document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${data.openBet.length})</h5>`
             if(data.openBet.length === 1){
@@ -5718,6 +5730,10 @@ socket.on('connect', () => {
     
 
     if(pathname === "/admin/gameRules"){
+
+       
+          
+
         $(document).on('submit', '.uploadRulesPage', async function(e){
             e.preventDefault()
             let form = $(this)[0];
