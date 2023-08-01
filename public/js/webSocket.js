@@ -1,3 +1,4 @@
+const path = require("path");
 
 
 
@@ -5717,7 +5718,16 @@ socket.on('connect', () => {
 
     
 
-
+    if(pathname === "/admin/gameRules"){
+        $(document).on('submit', '.uploadRulesPage', async function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            console.log(data)
+            // socket.emit("createVerticalMenu", {data, LOGINDATA})
+        })
+    }
    
 
 
