@@ -5589,6 +5589,95 @@ socket.on('connect', () => {
                 });
               });
         
+
+
+
+              $(document).ready(function () {
+                $(".eventId").click(function () {
+                    console.log("working")
+                let data = {}
+                data.title = $(this).closest("tr").find(".name").text()
+                data.eventId = $(this).attr("id");
+                data.odds = $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                let secId = $(this).closest("tr").find(".beton").attr('id')
+                data.secId = secId.slice(0,-1)
+                data.market = $(this).closest("table").attr("id");
+                data.stake = $(this).closest("tr").find(".set-stake-form-input2").val()
+                data.spoetId = $(this).closest("tr").find(".c-gren").attr('id')
+                if(data.market == undefined){
+                    data.market = $(this).closest("table").find('.market').attr('id')
+                    if(secId.slice(-1) == 1){
+                        data.secId = "odd_Even_Yes"
+                    }else{
+                        data.secId = "odd_Even_No"
+                    }
+                }
+                if(data.stake === ""){
+                    alert("Please select stake")
+                }else{
+                    // socket.emit("betDetails", {data, LOGINDATA})
+                    console.log(data)
+                }
+                });
+              });
+    
+            // function handlePlaceBetClick(event) {
+            //     const clickedLink = event.target;
+            //     const parentContainer = clickedLink.closest(".nww-bet-slip-wrp");
+            //     let data = {
+            //         spoetId : clickedLink.dataset.sportId,
+            //         title : parentContainer.querySelector(".eventTitle").textContent,
+            //         eventId : parentContainer.querySelector(".eventTitle").id,
+            //         odds : parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").textContent,
+            //         secId : parentContainer.querySelector(".nww-bet-slip-wrp-col1-txt-num").id.slice(0,-1),
+            //         market : parentContainer.querySelector("[class^='betOn']").id,
+            //         stake : parentContainer.querySelector(".set-stake-form-input2").value,
+            //     }
+            //     socket.emit("betDetails", {data, LOGINDATA})
+            //   }
+            
+            //   // Get all the "PLACE BET" links
+            //   const placeBetLinks = document.querySelectorAll(".PLACEBET");
+            
+            //   // Attach a click event listener to each link
+            //   placeBetLinks.forEach((link) => {
+            //     link.addEventListener("click", handlePlaceBetClick);
+            //   });
+    
+            socket.on("betDetails" , (data) => {
+                alert(data.result)
+             
+                let html2 = ""
+                document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${data.openBet.length})</h5>`
+                if(data.openBet.length === 1){
+                    html2 = `<table class="table-new-d">
+                    <thead>
+                      <tr class="thead-border my-open-bet-trr">
+                        <th>Selection</th>
+                        <th>Odds</th>
+                        <th>Stake</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tableBET">
+                      <tr>
+                        <td>${ data.openBet[0].selectionName}</td>
+                        <td>${ data.openBet[0].oddValue }</td>
+                        <td>${ data.openBet[0].Stake }</td>
+                      </tr>
+                    </tbody>
+                  </table>`
+                  document.getElementById('length1').innerHTML = html2
+                }else{
+                    for(let i = 0; i < data.openBet.length; i++){
+                        html2 += `<tr>
+                        <td>${ data.openBet[i].selectionName}</td>
+                        <td>${ data.openBet[i].oddValue }</td>
+                        <td>${ data.openBet[i].Stake }</td>
+                      </tr>`
+                    }
+                    document.getElementById('tableBET').innerHTML = html2
+                }
+            })
     }
 
     
