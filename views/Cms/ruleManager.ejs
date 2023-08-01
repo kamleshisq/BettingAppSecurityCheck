@@ -89,7 +89,7 @@
                             </div> -->
                             <div class="col">
                                 <label for="description">Details</label>
-                                <textarea  class="form-control ml0 detailsTextArea" name="description"></textarea>
+                                <textarea id="detailsTextArea" class="form-control ml0 " name="description"></textarea>
                             </div>                              
                         </div>
                         <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Add</button>
@@ -148,19 +148,14 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
 <script>
   // Initialize ClassicEditor
-  const textAreas = document.querySelectorAll('.detailsTextArea');
-
-  // Loop through each textarea and initialize ClassicEditor
-  textAreas.forEach(textArea => {
-    ClassicEditor
-      .create(textArea)
-      .then(editor => {
-        console.log('ClassicEditor was initialized', editor);
-      })
-      .catch(error => {
-        console.error('Error initializing ClassicEditor', error);
-      });
-  });
+  ClassicEditor
+    .create(document.getElementById('detailsTextArea'))
+    .then(editor => {
+      console.log('ClassicEditor was initialized', editor);
+    })
+    .catch(error => {
+      console.error('Error initializing ClassicEditor', error);
+    });
 </script>
 
 <script>
