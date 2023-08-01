@@ -5744,6 +5744,7 @@ socket.on('connect', () => {
         $(document).on("click", ".description", function(e){
             e.preventDefault()
             let id = this.id
+            console.log(id)
             socket.emit("getDetailsOfRUles", id)
         })
 
