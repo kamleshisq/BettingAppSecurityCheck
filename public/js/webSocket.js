@@ -5784,6 +5784,20 @@ socket.on('connect', () => {
             data.id = id
             socket.emit("updateRules", data)
         })
+
+        socket.on("updateRules", data =>{
+            if(data === "err"){
+                alert("Something wrong, please try again later")
+            }else{
+                console.log(data)
+                const trElement = $(`tr:has(button#${data._id})`);
+                if (trElement.length) {
+                    trElement.find('td:eq(0)').text(`${data.name}`);
+                    trElement.find('td:eq(1)').text(`${data.description}`);
+                }
+
+            }
+        })
         
     }
    

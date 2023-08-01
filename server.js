@@ -1534,7 +1534,13 @@ io.on('connection', (socket) => {
     })
 
     socket.on("updateRules", async(data) => {
-        console.log(data)
+        try{
+            await gameRuleModel.findByIdAndUpdate(data.id, {data})
+            let updated = gameRuleModel.findById(data.id)
+            socket.emit("updateRules", updated)
+        }catch(err){
+            socket.emit("updateRules", "err")
+        }
     })
 
     
