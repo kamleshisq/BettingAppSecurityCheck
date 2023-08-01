@@ -1533,6 +1533,10 @@ io.on('connection', (socket) => {
         socket.emit("getDetailsOfRUles", data1)
     })
 
+    socket.on("updateRules", async(data) => {
+        console.log(data)
+    })
+
     
 })
 
