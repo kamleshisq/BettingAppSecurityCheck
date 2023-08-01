@@ -1534,6 +1534,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("updateRules", async(data) => {
+        console.log(data)
         try{
             await gameRuleModel.findByIdAndUpdate(data.id, {name:data.name, description:data.description})
             let updated = await gameRuleModel.findById(data.id)
