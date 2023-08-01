@@ -12,7 +12,7 @@ async function getmarketdetails(array){
             },
         body:body 
     })
-    .then(res =>res.text())
+    .then(res =>console.log(res.text()))
     .then(result => {
         Data = result
     })
