@@ -5730,9 +5730,8 @@ socket.on('connect', () => {
         socket.on("createNewRule", data => {
             if(data.message === "updated"){
                 let num = $("#table123").find('tr').length;
-                console.log(num)
                 let html = `<tr>
-                <td> ${num} </td>
+                <td> ${num + 1} </td>
                 <td>${data.data1.name}</td>
                 <td><button class="description" data-bs-toggle="modal" data-bs-target="#uploadFile" id="${data.data1._id}" ><i class="fa-solid fa-database"></i></button></td>
               </tr>`
@@ -5750,7 +5749,7 @@ socket.on('connect', () => {
 
         let textEditor = true
         socket.on('getDetailsOfRUles', async(data) => {
-            let form = $(`#updatePages`)
+            let form = $(`#updaterules`)
             form.find('input[name = "name"]').attr('value', data.name)
             form.find('textarea[name = "description"]').html(data.description)
             form.find('input[name = "name"]').attr('id', data._id)
