@@ -3582,6 +3582,7 @@ socket.on('connect', () => {
                 id = id.slice(0, -1);
                 let section = null;
                 data.finalResult.items.some(item => {
+                    console.log(item, 4564654654)
                     if(item.odds){
                         section = item.odds.find(odd => odd.selectionId == id);
                         return section !== undefined;
@@ -5653,7 +5654,7 @@ socket.on('connect', () => {
                     ids.push(this.id);
                   });
                 let newArray = data.openBet.filter(item => ids.includes(item.marketId))
-                console.log(newArray)
+                // console.log(newArray)
 
                 document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${newArray.length})</h5>`
                 if(newArray.length === 1){
