@@ -89,7 +89,7 @@
                             </div> -->
                             <div class="col">
                                 <label for="description">Details</label>
-                                <textarea id="detailsTextArea" class="form-control ml0" name="description"></textarea>
+                                <textarea  class="form-control ml0 detailsTextArea" name="description"></textarea>
                             </div>                              
                         </div>
                         <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Add</button>
@@ -122,7 +122,7 @@
                     <div class="row mt-2">
                       <div class="col">
                         <label for="description">Details</label>
-                        <textarea id="detailsTextArea" class="form-control ml0" name="description"></textarea>
+                        <textarea  class="form-control ml0 detailsTextArea" name="description"></textarea>
                     </div>  
                     </div>
                     <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Update</button>
@@ -148,14 +148,19 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
 <script>
   // Initialize ClassicEditor
-  ClassicEditor
-    .create(document.getElementById('detailsTextArea'))
-    .then(editor => {
-      console.log('ClassicEditor was initialized', editor);
-    })
-    .catch(error => {
-      console.error('Error initializing ClassicEditor', error);
-    });
+  const textAreas = document.querySelectorAll('.detailsTextArea');
+
+  // Loop through each textarea and initialize ClassicEditor
+  textAreas.forEach(textArea => {
+    ClassicEditor
+      .create(textArea)
+      .then(editor => {
+        console.log('ClassicEditor was initialized', editor);
+      })
+      .catch(error => {
+        console.error('Error initializing ClassicEditor', error);
+      });
+  });
 </script>
 
 <script>
