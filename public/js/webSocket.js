@@ -5652,7 +5652,7 @@ socket.on('connect', () => {
                 $(".market").each(function() {
                     ids.push(this.id);
                   });
-                let newArray = ids.some(item => data.openBet.some(element => element.marketId === item))
+                let newArray = data.openBet.filter(item => ids.includes(item.marketId))
                 console.log(newArray)
 
                 document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${newArray.length})</h5>`
