@@ -1539,6 +1539,7 @@ io.on('connection', (socket) => {
             let updated = gameRuleModel.findById(data.id)
             socket.emit("updateRules", updated)
         }catch(err){
+            console.log(err)
             socket.emit("updateRules", "err")
         }
     })
