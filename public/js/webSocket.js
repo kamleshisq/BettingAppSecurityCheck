@@ -5748,17 +5748,22 @@ socket.on('connect', () => {
         })
 
         let textEditor = true
+        let textEditorInstance
         socket.on('getDetailsOfRUles', async(data) => {
+            if(textEditorInstance){
+                textEditorInstance.destroy();
+                textEditorInstance = null;
+            }
             let form = $(`#updaterules`)
             form.find('input[name = "name"]').attr('value', data.name)
             form.find('textarea[name = "description"]').html(data.description)
             form.find('input[name = "name"]').attr('id', data._id)
 
             // if(textEditor){
-                textEditor = false
                 ClassicEditor
                 .create(document.getElementById('detailsTextArea1'))
                 .then(editor => {
+                    textEditorInstance = editor;
                     console.log('ClassicEditor was initialized', editor);
                 })
                 .catch(error => {
