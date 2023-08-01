@@ -2084,7 +2084,6 @@ exports.getMyProfileUser = catchAsync(async(req, res, next) => {
     let userProfileContent = await betModel.aggregate([
         {
             $match: {
-              event: req.query.eventname,
               userId:user.id,
               date: {
                 $gte: currentDate,
