@@ -1431,7 +1431,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     let userLog
     let userMultimarkets
-    let betsOnthisMatch
+    let betsOnthisMatch = []
     if(user){
         userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
@@ -1450,7 +1450,8 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         upcomintTennis,
         userLog,
         notifications:req.notifications,
-        userMultimarkets
+        userMultimarkets,
+        betsOnthisMatch
         
     })
 })
