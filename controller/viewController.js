@@ -1669,10 +1669,11 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     let src
     if (match1) {
          src = match1[1];
+         console.log(src)
     } else {
     console.log("No 'src' attribute found in the iframe tag.");
     }
-    console.log(src)
+    console.log(src, 123)
     const betLimit = await betLimitModel.find()
     // console.log(match.marketList.goals)
     // let session = match.marketList.session.filter(item => {
