@@ -1380,7 +1380,7 @@ io.on('connection', (socket) => {
         filter.status = data.filterData.type
     }
     // console.log(filter)
-    let MyBets = await Bet.find(filter).skip(page * limit).limit(limit)
+    let MyBets = await Bet.find(filter).sort({date: -1}).skip(page * limit).limit(limit)
     // console.log(MyBets)
     socket.emit("BETSFORUSER", {MyBets, page})
     })
