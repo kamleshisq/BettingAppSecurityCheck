@@ -5526,6 +5526,7 @@ socket.on('connect', () => {
         });
 
           socket.on("GAMEREPORTMATCHPAGEUSER", async(data) => {
+            console.log(data.result)
             if(data.result != []){
 
                 let result = data.result;
@@ -5563,6 +5564,7 @@ socket.on('connect', () => {
                     $('.acount-stat-tbl-body').append(html)         
                 }
             }else{
+                console.log("working")
                 $('.loadMoredive').html("")
             }
         })
