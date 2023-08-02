@@ -3597,22 +3597,24 @@ margin-bottom: 0px;
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
-  #loadMore {
-    padding: 10px;
+  .loadMoredive {
+    width: 100%;
+    display: inline-block;
     text-align: center;
-    background-color: #33739E;
-    color: #fff;
-    border-width: 0 1px 1px 0;
-    border-style: solid;
-    border-color: #fff;
-    box-shadow: 0 1px 1px #ccc;
-    transition: all 600ms ease-in-out;
-    -webkit-transition: all 600ms ease-in-out;
-    -moz-transition: all 600ms ease-in-out;
-    -o-transition: all 600ms ease-in-out;
+    margin: 1em 0 0;
 }
-#loadMore:hover {
-    background-color: #fff;
+
+.loadMoredive a#loadMore {
+    line-height: 1;
+    display: inline-block;
+    cursor: pointer;
+    border: 2px solid #33739E;
+    box-shadow: none;
+    padding: 10px 20px 12px;
+}
+
+.loadMoredive a#loadMore:hover {
+    background: transparent;
     color: #33739E;
 }
 
