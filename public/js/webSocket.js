@@ -5817,8 +5817,11 @@ socket.on('connect', () => {
                     document.getElementById('redPopUP').innerText  = data.result.toUpperCase()
                     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
                   }
-    
-                togglePopup('popup-1')
+                if(data.result === "Bet place successfully"){
+                    togglePopup('popup-2')
+                }else{
+                    togglePopup('popup-1')
+                }
              
                 let html2 = ""
                 let ids = []

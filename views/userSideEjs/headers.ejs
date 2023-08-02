@@ -74,11 +74,26 @@
       .popup .close-btn { cursor: pointer; position: absolute; right: -15px; top: -15px; width: 30px; height: 30px; background: #182ea6; color: #fff; font-size: 25px; font-weight: 600; line-height: 27px; text-align: center; border-radius: 50%; }
       .popup.active .overlay { display:block; }
       .popup.active .content { transition:all 300ms ease-in-out; transform:translate(-50%,-50%) scale(1); }
+
+      .popup2 .overlay { position:fixed; top:0px; left:0px; width:100vw; height:100vh; background:rgba(0,0,0,0.6); z-index:1; display:none; }
+      .popup2 .content { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0); font-family: 'Kanit', sans-serif; font-weight: 400; font-size: 20px; line-height: normal;color: #fff; background: green; width: 100%; max-width: 600px; height: initial; z-index: 2; text-align: center; box-sizing: border-box; padding: 20px; }
+      .popup2 .content p { padding: 0; margin: 0; }
+      .popup2 .close-btn { cursor: pointer; position: absolute; right: -15px; top: -15px; width: 30px; height: 30px; background: #182ea6; color: #fff; font-size: 25px; font-weight: 600; line-height: 27px; text-align: center; border-radius: 50%; }
+      .popup2.active .overlay { display:block; }
+      .popup2.active .content { transition:all 300ms ease-in-out; transform:translate(-50%,-50%) scale(1); }
     </style>
   </head>
   <body>
 
     <div class="popup" id="popup-1">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="close-btn" onclick="togglePopup('popup-1')">&times;</div>
+        <p id="redPopUP">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo aspernatur laborum rem sed laudantium excepturi veritatis voluptatum architecto, dolore quaerat totam officiis nisi animi accusantium alias inventore nulla atque debitis.</p>
+      </div>
+    </div>
+
+    <div class="popup2" id="popup-2">
       <div class="overlay"></div>
       <div class="content">
         <div class="close-btn" onclick="togglePopup('popup-1')">&times;</div>
