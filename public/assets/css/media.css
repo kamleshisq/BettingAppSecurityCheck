@@ -2231,6 +2231,9 @@
     }
 } */
 
-
+iframe.my-livestrem-ifream { width: 100%; height: 220px; }
+@media (min-width: 1921px) {
+	iframe.my-livestrem-ifream { width: 100%; height: 46vh; }
+}
 
 /* / EXCHANGE LIVE STREAM I-FREAM  / */
