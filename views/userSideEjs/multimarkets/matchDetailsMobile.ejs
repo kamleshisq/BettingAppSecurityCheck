@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <%-include("../navbar2")%>
     
-
+    <%if(multimarket != null && multimarket.marketIds && multimarket.marketIds.length > 0){%>
     <div class="mbl-exc-inn-tbl-datadv">
       <%
         for(let i = 0; i < multimarket.marketIds.length; i++){
@@ -92,5 +92,6 @@
         <%} %>
         <%}%>
     </div>
+    <%} %>
   </div>
 </div>
