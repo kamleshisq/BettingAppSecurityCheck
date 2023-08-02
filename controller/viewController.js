@@ -2149,4 +2149,22 @@ exports.gameRulesPage = catchAsync(async(req, res, next) => {
         sliders,
         rules
     })
-})
+});
+
+
+exports.getMyKycPage = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    const data = await promotionModel.find();
+    let games = await gameModel.find();
+    let userLog = await loginLogs.find({user_id:user._id})
+    res.status(200).render("./userSideEjs/Kyc/main",{
+        user,
+        verticalMenus,
+        data,
+        check:"Kyc",
+        games,
+        userLog,
+        notifications:req.notifications
+    })
+});
