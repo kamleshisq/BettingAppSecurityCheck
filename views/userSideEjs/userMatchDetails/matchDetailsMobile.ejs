@@ -62,21 +62,26 @@
           <div class="tab-pane fade exc-pg-rit-tabtxt-datadv" id="pills-profilebb" role="tabpanel" aria-labelledby="pills-profilebb-tab" tabindex="0">
             <div class="exchange-pg-inn-banner-tv pt-0">
                 
-              <table class="table-new-d">
-                <thead>
-                  <tr class="thead-border my-open-bet-trr">
-                    <td>Selection</td>
-                    <td>Odds</td>
-                    <td>Stake</td>
-                    <td>P/L</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    
-                  </tr>
-                </tbody>
-              </table>
+              <%if(betsOnthisMatch.length > 0){%>
+                <table class="table-new-d">
+                  <thead>
+                    <tr class="thead-border my-open-bet-trr">
+                      <th>Selection</th>
+                      <th>Odds</th>
+                      <th>Stake</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tableBET">
+                   <%for(let i = 0; i < betsOnthisMatch.length; i++){%>
+                    <tr>
+                      <td><%= betsOnthisMatch[i].selectionName%></td>
+                      <td><%= betsOnthisMatch[i].oddValue %></td>
+                      <td><%= betsOnthisMatch[i].Stake %></td>
+                    </tr>
+                    <%} %>
+                  </tbody>
+                </table>
+              <%} %>
                   
               </div>
           </div>
