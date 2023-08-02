@@ -5812,15 +5812,15 @@ socket.on('connect', () => {
     
             socket.on("betDetails" , (data) => {
                 hideLoader()
-                function togglePopup(idname){
+                function togglePopup(idname, id){
                     document.getElementById(idname).classList.toggle("active");
-                    document.getElementById('redPopUP').innerText  = data.result.toUpperCase()
+                    document.getElementById('id').innerText  = data.result.toUpperCase()
                     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
                   }
                 if(data.result === "Bet place successfully"){
-                    togglePopup('popup-2')
+                    togglePopup('popup-2', "redPopUP2")
                 }else{
-                    togglePopup('popup-1')
+                    togglePopup('popup-1', "redPopUP")
                 }
              
                 let html2 = ""
