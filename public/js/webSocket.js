@@ -4546,10 +4546,8 @@ socket.on('connect', () => {
         // });
 
         $(document).ready(function() {
-            var isScrolling = false;
-        
-            // Function to handle the event when the user reaches the bottom of the page
-            function handleScrollToBottom() {
+            // Function to check if the user is close to the bottom of the page
+            function isNearBottom() {
                 var scroll = $(window).scrollTop();
                 var windowHeight = $(window).height();
                 var documentHeight = $(document).height();
@@ -4557,31 +4555,29 @@ socket.on('connect', () => {
                 var offset = 10; // Adjust this value as needed for better accuracy
         
                 // Check if the user is close to the bottom of the page
-                if (scroll + windowHeight + offset >= documentHeight - footerHeight) {
-                    if (!isScrolling) {
-                        let page = parseInt($('.pageId').attr('data-pageid'));
-                        $('.pageId').attr('data-pageid',page + 1)
-                        let fromDate = $('#Fdate').val()
-                        let toDate = $('#Tdate').val()
-                        let type = $("#select").val()
-                        let filterData = {}
-                        filterData.fromDate = fromDate,
-                        filterData.toDate = toDate
-                        filterData.type = type
-                        socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
-                        isScrolling = true;
+                return (scroll + windowHeight + offset >= documentHeight - footerHeight);
+            }
         
-                        // Wait for a short delay to avoid triggering multiple times
-                        setTimeout(function() {
-                            isScrolling = false;
-                        }, 200); // Adjust the delay as needed
-                    }
+            // Function to handle the event when the user is close to the bottom of the page
+            function handleScrollNearBottom() {
+                if (isNearBottom()) {
+                    let page = parseInt($('.pageId').attr('data-pageid'));
+                    $('.pageId').attr('data-pageid',page + 1)
+                    let fromDate = $('#Fdate').val()
+                    let toDate = $('#Tdate').val()
+                    let type = $("#select").val()
+                    let filterData = {}
+                    filterData.fromDate = fromDate,
+                    filterData.toDate = toDate
+                    filterData.type = type
+                    socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
                 }
             }
         
-            // Attach the handleScrollToBottom function to the scroll event
-            $(window).scroll(handleScrollToBottom);
+            // Attach the handleScrollNearBottom function to the scroll event
+            $(window).on('scroll', handleScrollNearBottom);
         });
+        
         
         
         
