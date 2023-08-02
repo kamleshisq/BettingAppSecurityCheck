@@ -201,34 +201,46 @@
         </div>
       </div> -->
       <!-- ----= FETURE SPORTS START =-----   -->
-      <section class="exchange-pg-tranding-maches-nav-sec">
-        <div class="exchange-pg-tranding-maches-nav-sec-wrp" id="liveMatch_data">
-          <%for(let i = 0; i < LiveCricket.length; i++){%>
-            <%if(LiveCricket[i].marketList.match_odd != null){%>
-              <a href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>">
-                  <img src="/assets/img/home/side-menuimg02.svg" alt="">
-                  <%=LiveCricket[i].eventData.name%>
-              </a>
-            <%}%>
-          <%}%>
-          <%for(let i = 0; i < liveFootBall.length; i++){%>
-            <%if(liveFootBall[i].marketList.match_odd != null){%>
-              <a href="/exchange_inPlay/match?id=<%=liveFootBall[i].eventData.eventId%>">
-                  <img src="/assets/img/home/side-menuimg03.svg" alt="">
-                  <%=liveFootBall[i].eventData.name%>
-              </a>
-            <%}%> 
-          <%}%> 
-          <%for(let i = 0; i < liveTennis.length; i++){%>
-            <%if(liveTennis[i].marketList.match_odd != null){%>
-              <a href="/exchange_inPlay/match?id=<%=liveTennis[i].eventData.eventId%>">
-                  <img src="/assets/img/home/side-menuimg04.svg" alt="">
-                  <%=liveTennis[i].eventData.name%>
-              </a>
-            <%}%>
-          <%}%>
+      <section class="exchange-pg-main-sec">
+        <div class="container-fluid exchange-pg-main-contnr">
+          <div class="col-lg-11 col-md-11 col-12 exchange-pg-main-col">
+            <div class="exchange-pg-main-col-ro">
+                <div class="exchange-pg-main-col-big 9 col-md-10 col-12">
+                    <div class="exchange-pg-main-col-big-wrp">
+                      <section class="exchange-pg-tranding-maches-nav-sec">
+                        <div class="exchange-pg-tranding-maches-nav-sec-wrp" id="liveMatch_data">
+                          <%for(let i = 0; i < LiveCricket.length; i++){%>
+                            <%if(LiveCricket[i].marketList.match_odd != null){%>
+                              <a href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>">
+                                  <img src="/assets/img/home/side-menuimg02.svg" alt="">
+                                  <%=LiveCricket[i].eventData.name%>
+                              </a>
+                            <%}%>
+                          <%}%>
+                          <%for(let i = 0; i < liveFootBall.length; i++){%>
+                            <%if(liveFootBall[i].marketList.match_odd != null){%>
+                              <a href="/exchange_inPlay/match?id=<%=liveFootBall[i].eventData.eventId%>">
+                                  <img src="/assets/img/home/side-menuimg03.svg" alt="">
+                                  <%=liveFootBall[i].eventData.name%>
+                              </a>
+                            <%}%> 
+                          <%}%> 
+                          <%for(let i = 0; i < liveTennis.length; i++){%>
+                            <%if(liveTennis[i].marketList.match_odd != null){%>
+                              <a href="/exchange_inPlay/match?id=<%=liveTennis[i].eventData.eventId%>">
+                                  <img src="/assets/img/home/side-menuimg04.svg" alt="">
+                                  <%=liveTennis[i].eventData.name%>
+                              </a>
+                            <%}%>
+                          <%}%>
+                        </div>
+                    </section>
+                  </div>
+                </div>
+            </div>
+          </div>
         </div>
-    </section>
+      </section>
 
       <!-- ----= FEATURED SECTION START =-----   -->
       <%-include('./Sport')%>
