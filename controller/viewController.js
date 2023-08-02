@@ -1664,6 +1664,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         match = data1liveCricket.find(item => item != undefined)
     }
     const liveStream = await liveStreameData(match.eventData.channelId, ipv4)
+    console.log(liveStream)
     const betLimit = await betLimitModel.find()
     // console.log(match.marketList.goals)
     // let session = match.marketList.session.filter(item => {
@@ -1690,13 +1691,13 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             verticalMenus,
             check:"Exchange",
             match,
-        SportLimits,
-        liveStream,
-        userLog,
-        notifications:req.notifications,
-        stakeLabledata,
-        betsOnthisMatch,
-        rules
+            SportLimits,
+            liveStream,
+            userLog,
+            notifications:req.notifications,
+            stakeLabledata,
+            betsOnthisMatch,
+            rules
     })
 });
 
