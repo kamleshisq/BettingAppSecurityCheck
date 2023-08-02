@@ -1666,7 +1666,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     const liveStream = await liveStreameData(match.eventData.channelId, ipv4)
     const src_regex = /src='([^']+)'/;
     const match1 = string_with_iframe.match(src_regex);
-
+    console.log(match1)
     if (match1) {
     const src_attribute_value = match1[1];
     console.log(src_attribute_value);
