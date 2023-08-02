@@ -1721,6 +1721,7 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
         multimarket = await multimarkets.findOne({userId:req.currentUser._id})
+        console.log(multimarket)
         betsOnthisMatch = await betModel.find({userId:req.currentUser._id, status:"OPEN", marketId:{$in:multimarket.marketIds}})
         stakeLabledata = await stakeLable.findOne({userId:req.currentUser._id})
         if(stakeLabledata === null){
