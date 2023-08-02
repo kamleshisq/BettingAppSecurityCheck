@@ -4527,16 +4527,38 @@ socket.on('connect', () => {
 
     if(pathname === "/mybets"){
         // console.log("WORKING")
+        // $(window).scroll(function() {
+        //     var scroll = $(window).scrollTop();
+        //     var windowHeight = $(window).height();
+        //     var documentHeight = $(document).height();
+        //     if (scroll + windowHeight >= documentHeight) {
+                // let page = parseInt($('.pageId').attr('data-pageid'));
+                // $('.pageId').attr('data-pageid',page + 1)
+                // let fromDate = $('#Fdate').val()
+                // let toDate = $('#Tdate').val()
+                // let type = $("#select").val()
+                // let filterData = {}
+                // filterData.fromDate = fromDate,
+                // filterData.toDate = toDate
+                // filterData.type = type
+                // socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
+        //     }
+        // });
+
         $(document).ready(function() {
-            $(window).scroll(function() {
+            // Function to check if the user has reached the bottom of the page
+            function isAtBottom() {
                 var scroll = $(window).scrollTop();
                 var windowHeight = $(window).height();
                 var documentHeight = $(document).height();
-                var footerHeight = $('#footer').outerHeight(); // Replace '#footer' with the actual ID/class of your footer element.
         
-                // Add an additional offset to account for the footer's height
-                if (scroll + windowHeight >= documentHeight - footerHeight) {
-                let page = parseInt($('.pageId').attr('data-pageid'));
+                return (scroll + windowHeight >= documentHeight);
+            }
+        
+            // Function to handle the event when the user reaches the bottom of the page
+            function handleScrollToBottom() {
+                if (isAtBottom()) {
+                    let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
                 let fromDate = $('#Fdate').val()
                 let toDate = $('#Tdate').val()
@@ -4546,9 +4568,13 @@ socket.on('connect', () => {
                 filterData.toDate = toDate
                 filterData.type = type
                 socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
+                }
             }
+        
+            // Attach the handleScrollToBottom function to the scroll event
+            $(window).scroll(handleScrollToBottom);
         });
-    });
+        
 
 
         const FdateInput = document.getElementById('Fdate');
