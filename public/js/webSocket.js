@@ -5526,11 +5526,12 @@ socket.on('connect', () => {
         });
 
           socket.on("GAMEREPORTMATCHPAGEUSER", async(data) => {
-            console.log(data.result)
-            let result = data.result;
-            let html = '';
-            for(let i = 0; i < result.length; i++){
-                
+            if(data.result){
+
+                let result = data.result;
+                let html = '';
+                for(let i = 0; i < result.length; i++){
+                    
                     var date = new Date(result[i].date);
                     var options = { 
                         year: 'numeric',
@@ -5541,8 +5542,8 @@ socket.on('connect', () => {
                         hour12: true
                     };
                     var formattedTime = date.toLocaleString('en-US', options);
-                
-                html += `<tr class="acount-stat-tbl-body-tr" >
+                    
+                    html += `<tr class="acount-stat-tbl-body-tr" >
                     <td>${formattedTime}</td>
                     <td>${result[i].marketName}</td>
                     <td>${result[i].selectionName}</td>
@@ -5554,12 +5555,15 @@ socket.on('connect', () => {
                     }else{
                         html += `<td class="c-reed">-${result[i].Stake}</td>`
                     }
-                html += "</tr>"
-            }
-            if(data.page == 0){
-                $('.acount-stat-tbl-body').html(html)
+                    html += "</tr>"
+                }
+                if(data.page == 0){
+                    $('.acount-stat-tbl-body').html(html)
+                }else{
+                    $('.acount-stat-tbl-body').append(html)         
+                }
             }else{
-                $('.acount-stat-tbl-body').append(html)         
+                $('.loadMoredive').html("")
             }
         })
           
