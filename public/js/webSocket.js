@@ -4114,7 +4114,7 @@ socket.on('connect', () => {
             function togglePopup(idname){
                 document.getElementById(idname).classList.toggle("active");
                 document.getElementById('redPopUP').innerText  = data.result.toUpperCase()
-                setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+                setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 200000000);
               }
 
             togglePopup('popup-1')
@@ -5821,7 +5821,7 @@ socket.on('connect', () => {
                 function togglePopup(idname, id){
                     document.getElementById(idname).classList.toggle("active");
                     document.getElementById(id).innerText  = data.result.toUpperCase()
-                    setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+                    setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 200000000);
                   }
                 if(data.result === "Bet place successfully"){
                     togglePopup('popup-2', "redPopUP2")
