@@ -375,3 +375,10 @@
             </marquee>
         </div>
       </div>
+
+      <script type="text/javascript">
+        function togglePopup(idname){
+          document.getElementById(idname).classList.toggle("active");
+          setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+        }
+      </script>
