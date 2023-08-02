@@ -62,19 +62,18 @@ socket.on('connect', () => {
             if(pathname === "/exchange/multimarkets"){
                 multiMarketTd.forEach((multiMarketTd) => {
                     if(multiMarketTd.id == data.id){
-                        function removeElementById(id) {
-                            const element = document.getElementById(id);
-                            if (element && element.parentNode) {
-                              element.parentNode.removeChild(element);
+                        function removeParentElementByChildId(childId) {
+                            const childElement = document.getElementById(childId);
+                            if (childElement) {
+                              const parentElement = childElement.closest('.exchange-pg-inn-banner-col2');
+                              if (parentElement) {
+                                parentElement.parentNode.removeChild(parentElement);
+                              }
                             }
                           }
-                        
-                          // IDs of elements with class "multi_market" that you want to remove
                           const idsToRemove = [data.id];
-                        
-                          // Loop through each ID and remove the corresponding element from the DOM
                           idsToRemove.forEach((id) => {
-                            removeElementById(id);
+                            removeParentElementByChildId(id);
                           });
                     }
                 })
