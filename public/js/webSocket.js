@@ -5813,7 +5813,13 @@ socket.on('connect', () => {
     
             socket.on("betDetails" , (data) => {
                 hideLoader()
-                alert(data.result)
+                function togglePopup(idname){
+                    document.getElementById(idname).classList.toggle("active");
+                    document.getElementById('redPopUP').innerText  = data.result
+                    setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+                  }
+    
+                togglePopup('popup-1')
              
                 let html2 = ""
                 let ids = []
