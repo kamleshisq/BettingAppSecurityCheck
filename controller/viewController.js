@@ -386,7 +386,7 @@ exports.myAccountStatment = catchAsync(async(req, res, next) => {
     }
     // console.log(req.query.id)
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
-    let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date:1}).limit(20)
+    let userAcc = await accountStatement.find({user_id:req.currentUser._id}).sort({date: -1}).limit(20)
     // var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getMyAccStatement'
     // fetch(fullUrl, {
     //     method: 'POST',
