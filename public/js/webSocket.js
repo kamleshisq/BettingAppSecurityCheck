@@ -4545,9 +4545,8 @@ socket.on('connect', () => {
         //     }
         // });
 
-        var counter=0;
-        $(window).scroll(function () {
-            if ($(window).scrollTop() == $(document).height() - $(window).height() && counter < 2) {
+        $(window).scroll(function() {
+            if($(window).scrollTop() == $(document).height() - $(window).height()) {
                 let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
                 let fromDate = $('#Fdate').val()
