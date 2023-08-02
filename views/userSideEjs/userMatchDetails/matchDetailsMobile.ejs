@@ -60,7 +60,7 @@
           </div>
           
           <div class="tab-pane fade exc-pg-rit-tabtxt-datadv" id="pills-profilebb" role="tabpanel" aria-labelledby="pills-profilebb-tab" tabindex="0">
-            <div class="exchange-pg-inn-banner-tv pt-0">
+            <div class="exchange-pg-inn-banner-tv pt-0" id="length2">
                 
               <%if(betsOnthisMatch.length > 0){%>
                 <table class="table-new-d">
@@ -71,7 +71,7 @@
                       <th>Stake</th>
                     </tr>
                   </thead>
-                  <tbody id="tableBET">
+                  <tbody id="tableBET1">
                    <%for(let i = 0; i < betsOnthisMatch.length; i++){%>
                     <tr>
                       <td><%= betsOnthisMatch[i].selectionName%></td>

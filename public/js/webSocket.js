@@ -4095,6 +4095,7 @@ socket.on('connect', () => {
             
             let html2 = ""
             document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${data.openBet.length})</h5>`
+            document.getElementById("pills-profilebb-tab").innerHTML = `Open Bets (${data.openBet.length})`
             if(data.openBet.length === 1){
                 html2 = `<table class="table-new-d">
                 <thead>
@@ -4113,6 +4114,7 @@ socket.on('connect', () => {
                 </tbody>
               </table>`
               document.getElementById('length1').innerHTML = html2
+              document.getElementById('length2').innerHTML = html2
             }else{
                 for(let i = 0; i < data.openBet.length; i++){
                     html2 += `<tr>
@@ -4122,6 +4124,7 @@ socket.on('connect', () => {
                   </tr>`
                 }
                 document.getElementById('tableBET').innerHTML = html2
+                document.getElementById('tableBET1').innerHTML = html2
             }
         })
         
