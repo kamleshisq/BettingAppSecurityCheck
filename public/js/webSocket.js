@@ -4114,7 +4114,7 @@ socket.on('connect', () => {
             hideLoader()
             function togglePopup(idname){
                 document.getElementById(idname).classList.toggle("active");
-                document.getElementById('redPopUP').innerHTML = data.result
+                document.getElementById('redPopUP').innerText  = data.result
                 setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
               }
 
