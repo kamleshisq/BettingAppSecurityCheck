@@ -5527,7 +5527,7 @@ socket.on('connect', () => {
 
           socket.on("GAMEREPORTMATCHPAGEUSER", async(data) => {
             console.log(data.result)
-            if(data.result != []){
+            if(data.result.length > 0){
 
                 let result = data.result;
                 let html = '';
