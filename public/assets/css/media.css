@@ -1977,7 +1977,7 @@
 
 
 /* / EXCHANGE LIVE STREAM I-FREAM  / */
-@media (min-width: 767px) and (max-width: 896px){
+/* @media (min-width: 767px) and (max-width: 896px){
     .my-live-streacoldv{
         width: 500px;
         margin: 0 auto;
@@ -2229,11 +2229,10 @@
         height: 500px;
         width: 100%;
     }
-}
-/* 
+} */
 iframe.my-livestrem-ifream { width: 100%; height: 220px; }
 @media (min-width: 1921px) {
 	iframe.my-livestrem-ifream { width: 100%; height: 46vh; }
-} */
+}
 
 /* / EXCHANGE LIVE STREAM I-FREAM  / */

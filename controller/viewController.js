@@ -1669,7 +1669,6 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     let src
     if (match1) {
          src = match1[1];
-         console.log(src)
     } else {
     console.log("No 'src' attribute found in the iframe tag.");
     }
