@@ -59,11 +59,32 @@ socket.on('connect', () => {
         // console.log(data.id[i])
         let multiMarketTd = document.querySelectorAll('.multi_market');
         if(data.remove){
-            multiMarketTd.forEach((multiMarketTd) => {
-                if(multiMarketTd.id == data.id){
-                    multiMarketTd.innerHTML = `<a ><img src="/assets/img/exchange/Vector.svg" alt=""></a>`
-                }
-            })
+            if(pathname === "/exchange/multimarkets"){
+                multiMarketTd.forEach((multiMarketTd) => {
+                    if(multiMarketTd.id == data.id){
+                        function removeElementById(id) {
+                            const element = document.getElementById(id);
+                            if (element && element.parentNode) {
+                              element.parentNode.removeChild(element);
+                            }
+                          }
+                        
+                          // IDs of elements with class "multi_market" that you want to remove
+                          const idsToRemove = [data.id];
+                        
+                          // Loop through each ID and remove the corresponding element from the DOM
+                          idsToRemove.forEach((id) => {
+                            removeElementById(id);
+                          });
+                    }
+                })
+            }else{
+                multiMarketTd.forEach((multiMarketTd) => {
+                    if(multiMarketTd.id == data.id){
+                        multiMarketTd.innerHTML = `<a ><img src="/assets/img/exchange/Vector.svg" alt=""></a>`
+                    }
+                })
+            }
         }else{
             multiMarketTd.forEach((multiMarketTd) => {
                 if(multiMarketTd.id == data.id){
