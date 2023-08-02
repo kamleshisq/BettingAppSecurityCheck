@@ -4546,34 +4546,36 @@ socket.on('connect', () => {
         // });
 
         $(document).ready(function() {
-            // Function to check if the user has reached the bottom of the page
-            function isAtBottom() {
+            // Function to check if the user is close to the bottom of the page
+            function isNearBottom() {
                 var scroll = $(window).scrollTop();
                 var windowHeight = $(window).height();
                 var documentHeight = $(document).height();
+                var tolerance = 50; // Adjust this value as needed for your specific case
         
-                return (scroll + windowHeight >= documentHeight);
+                return (scroll + windowHeight + tolerance >= documentHeight);
             }
         
-            // Function to handle the event when the user reaches the bottom of the page
-            function handleScrollToBottom() {
-                if (isAtBottom()) {
+            // Function to handle the event when the user is close to the bottom of the page
+            function handleScrollNearBottom() {
+                if (isNearBottom()) {
                     let page = parseInt($('.pageId').attr('data-pageid'));
-                $('.pageId').attr('data-pageid',page + 1)
-                let fromDate = $('#Fdate').val()
-                let toDate = $('#Tdate').val()
-                let type = $("#select").val()
-                let filterData = {}
-                filterData.fromDate = fromDate,
-                filterData.toDate = toDate
-                filterData.type = type
-                socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
+                    $('.pageId').attr('data-pageid',page + 1)
+                    let fromDate = $('#Fdate').val()
+                    let toDate = $('#Tdate').val()
+                    let type = $("#select").val()
+                    let filterData = {}
+                    filterData.fromDate = fromDate,
+                    filterData.toDate = toDate
+                    filterData.type = type
+                    socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
                 }
             }
         
-            // Attach the handleScrollToBottom function to the scroll event
-            $(window).scroll(handleScrollToBottom);
+            // Attach the handleScrollNearBottom function to the scroll event
+            $(window).scroll(handleScrollNearBottom);
         });
+        
         
 
 
