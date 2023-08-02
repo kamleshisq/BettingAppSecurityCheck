@@ -1668,7 +1668,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     const match1 = liveStream.data.match(src_regex);
     let src
     if (match1) {
-        const src = match1[1];
+         src = match1[1];
     } else {
     console.log("No 'src' attribute found in the iframe tag.");
     }
