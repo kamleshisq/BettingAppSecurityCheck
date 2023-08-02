@@ -2,7 +2,7 @@
 
 
       <!-- ----= HIRO BANNER SECTION START =-----   -->
-      <section class="hiro-banner-sec">
+      <!-- <section class="hiro-banner-sec">
         <div class="hiro-banner-sec-contnr  col-lg-11 col-md-11 col-12">
           <div class="hiro-banner-wrp container-fluid">
             <div class="">
@@ -51,7 +51,7 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
       <!-- ----= HIRO BANNER SECTION END =-----   -->
 
 
@@ -207,6 +207,55 @@
             <div class="exchange-pg-main-col-ro">
                 <div class="exchange-pg-main-col-big 9 col-md-10 col-12">
                     <div class="exchange-pg-main-col-big-wrp">
+                      <section class="hiro-banner-sec">
+                        <div class="hiro-banner-sec-contnr  col-lg-11 col-md-11 col-12">
+                          <div class="hiro-banner-wrp container-fluid">
+                            <div class="">
+                  
+                              <div class="featured-sec-slide-ro hiroslide3">
+                                <%for(let i = 0; i < banner.length; i++){%>
+                                  <%if(banner[i].status){%>
+                                    <div class="featured-sec-card-col-dv">
+                                      <div class="featured-sec-card-col-inn">
+                                        <div class="featured-sec-card-col-img-dv">
+                                          <a href="<%=banner[i].url%>">
+                                            <img class="img-fluid featured-sec-card-col-img-tg" src="../banner/<%=banner[i].banner%>.png" alt="">
+                                          </a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  <%}%>
+                                <%}%>
+                  
+                              </div>
+                
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                      <section class="royalgaming-sec2 mbl-hiro-banner">
+                        <div class="container-fluid featured-sec-contnr">
+                          <div class="featured-sec-coldv col-lg-11 col-md-12 col-12 w-100-md">
+                            <div class="featured-sec-ro-mob">
+                              <div class="hiro-nanner-sec-slide-ro hiroslide3">
+                                <%for(let i = 0; i < banner.length; i++){%>
+                                  <%if(banner[i].status){%>
+                                    <div class="featured-sec-card-col-dv">
+                                      <div class="featured-sec-card-col-inn">
+                                        <div class="featured-sec-card-col-img-dv">
+                                          <a href="<%=banner[i].url%>">
+                                            <img class="img-fluid featured-sec-card-col-img-tg" src="../banner/<%=banner[i].banner%>.png" alt="">
+                                          </a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  <%}%>
+                                <%}%>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
                       <section class="exchange-pg-tranding-maches-nav-sec">
                         <div class="exchange-pg-tranding-maches-nav-sec-wrp" id="liveMatch_data">
                           <%for(let i = 0; i < LiveCricket.length; i++){%>
