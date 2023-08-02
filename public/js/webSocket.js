@@ -4112,7 +4112,12 @@ socket.on('connect', () => {
 
         socket.on("betDetails" , (data) => {
             hideLoader()
-            alert(data.result)
+            function togglePopup(idname){
+                document.getElementById(idname).classList.toggle("active");
+                setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+              }
+
+            togglePopup('popup-1')
             
             let html2 = ""
             document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${data.openBet.length})</h5>`
