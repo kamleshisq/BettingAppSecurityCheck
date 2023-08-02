@@ -4545,46 +4545,20 @@ socket.on('connect', () => {
         //     }
         // });
 
-        $(document).ready(function() {
-            var debounceTimer;
-        
-            // Function to check if the user is close to the bottom of the page
-            function isNearBottom() {
-                var scroll = $(window).scrollTop();
-                var windowHeight = $(window).height();
-                var documentHeight = $(document).height();
-                var footerHeight = $('#footer').outerHeight(); // Replace '#footer' with the actual ID/class of your footer element.
-                var offset = 10; // Adjust this value as needed for better accuracy
-        
-                // Check if the user is close to the bottom of the page
-                return (scroll + windowHeight + offset >= documentHeight - footerHeight);
+        var counter=0;
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() - $(window).height() && counter < 2) {
+                let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                let fromDate = $('#Fdate').val()
+                let toDate = $('#Tdate').val()
+                let type = $("#select").val()
+                let filterData = {}
+                filterData.fromDate = fromDate,
+                filterData.toDate = toDate
+                filterData.type = type
+                socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
             }
-        
-            // Function to handle the event when the user is close to the bottom of the page
-            function handleScrollNearBottom() {
-                // Check if the user is close to the bottom and prevent multiple triggers with a debounce
-                if (debounceTimer) {
-                    clearTimeout(debounceTimer);
-                }
-        
-                debounceTimer = setTimeout(function() {
-                    if (isNearBottom()) {
-                        let page = parseInt($('.pageId').attr('data-pageid'));
-                        $('.pageId').attr('data-pageid',page + 1)
-                        let fromDate = $('#Fdate').val()
-                        let toDate = $('#Tdate').val()
-                        let type = $("#select").val()
-                        let filterData = {}
-                        filterData.fromDate = fromDate,
-                        filterData.toDate = toDate
-                        filterData.type = type
-                        socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
-                    }
-                }, 100); // Adjust the debounce delay (in milliseconds) as needed
-            }
-        
-            // Attach the handleScrollNearBottom function to the scroll event
-            $(window).on('scroll', handleScrollNearBottom);
         });
         
         
