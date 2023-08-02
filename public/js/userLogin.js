@@ -1,4 +1,6 @@
 import axios from "axios";
+import { notificationsss } from "./notificationsss";
+
 export const userLogin = async(data) => {
     try{
         const res = await axios({
@@ -7,7 +9,7 @@ export const userLogin = async(data) => {
             data
         });
         if(res.data.status === 'success'){
-            alert('Logged in successfully!!!!');
+            notificationsss('Logged in successfully!!!!');
             sessionStorage.setItem('loginUserDetails',JSON.stringify(res.data.data.user));
             sessionStorage.setItem('roles',JSON.stringify(res.data.data.roles))
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
