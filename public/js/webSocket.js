@@ -5504,15 +5504,25 @@ socket.on('connect', () => {
           }
           let jsonData = getJSONDataFromQueryString(search);
 
-          $(window).scroll(function() {
-            var scroll = $(window).scrollTop();
-            var windowHeight = $(window).height();
-            var documentHeight = $(document).height();
-            if (scroll + windowHeight >= documentHeight) {
+        //   $(window).scroll(function() {
+        //     var scroll = $(window).scrollTop();
+        //     var windowHeight = $(window).height();
+        //     var documentHeight = $(document).height();
+        //     if (scroll + windowHeight >= documentHeight) {
+                // let page = parseInt($('.pageId').attr('data-pageid'));
+                // $('.pageId').attr('data-pageid',page + 1)
+                // socket.emit("GAMEREPORTMATCHPAGEUSER", {page, LOGINDATA, jsonData})
+        //     }
+        // });
+
+        $(function () {
+            $("div").slice(0, 4).show();
+            $("#loadMore").on('click', function (e) {
+                e.preventDefault();
                 let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
                 socket.emit("GAMEREPORTMATCHPAGEUSER", {page, LOGINDATA, jsonData})
-            }
+            });
         });
 
           socket.on("GAMEREPORTMATCHPAGEUSER", async(data) => {
