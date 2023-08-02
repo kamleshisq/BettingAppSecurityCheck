@@ -5469,6 +5469,7 @@ socket.on('connect', () => {
 
           let count = 21
         socket.on("GAMEREPORTUSER", async(data) => {
+            console.log(data)
             if(data.bets.length > 0){
 
             if(data.page === 0){
