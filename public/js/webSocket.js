@@ -4492,6 +4492,7 @@ socket.on('connect', () => {
 
         let count = 21
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
+            if(data.userAcc.length > 0){
             console.log(data.page)
             if(data.page === 0){
                 count = 1
@@ -4538,6 +4539,10 @@ socket.on('connect', () => {
             }else{
                 $('.acount-stat-tbl-body').append(html)         
             }
+        }else{
+            console.log("working")
+                $('.loadMoredive').html("")
+        }
         })
     }
 
@@ -5526,7 +5531,7 @@ socket.on('connect', () => {
         });
 
           socket.on("GAMEREPORTMATCHPAGEUSER", async(data) => {
-            console.log(data.result)
+            // console.log(data.result)
             if(data.result.length > 0){
 
                 let result = data.result;
