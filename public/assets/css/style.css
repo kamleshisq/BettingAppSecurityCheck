@@ -2850,7 +2850,7 @@ td>.green{
 .new-betslip-witt{
     opacity: 1;
     height: max-content;
-    display: block;
+    /* display: block; */
     transition: height 0.3s ease-in-out;
 }
 
