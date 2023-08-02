@@ -2,7 +2,7 @@
 
 
       <!-- ----= HIRO BANNER SECTION START =-----   -->
-      <!-- <section class="hiro-banner-sec">
+      <section class="hiro-banner-sec">
         <div class="hiro-banner-sec-contnr  col-lg-11 col-md-11 col-12">
           <div class="hiro-banner-wrp container-fluid">
             <div class="">
@@ -51,7 +51,7 @@
             </div>
           </div>
         </div>
-      </section> -->
+      </section>
       <!-- ----= HIRO BANNER SECTION END =-----   -->
 
 
@@ -132,12 +132,12 @@
       <!-- ----= HIRO BANNER MOBILE MENU SECTION END =-----   -->
 
       <!-- ----= FETURE SPORTS START =-----   -->
-      <!-- <div class="liv-casino-txt-ro-aded container-fluid">
+      <div class="liv-casino-txt-ro-aded container-fluid">
         <div class="hiro-feture-tab-col col-lg-11 col-md-11 col-12">
           <div class="liv-casino-txt-ro-contnr2 ">
             <div class="liv-casino-nav-ro">
-              <div class="liv-casino-nav-tabcol col-lg-3 col-md-4 col-12">
-                <ul class="nav nav-pills liv-casino-nav-tab-ul" id="pills-tab" role="tablist">
+              <!-- <div class="liv-casino-nav-tabcol col-lg-3 col-md-4 col-12"> -->
+                <!-- <ul class="nav nav-pills liv-casino-nav-tab-ul" id="pills-tab" role="tablist">
                   <li class="nav-item hiro-feture-tab--tab-li" role="presentation">
                     <button class="nav-link hiro-feture-tab--btnn active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">SPORTS</button>
                   </li>
@@ -146,14 +146,14 @@
                   </li>
                   
                   
-                </ul>
+                </ul> -->
 
-                <div class="home-ro2-spots-casino-btns">
+                <!-- <div class="home-ro2-spots-casino-btns">
                   <a class="home-ro2-spots-casino-btns1" href="/exchange">SPORTS</a>
                   <a class="home-ro2-spots-casino-btns2" href="/live_casino">CASINO</a>
                 </div>
                 
-              </div>
+              </div> -->
               <div class="liv-casino-nav-serchcol col-lg-9 col-md-8 col-12" >
                 <div class="exchange-pg-tranding-maches-nav-sec-wrp" >
                   <%for(let i = 0; i < LiveCricket.length; i++){%>
@@ -199,97 +199,9 @@
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
       <!-- ----= FETURE SPORTS START =-----   -->
-      <section class="exchange-pg-main-sec">
-        <div class="container-fluid exchange-pg-main-contnr">
-          <div class="col-lg-11 col-md-11 col-12 exchange-pg-main-col">
-            <div class="exchange-pg-main-col-ro">
-                <div class="exchange-pg-main-col-big 9 col-md-10 col-12">
-                    <div class="exchange-pg-main-col-big-wrp">
-                      <section class="hiro-banner-sec">
-                        <div class="hiro-banner-sec-contnr  col-lg-11 col-md-11 col-12">
-                          <div class="hiro-banner-wrp container-fluid">
-                            <div class="">
-                  
-                              <div class="featured-sec-slide-ro hiroslide3">
-                                <%for(let i = 0; i < banner.length; i++){%>
-                                  <%if(banner[i].status){%>
-                                    <div class="featured-sec-card-col-dv">
-                                      <div class="featured-sec-card-col-inn">
-                                        <div class="featured-sec-card-col-img-dv">
-                                          <a href="<%=banner[i].url%>">
-                                            <img class="img-fluid featured-sec-card-col-img-tg" src="../banner/<%=banner[i].banner%>.png" alt="">
-                                          </a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  <%}%>
-                                <%}%>
-                  
-                              </div>
-                
-                            </div>
-                          </div>
-                        </div>
-                      </section>
-                      <section class="royalgaming-sec2 mbl-hiro-banner">
-                        <div class="container-fluid featured-sec-contnr">
-                          <div class="featured-sec-coldv col-lg-11 col-md-12 col-12 w-100-md">
-                            <div class="featured-sec-ro-mob">
-                              <div class="hiro-nanner-sec-slide-ro hiroslide3">
-                                <%for(let i = 0; i < banner.length; i++){%>
-                                  <%if(banner[i].status){%>
-                                    <div class="featured-sec-card-col-dv">
-                                      <div class="featured-sec-card-col-inn">
-                                        <div class="featured-sec-card-col-img-dv">
-                                          <a href="<%=banner[i].url%>">
-                                            <img class="img-fluid featured-sec-card-col-img-tg" src="../banner/<%=banner[i].banner%>.png" alt="">
-                                          </a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  <%}%>
-                                <%}%>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </section>
-                      <section class="exchange-pg-tranding-maches-nav-sec">
-                        <div class="exchange-pg-tranding-maches-nav-sec-wrp" id="liveMatch_data">
-                          <%for(let i = 0; i < LiveCricket.length; i++){%>
-                            <%if(LiveCricket[i].marketList.match_odd != null){%>
-                              <a href="/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>">
-                                  <img src="/assets/img/home/side-menuimg02.svg" alt="">
-                                  <%=LiveCricket[i].eventData.name%>
-                              </a>
-                            <%}%>
-                          <%}%>
-                          <%for(let i = 0; i < liveFootBall.length; i++){%>
-                            <%if(liveFootBall[i].marketList.match_odd != null){%>
-                              <a href="/exchange_inPlay/match?id=<%=liveFootBall[i].eventData.eventId%>">
-                                  <img src="/assets/img/home/side-menuimg03.svg" alt="">
-                                  <%=liveFootBall[i].eventData.name%>
-                              </a>
-                            <%}%> 
-                          <%}%> 
-                          <%for(let i = 0; i < liveTennis.length; i++){%>
-                            <%if(liveTennis[i].marketList.match_odd != null){%>
-                              <a href="/exchange_inPlay/match?id=<%=liveTennis[i].eventData.eventId%>">
-                                  <img src="/assets/img/home/side-menuimg04.svg" alt="">
-                                  <%=liveTennis[i].eventData.name%>
-                              </a>
-                            <%}%>
-                          <%}%>
-                        </div>
-                    </section>
-                  </div>
-                </div>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       <!-- ----= FEATURED SECTION START =-----   -->
       <%-include('./Sport')%>
