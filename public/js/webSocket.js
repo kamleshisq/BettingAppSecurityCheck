@@ -5409,11 +5409,26 @@ socket.on('connect', () => {
 
 
     if(pathname === "/myGameReport"){
-        $(window).scroll(function() {
-            var scroll = $(window).scrollTop();
-            var windowHeight = $(window).height();
-            var documentHeight = $(document).height();
-            if (scroll + windowHeight >= documentHeight) {
+        // $(window).scroll(function() {
+        //     var scroll = $(window).scrollTop();
+        //     var windowHeight = $(window).height();
+        //     var documentHeight = $(document).height();
+        //     if (scroll + windowHeight >= documentHeight) {
+                // let page = parseInt($('.pageId').attr('data-pageid'));
+                // $('.pageId').attr('data-pageid',page + 1)
+                // let fromDate = $('#Fdate').val()
+                // let toDate = $('#Tdate').val()
+                // let filterData = {}
+                // filterData.fromDate = fromDate,
+                // filterData.toDate = toDate
+                // socket.emit("GAMEREPORTUSER", {page, LOGINDATA, filterData})
+        //     }
+        // });
+
+        $(function () {
+            $("div").slice(0, 4).show();
+            $("#loadMore").on('click', function (e) {
+                e.preventDefault();
                 let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
                 let fromDate = $('#Fdate').val()
@@ -5422,7 +5437,7 @@ socket.on('connect', () => {
                 filterData.fromDate = fromDate,
                 filterData.toDate = toDate
                 socket.emit("GAMEREPORTUSER", {page, LOGINDATA, filterData})
-            }
+            });
         });
 
 
