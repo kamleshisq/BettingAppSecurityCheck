@@ -4612,6 +4612,7 @@ socket.on('connect', () => {
 
         let count = 21
         socket.on("BETSFORUSER", async(data) => {
+            if(data.MyBets.length > 0){
             console.log(data.page)
             if(data.page === 0){
                 count = 1
@@ -4671,6 +4672,10 @@ socket.on('connect', () => {
             }else{
                 $('.acount-stat-tbl-body').append(html)         
             }
+        }else{
+            console.log("working")
+                $('.loadMoredive').html("")
+        }
         })
     }
 
