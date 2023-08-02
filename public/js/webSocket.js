@@ -4546,6 +4546,8 @@ socket.on('connect', () => {
         // });
 
         $(document).ready(function() {
+            var debounceTimer;
+        
             // Function to check if the user is close to the bottom of the page
             function isNearBottom() {
                 var scroll = $(window).scrollTop();
@@ -4560,23 +4562,31 @@ socket.on('connect', () => {
         
             // Function to handle the event when the user is close to the bottom of the page
             function handleScrollNearBottom() {
-                if (isNearBottom()) {
-                    let page = parseInt($('.pageId').attr('data-pageid'));
-                    $('.pageId').attr('data-pageid',page + 1)
-                    let fromDate = $('#Fdate').val()
-                    let toDate = $('#Tdate').val()
-                    let type = $("#select").val()
-                    let filterData = {}
-                    filterData.fromDate = fromDate,
-                    filterData.toDate = toDate
-                    filterData.type = type
-                    socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
+                // Check if the user is close to the bottom and prevent multiple triggers with a debounce
+                if (debounceTimer) {
+                    clearTimeout(debounceTimer);
                 }
+        
+                debounceTimer = setTimeout(function() {
+                    if (isNearBottom()) {
+                        let page = parseInt($('.pageId').attr('data-pageid'));
+                        $('.pageId').attr('data-pageid',page + 1)
+                        let fromDate = $('#Fdate').val()
+                        let toDate = $('#Tdate').val()
+                        let type = $("#select").val()
+                        let filterData = {}
+                        filterData.fromDate = fromDate,
+                        filterData.toDate = toDate
+                        filterData.type = type
+                        socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
+                    }
+                }, 100); // Adjust the debounce delay (in milliseconds) as needed
             }
         
             // Attach the handleScrollNearBottom function to the scroll event
             $(window).on('scroll', handleScrollNearBottom);
         });
+        
         
         
         
