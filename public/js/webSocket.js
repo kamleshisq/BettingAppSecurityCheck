@@ -4527,11 +4527,15 @@ socket.on('connect', () => {
 
     if(pathname === "/mybets"){
         // console.log("WORKING")
-        $(window).scroll(function() {
-            var scroll = $(window).scrollTop();
-            var windowHeight = $(window).height();
-            var documentHeight = $(document).height();
-            if (scroll + windowHeight >= documentHeight) {
+        $(document).ready(function() {
+            $(window).scroll(function() {
+                var scroll = $(window).scrollTop();
+                var windowHeight = $(window).height();
+                var documentHeight = $(document).height();
+                var footerHeight = $('#footer').outerHeight(); // Replace '#footer' with the actual ID/class of your footer element.
+        
+                // Add an additional offset to account for the footer's height
+                if (scroll + windowHeight >= documentHeight - footerHeight) {
                 let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
                 let fromDate = $('#Fdate').val()
@@ -4544,6 +4548,7 @@ socket.on('connect', () => {
                 socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
             }
         });
+    });
 
 
         const FdateInput = document.getElementById('Fdate');
