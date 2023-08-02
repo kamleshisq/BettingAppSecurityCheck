@@ -4545,8 +4545,10 @@ socket.on('connect', () => {
         //     }
         // });
 
-        $(window).scroll(function() {
-            if($(window).scrollTop() == $(document).height() - $(window).height()) {
+        $(function () {
+            $("div").slice(0, 4).show();
+            $("#loadMore").on('click', function (e) {
+                e.preventDefault();
                 let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
                 let fromDate = $('#Fdate').val()
@@ -4557,7 +4559,7 @@ socket.on('connect', () => {
                 filterData.toDate = toDate
                 filterData.type = type
                 socket.emit("BETSFORUSER", {page, LOGINDATA, filterData})
-            }
+            });
         });
         
         
