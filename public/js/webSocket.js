@@ -5781,7 +5781,7 @@ socket.on('connect', () => {
                     function togglePopup(idname, id){
                         document.getElementById(idname).classList.toggle("active");
                         document.getElementById(id).innerText  = "Please select stake".toUpperCase()
-                        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+                        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 20000000);
                       }
                       togglePopup('popup-1', "redPopUP")
                 }else{
