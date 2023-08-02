@@ -5777,7 +5777,13 @@ socket.on('connect', () => {
                     }
                 }
                 if(data.stake === ""){
-                    alert("Please select stake")
+                    // alert("Please select stake")
+                    function togglePopup(idname, id){
+                        document.getElementById(idname).classList.toggle("active");
+                        document.getElementById(id).innerText  = "Please select stake".toUpperCase()
+                        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+                      }
+                      togglePopup('popup-1', "redPopUP")
                 }else{
                     
                     socket.emit("betDetails", {data, LOGINDATA, pathname})
@@ -5811,7 +5817,6 @@ socket.on('connect', () => {
             //   });
     
             socket.on("betDetails" , (data) => {
-                console.log(data)
                 hideLoader()
                 function togglePopup(idname, id){
                     document.getElementById(idname).classList.toggle("active");
