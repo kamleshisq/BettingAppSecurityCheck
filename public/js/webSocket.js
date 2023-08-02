@@ -4111,13 +4111,16 @@ socket.on('connect', () => {
 
         socket.on("betDetails" , (data) => {
             hideLoader()
-            function togglePopup(idname){
+            function togglePopup(idname, id){
                 document.getElementById(idname).classList.toggle("active");
-                document.getElementById('redPopUP').innerText  = data.result.toUpperCase()
+                document.getElementById(id).innerText  = data.result.toUpperCase()
                 setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
               }
-
-            togglePopup('popup-2')
+            if(data.result === "Bet place successfully"){
+                togglePopup('popup-1', "redPopUP")
+            }else{
+                togglePopup('popup-2', "redPopUP2")
+            }
             
             let html2 = ""
             document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${data.openBet.length})</h5>`
@@ -5824,9 +5827,9 @@ socket.on('connect', () => {
                     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
                   }
                 if(data.result === "Bet place successfully"){
-                    togglePopup('popup-1', "redPopUP2")
+                    togglePopup('popup-1', "redPopUP")
                 }else{
-                    togglePopup('popup-2', "redPopUP")
+                    togglePopup('popup-2', "redPopUP2")
                 }
              
                 let html2 = ""
