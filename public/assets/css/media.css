@@ -1974,3 +1974,261 @@
 /* --------------------------------------------------------------------------------------
 ============================ LOGGEDIN PAGE STYLE ========================================
 -------------------------------------------------------------------------------------- */
+
+
+/* / EXCHANGE LIVE STREAM I-FREAM  / */
+@media (min-width: 767px) and (max-width: 896px){
+    .my-live-streacoldv{
+        width: 500px;
+        margin: 0 auto;
+        margin-top: 10px;
+    }
+    
+    .my-livestrem-ifream {
+        height: 270px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 896px) and (max-width: 991px){
+    .my-live-streacoldv{
+        width: 500px;
+        margin: 0 auto;
+        margin-top: 10px;
+    }
+    
+    .my-livestrem-ifream {
+        height: 270px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1100px){
+    .my-live-streacoldv {
+        width: 200px;
+    }
+
+    .my-livestrem-ifream {
+        height: 100px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1100px) and (max-width: 1200px){
+    .my-live-streacoldv {
+        width: 240px;
+    }
+
+    .my-livestrem-ifream {
+        height: 120px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1300px){
+    .my-live-streacoldv {
+        width: 260px;
+    }
+
+    .my-livestrem-ifream {
+        height: 130px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1300px) and (max-width: 1400px){
+    .my-live-streacoldv {
+        width: 290px;
+    }
+
+    .my-livestrem-ifream {
+        height: 150px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1400px) and (max-width: 1500px){
+    
+
+    .my-livestrem-ifream {
+        height: 180px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1500px) and (max-width: 1600px){
+    .my-livestrem-ifream {
+        height: 190px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1600px) and (max-width: 1700px){
+    .my-livestrem-ifream {
+        height: 200px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1700px) and (max-width: 1800px){
+    .my-livestrem-ifream {
+        height: 220px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1800px) and (max-width: 1900px){
+    .my-livestrem-ifream {
+        height: 230px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 1900px) and (max-width: 2000px){
+    .my-livestrem-ifream {
+        height: 240px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 2000px) and (max-width: 2100px){
+    .my-livestrem-ifream {
+        height: 250px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 2100px) and (max-width: 2200px){
+    .my-livestrem-ifream {
+        height: 270px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 2200px) and (max-width: 2300px){
+    .my-livestrem-ifream {
+        height: 280px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 2300px) and (max-width: 2400px){
+    .my-livestrem-ifream {
+        height: 290px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 2400px) and (max-width: 2500px){
+    .my-livestrem-ifream {
+        height: 310px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 2500px) and (max-width: 2600px){
+    .my-livestrem-ifream {
+        height: 330px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 2600px) and (max-width: 2700px){
+    .my-livestrem-ifream {
+        height: 335px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 2700px) and (max-width: 2800px){
+    .my-livestrem-ifream {
+        height: 350px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 2800px) and (max-width: 2900px){
+    .my-livestrem-ifream {
+        height: 360px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 2900px) and (max-width: 3000px){
+    .my-livestrem-ifream {
+        height: 370px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 3000px) and (max-width: 3100px){
+    .my-livestrem-ifream {
+        height: 385px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 3100px) and (max-width: 3200px){
+    .my-livestrem-ifream {
+        height: 395px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 3200px) and (max-width: 3300px){
+    .my-livestrem-ifream {
+        height: 410px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 3300px) and (max-width: 3400px){
+    .my-livestrem-ifream {
+        height: 425px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 3400px) and (max-width: 3500px){
+    .my-livestrem-ifream {
+        height: 435px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 3500px) and (max-width: 3600px){
+    .my-livestrem-ifream {
+        height: 445px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 3600px) and (max-width: 3700px){
+    .my-livestrem-ifream {
+        height: 455px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 3700px) and (max-width: 3800px){
+    .my-livestrem-ifream {
+        height: 470px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 3800px) and (max-width: 3900px){
+    .my-livestrem-ifream {
+        height: 490px;
+        width: 100%;
+    }
+}
+
+@media (min-width: 3900px) and (max-width: 4000px){
+    .my-livestrem-ifream {
+        height: 500px;
+        width: 100%;
+    }
+}
+
+/* / EXCHANGE LIVE STREAM I-FREAM  / */
