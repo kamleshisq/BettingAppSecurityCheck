@@ -6038,7 +6038,10 @@ socket.on('connect', () => {
 
 
     if(pathname === "/Kyc"){
-        
+        $(document).on('click', ".submit", function(e){
+            e.preventDefault()
+            
+        })
     }
    
 

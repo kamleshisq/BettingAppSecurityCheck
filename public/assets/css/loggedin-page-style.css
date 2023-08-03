@@ -236,17 +236,18 @@ a{
     font-size: 13px;
 }
 
-.bet-blns-nav-wrp-amount-num>span{
+.bet-blns-nav-wrp-amount-num>span {
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 0px;
     width: max-content;
     font-size: 13px;
     padding: 5px 5px;
-    border-radius: 20px;
-    background-color: var(--color3);
-    color: var(--color4);
+    border-radius: 15px;
+    background-color: #32962a;
+    color: var(--color3);
+    flex-direction: column;
 }
 
 .nav-login-regstr-btn-anim{
