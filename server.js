@@ -1545,6 +1545,10 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on("KYC", async(data) => {
+        console.log(data.data)
+    })
+
     
 })
 

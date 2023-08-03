@@ -6040,10 +6040,11 @@ socket.on('connect', () => {
     if(pathname === "/Kyc"){
         $(document).on('click', ".submit", function(e){
             e.preventDefault()
-            let files = $("#formFileSm")[0].files[0];
-            let name = $("#cardName").val()
-            let idNum = $('#exampleInputPassword1').val()
-            console.log(idNum)
+            let data = {}
+             data.files = $("#formFileSm")[0].files[0];
+             data.name = $("#cardName").val()
+             data.idNum = $('#exampleInputPassword1').val()
+            socket.emit("KYC", {data, LOGINDATA})
         })
     }
    
