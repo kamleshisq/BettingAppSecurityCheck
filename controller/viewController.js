@@ -1686,10 +1686,12 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         let SportLimits = betLimit.find(item => item.type === "Sport")
         let userLog
         let stakeLabledata
+        let userMultimarkets
         let betsOnthisMatch = []
         let rules = await gamrRuleModel.find()
         if(req.currentUser){
             userLog = await loginLogs.find({user_id:req.currentUser._id})
+            userMultimarkets = await multimarkets.findOne({userId:currentUser._id})
             stakeLabledata = await stakeLable.findOne({userId:req.currentUser._id})
             if(stakeLabledata === null){
                 stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
@@ -1710,7 +1712,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             stakeLabledata,
             betsOnthisMatch,
             rules,
-            src
+            src,
+            userMultimarkets
     })
 });
 
