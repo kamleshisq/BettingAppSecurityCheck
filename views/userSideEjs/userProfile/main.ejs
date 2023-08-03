@@ -81,7 +81,7 @@
                                         <div class="col-lg-4 col-md-4 col-4 user-prof-statistik-data-col">
                                             <div class="user-prof-statistik-data-col--inn">
                                                 <p>Today profit</p>
-                                                <%if(userProfileContent.length > 0) {%>
+                                                <%if(userProfileContent.length === 0) {%>
                                                   <h6>0</h6>
                                                 <%}else{%>
                                                   <h6><%=userProfileContent[0].totalReturns%></h6>
@@ -91,7 +91,7 @@
                                         <div class="col-lg-4 col-md-4 col-4 user-prof-statistik-data-col">
                                             <div class="user-prof-statistik-data-col--inn">
                                                 <p>Today profit in Sports</p>
-                                                <%if(userProfileContent.length > 0) {%>
+                                                <%if(userProfileContent.length === 0) {%>
                                                   <h6>0</h6>
                                                   <%}else{%>
                                                     <h6><%=userProfileContent[0].totalReturns1%></h6>
@@ -101,7 +101,7 @@
                                         <div class="col-lg-4 col-md-4 col-4 user-prof-statistik-data-col">
                                             <div class="user-prof-statistik-data-col--inn">
                                                 <p>Today profit in Casino</p>
-                                                <%if(userProfileContent.length > 0) {%>
+                                                <%if(userProfileContent.length === 0) {%>
                                                   <h6>0</h6>
                                                 <%}else{%>
                                                   <h6><%=userProfileContent[0].totalReturns3%></h6>
