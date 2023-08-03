@@ -2242,10 +2242,10 @@ iframe.my-livestrem-ifream {
     overflow-y: hidden !important;
 }
 /* / EXCHANGE LIVE STREAM I-FREAM  / */
-@media only screen and (max-width: 767px){
+/* @media only screen and (max-width: 767px){
     .bet-blns-nav-wrp-amount-num>span {
         font-size: 10px;
         flex-direction: row;
         gap: 5px;
     }
-}
+} */
