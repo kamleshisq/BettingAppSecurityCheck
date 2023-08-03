@@ -1,4 +1,5 @@
 <%
+let multiTrue = true;
 for(let i = 0; i < multimarket.marketIds.length; i++){
     let result
     result = sportData[0].gameList[0].eventList.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == multimarket.marketIds[i])
@@ -15,6 +16,7 @@ for(let i = 0; i < multimarket.marketIds.length; i++){
 %>
 
 <%if(result){%>
+  multiTrue = false
     <div class="exchange-pg-inn-banner-col2">
         <div class="exchange-pg-inn-banner-col-titi">
             <div class="exchange-pg-inn-banner-col-titi-txt">

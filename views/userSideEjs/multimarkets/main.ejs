@@ -16,7 +16,8 @@
                           <%console.log(multimarket)%>
                           <%if(multimarket != null && multimarket.marketIds && multimarket.marketIds.length > 0){%>
                             <%-include("./tables")%>
-                          <%}else{%>
+                          <%}%>
+                          <%if(multiTrue){%>
                             <p>There are currently no followed multi markets.</p>
                           <%} %>
   
