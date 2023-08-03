@@ -5,7 +5,7 @@ const path = require('path');
 
 
 exports.uploadphoto = catchAsynch(async(req, res, next) => {
-    console.log(req.file)
+    console.log(req.files)
     console.log(req.body)
     console.log("req.body")
 })
