@@ -6041,7 +6041,7 @@ socket.on('connect', () => {
         $(document).on('click', ".submit", function(e){
             e.preventDefault()
             let files = $("#formFileSm")[0].files[0];
-            let name = $("#cardName")[0].val
+            let name = $("#cardName")[0].val()
             console.log(name)
         })
     }
