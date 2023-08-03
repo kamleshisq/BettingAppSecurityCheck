@@ -197,6 +197,7 @@
                       </table>
                     </div>
                   <%} %>
+                  <%}%>
                   <%if(match.marketList.odd_even != null){%>
                     <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
                       <table class="acount-stat-tbl mt-2">
@@ -246,10 +247,11 @@
                     </div>
                     <%}%>
                     
-                  <%}%>
+                  
       
                 </div>
               </div>
+              <%if(match.marketList.session != null){%>
               <%let sessionData = match.marketList.session.filter(item => item.status == 1 && !item.title.startsWith("Only") &&  item.title.includes("Over"))%>
               <%if(sessionData.length > 0){ %>
               <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab5" role="tabpanel" aria-labelledby="fancytab5-tab" tabindex="0">
@@ -301,6 +303,8 @@
                 </div>
               </div>
               <%} %>
+              <%} %>
+
               <%if(match.marketList.odd_even != null){%>
                 <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
                   <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
@@ -351,6 +355,8 @@
                   </div>
                 </div>
               <%}%>
+
+
               <%if(match.marketList.session != null){%>
                 <% let dataSessionOnly = match.marketList.session.filter(item => item.status == 1 && item.title.startsWith("Only")) %>
                 <%if(dataSessionOnly.length != 0){%>
@@ -405,6 +411,8 @@
                 <%} %>
               <%}%>
               
+
+              <%if(match.marketList.session != null){%>
               <% let dataNotOnly = match.marketList.session.filter(item => item.status == 1 && !item.title.includes("Over")) %>
               <%if(dataNotOnly.length > 0) {%>
                 <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab4" role="tabpanel" aria-labelledby="fancytab4-tab" tabindex="0">
@@ -456,9 +464,8 @@
                   </div>
                 </div>
                 <%} %>
-              <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab6" role="tabpanel" aria-labelledby="fancytab6-tab" tabindex="0">
-                tab 06
-              </div>
+                <%} %>
+              
             </div>
           </div>
       </div>
