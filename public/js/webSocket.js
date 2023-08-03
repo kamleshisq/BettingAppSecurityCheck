@@ -6042,7 +6042,8 @@ socket.on('connect', () => {
             e.preventDefault()
             let files = $("#formFileSm")[0].files[0];
             let name = $("#cardName").val()
-            console.log(name)
+            let idNum = $('exampleInputPassword1').val()
+            console.log(idNum)
         })
     }
    
