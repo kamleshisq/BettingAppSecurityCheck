@@ -525,3 +525,11 @@ $(document).on('submit', ".myloginmodl-form-dv", function(e){
     let data = Object.fromEntries(fd.entries());
     userLogin(data)
 })
+
+$(document).on('submit', ".kycForm", function(e){
+    e.preventDefault()
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    let data = Object.fromEntries(fd.entries());
+    console.log(data)
+})
