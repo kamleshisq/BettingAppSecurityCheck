@@ -126,6 +126,22 @@ const userSchema = mongoose.Schema({
     Loss:{
         type:Number,
         default:0
+    },
+    kycDocName:{
+        type:String,
+        default:null
+    },
+    kycDoc:{
+        type:String,
+        default:null
+    },
+    kycDocNum:{
+        type:String,
+        default:null
+    },
+    kycNotification:{
+        type:Boolean,
+        default:false
     }
 })
 
