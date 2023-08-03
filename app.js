@@ -19,6 +19,7 @@ const horizontalMenuRoutes = require("./routes/horizontalMenuRoures");
 const pagesRoutes = require("./routes/pagesRoutes");
 const bannerRoutes = require("./routes/bannerRoutes");
 const sliderRoutes = require("./routes/sliderRoutes");
+const KycRoutes = require("./routes/kycRoutes");
 const dotenv =require('dotenv');
 const cookieParser = require('cookie-parser');
 const globleErrorHandler = require('./controller/errorController');
@@ -74,6 +75,7 @@ app.use("/api/v1/horizontalMenu", horizontalMenuRoutes);
 app.use("/api/v1/banner", bannerRoutes);
 app.use("/api/v1/pages", pagesRoutes);
 app.use("/api/v1/slider", sliderRoutes);
+app.use("/api/v1/Kyc", KycRoutes);
 app.use("/", viewRoutes);
 // console.log(globleErrorHandler)
 
