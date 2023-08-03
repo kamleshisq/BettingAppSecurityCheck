@@ -17,6 +17,7 @@ exports.uploadphoto = catchAsynch(async(req, res, next) => {
             data.kycDoc = path.join(__dirname, 'documents', req.currentUser.userName);
             image.mv(data.kycDoc, (err)=>{
                 if(err) 
+                console.log(err)
                 return next(new AppError("Something went wrong please try again later", 400))
             })
         }else{
