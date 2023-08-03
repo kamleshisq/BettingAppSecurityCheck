@@ -3657,6 +3657,22 @@ margin-bottom: 0px;
   .exchange-pg-inn-banner-col-titi-wrpp>.exchange-pg-inn-banner-col-titi{
     flex: 1;
   }
+
+  .bet-blns-nav-wrp-amount-num>span {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0px;
+    width: max-content;
+    font-size: 13px;
+    padding: 5px 5px;
+    border-radius: 15px;
+    background-color: #32962a;
+    color: var(--color3);
+    flex-direction: column;
+}
+
+
 /* --------------------------------------------------------------------------------------
 ============================ EXCHANGE INNER FANCY TAB ========================================
 -------------------------------------------------------------------------------------- */
