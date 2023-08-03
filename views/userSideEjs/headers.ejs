@@ -267,7 +267,7 @@
                       <div class="search-sv-nav-seting-inn">
                         <div class="search-sv-nav-seting-inn-col1">
                           <div class="input-group flex-nowrap input-group-sm my-setting-nav-form">
-                            <input type="text" class="form-control" placeholder="Search Anything" aria-label="Username" aria-describedby="addon-wrapping">
+                            <input type="text" id="search_field" class="form-control" placeholder="Search Anything" aria-label="Username" aria-describedby="addon-wrapping">
                             <span class="input-group-text" id="addon-wrapping">
                               <i class="fa-solid fa-magnifying-glass"></i>
                             </span>
@@ -279,6 +279,17 @@
                             DEPOSIT
                           </a>
                         </div>
+                        <ul id="demonames">
+                          <li><a class="demoname" href="#">Adele</a></li>
+                          <li><a class="demoname" href="#">Agnes</a></li>
+                        
+                          <li><a class="demoname" href="#">Billy</a></li>
+                          <li><a class="demoname" href="#">Bob</a></li>
+                        
+                          <li><a class="demoname" href="#">Calvin</a></li>
+                          <li><a class="demoname" href="#">Christina</a></li>
+                          <li><a class="demoname" href="#">Cindy</a></li>
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -451,3 +462,42 @@
           });
         });
       </script>
+      <script>
+        // SEARCH FUNCTION
+        var btsearch = {
+          init: function(search_field, searchable_elements, searchable_text_class) {
+            $(search_field).keyup(function(e){
+              e.preventDefault();
+              var query = $(this).val().toLowerCase();
+              if(query){
+                // loop through all elements to find match
+                $.each($(searchable_elements), function(){
+                  var title = $(this).find(searchable_text_class).text().toLowerCase();
+                  if(title.indexOf(query) == -1){
+                    $(this).hide();
+                  } else {
+                    $(this).show();
+                  }
+                });
+              } else {
+                // empty query so show everything
+                $(searchable_elements).show();
+              }
+            });
+          }
+        }
+  
+        // INIT
+        $(function(){
+          // USAGE: btsearch.init(('search field element', 'searchable children elements', 'searchable text class');
+          btsearch.init('#search_field', '#demonames li', '.demoname');
+        });
+        </script>
+  
+        <script>
+          $(document).ready(function(){
+            $("#search_field").click(function(){
+              $("#demonames").toggleClass("show-nav-serch-list");
+            });
+          });
+        </script>
