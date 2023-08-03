@@ -2135,6 +2135,7 @@ exports.getMyProfileUser = catchAsync(async(req, res, next) => {
             },
           },
     ])
+    console.log(userProfileContent)
     res.status(200).render("./userSideEjs/userProfile/main",{
         user,
         verticalMenus,
