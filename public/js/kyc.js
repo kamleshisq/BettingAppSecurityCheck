@@ -4,7 +4,7 @@ export const KYC = async(data)=>{
     try{
         const res = await axios({
             method: 'POST',
-            url: '/api/v1/Kyc/uploadDoc',
+            url: '/api/v1/Kyc/uploadDoc ',
             data
         });
         if(res.data.status === 'success'){

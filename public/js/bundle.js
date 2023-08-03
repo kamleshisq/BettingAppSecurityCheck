@@ -6792,7 +6792,7 @@ var KYC = /*#__PURE__*/function () {
           _context.next = 3;
           return (0, _axios.default)({
             method: 'POST',
-            url: '/api/v1/Kyc/uploadDoc',
+            url: '/api/v1/Kyc/uploadDoc ',
             data: data
           });
         case 3:
