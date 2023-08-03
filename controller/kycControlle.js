@@ -18,7 +18,7 @@ exports.uploadphoto = catchAsynch(async(req, res, next) => {
             data.kycDoc = `/var/www/bettingApp/documents/${req.currentUser.userName}`
             image.mv(`${data.kycDoc}.pdf`, (err)=>{
                 if(err) 
-                console.log(err)
+                console.log(err, 4545)
                 return next(new AppError("Something went wrong please try again later", 400))
             })
         }else{
