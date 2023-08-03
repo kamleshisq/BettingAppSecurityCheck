@@ -1,25 +1,27 @@
 <div class="exchange-pg-inn-banner-col2">
-  <div class="exchange-pg-inn-banner-col-titi">
+  <div class="exchange-pg-inn-banner-col-titi-wrpp">
+    <div class="exchange-pg-inn-banner-col-titi">
       <div class="exchange-pg-inn-banner-col-titi-txt">
-          <h6 ><span>Match Odds</span> <span class="game-info-popup-spn" data-bs-toggle="modal" data-bs-target="#gameroulspop"> 
+          <h6><span>Match Odds 11</span><span class="game-info-popup-spn" data-bs-toggle="modal" data-bs-target="#gameroulspop"> 
             <i class="fa-solid fa-circle-info"></i> 
           </span></h6>
       </div>
       <div class="exchange-pg-inn-banner-col-titi-txt-tim">
           <h6><b>Min : <%=SportLimits.min_stake%>, Max : <%=SportLimits.max_stake%></b></h6>
       </div>
-      <div style="border-bottom: 0px;" class="multi_market" id="<%=match.marketList.match_odd.marketId%>">
-        <%if(user && userMultimarkets != null){ %>
-          <%let check = userMultimarkets.marketIds.find(item => item == match.marketList.match_odd.marketId) %>
-          <%if(check){%>
-            <a><img src="/assets/img/exchange/Vector2.svg" alt=""></a> 
-          <%}else{%>
-            <a><img src="/assets/img/exchange/Vector.png" alt=""></a> 
-          <%}%>
+    </div>
+    <div class="star-hedtitl-dv multi_market" id="<%=match.marketList.match_odd.marketId%>">
+      <%if(user && userMultimarkets != null){ %>
+        <%let check = userMultimarkets.marketIds.find(item => item == match.marketList.match_odd.marketId) %>
+        <%if(check){%>
+          <a><img src="/assets/img/exchange/Vector2.svg" alt=""></a> 
         <%}else{%>
-          <a><img src="/assets/img/exchange/Vector.png" alt=""></a>
+          <a><img src="/assets/img/exchange/Vector.png" alt=""></a> 
         <%}%>
-      </div>
+      <%}else{%>
+        <a><img src="/assets/img/exchange/Vector.png" alt=""></a>
+      <%}%>
+    </div>
   </div>
 
   <div class="exchange-pg-inn-tbl">
