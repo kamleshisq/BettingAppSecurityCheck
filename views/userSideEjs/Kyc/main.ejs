@@ -11,7 +11,11 @@
                         <div class="user-pro-sec-col1-inn col-lg-12 ">
                             <div class="user-pro-sec-col1-inn-ro">
                                 <div class="withdrow-titl-dv">
-                                  <h6>KYC Status : <span class="c-reed">Pending</span></h6>
+                                  <%if(user.kycDoc === null){%>
+                                    <h6>KYC Status : <span class="c-reed">Pending</span></h6>
+                                  <%}else{ %>
+                                    <h6>KYC Status : <span class="c-reed">Pending</span></h6>
+                                    <%} %>
                                 </div>
                                 <div class="withdrow-txt-ro">
                                   <div class="withdrow-txt-col col-lg-4 col-md-4 col-12">

@@ -142,6 +142,10 @@ const userSchema = mongoose.Schema({
     kycNotification:{
         type:Boolean,
         default:false
+    },
+    isKycVer:{
+        type:Boolean,
+        default:false
     }
 })
 
