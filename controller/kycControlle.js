@@ -14,8 +14,8 @@ exports.uploadphoto = catchAsynch(async(req, res, next) => {
         if(req.files.file.mimetype.startsWith('application/pdf')){
             const image = req.files.file
             // console.log(logo)
-            data.kycDoc = `${path.join(__dirname, "documents")}/${req.currentUser.userName}.pdf`
-            image.mv(`${data.kycDoc}`, (err)=>{
+            data.kycDoc = path.join(__dirname, 'documents', req.currentUser.userName);
+            image.mv(data.kycDoc, (err)=>{
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
             })
