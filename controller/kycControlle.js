@@ -4,7 +4,7 @@ const userModel = require("../model/userModel");
 const path = require('path');
 
 
-exports.uploadphoto = catchAsynch(async(res, req, next) => {
+exports.uploadphoto = catchAsynch(async(req, res, next) => {
     console.log(req.file)
     console.log(req.body)
     console.log("req.body")
