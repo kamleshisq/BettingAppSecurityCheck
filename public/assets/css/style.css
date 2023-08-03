@@ -3428,7 +3428,7 @@ margin-bottom: 0px;
     padding-top: 10px;
 }
 
-.withdrow-txt-doc-upload-col-btn-dv>a{
+.withdrow-txt-doc-upload-col-btn-dv>button{
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -3440,7 +3440,7 @@ margin-bottom: 0px;
     transition: all 0.3s ease-in-out;
 }
 
-.withdrow-txt-doc-upload-col-btn-dv>a:hover{
+.withdrow-txt-doc-upload-col-btn-dv>button:hover{
     transition: all 0.3s ease-in-out;
     background: var(--color6);
 }
