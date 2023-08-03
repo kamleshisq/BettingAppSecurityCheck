@@ -371,71 +371,71 @@
 
 
 
-        
-        
-
-
-
-
-
-
-
         <%if(match.marketList.session != null){%>
-        <% let dataNotOnly = match.marketList.session.filter(item => item.status == 1 && !item.title.includes("Over")) %>
-        <%if(dataNotOnly.length > 0) {%>
-          <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab4" role="tabpanel" aria-labelledby="fancytab4-tab" tabindex="0">
-            <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
-              <table class="acount-stat-tbl mt-2">
+          <% let dataSessionOnly = match.marketList.session.filter(item => item.status == 1 && item.title.startsWith("Only")) %>
+          <%if(dataSessionOnly.length != 0){%>
+            <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab3" role="tabpanel" aria-labelledby="fancytab3-tab" tabindex="0">
+              <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
+                <table class="acount-stat-tbl mt-2">
+    
+                  <thead class="acount-stat-tbl-hed3">
+                      <tr class="acount-stat-tbl-hed-tr3" >
+                          <th colspan="2" style="text-align: left;" class="bod-red-lft " >Only Over</th>
+                          <th style="text-align: center;" colspan=""></th>
+                          <th style="text-align: center;" colspan="">YES</th>
+                          <th style="text-align: center;" colspan="" class="bod-red-rit">NO</th>
+                      </tr>
+                  </thead>
+    
+                  <tbody class="acount-stat-tbl-body">
+                      <%for(let i = 0; i < dataSessionOnly.length; i++){%>
+                        <tr class="acount-stat-tbl-body-tr odd_even" data-href='#'>
+                          <td colspan="2" style="text-align: left;" class="market" id="<%=dataSessionOnly[i].marketId%>">
+                            <%=dataSessionOnly[i].title%>
+                          </td>
   
-                <thead class="acount-stat-tbl-hed3">
-                    <tr class="acount-stat-tbl-hed-tr3" >
-                        <th colspan="2" style="text-align: left;" class="bod-red-lft " >W/P Market</th>
-                        <th style="text-align: center;" colspan=""></th>
-                        <th style="text-align: center;" colspan="">YES</th>
-                        <th style="text-align: center;" colspan="" class="bod-red-rit">NO</th>
-                    </tr>
-                </thead>
+                          <td><span class="c-activee">Min : <%=SportLimits.min_stake%>, Max : <%=SportLimits.max_stake%></span></td>
+                          
+                          <td >
+                              <snan data-bs-toggle="collapse" href="#bt-slp-colps-dataSessionOnly-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-dataSessionOnly-<%=i%>" class="tbl-bg-blu-spn button only_over_blue" id="<%=dataSessionOnly[i].marketId%>1">
+                                  
+                              </snan> 
+                          </td>
   
-                <tbody class="acount-stat-tbl-body">
-                    <%for(let i = 0; i < dataNotOnly.length; i++){%>
-                      <tr class="acount-stat-tbl-body-tr odd_even" data-href='#'>
-                        <td colspan="2" style="text-align: left;" class="market" id="<%=dataNotOnly[i].marketId%>">
-                          <%=dataNotOnly[i].title%>
+                          <td >
+                              <snan data-bs-toggle="collapse" href="#bt-slp-colps-dataSessionOnly-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-dataSessionOnly-<%=i%>" class="tbl-bg-pech-spn button only_over_red" id="<%=dataSessionOnly[i].marketId%>2">
+                                  
+                              </snan> 
+                          </td>  
+                      </tr>
+                      <tr>
+                        <td colspan="4">
+                          <div class="my-exc-inn-colaps-txt-dv collapse" id="bt-slp-colps-dataSessionOnly-<%=i%>" >
+                            <%-include("../betslip")%>
+                          </div>
                         </td>
-
-                        <td><span class="c-activee">Min : <%=SportLimits.min_stake%>, Max : <%=SportLimits.max_stake%></span></td>
-                        
-                        <td >
-                            <snan data-bs-toggle="collapse" href="#bt-slp-colps-dataNotOnly-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-dataNotOnly-<%=i%>" class="tbl-bg-blu-spn button only_over_blue" id="<%=dataNotOnly[i].marketId%>1">
-                                
-                            </snan> 
-                        </td>
-
-                        <td >
-                            <snan data-bs-toggle="collapse" href="#bt-slp-colps-dataNotOnly-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-dataNotOnly-<%=i%>" class="tbl-bg-pech-spn button only_over_red" id="<%=dataNotOnly[i].marketId%>2">
-                                
-                            </snan> 
-                        </td>  
-                    </tr>
-                    <tr>
-                      <td colspan="4">
-                        <div class="my-exc-inn-colaps-txt-dv collapse" id="bt-slp-colps-dataNotOnly-<%=i%>" >
-                          <%-include("../betslip")%>
-                        </div>
-                      </td>
-                    </tr>
-                    <%}%>
-                    
-                </tbody>
-  
-              </table>
+                      </tr>
+                      <%}%>
+                      
+                  </tbody>
+    
+                </table>
+              </div>
             </div>
-          </div>
           <%} %>
-          <%} %>
-        <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab6" role="tabpanel" aria-labelledby="fancytab6-tab" tabindex="0">
-          tab 06
-        </div>
+        <%}%>
+        
+
+
+
+
+
+
+
+
+
+
+        
       </div>
     </div>
   </div>
