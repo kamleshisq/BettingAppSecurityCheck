@@ -3445,6 +3445,20 @@ margin-bottom: 0px;
     background: var(--color6);
 }
 
+
+.liked-star{
+    color: #CB1B1C;
+ }
+
+ .my-heart-icon{
+    transition: all 0.3s ease-in-out;
+    z-index: 50;
+ }
+
+ .my-heart-icon:active{
+    transition: all 0.3s ease-in-out;
+    transform: scale(0.2);
+ }
 /* --------------------------------------------------------------------------------------
 ============================ WITHDROWAL PAGE STYLE ========================================
 -------------------------------------------------------------------------------------- */
