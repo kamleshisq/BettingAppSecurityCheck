@@ -6038,7 +6038,7 @@ socket.on('connect', () => {
 
 
     if(pathname === "/Kyc"){
-        console.log("Working")
+        
     }
    
 
