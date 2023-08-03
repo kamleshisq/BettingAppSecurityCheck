@@ -13,8 +13,10 @@
                                 <div class="withdrow-titl-dv">
                                   <%if(user.kycDoc === null){%>
                                     <h6>KYC Status : <span class="c-reed">Pending</span></h6>
-                                  <%}else{ %>
-                                    <h6>KYC Status : <span class="c-reed">Pending</span></h6>
+                                  <%}else if(user.kycDoc != null && isKycVer){ %>
+                                    <h6>KYC Status : <span class="c-gren">Successfull</span></h6>
+                                  <%}else if(user.kycDoc != null && !isKycVer){ %>
+                                    <h6>KYC Status : <span class="c-yell">Processing</span></h6>
                                     <%} %>
                                 </div>
                                 <div class="withdrow-txt-ro">
