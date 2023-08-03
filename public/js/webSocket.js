@@ -78,7 +78,10 @@ socket.on('connect', () => {
                     }
                 })
                 let multiMarketTd1 = document.querySelectorAll('.multi_market');
-                console.log(multiMarketTd1)
+                if(multiMarketTd1.length === 0){
+                    document.getElementById('container').innerHTML = `<h3>MultiMarket</h3>
+                    <p>There are currently no followed multi markets.</p>`
+                }
             }else{
                 multiMarketTd.forEach((multiMarketTd) => {
                     if(multiMarketTd.id == data.id){
