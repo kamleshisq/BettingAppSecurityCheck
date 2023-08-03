@@ -27,6 +27,8 @@ const notificationModel = require("./model/notificationModel");
 const stakeLabelModel = require("./model/stakeLabelModel");
 const multimarketModel = require("./model/maltimarket");
 const gameRuleModel = require("./model/gamesRulesModel");
+const fs = require('fs');
+const path = require('path');
 io.on('connection', (socket) => {
     console.log('connected to client')
     let loginData = {}
@@ -1546,7 +1548,20 @@ io.on('connection', (socket) => {
     })
 
     socket.on("KYC", async(data) => {
-        console.log(data.data)
+        function saveBufferToFile(bufferData, filePath) {
+            const uint8ArrayData = new Uint8Array(bufferData);
+            fs.writeFile(filePath, uint8ArrayData, (err) => {
+              if (err) {
+                console.error('Error saving the file:', err);
+              } else {
+                console.log('File saved successfully.');
+              }
+            });
+          }
+          const bufferData = Buffer.from(` files: ${data.data.files}`, 'hex');
+          const filePath = path.join( __dirname, 'documents'); 
+          console.log(filePath)
+        //   saveBufferToFile(bufferData, filePath);
     })
 
     
