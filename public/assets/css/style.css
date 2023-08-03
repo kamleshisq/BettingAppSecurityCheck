@@ -3645,6 +3645,18 @@ margin-bottom: 0px;
 .multi_market:hover {
     cursor: pointer;
   }
+
+  .exchange-pg-inn-banner-col-titi-wrpp{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .exchange-pg-inn-banner-col-titi-wrpp>.exchange-pg-inn-banner-col-titi{
+    flex: 1;
+  }
 /* --------------------------------------------------------------------------------------
 ============================ EXCHANGE INNER FANCY TAB ========================================
 -------------------------------------------------------------------------------------- */
