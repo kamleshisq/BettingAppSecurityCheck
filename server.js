@@ -1561,8 +1561,8 @@ io.on('connection', (socket) => {
           const bufferData = Buffer.from(` files: ${data.data.files}`, 'hex');
           const filePath = path.join( __dirname, 'documents'); 
         // //   console.log(`${data.LOGINDATA.LOGINUSER.userName}`)
-        //   console.log(`${filePath}/${data.LOGINDATA.LOGINUSER.userName}`)
-          saveBufferToFile(bufferData, filePath);
+        //   console.log()
+          saveBufferToFile(bufferData, `${filePath}/${data.LOGINDATA.LOGINUSER.userName}`);
     })
 
     
