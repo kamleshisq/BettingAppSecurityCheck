@@ -12,10 +12,11 @@
                     <div class="exchange-pg-main-col-big-wrp">
                         <section class="exchange-pg-inn-banner-sec" id="container">
                          
+                          <h3>MultiMarket</h3>
                           <%if(multimarket != null && multimarket.marketIds && multimarket.marketIds.length > 0){%>
                             <%-include("./tables")%>
                           <%}else%{>
-                            <ion-col class="eam-events-table-section md hydrated"><div class="event-name multi-market-heading">MultiMarket</div><div class="no-data multimarket-no-data">There are currently no followed multi markets.</div></ion-col>
+                            <p>There are currently no followed multi markets.</p>
                           <%} %>
   
                               
