@@ -24,6 +24,7 @@ import { addImage } from "./addImage";
 import { updateSlider } from "./updateSlider";
 import { createSlider } from "./addSlider";
 import { userLogin } from "./userLogin";
+import { KYC } from "./kyc";
 // import { func } from "joi";
 
 
@@ -532,4 +533,5 @@ $(document).on('submit', ".kycForm", function(e){
     let fd = new FormData(form);
     let data = Object.fromEntries(fd.entries());
     console.log(data)
+    KYC(data)
 })
