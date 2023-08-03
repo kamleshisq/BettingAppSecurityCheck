@@ -1665,14 +1665,18 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     }
     const liveStream = await liveStreameData(match.eventData.channelId, ipv4)
     const src_regex = /src='([^']+)'/;
-    const match1 = liveStream.data.match(src_regex);
+    let match1
     let src
-    if (match1) {
-         src = match1[1];
-    } else {
-    console.log("No 'src' attribute found in the iframe tag.");
+    if(liveStream.data){
+
+        match1 = liveStream.data.match(src_regex);
+        if (match1) {
+            src = match1[1];
+        } else {
+            console.log("No 'src' attribute found in the iframe tag.");
+        }
+        console.log(src, 123)
     }
-    console.log(src, 123)
     const betLimit = await betLimitModel.find()
     // console.log(match.marketList.goals)
     // let session = match.marketList.session.filter(item => {
