@@ -6040,7 +6040,8 @@ socket.on('connect', () => {
     if(pathname === "/Kyc"){
         $(document).on('click', ".submit", function(e){
             e.preventDefault()
-            
+            let files = $("#formFileSm")[0].files[0];
+            console.log(files)
         })
     }
    
