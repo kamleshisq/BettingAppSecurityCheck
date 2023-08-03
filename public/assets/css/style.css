@@ -2928,7 +2928,7 @@ td>.green{
 
 .nww-bet-slip-wrp-col1-txt-icons{
     padding: 0px 5px;
-    border-radius: 5px;
+    border-radius: 20px;
     background-color: var(--color8);
     font-size: 15px;
 }
@@ -2941,6 +2941,7 @@ td>.green{
     width: 100px;
     text-align: center;
     font-size: 13px;
+    border-radius: 8px;
     color: var(--color8);
 }
 
@@ -2958,15 +2959,18 @@ td>.green{
 .nww-bet-slip-wrp-col2-inn>span{
     font-size: 13px;
     padding: 2px 5px;
-    background-color: var(--color9);
-    border-radius: 5px;
+    /* background-color: var(--color9); */
+    border-radius: 30px;
     cursor: pointer;
+    border: 1px solid var(--color2);
+    color: var(--color2);
 }
 
 .nww-bet-slip-wrp-col3{
     padding-top: 10px;
     display: flex;
     align-items: start;
+    justify-content: space-between;
 }
 
 .nww-bet-slip-wrp-col3-txt1>p{
@@ -2979,7 +2983,7 @@ td>.green{
     align-items: center;
     justify-content: center;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 30px;
     background: var(--color1);
     width: max-content;
     color: var(--color3);
