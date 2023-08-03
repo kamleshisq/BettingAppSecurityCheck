@@ -20,13 +20,11 @@ for(let i = 0; i < multimarket.marketIds.length; i++){
               if(result){
                 isBookmaker = true
               }else{
-                if(item.marketList.bookmaker[1]){
 
-                  result = sportData[0].gameList[0].eventList.find(item => item.marketList.bookmaker != null&&  item.marketList.bookmaker[1].marketId == multimarket.marketIds[i])
+                  result = sportData[0].gameList[0].eventList.find(item => item.marketList.bookmaker != null && item.marketList.bookmaker[1] &&  item.marketList.bookmaker[1].marketId == multimarket.marketIds[i])
                   if(result){
                     isToss = true
                   }
-                }
               }
             }
         }
