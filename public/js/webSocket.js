@@ -77,6 +77,8 @@ socket.on('connect', () => {
                           });
                     }
                 })
+                let multiMarketTd1 = document.querySelectorAll('.multi_market');
+                console.log(multiMarketTd1)
             }else{
                 multiMarketTd.forEach((multiMarketTd) => {
                     if(multiMarketTd.id == data.id){
