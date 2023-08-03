@@ -147,7 +147,7 @@
                     <span id="setingnavbtnn" class="nav-login-regstr-btn">
                       <img class="nav-profile-img" src="/assets/img/exchange/settings.png" alt="">
                     </span>
-                    <div class="search-sv-nav-seting-wrp setting-btn-nav-contnt" id="setingnavbtnntxt">
+                    <div class="search-sv-nav-seting-wrp" id="setingnavbtnntxt">
                       <div class="search-sv-nav-seting-inn">
                         <div class="search-sv-nav-seting-inn-col1">
                           <div class="input-group flex-nowrap input-group-sm my-setting-nav-form">
@@ -435,4 +435,19 @@
           document.getElementById(idname).classList.toggle("active");
           setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
         }
+      </script>
+      <script>
+        $(document).ready(function(){
+          $("#setingnavbtnn").click(function(){
+            $("#setingnavbtnntxt").toggleClass("setting-btn-nav-contnt");
+          });
+        });
+      </script>
+      
+      <script>
+        $(document).ready(function(){
+          $("#setingnavbtnn2").click(function(){
+            $("#setingnavbtnntxt2").toggleClass("setting-btn-nav-contnt");
+          });
+        });
       </script>
