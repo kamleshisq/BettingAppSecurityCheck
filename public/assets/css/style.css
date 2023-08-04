@@ -2891,7 +2891,6 @@ td>.green{
     margin-bottom: 0px;
     font-size: 13px;
     text-align: left;
-    width: 370px;
  }
 
  .nww-bet-slip-wrp-col1-txt-inn>.set-stake-form-input2 {
@@ -2997,6 +2996,7 @@ td>.green{
     display: flex;
     align-items: start;
     justify-content: space-between;
+    gap: 10px; 
 }
 
 .nww-bet-slip-wrp-col3-txt1>p{
