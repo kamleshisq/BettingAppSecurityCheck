@@ -6052,8 +6052,11 @@ socket.on('connect', () => {
           });
 
 
-          socket.on('getPdf', data => {
-            window.open(data, '_blank');
+          socket.on('getPdf', pdfData => {
+            const blob = new Blob([pdfData.data], { type: 'application/pdf' });
+            const pdfUrl = URL.createObjectURL(blob);
+            window.open(pdfUrl, '_blank');
+            URL.revokeObjectURL(pdfUrl);
           })
     }
    
