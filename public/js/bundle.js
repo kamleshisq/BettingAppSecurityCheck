@@ -6747,7 +6747,10 @@ var userLogin = /*#__PURE__*/function () {
         case 3:
           res = _context.sent;
           if (res.data.status === 'success') {
-            (0, _notificationsss.notificationsss)('Logged in successfully!!!!');
+            (0, _notificationsss.notificationsss)({
+              message: 'Logged in successfully!!!!',
+              status: "succes"
+            });
             sessionStorage.setItem('loginUserDetails', JSON.stringify(res.data.data.user));
             sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');

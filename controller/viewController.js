@@ -29,6 +29,7 @@ const request = require('request');
 const multimarkets = require("../model/maltimarket");
 const stakeLable = require("../model/stakeLabelModel");
 const gamrRuleModel = require("../model/gamesRulesModel");
+const casinoFevorite = require("../model/CasinoFevorite")
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -1918,8 +1919,13 @@ exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find();
     let games = await gameModel.find();
     let userLog
+    let gamesFe = []
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
+        let gamesfev = await casinoFevorite.findOne({userId:user._id})
+        if(gamesfev){
+            gamesFe = gamesfev.gameId
+        }
     }
     res.status(200).render("./userSideEjs/liveCasino/main", {
         user,
@@ -1928,7 +1934,8 @@ exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
         check:"Live Casino",
         games,
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        gamesFe
     })
 });
 

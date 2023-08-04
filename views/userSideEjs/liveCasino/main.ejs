@@ -73,6 +73,8 @@
                                               <div class="liv-casino-games-cards-txt">
                                                 <div class="liv-casino-games-cards-txtcol">
                                                   <h6><%=games[i].game_name%></h6>
+                                                  <%if(gamesFe.includes(games[i]._id)){ %>
+                                                  <%} else %>
                                                   <i id="<%=games[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>
                                                 </div>
                                               </div>
