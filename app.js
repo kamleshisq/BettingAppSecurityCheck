@@ -33,7 +33,7 @@ app.use(requestIp.mw());
 app.set('trust proxy', true);
 dotenv.config({path: './config.env'});
 mongoose.connect(process.env.db1,{
-    useNewUrlParser: true,
+    useNewUrlParser: true, 
     useUnifiedTopology: true
 }).then(()=>{
     console.log("MongoDB connected")
