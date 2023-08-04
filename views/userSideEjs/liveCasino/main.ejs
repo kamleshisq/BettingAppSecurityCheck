@@ -26,6 +26,9 @@
                                     <button class="nav-link liv-casino-nav-tab-btnn active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">All Games</button>
                                   </li>
                                   <li class="nav-item liv-casino-nav-tab-li" role="presentation">
+                                    <button class="nav-link liv-casino-nav-tab-btnn active" id="pills-home1-tab" data-bs-toggle="pill" data-bs-target="#pills-home1" type="button" role="tab" aria-controls="pills-home1" aria-selected="false">My Favourites</button>
+                                  </li>
+                                  <li class="nav-item liv-casino-nav-tab-li" role="presentation">
                                     <button class="nav-link liv-casino-nav-tab-btnn" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Roulette </button>
                                   </li>
                                   <li class="nav-item liv-casino-nav-tab-li" role="presentation">
@@ -91,6 +94,36 @@
                                             </div>
                                           </a>
                                         </div>
+                                  <%}%>
+
+                                  </div>
+                                </div>
+                                <div class="tab-pane fade show active" id="pills-home1" role="tabpanel" aria-labelledby="pills-home1-tab" tabindex="0">
+                                  <div class="liv-casino-nav-tab-txtcards-dv" id="gamesFevorite">
+                                    <%for(let i = 0; i < games.length; i++){%>
+                                      <%if(gamesFe.includes(games[i]._id)){ %>
+                                      <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
+                                          <a class="liv-casino-games-cards-a" href="#">
+                                            <div class="liv-casino-games-cards-imgdv">
+                                              <img class="img-fluid img-bdr-red15 forIMG" src="<%=games[i].url_thumb%>" alt="">
+                                              <div class="liv-casino-games-cards-txt">
+                                                <div class="liv-casino-games-cards-txtcol">
+                                                  <h6><%=games[i].game_name%></h6>
+                                                      <i id="<%=games[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i> 
+                                                </div>
+                                              </div>
+                                              <div class="liv-casino-games-cards-txt2">
+                                                  <%if(user){%>
+                                                      <a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=<%=games[i]._id%>">PLAY NOW</a>
+                                                      <%}else{%>
+                                                      <!-- <a class="liv-casino-games-cards-txt2-btn" href="/cards?gameId=<%=games[i]._id%>">LOGIN TO CONTINUE</a> -->
+                                                      <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
+                                                      <%}%>
+                                              </div>
+                                            </div>
+                                          </a>
+                                        </div>
+                                      <%} %>
                                   <%}%>
 
                                   </div>
