@@ -118,8 +118,12 @@ socket.on('connect', () => {
                     if (elementToDelete) {
                       elementToDelete.remove();
                     }
+                    heart.classList.remove("fa-solid", "liked-star");
+
+                }else{
+                    heart.classList.remove("fa-solid", "liked-star");
+
                 }
-                heart.classList.remove("fa-solid", "liked-star");
             }
         })
     }else{
