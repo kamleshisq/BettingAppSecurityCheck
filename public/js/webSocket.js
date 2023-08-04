@@ -132,6 +132,7 @@ socket.on('connect', () => {
         heart.forEach((heart) => {
             if(heart.id == data.id){
                 if(pathname === "/live_casino"){
+                    var gamesFevoriteElement = document.getElementById("gamesFevorite");
                     elementsToDelete.forEach(function(element) {
                         let isAvailable = false
                         var targetElement = element.querySelector("#" + CSS.escape(heart.id));
@@ -139,7 +140,6 @@ socket.on('connect', () => {
                             isAvailable = true 
                         }
                       });
-                    var gamesFevoriteElement = document.getElementById("gamesFevorite");
                     // // var elementsToDelete = gamesFevoriteElement.querySelectorAll(".liv-casino-games-cards-dv.col-lg-3.col-md-3.col-6");
                     let html = `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
                     <a class="liv-casino-games-cards-a" href="#">
