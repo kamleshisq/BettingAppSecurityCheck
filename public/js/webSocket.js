@@ -98,6 +98,16 @@ socket.on('connect', () => {
         }
     // }
   })
+
+
+  $(document).on('click', ".fevoriteHeart", function(e){
+    e.preventDefault()
+    console.log(this.id)
+  })
+
+
+
+
  
    // JavaScript event delegation using the parent <table> element
    const allTables = document.querySelectorAll('.myTable');
