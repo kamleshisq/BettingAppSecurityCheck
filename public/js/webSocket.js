@@ -114,6 +114,7 @@ socket.on('connect', () => {
             if(heart.id == data.id){
                 if(pathname === "/live_casino"){
                     var gamesFevoriteElement = document.getElementById("gamesFevorite");
+                    console.log(gamesFevoriteElement)
                     var elementToDelete = gamesFevoriteElement.querySelector(`#${data.id}`);
                     if (elementToDelete) {
                       elementToDelete.remove();
