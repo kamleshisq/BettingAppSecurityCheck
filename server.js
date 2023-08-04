@@ -1324,6 +1324,7 @@ io.on('connection', (socket) => {
         }
         let fevGames
         if(data.LOGINDATA.LOGINUSER != ""){
+            console.log(data.LOGINDATA.LOGINUSER.id)
            let fevGames1 = await CasinoFevoriteModel.findOne({userId:data.LOGINDATA.LOGINUSER.id})
            fevGames = fevGames1.gameId
         }
