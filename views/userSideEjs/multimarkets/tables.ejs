@@ -34,9 +34,9 @@ for(let i = 0; i < multimarket.marketIds.length; i++){
 
 <%if(result){%>
   <%console.left("working") %>
-  <% multiTrue = false %>
   
   <%if(!isBookmaker && !isToss){%>
+    <% multiTrue = false %>
     <div class="exchange-pg-inn-banner-col2">
       <div class="exchange-pg-inn-banner-col-titi-wrpp">
         <div class="exchange-pg-inn-banner-col-titi">
@@ -195,6 +195,8 @@ for(let i = 0; i < multimarket.marketIds.length; i++){
       
       </div>
   <%}else if (isBookmaker && !isToss){%>
+    <% multiTrue = false %>
+
     <div class="exchange-pg-inn-banner-col2">
       <div class="exchange-pg-inn-banner-col-titi-wrpp">
         <div class="exchange-pg-inn-banner-col-titi">
@@ -271,6 +273,8 @@ for(let i = 0; i < multimarket.marketIds.length; i++){
     
     </div>
   <%}else if(!isBookmaker && isToss){ %>
+    <% multiTrue = false %>
+
     <div class="exchange-pg-inn-banner-col2">
       <div class="exchange-pg-inn-banner-col-titi-wrpp">
         <div class="exchange-pg-inn-banner-col-titi">
