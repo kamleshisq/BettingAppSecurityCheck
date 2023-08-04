@@ -110,7 +110,12 @@
                                               <div class="liv-casino-games-cards-txt">
                                                 <div class="liv-casino-games-cards-txtcol">
                                                   <h6><%=data1array[i].game_name%></h6>
-                                                  <i id="<%=data1array[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>
+                                                  <%if(gamesFe.includes(data1array[i]._id)){ %>
+                                                    <i id="<%=data1array[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i>
+                                                    <%} else{ %>
+                                                    <!-- <i id="<%=games[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i> -->
+                                                    <i id="<%=data1array[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>
+                                                <%} %>
                                                 </div>
                                               </div>
                                               <div class="liv-casino-games-cards-txt2">
@@ -142,7 +147,11 @@
                                               <div class="liv-casino-games-cards-txt">
                                                 <div class="liv-casino-games-cards-txtcol">
                                                   <h6><%=data2array[i].game_name%></h6>
-                                                  <i id="<%=data2array[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>
+                                                  <%if(gamesFe.includes(data2array[i]._id)){ %>
+                                                    <i id="<%=data2array[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i>
+                                                    <%} else{ %>
+                                                    <i id="<%=data2array[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>
+                                                <%} %>
                                                 </div>
                                               </div>
                                               <div class="liv-casino-games-cards-txt2">
@@ -174,7 +183,11 @@
                                               <div class="liv-casino-games-cards-txt">
                                                 <div class="liv-casino-games-cards-txtcol">
                                                   <h6><%=data3array[i].game_name%></h6>
-                                                  <i id="<%=data3array[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>
+                                                  <%if(gamesFe.includes(data3array[i]._id)){ %>
+                                                    <i id="<%=data3array[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i>
+                                                    <%} else{ %>
+                                                    <i id="<%=data3array[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>
+                                                <%} %>
                                                 </div>
                                               </div>
                                               <div class="liv-casino-games-cards-txt2">
@@ -203,7 +216,12 @@
                                             <div class="liv-casino-games-cards-txt">
                                               <div class="liv-casino-games-cards-txtcol">
                                                 <h6><%=vertuals[i].game_name%></h6>
-                                                <i id="<%=vertuals[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>
+                                                <%if(gamesFe.includes(vertuals[i]._id)){ %>
+                                                  <i id="<%=vertuals[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i>
+                                                  <%} else{ %>
+                                                  <!-- <i id="<%=data3array[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i> -->
+                                                  <i id="<%=vertuals[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>
+                                              <%} %>
                                               </div>
                                             </div>
                                             <div class="liv-casino-games-cards-txt2">
