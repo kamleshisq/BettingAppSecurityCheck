@@ -1,9 +1,7 @@
 <%
 let multiTrue = true;
-console.log(multiTrue)
 console.log(multimarket.marketIds, 45646565456)
 for(let i = 0; i < multimarket.marketIds.length; i++){
-
   console.log(i, 123)
     let result
     let isBookmaker = false
@@ -35,10 +33,9 @@ for(let i = 0; i < multimarket.marketIds.length; i++){
 %>
 
 <%if(result){%>
-  <%console.left("working") %>
+  <% multiTrue = false %>
   
   <%if(!isBookmaker && !isToss){%>
-    <% multiTrue = false %>
     <div class="exchange-pg-inn-banner-col2">
       <div class="exchange-pg-inn-banner-col-titi-wrpp">
         <div class="exchange-pg-inn-banner-col-titi">
@@ -197,8 +194,6 @@ for(let i = 0; i < multimarket.marketIds.length; i++){
       
       </div>
   <%}else if (isBookmaker && !isToss){%>
-    <% multiTrue = false %>
-
     <div class="exchange-pg-inn-banner-col2">
       <div class="exchange-pg-inn-banner-col-titi-wrpp">
         <div class="exchange-pg-inn-banner-col-titi">
@@ -275,8 +270,6 @@ for(let i = 0; i < multimarket.marketIds.length; i++){
     
     </div>
   <%}else if(!isBookmaker && isToss){ %>
-    <% multiTrue = false %>
-
     <div class="exchange-pg-inn-banner-col2">
       <div class="exchange-pg-inn-banner-col-titi-wrpp">
         <div class="exchange-pg-inn-banner-col-titi">
@@ -357,7 +350,6 @@ for(let i = 0; i < multimarket.marketIds.length; i++){
 <%}%>
 
 
-<%console.log(multiTrue)%>
 <%if(multiTrue){%>
   <p>There are currently no followed multi markets.</p>
 <%} %>
