@@ -6038,7 +6038,7 @@ socket.on('connect', () => {
 
     // console.log(pathname)
 
-    if(pathname === "/kyc"){
+    if(pathname === "/kyc" || pathname === "/Kyc"){
         console.log("Working")
         $(document).on('click', ".submit", function(e){
             e.preventDefault()
