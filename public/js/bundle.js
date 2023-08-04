@@ -6816,7 +6816,7 @@ var KYC = /*#__PURE__*/function () {
             });
             setTimeout(function () {
               location.reload();
-            }, 300);
+            }, 2000);
             // $(".popup_body").removeClass("popup_body_show");
           }
           _context.next = 11;
