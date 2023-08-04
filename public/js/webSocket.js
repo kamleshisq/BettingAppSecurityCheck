@@ -4229,7 +4229,7 @@ socket.on('connect', () => {
                 html += `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
                 <a class="liv-casino-games-cards-a" href="#">
                   <div class="liv-casino-games-cards-imgdv">
-                    <img class="img-fluid img-bdr-red15" src="${games[i].url_thumb}" alt="">
+                    <img class="img-fluid img-bdr-red15 forIMG" src="${games[i].url_thumb}" alt="">
                     <div class="liv-casino-games-cards-txt">
                       <div class="liv-casino-games-cards-txtcol">
                         <h6>${games[i].game_name}</h6>
@@ -4256,7 +4256,7 @@ socket.on('connect', () => {
                 htmlV += `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
                 <a class="liv-casino-games-cards-a" href="#">
                   <div class="liv-casino-games-cards-imgdv">
-                    <img class="img-fluid img-bdr-red15" src="${vertuals[i].url_thumb}" alt="">
+                    <img class="img-fluid img-bdr-red15 forIMG" src="${vertuals[i].url_thumb}" alt="">
                     <div class="liv-casino-games-cards-txt">
                       <div class="liv-casino-games-cards-txtcol">
                         <h6>${vertuals[i].game_name}</h6>
@@ -4288,7 +4288,7 @@ socket.on('connect', () => {
                 htmlr += `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
                 <a class="liv-casino-games-cards-a" href="#">
                   <div class="liv-casino-games-cards-imgdv">
-                    <img class="img-fluid img-bdr-red15" src="${roulette[i].url_thumb}" alt="">
+                    <img class="img-fluid img-bdr-red15 forIMG" src="${roulette[i].url_thumb}" alt="">
                     <div class="liv-casino-games-cards-txt">
                       <div class="liv-casino-games-cards-txtcol">
                         <h6>${roulette[i].game_name}</h6>
@@ -4323,7 +4323,7 @@ socket.on('connect', () => {
                 htmlb += `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
                 <a class="liv-casino-games-cards-a" href="#">
                   <div class="liv-casino-games-cards-imgdv">
-                    <img class="img-fluid img-bdr-red15" src="${baccarat[i].url_thumb}" alt="">
+                    <img class="img-fluid img-bdr-red15 forIMG" src="${baccarat[i].url_thumb}" alt="">
                     <div class="liv-casino-games-cards-txt">
                       <div class="liv-casino-games-cards-txtcol">
                         <h6>${baccarat[i].game_name}</h6>
@@ -4357,7 +4357,7 @@ socket.on('connect', () => {
                 htmll += `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
                 <a class="liv-casino-games-cards-a" href="#">
                   <div class="liv-casino-games-cards-imgdv">
-                    <img class="img-fluid img-bdr-red15" src="${live[i].url_thumb}" alt="">
+                    <img class="img-fluid img-bdr-red15 forIMG" src="${live[i].url_thumb}" alt="">
                     <div class="liv-casino-games-cards-txt">
                       <div class="liv-casino-games-cards-txtcol">
                         <h6>${live[i].game_name}</h6>
