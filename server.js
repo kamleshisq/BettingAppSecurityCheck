@@ -1568,7 +1568,7 @@ io.on('connection', (socket) => {
     socket.on('getPdf', async(data) => {
         console.log(data)
         const fileName = `${data.LOGINDATA.LOGINUSER.userName}`; 
-        const filePath = `/var/www/bettingApp/documents/${fileName}`;
+        const filePath = `/var/www/bettingApp/documents/${fileName}.pdf`;
         fs.readFile(filePath, (err, data1) => {
             if (err) {
               console.error('Error reading the PDF file:', err);

@@ -6036,8 +6036,10 @@ socket.on('connect', () => {
         
     }
 
+    // console.log(pathname)
 
-    if(pathname === "/Kyc"){
+    if(pathname === "/kyc"){
+        console.log("Working")
         $(document).on('click', ".submit", function(e){
             e.preventDefault()
             let data = {}
@@ -6048,15 +6050,20 @@ socket.on('connect', () => {
         })
 
         document.getElementById("viewPdfButton").addEventListener("click", function() {
+            console.log("Click")
             socket.emit('getPdf', {LOGINDATA})
           });
 
 
           socket.on('getPdf', pdfData => {
-            const blob = new Blob([pdfData.data], { type: 'application/pdf' });
-            const pdfUrl = URL.createObjectURL(blob);
-            window.open(pdfUrl, '_blank');
-            URL.revokeObjectURL(pdfUrl);
+            try {
+                const blob = new Blob([pdfData.data1], { type: 'application/pdf' });
+                const pdfUrl = URL.createObjectURL(blob);
+                window.open(pdfUrl, '_blank');
+                URL.revokeObjectURL(pdfUrl);
+              } catch (error) {
+                console.error('Error creating or opening the PDF:', error);
+              }
           })
     }
    
