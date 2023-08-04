@@ -8,8 +8,7 @@ const CasinoFevorite = mongoose.Schema({
         unique:true
     },
     gameId:[{
-        type:String,
-        unique:true
+        type:String
     }]
 })
 
