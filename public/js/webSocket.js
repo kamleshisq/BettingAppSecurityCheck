@@ -116,11 +116,11 @@ socket.on('connect', () => {
                     var gamesFevoriteElement = document.getElementById("gamesFevorite");
                     var elementsToDelete = gamesFevoriteElement.querySelectorAll(".liv-casino-games-cards-dv.col-lg-3.col-md-3.col-6");
                     elementsToDelete.forEach(function(element) {
-                        var targetElement = element.querySelector(`#${heart.id}`);
+                        var targetElement = element.querySelector("#" + CSS.escape(heart.id));
                         if (targetElement) {
-                        element.remove();
+                          element.remove(); 
                         }
-                    });
+                      });
                     heart.classList.remove("fa-solid", "liked-star");
                 }else{
                     heart.classList.remove("fa-solid", "liked-star");
