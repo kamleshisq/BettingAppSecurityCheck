@@ -6046,6 +6046,11 @@ socket.on('connect', () => {
              data.idNum = $('#exampleInputPassword1').val()
             socket.emit("KYC", {data, LOGINDATA})
         })
+
+        document.getElementById("viewPdfButton").addEventListener("click", function() {
+            const pdfUrl = `/var/www/bettingApp/documents/${LOGINDATA.LOGINUSER.userName}`;
+            window.open(pdfUrl, '_blank');
+          });
     }
    
 
