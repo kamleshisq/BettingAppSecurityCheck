@@ -10,7 +10,9 @@ export const KYC = async(data)=>{
         });
         if(res.data.status === 'success'){
                 notificationsss({message:"Updated Successfully!!!", status:"success"});
-           
+                setTimeout(function() {
+                    location.reload();
+                  }, 300);
             // $(".popup_body").removeClass("popup_body_show");
 
            
