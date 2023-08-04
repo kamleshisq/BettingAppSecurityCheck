@@ -277,6 +277,10 @@ a{
     position: relative;
 }
 
+.forIMG{
+    width: 100%;
+}
+
 .search-sv-nav-seting-inn-col2{
     padding-left: 5px;
     border-left: 2px solid var(--color5);

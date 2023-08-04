@@ -152,6 +152,10 @@ a{
     100%{background-color: transparent;}
 }
 
+.forIMG{
+    width: 100%;
+}
+
 .blink-nav-mnu:hover{
     transition: all 0.3s ease-in-out;
     border-radius: 30px;
