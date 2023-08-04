@@ -150,6 +150,7 @@ socket.on('connect', () => {
                       </div>
                     </a>
                   </div>`
+                  gamesFevoriteElement.append(html)
                     // console.log(data.gameDetails)
                     heart.classList.add("fa-solid", "liked-star");
                 }else{
