@@ -66,28 +66,20 @@
                   return gameName.includes('roulette') || category.includes('roulette');
                 }); %>
                   <%for(let i = 0; i < data1array.length; i++){%>
-                  <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
-                    <a class="liv-casino-games-cards-a" href="#">
-                      </a><div class="liv-casino-games-cards-imgdv"><a class="liv-casino-games-cards-a" href="#">
-                        <img class="img-fluid img-bdr-red15" src="<%=data1array[i].url_thumb%>" alt="">
-                        <div class="liv-casino-games-cards-txt">
-                          <div class="liv-casino-games-cards-txtcol">
-                            <h6><%=data1array[i].game_name%></h6>
-                            <i class="fa-regular fa-heart"></i>
+                    <div class="col-lg-3 col-md-6 col-6 cardspg-col">
+                      <div class="cardspg-col-txt">
+                          <div class="cardspg-col-txt-imgdv-wrp">
+                              <span class="cardspg-col-txt-bg-anim-spn"></span>
+                              <img class="img-fluid cards-pg-game-img" src="<%=data1array[i].url_thumb%>" alt="">
+                              <%if(user){%>
+                                <a class="cardspg-col-txt-playnow-btn" href="/cards?gameId=<%=games[i]._id%>">PLAY NOW</a>
+                                <%}else{%>
+                                <!-- <a class="cardspg-col-txt-playnow-btn" href="/cards?gameId=<%=games[i]._id%>">LOGIN TO CONTINUE</a> -->
+                                <a class="cardspg-col-txt-playnow-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
+                                <%}%>
                           </div>
-                        </div>
-                        </a><div class="liv-casino-games-cards-txt2"><a class="liv-casino-games-cards-a" href="#">
-                          </a>
-                          <%if(user){%>
-                            <a class="liv-casino-games-cards-txt2-btn" href="/cards?gameId=<%=data1array[i]._id%>">PLAY NOW</a>
-                            <%}else{%>
-                            <!-- <a class="liv-casino-games-cards-txt2-btn" href="/cards?gameId=<%=games[i]._id%>">LOGIN TO CONTINUE</a> -->
-                            <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
-                            <%}%>
-                        </div>
                       </div>
-                    
-                  </div>
+                    </div>
                   <%}%>
                 
                 
