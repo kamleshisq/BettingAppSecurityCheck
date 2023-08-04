@@ -4297,8 +4297,13 @@ socket.on('connect', () => {
                     <img class="img-fluid img-bdr-red15 forIMG" src="${games.games[i].url_thumb}" alt="">
                     <div class="liv-casino-games-cards-txt">
                       <div class="liv-casino-games-cards-txtcol">
-                        <h6>${games.games[i].game_name}</h6>
-                        <i class="fa-regular fa-heart"></i>
+                        <h6>${games.games[i].game_name}</h6>`
+                        if(games.fevGames.includes(games.games._id)){
+                            html += `<i id="${games.games[i]._id}" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i>`
+                        }else{
+                            html += `<i id="${games.games[i]._id}" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>`
+                        }
+                        html += `
                       </div>
                     </div>
                     <div class="liv-casino-games-cards-txt2">`
