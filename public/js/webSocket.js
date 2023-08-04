@@ -4283,21 +4283,21 @@ socket.on('connect', () => {
         $(document).ready(function() {
             $('.form-select').on('change', function() {
               var selectedValue = $(this).val();
-              socket.emit("liveCasinoPage", selectedValue)
+              socket.emit("liveCasinoPage", {selectedValue, LOGINDATA})
             });
           });
 
 
           socket.on("liveCasinoPage", async(games) =>{
             let html = ""
-            for(let i = 0; i < games.length; i++){
+            for(let i = 0; i < games.games.length; i++){
                 html += `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
                 <a class="liv-casino-games-cards-a" href="#">
                   <div class="liv-casino-games-cards-imgdv">
-                    <img class="img-fluid img-bdr-red15 forIMG" src="${games[i].url_thumb}" alt="">
+                    <img class="img-fluid img-bdr-red15 forIMG" src="${games.games[i].url_thumb}" alt="">
                     <div class="liv-casino-games-cards-txt">
                       <div class="liv-casino-games-cards-txtcol">
-                        <h6>${games[i].game_name}</h6>
+                        <h6>${games.games[i].game_name}</h6>
                         <i class="fa-regular fa-heart"></i>
                       </div>
                     </div>
@@ -4306,7 +4306,7 @@ socket.on('connect', () => {
                     if(LOGINDATA.LOGINUSER === ""){
                       html +=  `<a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>`
                     }else{
-                        html += `<a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=${games[i]._id}">PLAY NOW</a>`
+                        html += `<a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=${games.games[i]._id}">PLAY NOW</a>`
                     }
                     html += `</div>
                             </div>
@@ -4315,7 +4315,7 @@ socket.on('connect', () => {
             }
             document.getElementById("games").innerHTML = html
 
-            let vertuals = games.filter(item => item.category == "Virtual")
+            let vertuals = games.games.filter(item => item.category == "Virtual")
             let htmlV = ""
             for(let i = 0; i < vertuals.length; i++){
                 htmlV += `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
@@ -4341,7 +4341,7 @@ socket.on('connect', () => {
             }
             document.getElementById("vertuals").innerHTML = htmlV
 
-            let roulette = games.filter(item => 
+            let roulette = games.games.filter(item => 
                 {
                     const gameName = item.game_name.toLowerCase();
                     const category = item.category.toLowerCase();
@@ -4376,7 +4376,7 @@ socket.on('connect', () => {
 
 
 
-            let baccarat = games.filter(item => 
+            let baccarat = games.games.filter(item => 
                 {
                     const gameName = item.game_name.toLowerCase();
                     const category = item.category.toLowerCase();
@@ -4410,7 +4410,7 @@ socket.on('connect', () => {
 
 
 
-            let live = games.filter(item => 
+            let live = games.games.filter(item => 
                 {
                     const gameName = item.game_name.toLowerCase();
                     const category = item.category.toLowerCase();

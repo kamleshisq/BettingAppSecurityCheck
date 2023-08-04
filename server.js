@@ -1317,12 +1317,17 @@ io.on('connection', (socket) => {
 
     socket.on('liveCasinoPage', async(data) => {
         let games
-        if(data === "All"){
+        if(data.selectedValue === "All"){
              games = await gameModel.find()
         }else{
-            games = await gameModel.find({provider_name:data})
+            games = await gameModel.find({provider_name:data.selectedValue})
         }
-        socket.emit("liveCasinoPage", games)
+        let fevGames
+        if(data.LOGINDATA.LOGINUSER != ""){
+           let fevGames1 = await CasinoFevoriteModel.findOne({userId:data.LOGINDATA.LOGINUSER.id})
+           fevGames = fevGames1.gameId
+        }
+        socket.emit("liveCasinoPage", {games, fevGames})
     })
 
     socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
