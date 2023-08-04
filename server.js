@@ -1565,6 +1565,12 @@ io.on('connection', (socket) => {
           saveBufferToFile(bufferData, `${filePath}/${data.LOGINDATA.LOGINUSER.userName}`);
     })
 
+    socket.on('getPdf', async(data) => {
+        const fileName = `${data.LOGINUSER.userName}`; 
+        const filePath = `/var/www/bettingApp/documents/${fileName}`;
+        socket.emit('getPdf', filePath)
+    })
+
     
 })
 

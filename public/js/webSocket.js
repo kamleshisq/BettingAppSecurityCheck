@@ -6048,9 +6048,13 @@ socket.on('connect', () => {
         })
 
         document.getElementById("viewPdfButton").addEventListener("click", function() {
-            const pdfUrl = `/var/www/bettingApp/documents/${LOGINDATA.LOGINUSER.userName}`;
-            window.open(pdfUrl, '_blank');
+            socket.emit('getPdf', {LOGINDATA})
           });
+
+
+          socket.on('getPdf', data => {
+            window.open(data, '_blank');
+          })
     }
    
 
