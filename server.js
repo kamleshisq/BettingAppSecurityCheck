@@ -1567,7 +1567,7 @@ io.on('connection', (socket) => {
 
     socket.on('getPdf', async(data) => {
         console.log(data)
-        const fileName = `${data.LOGINUSER.userName}`; 
+        const fileName = `${data.LOGINDATA.LOGINUSER.userName}`; 
         const filePath = `/var/www/bettingApp/documents/${fileName}`;
         socket.emit('getPdf', filePath)
     })
