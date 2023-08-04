@@ -2879,8 +2879,28 @@ td>.green{
 }
 
 .my-exc-inn-colaps-txt-dv{
-    margin: 0px 2px;
-}
+    margin: 0px 0px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    width: 100%;
+    padding: 0px 5px;
+ }
+
+ .nww-bet-slip-wrp-col3-txt1>p {
+    margin-bottom: 0px;
+    font-size: 13px;
+    text-align: left;
+    width: 370px;
+ }
+
+ .nww-bet-slip-wrp-col1-txt-inn>.set-stake-form-input2 {
+    width: 100px;
+    text-align: center;
+    font-size: 13px;
+    border-radius: 8px;
+    color: var(--color4);
+ }
 
 .my-exc-inn-colaps-txt-body{
     border: none;
