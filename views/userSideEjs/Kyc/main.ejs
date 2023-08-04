@@ -38,15 +38,7 @@
                                         </div>
                                       </div>
                                     </div>
-                                    <%if(user.kycDoc != null){ %>
-                                      <div class="withdrow-txt-col col-lg-12 col-md-12 col-12">
-                                        <div class="withdrow-txt-col-wrp">
-                                          <div class="withdrow-txt-doc-upload-col-btn-dv">
-                                            <button type="button" id="viewPdfButton">View Uploaded Document</button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    <%} %>
+                                    
                                     <div class="withdrow-txt-col col-lg-8 col-md-8 col-12">
                                       <div class="withdrow-txt-col-wrp">
                                         <div class="withdrow-txt-doc-upload-ro">
@@ -69,6 +61,9 @@
                                           <div class="withdrow-txt-doc-upload-col col-lg-12 col-md-12 col-12">
                                             <div class="withdrow-txt-doc-upload-col-btn-dv">
                                               <!-- <a href="#">SUBMIT YOUR DETAILS</a> -->
+                                              <%if(user.kycDoc != null){ %>
+                                                <button type="button" id="viewPdfButton">View Uploaded Document</button>
+                                              <%} %>
                                               <button type="submit">SUBMIT YOUR DETAILS</button>
                                             </div>
                                           </div>
