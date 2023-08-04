@@ -132,9 +132,10 @@ socket.on('connect', () => {
         heart.forEach((heart) => {
             if(heart.id == data.id){
                 if(pathname === "/live_casino"){
-                    var gamesFevoriteElement = document.getElementById("gamesFevorite");
-                    // var elementsToDelete = gamesFevoriteElement.querySelectorAll(".liv-casino-games-cards-dv.col-lg-3.col-md-3.col-6");
-                    let html = ``
+                    // var gamesFevoriteElement = document.getElementById("gamesFevorite");
+                    // // var elementsToDelete = gamesFevoriteElement.querySelectorAll(".liv-casino-games-cards-dv.col-lg-3.col-md-3.col-6");
+                    // let html = ``
+                    console.log(data.gameDetails)
                     heart.classList.add("fa-solid", "liked-star");
                 }else{
                 heart.classList.add("fa-solid", "liked-star");
