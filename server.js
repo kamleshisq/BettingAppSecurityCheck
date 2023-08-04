@@ -1601,6 +1601,7 @@ io.on('connection', (socket) => {
                 socket.emit("CasinoFevorite", {id:data.id,})
             }
         }catch(err){
+            console.log(err)
             socket.emit("CasinoFevorite", "err")
         }
         // console.log(data)
