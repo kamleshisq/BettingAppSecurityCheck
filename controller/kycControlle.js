@@ -31,7 +31,9 @@ exports.uploadphoto = catchAsynch(async(req, res, next) => {
             }
 
         }else{
-            return next(new AppError("Please Upload an image", 404))
+            return next(new AppError("Please Upload pdf", 404))
         }
+    }else{
+        return next(new AppError("Please Upload pdf", 404))
     }
 })
