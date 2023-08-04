@@ -1578,6 +1578,10 @@ io.on('connection', (socket) => {
         })
     })
 
+    socket.on("CasinoFevorite", async(data) => {
+        console.log(data)
+    })
+
     
 })
 

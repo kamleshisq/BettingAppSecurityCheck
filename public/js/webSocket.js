@@ -102,7 +102,8 @@ socket.on('connect', () => {
 
   $(document).on('click', ".fevoriteHeart", function(e){
     e.preventDefault()
-    console.log(this.id)
+    let id = this.id
+    socket.emit("CasinoFevorite", {id, LOGINDATA})
   })
 
 
