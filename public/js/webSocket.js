@@ -112,6 +112,13 @@ socket.on('connect', () => {
     if(data.remove){
         heart.forEach((heart) =>  {
             if(heart.id == data.id){
+                if(pathname === "/live_casino"){
+                    var gamesFevoriteElement = document.getElementById("gamesFevorite");
+                    var elementToDelete = gamesFevoriteElement.querySelector(`#${data.id}`);
+                    if (elementToDelete) {
+                      elementToDelete.remove();
+                    }
+                }
                 heart.classList.remove("fa-solid", "liked-star");
             }
         })
