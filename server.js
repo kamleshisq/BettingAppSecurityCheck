@@ -1569,7 +1569,13 @@ io.on('connection', (socket) => {
         console.log(data)
         const fileName = `${data.LOGINDATA.LOGINUSER.userName}`; 
         const filePath = `/var/www/bettingApp/documents/${fileName}`;
-        socket.emit('getPdf', filePath)
+        fs.readFile(filePath, (err, data1) => {
+            if (err) {
+              console.error('Error reading the PDF file:', err);
+              return;
+            }
+            socket.emit('getPdf', { fileName, data1 });
+        })
     })
 
     
