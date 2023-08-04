@@ -7,8 +7,12 @@ const CasinoFevorite = mongoose.Schema({
         required:true,
         unique:true
     },
-    gameId:{
+    gameId:[{
         type:String,
         unique:true
-    }
+    }]
 })
+
+const CasinoFevoriteModel = mongoose.model('CasinoFevoriteModel', CasinoFevorite)
+
+module.exports = CasinoFevoriteModel

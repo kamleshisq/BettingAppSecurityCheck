@@ -106,6 +106,10 @@ socket.on('connect', () => {
     socket.emit("CasinoFevorite", {id, LOGINDATA})
   })
 
+  socket.on('CasinoFevorite', async(data) => {
+    console.log(data)
+  })
+
 
 
 

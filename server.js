@@ -27,6 +27,7 @@ const notificationModel = require("./model/notificationModel");
 const stakeLabelModel = require("./model/stakeLabelModel");
 const multimarketModel = require("./model/maltimarket");
 const gameRuleModel = require("./model/gamesRulesModel");
+const CasinoFevoriteModel = require("./model/CasinoFevorite");
 const fs = require('fs');
 const path = require('path');
 io.on('connection', (socket) => {
@@ -1579,7 +1580,30 @@ io.on('connection', (socket) => {
     })
 
     socket.on("CasinoFevorite", async(data) => {
-        console.log(data)
+        try{
+            let games = await CasinoFevoriteModel.findOne({userId:data.LOGINDATA.LOGINUSER._id})
+            if(games){
+                const index = games.gameId.indexOf(data.id);
+                    if (index !== -1) {
+                        // If data.id is found in the array, remove it using splice
+                        games.gameId.splice(index, 1);
+                        await games.save()
+                        socket.emit("CasinoFevorite", {id:data.id,remove:true})
+                    } else {
+                        // If data.id is not found in the array, add it
+                        games.gameId.push(data.id);
+                        await games.save()
+                        socket.emit("CasinoFevorite", {id:data.id,remove:false})
+                    }
+                
+            }else{
+                await CasinoFevoriteModel.create({userId:data.LOGINDATA.LOGINUSER._id, gameId:[`${data.id}`]})
+                socket.emit("CasinoFevorite", {id:data.id,})
+            }
+        }catch(err){
+            socket.emit("CasinoFevorite", "err")
+        }
+        // console.log(data)
     })
 
     
