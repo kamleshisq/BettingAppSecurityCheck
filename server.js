@@ -1322,7 +1322,7 @@ io.on('connection', (socket) => {
         }else{
             games = await gameModel.find({provider_name:data.selectedValue})
         }
-        let fevGames
+        let fevGames = []
         if(data.LOGINDATA.LOGINUSER != "" && data.LOGINDATA.LOGINUSER != undefined){
             console.log(data.LOGINDATA.LOGINUSER.id)
            let fevGames1 = await CasinoFevoriteModel.findOne({userId:data.LOGINDATA.LOGINUSER.id})
