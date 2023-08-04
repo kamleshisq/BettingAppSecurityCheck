@@ -2473,6 +2473,8 @@ a{
     justify-content: space-between;
     padding: 5px 10px;
     color: var(--color3);
+    z-index: 50; 
+    position: relative;
  }
 
  .liv-casino-games-cards-txtcol>h6{
