@@ -132,10 +132,25 @@ socket.on('connect', () => {
         heart.forEach((heart) => {
             if(heart.id == data.id){
                 if(pathname === "/live_casino"){
-                    // var gamesFevoriteElement = document.getElementById("gamesFevorite");
+                    var gamesFevoriteElement = document.getElementById("gamesFevorite");
                     // // var elementsToDelete = gamesFevoriteElement.querySelectorAll(".liv-casino-games-cards-dv.col-lg-3.col-md-3.col-6");
-                    // let html = ``
-                    console.log(data.gameDetails)
+                    let html = `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
+                    <a class="liv-casino-games-cards-a" href="#">
+                      <div class="liv-casino-games-cards-imgdv">
+                        <img class="img-fluid img-bdr-red15 forIMG" src="${data.gameDetails.url_thumb}" alt="">
+                        <div class="liv-casino-games-cards-txt">
+                          <div class="liv-casino-games-cards-txtcol">
+                            <h6>${data.gameDetails.game_name}</h6>
+                                <i id="${data.gameDetails._id}" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i> 
+                          </div>
+                        </div>
+                        <div class="liv-casino-games-cards-txt2">
+                                <a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=${data.gameDetails._id}">PLAY NOW</a>
+                        </div>
+                      </div>
+                    </a>
+                  </div>`
+                    // console.log(data.gameDetails)
                     heart.classList.add("fa-solid", "liked-star");
                 }else{
                 heart.classList.add("fa-solid", "liked-star");
