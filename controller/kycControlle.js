@@ -2,6 +2,8 @@ const catchAsynch = require("../utils/catchAsync");
 const AppError = require("../utils/AppError");
 const userModel = require("../model/userModel");
 const path = require('path');
+// data.kycDoc = path.join(__dirname, 'documents', req.currentUser.userName);
+// console.log(logo)
 
 
 exports.uploadphoto = catchAsynch(async(req, res, next) => {
@@ -13,12 +15,9 @@ exports.uploadphoto = catchAsynch(async(req, res, next) => {
         let data = {}
         if(req.files.file.mimetype.startsWith('application/pdf')){
             const image = req.files.file
-            // console.log(logo)
-            // data.kycDoc = path.join(__dirname, 'documents', req.currentUser.userName);
             data.kycDoc = `/var/www/bettingApp/documents/${req.currentUser.userName}`
             image.mv(`${data.kycDoc}.pdf`, (err)=>{
                 if(err) 
-                console.log(err, 4545)
                 return next(new AppError("Something went wrong please try again later", 400))
             })
         }else{
