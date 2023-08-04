@@ -107,7 +107,20 @@ socket.on('connect', () => {
   })
 
   socket.on('CasinoFevorite', async(data) => {
-    console.log(data)
+    let heart = document.querySelectorAll('.fevoriteHeart');
+    if(data.remove){
+        heart.forEach((heart) =>  {
+            if(heart.id == data.id){
+                heart.classList.toggle("fa-solid");
+            }
+        })
+    }else{
+        heart.forEach((heart) => {
+            if(heart.id == data.id){
+                heart.classList.toggle("liked-star");
+            }
+        })
+    }
   })
 
 
