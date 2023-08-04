@@ -1593,7 +1593,7 @@ io.on('connection', (socket) => {
                         // If data.id is not found in the array, add it
                         games.gameId.push(data.id);
                         await games.save()
-                        let gameDetails = await gameModel.findOne({game_id:data.id})
+                        let gameDetails = await gameModel.findById(data.id)
                         socket.emit("CasinoFevorite", {id:data.id,remove:false, gameDetails})
                     }
                 
