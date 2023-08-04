@@ -6810,18 +6810,11 @@ var KYC = /*#__PURE__*/function () {
         case 3:
           res = _context.sent;
           if (res.data.status === 'success') {
-            if (data.status === "success") {
-              (0, _notificationsss.notificationsss)({
-                message: "Updated Successfully!!!",
-                status: "success"
-              });
-            } else {
-              console.log(data);
-              (0, _notificationsss.notificationsss)({
-                message: "Updated Successfully!!!",
-                status: "12315"
-              });
-            }
+            (0, _notificationsss.notificationsss)({
+              message: "Updated Successfully!!!",
+              status: "success"
+            });
+
             // $(".popup_body").removeClass("popup_body_show");
           }
           _context.next = 11;
@@ -6830,7 +6823,10 @@ var KYC = /*#__PURE__*/function () {
           _context.prev = 7;
           _context.t0 = _context["catch"](0);
           console.log(_context.t0);
-          setTimeout(alert(_context.t0.response.data.message), 1500);
+          (0, _notificationsss.notificationsss)({
+            message: _context.t0.response.data.message,
+            status: "error"
+          });
         case 11:
         case "end":
           return _context.stop();

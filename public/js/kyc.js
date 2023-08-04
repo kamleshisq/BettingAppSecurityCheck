@@ -9,12 +9,8 @@ export const KYC = async(data)=>{
             data
         });
         if(res.data.status === 'success'){
-            if(data.status === "success"){
                 notificationsss({message:"Updated Successfully!!!", status:"success"});
-            }else{
-                console.log(data)
-                notificationsss({message:"Updated Successfully!!!", status:"123154"});
-            }
+           
             // $(".popup_body").removeClass("popup_body_show");
 
            
@@ -22,6 +18,6 @@ export const KYC = async(data)=>{
 
     }catch(err){
         console.log(err)
-    setTimeout(alert(err.response.data.message), 1500)
+    notificationsss({message: err.response.data.message, status:"error"})
     }
 }
