@@ -114,13 +114,14 @@ socket.on('connect', () => {
             if(heart.id == data.id){
                 if(pathname === "/live_casino"){
                     var gamesFevoriteElement = document.getElementById("gamesFevorite");
-                    console.log(gamesFevoriteElement)
-                    var elementToDelete = gamesFevoriteElement.querySelector(`#${data.id}`);
-                    if (elementToDelete) {
-                      elementToDelete.remove();
-                    }
+                    var elementsToDelete = gamesFevoriteElement.querySelectorAll(".liv-casino-games-cards-dv.col-lg-3.col-md-3.col-6");
+                    elementsToDelete.forEach(function(element) {
+                        var targetElement = element.querySelector(`#${heart.id}`);
+                        if (targetElement) {
+                        element.remove();
+                        }
+                    });
                     heart.classList.remove("fa-solid", "liked-star");
-
                 }else{
                     heart.classList.remove("fa-solid", "liked-star");
 
