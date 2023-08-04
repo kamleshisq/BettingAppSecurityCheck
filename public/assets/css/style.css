@@ -2865,7 +2865,7 @@ td>.green{
 }
 
 .my-exc-inn-colaps-txt-body{
-    width: 100%;
+    max-width: 500px;
 }
 
 .exc-inn-colaps-data-titl{
