@@ -134,8 +134,8 @@ socket.on('connect', () => {
                 if(pathname === "/live_casino"){
                     var gamesFevoriteElement = document.getElementById("gamesFevorite");
                     var elementsToDelete = gamesFevoriteElement.querySelectorAll(".liv-casino-games-cards-dv.col-lg-3.col-md-3.col-6");
+                    let isAvailable = false
                     elementsToDelete.forEach(function(element) {
-                        let isAvailable = false
                         var targetElement = element.querySelector("#" + CSS.escape(heart.id));
                         if (targetElement) {
                             isAvailable = true 
