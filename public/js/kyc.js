@@ -1,4 +1,5 @@
 import axios from "axios";
+import { notificationsss } from "./notificationsss";
 
 export const KYC = async(data)=>{
     try{
@@ -8,7 +9,12 @@ export const KYC = async(data)=>{
             data
         });
         if(res.data.status === 'success'){
-            alert('image added successfully!!!!');
+            if(data.status === "success"){
+                notificationsss({message:"Updated Successfully!!!", status:"success"});
+            }else{
+                console.log(data)
+                notificationsss({message:"Updated Successfully!!!", status:"123154"});
+            }
             // $(".popup_body").removeClass("popup_body_show");
 
            

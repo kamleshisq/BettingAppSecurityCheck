@@ -1,5 +1,11 @@
 export const notificationsss = async(data) => {
-    document.getElementById("popup-1").classList.toggle("active");
-    document.getElementById('redPopUP').innerText  = data
-    setTimeout(function(){document.getElementById("popup-1").classList.toggle("active")}, 2000);
+    if(data.status === "success"){
+        document.getElementById("popup-1").classList.toggle("active");
+        document.getElementById('redPopUP').innerText  = data.message
+        setTimeout(function(){document.getElementById("popup-1").classList.toggle("active")}, 2000);
+    }else{
+        document.getElementById("popup-2").classList.toggle("active");
+        document.getElementById('redPopUP2').innerText  = data.message
+        setTimeout(function(){document.getElementById("popup-2").classList.toggle("active")}, 2000);
+    }
 }

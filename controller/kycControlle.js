@@ -20,6 +20,16 @@ exports.uploadphoto = catchAsynch(async(req, res, next) => {
                 if(err) 
                 return next(new AppError("Something went wrong please try again later", 400))
             })
+            data.kycDocName = req.body.name
+            data.kycDocNum = req.body.CardId
+            data.kycNotification = true
+            let updatedUser = await userModel.findByIdAndUpdate(req.currentUser.id, data)
+            if(updatedUser){
+                res.status(200).json({
+                    status:"success"
+                })
+            }
+
         }else{
             return next(new AppError("Please Upload an image", 404))
         }

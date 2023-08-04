@@ -12,7 +12,7 @@ export const login = async(userName, password)=>{
             }
         });
         if(res.data.status === 'success'){
-            notificationsss('Logged in successfully!!!!');
+            notificationsss({message:'Logged in successfully!!!!', status:"success"});
             sessionStorage.setItem('loginUserDetails',JSON.stringify(res.data.data.user));
             sessionStorage.setItem('roles',JSON.stringify(res.data.data.roles))
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
