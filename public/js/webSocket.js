@@ -112,13 +112,13 @@ socket.on('connect', () => {
     if(data.remove){
         heart.forEach((heart) =>  {
             if(heart.id == data.id){
-                heart.classList.toggle("fa-solid");
+                heart.classList.remove("fa-solid", "liked-star");
             }
         })
     }else{
         heart.forEach((heart) => {
             if(heart.id == data.id){
-                heart.classList.toggle("liked-star");
+                heart.classList.add("fa-solid", "liked-star");
             }
         })
     }
