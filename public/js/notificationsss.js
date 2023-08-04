@@ -1,4 +1,5 @@
 export const notificationsss = async(data) => {
+    
     if(data.status === "success"){
         document.getElementById("popup-1").classList.toggle("active");
         document.getElementById('redPopUP').innerText  = data.message

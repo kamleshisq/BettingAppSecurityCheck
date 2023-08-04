@@ -6749,7 +6749,7 @@ var userLogin = /*#__PURE__*/function () {
           if (res.data.status === 'success') {
             (0, _notificationsss.notificationsss)({
               message: 'Logged in successfully!!!!',
-              status: "succes"
+              status: "success"
             });
             sessionStorage.setItem('loginUserDetails', JSON.stringify(res.data.data.user));
             sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
