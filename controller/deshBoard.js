@@ -108,7 +108,35 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         }
     ])
 
-    // console.log(Categories)
+    let summery1 = await User.aggregate([
+        {
+            $match: {
+                $or: [
+                    { userName: 'user', isActive: true },
+                    { userName: { $ne: 'user' }, isActive: true }
+                ]
+            }
+        },
+        {
+            $group: {
+                _id: {
+                    isActive: '$isActive',
+                    isUser: { $cond: [ { $eq: ['$userName', 'user'] }, true, false ] }
+                },
+                userCount: { $sum: 1 }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                isActive: '$_id.isActive',
+                isUser: '$_id.isUser',
+                userCount: 1
+            }
+        }
+    ])
+
+    console.log(summery1)
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
