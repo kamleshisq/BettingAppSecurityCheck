@@ -87,51 +87,51 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         }
     ])
 
-    let Categories = await betModel.aggregate([
-        {
-            $match: {
-                status: { $ne: "OPEN" }
-            }
-        },
-        {
-            $group: {
-                _id: {
-                    betType: "$betType",
-                    event: "$event"
-                },
-                totalBets: { $sum: 1 },
-                totalReturns: { $sum: "$returns" }
-            }
-        },
-        {
-            $group: {
-                _id: "$_id.betType",
-                uniqueEvents: { $addToSet: "$_id.event" },
-                betTypeStats: {
-                    $push: {
-                        event: "$_id.event",
-                        totalBets: "$totalBets",
-                        totalReturns: "$totalReturns"
-                    }
-                },
-                totalUniqueEvents: { $sum: { $size: "$uniqueEvents" } },
-                totalBets: { $sum: "$totalBets" },
-                totalReturns: { $sum: "$totalReturns" }
-            }
-        },
-        {
-            $project: {
-                _id: 0,
-                betType: "$_id",
-                uniqueEvents: "$totalUniqueEvents",
-                betTypeStats: 1,
-                totalBets: 1,
-                totalReturns: 1
-            }
-        }
-    ])
+    // let Categories = await betModel.aggregate([
+    //     {
+    //         $match: {
+    //             status: { $ne: "OPEN" }
+    //         }
+    //     },
+    //     {
+    //         $group: {
+    //             _id: {
+    //                 betType: "$betType",
+    //                 event: "$event"
+    //             },
+    //             totalBets: { $sum: 1 },
+    //             totalReturns: { $sum: "$returns" }
+    //         }
+    //     },
+    //     {
+    //         $group: {
+    //             _id: "$_id.betType",
+    //             uniqueEvents: { $addToSet: "$_id.event" },
+    //             betTypeStats: {
+    //                 $push: {
+    //                     event: "$_id.event",
+    //                     totalBets: "$totalBets",
+    //                     totalReturns: "$totalReturns"
+    //                 }
+    //             },
+    //             totalUniqueEvents: { $sum: { $size: "$uniqueEvents" } },
+    //             totalBets: { $sum: "$totalBets" },
+    //             totalReturns: { $sum: "$totalReturns" }
+    //         }
+    //     },
+    //     {
+    //         $project: {
+    //             _id: 0,
+    //             betType: "$_id",
+    //             uniqueEvents: "$totalUniqueEvents",
+    //             betTypeStats: 1,
+    //             totalBets: 1,
+    //             totalReturns: 1
+    //         }
+    //     }
+    // ])
 
-    console.log(Categories)
+    // console.log(Categories)
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
