@@ -1625,7 +1625,8 @@ io.on('connection', (socket) => {
         Tennis = Tennis.eventList
         let liveFootBall = footBall.filter(item => item.eventData.type === "IN_PLAY");
         let liveTennis = Tennis.filter(item => item.eventData.type === "IN_PLAY")
-        console.log(LiveCricket)
+        console.log(LiveCricket, liveFootBall, liveTennis)
+        console.log(data)
     })
 
     
