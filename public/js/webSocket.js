@@ -4248,7 +4248,7 @@ socket.on('connect', () => {
                 
             }
             console.log(specificSpan)
-            let check = $("#changes").prop("checked");
+            let check = $("#changes").val();
             console.log(check)
             if(specificSpan == data.odds){
                 if(data.stake === ""){
