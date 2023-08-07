@@ -4023,6 +4023,7 @@ socket.on('connect', () => {
               var spanId = $(this).attr("id");
               let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
               let newStake
+              console.log(OldStake)
               if(OldStake == NaN){
                 newStake = parseFloat(spanId)
               }else{
