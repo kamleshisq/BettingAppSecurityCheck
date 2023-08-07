@@ -1953,13 +1953,13 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
                 userId:user._id
             }
         },
-        {
-            $group: {
-              _id: null,
-              totalReturns: { $sum: '$returns' },
-              totalCount: { $sum: 1 }
-            }
-          }
+        // {
+        //     $group: {
+        //       _id: null,
+        //       totalReturns: { $sum: '$returns' },
+        //       totalCount: { $sum: 1 }
+        //     }
+        //   }
     ])
     console.log(betsDetails)
     res.status(200).render("./userSideEjs/myBetsPage/main", {
