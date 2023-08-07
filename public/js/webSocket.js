@@ -36,7 +36,7 @@ socket.on('connect', () => {
     function togglePopupMain(idname, id, message){
         document.getElementById(idname).classList.toggle("active");
         document.getElementById(id).innerText  = message
-        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
       }
 
     //....................FOR UPDATE ROLE...................//
@@ -227,7 +227,7 @@ socket.on('connect', () => {
       function togglePopup(idname, id){
         document.getElementById(idname).classList.toggle("active");
         document.getElementById(id).innerText  = "password updated".toUpperCase()
-        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
       }
       togglePopup('popup-1', "redPopUP")
         // alert("password updated")
@@ -235,7 +235,7 @@ socket.on('connect', () => {
       function togglePopup1(idname, id){
         document.getElementById(idname).classList.toggle("active");
         document.getElementById(id).innerText  = data.message.toUpperCase()
-        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
       }
       togglePopup1('popup-2', "redPopUP2")
     }
@@ -269,14 +269,14 @@ socket.on('connect', () => {
             function togglePopup(idname, id){
                 document.getElementById(idname).classList.toggle("active");
                 document.getElementById(id).innerText  = "Stakes updated".toUpperCase()
-                setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+                setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
               }
               togglePopup('popup-1', "redPopUP")
         }else{
             function togglePopup1(idname, id){
                 document.getElementById(idname).classList.toggle("active");
                 document.getElementById(id).innerText  = data.toUpperCase()
-                setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+                setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
               }
               togglePopup1('popup-2', "redPopUP2")
         }
@@ -4283,9 +4283,9 @@ socket.on('connect', () => {
             function togglePopup(idname, id){
                 document.getElementById(idname).classList.toggle("active");
                 document.getElementById(id).innerText  = data.result.toUpperCase()
-                setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+                setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
               }
-            if(data.result === "Bet place successfully"){
+            if(data.result === "Bet placed successfully"){
                 togglePopup('popup-1', "redPopUP")
             }else{
                 togglePopup('popup-2', "redPopUP2")
@@ -6090,7 +6090,7 @@ socket.on('connect', () => {
                     function togglePopup(idname, id){
                         document.getElementById(idname).classList.toggle("active");
                         document.getElementById(id).innerText  = "Please select stake".toUpperCase()
-                        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+                        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
                       }
                       togglePopup('popup-2', "redPopUP2")
                 }else{
@@ -6130,7 +6130,7 @@ socket.on('connect', () => {
                 function togglePopup(idname, id){
                     document.getElementById(idname).classList.toggle("active");
                     document.getElementById(id).innerText  = data.result.toUpperCase()
-                    setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+                    setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
                   }
                 if(data.result === "Bet place successfully"){
                     togglePopup('popup-1', "redPopUP")
