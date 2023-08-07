@@ -26,6 +26,21 @@ for(let i = 0; i < multimarket.marketIds.length; i++){
                     isToss = true
                   }
               }
+              if(!result){
+                
+
+                result = Tennis.find(item => item.marketList.bookmaker != null&&  item.marketList.bookmaker[0].marketId == multimarket.marketIds[i])
+              if(result){
+                isBookmaker = true
+              }else{
+
+                  result = Tennis.find(item => item.marketList.bookmaker != null && item.marketList.bookmaker[1] &&  item.marketList.bookmaker[1].marketId == multimarket.marketIds[i])
+                  if(result){
+                    isToss = true
+                  }
+              }
+
+              }
             }
         }
     }
