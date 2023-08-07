@@ -900,7 +900,7 @@ io.on('connection', (socket) => {
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
         let thatMarket = marketDetails.data.items[0]
         let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
-        let name = `backPrice${data.data.secId.slice(1)}`
+        let name = `backPrice${data.data.secId.slice(-1)}`
         console.log(name)
         let odds = data.name
         console.log(odds)
