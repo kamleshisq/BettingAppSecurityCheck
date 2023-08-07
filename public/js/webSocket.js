@@ -4013,7 +4013,7 @@ socket.on('connect', () => {
               let secondPTag = $(this).closest("tr").next().find(".beton");
               let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
               let secId = this.id
-              secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", secId);;
+              secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
               numSpan.text(odds);
             });
           });
@@ -4216,7 +4216,7 @@ socket.on('connect', () => {
             data.eventId = $(this).attr("id");
             data.odds = $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
             let secId = $(this).closest("tr").find(".beton").attr('id')
-            data.secId = secId.slice(0,-1)
+            data.secId = secId.slice(0,-2)
             data.market = $(this).closest("table").attr("id");
             data.stake = $(this).closest("tr").find(".set-stake-form-input2").val()
             data.spoetId = $(this).closest("tr").find(".c-gren").attr('id')
@@ -4230,7 +4230,7 @@ socket.on('connect', () => {
             }
             let check =  $("#changes").prop("checked");
             console.log(secId)
-            let specificSpan = $("span[id='" + secId + "'][data-bs-toggle='collapse'][href='#bt-slp-colps-match-odds-0']");
+            let specificSpan = `${secId.slice(0,-1)}`
             console.log(specificSpan)
             if(data.stake === ""){
                 // alert("Please select stake")
