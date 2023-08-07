@@ -897,8 +897,9 @@ io.on('connection', (socket) => {
 
     socket.on('betDetails', async(data) => {
         console.log(data)
-        // let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
-        // let thatMarket = marketDetails.data.items[0]
+        let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
+        let thatMarket = marketDetails.data.items[0]
+        console.log(thatMarket)
         // let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
         // let name
         // if(data.data.secId.slice(-1) > 3){
