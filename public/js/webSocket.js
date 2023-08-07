@@ -4220,6 +4220,7 @@ socket.on('connect', () => {
             $(".eventId").click(function () {
                 // console.log("working")
             let data = {}
+            let secforFency 
             data.title = $(this).closest("tr").find(".name").text()
             data.eventId = $(this).attr("id");
             data.odds = $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
@@ -4230,8 +4231,8 @@ socket.on('connect', () => {
             data.spoetId = $(this).closest("tr").find(".c-gren").attr('id')
             if(data.market == undefined){
                 data.market = $(this).closest("table").find('.market').attr('id')
-                console.log(secId.charAt(secId.length - 2))
-                if(secId.slice(-1) == 1){
+                secforFency = secId.slice(0,-2)
+                if(secId.charAt(secId.length - 2) == 1){
                     data.secId = "odd_Even_Yes"
                 }else{
                     data.secId = "odd_Even_No"
@@ -4241,7 +4242,7 @@ socket.on('connect', () => {
             let check =  $("#changes").prop("checked");
             let specificSpan 
             if(data.secId.startsWith('odd_Even_')){
-                specificSpan = $(`#${data.market}`).children("span:first-child").text();
+                specificSpan = $(`#${secforFency}`).children("span:first-child").text();
             }else{
                 specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
 
