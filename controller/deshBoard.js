@@ -99,6 +99,11 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 totalBets: { $sum: 1 },
                 totalReturns: { $sum: "$returns" }
             }
+        },
+        {
+            $sort: {
+                totalBets: -1
+            }
         }
     ])
 
