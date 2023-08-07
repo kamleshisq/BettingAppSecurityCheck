@@ -62,33 +62,20 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         },
         {
             $group: {
-                _id: {
-                    gameId: '$event',
-                    userName: '$userName'
-                },
-                betCount: { $sum: 1 },
-                loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
-                won: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
-                returns: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, '$returns', { $subtract: ['$returns', '$Stake'] }] } }
+                _id: "$event",
+                totalCount: { $sum: 1 },
+                uniqueUsers: { $addToSet: "$userId" },
+                totalReturns: { $sum: "$returns" }
             }
         },
         {
-            $group: {
-                _id: '$_id.gameId',
-                userCount: { $sum: 1 },
-                totalBetCount: { $sum: '$betCount' },
-                totalLoss: { $sum: '$loss' },
-                totalWon: { $sum: '$won' },
-                totalReturns: { $sum: '$returns' }
+            $project: {
+                _id: 0,
+                event: "$_id",
+                totalCount: 1,
+                noOfUniqueUsers: { $size: "$uniqueUsers" },
+                totalReturns: 1
             }
-        },
-        {
-            $sort: {
-                totalBetCount: -1
-            }
-        },
-        {
-            $limit: 5
         }
     ])
 
