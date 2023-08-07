@@ -3724,6 +3724,14 @@ margin-bottom: 0px;
     flex-direction: column;
 }
 
+.fevoriteHeart:hover {
+    /* Styles applied when hovering over the element */
+    color: pink; /* Change this to your desired hover color */
+    transform: scale(1.1); /* Add a slight scaling effect on hover */
+    transition: color 0.3s, transform 0.3s; /* Add smooth transition animation */
+    cursor: pointer; /* Change the cursor to a pointer on hover */
+  }
+
 
 /* --------------------------------------------------------------------------------------
 ============================ EXCHANGE INNER FANCY TAB ========================================
