@@ -4247,7 +4247,7 @@ socket.on('connect', () => {
                 specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
 
             }
-            console.log(specificSpan)
+            console.log(specificSpan, 45454554)
             if(specificSpan == data.odds){
                 if(data.stake === ""){
                     // alert("Please select stake")
