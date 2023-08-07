@@ -4366,9 +4366,14 @@ socket.on('connect', () => {
                     <img class="img-fluid img-bdr-red15 forIMG" src="${roulette[i].url_thumb}" alt="">
                     <div class="liv-casino-games-cards-txt">
                       <div class="liv-casino-games-cards-txtcol">
-                        <h6>${roulette[i].game_name}</h6>
-                        <i class="fa-regular fa-heart"></i>
-                      </div>
+                        <h6>${roulette[i].game_name}</h6>`
+                        if(games.fevGames.includes(roulette[i]._id)){
+                            htmlr += `<i id="${roulette[i]._id}" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i>`
+                        }else{
+                            htmlr += `<i id="${roulette[i]._id}" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>`
+                        }
+                        // <i class="fa-regular fa-heart"></i>
+                        htmlr +=  `</div>
                     </div>
                     <div class="liv-casino-games-cards-txt2">`
                     if(LOGINDATA.LOGINUSER === ""){
