@@ -4236,6 +4236,7 @@ socket.on('connect', () => {
                     data.secId = "odd_Even_No"
                 }
             }
+            console.log(data)
             let check =  $("#changes").prop("checked");
             let specificSpan 
             if(data.secId.startsWith('odd_Even_')){
