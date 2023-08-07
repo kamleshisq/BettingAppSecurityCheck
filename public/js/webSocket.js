@@ -4231,6 +4231,7 @@ socket.on('connect', () => {
             data.spoetId = $(this).closest("tr").find(".c-gren").attr('id')
             if(data.market == undefined){
                 data.market = $(this).closest("tr").find('.market').attr('id')
+                console.log(data.market)
                 secforFency = secId.slice(0,-1)
                 secforFency = secforFency.replace(".", "\\.");
                 if(secId.charAt(secId.length - 2) == 1){
