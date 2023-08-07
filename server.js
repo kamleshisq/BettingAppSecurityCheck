@@ -1616,7 +1616,6 @@ io.on('connection', (socket) => {
 
     socket.on("UserSideSEarchLive", async(data) => {
         let allData =  await getCrkAndAllData()
-        let searchdtaa = []
         const cricket = allData[0].gameList[0].eventList
         let LiveCricket = cricket.filter(item =>  item.eventData.name.toLowerCase().includes(data.toLowerCase()))
         let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
@@ -1626,8 +1625,9 @@ io.on('connection', (socket) => {
         let liveFootBall = footBall.filter(item =>  item.eventData.name.toLowerCase().includes(data.toLowerCase()));
         let liveTennis = Tennis.filter(item =>  item.eventData.name.toLowerCase().includes(data.toLowerCase()))
         const resultSearch = LiveCricket.concat(liveFootBall, liveTennis);
-        console.log(resultSearch)
-        console.log(data)
+        // console.log(resultSearch)
+        // console.log(data)
+        socket.emit("UserSideSEarchLive", resultSearch)
     })
 
     

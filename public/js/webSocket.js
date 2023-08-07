@@ -40,6 +40,14 @@ socket.on('connect', () => {
         }
       });
 
+    socket.on("UserSideSEarchLive", async(data) => {
+        let html = ""
+        for(let i = 0; i < data.length; i++){
+            html += `<li><a class="demoname" href="/exchange_inPlay/match?id=${data.eventData.eventId}">${data.eventData.name}</a></li>`
+        }
+        document.getElementById("demonames1").innerHTML = html
+    })
+
 
 
 
