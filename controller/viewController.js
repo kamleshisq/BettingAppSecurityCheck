@@ -1946,7 +1946,7 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find();
     let games = await gameModel.find();
     console.log(user._id)
-    let userLog = await loginLogs.find({user_id:user._id})
+    let userLog = await loginLogs.find({user_id:user.id})
     let bets = await betModel.find({userId:user._id}).sort({date:-1}).limit(20)
     let betsDetails = await betModel.aggregate([
         {
@@ -1962,7 +1962,7 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
             }
           }
     ])
-    console.log(betsDetails)
+    // console.log(betsDetails)
     res.status(200).render("./userSideEjs/myBetsPage/main", {
         user,
         verticalMenus,
