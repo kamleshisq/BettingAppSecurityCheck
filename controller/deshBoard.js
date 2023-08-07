@@ -96,37 +96,10 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         {
             $group: {
                 _id: {
-                    betType: "$betType",
-                    event: "$event"
+                    betType: "$betType"
                 },
                 totalBets: { $sum: 1 },
                 totalReturns: { $sum: "$returns" }
-            }
-        },
-        {
-            $group: {
-                _id: "$_id.betType",
-                uniqueEvents: { $addToSet: "$_id.event" },
-                betTypeStats: {
-                    $push: {
-                        event: "$_id.event",
-                        totalBets: "$totalBets",
-                        totalReturns: "$totalReturns"
-                    }
-                },
-                totalUniqueEvents: { $sum: { $size: "$uniqueEvents" } },
-                totalBets: { $sum: "$totalBets" },
-                totalReturns: { $sum: "$totalReturns" }
-            }
-        },
-        {
-            $project: {
-                _id: 0,
-                betType: "$_id",
-                uniqueEvents: "$totalUniqueEvents",
-                betTypeStats: 1,
-                totalBets: 1,
-                totalReturns: 1
             }
         }
     ])
