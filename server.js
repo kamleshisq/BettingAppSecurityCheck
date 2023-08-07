@@ -907,16 +907,15 @@ io.on('connection', (socket) => {
             name = `backPrice${data.data.secId.slice(-1)}`
         }
         let odds = realodd[name];
-        console.log(name)
-        console.log(odds,data.data.odds )
-        // let result = await placeBet(data)
-        // let openBet = []
-        // if(data.pathname === "/exchange/multimarkets"){
-        //     openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})
-        // }else{
-        //     openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title})
-        // }
-        // socket.emit("betDetails", {result, openBet})
+        data.data.odds = odds
+        let result = await placeBet(data)
+        let openBet = []
+        if(data.pathname === "/exchange/multimarkets"){
+            openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})
+        }else{
+            openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title})
+        }
+        socket.emit("betDetails", {result, openBet})
     })
 
     socket.on('voidBet', async(data) => {
