@@ -4239,7 +4239,7 @@ socket.on('connect', () => {
             let check =  $("#changes").prop("checked");
             let specificSpan 
             if(data.secId.startsWith('odd_Even_')){
-                console.log(data)
+                specificSpan = $(`#${data.market.slice(0,-1)}`).children("span:first-child").text();
             }else{
                 specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
 
