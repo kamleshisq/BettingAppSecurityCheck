@@ -3732,6 +3732,10 @@ margin-bottom: 0px;
     cursor: pointer; /* Change the cursor to a pointer on hover */
   }
 
+.eventId:hover {
+    cursor: pointer;
+}
+
 
 /* --------------------------------------------------------------------------------------
 ============================ EXCHANGE INNER FANCY TAB ========================================
