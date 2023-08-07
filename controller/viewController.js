@@ -269,7 +269,7 @@ exports.dashboard = catchAsync(async(req, res, nex) => {
         method: 'get',
         headers: { 'Authorization': `Bearer ` + req.token }
     }).then(res => res.json()).then(result => {
-        // console.log(result.dashboard.users)
+        console.log(result.dashboard)
         const currentUser = global._User
         res.status(200).render('./adminSideDashboard/dashboard',{
             title:"Dashboard",
