@@ -37,6 +37,8 @@ socket.on('connect', () => {
     inputElementSearch.addEventListener('input', function() {
         if(inputElementSearch.value.length > 3){
             socket.emit("UserSideSEarchLive", inputElementSearch.value);
+        }else{
+            socket.emit("UserSideSEarchLive", "LessTheN3");
         }
       });
 
