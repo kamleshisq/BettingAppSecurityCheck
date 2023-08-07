@@ -4230,7 +4230,7 @@ socket.on('connect', () => {
             }
             let check =  $("#changes").prop("checked");
             console.log(secId)
-            let specificSpan = `${secId.slice(0,-1)}`
+            let specificSpan = $(`#${secId.slice(0,-1)}`)
             console.log(specificSpan)
             if(data.stake === ""){
                 // alert("Please select stake")
