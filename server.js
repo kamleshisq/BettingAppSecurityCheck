@@ -899,10 +899,16 @@ io.on('connection', (socket) => {
         console.log(data)
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
         console.log(marketDetails.data)
+        let thatMarket = marketDetails.data.items[0]
         if(data.data.secId.startsWith('odd_Even_')){
-            
+            if(data.data.secId == "odd_Even_Yes"){
+                let odds = thatMarket.odd
+                data.data.odds = odds
+            }else{
+                let odds = thatMarket.even
+                data.data.odds = odds
+            }
         }else{
-            let thatMarket = marketDetails.data.items[0]
             let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
             let name
             if(data.data.secId.slice(-1) > 3){
