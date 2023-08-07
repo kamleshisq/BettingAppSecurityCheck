@@ -118,6 +118,8 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         isActive: true
     });
 
+    let betCount = await betModel.countDocuments({})
+
     // console.log(summery1)
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
@@ -128,6 +130,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     dashboard.Categories = Categories
     dashboard.userCount = userCount
     dashboard.adminCount = adminCount
+    dashboard.betCount = betCount
     
     res.status(200).json({
         status:'success',
