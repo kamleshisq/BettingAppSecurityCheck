@@ -4243,7 +4243,7 @@ socket.on('connect', () => {
             let check =  $("#changes").prop("checked");
             let specificSpan 
             if(data.secId.startsWith('odd_Even_')){
-                specificSpan = $("#" + secforFency + " b").text();
+                specificSpan = $("#" + secforFency + " span").text();
             }else{
                 specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
 
