@@ -4228,6 +4228,8 @@ socket.on('connect', () => {
                     data.secId = "odd_Even_No"
                 }
             }
+            let check = $("#changes").val()
+            console.log(check, 456)
             if(data.stake === ""){
                 // alert("Please select stake")
                 togglePopupMain('popup-2', "redPopUP2", "Please select stake")
