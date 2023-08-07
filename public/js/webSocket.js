@@ -4240,7 +4240,7 @@ socket.on('connect', () => {
                 }
             }else{
                 console.log(check)
-                if(check == "on"){
+                if(check ){
                     data.odds = specificSpan
                     if(data.stake === ""){
                         // alert("Please select stake")
