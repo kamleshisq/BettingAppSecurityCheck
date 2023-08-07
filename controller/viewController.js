@@ -1949,6 +1949,11 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
     let bets = await betModel.find({userId:user._id}).sort({date:-1}).limit(20)
     let betsDetails = await betModel.aggregate([
         {
+            $match:{
+                userId:user._id
+            }
+        },
+        {
             $group: {
               _id: null,
               totalReturns: { $sum: '$returns' },
