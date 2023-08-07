@@ -76,6 +76,14 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 noOfUniqueUsers: { $size: "$uniqueUsers" },
                 totalReturns: 1
             }
+        },
+        {
+            $sort: {
+                totalCount: -1
+            }
+        },
+        {
+            $limit: 5
         }
     ])
 
