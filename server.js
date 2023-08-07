@@ -903,10 +903,16 @@ io.on('connection', (socket) => {
         if(data.data.secId.startsWith('odd_Even_')){
             if(data.data.secId == "odd_Even_Yes"){
                 let odds = thatMarket.odd
+                if(!odds){
+                    thatMarket.yes
+                }
                 data.data.odds = odds
-                console.log(odds)
+                
             }else{
                 let odds = thatMarket.even
+                if(!odds){
+                    thatMarket.no
+                }
                 data.data.odds = odds
             }
         }else{
@@ -921,7 +927,7 @@ io.on('connection', (socket) => {
             data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
         }
-        
+        console.log(data.data)
         // let result = await placeBet(data)
         // let openBet = []
         // if(data.pathname === "/exchange/multimarkets"){
