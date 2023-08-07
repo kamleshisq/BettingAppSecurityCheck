@@ -898,7 +898,7 @@ io.on('connection', (socket) => {
     socket.on('betDetails', async(data) => {
         console.log(data)
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
-        console.log(marketDetails)
+        console.log(marketDetails.data)
         if(data.data.secId.startsWith('odd_Even_')){
             
         }else{
