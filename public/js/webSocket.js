@@ -4024,7 +4024,7 @@ socket.on('connect', () => {
               let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
               let newStake
               console.log(OldStake)
-              if(OldStake == NaN){
+              if(OldStake == ""){
                 newStake = parseFloat(spanId)
               }else{
                 newStake = parseFloat(spanId) + parseFloat(OldStake)
