@@ -4229,15 +4229,28 @@ socket.on('connect', () => {
                 }
             }
             let check =  $("#changes").prop("checked");
-            console.log(secId)
             let specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
-            console.log(specificSpan)
-            if(data.stake === ""){
-                // alert("Please select stake")
-                togglePopupMain('popup-2', "redPopUP2", "Please select stake")
+            if(specificSpan == data.odds){
+                if(data.stake === ""){
+                    // alert("Please select stake")
+                    togglePopupMain('popup-2', "redPopUP2", "Please select stake")
+                }else{
+                    socket.emit("betDetails", {data, LOGINDATA})
+                    showLoader();
+                }
             }else{
-                socket.emit("betDetails", {data, LOGINDATA})
-                showLoader();
+                if(check == "on"){
+                    data.odds = specificSpan
+                    if(data.stake === ""){
+                        // alert("Please select stake")
+                        togglePopupMain('popup-2', "redPopUP2", "Please select stake")
+                    }else{
+                        socket.emit("betDetails", {data, LOGINDATA})
+                        showLoader();
+                    }
+                }else{
+                    togglePopup('popup-2', "redPopUP2", "Odds value changed, please try again ")
+                }
             }
             });
           });
