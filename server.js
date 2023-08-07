@@ -900,10 +900,15 @@ io.on('connection', (socket) => {
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
         let thatMarket = marketDetails.data.items[0]
         let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
-        let name = `backPrice${data.data.secId.slice(-1)}`
-        console.log(name)
+        let name
+        if(data.data.secId.slice(-1) > 3){
+            name = `layPrice${data.data.secId.slice(-1) - 3}`
+        }else{
+            name = `backPrice${data.data.secId.slice(-1)}`
+        }
         let odds = realodd[name];
-        console.log(odds)
+        console.log(name)
+        console.log(odds,data.data.odds )
         // let result = await placeBet(data)
         // let openBet = []
         // if(data.pathname === "/exchange/multimarkets"){
