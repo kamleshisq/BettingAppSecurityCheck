@@ -75,15 +75,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         {
             $group: {
                 _id: '$_id.gameId',
-                userStats: {
-                    $push: {
-                        userName: '$_id.userName',
-                        betCount: '$betCount',
-                        loss: '$loss',
-                        won: '$won',
-                        returns: '$returns'
-                    }
-                },
                 userCount: { $sum: 1 },
                 totalBetCount: { $sum: '$betCount' },
                 totalLoss: { $sum: '$loss' },
