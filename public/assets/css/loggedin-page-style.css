@@ -491,7 +491,7 @@ a{
 
 .cur-bet-amount-spn>span{
     font-weight: 600;
-    color: var(--color2);
+    /* color: var(--color2); */
 }
 
 .tbl-data-href{
