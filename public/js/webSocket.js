@@ -4238,8 +4238,7 @@ socket.on('connect', () => {
                     data.secId = "odd_Even_No"
                 }
             }
-            console.log(data)
-            console.log(secforFency)
+           console.log(data)
             let check =  $("#changes").prop("checked");
             let specificSpan 
             if(data.secId.startsWith('odd_Even_')){
@@ -4248,7 +4247,6 @@ socket.on('connect', () => {
                 specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
 
             }
-            console.log(specificSpan, 789)
             if(specificSpan == data.odds){
                 if(data.stake === ""){
                     // alert("Please select stake")
@@ -4258,7 +4256,6 @@ socket.on('connect', () => {
                     showLoader();
                 }
             }else{
-                console.log(check)
                 if(check ){
                     data.odds = specificSpan
                     if(data.stake === ""){
