@@ -87,13 +87,13 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         }
     ])
 
-    console.log(topGames)
 
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
     dashboard.users = users
     dashboard.topPlayers = topPlayers
+    dashboard.topGames = topGames
     
     res.status(200).json({
         status:'success',

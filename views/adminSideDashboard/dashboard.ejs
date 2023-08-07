@@ -331,27 +331,19 @@
             </tr>
         </thead>
         <tbody>
-          <tr style="text-align: center;">
-            <td>1</td>
-            <td>Sergio01</td>
-            <td>67</td>
-            <td>67</td>
-            <td class="text-purple">17900</td>
-          </tr>
-          <tr style="text-align: center;" class="blue">
-            <td>1</td>
-            <td>Sergio01</td>
-            <td>67</td>
-            <td>67</td>
-            <td class="text-purple">17900</td>
-          </tr>
-          <tr style="text-align: center;">
-            <td>1</td>
-            <td>Sergio01</td>
-            <td>67</td>
-            <td>67</td>
-            <td class="text-purple">17900</td>
-          </tr>
+          <%for(let i = 0; i < data.dashboard.topGames.length; i++){%>
+            <%if((i%2)==0){%>
+              <tr style="text-align: center;" class="blue">
+            <%}else{%>
+              <tr style="text-align: center;">
+            <%}%>
+              <td><%=i%></td>
+              <td><%=data.dashboard.topGames[i].event%></td>
+              <td><%=data.dashboard.topGames[i].noOfUniqueUsers%></td>
+              <td><%=data.dashboard.topGames[i].totalCount%></td>
+              <td class="text-purple"><%=data.dashboard.topGames[i].totalReturns%></td>
+            </tr>
+          <%} %>
           
           
          
