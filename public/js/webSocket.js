@@ -5354,11 +5354,11 @@ socket.on('connect', () => {
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                     }else if(foundItem.odds[0].backPrice1=="1,000.00"){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data ">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[0].backPrice1}</span>`
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[0].backPrice1}</span>`
                     }
                 });
 
@@ -5394,11 +5394,11 @@ socket.on('connect', () => {
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                     }else if(foundItem.odds[1].backPrice1=="1,000.00"){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data ">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[1].backPrice1}</span>`
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[1].backPrice1}</span>`
                     }
                 });
 
@@ -5414,12 +5414,12 @@ socket.on('connect', () => {
                                         <i class="fa-solid fa-lock"></i>
                                       </span>`
                         }else if(foundItem.odds[2].backPrice1=="1,000.00"){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
+                            this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data ">
                             <i class="fa-solid fa-lock"></i>
                           </span>`
                         }else{
                             console.log("Wirkinf", 4)
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[2].backPrice1}</span>`
+                            this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[2].backPrice1}</span>`
                         }
                 });
 
