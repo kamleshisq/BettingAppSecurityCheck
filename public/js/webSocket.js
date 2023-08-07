@@ -4238,6 +4238,7 @@ socket.on('connect', () => {
             }
             let check =  $("#changes").prop("checked");
             let specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
+            console.log(specificSpan)
             if(specificSpan == data.odds){
                 if(data.stake === ""){
                     // alert("Please select stake")
