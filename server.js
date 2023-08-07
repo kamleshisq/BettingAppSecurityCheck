@@ -898,7 +898,8 @@ io.on('connection', (socket) => {
     socket.on('betDetails', async(data) => {
         // console.log(data)
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
-        console.log(marketDetails.data.items)
+        let thatMarket = marketDetails.data.items.find(item => item == data.data.market)
+        console.log(thatMarket)
         // let result = await placeBet(data)
         // let openBet = []
         // if(data.pathname === "/exchange/multimarkets"){
