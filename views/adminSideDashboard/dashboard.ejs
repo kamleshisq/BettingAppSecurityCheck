@@ -217,7 +217,7 @@
             <%}else{%>
               <tr style="text-align: center;">
             <%}%>
-            <td><%=i %></td>
+            <td><%=i + 1 %></td>
             <td><%=data.dashboard.Categories[i]._id %></td>
             <td><%=data.dashboard.Categories[i].uniqueEvent.length %></td>
             <td><%=data.dashboard.Categories[i].totalBets %></td>
@@ -342,7 +342,7 @@
             <%}else{%>
               <tr style="text-align: center;">
             <%}%>
-              <td><%=i%></td>
+              <td><%=i + 1%></td>
               <td><%=data.dashboard.topGames[i].event%></td>
               <td><%=data.dashboard.topGames[i].noOfUniqueUsers%></td>
               <td><%=data.dashboard.topGames[i].totalCount%></td>
