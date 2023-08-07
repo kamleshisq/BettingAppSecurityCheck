@@ -4218,7 +4218,7 @@ socket.on('connect', () => {
 
         $(document).ready(function () {
             $(".eventId").click(function () {
-                console.log("working")
+                // console.log("working")
             let data = {}
             data.title = $(this).closest("tr").find(".name").text()
             data.eventId = $(this).attr("id");
@@ -4237,7 +4237,13 @@ socket.on('connect', () => {
                 }
             }
             let check =  $("#changes").prop("checked");
-            let specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
+            let specificSpan 
+            if(data.secId.startsWith('odd_Even_')){
+                console.log(data)
+            }else{
+                specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
+
+            }
             console.log(specificSpan)
             if(specificSpan == data.odds){
                 if(data.stake === ""){
