@@ -4021,7 +4021,13 @@ socket.on('connect', () => {
           $(document).ready(function () {
             $(".nww-bet-slip-wrp-col2-inn span").click(function () {
               var spanId = $(this).attr("id");
-              let newStake = parseFloat(spanId) + parseFloat($(this).closest("tr").find(".set-stake-form-input2").val())
+              let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
+              let newStake
+              if(OldStake == NaN){
+                newStake = parseFloat(spanId)
+              }else{
+                newStake = parseFloat(spanId) + parseFloat(OldStake)
+              }
               var betValue = parseFloat(
                 $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
               );
