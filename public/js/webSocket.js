@@ -32,6 +32,13 @@ socket.on('connect', () => {
     //     socket.emit('load', {P:P})
     // }
 
+
+    function togglePopupMain(idname, id, message){
+        document.getElementById(idname).classList.toggle("active");
+        document.getElementById(id).innerText  = message
+        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+      }
+
     //....................FOR UPDATE ROLE...................//
     const inputElementSearch = document.getElementById('search_field');
     if(inputElementSearch != null){
@@ -4222,7 +4229,8 @@ socket.on('connect', () => {
                 }
             }
             if(data.stake === ""){
-                alert("Please select stake")
+                // alert("Please select stake")
+                togglePopupMain('popup-2', "redPopUP2", "Please select stake")
             }else{
                 socket.emit("betDetails", {data, LOGINDATA})
                 showLoader();
