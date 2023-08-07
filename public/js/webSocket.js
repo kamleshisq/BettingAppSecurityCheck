@@ -235,7 +235,21 @@ socket.on('connect', () => {
             })
 
     socket.on("STAKELABEL", data =>{
-        alert(data)
+        if(data === "Updated"){
+            function togglePopup(idname, id){
+                document.getElementById(idname).classList.toggle("active");
+                document.getElementById(id).innerText  = "Stakes updated".toUpperCase()
+                setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+              }
+              togglePopup('popup-1', "redPopUP")
+        }else{
+            function togglePopup1(idname, id){
+                document.getElementById(idname).classList.toggle("active");
+                document.getElementById(id).innerText  = data.toUpperCase()
+                setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+              }
+              togglePopup1('popup-2', "redPopUP2")
+        }
     })
 
     if(pathname == "/admin/updateRole"){
