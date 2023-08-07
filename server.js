@@ -899,25 +899,30 @@ io.on('connection', (socket) => {
         console.log(data)
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
         let thatMarket = marketDetails.data.items[0]
-        console.log(thatMarket)
-        // let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
-        // let name
-        // if(data.data.secId.slice(-1) > 3){
-        //     name = `layPrice${data.data.secId.slice(-1) - 3}`
-        // }else{
-        //     name = `backPrice${data.data.secId.slice(-1)}`
-        // }
-        // let odds = realodd[name];
-        // data.data.odds = odds
-        // data.data.secId = data.data.secId.slice(0,-1)
-        // let result = await placeBet(data)
-        // let openBet = []
-        // if(data.pathname === "/exchange/multimarkets"){
-        //     openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})
-        // }else{
-        //     openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title})
-        // }
-        // socket.emit("betDetails", {result, openBet})
+        // console.log(thatMarket)
+        if(data.data.secId.startsWith('odd_Even_')){
+            
+        }else{
+            let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
+            let name
+            if(data.data.secId.slice(-1) > 3){
+                name = `layPrice${data.data.secId.slice(-1) - 3}`
+            }else{
+                name = `backPrice${data.data.secId.slice(-1)}`
+            }
+            let odds = realodd[name];
+            data.data.odds = odds
+            data.data.secId = data.data.secId.slice(0,-1)
+        }
+        
+        let result = await placeBet(data)
+        let openBet = []
+        if(data.pathname === "/exchange/multimarkets"){
+            openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})
+        }else{
+            openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title})
+        }
+        socket.emit("betDetails", {result, openBet})
     })
 
     socket.on('voidBet', async(data) => {
