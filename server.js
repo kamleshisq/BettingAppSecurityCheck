@@ -1625,7 +1625,8 @@ io.on('connection', (socket) => {
         Tennis = Tennis.eventList
         let liveFootBall = footBall.filter(item => item.eventData.type === "IN_PLAY" && item.eventData.name.toLowerCase().includes(data.toLowerCase()));
         let liveTennis = Tennis.filter(item => item.eventData.type === "IN_PLAY" && item.eventData.name.toLowerCase().includes(data.toLowerCase()))
-        console.log(LiveCricket, liveFootBall, liveTennis)
+        const resultSearch = LiveCricket.concat(liveFootBall, liveTennis);
+        console.log(resultSearch)
         console.log(data)
     })
 
