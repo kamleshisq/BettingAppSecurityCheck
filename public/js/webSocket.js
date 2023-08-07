@@ -4230,7 +4230,7 @@ socket.on('connect', () => {
             data.stake = $(this).closest("tr").find(".set-stake-form-input2").val()
             data.spoetId = $(this).closest("tr").find(".c-gren").attr('id')
             if(data.market == undefined){
-                data.market = $(this).closest("table").find('.market').attr('id')
+                data.market = $(this).closest("tr").find('.market').attr('id')
                 secforFency = secId.slice(0,-1)
                 secforFency = secforFency.replace(".", "\\.");
                 if(secId.charAt(secId.length - 2) == 1){
