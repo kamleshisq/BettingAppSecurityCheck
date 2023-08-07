@@ -1,3 +1,4 @@
+import { doc } from "prettier";
 
 
 
@@ -4248,7 +4249,7 @@ socket.on('connect', () => {
                 
             }
             console.log(specificSpan)
-            let check = $("#changes").val();
+            let check = $(this).closest("tr").find("#changes").prop("checked");
             console.log(check)
             if(specificSpan == data.odds){
                 if(data.stake === ""){
