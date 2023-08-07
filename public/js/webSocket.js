@@ -4320,6 +4320,37 @@ socket.on('connect', () => {
             }
             document.getElementById("games").innerHTML = html
 
+
+            let htmlF = ""
+            for(let i = 0; i < games.games.length; i++){
+              if(games.fevGames.includes(games.games[i]._id)){
+                htmlF += `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
+                <a class="liv-casino-games-cards-a" href="#">
+                  <div class="liv-casino-games-cards-imgdv">
+                    <img class="img-fluid img-bdr-red15 forIMG" src="${games.games[i].url_thumb}" alt="">
+                    <div class="liv-casino-games-cards-txt">
+                      <div class="liv-casino-games-cards-txtcol">
+                        <h6>${games.games[i].game_name}</h6>`
+                            htmlF += `<i id="${games.games[i]._id}" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i>`
+                            htmlF += `
+                          </div>
+                        </div>
+                        <div class="liv-casino-games-cards-txt2">`
+                          // console.log(games.fevGames)
+                          if(LOGINDATA.LOGINUSER === ""){
+                            htmlF +=  `<a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>`
+                          }else{
+                            htmlF += `<a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=${games.games[i]._id}">PLAY NOW</a>`
+                          }
+                          htmlF += `</div>
+                        </div>
+                      </a>
+                    </div>`
+                  }
+                }
+            document.getElementById("gamesFevorite").innerHTML = htmlF
+            
+
             let vertuals = games.games.filter(item => item.category == "Virtual")
             let htmlV = ""
             for(let i = 0; i < vertuals.length; i++){
