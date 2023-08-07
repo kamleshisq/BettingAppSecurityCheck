@@ -898,7 +898,7 @@ io.on('connection', (socket) => {
     socket.on('betDetails', async(data) => {
         // console.log(data)
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
-        let thatMarket = marketDetails.data.items.find(item => item == item.market)
+        let thatMarket = marketDetails.data.items[0]
         console.log(thatMarket)
         // let result = await placeBet(data)
         // let openBet = []
