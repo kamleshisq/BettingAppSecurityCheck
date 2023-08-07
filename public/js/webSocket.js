@@ -4229,7 +4229,8 @@ socket.on('connect', () => {
                 }
             }
             let check =  $("#changes").prop("checked");
-            console.log(check, 456)
+            let butoon = $(`#${secId}`).val()
+            console.log(butoon)
             if(data.stake === ""){
                 // alert("Please select stake")
                 togglePopupMain('popup-2', "redPopUP2", "Please select stake")
