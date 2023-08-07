@@ -4280,6 +4280,7 @@ socket.on('connect', () => {
 
         socket.on("betDetails" , (data) => {
             hideLoader()
+            console.log(data.result)
             function togglePopup(idname, id){
                 document.getElementById(idname).classList.toggle("active");
                 document.getElementById(id).innerText  = data.result.toUpperCase()
