@@ -108,12 +108,12 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         }
     ])
 
-    let userCount = await userModel.countDocuments({
+    let userCount = await User.countDocuments({
         userName: 'user',
         isActive: true
     });
 
-    let adminCount = await userModel.countDocuments({
+    let adminCount = await User.countDocuments({
         userName: { $ne: 'user' },
         isActive: true
     });
