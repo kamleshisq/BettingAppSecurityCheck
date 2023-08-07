@@ -63,44 +63,32 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         {
             $group: {
                 _id: {
-                    userName: '$userName',
-                    gameId: '$event'
+                    gameId: '$event',
+                    userName: '$userName'
                 },
-                gameCount: { $sum: 1 },
+                betCount: { $sum: 1 },
                 loss: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, 1, 0] } },
                 won: { $sum: { $cond: [{ $eq: ['$status', 'WON'] }, 1, 0] } },
-                returns: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, '$returns', { "$subtract": ["$returns", "$Stake"] }] } }
+                returns: { $sum: { $cond: [{ $eq: ['$status', 'LOSS'] }, '$returns', { $subtract: ['$returns', '$Stake'] }] } }
             }
         },
         {
             $group: {
-                _id: '$_id.userName',
-                gameCount: { $sum: 1 },
-                betCount: { $sum: '$gameCount' },
-                loss: { $sum: '$loss' },
-                won: { $sum: '$won' },
-                returns: { $sum: '$returns' }
-            }
-        },
-        {
-            $group: {
-                _id: null,
-                userCount: { $sum: 1 },
-                users: {
+                _id: '$_id.gameId',
+                userStats: {
                     $push: {
-                        userName: '$_id',
-                        gameCount: '$gameCount',
+                        userName: '$_id.userName',
                         betCount: '$betCount',
                         loss: '$loss',
                         won: '$won',
                         returns: '$returns'
                     }
-                }
-            }
-        },
-        {
-            $sort: {
-                returns: 1
+                },
+                userCount: { $sum: 1 },
+                totalBetCount: { $sum: '$betCount' },
+                totalLoss: { $sum: '$loss' },
+                totalWon: { $sum: '$won' },
+                totalReturns: { $sum: '$returns' }
             }
         }
     ])
