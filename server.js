@@ -1615,6 +1615,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on("UserSideSEarchLive", async(data) => {
+        let allData =  await getCrkAndAllData()
+        console.log(allData)
         console.log(data)
     })
 
