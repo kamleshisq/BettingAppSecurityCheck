@@ -90,6 +90,14 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 totalWon: { $sum: '$won' },
                 totalReturns: { $sum: '$returns' }
             }
+        },
+        {
+            $sort: {
+                totalBetCount: -1
+            }
+        },
+        {
+            $limit: 5
         }
     ])
 
