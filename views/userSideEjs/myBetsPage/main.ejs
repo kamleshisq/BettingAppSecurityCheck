@@ -25,7 +25,11 @@
                                     <option value="2">Game Reports</option>
                                 </select> -->
                                 <span class="cur-bet-amount-spn">Total Bets : <span><%=betsDetails[0].totalCount %></span></span>
-                                <span class="cur-bet-amount-spn">Total Amount : <span class="c-gren"><%=betsDetails[0].totalReturns %></span></span>
+                                <%if(betsDetails[0].totalReturns > 0){ %>
+                                  <span class="cur-bet-amount-spn">Total Amount : <span class="c-gren"><%=betsDetails[0].totalReturns %></span></span>
+                                <%}else{%>
+                                  <span class="cur-bet-amount-spn">Total Amount : <span class="c-reed"><%=betsDetails[0].totalReturns %></span></span>
+                                  <%} %>
                             </div>
 
                             <div class="">
