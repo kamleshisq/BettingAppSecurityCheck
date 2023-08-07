@@ -4239,15 +4239,15 @@ socket.on('connect', () => {
                 }
             }
             console.log(data)
+            console.log(secforFency)
             let check =  $("#changes").prop("checked");
             let specificSpan 
             if(data.secId.startsWith('odd_Even_')){
-                specificSpan = $(`#${secforFency}`)
+                specificSpan = $(`#${secforFency}`).children("span:first-child").text();
             }else{
                 specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
 
             }
-            console.log(specificSpan, 45454554)
             if(specificSpan == data.odds){
                 if(data.stake === ""){
                     // alert("Please select stake")
