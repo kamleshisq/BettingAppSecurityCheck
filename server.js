@@ -908,6 +908,7 @@ io.on('connection', (socket) => {
         }
         let odds = realodd[name];
         data.data.odds = odds
+        data.data.secId = data.data.secId.slice(0,-1)
         let result = await placeBet(data)
         let openBet = []
         if(data.pathname === "/exchange/multimarkets"){
