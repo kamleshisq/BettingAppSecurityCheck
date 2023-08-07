@@ -4331,12 +4331,12 @@ socket.on('connect', () => {
                       <div class="liv-casino-games-cards-txtcol">
                         <h6>${vertuals[i].game_name}</h6>`
                         if(games.fevGames.includes(vertuals[i]._id)){
-                            html += `<i id="${vertuals[i]._id}" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i>`
+                            htmlV += `<i id="${vertuals[i]._id}" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i>`
                         }else{
-                            html += `<i id="${vertuals[i]._id}" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>`
+                            htmlV += `<i id="${vertuals[i]._id}" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>`
                         }
                         // <i class="fa-regular fa-heart"></i>
-                        html += `</div>
+                        htmlV += `</div>
                     </div>
                     <div class="liv-casino-games-cards-txt2">`
                     if(LOGINDATA.LOGINUSER === ""){
