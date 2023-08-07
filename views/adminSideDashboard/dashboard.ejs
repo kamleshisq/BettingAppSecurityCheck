@@ -211,14 +211,19 @@
             </tr>
         </thead>
         <tbody>
-          
-          <tr style="text-align: center;" class="blue">
-            <td>1</td>
-            <td>Crickets</td>
-            <td>1</td>
-            <td>2</td>
-            <td class="text-purple">1500</td>
+          <%for(let i = 0; i < data.dashboard.Categories.length; i++){ %>
+            <%if((i%2)==0){%>
+              <tr style="text-align: center;" class="blue">
+            <%}else{%>
+              <tr style="text-align: center;">
+            <%}%>
+            <td><%=i %></td>
+            <td><%=i %></td>
+            <td><%=i %></td>
+            <td><%=i %></td>
+            <td class="text-purple"><%=i %></td>
           </tr>
+          <%} %>
           
         </tbody>
       </table>
