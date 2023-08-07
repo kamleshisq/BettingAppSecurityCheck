@@ -4239,16 +4239,17 @@ socket.on('connect', () => {
                     data.secId = "odd_Even_No"
                 }
             }
-            let check =  $("#changes").prop("checked");
             let specificSpan 
             if(data.secId.startsWith('odd_Even_')){
                 specificSpan = $(`#${secforFency}`).children("span:first-child").text();
                 // console.log(`#${secforFency}`)
             }else{
                 specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
-
+                
             }
             console.log(specificSpan)
+            let check =  $("#changes").prop("checked");
+            console.log(check)
             if(specificSpan == data.odds){
                 if(data.stake === ""){
                     // alert("Please select stake")
