@@ -1616,8 +1616,16 @@ io.on('connection', (socket) => {
 
     socket.on("UserSideSEarchLive", async(data) => {
         let allData =  await getCrkAndAllData()
-        console.log(allData)
-        console.log(data)
+        let searchdtaa = []
+        const cricket = sportListData[0].gameList[0].eventList
+        let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
+        let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
+        let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
+        footBall = footBall.eventList
+        Tennis = Tennis.eventList
+        let liveFootBall = footBall.filter(item => item.eventData.type === "IN_PLAY");
+        let liveTennis = Tennis.filter(item => item.eventData.type === "IN_PLAY")
+        console.log(LiveCricket)
     })
 
     
