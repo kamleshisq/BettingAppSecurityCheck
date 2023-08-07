@@ -4305,13 +4305,8 @@ socket.on('connect', () => {
                         }
                         html += `
                       </div>
-                    </div>`
-                    if(fevGames.includes(games[i]._id)){
-                        html += `<i id="${games[i]._id}" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i>`
-                    }else{
-                        html  += `<i id="${games[i]._id}" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>`
-                    }
-                    // `<div class="liv-casino-games-cards-txt2">`
+                    </div>
+                    <div class="liv-casino-games-cards-txt2">`
                     console.log(LOGINDATA)
                     if(LOGINDATA.LOGINUSER === ""){
                       html +=  `<a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>`
