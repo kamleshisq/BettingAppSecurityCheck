@@ -191,11 +191,23 @@ socket.on('connect', () => {
     });
   });
 
-   socket.on('UserUpdatePass', async(data)=>{
+  socket.on('UserUpdatePass', async(data)=>{
+  
     if(data.status === "success"){
-        alert("password updated")
+      function togglePopup(idname, id){
+        document.getElementById(idname).classList.toggle("active");
+        document.getElementById(id).innerText  = "password updated".toUpperCase()
+        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+      }
+      togglePopup('popup-1', "redPopUP")
+        // alert("password updated")
     }else{
-        alert(data.message)
+      function togglePopup1(idname, id){
+        document.getElementById(idname).classList.toggle("active");
+        document.getElementById(id).innerText  = data.message.toUpperCase()
+        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+      }
+      togglePopup1('popup-2', "redPopUP2")
     }
    })
 
