@@ -4023,6 +4023,20 @@ socket.on('connect', () => {
                 .text(result.toFixed(2));
             });
           });
+
+          $(document).ready(function () {
+            $(".set-stake-form-input2").change(function () {
+                var spanId = $(this).val()
+                var betValue = parseFloat(
+                    $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                  );
+                  var result = (parseFloat(spanId) * betValue) - parseFloat(spanId);
+                  $(this)
+                  .closest("tr")
+                  .find(".c-gren")
+                  .text(result.toFixed(2));
+            })
+          })
         
           // Get all the rows with class "acount-stat-tbl-body-tr"
         //   const rows = document.querySelectorAll(".acount-stat-tbl-body-tr");
