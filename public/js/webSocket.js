@@ -35,7 +35,7 @@ socket.on('connect', () => {
 
     function togglePopupMain(idname, id, message){
         document.getElementById(idname).classList.toggle("active");
-        document.getElementById(id).innerText  = message
+        document.getElementById(id).innerText  = message.toUpperCase()
         setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
       }
 
@@ -4249,7 +4249,7 @@ socket.on('connect', () => {
                         showLoader();
                     }
                 }else{
-                    togglePopup('popup-2', "redPopUP2", "Odds value changed, please try again ")
+                    togglePopupMain('popup-2', "redPopUP2", "Odds value changed, please try again ")
                 }
             }
             });

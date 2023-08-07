@@ -164,7 +164,7 @@ if(!marketDetails.runners){
         "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}Parent`
     }
     await accountStatementByUserModel.create(Acc2)
-    return "Bet place successfully"
+    return "Bet placed successfully"
 }
 
 module.exports = placeBet
