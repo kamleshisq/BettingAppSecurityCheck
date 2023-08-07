@@ -4239,6 +4239,7 @@ socket.on('connect', () => {
                     showLoader();
                 }
             }else{
+                console.log(check)
                 if(check == "on"){
                     data.odds = specificSpan
                     if(data.stake === ""){
