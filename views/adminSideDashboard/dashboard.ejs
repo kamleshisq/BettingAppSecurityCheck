@@ -207,7 +207,7 @@
               <th>Category</th>
               <th>No.of Matches</th>
               <th>No.of Bets</th>
-              <th>Points</th>
+              <th>Amount</th>
             </tr>
         </thead>
         <tbody>
@@ -218,10 +218,10 @@
               <tr style="text-align: center;">
             <%}%>
             <td><%=i %></td>
-            <td><%=i %></td>
-            <td><%=i %></td>
-            <td><%=i %></td>
-            <td class="text-purple"><%=i %></td>
+            <td><%=data.dashboard.Categories[i]._id %></td>
+            <td><%=data.dashboard.Categories[i].uniqueEvent.length %></td>
+            <td><%=data.dashboard.Categories[i].totalBets %></td>
+            <td class="text-purple"><%=data.dashboard.Categories[i].totalReturns %></td>
           </tr>
           <%} %>
           
