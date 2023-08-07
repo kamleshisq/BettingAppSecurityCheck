@@ -1947,6 +1947,16 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
     let games = await gameModel.find();
     let userLog = await loginLogs.find({user_id:user._id})
     let bets = await betModel.find({userId:user._id}).sort({date:-1}).limit(20)
+    let betsDetails = await betModel.aggregate([
+        {
+            $group: {
+              _id: null,
+              totalReturns: { $sum: '$returns' },
+              totalCount: { $sum: 1 }
+            }
+          }
+    ])
+    console.log(betsDetails)
     res.status(200).render("./userSideEjs/myBetsPage/main", {
         user,
         verticalMenus,
@@ -1955,7 +1965,8 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
         games,
         userLog,
         bets,
-        notifications:req.notifications
+        notifications:req.notifications,
+        betsDetails
     })
 });
 
