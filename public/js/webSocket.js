@@ -4229,6 +4229,7 @@ socket.on('connect', () => {
                 }
             }
             let check =  $("#changes").prop("checked");
+            console.log(secId)
             let specificSpan = $("span[id='" + secId + "'][data-bs-toggle='collapse'][href='#bt-slp-colps-match-odds-0']");
             console.log(specificSpan)
             if(data.stake === ""){
