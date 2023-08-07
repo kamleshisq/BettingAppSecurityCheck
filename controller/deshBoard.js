@@ -90,24 +90,42 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     let Categories = await betModel.aggregate([
         {
             $match: {
-                status: { $ne: "OPEN" },
-                betType: "Casino"
+                status: { $ne: "OPEN" }
             }
         },
         {
             $group: {
-                _id: "$event",
-                uniqueEvents: { $addToSet: "$event" },
-                totalCount: { $sum: 1 },
+                _id: {
+                    betType: "$betType",
+                    event: "$event"
+                },
+                totalBets: { $sum: 1 },
                 totalReturns: { $sum: "$returns" }
+            }
+        },
+        {
+            $group: {
+                _id: "$_id.betType",
+                uniqueEvents: { $addToSet: "$_id.event" },
+                betTypeStats: {
+                    $push: {
+                        event: "$_id.event",
+                        totalBets: "$totalBets",
+                        totalReturns: "$totalReturns"
+                    }
+                },
+                totalUniqueEvents: { $sum: { $size: "$uniqueEvents" } },
+                totalBets: { $sum: "$totalBets" },
+                totalReturns: { $sum: "$totalReturns" }
             }
         },
         {
             $project: {
                 _id: 0,
-                event: "$_id",
-                uniqueEventCount: { $size: "$uniqueEvents" },
-                totalCount: 1,
+                betType: "$_id",
+                uniqueEvents: "$totalUniqueEvents",
+                betTypeStats: 1,
+                totalBets: 1,
                 totalReturns: 1
             }
         }
