@@ -45,7 +45,7 @@ socket.on('connect', () => {
         for(let i = 0; i < data.length; i++){
             html += `<li><a class="demoname" href="/exchange_inPlay/match?id=${data[i].eventData.eventId}">${data[i].eventData.name}</a></li>`
         }
-        document.getElementById("demonames1").innerHTML = html
+        document.getElementById("demonames").innerHTML = html
     })
 
 
