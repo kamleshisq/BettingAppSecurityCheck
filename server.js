@@ -1614,6 +1614,10 @@ io.on('connection', (socket) => {
         // console.log(data)
     })
 
+    socket.on("UserSideSEarchLive", async(data) => {
+        console.log(data)
+    })
+
     
 })
 
