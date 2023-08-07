@@ -35,7 +35,9 @@ socket.on('connect', () => {
     //....................FOR UPDATE ROLE...................//
     const inputElementSearch = document.getElementById('search_field');
     inputElementSearch.addEventListener('input', function() {
-        socket.emit("UserSideSEarchLive", inputElementSearch.value);
+        if(inputElementSearch.value.length > 3){
+            socket.emit("UserSideSEarchLive", inputElementSearch.value);
+        }
       });
 
 
