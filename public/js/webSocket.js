@@ -4232,6 +4232,7 @@ socket.on('connect', () => {
             if(data.market == undefined){
                 data.market = $(this).closest("table").find('.market').attr('id')
                 secforFency = secId.slice(0,-1)
+                secforFency = secforFency.replace(".", "\\.");
                 if(secId.charAt(secId.length - 2) == 1){
                     data.secId = "odd_Even_Yes"
                 }else{
