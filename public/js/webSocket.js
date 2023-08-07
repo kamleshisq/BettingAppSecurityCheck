@@ -4229,8 +4229,8 @@ socket.on('connect', () => {
                 }
             }
             let check =  $("#changes").prop("checked");
-            let butoon = $(`#${secId}`).val()
-            console.log(butoon)
+            let specificSpan = $(`span[data-bs-toggle='collapse'][href='#bt-slp-colps-match-odds-0'][aria-controls='bt-slp-colps-match-odds-0'][class='tbl-bg-blu-spn match_odd_Blue button'][id='${secId}']`);
+            console.log(specificSpan)
             if(data.stake === ""){
                 // alert("Please select stake")
                 togglePopupMain('popup-2', "redPopUP2", "Please select stake")
