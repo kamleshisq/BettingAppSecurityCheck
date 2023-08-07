@@ -4228,7 +4228,7 @@ socket.on('connect', () => {
                     data.secId = "odd_Even_No"
                 }
             }
-            let check = $("#changes").val()
+            let check =  $("#changes").prop("checked");
             console.log(check, 456)
             if(data.stake === ""){
                 // alert("Please select stake")
