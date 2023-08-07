@@ -87,7 +87,33 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         }
     ])
 
+    let Categories = await betModel.aggregate([
+        {
+            $match: {
+                status: { $ne: "OPEN" },
+                betType: "Casino"
+            }
+        },
+        {
+            $group: {
+                _id: "$event",
+                uniqueEvents: { $addToSet: "$event" },
+                totalCount: { $sum: 1 },
+                totalReturns: { $sum: "$returns" }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                event: "$_id",
+                uniqueEventCount: { $size: "$uniqueEvents" },
+                totalCount: 1,
+                totalReturns: 1
+            }
+        }
+    ])
 
+    console.log(Categories)
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
