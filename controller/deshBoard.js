@@ -95,9 +95,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         },
         {
             $group: {
-                _id: {
-                    betType: "$betType"
-                },
+                _id: "$betType",
                 totalBets: { $sum: 1 },
                 totalReturns: { $sum: "$returns" }
             }
@@ -111,6 +109,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     dashboard.users = users
     dashboard.topPlayers = topPlayers
     dashboard.topGames = topGames
+    dashboard.Categories = Categories
     
     res.status(200).json({
         status:'success',
