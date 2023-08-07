@@ -4231,7 +4231,7 @@ socket.on('connect', () => {
             data.spoetId = $(this).closest("tr").find(".c-gren").attr('id')
             if(data.market == undefined){
                 data.market = $(this).closest("table").find('.market').attr('id')
-                secforFency = secId.slice(0,-2)
+                secforFency = secId.slice(0,-1)
                 if(secId.charAt(secId.length - 2) == 1){
                     data.secId = "odd_Even_Yes"
                 }else{
