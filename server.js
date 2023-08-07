@@ -904,14 +904,14 @@ io.on('connection', (socket) => {
             if(data.data.secId == "odd_Even_Yes"){
                 let odds = thatMarket.odd
                 if(!odds){
-                    thatMarket.yes
+                    odds = thatMarket.yes
                 }
                 data.data.odds = odds
                 
             }else{
                 let odds = thatMarket.even
                 if(!odds){
-                    thatMarket.no
+                    odds = thatMarket.no
                 }
                 data.data.odds = odds
             }
