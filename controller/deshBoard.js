@@ -198,8 +198,8 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     let accountForGraph = await accountModel.aggregate([
         {
             $match: {
-              userId: req.currentUser.id,
-              date: { $gte: sevenDaysAgo, $lte: currentDate }
+                user_id: req.currentUser._id,
+                date: { $gte: sevenDaysAgo, $lte: currentDate }
             }
           },
           {
