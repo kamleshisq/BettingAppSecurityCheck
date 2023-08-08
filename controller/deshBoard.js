@@ -259,7 +259,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
     
 
-    console.log(accountForGraph)
+    console.log(accountForGraph[0])
     // for(let i = 0; i < accountForGraph.length; i++){
     //     console.log(accountForGraph[i].details)
     // }
