@@ -1705,9 +1705,11 @@ io.on('connection', (socket) => {
               },
           ]);
           const dataArray = accountForGraph;
-          const dates = dataArray.map(item => new Date(item._id.year, item._id.month - 1, item._id.day));
-          const startDate = new Date(Math.min(...dates));
-          const endDate = new Date(Math.max(...dates));
+        //   const dates = dataArray.map(item => new Date(item._id.year, item._id.month - 1, item._id.day));
+            const today = new Date();
+          const startDate = today;
+          const endDate = new Date(today);
+          endDate.setDate(today.getDate() - 10);
           
           // Step 3: Fill in missing dates with zero values
           const newDataArray = [];
