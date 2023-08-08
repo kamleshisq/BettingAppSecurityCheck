@@ -138,7 +138,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
               },
               {
                 $match: {
-                  "user.parentUsers": {$in :req.currentUser.id}
+                  "user.parentUsers": {$in :[req.currentUser.id]}
                 }
               }
           ])
