@@ -7102,7 +7102,7 @@ $('.createRole-form').submit(function (e) {
 
 $(document).on("submit", ".UpdateRole-form", function (e) {
   e.preventDefault();
-  var id = $(this).id;
+  var id = $(this).attr("id");
   var roleName = document.getElementById("mySelect").value;
   var role_level = document.getElementById("role_level").value;
   var authorization = [];
