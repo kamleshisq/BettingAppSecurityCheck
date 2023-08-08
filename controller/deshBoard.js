@@ -102,6 +102,8 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             $limit: 5
         }
     ])
+
+    console.log(topGames)
     
     let Categories = await betModel.aggregate([
         {
