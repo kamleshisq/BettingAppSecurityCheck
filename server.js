@@ -1697,11 +1697,15 @@ io.on('connection', (socket) => {
                   totalIncome: {
                     $sum: '$creditDebitamount',
                   },
+                  totalIncome2: {
+                    $sum: { $abs: '$creditDebitamount' }
+                  }
                 },
               },
           ]);
 
           const incomeMap = new Map();
+          const incomeMap2 = new Map();
         accountForGraph.forEach((result) => {
             const dateStr = new Date(
             result._id.year,
@@ -1709,11 +1713,13 @@ io.on('connection', (socket) => {
             result._id.day
             ).toDateString();
             incomeMap.set(dateStr, result.totalIncome);
+            incomeMap2.set(dateStr, result.totalIncome2)
         });
         const incomeArray = dateSequence.map((date) => ({
             date,
             totalIncome: incomeMap.get(date) || 0,
         }));
+        console.log(incomeArray)
         const Income = incomeArray.map(entry => entry.totalIncome);
 
         socket.emit("chartMain", {Income})
