@@ -129,6 +129,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
     const rows = data[0].rows
     const me = data[0].me
+    console.log(currentUser)
     res.status(200).render('./userManagement/main',{
         title: "User Management",
         users,
