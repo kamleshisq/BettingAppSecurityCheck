@@ -467,12 +467,12 @@
 
 
 <script >
-  console.log(document.getElementById('chart').value, 454545454) 
+  console.log(document.getElementById('chart'), 454545454) 
   var options = {
           series: [{
           name: 'Income',
           type: 'column',
-          data: JSON.parse(document.getElementById('chart').value)
+          data: JSON.parse(document.getElementById('chart'))
         },  
         {
           name: 'Revenue',
