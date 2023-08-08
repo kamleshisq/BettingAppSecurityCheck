@@ -61,6 +61,22 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             }
         },
         {
+            $lookup: {
+              from: "UserModel",
+              localField: "userId",
+              foreignField: "_id",
+              as: "user"
+            }
+          },
+          {
+            $unwind: "$user"
+          },
+          {
+            $match: {
+              "user.parentUsers": { $in: [req.currentUser.id] }
+            }
+          },
+        {
             $group: {
                 _id: "$event",
                 totalCount: { $sum: 1 },
