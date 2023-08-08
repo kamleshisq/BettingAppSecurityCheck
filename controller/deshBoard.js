@@ -113,13 +113,13 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     let betCount = 0
     console.log(req.currentUser.id)
         userCount = await User.countDocuments({
-            userName: 'user',
+            roleName: 'user',
             isActive: true,
             parentUsers : { $in: [req.currentUser.id] }
         });
 
         adminCount = await User.countDocuments({
-            userName: { $ne: 'user' },
+            roleName: { $ne: 'user' },
             isActive: true,
             parentUsers : { $in: [req.currentUser.id] }
         });
