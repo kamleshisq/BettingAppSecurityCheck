@@ -1705,7 +1705,8 @@ io.on('connection', (socket) => {
               },
           ]);
             console.log(accountForGraph)
-        //     const dataArray = JSON.parse(accountForGraph);
+            const dataArray = JSON.parse(accountForGraph);
+            console.log(dataArray)
         //     const dates = dataArray.map(item => new Date(item._id.year, item._id.month - 1, item._id.day));
         //     const startDate = new Date(Math.min(...dates));
         //     const endDate = new Date(Math.max(...dates));
