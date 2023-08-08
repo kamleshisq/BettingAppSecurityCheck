@@ -6477,6 +6477,7 @@ socket.on('connect', () => {
             const table = document.getElementById('table12');             
             if (table) {
               const csvContent = convertToCSV(table);
+              console.log(csvContent, 12121)
               downloadCSV(csvContent, 'Users.csv');
             }
           });
