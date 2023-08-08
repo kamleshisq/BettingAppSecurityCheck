@@ -1703,7 +1703,7 @@ io.on('connection', (socket) => {
                 },
               },
           ]);
-
+          console.log(accountForGraph)
           const incomeMap = new Map();
           const incomeMap2 = new Map();
         accountForGraph.forEach((result) => {
