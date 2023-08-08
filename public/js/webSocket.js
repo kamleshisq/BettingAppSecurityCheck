@@ -6478,24 +6478,29 @@ socket.on('connect', () => {
             const table = document.getElementById('table12');             
             if (table) {
                 const rows = table.querySelectorAll('tbody tr');
+                const headers = table.querySelectorAll('thead th:not(:last-child)');
                 const csvRows = [];
-              
+
+                // Extract headers
+                const headerRow = Array.from(headers).map(header => header.textContent.trim());
+                csvRows.push(headerRow.join(','));
+
                 // Extract data from each row except the last column
                 rows.forEach(row => {
-                  const cells = row.querySelectorAll('td:not(:last-child)');
-                  const csvRow = Array.from(cells).map(cell => cell.textContent.trim());
-                  csvRows.push(csvRow.join(','));
+                    const cells = row.querySelectorAll('td:not(:last-child)');
+                    const csvRow = Array.from(cells).map(cell => cell.textContent.trim());
+                    csvRows.push(csvRow.join(','));
                 });
-              
+
                 // Combine rows into a CSV string
                 const csvContent = csvRows.join('\n');
-              
+
                 // Create a Blob and initiate download
                 const blob = new Blob([csvContent], { type: 'text/csv' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'Users.csv';
+                a.download = 'table_data.csv';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
