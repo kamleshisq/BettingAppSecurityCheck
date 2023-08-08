@@ -271,11 +271,12 @@ exports.dashboard = catchAsync(async(req, res, nex) => {
         headers: { 'Authorization': `Bearer ` + req.token }
     }).then(res => res.json()).then(result => {
         console.log(result.dashboard)
-        const currentUser = global._User
+        const currentUser = req.currentUser
         res.status(200).render('./adminSideDashboard/dashboard',{
             title:"Dashboard",
             data:result,
-            me:currentUser
+            me:currentUser,
+            currentUser
         })
     })
 });
