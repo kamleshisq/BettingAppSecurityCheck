@@ -6463,6 +6463,7 @@ socket.on('connect', () => {
               const columns = row.querySelectorAll('td, th');
               let rowData = '';
               for (const column of columns) {
+                console.log(column.innerText)
                 const data = sanitizeCellValue(column.innerText);
                 rowData += (data.includes(',') ? `"${data}"` : data) + ',';
               }
