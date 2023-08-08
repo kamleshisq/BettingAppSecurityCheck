@@ -166,7 +166,7 @@ $(document).on('submit','.acc-form',async function(e) {
 
 $('.createRole-form').submit(function(e) {
     e.preventDefault()
-    let authorization = [];
+    let authorization = []; 
     let authCheck = document.querySelectorAll("input[name='authorization']:checked");
     for (let i = 0 ; i < authCheck.length; i++) {
      authorization.push(authCheck[i].value)
