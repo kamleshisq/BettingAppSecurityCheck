@@ -6321,7 +6321,7 @@ socket.on('connect', () => {
           })
     }
 
-    if(pathname === "/admin/dashboard"){
+    if(pathname === "/admin/dashboard" && href === "http://ollscores.com/admin/dashboard"){
         console.log("WORKING")
         socket.emit('chartMain', LOGINDATA) 
         console.log(LOGINDATA)
