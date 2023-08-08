@@ -200,45 +200,23 @@ sevenDaysAgo.setHours(0, 0, 0, 0);
     let accountForGraph = await accountModel.aggregate([
         {
             $match: {
-              $or: [
-                {
-                  date: { $gte: sevenDaysAgo, $lte: currentDate },
-                },
-                {
-                  user_id: req.currentUser._id,
-                },
-              ],
-            },
+              user_id: userId,
+              date: { $gte: sevenDaysAgo, $lte: currentDate }
+            }
           },
           {
             $group: {
-              _id: {
-                type: {
-                  $cond: [{ $eq: ["$user_id", req.currentUser._id] }, "revenue", "income"],
-                },
-                day: {
-                  $dateToString: { format: "%Y-%m-%d", date: "$date" },
-                },
+              _id: null,
+              totalRevenue: {
+                $sum: {
+                  $cond: [{ $eq: ["$user_id", req.currentUser.id] }, "$creditDebitamount", 0]
+                }
               },
-              totalAmount: { $sum: "$creditDebitamount" },
-            },
-          },
-          {
-            $group: {
-              _id: "$_id.day",
-              details: {
-                $push: {
-                  type: "$_id.type",
-                  totalAmount: "$totalAmount",
-                },
-              },
-            },
-          },
-          {
-            $sort: {
-              _id: 1,
-            },
-          },
+              totalIncome: {
+                $sum: "$creditDebitamount"
+              }
+            }
+          }
       ]);
 
     
