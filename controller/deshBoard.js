@@ -127,7 +127,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         betCount = await betModel.aggregate([
             {
                 $lookup: {
-                  from: "User",
+                  from: "users",
                   localField: "userId",
                   foreignField: "_id",
                   as: "user"
