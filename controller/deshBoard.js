@@ -132,7 +132,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
     
 
-    // console.log(summery1)
+    console.log(adminCount, userCount)
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
