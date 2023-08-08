@@ -1714,9 +1714,10 @@ io.on('connection', (socket) => {
             date,
             totalIncome: incomeMap.get(date) || 0,
         }));
-        const scriptData = incomeArray.map(entry => entry.totalIncome);
+        const Income = incomeArray.map(entry => entry.totalIncome);
 
-        console.log(scriptData)
+        socket.emit("chartMain", {Income})
+        
     })
 
     

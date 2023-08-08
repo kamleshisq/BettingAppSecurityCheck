@@ -6322,11 +6322,13 @@ socket.on('connect', () => {
 
     if(pathname === "/admin/dashboard"){
         socket.emit('chartMain', LOGINDATA) 
-        var options = {
+        socket.on("chartMain", data => {
+
+            var options = {
                 series: [{
                 name: 'Income',
                 type: 'column',
-                data: [4, 5, 6]
+                data: data.Income
               },  
               {
                 name: 'Revenue',
@@ -6353,69 +6355,69 @@ socket.on('connect', () => {
                   axisBorder: {
                     show: true,
                     color: '#008FFB'
-                  },
+                },
                   labels: {
                     style: {
                       colors: '#008FFB',
                     }
-                  },
-                  title: {
+                },
+                title: {
                     text: "Income (thousand crores)",
                     style: {
-                      color: '#008FFB',
+                        color: '#008FFB',
                     }
-                  },
-                  tooltip: {
-                    enabled: true
-                  }
                 },
-                {
-                  seriesName: 'Income',
-                  opposite: true,
-                  axisTicks: {
+                tooltip: {
+                    enabled: true
+                }
+            },
+            {
+                seriesName: 'Income',
+                opposite: true,
+                axisTicks: {
                     show: true,
-                  },
-                  axisBorder: {
+                },
+                axisBorder: {
                     show: true,
                     color: '#00E396'
-                  },
-                  labels: {
+                },
+                labels: {
                     style: {
-                      colors: '#00E396',
+                        colors: '#00E396',
                     }
-                  },
+                },
                   title: {
                     text: "Operating Cashflow (thousand crores)",
                     style: {
                       color: '#00E396',
                     }
-                  },
                 },
-                {
-                  seriesName: 'Revenue',
-                  opposite: true,
-                  axisTicks: {
+            },
+            {
+                seriesName: 'Revenue',
+                opposite: true,
+                axisTicks: {
                     show: true,
-                  },
-                  axisBorder: {
+                },
+                axisBorder: {
                     show: true,
                     color: '#FEB019'
-                  },
-                  labels: {
+                },
+                labels: {
                     style: {
-                      colors: '#FEB019',
+                        colors: '#FEB019',
                     },
-                  },
-                  title: {
+                },
+                title: {
                     text: "Revenue (thousand crores)",
                     style: {
-                      color: '#FEB019',
+                        color: '#FEB019',
                     }
-                  }
-                },
-              ],
-              tooltip: {
-                fixed: {
+                }
+            },
+        ],
+        tooltip: {
+            fixed: {
                   enabled: true,
                   position: 'topLeft', // topRight, topLeft, bottomRight, bottomLeft
                   offsetY: 30,
@@ -6430,6 +6432,7 @@ socket.on('connect', () => {
       
               var chart = new ApexCharts(document.querySelector("#chart"), options);
               chart.render();
+            })
     }
    
 
