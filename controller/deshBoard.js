@@ -8,7 +8,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     const roles = await User.aggregate([
         {
             $match:{
-                roleName:{$ne:"Admin"}
+                parentUsers : { $in: [req.currentUser.id] }
             }
         },
         {
@@ -111,7 +111,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     let userCount = 0
     let adminCount = 0
     let betCount = 0
-    console.log(req.currentUser.id)
+    // console.log(req.currentUser.id)
         userCount = await User.countDocuments({
             roleName: 'user',
             isActive: true,
@@ -160,7 +160,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
     
 
-    console.log(betCount)
+    // console.log(betCount)
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
