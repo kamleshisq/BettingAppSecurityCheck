@@ -191,52 +191,54 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
 
     // console.log(req.currentUser, 45645464)
-    const startDate = new Date();
-    startDate.setHours(0, 0, 0, 0);
-    startDate.setDate(startDate.getDate() - 7); // 7 days ago
-    
-    const endDate = new Date();
-    endDate.setHours(23, 59, 59, 999);
+    const currentDate = new Date();
+currentDate.setHours(23, 59, 59, 999);
+
+const sevenDaysAgo = new Date();
+sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+sevenDaysAgo.setHours(0, 0, 0, 0);
     let accountForGraph = await accountModel.aggregate([
         {
-          $match: {
-            $or: [
-              { date: { $gte: startDate, $lte: endDate } },
-              { user_id: req.currentUser._id }
-            ]
-          }
-        },
-        {
-          $group: {
-            _id: {
-              type: {
-                $cond: [
-                  { $gt: ["$user_id", req.currentUser._id] },
-                  "income",
-                  "revenue"
-                ]
-              },
-              day: { $dateToString: { format: "%Y-%m-%d", date: "$date" } }
+            $match: {
+              $or: [
+                {
+                  date: { $gte: sevenDaysAgo, $lte: currentDate },
+                },
+                {
+                  user_id: req.currentUser._id,
+                },
+              ],
             },
-            totalAmount: { $sum: "$creditDebitamount" }
-          }
-        },
-        {
-          $group: {
-            _id: "$_id.day",
-            details: {
-              $push: {
-                type: "$_id.type",
-                totalAmount: "$totalAmount"
-              }
-            }
-          }
-        },
-        {
-          $sort: {
-            _id: 1
-          }
-        }
+          },
+          {
+            $group: {
+              _id: {
+                type: {
+                  $cond: [{ $eq: ["$user_id", req.currentUser._id] }, "revenue", "income"],
+                },
+                day: {
+                  $dateToString: { format: "%Y-%m-%d", date: "$date" },
+                },
+              },
+              totalAmount: { $sum: "$creditDebitamount" },
+            },
+          },
+          {
+            $group: {
+              _id: "$_id.day",
+              details: {
+                $push: {
+                  type: "$_id.type",
+                  totalAmount: "$totalAmount",
+                },
+              },
+            },
+          },
+          {
+            $sort: {
+              _id: 1,
+            },
+          },
       ]);
 
     
