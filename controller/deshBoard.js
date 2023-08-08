@@ -111,7 +111,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     // let userCount 
     // if()
 
-    console.log(req.currentUser)
+    console.log(req.currentUser, 45645464)
     let userCount = await User.countDocuments({
         userName: 'user',
         isActive: true
