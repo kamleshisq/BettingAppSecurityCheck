@@ -144,7 +144,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
           ])
 
 
-    console.log(req.currentUser, 45645464)
+    // console.log(req.currentUser, 45645464)
 
 
     
