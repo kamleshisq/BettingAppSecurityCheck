@@ -108,21 +108,31 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         }
     ])
 
-    // let userCount 
-    // if()
+    let userCount 
+    let adminCount
+    let betCount
+    if(req.currentUser.roleName === "Admin"){
+        
+        userCount = await User.countDocuments({
+            userName: 'user',
+            isActive: true
+        });
+
+        adminCount = await User.countDocuments({
+            userName: { $ne: 'user' },
+            isActive: true
+        });
+
+        betCount = await betModel.countDocuments({})
+
+    }else{
+
+    }
 
     console.log(req.currentUser, 45645464)
-    let userCount = await User.countDocuments({
-        userName: 'user',
-        isActive: true
-    });
 
-    let adminCount = await User.countDocuments({
-        userName: { $ne: 'user' },
-        isActive: true
-    });
 
-    let betCount = await betModel.countDocuments({})
+    
 
     // console.log(summery1)
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }}).limit(5).sort({Bets:-1})
