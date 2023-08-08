@@ -3,6 +3,7 @@ const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/AppError');
 const User = require("../model/userModel");
 const betModel = require("../model/betmodel");
+const accountModel = require("../model/accountStatementByUserModel");
 
 exports.dashboardData = catchAsync(async(req, res, next) => {
     const roles = await User.aggregate([
@@ -103,7 +104,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         }
     ])
 
-    console.log(topGames)
+    // console.log(topGames)
     
     let Categories = await betModel.aggregate([
         {
@@ -190,11 +191,57 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
 
     // console.log(req.currentUser, 45645464)
-
+    const startDate = new Date();
+    startDate.setHours(0, 0, 0, 0);
+    startDate.setDate(startDate.getDate() - 7); // 7 days ago
+    
+    const endDate = new Date();
+    endDate.setHours(23, 59, 59, 999);
+    let accountForGraph = await accountModel.aggregate([
+        {
+          $match: {
+            $or: [
+              { date: { $gte: startDate, $lte: endDate } },
+              { user_id: req.currentUser._id }
+            ]
+          }
+        },
+        {
+          $group: {
+            _id: {
+              type: {
+                $cond: [
+                  { $gt: ["$user_id", req.currentUser._id] },
+                  "income",
+                  "revenue"
+                ]
+              },
+              day: { $dateToString: { format: "%Y-%m-%d", date: "$date" } }
+            },
+            totalAmount: { $sum: "$creditDebitamount" }
+          }
+        },
+        {
+          $group: {
+            _id: "$_id.day",
+            details: {
+              $push: {
+                type: "$_id.type",
+                totalAmount: "$totalAmount"
+              }
+            }
+          }
+        },
+        {
+          $sort: {
+            _id: 1
+          }
+        }
+      ]);
 
     
 
-    // console.log(betCount)
+    console.log(accountForGraph)
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }, parentUsers : { $in: [req.currentUser.id] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
