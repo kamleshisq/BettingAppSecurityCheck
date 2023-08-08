@@ -15,7 +15,7 @@ socket.on('connect', () => {
             host, hostname, href, origin, pathname, port, protocol, search
           } = window.location
         //   console.log(pathname)
-        //   console.log(host, hostname, href, origin ,port, protocol, search)
+          console.log(host, hostname, href, origin ,port, protocol, search)
 
     // console.log(LOGINTOKEN, LOGINUSER)
     // console.log(window.location.href)
