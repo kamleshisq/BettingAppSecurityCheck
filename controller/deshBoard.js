@@ -241,7 +241,8 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         totalIncome: incomeMap.get(date) || 0,
       }));
 
-    console.log(incomeArray)
+    // console.log(incomeArray)
+    const scriptData = incomeArray.map(entry => entry.totalIncome);
     // for(let i = 0; i < accountForGraph.length; i++){
     //     console.log(accountForGraph[i].details)
     // }
@@ -255,6 +256,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     dashboard.userCount = userCount
     dashboard.adminCount = adminCount
     dashboard.betCount = betCount
+    dashboard.incomeArray = scriptData
     
     res.status(200).json({
         status:'success',
