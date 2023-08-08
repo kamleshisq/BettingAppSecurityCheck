@@ -111,6 +111,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     let userCount = 0
     let adminCount = 0
     let betCount = 0
+    console.log(req.currentUser.id)
         userCount = await User.countDocuments({
             userName: 'user',
             isActive: true,
