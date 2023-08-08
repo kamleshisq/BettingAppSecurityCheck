@@ -142,7 +142,10 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 }
               },
               {
-                $count: "totalBets"
+                $group: {
+                  _id: "$user.userName",  // Grouping by userName
+                  totalBets: { $sum: 1 }
+                }
               }
               
               
