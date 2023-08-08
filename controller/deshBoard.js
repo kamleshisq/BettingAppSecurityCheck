@@ -223,43 +223,11 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
               '_id.day': 1,
             },
           },
-          {
-            $facet: {
-              daysData: [
-                {
-                  $unwind: {
-                    path: '$_id',
-                    preserveNullAndEmptyArrays: true,
-                  },
-                },
-                {
-                  $group: {
-                    _id: '$_id',
-                    totalIncome: {
-                      $sum: '$totalIncome',
-                    },
-                  },
-                },
-                {
-                  $sort: {
-                    '_id.year': 1,
-                    '_id.month': 1,
-                    '_id.day': 1,
-                  },
-                },
-              ],
-            },
-          },
-          {
-            $project: {
-              daysData: 1,
-            },
-          },
       ]);
 
     
 
-    console.log(accountForGraph[0])
+    console.log(accountForGraph)
     // for(let i = 0; i < accountForGraph.length; i++){
     //     console.log(accountForGraph[i].details)
     // }
