@@ -217,10 +217,26 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             },
           },
           {
+            $addFields: {
+              date: {
+                $dateFromParts: {
+                  year: '$_id.year',
+                  month: '$_id.month',
+                  day: '$_id.day',
+                },
+              },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
+              date: 1,
+              totalIncome: 1,
+            },
+          },
+          {
             $sort: {
-              '_id.year': 1,
-              '_id.month': 1,
-              '_id.day': 1,
+              date: 1,
             },
           },
       ]);
