@@ -133,6 +133,9 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                   as: "user"
                 }
               },
+              {
+                $unwind: "$user"
+              },
               
           ])
 
