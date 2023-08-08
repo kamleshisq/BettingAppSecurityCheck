@@ -225,9 +225,22 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
           },
       ]);
 
-    
+      const incomeMap = new Map();
+      results.forEach((accountForGraph) => {
+        const dateStr = new Date(
+          accountForGraph._id.year,
+          accountForGraph._id.month - 1,
+          accountForGraph._id.day
+        ).toDateString();
+        incomeMap.set(dateStr, accountForGraph.totalIncome);
+      });
 
-    console.log(accountForGraph)
+      dateSequence.forEach((date) => {
+        const totalIncome = incomeMap.get(date) || 0;
+        console.log(`${date}: ${totalIncome}`);
+      });
+
+    // console.log(accountForGraph)
     // for(let i = 0; i < accountForGraph.length; i++){
     //     console.log(accountForGraph[i].details)
     // }
