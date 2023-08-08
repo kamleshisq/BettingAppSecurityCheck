@@ -198,6 +198,10 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         {
             $match: {
                 userName: req.currentUser.userName,
+                date: {
+                    $gte: today,
+                    $lt: next10Days[next10Days.length - 1],
+                  },
             }
           }
       ]);
