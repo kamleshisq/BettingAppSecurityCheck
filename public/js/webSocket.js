@@ -6328,7 +6328,7 @@ socket.on('connect', () => {
                 series: [{
                 name: 'Income',
                 type: 'column',
-                data: data.Income
+                data: data.Income.reverse()
               },  
               {
                 name: 'Revenue',
