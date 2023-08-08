@@ -314,7 +314,7 @@ exports.onlineUsers = catchAsync(async(req, res, next) => {
     }else{
         users = await User.find({role_type:{$in:role_type},is_Online:true , whiteLabel:req.currentUser.whiteLabel, parentUsers:{$elemMatch:{$eq:req.currentUser.id}}})
     }
-    let me = global._User
+    let me = req.currentUser
     res.status(200).render('./onlineUsers/onlineUsers',{
         title:"Online Users",
         users,
@@ -470,7 +470,7 @@ exports.APIcall = catchAsync(async(req, res, next) => {
 
 
 exports.ReportPage = catchAsync(async(req, res, next) => {
-    const currentUser = global._User
+    const currentUser = req.currentUser
     // const role_type = []
     // const roles = await Role.find({role_type: {$gt:currentUser.role_type}});
     // // let role_type =[]
@@ -508,7 +508,8 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
                 res.status(200).render("./reports/reports",{
                     title:"Reports",
                     bets:betResult,
-                    me : currentUser
+                    me : currentUser,
+                    currentUser
                 })
             })
             .catch((error) => {
@@ -526,7 +527,7 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
 })
 
 exports.gameReportPage = catchAsync(async(req, res, next) => {
-    const currentUser = global._User
+    const currentUser = req.currentUser
 
     User.aggregate([
         {
@@ -593,7 +594,8 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
             res.status(200).render('./gamereports/gamereport',{
                 title:"gameReports",
                 me:currentUser,
-                games:betResult
+                games:betResult,
+                currentUser
             })
             })
             .catch((error) => {
@@ -660,7 +662,7 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
 })
 
 exports.useracount = catchAsync(async(req, res, next) => {
-    const currentUser = global._User
+    const currentUser = req.currentUser
     // console.log(currentUser)
     var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement?id=' + currentUser._id 
     fetch(fullUrl, {
@@ -673,7 +675,8 @@ exports.useracount = catchAsync(async(req, res, next) => {
         res.status(200).render('./userAccountStatement/useracount',{
         title:"UserAccountStatement",
         me:currentUser,
-        data
+        data,
+        currentUser
     })
 });
 
@@ -682,7 +685,7 @@ exports.useracount = catchAsync(async(req, res, next) => {
 
 exports.userhistoryreport = catchAsync(async(req, res, next) => {
     // const currentUser = global._User
-    const currentUser = global._User
+    const currentUser = req.currentUser
     // const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
     // let role_type =[]
     // for(let i = 0; i < roles.length; i++){
@@ -730,7 +733,8 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
             res.status(200).render('./userHistory/userhistoryreport',{
                 title:"UserHistory",
                 me:currentUser,
-                Logs
+                Logs,
+                currentUser
             })
             })
             .catch((error) => {
@@ -749,7 +753,7 @@ exports.plreport = catchAsync(async(req, res, next) => {
         role_type.push(roles[i].role_type)
     }
     // console.log(role_type)
-    const currentUser = global._User
+    const currentUser = req.currentUser
     let users
     if(currentUser.role_type == 1){
         users = await User.find({isActive:true}).limit(10)
@@ -760,14 +764,15 @@ exports.plreport = catchAsync(async(req, res, next) => {
     res.status(200).render('./PL_Report/plreport',{
         title:"P/L Report",
         me:currentUser,
-        users:users
+        users:users,
+        currentUser
     })
     
     
 });
 
 exports.roleManagement = catchAsync(async(req, res, next) => {
-    const currentUser = global._User
+    const currentUser = req.currentUser
     const roles = await Role.find().sort({role_level:1})
     const Auth = await roleAuth.find()
     // console.log(Auth[0].UserControll);
@@ -775,7 +780,8 @@ exports.roleManagement = catchAsync(async(req, res, next) => {
         title:"Role Management",
         me:currentUser,
         roles,
-        roleAuth:Auth[0]
+        roleAuth:Auth[0],
+        currentUser
     })
 });
 
@@ -825,26 +831,30 @@ const hashedOutput = SHA256(privateKey, textToSign);
 
 exports.getPromotionPage = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find()
+    let currentUser = req.currentUser
     console.log(data)
     res.status(200).render("./promotion/promotion",{
         title:"Promotion",
-        data
+        data,
+        currentUser
     })
 });
 
 exports.getoperationsPage = catchAsync(async(req, res, next) => {
-    const me = global._User
+    const me = req.currentUser
     res.status(200).render("./operations/operation",{
         title:"House Management",
-        me
+        me,
+        currentUser:me
     })
 })
 
 exports.getSettlementPage = catchAsync(async(req, res, next) => {
-    const me = global._User
+    const me = req.currentUser
     res.status(200).render("./sattelment/setalment",{
         title:"Setalment",
-        me
+        me,
+        currentUser:me
     })
 })
 
@@ -879,12 +889,13 @@ exports.WhiteLabelAnalysis = catchAsync(async(req, res, next) => {
             }
         }
     ])
-    const me = global._User
+    const me = req.currentUser
     // console.log(whiteLabelWise)
     res.status(200).render("./whiteLableAnalysis/whiteLableAnalysis",{
         title:"whiteLableAnalysis",
         whiteLabelWise,
-        me
+        me,
+        currentUser
         // activeUser,
         // AWhitelabel
     })
@@ -951,24 +962,26 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
     ])
     // console.log(gameAnalist)
 
-    const me = global._User
+    const me = req.currentUser
     res.status(200).render("./gameAnalysis/gameanalysis",{
         title:"Game Analysis",
         gameAnalist,
-        me
+        me,
+        currentUser:me
     })
 })
 
 exports.getStreamManagementPage = catchAsync(async(req, res, next) => {
-    const me = global._User
+    const me = req.currentUser
     res.status(200).render("./streamManagement/streammanagement",{
         title:"Streammanagement",
-        me
+        me,
+        currentUser:me
     })
 })
 
 exports.getNotificationsPage = catchAsync(async(req, res, next) => {
-    const me = global._User
+    const me = req.currentUser
     let notifications
     var fullUrl = "http://127.0.0.1/api/v1/notification/myNotifications"
     await fetch(fullUrl, {
@@ -983,7 +996,8 @@ exports.getNotificationsPage = catchAsync(async(req, res, next) => {
     res.status(200).render("./Notifications/Notification",{
         title:"Notification",
         me,
-        notifications:notifications.notifications
+        notifications:notifications.notifications,
+        currentUser:me
     })
 })
 
@@ -1029,11 +1043,12 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
           ])
             .then((betResult) => {
             //   socket.emit("aggreat", betResult)
-              let me = global._User
+              let me = req.currentUser
                 res.status(200).render("./betMonitering/betmoniter",{
                     title:"Betmoniter",
                     bets:betResult,
-                    me
+                    me,
+                    currentUser:me
                 })
             })
             .catch((error) => {
@@ -1058,13 +1073,16 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
 exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
     let data;
     let RG;
+    let currentUser = req.currentUser
     data = await gameModel.find({game_name:new RegExp("32 Cards","i")})
     RG = await gameModel.find({sub_provider_name:"Royal Gaming"})
     // console.log(RG.length)
     res.status(200).render("./casinoController/casinocontrol", {
         title:"casinoController",
         data:data,
-        RG
+        RG,
+        currentUser,
+        me: currentUser
     })
 })
 
@@ -1146,11 +1164,12 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
           ])
             .then((betResult) => {
             //   socket.emit("aggreat", betResult)
-              let me = global._User
+              let me = req.currentUser
                 res.status(200).render("./voidBet/voidBet",{
                     title:"Void Bets",
                     bets:betResult,
-                    me
+                    me,
+                    currentUser:me
                 })
             })
             .catch((error) => {
@@ -1164,12 +1183,13 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
 
 
 exports.getBetLimitPage = catchAsync(async(req, res, next) => {
-    const me = global._User
+    const me = req.currentUser
     const betLimit = await betLimitModel.find()
     res.status(200).render("./betLimit/betLimit", {
         title:"Bet Limits",
         betLimit,
-        me
+        me,
+        currentUser:me
     })
 });
 
@@ -1380,11 +1400,14 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     const Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis");
     let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
     let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
+    let currentUser =  req.currentUser
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
         liveCricket,
         liveFootBall,
-        liveTennis
+        liveTennis,
+        currentUser,
+        me: currentUser
     })
 })
 
@@ -1399,6 +1422,8 @@ exports.getCmsPage = catchAsync(async(req, res, next) => {
     res.status(200).render("./Cms/cms",{
         title:"CMS",
         user,
+        me:user,
+        currentUser:user,
         verticalMenus,
         hosriZontalMenu,
         banner,
@@ -1414,6 +1439,8 @@ exports.getPageManagement = catchAsync(async(req, res, next) => {
     res.status(200).render("./Cms/pageManager", {
         title:"Page Management",
         user,
+        me:user,
+        currentUser:user,
         pages
     })
 });
@@ -2186,6 +2213,8 @@ exports.gameRulesPage = catchAsync(async(req, res, next) => {
     res.status(200).render("./Cms/ruleManager",{
         title:"CMS",
         user,
+        me:user,
+        currentUser:user,
         verticalMenus,
         hosriZontalMenu,
         banner,
