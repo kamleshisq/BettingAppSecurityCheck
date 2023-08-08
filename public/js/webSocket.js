@@ -6333,7 +6333,7 @@ socket.on('connect', () => {
               {
                 name: 'Revenue',
                 type: 'line',
-                data: [20, 29, 37, 36, 44, 45, 50, 58]
+                data: data.Revanue.reverse()
               }],
                 chart: {
                 height: 350,

@@ -1725,9 +1725,7 @@ io.on('connection', (socket) => {
         }));
         const Income = incomeArray.map(entry => entry.totalIncome);
         const Revanue = revanue.map(entry => entry.revanue)
-        console.log(Income)
-        console.log(Revanue)
-        socket.emit("chartMain", {Income})
+        socket.emit("chartMain", {Income, Revanue})
         
     })
 
