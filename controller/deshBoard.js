@@ -201,6 +201,41 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
               user_id: req.currentUser.id,
               date: { $gte: sevenDaysAgo, $lte: currentDate }
             }
+          },
+          {
+            $group: {
+              _id: {
+                day: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+                type: {
+                  $cond: [{ $gt: ["$creditDebitamount", 0] }, "revenue", "income"]
+                }
+              },
+              totalAmount: {
+                $sum: {
+                  $cond: [
+                    { $gt: ["$creditDebitamount", 0] },
+                    "$creditDebitamount",
+                    0
+                  ]
+                }
+              }
+            }
+          },
+          {
+            $group: {
+              _id: "$_id.day",
+              details: {
+                $push: {
+                  type: "$_id.type",
+                  totalAmount: "$totalAmount"
+                }
+              }
+            }
+          },
+          {
+            $sort: {
+              _id: 1
+            }
           }
       ]);
 
