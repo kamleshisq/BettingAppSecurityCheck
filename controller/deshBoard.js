@@ -26,7 +26,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     const users = await User.aggregate([
         {
             $match:{
-                roleName:{$ne:"Admin"}
+                parentUsers : { $in: [req.currentUser.id] }
             }
         },
         {
