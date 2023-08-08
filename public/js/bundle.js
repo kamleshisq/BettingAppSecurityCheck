@@ -7264,6 +7264,7 @@ $(document).on('click', '.PasswordChange', function () {
 $(document).on('click', '.RoleDetails', function () {
   // console.log("Working")
   var modleName = $(this).data('bs-target');
+  var roledata = $(this).parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
   var form = $(modleName).find('.UpdateRole-form');
   // let x = form.find('input[id="check"]').length
   // console.log(x)
@@ -7272,7 +7273,6 @@ $(document).on('click', '.RoleDetails', function () {
   // }
   form.attr('id', roledata._id);
   form.find('input:checkbox').removeAttr('checked');
-  var roledata = $(this).parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
   // console.log(roledata, 45654654654)
   form.find('input[name = "name"]').attr('value', roledata.roleName);
   // console.log(roledata.authorization)
