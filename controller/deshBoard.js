@@ -62,9 +62,9 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         },
         {
             $lookup: {
-              from: "UserModel",
-              localField: "userId",
-              foreignField: "_id",
+              from: "users",
+              localField: "userName",
+              foreignField: "userName",
               as: "user"
             }
           },
@@ -102,7 +102,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             $limit: 5
         }
     ])
-
+    
     let Categories = await betModel.aggregate([
         {
             $match: {
