@@ -150,7 +150,8 @@ exports.getRoleById =catchAsync(async(req, res, next) => {
 
 exports.updateRoleById = catchAsync(async(req, res, next) => {
     console.log(req.body)
-    // const role = await Role.findOneAndUpdate({roleName:req.body.roleName}, {authorization:req.body.authorization, userAuthorization:req.body.userAuthorization})
+    const role = await Role.findByIdAndUpdate(req.body.id, {authorization:req.body.authorization, userAuthorization:req.body.userAuthorization})
+    console.log(role)
     // req.body.id = role.id
     // // console.log(req.body.id)
     // if(!role){
