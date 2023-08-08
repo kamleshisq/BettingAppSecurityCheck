@@ -200,7 +200,7 @@ sevenDaysAgo.setHours(0, 0, 0, 0);
     let accountForGraph = await accountModel.aggregate([
         {
             $match: {
-              user_id: userId,
+              user_id: req.currentUser.id,
               date: { $gte: sevenDaysAgo, $lte: currentDate }
             }
           },
