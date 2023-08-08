@@ -133,14 +133,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                   as: "user"
                 }
               },
-              {
-                $unwind: "$user"
-              },
-              {
-                $match: {
-                  "user.parentUsers": {$in :[req.currentUser.id]}
-                }
-              }
+              
           ])
 
 
