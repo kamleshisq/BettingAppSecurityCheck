@@ -112,6 +112,22 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             }
         },
         {
+            $lookup: {
+              from: "users",
+              localField: "userName",
+              foreignField: "userName",
+              as: "user"
+            }
+          },
+          {
+            $unwind: "$user"
+          },
+          {
+            $match: {
+              "user.parentUsers": { $in: [req.currentUser.id] }
+            }
+          },
+        {
             $group: {
                 _id: "$betType",
                 totalBets: { $sum: 1 },
