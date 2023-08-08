@@ -6331,8 +6331,8 @@ socket.on('connect', () => {
                 data: data.Income.reverse()
               },  
               {
-                name: 'Revenue',
-                type: 'line',
+                name: 'Cashflow',
+                type: 'column',
                 data: data.Revanue.reverse()
               }],
                 chart: {
@@ -6387,34 +6387,34 @@ socket.on('connect', () => {
                     }
                 },
                   title: {
-                    text: "Operating Cashflow (Indian Rupee)",
+                    text: "Revenue (Indian Rupee)",
                     style: {
                       color: '#00E396',
                     }
                 },
             },
-            {
-                seriesName: 'Revenue',
-                opposite: true,
-                axisTicks: {
-                    show: true,
-                },
-                axisBorder: {
-                    show: true,
-                    color: '#FEB019'
-                },
-                labels: {
-                    style: {
-                        colors: '#FEB019',
-                    },
-                },
-                title: {
-                    text: "Revenue (Indian Rupee)",
-                    style: {
-                        color: '#FEB019',
-                    }
-                }
-            },
+            // {
+            //     seriesName: 'Revenue',
+            //     opposite: true,
+            //     axisTicks: {
+            //         show: true,
+            //     },
+            //     axisBorder: {
+            //         show: true,
+            //         color: '#FEB019'
+            //     },
+            //     labels: {
+            //         style: {
+            //             colors: '#FEB019',
+            //         },
+            //     },
+            //     title: {
+            //         text: "Revenue (Indian Rupee)",
+            //         style: {
+            //             color: '#FEB019',
+            //         }
+            //     }
+            // },
         ],
         tooltip: {
             fixed: {
