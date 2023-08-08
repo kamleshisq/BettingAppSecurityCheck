@@ -243,7 +243,7 @@ sevenDaysAgo.setHours(0, 0, 0, 0);
 
     
 
-    console.log(accountForGraph[7].details)
+    console.log(accountForGraph)
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }, parentUsers : { $in: [req.currentUser.id] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
