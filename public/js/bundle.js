@@ -7292,7 +7292,7 @@ $(document).on('click', '.RoleDetails', function () {
   form.attr('id', roledata._id);
   form.find('input:checkbox').removeAttr('checked');
   // console.log(roledata, 45654654654)
-  form.find('input[name = "name"]').attr('value', roledata.roleName);
+  form.find('input[name = "name"]').attr('value', roledata.name);
   // console.log(roledata.authorization)
   for (var i = 0; i < roledata.authorization.length; i++) {
     form.find("input[value = \"".concat(roledata.authorization[i], "\"]")).attr("checked", "checked");
