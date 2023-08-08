@@ -124,7 +124,27 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             parentUsers : { $in: [req.currentUser.id] }
         });
 
-        betCount = await betModel.countDocuments({})
+        betCount = await betModel.aggregate([
+            {
+              $lookup: {
+                from: "user",
+                localField: "userId",
+                foreignField: "_id",
+                as: "user"
+              }
+            },
+            {
+              $match: {
+                "user.parentUsers": req.currentUser.id
+              }
+            },
+            {
+              $group: {
+                _id: null,
+                totalBets: { $sum: 1 }
+              }
+            }
+          ])
 
 
     console.log(req.currentUser, 45645464)
@@ -132,7 +152,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
     
 
-    console.log(adminCount, userCount)
+    console.log(adminCount, userCount, console.log(betCount))
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
