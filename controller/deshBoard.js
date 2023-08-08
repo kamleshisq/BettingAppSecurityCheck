@@ -192,11 +192,12 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
     // console.log(req.currentUser, 45645464)
     const currentDate = new Date();
-currentDate.setHours(23, 59, 59, 999);
+    currentDate.setHours(23, 59, 59, 999);
 
-const sevenDaysAgo = new Date();
-sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-sevenDaysAgo.setHours(0, 0, 0, 0);
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    sevenDaysAgo.setHours(0, 0, 0, 0);
+    console.log(sevenDaysAgo)
     let accountForGraph = await accountModel.aggregate([
         {
             $match: {
