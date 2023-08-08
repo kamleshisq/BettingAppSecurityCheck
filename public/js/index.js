@@ -394,7 +394,9 @@ $(document).on('click','.RoleDetails',function(){
     // }
     form.find('input:checkbox').removeAttr('checked');
     let roledata = $(this).parent('td').siblings('.getRoleForPopUP').data('bs-dismiss')
+    console.log(roledata, 45654654654)
     form.find('input[name = "name"]').attr('value',roledata.roleName)
+    // form.attr('id', '123');
     // console.log(roledata.authorization)
     for(let i = 0; i < roledata.authorization.length; i++){
         form.find(`input[value = "${roledata.authorization[i]}"]`).attr("checked", "checked");
