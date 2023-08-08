@@ -234,12 +234,12 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         ).toDateString();
         incomeMap.set(dateStr, result.totalIncome);
       });
-      dateSequence.forEach((date) => {
-        const totalIncome = incomeMap.get(date) || 0;
-        console.log(`${date}: ${totalIncome}`);
-      });
+      const incomeArray = dateSequence.map((date) => ({
+        date,
+        totalIncome: incomeMap.get(date) || 0,
+      }));
 
-    console.log(accountForGraph)
+    console.log(incomeArray)
     // for(let i = 0; i < accountForGraph.length; i++){
     //     console.log(accountForGraph[i].details)
     // }
