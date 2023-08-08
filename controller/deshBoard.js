@@ -108,11 +108,11 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         }
     ])
 
-    let userCount 
-    let adminCount
-    let betCount
+    let userCount = 0
+    let adminCount = 0
+    let betCount = 0
     if(req.currentUser.roleName === "Admin"){
-        
+
         userCount = await User.countDocuments({
             userName: 'user',
             isActive: true
