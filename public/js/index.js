@@ -392,11 +392,11 @@ $(document).on('click','.RoleDetails',function(){
     // for(let i = 0; i < x ; i++){
     //     document.getElementsByClassName(`${i}`).checked = false
     // }
+    form.attr('id', roledata._id);
     form.find('input:checkbox').removeAttr('checked');
     let roledata = $(this).parent('td').siblings('.getRoleForPopUP').data('bs-dismiss')
-    console.log(roledata, 45654654654)
+    // console.log(roledata, 45654654654)
     form.find('input[name = "name"]').attr('value',roledata.roleName)
-    form.attr('id', roledata._id);
     // console.log(roledata.authorization)
     for(let i = 0; i < roledata.authorization.length; i++){
         form.find(`input[value = "${roledata.authorization[i]}"]`).attr("checked", "checked");
