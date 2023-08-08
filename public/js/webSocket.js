@@ -6321,7 +6321,8 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/admin/dashboard"){
-        socket.emit('chartMain', LOGINDATA) 
+        // socket.emit('chartMain', LOGINDATA) 
+        console.log(LOGINDATA)
         socket.on("chartMain", data => {
 
             var options = {
