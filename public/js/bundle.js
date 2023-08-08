@@ -7074,32 +7074,39 @@ $('.createRole-form').submit(function (e) {
 //     searchUser(data)
 // })
 
-if (document.querySelector(".updateRole")) {
-  document.querySelector(".updateRole").addEventListener('submit', function (e) {
-    e.preventDefault();
-    var roleName = document.getElementById("mySelect").value;
-    var role_level = document.getElementById("role_level").value;
-    var authorization = [];
-    var roleAuthorization = [];
-    var authCheck = document.querySelectorAll("input[name='authorization']:checked");
-    for (var i = 0; i < authCheck.length; i++) {
-      roleAuthorization.push(authCheck[i].value);
-    }
-    var checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-    for (var _i2 = 0; _i2 < checkboxes.length; _i2++) {
-      authorization.push(checkboxes[_i2].value);
-    }
-    var data = {
-      authorization: authorization,
-      userAuthorization: roleAuthorization,
-      roleName: roleName,
-      role_level: role_level
-    };
-    // console.log(data)
-    (0, _updateRoleByaxios.updateRole)(data);
-  });
-}
-;
+// if(document.querySelector(".updateRole")){
+//     document.querySelector(".updateRole").addEventListener('submit', e => {
+//         e.preventDefault()
+//     let roleName = document.getElementById("mySelect").value
+//     let role_level = document.getElementById("role_level").value
+//     let authorization = [];
+//     let roleAuthorization = [];
+//     let authCheck = document.querySelectorAll("input[name='authorization']:checked");
+//     for (let i = 0 ; i < authCheck.length; i++) {
+//         roleAuthorization.push(authCheck[i].value)
+//     }
+//     let checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
+//     for (let i = 0 ; i < checkboxes.length; i++) {
+//         authorization.push(checkboxes[i].value)
+//     }
+//     let data = {
+//         authorization,
+//         userAuthorization:roleAuthorization,
+//         roleName,
+//         role_level
+//     }
+//     // console.log(data)
+//     updateRole(data)
+//     })
+// };
+
+$(document).on("submit", ".UpdateRole-form", function (e) {
+  e.preventDefault();
+  var form = $(this)[0];
+  var fd = new FormData(form);
+  var data = Object.fromEntries(fd.entries());
+  console.log(data);
+});
 if (document.querySelector('.ChangeFORM')) {
   document.querySelector('.ChangeFORM').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -7263,17 +7270,17 @@ $(document).on('click', '.RoleDetails', function () {
   // for(let i = 0; i < x ; i++){
   //     document.getElementsByClassName(`${i}`).checked = false
   // }
+  form.attr('id', roledata._id);
   form.find('input:checkbox').removeAttr('checked');
   var roledata = $(this).parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
   // console.log(roledata, 45654654654)
-  form.attr('id', roledata._id);
   form.find('input[name = "name"]').attr('value', roledata.roleName);
   // console.log(roledata.authorization)
   for (var i = 0; i < roledata.authorization.length; i++) {
     form.find("input[value = \"".concat(roledata.authorization[i], "\"]")).attr("checked", "checked");
   }
-  for (var _i3 = 0; _i3 < roledata.userAuthorization.length; _i3++) {
-    form.find("input[value = \"".concat(roledata.userAuthorization[_i3], "\"]")).attr("checked", "checked");
+  for (var _i2 = 0; _i2 < roledata.userAuthorization.length; _i2++) {
+    form.find("input[value = \"".concat(roledata.userAuthorization[_i2], "\"]")).attr("checked", "checked");
   }
   document.getElementById("role_controller").innerHTML = "\n            <label for=\"level\"> <h3>Role Level </h3></label><br>\n            <input type=\"number\" name=\"level\" placeholder='".concat(roledata.role_level, "' id='role_level'>");
 });

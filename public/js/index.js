@@ -191,31 +191,40 @@ $('.createRole-form').submit(function(e) {
 // })
 
 
-if(document.querySelector(".updateRole")){
-    document.querySelector(".updateRole").addEventListener('submit', e => {
-        e.preventDefault()
-    let roleName = document.getElementById("mySelect").value
-    let role_level = document.getElementById("role_level").value
-    let authorization = [];
-    let roleAuthorization = [];
-    let authCheck = document.querySelectorAll("input[name='authorization']:checked");
-    for (let i = 0 ; i < authCheck.length; i++) {
-        roleAuthorization.push(authCheck[i].value)
-    }
-    let checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-    for (let i = 0 ; i < checkboxes.length; i++) {
-        authorization.push(checkboxes[i].value)
-    }
-    let data = {
-        authorization,
-        userAuthorization:roleAuthorization,
-        roleName,
-        role_level
-    }
-    // console.log(data)
-    updateRole(data)
-    })
-};
+// if(document.querySelector(".updateRole")){
+//     document.querySelector(".updateRole").addEventListener('submit', e => {
+//         e.preventDefault()
+//     let roleName = document.getElementById("mySelect").value
+//     let role_level = document.getElementById("role_level").value
+//     let authorization = [];
+//     let roleAuthorization = [];
+//     let authCheck = document.querySelectorAll("input[name='authorization']:checked");
+//     for (let i = 0 ; i < authCheck.length; i++) {
+//         roleAuthorization.push(authCheck[i].value)
+//     }
+//     let checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
+//     for (let i = 0 ; i < checkboxes.length; i++) {
+//         authorization.push(checkboxes[i].value)
+//     }
+//     let data = {
+//         authorization,
+//         userAuthorization:roleAuthorization,
+//         roleName,
+//         role_level
+//     }
+//     // console.log(data)
+//     updateRole(data)
+//     })
+// };
+
+
+$(document).on("submit", ".UpdateRole-form", function(e){
+    e.preventDefault()
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    let data = Object.fromEntries(fd.entries());
+    console.log(data)
+})
 
 if(document.querySelector('.ChangeFORM')){
     document.querySelector('.ChangeFORM').addEventListener('submit', e =>{
