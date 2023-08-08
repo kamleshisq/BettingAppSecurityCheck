@@ -2,6 +2,7 @@ const cron = require('node-cron');
 const betModel = require('../model/betmodel');
 const accModel = require('../model/accountStatementByUserModel');
 const userModel = require("../model/userModel");
+const { parse } = require('dotenv');
 
 module.exports = () => {
     cron.schedule('*/5 * * * *', async() => {
@@ -36,7 +37,7 @@ module.exports = () => {
                         console.log("WORKING4564654654")
                         console.log(entry)
                         let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue)})
-                        let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{balance: (entry.Stake * entry.oddValue), availableBalance: (entry.Stake * entry.oddValue), myPL: (entry.Stake * entry.oddValue), Won:1, exposure:-entry.Stake}})
+                        let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{balance: parseFloat(entry.Stake * entry.oddValue), availableBalance: parseFloat(entry.Stake * entry.oddValue), myPL: parseFloat(entry.Stake * entry.oddValue), Won:1, exposure:-parseFloat(entry.Stake)}})
                         console.log(user)
                         let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
                         let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/WON `
@@ -44,10 +45,10 @@ module.exports = () => {
 
                         if(user.parentUsers.length < 2){
                             // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
-                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -(entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
+                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -parseFloat(entry.Stake * entry.oddValue), downlineBalance: parseFloat(entry.Stake * entry.oddValue), myPL: -parseFloat(entry.Stake * entry.oddValue)}})
                         }else{
-                            await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
-                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-(entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
+                            await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: parseFloat(entry.Stake * entry.oddValue), downlineBalance: parseFloat(entry.Stake * entry.oddValue)}})
+                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-parseFloat(entry.Stake * entry.oddValue), downlineBalance: parseFloat(entry.Stake * entry.oddValue), myPL: -parseFloat(entry.Stake * entry.oddValue)}})
                         }
                         
                         await accModel.create({
@@ -78,7 +79,7 @@ module.exports = () => {
 
                     }else if((entry.secId === "odd_Even_No" && marketresult.result === "lay") || (entry.secId === "odd_Even_Yes" && marketresult.result === "back")){
                         let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue)})
-                        let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{balance: (entry.Stake * entry.oddValue), availableBalance: (entry.Stake * entry.oddValue), myPL: (entry.Stake * entry.oddValue), Won:1, exposure:-entry.Stake}})
+                        let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{balance: parseFloat(entry.Stake * entry.oddValue), availableBalance: parseFloat(entry.Stake * entry.oddValue), myPL: parseFloat(entry.Stake * entry.oddValue), Won:1, exposure:-parseFloat(entry.Stake)}})
                         console.log(user)
                         let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
                         let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/WON `
@@ -86,10 +87,10 @@ module.exports = () => {
 
                         if(user.parentUsers.length < 2){
                             // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
-                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -(entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
+                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -parseFloat(entry.Stake * entry.oddValue), downlineBalance: parseFloat(entry.Stake * entry.oddValue), myPL: -parseFloat(entry.Stake * entry.oddValue)}})
                         }else{
-                            await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
-                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-(entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
+                            await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: parseFloat(entry.Stake * entry.oddValue), downlineBalance: parseFloat(entry.Stake * entry.oddValue)}})
+                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance: -parseFloat(entry.Stake * entry.oddValue), downlineBalance: parseFloat(entry.Stake * entry.oddValue), myPL: -parseFloat(entry.Stake * entry.oddValue)}})
                         }
                         
                         await accModel.create({
@@ -119,7 +120,7 @@ module.exports = () => {
                         })
                     }else{
                         await betModel.findByIdAndUpdate(entry._id,{status:"LOSS"})
-                        await userModel.findByIdAndUpdate(entry.userId,{$inc:{Loss:1, exposure:-entry.Stake}})
+                        await userModel.findByIdAndUpdate(entry.userId,{$inc:{Loss:1, exposure:-parseFloat(entry.Stake)}})
                     }
                     // const userName = entry.userName;
                     // const stake = entry.Stake;
