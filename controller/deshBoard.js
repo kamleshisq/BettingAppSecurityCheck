@@ -191,33 +191,37 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
 
     console.log(req.currentUser, 45645464)
-    const today = new Date();
-    const next10Days = Array.from({ length: 10 }, (_, i) => {
-        const nextDate = new Date(today);
-        nextDate.setDate(today.getDate() + i);
-        return nextDate;
-      });
-    console.log(next10Days)
+    const currentDate = new Date();
+    const tenDaysAgo = new Date();
+    tenDaysAgo.setDate(currentDate.getDate() - 10);
+    // console.log(next10Days)
     let accountForGraph = await accountModel.aggregate([
         {
             $match: {
               userName: req.currentUser.userName,
               date: {
-                $gte: today,
-                $lt: next10Days[next10Days.length - 1],
+                $gte: tenDaysAgo,
               },
             },
           },
           {
             $group: {
               _id: {
-                $dateToString: { format: "%Y-%m-%d", date: "$date" },
+                year: { $year: '$date' },
+                month: { $month: '$date' },
+                day: { $dayOfMonth: '$date' },
               },
-              income: { $sum: "$creditDebitamount" },
+              totalIncome: {
+                $sum: '$creditDebitamount',
+              },
             },
           },
           {
-            $sort: { _id: 1 },
+            $sort: {
+              '_id.year': 1,
+              '_id.month': 1,
+              '_id.day': 1,
+            },
           },
       ]);
 
