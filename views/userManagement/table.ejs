@@ -11,7 +11,7 @@
   <div style="justify-content: flex-end;
   display: flex;
   gap: 10px;">
-  <button class="btn-filter downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
+  <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
   <%if(currentUser.role.authorization.includes('createDeleteUser')){%>
     <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add User</button>
   <%}%>
