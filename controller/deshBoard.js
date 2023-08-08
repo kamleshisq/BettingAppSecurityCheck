@@ -198,21 +198,8 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     let accountForGraph = await accountModel.aggregate([
         {
             $match: {
-              user_id: req.currentUser.id,
+              user_id: userId,
               date: { $gte: sevenDaysAgo, $lte: currentDate }
-            }
-          },
-          {
-            $group: {
-              _id: null,
-              totalRevenue: {
-                $sum: {
-                  $cond: [{ $eq: ["$user_id", req.currentUser.id] }, "$creditDebitamount", 0]
-                }
-              },
-              totalIncome: {
-                $sum: "$creditDebitamount"
-              }
             }
           }
       ]);
@@ -220,9 +207,9 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     
 
     console.log(accountForGraph)
-    for(let i = 0; i < accountForGraph.length; i++){
-        console.log(accountForGraph[i].details)
-    }
+    // for(let i = 0; i < accountForGraph.length; i++){
+    //     console.log(accountForGraph[i].details)
+    // }
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }, parentUsers : { $in: [req.currentUser.id] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
