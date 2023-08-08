@@ -225,6 +225,8 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
           },
       ]);
 
+      console.log(accountForGraph)
+
       const incomeMap = new Map();
       accountForGraph.forEach((result) => {
         const dateStr = new Date(
