@@ -149,18 +149,18 @@ exports.getRoleById =catchAsync(async(req, res, next) => {
 });
 
 exports.updateRoleById = catchAsync(async(req, res, next) => {
-    // console.log(req.body)
-    const role = await Role.findOneAndUpdate({roleName:req.body.roleName}, {authorization:req.body.authorization, userAuthorization:req.body.userAuthorization})
-    req.body.id = role.id
-    // console.log(req.body.id)
-    if(!role){
-        return next(new AppError("Ops!, Something went wrong please try again later", 404))
-    }
-    if(req.body.role_level == '' || req.body.role_level == undefined){
-        return res.status(200).json({
-            status:"success",
-            role
-        })
-    }
-    next()
+    console.log(req.body)
+    // const role = await Role.findOneAndUpdate({roleName:req.body.roleName}, {authorization:req.body.authorization, userAuthorization:req.body.userAuthorization})
+    // req.body.id = role.id
+    // // console.log(req.body.id)
+    // if(!role){
+    //     return next(new AppError("Ops!, Something went wrong please try again later", 404))
+    // }
+    // if(req.body.role_level == '' || req.body.role_level == undefined){
+    //     return res.status(200).json({
+    //         status:"success",
+    //         role
+    //     })
+    // }
+    // next()
 })
