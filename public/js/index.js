@@ -241,6 +241,7 @@ $(document).on("submit", ".UpdateRole-form", function(e){
         role_level
     }
     console.log(data)
+    updateRole(data)
 })
 
 if(document.querySelector('.ChangeFORM')){
