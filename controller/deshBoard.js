@@ -128,8 +128,8 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             {
                 $lookup: {
                   from: "users",
-                  localField: "userId",
-                  foreignField: "_id",
+                  localField: "userName",
+                  foreignField: "userName",
                   as: "user"
                 }
               },
