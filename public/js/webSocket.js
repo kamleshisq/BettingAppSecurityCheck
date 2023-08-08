@@ -6495,7 +6495,7 @@ socket.on('connect', () => {
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'table_data.csv';
+                a.download = 'Users.csv';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
