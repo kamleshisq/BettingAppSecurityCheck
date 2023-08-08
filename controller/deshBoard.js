@@ -194,7 +194,14 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     const currentDate = new Date();
     const tenDaysAgo = new Date();
     tenDaysAgo.setDate(currentDate.getDate() - 10);
-    // console.log(next10Days)
+
+    const dateSequence = [];
+    for (let i = 0; i < 10; i++) {
+    const currentDate = new Date(tenDaysAgo);
+    currentDate.setDate(tenDaysAgo.getDate() + i);
+    dateSequence.push(currentDate.toDateString());
+    }
+        // console.log(next10Days)
     let accountForGraph = await accountModel.aggregate([
         {
             $match: {
@@ -214,29 +221,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
               totalIncome: {
                 $sum: '$creditDebitamount',
               },
-            },
-          },
-          {
-            $addFields: {
-              date: {
-                $dateFromParts: {
-                  year: '$_id.year',
-                  month: '$_id.month',
-                  day: '$_id.day',
-                },
-              },
-            },
-          },
-          {
-            $project: {
-              _id: 0,
-              date: 1,
-              totalIncome: 1,
-            },
-          },
-          {
-            $sort: {
-              date: 1,
             },
           },
       ]);
