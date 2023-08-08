@@ -20,12 +20,15 @@
         <h5>Downline Balance</h5>
           <h6><%= me.downlineBalance%></h6>
       </div>
-
-      <div class="skin-data red">
-       
-        <h5>MY P/L</h5>
-          <h6><%= me.myPL%></h6>
-      </div>
+      <%if(me.myPL > 0){%>
+      <div class="skin-data green">
+        <%}else{%>
+          <div class="skin-data red">
+        <%}%>
+         
+          <h5>MY P/L</h5>
+            <h6><%= me.myPL%></h6>
+        </div>
       <div class="skin-data red">
         
         <h5>Upline P/L</h5>
