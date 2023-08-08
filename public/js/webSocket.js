@@ -6437,6 +6437,50 @@ socket.on('connect', () => {
               chart.render();
             })
     }
+
+    if(pathname === "/admin/userManagement"){
+        function downloadCSV(csvContent, fileName) {
+            const link = document.createElement('a');
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+          }          
+
+          function sanitizeCellValue(value) {
+            // Define a character whitelist (allow only printable ASCII and basic punctuation)
+            const allowedCharactersRegex = /[\x20-\x7E\u0020-\u007E]/g;
+            
+            return value.match(allowedCharactersRegex).join('').trim();
+          }
+          
+          function convertToCSV(table) {
+            const rows = table.querySelectorAll('tr');
+            
+            let csv = '';
+            for (const row of rows) {
+              const columns = row.querySelectorAll('td, th');
+              let rowData = '';
+              for (const column of columns) {
+                const data = sanitizeCellValue(column.innerText);
+                rowData += (data.includes(',') ? `"${data}"` : data) + ',';
+              }
+              csv += rowData.slice(0, -1) + '\n';
+            }
+            
+            return csv;
+          }
+
+        document.getElementById('downloadBtn').addEventListener('click', function(e) {
+            e.preventDefault()
+            const table = document.getElementById('table12');             
+            if (table) {
+              const csvContent = convertToCSV(table);
+              downloadCSV(csvContent, 'Users.csv');
+            }
+          });
+    }
    
 
 
