@@ -6452,7 +6452,7 @@ socket.on('connect', () => {
             // Define a character whitelist (allow only printable ASCII and basic punctuation)
             const allowedCharactersRegex = /[\x20-\x7E\u0020-\u007E]/g;
             
-            return value.match(allowedCharactersRegex).join('').trim();
+            return value.match(allowedCharactersRegex).join(',').trim();
           }
           
           function convertToCSV(table) {
