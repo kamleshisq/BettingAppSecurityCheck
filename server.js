@@ -1667,7 +1667,56 @@ io.on('connection', (socket) => {
     })
 
     socket.on("chartMain", async(data) => {
-        console.log(data)
+        const currentDate = new Date();
+        const tenDaysAgo = new Date();
+        tenDaysAgo.setDate(currentDate.getDate() - 10);
+    
+        const dateSequence = [];
+        for (let i = 0; i < 10; i++) {
+        const currentDate = new Date(tenDaysAgo);
+        currentDate.setDate(tenDaysAgo.getDate() + i);
+        dateSequence.push(currentDate.toDateString());
+        }
+
+        let accountForGraph = await AccModel.aggregate([
+            {
+                $match: {
+                  userName: data.LOGINUSER.userName,
+                  date: {
+                    $gte: tenDaysAgo,
+                  },
+                },
+              },
+              {
+                $group: {
+                  _id: {
+                    year: { $year: '$date' },
+                    month: { $month: '$date' },
+                    day: { $dayOfMonth: '$date' },
+                  },
+                  totalIncome: {
+                    $sum: '$creditDebitamount',
+                  },
+                },
+              },
+          ]);
+
+          const incomeMap = new Map();
+        accountForGraph.forEach((result) => {
+            const dateStr = new Date(
+            result._id.year,
+            result._id.month - 1,
+            result._id.day
+            ).toDateString();
+            incomeMap.set(dateStr, result.totalIncome);
+        });
+        const incomeArray = dateSequence.map((date) => ({
+            date,
+            totalIncome: incomeMap.get(date) || 0,
+        }));
+        const scriptData = incomeArray.map(entry => entry.totalIncome);
+
+        console.log(scriptData)
     })
 
     

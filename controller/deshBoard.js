@@ -191,58 +191,16 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
 
     console.log(req.currentUser, 45645464)
-    const currentDate = new Date();
-    const tenDaysAgo = new Date();
-    tenDaysAgo.setDate(currentDate.getDate() - 10);
-
-    const dateSequence = [];
-    for (let i = 0; i < 10; i++) {
-    const currentDate = new Date(tenDaysAgo);
-    currentDate.setDate(tenDaysAgo.getDate() + i);
-    dateSequence.push(currentDate.toDateString());
-    }
+   
         // console.log(next10Days)
-    let accountForGraph = await accountModel.aggregate([
-        {
-            $match: {
-              userName: req.currentUser.userName,
-              date: {
-                $gte: tenDaysAgo,
-              },
-            },
-          },
-          {
-            $group: {
-              _id: {
-                year: { $year: '$date' },
-                month: { $month: '$date' },
-                day: { $dayOfMonth: '$date' },
-              },
-              totalIncome: {
-                $sum: '$creditDebitamount',
-              },
-            },
-          },
-      ]);
+    
 
       console.log(accountForGraph)
 
-      const incomeMap = new Map();
-      accountForGraph.forEach((result) => {
-        const dateStr = new Date(
-          result._id.year,
-          result._id.month - 1,
-          result._id.day
-        ).toDateString();
-        incomeMap.set(dateStr, result.totalIncome);
-      });
-      const incomeArray = dateSequence.map((date) => ({
-        date,
-        totalIncome: incomeMap.get(date) || 0,
-      }));
+      
 
     // console.log(incomeArray)
-    const scriptData = incomeArray.map(entry => entry.totalIncome);
+    
     // for(let i = 0; i < accountForGraph.length; i++){
     //     console.log(accountForGraph[i].details)
     // }
@@ -256,7 +214,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     dashboard.userCount = userCount
     dashboard.adminCount = adminCount
     dashboard.betCount = betCount
-    dashboard.incomeArray = scriptData
     
     res.status(200).json({
         status:'success',
