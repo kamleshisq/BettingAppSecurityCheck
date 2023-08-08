@@ -111,23 +111,20 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     let userCount = 0
     let adminCount = 0
     let betCount = 0
-    if(req.currentUser.roleName === "Admin"){
-
         userCount = await User.countDocuments({
             userName: 'user',
-            isActive: true
+            isActive: true,
+            parentUsers : { $in: [req.currentUser.id] }
         });
 
         adminCount = await User.countDocuments({
             userName: { $ne: 'user' },
-            isActive: true
+            isActive: true,
+            parentUsers : { $in: [req.currentUser.id] }
         });
 
         betCount = await betModel.countDocuments({})
 
-    }else{
-
-    }
 
     console.log(req.currentUser, 45645464)
 
