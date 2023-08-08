@@ -1719,9 +1719,14 @@ io.on('connection', (socket) => {
             date,
             totalIncome: incomeMap.get(date) || 0,
         }));
-        console.log(incomeArray)
+        const revanue = dateSequence.map((date) => ({
+            date,
+            revanue: incomeMap2.get(date) || 0,
+        }));
         const Income = incomeArray.map(entry => entry.totalIncome);
-
+        const Revanue = revanue.map(entry => entry.revanue)
+        console.log(Income)
+        console.log(Revanue)
         socket.emit("chartMain", {Income})
         
     })
