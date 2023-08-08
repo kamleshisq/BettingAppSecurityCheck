@@ -150,7 +150,7 @@ exports.getRoleById =catchAsync(async(req, res, next) => {
 
 exports.updateRoleById = catchAsync(async(req, res, next) => {
     console.log(req.body)
-    const role = await Role.findByIdAndUpdate(req.body.id, {authorization:req.body.authorization, userAuthorization:req.body.userAuthorization})
+    const role = await Role.findByIdAndUpdate(req.body.id, {authorization:req.body.authorization, userAuthorization:req.body.userAuthorization, })
     console.log(role)
     if(!role){
         return next(new AppError("Ops!, Something went wrong please try again later", 404))

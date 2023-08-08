@@ -7,6 +7,9 @@ const roleSchema = mongoose.Schema({
         type: String,
         unique:true
     },
+    name:{
+        type:String
+    },
     role_level:{
         type:Number,
         required:true
