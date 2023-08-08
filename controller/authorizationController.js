@@ -138,7 +138,6 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     }
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
-    console.log(currentUser)
     if(!currentUser){
         return res.status(404).json({
             status:"success",
