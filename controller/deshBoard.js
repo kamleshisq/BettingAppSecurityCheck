@@ -203,17 +203,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 $lt: next10Days[next10Days.length - 1],
               },
             },
-          },
-          {
-            $group: {
-              _id: {
-                $dateToString: { format: "%Y-%m-%d", date: "$date" },
-              },
-              income: { $sum: "$creditDebitamount" },
-            },
-          },
-          {
-            $sort: { _id: 1 },
           }
       ]);
 
