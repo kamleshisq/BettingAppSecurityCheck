@@ -7265,9 +7265,9 @@ $(document).on('click', '.RoleDetails', function () {
   // }
   form.find('input:checkbox').removeAttr('checked');
   var roledata = $(this).parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
-  console.log(roledata, 4565465465);
+  console.log(roledata, 45654654654);
   form.find('input[name = "name"]').attr('value', roledata.roleName);
-  // form.attr('id', '123');
+  form.attr('id', roledata._i);
   // console.log(roledata.authorization)
   for (var i = 0; i < roledata.authorization.length; i++) {
     form.find("input[value = \"".concat(roledata.authorization[i], "\"]")).attr("checked", "checked");
