@@ -132,6 +132,14 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                   foreignField: "_id",
                   as: "user"
                 }
+              },
+              {
+                $unwind: "$user"
+              },
+              {
+                $match: {
+                  "user.parentUsers": req.currentUser.id
+                }
               }
           ])
 
