@@ -195,7 +195,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         // console.log(next10Days)
     
 
-      console.log(accountForGraph)
+    //   console.log(accountForGraph)
 
       
 
