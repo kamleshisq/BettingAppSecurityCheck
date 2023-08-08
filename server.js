@@ -1666,6 +1666,10 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on("chartMain", async(data) => {
+        console.log(data)
+    })
+
     
 })
 

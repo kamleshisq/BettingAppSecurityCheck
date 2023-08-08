@@ -6321,7 +6321,7 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/admin/dashboard"){
-        console.log(document.getElementById('chart').value, 454545454) 
+        socket.emit('chartMain', LOGINDATA) 
         var options = {
                 series: [{
                 name: 'Income',
