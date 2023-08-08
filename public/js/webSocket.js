@@ -6362,7 +6362,7 @@ socket.on('connect', () => {
                     }
                 },
                 title: {
-                    text: "Income (thousand crores)",
+                    text: "Income (Indian Rupee)",
                     style: {
                         color: '#008FFB',
                     }
@@ -6387,7 +6387,7 @@ socket.on('connect', () => {
                     }
                 },
                   title: {
-                    text: "Operating Cashflow (thousand crores)",
+                    text: "Operating Cashflow (Indian Rupee)",
                     style: {
                       color: '#00E396',
                     }
