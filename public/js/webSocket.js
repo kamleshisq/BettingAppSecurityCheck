@@ -6409,7 +6409,7 @@ socket.on('connect', () => {
                     },
                 },
                 title: {
-                    text: "Revenue (thousand crores)",
+                    text: "Revenue (Indian Rupee)",
                     style: {
                         color: '#FEB019',
                     }
