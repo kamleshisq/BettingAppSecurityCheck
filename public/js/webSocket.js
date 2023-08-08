@@ -6463,7 +6463,7 @@ socket.on('connect', () => {
               const columns = row.querySelectorAll('td, th');
               let rowData = '';
               for (const column of columns) {
-                console.log(column.innerText)
+                
                 const data = sanitizeCellValue(column.innerText);
                 rowData += (data.includes(',') ? `"${data}"` : data) + ',';
               }
@@ -6477,9 +6477,28 @@ socket.on('connect', () => {
             e.preventDefault()
             const table = document.getElementById('table12');             
             if (table) {
-              const csvContent = convertToCSV(table);
-              console.log(csvContent, 12121)
-              downloadCSV(csvContent, 'Users.csv');
+                const rows = table.querySelectorAll('tbody tr');
+                const csvRows = [];
+              
+                // Extract data from each row except the last column
+                rows.forEach(row => {
+                  const cells = row.querySelectorAll('td:not(:last-child)');
+                  const csvRow = Array.from(cells).map(cell => cell.textContent.trim());
+                  csvRows.push(csvRow.join(','));
+                });
+              
+                // Combine rows into a CSV string
+                const csvContent = csvRows.join('\n');
+              
+                // Create a Blob and initiate download
+                const blob = new Blob([csvContent], { type: 'text/csv' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'table_data.csv';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
             }
           });
     }
