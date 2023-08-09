@@ -1775,7 +1775,14 @@ io.on('connection', (socket) => {
     })
 
     socket.on("BetLockUnlock", async(data) => {
-        console.log(data)
+        try{
+            let user =  await User.findById(data.dataId)
+            console.log(user)
+
+        }catch(err){
+            console.log(err)
+            socket.emit("BetLockUnlock", {message:"err", status:"error"})
+        }
     })
 
     
