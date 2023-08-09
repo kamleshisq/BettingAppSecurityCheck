@@ -453,7 +453,15 @@ socket.on('connect', () => {
 
         $(document).on("change", ".DepositW", function(e){
             e.preventDefault()
-            console.log($(this).val())
+            let type = $(this).val()
+            var row = this.closest("tr");
+            var id = row.id;
+            var dataId = row.getAttribute("data-id");
+            socket.emit("DepositW", {id, dataId, type})
+        })
+
+        socket.on("DepositW", async(data) => {
+            console.log(data)
         })
         
         // socket.on('getOwnChild',(data) => {

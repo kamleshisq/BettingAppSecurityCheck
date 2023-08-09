@@ -1751,6 +1751,15 @@ io.on('connection', (socket) => {
             socket.emit("getUserDetaisl", {message:"err", status:"error"})
         }
     })
+    socket.on("DepositW", async(data) => {
+        try{
+            let user = await User.findById(data.dataId)
+            socket.emit("DepositW", {user, status:"success", type:data.type})
+        }catch(err){
+            console.log(err)
+            socket.emit("DepositW", {message:"err", status:"error"})
+        }
+    })
 
     
 })
