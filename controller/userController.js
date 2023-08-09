@@ -12,40 +12,39 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     const user_type = await Role.findById(req.body.role);
     // console.log(user_type)
     // console.log(req.currentUser)
-    if(req.currentUser.role_type != 1){
-        req.body.whiteLabel = req.currentUser.whiteLabel
-    }else if(req.currentUser.role_type == 1){
-        // req.body.whiteLabel = "betbhai"
-    }
-    const count = await whiteLabel.find({whiteLabelName:req.body.whiteLabel})
-    if(count.length == 0){
-        // console.log(req.body.whiteLabel)
-        await whiteLabel.create({whiteLabelName:req.body.whiteLabel})
-    }
-    if(user_type.role_level < req.currentUser.role.role_level){
-        return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
-    }
-    if(!req.currentUser.role.userAuthorization.includes(user_type.role_type)){
-        return next(new AppError("You do not have permission to perform this action", 404))
-    }
-    if(!req.body.whiteLabel){
-        return next(new AppError("please provide a white lable for user", 404))
-    }
-    req.body.role_type = user_type.role_type
-    req.body.roleName = user_type.roleName
-    req.body.parent_id = req.currentUser.id
-    req.body.parent_user_type_id = req.currentUser.user_type_id
-    req.body.parentUsers = []
-    if(req.currentUser.parentUsers){
-        req.body.parentUsers = req.currentUser.parentUsers
-    }
-    req.body.parentUsers.push(req.currentUser._id)
-    // console.log(req.body)
-    const newUser = await User.create(req.body);
-    res.status(200).json({
-        status:'success',
-        User: newUser
-    })
+    console.log(req.body)
+    // if(req.currentUser.role_type != 1){
+    //     req.body.whiteLabel = req.currentUser.whiteLabel
+    // }
+    // const count = await whiteLabel.find({whiteLabelName:req.body.whiteLabel})
+    // if(count.length == 0){
+    //     // console.log(req.body.whiteLabel)
+    //     await whiteLabel.create({whiteLabelName:req.body.whiteLabel})
+    // }
+    // if(user_type.role_level < req.currentUser.role.role_level){
+    //     return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
+    // }
+    // if(!req.currentUser.role.userAuthorization.includes(user_type.role_type)){
+    //     return next(new AppError("You do not have permission to perform this action", 404))
+    // }
+    // if(!req.body.whiteLabel){
+    //     return next(new AppError("please provide a white lable for user", 404))
+    // }
+    // req.body.role_type = user_type.role_type
+    // req.body.roleName = user_type.roleName
+    // req.body.parent_id = req.currentUser.id
+    // req.body.parent_user_type_id = req.currentUser.user_type_id
+    // req.body.parentUsers = []
+    // if(req.currentUser.parentUsers){
+    //     req.body.parentUsers = req.currentUser.parentUsers
+    // }
+    // req.body.parentUsers.push(req.currentUser._id)
+    // // console.log(req.body)
+    // const newUser = await User.create(req.body);
+    // res.status(200).json({
+    //     status:'success',
+    //     User: newUser
+    // })
 })
 
 exports.deletUser = catchAsync(async(req, res, next) =>{
