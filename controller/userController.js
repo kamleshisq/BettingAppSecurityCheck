@@ -244,27 +244,27 @@ exports.updateUserStatusBattingUnlock = catchAsync(async(req, res, next) => {
 exports.changePassword = catchAsync(async(req, res, next) => {
     // const user = await User.findById(req.body.id).select('+password')
     console.log(req.body)
-    // let user
-    // if(req.currentUser.role.role_level == 1){
-    //     user = await User.findById(req.body.id).select('+password')
-    // }else{
-    //     user = await User.findOne({_id:req.body.id, whiteLabel:req.currentUser.whiteLabel}).select('+password')
-    // }
+    let user
+    if(req.currentUser.role.role_level == 1){
+        user = await User.findById(req.body.id).select('+password')
+    }else{
+        user = await User.findOne({_id:req.body.id, whiteLabel:req.currentUser.whiteLabel}).select('+password')
+    }
     // // console.log(req.body.password)
-    // if(!user){
-    //     return next(new AppError("User not found", 404))
-    // }
-    // if(req.currentUser.role.role_type > user.role.role_type){
-    //     return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
-    // }
+    if(!user){
+        return next(new AppError("User not found", 404))
+    }
+    if(req.currentUser.role.role_type > user.role.role_type){
+        return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
+    }
     
-    // user.password = req.body.password
-    // user.passwordConfirm = req.body.passwordConfirm
-    // await user.save();
-    // res.status(200).json({
-    //     status:'success',
-    //     user
-    // })
+    user.password = req.body.password
+    user.passwordConfirm = req.body.passwordConfirm
+    await user.save();
+    res.status(200).json({
+        status:'success',
+        user
+    })
 });
 
 exports.onLineUsers = catchAsync(async(req, res, next) => {
