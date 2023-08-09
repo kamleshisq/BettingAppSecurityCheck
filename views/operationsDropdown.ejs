@@ -1,5 +1,5 @@
 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-  <%if(req.currentUser.roleName == "Admin"){ %>
+  <%if(currentUser.roleName == "Admin"){ %>
     <li><a class="dropdown-item" href="/admin/houseManagement">House Management</a></li>
     <li><a class="dropdown-item" href="/admin/setalment">Settlements</a></li>
     <li><a class="dropdown-item" href="/admin/whiteLableAnalysis">White Label Analysis</a></li>
