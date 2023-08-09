@@ -452,14 +452,14 @@ socket.on('connect', () => {
             let userData = data.user
             let me = LOGINDATA.LOGINUSER
             let type = form.find('select[name = "type"]').val()
-            console.log(type)
-
-            // form.find('input[name = "toUser"]').attr('value',userData.userName)
-            // form.find('input[name = "fuBalance"]').attr('value',me.balance)
-            // form.find('input[name = "tuBalance"]').attr('value',userData.balance)
-            // form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
-            // form.find('input[name = "fromUser"]').attr('value','admin')
-            // form.find('input[name = "id"]').attr('value',userData._id)
+            if(type == "deposit"){
+                form.find('input[name = "toUser"]').attr('value',userData.userName)
+                form.find('input[name = "fuBalance"]').attr('value',me.balance)
+                form.find('input[name = "tuBalance"]').attr('value',userData.balance)
+                form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
+                form.find('input[name = "fromUser"]').attr('value',me.userName)
+                form.find('input[name = "id"]').attr('value',userData._id)
+            }
             }
         })
         
