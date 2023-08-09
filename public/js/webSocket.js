@@ -443,6 +443,7 @@ socket.on('connect', () => {
         })
 
         socket.on("getUserDetaisl", data => {
+            console.log(data)
             if(data.status === "error"){
                 alert("Please Try again leter")
             }else{
