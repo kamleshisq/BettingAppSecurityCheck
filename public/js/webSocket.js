@@ -508,7 +508,7 @@ socket.on('connect', () => {
             var row = this.closest("tr");
             var id = row.id;
             var dataId = row.getAttribute("data-id");
-            console.log(id, dataId)
+            socket.emit("BetLockUnlock", {id, dataId})
         })
         
         // socket.on('getOwnChild',(data) => {

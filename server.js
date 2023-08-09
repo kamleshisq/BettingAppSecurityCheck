@@ -1774,6 +1774,10 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on("BetLockUnlock", async(data) => {
+        console.log(data)
+    })
+
     
 })
 
