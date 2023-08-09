@@ -6641,6 +6641,7 @@ socket.on('connect', () => {
     if(pathname === "/admin/houseManagement"){
         $(document).on("submit", ".HouseFund", function(e){
             e.preventDefault()
+            console.log("Wroking")
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
