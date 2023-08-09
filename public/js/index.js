@@ -149,6 +149,7 @@ $(document).on('submit','.acc-form',async function(e) {
     const user = await debitCredit(formDataObj)
     var trElements = document.querySelectorAll('tr.trtable');
     console.log(trElements)
+    console.log(user)
     trElements.forEach(function(trElement) {
         if (trElement.getAttribute('data-id') === user.id) {
             console.log(trElement)

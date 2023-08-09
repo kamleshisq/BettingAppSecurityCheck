@@ -7026,6 +7026,7 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           user = _context3.sent;
           trElements = document.querySelectorAll('tr.trtable');
           console.log(trElements);
+          console.log(user);
           trElements.forEach(function (trElement) {
             if (trElement.getAttribute('data-id') === user.id) {
               console.log(trElement);
@@ -7035,7 +7036,7 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           // let currentUser = $('#currentUserDetails').data('currentuser')
           // updateRow(user,rowId,currentUser)
           // console.log(user)
-        case 13:
+        case 14:
         case "end":
           return _context3.stop();
       }
