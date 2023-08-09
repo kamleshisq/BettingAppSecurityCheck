@@ -5966,7 +5966,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.userStatus = void 0;
-var userStatus = function userStatus(data) {
+var userStatus = function userStatus(data, rawId) {
   var url = data.status === 'true' ? '/api/v1/users/updateUserStatusActive' : '/api/v1/users/updateUserStatusInactive';
   $.ajax({
     url: url,
@@ -7164,7 +7164,7 @@ $(document).on('submit', '.userStatus', function (e) {
   // let rowId = $('.rowId').attr('data-rowid')
   // console.log(formDataObj)
   var trElement = document.querySelector("tr[data-id=\"".concat(id, "\"]"));
-  console.log(trElement);
+  var rowId = trElement.id;
   // console.log(rowId)
   // console.log(formDataObj)
   (0, _userStatus.userStatus)(formDataObj);

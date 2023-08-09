@@ -325,10 +325,10 @@ $(document).on('submit','.userStatus',function(e) {
     // let rowId = $('.rowId').attr('data-rowid')
     // console.log(formDataObj)
     var trElement = document.querySelector(`tr[data-id="${id}"]`);
-    console.log(trElement)
+    let rowId = trElement.id
     // console.log(rowId)
     // console.log(formDataObj)
-    userStatus(formDataObj)
+    userStatus(formDataObj, rowId)
 });
 
    
