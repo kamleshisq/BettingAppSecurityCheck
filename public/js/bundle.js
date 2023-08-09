@@ -7208,26 +7208,6 @@ $(document).on('click', '.StatusChange', function () {
   var me = $('#meDatails').data('me');
   form.find('input[name = "id"]').attr('value', userData._id);
 });
-$(document).on('click', '.Deposite', function (e) {
-  var rowId = $(this).parent().parent().attr('id');
-  $('.rowId').attr('data-rowid', rowId);
-  var modleName = $(this).data('bs-target');
-  var form = $(modleName).find('.form-data');
-  var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
-  var me = $('#meDatails').data('me');
-  // console.log(me.userName)
-  // console.log(userData)
-  // console.log(form.find('input[name = "fromUser"]'))
-  // form.find('input[name = "fromUser"]').attr('value',me.userName)
-  form.find('input[name = "toUser"]').attr('value', userData.userName);
-  form.find('input[name = "fuBalance"]').attr('value', me.balance);
-  form.find('input[name = "tuBalance"]').attr('value', userData.balance);
-  form.find('input[name = "clintPL"]').attr('value', userData.clientPL);
-  form.find('input[name = "fromUser"]').attr('value', 'admin');
-  form.find('input[name = "id"]').attr('value', userData._id);
-  // console.log(form)
-});
-
 $(document).on('click', '.Withdraw', function () {
   var rowId = $(this).parent().parent().attr('id');
   $('.rowId').attr('data-rowid', rowId);

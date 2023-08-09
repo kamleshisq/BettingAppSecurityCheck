@@ -334,25 +334,7 @@ $(document).on('submit','.userStatus',function(e) {
         form.find('input[name = "id"]').attr('value',userData._id)
     })
 
-$(document).on('click','.Deposite',function(e){
-    let rowId = $(this).parent().parent().attr('id')
-    $('.rowId').attr('data-rowid',rowId)
-    let modleName = $(this).data('bs-target')
-    let form = $(modleName).find('.form-data')
-    let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
-    let me = $('#meDatails').data('me')
-    // console.log(me.userName)
-    // console.log(userData)
-    // console.log(form.find('input[name = "fromUser"]'))
-    // form.find('input[name = "fromUser"]').attr('value',me.userName)
-    form.find('input[name = "toUser"]').attr('value',userData.userName)
-    form.find('input[name = "fuBalance"]').attr('value',me.balance)
-    form.find('input[name = "tuBalance"]').attr('value',userData.balance)
-    form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
-    form.find('input[name = "fromUser"]').attr('value','admin')
-    form.find('input[name = "id"]').attr('value',userData._id)
-    // console.log(form)
-})
+
 
 $(document).on('click','.Withdraw',function(){
     let rowId = $(this).parent().parent().attr('id')
