@@ -120,8 +120,8 @@ exports.login = catchAsync (async(req, res, next) => {
 exports.checkPass = catchAsync(async(req, res, next) => {
     const user = await User.findOne({userName:req.currentUser.userName}).select('+password');
     console.log(user)
-    console.log(req.body.password)
-    const passcheck = await user.correctPassword(req.body.password, user.password)
+    console.log(req.body.Password)
+    const passcheck = await user.correctPassword(req.body.Password, user.password)
     console.log(passcheck)
     if(!user || !(passcheck)){
         res.status(404).json({
