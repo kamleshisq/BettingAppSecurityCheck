@@ -148,15 +148,16 @@ $(document).on('submit','.acc-form',async function(e) {
     // let rowId = $('.rowId').attr('data-rowid')
     const user = await debitCredit(formDataObj)
     var trElements = document.querySelectorAll('tr.trtable');
+    console.log(trElements)
     trElements.forEach(function(trElement) {
         if (trElement.getAttribute('data-id') === user.id) {
             console.log(trElement)
         }
     })
     // console.log(rowId)
-    let currentUser = $('#currentUserDetails').data('currentuser')
-    updateRow(user,rowId,currentUser)
-    console.log(user)
+    // let currentUser = $('#currentUserDetails').data('currentuser')
+    // updateRow(user,rowId,currentUser)
+    // console.log(user)
 })
 
 // $('.edit-form').submit(function(e){
