@@ -454,11 +454,9 @@ socket.on('connect', () => {
         $(document).on("change", ".DepositW", function(e){
             e.preventDefault()
             let type = $(this).val()
-            var row = this.closest("tr");
-            console.log(row)
-            var id = row.id;
-            var dataId = row.getAttribute("data-id");
-            socket.emit("DepositW", {id, dataId, type})
+            var row = this.closest('form');
+            var dataId = row.id;
+            socket.emit("DepositW", {dataId, type})
         })
 
         socket.on("DepositW", async(data) => {
