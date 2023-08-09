@@ -1,0 +1,119 @@
+<div class="container-fluid">
+    <div class="meDetails" id="meDatails" data-me='<%=JSON.stringify(me)%>'></div>
+    <div class="currentUserDetails" id="currentUserDetails" data-currentuser='<%=JSON.stringify(currentUser)%>'></div>
+    <div class="pageLink" data-page="1"></div>
+    <span data-rowid="1" class="rowId"></span>
+  <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
+    <div class="">
+      
+    <h3 style="color:#6359CA;font-size: 18px;font-weight: 700;"><img src="../images/c-user.png" alt=""> &nbsp;User Management</h3>
+  </div>
+    <div style="justify-content: flex-end;
+    display: flex;
+    gap: 10px;">
+    <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
+    <%if(currentUser.role.authorization.includes('createDeleteUser')){%>
+      <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add User</button>
+    <%}%>
+  </div>
+  
+  <div class="row">
+    <div class="table_data_details col-lg-12">
+      
+  <div class="spcare-table_">
+      <table id="table12">
+        <thead>
+            <tr style="text-align: center;font-size: 11px;">
+              <th>S.No</th>
+              <th>User Name</th>
+              <th>White Labels</th>
+              <th>Credit Reference</th>
+              <th>Balance</th>
+              <th>Available Balance</th>
+              <th>Downlevel Balance</th>
+              <th>Client P/L</th>
+              <th>Upline P/L</th>
+              <th>Exposure Limit</th>
+              <th>Exposure</th>
+  
+              <!-- <th>Exposure<br>0.00</th> -->
+              <th>Lifetime Credit</th>
+              <th>Lifetime Deposit</th>
+              <th colspan="6">Action</th>
+              
+              
+  
+              
+            </tr>
+        </thead>
+        <tbody class="new-body">
+          <%for(let i = 0; i<users.length; i++){%>
+            <%if((i+1) % 2 != 0){%>
+              <tr style="text-align: center;" class="blue" id="<%=i+1%>">
+            <%}else{%>
+              <tr style="text-align: center;" id="<%=i+1%>">
+            <%}%>
+              <td><%=i + 1%></td>
+              <td class="getOwnChild" data-bs-dismiss="<%=JSON.stringify(users[i])%>">
+                <%if(users[i].roleName != 'user'){%>
+                  <a href="/admin/userManagement?id=<%=users[i]._id%>"><%=users[i].userName%></a>
+                
+                <%}else{%>
+                  <%=users[i].userName%>
+                <%}%>
+              </td>
+              <td><%=users[i].whiteLabel%></td>
+              <td><%=users[i].creditReference%> </td>
+              <td><%=users[i].balance%></td>
+              <td><%=users[i].availableBalance%></td>
+              <td><%=users[i].downlineBalance%></td>
+              <td style="color:#FE3030;"><%=users[i].clientPL%></td>
+              <td><%=users[i].uplinePL%> </td>
+              <td><%=users[i].exposureLimit%> </td>
+              <td><%=users[i].exposure%></td>
+              <!-- <td><%=users[i].userName%></td> -->
+              <td><%=users[i].lifeTimeCredit%></td>
+              <td><%=users[i].lifeTimeDeposit%></td>
+              <td>
+                <%if(currentUser.role.authorization.includes('accountControl')){%>
+  
+                <button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite"> D/W </button>
+                <%}%>
+              </td>
+              <td><button data-bs-toggle="modal" data-bs-target="#myModal2" class="CreaditChange">C</button></td>
+              <td>
+                <%if(currentUser.role.authorization.includes('changeUserPassword')){%>
+  
+                <button data-bs-toggle="modal" data-bs-target="#myModal3"class="PasswordChange">P</button>
+                <%}%>
+              </td>
+              <td> 
+                <%if(currentUser.role.authorization.includes('betLockAndUnloack')){%>
+  
+                <button type="button" class="betLockStatus">B</button>
+                <%}%>
+              </td>
+              <td class="text-purple">
+                <%if(currentUser.role.authorization.includes('userStatus')){%>
+  
+                <button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange">CS</button>
+                  <%}%>
+              </td>
+              <td>
+                <%if(currentUser.role.authorization.includes('userName')){%>
+  
+                <button data-bs-toggle="modal" data-bs-target="#myModal5" class="UserDetails"><i class="fa-solid fa-database"></i></button>
+                <%}%>
+              </td>
+            </tr>
+          <%}%>
+         
+        </tbody>
+      </table>
+      </div>
+    </div>
+  
+      </div>
+    </div>
+  </div>
+  </div>

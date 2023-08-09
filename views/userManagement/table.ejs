@@ -49,12 +49,12 @@
       <tbody class="new-body">
         <%for(let i = 0; i<users.length; i++){%>
           <%if((i+1) % 2 != 0){%>
-            <tr style="text-align: center;" class="blue" id="<%=i+1%>">
+            <tr style="text-align: center;" class="blue" id="<%=i+1%>" data-id="<%=users[i]._id%>">
           <%}else{%>
-            <tr style="text-align: center;" id="<%=i+1%>">
+            <tr style="text-align: center;" id="<%=i+1%>" data-id="<%=users[i]._id%>">
           <%}%>
             <td><%=i + 1%></td>
-            <td class="getOwnChild" data-bs-dismiss="<%=JSON.stringify(users[i])%>">
+            <td class="getOwnChild">
               <%if(users[i].roleName != 'user'){%>
                 <a href="/admin/userManagement?id=<%=users[i]._id%>"><%=users[i].userName%></a>
               
