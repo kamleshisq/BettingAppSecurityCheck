@@ -9,7 +9,7 @@ import { createRole } from "./createRole";
 import { updateRole } from "./updateRoleByaxios";
 import { updatePassword } from "./updatePASSWORD";
 import { userStatus } from "./userStatus";
-import { betLockStatus } from "./betLock";
+// import { betLockStatus } from "./betLock";
 import { updateRow } from "./updateRow";
 import {updatePromotion} from "./updatePromotion";
 import { createPromotion } from "./createPromotion";
@@ -326,7 +326,7 @@ $(document).on('submit','.userStatus',function(e) {
     console.log(formDataObj)
     // console.log(rowId)
     // console.log(formDataObj)
-    // userStatus(formDataObj,rowId)
+    userStatus(formDataObj)
 });
 
    
