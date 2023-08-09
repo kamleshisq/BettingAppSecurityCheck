@@ -1812,7 +1812,7 @@ io.on('connection', (socket) => {
         try{
             if(data.LOGINDATA.LOGINUSER.roleName === "Admin"){
                 let user = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{balance:parseFloat(data.data.amount), availableBalance:parseFloat(data.data.amount)}})
-                console.log(user,122122)
+                // console.log(user,122122)
                 let date = Date.now()
                 let data1 = {
                     userId:data.LOGINDATA.LOGINUSER._id,

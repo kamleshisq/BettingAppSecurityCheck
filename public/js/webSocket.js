@@ -6649,7 +6649,40 @@ socket.on('connect', () => {
         })
 
         socket.on("FUndData", async(data) => {
-            console.log(data)
+            if(data.status === "error"){
+                alert("Please Try again later")
+            }else{
+                let html = ""
+                const tbody = document.getElementById("tableBody");
+                const numberOfRows = tbody.getElementsByTagName("tr").length;
+                if(numberOfRows%2 == 0){
+                    html += `<tr style="text-align: center;" class="blue">`
+                }else{
+                    html += `<tr style="text-align: center;" >`
+                }
+                var date = new Date(data.date);
+                var options = { 
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+                html += `<td>${numberOfRows+1}</td>
+                <td>${formattedTime}</td>
+                <td>Deposit</td>
+                <td>Betbhai</td>
+                <td> <i class="fa-solid fa-arrow-right"></i> </td>
+                <td>Betbhai</td>
+                <td>${data.amount}</td>
+                <td>${data.closingBalance}</td>
+                <td>${data.Remark}</td>
+              </tr>`
+
+              tbody.append('html')
+            }
         })
     }
 
