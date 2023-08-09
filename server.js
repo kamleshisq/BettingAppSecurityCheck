@@ -1807,6 +1807,14 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on("FUndData", async(data) => {
+        try{
+            console.log(data)
+        }catch(err){
+            console.log(err)
+            socket.emit("FUndData",{message:"err", status:"error"})
+        }
+    })
     
 })
 
