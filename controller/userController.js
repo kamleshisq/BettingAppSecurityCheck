@@ -15,7 +15,7 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     if(req.currentUser.role_type != 1){
         req.body.whiteLabel = req.currentUser.whiteLabel
     }else if(req.currentUser.role_type == 1){
-        req.body.whiteLabel = "betbhai"
+        // req.body.whiteLabel = "betbhai"
     }
     const count = await whiteLabel.find({whiteLabelName:req.body.whiteLabel})
     if(count.length == 0){
