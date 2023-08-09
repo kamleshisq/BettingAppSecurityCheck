@@ -457,7 +457,7 @@ exports.currentUserPasswordupdate = catchAsync(async(req, res, next) => {
         return next(new AppError('your old password is wrong',400))
     }
     // console.log(user)
-    if(user.password === req.body.newPass){
+    if(await user.correctPassword(req.body.newPass,user.password)){
         return next(new AppError("Please Provide a new password"))
     }
     user.password = req.body.newPass
