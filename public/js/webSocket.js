@@ -418,7 +418,7 @@ socket.on('connect', () => {
 
         $(document).on('click','.Deposite',function(e){
             // console.log("Working")
-            var row = button.closest("tr");
+            var row = $(this).closest("tr");
             var id = row.id;
             var dataId = row.getAttribute("data-id");
             console.log(id, dataId)
