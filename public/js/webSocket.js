@@ -482,6 +482,27 @@ socket.on('connect', () => {
                 form.attr('id', userData._id);                 
             }
         })
+
+
+        $(document).on('click','.PasswordChange',function(){
+            var row = this.closest("tr");
+            var id = row.id;
+            var dataId = row.getAttribute("data-id");
+            socket.emit("getUserDetaislForPassChange", {id, dataId})
+            // let rowId = $(this).parent().parent().attr('id')
+            // // console.log(rowId)
+            // $('.rowId').attr('data-rowid',rowId)
+            // let modleName = $(this).data('bs-target')
+            // let form = $(modleName).find('.form-data')
+            // let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
+            // let me = $('#meDatails').data('me')
+            // form.find('input[name = "id"]').attr('value',userData._id)
+        });
+        socket.on("getUserDetaislForPassChange", data => {
+            let modleName = "#myModal3"
+            let form = $(modleName).find('.form-data')
+            form.attr('id', data.user._id);
+        })
         
         // socket.on('getOwnChild',(data) => {
             // console.log(data)

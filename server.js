@@ -1763,6 +1763,17 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on("getUserDetaislForPassChange", async(data) => {
+        try{
+            let user = await User.findById(data.dataId)
+            let parent = await User.findById(user.parent_id)
+            socket.emit("getUserDetaislForPassChange", {user, status:"success", parent})
+        }catch(err){
+            console.log(err)
+            socket.emit("getUserDetaislForPassChange", {message:"err", status:"error"})
+        }
+    })
+
     
 })
 

@@ -7024,19 +7024,18 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           return (0, _debitCredit.debitCredit)(formDataObj);
         case 9:
           user = _context3.sent;
-          trElements = document.querySelectorAll('tr.trtable');
-          console.log(trElements);
-          console.log(user);
+          trElements = document.querySelectorAll('tr.trtable'); // console.log(trElements)
+          // console.log(user)
           trElements.forEach(function (trElement) {
             if (trElement.getAttribute('data-id') === user.id) {
-              console.log(trElement, 45454);
+              console.log(trElement, 4545445454);
             }
           });
           // console.log(rowId)
           // let currentUser = $('#currentUserDetails').data('currentuser')
           // updateRow(user,rowId,currentUser)
           // console.log(user)
-        case 14:
+        case 12:
         case "end":
           return _context3.stop();
       }
@@ -7261,16 +7260,6 @@ $(document).on('click', '.UserDetails', function () {
   var rowId = $(this).parent().parent().attr('id');
   // console.log(rowId)
   $('.rowId').attr('data-rowid', rowId);
-});
-$(document).on('click', '.PasswordChange', function () {
-  var rowId = $(this).parent().parent().attr('id');
-  // console.log(rowId)
-  $('.rowId').attr('data-rowid', rowId);
-  var modleName = $(this).data('bs-target');
-  var form = $(modleName).find('.form-data');
-  var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
-  var me = $('#meDatails').data('me');
-  form.find('input[name = "id"]').attr('value', userData._id);
 });
 $(document).on('click', '.RoleDetails', function () {
   // console.log("Working")

@@ -148,8 +148,8 @@ $(document).on('submit','.acc-form',async function(e) {
     // let rowId = $('.rowId').attr('data-rowid')
     const user = await debitCredit(formDataObj)
     var trElements = document.querySelectorAll('tr.trtable');
-    console.log(trElements)
-    console.log(user)
+    // console.log(trElements)
+    // console.log(user)
     trElements.forEach(function(trElement) {
         if (trElement.getAttribute('data-id') === user.id) {
             console.log(trElement, 4545445454)
@@ -391,16 +391,7 @@ $(document).on('click','.UserDetails',function(){
     $('.rowId').attr('data-rowid',rowId)
 });
 
-$(document).on('click','.PasswordChange',function(){
-    let rowId = $(this).parent().parent().attr('id')
-    // console.log(rowId)
-    $('.rowId').attr('data-rowid',rowId)
-    let modleName = $(this).data('bs-target')
-    let form = $(modleName).find('.form-data')
-    let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
-    let me = $('#meDatails').data('me')
-    form.find('input[name = "id"]').attr('value',userData._id)
-});
+
 
 
 $(document).on('click','.RoleDetails',function(){
