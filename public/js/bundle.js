@@ -6935,10 +6935,9 @@ $(document).on('submit', '.passReset-form', function (e) {
   var formDataObj = Object.fromEntries(fd.entries());
   var id = form.id;
   formDataObj.id = id;
-  console.log(formDataObj);
-  // reset(formDataObj);
+  // console.log(formDataObj)
+  (0, _resetPass.reset)(formDataObj);
 });
-
 $(document).on('submit', '#edit-form', /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
     var form, fd, formDataObj, rowId, user, currentUser;
