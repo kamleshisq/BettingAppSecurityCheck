@@ -510,6 +510,15 @@ socket.on('connect', () => {
             var dataId = row.getAttribute("data-id");
             socket.emit("BetLockUnlock", {id, dataId})
         })
+        socket.on("BetLockUnlock", data => {
+            if(data.status === "error"){
+                alert("Please Try again leter")
+            }else if (data.status){
+                alert("Bet Locked Successfully")
+            }else if (!data.status){
+                alert("Bet Unlocked Successfully")
+            }
+        })
         
         // socket.on('getOwnChild',(data) => {
             // console.log(data)

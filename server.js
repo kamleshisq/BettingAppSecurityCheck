@@ -1777,7 +1777,10 @@ io.on('connection', (socket) => {
     socket.on("BetLockUnlock", async(data) => {
         try{
             let user =  await User.findById(data.dataId)
-            console.log(user)
+            let status = !user.betLock
+            user.betLock = status
+            user.save()
+            socket.emit("BetLockUnlock", {user, status})
 
         }catch(err){
             console.log(err)
