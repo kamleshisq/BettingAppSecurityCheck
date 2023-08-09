@@ -15,8 +15,8 @@ router.post('/deleteUser', authController.restrictTo("createDeleteUser"), userCo
 
 
 //userStatus//
-router.post('/updateUserStatusInactive', authController.restrictTo("userStatus"), userController.updateUserStatusCodeInactive );
-router.post('/updateUserStatusActive', authController.restrictTo("userStatus"), userController.updateUserStatusCodeActive);
+router.post('/updateUserStatusInactive', authController.restrictTo("userStatus"), authController.checkPass,userController.updateUserStatusCodeInactive );
+router.post('/updateUserStatusActive', authController.restrictTo("userStatus"),authController.checkPass, userController.updateUserStatusCodeActive);
 
 
 
