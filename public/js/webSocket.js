@@ -519,6 +519,22 @@ socket.on('connect', () => {
                 alert("Bet Unlocked Successfully")
             }
         })
+
+        $(document).on('click','.StatusChange',function(){
+            console.log("working")
+            var row = this.closest("tr");
+            var id = row.id;
+            var dataId = row.getAttribute("data-id");
+            socket.emit("Status", {id, dataId})
+            // let rowId = $(this).parent().parent().attr('id')
+            // // console.log(rowId)
+            // $('.rowId').attr('data-rowid',rowId)
+            // let modleName = $(this).data('bs-target')
+            // let form = $(modleName).find('.form-data')
+            // let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
+            // let me = $('#meDatails').data('me')
+            // form.find('input[name = "id"]').attr('value',userData._id)
+        })
         
         // socket.on('getOwnChild',(data) => {
             // console.log(data)

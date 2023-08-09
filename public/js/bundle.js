@@ -7202,16 +7202,6 @@ $(document).on('submit', '.userStatus', function (e) {
   // console.log(formDataObj)
   (0, _userStatus.userStatus)(formDataObj, rowId);
 });
-$(document).on('click', '.StatusChange', function () {
-  var rowId = $(this).parent().parent().attr('id');
-  // console.log(rowId)
-  $('.rowId').attr('data-rowid', rowId);
-  var modleName = $(this).data('bs-target');
-  var form = $(modleName).find('.form-data');
-  var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
-  var me = $('#meDatails').data('me');
-  form.find('input[name = "id"]').attr('value', userData._id);
-});
 $(document).on('click', '.Withdraw', function () {
   var rowId = $(this).parent().parent().attr('id');
   $('.rowId').attr('data-rowid', rowId);
