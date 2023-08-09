@@ -422,6 +422,7 @@ socket.on('connect', () => {
             var id = row.id;
             var dataId = row.getAttribute("data-id");
             console.log(id, dataId)
+            socket.emit("getUserDetaisl", {id, dataId})
             // let rowId = $(this).parent().parent().attr('id')
             // $('.rowId').attr('data-rowid',rowId)
             // let modleName = $(this).data('bs-target')

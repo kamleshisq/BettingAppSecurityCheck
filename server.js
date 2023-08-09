@@ -1742,6 +1742,15 @@ io.on('connection', (socket) => {
         
     })
 
+    socket.on("getUserDetaisl", async(data) => {
+        try{
+            console.log(data)
+        }catch(err){
+            console.log(err)
+            socket.emit("getUserDetaisl", err)
+        }
+    })
+
     
 })
 
