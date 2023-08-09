@@ -1779,7 +1779,7 @@ io.on('connection', (socket) => {
             let user =  await User.findById(data.dataId)
             let status = !user.betLock
             user.betLock = status
-            user.save()
+            await user.findByIdAndUpdate(data.dataId, {betLock:status})
             socket.emit("BetLockUnlock", {user, status})
 
         }catch(err){
