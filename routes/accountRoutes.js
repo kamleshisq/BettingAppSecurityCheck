@@ -9,7 +9,7 @@ router.use(authController.isProtected, authController.restrictTo('accountControl
 
 router.post("/deposit", authController.checkPass ,accountController.deposit);
 router.get("/getAllStatement", accountController.getAllAccStatement);
-router.post("/withdrawl", accountController.withdrawl);
+router.post("/withdrawl", authController.checkPass ,accountController.withdrawl);
 router.post("/getUserAccStatement", accountController.getUserAccountStatement);
 
 
