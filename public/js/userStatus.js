@@ -1,5 +1,4 @@
 export const userStatus = (data, rawId) => {
-    console.log("Working", 454545)
     let url = data.status === 'true' ? '/api/v1/users/updateUserStatusActive' : '/api/v1/users/updateUserStatusInactive';
     $.ajax({
         url,
@@ -12,7 +11,7 @@ export const userStatus = (data, rawId) => {
                 }
                 alert(data.message)
             }
-            console.log(data)
+            console.log(data, 1212121)
         },
         error:function(error){
             alert(error.responseJSON.message)
