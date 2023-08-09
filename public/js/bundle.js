@@ -5973,7 +5973,8 @@ var userStatus = function userStatus(data, rawId) {
     url: url,
     type: 'post',
     data: {
-      id: data.id
+      id: data.id,
+      Password: data.Password
     },
     success: function success(data) {
       if (data.status === 'success') {

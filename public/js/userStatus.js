@@ -4,7 +4,7 @@ export const userStatus = (data, rawId) => {
     $.ajax({
         url,
         type:'post',
-        data:{id:data.id},
+        data:{id:data.id, Password:data.Password},
         success:function(data){
             if(data.status === 'success' ){
                 if(!data.status){
