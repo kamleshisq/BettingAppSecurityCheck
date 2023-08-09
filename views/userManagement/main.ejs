@@ -311,6 +311,18 @@
                 </select>
               </div>
             </div>
+            <%if(currentUser.roleName === "Admin"){ %>
+              <div class="row mt-2">
+                <div class="col">
+                  <label for="">User Role</label>
+                  <select name="role"  class="form-control ml0" style="color: #000 !important;">
+                    <%for(let i = 0; i < WhiteLabel.length; i++){ %>
+                      <option value="<%=WhiteLabel[i]._id%>"><%=WhiteLabel[i].whiteLabelName%></option>
+                    <%} %>
+                  </select>
+                </div>
+              </div>
+            <%} %>
             <div class="row mt-2">
               <div class="col">
                 <label for="">Email ID</label>
