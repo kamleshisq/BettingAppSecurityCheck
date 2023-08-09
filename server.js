@@ -1788,6 +1788,17 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on("userStatus", async(data) => {
+        try{
+            let user = await User.findById(data.dataId)
+            let parent = await User.findById(user.parent_id)
+            socket.emit("userStatus", {user, status:"success", parent})
+        }catch(err){
+            console.log(err)
+            socket.emit("userStatus", {message:"err", status:"error"})
+        }
+    })
+
     
 })
 

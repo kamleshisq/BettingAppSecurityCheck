@@ -525,7 +525,7 @@ socket.on('connect', () => {
             var row = this.closest("tr");
             var id = row.id;
             var dataId = row.getAttribute("data-id");
-            socket.emit("Status", {id, dataId})
+            socket.emit("userStatus", {id, dataId})
             // let rowId = $(this).parent().parent().attr('id')
             // // console.log(rowId)
             // $('.rowId').attr('data-rowid',rowId)
@@ -534,6 +534,16 @@ socket.on('connect', () => {
             // let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
             // let me = $('#meDatails').data('me')
             // form.find('input[name = "id"]').attr('value',userData._id)
+        })
+
+        socket.on("userStatus", data => {
+            if(data.status === "error"){
+                alert("Please try again later")
+            }else{
+                let modleName = "#myModal4"
+                let form = $(modleName).find('.form-data')
+                form.attr("id", data.user_id)
+            }
         })
         
         // socket.on('getOwnChild',(data) => {
