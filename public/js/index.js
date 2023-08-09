@@ -146,11 +146,11 @@ $(document).on('submit','.acc-form',async function(e) {
     // formDataObj.id = id
     // console.log(formDataObj)
     // let rowId = $('.rowId').attr('data-rowid')
-    // // console.log(rowId)
-    // const user = await debitCredit(formDataObj)
-    // let currentUser = $('#currentUserDetails').data('currentuser')
-    // updateRow(user,rowId,currentUser)
-    // console.log(user)
+    // console.log(rowId)
+    const user = await debitCredit(formDataObj)
+    let currentUser = $('#currentUserDetails').data('currentuser')
+    updateRow(user,rowId,currentUser)
+    console.log(user)
 })
 
 // $('.edit-form').submit(function(e){

@@ -6974,7 +6974,7 @@ $(document).on('submit', '#edit-form', /*#__PURE__*/function () {
 
 $(document).on('submit', '.form-betLimit', /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
-    var form, fd, data, res, _betLimit, rowId;
+    var form, fd, data, res, _betLimit, _rowId;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
@@ -6988,8 +6988,8 @@ $(document).on('submit', '.form-betLimit', /*#__PURE__*/function () {
           res = _context2.sent;
           if (res) {
             _betLimit = res;
-            rowId = $('.rowId').attr('data-rowid');
-            $('#' + rowId).html("\n            <td class=\"btn-filter\">".concat(_betLimit.type, "</td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.min_stake, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.max_stake, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.max_profit, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.max_odd, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.delay, "'></td>\n            <td data-details='").concat(JSON.stringify(_betLimit), "'><button type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#myModal2\"class=\"updateBetLimit\">Update</button></td>"));
+            _rowId = $('.rowId').attr('data-rowid');
+            $('#' + _rowId).html("\n            <td class=\"btn-filter\">".concat(_betLimit.type, "</td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.min_stake, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.max_stake, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.max_profit, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.max_odd, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.delay, "'></td>\n            <td data-details='").concat(JSON.stringify(_betLimit), "'><button type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#myModal2\"class=\"updateBetLimit\">Update</button></td>"));
             alert("updated SuccessFully");
           }
         case 8:
@@ -7004,7 +7004,7 @@ $(document).on('submit', '.form-betLimit', /*#__PURE__*/function () {
 }());
 $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(e) {
-    var form, id, fd, formDataObj;
+    var form, id, fd, formDataObj, user, currentUser;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
@@ -7020,12 +7020,15 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           // formDataObj.id = id
           // console.log(formDataObj)
           // let rowId = $('.rowId').attr('data-rowid')
-          // // console.log(rowId)
-          // const user = await debitCredit(formDataObj)
-          // let currentUser = $('#currentUserDetails').data('currentuser')
-          // updateRow(user,rowId,currentUser)
-          // console.log(user)
-        case 7:
+          // console.log(rowId)
+          _context3.next = 9;
+          return (0, _debitCredit.debitCredit)(formDataObj);
+        case 9:
+          user = _context3.sent;
+          currentUser = $('#currentUserDetails').data('currentuser');
+          (0, _updateRow.updateRow)(user, rowId, currentUser);
+          console.log(user);
+        case 13:
         case "end":
           return _context3.stop();
       }
