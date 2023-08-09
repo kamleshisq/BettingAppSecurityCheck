@@ -5975,8 +5975,10 @@ var userStatus = function userStatus(data) {
       id: data.id
     },
     success: function success(data) {
-      if (data.status === 'success' && !data.status) {
-        $('tr[id = ' + rawId + ']').html('');
+      if (data.status === 'success') {
+        if (!data.status) {
+          $('tr[id = ' + rawId + ']').html('');
+        }
         alert(data.message);
       }
       console.log(data);
