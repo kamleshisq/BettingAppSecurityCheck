@@ -420,8 +420,8 @@ socket.on('connect', () => {
             // console.log("Working")
             var row = $(this).closest("tr");
             var id = row.id;
-            var dataId = row.getAttribute("data-id");
-            console.log(id, dataId)
+            // var dataId = row.getAttribute("data-id");
+            console.log(id)
             // let rowId = $(this).parent().parent().attr('id')
             // $('.rowId').attr('data-rowid',rowId)
             // let modleName = $(this).data('bs-target')
