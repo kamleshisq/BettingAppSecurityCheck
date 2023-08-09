@@ -7192,17 +7192,6 @@ $(document).on('click', '.popup_close', function () {
 $(document).on('click', '.popup_back', function () {
   $(".popup_body").removeClass("popup_body_show");
 });
-$(document).on('click', '.betLockStatus', function (e) {
-  var rowId = $(this).parent().parent().attr('id');
-  var data = $(this).parent().siblings('.getOwnChild').data('bs-dismiss');
-  // console.log(rowId)
-  // console.log(data)
-  (0, _betLock.betLockStatus)(data, rowId);
-  // console.log(user)
-  // let currentUser = $('#currentUserDetails').data('currentuser')
-  // updateRow(user,rowId,currentUser)
-});
-
 $(document).on('submit', '.userStatus', function (e) {
   e.preventDefault();
   var form = $(this)[0];

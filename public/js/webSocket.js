@@ -503,6 +503,13 @@ socket.on('connect', () => {
             let form = $(modleName).find('.form-data')
             form.attr('id', data.user._id);
         })
+
+        $(document).on('click','.betLockStatus', function(e) {
+            var row = this.closest("tr");
+            var id = row.id;
+            var dataId = row.getAttribute("data-id");
+            console.log(id, dataId)
+        })
         
         // socket.on('getOwnChild',(data) => {
             // console.log(data)
