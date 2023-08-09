@@ -441,6 +441,26 @@ socket.on('connect', () => {
             // form.find('input[name = "id"]').attr('value',userData._id)
             // console.log(form)
         })
+
+        socket.on("getUserDetaisl", data => {
+            if(data.status === "error"){
+                alert("Please Try again leter")
+            }else{
+            let modleName = "#myModal"
+            let form = $(modleName).find('.form-data')
+            let userData = data.user
+            let me = LOGINDATA.LOGINUSER
+            let type = form.find('select[name = "type"]').val()
+            console.log(type)
+
+            // form.find('input[name = "toUser"]').attr('value',userData.userName)
+            // form.find('input[name = "fuBalance"]').attr('value',me.balance)
+            // form.find('input[name = "tuBalance"]').attr('value',userData.balance)
+            // form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
+            // form.find('input[name = "fromUser"]').attr('value','admin')
+            // form.find('input[name = "id"]').attr('value',userData._id)
+            }
+        })
         
         // socket.on('getOwnChild',(data) => {
             // console.log(data)
