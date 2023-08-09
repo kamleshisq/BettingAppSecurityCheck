@@ -136,8 +136,10 @@ $(document).on('submit','.form-betLimit',async function(e){
 $(document).on('submit','.acc-form',async function(e) {
     e.preventDefault()
     let form = $(this)[0];
+    let id = form.id
     let fd = new FormData(form);
     let formDataObj = Object.fromEntries(fd.entries());
+    formDataObj.id = id
     console.log(formDataObj)
     // const url = window.location.href
     // const id = url.split("=")[1]

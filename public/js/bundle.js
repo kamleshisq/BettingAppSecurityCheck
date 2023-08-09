@@ -7004,14 +7004,16 @@ $(document).on('submit', '.form-betLimit', /*#__PURE__*/function () {
 }());
 $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(e) {
-    var form, fd, formDataObj;
+    var form, id, fd, formDataObj;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
           e.preventDefault();
           form = $(this)[0];
+          id = form.id;
           fd = new FormData(form);
           formDataObj = Object.fromEntries(fd.entries());
+          formDataObj.id = i;
           console.log(formDataObj);
           // const url = window.location.href
           // const id = url.split("=")[1]
@@ -7023,7 +7025,7 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           // let currentUser = $('#currentUserDetails').data('currentuser')
           // updateRow(user,rowId,currentUser)
           // console.log(user)
-        case 5:
+        case 7:
         case "end":
           return _context3.stop();
       }
@@ -7052,13 +7054,13 @@ $('.createRole-form').submit(function (e) {
   e.preventDefault();
   var authorization = [];
   var authCheck = document.querySelectorAll("input[name='authorization']:checked");
-  for (var i = 0; i < authCheck.length; i++) {
-    authorization.push(authCheck[i].value);
+  for (var _i = 0; _i < authCheck.length; _i++) {
+    authorization.push(authCheck[_i].value);
   }
   var roleAuthorization = [];
   var checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-  for (var _i = 0; _i < checkboxes.length; _i++) {
-    roleAuthorization.push(checkboxes[_i].value);
+  for (var _i2 = 0; _i2 < checkboxes.length; _i2++) {
+    roleAuthorization.push(checkboxes[_i2].value);
   }
   var roleName = $('#roleName').val();
   var data = {
@@ -7108,12 +7110,12 @@ $(document).on("submit", ".UpdateRole-form", function (e) {
   var authorization = [];
   var roleAuthorization = [];
   var authCheck = document.querySelectorAll("input[name='authorization']:checked");
-  for (var i = 0; i < authCheck.length; i++) {
-    roleAuthorization.push(authCheck[i].value);
+  for (var _i3 = 0; _i3 < authCheck.length; _i3++) {
+    roleAuthorization.push(authCheck[_i3].value);
   }
   var checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-  for (var _i2 = 0; _i2 < checkboxes.length; _i2++) {
-    authorization.push(checkboxes[_i2].value);
+  for (var _i4 = 0; _i4 < checkboxes.length; _i4++) {
+    authorization.push(checkboxes[_i4].value);
   }
   var data = {
     id: id,
@@ -7274,11 +7276,11 @@ $(document).on('click', '.RoleDetails', function () {
   // console.log(roledata, 45654654654)
   form.find('input[name = "name"]').attr('value', roledata.name);
   // console.log(roledata.authorization)
-  for (var i = 0; i < roledata.authorization.length; i++) {
-    form.find("input[value = \"".concat(roledata.authorization[i], "\"]")).attr("checked", "checked");
+  for (var _i5 = 0; _i5 < roledata.authorization.length; _i5++) {
+    form.find("input[value = \"".concat(roledata.authorization[_i5], "\"]")).attr("checked", "checked");
   }
-  for (var _i3 = 0; _i3 < roledata.userAuthorization.length; _i3++) {
-    form.find("input[value = \"".concat(roledata.userAuthorization[_i3], "\"]")).attr("checked", "checked");
+  for (var _i6 = 0; _i6 < roledata.userAuthorization.length; _i6++) {
+    form.find("input[value = \"".concat(roledata.userAuthorization[_i6], "\"]")).attr("checked", "checked");
   }
   document.getElementById("role_controller").innerHTML = "\n            <label for=\"level\"> <h3>Role Level </h3></label><br>\n            <input type=\"number\" name=\"level\" placeholder='".concat(roledata.role_level, "' id='role_level'>");
 });
