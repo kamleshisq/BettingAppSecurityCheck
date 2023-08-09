@@ -26,7 +26,7 @@ router.post('/updateUserStatusBettingUnlock', authController.restrictTo("betLock
 
 
 //changeUserPassword//
-router.post('/changeUserPassword', authController.restrictTo("changeUserPassword"), userController.changePassword);
+router.post('/changeUserPassword', authController.restrictTo("changeUserPassword"), authController.checkPass,userController.changePassword);
 
 
 //userName//
