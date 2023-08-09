@@ -1,4 +1,5 @@
 export const userStatus = (data, rawId) => {
+    console.log("Working")
     let url = data.status === 'true' ? '/api/v1/users/updateUserStatusActive' : '/api/v1/users/updateUserStatusInactive';
     $.ajax({
         url,

@@ -5967,6 +5967,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.userStatus = void 0;
 var userStatus = function userStatus(data, rawId) {
+  console.log("Working");
   var url = data.status === 'true' ? '/api/v1/users/updateUserStatusActive' : '/api/v1/users/updateUserStatusInactive';
   $.ajax({
     url: url,
