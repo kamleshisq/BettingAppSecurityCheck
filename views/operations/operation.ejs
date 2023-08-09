@@ -69,16 +69,34 @@
                     </tr>
                 </thead>
                 <tbody class="new-body" id="tableBody">
-                  <tr style="text-align: center;" class="blue">
-                    <td>1</td>
-                    <td>22-12-2022, 03:05 </td>
-                    <td>Deposit</td>
-                    <td>Betbhai</td>
-                    <td> <i class="fa-solid fa-arrow-right"></i> </td>
-                    <td>Betbhai</td>
-                    <td>10000000000</td>
-                    <td>15149444374.480011</td>
-                    <td>Adding House Funds</td>
+                  <%for(let i = 0; i < fundList.length; i++){ %>
+                    <%
+                      var date = new Date(fundList[i].date);
+                      var options = { 
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: true
+                      };
+                      var formattedTime = date.toLocaleString('en-US', options);
+                    %>
+                    <%if(i%2 == 0){ %>
+                      <tr style="text-align: center;" class="blue">
+                    <%}else{ %>
+                      <tr style="text-align: center;" >
+                      <%}%>
+                      <td><%= i+1 %></td>
+                      <td><%=formattedTime%></td>
+                      <td>Deposit</td>
+                      <td>Betbhai</td>
+                      <td> <i class="fa-solid fa-arrow-right"></i> </td>
+                      <td>Betbhai</td>
+                      <td><%=fundList.amount%></td>
+                      <td><%=fundList.closingBalance%></td>
+                      <td><%=fundList.Remark%></td>
+                  <%} %>
                   </tr>
                 </tbody>
               </table>

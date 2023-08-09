@@ -29,7 +29,8 @@ const request = require('request');
 const multimarkets = require("../model/maltimarket");
 const stakeLable = require("../model/stakeLabelModel");
 const gamrRuleModel = require("../model/gamesRulesModel");
-const casinoFevorite = require("../model/CasinoFevorite")
+const casinoFevorite = require("../model/CasinoFevorite");
+const houseFundModel = require('../model/houseFundmodel');
 
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
@@ -842,10 +843,12 @@ exports.getPromotionPage = catchAsync(async(req, res, next) => {
 
 exports.getoperationsPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
+    const fundList = await houseFundModel.find({userId:me.id})
     res.status(200).render("./operations/operation",{
         title:"House Management",
         me,
-        currentUser:me
+        currentUser:me,
+        fundList
     })
 })
 
