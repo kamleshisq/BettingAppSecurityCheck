@@ -467,19 +467,19 @@ socket.on('connect', () => {
             let userData = data.user
             let me = LOGINDATA.LOGINUSER
             if(data.type == "withdrawl"){
-                form.find('input[name = "toUser"]').attr('value',userData.userName)
-                form.find('input[name = "fuBalance"]').attr('value',me.availableBalance)
-                form.find('input[name = "tuBalance"]').attr('value',userData.availableBalance)
-                form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
-                form.find('input[name = "fromUser"]').attr('value',me.userName)
-                form.attr('id', userData._id);
-            }else{
                 form.find('input[name = "toUser"]').attr('value',me.userName)
                 form.find('input[name = "fuBalance"]').attr('value',userData.availableBalance)
                 form.find('input[name = "tuBalance"]').attr('value',me.availableBalance)
                 form.find('input[name = "clintPL"]').attr('value',me.clientPL)
                 form.find('input[name = "fromUser"]').attr('value',userData.userName)
-                form.attr('id', userData._id);  
+                form.attr('id', userData._id); 
+            }else{
+                form.find('input[name = "toUser"]').attr('value',userData.userName)
+                form.find('input[name = "fuBalance"]').attr('value',me.availableBalance)
+                form.find('input[name = "tuBalance"]').attr('value',userData.availableBalance)
+                form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
+                form.find('input[name = "fromUser"]').attr('value',me.userName)
+                form.attr('id', userData._id);                 
             }
         })
         
