@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 // const validator = require('validator');
 const bycrypt = require('bcrypt');
+const { default: isEmail } = require('validator/lib/isEmail');
 // const { string } = require('joi');
 
 const userSchema = mongoose.Schema({
@@ -146,6 +147,12 @@ const userSchema = mongoose.Schema({
     isKycVer:{
         type:Boolean,
         default:false
+    },
+    contact:{
+        type:Number
+    },
+    email:{
+        type:String
     }
 })
 
