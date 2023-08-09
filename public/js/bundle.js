@@ -6933,7 +6933,8 @@ $(document).on('submit', '.passReset-form', function (e) {
   var form = $(this)[0];
   var fd = new FormData(form);
   var formDataObj = Object.fromEntries(fd.entries());
-  (0, _resetPass.reset)(formDataObj);
+  var id = form.id;
+  formDataObj.id = (0, _resetPass.reset)(formDataObj);
 });
 $(document).on('submit', '#edit-form', /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {

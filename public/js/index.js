@@ -84,6 +84,8 @@ $(document).on('submit','.passReset-form',function(e){
     let form = $(this)[0];
     let fd = new FormData(form)
     const formDataObj = Object.fromEntries(fd.entries())
+    let id = form.id
+    formDataObj.id = id
     reset(formDataObj);
 });
 
