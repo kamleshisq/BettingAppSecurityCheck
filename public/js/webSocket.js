@@ -6670,8 +6670,9 @@ socket.on('connect', () => {
                 hour12: true
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
+                var formattedTimeWithoutComma = formattedTime.replace(",", "");
                 html += `<td>${numberOfRows+1}</td>
-                <td>${formattedTime}</td>
+                <td>${formattedTimeWithoutComma}</td>
                 <td>Deposit</td>
                 <td>Betbhai</td>
                 <td> <i class="fa-solid fa-arrow-right"></i> </td>
