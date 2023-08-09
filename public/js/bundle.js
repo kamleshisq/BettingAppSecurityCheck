@@ -5980,10 +5980,15 @@ var userStatus = function userStatus(data, rawId) {
         if (!data.status) {
           $('tr[id = ' + rawId + ']').html('');
         }
-        alert(data.message);
+        if (data.message) {
+          alert(data.message);
+        } else {
+          alert("Updated!");
+        }
       }
-      console.log(data, 1212121);
+      // console.log(data, 1212121)
     },
+
     error: function error(_error) {
       alert(_error.responseJSON.message);
     }

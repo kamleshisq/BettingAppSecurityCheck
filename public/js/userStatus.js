@@ -9,9 +9,13 @@ export const userStatus = (data, rawId) => {
                 if(!data.status){
                     $('tr[id = '+rawId+']').html('')
                 }
-                alert(data.message)
+                if(data.message){
+                    alert(data.message)
+                }else{
+                    alert("Updated!")
+                }
             }
-            console.log(data, 1212121)
+            // console.log(data, 1212121)
         },
         error:function(error){
             alert(error.responseJSON.message)
