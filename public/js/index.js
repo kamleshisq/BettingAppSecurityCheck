@@ -323,7 +323,9 @@ $(document).on('submit','.userStatus',function(e) {
     let formDataObj = Object.fromEntries(fd.entries());
     formDataObj.id = id
     // let rowId = $('.rowId').attr('data-rowid')
-    console.log(formDataObj)
+    // console.log(formDataObj)
+    var trElement = document.querySelector('tr[data-id="123456"]');
+    console.log(trElement)
     // console.log(rowId)
     // console.log(formDataObj)
     userStatus(formDataObj)
