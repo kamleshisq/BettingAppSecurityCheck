@@ -1745,7 +1745,8 @@ io.on('connection', (socket) => {
     socket.on("getUserDetaisl", async(data) => {
         try{
             let user = await User.findById(data.dataId)
-            socket.emit("getUserDetaisl", {user, status:"success"})
+            let parent = await User.findById(user.parent_id)
+            socket.emit("getUserDetaisl", {user, status:"success", parent})
         }catch(err){
             console.log(err)
             socket.emit("getUserDetaisl", {message:"err", status:"error"})
@@ -1754,7 +1755,8 @@ io.on('connection', (socket) => {
     socket.on("DepositW", async(data) => {
         try{
             let user = await User.findById(data.dataId)
-            socket.emit("DepositW", {user, status:"success", type:data.type})
+            let parent = await User.findById(user.parent_id)
+            socket.emit("DepositW", {user, status:"success", type:data.type, parent})
         }catch(err){
             console.log(err)
             socket.emit("DepositW", {message:"err", status:"error"})
