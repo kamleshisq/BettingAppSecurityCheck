@@ -6681,7 +6681,7 @@ socket.on('connect', () => {
                 <td>${data.Remark}</td>
               </tr>`
 
-              tbody.append('html')
+              tbody.append(html)
             }
         })
     }
