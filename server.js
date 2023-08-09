@@ -1745,7 +1745,7 @@ io.on('connection', (socket) => {
     socket.on("getUserDetaisl", async(data) => {
         try{
             let user = await User.findById(data.dataId)
-            socket.emit("getUserDetaisl", {user, status:"error"})
+            socket.emit("getUserDetaisl", {user, status:"success"})
         }catch(err){
             console.log(err)
             socket.emit("getUserDetaisl", {message:"err", status:"error"})
