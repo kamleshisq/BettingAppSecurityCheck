@@ -453,7 +453,7 @@ socket.on('connect', () => {
 
         $(document).on("change", ".DepositW", function(e){
             e.preventDefault()
-            console.log(this.val())
+            console.log($(this).val())
         })
         
         // socket.on('getOwnChild',(data) => {
