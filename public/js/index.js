@@ -139,7 +139,7 @@ $(document).on('submit','.acc-form',async function(e) {
     let id = form.id
     let fd = new FormData(form);
     let formDataObj = Object.fromEntries(fd.entries());
-    formDataObj.id = id
+    formDataObj.id = id ;
     console.log(formDataObj)
     // const url = window.location.href
     // const id = url.split("=")[1]
