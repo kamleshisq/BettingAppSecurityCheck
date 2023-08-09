@@ -542,7 +542,7 @@ socket.on('connect', () => {
             }else{
                 let modleName = "#myModal4"
                 let form = $(modleName).find('.form-data')
-                console.log(form)
+                // console.log(form)
                 form.attr('id', data.user._id);
             }
         })
