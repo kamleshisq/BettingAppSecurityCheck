@@ -152,7 +152,7 @@ $(document).on('submit','.acc-form',async function(e) {
     console.log(user)
     trElements.forEach(function(trElement) {
         if (trElement.getAttribute('data-id') === user.id) {
-            console.log(trElement)
+            console.log(trElement, 4545445454)
         }
     })
     // console.log(rowId)

@@ -7029,7 +7029,7 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           console.log(user);
           trElements.forEach(function (trElement) {
             if (trElement.getAttribute('data-id') === user.id) {
-              console.log(trElement);
+              console.log(trElement, 45454);
             }
           });
           // console.log(rowId)
