@@ -15,7 +15,6 @@ const loginLogSchema = mongoose.Schema({
     login_time:{
         type:Date,
         default:Date.now(),
-        required:true
     },
     logOut_time:{
         type:Date
@@ -25,15 +24,12 @@ const loginLogSchema = mongoose.Schema({
     },
     ip_address:{
         type:String,
-        required:true
     },
     session_id:{
         type:String,
-        required:true
     },
     device_info:{
         type:String,
-        required:true
     },
     logs:[{
         type:String
