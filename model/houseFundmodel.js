@@ -6,12 +6,23 @@ const houseFund = mongoose.Schema({
         type:String,
         required:true
     },
+    date:{
+        type:Date,
+        required:true
+    },
     amount:{
         type:Number,
         required:true
     },
     Remark:{
         type:String,
+    },
+    type:{
+        type:String,
+    },
+    closingBalance:{
+        type:Number,
+        required:true
     }
 })
 
