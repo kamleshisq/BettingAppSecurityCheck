@@ -40,14 +40,21 @@ io.on('connection', (socket) => {
     socket.emit("loginUser", {
         loginData
     })
-    const urlRequestAdd = async(url,method, Token) => {
+    const urlRequestAdd = async(url,method, Token, user) => {
         const login = await loginlogs.findOne({session_id:Token, isOnline:true})
-        // console.log(login)
-
+        
         var fullUrl = global._protocol + '://' + global._host + url
-        // console.log(fullUrl)
-        login.logs.push(method + " - " + fullUrl)
-        login.save()
+        if(login){
+            // console.log(fullUrl)
+            login.logs.push(method + " - " + fullUrl)
+            login.save()
+        }else{
+            let data = {}
+            data.user_id = user._id,
+            data.userName = user.userName
+            data.logs = [fullUrl]
+            await loginlogs.create(data)
+        }
     }
 
 
@@ -1327,7 +1334,7 @@ io.on('connection', (socket) => {
         }).then(res => res.json())
         .then(Data =>{
             socket.emit('UserUpdatePass', Data)
-            urlRequestAdd(`/api/v1/users/updateCurrentUserPass`,'POST', data.LOGINDATA.LOGINTOKEN)
+            urlRequestAdd(`/api/v1/users/updateCurrentUserPass`,'POST', data.LOGINDATA.LOGINTOKEN, data.LOGINDATA.LOGINUSER)
             // console.log(Data)
         })
     })
