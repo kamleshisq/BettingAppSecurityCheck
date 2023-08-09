@@ -6639,6 +6639,7 @@ socket.on('connect', () => {
 
 
     if(pathname === "/admin/houseManagement"){
+        console.log('working')
         $(document).on("submit", ".HouseFund", function(e){
             e.preventDefault()
             console.log("Wroking")
