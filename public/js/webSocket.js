@@ -6647,6 +6647,10 @@ socket.on('connect', () => {
             let data = Object.fromEntries(fd.entries());
             socket.emit("FUndData", {data, LOGINDATA})
         })
+
+        socket.on("FUndData", async(data) => {
+            console.log(data)
+        })
     }
 
     

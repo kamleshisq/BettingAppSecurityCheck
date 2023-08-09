@@ -30,6 +30,7 @@ const gameRuleModel = require("./model/gamesRulesModel");
 const CasinoFevoriteModel = require("./model/CasinoFevorite");
 const fs = require('fs');
 const path = require('path');
+const houseFundModel = require('./model/houseFundmodel');
 io.on('connection', (socket) => {
     console.log('connected to client')
     let loginData = {}
@@ -1809,7 +1810,11 @@ io.on('connection', (socket) => {
 
     socket.on("FUndData", async(data) => {
         try{
-            console.log(data)
+            if(data.LOGINDATA.LOGINUSER.roleName === "Admin"){
+                let houseFund =  await houseFundModel.create({userId:data.LOGINDATA.LOGINUSER.id, amount:parseFloat(data.amount), Remark:data.Remark})
+                await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.id, {$in:{balance:parseFloat(data.amount), availableBalance:parseFloat(data.amount)}})
+                socket.emit("FUndData", houseFund)
+            }
         }catch(err){
             console.log(err)
             socket.emit("FUndData",{message:"err", status:"error"})
