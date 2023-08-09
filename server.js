@@ -1811,7 +1811,7 @@ io.on('connection', (socket) => {
     socket.on("FUndData", async(data) => {
         try{
             if(data.LOGINDATA.LOGINUSER.roleName === "Admin"){
-                let houseFund =  await houseFundModel.create({userId:data.LOGINDATA.LOGINUSER.id, amount:parseFloat(data.amount), Remark:data.Remark})
+                let houseFund =  await houseFundModel.create({userId:data.LOGINDATA.LOGINUSER._id, amount:parseFloat(data.amount), Remark:data.Remark})
                 await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.id, {$in:{balance:parseFloat(data.amount), availableBalance:parseFloat(data.amount)}})
                 socket.emit("FUndData", houseFund)
             }
