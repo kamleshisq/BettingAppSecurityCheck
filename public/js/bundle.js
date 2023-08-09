@@ -7004,26 +7004,26 @@ $(document).on('submit', '.form-betLimit', /*#__PURE__*/function () {
 }());
 $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(e) {
-    var form, fd, formDataObj, rowId, user, currentUser;
+    var form, fd, formDataObj;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
           e.preventDefault();
           form = $(this)[0];
           fd = new FormData(form);
-          formDataObj = Object.fromEntries(fd.entries()); // const url = window.location.href
+          formDataObj = Object.fromEntries(fd.entries());
+          console.log(formDataObj);
+          // const url = window.location.href
           // const id = url.split("=")[1]
           // formDataObj.id = id
           // console.log(formDataObj)
-          rowId = $('.rowId').attr('data-rowid'); // console.log(rowId)
-          _context3.next = 7;
-          return (0, _debitCredit.debitCredit)(formDataObj);
-        case 7:
-          user = _context3.sent;
-          currentUser = $('#currentUserDetails').data('currentuser');
-          (0, _updateRow.updateRow)(user, rowId, currentUser);
+          // let rowId = $('.rowId').attr('data-rowid')
+          // // console.log(rowId)
+          // const user = await debitCredit(formDataObj)
+          // let currentUser = $('#currentUserDetails').data('currentuser')
+          // updateRow(user,rowId,currentUser)
           // console.log(user)
-        case 10:
+        case 5:
         case "end":
           return _context3.stop();
       }

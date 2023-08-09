@@ -138,15 +138,16 @@ $(document).on('submit','.acc-form',async function(e) {
     let form = $(this)[0];
     let fd = new FormData(form);
     let formDataObj = Object.fromEntries(fd.entries());
+    console.log(formDataObj)
     // const url = window.location.href
     // const id = url.split("=")[1]
     // formDataObj.id = id
     // console.log(formDataObj)
-    let rowId = $('.rowId').attr('data-rowid')
-    // console.log(rowId)
-    const user = await debitCredit(formDataObj)
-    let currentUser = $('#currentUserDetails').data('currentuser')
-    updateRow(user,rowId,currentUser)
+    // let rowId = $('.rowId').attr('data-rowid')
+    // // console.log(rowId)
+    // const user = await debitCredit(formDataObj)
+    // let currentUser = $('#currentUserDetails').data('currentuser')
+    // updateRow(user,rowId,currentUser)
     // console.log(user)
 })
 
