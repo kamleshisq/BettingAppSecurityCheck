@@ -1327,6 +1327,7 @@ io.on('connection', (socket) => {
         }).then(res => res.json())
         .then(Data =>{
             socket.emit('UserUpdatePass', Data)
+            urlRequestAdd(`/api/v1/users/updateCurrentUserPass`,'POST', data.LOGINDATA.LOGINTOKEN)
             // console.log(Data)
         })
     })
