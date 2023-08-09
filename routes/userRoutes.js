@@ -10,7 +10,7 @@ router.use(authController.isProtected)
 
 router.post("/updateCurrentUserPass", userController.currentUserPasswordupdate);
 //createDeleteUser//
-router.post('/createUser', authController.restrictTo("createDeleteUser"), userController.createUser);
+router.post('/createUser', authController.restrictTo("createDeleteUser"), authController.checkPass, userController.createUser);
 router.post('/deleteUser', authController.restrictTo("createDeleteUser"), userController.deletUser);
 
 

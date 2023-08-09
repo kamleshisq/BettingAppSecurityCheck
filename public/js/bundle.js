@@ -6879,10 +6879,9 @@ $('#Add-User').submit(function (e) {
   var form = document.getElementById('Add-User');
   var data = new FormData(form);
   var formDataObj = Object.fromEntries(data.entries());
-  console.log(formDataObj);
-  // createUser(formDataObj)
+  // console.log(formDataObj)
+  (0, _createUser.createUser)(formDataObj);
 });
-
 $(document).on('click', '.updateBetLimit', function (e) {
   var rowId = $(this).parent().parent().attr('id');
   $('.rowId').attr('data-rowid', rowId);
