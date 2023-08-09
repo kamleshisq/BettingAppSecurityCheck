@@ -438,14 +438,14 @@ socket.on('connect', () => {
                 form.find('input[name = "tuBalance"]').attr('value',userData.availableBalance)
                 form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
                 form.find('input[name = "fromUser"]').attr('value',me.userName)
-                form.find('input[name = "id"]').attr('value',userData._id)
+                form.attr('id', userData._id);
             }else{
                 form.find('input[name = "toUser"]').attr('value',me.userName)
                 form.find('input[name = "fuBalance"]').attr('value',userData.availableBalance)
                 form.find('input[name = "tuBalance"]').attr('value',me.availableBalance)
                 form.find('input[name = "clintPL"]').attr('value',me.clientPL)
                 form.find('input[name = "fromUser"]').attr('value',userData.userName)
-                form.find('input[name = "id"]').attr('value',userData._id)
+                form.attr('id', userData._id);
             }
             }
         })
@@ -453,7 +453,7 @@ socket.on('connect', () => {
 
         $(document).on("change", ".DepositW", function(e){
             e.preventDefault()
-            console.log("Working")
+            console.log()
         })
         
         // socket.on('getOwnChild',(data) => {
