@@ -455,6 +455,7 @@ socket.on('connect', () => {
             e.preventDefault()
             let type = $(this).val()
             var row = this.closest('form');
+            console.log(row)
             var dataId = row.id;
             console.log(dataId)
             socket.emit("DepositW", {dataId, type})
