@@ -430,7 +430,7 @@ socket.on('connect', () => {
             let modleName = "#myModal"
             let form = $(modleName).find('.form-data')
             let userData = data.user
-            let me = LOGINDATA.LOGINUSER
+            let me = data.parent
             let type = form.find('select[name = "type"]').val()
             if(type == "deposit"){
                 form.find('input[name = "toUser"]').attr('value',userData.userName)
@@ -465,7 +465,7 @@ socket.on('connect', () => {
             let modleName = "#myModal"
             let form = $(modleName).find('.form-data')
             let userData = data.user
-            let me = LOGINDATA.LOGINUSER
+            let me = data.parent
             if(data.type == "withdrawl"){
                 form.find('input[name = "toUser"]').attr('value',me.userName)
                 form.find('input[name = "fuBalance"]').attr('value',userData.availableBalance)
