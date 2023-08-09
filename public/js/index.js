@@ -146,8 +146,14 @@ $(document).on('submit','.acc-form',async function(e) {
     // formDataObj.id = id
     // console.log(formDataObj)
     // let rowId = $('.rowId').attr('data-rowid')
-    // console.log(rowId)
     const user = await debitCredit(formDataObj)
+    var trElements = document.querySelectorAll('tr.trtable');
+    trElements.forEach(function(trElement) {
+        if (trElement.getAttribute('data-id') === user.id) {
+            console.log(trElement)
+        }
+    })
+    // console.log(rowId)
     let currentUser = $('#currentUserDetails').data('currentuser')
     updateRow(user,rowId,currentUser)
     console.log(user)

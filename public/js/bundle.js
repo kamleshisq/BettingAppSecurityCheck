@@ -7004,7 +7004,7 @@ $(document).on('submit', '.form-betLimit', /*#__PURE__*/function () {
 }());
 $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(e) {
-    var form, id, fd, formDataObj, user, currentUser;
+    var form, id, fd, formDataObj, user, trElements, currentUser;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
@@ -7020,15 +7020,21 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           // formDataObj.id = id
           // console.log(formDataObj)
           // let rowId = $('.rowId').attr('data-rowid')
-          // console.log(rowId)
           _context3.next = 9;
           return (0, _debitCredit.debitCredit)(formDataObj);
         case 9:
           user = _context3.sent;
+          trElements = document.querySelectorAll('tr.trtable');
+          trElements.forEach(function (trElement) {
+            if (trElement.getAttribute('data-id') === user.id) {
+              console.log(trElement);
+            }
+          });
+          // console.log(rowId)
           currentUser = $('#currentUserDetails').data('currentuser');
           (0, _updateRow.updateRow)(user, rowId, currentUser);
           console.log(user);
-        case 13:
+        case 15:
         case "end":
           return _context3.stop();
       }

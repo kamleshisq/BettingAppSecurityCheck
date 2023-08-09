@@ -49,9 +49,9 @@
       <tbody class="new-body">
         <%for(let i = 0; i<users.length; i++){%>
           <%if((i+1) % 2 != 0){%>
-            <tr style="text-align: center;" class="blue" id="<%=i+1%>" data-id="<%=users[i]._id%>">
+            <tr style="text-align: center;" class="blue trtable" id="<%=i+1%>" data-id="<%=users[i]._id%>">
           <%}else{%>
-            <tr style="text-align: center;" id="<%=i+1%>" data-id="<%=users[i]._id%>">
+            <tr style="text-align: center;" class="trtable" id="<%=i+1%>" data-id="<%=users[i]._id%>">
           <%}%>
             <td><%=i + 1%></td>
             <td class="getOwnChild">
