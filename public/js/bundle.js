@@ -7163,7 +7163,7 @@ $(document).on('submit', '.userStatus', function (e) {
   formDataObj.id = id;
   // let rowId = $('.rowId').attr('data-rowid')
   // console.log(formDataObj)
-  var trElement = document.querySelector('tr[data-id="123456"]');
+  var trElement = document.querySelector("tr[data-id=\"".concat(id, "\"]"));
   console.log(trElement);
   // console.log(rowId)
   // console.log(formDataObj)
