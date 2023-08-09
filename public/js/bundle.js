@@ -7196,12 +7196,16 @@ $(document).on('submit', '.userStatus', function (e) {
   e.preventDefault();
   var form = $(this)[0];
   var fd = new FormData(form);
+  var id = form.id;
   var formDataObj = Object.fromEntries(fd.entries());
-  var rowId = $('.rowId').attr('data-rowid');
+  formDataObj.id = id;
+  // let rowId = $('.rowId').attr('data-rowid')
+  console.log(formDataObj);
   // console.log(rowId)
   // console.log(formDataObj)
-  (0, _userStatus.userStatus)(formDataObj, rowId);
+  // userStatus(formDataObj,rowId)
 });
+
 $(document).on('click', '.Withdraw', function () {
   var rowId = $(this).parent().parent().attr('id');
   $('.rowId').attr('data-rowid', rowId);

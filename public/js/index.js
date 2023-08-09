@@ -319,11 +319,14 @@ $(document).on('submit','.userStatus',function(e) {
     
     let form = $(this)[0];
     let fd = new FormData(form);
+    let id = form.id
     let formDataObj = Object.fromEntries(fd.entries());
-    let rowId = $('.rowId').attr('data-rowid')
+    formDataObj.id = id
+    // let rowId = $('.rowId').attr('data-rowid')
+    console.log(formDataObj)
     // console.log(rowId)
     // console.log(formDataObj)
-    userStatus(formDataObj,rowId)
+    // userStatus(formDataObj,rowId)
 });
 
    
