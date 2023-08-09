@@ -455,14 +455,32 @@ socket.on('connect', () => {
             e.preventDefault()
             let type = $(this).val()
             var row = this.closest('form');
-            console.log(row.id)
+            // console.log(row.id)
             var dataId = row.id;
-            console.log(dataId)
+            // console.log(dataId)
             socket.emit("DepositW", {dataId, type})
         })
 
         socket.on("DepositW", async(data) => {
-            console.log(data)
+            let modleName = "#myModal"
+            let form = $(modleName).find('.form-data')
+            let userData = data.user
+            let me = LOGINDATA.LOGINUSER
+            if(data.type == "withdrawl"){
+                form.find('input[name = "toUser"]').attr('value',userData.userName)
+                form.find('input[name = "fuBalance"]').attr('value',me.availableBalance)
+                form.find('input[name = "tuBalance"]').attr('value',userData.availableBalance)
+                form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
+                form.find('input[name = "fromUser"]').attr('value',me.userName)
+                form.attr('id', userData._id);
+            }else{
+                form.find('input[name = "toUser"]').attr('value',me.userName)
+                form.find('input[name = "fuBalance"]').attr('value',userData.availableBalance)
+                form.find('input[name = "tuBalance"]').attr('value',me.availableBalance)
+                form.find('input[name = "clintPL"]').attr('value',me.clientPL)
+                form.find('input[name = "fromUser"]').attr('value',userData.userName)
+                form.attr('id', userData._id);  
+            }
         })
         
         // socket.on('getOwnChild',(data) => {
