@@ -11,9 +11,9 @@ socket.on('disconnect', () => {
 });
 socket.on('connect', () => {
     console.log("websocket Connected")
-    window.location.reload();
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
+        window.location.reload();
         // console.log('WORKING45654', data)
         LOGINDATA.LOGINUSER = data.loginData.User
         LOGINDATA.LOGINTOKEN = data.loginData.Token
