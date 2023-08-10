@@ -204,6 +204,42 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     // for(let i = 0; i < accountForGraph.length; i++){
     //     console.log(accountForGraph[i].details)
     // }
+
+    let alertBet = await betModel.aggregate([
+        {
+            $lookup: {
+                from: "users",
+                localField: "userName",
+                foreignField: "userName",
+                as: "user"
+            }
+        },
+        {
+            $unwind: "$user"
+        },
+        {
+            $match: {
+                "user.parentUsers": { $in: [req.currentUser.id] }
+            }
+        },
+        {
+            $match: {
+                "status": "Alert"
+            }
+        },
+        {
+            $lookup: {
+                from: "bets", // Assuming the collection name is "bets"
+                localField: "_id",
+                foreignField: "_id",
+                as: "betDetails"
+            }
+        },
+        {
+            $unwind: "$betDetails"
+        }
+    ]);
+    console.log(alertBet)
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }, parentUsers : { $in: [req.currentUser.id] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
