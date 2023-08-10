@@ -2606,6 +2606,7 @@ socket.on('connect', () => {
 
 
         $('.filter').click(function(){
+            console.log("working")
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
