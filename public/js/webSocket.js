@@ -6790,7 +6790,199 @@ socket.on('connect', () => {
 
 
     if(pathname === "/admin/alertbet"){
-        console.log("Working")
+        $('.searchUser').keyup(function(){
+            if($(this).hasClass("searchUser")){
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    socket.emit("SearchACC", {x, LOGINDATA})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                    document.getElementById("button").innerHTML = ''
+                }
+            }
+        })
+
+        $(document).on("click", ".next", function(e){
+            e.preventDefault()
+            let page = $(this).attr("id")
+            let x = $("#searchUser").val()
+            socket.emit("SearchACC", {x, LOGINDATA, page})
+        })
+
+        socket.on("ACCSEARCHRES", async(data)=>{
+            let html = ``
+            if(data.page === 1){
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }else if(data.page === null){
+                document.getElementById("button").innerHTML = ``
+            }else{
+                html = document.getElementById('search').innerHTML
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }
+        })
+
+        let toDate;
+        let fromDate;
+        let filterData = {}
+        $(".searchUser").on('input', function(e){
+            var $input = $(this),
+                    val = $input.val();
+                    var listItems = document.getElementsByTagName("li");
+                for (var i = 0; i < listItems.length; i++) {
+                    if (listItems[i].textContent === val) {
+                        match = ($(this).val() === val);
+                      break; 
+                    }else{
+                        match = false
+                    }
+                  }
+
+                if(match){
+                    filterData = {}
+                    filterData.userName = val
+                    $('.pageId').attr('data-pageid','1')
+                    socket.emit('betMoniter',{filterData,LOGINDATA,page:0})
+                }
+        })
+        $('.filter').click(function(){
+            console.log("working")
+            let userName = $('.searchUser').val()
+            fromDate = $('#fromDate').val()
+            toDate = $('#toDate').val()
+            sport = $('#Sport').val()
+            market = $('#market').val()
+            $('.pageId').attr('data-pageid','1')
+            data.page = 0;
+            if(fromDate != ''  && toDate != '' ){
+                filterData.date = {$gte : fromDate,$lte : toDate}
+            }else{
+
+                if(fromDate != '' ){
+                    filterData.date = {$gte : fromDate}
+                }
+                if(toDate != '' ){
+                    filterData.date = {$lte : toDate}
+                }
+            }
+            if(userName != ''){
+                filterData.userName = userName
+            }else{
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }
+            // if(sport != "All"){
+                filterData.betType = sport
+            // }
+            // if(market != "All"){
+                filterData.marketName = market
+            // }
+            data.filterData = filterData
+            data.LOGINDATA = LOGINDATA
+            // console.log(data)
+            socket.emit('betMoniter',data)
+
+        })
+
+        $(document).on("click", ".searchList", function(){
+            // console.log("working")
+            // console.log(this.textContent)
+            document.getElementById("searchUser").value = this.textContent
+            filterData = {}
+            filterData.userName = this.textContent
+            $('.pageId').attr('data-pageid','1')
+            socket.emit('betMoniter',{filterData,LOGINDATA,page:0})
+            
+        })
+
+        $(window).scroll(function() {
+            if($(document).height()-$(window).scrollTop() == window.innerHeight){
+                let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                let data = {}
+                let userName = $('.searchUser').val()
+                if(userName == ''){
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                }
+                if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
+                    filterData.date = {$gte : fromDate,$lte : toDate}
+                }else{
+
+                    if(fromDate != undefined && fromDate != '' ){
+                        filterData.date = {$gte : fromDate}
+                    }
+                    if(toDate != undefined && toDate != '' ){
+                        filterData.date = {$lte : toDate}
+                    }
+                }
+
+                data.filterData = filterData;
+                data.page = page
+                data.LOGINDATA = LOGINDATA
+                // console.log(data)
+                socket.emit('betMoniter',data)
+
+
+
+            }
+            }); 
+            
+            let count = 11
+            socket.on('betMoniter',(data) => {
+                // console.log(data)
+                if(data.page === 0){
+                    count = 1
+                }
+                let bets = data.ubDetails;
+                let html = '';
+                    for(let i = 0; i < bets.length; i++){
+                        let date = new Date(bets[i].date)
+                    if((i%2)==0){
+                        html += `<tr style="text-align: center;" class="blue">`
+                    }else{
+                        html += `<tr style="text-align: center;" >`
+                    }
+                    html += `<td>${i + count}</td>
+                    <td>${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
+                    <td>${bets[i].userName}</td>
+                    <td>${bets[i].event}</td>
+                    `
+                    if(bets[i].match){
+                        html += `
+                        <td>${bets[i].marketName}</td>
+                        <td>${bets[i].oddValue}</td>
+                        <td>${bets[i].match}</td>
+                        <td>${bets[i].selectionName}</td>`
+                    }else{
+                        html += `<td>-</td>
+                        <td>-</td><td>-</td><td>-</td>`
+                    }
+                    html += `
+                    <td>${bets[i].Stake}</td>
+                    <td>${bets[i].transactionId}</td>
+                    <td>${bets[i].status}</td>
+                    <td>${bets[i].returns}</td>
+                    <td><button class="voidBet" id="${bets[i]._id}">Cancel Bet</button><button class="alertBet" id="${bets[i]._id}"> Alert Bet</button></td>
+                    </tr>`
+                }
+                count += 10;
+                if(data.page == 0){
+                    $('.new-body').html(html)
+                }else{
+                    $('.new-body').append(html)         
+                }
+            })
+
+
+
     }
 
     
