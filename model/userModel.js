@@ -168,6 +168,10 @@ const userSchema = mongoose.Schema({
     transferLock:{
         type:Boolean,
         default:false
+    },
+    maxCreditReference:{
+        type:Number,
+        default:100000
     }
 })
 
