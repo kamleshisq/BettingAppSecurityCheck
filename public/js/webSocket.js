@@ -2751,8 +2751,8 @@ socket.on('connect', () => {
         if(data.status === "error"){
             alert("Please try again later")
         }else{
-            console.log(data.bet.id)
-            const deleteButton = document.getElementById(data.bet.id);
+            console.log(data.bet._id)
+            const deleteButton = document.getElementById(data.bet._id);
             console.log(deleteButton)
             const row = deleteButton.closest('tr'); 
             if (row) {
