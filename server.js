@@ -814,7 +814,7 @@ io.on('connection', (socket) => {
         //     role_type.push(roles[i].role_type)
         // }
         let onlineUsers
-        if(data.filterData){
+        if(data.filterData && page == 0){
                 onlineUsers = await User.find({is_Online:true, userName:data.filterData.userName, parentUsers:{$in:[data.LOGINDATA.LOGINUSER._id]}})
                 page = 0
         }else{
