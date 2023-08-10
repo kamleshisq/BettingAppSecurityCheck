@@ -441,6 +441,14 @@ socket.on('connect', () => {
         
         }
 
+        $(document).on("click", ".UserDetails", function(e) {
+            e.preventDefault()
+            var row = this.closest("tr");
+            // var id = row.id;
+            var dataId = row.getAttribute("data-id");
+            console.log(dataId)
+        })
+
             function downloadCSV(csvContent, fileName) {
                 const link = document.createElement('a');
                 const blob = new Blob([csvContent], { type: 'text/csv' });
@@ -823,8 +831,7 @@ socket.on('connect', () => {
                             `
                         }
                         if(data.currentUser.role.authorization.includes('userName')){
-                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal5" class="UserDetails"><i class="fa-solid fa-database"></i></button></td>
-                            `
+                            html += `<button class="UserDetails"><i class="fa-solid fa-database"></i></button>`
                         }
                       html += `</td> </tr>`
             }
