@@ -7127,6 +7127,17 @@ socket.on('connect', () => {
             let id = this.id
             socket.emit("myShare", {share, myShare, id})
         })
+
+        socket.on("myShare", data => {
+            console.log(data)
+            if(data.status === "error"){
+                alert("Please try again later")
+            }else{
+                alert("Updated")
+                $(".userDetails").find('input[name="Share"]').val(data.user.share)
+                $(".userDetails").find('input[name="myShare"]').val(data.user.myShare)
+            }
+        })
     }
     
     

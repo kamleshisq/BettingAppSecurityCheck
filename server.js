@@ -1917,7 +1917,13 @@ io.on('connection', (socket) => {
     })
 
     socket.on("myShare", async(data) => {
-        console.log(data)
+        try{
+            let user = User.findByIdAndUpdate(data.id, {share:data.share, myShare:data.myShare})
+            socket.emit("myShare", {user, status:"success"})
+        }catch(err){
+            console.log(err)
+            socket.emit("myShare",{message:"err", status:"error"})
+        }
     })
     
 })
