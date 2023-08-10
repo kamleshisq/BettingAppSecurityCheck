@@ -164,6 +164,10 @@ const userSchema = mongoose.Schema({
     Share:{
         type:Number,
         default:0
+    },
+    transferLock:{
+        type:Boolean,
+        default:false
     }
 })
 
