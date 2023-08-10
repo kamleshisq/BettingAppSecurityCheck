@@ -153,6 +153,17 @@ const userSchema = mongoose.Schema({
     },
     email:{
         type:String
+    },
+    note:{
+        type:String
+    },
+    myShare:{
+        type:Number,
+        default:100
+    },
+    Share:{
+        type:Number,
+        default:0
     }
 })
 
