@@ -2629,8 +2629,12 @@ socket.on('connect', () => {
             }else{
                 filterData.userName = LOGINDATA.LOGINUSER.userName
             }
-            filterData.betType = sport
-            filterData.marketName = market
+            if(sport != "All"){
+                filterData.betType = sport
+            }
+            if(marketName != "All"){
+                filterData.marketName = market
+            }
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             // console.log(data)
