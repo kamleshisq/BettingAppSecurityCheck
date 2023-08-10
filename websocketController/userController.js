@@ -29,7 +29,7 @@ exports.getOwnChild = async(id,page) => {
         // Rows:Rows,
         // me,
         roles,
-        currentUser:req.currentUser
+        currentUser:userDetails
     }
     return data
 };
