@@ -7134,8 +7134,8 @@ socket.on('connect', () => {
                 alert("Please try again later")
             }else{
                 alert("Updated")
-                $(".userDetails").find('input[name="Share"]').val(data.user.share)
-                $(".userDetails").find('input[name="myShare"]').val(data.user.myShare)
+                $(".userDetails").find('input[name="Share"]').val(data.share)
+                $(".userDetails").find('input[name="myShare"]').val(data.myShare)
             }
         })
     }
