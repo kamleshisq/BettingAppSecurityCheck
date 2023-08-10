@@ -699,6 +699,9 @@ io.on('connection', (socket) => {
         if(data.filterData.marketName == "All"){
             delete data.filterData.marketName
         }
+        if(data.filterData.marketName == "Fancy"){
+            data.filterData.marketName = {$ne:["Match Odds", "Bookmaker 0%Comm"]}
+        }
         if(data.filterData.betType == "All"){
             delete data.filterData.betType; 
         }
