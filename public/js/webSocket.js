@@ -2629,12 +2629,12 @@ socket.on('connect', () => {
             }else{
                 filterData.userName = LOGINDATA.LOGINUSER.userName
             }
-            if(sport != "All"){
+            // if(sport != "All"){
                 filterData.betType = sport
-            }
-            if(market != "All"){
+            // }
+            // if(market != "All"){
                 filterData.marketName = market
-            }
+            // }
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             // console.log(data)
