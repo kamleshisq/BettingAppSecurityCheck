@@ -800,7 +800,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('OnlineUser', async(data) => {
-        console.log(data.filterData, 12121)
+        // console.log(data.filterData, 12121)
         let page
         page = data.page
         if(!page){
@@ -818,6 +818,7 @@ io.on('connection', (socket) => {
             onlineUsers = await User.find({is_Online:true, role_type:{$in:role_type}, userName:data.filterData.userName})
         }
         page++
+        console.log(onlineUsers)
         socket.emit("OnlineUser",{onlineUsers, page})
     })
 
