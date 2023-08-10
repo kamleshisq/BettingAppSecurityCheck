@@ -329,11 +329,28 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
     console.log(req.query.id)
     let currentUser = req.currentUser
     let userDetails = await User.findById(req.query.id)
+    let bets = await betModel.find({userId:req.query.id}).sort({date:-1}).limit(20)
+    let betsDetails = await betModel.aggregate([
+        {
+            $match:{
+                userId:req.query.id
+            }
+        },
+        {
+            $group: {
+              _id: null,
+              totalReturns: { $sum: '$returns' },
+              totalCount: { $sum: 1 }
+            }
+          }
+    ])
     res.status(200).render("./userDetailsAdmin/main",{
         title:"User Details",
         userDetails,
         currentUser,
-        me:currentUser
+        me:currentUser,
+        bets,
+        betsDetails
 
     })
 })
