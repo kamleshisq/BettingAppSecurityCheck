@@ -7169,7 +7169,7 @@ socket.on('connect', () => {
             }else{
                 alert("Updated")
                 $(".Wallet").find('input[name="maxCreditReference"]').val(data.maxCreditReference)
-                $(".Wallet").find('select[name="transferLock"]').val(data.transferLock)
+                // $(".Wallet").find('select[name="transferLock"]').val(data.transferLock)
             }
         })
     }
