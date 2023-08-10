@@ -7159,7 +7159,18 @@ socket.on('connect', () => {
             e.preventDefault()
             let maxCreditReference = $(".Wallet").find('input[name="maxCreditReference"]').val()
             let transferLock =  $(".Wallet").find('select[name="transferLock"]').val()
-            socket.emit("Wallet", {maxCreditReference, transferLock})
+            let id = this.id
+            socket.emit("Wallet", {maxCreditReference, transferLock, id})
+        })
+
+        socket.on("maxCreditReference", data =>{
+            if(data.status === "error"){
+                alert(data.message)
+            }else{
+                alert("Updated")
+                $(".Wallet").find('input[name="maxCreditReference"]').val(data.maxCreditReference)
+                $(".Wallet").find('select[name="transferLock"]').val(data.transferLock)
+            }
         })
     }
     

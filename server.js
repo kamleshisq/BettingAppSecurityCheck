@@ -1929,6 +1929,16 @@ io.on('connection', (socket) => {
             socket.emit("myShare",{message:"Please try again later", status:"error"})
         }
     })
+
+    socket.on("Wallet", async(data) => {
+        try{
+            await User.findByIdAndUpdate(data.id, {maxCreditReference:data.maxCreditReference, transferLock:data.transferLock})
+            socket.emit("myShare", {maxCreditReference:data.maxCreditReference, transferLock:data.transferLock, status:"success"})
+        }catch(err){
+            console.log(err)
+            socket.emit("Wallet",{message:"Please try again later", status:"error"})
+        }
+    })
     
 })
 
