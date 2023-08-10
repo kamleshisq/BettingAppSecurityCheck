@@ -54,6 +54,7 @@ router.get("/pp", viewController.promotion);
 router.get('/ALLGAMEFORTESTING', authController.isProtected, viewController.getAllCasinoPageFOrTEsting);
 router.get("/SPORT",authController.isProtected, gameController.sport ,viewController.getSpoertPage);
 router.get("/admin/betmoniter", authController.isProtected, authController.isAdmin, viewController.getBetMoniterPage);
+router.get("/admin/alertbet", authController.isProtected, authController.isAdmin, viewController.getBetAlertPage);
 router.get("/admin/voidbet", authController.isProtected, authController.isAdmin, viewController.getVoidBetPage);
 router.get("/admin/betlimit", authController.isProtected, authController.isAdmin, viewController.getBetLimitPage);
 router.get("/admin/onlineUsers", authController.isProtected, authController.isAdmin, viewController.onlineUsers);

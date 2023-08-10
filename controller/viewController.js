@@ -1069,9 +1069,14 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
     // })
 })
 
-// exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
-//     res.status(200).render("./alertBet/betmoniter")
-// })
+exports.getBetAlertPage = catchAsync(async(req, res, next) => {
+    let me = req.currentUser 
+    res.status(200).render("./alertBet/alertbet", {
+        title:"Alert Bet",
+        me,
+        currentUser:me
+    })
+})
 
 exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
     let data;
