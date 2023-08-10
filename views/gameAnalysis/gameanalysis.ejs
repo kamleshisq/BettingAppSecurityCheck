@@ -7,7 +7,7 @@
     <section>
       <div class="align-fix"> 
           <h1 class="main-heading">Game Analysis</h1>
-          <form action="" style="display: flex; height: 30px;">
+          <!-- <form action="" style="display: flex; height: 30px;">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
@@ -16,7 +16,7 @@
               
             </div>
             <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
-          </form>
+          </form> -->
       </div>
     </section>
     <%- include("../loginUserAdminsideDetails") %>
@@ -27,7 +27,7 @@
     <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
       <div class="">
         
-      <h3 class="fix-h3"><img src="../images/c-user.png" alt=""> &nbsp;House Management</h3>
+      <h3 class="fix-h3"><img src="../images/c-user.png" alt=""> &nbsp;Game Analysis</h3>
     </div>
     <div class="header-front">
     <div>
@@ -41,12 +41,12 @@
     <div>
       <span class="up-down-form">Select Sports</span>
       <form action="">
-        <select name="" id="">
-          <option value="">Cricket</option>
-          <option value="">FOOTBALL</option>
-          <option value="">TENNIS</option>
-          <option value="">BASKETBALL</option>
-          <option value="">BASEBALL</option>
+        <select name="Sport" id="Sport">
+          <option value="Cricket">Cricket</option>
+          <option value="Football">FOOTBALL</option>
+          <option value="Tennis">TENNIS</option>
+          <option value="Basketball">BASKETBALL</option>
+          <option value="Baseball">BASEBALL</option>
          
         </select>
       </form>
@@ -56,11 +56,11 @@
 
       <form action="">
         <select name="" id="">
-          <option value="">All</option>
-          <option value="">Match Odds</option>
-          <option value="">BookMaker</option>
-          <option value="">Fancy</option>
-          <option value="">GoalMarket</option>
+          <option value="All">All</option>
+          <option value="Match Odds">Match Odds</option>
+          <option value="Bookmaker 0%Comm">BookMaker</option>
+          <option value="Fancy">Fancy</option>
+          <!-- <option value="">GoalMarket</option> -->
          
         </select>
       </form>
@@ -68,7 +68,7 @@
     <div>
       <span class="up-down-form">Select Event</span>
       <form action="">
-        <select name="" id="">
+        <select name="Event" id="Event">
           <option value="">Cricket</option>
           <option value="">FOOTBALL</option>
           <option value="">TENNIS</option>
@@ -97,7 +97,7 @@
     </div>
   </div>
 
-  <div class="new-line-buttton">
+  <!-- <div class="new-line-buttton">
     <a href="" class="blue-bd">Total Game Played<br><%=(gameAnalist.length)+1%></a>
     <a href="" class="blue-bd">Total Bets <br> 100</a>
     <a href="" class="blue-bd">Total User <br> 0</a>
@@ -106,7 +106,7 @@
     <a href="" class="blue-bd">Void <br> 1586</a>
     <a href="" class="blue-bd">Open <br> 545</a> 
     <a href="" class="blue-bd">P/L <br> 654586</a>
-  </div>
+  </div> -->
 
 
 
