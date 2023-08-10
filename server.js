@@ -1842,7 +1842,14 @@ io.on('connection', (socket) => {
     })
 
     socket.on("alertBet", async(data) => {
-        console.log(data)
+        try{
+            let bet = await Bet.findByIdAndUpdate(data, {status:"CANCEL"});
+            socket.emit('alertBet', {bet, status:"success"})
+
+        }catch(err){
+            console.log(err)
+            socket.emit("alertBet",{message:"err", status:"error"})
+        }
     })
     
 })

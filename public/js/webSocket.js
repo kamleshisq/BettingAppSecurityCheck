@@ -2747,7 +2747,17 @@ socket.on('connect', () => {
         e.preventDefault()
         socket.emit("alertBet", this.id)
     })
-
+    socket.on("alertBet", async(data) => {
+        if(data.status === "error"){
+            alert("Please try again later")
+        }else{
+            const deleteButton = document.getElementById(data.bet.id);
+            const row = deleteButton.closest('tr'); 
+            if (row) {
+                row.remove(); 
+              }
+        }
+    })
             
 
     }
