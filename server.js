@@ -1920,9 +1920,10 @@ io.on('connection', (socket) => {
         try{
             if(data.share < 0 || data.myShare < 0){
             socket.emit("myShare",{message:"value Must be positive", status:"error"})
+            }else{
+                await User.findByIdAndUpdate(data.id, {Share:data.share, myShare:data.myShare})
+                socket.emit("myShare", {share:data.share, myShare:data.myShare, status:"success"})
             }
-            await User.findByIdAndUpdate(data.id, {Share:data.share, myShare:data.myShare})
-            socket.emit("myShare", {share:data.share, myShare:data.myShare, status:"success"})
         }catch(err){
             console.log(err)
             socket.emit("myShare",{message:"Please try again later", status:"error"})
