@@ -231,6 +231,9 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             $sort: {
                 Stake: -1
             }
+        },
+        {
+            $limit: 5
         }
     ]);
     console.log(alertBet)
