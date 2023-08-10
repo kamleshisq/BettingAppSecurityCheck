@@ -226,17 +226,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             $match: {
                 "status": "Alert"
             }
-        },
-        {
-            $lookup: {
-                from: "bets", // Assuming the collection name is "bets"
-                localField: "_id",
-                foreignField: "_id",
-                as: "betDetails"
-            }
-        },
-        {
-            $unwind: "$betDetails"
         }
     ]);
     console.log(alertBet)
