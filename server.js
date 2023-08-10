@@ -1851,6 +1851,45 @@ io.on('connection', (socket) => {
             socket.emit("alertBet",{message:"err", status:"error"})
         }
     })
+
+    socket.on('AlertBet',async(data)=>{
+        console.log(data.filterData)
+        if(data.filterData.marketName == "All"){
+            delete data.filterData.marketName
+        }
+        if(data.filterData.marketName == "Fancy"){
+            data.filterData.marketName = {$nin:["Match Odds", "Bookmaker 0%Comm"]}
+        }
+        if(data.filterData.betType == "All"){
+            delete data.filterData.betType; 
+        }
+        let limit = 10;
+        let page = data.page;
+        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        data.filterData.role_type = {
+            $in:role_type
+        }
+        data.filterData.status = 'Alert';
+        const user = await User.findOne({userName:data.filterData.userName})
+        if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
+            delete data.filterData['userName']
+            let ubDetails = await Bet.find({status:"Alert"}).skip(page * limit).limit(limit)
+            socket.emit('AlertBet',{ubDetails,page})
+        }
+        else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
+            delete data.filterData['userName']
+            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+            socket.emit('AlertBet',{ubDetails,page})
+        }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
+            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+            socket.emit('AlertBet',{ubDetails,page})
+
+        }
+    })
     
 })
 
