@@ -1,3 +1,4 @@
+const { sport } = require("../../controller/gameController");
 
 
 
@@ -2608,6 +2609,10 @@ socket.on('connect', () => {
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
+            sport = $('#Sport').val()
+            market = $('#market').val()
+            console.log(sport)
+            console.log(market)
             $('.pageId').attr('data-pageid','1')
             data.page = 0;
             if(fromDate != ''  && toDate != '' ){
