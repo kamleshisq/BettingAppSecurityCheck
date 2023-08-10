@@ -164,7 +164,39 @@
             </div>
             <div id="BASEBALL" class="tabcontent" style="margin-bottom:15px">
               <div class="row" style="padding:10px 0px">
-                
+                <div class="container">
+                    <div class="form-container">
+                      <div class="form-column blue">
+                        <form class="Wallet" >
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label for="availableBalance">Available Bal</label>
+                                    <input type="number" readonly id="availableBalance" name="availableBalance" placeholder="<%=userDetails.availableBalance%>" value="<%=userDetails.availableBalance%>">
+                                </div>
+                                <div class="col form-group">
+                                    <label for="creditReference">Credit Reference</label>
+                                    <input type="number" readonly id="creditReference" name="creditReference" placeholder="<%=userDetails.creditReference%>" value="<%=userDetails.creditReference%>">
+                                </div>
+                                <div class="col form-group">
+                                    <label for="exposure">Net Exposure</label>
+                                    <input type="number" readonly id="exposure" name="exposure" placeholder="<%=userDetails.exposure%>" value="<%=userDetails.exposure%>">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label for="downlineBalance">Downlevel Bal</label>
+                                    <input type="number" readonly id="downlineBalance" name="downlineBalance" placeholder="<%=userDetails.downlineBalance%>" value="<%=userDetails.downlineBalance%>">
+                                </div>
+                                <div class="col form-group">
+                                    <label for="uplinePL">Upline P/L</label>
+                                    <input type="number" readonly id="uplinePL" name="uplinePL" placeholder="<%=userDetails.uplinePL%>" value="<%=userDetails.uplinePL%>">
+                                </div>
+                            </div>
+                        </form>
+                        
+                      </div>
+                    </div>
+                  </div>
               </div>
             </div>
             <div id="BASKETBALL" class="tabcontent" style="margin-bottom:15px">
