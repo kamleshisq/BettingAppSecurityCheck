@@ -4,7 +4,7 @@ const AppError = require('./../utils/AppError')
 const Role = require('./../model/roleModel')
 // const catchAsync = require("../utils/catchAsync");
 exports.getOwnChild = async(id,page) => {
-    console.log(id)
+    // console.log(id)
     let userDetails = await User.findById(id)
     let child;
     // let Rows;
