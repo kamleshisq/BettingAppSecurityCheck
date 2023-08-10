@@ -6801,14 +6801,14 @@ socket.on('connect', () => {
                 }
             }
         })
-
+    
         $(document).on("click", ".next", function(e){
             e.preventDefault()
             let page = $(this).attr("id")
             let x = $("#searchUser").val()
             socket.emit("SearchACC", {x, LOGINDATA, page})
         })
-
+    
         socket.on("ACCSEARCHRES", async(data)=>{
             let html = ``
             if(data.page === 1){
@@ -6828,7 +6828,7 @@ socket.on('connect', () => {
                 document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
             }
         })
-
+    
         let toDate;
         let fromDate;
         let filterData = {}
@@ -6844,12 +6844,12 @@ socket.on('connect', () => {
                         match = false
                     }
                   }
-
+    
                 if(match){
                     filterData = {}
                     filterData.userName = val
                     $('.pageId').attr('data-pageid','1')
-                    socket.emit('betMoniter',{filterData,LOGINDATA,page:0})
+                    socket.emit('AlertBet',{filterData,LOGINDATA,page:0})
                 }
         })
         $('.filter').click(function(){
@@ -6864,7 +6864,7 @@ socket.on('connect', () => {
             if(fromDate != ''  && toDate != '' ){
                 filterData.date = {$gte : fromDate,$lte : toDate}
             }else{
-
+    
                 if(fromDate != '' ){
                     filterData.date = {$gte : fromDate}
                 }
@@ -6886,10 +6886,10 @@ socket.on('connect', () => {
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             // console.log(data)
-            socket.emit('betMoniter',data)
-
+            socket.emit('AlertBet',data)
+    
         })
-
+    
         $(document).on("click", ".searchList", function(){
             // console.log("working")
             // console.log(this.textContent)
@@ -6897,10 +6897,10 @@ socket.on('connect', () => {
             filterData = {}
             filterData.userName = this.textContent
             $('.pageId').attr('data-pageid','1')
-            socket.emit('betMoniter',{filterData,LOGINDATA,page:0})
+            socket.emit('AlertBet',{filterData,LOGINDATA,page:0})
             
         })
-
+    
         $(window).scroll(function() {
             if($(document).height()-$(window).scrollTop() == window.innerHeight){
                 let page = parseInt($('.pageId').attr('data-pageid'));
@@ -6915,7 +6915,7 @@ socket.on('connect', () => {
                 if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
                     filterData.date = {$gte : fromDate,$lte : toDate}
                 }else{
-
+    
                     if(fromDate != undefined && fromDate != '' ){
                         filterData.date = {$gte : fromDate}
                     }
@@ -6923,15 +6923,15 @@ socket.on('connect', () => {
                         filterData.date = {$lte : toDate}
                     }
                 }
-
+    
                 data.filterData = filterData;
                 data.page = page
                 data.LOGINDATA = LOGINDATA
                 // console.log(data)
-                socket.emit('betMoniter',data)
-
-
-
+                socket.emit('AlertBet',data)
+    
+    
+    
             }
             }); 
             
@@ -6980,11 +6980,11 @@ socket.on('connect', () => {
                     $('.new-body').append(html)         
                 }
             })
-
-
-
+    
+    
+    
     }
-
+    
     
    
 
