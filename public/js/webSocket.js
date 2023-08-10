@@ -7131,7 +7131,7 @@ socket.on('connect', () => {
         socket.on("myShare", data => {
             console.log(data)
             if(data.status === "error"){
-                alert("Please try again later")
+                alert(data.message)
             }else{
                 alert("Updated")
                 $(".userDetails").find('input[name="Share"]').val(data.share)
