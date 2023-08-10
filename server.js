@@ -1918,7 +1918,7 @@ io.on('connection', (socket) => {
 
     socket.on("myShare", async(data) => {
         try{
-            let user = User.findByIdAndUpdate(data.id, {share:data.share, myShare:data.myShare})
+            let user = await User.findByIdAndUpdate(data.id, {share:data.share, myShare:data.myShare})
             socket.emit("myShare", {user, status:"success"})
         }catch(err){
             console.log(err)
