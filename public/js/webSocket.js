@@ -446,7 +446,7 @@ socket.on('connect', () => {
             var row = this.closest("tr");
             // var id = row.id;
             var dataId = row.getAttribute("data-id");
-            window.location.href = `/userdetails?id=${dataId}`
+            window.location.href = `/admin/userdetails?id=${dataId}`
         })
 
             function downloadCSV(csvContent, fileName) {

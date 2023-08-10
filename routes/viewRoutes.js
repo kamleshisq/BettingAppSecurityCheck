@@ -62,6 +62,8 @@ router.get("/admin/liveMarket", authController.isProtected, authController.isAdm
 router.get("/admin/cms", authController.isProtected, authController.isAdmin, viewController.getCmsPage);
 router.get("/admin/pageManager", authController.isProtected, authController.isAdmin, viewController.getPageManagement);
 router.get("/admin/gameRules", authController.isProtected, authController.isAdmin, viewController.gameRulesPage);
+router.get("/admin/userdetails", authController.isProtected, authController.isAdmin, viewController.userDetailsAdminSide);
+
 //user routs
 
 
