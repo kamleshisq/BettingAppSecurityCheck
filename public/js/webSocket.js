@@ -2538,7 +2538,7 @@ socket.on('connect', () => {
         })
 
         socket.on('OnlineUser', async(data) => {
-            console.log(data)
+            // console.log(data)
             let html = `<tr style="text-align: center;" class="blue">
             <td>1</td>
             <td>${data.onlineUsers[0].userName}</td>
@@ -2558,6 +2558,45 @@ socket.on('connect', () => {
             let x = $("#searchUser").val()
             socket.emit("SearchOnlineUser", {x, LOGINDATA, page})
         })
+
+
+        $(window).scroll(function() {
+            if($(document).height()-$(window).scrollTop() == window.innerHeight){
+                let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                let data = {}
+                let userName = $('.searchUser').val()
+                if(userName == ''){
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                    data.filterData = filterData;
+                }
+                // if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
+                //     filterData.date = {$gte : fromDate,$lte : toDate}
+                // }else{
+
+                //     if(fromDate != undefined && fromDate != '' ){
+                //         filterData.date = {$gte : fromDate}
+                //     }
+                //     if(toDate != undefined && toDate != '' ){
+                //         filterData.date = {$lte : toDate}
+                //     }
+                // }
+
+                data.page = page
+                data.LOGINDATA = LOGINDATA
+                // console.log(data)
+                socket.emit('OnlineUser',data)
+
+
+
+            }
+            }); 
+
+
+
+
     }
 
     if(pathname == "/admin/betmoniter"){
