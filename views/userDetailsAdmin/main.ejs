@@ -126,7 +126,26 @@
                         <div class="form-container">
                           <div class="form-column blue">
                             <form>
-
+                                <div class="row">
+                                    <div class="col form-group">
+                                        <label for="maxCreditReference">Max Credit Ref</label>
+                                        <input type="maxCreditReference" readonly id="maxCreditReference" name="maxCreditReference" placeholder="<%=userDetails.maxCreditReference%>" value="<%=userDetails.maxCreditReference%>">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col form-group">
+                                        <label for="transferLock">Transfer Lock</label>
+                                        <select name="transferLock" id="transferLock">
+                                            <%if(userDetails.transferLock){ %>
+                                                <option value="true" >Active</option>
+                                                <option value="false"  selected>In-Active</option>
+                                            <%}else{ %>
+                                                <option value="true" selected>Active</option>
+                                                <option value="false">In-Active</option>
+                                            <%} %>
+                                        </select>
+                                    </div>
+                                </div>
                             </form>
                             
                           </div>
