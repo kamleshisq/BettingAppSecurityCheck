@@ -2722,7 +2722,7 @@ socket.on('connect', () => {
                     <td>${bets[i].transactionId}</td>
                     <td>${bets[i].status}</td>
                     <td>${bets[i].returns}</td>
-                    <td><button class="voidBet" id="${bets[i]._id}">Cancel Bet</button></td>
+                    <td><button class="voidBet" id="${bets[i]._id}">Cancel Bet</button><button class="alertBet" id="${bets[i]._id}"> Alert Bet</button></td>
                     </tr>`
                 }
                 count += 10;
@@ -2741,6 +2741,11 @@ socket.on('connect', () => {
     socket.on("voidBet", (data)=>{
         alert("Bet Canceled successfully")
         window.location.href = "/admin/betmoniter"
+    })
+
+    $(document).on("click", ".alertBet", function(e){
+        e.preventDefault()
+        socket.emit("alertBet", this.id)
     })
 
             

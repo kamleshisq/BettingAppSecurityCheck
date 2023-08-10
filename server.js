@@ -1840,6 +1840,10 @@ io.on('connection', (socket) => {
             socket.emit("FUndData",{message:"err", status:"error"})
         }
     })
+
+    socket.on("alertBet", async(data) => {
+        console.log(data)
+    })
     
 })
 
