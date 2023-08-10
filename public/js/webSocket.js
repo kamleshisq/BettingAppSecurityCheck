@@ -7121,6 +7121,7 @@ socket.on('connect', () => {
         $(document).on("submit", ".userDetails", function(e){
             e.preventDefault()
             let form = $(this)[0];
+            console.log(form)
             let share = form.find('input[name="Share"]').val()
             let myShare = form.find('input[name="myShare"]').val()
             let id = this.id
