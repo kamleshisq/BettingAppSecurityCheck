@@ -1939,6 +1939,10 @@ io.on('connection', (socket) => {
             socket.emit("Wallet",{message:"Please try again later", status:"error"})
         }
     })
+
+    socket.on("BETSFORUSERAdminSide", async(data) => {
+        console.log(data)
+    })
     
 })
 

@@ -7172,6 +7172,40 @@ socket.on('connect', () => {
                 // $(".Wallet").find('select[name="transferLock"]').val(data.transferLock)
             }
         })
+
+
+        $(document).on("click", ".loadMoredive", function(e){
+            e.preventDefault()
+            let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                let fromDate = $('#FdateBet').val()
+                let toDate = $('#TdateBet').val()
+                let type = $("#selectBet").val()
+                let filterData = {}
+                filterData.fromDate = fromDate,
+                filterData.toDate = toDate
+                filterData.type = type
+                socket.emit("BETSFORUSERAdminSide", {page, LOGINDATA, filterData})
+        })
+  
+        const FdateInput = document.getElementById('FdateBet');
+        const TdateInput = document.getElementById('TdateBet');
+        const selectElement = document.getElementById('selectBet');
+        FdateInput.addEventListener('change', handleInputChange);
+        TdateInput.addEventListener('change', handleInputChange);
+        selectElement.addEventListener('change', handleInputChange);
+        function handleInputChange(event) {
+            let fromDate = $('#FdateBet').val()
+            let toDate = $('#TdateBet').val()
+            let type = $("#selectBet").val()
+            let filterData = {}
+            filterData.fromDate = fromDate,
+            filterData.toDate = toDate
+            filterData.type = type
+            page = 0
+            $('.pageId').attr('data-pageid', 1)
+            socket.emit("BETSFORUSERAdminSide", {page, LOGINDATA, filterData})
+          }
     }
     
     
