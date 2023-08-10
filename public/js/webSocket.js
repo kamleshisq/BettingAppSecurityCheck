@@ -4,6 +4,11 @@
 
 
 const socket = io();
+socket.on('disconnect', () => {
+    console.log("WebSocket Disconnected");
+    // Refresh the page when the WebSocket connection is lost
+    window.location.reload();
+});
 socket.on('connect', () => {
     console.log("websocket Connected")
     let LOGINDATA = {}
