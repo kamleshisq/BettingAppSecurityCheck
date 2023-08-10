@@ -289,7 +289,7 @@ exports.inactiveUser = catchAsync(async(req, res, next) => {
     for(let i = 0; i < roles.length; i++){
         role_type.push(roles[i].role_type)
     }
-    const currentUser = global._User
+    const currentUser = req.currentUser
     let users
     if(currentUser.role_type == 1){
         users = await User.find({isActive:false})
@@ -376,7 +376,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
 })
 
 exports.edit = catchAsync(async(req, res, next) => {
-    const user = global._User;
+    const user = req.currentUser;
     res.status(200).render('./user/edit',{
         user
     })
