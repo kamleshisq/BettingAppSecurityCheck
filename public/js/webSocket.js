@@ -7120,8 +7120,11 @@ socket.on('connect', () => {
     if(pathname === "/admin/userdetails"){
         $(document).on("submit", ".userDetails", function(e){
             e.preventDefault()
-        let id = this.id
-        console.log(id)
+            let form = $(this)[0];
+            let share = form.find('input[name="Share"]').val()
+            let myShare = form.find('input[name="myShare"]').val()
+            let id = this.id
+            socket.emit("myShare", {share, myShare, id})
         })
     }
     

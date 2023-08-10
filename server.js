@@ -1915,6 +1915,10 @@ io.on('connection', (socket) => {
 
         }
     })
+
+    socket.on("myShare", async(data) => {
+        console.log(data)
+    })
     
 })
 
