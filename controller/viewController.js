@@ -1070,12 +1070,48 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
 })
 
 exports.getBetAlertPage = catchAsync(async(req, res, next) => {
-    let me = req.currentUser 
-    res.status(200).render("./alertBet/alertbet", {
-        title:"Alert Bet",
-        me,
-        currentUser:me
-    })
+    User.aggregate([
+        {
+          $match: {
+            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            userIds: { $push: '$_id' } 
+          }
+        }
+      ])
+        .then((userResult) => {
+          const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
+      
+          betModel.aggregate([
+            {
+              $match: {
+                userId: { $in: userIds },
+                status: 'Alert'
+              }
+            },
+            { $limit : 10 }
+          ])
+            .then((betResult) => {
+            //   socket.emit("aggreat", betResult)
+              let me = req.currentUser
+              res.status(200).render("./alertBet/alertbet", {
+                title:"Alert Bet",
+                bets:betResult,
+                me,
+                currentUser:me
+            })
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+        }); 
 })
 
 exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
