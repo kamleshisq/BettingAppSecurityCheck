@@ -329,16 +329,16 @@
               </tr>
           </thead>
           <tbody>
-            <%for(let i = 0; i < alertBet.length; i++){%>
+            <%for(let i = 0; i <  data.dashboard.alertBet.length; i++){%>
               <%if(i%2 == 0){ %>
                 <tr style="text-align: center;" class="blue">
               <%}else{%>
                 <tr style="text-align: center;" class="blue">
               <%} %>
               <td><%i+1 %></td>
-              <td><%alertBet[i].userName%></td>
-              <td><%alertBet[i].betType%></td>
-              <td class="text-purple"><%alertBet[i].Stake%></td>
+              <td><% data.dashboard.alertBet[i].userName%></td>
+              <td><% data.dashboard.alertBet[i].betType%></td>
+              <td class="text-purple"><% data.dashboard.alertBet[i].Stake%></td>
             </tr>
               <%}%>
             
