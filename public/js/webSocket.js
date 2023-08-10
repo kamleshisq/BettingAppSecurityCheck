@@ -7176,6 +7176,7 @@ socket.on('connect', () => {
 
         $(document).on("click", ".loadMoredive", function(e){
             e.preventDefault()
+            console.log(search)
             let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
                 let fromDate = $('#FdateBet').val()
