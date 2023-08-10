@@ -6936,7 +6936,7 @@ socket.on('connect', () => {
             }); 
             
             let count = 11
-            socket.on('betMoniter',(data) => {
+            socket.on('AlertBet',(data) => {
                 // console.log(data)
                 if(data.page === 0){
                     count = 1
