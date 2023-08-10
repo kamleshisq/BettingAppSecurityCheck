@@ -7152,6 +7152,15 @@ socket.on('connect', () => {
             const num1 = 100 - num2;
             num1Input.value = num1;
         });
+
+
+
+        $(document).on("submit", ".Wallet", function(e){
+            e.preventDefault()
+            let maxCreditReference = $(".Wallet").find('input[name="maxCreditReference"]').val()
+            let transferLock =  $(".Wallet").find('select[name="transferLock"]').val()
+            socket.emit("Wallet", {maxCreditReference, transferLock})
+        })
     }
     
     
