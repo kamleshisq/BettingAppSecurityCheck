@@ -42,7 +42,9 @@
         <button class="tablinks" onclick="openCity(event, 'BASKETBALL')"> BetList</button>
         <button class="tablinks" onclick="openCity(event, 'HORSE RACING')"> Account Statement</button>
         <button class="tablinks" onclick="openCity(event, 'Greyhound')"> Login History</button>
-        <button class="tablinks" onclick="openCity(event, 'Payment')"> Login History</button>
+        <%if(currentUser.roleName === "Admin"){%>
+        <button class="tablinks" onclick="openCity(event, 'Payment')"> Payment</button>
+        <%}%>
         
     </div>
 
