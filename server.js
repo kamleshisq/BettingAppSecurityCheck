@@ -1843,7 +1843,7 @@ io.on('connection', (socket) => {
 
     socket.on("alertBet", async(data) => {
         try{
-            let bet = await Bet.findByIdAndUpdate(data, {status:"CANCEL"});
+            let bet = await Bet.findByIdAndUpdate(data, {status:"Alert"});
             socket.emit('alertBet', {bet, status:"success"})
 
         }catch(err){
