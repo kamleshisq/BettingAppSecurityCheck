@@ -7122,8 +7122,8 @@ socket.on('connect', () => {
             e.preventDefault()
             let form = $(this)[0];
             console.log(form)
-            let share = form.find('input[name="Share"]').val()
-            let myShare = form.find('input[name="myShare"]').val()
+            let share = $(".userDetails").find('input[name="Share"]').val()
+            let myShare = $(".userDetails").find('input[name="myShare"]').val()
             let id = this.id
             socket.emit("myShare", {share, myShare, id})
         })
