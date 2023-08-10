@@ -191,6 +191,75 @@ input:checked + .slider:before {
   color: black;
 }
 </style>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .form-container {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    width: 600px;
+  }
+
+  .form-column {
+    flex: 1;
+    padding: 30px;
+  }
+
+  .form-column.blue {
+    background-color: #3498db;
+    color: #fff;
+  }
+
+  .form-column.white {
+    background-color: #fff;
+    color: #333;
+  }
+
+  .form-column h2 {
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .form-group button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
 </head>
 <body id="body-pd" class="fix-width-body" style="font-family: Outfit;background-color:#EAEEF7;">
   <div class="container-fluid">
