@@ -2538,7 +2538,7 @@ socket.on('connect', () => {
         })
 
         socket.on('OnlineUser', async(data) => {
-            // console.log(data)
+            console.log(data)
             if(data.page = 1){
                 let html = `<tr style="text-align: center;" class="blue">
                 <td>1</td>
