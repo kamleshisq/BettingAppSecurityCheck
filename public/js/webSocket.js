@@ -7176,7 +7176,7 @@ socket.on('connect', () => {
 
         $(document).on("click", ".loadMoredive", function(e){
             e.preventDefault()
-            console.log(search.split("=")[1])
+            let id = search.split("=")[1]
             let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
                 let fromDate = $('#FdateBet').val()
@@ -7186,7 +7186,7 @@ socket.on('connect', () => {
                 filterData.fromDate = fromDate,
                 filterData.toDate = toDate
                 filterData.type = type
-                socket.emit("BETSFORUSERAdminSide", {page, LOGINDATA, filterData})
+                socket.emit("BETSFORUSERAdminSide", {page, id, filterData})
         })
   
         const FdateInput = document.getElementById('FdateBet');
@@ -7205,7 +7205,8 @@ socket.on('connect', () => {
             filterData.type = type
             page = 0
             $('.pageId').attr('data-pageid', 1)
-            socket.emit("BETSFORUSERAdminSide", {page, LOGINDATA, filterData})
+            let id = search.split("=")[1]
+            socket.emit("BETSFORUSERAdminSide", {page, id, filterData})
           }
     }
     
