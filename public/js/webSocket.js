@@ -2561,8 +2561,10 @@ socket.on('connect', () => {
 
 
         $(window).scroll(function() {
+            console.log("Working")
             if($(document).height()-$(window).scrollTop() == window.innerHeight){
-                let page = parseInt($('.pageId').attr('data-pageid'));
+            console.log("Working2")
+            let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
                 let data = {}
                 let userName = $('.searchUser').val()
