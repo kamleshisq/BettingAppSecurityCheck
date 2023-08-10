@@ -2739,8 +2739,24 @@ socket.on('connect', () => {
         socket.emit('voidBet', this.id)
     })
     socket.on("voidBet", (data)=>{
-        alert("Bet Canceled successfully")
-        window.location.href = "/admin/betmoniter"
+        if(data.status === "error"){
+            alert("Please try again later")
+        }else{
+            console.log(data.bet._id)
+            const deleteButton = document.getElementById(data.bet._id);
+            console.log(deleteButton)
+            const row = deleteButton.closest('tr'); 
+            if (row) {
+                const table = row.parentNode;
+                const rowIndex = Array.from(table.rows).indexOf(row);
+                row.remove(); 
+                const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
+                rowsToUpdate.forEach((row, index) => {
+                    const srNoCell = row.cells[0]; 
+                    srNoCell.textContent = index + rowIndex + 1;
+                  });
+              }
+        }
     })
 
     $(document).on("click", ".alertBet", function(e){
@@ -6979,6 +6995,11 @@ socket.on('connect', () => {
                 }else{
                     $('.new-body').append(html)         
                 }
+            })
+
+            $(document).on('click', '.voidBet', async function(e){
+                e.preventDefault()
+                socket.emit('voidBet', this.id)
             })
     
     
