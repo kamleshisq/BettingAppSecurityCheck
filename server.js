@@ -31,6 +31,7 @@ const CasinoFevoriteModel = require("./model/CasinoFevorite");
 const fs = require('fs');
 const path = require('path');
 const houseFundModel = require('./model/houseFundmodel');
+const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
     let loginData = {}
@@ -1942,6 +1943,20 @@ io.on('connection', (socket) => {
 
     socket.on("BETSFORUSERAdminSide", async(data) => {
         console.log(data)
+        try{
+            let Limit = 20
+            let page = 0
+            if(data.page){
+                page = data.page
+            }
+            let bets = await Bet.find({userId:data.id}).sort({date:-1}).skip(Limit*page).skip(Limit)
+            page++
+            socket.emit("BETSFORUSERAdminSide",{bets, page,status:"success"})
+
+        }catch(err){
+            console.log(err)
+            socket.emit("BETSFORUSERAdminSide",{message:"Please try again later", status:"error"})
+        }
     })
     
 })

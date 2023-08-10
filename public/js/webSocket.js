@@ -18,10 +18,10 @@ socket.on('connect', () => {
         // console.log('WORKING45654', data)
         LOGINDATA.LOGINUSER = data.loginData.User
         LOGINDATA.LOGINTOKEN = data.loginData.Token
-        if(LOGINDATA.LOGINUSER == "" && c == 0){
-            window.location.reload();
-            c++
-        }
+        // if(LOGINDATA.LOGINUSER == "" && c == 0){
+        //     window.location.reload();
+        //     c++
+        // }
         const {
             host, hostname, href, origin, pathname, port, protocol, search
           } = window.location
