@@ -6640,120 +6640,122 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/admin/dashboard" && href === "http://ollscores.com/admin/dashboard"){
-        console.log("WORKING")
-        socket.emit('chartMain', LOGINDATA) 
-        console.log(LOGINDATA)
-        socket.on("chartMain", data => {
-
-            var options = {
-                series: [{
-                name: 'Income',
-                type: 'column',
-                data: data.Income.reverse()
-              },  
-              {
-                name: 'Cashflow',
-                type: 'column',
-                data: data.Revanue.reverse()
-              }],
-                chart: {
-                height: 350,
-                type: 'line',
-                stacked: false
-              },
-              dataLabels: {
-                enabled: false
-              },
-              stroke: {
-                width: [1, 1, 4]
-              },
-              
-              yaxis: [
-                {
-                  axisTicks: {
-                    show: true,
+        if(LOGINDATA.LOGINUSER != ""){
+            console.log("WORKING")
+            socket.emit('chartMain', LOGINDATA) 
+            console.log(LOGINDATA)
+            socket.on("chartMain", data => {
+    
+                var options = {
+                    series: [{
+                    name: 'Income',
+                    type: 'column',
+                    data: data.Income.reverse()
+                  },  
+                  {
+                    name: 'Cashflow',
+                    type: 'column',
+                    data: data.Revanue.reverse()
+                  }],
+                    chart: {
+                    height: 350,
+                    type: 'line',
+                    stacked: false
                   },
-                  axisBorder: {
-                    show: true,
-                    color: '#008FFB'
-                },
-                  labels: {
-                    style: {
-                      colors: '#008FFB',
+                  dataLabels: {
+                    enabled: false
+                  },
+                  stroke: {
+                    width: [1, 1, 4]
+                  },
+                  
+                  yaxis: [
+                    {
+                      axisTicks: {
+                        show: true,
+                      },
+                      axisBorder: {
+                        show: true,
+                        color: '#008FFB'
+                    },
+                      labels: {
+                        style: {
+                          colors: '#008FFB',
+                        }
+                    },
+                    title: {
+                        text: "Income (Indian Rupee)",
+                        style: {
+                            color: '#008FFB',
+                        }
+                    },
+                    tooltip: {
+                        enabled: true
                     }
                 },
-                title: {
-                    text: "Income (Indian Rupee)",
-                    style: {
-                        color: '#008FFB',
-                    }
+                {
+                    seriesName: 'Income',
+                    opposite: true,
+                    axisTicks: {
+                        show: true,
+                    },
+                    axisBorder: {
+                        show: true,
+                        color: '#00E396'
+                    },
+                    labels: {
+                        style: {
+                            colors: '#00E396',
+                        }
+                    },
+                      title: {
+                        text: "Revenue (Indian Rupee)",
+                        style: {
+                          color: '#00E396',
+                        }
+                    },
                 },
-                tooltip: {
-                    enabled: true
-                }
-            },
-            {
-                seriesName: 'Income',
-                opposite: true,
-                axisTicks: {
-                    show: true,
-                },
-                axisBorder: {
-                    show: true,
-                    color: '#00E396'
-                },
-                labels: {
-                    style: {
-                        colors: '#00E396',
-                    }
-                },
-                  title: {
-                    text: "Revenue (Indian Rupee)",
-                    style: {
-                      color: '#00E396',
-                    }
-                },
-            },
-            // {
-            //     seriesName: 'Revenue',
-            //     opposite: true,
-            //     axisTicks: {
-            //         show: true,
-            //     },
-            //     axisBorder: {
-            //         show: true,
-            //         color: '#FEB019'
-            //     },
-            //     labels: {
-            //         style: {
-            //             colors: '#FEB019',
-            //         },
-            //     },
-            //     title: {
-            //         text: "Revenue (Indian Rupee)",
-            //         style: {
-            //             color: '#FEB019',
-            //         }
-            //     }
-            // },
-        ],
-        tooltip: {
-            fixed: {
-                  enabled: true,
-                  position: 'topLeft', // topRight, topLeft, bottomRight, bottomLeft
-                  offsetY: 30,
-                  offsetX: 60
-                },
-              },
-              legend: {
-                horizontalAlign: 'left',
-                offsetX: 40
-              }
-              };
-      
-              var chart = new ApexCharts(document.querySelector("#chart"), options);
-              chart.render();
-            })
+                // {
+                //     seriesName: 'Revenue',
+                //     opposite: true,
+                //     axisTicks: {
+                //         show: true,
+                //     },
+                //     axisBorder: {
+                //         show: true,
+                //         color: '#FEB019'
+                //     },
+                //     labels: {
+                //         style: {
+                //             colors: '#FEB019',
+                //         },
+                //     },
+                //     title: {
+                //         text: "Revenue (Indian Rupee)",
+                //         style: {
+                //             color: '#FEB019',
+                //         }
+                //     }
+                // },
+            ],
+            tooltip: {
+                fixed: {
+                      enabled: true,
+                      position: 'topLeft', // topRight, topLeft, bottomRight, bottomLeft
+                      offsetY: 30,
+                      offsetX: 60
+                    },
+                  },
+                  legend: {
+                    horizontalAlign: 'left',
+                    offsetX: 40
+                  }
+                  };
+          
+                  var chart = new ApexCharts(document.querySelector("#chart"), options);
+                  chart.render();
+                })
+        }
     }
 
     
