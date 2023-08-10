@@ -6788,6 +6788,11 @@ socket.on('connect', () => {
           });
     }
 
+
+    if(pathname === "/admin/alertbet"){
+        console.log("Working")
+    }
+
     
    
 
