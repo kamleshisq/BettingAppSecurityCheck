@@ -2541,7 +2541,7 @@ socket.on('connect', () => {
             console.log(data)
             if(data.page = 1){
                 let html = `<tr style="text-align: center;" class="blue">
-                <td>222</td>
+                <td>1</td>
                 <td>${data.onlineUsers[0].userName}</td>
                 <td>
     
