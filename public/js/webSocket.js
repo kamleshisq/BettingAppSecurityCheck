@@ -2539,15 +2539,34 @@ socket.on('connect', () => {
 
         socket.on('OnlineUser', async(data) => {
             // console.log(data)
-            let html = `<tr style="text-align: center;" class="blue">
-            <td>1</td>
-            <td>${data.onlineUsers[0].userName}</td>
-            <td>
-
-                <button type="button" id="${data.onlineUsers[0]._id}" class="logout">Logout</button>
-            </td>
-        </tr>`
-        $('.new-body').html(html)
+            if(data.page = 1){
+                let html = `<tr style="text-align: center;" class="blue">
+                <td>1</td>
+                <td>${data.onlineUsers[0].userName}</td>
+                <td>
+    
+                    <button type="button" id="${data.onlineUsers[0]._id}" class="logout">Logout</button>
+                </td>
+            </tr>`
+            $('.new-body').html(html)
+            }else{
+                let html = ''
+                for(let i = 0; i < data.onlineUsers.length; i++){
+                    if(i%2 == 0){
+                        html += `<tr style="text-align: center;" class="blue">`
+                    }else{
+                        html += `<tr style="text-align: center;">`
+                    }
+                    html+= `<td>1</td>
+                    <td>${data.onlineUsers[i].userName}</td>
+                    <td>
+        
+                        <button type="button" id="${data.onlineUsers[i]._id}" class="logout">Logout</button>
+                    </td>
+                </tr>`
+                }
+                $('.new-body').append(html)
+            }
 
         })
 

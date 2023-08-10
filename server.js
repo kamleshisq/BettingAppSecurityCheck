@@ -803,6 +803,7 @@ io.on('connection', (socket) => {
         // console.log(data.filterData, 12121)
         console.log(data)
         let page
+        let limit = 10
         page = data.page
         if(!page){
             page = 0
@@ -812,14 +813,18 @@ io.on('connection', (socket) => {
         // for(let i = 0; i < roles.length; i++){
         //     role_type.push(roles[i].role_type)
         // }
-        // let onlineUsers
+        let onlineUsers
+        if(data.filterData){
+                onlineUsers = await User.find({is_Online:true, userName:data.filterData.userName, parentUsers:{$in:[data.LOGINDATA.LOGINUSER._id]}})
+                page = 1
+        }else{
+                onlineUsers = await User.find({is_Online:true, parentUsers:{$in:[data.LOGINDATA.LOGINUSER._id]}}).skip(page * limit).limit(limit)
+                page++
+        }
         // if(data.LOGINDATA.LOGINUSER.role_type === 1){
-        //     onlineUsers = await User.findOne({is_Online:true, userName:data.filterData.userName})
         // }else{
-        //     onlineUsers = await User.find({is_Online:true, role_type:{$in:role_type}, userName:data.filterData.userName})
         // }
-        page++
-        console.log(onlineUsers)
+        // console.log(onlineUsers)
         socket.emit("OnlineUser",{onlineUsers, page})
     })
 
