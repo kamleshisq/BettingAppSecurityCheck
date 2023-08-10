@@ -327,10 +327,15 @@ exports.onlineUsers = catchAsync(async(req, res, next) => {
 
 exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
     console.log(req.query.id)
-    // res.status(200).render("./userDetailsAdmin/main",{
-    //     title:"User Details",
+    let currentUser = req.currentUser
+    let userDetails = await User.findById(req.query.id)
+    res.status(200).render("./userDetailsAdmin/main",{
+        title:"User Details",
+        userDetails,
+        currentUser,
+        me:currentUser
 
-    // })
+    })
 })
 
 
