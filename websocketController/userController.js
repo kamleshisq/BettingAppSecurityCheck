@@ -5,6 +5,7 @@ const Role = require('./../model/roleModel')
 // const catchAsync = require("../utils/catchAsync");
 exports.getOwnChild = async(id,page) => {
     console.log(id)
+    let userDetails = await User.findById(id)
     let child;
     // let Rows;
     // let me;
@@ -17,7 +18,7 @@ exports.getOwnChild = async(id,page) => {
         // Rows = await User.count({parent_id: id,isActive:true}).skip(page * limit).limit(limit)
         child = await User.find({parent_id: id,isActive:true}).skip(page * limit).limit(limit);
         // me = await User.findById(id)
-        roles = await Role.find({role_level:{$gt : req.currentUser.role.role_level}})
+        roles = await Role.find({role_level:{$gt : userDetails.role.role_level}})
 
 
     }
