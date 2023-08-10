@@ -7115,6 +7115,15 @@ socket.on('connect', () => {
             })
     
     }
+
+
+    if(pathname === "/admin/userdetails"){
+        $(document).on("submit", ".userDetails", function(e){
+            e.preventDefault()
+        let id = this.id
+        console.log(id)
+        })
+    }
     
     
    
