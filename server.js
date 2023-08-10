@@ -697,10 +697,10 @@ io.on('connection', (socket) => {
     socket.on('betMoniter',async(data)=>{
         console.log(data.filterData)
         if(data.filterData.marketName == "All"){
-            data.filterData.marketName = {}
+            delete data.filterData.marketName
         }
         if(data.filterData.betType == "All"){
-            data.filterData.betType = {}
+            delete data.filterData.betType; 
         }
         let limit = 10;
         let page = data.page;
