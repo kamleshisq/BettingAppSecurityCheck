@@ -2611,8 +2611,6 @@ socket.on('connect', () => {
             toDate = $('#toDate').val()
             sport = $('#Sport').val()
             market = $('#market').val()
-            console.log(sport)
-            console.log(market)
             $('.pageId').attr('data-pageid','1')
             data.page = 0;
             if(fromDate != ''  && toDate != '' ){
@@ -2631,6 +2629,8 @@ socket.on('connect', () => {
             }else{
                 filterData.userName = LOGINDATA.LOGINUSER.userName
             }
+            filterData.sport = sport
+            filterData.market = market
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             // console.log(data)
