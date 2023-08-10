@@ -816,7 +816,7 @@ io.on('connection', (socket) => {
         let onlineUsers
         if(data.filterData){
                 onlineUsers = await User.find({is_Online:true, userName:data.filterData.userName, parentUsers:{$in:[data.LOGINDATA.LOGINUSER._id]}})
-                page = 1
+                page = 0
         }else{
                 onlineUsers = await User.find({is_Online:true, parentUsers:{$in:[data.LOGINDATA.LOGINUSER._id]}}).skip(page * limit).limit(limit)
                 page++
