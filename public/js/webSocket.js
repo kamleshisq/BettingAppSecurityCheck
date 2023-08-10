@@ -2632,7 +2632,7 @@ socket.on('connect', () => {
             if(sport != "All"){
                 filterData.betType = sport
             }
-            if(marketName != "All"){
+            if(market != "All"){
                 filterData.marketName = market
             }
             data.filterData = filterData
