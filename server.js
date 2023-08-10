@@ -1858,6 +1858,17 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on("acceptBet", async(data) => {
+        try{
+            let bet = await Bet.findByIdAndUpdate(data, {status:"OPEN"});
+            socket.emit('acceptBet', {bet, status:"success"})
+
+        }catch(err){
+            console.log(err)
+            socket.emit("acceptBet",{message:"err", status:"error"})
+        }
+    })
+
     socket.on('AlertBet',async(data)=>{
         console.log(data.filterData)
         if(data.filterData.marketName == "All"){

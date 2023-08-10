@@ -33,7 +33,7 @@ socket.on('connect', () => {
     //     socket.emit('load', {P:P})
     // }
 
-
+    
     function togglePopupMain(idname, id, message){
         document.getElementById(idname).classList.toggle("active");
         document.getElementById(id).innerText  = message.toUpperCase()
@@ -282,6 +282,31 @@ socket.on('connect', () => {
               togglePopup1('popup-2', "redPopUP2")
         }
     })
+
+
+    socket.on("voidBet", (data)=>{
+        if(data.status === "error"){
+            alert("Please try again later")
+        }else{
+            console.log(data.bet._id)
+            const deleteButton = document.getElementById(data.bet._id);
+            console.log(deleteButton)
+            const row = deleteButton.closest('tr'); 
+            if (row) {
+                const table = row.parentNode;
+                const rowIndex = Array.from(table.rows).indexOf(row);
+                row.remove(); 
+                const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
+                rowsToUpdate.forEach((row, index) => {
+                    const srNoCell = row.cells[0]; 
+                    srNoCell.textContent = index + rowIndex + 1;
+                  });
+              }
+        }
+    })
+
+
+
 
     if(pathname == "/admin/updateRole"){
         let x = "121"
@@ -2738,26 +2763,7 @@ socket.on('connect', () => {
         e.preventDefault()
         socket.emit('voidBet', this.id)
     })
-    socket.on("voidBet", (data)=>{
-        if(data.status === "error"){
-            alert("Please try again later")
-        }else{
-            console.log(data.bet._id)
-            const deleteButton = document.getElementById(data.bet._id);
-            console.log(deleteButton)
-            const row = deleteButton.closest('tr'); 
-            if (row) {
-                const table = row.parentNode;
-                const rowIndex = Array.from(table.rows).indexOf(row);
-                row.remove(); 
-                const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
-                rowsToUpdate.forEach((row, index) => {
-                    const srNoCell = row.cells[0]; 
-                    srNoCell.textContent = index + rowIndex + 1;
-                  });
-              }
-        }
-    })
+    
 
     $(document).on("click", ".alertBet", function(e){
         e.preventDefault()
@@ -7002,7 +7008,31 @@ socket.on('connect', () => {
                 socket.emit('voidBet', this.id)
             })
     
-    
+            $(document).on('click', '.acceptBet', async function(e){
+                e.preventDefault()
+                socket.emit('acceptBet', this.id)
+            })
+
+            socket.on("acceptBet", (data)=>{
+                if(data.status === "error"){
+                    alert("Please try again later")
+                }else{
+                    console.log(data.bet._id)
+                    const deleteButton = document.getElementById(data.bet._id);
+                    console.log(deleteButton)
+                    const row = deleteButton.closest('tr'); 
+                    if (row) {
+                        const table = row.parentNode;
+                        const rowIndex = Array.from(table.rows).indexOf(row);
+                        row.remove(); 
+                        const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
+                        rowsToUpdate.forEach((row, index) => {
+                            const srNoCell = row.cells[0]; 
+                            srNoCell.textContent = index + rowIndex + 1;
+                          });
+                      }
+                }
+            })
     
     }
     
