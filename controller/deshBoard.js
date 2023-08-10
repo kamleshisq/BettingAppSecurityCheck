@@ -226,6 +226,11 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             $match: {
                 "status": "Alert"
             }
+        },
+        {
+            $sort: {
+                Stake: -1
+            }
         }
     ]);
     console.log(alertBet)
@@ -239,6 +244,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     dashboard.userCount = userCount
     dashboard.adminCount = adminCount
     dashboard.betCount = betCount
+    dashboard.alertBet = alertBet
     
     res.status(200).json({
         status:'success',

@@ -329,13 +329,18 @@
               </tr>
           </thead>
           <tbody>
-            
-            <tr style="text-align: center;" class="blue">
-              <td>1</td>
-              <td>No Data</td>
-              <td>Kabbadi</td>
-              <td class="text-purple">1500</td>
+            <%for(let i = 0; i < alertBet.length; i++){%>
+              <%if(i%2 == 0){ %>
+                <tr style="text-align: center;" class="blue">
+              <%}else{%>
+                <tr style="text-align: center;" class="blue">
+              <%} %>
+              <td><%i+1 %></td>
+              <td><%alertBet[i].userName%></td>
+              <td><%alertBet[i].betType%></td>
+              <td class="text-purple"><%alertBet[i].Stake%></td>
             </tr>
+              <%}>
             
           </tbody>
         </table>
