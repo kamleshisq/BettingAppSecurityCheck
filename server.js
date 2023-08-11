@@ -1982,7 +1982,7 @@ io.on('connection', (socket) => {
                 }
                     ])
             }else{
-                bets = await Bet.find({userId:data.id}).sort({date:-1}).skip(limit*page).skip(limit)
+                bets = await Bet.find({userId:data.id}).sort({date:-1}).skip(limit*page).limit(limit)
 
             }
             socket.emit("BETSFORUSERAdminSide",{bets, page,status:"success"})
