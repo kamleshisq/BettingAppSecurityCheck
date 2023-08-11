@@ -65,12 +65,12 @@
         <span for="autoSattled" style="width: 150px;">Auto Settlements</span>
         <%if(settlement.status){%>
           <span>OFF &nbsp; <label class="switch">
-          <input name="autoSattled" type="checkbox" checked>
+          <input class="checkbox" name="autoSattled" type="checkbox" checked id="checkbox">
           <span class="slider round"></span>
           </label>&nbsp; ON</span>
         <%}else{%>
           <span>OFF &nbsp; <label class="switch">
-            <input name="autoSattled" type="checkbox" >
+            <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
             <span class="slider round"></span>
             </label>&nbsp; ON</span>
         <%} %>
