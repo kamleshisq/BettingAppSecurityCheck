@@ -5,7 +5,8 @@ const Role = require('../model/roleModel');
 const whiteLabel = require('../model/whitelableModel');
 const AppError = require('./../utils/AppError');
 const catchAsync = require('./../utils/catchAsync');
-const { array } = require('joi');
+// const { array } = require('joi');
+const settlementModel = require("../model/sattlementModel");
 // const { use } = require('../routes/userRoutes')
 
 exports.createUser = catchAsync(async(req, res, next)=>{
@@ -41,6 +42,9 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     req.body.parentUsers.push(req.currentUser._id)
     // console.log(req.body)
     const newUser = await User.create(req.body);
+    if(req.body.roleName === "Admin" || req.body.roleName === "Super-Duper-Admin"){
+       await settlementModel.create({userId:newUser.id})
+    }
     res.status(200).json({
         status:'success',
         User: newUser
