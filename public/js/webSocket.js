@@ -7478,7 +7478,7 @@ socket.on('connect', () => {
             socket.emit("loadMorediveHistory", {page, id})
         })
 
-
+        let countHistory = 21
         socket.on("loadMorediveHistory", data => {
             console.log(data)
             if(data.length > 0){
@@ -7501,7 +7501,7 @@ socket.on('connect', () => {
                         formattedTime2 = date2.toLocaleString('en-US', options);
                     }
                     html += `<tr class="acount-stat-tbl-body-tr">
-                    <td>${i+1}</td>
+                    <td>${i+countHistory}</td>
                     <td>${formattedTime}</td>`
                     if(!data[i].isOnline){
                         html += `<td>${formattedTime2}</td> `
