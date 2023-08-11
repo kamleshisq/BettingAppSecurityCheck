@@ -1028,7 +1028,8 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
         title:"Setalment",
         me,
         currentUser:me,
-        settlement
+        settlement,
+        betsEventWise
     })
 })
 

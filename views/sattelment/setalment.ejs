@@ -95,89 +95,29 @@
                     </tr>
                 </thead>
                 <tbody class="new-body" style="font-size: 11px;">
-                  <tr style="text-align: center;" class="blue">
-                    <td>1</td>
-                    <td>22-12-2022, 03:05</td>
-                    <td>Twenty20 Big Bash</td>
-                    <td>Melbourne Renegades v Brisbane Heat</td>
-                    <td>27</td>
-                    <td>27</td>
-                    <td><a href="/setal" class="btn-green">Settle</a></td>
-                  </tr>
-                  <tr style="text-align: center;">
-                    <td>2</td>
-                    <td>22-12-2022, 03:05</td>
-                    <td>Twenty20 Big Bash</td>
-                    <td>Melbourne Renegades v Brisbane Heat</td>
-                    <td>27</td>
-                    <td>27</td>
-                    <td><a class="btn-green">Settle</a></td>
-                  </tr>
-                  <tr style="text-align: center;" class="blue">
-                    <td>3</td>
-                    <td>22-12-2022, 03:05</td>
-                    <td>Twenty20 Big Bash</td>
-                    <td>Melbourne Renegades v Brisbane Heat</td>
-                    <td>27</td>
-                    <td>27</td>
-                    <td><a class="btn-green">Settle</a></td>
-                  </tr>
-                  <tr style="text-align: center;">
-                    <td>4</td>
-                    <td>22-12-2022, 03:05</td>
-                    <td>Twenty20 Big Bash</td>
-                    <td>Melbourne Renegades v Brisbane Heat</td>
-                    <td>27</td>
-                    <td>27</td>
-                    <td><a class="btn-green">Settle</a></td>
-                  </tr>
-                  <tr style="text-align: center;" class="blue">
-                    <td>5</td>
-                    <td>22-12-2022, 03:05</td>
-                    <td>Twenty20 Big Bash</td>
-                    <td>Melbourne Renegades v Brisbane Heat</td>
-                    <td>27</td>
-                    <td>27</td>
-                    <td><a class="btn-green">Settle</a></td>
-                  </tr>
-                  <tr style="text-align: center;">
-                    <td>1</td>
-                    <td>22-12-2022, 03:05</td>
-                    <td>Twenty20 Big Bash</td>
-                    <td>Melbourne Renegades v Brisbane Heat</td>
-                    <td>27</td>
-                    <td>27</td>
-                    <td><a class="btn-green">Settle</a></td>
-                  </tr>
-                  <tr style="text-align: center;" class="blue">
-                    <td>1</td>
-                    <td>22-12-2022, 03:05</td>
-                    <td>Twenty20 Big Bash</td>
-                    <td>Melbourne Renegades v Brisbane Heat</td>
-                    <td>27</td>
-                    <td>27</td>
-                    <td><a class="btn-green">Settle</a></td>
-                  </tr>
-                  <tr style="text-align: center;" class="">
-                    <td>1</td>
-                    <td>22-12-2022, 03:05</td>
-                    <td>Twenty20 Big Bash</td>
-                    <td>Melbourne Renegades v Brisbane Heat</td>
-                    <td>27</td>
-                    <td>27</td>
-                    <td><a class="btn-green">Settle</a></td>
-                  </tr>
-                  <tr style="text-align: center;" class="blue">
-                    <td>1</td>
-                    <td>22-12-2022, 03:05</td>
-                    <td>Twenty20 Big Bash</td>
-                    <td>Melbourne Renegades v Brisbane Heat</td>
-                    <td>27</td>
-                    <td>27</td>
-                    <td><a class="btn-green">Settle</a></td>
-                  </tr>
-                 
-                 
+                  <%for(let i = 0; i < betsEventWise.length; i++){ %>
+                    <tr style="text-align: center;" class="blue">
+                      <%
+                      var date = new Date(betsEventWise[i].eventdate);
+                      var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                      };
+                      var formattedTime = date.toLocaleString('en-US', options);
+                      %>
+                      <td><%=i+1 %></td>
+                      <td><%=formattedTime%></td>
+                      <td><%= betsEventWise[i].series%></td>
+                      <td><%= betsEventWise[i].matchName%></td>
+                      <td><%= betsEventWise[i].count%></td>
+                      <td><%= betsEventWise[i].count%></td>
+                      <td><a href="/setal?id=<%=betsEventWise[i].eventid%>" class="btn-green">settle</a></td>
+                    </tr>
+                  <%} %>
                 </tbody>
               </table>
               </div>
