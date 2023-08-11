@@ -333,7 +333,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
     // console.log(userDetails)
     let bets
     let betsDetails
-    if(userDetails.roleName === "Super-Duper-Admin"){
+    if(userDetails.roleName != "user"){
         bets = await betModel.aggregate([
             {
                 $lookup: {
@@ -352,6 +352,32 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                 }
               },
             ])
+
+            betsDetails = await betModel.aggregate([
+                {
+                    $lookup: {
+                      from: "users",
+                      localField: "userName",
+                      foreignField: "userName",
+                      as: "user"
+                    }
+                  },
+                  {
+                    $unwind: "$user"
+                  },
+                  {
+                    $match: {
+                      "user.parentUsers": { $in: [req.currentUser.id] }
+                    }
+                  },
+                  {
+                    $group: {
+                      _id: null,
+                      totalReturns: { $sum: '$returns' },
+                      totalCount: { $sum: 1 }
+                    }
+                  }
+                ])
         
     }else{
         bets = await betModel.find({userId:req.query.id}).sort({date:-1}).limit(20)
@@ -371,6 +397,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
         ])
     }
     console.log(bets)
+    console.log(betsDetails)
     res.status(200).render("./userDetailsAdmin/main",{
         title:"User Details",
         userDetails,
