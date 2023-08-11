@@ -55,7 +55,7 @@
                     <tr style="text-align: center;" class="blue">
                       <td><%= i+1%></td>
                       <td><%= betsEventWise[i].marketName%></td>
-                      <td></td>
+                      <td><button class="voidBet" id="<%=betsEventWise[i].marketId%>"> Cancel Bet</button><button class="acceptBet" id="<%=betsEventWise[i].marketId%>"> accept Bet</button></td>
                     </tr>
                   <%} %>
                 </tbody>
