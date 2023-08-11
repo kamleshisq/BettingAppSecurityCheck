@@ -7480,6 +7480,7 @@ socket.on('connect', () => {
 
 
         socket.on("ACCSTATEMENTADMINSIDE", data => {
+            console.log(data)
             if(data.length > 0){
                 let html = ""
                 for(let i = 0; i < data.legend; i++){
@@ -7515,6 +7516,8 @@ socket.on('connect', () => {
                     }
     
                 }
+                $('.acount-stat-tbl-body111').append(html) 
+
             }else{
                 $('.loadMorediveHistory').html("")
             }
