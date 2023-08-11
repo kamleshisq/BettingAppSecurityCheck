@@ -7533,7 +7533,12 @@ socket.on('connect', () => {
     if(pathname === "/admin/setalment"){
         console.log("Working")
         $(document).on("change", ".checkbox", function(e) {
-            console.log($(this).val());
+            e.preventDefault()
+            if ($(this).is(":checked")) {
+                console.log("on");
+              } else {
+                console.log("off");
+              }
         });
     }
     
