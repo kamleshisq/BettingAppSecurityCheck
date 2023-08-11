@@ -47,19 +47,19 @@ module.exports = () => {
                   as: 'settlement'
                 }
             },
-            {
-                $match: {
-                  $expr: {
-                    $and: [
-                      { $eq: ['$settlement.0.status', true] },
-                      { $eq: ['$settlement.1.status', true] }
-                    ]
-                  }
-                }
-            }
+            // {
+            //     $match: {
+            //       $expr: {
+            //         $and: [
+            //           { $eq: ['$settlement.0.status', true] },
+            //           { $eq: ['$settlement.1.status', true] }
+            //         ]
+            //       }
+            //     }
+            // }
         ])
 
-        console.log(openBets)
+        console.log(openBets.settlement)
         const marketIds = [...new Set(openBets.map(item => item.marketId))];
         // console.log(marketIds)
         const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
