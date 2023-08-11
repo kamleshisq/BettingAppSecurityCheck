@@ -958,6 +958,13 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     if(settlement === null){
         settlement = await sattlementModel.create({userId:me.id})
     }
+    let users = await User.find({roleName:"Super-Duper-Admin"})
+    for(let i = 0; i < users.length; i++){
+        let settlement = await sattlementModel.findOne({userId:users[i].id})
+        if(settlement === null){
+            await sattlementModel.create({userId:users[i].id})
+        }
+    }
     // console.log(settlement)
     res.status(200).render("./sattelment/setalment",{
         title:"Setalment",
