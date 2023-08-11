@@ -7369,10 +7369,10 @@ socket.on('connect', () => {
 
           $(function () {
             $("div").slice(0, 4).show();
-            $("#loadMore").on('click', function (e) {
+            $("#loadMorediveACC").on('click', function (e) {
                 e.preventDefault();
-                let page = parseInt($('.pageId').attr('data-pageid'));
-                $('.pageId').attr('data-pageid',page + 1)
+                let page = parseInt($('.pageIdACC').attr('data-pageid'));
+                $('.pageIdACC').attr('data-pageid',page + 1)
                 let fromDate = $('#Fdate').val()
                 let toDate = $('#Tdate').val()
                 let type = $("#select").val()
