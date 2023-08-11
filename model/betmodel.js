@@ -64,6 +64,12 @@ const betSchema = mongoose.Schema({
     },
     secId:{
         type : String
+    },
+    eventId:{
+        type: String
+    },
+    eventDate:{
+        type:Date
     }
 })
 
