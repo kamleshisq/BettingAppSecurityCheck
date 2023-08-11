@@ -330,6 +330,8 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
     let currentUser = req.currentUser
     let userDetails = await User.findById(req.query.id)
     let bets = await betModel.find({userId:req.query.id}).sort({date:-1}).limit(20)
+    // if(userDetails.roleName)
+    console.log(userDetails)
     let betsDetails = await betModel.aggregate([
         {
             $match:{
