@@ -7532,9 +7532,9 @@ socket.on('connect', () => {
 
     if(pathname === "/admin/setalment"){
         console.log("Working")
-        $(document).on("chenge", ".checkbox", function(e){
-            console.log(this.val())
-        })
+        $(document).on("change", ".checkbox", function(e) {
+            console.log($(this).val());
+        });
     }
     
     
