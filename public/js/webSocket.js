@@ -7369,9 +7369,10 @@ socket.on('connect', () => {
 
         //   $(function () {
         //     $("div").slice(0, 4).show();
-            $(".loadMorediveACC").on('click', function (e) {
-                console.log("Working")
+            // $(".loadMorediveACC").on('click', function (e) {
+                $(document).on("click", ".loadMorediveACC", function(e){
                 e.preventDefault();
+                console.log("Working")
                 let page = parseInt($('.pageIdACC').attr('data-pageid'));
                 $('.pageIdACC').attr('data-pageid',page + 1)
                 let fromDate = $('#Fdate').val()
