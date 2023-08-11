@@ -31,6 +31,7 @@ const CasinoFevoriteModel = require("./model/CasinoFevorite");
 const fs = require('fs');
 const path = require('path');
 const houseFundModel = require('./model/houseFundmodel');
+const loginLogs =  require("./model/loginLogs");
 const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
