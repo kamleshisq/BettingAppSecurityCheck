@@ -7211,9 +7211,9 @@ socket.on('connect', () => {
 
           let count = 21
           socket.on("BETSFORUSERAdminSide", async(data) => {
-            console.log(data)
+            // console.log(data)
             if(data.bets.length > 0){
-                console.log(data.page)
+                // console.log(data.page)
                 if(data.page === 0){
                     count = 1
                 }
