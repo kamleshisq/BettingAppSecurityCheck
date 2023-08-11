@@ -1952,6 +1952,7 @@ io.on('connection', (socket) => {
             let user = await User.findById(data.id)
             let bets 
             let filter = {}
+            
             if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
                 filter.date = {
                     $gt : new Date(data.filterData.fromDate)
@@ -1989,6 +1990,9 @@ io.on('connection', (socket) => {
                         }
                       },
                       {
+                        $match:filter
+                      },
+                      {
                     $sort: {
                         date: -1
                     }
@@ -2001,7 +2005,8 @@ io.on('connection', (socket) => {
                 }
                     ])
             }else{
-                bets = await Bet.find({userId:data.id}).sort({date:-1}).skip(limit*page).limit(limit)
+                filter.userId = data.id
+                bets = await Bet.find(filter).sort({date:-1}).skip(limit*page).limit(limit)
 
             }
             socket.emit("BETSFORUSERAdminSide",{bets, page,status:"success"})
