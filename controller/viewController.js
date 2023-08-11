@@ -351,6 +351,12 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                   "user.parentUsers": { $in: [req.currentUser.id] }
                 }
               },
+              {
+                sort:{date:-1}
+              },
+              {
+                limit:20
+              }
             ])
 
             betsDetails = await betModel.aggregate([
