@@ -7260,6 +7260,8 @@ socket.on('connect', () => {
                 }else{
                     $('.new-body').append(html)         
                 }
+                let html12 = `<a id="loadMore">Load More</a>`
+                $('.loadMoredive').html(html12)
             }else{
                 console.log("working")
                     $('.loadMoredive').html("")
