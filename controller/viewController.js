@@ -995,10 +995,11 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
         //   }
         {
             $group: {
-              _id: "$event",
+              _id: "$match",
               count: { $sum: 1 },
               eventdate: { $first: "$eventDate" }, 
-              eventid: { $first: "$eventId" } 
+              eventid: { $first: "$eventId" },
+              series: {$first: "$event"} 
             }
           },
           {
