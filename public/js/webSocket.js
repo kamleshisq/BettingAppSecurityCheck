@@ -7475,11 +7475,11 @@ socket.on('connect', () => {
             let page = parseInt($('.pageIdHistory').attr('data-pageid'));
             $('.pageIdHistory').attr('data-pageid',page + 1)
             let id = search.split("=")[1]
-            socket.emit("ACCSTATEMENTADMINSIDE", {page, id})
+            socket.emit("loadMorediveHistory", {page, id})
         })
 
 
-        socket.on("ACCSTATEMENTADMINSIDE", data => {
+        socket.on("loadMorediveHistory", data => {
             console.log(data)
             if(data.length > 0){
                 let html = ""
