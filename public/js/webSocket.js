@@ -7484,6 +7484,7 @@ socket.on('connect', () => {
             if(data.length > 0){
                 let html = ""
                 for(let i = 0; i < data.legend; i++){
+                    console.log(data[i])
                     var date = new Date(data[i].login_time);
                     var options = { 
                         year: 'numeric',
