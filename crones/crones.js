@@ -19,7 +19,7 @@ module.exports = () => {
                 $lookup: {
                   from: 'users',
                   localField: 'userId',
-                  foreignField: '_id',
+                  foreignField: 'id',
                   as: 'user'
                 }
             },
