@@ -404,6 +404,8 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
               }
         ])
     }
+
+    let ACCount = await accountStatement.find({user_id:req.query.id}).sort({date: -1}).limit(20)
     // console.log(bets)
     // console.log(betsDetails)
     res.status(200).render("./userDetailsAdmin/main",{
@@ -412,7 +414,8 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
         currentUser,
         me:currentUser,
         bets,
-        betsDetails
+        betsDetails,
+        ACCount
 
     })
 })
