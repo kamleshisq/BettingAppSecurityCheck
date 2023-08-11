@@ -98,16 +98,17 @@
                   <%for(let i = 0; i < betsEventWise.length; i++){ %>
                     <tr style="text-align: center;" class="blue">
                       <%
-                      var date = new Date(betsEventWise[i].eventdate);
-                      var options = { 
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric',
-                        hour12: true
-                      };
-                      var formattedTime = date.toLocaleString('en-US', options);
+                          var timestamp = `${betsEventWise[i].eventDate}` * 1000; 
+                          var date = new Date(timestamp);
+                          var options = { 
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                              hour: 'numeric',
+                              minute: 'numeric',
+                              hour12: true
+                          };
+                          var formattedTime = date.toLocaleString('en-US', options);
                       %>
                       <td><%=i+1 %></td>
                       <td><%=formattedTime%></td>
