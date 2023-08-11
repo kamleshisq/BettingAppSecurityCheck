@@ -348,7 +348,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
               },
               {
                 $match: {
-                  "user.parentUsers": { $in: [req.currentUser.id] }
+                  "user.parentUsers": { $in: [req.query.id] }
                 }
               },
               {
@@ -375,7 +375,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                   },
                   {
                     $match: {
-                      "user.parentUsers": { $in: [req.currentUser.id] }
+                      "user.parentUsers": { $in: [req.query.id] }
                     }
                   },
                   {
