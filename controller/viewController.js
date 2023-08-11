@@ -404,8 +404,8 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
               }
         ])
     }
-    console.log(bets)
-    console.log(betsDetails)
+    // console.log(bets)
+    // console.log(betsDetails)
     res.status(200).render("./userDetailsAdmin/main",{
         title:"User Details",
         userDetails,
