@@ -16,10 +16,15 @@ module.exports = () => {
                 }
             },
             {
+                $addFields: {
+                  userIdObjectId: { $toObjectId: '$userId' } 
+                }
+            },
+            {
                 $lookup: {
                   from: 'users',
-                  localField: 'userId',
-                  foreignField: 'id',
+                  localField: 'userIdObjectId',
+                  foreignField: '_id',
                   as: 'user'
                 }
             },
