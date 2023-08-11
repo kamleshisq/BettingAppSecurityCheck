@@ -2,11 +2,11 @@ const cron = require('node-cron');
 const betModel = require('../model/betmodel');
 const accModel = require('../model/accountStatementByUserModel');
 const userModel = require("../model/userModel");
-const { parse } = require('dotenv');
-const { aggregate } = require('../model/stakeLabelModel');
+// const { parse } = require('dotenv');
+// const { aggregate } = require('../model/stakeLabelModel');
 
 module.exports = () => {
-    cron.schedule('*/5 * * * *', async() => {
+    cron.schedule('*/5 * * * * *', async() => {
       console.log("Working")
         // const openBets = await betModel.find({status:"OPEN"});
         const openBets = await betModel.aggregate([
