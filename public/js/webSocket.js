@@ -7268,6 +7268,198 @@ socket.on('connect', () => {
                     $('.loadMoredive').html("")
             }
           })
+
+
+          function generatePDF(table) {
+            const printWindow = window.open('', '_blank');
+                    printWindow.document.open();
+                    printWindow.document.write(`
+                    <html>
+                        <head>
+                        <title>Account Statement</title>
+                        <style>
+                            .ownAccDetails {
+                                color: black;
+                                border: none;
+                                background-color: inherit;
+                                padding: 14px 28px;
+                                font-size: 16px;
+                                cursor: pointer;
+                                display: inline-block;
+                            }
+                            body {
+                            font-family: Arial, sans-serif;
+                            margin: 20px;
+                            }
+                            table {
+                            border-collapse: collapse;
+                            width: 100%;
+                            }
+                            th, td {
+                            border: 1px solid #ccc;
+                            padding: 8px;
+                            }
+                            th {
+                            background-color: #f2f2f2;
+                            font-weight: bold;
+                            }
+                        </style>
+                        </head>
+                        <body>
+                        ${table.outerHTML}
+                        </body>
+                    </html>
+                    `);
+                    printWindow.document.close();
+
+                    printWindow.print();
+                
+          }
+          document.getElementById('pdfDownload').addEventListener('click', function(e) {
+            e.preventDefault()
+            const table = document.getElementById('table12');
+            
+            if (table) {
+              generatePDF(table);
+            }
+          });
+
+          function downloadCSV(csvContent, fileName) {
+            const link = document.createElement('a');
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+          }          
+
+          function sanitizeCellValue(value) {
+            // Define a character whitelist (allow only printable ASCII and basic punctuation)
+            const allowedCharactersRegex = /[\x20-\x7E\u0020-\u007E]/g;
+            
+            return value.match(allowedCharactersRegex).join('').trim();
+          }
+          
+          function convertToCSV(table) {
+            const rows = table.querySelectorAll('tr');
+            
+            let csv = '';
+            for (const row of rows) {
+              const columns = row.querySelectorAll('td, th');
+              let rowData = '';
+              for (const column of columns) {
+                const data = sanitizeCellValue(column.innerText);
+                rowData += (data.includes(',') ? `"${data}"` : data) + ',';
+              }
+              csv += rowData.slice(0, -1) + '\n';
+            }
+            
+            return csv;
+          }
+
+        document.getElementById('downloadBtn').addEventListener('click', function(e) {
+            e.preventDefault()
+            const table = document.getElementById('table12');             
+            if (table) {
+              const csvContent = convertToCSV(table);
+              downloadCSV(csvContent, 'AccountStatement.csv');
+            }
+          });
+
+
+          $(function () {
+            $("div").slice(0, 4).show();
+            $("#loadMore").on('click', function (e) {
+                e.preventDefault();
+                let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                let fromDate = $('#Fdate').val()
+                let toDate = $('#Tdate').val()
+                let type = $("#select").val()
+                let filterData = {}
+                filterData.fromDate = fromDate,
+                filterData.toDate = toDate
+                filterData.type = type
+                let id = search.split("=")[1]
+                socket.emit("ACCSTATEMENTUSERSIDE", {page, id, filterData})
+            });
+        });
+
+        const FdateInputACC = document.getElementById('FdateACC');
+        const TdateInputAcc = document.getElementById('TdateACC');
+        const selectElementAcc = document.getElementById('selectACC');
+        FdateInputACC.addEventListener('change', handleInputChange);
+        TdateInputAcc.addEventListener('change', handleInputChange);
+        selectElementAcc.addEventListener('change', handleInputChange);
+        function handleInputChange(event) {
+            let fromDate = $('#FdateACC').val()
+            let toDate = $('#TdateACC').val()
+            let type = $("#selectACC").val()
+            let filterData = {}
+            filterData.fromDate = fromDate,
+            filterData.toDate = toDate
+            filterData.type = type
+            page = 0
+            $('.pageId').attr('data-pageid',1)
+            let id = search.split("=")[1]
+            socket.emit("ACCSTATEMENTADMINSIDE", {page, id, filterData})
+          }
+
+
+        let countAcc = 21
+        socket.on("ACCSTATEMENTADMINSIDE", async(data) => {
+            if(data.userAcc.length > 0){
+            console.log(data.page)
+            if(data.page === 0){
+                countAcc = 1
+            }
+            let page = data.page
+            let userAcc = data.userAcc;
+            let html = '';
+             for(let i = 0; i < userAcc.length; i++){
+                var date = new Date(userAcc[i].date);
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+                html += `<tr class="acount-stat-tbl-body-tr">
+                    <td>${i+countAcc}</td>
+                    <td>${formattedTime}</td>`
+                    if(userAcc[i].creditDebitamount > 0){
+                        html += `<td>${userAcc[i].creditDebitamount}</td>
+                        <td>0</td>`
+                    }else{
+                        html += ` <td>0</td>
+                        <td>${userAcc[i].creditDebitamount}</td>`
+                    }
+
+                    if(userAcc[i].stake){
+                        html += `<td>${userAcc[i].stake}</td>`
+                    }else{
+                        html += "<td>-</td>"
+                    }
+
+                    html += `<td>0</td>
+                    <td>${userAcc[i].balance}</td>
+                    <td>${userAcc[i].description}</td>
+                    <td>-</td>`
+            }
+            countAcc += 20
+            if(data.page == 0){
+                $('.acount-stat-tbl-body').html(html)
+            }else{
+                $('.acount-stat-tbl-body').append(html)         
+            }
+        }else{
+            console.log("working")
+                $('.loadMorediveACC').html("")
+        }
+        })
     }
     
     

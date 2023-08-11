@@ -2016,6 +2016,39 @@ io.on('connection', (socket) => {
             socket.emit("BETSFORUSERAdminSide",{message:"Please try again later", status:"error"})
         }
     })
+
+    socket.on("ACCSTATEMENTADMINSIDE", async(data) => {
+        let limit = 20;
+        let page = data.page;
+        // console.log(page)
+        // console.log(data.LOGINDATA.LOGINUSER)
+        let filter = {}
+        filter.user_id = data.id
+        if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
+            filter.date = {
+                $gt : new Date(data.filterData.fromDate)
+            }
+        }else if(data.filterData.fromDate == "" && data.filterData.toDate != ""){
+            filter.date = {
+                $lt : new Date(data.filterData.toDate)
+            }
+        }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
+            filter.date = {
+                $gte : new Date(data.filterData.fromDate),
+                $lt : new Date(data.filterData.toDate)
+            }
+        }
+        if(data.filterData.type === "2"){
+            filter.stake = {
+                $ne:undefined
+            }
+        }else if (data.filterData.type === "1"){
+            filter.stake = undefined
+        }
+        // console.log(filter)
+        let userAcc = await AccModel.find(filter).sort({date: -1}).skip(page * limit).limit(limit)
+        socket.emit("ACCSTATEMENTADMINSIDE", {userAcc, page})
+        })
     
 })
 
