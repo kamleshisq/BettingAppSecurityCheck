@@ -2465,7 +2465,7 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
 });
 
 exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
-    let currentUser = req.currentUser
+    let me = req.currentUser
     console.log("working")
     console.log(req.query.id)
     let betsEventWise = await betModel.aggregate([
