@@ -45,6 +45,7 @@ router.get("/admin/roleManagement", authController.isProtected, authController.i
 router.get("/admin/promotion", authController.isProtected,authController.isAdmin, viewController.getPromotionPage);
 router.get("/admin/houseManagement", authController.isProtected, authController.isAdmin,viewController.getoperationsPage);
 router.get("/admin/settlement", authController.isProtected, authController.isAdmin,viewController.getSettlementPage);
+router.get("/admin/settlementIn", authController.isProtected, authController.isAdmin,viewController.getSettlementPageIn);
 router.get("/admin/whiteLableAnalysis", authController.isProtected, authController.isAdmin,viewController.WhiteLabelAnalysis);
 router.get("/admin/gameAnalysis", authController.isProtected, authController.isAdmin,viewController.gameAnalysis);
 router.get("/admin/streammanagement", authController.isProtected, authController.isAdmin,viewController.getStreamManagementPage);
