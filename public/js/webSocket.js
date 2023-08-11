@@ -7367,8 +7367,8 @@ socket.on('connect', () => {
           });
 
 
-          $(function () {
-            $("div").slice(0, 4).show();
+        //   $(function () {
+        //     $("div").slice(0, 4).show();
             $("#loadMorediveACC").on('click', function (e) {
                 console.log("Working")
                 e.preventDefault();
@@ -7384,7 +7384,7 @@ socket.on('connect', () => {
                 let id = search.split("=")[1]
                 socket.emit("ACCSTATEMENTUSERSIDE", {page, id, filterData})
             });
-        });
+        // });/
 
         const FdateInputACC = document.getElementById('FdateACC');
         const TdateInputAcc = document.getElementById('TdateACC');
