@@ -7388,6 +7388,64 @@ socket.on('connect', () => {
             let id = search.split("=")[1]
             socket.emit("ACCSTATEMENTADMINSIDE", {page, id, filterData})
         })
+
+
+
+
+        let countAcc = 21
+        socket.on("ACCSTATEMENTADMINSIDE", async(data) => {
+            if(data.userAcc.length > 0){
+            console.log(data.page)
+            if(data.page === 0){
+                countAcc = 1
+            }
+            let page = data.page
+            let userAcc = data.userAcc;
+            let html = '';
+             for(let i = 0; i < userAcc.length; i++){
+                var date = new Date(userAcc[i].date);
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+                html += `<tr class="acount-stat-tbl-body-tr">
+                    <td>${i+countAcc}</td>
+                    <td>${formattedTime}</td>`
+                    if(userAcc[i].creditDebitamount > 0){
+                        html += `<td>${userAcc[i].creditDebitamount}</td>
+                        <td>0</td>`
+                    }else{
+                        html += ` <td>0</td>
+                        <td>${userAcc[i].creditDebitamount}</td>`
+                    }
+
+                    if(userAcc[i].stake){
+                        html += `<td>${userAcc[i].stake}</td>`
+                    }else{
+                        html += "<td>-</td>"
+                    }
+
+                    html += `<td>0</td>
+                    <td>${userAcc[i].balance}</td>
+                    <td>${userAcc[i].description}</td>
+                    <td>-</td>`
+            }
+            countAcc += 20
+            if(data.page == 0){
+                $('.acount-stat-tbl-body').html(html)
+            }else{
+                $('.acount-stat-tbl-body').append(html)         
+            }
+        }else{
+            console.log("working")
+                $('.loadMorediveACC').html("")
+        }
+        })
         
     }
     
