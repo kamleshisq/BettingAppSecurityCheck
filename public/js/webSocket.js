@@ -7315,7 +7315,7 @@ socket.on('connect', () => {
                     printWindow.print();
                 
           }
-          document.getElementById('pdfDownload').addEventListener('click', function(e) {
+          document.getElementById('downloadBtnACC').addEventListener('click', function(e) {
             e.preventDefault()
             const table = document.getElementById('table12');
             
@@ -7357,7 +7357,7 @@ socket.on('connect', () => {
             return csv;
           }
 
-        document.getElementById('downloadBtn').addEventListener('click', function(e) {
+        document.getElementById('pdfDownloadACC').addEventListener('click', function(e) {
             e.preventDefault()
             const table = document.getElementById('table12');             
             if (table) {
