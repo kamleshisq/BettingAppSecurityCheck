@@ -7382,7 +7382,7 @@ socket.on('connect', () => {
                 filterData.toDate = toDate
                 filterData.type = type
                 let id = search.split("=")[1]
-                socket.emit("ACCSTATEMENTUSERSIDE", {page, id, filterData})
+                socket.emit("ACCSTATEMENTADMINSIDE", {page, id, filterData})
             });
         // });/
 
