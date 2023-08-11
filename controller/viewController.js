@@ -1008,7 +1008,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
               matchName: "$_id",
               eventdate: 1,
               eventid: 1,
-              event:1,
+              series:1,
               count: 1
             }
           }
