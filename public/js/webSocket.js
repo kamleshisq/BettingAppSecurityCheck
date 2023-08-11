@@ -7206,6 +7206,7 @@ socket.on('connect', () => {
             page = 0
             $('.pageId').attr('data-pageid', 1)
             let id = search.split("=")[1]
+            console.log(filterData)
             socket.emit("BETSFORUSERAdminSide", {page, id, filterData})
           }
 
