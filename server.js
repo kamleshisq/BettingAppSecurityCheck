@@ -1950,8 +1950,41 @@ io.on('connection', (socket) => {
                 page = data.page
             }
             let user = await User.findById(data.id)
-            console.log(user)
-            let bets = await Bet.find({userId:data.id}).sort({date:-1}).skip(Limit*page).skip(Limit)
+            let bets 
+            if(user.roleName != "user"){
+                bets = await Bet.aggregate([
+                    {
+                        $lookup: {
+                          from: "users",
+                          localField: "userName",
+                          foreignField: "userName",
+                          as: "user"
+                        }
+                      },
+                      {
+                        $unwind: "$user"
+                      },
+                      {
+                        $match: {
+                          "user.parentUsers": { $in: [data.id] }
+                        }
+                      },
+                      {
+                    $sort: {
+                        date: -1
+                    }
+                },
+                {
+                    $skip:(page * limit)
+                },
+                {
+                    $limit:limit
+                }
+                    ])
+            }else{
+                bets = await Bet.find({userId:data.id}).sort({date:-1}).skip(Limit*page).skip(Limit)
+
+            }
             socket.emit("BETSFORUSERAdminSide",{bets, page,status:"success"})
 
         }catch(err){
