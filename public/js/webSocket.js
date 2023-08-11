@@ -7368,6 +7368,23 @@ socket.on('connect', () => {
           });
 
 
+        //for accountstatement/
+
+        $(document).on("click", ".loadMorediveACC", function(e){
+            e.preventDefault();
+            console.log("Working")
+            let page = parseInt($('.pageIdACC').attr('data-pageid'));
+            $('.pageIdACC').attr('data-pageid',page + 1)
+            let fromDate = $('#FdateACC').val()
+            let toDate = $('#TdateACC').val()
+            let type = $("#selectACC").val()
+            let filterData = {}
+            filterData.fromDate = fromDate,
+            filterData.toDate = toDate
+            filterData.type = type
+            let id = search.split("=")[1]
+            socket.emit("ACCSTATEMENTADMINSIDE", {page, id, filterData})
+        })
         
     }
     
