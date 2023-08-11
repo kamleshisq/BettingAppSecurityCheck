@@ -46,15 +46,18 @@
                 <thead>
                     <tr style="text-align: center;font-size: 11px;">
                       <th>S.No</th>
-                      <th>Event Date</th>
-                      <th>Series</th>
-                      <th>Event Name</th>
-                      <th>Total Bets</th>
-                      <th>Open Bets</th>
-                      <th></th>
+                      <th>Market Name</th>
+                      <th>Action</th>
                     </tr>
                 </thead>
                 <tbody class="new-body" style="font-size: 11px;">
+                  <%for(let i = 0; i < betsEventWise.length; i++){ %>
+                    <tr style="text-align: center;" class="blue">
+                      <td><%= i+1%></td>
+                      <td><%= betsEventWise[i].marketName%></td>
+                      <td></td>
+                    </tr>
+                  <%} %>
                 </tbody>
               </table>
               </div>

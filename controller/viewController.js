@@ -2507,5 +2507,10 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
             }
           }
     ])
-    console.log(betsEventWise)
+    res.status(200).render("./sattlementInPage/main",{
+        title:"SETTLEMENTS",
+        me,
+        currentUser:me,
+        betsEventWise
+    })
 } )
