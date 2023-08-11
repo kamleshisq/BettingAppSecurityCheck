@@ -2047,7 +2047,7 @@ io.on('connection', (socket) => {
         }else if (data.filterData.type === "1"){
             filter.stake = undefined
         }
-        // console.log(filter)
+        console.log(filter)
         let userAcc = await AccModel.find(filter).sort({date: -1}).skip(page * limit).limit(limit)
         socket.emit("ACCSTATEMENTADMINSIDE", {userAcc, page})
     }catch(err){
