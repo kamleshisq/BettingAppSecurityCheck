@@ -2018,13 +2018,15 @@ io.on('connection', (socket) => {
     })
 
     socket.on("ACCSTATEMENTADMINSIDE", async(data) => {
-        let limit = 20;
-        let page = data.page;
-        // console.log(page)
-        // console.log(data.LOGINDATA.LOGINUSER)
-        let filter = {}
-        filter.user_id = data.id
-        if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
+        try{
+
+            let limit = 20;
+            let page = data.page;
+            // console.log(page)
+            // console.log(data.LOGINDATA.LOGINUSER)
+            let filter = {}
+            filter.user_id = data.id
+            if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
             filter.date = {
                 $gt : new Date(data.filterData.fromDate)
             }
@@ -2048,7 +2050,10 @@ io.on('connection', (socket) => {
         // console.log(filter)
         let userAcc = await AccModel.find(filter).sort({date: -1}).skip(page * limit).limit(limit)
         socket.emit("ACCSTATEMENTADMINSIDE", {userAcc, page})
-        })
+    }catch(err){
+        console.log(err)
+    }
+    })
     
 })
 
