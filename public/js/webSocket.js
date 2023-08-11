@@ -7264,6 +7264,7 @@ socket.on('connect', () => {
                 $('.loadMoredive').html(html12)
             }else{
                 console.log("working")
+                $('.new-body').html("")
                     $('.loadMoredive').html("")
             }
           })
