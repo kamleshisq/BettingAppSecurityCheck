@@ -7480,7 +7480,7 @@ socket.on('connect', () => {
 
         let countHistory = 21
         socket.on("loadMorediveHistory", data => {
-            console.log(data)
+            // console.log(data)
             if(data.length > 0){
                 let html = ""
                 for(let i = 0; i < data.length; i++){
