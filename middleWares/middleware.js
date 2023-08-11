@@ -25,7 +25,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         const clientIP1 = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
         let clientIP2 = clientIP1.split(":")
         let clientIP = clientIP2[clientIP2.length - 1]
-        global.ip = clientIP
+        req.userIp = clientIP
     }
     
     if(req.originalUrl == "/api/v1/auth/login" ){
@@ -38,6 +38,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         }
         const userLog = await loginLogs.find({user_id:id._id})
         global._count = userLog.length
+        req._count = userLog.length
         global._admin = true
     }else if (req.originalUrl == "/api/v1/auth/userLogin"){
         const id = await User.findOne({userName:req.body.userName})
