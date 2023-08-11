@@ -1024,7 +1024,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     const cricket1 = sportData[0].gameList[0].eventList
     console.log(cricket1)
     console.log(betsEventWise)
-    res.status(200).render("./sattelment/settlement",{
+    res.status(200).render("./sattelment/setalment",{
         title:"SETTLEMENTS",
         me,
         currentUser:me,
