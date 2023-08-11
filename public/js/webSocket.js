@@ -7528,6 +7528,11 @@ socket.on('connect', () => {
         })
         
     }
+
+
+    if(pathname === "/admin/setalment"){
+        console.log("Working")
+    }
     
     
    
