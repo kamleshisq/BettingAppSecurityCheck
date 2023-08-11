@@ -176,17 +176,9 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                   "user.parentUsers": { $in: [req.currentUser.id] }
                 }
               },
-            //   {
-            //     $group: {
-            //       _id: "$user.userName",  // Grouping by userName
-            //       totalBets: { $sum: 1 }
-            //     }
-            //   }
             {
                 $count: "totalBets"
               }
-              
-              
           ])
 
 

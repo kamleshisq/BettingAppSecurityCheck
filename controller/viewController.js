@@ -329,23 +329,48 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
     console.log(req.query.id)
     let currentUser = req.currentUser
     let userDetails = await User.findById(req.query.id)
-    let bets = await betModel.find({userId:req.query.id}).sort({date:-1}).limit(20)
     // if(userDetails.roleName)
-    console.log(userDetails)
-    let betsDetails = await betModel.aggregate([
-        {
-            $match:{
-                userId:req.query.id
-            }
-        },
-        {
-            $group: {
-              _id: null,
-              totalReturns: { $sum: '$returns' },
-              totalCount: { $sum: 1 }
-            }
-          }
-    ])
+    // console.log(userDetails)
+    let bets
+    let betsDetails
+    if(userDetails.roleName === "Super-Duper-Admin"){
+        bets = await betModel.aggregate([
+            {
+                $lookup: {
+                  from: "users",
+                  localField: "userName",
+                  foreignField: "userName",
+                  as: "user"
+                }
+              },
+              {
+                $unwind: "$user"
+              },
+              {
+                $match: {
+                  "user.parentUsers": { $in: [req.currentUser.id] }
+                }
+              },
+            ])
+        
+    }else{
+        bets = await betModel.find({userId:req.query.id}).sort({date:-1}).limit(20)
+        betsDetails = await betModel.aggregate([
+            {
+                $match:{
+                    userId:req.query.id
+                }
+            },
+            {
+                $group: {
+                  _id: null,
+                  totalReturns: { $sum: '$returns' },
+                  totalCount: { $sum: 1 }
+                }
+              }
+        ])
+    }
+    console.log(bets)
     res.status(200).render("./userDetailsAdmin/main",{
         title:"User Details",
         userDetails,
