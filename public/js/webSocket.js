@@ -7233,37 +7233,25 @@ socket.on('connect', () => {
                     var formattedTime = date.toLocaleString('en-US', options);
                     html += `<tr class="acount-stat-tbl-body-tr">
                         <td>${i+count}</td>
-                        <td>${formattedTime}</td>`
-                    if(bets[i].betType === "Casino"){
-                            html += "<td>-</td>"
-                    }else{
-                            html += `<td>${bets[i].betType}</td>`
-                    }
-                    html += `<td>${bets[i].event}</td>`
+                        <td>${formattedTime}</td>
+                        <td>${bets[i].userName}</td>
+                        <td>${bets[i].event}</td>`
                     if(bets[i].match){
-                            html +=  `<td>${bets[i].match}</td>`
+                            html += `<td>${bets[i].marketName}</td>
+                            <td>${bets[i].oddValue}</td>
+                            <td>${bets[i].match}</td>
+                            <td>${bets[i].selectionName}</td>`
                     }else{
-                            html += "<td>-</td>"
+                            html += `<td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>`
                     }
-                    if(bets[i].marketName){
-                            html += `<td>${bets[i].marketName}</td>`
-                    }else{
-                            html += "<td>-</td>"
-                    }
-                    if(bets[i].selectionName){
-                            html +=    `<td>${bets[i].selectionName}</td>
-                                <td>${bets[i].oddValue}</td>`
-                    }else{
-                            html +=    "<td>-</td><td>-</td>"
-                    }
-                    html += ` <td>${bets[i].status}</td>
-                            <td>${bets[i].Stake}</td>`
-                            if(bets[i].returns > 0){
-                               html += `<td class="c-gren">${bets[i].returns}</td>`
-                            }else{
-                                html += `<td class="c-reed">${bets[i].returns}</td>`
-                            }
-                       html +=  "</tr>"
+                    html += `<td>${bets[i].Stake}</td>
+                    <td>${bets[i].transactionId}</td>
+                    <td>${bets[i].status}</td>
+                    <td>${bets[i].returns}</td>
+                    </tr>`
                         
                 }
                 count += 20
