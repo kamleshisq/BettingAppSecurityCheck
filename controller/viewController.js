@@ -961,7 +961,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     let betsEventWise = await betModel.aggregate([
         {
             $match: {
-                status: { $ne: "OPEN" }
+                status:"OPEN" 
             }
         },
         {
