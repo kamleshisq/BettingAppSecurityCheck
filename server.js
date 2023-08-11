@@ -32,7 +32,8 @@ const fs = require('fs');
 const path = require('path');
 const houseFundModel = require('./model/houseFundmodel');
 const loginLogs =  require("./model/loginLogs");
-const { Linter } = require('eslint');
+const settlement = require("./model/sattlementModel");
+// const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
     let loginData = {}
@@ -2063,6 +2064,10 @@ io.on('connection', (socket) => {
         let userDetails = await User.findById(data.id)
         let historty = await loginLogs.find({userName:userDetails.userName}).sort({login_time:-1}).skip(page*20).limit(20)
         socket.emit("loadMorediveHistory", historty)
+    })
+
+    socket.on("Autosettle", async(data) => {
+        await settlement.findOneAndUpdate({userId:data.LOGINDATA.LOGINUSER._id},{status:data.status})
     })
     
 })
