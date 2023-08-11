@@ -7540,6 +7540,16 @@ socket.on('connect', () => {
                 socket.emit("Autosettle", {LOGINDATA, status:false})
               }
         });
+
+        $(document).on("click", ".voidBet", function(e){
+            e.preventDefault()
+            console.log(this.id)
+        })
+
+        $(document).on("click", ".acceptBet", function(e){
+            e.preventDefault()
+            console.log(this.id)
+        })
     }
     
     
