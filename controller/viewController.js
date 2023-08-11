@@ -980,16 +980,33 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
               "user.parentUsers": { $in: [req.currentUser.id] }
             }
           },
-          {
+        //   {
+        //     $group: {
+        //       _id: "$match",
+        //       count: { $sum: 1 }
+        //     }
+        //   },
+        //   {
+        //     $project: {
+        //       _id: 0,
+        //       eventname: "$_id",
+        //       count: 1
+        //     }
+        //   }
+        {
             $group: {
-              _id: "$match",
-              count: { $sum: 1 }
+              _id: "$event",
+              count: { $sum: 1 },
+              eventdate: { $first: "$eventDate" }, 
+              eventid: { $first: "$eventId" } 
             }
           },
           {
             $project: {
               _id: 0,
               eventname: "$_id",
+              eventdate: 1,
+              eventid: 1,
               count: 1
             }
           }
