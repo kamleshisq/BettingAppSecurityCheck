@@ -1005,7 +1005,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
           {
             $project: {
               _id: 0,
-              eventname: "$_id",
+              matchName: "$_id",
               eventdate: 1,
               eventid: 1,
               event:1,
