@@ -2465,6 +2465,46 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
 });
 
 exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
+    let currentUser = req.currentUser
     console.log("working")
     console.log(req.query.id)
+    let betsEventWise = await betModel.aggregate([
+        {
+            $match: {
+                status:"OPEN",
+                eventId:req.query.id
+            }
+        },
+        {
+            $lookup: {
+              from: "users",
+              localField: "userName",
+              foreignField: "userName",
+              as: "user"
+            }
+          },
+          {
+            $unwind: "$user"
+          },
+          {
+            $match: {
+              "user.parentUsers": { $in: [req.currentUser.id] }
+            }
+          },
+        {
+            $group: {
+              _id: "$marketName",
+              count: { $sum: 1 },
+              marketId: { $first: "$marketId" }
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              marketName: "$_id",
+              marketId: 1
+            }
+          }
+    ])
+    console.log(betsEventWise)
 } )
