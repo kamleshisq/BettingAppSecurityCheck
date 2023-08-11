@@ -2389,3 +2389,4 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
         notifications:req.notifications
     })
 });
+

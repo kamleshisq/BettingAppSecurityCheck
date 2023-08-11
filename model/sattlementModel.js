@@ -9,5 +9,13 @@ const sattlement = mongoose.Schema({
         type:Boolean,
         default:false
     },
-    
-})
+    eventName:[{
+        type:String
+    }]
+});
+
+
+const StatementModel = mongoose.model("StatementModel", sattlement);
+
+
+module.exports = StatementModel
