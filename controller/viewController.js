@@ -2465,5 +2465,6 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
 });
 
 exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
+    console.log("working")
     console.log(req.query.id)
 } )
