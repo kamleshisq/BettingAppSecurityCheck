@@ -31,7 +31,7 @@ const stakeLable = require("../model/stakeLabelModel");
 const gamrRuleModel = require("../model/gamesRulesModel");
 const casinoFevorite = require("../model/CasinoFevorite");
 const houseFundModel = require('../model/houseFundmodel');
-
+const sattlementModel =  require("../model/sattlementModel");
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -952,6 +952,9 @@ exports.getoperationsPage = catchAsync(async(req, res, next) => {
 
 exports.getSettlementPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
+    console.log(me)
+    let settlement = await sattlementModel.findOne({userId:me._id})
+    console.log(settlement)
     res.status(200).render("./sattelment/setalment",{
         title:"Setalment",
         me,
