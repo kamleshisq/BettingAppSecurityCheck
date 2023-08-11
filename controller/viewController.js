@@ -1835,7 +1835,12 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         let data1liveCricket = sportData[1].gameList.map(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
         match = data1liveCricket.find(item => item != undefined)
     }
-    console.log(match)
+    if(match == undefined){
+        res.status(404).json({
+            status:"Success",
+            message:"This match is no more live"
+        })
+    }
     const liveStream = await liveStreameData(match.eventData.channelId, ipv4)
     const src_regex = /src='([^']+)'/;
     let match1
