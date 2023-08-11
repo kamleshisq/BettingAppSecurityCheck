@@ -51,7 +51,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
                             ip_address:req.userIp, 
                             session_id:token, 
                             device_info:req.headers['user-agent']})
-    console.log(loginLogs, 454665564)
+    console.log(lpginLog, 454665564)
     global._loggedInToken.push({token:token,time:time})
     // console.log(global._loggedInToken)
     // const roles = await Role.find({role_level: {$gt:user.role.role_level}})
