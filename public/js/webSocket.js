@@ -7375,9 +7375,9 @@ socket.on('connect', () => {
                 console.log("Working")
                 let page = parseInt($('.pageIdACC').attr('data-pageid'));
                 $('.pageIdACC').attr('data-pageid',page + 1)
-                let fromDate = $('#Fdate').val()
-                let toDate = $('#Tdate').val()
-                let type = $("#select").val()
+                let fromDate = $('#FdateACC').val()
+                let toDate = $('#TdateACC').val()
+                let type = $("#selectACC").val()
                 let filterData = {}
                 filterData.fromDate = fromDate,
                 filterData.toDate = toDate
