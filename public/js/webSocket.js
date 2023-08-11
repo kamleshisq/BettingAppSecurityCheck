@@ -7389,7 +7389,25 @@ socket.on('connect', () => {
             socket.emit("ACCSTATEMENTADMINSIDE", {page, id, filterData})
         })
 
-
+        const FdateInputACC = document.getElementById('FdateACC');
+        const TdateInputAcc = document.getElementById('TdateACC');
+        const selectElementAcc = document.getElementById('selectACC');
+        FdateInputACC.addEventListener('change', handleInputChangeACC);
+        TdateInputAcc.addEventListener('change', handleInputChangeACC);
+        selectElementAcc.addEventListener('change', handleInputChangeACC);
+        function handleInputChangeACC(event) {
+            let fromDate = $('#FdateACC').val()
+            let toDate = $('#TdateACC').val()
+            let type = $("#selectACC").val()
+            let filterData = {}
+            filterData.fromDate = fromDate,
+            filterData.toDate = toDate
+            filterData.type = type
+            page = 0
+            $('.pageId').attr('data-pageid',1)
+            let id = search.split("=")[1]
+            socket.emit("ACCSTATEMENTADMINSIDE", {page, id, filterData})
+          }
 
 
         let countAcc = 21
