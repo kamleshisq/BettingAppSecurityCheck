@@ -7370,6 +7370,7 @@ socket.on('connect', () => {
           $(function () {
             $("div").slice(0, 4).show();
             $("#loadMorediveACC").on('click', function (e) {
+                console.log("Working")
                 e.preventDefault();
                 let page = parseInt($('.pageIdACC').attr('data-pageid'));
                 $('.pageIdACC').attr('data-pageid',page + 1)
