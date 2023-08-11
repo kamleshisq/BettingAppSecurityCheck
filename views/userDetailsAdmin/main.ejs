@@ -398,7 +398,73 @@
             </div>
             <div id="Greyhound" class="tabcontent" style="margin-bottom:15px">
               <div class="row" style="padding:10px 0px">
-                
+                <section style="padding: 15px 0px;">
+                  <div class="container-fluid">
+                      <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
+                      </div>
+                      <div class="table_data_details_ col-lg-12" style="background-color: #EAEEF7;">
+                        <table class="acount-stat-tbl" id="table12">
+
+                          <thead class="acount-stat-tbl-hed">
+                              <tr class="acount-stat-tbl-hed-tr">
+                                  <th class="bod-red-lft">SR No.</th>
+                                  <th>Login Date & Time</th>
+                                  <th>LogOut Date & Time</th>
+                                  <th>IP</th>
+                                  <th class="bod-red-rit">Audit Type</th>
+                              </tr>
+                          </thead>
+  
+                          <tbody class="acount-stat-tbl-body">
+                              <%if(historty.length != 0){%>
+                              <%for(let i = 0; i < historty.length; i++){%>
+                                  <%
+                                      <!-- var timestamp = `${historty[i].time}`;  -->
+                                      var date = new Date(historty[i].login_time);
+                                      var options = { 
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: 'numeric',
+                                        minute: 'numeric',
+                                        hour12: true
+                                      };
+                                      var formattedTime = date.toLocaleString('en-US', options);
+                                      let date2
+                                      let formattedTime2
+                                      if(!historty[i].isOnline){
+                                         date2 = new Date(historty[i].logOut_time);
+                                         formattedTime2 = date2.toLocaleString('en-US', options);
+
+                                      }
+                                  %>
+                                  <tr class="acount-stat-tbl-body-tr">
+                                      <td><%=i+1%></td>
+                                      <td><%=formattedTime%></td>
+                                      <%if(!historty[i].isOnline){ %>
+                                        <td><%=formattedTime2%></td> 
+                                      <%}else{ %>
+                                        <td>-</td>
+                                      <%} %>
+                                      <td><%=historty[i].ip_address%></td>
+                                      <%if(historty[i].isOnline){ %>
+                                      <td>Online</td>
+                                      <%}else{ %>
+                                        <td>LogOut</td>
+                                      <%} %>
+                                      
+                                  </tr>
+                                  <%}%>
+                                  <%}%>
+                          </tbody>
+  
+                      </table>
+                          <div class="loadMorediveACC" >
+                              <a id="loadMoreACC">Load More</a>
+                            </div>
+                        </div>
+                  </div>
+              </section>
               </div>
             </div>
             <div id="Payment" class="tabcontent" style="margin-bottom:15px">
