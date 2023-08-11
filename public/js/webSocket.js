@@ -7516,6 +7516,7 @@ socket.on('connect', () => {
                     }
     
                 }
+                console.log(html)
                 $('.acount-stat-tbl-body111').append(html) 
 
             }else{
