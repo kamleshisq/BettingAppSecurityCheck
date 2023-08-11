@@ -47,6 +47,16 @@ module.exports = () => {
                   as: 'settlement'
                 }
             },
+            {
+                $match: {
+                  $expr: {
+                    $and: [
+                      { $eq: ['$settlement.0.status', true] },
+                      { $eq: ['$settlement.1.status', true] }
+                    ]
+                  }
+                }
+            }
         ])
 
         console.log(openBets)
