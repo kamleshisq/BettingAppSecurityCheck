@@ -28,18 +28,25 @@ module.exports = () => {
                   as: 'user'
                 }
             },
-            // {
-            //     $unwind: '$user'
-            // },
-            // {
-            //     $lookup: {
-            //       from: 'statementmodels',
-            //       let: { parentUserIds: '$user.parentUserId' },
-            //       localField: 'user.parentUserId',
-            //       foreignField: 'userId',
-            //       as: 'settlement'
-            //     }
-            // },
+            {
+                $unwind: '$user'
+            },
+            {
+                $lookup: {
+                  from: 'statementmodels',
+                  let: { parentUserIds: '$user.parentUsers' },
+                  pipeline: [
+                    {
+                      $match: {
+                        $expr: {
+                          $in: ['$userId', '$$parentUserIds'] 
+                        }
+                      }
+                    }
+                  ],
+                  as: 'settlement'
+                }
+            },
         ])
 
         console.log(openBets)
