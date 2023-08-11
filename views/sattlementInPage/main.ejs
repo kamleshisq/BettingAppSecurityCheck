@@ -37,46 +37,6 @@
         
       <h3 class="fix-h3"><img src="../images/c-user.png" alt=""> &nbsp;Settelments</h3>
     </div>
-    <div class="cms-rep">
-    <div>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #fff;color: #000;border: 2px solid #6359CA; padding: 6px 34px;">
-          Settelments 
-        </button>
-        <%- include("../operationsDropdown") %>
-      </div>
-    </div>
-    <div class="flex-w">
-      <div>
-        <span class="up-down-form">From Date</span>
-      <form action="">
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
-        </form></div>
-        <div>
-          <span class="up-down-form">To Date</span>
-        <form action="">
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
-          </form>
-          </div>
-    </div>
-      <div style="justify-content: flex-end;display: flex;gap: 10px;">
-      <!-- <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add House Funds</button> -->
-      <div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;">
-        <span for="autoSattled" style="width: 150px;">Auto Settlements</span>
-        <%if(settlement.status){%>
-          <span>OFF &nbsp; <label class="switch">
-          <input class="checkbox" name="autoSattled" type="checkbox" checked id="checkbox">
-          <span class="slider round"></span>
-          </label>&nbsp; ON</span>
-        <%}else{%>
-          <span>OFF &nbsp; <label class="switch">
-            <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
-            <span class="slider round"></span>
-            </label>&nbsp; ON</span>
-        <%} %>
-      </div>
-    </div>
-  </div>
   <section class="">
     <div class="">
       <div class="table_data_details_ col-lg-12">
@@ -95,31 +55,6 @@
                     </tr>
                 </thead>
                 <tbody class="new-body" style="font-size: 11px;">
-                  <%for(let i = 0; i < betsEventWise.length; i++){ %>
-                    <!-- <%console.log(betsEventWise)%> -->
-                    <tr style="text-align: center;" class="blue">
-                      <%
-                          var timestamp = betsEventWise[i].eventdate * 1000; 
-                          var date = new Date(timestamp);
-                          var options = { 
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric',
-                              hour: 'numeric',
-                              minute: 'numeric',
-                              hour12: true
-                          };
-                          var formattedTime = date.toLocaleString('en-US', options);
-                      %>
-                      <td><%=i+1 %></td>
-                      <td><%=formattedTime%></td>
-                      <td><%= betsEventWise[i].series%></td>
-                      <td><%= betsEventWise[i].matchName%></td>
-                      <td><%= betsEventWise[i].count%></td>
-                      <td><%= betsEventWise[i].count%></td>
-                      <td><a href="/settlement?id=<%=betsEventWise[i].eventid%>" class="btn-green">settle</a></td>
-                    </tr>
-                  <%} %>
                 </tbody>
               </table>
               </div>

@@ -1024,8 +1024,8 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     const cricket1 = sportData[0].gameList[0].eventList
     console.log(cricket1)
     console.log(betsEventWise)
-    res.status(200).render("./sattelment/setalment",{
-        title:"Setalment",
+    res.status(200).render("./sattelment/settlement",{
+        title:"SETTLEMENTS",
         me,
         currentUser:me,
         settlement,
@@ -2464,3 +2464,6 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
     })
 });
 
+exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
+    console.log(req.query.id)
+} )
