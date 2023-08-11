@@ -2055,6 +2055,14 @@ io.on('connection', (socket) => {
         console.log(err)
     }
     })
+
+
+    socket.on("ACCSTATEMENTADMINSIDE", async(data) => {
+        let page = data.page
+        let userDetails = await User.findById(data.id)
+        let historty = await loginLogs.find({userName:userDetails.userName}).sort({login_time:-1}).skip(page*20).limit(20)
+        socket.emit("ACCSTATEMENTADMINSIDE", historty)
+    })
     
 })
 

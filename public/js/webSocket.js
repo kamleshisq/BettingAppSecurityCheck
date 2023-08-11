@@ -7464,6 +7464,63 @@ socket.on('connect', () => {
                 $('.loadMorediveACC').html("")
         }
         })
+
+
+
+        //For user History/
+
+        $(document).on("click", ".loadMorediveHistory", function(e){
+            e.preventDefault();
+            console.log("Working")
+            let page = parseInt($('.pageIdHistory').attr('data-pageid'));
+            $('.pageIdHistory').attr('data-pageid',page + 1)
+            let id = search.split("=")[1]
+            socket.emit("ACCSTATEMENTADMINSIDE", {page, id})
+        })
+
+
+        socket.on("ACCSTATEMENTADMINSIDE", data => {
+            if(data.length > 0){
+                let html = ""
+                for(let i = 0; i < data.legend; i++){
+                    var date = new Date(data[i].login_time);
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
+                    let date2
+                    let formattedTime2
+                    if(!data[i].isOnline){
+                        date2 = new Date(data[i].logOut_time);
+                        formattedTime2 = date2.toLocaleString('en-US', options);
+                    }
+                    html += `<tr class="acount-stat-tbl-body-tr">
+                    <td>${i+1}</td>
+                    <td>${formattedTime}</td>`
+                    if(!data[i].isOnline){
+                        html += `<td>${formattedTime2}</td> `
+                    }else{
+                        html += ``
+                    }
+                    html += `<td>${data[i].ip_address}</td>`
+                    if(!data[i].isOnline){
+                        html += ` <td>Online</td></tr>`
+                    }else{
+                        html += ` <td>LogOut</td></tr>`
+                    }
+    
+                }
+            }else{
+                $('.loadMorediveHistory').html("")
+            }
+           
+
+        })
         
     }
     
