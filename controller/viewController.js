@@ -953,7 +953,7 @@ exports.getoperationsPage = catchAsync(async(req, res, next) => {
 exports.getSettlementPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     console.log(me)
-    let settlement = await sattlementModel.findOne({userId:me._id})
+    let settlement = await sattlementModel.findOne({userId:me.id})
     console.log(settlement)
     res.status(200).render("./sattelment/setalment",{
         title:"Setalment",
