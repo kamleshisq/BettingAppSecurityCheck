@@ -43,15 +43,14 @@ const createSendToken = async (user, statuscode, res, req)=>{
     // console.log(req.headers['user-agent'])
     // req.loginUser = user
     let time = Date.now()
-    let lpginLog = await loginLogs.create({user_id:user._id,
+    await loginLogs.create({user_id:user._id,
                             userName:user.userName, 
                             role_Type:user.role_type,
                             login_time:time, 
                             isOnline: true, 
-                            ip_address:req.userIp, 
+                            ip_address:global.ip, 
                             session_id:token, 
                             device_info:req.headers['user-agent']})
-    console.log(lpginLog, 454665564)
     global._loggedInToken.push({token:token,time:time})
     // console.log(global._loggedInToken)
     // const roles = await Role.find({role_level: {$gt:user.role.role_level}})

@@ -25,7 +25,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         const clientIP1 = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
         let clientIP2 = clientIP1.split(":")
         let clientIP = clientIP2[clientIP2.length - 1]
-        req.userIp = clientIP
+        global.ip = clientIP
     }
     
     if(req.originalUrl == "/api/v1/auth/login" ){
