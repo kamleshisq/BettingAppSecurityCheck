@@ -1949,6 +1949,8 @@ io.on('connection', (socket) => {
             if(data.page){
                 page = data.page
             }
+            let user = await User.findById(data.id)
+            console.log(user)
             let bets = await Bet.find({userId:data.id}).sort({date:-1}).skip(Limit*page).skip(Limit)
             socket.emit("BETSFORUSERAdminSide",{bets, page,status:"success"})
 
