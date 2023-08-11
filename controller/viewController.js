@@ -958,6 +958,42 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     if(settlement === null){
         settlement = await sattlementModel.create({userId:me.id})
     }
+    let betsEventWise = await betModel.aggregate([
+        {
+            $match: {
+                status: { $ne: "OPEN" }
+            }
+        },
+        {
+            $lookup: {
+              from: "users",
+              localField: "userName",
+              foreignField: "userName",
+              as: "user"
+            }
+          },
+          {
+            $unwind: "$user"
+          },
+          {
+            $match: {
+              "user.parentUsers": { $in: [req.currentUser.id] }
+            }
+          },
+          {
+            $group: {
+              _id: "$event",
+              count: { $sum: 1 }
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              eventname: "$_id",
+              count: 1
+            }
+          }
+    ])
     // let users = await User.find({roleName:"Super-Duper-Admin"})
     // for(let i = 0; i < users.length; i++){
     //     let settlement = await sattlementModel.findOne({userId:users[i].id})
@@ -965,7 +1001,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     //         await sattlementModel.create({userId:users[i].id})
     //     }
     // }
-    // console.log(settlement)
+    console.log(betsEventWise)
     res.status(200).render("./sattelment/setalment",{
         title:"Setalment",
         me,
