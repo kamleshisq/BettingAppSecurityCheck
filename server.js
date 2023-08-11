@@ -1951,6 +1951,25 @@ io.on('connection', (socket) => {
             }
             let user = await User.findById(data.id)
             let bets 
+            let filter = {}
+            if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
+                filter.date = {
+                    $gt : new Date(data.filterData.fromDate)
+                }
+            }else if(data.filterData.fromDate == "" && data.filterData.toDate != ""){
+                filter.date = {
+                    $lt : new Date(data.filterData.toDate)
+                }
+            }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
+                filter.date = {
+                    $gte : new Date(data.filterData.fromDate),
+                    $lt : new Date(data.filterData.toDate)
+                }
+            }
+            if(data.filterData.type != "All Bets"){
+                filter.status = data.filterData.type
+            }
+            console.log(filter)
             if(user.roleName != "user"){
                 bets = await Bet.aggregate([
                     {
