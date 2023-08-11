@@ -2502,7 +2502,8 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
             $project: {
               _id: 0,
               marketName: "$_id",
-              marketId: 1
+              marketId: 1,
+              count: 1
             }
           }
     ])
