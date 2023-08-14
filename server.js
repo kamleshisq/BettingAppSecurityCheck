@@ -2141,6 +2141,7 @@ io.on('connection', (socket) => {
         try{
              console.log(data)
              let data1 = mapBet.mapbet(data)
+             socket.emit('VoidBetIn', {marketId:data.id, status:"success"})
         }catch(err){
             console.log(err)
             socket.emit("VoidBetIn22",{message:"err", status:"error"})
