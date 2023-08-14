@@ -5,7 +5,31 @@ const betModel = require("../model/betmodel");
 
 exports.mapbet = async(data) => {
     console.log(data)
-    let bets = await betModel.find({marketId:`${data.id}`})
+    // let bets = await betModel.find({marketId:`${data.id}`})
+    let bets = await betModel.aggregate([
+        {
+            $match:{
+                marketId:`${data.id}`
+            }
+        },
+        {
+            $lookup: {
+              from: "users",
+              localField: "userName",
+              foreignField: "userName",
+              as: "user"
+            }
+          },
+          {
+            $unwind: "$user"
+          },
+          {
+            $match: {
+              "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER>_id] }
+            }
+          },
+    ])
+    console.log(bets)
     bets.forEach(async(bet) => {
         if(data.result === "yes" || data.result === "no"){
             // console.log(bet)
