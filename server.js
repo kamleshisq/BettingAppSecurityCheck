@@ -2071,9 +2071,9 @@ io.on('connection', (socket) => {
     })
 
     socket.on("VoidBetIn", async(data) => {
-        let bets = await Bet.find({marketId:data.id, status:"OPEN"})
+        let bets = await Bet.find({marketId:data.id})
         for(const bet in bets){
-            console.log(bet, 123)
+            console.log(bet, 12)
             // let user = await User.findByIdAndUpdate(bet.userId, {$inc:{balance: bet.Stake, availableBalance: bet.Stake, myPL: bet.Stake, exposure:-bet.Stake}})
             // let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
             // let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/CANCEL `
