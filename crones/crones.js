@@ -184,11 +184,11 @@ module.exports = () => {
                       let commission = await commissionModel.find({userId:user.parentUsers[1]})
                       let commissionPer = 0
                       if(entry.marketName.startsWith('Match Odds') && commission[0].matchOdd.type == "WIN"){
-                        commissionPer = commission[0].matchOdd.percentage
+                        commissionPer = parseFloat(commission[0].matchOdd.percentage)/100
                       }else if ((entry.marketName.startsWith('Bookmake') || entry.marketName.startsWith('TOSS')) && commission[0].Bookmaker.type == "WIN"){
-                        commissionPer = commission[0].Bookmaker.percentage
+                        commissionPer = parseFloat(commission[0].Bookmaker.percentage)/100
                       }else if (commission[0].fency.type == "WIN" && !(entry.marketName.startsWith('Bookmake') || entry.marketName.startsWith('TOSS') || entry.marketName.startsWith('Match Odds'))){
-                        commissionPer = commission[0].fency.percentage
+                        commissionPer = parseFloat(commission[0].fency.percentage)/100
                       }
                       let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - parseFloat(commissionPer * entry.Stake), availableBalance : -parseFloat(commissionPer * entry.Stake)}})
                       let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: parseFloat(commissionPer * entry.Stake), availableBalance : parseFloat(commissionPer * entry.Stake)}})

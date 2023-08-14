@@ -79,7 +79,7 @@ exports.mapbet = async(data) => {
               let commission = await commissionModel.find({userId:user.parentUsers[1]})
               let commissionPer = 0
               if (commission[0].fency.type == "WIN" && !(bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS') || bet.marketName.startsWith('Match Odds'))){
-                commissionPer = commission[0].fency.percentage
+                commissionPer = parseFloat(commission[0].fency.percentage)/100
               }
               let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - parseFloat(commissionPer * bet.Stake), availableBalance : -parseFloat(commissionPer * bet.Stake)}})
               let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: parseFloat(commissionPer * bet.Stake), availableBalance : parseFloat(commissionPer * bet.Stake)}})
@@ -160,9 +160,9 @@ exports.mapbet = async(data) => {
               let commission = await commissionModel.find({userId:user.parentUsers[1]})
               let commissionPer = 0
               if(bet.marketName.startsWith('Match Odds') && commission[0].matchOdd.type == "WIN"){
-                commissionPer = commission[0].matchOdd.percentage
+                commissionPer = parseFloat(commission[0].matchOdd.percentage)/100
               }else if ((bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS')) && commission[0].Bookmaker.type == "WIN"){
-                commissionPer = commission[0].Bookmaker.percentage
+                commissionPer = parseFloat(commission[0].Bookmaker.percentage)/100
               }
               let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - parseFloat(commissionPer * bet.Stake), availableBalance : -parseFloat(commissionPer * bet.Stake)}})
               let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: parseFloat(commissionPer * bet.Stake), availableBalance : parseFloat(commissionPer * bet.Stake)}})
