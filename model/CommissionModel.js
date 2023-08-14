@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const commission = mongoose.Schema({
     userId:{
         type:String,
-        required
+        required : true
     },
     matchOdd:{
         percentage:{
