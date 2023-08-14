@@ -1070,7 +1070,7 @@ exports.WhiteLabelAnalysis = catchAsync(async(req, res, next) => {
         title:"whiteLableAnalysis",
         whiteLabelWise,
         me,
-        currentUser
+        currentUser:me
         // activeUser,
         // AWhitelabel
     })
