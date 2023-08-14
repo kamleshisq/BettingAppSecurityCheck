@@ -33,6 +33,7 @@ const path = require('path');
 const houseFundModel = require('./model/houseFundmodel');
 const loginLogs =  require("./model/loginLogs");
 const settlement = require("./model/sattlementModel");
+const mapBet = require("./websocketController/mapBetsController");
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -2139,6 +2140,7 @@ io.on('connection', (socket) => {
         // let marketIds = [`${data.id}`]
         try{
              console.log(data)
+             let data = mapBet.mapbet(data)
         }catch(err){
             console.log(err)
             socket.emit("VoidBetIn22",{message:"err", status:"error"})
