@@ -1014,15 +1014,15 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
             }
           }
     ])
-    let users = await User.find({roleName:"Super-Duper-Admin"})
-    for(let i = 0; i < users.length; i++){
-        await commissionModel.create({userId:users[i].id})
-        // let settlement = await sattlementModel.findOne({userId:users[i].id})
-        // if(settlement === null){
-        //     await sattlementModel.create({userId:users[i].id})
-        // }
+    // let users = await User.find({roleName:"Super-Duper-Admin"})
+    // for(let i = 0; i < users.length; i++){
+    //     await commissionModel.create({userId:users[i].id})
+    //     // let settlement = await sattlementModel.findOne({userId:users[i].id})
+    //     // if(settlement === null){
+    //     //     await sattlementModel.create({userId:users[i].id})
+    //     // }
 
-    }
+    // }
     // let sportData = await getCrkAndAllData()
     // const cricket1 = sportData[0].gameList[0].eventList
     // console.log(cricket1)
