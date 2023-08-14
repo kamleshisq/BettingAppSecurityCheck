@@ -194,6 +194,36 @@ module.exports = () => {
                       let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: parseFloat(commissionPer * entry.Stake), availableBalance : parseFloat(commissionPer * entry.Stake)}})
                         await betModel.findByIdAndUpdate(entry._id,{status:"LOSS"})
                         await userModel.findByIdAndUpdate(entry.userId,{$inc:{Loss:1, exposure:-parseFloat(entry.Stake)}})
+                      if(commissionPer > 0){
+                        await accModel.create({
+                          "user_id":WhiteLableUser._id,
+                          "description": `commission for ${entry.match}/stake = ${entry.Stake}`,
+                          "creditDebitamount" : - parseFloat(commissionPer * entry.Stake),
+                          "balance" : WhiteLableUser.availableBalance - parseFloat(commissionPer * entry.Stake),
+                          "date" : Date.now(),
+                          "userName" : WhiteLableUser.userName,
+                          "role_type" : WhiteLableUser.role_type,
+                          "Remark":"-",
+                          "stake": entry.Stake,
+                          "transactionId":`${entry.transactionId}`
+                        })
+
+                        await accModel.create({
+                          "user_id":houseUser._id,
+                          "description": `commission for ${entry.match}/stake = ${entry.Stake}/from user ${WhiteLableUser.userName}`,
+                          "creditDebitamount" : parseFloat(commissionPer * entry.Stake),
+                          "balance" : houseUser.availableBalance + parseFloat(commissionPer * entry.Stake),
+                          "date" : Date.now(),
+                          "userName" : houseUser.userName,
+                          "role_type" : houseUser.role_type,
+                          "Remark":"-",
+                          "stake": entry.Stake,
+                          "transactionId":`${entry.transactionId}Parent`
+                        })
+                      }
+
+
+
                     }
                     // const userName = entry.userName;
                     // const stake = entry.Stake;

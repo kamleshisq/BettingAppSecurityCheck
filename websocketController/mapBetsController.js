@@ -84,8 +84,35 @@ exports.mapbet = async(data) => {
               let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - parseFloat(commissionPer * bet.Stake), availableBalance : -parseFloat(commissionPer * bet.Stake)}})
               let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: parseFloat(commissionPer * bet.Stake), availableBalance : parseFloat(commissionPer * bet.Stake)}})
 
-                await betModel.findByIdAndUpdate(bet._id,{status:"LOSS"})
-                await userModel.findByIdAndUpdate(bet.userId,{$inc:{Loss:1, exposure:-parseFloat(bet.Stake)}})
+              await betModel.findByIdAndUpdate(bet._id,{status:"LOSS"})
+              await userModel.findByIdAndUpdate(bet.userId,{$inc:{Loss:1, exposure:-parseFloat(bet.Stake)}})
+              if(commissionPer > 0){
+                await accModel.create({
+                  "user_id":WhiteLableUser._id,
+                  "description": `commission for ${bet.match}/stake = ${bet.Stake}`,
+                  "creditDebitamount" : - parseFloat(commissionPer * bet.Stake),
+                  "balance" : WhiteLableUser.availableBalance - parseFloat(commissionPer * bet.Stake),
+                  "date" : Date.now(),
+                  "userName" : WhiteLableUser.userName,
+                  "role_type" : WhiteLableUser.role_type,
+                  "Remark":"-",
+                  "stake": bet.Stake,
+                  "transactionId":`${bet.transactionId}`
+                })
+
+                await accModel.create({
+                  "user_id":houseUser._id,
+                  "description": `commission for ${bet.match}/stake = ${bet.Stake}/from user ${WhiteLableUser.userName}`,
+                  "creditDebitamount" : parseFloat(commissionPer * bet.Stake),
+                  "balance" : houseUser.availableBalance + parseFloat(commissionPer * bet.Stake),
+                  "date" : Date.now(),
+                  "userName" : houseUser.userName,
+                  "role_type" : houseUser.role_type,
+                  "Remark":"-",
+                  "stake": bet.Stake,
+                  "transactionId":`${bet.transactionId}Parent`
+                })
+              }
             }
         }else{
             if(bet.selectionName.toLowerCase() === data.result.toLowerCase()){
@@ -141,6 +168,33 @@ exports.mapbet = async(data) => {
               let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: parseFloat(commissionPer * bet.Stake), availableBalance : parseFloat(commissionPer * bet.Stake)}})
                 await betModel.findByIdAndUpdate(bet._id,{status:"LOSS"})
                 await userModel.findByIdAndUpdate(bet.userId,{$inc:{Loss:1, exposure:-parseFloat(bet.Stake)}})
+                if(commissionPer > 0){
+                  await accModel.create({
+                    "user_id":WhiteLableUser._id,
+                    "description": `commission for ${bet.match}/stake = ${bet.Stake}`,
+                    "creditDebitamount" : - parseFloat(commissionPer * bet.Stake),
+                    "balance" : WhiteLableUser.availableBalance - parseFloat(commissionPer * bet.Stake),
+                    "date" : Date.now(),
+                    "userName" : WhiteLableUser.userName,
+                    "role_type" : WhiteLableUser.role_type,
+                    "Remark":"-",
+                    "stake": bet.Stake,
+                    "transactionId":`${bet.transactionId}`
+                  })
+  
+                  await accModel.create({
+                    "user_id":houseUser._id,
+                    "description": `commission for ${bet.match}/stake = ${bet.Stake}/from user ${WhiteLableUser.userName}`,
+                    "creditDebitamount" : parseFloat(commissionPer * bet.Stake),
+                    "balance" : houseUser.availableBalance + parseFloat(commissionPer * bet.Stake),
+                    "date" : Date.now(),
+                    "userName" : houseUser.userName,
+                    "role_type" : houseUser.role_type,
+                    "Remark":"-",
+                    "stake": bet.Stake,
+                    "transactionId":`${bet.transactionId}Parent`
+                  })
+                }
             }
         }
     });
