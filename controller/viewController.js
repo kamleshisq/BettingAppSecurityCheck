@@ -2488,7 +2488,8 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
             $group: {
               _id: "$marketName",
               count: { $sum: 1 },
-              marketId: { $first: "$marketId" }
+              marketId: { $first: "$marketId" },
+              match: { $first: "$match" },
             }
           },
           {
@@ -2496,7 +2497,8 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
               _id: 0,
               marketName: "$_id",
               marketId: 1,
-              count: 1
+              count: 1,
+              match : 1
             }
           }
     ])
