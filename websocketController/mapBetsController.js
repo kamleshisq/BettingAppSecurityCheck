@@ -5,5 +5,5 @@ const betModel = require("../model/betmodel");
 
 exports.mapbet = async(data) => {
     let bets = await betModel.find({marketId:`${data.id}`})
-    
+    console.log(bets)
 }
