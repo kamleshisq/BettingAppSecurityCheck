@@ -2136,8 +2136,23 @@ io.on('connection', (socket) => {
     })
 
     socket.on("VoidBetIn22", async(data) => {
+        let marketIds = [`${data.id}`]
         try{
-            console.log(data)
+            const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
+            let result;
+            await fetch(fullUrl, {
+                method:'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'accept': 'application/json'
+                    },
+                body:JSON.stringify(marketIds)
+            }).then(res =>res.json())
+            .then(data => {
+                result = data
+            })
+            console.log(result)
+            // let data = 
         }catch(err){
             console.log(err)
             socket.emit("VoidBetIn",{message:"err", status:"error"})
