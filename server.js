@@ -2158,6 +2158,20 @@ io.on('connection', (socket) => {
         }
 
     })
+
+    socket.on("updateCommission", async(data) => {
+        console.log(data)
+        try{
+            let newValues = {
+                matchOdd: { percentage: 10, type: 'WIN' },
+                Bookmaker: { percentage: 15, type: 'PLACE' },
+                fency: { percentage: 5, type: 'HIGH' }
+            }
+
+        }catch(err){
+            socket.emit("updateCommission",{message:"err", status:"error"})
+        }
+    })
     
 })
 

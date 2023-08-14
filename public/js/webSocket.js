@@ -502,8 +502,9 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
-            console.log(this.id)
+            data.id = this.id
             console.log(data)
+            socket.emit("updateCommission", {LOGINDATA, data})
         })
 
         $(document).on("click", ".UserDetails", function(e) {
