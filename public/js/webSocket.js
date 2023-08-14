@@ -509,7 +509,7 @@ socket.on('connect', () => {
                     // Extract data from each row except the last column
                     rows.forEach(row => {
                         const cells = row.querySelectorAll('td:not(:last-child)');
-                        const csvRow = Array.from(cells).map(cell => cell.textContent.trim());
+                        const csvRow = Array.from(cells).slice(0, 13).map(cell => cell.textContent.trim());
                         csvRows.push(csvRow.join(','));
                     });
     
