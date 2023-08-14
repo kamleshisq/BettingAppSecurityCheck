@@ -2071,7 +2071,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on("VoidBetIn", async(data) => {
-        console.log(data)
+        let bets = await Bet.find({marketId:data.id})
+        console.log(bets)
     })
     
 })
