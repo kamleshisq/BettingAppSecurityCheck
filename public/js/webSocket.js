@@ -7577,7 +7577,8 @@ socket.on('connect', () => {
         $(document).on("click", ".acceptBet", function(e){
             e.preventDefault()
             let id =  this.id
-            socket.emit("VoidBetIn22", {LOGINDATA, id})
+            // socket.emit("VoidBetIn22", {LOGINDATA, id})
+            console.log(id)
         })
 
         socket.on("VoidBetIn22", async(data) => {
