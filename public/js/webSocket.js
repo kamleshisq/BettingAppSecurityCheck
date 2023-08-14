@@ -7529,18 +7529,20 @@ socket.on('connect', () => {
         
     }
 
-
-    if(pathname === "/admin/settlementIn"){
-        console.log("Working")
+    if(pathname === "/admin/settlement"){
         $(document).on("change", ".checkbox", function(e) {
             e.preventDefault()
-            console.log("Workd")
             if ($(this).is(":checked")) {
                 socket.emit("Autosettle", {LOGINDATA, status:true})
               } else {
                 socket.emit("Autosettle", {LOGINDATA, status:false})
               }
         });
+    }
+
+
+    if(pathname === "/admin/settlementIn"){
+       
 
         $(document).on("click", ".voidBet", function(e){
             e.preventDefault()
