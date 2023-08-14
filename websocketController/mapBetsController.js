@@ -7,6 +7,12 @@ exports.mapbet = async(data) => {
     console.log(data)
     let bets = await betModel.find({marketId:`${data.id}`})
     bets.forEach(bet => {
-        console.log(bet, 121212)
+        if(data.result === "yes" || data.result === "no"){
+
+        }else{
+            if(bet.selectionName.toLowerCase() === data.result.toLowerCase()){
+                console.log("WORKING    ")
+            }
+        }
     });
 }
