@@ -7579,6 +7579,12 @@ socket.on('connect', () => {
             let id =  this.id
             socket.emit("VoidBetIn22", {LOGINDATA, id})
         })
+
+        socket.on("error1", async(data) => {
+            if(data.status === error){
+                alert(data.message.toUpperCase())
+            }
+        })
     }
     
     
