@@ -34,6 +34,7 @@ const houseFundModel = require('./model/houseFundmodel');
 const loginLogs =  require("./model/loginLogs");
 const settlement = require("./model/sattlementModel");
 const mapBet = require("./websocketController/mapBetsController");
+const commissionModel = require("./model/CommissionModel");
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -2149,7 +2150,13 @@ io.on('connection', (socket) => {
     })
 
     socket.on("commissionData", async(data) => {
-        console.log(data)
+        try{
+            let commissionData = await commissionModel.find({userId:data.dataId})
+            socket.emit("commissionData", {stats:"success", commissionData, id:data.dataId})
+        }catch(err){
+            socket.emit("commissionData",{message:"err", status:"error"})
+        }
+
     })
     
 })

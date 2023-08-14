@@ -459,6 +459,20 @@ socket.on('connect', () => {
             socket.emit('commissionData', {LOGINDATA, dataId})
         })
 
+        socket.on("commissionData", data => {
+            if(data.status === "error"){
+                alert("Please try again later")
+            }else{
+                console.log(data)
+                let modleName = "#myModal2"
+                let form = $(modleName).find('.form-data')
+                // console.log(form)
+                form.attr('id', data.id);
+                // form.find('input[name="matchOdds"]').attr('value', data.name);
+            }
+        })
+
+
         $(document).on("click", ".UserDetails", function(e) {
             e.preventDefault()
             var row = this.closest("tr");
