@@ -494,28 +494,29 @@ socket.on('connect', () => {
                 return csv;
               }
     
-            document.getElementById('downloadBtn').addEventListener('click', function(e) {
-                e.preventDefault()
-                const table = document.getElementById('table12');             
+              document.getElementById('downloadBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const table = document.getElementById('table12');
+                
                 if (table) {
                     const rows = table.querySelectorAll('tbody tr');
-                    const headers = table.querySelectorAll('thead th:not(:last-child)');
                     const csvRows = [];
-    
-                    // Extract headers
-                    const headerRow = Array.from(headers).map(header => header.textContent.trim());
-                    csvRows.push(headerRow.join(','));
-    
-                    // Extract data from each row except the last column
+                    
                     rows.forEach(row => {
                         const cells = row.querySelectorAll('td:not(:last-child)');
-                        const csvRow = Array.from(cells).map(cell => cell.textContent.trim());
+                        
+                        // Extract data from only the first 13 cells
+                        const csvRow = Array.from(cells)
+                            .slice(0, 13) // Limit to the first 13 cells
+                            .map(cell => sanitizeCellValue(cell.textContent.trim()))
+                            .map(data => (data.includes(',') ? `"${data}"` : data));
+                        
                         csvRows.push(csvRow.join(','));
                     });
-    
+                    
                     // Combine rows into a CSV string
                     const csvContent = csvRows.join('\n');
-    
+                    
                     // Create a Blob and initiate download
                     const blob = new Blob([csvContent], { type: 'text/csv' });
                     const url = URL.createObjectURL(blob);
@@ -526,7 +527,7 @@ socket.on('connect', () => {
                     a.click();
                     document.body.removeChild(a);
                 }
-              });
+            });
 
         $(document).on('click','.Deposite',function(e){
             var row = this.closest("tr");
