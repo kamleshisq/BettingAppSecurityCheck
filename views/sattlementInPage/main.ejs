@@ -47,6 +47,7 @@
                     <tr style="text-align: center;font-size: 11px;">
                       <th>S.No</th>
                       <th>Market Name</th>
+                      <th>Result</th>
                       <th>Action</th>
                     </tr>
                 </thead>
@@ -55,6 +56,22 @@
                     <tr style="text-align: center;" class="blue">
                       <td><%= i+1%></td>
                       <td><%= betsEventWise[i].marketName%></td>
+                      <%if(betsEventWise[i].marketName != "Match Odds"){%>
+                        <td>
+                          <select class="selectOption" onchange="updateValue(this)">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                          </select>
+                        </td>
+                      <%}else {%>
+                        <!-- <td>
+                          <select class="selectOption" onchange="updateValue(this)">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                          </select>
+                        </td> -->
+                        <%console.log(betsEventWise[i])%>
+                      <%}%>
                       <td><button class="voidBet" id="<%=betsEventWise[i].marketId%>"> VOID</button><button class="acceptBet" id="<%=betsEventWise[i].marketId%>"> MAP</button></td>
                     </tr>
                   <%} %>
@@ -102,6 +119,13 @@
 
   </div>
  
+  <script>
+    function updateValue(selectElement) {
+        var selectedValue = selectElement.value;
+        var newColumnCell = selectElement.parentElement.nextElementSibling;
+        newColumnCell.textContent = selectedValue;
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
