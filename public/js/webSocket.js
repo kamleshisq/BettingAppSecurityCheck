@@ -500,12 +500,7 @@ socket.on('connect', () => {
                 
                 if (table) {
                     const rows = table.querySelectorAll('tbody tr');
-                    const headers = table.querySelectorAll('thead th:not(:last-child)');
                     const csvRows = [];
-                    
-                    // Extract headers
-                    const headerRow = Array.from(headers).slice(0, 14).map(header => sanitizeCellValue(header.textContent.trim()));
-                    csvRows.push(headerRow.join(','));
                     
                     rows.forEach(row => {
                         const cells = row.querySelectorAll('td:not(:last-child)');
@@ -533,8 +528,6 @@ socket.on('connect', () => {
                     document.body.removeChild(a);
                 }
             });
-            
-            
 
         $(document).on('click','.Deposite',function(e){
             var row = this.closest("tr");
