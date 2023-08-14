@@ -7530,7 +7530,7 @@ socket.on('connect', () => {
     }
 
 
-    if(pathname === "/admin/settlement"){
+    if(pathname === "/admin/settlementIn"){
         console.log("Working")
         $(document).on("change", ".checkbox", function(e) {
             e.preventDefault()
