@@ -5282,6 +5282,9 @@ socket.on('connect', () => {
         }else{
             console.log("working")
                 $('.loadMoredive').html("")
+                if(data.page == 0){
+                    $('.acount-stat-tbl-body').html("")
+                }
         }
         })
     }
