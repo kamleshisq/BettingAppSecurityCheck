@@ -7581,7 +7581,7 @@ socket.on('connect', () => {
         })
 
         socket.on("VoidBetIn22", async(data) => {
-            if(data.status === error){
+            if(data.status === "error"){
                 alert(data.message.toUpperCase())
             }
         })
