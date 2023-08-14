@@ -64,12 +64,17 @@
                           </select>
                         </td>
                       <%}else {%>
-                        <!-- <td>
-                          <select class="selectOption" onchange="updateValue(this)">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
+                        <% 
+                          let option = betsEventWise[i].split("v")
+                          let option1 = option[0]
+                          let option2 = option[1]
+                        %>
+                        <td>
+                          <select class="selectOption">
+                            <option value="<%=option1 %>"><%=option1 %></option>
+                            <option value="<%=option2 %>"><%=option2 %></option>
                           </select>
-                        </td> -->
+                        </td>
                         <%console.log(betsEventWise[i])%>
                       <%}%>
                       <td><button class="voidBet" id="<%=betsEventWise[i].marketId%>"> VOID</button><button class="acceptBet" id="<%=betsEventWise[i].marketId%>"> MAP</button></td>
