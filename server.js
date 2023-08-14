@@ -2067,6 +2067,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("Autosettle", async(data) => {
+        console.log(data)
         await settlement.findOneAndUpdate({userId:data.LOGINDATA.LOGINUSER._id},{status:data.status})
     })
 
