@@ -1,7 +1,7 @@
 const userModel = require("../model/userModel");
 const accModel = require("../model/accountStatementByUserModel");
 const betModel = require("../model/betmodel");
-
+const commissionModel = require("../model/CommissionModel")
 
 exports.mapbet = async(data) => {
     console.log(data)
@@ -75,6 +75,15 @@ exports.mapbet = async(data) => {
                           "transactionId":`${bet.transactionId}Parent`
                         })
             }else{
+              let user = await userModel.findById(bet.userId)
+              let commission = await commissionModel.find({userId:user.parentUsers[1]})
+              let commissionPer = 0
+              if (commission[0].fency.type == "WIN" && !(bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS') || bet.marketName.startsWith('Match Odds'))){
+                commissionPer = commission[0].fency.percentage
+              }
+              let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - parseFloat(commissionPer * bet.Stake), availableBalance : -parseFloat(commissionPer * bet.Stake)}})
+              let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: parseFloat(commissionPer * bet.Stake), availableBalance : parseFloat(commissionPer * bet.Stake)}})
+
                 await betModel.findByIdAndUpdate(bet._id,{status:"LOSS"})
                 await userModel.findByIdAndUpdate(bet.userId,{$inc:{Loss:1, exposure:-parseFloat(bet.Stake)}})
             }
@@ -120,6 +129,16 @@ exports.mapbet = async(data) => {
                   "transactionId":`${bet.transactionId}Parent`
                 })
             }else{
+              let user = await userModel.findById(bet.userId)
+              let commission = await commissionModel.find({userId:user.parentUsers[1]})
+              let commissionPer = 0
+              if(bet.marketName.startsWith('Match Odds') && commission[0].matchOdd.type == "WIN"){
+                commissionPer = commission[0].matchOdd.percentage
+              }else if ((bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS')) && commission[0].Bookmaker.type == "WIN"){
+                commissionPer = commission[0].Bookmaker.percentage
+              }
+              let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - parseFloat(commissionPer * bet.Stake), availableBalance : -parseFloat(commissionPer * bet.Stake)}})
+              let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: parseFloat(commissionPer * bet.Stake), availableBalance : parseFloat(commissionPer * bet.Stake)}})
                 await betModel.findByIdAndUpdate(bet._id,{status:"LOSS"})
                 await userModel.findByIdAndUpdate(bet.userId,{$inc:{Loss:1, exposure:-parseFloat(bet.Stake)}})
             }
