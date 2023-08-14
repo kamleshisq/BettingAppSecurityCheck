@@ -6,7 +6,7 @@ const userModel = require("../model/userModel");
 // const { aggregate } = require('../model/stakeLabelModel');
 
 module.exports = () => {
-    cron.schedule('*/5 * * * *', async() => {
+    cron.schedule('*/5 * * * * *', async() => {
       console.log("Working")
         // const openBets = await betModel.find({status:"OPEN"});
         const openBets = await betModel.aggregate([
