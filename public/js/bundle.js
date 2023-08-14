@@ -7189,16 +7189,17 @@ $(document).on('click', '.Withdraw', function () {
   form.find('input[name = "clintPL"]').attr('value', userData.clientPL);
   form.find('input[name = "id"]').attr('value', userData._id);
 });
-$(document).on('click', '.CreaditChange', function () {
-  var rowId = $(this).parent().parent().attr('id');
-  $('.rowId').attr('data-rowid', rowId);
-  var modleName = $(this).data('bs-target');
-  var form = $(modleName).find('.form-data');
-  var userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss');
-  var me = $('#meDatails').data('me');
-  form.find('input[name = "credit"]').attr('value', userData.creditReference);
-  form.find('input[name = "newCreadit"]').attr('value', '0');
-});
+
+// $(document).on('click','.CreaditChange',function(){
+//     let rowId = $(this).parent().parent().attr('id')
+//         $('.rowId').attr('data-rowid',rowId)
+//     let modleName = $(this).data('bs-target')
+//     let form = $(modleName).find('.form-data')
+//     let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
+//     let me = $('#meDatails').data('me')
+//     form.find('input[name = "credit"]').attr('value',userData.creditReference)
+//     form.find('input[name = "newCreadit"]').attr('value','0')
+// })
 
 // $(document).on('click','.UserDetails',function(){
 //     // let rowId = $(this).parent().parent().attr('id')
