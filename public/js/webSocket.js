@@ -7577,8 +7577,8 @@ socket.on('connect', () => {
         $(document).on("click", ".acceptBet", function(e){
             e.preventDefault()
             let id =  this.id
-            var newColumnCell = $(this).closest('tr').find('.new-column');
-            console.log( newColumnCell.text(selectedValue))
+            var newColumnCell = $(this).closest('tr').find('.selectOption');
+            console.log(newColumnCell.val())
             // socket.emit("VoidBetIn22", {LOGINDATA, id})
             console.log(id)
         })
