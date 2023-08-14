@@ -2147,6 +2147,10 @@ io.on('connection', (socket) => {
             socket.emit("VoidBetIn22",{message:"err", status:"error"})
         }
     })
+
+    socket.on("commissionData", async(data) => {
+        console.log(data)
+    })
     
 })
 

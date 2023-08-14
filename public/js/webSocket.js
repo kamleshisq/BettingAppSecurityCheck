@@ -452,6 +452,13 @@ socket.on('connect', () => {
         
         }
 
+        $(document).on("click", ".CreaditChange", function(e){
+            e.preventDefault()
+            var row = this.closest('tr');
+            var dataId = row.getAttribute("data-id");
+            socket.emit('commissionData', {LOGINDATA, dataId})
+        })
+
         $(document).on("click", ".UserDetails", function(e) {
             e.preventDefault()
             var row = this.closest("tr");
