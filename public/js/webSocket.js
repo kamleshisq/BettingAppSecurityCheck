@@ -7577,6 +7577,8 @@ socket.on('connect', () => {
         $(document).on("click", ".acceptBet", function(e){
             e.preventDefault()
             let id =  this.id
+            let table = this.closest("table")
+            console.log(table)
             // socket.emit("VoidBetIn22", {LOGINDATA, id})
             console.log(id)
         })
