@@ -2073,7 +2073,7 @@ io.on('connection', (socket) => {
     socket.on("VoidBetIn", async(data) => {
         let bets = await Bet.find({marketId:data.id, status:"OPEN"})
         for(const bet in bets){
-            console.log(bet)
+            console.log(bet, 123)
             // let user = await User.findByIdAndUpdate(bet.userId, {$inc:{balance: bet.Stake, availableBalance: bet.Stake, myPL: bet.Stake, exposure:-bet.Stake}})
             // let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
             // let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/CANCEL `
@@ -2126,7 +2126,7 @@ io.on('connection', (socket) => {
             // await AccModel.create(parentAcc);
             // socket.emit('voidBet', {bet, status:"success"})
         }
-        console.log(bets)
+        // console.log(bets)
     })
     
 })
