@@ -2154,6 +2154,8 @@ io.on('connection', (socket) => {
             console.log(result)
             if(result.data.length === 0){
                 socket.emit("VoidBetIn22",{message:"the result is not declared", status:"error"})
+            }else{
+                
             }
             // let data = 
         }catch(err){
