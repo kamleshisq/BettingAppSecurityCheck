@@ -47,19 +47,19 @@ module.exports = () => {
                   as: 'settlement'
                 }
             },
-            {
-                $match: {
-                  $expr: {
-                    $allElementsTrue: {
-                      $map: {
-                        input: "$settlement",
-                        as: "settlementStatus",
-                        in: "$$settlementStatus.status"
-                      }
-                    }
-                  }
-                }
-              }
+            // {
+            //     $match: {
+            //       $expr: {
+            //         $allElementsTrue: {
+            //           $map: {
+            //             input: "$settlement",
+            //             as: "settlementStatus",
+            //             in: "$$settlementStatus.status"
+            //           }
+            //         }
+            //       }
+            //     }
+            //   }
         ])
 
         console.log(openBets)
