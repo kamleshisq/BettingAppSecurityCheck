@@ -466,7 +466,7 @@ socket.on('connect', () => {
                 console.log(data)
                 let modleName = "#myModal2"
                 let form = $(modleName).find('.form-data')
-                console.log(data.commissionData.matchOdd.percentage)
+                console.log(data.commissionData.matchOdd)
                 form.attr('id', data.id);
                 form.find('input[name="matchOdds"]').attr('value', data.commissionData.matchOdd.percentage);
                 form.find('input[name="Bookmaker"]').attr('value', data.commissionData.Bookmaker.percentage);
