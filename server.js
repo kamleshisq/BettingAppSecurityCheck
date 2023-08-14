@@ -2140,7 +2140,7 @@ io.on('connection', (socket) => {
         // let marketIds = [`${data.id}`]
         try{
              console.log(data)
-             let data = mapBet.mapbet(data)
+             let data1 = mapBet.mapbet(data)
         }catch(err){
             console.log(err)
             socket.emit("VoidBetIn22",{message:"err", status:"error"})
