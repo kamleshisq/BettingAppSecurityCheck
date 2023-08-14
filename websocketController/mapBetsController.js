@@ -25,7 +25,7 @@ exports.mapbet = async(data) => {
           },
           {
             $match: {
-              "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER>_id] }
+              "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
             }
           },
     ])
