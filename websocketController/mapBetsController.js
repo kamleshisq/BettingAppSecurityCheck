@@ -4,5 +4,6 @@ const betModel = require("../model/betmodel");
 
 
 exports.mapbet = (data) => {
-    console.log(data, 45454545)
+    let bets = betModel.find({marketId:`${data.id}`})
+    console.log(bets)
 }
