@@ -2071,63 +2071,67 @@ io.on('connection', (socket) => {
     })
 
     socket.on("VoidBetIn", async(data) => {
-        let bets = await Bet.find({marketId:data.id, status: 'OPEN'})
+        try{
+            let bets = await Bet.find({marketId:data.id, status: 'OPEN'})
         for(const bet in bets){
-            console.log(bets[bet].id, 12)
-            // await Bet.findByIdAndUpdate(bets[bet].userId, {status:"CANCEL"});
-            // let user = await User.findByIdAndUpdate(bets[bet].userId, {$inc:{balance: bets[bet].Stake, availableBalance: bets[bet].Stake, myPL: bets[bet].Stake, exposure:-bets[bet].Stake}})
-            // let description = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/CANCEL`
-            // let description2 = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/user = ${user.userName}/CANCEL `
-            // let userAcc = {
-            //     "user_id":user._id,
-            //     "description": description,
-            //     "creditDebitamount" : bets[bet].Stake,
-            //     "balance" : user.availableBalance + bets[bet].Stake,
-            //     "date" : Date.now(),
-            //     "userName" : user.userName,
-            //     "role_type" : user.role_type,
-            //     "Remark":"-",
-            //     "stake": bets[bet].Stake,
-            //     "transactionId":`${bets[bet].transactionId}`
-            // }
-            // let parentAcc
-            // if(user.parentUsers.length < 2){
-            //     await User.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: bets[bet].Stake, downlineBalance: bets[bet].Stake}})
-            //     let parent = await User.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:-bets[bet].Stake}})
-            //     parentAcc = {
-            //         "user_id":parent._id,
-            //         "description": description2,
-            //         "creditDebitamount" : -bets[bet].Stake,
-            //         "balance" : parent.availableBalance - (bets[bet].Stake * 1),
-            //         "date" : Date.now(),
-            //         "userName" : parent.userName,
-            //         "role_type" : parent.role_type,
-            //         "Remark":"-",
-            //         "stake": bets[bet].Stake,
-            //         "transactionId":`${bets[bet].transactionId}Parent`
-            //     }
+            // console.log(bets[bet].id, 12)
+            await Bet.findByIdAndUpdate(bets[bet].id, {status:"CANCEL"});
+            let user = await User.findByIdAndUpdate(bets[bet].userId, {$inc:{balance: bets[bet].Stake, availableBalance: bets[bet].Stake, myPL: bets[bet].Stake, exposure:-bets[bet].Stake}})
+            let description = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/CANCEL`
+            let description2 = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/user = ${user.userName}/CANCEL `
+            let userAcc = {
+                "user_id":user._id,
+                "description": description,
+                "creditDebitamount" : bets[bet].Stake,
+                "balance" : user.availableBalance + bets[bet].Stake,
+                "date" : Date.now(),
+                "userName" : user.userName,
+                "role_type" : user.role_type,
+                "Remark":"-",
+                "stake": bets[bet].Stake,
+                "transactionId":`${bets[bet].transactionId}`
+            }
+            let parentAcc
+            if(user.parentUsers.length < 2){
+                await User.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: bets[bet].Stake, downlineBalance: bets[bet].Stake}})
+                let parent = await User.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:-bets[bet].Stake}})
+                parentAcc = {
+                    "user_id":parent._id,
+                    "description": description2,
+                    "creditDebitamount" : -bets[bet].Stake,
+                    "balance" : parent.availableBalance - (bets[bet].Stake * 1),
+                    "date" : Date.now(),
+                    "userName" : parent.userName,
+                    "role_type" : parent.role_type,
+                    "Remark":"-",
+                    "stake": bets[bet].Stake,
+                    "transactionId":`${bets[bet].transactionId}Parent`
+                }
                 
-            // }else{
-            //     await User.updateMany({ _id: { $in: user.parentUsers.slice(1) } }, {$inc:{balance: bets[bet].Stake, downlineBalance: bets[bet].Stake}})
-            //     let parent = await User.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-bets[bet].Stake}})
-            //     parentAcc = {
-            //         "user_id":parent._id,
-            //         "description": description2,
-            //         "creditDebitamount" : -bets[bet].Stake,
-            //         "balance" : parent.availableBalance - (bets[bet].Stake * 1),
-            //         "date" : Date.now(),
-            //         "userName" : parent.userName,
-            //         "role_type" : parent.role_type,
-            //         "Remark":"-",
-            //         "stake": bets[bet].Stake,
-            //         "transactionId":`${bets[bet].transactionId}Parent`
-            //     }
-            // }
-            // await AccModel.create(userAcc);
-            // await AccModel.create(parentAcc);
-            // socket.emit('voidBet', {bet, status:"success"})
+            }else{
+                await User.updateMany({ _id: { $in: user.parentUsers.slice(1) } }, {$inc:{balance: bets[bet].Stake, downlineBalance: bets[bet].Stake}})
+                let parent = await User.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-bets[bet].Stake}})
+                parentAcc = {
+                    "user_id":parent._id,
+                    "description": description2,
+                    "creditDebitamount" : -bets[bet].Stake,
+                    "balance" : parent.availableBalance - (bets[bet].Stake * 1),
+                    "date" : Date.now(),
+                    "userName" : parent.userName,
+                    "role_type" : parent.role_type,
+                    "Remark":"-",
+                    "stake": bets[bet].Stake,
+                    "transactionId":`${bets[bet].transactionId}Parent`
+                }
+            }
+            await AccModel.create(userAcc);
+            await AccModel.create(parentAcc);  // socket.emit('voidBet', {bet, status:"success"})
         }
-        // console.log(bets)
+        socket.emit('VoidBetIn', {marketId:data.id, status:"success"})
+        }catch(err){
+            console.log(err)
+            socket.emit("VoidBetIn",{message:"err", status:"error"})
+        }     
     })
     
 })
