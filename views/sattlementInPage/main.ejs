@@ -120,9 +120,9 @@
   </div>
  
   <script>
-    function updateValue(selectElement) {
+   function updateValue(selectElement) {
         var selectedValue = selectElement.value;
-        var newColumnCell = selectElement.parentElement.nextElementSibling;
+        var newColumnCell = selectElement.parentElement.nextElementSibling.nextElementSibling;
         newColumnCell.textContent = selectedValue;
     }
 </script>
