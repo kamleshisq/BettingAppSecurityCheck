@@ -471,6 +471,28 @@ socket.on('connect', () => {
                 form.find('input[name="matchOdds"]').attr('value', data.commissionData[0].matchOdd.percentage);
                 form.find('input[name="Bookmaker"]').attr('value', data.commissionData[0].Bookmaker.percentage);
                 form.find('input[name="fency"]').attr('value', data.commissionData[0].fency.percentage);
+                let html1 = `<option value="WIN" selected>WIN_COMMISSION</option>
+                <option value="ENTRY">Entry Wise Commission</option>`
+                let html2 = `<option value="WIN">WIN_COMMISSION</option>
+                <option value="ENTRY" selected>Entry Wise Commission</option>`
+
+                if(data.commissionData[0].fency.type == "WIN"){
+                    form.find('select[name="fencyType"]').html(html1)
+                }else{
+                    form.find('select[name="fencyType"]').html(html2)
+                }
+
+                if(data.commissionData[0].Bookmaker.type == "WIN"){
+                    form.find('select[name="BookmakerType"]').html(html1)
+                }else{
+                    form.find('select[name="BookmakerType"]').html(html2)
+                }
+
+                if(data.commissionData[0].matchOdd.type == "WIN"){
+                    form.find('select[name="matchOddsType"]').html(html1)
+                }else{
+                    form.find('select[name="matchOddsType"]').html(html2)
+                }
             }
         })
 
