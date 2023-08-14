@@ -7580,7 +7580,7 @@ socket.on('connect', () => {
             socket.emit("VoidBetIn22", {LOGINDATA, id})
         })
 
-        socket.on("error1", async(data) => {
+        socket.on("VoidBetIn22", async(data) => {
             if(data.status === error){
                 alert(data.message.toUpperCase())
             }
