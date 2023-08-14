@@ -2134,6 +2134,15 @@ io.on('connection', (socket) => {
             socket.emit("VoidBetIn",{message:"err", status:"error"})
         }     
     })
+
+    socket.on("VoidBetIn22", async(data) => {
+        try{
+            console.log(data)
+        }catch(err){
+            console.log(err)
+            socket.emit("VoidBetIn",{message:"err", status:"error"})
+        }
+    })
     
 })
 
