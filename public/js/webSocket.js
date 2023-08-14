@@ -507,6 +507,14 @@ socket.on('connect', () => {
             socket.emit("updateCommission", {LOGINDATA, data})
         })
 
+        socket.on("updateCommission", async(data) =>  {
+            if(data.status === "error"){
+                alert("Please try again later")
+            }else{
+                alert("Updated!!")
+            }
+        })
+
         $(document).on("click", ".UserDetails", function(e) {
             e.preventDefault()
             var row = this.closest("tr");

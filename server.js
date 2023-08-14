@@ -2163,11 +2163,13 @@ io.on('connection', (socket) => {
         console.log(data)
         try{
             let newValues = {
-                matchOdd: { percentage: 10, type: 'WIN' },
-                Bookmaker: { percentage: 15, type: 'PLACE' },
-                fency: { percentage: 5, type: 'HIGH' }
+                matchOdd: { percentage: data.data.matchOdds, type: `${data.data.matchOddsType}` },
+                Bookmaker: { percentage: data.data.Bookmaker, type:  `${data.data.BookmakerType}` },
+                fency: { percentage: data.data.Bookmaker, type: `${data.data.BookmakerType}` }
             }
+            let newdata = await commissionModel.findOneAndUpdate({userId:data.data.id}, newValues)
 
+        socket.emit("updateCommission",{newdata, status:"success"})
         }catch(err){
             socket.emit("updateCommission",{message:"err", status:"error"})
         }
