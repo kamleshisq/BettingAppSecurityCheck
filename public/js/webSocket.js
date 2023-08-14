@@ -7534,6 +7534,7 @@ socket.on('connect', () => {
         console.log("Working")
         $(document).on("change", ".checkbox", function(e) {
             e.preventDefault()
+            console.log("Workd")
             if ($(this).is(":checked")) {
                 socket.emit("Autosettle", {LOGINDATA, status:true})
               } else {
