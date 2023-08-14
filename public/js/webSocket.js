@@ -7543,7 +7543,8 @@ socket.on('connect', () => {
 
         $(document).on("click", ".voidBet", function(e){
             e.preventDefault()
-            console.log(this.id)
+            let id =  this.id
+            socket.emit("VoidBetIn", {LOGINDATA, id})
         })
 
         $(document).on("click", ".acceptBet", function(e){
