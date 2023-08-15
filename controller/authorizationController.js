@@ -163,16 +163,24 @@ exports.isProtected = catchAsync( async (req, res, next) => {
             status:"success",
             message:'the user belonging to this token does no longer available'
         })
-    }else if(!currentUser.isActive){
-        return res.status(404).json({
-            status:"success",
-            message:'the user belonging to this token does no longer available'
-        })
-    }else if(!currentUser.is_Online){
-        return res.status(404).json({
-            status:"success",
-            message:"Please login to get access"
-        })
+    }
+    if(currentUser.roleName != "DemoLogin"){
+        if(!currentUser){
+            return res.status(404).json({
+                status:"success",
+                message:'the user belonging to this token does no longer available'
+            })
+        }else if(!currentUser.isActive){
+            return res.status(404).json({
+                status:"success",
+                message:'the user belonging to this token does no longer available'
+            })
+        }else if(!currentUser.is_Online){
+            return res.status(404).json({
+                status:"success",
+                message:"Please login to get access"
+            })
+        }
     }
     req.currentUser = currentUser
     req.token = token
@@ -203,7 +211,12 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     // console.log(token)
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
-    
+    if(!currentUser){
+        return res.status(404).json({
+            status:"success",
+            message:'the user belonging to this token does no longer available'
+        })
+    }
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){
             return res.status(404).json({
