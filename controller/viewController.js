@@ -33,6 +33,7 @@ const casinoFevorite = require("../model/CasinoFevorite");
 const houseFundModel = require('../model/houseFundmodel');
 const sattlementModel =  require("../model/sattlementModel");
 const commissionModel = require("../model/CommissionModel");
+const settlementHisory = require("../model/settelementHistory");
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -2516,9 +2517,16 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
 exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
     let me = req.currentUser
     console.log(me)
+    let History
+    if(me.roleName === "Admin"){
+        History = await settlementHisory.find()
+    }else{
+        History = await settlementHisory.find({userId:me._id})
+    }
     res.status(200).render("./settlemetHistory/settlemetHistory",{
         title:"SETTLEMENTS",
         me,
         currentUser:me,
+        History
     })
 } )
