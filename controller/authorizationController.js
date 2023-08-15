@@ -376,6 +376,7 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
 
 exports.userLogin = catchAsync (async(req, res, next) => {
     console.log(req.body)
+    console.log("Working")
     let {
 		userName,
 		password
