@@ -24,12 +24,17 @@
                                     <option value="1">Deposit/Withdraw Reports</option>
                                     <option value="2">Game Reports</option>
                                 </select> -->
-                                <span class="cur-bet-amount-spn">Total Bets : <span><%=betsDetails[0].totalCount %></span></span>
-                                <%if(betsDetails[0].totalReturns > 0){ %>
-                                  <span class="cur-bet-amount-spn">Total Amount : <span class="c-gren"><%=betsDetails[0].totalReturns %></span></span>
-                                <%}else{%>
-                                  <span class="cur-bet-amount-spn">Total Amount : <span class="c-reed"><%=betsDetails[0].totalReturns %></span></span>
-                                  <%} %>
+                                <%if(betsDetails.length > 0){ %>
+                                  <span class="cur-bet-amount-spn">Total Bets : <span><%=betsDetails[0].totalCount %></span></span>
+                                  <%if(betsDetails[0].totalReturns > 0){ %>
+                                    <span class="cur-bet-amount-spn">Total Amount : <span class="c-gren"><%=betsDetails[0].totalReturns %></span></span>
+                                  <%}else{%>
+                                    <span class="cur-bet-amount-spn">Total Amount : <span class="c-reed"><%=betsDetails[0].totalReturns %></span></span>
+                                    <%} %>
+                                <%}else{ %>
+                                  <span class="cur-bet-amount-spn">Total Bets : <span>00</span></span>
+                                    <span class="cur-bet-amount-spn">Total Amount : <span class="c-reed">00</span></span>
+                                <%} %>
                             </div>
 
                             <div class="">
