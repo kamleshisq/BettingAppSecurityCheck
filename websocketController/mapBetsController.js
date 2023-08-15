@@ -76,6 +76,9 @@ exports.mapbet = async(data) => {
                         })
             }else{
             console.log(Math.round(bet.Stake * bet.oddValue), "WORKING")
+            console.log((bet.Stake * bet.oddValue))
+            console.log(bet.Stake)
+            console.log(bet.oddValue)
             let user = await userModel.findById(bet.userId)
               let commission = await commissionModel.find({userId:user.parentUsers[1]})
               let commissionPer = 0
