@@ -11,7 +11,7 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
         let result = "";
         const charactersLength = characters.length;
         for ( let i = 0; i < length; i++ ) {
-            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            result += characters.charAt(parseFloat(Math.random() * charactersLength));
         }
 
         return result;
@@ -143,7 +143,7 @@ if(!marketDetails.runners){
     await betmodel.create(betPlaceData)
     await accountStatementByUserModel.create(Acc)
     let parentUser
-    let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{balance: -Math.round(data.data.stake), availableBalance: -Math.round(data.data.stake), myPL: -Math.round(data.data.stake), Bets : 1, exposure:Math.round(data.data.stake)}})
+    let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{balance: - Math.round(data.data.stake), availableBalance: - Math.round(data.data.stake), myPL: - Math.round(data.data.stake), Bets : 1, exposure: Math.round(data.data.stake)}})
     if(!user){
         return "There is no user with that id"
     }
