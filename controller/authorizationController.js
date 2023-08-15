@@ -203,7 +203,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     // console.log(token)
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);
-    // console.log(currentUser)
+    console.log(currentUser, "USer")
     if(!currentUser){
         return res.status(404).json({
             status:"success",
