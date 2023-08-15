@@ -31,7 +31,7 @@ exports.mapbet = async(data) => {
             }
           },
     ])
-    console.log(bets)
+    console.log(bets, 456456456)
     // let dataForHistory = {
     //   marketID:`${data.id}`,
     //   userId:`${data.LOGINDATA.LOGINUSER._id}`,
