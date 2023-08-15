@@ -98,7 +98,7 @@ module.exports = () => {
                         console.log("WORKING4564654654")
                         console.log(entry)
                         let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue)})
-                        let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{balance: parseFloat(entry.Stake * entry.oddValue), availableBalance: parseFloat(entry.Stake * entry.oddValue), myPL: parseFloat(entry.Stake * entry.oddValue), Won:1, exposure:-parseFloat(entry.Stake)}})
+                        let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{balance: Math.round(entry.Stake * entry.oddValue), availableBalance: Math.round(entry.Stake * entry.oddValue), myPL: Math.round(entry.Stake * entry.oddValue), Won:1, exposure:-Math.round(entry.Stake)}})
                         console.log(user)
                         let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
                         let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/WON `
@@ -106,10 +106,10 @@ module.exports = () => {
 
                         if(user.parentUsers.length < 2){
                             // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
-                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -parseFloat(entry.Stake * entry.oddValue), downlineBalance: parseFloat(entry.Stake * entry.oddValue), myPL: -parseFloat(entry.Stake * entry.oddValue)}})
+                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -Math.round(entry.Stake * entry.oddValue), downlineBalance: Math.round(entry.Stake * entry.oddValue), myPL: -Math.round(entry.Stake * entry.oddValue)}})
                         }else{
-                            await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: parseFloat(entry.Stake * entry.oddValue), downlineBalance: parseFloat(entry.Stake * entry.oddValue)}})
-                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-parseFloat(entry.Stake * entry.oddValue), downlineBalance: parseFloat(entry.Stake * entry.oddValue), myPL: -parseFloat(entry.Stake * entry.oddValue)}})
+                            await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: Math.round(entry.Stake * entry.oddValue), downlineBalance: Math.round(entry.Stake * entry.oddValue)}})
+                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-Math.round(entry.Stake * entry.oddValue), downlineBalance: Math.round(entry.Stake * entry.oddValue), myPL: -Math.round(entry.Stake * entry.oddValue)}})
                         }
                         
                         await accModel.create({
@@ -140,7 +140,7 @@ module.exports = () => {
 
                     }else if((entry.secId === "odd_Even_No" && marketresult.result === "lay") || (entry.secId === "odd_Even_Yes" && marketresult.result === "back")){
                         let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue)})
-                        let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{balance: parseFloat(entry.Stake * entry.oddValue), availableBalance: parseFloat(entry.Stake * entry.oddValue), myPL: parseFloat(entry.Stake * entry.oddValue), Won:1, exposure:-parseFloat(entry.Stake)}})
+                        let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{balance: Math.round(entry.Stake * entry.oddValue), availableBalance: Math.round(entry.Stake * entry.oddValue), myPL: Math.round(entry.Stake * entry.oddValue), Won:1, exposure:-Math.round(entry.Stake)}})
                         console.log(user)
                         let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
                         let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/WON `
@@ -148,10 +148,10 @@ module.exports = () => {
 
                         if(user.parentUsers.length < 2){
                             // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
-                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -parseFloat(entry.Stake * entry.oddValue), downlineBalance: parseFloat(entry.Stake * entry.oddValue), myPL: -parseFloat(entry.Stake * entry.oddValue)}})
+                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -Math.round(entry.Stake * entry.oddValue), downlineBalance: Math.round(entry.Stake * entry.oddValue), myPL: -Math.round(entry.Stake * entry.oddValue)}})
                         }else{
-                            await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: parseFloat(entry.Stake * entry.oddValue), downlineBalance: parseFloat(entry.Stake * entry.oddValue)}})
-                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance: -parseFloat(entry.Stake * entry.oddValue), downlineBalance: parseFloat(entry.Stake * entry.oddValue), myPL: -parseFloat(entry.Stake * entry.oddValue)}})
+                            await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: Math.round(entry.Stake * entry.oddValue), downlineBalance: Math.round(entry.Stake * entry.oddValue)}})
+                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance: -Math.round(entry.Stake * entry.oddValue), downlineBalance: Math.round(entry.Stake * entry.oddValue), myPL: -Math.round(entry.Stake * entry.oddValue)}})
                         }
                         
                         await accModel.create({
@@ -184,22 +184,22 @@ module.exports = () => {
                       let commission = await commissionModel.find({userId:user.parentUsers[1]})
                       let commissionPer = 0
                       if(entry.marketName.startsWith('Match Odds') && commission[0].matchOdd.type == "WIN"){
-                        commissionPer = parseFloat(commission[0].matchOdd.percentage)/100
+                        commissionPer = Math.round(commission[0].matchOdd.percentage)/100
                       }else if ((entry.marketName.startsWith('Bookmake') || entry.marketName.startsWith('TOSS')) && commission[0].Bookmaker.type == "WIN"){
-                        commissionPer = parseFloat(commission[0].Bookmaker.percentage)/100
+                        commissionPer = Math.round(commission[0].Bookmaker.percentage)/100
                       }else if (commission[0].fency.type == "WIN" && !(entry.marketName.startsWith('Bookmake') || entry.marketName.startsWith('TOSS') || entry.marketName.startsWith('Match Odds'))){
-                        commissionPer = parseFloat(commission[0].fency.percentage)/100
+                        commissionPer = Math.round(commission[0].fency.percentage)/100
                       }
-                      let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - parseFloat(commissionPer * entry.Stake), availableBalance : -parseFloat(commissionPer * entry.Stake)}})
-                      let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: parseFloat(commissionPer * entry.Stake), availableBalance : parseFloat(commissionPer * entry.Stake)}})
+                      let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - Math.round(commissionPer * entry.Stake), availableBalance : -Math.round(commissionPer * entry.Stake)}})
+                      let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: Math.round(commissionPer * entry.Stake), availableBalance : Math.round(commissionPer * entry.Stake)}})
                         await betModel.findByIdAndUpdate(entry._id,{status:"LOSS"})
-                        await userModel.findByIdAndUpdate(entry.userId,{$inc:{Loss:1, exposure:-parseFloat(entry.Stake)}})
+                        await userModel.findByIdAndUpdate(entry.userId,{$inc:{Loss:1, exposure:-Math.round(entry.Stake)}})
                       if(commissionPer > 0){
                         await accModel.create({
                           "user_id":WhiteLableUser._id,
                           "description": `commission for ${entry.match}/stake = ${entry.Stake}`,
-                          "creditDebitamount" : - parseFloat(commissionPer * entry.Stake),
-                          "balance" : WhiteLableUser.availableBalance - parseFloat(commissionPer * entry.Stake),
+                          "creditDebitamount" : - Math.round(commissionPer * entry.Stake),
+                          "balance" : WhiteLableUser.availableBalance - Math.round(commissionPer * entry.Stake),
                           "date" : Date.now(),
                           "userName" : WhiteLableUser.userName,
                           "role_type" : WhiteLableUser.role_type,
@@ -211,8 +211,8 @@ module.exports = () => {
                         await accModel.create({
                           "user_id":houseUser._id,
                           "description": `commission for ${entry.match}/stake = ${entry.Stake}/from user ${WhiteLableUser.userName}`,
-                          "creditDebitamount" : parseFloat(commissionPer * entry.Stake),
-                          "balance" : houseUser.availableBalance + parseFloat(commissionPer * entry.Stake),
+                          "creditDebitamount" : Math.round(commissionPer * entry.Stake),
+                          "balance" : houseUser.availableBalance + Math.round(commissionPer * entry.Stake),
                           "date" : Date.now(),
                           "userName" : houseUser.userName,
                           "role_type" : houseUser.role_type,
