@@ -194,8 +194,9 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     if(token == "loggedout"){
         return next()
     }
+    
     const tokenId = await loginLogs.findOne({session_id:token})
-    // console.log(tokenId)
+    console.log(tokenId)
     if(!tokenId.isOnline){
         return next()
     }
