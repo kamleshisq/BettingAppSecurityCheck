@@ -27,6 +27,7 @@ export const userLogin = async(data) => {
 
     }catch(err){
         console.log(err)
-    setTimeout(alert(err.response.data.message), 1500)
+        notificationsss({message : err.response.data.message, status:"error"});
+    // setTimeout(alert(err.response.data.message), 1500)
     }
 }

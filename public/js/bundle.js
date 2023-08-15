@@ -6739,7 +6739,11 @@ var userLogin = /*#__PURE__*/function () {
           _context.prev = 7;
           _context.t0 = _context["catch"](0);
           console.log(_context.t0);
-          setTimeout(alert(_context.t0.response.data.message), 1500);
+          (0, _notificationsss.notificationsss)({
+            message: _context.t0.response.data.message,
+            status: "error"
+          });
+          // setTimeout(alert(err.response.data.message), 1500)
         case 11:
         case "end":
           return _context.stop();
