@@ -30,6 +30,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
     
     if(req.originalUrl == "/api/v1/auth/login" ){
         const id = await User.findOne({userName:req.body.userName})
+        console.log(req.body)
         if(!id){
             return res.status(404).json({
                 status:"error",
