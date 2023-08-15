@@ -187,7 +187,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
         token = parseCookies(req.headers.cookie).JWT;
         // console.log(token)
     }
-    console.log(token)
+    console.log(token, "TOKEN")
     if(!token){
         return next()
     }
@@ -196,7 +196,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     }
     
     const tokenId = await loginLogs.findOne({session_id:token})
-    console.log(tokenId)
+    console.log(tokenId, "TOKENID")
     if(!tokenId.isOnline){
         return next()
     }
