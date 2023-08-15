@@ -6705,14 +6705,15 @@ var userLogin = /*#__PURE__*/function () {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          _context.prev = 0;
-          _context.next = 3;
+          console.log(data);
+          _context.prev = 1;
+          _context.next = 4;
           return (0, _axios.default)({
             method: 'POST',
             url: '/api/v1/auth/userLogin',
             data: data
           });
-        case 3:
+        case 4:
           res = _context.sent;
           if (res.data.status === 'success') {
             (0, _notificationsss.notificationsss)({
@@ -6733,22 +6734,22 @@ var userLogin = /*#__PURE__*/function () {
             }, 300);
             // }
           }
-          _context.next = 11;
+          _context.next = 12;
           break;
-        case 7:
-          _context.prev = 7;
-          _context.t0 = _context["catch"](0);
+        case 8:
+          _context.prev = 8;
+          _context.t0 = _context["catch"](1);
           console.log(_context.t0);
           (0, _notificationsss.notificationsss)({
             message: _context.t0.response.data.message,
             status: "error"
           });
           // setTimeout(alert(err.response.data.message), 1500)
-        case 11:
+        case 12:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 7]]);
+    }, _callee, null, [[1, 8]]);
   }));
   return function userLogin(_x) {
     return _ref.apply(this, arguments);
