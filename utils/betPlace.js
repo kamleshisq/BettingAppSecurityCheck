@@ -102,7 +102,7 @@ if(!marketDetails.runners){
     let betOn = runnersData.find(item => item.secId == data.data.secId)
     // console.log(betOn)
     // return 123
-    console.log(betOn, 456)
+    //og(betOn, 456)
         betPlaceData = {
             userId : data.LOGINDATA.LOGINUSER._id,
             userName : data.LOGINDATA.LOGINUSER.userName,
