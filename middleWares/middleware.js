@@ -42,17 +42,23 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         global._admin = true
     }else if (req.originalUrl == "/api/v1/auth/userLogin"){
         const id = await User.findOne({userName:req.body.userName})
-        console.log(req.body)
-        console.log("WORKING")
+        // console.log(req.body)
+        // console.log("WORKING")
         if(!id){
-            return res.status(404).json({
-                status:"error",
-                message:"please provide a valide user name"
-            })
+            if(req.body.data == "Demo"){
+
+            }else{
+                return res.status(404).json({
+                    status:"error",
+                    message:"please provide a valide user name"
+                })
+            }
         }
-        const userLog = await loginLogs.find({user_id:id._id})
-        req._count = userLog.length
-        global._admin = false
+        if(req.body.data != "Demo"){
+            const userLog = await loginLogs.find({user_id:id._id})
+            req._count = userLog.length
+            global._admin = false
+        }
     }
     // else if(global._count == 0){
     //         global._count = 2
