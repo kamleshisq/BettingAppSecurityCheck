@@ -2,7 +2,6 @@ import axios from "axios";
 import { notificationsss } from "./notificationsss";
 
 export const userLogin = async(data) => {
-    console.log(data, 456)
     try{
         const res = await axios({
             method: 'POST',

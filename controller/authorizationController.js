@@ -377,56 +377,62 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
 exports.userLogin = catchAsync (async(req, res, next) => {
     console.log(req.body)
     console.log("Working")
-    let {
-		userName,
-		password
-	} = req.body;
-    const loginSchema = Joi.object({
-		userName: Joi.string().required(),
-		password: Joi.string().required(),
-		// g_captcha: Joi.optional()
-	});
-    const validate = loginSchema.validate(req.body);
-    // console.log(validate)
-    if(validate.error){
-        // console.log("working")
-        res.status(404).json({
-            status:"error",
-            message:validate.error.details[0].message
-        })
-    }else{
-        const user = await User.findOne({userName}).select('+password');
-        // console.log(user)
-        if(!user || !(await user.correctPassword(password, user.password))){
-            // console.log()
-            res.status(404).json({
-                status:'error',
-                message:"Please provide valide user and password"
-            })
-        }
-        else if(user.role_type != 5){
-            res.status(404).json({
-                status:'error',
-                message:"You do not have permission to login as user"
-            })
-        }
-        else if(!user.isActive){
-            res.status(404).json({
-                status:'error',
-                message:"You are inactive"
-            })
-        }else if(user.is_Online){
-            // console.log(user)
+    if(req.body.data != "Demo"){
+
+        let {
+            userName,
+            password
+        } = req.body;
+        const loginSchema = Joi.object({
+            userName: Joi.string().required(),
+            password: Joi.string().required(),
+            // g_captcha: Joi.optional()
+        });
+        const validate = loginSchema.validate(req.body);
+        // console.log(validate)
+        if(validate.error){
+            // console.log("working")
             res.status(404).json({
                 status:"error",
-                message:"User is already login"
+                message:validate.error.details[0].message
             })
         }else{
-            await User.findOneAndUpdate({_id:user._id}, {is_Online:true})
-            createSendToken(user, 200, res, req);
-            // console.log(req.token)
-
+            const user = await User.findOne({userName}).select('+password');
+            // console.log(user)
+            if(!user || !(await user.correctPassword(password, user.password))){
+                // console.log()
+                res.status(404).json({
+                    status:'error',
+                    message:"Please provide valide user and password"
+                })
+            }
+            else if(user.role_type != 5){
+                res.status(404).json({
+                    status:'error',
+                    message:"You do not have permission to login as user"
+                })
+            }
+            else if(!user.isActive){
+                res.status(404).json({
+                    status:'error',
+                    message:"You are inactive"
+                })
+            }else if(user.is_Online){
+                // console.log(user)
+                res.status(404).json({
+                    status:"error",
+                    message:"User is already login"
+                })
+            }else{
+                await User.findOneAndUpdate({_id:user._id}, {is_Online:true})
+                createSendToken(user, 200, res, req);
+                // console.log(req.token)
+    
+            }
         }
+    }else{
+        let demoUser = await user.find({roleName: 'DemoLogin'})
+        createSendToken(demoUser, 200, res, req);
     }
 });
 
