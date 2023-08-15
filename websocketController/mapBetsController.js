@@ -9,7 +9,8 @@ exports.mapbet = async(data) => {
     let bets = await betModel.aggregate([
         {
             $match:{
-                marketId:`${data.id}`
+                marketId:`${data.id}`,
+                status:"OPEN"
             }
         },
         {
