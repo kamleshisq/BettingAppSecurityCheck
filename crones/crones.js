@@ -190,11 +190,11 @@ module.exports = () => {
                       }else if (commission[0].fency.type == "WIN" && !(entry.marketName.startsWith('Bookmake') || entry.marketName.startsWith('TOSS') || entry.marketName.startsWith('Match Odds'))){
                         commissionPer = parseFloat(commission[0].fency.percentage)/100
                       }
-                      let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - Math.round(commissionPer * entry.Stake), availableBalance : -Math.round(commissionPer * entry.Stake)}})
-                      let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: Math.round(commissionPer * entry.Stake), availableBalance : Math.round(commissionPer * entry.Stake)}})
-                        await betModel.findByIdAndUpdate(entry._id,{status:"LOSS"})
-                        await userModel.findByIdAndUpdate(entry.userId,{$inc:{Loss:1, exposure:-parseFloat(entry.Stake)}})
+                      await betModel.findByIdAndUpdate(entry._id,{status:"LOSS"})
+                      await userModel.findByIdAndUpdate(entry.userId,{$inc:{Loss:1, exposure:-parseFloat(entry.Stake)}})
                       if(commissionPer > 0){
+                        let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - Math.round(commissionPer * entry.Stake), availableBalance : -Math.round(commissionPer * entry.Stake)}})
+                        let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: Math.round(commissionPer * entry.Stake), availableBalance : Math.round(commissionPer * entry.Stake)}})
                         await accModel.create({
                           "user_id":WhiteLableUser._id,
                           "description": `commission for ${entry.match}/stake = ${entry.Stake}`,

@@ -3,7 +3,7 @@ const betmodel = require('../model/betmodel');
 const accountStatementByUserModel = require("../model/accountStatementByUserModel");
 const betLimitModel = require('../model/betLimitModel');
 const cricketAndOtherSport = require('../utils/getSportAndCricketList');
-
+const commissionModel = require("../model/CommissionModel");
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -147,6 +147,49 @@ if(!marketDetails.runners){
     if(!user){
         return "There is no user with that id"
     }
+    let commission = await commissionModel.find({userId:user.parentUsers[1]})
+    let commissionPer = 0
+    if(marketDetails.title.startsWith('Match Odds') && commission[0].matchOdd.type == "ENTRY"){
+      commissionPer = parseFloat(commission[0].matchOdd.percentage)/100
+    }else if ((marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS')) && commission[0].Bookmaker.type == "ENTRY"){
+      commissionPer = parseFloat(commission[0].Bookmaker.percentage)/100
+    }else if (commission[0].fency.type == "ENTRY" && !(marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('Match Odds'))){
+      commissionPer = parseFloat(commission[0].fency.percentage)/100
+    }
+
+    if(commissionPer > 0){
+        let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - Math.round(commissionPer * data.data.stake), availableBalance : -Math.round(commissionPer * data.data.stake)}})
+        let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: Math.round(commissionPer * data.data.stake), availableBalance : Math.round(commissionPer * data.data.stake)}}) 
+
+        await accModel.create({
+          "user_id":WhiteLableUser._id,
+          "description": `commission for ${data.data.title}/stake = ${data.data.stake}`,
+          "creditDebitamount" : - Math.round(commissionPer * data.data.stake),
+          "balance" : WhiteLableUser.availableBalance - Math.round(commissionPer * data.data.stake),
+          "date" : Date.now(),
+          "userName" : WhiteLableUser.userName,
+          "role_type" : WhiteLableUser.role_type,
+          "Remark":"-",
+          "stake": data.data.stake,
+          "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`
+        })
+
+        await accModel.create({
+          "user_id":houseUser._id,
+          "description": `commission for ${data.data.title}/stake = ${data.data.stake}/from user ${WhiteLableUser.userName}`,
+          "creditDebitamount" : Math.round(commissionPer * data.data.stake),
+          "balance" : houseUser.availableBalance + Math.round(commissionPer * data.data.stake),
+          "date" : Date.now(),
+          "userName" : houseUser.userName,
+          "role_type" : houseUser.role_type,
+          "Remark":"-",
+          "stake": data.data.stake,
+          "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}Parent`
+        })
+      }                 
+
+
+
     if(user.parentUsers.length < 2){
         // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
         // parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:data.data.stake}})
