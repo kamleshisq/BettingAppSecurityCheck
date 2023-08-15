@@ -2515,6 +2515,7 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
 
 exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
     let me = req.currentUser
+    console.log(me)
     res.status(200).render("./settlemetHistory/settlemetHistory",{
         title:"SETTLEMENTS",
         me,
