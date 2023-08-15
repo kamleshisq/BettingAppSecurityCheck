@@ -186,7 +186,7 @@ if(!marketDetails.runners){
         let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - Math.round(commissionPer * data.data.stake), availableBalance : -Math.round(commissionPer * data.data.stake)}})
         let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: Math.round(commissionPer * data.data.stake), availableBalance : Math.round(commissionPer * data.data.stake)}}) 
 
-        await accModel.create({
+        await accountStatementByUserModel.create({
           "user_id":WhiteLableUser._id,
           "description": `commission for ${data.data.title}/stake = ${data.data.stake}`,
           "creditDebitamount" : - Math.round(commissionPer * data.data.stake),
@@ -199,7 +199,7 @@ if(!marketDetails.runners){
           "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`
         })
 
-        await accModel.create({
+        await accountStatementByUserModel.create({
           "user_id":houseUser._id,
           "description": `commission for ${data.data.title}/stake = ${data.data.stake}/from user ${WhiteLableUser.userName}`,
           "creditDebitamount" : Math.round(commissionPer * data.data.stake),
