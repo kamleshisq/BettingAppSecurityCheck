@@ -97,7 +97,7 @@ module.exports = () => {
                     if(entry.selectionName ==  marketresult.result){
                         //og("WORKING4564654654")
                         //og(entry)
-                        let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue)})
+                        let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:Math.round(entry.Stake * entry.oddValue)})
                         let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{balance: Math.round(entry.Stake * entry.oddValue), availableBalance: Math.round(entry.Stake * entry.oddValue), myPL: Math.round(entry.Stake * entry.oddValue), Won:1, exposure:-parseFloat(entry.Stake)}})
                         //og(user)
                         let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
@@ -139,7 +139,7 @@ module.exports = () => {
                         })
 
                     }else if((entry.secId === "odd_Even_No" && marketresult.result === "lay") || (entry.secId === "odd_Even_Yes" && marketresult.result === "back")){
-                        let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue)})
+                        let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:Math.round(entry.Stake * entry.oddValue)})
                         let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{balance: Math.round(entry.Stake * entry.oddValue), availableBalance: Math.round(entry.Stake * entry.oddValue), myPL: Math.round(entry.Stake * entry.oddValue), Won:1, exposure:-parseFloat(entry.Stake)}})
                         //og(user)
                         let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`

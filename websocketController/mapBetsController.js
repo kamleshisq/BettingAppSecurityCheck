@@ -34,7 +34,7 @@ exports.mapbet = async(data) => {
     bets.forEach(async(bet) => {
         if(data.result === "yes" || data.result === "no"){
             if(bet.secId === "odd_Even_Yes" && data.result === "yes" || bet.secId === "odd_Even_No" && data.result === "no" ){
-                let bet1 = await betModel.findByIdAndUpdate(bet._id,{status:"WON", returns:(bet.Stake * bet.oddValue)})
+                let bet1 = await betModel.findByIdAndUpdate(bet._id,{status:"WON", returns:Math.round(bet.Stake * bet.oddValue)})
                         let user = await userModel.findByIdAndUpdate(bet.userId,{$inc:{balance: Math.round(bet.Stake * bet.oddValue), availableBalance: Math.round(bet.Stake * bet.oddValue), myPL: Math.round(bet.Stake * bet.oddValue), Won:1, exposure:- Math.round(bet.Stake)}})
                         //og(user)
                         let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
@@ -116,7 +116,7 @@ exports.mapbet = async(data) => {
             }
         }else{
             if(bet.selectionName.toLowerCase().includes(data.result.toLowerCase())){
-                let bet1 = await betModel.findByIdAndUpdate(bet._id,{status:"WON", returns:(bet.Stake * bet.oddValue)})
+                let bet1 = await betModel.findByIdAndUpdate(bet._id,{status:"WON", returns:Math.round(bet.Stake * bet.oddValue)})
                 let user = await userModel.findByIdAndUpdate(bet.userId,{$inc:{balance: Math.round(bet.Stake * bet.oddValue), availableBalance: Math.round(bet.Stake * bet.oddValue), myPL: Math.round(bet.Stake * bet.oddValue), Won:1, exposure:-parseFloat(bet.Stake)}})
                 let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
                 let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/WON `
