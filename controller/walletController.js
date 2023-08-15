@@ -59,6 +59,9 @@ exports.getUserBalancebyiD = catchAsync(async(req, res, next) => {
 
 exports.betrequest = catchAsync(async(req, res, next) => {
     const check = await userModel.findById(req.body.userId)
+    if(check.availableBalance < 0){
+        return "Error: Insufficient balance"
+    }
     let betLimit
     if(req.body.sportId){
         betLimit = await betLimitModel.findOne({type:"Sport"})
