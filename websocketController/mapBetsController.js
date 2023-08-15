@@ -75,10 +75,6 @@ exports.mapbet = async(data) => {
                           "transactionId":`${bet.transactionId}Parent`
                         })
             }else{
-            console.log(Math.round(bet.Stake * bet.oddValue), "WORKING")
-            console.log((bet.Stake * bet.oddValue))
-            console.log(bet.Stake)
-            console.log(bet.oddValue)
             let user = await userModel.findById(bet.userId)
               let commission = await commissionModel.find({userId:user.parentUsers[1]})
               let commissionPer = 0
@@ -120,7 +116,10 @@ exports.mapbet = async(data) => {
             }
         }else{
             if(bet.selectionName.toLowerCase().includes(data.result.toLowerCase())){
-              console.log(Math.round(bet.Stake))
+              console.log(Math.round(bet.Stake * bet.oddValue), "WORKING")
+            console.log((bet.Stake * bet.oddValue))
+            console.log(bet.Stake)
+            console.log(bet.oddValue)
                 let bet1 = await betModel.findByIdAndUpdate(bet._id,{status:"WON", returns:(bet.Stake * bet.oddValue)})
                 let user = await userModel.findByIdAndUpdate(bet.userId,{$inc:{balance: Math.round(bet.Stake * bet.oddValue), availableBalance: Math.round(bet.Stake * bet.oddValue), myPL: Math.round(bet.Stake * bet.oddValue), Won:1, exposure:-Math.round(bet.Stake)}})
                 let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
