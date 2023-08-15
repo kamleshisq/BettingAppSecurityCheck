@@ -53,7 +53,12 @@
                 </thead>
                 <tbody class="new-body" style="font-size: 11px;">
                   <%for(let i = 0; i < History.length; i++){%>
-                    
+                    <tr style="text-align: center;" class="blue">
+                      <td><%= i+1%></td>
+                      <td><%= History[i].eventName%></td>
+                      <td><%= History[i].marketName%></td>
+                      <td><%= History[i].result%></td>
+                    </tr>
                   <% }>
                 </tbody>
               </table>
