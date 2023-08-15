@@ -528,8 +528,9 @@ $(document).on('submit', ".myloginmodl-form-dv", function(e){
     userLogin(data)
 })
 
-$(document).on("click", ".btn myloginmodl-demo-loginbtnn", function(e){
+$(document).on("click", ".myloginmodl-demo-loginbtnn", function(e){
     e.preventDefault()
+    console.log("WORKING")
     userLogin({data:"Demo"})
 })
 
