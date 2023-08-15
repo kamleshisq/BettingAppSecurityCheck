@@ -2512,3 +2512,12 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
         betsEventWise
     })
 } )
+
+exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
+    let me = req.currentUser
+    res.status(200).render("./settlemetHistory/settlemetHistory",{
+        title:"SETTLEMENTS",
+        me,
+        currentUser:me,
+    })
+} )
