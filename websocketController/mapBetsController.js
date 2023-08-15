@@ -133,7 +133,7 @@ exports.mapbet = async(data) => {
                 await accModel.create({
                   "user_id":user._id,
                   "description": description,
-                  "creditDebitamount" : (bet.Stake * bet.oddValue),
+                  "creditDebitamount" : parseFloat(bet.Stake * bet.oddValue),
                   "balance" : user.availableBalance + (bet.Stake * bet.oddValue),
                   "date" : Date.now(),
                   "userName" : user.userName,
@@ -146,7 +146,7 @@ exports.mapbet = async(data) => {
                 await accModel.create({
                   "user_id":parentUser._id,
                   "description": description2,
-                  "creditDebitamount" : -(bet.Stake * bet.oddValue),
+                  "creditDebitamount" : -parseFloat(bet.Stake * bet.oddValue),
                   "balance" : parentUser.availableBalance - (bet.Stake * bet.oddValue),
                   "date" : Date.now(),
                   "userName" : parentUser.userName,
