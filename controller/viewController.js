@@ -2535,10 +2535,12 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
 
 exports.getCommissionReport = catchAsync(async(req, res, next) => {
     let me = req.currentUser
-    let data = await accountStatement.find({user_id:me._id, })
+    let data = await accountStatement.find({user_id:me._id,description: { $regex: /^commission for/ } })
+    console.log(data)
     res.status(200).render("./commissionPage/commissionPage",{
         title:"Commission",
         me,
-        currentUser:me
+        currentUser:me,
+        data
     })
 } )
