@@ -2,6 +2,7 @@ const userModel = require("../model/userModel");
 const accModel = require("../model/accountStatementByUserModel");
 const betModel = require("../model/betmodel");
 const commissionModel = require("../model/CommissionModel")
+const settlementHistory = require("../model/settelementHistory");
 
 exports.mapbet = async(data) => {
     //og(data)
@@ -31,13 +32,21 @@ exports.mapbet = async(data) => {
           },
     ])
     //og(bets)
+    let dataForHistory = {
+      marketID:`${data.id}`,
+      userId:`${data.LOGINDATA.LOGINUSER._id}`,
+      eventName: `${bets[0].Stake}`,
+      date:Date.now(),
+      result:data.result
+    }
+    await settlementHistory.create(dataForHistory)
     bets.forEach(async(bet) => {
         if(data.result === "yes" || data.result === "no"){
             if(bet.secId === "odd_Even_Yes" && data.result === "yes" || bet.secId === "odd_Even_No" && data.result === "no" ){
                 let bet1 = await betModel.findByIdAndUpdate(bet._id,{status:"WON", returns:Math.round(bet.Stake * bet.oddValue)})
                         let user = await userModel.findByIdAndUpdate(bet.userId,{$inc:{balance: Math.round(bet.Stake * bet.oddValue), availableBalance: Math.round(bet.Stake * bet.oddValue), myPL: Math.round(bet.Stake * bet.oddValue), Won:1, exposure:- Math.round(bet.Stake)}})
                         //og(user)
-                        let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
+                        let description = `Bet for /stake = ${bet.Stake}/WON`
                         let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/WON `
                         let parentUser
 
