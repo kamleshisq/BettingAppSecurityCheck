@@ -431,7 +431,7 @@ exports.userLogin = catchAsync (async(req, res, next) => {
             }
         }
     }else{
-        let demoUser = await user.find({roleName: 'DemoLogin'})
+        let demoUser = await User.find({roleName: 'DemoLogin'})
         createSendToken(demoUser, 200, res, req);
     }
 });
