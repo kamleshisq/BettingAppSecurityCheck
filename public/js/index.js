@@ -530,7 +530,7 @@ $(document).on('submit', ".myloginmodl-form-dv", function(e){
 
 $(document).on("click", ".myloginmodl-form-dv", function(e){
     e.preventDefault()
-    userLogin("Demo")
+    userLogin({data:"Demo"})
 })
 
 $(document).on('submit', ".kycForm", function(e){

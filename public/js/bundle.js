@@ -7348,7 +7348,9 @@ $(document).on('submit', ".myloginmodl-form-dv", function (e) {
 });
 $(document).on("click", ".myloginmodl-form-dv", function (e) {
   e.preventDefault();
-  (0, _userLogin.userLogin)("Demo");
+  (0, _userLogin.userLogin)({
+    data: "Demo"
+  });
 });
 $(document).on('submit', ".kycForm", function (e) {
   e.preventDefault();
