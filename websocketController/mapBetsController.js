@@ -33,7 +33,6 @@ exports.mapbet = async(data) => {
     console.log(bets)
     bets.forEach(async(bet) => {
         if(data.result === "yes" || data.result === "no"){
-            // console.log(Math.round(bet.Stake))
             if(bet.secId === "odd_Even_Yes" && data.result === "yes" || bet.secId === "odd_Even_No" && data.result === "no" ){
                 let bet1 = await betModel.findByIdAndUpdate(bet._id,{status:"WON", returns:(bet.Stake * bet.oddValue)})
                         let user = await userModel.findByIdAndUpdate(bet.userId,{$inc:{balance: Math.round(bet.Stake * bet.oddValue), availableBalance: Math.round(bet.Stake * bet.oddValue), myPL: Math.round(bet.Stake * bet.oddValue), Won:1, exposure:- Math.round(bet.Stake)}})
@@ -76,7 +75,8 @@ exports.mapbet = async(data) => {
                           "transactionId":`${bet.transactionId}Parent`
                         })
             }else{
-              let user = await userModel.findById(bet.userId)
+            console.log(Math.round(bet.Stake * bet.oddValue), "WORKING")
+            let user = await userModel.findById(bet.userId)
               let commission = await commissionModel.find({userId:user.parentUsers[1]})
               let commissionPer = 0
               if (commission[0].fency.type == "WIN" && !(bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS') || bet.marketName.startsWith('Match Odds'))){
