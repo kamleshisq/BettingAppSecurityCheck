@@ -2530,3 +2530,14 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
         History
     })
 } )
+
+
+
+exports.getCommissionReport = catchAsync(async(req, res, next) => {
+    let me = req.currentUser
+    res.status(200).render("./commissionPage/commissionPage",{
+        title:"Commission",
+        me,
+        currentUser:me
+    })
+} )
