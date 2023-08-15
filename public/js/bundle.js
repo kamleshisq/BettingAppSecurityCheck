@@ -7346,7 +7346,7 @@ $(document).on('submit', ".myloginmodl-form-dv", function (e) {
   var data = Object.fromEntries(fd.entries());
   (0, _userLogin.userLogin)(data);
 });
-$(document).on("click", ".myloginmodl-form-dv", function (e) {
+$(document).on("click", ".btn myloginmodl-demo-loginbtnn", function (e) {
   e.preventDefault();
   (0, _userLogin.userLogin)({
     data: "Demo"
