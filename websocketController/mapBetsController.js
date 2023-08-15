@@ -115,7 +115,7 @@ exports.mapbet = async(data) => {
               }
             }
         }else{
-            if(bet.selectionName.toLowerCase() === data.result.toLowerCase()){
+            if(bet.selectionName.toLowerCase().includes(data.result.toLowerCase())){
                 let bet1 = await betModel.findByIdAndUpdate(bet._id,{status:"WON", returns:(bet.Stake * bet.oddValue)})
                 let user = await userModel.findByIdAndUpdate(bet.userId,{$inc:{balance: parseFloat(bet.Stake * bet.oddValue), availableBalance: parseFloat(bet.Stake * bet.oddValue), myPL: parseFloat(bet.Stake * bet.oddValue), Won:1, exposure:-parseFloat(bet.Stake)}})
                 let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
