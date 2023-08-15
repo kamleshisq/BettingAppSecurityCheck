@@ -155,14 +155,16 @@
                         <%if(data[i].parent_id){%>
                           <%if(data[i].parent_id.userName == data[i].user_id.userName){%>
                             <%if(data[i].child_id == null){ %>
-                            <%}else{ %>
+                              <td>-/<%=data[i].parent_id.userName%></td>
+                              <%}else{ %>
+                              <td><%=data[i].child_id.userName%>/<%=data[i].parent_id.userName%></td>
                             <%} %>
-                            <td><%=data[i].child_id.userName%>/<%=data[i].parent_id.userName%></td>
                           <%}else{%>
                             <%if(data[i].child_id == null){ %>
-                            <%}else{ %>
+                              <td><%=data[i].parent_id.userName%>/-</td>
+                              <%}else{ %>
+                              <td><%=data[i].parent_id.userName%>/<%=data[i].child_id.userName%></td>
                             <%} %>
-                            <td><%=data[i].parent_id.userName%>/<%=data[i].child_id.userName%></td>
                           <%}%>
                         <%}else{%>
                           <td>-</td>  
@@ -173,14 +175,16 @@
                       <td><%=data[i].creditDebitamount%></td>
                         <%if(data[i].parent_id.userName == data[i].user_id.userName){%>
                           <%if(data[i].child_id == null){ %>
-                          <%}else{ %>
+                            <td><%=data[i].parent_id.userName%>/-</td>
+                            <%}else{ %>
+                            <td><%=data[i].parent_id.userName%>/<%=data[i].child_id.userName%></td>
                           <%} %>
-                          <td><%=data[i].parent_id.userName%>/<%=data[i].child_id.userName%></td>
                         <%}else{%>
                           <%if(data[i].child_id == null){ %>
-                          <%}else{ %>
+                            <td>-/<%=data[i].parent_id.userName%></td>
+                            <%}else{ %>
+                            <td><%=data[i].child_id.userName%>/<%=data[i].parent_id.userName%></td>
                           <%} %>
-                          <td><%=data[i].child_id.userName%>/<%=data[i].parent_id.userName%></td>
                         <%}%>
                       <%}else{%>
                         <td><%=data[i].creditDebitamount%></td>
