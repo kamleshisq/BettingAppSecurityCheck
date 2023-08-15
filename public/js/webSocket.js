@@ -3161,7 +3161,7 @@ socket.on('connect', () => {
             })
 
             $(document).on("click", ".click", function(){
-                window.location.href = `/exchange_sports/live_match?id=${this.id}`
+                window.location.href = `/exchange_inPlay/match?id=${this.id}`
             })
             
         })
@@ -3211,11 +3211,11 @@ socket.on('connect', () => {
         })
 
         $(document).on("click", ".click", function(){
-                window.location.href = `/exchange_sports/live_match?id=${this.id}`
+                window.location.href = `/exchange_inPlay/match?id=${this.id}`
         })
     }
 
-    if(pathname === "/exchange_sports/live_match"){
+    if(pathname === "/exchange_inPlay/match"){
         function marketId(){
             $(document).ready(function() {
                 var ids = [];
@@ -3439,7 +3439,7 @@ socket.on('connect', () => {
             })
 
             $(document).on("click", ".click", function(){
-                window.location.href = `/exchange_sports/live_match?id=${this.id}`
+                window.location.href = `/exchange_inPlay/match?id=${this.id}`
             })
 
         })
@@ -3487,7 +3487,7 @@ socket.on('connect', () => {
             })
 
             $(document).on("click", ".click", function(){
-                window.location.href = `/exchange_sports/live_match?id=${this.id}`
+                window.location.href = `/exchange_inPlay/match?id=${this.id}`
             })
             
         })
@@ -3838,7 +3838,7 @@ socket.on('connect', () => {
             let html = ``
             for(let i = 0; i < data.LiveCricket.length; i++){
                 if(data.LiveCricket[i].marketList.match_odd != null){
-                   html += `<a href="/exchange_sports/live_match?id=${data.LiveCricket[i].eventData.eventId}">
+                   html += `<a href="/exchange_inPlay/match?id=${data.LiveCricket[i].eventData.eventId}">
                                     <img src="/assets/img/home/side-menuimg02.svg" alt="">
                                     ${data.LiveCricket[i].eventData.name}
                                 </a>`
@@ -3846,7 +3846,7 @@ socket.on('connect', () => {
             }
             for(let i = 0; i < data.liveFootBall.length; i++){
                 if(data.liveFootBall[i].marketList.match_odd != null){
-                   html += `<a href="/exchange_sports/live_match?id=${data.liveFootBall[i].eventData.eventId}">
+                   html += `<a href="/exchange_inPlay/match?id=${data.liveFootBall[i].eventData.eventId}">
                                     <img src="/assets/img/home/side-menuimg03.svg" alt="">
                                     ${data.liveFootBall[i].eventData.name}
                                 </a>`
@@ -3854,7 +3854,7 @@ socket.on('connect', () => {
             }
             for(let i = 0; i < data.liveTennis.length; i++){
                 if(data.liveTennis[i].marketList.match_odd != null){
-                   html += `<a href="/exchange_sports/live_match?id=${data.liveTennis[i].eventData.eventId}">
+                   html += `<a href="/exchange_inPlay/match?id=${data.liveTennis[i].eventData.eventId}">
                                     <img src="/assets/img/home/side-menuimg04.svg" alt="">
                                     ${data.liveTennis[i].eventData.name}
                                 </a>`
@@ -5366,7 +5366,7 @@ socket.on('connect', () => {
             let html = ``
             for(let i = 0; i < data.LiveCricket.length; i++){
                 if(data.LiveCricket[i].marketList.match_odd != null){
-                   html += `<a href="/exchange_sports/live_match?id=${data.LiveCricket[i].eventData.eventId}">
+                   html += `<a href="/exchange_inPlay/match?id=${data.LiveCricket[i].eventData.eventId}">
                                     <img src="/assets/img/home/side-menuimg02.svg" alt="">
                                     ${data.LiveCricket[i].eventData.name}
                                 </a>`
@@ -5374,7 +5374,7 @@ socket.on('connect', () => {
             }
             for(let i = 0; i < data.liveFootBall.length; i++){
                 if(data.liveFootBall[i].marketList.match_odd != null){
-                   html += `<a href="/exchange_sports/live_match?id=${data.liveFootBall[i].eventData.eventId}">
+                   html += `<a href="/exchange_inPlay/match?id=${data.liveFootBall[i].eventData.eventId}">
                                     <img src="/assets/img/home/side-menuimg03.svg" alt="">
                                     ${data.liveFootBall[i].eventData.name}
                                 </a>`
@@ -5382,7 +5382,7 @@ socket.on('connect', () => {
             }
             for(let i = 0; i < data.liveTennis.length; i++){
                 if(data.liveTennis[i].marketList.match_odd != null){
-                   html += `<a href="/exchange_sports/live_match?id=${data.liveTennis[i].eventData.eventId}">
+                   html += `<a href="/exchange_inPlay/match?id=${data.liveTennis[i].eventData.eventId}">
                                     <img src="/assets/img/home/side-menuimg04.svg" alt="">
                                     ${data.liveTennis[i].eventData.name}
                                 </a>`
@@ -5551,7 +5551,7 @@ socket.on('connect', () => {
             let html = ``
             for(let i = 0; i < data.LiveCricket.length; i++){
                 if(data.LiveCricket[i].marketList.match_odd != null){
-                   html += `<a href="/exchange_sports/live_match?id=${data.LiveCricket[i].eventData.eventId}">
+                   html += `<a href="/exchange_inPlay/match?id=${data.LiveCricket[i].eventData.eventId}">
                                     <img src="/assets/img/home/side-menuimg02.svg" alt="">
                                     ${data.LiveCricket[i].eventData.name}
                                 </a>`
@@ -5559,7 +5559,7 @@ socket.on('connect', () => {
             }
             // for(let i = 0; i < data.liveFootBall.length; i++){
             //     if(data.liveFootBall[i].marketList.match_odd != null){
-            //        html += `<a href="/exchange_sports/live_match?id=${data.liveFootBall[i].eventData.eventId}">
+            //        html += `<a href="/exchange_inPlay/match?id=${data.liveFootBall[i].eventData.eventId}">
             //                         <img src="/assets/img/home/side-menuimg03.svg" alt="">
             //                         ${data.liveFootBall[i].eventData.name}
             //                     </a>`
@@ -5567,7 +5567,7 @@ socket.on('connect', () => {
             // }
             // for(let i = 0; i < data.liveTennis.length; i++){
             //     if(data.liveTennis[i].marketList.match_odd != null){
-            //        html += `<a href="/exchange_sports/live_match?id=${data.liveTennis[i].eventData.eventId}">
+            //        html += `<a href="/exchange_inPlay/match?id=${data.liveTennis[i].eventData.eventId}">
             //                         <img src="/assets/img/home/side-menuimg04.svg" alt="">
             //                         ${data.liveTennis[i].eventData.name}
             //                     </a>`
@@ -5735,7 +5735,7 @@ socket.on('connect', () => {
             let html = ``
             // for(let i = 0; i < data.LiveCricket.length; i++){
             //     if(data.LiveCricket[i].marketList.match_odd != null){
-            //        html += `<a href="/exchange_sports/live_match?id=${data.LiveCricket[i].eventData.eventId}">
+            //        html += `<a href="/exchange_inPlay/match?id=${data.LiveCricket[i].eventData.eventId}">
             //                         <img src="/assets/img/home/side-menuimg02.svg" alt="">
             //                         ${data.LiveCricket[i].eventData.name}
             //                     </a>`
@@ -5743,7 +5743,7 @@ socket.on('connect', () => {
             // }
             for(let i = 0; i < data.liveFootBall.length; i++){
                 if(data.liveFootBall[i].marketList.match_odd != null){
-                   html += `<a href="/exchange_sports/live_match?id=${data.liveFootBall[i].eventData.eventId}">
+                   html += `<a href="/exchange_inPlay/match?id=${data.liveFootBall[i].eventData.eventId}">
                                     <img src="/assets/img/home/side-menuimg03.svg" alt="">
                                     ${data.liveFootBall[i].eventData.name}
                                 </a>`
@@ -5751,7 +5751,7 @@ socket.on('connect', () => {
             }
             // for(let i = 0; i < data.liveTennis.length; i++){
             //     if(data.liveTennis[i].marketList.match_odd != null){
-            //        html += `<a href="/exchange_sports/live_match?id=${data.liveTennis[i].eventData.eventId}">
+            //        html += `<a href="/exchange_inPlay/match?id=${data.liveTennis[i].eventData.eventId}">
             //                         <img src="/assets/img/home/side-menuimg04.svg" alt="">
             //                         ${data.liveTennis[i].eventData.name}
             //                     </a>`
@@ -5920,7 +5920,7 @@ socket.on('connect', () => {
             let html = ``
             // for(let i = 0; i < data.LiveCricket.length; i++){
             //     if(data.LiveCricket[i].marketList.match_odd != null){
-            //        html += `<a href="/exchange_sports/live_match?id=${data.LiveCricket[i].eventData.eventId}">
+            //        html += `<a href="/exchange_inPlay/match?id=${data.LiveCricket[i].eventData.eventId}">
             //                         <img src="/assets/img/home/side-menuimg02.svg" alt="">
             //                         ${data.LiveCricket[i].eventData.name}
             //                     </a>`
@@ -5928,7 +5928,7 @@ socket.on('connect', () => {
             // }
             // for(let i = 0; i < data.liveFootBall.length; i++){
             //     if(data.liveFootBall[i].marketList.match_odd != null){
-            //        html += `<a href="/exchange_sports/live_match?id=${data.liveFootBall[i].eventData.eventId}">
+            //        html += `<a href="/exchange_inPlay/match?id=${data.liveFootBall[i].eventData.eventId}">
             //                         <img src="/assets/img/home/side-menuimg03.svg" alt="">
             //                         ${data.liveFootBall[i].eventData.name}
             //                     </a>`
@@ -5936,7 +5936,7 @@ socket.on('connect', () => {
             // }
             for(let i = 0; i < data.liveTennis.length; i++){
                 if(data.liveTennis[i].marketList.match_odd != null){
-                   html += `<a href="/exchange_sports/live_match?id=${data.liveTennis[i].eventData.eventId}">
+                   html += `<a href="/exchange_inPlay/match?id=${data.liveTennis[i].eventData.eventId}">
                                     <img src="/assets/img/home/side-menuimg04.svg" alt="">
                                     ${data.liveTennis[i].eventData.name}
                                 </a>`
