@@ -29,11 +29,11 @@ async function placeBet(data){
         betLimit = await betLimitModel.findOne({type:"Sport"})
     }
     // console.log(betLimit, 45654654654)
-    if(betLimit.min_stake > Math.round(data.data.stake) ){
+    if(betLimit.min_stake > parseFloat(data.data.stake) ){
         return `Invalide stake, Please play with atleast minimum stake (${betLimit.min_stake})`
-    }else if(betLimit.max_stake < Math.round(data.data.stake)){
+    }else if(betLimit.max_stake < parseFloat(data.data.stake)){
         return `Invalide stake, Please play with atmost maximum stake (${betLimit.max_stake})`
-    }else if(betLimit.max_odd < Math.round(data.data.odds)){
+    }else if(betLimit.max_odd < parseFloat(data.data.odds)){
         return `Invalide odds valur, Please play with atmost maximum odds (${betLimit.max_odd})`
     }
 
@@ -81,10 +81,10 @@ if(!marketDetails.runners){
         userName : data.LOGINDATA.LOGINUSER.userName,
         transactionId : `${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`,
         date : Date.now(),
-        oddValue : Math.round(data.data.odds),
-        Stake : Math.round(data.data.stake),
+        oddValue : parseFloat(data.data.odds),
+        Stake : parseFloat(data.data.stake),
         status : "OPEN",
-        returns : -Math.round(data.data.stake),
+        returns : -parseFloat(data.data.stake),
         role_type : data.LOGINDATA.LOGINUSER.role_type,
         match : data.data.title,
         betType : bettype,
@@ -108,10 +108,10 @@ if(!marketDetails.runners){
             userName : data.LOGINDATA.LOGINUSER.userName,
             transactionId : `${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`,
             date : Date.now(),
-            oddValue : Math.round(data.data.odds),
-            Stake : Math.round(data.data.stake),
+            oddValue : parseFloat(data.data.odds),
+            Stake : parseFloat(data.data.stake),
             status : "OPEN",
-            returns : -Math.round(data.data.stake),
+            returns : -parseFloat(data.data.stake),
             role_type : data.LOGINDATA.LOGINUSER.role_type,
             match : data.data.title,
             betType : bettype,
@@ -131,40 +131,40 @@ if(!marketDetails.runners){
     let Acc = {
         "user_id":data.LOGINDATA.LOGINUSER._id,
         "description": description,
-        "creditDebitamount" : -Math.round(data.data.stake),
-        "balance" : check.availableBalance - Math.round(data.data.stake),
+        "creditDebitamount" : -parseFloat(data.data.stake),
+        "balance" : check.availableBalance - parseFloat(data.data.stake),
         "date" : Date.now(),
         "userName" : data.LOGINDATA.LOGINUSER.userName,
         "role_type" : data.LOGINDATA.LOGINUSER.role_type,
         "Remark":"-",
-        "stake": Math.round(data.data.stake),
+        "stake": parseFloat(data.data.stake),
         "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`
     }
     await betmodel.create(betPlaceData)
     await accountStatementByUserModel.create(Acc)
     let parentUser
-    let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{balance: - Math.round(data.data.stake), availableBalance: - Math.round(data.data.stake), myPL: - Math.round(data.data.stake), Bets : 1, exposure: Math.round(data.data.stake)}})
+    let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{balance: - parseFloat(data.data.stake), availableBalance: - parseFloat(data.data.stake), myPL: - parseFloat(data.data.stake), Bets : 1, exposure: parseFloat(data.data.stake)}})
     if(!user){
         return "There is no user with that id"
     }
     if(user.parentUsers.length < 2){
         // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
         // parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:data.data.stake}})
-        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0],{$inc:{availableBalance:Math.round(data.data.stake), downlineBalance: -Math.round(data.data.stake), myPL: Math.round(data.data.stake)}})
+        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0],{$inc:{availableBalance:parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake), myPL: parseFloat(data.data.stake)}})
     }else{
-        await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: -Math.round(data.data.stake), downlineBalance: -Math.round(data.data.stake)}})
-        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:Math.round(data.data.stake), downlineBalance: -Math.round(data.data.stake), myPL: Math.round(data.data.stake)}})
+        await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: -parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake)}})
+        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake), myPL: parseFloat(data.data.stake)}})
     }
     let Acc2 = {
         "user_id":parentUser._id,
         "description": description2,
-        "creditDebitamount" : Math.round(data.data.stake),
-        "balance" : parentUser.availableBalance + Math.round(data.data.stake),
+        "creditDebitamount" : parseFloat(data.data.stake),
+        "balance" : parentUser.availableBalance + parseFloat(data.data.stake),
         "date" : Date.now(),
         "userName" : parentUser.userName,
         "role_type" : parentUser.role_type,
         "Remark":"-",
-        "stake": Math.round(data.data.stake),
+        "stake": parseFloat(data.data.stake),
         "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}Parent`
     }
     await accountStatementByUserModel.create(Acc2)
