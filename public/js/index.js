@@ -528,6 +528,11 @@ $(document).on('submit', ".myloginmodl-form-dv", function(e){
     userLogin(data)
 })
 
+$(document).on("click", ".myloginmodl-form-dv", function(e){
+    e.preventDefault()
+    console.log("Working")
+})
+
 $(document).on('submit', ".kycForm", function(e){
     e.preventDefault()
     let form = $(this)[0];

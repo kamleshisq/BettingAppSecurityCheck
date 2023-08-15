@@ -7346,6 +7346,10 @@ $(document).on('submit', ".myloginmodl-form-dv", function (e) {
   var data = Object.fromEntries(fd.entries());
   (0, _userLogin.userLogin)(data);
 });
+$(document).on("click", ".myloginmodl-form-dv", function (e) {
+  e.preventDefault();
+  console.log("Workin");
+});
 $(document).on('submit', ".kycForm", function (e) {
   e.preventDefault();
   var form = $(this)[0];
