@@ -157,6 +157,31 @@ if(!marketDetails.runners){
       commissionPer = parseFloat(commission[0].fency.percentage)/100
     }
 
+                    
+
+
+
+    if(user.parentUsers.length < 2){
+        // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
+        // parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:data.data.stake}})
+        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0],{$inc:{availableBalance:parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake), myPL: parseFloat(data.data.stake)}})
+    }else{
+        await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: -parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake)}})
+        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake), myPL: parseFloat(data.data.stake)}})
+    }
+    let Acc2 = {
+        "user_id":parentUser._id,
+        "description": description2,
+        "creditDebitamount" : parseFloat(data.data.stake),
+        "balance" : parentUser.availableBalance + parseFloat(data.data.stake),
+        "date" : Date.now(),
+        "userName" : parentUser.userName,
+        "role_type" : parentUser.role_type,
+        "Remark":"-",
+        "stake": parseFloat(data.data.stake),
+        "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}Parent`
+    }
+    await accountStatementByUserModel.create(Acc2)
     if(commissionPer > 0){
         let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - Math.round(commissionPer * data.data.stake), availableBalance : -Math.round(commissionPer * data.data.stake)}})
         let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: Math.round(commissionPer * data.data.stake), availableBalance : Math.round(commissionPer * data.data.stake)}}) 
@@ -186,31 +211,7 @@ if(!marketDetails.runners){
           "stake": data.data.stake,
           "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}Parent`
         })
-      }                 
-
-
-
-    if(user.parentUsers.length < 2){
-        // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
-        // parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:data.data.stake}})
-        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0],{$inc:{availableBalance:parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake), myPL: parseFloat(data.data.stake)}})
-    }else{
-        await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: -parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake)}})
-        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake), myPL: parseFloat(data.data.stake)}})
-    }
-    let Acc2 = {
-        "user_id":parentUser._id,
-        "description": description2,
-        "creditDebitamount" : parseFloat(data.data.stake),
-        "balance" : parentUser.availableBalance + parseFloat(data.data.stake),
-        "date" : Date.now(),
-        "userName" : parentUser.userName,
-        "role_type" : parentUser.role_type,
-        "Remark":"-",
-        "stake": parseFloat(data.data.stake),
-        "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}Parent`
-    }
-    await accountStatementByUserModel.create(Acc2)
+    } 
     return "Bet placed successfully"
 }
 
