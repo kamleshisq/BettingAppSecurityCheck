@@ -291,7 +291,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     let turnOver = await accountModel.aggregate([
         {
             $match:{
-                user_id:req.currentUser.id
+                user_id:req.currentUser._id
             }
         }
     ])
