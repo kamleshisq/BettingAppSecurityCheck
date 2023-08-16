@@ -288,8 +288,19 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
           }
     ])
 
-
-    // console.log(alertBet)
+    let turnOver = await accountModel.aggregate([
+        {
+            $match:{
+                user_id:req.currentUser.id
+            }
+        },
+        {
+            totalIncome2: {
+                $sum: { $abs: '$creditDebitamount' },
+            }
+        }
+    ])
+    console.log(turnOver)
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }, parentUsers : { $in: [req.currentUser.id] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
