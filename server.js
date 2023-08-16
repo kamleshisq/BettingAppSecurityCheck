@@ -2357,6 +2357,32 @@ io.on('connection', (socket) => {
             socket.emit("updateCommission",{message:"err", status:"error"})
         }
     })
+
+    socket.on("CommissionRReport", async(data) => {
+        let limit = 20;
+        let page = data.page;
+        // console.log(page)
+        // console.log(data.LOGINDATA.LOGINUSER)
+        let filter = {}
+        filter.user_id = data.LOGINDATA.LOGINUSER._id
+        if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
+            filter.date = {
+                $gt : new Date(data.filterData.fromDate)
+            }
+        }else if(data.filterData.fromDate == "" && data.filterData.toDate != ""){
+            filter.date = {
+                $lt : new Date(data.filterData.toDate)
+            }
+        }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
+            filter.date = {
+                $gte : new Date(data.filterData.fromDate),
+                $lt : new Date(data.filterData.toDate)
+            }
+        }
+
+        let CommissionData = await AccModel.find({user_id:data.LOGINDATA.LOGINUSER.id,description: { $regex: /^commission for/ } }).sort({date:-1}).skip(page * limit).limit(limit)
+        socket.emit("CommissionRReport", {CommissionData, page})
+    })
     
 })
 

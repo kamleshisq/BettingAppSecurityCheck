@@ -6910,6 +6910,75 @@ socket.on('connect', () => {
         }
     }
 
+    if(pathname === "/admin/commissionReport"){
+        const FdateInput = document.getElementById('Fdate');
+        const TdateInput = document.getElementById('Tdate');
+        FdateInput.addEventListener('change', handleInputChange);
+        TdateInput.addEventListener('change', handleInputChange);
+        function handleInputChange(event) {
+            let fromDate = $('#Fdate').val()
+            let toDate = $('#Tdate').val()
+            let filterData = {}
+            filterData.fromDate = fromDate,
+            filterData.toDate = toDate
+            page = 0
+            $('.pageId').attr('data-pageid',1)
+            socket.emit("CommissionRReport", {page, LOGINDATA, filterData})
+          }
+
+
+          $(window).scroll(function() {
+            var scroll = $(window).scrollTop();
+            var windowHeight = $(window).height();
+            var documentHeight = $(document).height();
+            if (scroll + windowHeight >= documentHeight) {
+                console.log("working")
+                let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                let filterData;
+                let fromDate = $('#Fdate').val()
+                let toDate = $('#Tdate').val()
+                filterData.fromDate = fromDate,
+                filterData.toDate = toDate
+                socket.emit("CommissionRReport", {page, LOGINDATA, filterData})
+            }
+          })
+          let count = 21
+          socket.on("CommissionRReport", data => {
+            if(data.CommissionData.length > 0){
+                if(data.page === 0){
+                    count = 1
+                }
+                let page = data.page
+                let userAcc = data.CommissionData;
+                let html = ""
+                for(let i = 0; i < userAcc.length; i++){
+                    let date = new Date(userAcc[i].date)
+                    html += `<tr style="text-align: center;" class="blue"><td>${count + i}</td>
+                    <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
+                <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                if(data[i].creditDebitamount > 0){
+                    html += ` <td>${userAcc[i].creditDebitamoun}></td>
+                    <td>-</td>`
+                }else{
+                    html += ` <td>-</td><td>${userAcc[i].creditDebitamoun}></td>`
+                }
+                html += `td>${userAcc[i].balance}</td>
+                <td>${userAcc[i].description}</td>
+            </tr>`
+                }
+
+                count += 20
+                if(data.page == 0){
+                    $('.table-body').html(html)
+                }else{
+                    $('.table-body').append(html)         
+                }
+            }
+          })
+
+
+    }
     
 
 

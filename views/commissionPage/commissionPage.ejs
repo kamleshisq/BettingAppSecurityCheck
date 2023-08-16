@@ -50,15 +50,16 @@
       <div>
         <span class="up-down-form">From Date</span>
       <form action="">
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+          <input type = "date" id="Fdate" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
         </form></div>
         <div>
           <span class="up-down-form">To Date</span>
         <form action="">
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+          <input type = "date" id="Tdate" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
           </form>
           </div>
     </div>
+    <div class="pageId" data-pageid="1"></div>
       <div style="justify-content: flex-end;display: flex;gap: 10px;">
       <!-- <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add House Funds</button> -->
       
@@ -81,7 +82,7 @@
                 <th>Description</th>
               </tr>
           </thead>
-          <tbody class="new-body" style="font-size: 11px;">
+          <tbody class="new-body table-body" style="font-size: 11px;">
            <%for(let i = 0; i < data.length; i++){ %>
             <% let date = new Date(data[i].date)%>
             <tr style="text-align: center;" class="blue">
