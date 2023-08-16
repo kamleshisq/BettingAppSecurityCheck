@@ -6517,7 +6517,7 @@ socket.on('connect', () => {
                     
                 }
                 let check = $(this).closest("tr").find("#changes").prop("checked");
-                console.log((data.odds != "\n                        \n"), 121212)
+                console.log((data.odds != '\n                        \n                      '), 121212)
                 if(specificSpan == data.odds){
                     if(data.stake === ""){
                         // alert("Please select stake")
