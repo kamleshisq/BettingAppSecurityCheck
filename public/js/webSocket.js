@@ -76,6 +76,7 @@ socket.on('connect', () => {
     $(document).ready(function() {
         // Check if there's a class stored in localStorage
         var storedClass = localStorage.getItem("new-class");
+        console.log(storedClass)
         if (storedClass) {
             // Apply the stored class to the corresponding element
             $(".nav2menu-item").removeClass("new-class");
