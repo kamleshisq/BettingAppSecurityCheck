@@ -6567,27 +6567,22 @@ socket.on('connect', () => {
     
             socket.on("betDetails" , (data) => {
                 hideLoader()
+                console.log(data.result)
                 function togglePopup(idname, id){
                     document.getElementById(idname).classList.toggle("active");
                     document.getElementById(id).innerText  = data.result.toUpperCase()
                     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
                   }
-                if(data.result === "Bet place successfully"){
+                if(data.result === "Bet placed successfully"){
                     togglePopup('popup-1', "redPopUP")
                 }else{
                     togglePopup('popup-2', "redPopUP2")
                 }
-             
+                
                 let html2 = ""
-                let ids = []
-                $(".market").each(function() {
-                    ids.push(this.id);
-                  });
-                let newArray = data.openBet.filter(item => ids.includes(item.marketId))
-                // console.log(newArray)
-
-                document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${newArray.length})</h5>`
-                if(newArray.length === 1){
+                document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${data.openBet.length})</h5>`
+                document.getElementById("pills-profilebb-tab").innerHTML = `Open Bets (${data.openBet.length})`
+                if(data.openBet.length === 1){
                     html2 = `<table class="table-new-d">
                     <thead>
                       <tr class="thead-border my-open-bet-trr">
@@ -6598,22 +6593,24 @@ socket.on('connect', () => {
                     </thead>
                     <tbody id="tableBET">
                       <tr>
-                        <td>${ newArray[0].selectionName}</td>
-                        <td>${ newArray[0].oddValue }</td>
-                        <td>${ newArray[0].Stake }</td>
+                        <td>${ data.openBet[0].selectionName}</td>
+                        <td>${ data.openBet[0].oddValue }</td>
+                        <td>${ data.openBet[0].Stake }</td>
                       </tr>
                     </tbody>
                   </table>`
                   document.getElementById('length1').innerHTML = html2
+                  document.getElementById('length2').innerHTML = html2
                 }else{
-                    for(let i = 0; i < newArray.length; i++){
+                    for(let i = 0; i < data.openBet.length; i++){
                         html2 += `<tr>
-                        <td>${ newArray[i].selectionName}</td>
-                        <td>${ newArray[i].oddValue }</td>
-                        <td>${ newArray[i].Stake }</td>
+                        <td>${ data.openBet[i].selectionName}</td>
+                        <td>${ data.openBet[i].oddValue }</td>
+                        <td>${ data.openBet[i].Stake }</td>
                       </tr>`
                     }
                     document.getElementById('tableBET').innerHTML = html2
+                    document.getElementById('tableBET1').innerHTML = html2
                 }
             })
     }
