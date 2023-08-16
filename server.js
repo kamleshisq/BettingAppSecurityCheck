@@ -1908,18 +1908,19 @@ io.on('connection', (socket) => {
                     date:filter
                 }
             },
-            {
-                $group: {
-                    _id: null,
-                    totalAmount: { $sum: { $abs: "$creditDebitamount" } }
-                }
-            }
+            // {
+            //     $group: {
+            //         _id: null,
+            //         totalAmount: { $sum: { $abs: "$creditDebitamount" } }
+            //     }
+            // }
         ])
-        if(turnOver.length > 0){
-            result.turnOver = turnOver[0].totalAmount
-        }else{
-            result.turnOver = 0
-        }
+        // if(turnOver.length > 0){
+        //     result.turnOver = turnOver[0].totalAmount
+        // }else{
+        //     result.turnOver = 0
+        // }
+        console.log(turnOver.length)
         console.log(result)
 
     })
