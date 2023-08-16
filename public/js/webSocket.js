@@ -6898,6 +6898,14 @@ socket.on('connect', () => {
                     let value = $(this).val()
                     socket.emit("FIlterDashBoard", {LOGINDATA, value})
                 })
+
+                socket.on("FIlterDashBoard", data => {
+                    document.getElementById('betCount').innerText = data.betCount
+                    document.getElementById('Profit').innerText = data.Income
+                    document.getElementById('turnOver').innerText = data.turnOver
+                    document.getElementById('adminCount').innerText = data.adminCount
+                    document.getElementById('userCount').innerText = data.userCount
+                })
         }
     }
 

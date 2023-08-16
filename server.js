@@ -1805,7 +1805,7 @@ io.on('connection', (socket) => {
                 $lt: new Date(currentDateString)
             };
         } else if (data.value === "all") {
-           
+            filter = {};
         } else {
             filter = {
                 $gte: new Date(threeDaysAgoString),
@@ -1951,10 +1951,13 @@ io.on('connection', (socket) => {
               }
           ])
           console.log(betCount)
+          if(betCount.length > 0){
+            result.betCount = betCount[0].totalBets
+          }
         // console.log(turnOver)
         // console.log(turnOver.length)
 
-        console.log(result)
+        socket.emit("FIlterDashBoard", {result})
 
     })
 
