@@ -2365,6 +2365,7 @@ io.on('connection', (socket) => {
         // console.log(data.LOGINDATA.LOGINUSER)
         let filter = {}
         filter.user_id = data.LOGINDATA.LOGINUSER._id
+        filter.description = { $regex: /^commission for/ }
         if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
             filter.date = {
                 $gt : new Date(data.filterData.fromDate)
@@ -2380,7 +2381,7 @@ io.on('connection', (socket) => {
             }
         }
 
-        let CommissionData = await AccModel.find({user_id:data.LOGINDATA.LOGINUSER.id,description: { $regex: /^commission for/ } }).sort({date:-1})
+        let CommissionData = await AccModel.find(filter).sort({date:-1}).skip(page * limit).limit(limit)
         console.log(CommissionData)
         socket.emit("CommissionRReport", {CommissionData, page})
     })
