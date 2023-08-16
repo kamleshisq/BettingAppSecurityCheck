@@ -6973,6 +6973,7 @@ socket.on('connect', () => {
 
                 count += 20
                 if(data.page == 0){
+                    console.log(html)
                     $('.table-body').html(html)
                 }else{
                     $('.table-body').append(html)         
