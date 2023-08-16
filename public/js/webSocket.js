@@ -6973,8 +6973,11 @@ socket.on('connect', () => {
 
                 count += 20
                 if(data.page == 0){
-                    console.log(html)
+                    // console.log(html)
                     $('.table-body').html(html)
+                    if(data.CommissionData.length === 0){
+                        $('.table-body').html("")
+                    }
                 }else{
                     $('.table-body').append(html)         
                 }
