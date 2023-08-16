@@ -6901,11 +6901,11 @@ socket.on('connect', () => {
 
                 socket.on("FIlterDashBoard", data => {
                     console.log(data)
-                    document.getElementById('betCount').innerText = data.betCount
-                    document.getElementById('Profit').innerText = data.Income
-                    document.getElementById('turnOver').innerText = data.turnOver
-                    document.getElementById('adminCount').innerText = data.adminCount
-                    document.getElementById('userCount').innerText = data.userCount
+                    document.getElementById('betCount').innerText = data.result.betCount
+                    document.getElementById('Profit').innerText = data.result.Income
+                    document.getElementById('turnOver').innerText = data.result.turnOver
+                    document.getElementById('adminCount').innerText = data.result.adminCount
+                    document.getElementById('userCount').innerText = data.result.userCount
                 })
         }
     }
