@@ -6892,6 +6892,13 @@ socket.on('connect', () => {
                   var chart = new ApexCharts(document.querySelector("#chart"), options);
                   chart.render();
                 })
+
+                $(document).on("change", "selected", function(e){
+                    console.log("working")
+                    console.log(this.val())
+                })
+
+
         }
     }
 
