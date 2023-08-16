@@ -6948,7 +6948,7 @@ socket.on('connect', () => {
           let count = 21
           socket.on("CommissionRReport", data => {
             console.log(data)
-            if(data.CommissionData.length > 0){
+            // if(data.CommissionData.length > 0){
                 if(data.page === 0){
                     count = 1
                 }
@@ -6976,15 +6976,12 @@ socket.on('connect', () => {
                 if(data.page == 0){
                     // console.log(html)
                     $('.table-body').html(html)
-                    if(data.CommissionData.length === 0){
-                        $('.table-body').html("1")
-                    }
+                    // if(data.CommissionData.length === 0){
+                    //     $('.table-body').html("1")
+                    // }
                 }else{
                     $('.table-body').append(html)         
                 }
-            }else{
-                $('.table-body').html("")
-            }
           })
 
 
