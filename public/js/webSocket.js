@@ -3215,186 +3215,186 @@ socket.on('connect', () => {
         })
     }
 
-    if(pathname === "/exchange_inPlay/match"){
-        function marketId(){
-            $(document).ready(function() {
-                var ids = [];
+    // if(pathname === "/exchange_inPlay/match"){
+    //     function marketId(){
+    //         $(document).ready(function() {
+    //             var ids = [];
           
-                $(".market").each(function() {
-                  ids.push(this.id);
-                });
-                // console.log(ids)
-                socket.emit("marketId", ids)
-              });
-              setTimeout(()=>{
-                marketId()
-              }, 60000)
-        }
-        marketId()
+    //             $(".market").each(function() {
+    //               ids.push(this.id);
+    //             });
+    //             // console.log(ids)
+    //             socket.emit("marketId", ids)
+    //           });
+    //           setTimeout(()=>{
+    //             marketId()
+    //           }, 60000)
+    //     }
+    //     marketId()
 
 
-        socket.on("marketId", async(data) => {
-            // console.log(data)
-            $(document).ready(function() {
+    //     socket.on("marketId", async(data) => {
+    //         // console.log(data)
+    //         $(document).ready(function() {
           
-                $(".BACK").each(function() {
-                let id = this.id
-                const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                for(let i = 0; i < 3; i++){
-                    if($(this).hasClass(`${i}`)){
-                        // this.innerHTML = `<button id="123">${foundItem.odds[i].backPrice1}</button>, <button id="123">${foundItem.odds[i].backPrice2}</button>, <button id="123">${foundItem.odds[i].backPrice3}</button>`
-                        document.getElementById(`${this.id}0`).innerHTML = `${foundItem.odds[i].backPrice3}`
-                        document.getElementById(`${this.id}1`).innerHTML = `${foundItem.odds[i].backPrice2}`
-                        document.getElementById(`${this.id}2`).innerHTML = `${foundItem.odds[i].backPrice1}`
+    //             $(".BACK").each(function() {
+    //             let id = this.id
+    //             const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+    //             for(let i = 0; i < 3; i++){
+    //                 if($(this).hasClass(`${i}`)){
+    //                     // this.innerHTML = `<button id="123">${foundItem.odds[i].backPrice1}</button>, <button id="123">${foundItem.odds[i].backPrice2}</button>, <button id="123">${foundItem.odds[i].backPrice3}</button>`
+    //                     document.getElementById(`${this.id}0`).innerHTML = `${foundItem.odds[i].backPrice3}`
+    //                     document.getElementById(`${this.id}1`).innerHTML = `${foundItem.odds[i].backPrice2}`
+    //                     document.getElementById(`${this.id}2`).innerHTML = `${foundItem.odds[i].backPrice1}`
 
-                    }
-                }
-                });
+    //                 }
+    //             }
+    //             });
 
-                $(".LAY").each(function() {
-                    let id = this.id
-                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    for(let i = 0; i < 3; i++){
-                        if($(this).hasClass(`${i}`)){
-                            // this.innerHTML = `<button id="123">${foundItem.odds[i].layPrice1}</button>, <button id="123">${foundItem.odds[i].layPrice2}</button>, <button id="123">${foundItem.odds[i].layPrice3}</button>`
-                            document.getElementById(`${this.id}3`).innerHTML = `${foundItem.odds[i].layPrice1}`
-                            document.getElementById(`${this.id}4`).innerHTML = `${foundItem.odds[i].layPrice2}`
-                            document.getElementById(`${this.id}5`).innerHTML = `${foundItem.odds[i].layPrice3}`
-                        }
-                    }
-                    });
+    //             $(".LAY").each(function() {
+    //                 let id = this.id
+    //                 const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+    //                 for(let i = 0; i < 3; i++){
+    //                     if($(this).hasClass(`${i}`)){
+    //                         // this.innerHTML = `<button id="123">${foundItem.odds[i].layPrice1}</button>, <button id="123">${foundItem.odds[i].layPrice2}</button>, <button id="123">${foundItem.odds[i].layPrice3}</button>`
+    //                         document.getElementById(`${this.id}3`).innerHTML = `${foundItem.odds[i].layPrice1}`
+    //                         document.getElementById(`${this.id}4`).innerHTML = `${foundItem.odds[i].layPrice2}`
+    //                         document.getElementById(`${this.id}5`).innerHTML = `${foundItem.odds[i].layPrice3}`
+    //                     }
+    //                 }
+    //                 });
              
-            })
-        })
+    //         })
+    //     })
 
-        function eventID(){
-            let eventId = $(".eventName").attr("id")
-            socket.emit("eventId", eventId)
-            setTimeout(()=>{
-                eventID()
-              }, 500)
+    //     function eventID(){
+    //         let eventId = $(".eventName").attr("id")
+    //         socket.emit("eventId", eventId)
+    //         setTimeout(()=>{
+    //             eventID()
+    //           }, 500)
 
-        }
-        eventID()
-        socket.on("eventId", async(data)=>{
-            if(data != ""){
-                let score = JSON.parse(data)
+    //     }
+    //     eventID()
+    //     socket.on("eventId", async(data)=>{
+    //         if(data != ""){
+    //             let score = JSON.parse(data)
                 
-                document.getElementById("Score").innerHTML = score[0].data
-            }
-        })
+    //             document.getElementById("Score").innerHTML = score[0].data
+    //         }
+    //     })
 
-        // document.getElementsByClassName('button').addEventListener('click', function() {
-        //     console.log("1234")
-        //   var popup = document.getElementById('popupForm');
-        //   popup.style.display = 'block';
-        // });
-        const buttons = document.getElementsByClassName('button');
-        let popup = document.getElementById('popupForm');
-        let form = $(popup).find('#bet-form')
-        Array.from(buttons).forEach(function(button) {
-            button.addEventListener('click', function() {
-              popup.style.display = 'block';
-            });
-          });
+    //     // document.getElementsByClassName('button').addEventListener('click', function() {
+    //     //     console.log("1234")
+    //     //   var popup = document.getElementById('popupForm');
+    //     //   popup.style.display = 'block';
+    //     // });
+    //     const buttons = document.getElementsByClassName('button');
+    //     let popup = document.getElementById('popupForm');
+    //     let form = $(popup).find('#bet-form')
+    //     Array.from(buttons).forEach(function(button) {
+    //         button.addEventListener('click', function() {
+    //           popup.style.display = 'block';
+    //         });
+    //       });
 
           
-    document.addEventListener('click', function(event) {
-        if (!popup.contains(event.target) && !Array.from(buttons).some(button => button.contains(event.target))) {
-          popup.style.display = 'none';
-          form.find('input[name = "odds"]').val("")
-        }
+    // document.addEventListener('click', function(event) {
+    //     if (!popup.contains(event.target) && !Array.from(buttons).some(button => button.contains(event.target))) {
+    //       popup.style.display = 'none';
+    //       form.find('input[name = "odds"]').val("")
+    //     }
 
-        if(Array.from(buttons).some(button => button.contains(event.target))){
-            form.find('input[name = "odds"]').val("")
-            form.find('input[name = "title"]').removeClass()
-        }
-      });
+    //     if(Array.from(buttons).some(button => button.contains(event.target))){
+    //         form.find('input[name = "odds"]').val("")
+    //         form.find('input[name = "title"]').removeClass()
+    //     }
+    //   });
 
 
 
-    //   $(document).on('click','.button',function(e){
+    // //   $(document).on('click','.button',function(e){
+    // //     let modleName = $(".popup")
+    // //     let form = $(modleName).find('#bet-form')
+    // //     let eventName = $(".eventName").text()
+    // //     let marketId = $(".match_odd").attr('id')
+    // //     let x = parseFloat($(this).text())
+    // //     let id = parseFloat($(this).attr("id"))
+    // //     // form.find('input[name = "odds"]').val(x)
+    // //     form.find('input[name="odds"]').prop('value', x)
+    // //     form.find('input[name = "title"]').addClass(id);
+    // //     form.find('input[name = "button"]').addClass(marketId);
+    // //     form.find('input[name = "title"]').val(eventName)
+    // // })
+
+    // document.addEventListener('click', function(e) {
+    //     if (e.target.classList.contains('button')) {
+    //       e.preventDefault();
+      
+    //       var modleName = document.querySelector('.popup');
+    //       var form = modleName.querySelector('#bet-form');
+    //       var eventName = document.querySelector('.eventName').textContent;
+    //       var marketId = document.querySelector('.match_odd').getAttribute('id');
+    //       var x = parseFloat(e.target.textContent.trim());
+    //       var id = e.target.getAttribute('id');
+      
+    //       form.querySelector('input[name="odds"]').value = x;
+    //       form.querySelector('input[name="title"]').classList.add(id);
+    //       form.querySelector('input[name="button"]').classList.add(marketId);
+    //       form.querySelector('input[name="title"]').value = eventName;
+    //     }
+    //   });      
+
+    // async function checkOdd() {
+    // //    console.log('working')
     //     let modleName = $(".popup")
     //     let form = $(modleName).find('#bet-form')
-    //     let eventName = $(".eventName").text()
-    //     let marketId = $(".match_odd").attr('id')
-    //     let x = parseFloat($(this).text())
-    //     let id = parseFloat($(this).attr("id"))
-    //     // form.find('input[name = "odds"]').val(x)
-    //     form.find('input[name="odds"]').prop('value', x)
-    //     form.find('input[name = "title"]').addClass(id);
-    //     form.find('input[name = "button"]').addClass(marketId);
-    //     form.find('input[name = "title"]').val(eventName)
+    //     let formOddsbuttonId = form.find('input[name = "title"]').attr("class");
+    //     let odds = $(`#${formOddsbuttonId}`).text()
+    //     if(form.find('input[name = "odds"]').val() != odds && form.find('input[name = "odds"]').val() != ''){
+    //         alert('odds value change')
+    //         form.find('input[name = "odds"]').val(odds)
+    //     }
+    //    setTimeout(()=>{
+    //     formOdds = null
+    //     checkOdd()
+    //   }, 300)
+    // }
+
+
+    // $(document).on('submit', '#bet-form', async function(e){
+    //     e.preventDefault()
+    //     let form = $(this)[0];
+    //     let fd = new FormData(form);
+    //     let data = Object.fromEntries(fd.entries());
+    //     data.secId = $("#bet-title").attr("class").slice(0, -1);
+    //     data.market = $("#SUBMIT").attr("class");
+    //     data.eventId = $('.eventName')[0].id
+    //     data.spoetId = $('.details')[0].id
+    //     let modleName = $(".popup")
+    //     let form1 = $(modleName).find('#bet-form')
+    //     let formOddsbuttonId = form1.find('input[name = "title"]').attr("class");
+    //     let odds = $(`#${formOddsbuttonId}`).text()
+    //     if(odds != data.odds && !data.option1){
+    //         alert('odds value change')
+    //         form1.find('input[name = "odds"]').val(odds)
+    //         data.odds = odds
+    //     }else{
+    //         form1.find('input[name = "odds"]').val(odds)
+    //         data.odds = odds
+    //     }
+    //     // console.log(data)
+    //     socket.emit('betDetails', {data, LOGINDATA});
     // })
 
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('button')) {
-          e.preventDefault();
-      
-          var modleName = document.querySelector('.popup');
-          var form = modleName.querySelector('#bet-form');
-          var eventName = document.querySelector('.eventName').textContent;
-          var marketId = document.querySelector('.match_odd').getAttribute('id');
-          var x = parseFloat(e.target.textContent.trim());
-          var id = e.target.getAttribute('id');
-      
-          form.querySelector('input[name="odds"]').value = x;
-          form.querySelector('input[name="title"]').classList.add(id);
-          form.querySelector('input[name="button"]').classList.add(marketId);
-          form.querySelector('input[name="title"]').value = eventName;
-        }
-      });      
-
-    async function checkOdd() {
-    //    console.log('working')
-        let modleName = $(".popup")
-        let form = $(modleName).find('#bet-form')
-        let formOddsbuttonId = form.find('input[name = "title"]').attr("class");
-        let odds = $(`#${formOddsbuttonId}`).text()
-        if(form.find('input[name = "odds"]').val() != odds && form.find('input[name = "odds"]').val() != ''){
-            alert('odds value change')
-            form.find('input[name = "odds"]').val(odds)
-        }
-       setTimeout(()=>{
-        formOdds = null
-        checkOdd()
-      }, 300)
-    }
-
-
-    $(document).on('submit', '#bet-form', async function(e){
-        e.preventDefault()
-        let form = $(this)[0];
-        let fd = new FormData(form);
-        let data = Object.fromEntries(fd.entries());
-        data.secId = $("#bet-title").attr("class").slice(0, -1);
-        data.market = $("#SUBMIT").attr("class");
-        data.eventId = $('.eventName')[0].id
-        data.spoetId = $('.details')[0].id
-        let modleName = $(".popup")
-        let form1 = $(modleName).find('#bet-form')
-        let formOddsbuttonId = form1.find('input[name = "title"]').attr("class");
-        let odds = $(`#${formOddsbuttonId}`).text()
-        if(odds != data.odds && !data.option1){
-            alert('odds value change')
-            form1.find('input[name = "odds"]').val(odds)
-            data.odds = odds
-        }else{
-            form1.find('input[name = "odds"]').val(odds)
-            data.odds = odds
-        }
-        // console.log(data)
-        socket.emit('betDetails', {data, LOGINDATA});
-    })
-
-    socket.on("betDetails" , (data) => {
-        alert(data)
-    })
+    // socket.on("betDetails" , (data) => {
+    //     alert(data)
+    // })
 
 
 
 
-    }
+    // }
 
     if(pathname === "/exchange_sports/cricket"){
         function marketId(){
