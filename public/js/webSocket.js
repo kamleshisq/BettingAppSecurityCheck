@@ -74,16 +74,16 @@ socket.on('connect', () => {
 
 
     $(document).ready(function() {
-        // Check if there's a class stored in localStorage
+        // Check if there's a stored class in localStorage
         var storedClass = localStorage.getItem("new-class");
-        console.log(storedClass)
+    
         if (storedClass) {
-            // Apply the stored class to the corresponding element
+            // Add the stored class to the corresponding element
             $(".nav2menu-item").removeClass("new-class");
             $("." + storedClass).addClass("new-class");
         }
     
-        $(document).on("click", ".nav2menu-item", function(e){
+        $(document).on("click", ".nav2menu-item", function(e) {
             // Remove the "new-class" from all other elements
             $(".nav2menu-item").removeClass("new-class");
     
