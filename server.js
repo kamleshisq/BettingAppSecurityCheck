@@ -1840,7 +1840,12 @@ io.on('connection', (socket) => {
             {
                 $group: {
                     _id: null,
-                    totalAmount: { $sum: 1 }
+                    uniqueUsers: { $addToSet: "$user._id" } 
+                }
+            },
+            {
+                $project: {
+                    totalAmount: { $size: "$uniqueUsers" } 
                 }
             }
         ])
