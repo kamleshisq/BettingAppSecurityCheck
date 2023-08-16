@@ -73,28 +73,28 @@ socket.on('connect', () => {
     })
 
 
-    $(document).ready(function() {
-        // Check if there's a stored class in localStorage
-        var storedClass = localStorage.getItem("new-class");
-        console.log(storedClass)
-        if (storedClass) {
-            // Add the stored class to the corresponding element
-            $(".nav2menu-item").removeClass("new-class");
-            $("." + storedClass).addClass("new-class");
-        }
+    // $(document).ready(function() {
+    //     // Check if there's a stored class in localStorage
+    //     var storedClass = localStorage.getItem("new-class");
+    //     console.log(storedClass)
+    //     if (storedClass) {
+    //         // Add the stored class to the corresponding element
+    //         $(".nav2menu-item").removeClass("new-class");
+    //         $("." + storedClass).addClass("new-class");
+    //     }
     
-        $(document).on("click", ".nav2menu-item", function(e) {
-            // Remove the "new-class" from all other elements
-            $(".nav2menu-item").removeClass("new-class");
+    //     $(document).on("click", ".nav2menu-item", function(e) {
+    //         // Remove the "new-class" from all other elements
+    //         $(".nav2menu-item").removeClass("new-class");
     
-            // Add the "new-class" to the clicked element
-            $(this).addClass("new-class");
+    //         // Add the "new-class" to the clicked element
+    //         $(this).addClass("new-class");
     
-            // Store the added class in localStorage
-            var addedClass = $(this).attr("class").split(" ").filter(cls => cls !== "nav2menu-item")[0];
-            localStorage.setItem("new-class", addedClass);
-        });
-    });
+    //         // Store the added class in localStorage
+    //         var addedClass = $(this).attr("class").split(" ").filter(cls => cls !== "nav2menu-item")[0];
+    //         localStorage.setItem("new-class", addedClass);
+    //     });
+    // });
 
 
 

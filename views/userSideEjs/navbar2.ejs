@@ -1,48 +1,76 @@
 <section class="nav2menu-dv2">
     <div class="nav2menu-dv-wrp container-fluid">
       <div class="nav2menu-dv-wrp2">
-        <div class="nav2menu-item" onclick="window.location.href = '/exchange/inPlay'; ">
+        <%if(check === "In-Play"){%>
+            <div class="nav2menu-item new-class-mobile" onclick="window.location.href = '/exchange/inPlay'; ">
+              <%}else{%>
+            <div class="nav2menu-item" onclick="window.location.href = '/exchange/inPlay'; ">
+          <%} %>
           <span>
           <img class="img-fluid" src="/assets/img/home/side-menuimg02.svg" alt="">
           </span>
           <p>In-play</p>
         </div>
-        <div class="nav2menu-item" onclick="window.location.href = '/exchange/cricket'; ">
+        <%if(check === "Cricket"){%>
+          <div class="nav2menu-item new-class-mobile" onclick="window.location.href = '/exchange/cricket'; ">
+            <%}else{%>
+          <div class="nav2menu-item" onclick="window.location.href = '/exchange/cricket'; ">
+        <%} %>
           <span>
           <img class="img-fluid" src="/assets/img/home/side-menuimg03.svg" alt="">
           </span>
           <p>Cricket</p>
         </div>
-        <div class="nav2menu-item" onclick="window.location.href = '/exchange/football'; ">
+        <%if(check === "Football"){%>
+            <div class="nav2menu-item new-class-mobile" onclick="window.location.href = '/exchange/football'; ">
+              <%}else{%>
+            <div class="nav2menu-item" onclick="window.location.href = '/exchange/football'; ">
+          <%} %>
           <span>
           <img class="img-fluid" src="/assets/img/home/side-menuimg04.svg" alt="">
           </span>
           <p>Football</p>
         </div>
-        <div class="nav2menu-item" onclick="window.location.href = '/exchange/tennis'; ">
+        <%if(check === "Tennis"){%>
+          <div class="nav2menu-item new-class-mobile" onclick="window.location.href = '/exchange/tennis'; ">
+            <%}else{%>
+          <div class="nav2menu-item" onclick="window.location.href = '/exchange/tennis'; ">
+        <%} %>
           <span>
           <img class="img-fluid" src="/assets/img/home/side-menuimg05.svg" alt="">
           </span>
           <p>Tennis</p>
         </div>
-        <div class="nav2menu-item" onclick="window.location.href = '/exchange/inPlay'; ">
+        <!-- <%if(check === "Cricket"){%>
+        <%}else{%>
+          <%} %> -->
+          <div class="nav2menu-item" onclick="window.location.href = '/exchange/inPlay'; ">
           <span>
           <img class="img-fluid" src="/assets/img/home/side-menuimg06.svg" alt="">
           </span>
           <p>Basketball</p>
         </div>
+        <!-- <%if(check === "Cricket"){%>
+        <%}else{%>
+        <%} %> -->
         <div class="nav2menu-item" onclick="window.location.href = '/exchange/inPlay'; ">
           <span>
           <img class="img-fluid" src="/assets/img/home/side-menuimg07.png" alt="">
           </span>
-          <p>Basketball</p>
+          <p>Horse Racing</p>
         </div>
+        <!-- <%if(check === "Cricket"){%>
+        <%}else{%>
+        <%} %> -->
         <div class="nav2menu-item" onclick="window.location.href = '/exchange/inPlay'; ">
           <span>
           <img class="img-fluid" src="/assets/img/home/side-menuimg08.png" alt="">
           </span>
-          <p>Basketball</p>
+          <p>Grayhound</p>
         </div>
+        <!-- <%if(check === "Cricket"){%>
+        <%}else{%>
+        <%} %> -->
       </div>
     </div>
   </section>
