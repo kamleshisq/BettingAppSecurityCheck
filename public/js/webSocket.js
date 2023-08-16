@@ -6893,9 +6893,9 @@ socket.on('connect', () => {
                   chart.render();
                 })
 
-                $(document).on("change", "selected", function(e){
+                $(document).on("change", ".selected", function(e){
                     console.log("working")
-                    console.log(this.val())
+                    console.log($(this).val())
                 })
 
 
