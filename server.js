@@ -1850,7 +1850,7 @@ io.on('connection', (socket) => {
         }else{
             result.userCount = 0
         }
-
+        console.log(result)
 
     })
 
