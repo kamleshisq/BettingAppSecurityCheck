@@ -6523,7 +6523,7 @@ socket.on('connect', () => {
                         // alert("Please select stake")
                         togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                     }else{
-                        if(data.odds != ""){
+                        if(data.odds != '\n                        \n                      '){
                             socket.emit("betDetails", {data, LOGINDATA})
                             showLoader();
                         }else{
@@ -6537,7 +6537,7 @@ socket.on('connect', () => {
                             // alert("Please select stake")
                             togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                         }else{
-                            if(data.odds != ""){
+                            if(data.odds != '\n                        \n                      '){
                                 socket.emit("betDetails", {data, LOGINDATA})
                                 showLoader();
                             }else{
