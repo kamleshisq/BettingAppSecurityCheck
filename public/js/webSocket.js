@@ -6517,10 +6517,10 @@ socket.on('connect', () => {
                 //     specificSpan = $(`#${secforFency}`).children("span:first-child").text();
                 //     // console.log(`#${secforFency}`)
                 // }else{
-                //     specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
+                let specificSpan = $(`#${secId}`).children("span:first-child").text();
                     
                 // }
-                console.log(secId)
+                console.log(secId, specificSpan)
                 let check = $(this).closest("tr").find("#changes").prop("checked");
                 if(specificSpan == data.odds){
                     if(data.stake === ""){
