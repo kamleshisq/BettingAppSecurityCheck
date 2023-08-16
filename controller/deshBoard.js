@@ -149,13 +149,13 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     // console.log(req.currentUser.id)
         userCount = await User.countDocuments({
             roleName: 'user',
-            isActive: true,
+            is_Online: true,
             parentUsers : { $in: [req.currentUser.id] }
         });
 
         adminCount = await User.countDocuments({
             roleName: { $ne: 'user' },
-            isActive: true,
+            is_Online: true,
             parentUsers : { $in: [req.currentUser.id] }
         });
 
