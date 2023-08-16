@@ -297,7 +297,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         {
             $group: {
                 _id: null,
-                totalAmount: { $abs: "$creditDebitamount" }
+                totalAmount: { $sum: { $abs: "$creditDebitamount" } }
             }
         }
     ])
