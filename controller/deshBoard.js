@@ -182,7 +182,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
           ])
 
 
-    console.log(req.currentUser, 45645464)
+    // console.log(req.currentUser, 45645464)
    
         // console.log(next10Days)
     
@@ -285,6 +285,11 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
               count: 1,
               sport:1
             }
+          },{
+            $sort:{count : -1}
+          },
+          {
+            $limit:5
           }
     ])
 
