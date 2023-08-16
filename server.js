@@ -1911,17 +1911,49 @@ io.on('connection', (socket) => {
             {
                 $group: {
                     _id: null,
-                    totalAmount: { $sum: { $abs: "$creditDebitamount" } }
+                    totalAmount: { $sum: { $abs: "$creditDebitamount" } },
+                    Income : {$sum: '$creditDebitamount'},
                 }
             }
         ])
-        // if(turnOver.length > 0){
-        //     result.turnOver = turnOver[0].totalAmount
-        // }else{
-        //     result.turnOver = 0
-        // }
-        console.log(turnOver)
-        console.log(turnOver.length)
+        if(turnOver.length > 0){
+            result.turnOver = turnOver[0].totalAmount
+            result.Income = turnOver[0].Income
+        }else{
+            result.turnOver = 0
+            result.Income = 0
+        }
+
+        betCount = await Bet.aggregate([
+            {
+                $match:{
+                    date:filter
+                }
+            },
+            {
+                $lookup: {
+                  from: "users",
+                  localField: "userName",
+                  foreignField: "userName",
+                  as: "user"
+                }
+              },
+              {
+                $unwind: "$user"
+              },
+              {
+                $match: {
+                  "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
+                }
+              },
+            {
+                $count: "totalBets"
+              }
+          ])
+          console.log(betCount)
+        // console.log(turnOver)
+        // console.log(turnOver.length)
+
         console.log(result)
 
     })
