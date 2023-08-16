@@ -6501,19 +6501,29 @@ socket.on('connect', () => {
                         data.secId = "odd_Even_No"
                     }
                 }
-                if(data.stake === ""){
-                    // alert("Please select stake")
-                    function togglePopup(idname, id){
-                        document.getElementById(idname).classList.toggle("active");
-                        document.getElementById(id).innerText  = "Please select stake".toUpperCase()
-                        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-                      }
-                      togglePopup('popup-2', "redPopUP2")
+                let specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
+                let check = $(this).closest("tr").find("#changes").prop("checked");
+                if(specificSpan == data.odds){
+                    if(data.stake === ""){
+                        // alert("Please select stake")
+                        togglePopupMain('popup-2', "redPopUP2", "Please select stake")
+                    }else{
+                        socket.emit("betDetails", {data, LOGINDATA})
+                        showLoader();
+                    }
                 }else{
-                    
-                    socket.emit("betDetails", {data, LOGINDATA, pathname})
-                    showLoader()
-                    // console.log(data)
+                    if(check ){
+                        data.odds = specificSpan
+                        if(data.stake === ""){
+                            // alert("Please select stake")
+                            togglePopupMain('popup-2', "redPopUP2", "Please select stake")
+                        }else{
+                            socket.emit("betDetails", {data, LOGINDATA})
+                            showLoader();
+                        }
+                    }else{
+                        togglePopupMain('popup-2', "redPopUP2", "Odds value changed, please try again ")
+                    }
                 }
                 });
               });
