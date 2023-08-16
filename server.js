@@ -1774,7 +1774,7 @@ io.on('connection', (socket) => {
             currentDate1.setDate(currentDate1.getDate() + 1);
         }
     
-        console.log(newDataArray);
+        // console.log(newDataArray);
     
         const Income = newDataArray.map(item => item.totalIncome);
         const Revanue = newDataArray.map(item => item.totalIncome2);
