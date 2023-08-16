@@ -1812,7 +1812,37 @@ io.on('connection', (socket) => {
             };
         }
 
-        console.log(filter)
+        const userCount = await loginLogs.aggregate([
+            {
+                $match:{
+                    isOnline: true
+                }
+            },
+            {
+                $lookup: {
+                  from: "users",
+                  localField: "userName",
+                  foreignField: "userName",
+                  as: "user"
+                }
+            },
+            {
+                $unwind: "$user"
+            },
+            {
+                $match: {
+                  "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalAmount: { $sum: 1 }
+                }
+            }
+        ])
+
+        console.log(userCount)
     })
 
     socket.on("getUserDetaisl", async(data) => {
