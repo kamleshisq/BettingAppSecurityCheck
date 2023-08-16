@@ -195,7 +195,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
         token = parseCookies(req.headers.cookie).JWT;
         // console.log(token)
     }
-    console.log(token, "TOKEN")
+    // console.log(token, "TOKEN")
     if(!token){
         return next()
     }
