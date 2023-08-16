@@ -1805,7 +1805,9 @@ io.on('connection', (socket) => {
                 $lt: new Date(currentDateString)
             };
         } else if (data.value === "all") {
-            filter = {};
+            filter = {
+                $lt : Date.now()
+            };
         } else {
             filter = {
                 $gte: new Date(threeDaysAgoString),
