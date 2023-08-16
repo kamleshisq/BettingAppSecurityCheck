@@ -6894,8 +6894,8 @@ socket.on('connect', () => {
                 })
 
                 $(document).on("change", ".selected", function(e){
-                    console.log("working")
-                    console.log($(this).val())
+                    let value = $(this).val()
+                    socket.emit("FIlterDashBoard", {LOGINDATA, value})
                 })
 
 

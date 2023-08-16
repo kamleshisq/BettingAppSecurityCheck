@@ -1782,6 +1782,10 @@ io.on('connection', (socket) => {
         // Now you can use the Income and Revanue arrays as needed
     });
 
+    socket.on("FIlterDashBoard", async(data) => {
+        console.log(data)
+    })
+
     socket.on("getUserDetaisl", async(data) => {
         try{
             let user = await User.findById(data.dataId)
