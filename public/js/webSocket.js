@@ -6900,6 +6900,7 @@ socket.on('connect', () => {
                 })
 
                 socket.on("FIlterDashBoard", data => {
+                    console.log(data)
                     document.getElementById('betCount').innerText = data.betCount
                     document.getElementById('Profit').innerText = data.Income
                     document.getElementById('turnOver').innerText = data.turnOver
