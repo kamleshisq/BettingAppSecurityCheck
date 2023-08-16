@@ -6897,8 +6897,6 @@ socket.on('connect', () => {
                     let value = $(this).val()
                     socket.emit("FIlterDashBoard", {LOGINDATA, value})
                 })
-
-
         }
     }
 
