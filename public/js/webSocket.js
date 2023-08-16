@@ -6291,17 +6291,14 @@ socket.on('connect', () => {
         marketId()
         socket.on("marketId", async(data) => {
             $(".match_odd_Blue").each(function() {
-                    
+              
                 let id = this.id
-
+      
                 id = id.slice(0, -1);
                 let section = null;
                 data.finalResult.items.some(item => {
-                    if(item.odds){
-
-                        section = item.odds.find(odd => odd.selectionId == id);
-                        return section !== undefined;
-                    }
+                    section = item.odds.find(odd => odd.selectionId == id);
+                    return section !== undefined;
                 });
                 if(this.id == `${section.selectionId}1` ){
                     if(data.betLimits[0].max_odd < section.backPrice1 || section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0"){
@@ -6332,16 +6329,13 @@ socket.on('connect', () => {
 
 
             $(".match_odd_Red").each(function() {
-                    
+              
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
                 data.finalResult.items.some(item => {
-                    if(item.odds){
-
-                        section = item.odds.find(odd => odd.selectionId == id);
-                        return section !== undefined;
-                    }
+                    section = item.odds.find(odd => odd.selectionId == id);
+                    return section !== undefined;
                 });
                 if(this.id == `${section.selectionId}4` ){
                     if(data.betLimits[0].max_odd < section.layPrice1 || section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0"){
@@ -6374,7 +6368,7 @@ socket.on('connect', () => {
             })
 
             $(".bookmaker_blue").each(function() {
-                    
+              
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
@@ -6404,13 +6398,13 @@ socket.on('connect', () => {
             })
 
             $(".bookmaker_red").each(function() {
-                    
+              
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
                 data.finalResult.items.some(item => {
                     if(item){
-
+      
                         if(item.runners){
                             let section1 = item.runners.find(item2 => item2.secId == id)
                             if(section1){
