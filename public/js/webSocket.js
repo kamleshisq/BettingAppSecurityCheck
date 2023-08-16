@@ -6936,11 +6936,11 @@ socket.on('connect', () => {
                 console.log("working")
                 let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
-                let filterData;
-                let fromDate = $('#Fdate').val()
+                let filterData = {};
+                let fromDate1 = $('#Fdate').val()
                 let toDate = $('#Tdate').val()
-                console.log(fromDate)
-                filterData.fromDate = fromDate,
+                console.log(fromDate1)
+                filterData.fromDate = fromDate1,
                 filterData.toDate = toDate
                 socket.emit("CommissionRReport", {page, LOGINDATA, filterData})
             }
