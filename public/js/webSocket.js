@@ -6472,6 +6472,7 @@ socket.on('connect', () => {
                       .text(result.toFixed(2));
                   });
               });
+
               $(document).ready(function () {
                 $(".set-stake-form-input2").change(function () {
                     var spanId = $(this).val()
@@ -6491,7 +6492,7 @@ socket.on('connect', () => {
 
               $(document).ready(function () {
                 $(".eventId").click(function () {
-                    console.log("working")
+                    // console.log("working")
                 let data = {}
                 data.title = $(this).closest("tr").find(".name").text()
                 data.eventId = $(this).attr("id");
@@ -6501,25 +6502,25 @@ socket.on('connect', () => {
                 data.market = $(this).closest("table").attr("id");
                 data.stake = $(this).closest("tr").find(".set-stake-form-input2").val()
                 data.spoetId = $(this).closest("tr").find(".c-gren").attr('id')
-                if(data.market == undefined){
-                    data.market = $(this).closest("table").find('.market').attr('id')
-                    secforFency = secId.slice(0,-1)
-                    secforFency = secforFency.replace(".", "\\.");
-                    if(secId.slice(-1) == 1){
-                        data.secId = "odd_Even_Yes"
-                    }else{
-                        data.secId = "odd_Even_No"
-                    }
-                }
-                let specificSpan 
-                if(data.secId.startsWith('odd_Even_')){
-                    specificSpan = $(`#${secforFency}`).children("span:first-child").text();
-                    // console.log(`#${secforFency}`)
-                }else{
-                    specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
+                // if(data.market == undefined){
+                //     data.market = $(this).closest("table").find('.market').attr('id')
+                //     secforFency = secId.slice(0,-1)
+                //     secforFency = secforFency.replace(".", "\\.");
+                //     if(secId.slice(-1) == 1){
+                //         data.secId = "odd_Even_Yes"
+                //     }else{
+                //         data.secId = "odd_Even_No"
+                //     }
+                // }
+                // let specificSpan 
+                // if(data.secId.startsWith('odd_Even_')){
+                //     specificSpan = $(`#${secforFency}`).children("span:first-child").text();
+                //     // console.log(`#${secforFency}`)
+                // }else{
+                //     specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
                     
-                }
-                console.log(specificSpan, data)
+                // }
+                console.log(secId)
                 let check = $(this).closest("tr").find("#changes").prop("checked");
                 if(specificSpan == data.odds){
                     if(data.stake === ""){
