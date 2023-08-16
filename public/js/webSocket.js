@@ -73,6 +73,12 @@ socket.on('connect', () => {
     })
 
 
+    $(document).on("click", ".nav2menu-item", function(e){
+        $(".nav2menu-item").removeClass("new-class");
+        $(this).addClass("new-class");
+    })
+
+
 
 
 
