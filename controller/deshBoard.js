@@ -293,11 +293,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             $match:{
                 user_id:req.currentUser.id
             }
-        },
-        {
-            totalIncome2: {
-                $sum: { $abs: '$creditDebitamount' },
-            }
         }
     ])
     console.log(turnOver)
