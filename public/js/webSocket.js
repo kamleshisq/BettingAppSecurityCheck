@@ -6946,6 +6946,7 @@ socket.on('connect', () => {
           })
           let count = 21
           socket.on("CommissionRReport", data => {
+            console.log(data)
             if(data.CommissionData.length > 0){
                 if(data.page === 0){
                     count = 1
