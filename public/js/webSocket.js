@@ -6977,7 +6977,7 @@ socket.on('connect', () => {
                     // console.log(html)
                     $('.table-body').html(html)
                     if(data.CommissionData.length === 0){
-                        $('.table-body').html("")
+                        $('.table-body').html("1")
                     }
                 }else{
                     $('.table-body').append(html)         
