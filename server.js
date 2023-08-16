@@ -1784,6 +1784,7 @@ io.on('connection', (socket) => {
 
     socket.on("FIlterDashBoard", async(data) => {
         let filter = {}
+        let result = {}
         const currentDate = new Date();
 
         const currentDateString = currentDate.toISOString().slice(0, 10);
@@ -1832,7 +1833,8 @@ io.on('connection', (socket) => {
             },
             {
                 $match: {
-                  "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
+                  "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] },
+                  "user.roleName" : "user"
                 }
             },
             {
@@ -1843,7 +1845,13 @@ io.on('connection', (socket) => {
             }
         ])
 
-        console.log(userCount)
+        if(userCount.length > 0){
+            result.userCount = userCount[0].totalAmount
+        }else{
+            result.userCount = 0
+        }
+
+
     })
 
     socket.on("getUserDetaisl", async(data) => {
