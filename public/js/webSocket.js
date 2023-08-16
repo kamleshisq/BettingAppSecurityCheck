@@ -6959,7 +6959,7 @@ socket.on('connect', () => {
                     html += `<tr style="text-align: center;" class="blue"><td>${count + i}</td>
                     <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
                 <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
-                if(data[i].creditDebitamount > 0){
+                if(userAcc[i].creditDebitamount > 0){
                     html += ` <td>${userAcc[i].creditDebitamoun}></td>
                     <td>-</td>`
                 }else{
