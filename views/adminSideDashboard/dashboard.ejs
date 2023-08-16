@@ -34,8 +34,17 @@
                   <div class="small-part" style="background-color: #fff;"> 
                       <div class="hed-data">
                           <h3 class="fix-h3"><img src="../images/sum.png" alt=""> &nbsp; Summary</h3>
+                          <%
+                          const currentDate = new Date();
+                            const threeDaysAgo = new Date(currentDate);
+                            threeDaysAgo.setDate(currentDate.getDate() - 3);
+                            const formattedDate = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: 'numeric' }).format(threeDaysAgo);
+                          %>
                           <select name="Today" id="">
-                            <option value="">Today</option>
+                            <option value="all" selected>Select Options</option>
+                            <option value="today">Today</option>
+                            <option value="yesterday">Yesterday</option>
+                            <option value="yesterday">Yesterday</option>
                           </select>
                       </div>
                       <table>
