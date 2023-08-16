@@ -1806,7 +1806,7 @@ io.on('connection', (socket) => {
             };
         } else if (data.value === "all") {
             filter = {
-                $lt : Date.now()
+                $lt : new Date(currentDateString)
             };
         } else {
             filter = {
