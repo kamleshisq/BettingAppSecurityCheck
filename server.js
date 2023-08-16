@@ -2380,7 +2380,8 @@ io.on('connection', (socket) => {
             }
         }
 
-        let CommissionData = await AccModel.find({user_id:data.LOGINDATA.LOGINUSER.id,description: { $regex: /^commission for/ } }).sort({date:-1}).skip(page * limit).limit(limit)
+        let CommissionData = await AccModel.find({user_id:data.LOGINDATA.LOGINUSER.id,description: { $regex: /^commission for/ } }).sort({date:-1})
+        console.log(CommissionData)
         socket.emit("CommissionRReport", {CommissionData, page})
     })
     
