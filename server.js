@@ -1920,6 +1920,7 @@ io.on('connection', (socket) => {
         // }else{
         //     result.turnOver = 0
         // }
+        console.log(turnOver)
         console.log(turnOver.length)
         console.log(result)
 
