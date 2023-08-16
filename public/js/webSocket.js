@@ -6982,6 +6982,8 @@ socket.on('connect', () => {
                 }else{
                     $('.table-body').append(html)         
                 }
+            }else{
+                $('.table-body').html("")
             }
           })
 
