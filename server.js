@@ -1834,7 +1834,8 @@ io.on('connection', (socket) => {
             {
                 $match: {
                   "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] },
-                  "user.roleName" : "user"
+                  "user.roleName" : "user",
+                  "user.is_Online" : true
                 }
             },
             {
