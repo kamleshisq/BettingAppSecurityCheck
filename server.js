@@ -1783,7 +1783,36 @@ io.on('connection', (socket) => {
     });
 
     socket.on("FIlterDashBoard", async(data) => {
-        console.log(data)
+        let filter = {}
+        const currentDate = new Date();
+
+        const currentDateString = currentDate.toISOString().slice(0, 10);
+        const oneDayAgo = new Date(currentDate);
+        oneDayAgo.setDate(currentDate.getDate() - 1);
+        const oneDayAgoString = oneDayAgo.toISOString().slice(0, 10);
+        const threeDaysAgo = new Date(currentDate);
+        threeDaysAgo.setDate(currentDate.getDate() - 3);
+        const threeDaysAgoString = threeDaysAgo.toISOString().slice(0, 10);
+        if (data.value === "today") {
+            filter = {
+                $gte: new Date(currentDateString),
+                $lt: new Date(new Date(currentDateString).getTime() + 24 * 60 * 60 * 1000) // Next day
+            };
+        } else if (data.value === "yesterday") {
+            filter = {
+                $gte: new Date(oneDayAgoString),
+                $lt: new Date(currentDateString)
+            };
+        } else if (data.value === "all") {
+           
+        } else {
+            filter = {
+                $gte: new Date(threeDaysAgoString),
+                $lt: new Date(currentDateString)
+            };
+        }
+
+        console.log(filter)
     })
 
     socket.on("getUserDetaisl", async(data) => {
