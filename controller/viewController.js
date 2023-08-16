@@ -2535,7 +2535,7 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
 
 exports.getCommissionReport = catchAsync(async(req, res, next) => {
     let me = req.currentUser
-    let data = await accountStatement.find({user_id:me._id,description: { $regex: /^commission for/ } }).sort({date:-1})
+    let data = await accountStatement.find({user_id:me._id,description: { $regex: /^commission for/ } }).sort({date:-1}).limit(20)
     console.log(data)
     res.status(200).render("./commissionPage/commissionPage",{
         title:"Commission",
