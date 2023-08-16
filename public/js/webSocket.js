@@ -6432,54 +6432,54 @@ socket.on('connect', () => {
 
 
 
-            $(document).ready(function () {
-                $(".button").click(function () {
-                  let odds = $(this).children("span:first-child").text();
-                  let beton = $(this).closest("tr").find("td:first-child").text();
-                  let secondPTag = $(this).closest("tr").next().find(".beton");
-                  let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
-                  let secId = this.id
-                  secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", secId);;
-                  numSpan.text(odds);
-                });
-              });
+        $(document).ready(function () {
+            $(".button").click(function () {
+              let odds = $(this).children("span:first-child").text();
+              let beton = $(this).closest("tr").find("td:first-child").text();
+              let secondPTag = $(this).closest("tr").next().find(".beton");
+              let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
+              let secId = this.id
+              secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
+              numSpan.text(odds);
+            });
+          });
     
-              $(document).ready(function () {
-                $(".nww-bet-slip-wrp-col2-inn span").click(function () {
-                    var spanId = $(this).attr("id");
-                    let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
-                    let newStake
-                    console.log(OldStake)
-                    if(OldStake == ""){
-                      newStake = parseFloat(spanId)
-                    }else{
-                      newStake = parseFloat(spanId) + parseFloat(OldStake)
-                    }
-                    var betValue = parseFloat(
-                      $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
-                    );
-                    var result = (parseFloat(newStake) * betValue) - parseFloat(newStake);
-                    $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
-                    $(this)
-                      .closest("tr")
-                      .find(".c-gren")
-                      .text(result.toFixed(2));
-                  });
-              });
+          $(document).ready(function () {
+            $(".nww-bet-slip-wrp-col2-inn span").click(function () {
+              var spanId = $(this).attr("id");
+              let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
+              let newStake
+              console.log(OldStake)
+              if(OldStake == ""){
+                newStake = parseFloat(spanId)
+              }else{
+                newStake = parseFloat(spanId) + parseFloat(OldStake)
+              }
+              var betValue = parseFloat(
+                $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+              );
+              var result = (parseFloat(newStake) * betValue) - parseFloat(newStake);
+              $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
+              $(this)
+                .closest("tr")
+                .find(".c-gren")
+                .text(result.toFixed(2));
+            });
+          });
 
-              $(document).ready(function () {
-                $(".set-stake-form-input2").change(function () {
-                    var spanId = $(this).val()
-                    var betValue = parseFloat(
-                        $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
-                      );
-                      var result = (parseFloat(spanId) * betValue) - parseFloat(spanId);
-                      $(this)
-                      .closest("tr")
-                      .find(".c-gren")
-                      .text(result.toFixed(2));
-                })
-              })
+          $(document).ready(function () {
+            $(".set-stake-form-input2").change(function () {
+                var spanId = $(this).val()
+                var betValue = parseFloat(
+                    $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                  );
+                  var result = (parseFloat(spanId) * betValue) - parseFloat(spanId);
+                  $(this)
+                  .closest("tr")
+                  .find(".c-gren")
+                  .text(result.toFixed(2));
+            })
+          })
         
 
 
