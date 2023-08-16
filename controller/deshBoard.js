@@ -228,6 +228,67 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             $limit: 5
         }
     ]);
+
+
+    let betsEventWise = await betModel.aggregate([
+        {
+            $match: {
+                status:"OPEN" 
+            }
+        },
+        {
+            $lookup: {
+              from: "users",
+              localField: "userName",
+              foreignField: "userName",
+              as: "user"
+            }
+          },
+          {
+            $unwind: "$user"
+          },
+          {
+            $match: {
+              "user.parentUsers": { $in: [req.currentUser.id] }
+            }
+          },
+        //   {
+        //     $group: {
+        //       _id: "$match",
+        //       count: { $sum: 1 }
+        //     }
+        //   },
+        //   {
+        //     $project: {
+        //       _id: 0,
+        //       eventname: "$_id",
+        //       count: 1
+        //     }
+        //   }
+        {
+            $group: {
+              _id: "$match",
+              count: { $sum: 1 },
+              eventdate: { $first: "$eventDate" }, 
+              eventid: { $first: "$eventId" },
+              series: {$first: "$event"},
+              sport: {$first : "$betType"}
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              matchName: "$_id",
+              eventdate: 1,
+              eventid: 1,
+              series:1,
+              count: 1,
+              sport:1
+            }
+          }
+    ])
+
+
     // console.log(alertBet)
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }, parentUsers : { $in: [req.currentUser.id] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
@@ -240,6 +301,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     dashboard.adminCount = adminCount
     dashboard.betCount = betCount
     dashboard.alertBet = alertBet
+    dashboard.settlement = betsEventWise
     
     res.status(200).json({
         status:'success',
