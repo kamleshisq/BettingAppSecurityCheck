@@ -6495,13 +6495,22 @@ socket.on('connect', () => {
                 data.spoetId = $(this).closest("tr").find(".c-gren").attr('id')
                 if(data.market == undefined){
                     data.market = $(this).closest("table").find('.market').attr('id')
+                    secforFency = secId.slice(0,-1)
+                    secforFency = secforFency.replace(".", "\\.");
                     if(secId.slice(-1) == 1){
                         data.secId = "odd_Even_Yes"
                     }else{
                         data.secId = "odd_Even_No"
                     }
                 }
-                let specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
+                let specificSpan 
+                if(data.secId.startsWith('odd_Even_')){
+                    specificSpan = $(`#${secforFency}`).children("span:first-child").text();
+                    // console.log(`#${secforFency}`)
+                }else{
+                    specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
+                    
+                }
                 console.log(specificSpan)
                 let check = $(this).closest("tr").find("#changes").prop("checked");
                 if(specificSpan == data.odds){
