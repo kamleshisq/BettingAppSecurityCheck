@@ -293,6 +293,12 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             $match:{
                 user_id:req.currentUser._id
             }
+        },
+        {
+            $group: {
+                _id: null,
+                totalAmount: { $abs: "$creditDebitamount" }
+            }
         }
     ])
     console.log(turnOver, 121212121)
