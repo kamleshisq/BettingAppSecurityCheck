@@ -6960,12 +6960,13 @@ socket.on('connect', () => {
                     <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
                 <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
                 if(userAcc[i].creditDebitamount > 0){
-                    html += ` <td>${userAcc[i].creditDebitamount}></td>
+                    html += ` <td>${userAcc[i].creditDebitamount}</td>
                     <td>-</td>`
                 }else{
-                    html += ` <td>-</td><td>${userAcc[i].creditDebitamount}</td>`
+                    html += ` <td>-</td>
+                    <td>${userAcc[i].creditDebitamount}</td>`
                 }
-                html += `td>${userAcc[i].balance}</td>
+                html += `<td>${userAcc[i].balance}</td>
                 <td>${userAcc[i].description}</td>
             </tr>`
                 }
