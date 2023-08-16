@@ -1901,7 +1901,25 @@ io.on('connection', (socket) => {
             result.adminCount = 0
         }
 
-
+        let turnOver = await AccModel.aggregate([
+            {
+                $match:{
+                    user_id:data.LOGINDATA.LOGINUSER._id,
+                    date:filter
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalAmount: { $sum: { $abs: "$creditDebitamount" } }
+                }
+            }
+        ])
+        if(turnOver.length > 0){
+            result.turnOver = turnOver[0].totalAmount
+        }else{
+            result.turnOver = 0
+        }
         console.log(result)
 
     })
