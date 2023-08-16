@@ -1835,7 +1835,7 @@ io.on('connection', (socket) => {
                 $match: {
                   "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] },
                   "user.roleName" : "user",
-                  "user.is_Online" : true
+                //   "user.is_Online" : true
                 }
             },
             {
@@ -1856,6 +1856,52 @@ io.on('connection', (socket) => {
         }else{
             result.userCount = 0
         }
+
+        const adminCount = await loginLogs.aggregate([
+            {
+                $match:{
+                    // isOnline: true,
+                    login_time:filter
+                }
+            },
+            {
+                $lookup: {
+                  from: "users",
+                  localField: "userName",
+                  foreignField: "userName",
+                  as: "user"
+                }
+            },
+            {
+                $unwind: "$user"
+            },
+            {
+                $match: {
+                  "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] },
+                  "user.roleName" : {$ne:"user"},
+                //   "user.is_Online" : true
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    uniqueUsers: { $addToSet: "$user._id" } 
+                }
+            },
+            {
+                $project: {
+                    totalAmount: { $size: "$uniqueUsers" } 
+                }
+            }
+        ])
+
+        if(adminCount.length > 0){
+            result.adminCount = adminCount[0].totalAmount
+        }else{
+            result.adminCount = 0
+        }
+
+
         console.log(result)
 
     })
