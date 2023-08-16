@@ -6939,6 +6939,7 @@ socket.on('connect', () => {
                 let filterData;
                 let fromDate = $('#Fdate').val()
                 let toDate = $('#Tdate').val()
+                console.log(fromDate)
                 filterData.fromDate = fromDate,
                 filterData.toDate = toDate
                 socket.emit("CommissionRReport", {page, LOGINDATA, filterData})
