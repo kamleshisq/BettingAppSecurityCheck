@@ -4647,8 +4647,12 @@ socket.on('connect', () => {
                     // alert("Please select stake")
                     togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                 }else{
-                    socket.emit("betDetails", {data, LOGINDATA})
-                    showLoader();
+                    if(data.odds != '\n                        \n                      '){
+                        socket.emit("betDetails", {data, LOGINDATA})
+                        showLoader();
+                    }else{
+                        togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
+                    }
                 }
             }else{
                 if(check ){
@@ -4657,8 +4661,12 @@ socket.on('connect', () => {
                         // alert("Please select stake")
                         togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                     }else{
-                        socket.emit("betDetails", {data, LOGINDATA})
-                        showLoader();
+                        if(data.odds != '\n                        \n                      '){
+                            socket.emit("betDetails", {data, LOGINDATA})
+                            showLoader();
+                        }else{
+                            togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
+                        }
                     }
                 }else{
                     togglePopupMain('popup-2', "redPopUP2", "Odds value changed, please try again ")
