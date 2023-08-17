@@ -362,7 +362,7 @@ socket.on('connect', () => {
                       </span>`
                     }else{
                         if(this.innerHTML !== `<span class="tbl-td-bg-pich-spn" >${foundItem.odds[0].layPrice1}</span>`){
-                            console.log(this.innerHTML, 123)
+                            console.log($(this).find('.tbl-td-bg-pich-spn').text(), 123)
                             this.innerHTML = `<span class="tbl-td-bg-pich-spn" style="background-color: blanchedalmond;">${foundItem.odds[0].layPrice1}</span>`
                         }
                     }
