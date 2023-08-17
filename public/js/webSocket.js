@@ -3948,10 +3948,10 @@ socket.on('connect', () => {
                     const spanElement = document.querySelectorAll('.tbl-td-bg-pich-spn');
                     console.log(spanElement.style)
                     setTimeout(() => {
-                        // if(spanElement.style){
+                        if(spanElement.style){
                             console.log("working")
                             spanElement.style.backgroundColor = '';
-                        // }
+                        }
                     },1000)
 
                 $(".0B").each(function() {
