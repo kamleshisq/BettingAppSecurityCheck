@@ -4173,7 +4173,10 @@ socket.on('connect', () => {
                             this.innerHTML = `<span><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
-                            console.log(htmldiv.find('span:first').text())
+                            if(htmldiv != section.backPrice3){
+                                this.innerHTML = `<span><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
+                                this.style.backgroundColor = blanchedalmond
+                            }
                         }
                     }
                 }
