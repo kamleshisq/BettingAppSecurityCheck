@@ -4172,7 +4172,8 @@ socket.on('connect', () => {
                         if(first){
                             this.innerHTML = `<span><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                         }else{
-                            console.log($(this).innerHTML.find('span:first').text())
+                            let htmldiv = $('<div>').html(this.innerHTML)
+                            console.log(htmldiv.find('span:first').text())
                         }
                     }
                 }
