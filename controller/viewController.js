@@ -1677,6 +1677,14 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     let userLog
     let userMultimarkets
+    let cricketSeries = {}
+    cricket.forEach(match => {
+        if (!cricketSeries[match.eventData.league]) {
+            cricketSeries[match.eventData.league] = [];
+        }
+        cricketSeries[match.eventData.league].push(match);
+    });
+    console.log(cricketSeries)
     if(user){
         userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
