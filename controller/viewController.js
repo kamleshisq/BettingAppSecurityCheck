@@ -1684,7 +1684,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         }
         cricketSeries[match.eventData.league].push(match);
     });
-    // console.log(cricketSeries)
+    console.log(cricketSeries)
     if(user){
         userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
