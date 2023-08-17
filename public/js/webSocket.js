@@ -476,6 +476,20 @@ socket.on('connect', () => {
         
         }
 
+        let num1Input1 = document.getElementById('myShare');
+        let num2Input1 = document.getElementById('Share');
+        num1Input1.addEventListener('input', () => {
+            const num11 = parseFloat(num1Input1.value);
+            const num21 = 100 - num11;
+            num2Input1.value = num21;
+        });
+
+        num2Input1.addEventListener('input', () => {
+            const num21 = parseFloat(num2Input1.value);
+            const num11 = 100 - num21;
+            num1Input1.value = num11;
+        });
+
         $(document).on("click", ".CreaditChange", function(e){
             e.preventDefault()
             var row = this.closest('tr');
