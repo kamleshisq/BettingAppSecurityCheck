@@ -4175,7 +4175,7 @@ socket.on('connect', () => {
                             let htmldiv = $('<div>').html(this.innerHTML)
                             if(htmldiv != section.backPrice3){
                                 this.innerHTML = `<span><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
-                                this.style.backgroundColor = blanchedalmond
+                                this.style.backgroundColor = 'blanchedalmond';
                             }
                         }
                     }
