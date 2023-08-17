@@ -1677,12 +1677,14 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     let userLog
     let userMultimarkets
-    let cricketSeries = {};
+    let cricketSeries = [];
     cricket.forEach(match => {
-        if (!cricketSeries[match.eventData.league]) {
-            cricketSeries[match.eventData.league] = [];
+        let seriesIndex = cricketSeries.findIndex(series => series.series === match.eventData.league);
+        if (seriesIndex === -1) {
+            cricketSeries.push({ series: match.eventData.league, matchdata: [match] });
+        } else {
+            cricketSeries[seriesIndex].matchdata.push(match);
         }
-        cricketSeries[match.eventData.league].push([match]); // Wrap the match in an array
     });
     console.log(cricketSeries);
     if(user){
