@@ -125,10 +125,11 @@ exports.userTable = catchAsync(async(req, res, next) => {
           );
         });
       });
+    let roles1 = await Role.find({role_level:{$in:req.currentUser.role.userAuthorization}}).sort({role_level:1});
     const data = await Promise.all(requests);
     console.log(data)
     const users = data[0].child;
-    const roles = data[1].roles;
+    const roles = roles1;
     const currentUser = req.currentUser
     const rows = data[0].rows
     const me = data[0].me
