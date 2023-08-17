@@ -492,7 +492,7 @@ socket.on('connect', () => {
                         }// Remove background color
                       });
                     
-                },200)
+                },300)
 
                 const spanElement2 = document.querySelectorAll('.tbl-td-bg-blu-spn');
                 setTimeout(() => {
@@ -502,7 +502,7 @@ socket.on('connect', () => {
                         }// Remove background color
                       });
                     
-                },200)
+                },300)
         })
     })
 
