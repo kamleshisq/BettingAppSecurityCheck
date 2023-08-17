@@ -4153,6 +4153,7 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
+                        let htmldiv = $('<div>').html(this.innerHTML)
                         if(htmldiv != section.backPrice1){
                             this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                             this.style.backgroundColor = 'blanchedalmond';
