@@ -3317,34 +3317,34 @@ socket.on('connect', () => {
         }
         marketId()
 
-        socket.on("marketId", async(data) => {
-            $(document).ready(function() {
+        // socket.on("marketId", async(data) => {
+        //     $(document).ready(function() {
           
-                $(".0").each(function() {
-                let id = this.id
-                const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[0].layPrice1}`
-                });
+        //         $(".0").each(function() {
+        //         let id = this.id
+        //         const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //         this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[0].layPrice1}`
+        //         });
 
-                $(".1").each(function() {
-                    let id = this.id
-                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    this.innerHTML = `${foundItem.odds[1].backPrice1}, ${foundItem.odds[1].layPrice1}`
-                });
+        //         $(".1").each(function() {
+        //             let id = this.id
+        //             const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //             this.innerHTML = `${foundItem.odds[1].backPrice1}, ${foundItem.odds[1].layPrice1}`
+        //         });
 
-                $(".2").each(function() {
-                    let id = this.id
-                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    this.innerHTML = `${foundItem.odds[2].backPrice1}, ${foundItem.odds[2].layPrice1}`
-                });
+        //         $(".2").each(function() {
+        //             let id = this.id
+        //             const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //             this.innerHTML = `${foundItem.odds[2].backPrice1}, ${foundItem.odds[2].layPrice1}`
+        //         });
 
-            })
+        //     })
 
-            $(document).on("click", ".click", function(){
-                window.location.href = `/exchange_inPlay/match?id=${this.id}`
-            })
+        //     $(document).on("click", ".click", function(){
+        //         window.location.href = `/exchange_inPlay/match?id=${this.id}`
+        //     })
             
-        })
+        // })
     }
 
 
@@ -3366,29 +3366,29 @@ socket.on('connect', () => {
         }
         marketId()
 
-        socket.on("marketId", (data) => {
-            $(document).ready(function() {
+        // socket.on("marketId", (data) => {
+        //     $(document).ready(function() {
           
-                $(".0").each(function() {
-                let id = this.id
-                const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[0].layPrice1}`
-                });
+        //         $(".0").each(function() {
+        //         let id = this.id
+        //         const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //         this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[0].layPrice1}`
+        //         });
 
-                $(".1").each(function() {
-                    let id = this.id
-                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    this.innerHTML = `${foundItem.odds[1].backPrice1}, ${foundItem.odds[1].layPrice1}`
-                });
+        //         $(".1").each(function() {
+        //             let id = this.id
+        //             const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //             this.innerHTML = `${foundItem.odds[1].backPrice1}, ${foundItem.odds[1].layPrice1}`
+        //         });
 
-                $(".2").each(function() {
-                    let id = this.id
-                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    this.innerHTML = `${foundItem.odds[2].backPrice1}, ${foundItem.odds[2].layPrice1}`
-                });
+        //         $(".2").each(function() {
+        //             let id = this.id
+        //             const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //             this.innerHTML = `${foundItem.odds[2].backPrice1}, ${foundItem.odds[2].layPrice1}`
+        //         });
 
-            })
-        })
+        //     })
+        // })
 
         $(document).on("click", ".click", function(){
                 window.location.href = `/exchange_inPlay/match?id=${this.id}`
@@ -3594,35 +3594,35 @@ socket.on('connect', () => {
         marketId()
 
 
-        socket.on("marketId", async(data) => {
-            // console.log(data)
-            $(document).ready(function() {
+        // socket.on("marketId", async(data) => {
+        //     // console.log(data)
+        //     $(document).ready(function() {
           
-                $(".0").each(function() {
-                let id = this.id
-                const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[0].layPrice1}`
-                });
+        //         $(".0").each(function() {
+        //         let id = this.id
+        //         const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //         this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[0].layPrice1}`
+        //         });
 
-                $(".1").each(function() {
-                    let id = this.id
-                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    this.innerHTML = `${foundItem.odds[1].backPrice1}, ${foundItem.odds[1].layPrice1}`
-                });
+        //         $(".1").each(function() {
+        //             let id = this.id
+        //             const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //             this.innerHTML = `${foundItem.odds[1].backPrice1}, ${foundItem.odds[1].layPrice1}`
+        //         });
 
-                $(".2").each(function() {
-                    let id = this.id
-                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    this.innerHTML = `${foundItem.odds[2].backPrice1}, ${foundItem.odds[2].layPrice1}`
-                });
+        //         $(".2").each(function() {
+        //             let id = this.id
+        //             const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //             this.innerHTML = `${foundItem.odds[2].backPrice1}, ${foundItem.odds[2].layPrice1}`
+        //         });
 
-            })
+        //     })
 
-            $(document).on("click", ".click", function(){
-                window.location.href = `/exchange_inPlay/match?id=${this.id}`
-            })
+        //     $(document).on("click", ".click", function(){
+        //         window.location.href = `/exchange_inPlay/match?id=${this.id}`
+        //     })
 
-        })
+        // })
     }
 
 
@@ -3643,34 +3643,34 @@ socket.on('connect', () => {
         }
         marketId()
 
-        socket.on("marketId", async(data) => {
-            $(document).ready(function() {
+        // socket.on("marketId", async(data) => {
+        //     $(document).ready(function() {
           
-                $(".0").each(function() {
-                let id = this.id
-                const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[0].layPrice1}`
-                });
+        //         $(".0").each(function() {
+        //         let id = this.id
+        //         const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //         this.innerHTML = `${foundItem.odds[0].backPrice1}, ${foundItem.odds[0].layPrice1}`
+        //         });
 
-                $(".1").each(function() {
-                    let id = this.id
-                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    this.innerHTML = `${foundItem.odds[1].backPrice1}, ${foundItem.odds[1].layPrice1}`
-                });
+        //         $(".1").each(function() {
+        //             let id = this.id
+        //             const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //             this.innerHTML = `${foundItem.odds[1].backPrice1}, ${foundItem.odds[1].layPrice1}`
+        //         });
 
-                $(".2").each(function() {
-                    let id = this.id
-                    const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    this.innerHTML = `${foundItem.odds[2].backPrice1}, ${foundItem.odds[2].layPrice1}`
-                });
+        //         $(".2").each(function() {
+        //             let id = this.id
+        //             const foundItem = data.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //             this.innerHTML = `${foundItem.odds[2].backPrice1}, ${foundItem.odds[2].layPrice1}`
+        //         });
 
-            })
+        //     })
 
-            $(document).on("click", ".click", function(){
-                window.location.href = `/exchange_inPlay/match?id=${this.id}`
-            })
+        //     $(document).on("click", ".click", function(){
+        //         window.location.href = `/exchange_inPlay/match?id=${this.id}`
+        //     })
             
-        })
+        // })
     }
 
 
@@ -5838,133 +5838,133 @@ socket.on('connect', () => {
               }, 60000)
         }
         marketId()
-        socket.on("marketId", (data) => {
-            $(document).ready(function() {
+        // socket.on("marketId", (data) => {
+        //     $(document).ready(function() {
           
-                $(".0L").each(function() {
+        //         $(".0L").each(function() {
                     
-                        let id = this.id
-                        const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                        if(data.betLimits[0].max_odd < foundItem.odds[0].layPrice1){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                        }else if (foundItem.odds[0].layPrice1 == "-"){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                        }else if(foundItem.odds[0].layPrice1=="1,000.00"){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
-                            <i class="fa-solid fa-lock"></i>
-                          </span>`
-                        }else{
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[0].layPrice1}</span>`
-                        }
-                });
+        //                 let id = this.id
+        //                 const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //                 if(data.betLimits[0].max_odd < foundItem.odds[0].layPrice1){
+        //                     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //                 }else if (foundItem.odds[0].layPrice1 == "-"){
+        //                     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //                 }else if(foundItem.odds[0].layPrice1=="1,000.00"){
+        //                     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
+        //                     <i class="fa-solid fa-lock"></i>
+        //                   </span>`
+        //                 }else{
+        //                     this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[0].layPrice1}</span>`
+        //                 }
+        //         });
 
-                $(".0B").each(function() {
+        //         $(".0B").each(function() {
                     
-                    let id = this.id
-                    const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    if(data.betLimits[0].max_odd < foundItem.odds[0].backPrice1){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                    }else if (foundItem.odds[0].backPrice1 == "-"){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                    }else if(foundItem.odds[0].backPrice1=="1,000.00"){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data ">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                    }else{
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[0].backPrice1}</span>`
-                    }
-                });
+        //             let id = this.id
+        //             const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //             if(data.betLimits[0].max_odd < foundItem.odds[0].backPrice1){
+        //                 this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //             }else if (foundItem.odds[0].backPrice1 == "-"){
+        //                 this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //             }else if(foundItem.odds[0].backPrice1=="1,000.00"){
+        //                 this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data ">
+        //                 <i class="fa-solid fa-lock"></i>
+        //               </span>`
+        //             }else{
+        //                 this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[0].backPrice1}</span>`
+        //             }
+        //         });
 
-                $(".1L").each(function() {
-                        let id = this.id
-                        const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                        if(data.betLimits[0].max_odd < foundItem.odds[1].layPrice1){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                        }else if (foundItem.odds[1].layPrice1 == "-"){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                        }else if(foundItem.odds[1].layPrice1=="1,000.00"){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
-                            <i class="fa-solid fa-lock"></i>
-                          </span>`
-                        }else{
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[1].layPrice1}</span>`
-                        }
-                });
+        //         $(".1L").each(function() {
+        //                 let id = this.id
+        //                 const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //                 if(data.betLimits[0].max_odd < foundItem.odds[1].layPrice1){
+        //                     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //                 }else if (foundItem.odds[1].layPrice1 == "-"){
+        //                     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //                 }else if(foundItem.odds[1].layPrice1=="1,000.00"){
+        //                     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
+        //                     <i class="fa-solid fa-lock"></i>
+        //                   </span>`
+        //                 }else{
+        //                     this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[1].layPrice1}</span>`
+        //                 }
+        //         });
 
-                $(".1B").each(function() {
-                    let id = this.id
-                    const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    if(data.betLimits[0].max_odd < foundItem.odds[1].backPrice1){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                    }else if (foundItem.odds[1].backPrice1 == "-"){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                    }else if(foundItem.odds[1].backPrice1=="1,000.00"){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data ">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                    }else{
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[1].backPrice1}</span>`
-                    }
-                });
+        //         $(".1B").each(function() {
+        //             let id = this.id
+        //             const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //             if(data.betLimits[0].max_odd < foundItem.odds[1].backPrice1){
+        //                 this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //             }else if (foundItem.odds[1].backPrice1 == "-"){
+        //                 this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //             }else if(foundItem.odds[1].backPrice1=="1,000.00"){
+        //                 this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data ">
+        //                 <i class="fa-solid fa-lock"></i>
+        //               </span>`
+        //             }else{
+        //                 this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[1].backPrice1}</span>`
+        //             }
+        //         });
 
-                $(".2B").each(function() {
-                        let id = this.id
-                        const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                        if(data.betLimits[0].max_odd < foundItem.odds[2].backPrice1){
-                            this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                        }else if (foundItem.odds[2].backPrice1 == "-"){
-                            this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                        }else if(foundItem.odds[2].backPrice1=="1,000.00"){
-                            this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data ">
-                            <i class="fa-solid fa-lock"></i>
-                          </span>`
-                        }else{
-                            console.log("Wirkinf", 4)
-                            this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[2].backPrice1}</span>`
-                        }
-                });
+        //         $(".2B").each(function() {
+        //                 let id = this.id
+        //                 const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //                 if(data.betLimits[0].max_odd < foundItem.odds[2].backPrice1){
+        //                     this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //                 }else if (foundItem.odds[2].backPrice1 == "-"){
+        //                     this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //                 }else if(foundItem.odds[2].backPrice1=="1,000.00"){
+        //                     this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data ">
+        //                     <i class="fa-solid fa-lock"></i>
+        //                   </span>`
+        //                 }else{
+        //                     console.log("Wirkinf", 4)
+        //                     this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[2].backPrice1}</span>`
+        //                 }
+        //         });
 
-                $(".2L").each(function() {
-                    let id = this.id
-                    const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    if(data.betLimits[0].max_odd < foundItem.odds[2].layPrice1){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                    }else if (foundItem.odds[2].layPrice1 == "-"){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                    }else if(foundItem.odds[2].layPrice1=="1,000.00"){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                    }else{
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[2].layPrice1}</span>`
-                    }
-                });
-            })
-        })
+        //         $(".2L").each(function() {
+        //             let id = this.id
+        //             const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //             if(data.betLimits[0].max_odd < foundItem.odds[2].layPrice1){
+        //                 this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //             }else if (foundItem.odds[2].layPrice1 == "-"){
+        //                 this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //             }else if(foundItem.odds[2].layPrice1=="1,000.00"){
+        //                 this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
+        //                 <i class="fa-solid fa-lock"></i>
+        //               </span>`
+        //             }else{
+        //                 this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[2].layPrice1}</span>`
+        //             }
+        //         });
+        //     })
+        // })
     }
 
 
@@ -6023,132 +6023,132 @@ socket.on('connect', () => {
               }, 60000)
         }
         marketId()
-        socket.on("marketId", (data) => {
-            $(document).ready(function() {
+        // socket.on("marketId", (data) => {
+        //     $(document).ready(function() {
           
-                $(".0L").each(function() {
+        //         $(".0L").each(function() {
                     
-                        let id = this.id
-                        const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                        if(data.betLimits[0].max_odd < foundItem.odds[0].layPrice1){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                        }else if (foundItem.odds[0].layPrice1 == "-"){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                        }else if(foundItem.odds[0].layPrice1=="1,000.00"){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
-                            <i class="fa-solid fa-lock"></i>
-                          </span>`
-                        }else{
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[0].layPrice1}</span>`
-                        }
-                });
+        //                 let id = this.id
+        //                 const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //                 if(data.betLimits[0].max_odd < foundItem.odds[0].layPrice1){
+        //                     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //                 }else if (foundItem.odds[0].layPrice1 == "-"){
+        //                     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //                 }else if(foundItem.odds[0].layPrice1=="1,000.00"){
+        //                     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
+        //                     <i class="fa-solid fa-lock"></i>
+        //                   </span>`
+        //                 }else{
+        //                     this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[0].layPrice1}</span>`
+        //                 }
+        //         });
 
-                $(".0B").each(function() {
+        //         $(".0B").each(function() {
                     
-                    let id = this.id
-                    const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    if(data.betLimits[0].max_odd < foundItem.odds[0].backPrice1){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                    }else if (foundItem.odds[0].backPrice1 == "-"){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                    }else if(foundItem.odds[0].backPrice1=="1,000.00"){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data ">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                    }else{
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[0].backPrice1}</span>`
-                    }
-                });
+        //             let id = this.id
+        //             const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //             if(data.betLimits[0].max_odd < foundItem.odds[0].backPrice1){
+        //                 this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //             }else if (foundItem.odds[0].backPrice1 == "-"){
+        //                 this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //             }else if(foundItem.odds[0].backPrice1=="1,000.00"){
+        //                 this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data ">
+        //                 <i class="fa-solid fa-lock"></i>
+        //               </span>`
+        //             }else{
+        //                 this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[0].backPrice1}</span>`
+        //             }
+        //         });
 
-                $(".1L").each(function() {
-                        let id = this.id
-                        const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                        if(data.betLimits[0].max_odd < foundItem.odds[1].layPrice1){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                        }else if (foundItem.odds[1].layPrice1 == "-"){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                        }else if(foundItem.odds[1].layPrice1=="1,000.00"){
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
-                            <i class="fa-solid fa-lock"></i>
-                          </span>`
-                        }else{
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[1].layPrice1}</span>`
-                        }
-                });
+        //         $(".1L").each(function() {
+        //                 let id = this.id
+        //                 const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //                 if(data.betLimits[0].max_odd < foundItem.odds[1].layPrice1){
+        //                     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //                 }else if (foundItem.odds[1].layPrice1 == "-"){
+        //                     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //                 }else if(foundItem.odds[1].layPrice1=="1,000.00"){
+        //                     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
+        //                     <i class="fa-solid fa-lock"></i>
+        //                   </span>`
+        //                 }else{
+        //                     this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[1].layPrice1}</span>`
+        //                 }
+        //         });
 
-                $(".1B").each(function() {
-                    let id = this.id
-                    const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    if(data.betLimits[0].max_odd < foundItem.odds[1].backPrice1){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                    }else if (foundItem.odds[1].backPrice1 == "-"){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                    }else if(foundItem.odds[1].backPrice1=="1,000.00"){
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data ">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                    }else{
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[1].backPrice1}</span>`
-                    }
-                });
+        //         $(".1B").each(function() {
+        //             let id = this.id
+        //             const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //             if(data.betLimits[0].max_odd < foundItem.odds[1].backPrice1){
+        //                 this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //             }else if (foundItem.odds[1].backPrice1 == "-"){
+        //                 this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //             }else if(foundItem.odds[1].backPrice1=="1,000.00"){
+        //                 this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data ">
+        //                 <i class="fa-solid fa-lock"></i>
+        //               </span>`
+        //             }else{
+        //                 this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[1].backPrice1}</span>`
+        //             }
+        //         });
 
-                $(".2B").each(function() {
-                        let id = this.id
-                        const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                        if(data.betLimits[0].max_odd < foundItem.odds[2].backPrice1){
-                            this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                        }else if (foundItem.odds[2].backPrice1 == "-"){
-                            this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                        }else if(foundItem.odds[2].backPrice1=="1,000.00"){
-                            this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data ">
-                            <i class="fa-solid fa-lock"></i>
-                          </span>`
-                        }else{
-                            this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[2].backPrice1}</span>`
-                        }
-                });
+        //         $(".2B").each(function() {
+        //                 let id = this.id
+        //                 const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //                 if(data.betLimits[0].max_odd < foundItem.odds[2].backPrice1){
+        //                     this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //                 }else if (foundItem.odds[2].backPrice1 == "-"){
+        //                     this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //                 }else if(foundItem.odds[2].backPrice1=="1,000.00"){
+        //                     this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data ">
+        //                     <i class="fa-solid fa-lock"></i>
+        //                   </span>`
+        //                 }else{
+        //                     this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[2].backPrice1}</span>`
+        //                 }
+        //         });
 
-                $(".2L").each(function() {
-                    let id = this.id
-                    const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
-                    if(data.betLimits[0].max_odd < foundItem.odds[2].layPrice1){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                    }else if (foundItem.odds[2].layPrice1 == "-"){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                                        <i class="fa-solid fa-lock"></i>
-                                      </span>`
-                    }else if(foundItem.odds[2].layPrice1=="1,000.00"){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                    }else{
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[2].layPrice1}</span>`
-                    }
-                });
-            })
-        })
+        //         $(".2L").each(function() {
+        //             let id = this.id
+        //             const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
+        //             if(data.betLimits[0].max_odd < foundItem.odds[2].layPrice1){
+        //                 this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //             }else if (foundItem.odds[2].layPrice1 == "-"){
+        //                 this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+        //                                 <i class="fa-solid fa-lock"></i>
+        //                               </span>`
+        //             }else if(foundItem.odds[2].layPrice1=="1,000.00"){
+        //                 this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data ">
+        //                 <i class="fa-solid fa-lock"></i>
+        //               </span>`
+        //             }else{
+        //                 this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[2].layPrice1}</span>`
+        //             }
+        //         });
+        //     })
+        // })
     }
 
 
