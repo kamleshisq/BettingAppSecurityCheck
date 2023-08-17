@@ -27,8 +27,9 @@
               };
               var formattedTime = date.toLocaleString('en-US', options);
             %>
+            <%if(cricketSeries[i].matchdata[j].marketList.match_odd != null){ %>
               <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/exchange_inPlay/match?id=<%=cricketSeries[i].matchdata[j].eventData.eventId%>'>
-                  <td style="border-bottom: 0px;" class="name1" >
+                  <td style="border-bottom: 0px;" class="name1" id="<%=cricketSeries[i].matchdata[j].marketList.match_odd.marketId%>" >
                     <div class="exchange-pg-mytbl-body-cricket-data-dv">
                       <%if(cricketSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
                         <span class="exchange-pg-mytbl-body-liv-dot"></span>
@@ -102,6 +103,7 @@
                    <a href="multimarket.html"><img src="assets/img/exchange/Vector.png" alt=""></a> 
                   </td>
               </tr>
+            <%} %>
             <%} %>
         </tbody>
   
