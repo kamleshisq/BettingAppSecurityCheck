@@ -4153,7 +4153,11 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
-                        this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        if(htmldiv != section.backPrice1){
+                            this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                            this.style.backgroundColor = 'blanchedalmond';
+                        }
+                        // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                     }
                 }else if(this.id == `${section.selectionId}2`){
                     if(data.betLimits[0].max_odd < section.backPrice2 || section.backPrice2 == "-" || section.backPrice2 == "1,000.00" || section.backPrice2 == "0"){
@@ -4161,7 +4165,12 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
-                        this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
+                        let htmldiv = $('<div>').html(this.innerHTML)
+                            if(htmldiv != section.backPrice2){
+                                this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
+                                this.style.backgroundColor = 'blanchedalmond';
+                            }
+                        // this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                     }
                 }else if (this.id == `${section.selectionId}3`){
                     if(data.betLimits[0].max_odd < section.backPrice3 || section.backPrice3 == "-" || section.backPrice3 == "1,000.00" || section.backPrice3 == "0"){
