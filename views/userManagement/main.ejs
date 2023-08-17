@@ -343,6 +343,7 @@
             <%if(currentUser.roleName === "Admin"){ %>
               <div class="row mt-2">
                 <div class="col">
+                  <input type="checkbox" id="customOptionCheckbox">
                   <label for="">WhiteLabel</label>
                   <!-- <input type="text" name="whiteLabel" placeholder="Enter new role"> -->
                   <select name="whiteLabel"  class="form-control ml0" style="color: #000 !important;">
@@ -350,6 +351,7 @@
                       <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
                     <%} %>
                   </select>
+                  <input type="text" name="newWhiteLabel" id="newWhiteLabelInput" placeholder="Enter new WhiteLabel" style="display: none;">
                 </div>
               </div>
             <%} %>
@@ -494,6 +496,21 @@
       </div>
     </div>
   </div>
+  <script>
+    const customOptionCheckbox = document.getElementById('customOptionCheckbox');
+    const newWhiteLabelInput = document.getElementById('newWhiteLabelInput');
+  
+    customOptionCheckbox.addEventListener('change', function () {
+      if (this.checked) {
+        newWhiteLabelInput.style.display = 'block';
+        // Hide the select element
+        document.querySelector('select[name="whiteLabel"]').style.display = 'none';
+      } else {
+        newWhiteLabelInput.style.display = 'none';
+        document.querySelector('select[name="whiteLabel"]').style.display = 'block';
+      }
+    });
+  </script>
     <script type="text/javascript" src="../js/bundle.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
