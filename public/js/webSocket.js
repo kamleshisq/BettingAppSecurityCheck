@@ -3946,7 +3946,9 @@ socket.on('connect', () => {
                         }
                         const spanElement = document.querySelectorAll('.tbl-td-bg-pich-spn');
                         setTimeout(() => {
-                            spanElement.style.backgroundColor = '';
+                            if(spanElement.style){
+                                spanElement.style.backgroundColor = '';
+                            }
                         },1000)
                 });
 
