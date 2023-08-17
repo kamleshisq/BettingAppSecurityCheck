@@ -104,9 +104,9 @@
                       </td>
                       <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
                       <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
-                      <td style="border-bottom: 0px;" class="multi_market" id="<%=LiveCricket[i].marketList.match_odd.marketId%>">
+                      <td style="border-bottom: 0px;" class="multi_market" id="<%=cricketSeries[i].matchdata[j].marketList.match_odd.marketId%>">
                         <%if(user && userMultimarkets != null){ %>
-                          <%let check = userMultimarkets.marketIds.find(item => item == LiveCricket[i].marketList.match_odd.marketId) %>
+                          <%let check = userMultimarkets.marketIds.find(item => item == cricketSeries[i].matchdata[j].match_odd.marketId) %>
                           <%if(check){%>
                             <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
                           <%}else{%>
@@ -123,9 +123,9 @@
                           <td style="border-bottom: 0px;"  class="2L" id="<%=secIds[2]%>"></td>
                           <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
                           <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
-                          <td style="border-bottom: 0px;" class="multi_market" id="<%=LiveCricket[i].marketList.match_odd.marketId%>">
+                          <td style="border-bottom: 0px;" class="multi_market" id="<%=cricketSeries[i].matchdata[j].marketList.match_odd.marketId%>">
                             <%if(user && userMultimarkets != null){ %>
-                              <%let check = userMultimarkets.marketIds.find(item => item == LiveCricket[i].marketList.match_odd.marketId) %>
+                              <%let check = userMultimarkets.marketIds.find(item => item == cricketSeries[i].matchdata[j].marketList.match_odd.marketId) %>
                             <%if(check){%>
                               <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
                             <%}else{%>
