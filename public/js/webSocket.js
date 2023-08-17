@@ -4153,10 +4153,14 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
-                        let htmldiv = $('<div>').html(this.innerHTML)
-                        if(htmldiv != section.backPrice1){
+                        if(first){
                             this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
-                            this.style.backgroundColor = 'blanchedalmond';
+                        }else{
+                            let htmldiv = $('<div>').html(this.innerHTML)
+                            if(htmldiv != section.backPrice1){
+                                this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                                this.style.backgroundColor = 'blanchedalmond';
+                            }
                         }
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                     }
@@ -4166,11 +4170,16 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
-                        let htmldiv = $('<div>').html(this.innerHTML)
+                        if(first){
+                            this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
+                        }else{
+
+                            let htmldiv = $('<div>').html(this.innerHTML)
                             if(htmldiv != section.backPrice2){
                                 this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
+                        }
                         // this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                     }
                 }else if (this.id == `${section.selectionId}3`){
