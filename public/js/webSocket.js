@@ -385,7 +385,8 @@ socket.on('connect', () => {
                     <i class="fa-solid fa-lock"></i>
                   </span>`
                 }else{
-                    if(this.innerHTML !== `<span class="tbl-td-bg-blu-spn">${foundItem.odds[0].backPrice1}</span>`){
+                    if($(this).find('.tbl-td-bg-blu-spn').text() != foundItem.odds[0].backPrice1){
+                    // if(this.innerHTML !== `<span class="tbl-td-bg-blu-spn">${foundItem.odds[0].backPrice1}</span>`){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn" style="background-color: blanchedalmond;">${foundItem.odds[0].backPrice1}</span>`
                     }
                 }
@@ -407,7 +408,8 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
-                        if(this.innerHTML !== `<span class="tbl-td-bg-pich-spn">${foundItem.odds[1].layPrice1}</span>`){
+                        if($(this).find('.tbl-td-bg-pich-spn').text() != foundItem.odds[1].layPrice1){
+                        // if(this.innerHTML !== `<span class="tbl-td-bg-pich-spn">${foundItem.odds[1].layPrice1}</span>`){
                             this.innerHTML = `<span class="tbl-td-bg-pich-spn" style="background-color: blanchedalmond;">${foundItem.odds[1].layPrice1}</span>`
                         }
                     }
@@ -429,7 +431,8 @@ socket.on('connect', () => {
                     <i class="fa-solid fa-lock"></i>
                   </span>`
                 }else{
-                    if(this.innerHTML !== `<span class="tbl-td-bg-blu-spn">${foundItem.odds[1].backPrice1}</span>`){
+                    if($(this).find('.tbl-td-bg-blu-spn').text() != foundItem.odds[1].backPrice1){
+                    // if(this.innerHTML !== `<span class="tbl-td-bg-blu-spn">${foundItem.odds[1].backPrice1}</span>`){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn" style="background-color: blanchedalmond;">${foundItem.odds[1].backPrice1}</span>`
                     }
                 }
@@ -451,7 +454,8 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
-                        if(this.innerHTML !== `<span class="tbl-td-bg-blu-spn">${foundItem.odds[2].backPrice1}</span>`){
+                        if($(this).find('.tbl-td-bg-blu-spn').text() != oundItem.odds[2].backPrice1){
+                        // if(this.innerHTML !== `<span class="tbl-td-bg-blu-spn">${foundItem.odds[2].backPrice1}</span>`){
                             this.innerHTML = `<span class="tbl-td-bg-blu-spn" style="background-color: blanchedalmond;">${foundItem.odds[2].backPrice1}</span>`
                         }
                     }
@@ -473,7 +477,8 @@ socket.on('connect', () => {
                     <i class="fa-solid fa-lock"></i>
                   </span>`
                 }else{
-                    if(this.innerHTML !== `<span class="tbl-td-bg-pich-spn">${foundItem.odds[2].layPrice1}</span>`){
+                    if($(this).find('.tbl-td-bg-pich-spn').text() != foundItem.odds[2].layPrice1){
+                    // if(this.innerHTML !== `<span class="tbl-td-bg-pich-spn">${foundItem.odds[2].layPrice1}</span>`){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn" style="background-color: blanchedalmond;">${foundItem.odds[2].layPrice1}</span>`
                     }
                 }
