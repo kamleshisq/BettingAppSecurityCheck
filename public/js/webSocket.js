@@ -4169,6 +4169,7 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
+                        console.log($(this).innerHTML.find('span:first').text())
                         this.innerHTML = `<span><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                     }
                 }
