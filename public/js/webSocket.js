@@ -4160,7 +4160,6 @@ socket.on('connect', () => {
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
                             if(data1 != section.backPrice1){
-                                console.log(this)
                                 this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -4224,7 +4223,18 @@ socket.on('connect', () => {
                       </span>`
                     }else{
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
-                        this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
+                        if(first){
+                            this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
+                        }else{
+                            let htmldiv = $('<div>').html(this.innerHTML)
+                            let data1 = htmldiv.find('span:first').text()
+                            // console.log(data1)
+                            if(data1 != section.backPrice3){
+                                this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
+                                this.style.backgroundColor = 'blanchedalmond';
+                            }
+                        }
+                        
                     }
                 }else if(this.id == `${section.selectionId}5`){
                     if(data.betLimits[0].max_odd < section.layPrice2 || section.layPrice2 == "-" || section.layPrice2 == "1,000.00" || section.layPrice2 == "0"){
@@ -4233,7 +4243,18 @@ socket.on('connect', () => {
                       </span>`
                     }else{
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
-                        this.innerHTML = `<span><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
+                        if(first){
+                            this.innerHTML = `<span><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
+                        }else{
+                            let htmldiv = $('<div>').html(this.innerHTML)
+                            let data1 = htmldiv.find('span:first').text()
+                            // console.log(data1)
+                            if(data1 != section.backPrice3){
+                                this.innerHTML = `<span><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
+                                this.style.backgroundColor = 'blanchedalmond';
+                            }
+                        }
+                        
                     }
                 }else if (this.id == `${section.selectionId}6`){
                     if(data.betLimits[0].max_odd < section.layPrice3 || section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0"){
@@ -4242,7 +4263,18 @@ socket.on('connect', () => {
                       </span>`
                     }else{
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
-                        this.innerHTML = `<span><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
+                        if(first){
+                            this.innerHTML = `<span><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
+                        }else{
+                            let htmldiv = $('<div>').html(this.innerHTML)
+                            let data1 = htmldiv.find('span:first').text()
+                            // console.log(data1)
+                            if(data1 != section.backPrice3){
+                                this.innerHTML = `<span><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
+                                this.style.backgroundColor = 'blanchedalmond';
+                            }
+                        }
+                        
                     }
                 }
             })
