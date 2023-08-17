@@ -4131,7 +4131,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 60000)
+              }, 6000)
         }
         marketId()
 
