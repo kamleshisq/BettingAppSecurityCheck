@@ -4135,7 +4135,7 @@ socket.on('connect', () => {
         }
         marketId()
 
-
+        let first = true
         socket.on("marketId", async(data) => {
             $(".match_odd_Blue").each(function() {
                     
@@ -4169,8 +4169,11 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
-                        console.log(this.innerHTML.find('span:first').text())
-                        this.innerHTML = `<span><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
+                        if(first){
+                            this.innerHTML = `<span><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
+                        }else{
+                            console.log($(this).innerHTML.find('span:first').text())
+                        }
                     }
                 }
             })
@@ -4464,7 +4467,7 @@ socket.on('connect', () => {
                 }
             });
 
-
+            first = false
         })
 
         // const buttons = document.querySelectorAll(".button");
