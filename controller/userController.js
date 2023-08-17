@@ -71,7 +71,7 @@ exports.createUser = catchAsync(async(req, res, next)=>{
         childAccStatement.parent_id = req.currentUser.id;
         childAccStatement.description = 'Chips credited to ' + newUser.name + '(' + newUser.userName + ') from parent user ' + req.currentUser.name + "(" + req.currentUser.userName + ")";
         childAccStatement.creditDebitamount = parseFloat(req.body.Credit);
-        childAccStatement.balance = userData.availableBalance;
+        childAccStatement.balance = newUser.availableBalance;
         childAccStatement.date = date
         childAccStatement.userName = newUser.userName
         childAccStatement.role_type = newUser.role_type
@@ -86,7 +86,7 @@ exports.createUser = catchAsync(async(req, res, next)=>{
         ParentAccStatement.parent_id = req.currentUser.id;
         ParentAccStatement.description = 'Chips credited to ' + newUser.name + '(' + newUser.userName + ') from parent user ' + req.currentUser.name + "(" + req.currentUser.userName + ")";
         ParentAccStatement.creditDebitamount = -parseFloat(req.body.Credit);
-        ParentAccStatement.balance = parentData.availableBalance;
+        ParentAccStatement.balance = req.currentUser.availableBalance;
         ParentAccStatement.date = date
         ParentAccStatement.userName = req.currentUser.userName;
         ParentAccStatement.role_type = req.currentUser.role_type
