@@ -1,6 +1,7 @@
 <%if(LiveCricket.length > 0 || upcomintCricket.length > 0){%>
   <div class="exchange-pg-tbl-ro2">
   <% Object.keys(cricketSeries).forEach(seriesName => { %>
+    <%console.log(seriesName)>
     <table class="acount-stat-tbl">
 
       <thead class="acount-stat-tbl-hed">
@@ -14,7 +15,7 @@
       </thead>
 
       <tbody class="acount-stat-tbl-body">
-          <tr class="series-title"><td colspan="9"><p><%=seriesName%></p></td></tr>
+          <tr class="series-title"><td colspan="9"><p></p></td></tr>
          
       </tbody>
 
