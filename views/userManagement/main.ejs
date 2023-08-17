@@ -347,7 +347,7 @@
                   <input type="checkbox" id="customOptionCheckbox">
                   <label for="">WhiteLabel</label>
                   <!-- <input type="text" name="whiteLabel" placeholder="Enter new role"> -->
-                  <select name="whiteLabel"  class="form-control ml0" style="color: #000 !important;">
+                  <select name="whiteLabel" id="roleSelect" class="form-control ml0" style="color: #000 !important;">
                     <%for(let i = 0; i < WhiteLabel.length; i++){ %>
                       <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
                     <%} %>
@@ -376,7 +376,7 @@
                 <input type="password" class="form-control ml0" placeholder="" name="passwordConfirm">
               </div>
             </div>
-            <div class="row mt-2">
+            <div class="row mt-2" id="shareVisibleActual">
               <div class="col">
                 <label for="">Share</label>
                 <input type="text" id="Share" class="form-control ml0" placeholder="0" name="share">
@@ -509,6 +509,18 @@
       } else {
         newWhiteLabelInput.style.display = 'none';
         document.querySelector('select[name="whiteLabel"]').style.display = 'block';
+      }
+    });
+  </script>
+  <script>
+    const roleSelect = document.getElementById('roleSelect');
+    const shareVisibleActual = document.getElementById('shareVisibleActual');
+  
+    roleSelect.addEventListener('change', function () {
+      if (this.value === '6492fe4fd09db28e00761694') {
+        shareVisibleActual.style.display = 'none';
+      } else {
+        shareVisibleActual.style.display = 'block';
       }
     });
   </script>
