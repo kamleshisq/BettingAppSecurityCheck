@@ -10,6 +10,7 @@ const settlementModel = require("../model/sattlementModel");
 // const { use } = require('../routes/userRoutes')
 
 exports.createUser = catchAsync(async(req, res, next)=>{
+    console.log(req.body)
     const user_type = await Role.findById(req.body.role);
     // console.log(user_type)
     // console.log(req.currentUser)
