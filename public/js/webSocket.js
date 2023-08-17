@@ -4137,6 +4137,7 @@ socket.on('connect', () => {
 
         let first = true
         socket.on("marketId", async(data) => {
+            console.log("working")
             $(".match_odd_Blue").each(function() {
                     
                 let id = this.id
@@ -4158,6 +4159,7 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             if(htmldiv != section.backPrice1){
+                                console.log(this)
                                 this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
