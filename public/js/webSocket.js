@@ -498,6 +498,7 @@ socket.on('connect', () => {
         })
 
         socket.on("commissionData", data => {
+            console.log(data)
             if(data.status === "error"){
                 alert("Please try again later")
             }else{
