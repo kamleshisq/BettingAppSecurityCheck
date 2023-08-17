@@ -509,115 +509,115 @@ socket.on('connect', () => {
 
 
 
-    if(pathname == "/admin/updateRole"){
-        let x = "121"
-        // let y = document.getElementById("mySelect").value
-        function sendData(){
+    // if(pathname == "/admin/updateRole"){
+    //     let x = "121"
+    //     // let y = document.getElementById("mySelect").value
+    //     function sendData(){
             
-            if(x != document.getElementById("mySelect").value){
-                x = document.getElementById("mySelect").value
-                socket.emit("dataId", (x))
-                setTimeout(()=>{
-                  sendData()
-                }, 300)
-            }else{
-                setTimeout(()=>{
-                    sendData()
-                }, 300)
-            }
-          }
-          sendData()
+    //         if(x != document.getElementById("mySelect").value){
+    //             x = document.getElementById("mySelect").value
+    //             socket.emit("dataId", (x))
+    //             setTimeout(()=>{
+    //               sendData()
+    //             }, 300)
+    //         }else{
+    //             setTimeout(()=>{
+    //                 sendData()
+    //             }, 300)
+    //         }
+    //       }
+    //       sendData()
 
-          socket.on("sendData", data => {
-            // console.log(data)
-            // console.log(data[1])
-            let html = ""
-            if(data[0].role.authorization.includes("createDeleteUser")){
-                html += `<label for="authorization">create and delete users</label><br>
-                        <input type="checkbox" name="authorization" value="createDeleteUser" checked><br>`
-            }else{
-                html += `<label for="authorization">create and delete users</label><br>
-                        <input type="checkbox" name="authorization" value="createDeleteUser" ><br>`
-            }
-            if(data[0].role.authorization.includes("userStatus")){
-                html += `<label for="authorization">User Status</label><br>
-                        <input type="checkbox" name="authorization" value="userStatus" checked><br>`
-            }else{
-                html += `<label for="authorization">User Status</label><br>
-                        <input type="checkbox" name="authorization" value="userStatus" ><br>`
-            }
-            if(data[0].role.authorization.includes("userName")){
-                html += `<label for="authorization">Users Details</label><br>
-                        <input type="checkbox" name="authorization" value="userName" checked><br>`
-            }else{
-                html += `<label for="authorization">Users Details</label><br>
-                        <input type="checkbox" name="authorization" value="userName" ><br>`
-            }
-            if(data[0].role.authorization.includes("betLockAndUnloack")){
-                html += `<label for="authorization">bet lock and unlock</label><br>
-                        <input type="checkbox" name="authorization" value="betLockAndUnloack" checked><br>`
-            }else{
-                html += `<label for="authorization">bet lock and unlock</label><br>
-                        <input type="checkbox" name="authorization" value="betLockAndUnloack" ><br>`
-            }
-            if(data[0].role.authorization.includes("changeUserPassword")){
-                html += `<label for="authorization">Password</label><br>
-                        <input type="checkbox" name="authorization" value="changeUserPassword" checked><br>`
-            }else{
-                html += `<label for="authorization">Password</label><br>
-                        <input type="checkbox" name="authorization" value="changeUserPassword" ><br>`
-            }
-            if(data[0].role.authorization.includes("roleController")){
-                html += `<label for="authorization">Role Controller</label><br>
-                        <input type="checkbox" name="authorization" value="roleController" checked><br>`
-            }else{
-                html += `<label for="authorization">Role Controller</label><br>
-                        <input type="checkbox" name="authorization" value="roleController" ><br>`
-            }
-            if(data[0].role.authorization.includes("accountControl")){
-                html += `<label for="authorization">Account Controller</label><br>
-                        <input type="checkbox" name="authorization" value="accountControl" checked><br>`
-            }else{
-                html += `<label for="authorization">Account Controller</label><br>
-                        <input type="checkbox" name="authorization" value="accountControl" ><br>`
-            }
-            if(data[0].role.authorization.includes("allUserLogOut")){
-                html += `<label for="authorization">All User Logout</label><br>
-                        <input type="checkbox" name="authorization" value="allUserLogOut" checked><br>`
-            }else{
-                html += `<label for="authorization">All User Logout</label><br>
-                        <input type="checkbox" name="authorization" value="allUserLogOut" ><br>`
-            }
-            if(data[0].role.authorization.includes("dashboard")){
-                html += `<label for="authorization">Dashboard</label><br>
-                        <input type="checkbox" name="authorization" value="dashboard" checked><br>`
-            }else{
-                html += `<label for="authorization">Dashboard</label><br>
-                        <input type="checkbox" name="authorization" value="dashboard" ><br>`
-            }
+    //       socket.on("sendData", data => {
+    //         // console.log(data)
+    //         // console.log(data[1])
+    //         let html = ""
+    //         if(data[0].role.authorization.includes("createDeleteUser")){
+    //             html += `<label for="authorization">create and delete users</label><br>
+    //                     <input type="checkbox" name="authorization" value="createDeleteUser" checked><br>`
+    //         }else{
+    //             html += `<label for="authorization">create and delete users</label><br>
+    //                     <input type="checkbox" name="authorization" value="createDeleteUser" ><br>`
+    //         }
+    //         if(data[0].role.authorization.includes("userStatus")){
+    //             html += `<label for="authorization">User Status</label><br>
+    //                     <input type="checkbox" name="authorization" value="userStatus" checked><br>`
+    //         }else{
+    //             html += `<label for="authorization">User Status</label><br>
+    //                     <input type="checkbox" name="authorization" value="userStatus" ><br>`
+    //         }
+    //         if(data[0].role.authorization.includes("userName")){
+    //             html += `<label for="authorization">Users Details</label><br>
+    //                     <input type="checkbox" name="authorization" value="userName" checked><br>`
+    //         }else{
+    //             html += `<label for="authorization">Users Details</label><br>
+    //                     <input type="checkbox" name="authorization" value="userName" ><br>`
+    //         }
+    //         if(data[0].role.authorization.includes("betLockAndUnloack")){
+    //             html += `<label for="authorization">bet lock and unlock</label><br>
+    //                     <input type="checkbox" name="authorization" value="betLockAndUnloack" checked><br>`
+    //         }else{
+    //             html += `<label for="authorization">bet lock and unlock</label><br>
+    //                     <input type="checkbox" name="authorization" value="betLockAndUnloack" ><br>`
+    //         }
+    //         if(data[0].role.authorization.includes("changeUserPassword")){
+    //             html += `<label for="authorization">Password</label><br>
+    //                     <input type="checkbox" name="authorization" value="changeUserPassword" checked><br>`
+    //         }else{
+    //             html += `<label for="authorization">Password</label><br>
+    //                     <input type="checkbox" name="authorization" value="changeUserPassword" ><br>`
+    //         }
+    //         if(data[0].role.authorization.includes("roleController")){
+    //             html += `<label for="authorization">Role Controller</label><br>
+    //                     <input type="checkbox" name="authorization" value="roleController" checked><br>`
+    //         }else{
+    //             html += `<label for="authorization">Role Controller</label><br>
+    //                     <input type="checkbox" name="authorization" value="roleController" ><br>`
+    //         }
+    //         if(data[0].role.authorization.includes("accountControl")){
+    //             html += `<label for="authorization">Account Controller</label><br>
+    //                     <input type="checkbox" name="authorization" value="accountControl" checked><br>`
+    //         }else{
+    //             html += `<label for="authorization">Account Controller</label><br>
+    //                     <input type="checkbox" name="authorization" value="accountControl" ><br>`
+    //         }
+    //         if(data[0].role.authorization.includes("allUserLogOut")){
+    //             html += `<label for="authorization">All User Logout</label><br>
+    //                     <input type="checkbox" name="authorization" value="allUserLogOut" checked><br>`
+    //         }else{
+    //             html += `<label for="authorization">All User Logout</label><br>
+    //                     <input type="checkbox" name="authorization" value="allUserLogOut" ><br>`
+    //         }
+    //         if(data[0].role.authorization.includes("dashboard")){
+    //             html += `<label for="authorization">Dashboard</label><br>
+    //                     <input type="checkbox" name="authorization" value="dashboard" checked><br>`
+    //         }else{
+    //             html += `<label for="authorization">Dashboard</label><br>
+    //                     <input type="checkbox" name="authorization" value="dashboard" ><br>`
+    //         }
             
-            document.getElementById('user_controller').innerHTML = html
+    //         document.getElementById('user_controller').innerHTML = html
         
-            for(let i = 0; i < data[1].roles.length; i++){
-                // console.log(data[0].role.userAuthorization)
-                // console.log(data[1].roles[i].role_type)
-                // document.getElementById(data[1].roles[i].role_type).checked = true
-                // console.log(document.getElementById(data[1].roles[i].role_type))
-                if(data[0].role.userAuthorization.includes(`${data[1].roles[i].role_type}`)){
-                    document.getElementById(data[1].roles[i].role_type).checked = true
-                    // console.log(document.getElementById(data[1].roles[i].role_type), "checked")
-                }else{
-                    document.getElementById(data[1].roles[i].role_type).checked = false
-                    // console.log(data[1].roles[i].role_type)
-                }
-            }
+    //         for(let i = 0; i < data[1].roles.length; i++){
+    //             // console.log(data[0].role.userAuthorization)
+    //             // console.log(data[1].roles[i].role_type)
+    //             // document.getElementById(data[1].roles[i].role_type).checked = true
+    //             // console.log(document.getElementById(data[1].roles[i].role_type))
+    //             if(data[0].role.userAuthorization.includes(`${data[1].roles[i].role_type}`)){
+    //                 document.getElementById(data[1].roles[i].role_type).checked = true
+    //                 // console.log(document.getElementById(data[1].roles[i].role_type), "checked")
+    //             }else{
+    //                 document.getElementById(data[1].roles[i].role_type).checked = false
+    //                 // console.log(data[1].roles[i].role_type)
+    //             }
+    //         }
         
-            let html1 = ""
-            document.getElementById("role_controller").innerHTML = `
-            <label for="level">Role Level</label>
-            <input type="number" name="level" placeholder='${data[0].role.role_level}' id='role_level'>`
-        })
-    }
+    //         let html1 = ""
+    //         document.getElementById("role_controller").innerHTML = `
+    //         <label for="level">Role Level</label>
+    //         <input type="number" name="level" placeholder='${data[0].role.role_level}' id='role_level'>`
+    //     })
+    // }
 
 
 
