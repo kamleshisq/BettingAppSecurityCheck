@@ -27,8 +27,8 @@
               };
               var formattedTime = date.toLocaleString('en-US', options);
             %>
-              <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
-                  <td style="border-bottom: 0px;">
+              <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/exchange_inPlay/match?id=<%=cricketSeries[i].matchdata[j].eventData.eventId%>'>
+                  <td style="border-bottom: 0px;" class="name1" id="<%=cricketSeries[i].matchdata[j].marketList.match_odd.marketId%>" >
                     <div class="exchange-pg-mytbl-body-cricket-data-dv">
                       <%if(cricketSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
                         <span class="exchange-pg-mytbl-body-liv-dot"></span>
@@ -47,25 +47,33 @@
                   
                   <td style="border-bottom: 0px;">
                     <div class="exchange-td2-txtdv">
-                      <div class="exchange-td2-txtdv-tv">
-                        <i class="fa-solid fa-tv c-activee"></i>
-                      </div>
-                      <div class="exchange-td2-txtdv-inn1">
-                        <p> MO </p>
-                        <span>35</span>
-                      </div>
-                      <div class="exchange-td2-txtdv-inn1">
-                        <p> F </p>
-                        <span>1</span>
-                      </div>
-                      <div class="exchange-td2-txtdv-inn1">
-                        <p> M </p>
-                        <span>1</span>
-                      </div>
-                      <div class="exchange-td2-txtdv-inn1">
+                      <%if(cricketSeries[i].matchdata[j].eventData.isTv){%>
+                        <div class="exchange-td2-txtdv-tv">
+                          <i class="fa-solid fa-tv c-activee"></i>
+                        </div>
+                      <%}%>
+                      <%if(cricketSeries[i].matchdata[j].marketList.match_odd != null){%>
+                        <div class="exchange-td2-txtdv-inn1">
+                          <p> MO </p>
+                          <span>35</span>
+                        </div>
+                      <%} %>
+                      <%if(cricketSeries[i].matchdata[j].marketList.fancy != null || cricketSeries[i].matchdata[j].marketList.session!= null || cricketSeries[i].matchdata[j].marketList.odd_even!= null ){%>
+                        <div class="exchange-td2-txtdv-inn1">
+                          <p> F </p>
+                          <span>1</span>
+                        </div>
+                      <%} %>
+                      <%if(cricketSeries[i].matchdata[j].marketList.bookmaker != null){%>
+                        <div class="exchange-td2-txtdv-inn1">
+                          <p> M </p>
+                          <span>1</span>
+                        </div>
+                      <%} %>
+                      <!-- <div class="exchange-td2-txtdv-inn1">
                         <p> L </p>
                         <span>1</span>
-                      </div>
+                      </div> -->
                     </div>
                   </td>
                   <td style="border-bottom: 0px;">
