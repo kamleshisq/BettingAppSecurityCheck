@@ -30,9 +30,9 @@
             
               <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/exchange_inPlay/match?id=<%=cricketSeries[i].matchdata[j].eventData.eventId%>'>
                 <%if(cricketSeries[i].matchdata[j].marketList.match_odd != null){ %>
-                  <td style="border-bottom: 0px;" >
-                    <%}else{ %>
                   <td style="border-bottom: 0px;" class="name1" id="<%=cricketSeries[i].matchdata[j].marketList.match_odd.marketId%>" >
+                    <%}else{ %>
+                      <td style="border-bottom: 0px;" >
                 <%} %>
                     <div class="exchange-pg-mytbl-body-cricket-data-dv">
                       <%if(cricketSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
