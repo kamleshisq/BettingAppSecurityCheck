@@ -3940,7 +3940,7 @@ socket.on('connect', () => {
                             <i class="fa-solid fa-lock"></i>
                           </span>`
                         }else{
-                            this.innerHTML = `<span class="tbl-td-bg-pich-spn" style="background-color: blanchedalmond;">${foundItem.odds[0].layPrice1}</span>`
+                            this.innerHTML = `<span class="tbl-td-bg-pich-spn" >${foundItem.odds[0].layPrice1}</span>`
                         }
                 });
 
