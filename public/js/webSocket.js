@@ -3945,6 +3945,7 @@ socket.on('connect', () => {
                             }
                         }
                         const spanElement = document.querySelectorAll('.tbl-td-bg-pich-spn');
+                        console.log(spanElement.style)
                         setTimeout(() => {
                             if(spanElement.style){
                                 console.log("working")
