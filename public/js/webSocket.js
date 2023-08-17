@@ -366,18 +366,7 @@ socket.on('connect', () => {
                         }
                     }
                 });
-                const spanElement = document.querySelectorAll('.tbl-td-bg-pich-spn');
-                console.log(spanElement)
-                setTimeout(() => {
-                    spanElement.forEach(spanElement => {
-                        if(spanElement.style){
-                            console.log("working")
-                            spanElement.style.backgroundColor = '';
-                        }// Remove background color
-                      });
-                    
-                },1000)
-
+                
             $(".0B").each(function() {
                 
                 let id = this.id
@@ -395,7 +384,9 @@ socket.on('connect', () => {
                     <i class="fa-solid fa-lock"></i>
                   </span>`
                 }else{
-                    this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[0].backPrice1}</span>`
+                    if(this.innerHTML !== `<span class="tbl-td-bg-blu-spn">${foundItem.odds[0].backPrice1}</span>`){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn" style="background-color: blanchedalmond;">${foundItem.odds[0].backPrice1}</span>`
+                    }
                 }
             });
 
@@ -415,7 +406,9 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[1].layPrice1}</span>`
+                        if(this.innerHTML !== `<span class="tbl-td-bg-pich-spn">${foundItem.odds[1].layPrice1}</span>`){
+                            this.innerHTML = `<span class="tbl-td-bg-pich-spn" style="background-color: blanchedalmond;">${foundItem.odds[1].layPrice1}</span>`
+                        }
                     }
             });
 
@@ -478,6 +471,18 @@ socket.on('connect', () => {
                     this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[2].layPrice1}</span>`
                 }
             });
+
+            const spanElement = document.querySelectorAll('.tbl-td-bg-pich-spn');
+                console.log(spanElement)
+                setTimeout(() => {
+                    spanElement.forEach(spanElement => {
+                        if(spanElement.style){
+                            console.log("working")
+                            spanElement.style.backgroundColor = '';
+                        }// Remove background color
+                      });
+                    
+                },200)
         })
     })
 
