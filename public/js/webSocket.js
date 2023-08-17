@@ -361,8 +361,8 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
-                        if(this.innerHTML !== `<span class="tbl-td-bg-pich-spn" >${foundItem.odds[0].layPrice1}</span>`){
-                            console.log($(this).find('.tbl-td-bg-pich-spn').text(), 123)
+                        if($(this).find('.tbl-td-bg-pich-spn').text() != foundItem.odds[0].layPrice1){
+                            console.log(123)
                             this.innerHTML = `<span class="tbl-td-bg-pich-spn" style="background-color: blanchedalmond;">${foundItem.odds[0].layPrice1}</span>`
                         }
                     }
