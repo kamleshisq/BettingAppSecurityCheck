@@ -3944,15 +3944,15 @@ socket.on('connect', () => {
                                 this.innerHTML = `<span class="tbl-td-bg-pich-spn" style="background-color: blanchedalmond;">${foundItem.odds[0].layPrice1}</span>`
                             }
                         }
-                        const spanElement = document.querySelectorAll('.tbl-td-bg-pich-spn');
-                        console.log(spanElement.style)
-                        setTimeout(() => {
-                            // if(spanElement.style){
-                                console.log("working")
-                                spanElement.style.backgroundColor = '';
-                            // }
-                        },1000)
-                });
+                    });
+                    const spanElement = document.querySelectorAll('.tbl-td-bg-pich-spn');
+                    console.log(spanElement.style)
+                    setTimeout(() => {
+                        // if(spanElement.style){
+                            console.log("working")
+                            spanElement.style.backgroundColor = '';
+                        // }
+                    },1000)
 
                 $(".0B").each(function() {
                     
