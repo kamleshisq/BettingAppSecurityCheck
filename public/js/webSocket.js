@@ -428,7 +428,9 @@ socket.on('connect', () => {
                     <i class="fa-solid fa-lock"></i>
                   </span>`
                 }else{
-                    this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[1].backPrice1}</span>`
+                    if(this.innerHTML !== `<span class="tbl-td-bg-blu-spn">${foundItem.odds[1].backPrice1}</span>`){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn" style="background-color: blanchedalmond;">${foundItem.odds[1].backPrice1}</span>`
+                    }
                 }
             });
 
@@ -448,7 +450,9 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
-                        this.innerHTML = `<span class="tbl-td-bg-blu-spn">${foundItem.odds[2].backPrice1}</span>`
+                        if(this.innerHTML !== `<span class="tbl-td-bg-blu-spn">${foundItem.odds[2].backPrice1}</span>`){
+                            this.innerHTML = `<span class="tbl-td-bg-blu-spn" style="background-color: blanchedalmond;">${foundItem.odds[2].backPrice1}</span>`
+                        }
                     }
             });
 
@@ -468,7 +472,9 @@ socket.on('connect', () => {
                     <i class="fa-solid fa-lock"></i>
                   </span>`
                 }else{
-                    this.innerHTML = `<span class="tbl-td-bg-pich-spn">${foundItem.odds[2].layPrice1}</span>`
+                    if(this.innerHTML !== `<span class="tbl-td-bg-pich-spn">${foundItem.odds[2].layPrice1}</span>`){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn" style="background-color: blanchedalmond;">${foundItem.odds[2].layPrice1}</span>`
+                    }
                 }
             });
 
@@ -476,6 +482,18 @@ socket.on('connect', () => {
                 console.log(spanElement)
                 setTimeout(() => {
                     spanElement.forEach(spanElement => {
+                        if(spanElement.style){
+                            console.log("working")
+                            spanElement.style.backgroundColor = '';
+                        }// Remove background color
+                      });
+                    
+                },200)
+
+                const spanElement2 = document.querySelectorAll('.tbl-td-bg-blu-spn');
+                console.log(spanElement2)
+                setTimeout(() => {
+                    spanElement2.forEach(spanElement => {
                         if(spanElement.style){
                             console.log("working")
                             spanElement.style.backgroundColor = '';
