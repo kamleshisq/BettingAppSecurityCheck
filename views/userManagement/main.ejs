@@ -333,7 +333,7 @@
               </div>
               <div class="col">
                 <label for="">User Role</label>
-                <select name="role"  class="form-control ml0" style="color: #000 !important;">
+                <select name="role" id="roleSelect" class="form-control ml0" style="color: #000 !important;">
                   <%for(let i = 0;i<roles.length; i++){%>
                     <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
                   <%}%>
@@ -347,7 +347,7 @@
                   <input type="checkbox" id="customOptionCheckbox">
                   <label for="">WhiteLabel</label>
                   <!-- <input type="text" name="whiteLabel" placeholder="Enter new role"> -->
-                  <select name="whiteLabel" id="roleSelect" class="form-control ml0" style="color: #000 !important;">
+                  <select name="whiteLabel" class="form-control ml0" style="color: #000 !important;">
                     <%for(let i = 0; i < WhiteLabel.length; i++){ %>
                       <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
                     <%} %>
