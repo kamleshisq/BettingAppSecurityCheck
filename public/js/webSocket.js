@@ -4158,8 +4158,8 @@ socket.on('connect', () => {
                             this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
-                            
-                            if(htmldiv != section.backPrice1){
+                            let data1 = htmldiv.find('span:first').text()
+                            if(data1 != section.backPrice1){
                                 console.log(this)
                                 this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
@@ -4178,7 +4178,8 @@ socket.on('connect', () => {
                         }else{
 
                             let htmldiv = $('<div>').html(this.innerHTML)
-                            if(htmldiv != section.backPrice2){
+                            let data1 = htmldiv.find('span:first').text()
+                            if(data1 != section.backPrice2){
                                 this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
@@ -4196,7 +4197,7 @@ socket.on('connect', () => {
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
-                            console.log(data1)
+                            // console.log(data1)
                             if(data1 != section.backPrice3){
                                 this.innerHTML = `<span><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
