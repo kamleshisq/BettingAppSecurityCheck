@@ -176,6 +176,7 @@
                 <tr>
                   <th>Market Name</th>
                   <th>Commission Type</th>
+                  <th>OFF / ON</th>
                   <th>Percentage Value</th>
                 </tr>
               </thead>
@@ -188,6 +189,12 @@
                       <!-- <option value="ENTRY">Entry Wise Commission</option> -->
                       <!-- Add more options as needed -->
                     </select>
+                  </td>
+                  <td>
+                    <span>OFF &nbsp; <label class="switch">
+                      <input class="checkbox" name="matchOddsStatus" type="checkbox">
+                      <span class="slider round"></span>
+                      </label>&nbsp; ON</span>
                   </td>
                   <td>
                     <!-- <input type="number" class="form-control" name="matchOdds"> -->
@@ -211,6 +218,12 @@
                     </select>
                   </td>
                   <td>
+                    <span>OFF &nbsp; <label class="switch">
+                      <input class="checkbox" name="BookmakerStatus" type="checkbox">
+                      <span class="slider round"></span>
+                      </label>&nbsp; ON</span>
+                  </td>
+                  <td>
                     <!-- <input type="number" class="form-control" name="Bookmaker"> -->
                     <select name="Bookmaker">
                       <option value="0.25">0.25</option>
@@ -228,6 +241,12 @@
                       <option value="ENTRY" selected>Entry Wise Commission</option>
                       <!-- Add more options as needed -->
                     </select>
+                  </td>
+                  <td>
+                    <span>OFF &nbsp; <label class="switch">
+                      <input class="checkbox" name="fencyStatus" type="checkbox">
+                      <span class="slider round"></span>
+                      </label>&nbsp; ON</span>
                   </td>
                   <td>
                     <!-- <input type="number" class="form-control" name="fency" > -->
