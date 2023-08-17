@@ -1678,6 +1678,15 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let userLog
     let userMultimarkets
     let cricketSeries = [];
+    let footbalSeries = [];
+    footBall.forEach(match => {
+        let seriesIndex = footbalSeries.findIndex(series => series.series === match.eventData.league);
+        if (seriesIndex === -1) {
+            footbalSeries.push({ series: match.eventData.league, matchdata: [match] });
+        } else {
+            footbalSeries[seriesIndex].matchdata.push(match);
+        }
+    });
     cricket.forEach(match => {
         let seriesIndex = cricketSeries.findIndex(series => series.series === match.eventData.league);
         if (seriesIndex === -1) {
@@ -1686,7 +1695,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
             cricketSeries[seriesIndex].matchdata.push(match);
         }
     });
-    console.log(cricketSeries);
+    console.log(footbalSeries);
     if(user){
         userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
