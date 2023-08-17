@@ -55,7 +55,7 @@ exports.createUser = catchAsync(async(req, res, next)=>{
         newUser.availableBalance = parseFloat(req.body.Credit);
         newUser.creditReference = parseFloat(req.body.Credit);
         req.currentUser.availableBalance = parseFloat(req.currentUser.availableBalance - req.body.Credit);
-        req.currentUser.downlineBalance = parseFloat(req.currentUser.downlineBalance + req.body.Credit);
+        req.currentUser.downlineBalance = parseFloat(req.currentUser.downlineBalance) + parseFloat(req.body.Credit);
         const updatedChild = await User.findByIdAndUpdate(newUser.id, newUser,{
             new:true
         });
