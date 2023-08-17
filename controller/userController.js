@@ -51,9 +51,9 @@ exports.createUser = catchAsync(async(req, res, next)=>{
         if(req.currentUser.availableBalance < req.body.Credit){
             return next(new AppError("Insufficient Credit Limit !"))
         }
-        newUser.balance = parseFloat(newUser.balance);
-        newUser.availableBalance = parseFloat(newUser.availableBalance);
-        newUser.creditReference = parseFloat(newUser.availableBalance);
+        newUser.balance = parseFloat(req.body.Credit);
+        newUser.availableBalance = parseFloat(req.body.Credit);
+        newUser.creditReference = parseFloat(req.body.Credit);
         req.currentUser.availableBalance = parseFloat(req.currentUser.availableBalance - req.body.Credit);
         req.currentUser.downlineBalance = parseFloat(req.currentUser.downlineBalance + req.body.Credit);
         const updatedChild = await User.findByIdAndUpdate(newUser.id, newUser,{
