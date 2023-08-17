@@ -1714,7 +1714,8 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         userLog,
         notifications:req.notifications,
         userMultimarkets,
-        cricketSeries
+        cricketSeries,
+        footbalSeries
         
     })
 })
