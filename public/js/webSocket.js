@@ -4491,6 +4491,15 @@ socket.on('connect', () => {
             });
 
             first = false
+            const spanElement2 = document.querySelectorAll('.button');
+                setTimeout(() => {
+                    spanElement2.forEach(spanElement => {
+                        if(spanElement.style){
+                            spanElement.style.backgroundColor = '';
+                        }// Remove background color
+                      });
+                    
+                },300)
         })
 
         // const buttons = document.querySelectorAll(".button");
