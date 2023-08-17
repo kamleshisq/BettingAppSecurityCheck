@@ -515,7 +515,13 @@
   <script>
     const roleSelect = document.getElementById('roleSelect');
     const shareVisibleActual = document.getElementById('shareVisibleActual');
-  
+    
+    if (roleSelect.value === '6492fe4fd09db28e00761694') {
+      shareVisibleActual.style.display = 'none';
+    } else {
+      shareVisibleActual.style.display = 'block';
+    }
+
     roleSelect.addEventListener('change', function () {
       if (this.value === '6492fe4fd09db28e00761694') {
         shareVisibleActual.style.display = 'none';
