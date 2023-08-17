@@ -345,7 +345,7 @@ socket.on('connect', () => {
         $(document).ready(function() {
       
             $(".0L").each(function() {
-                    console.log(this)
+                    // console.log(this)
                     let id = this.id
                     const foundItem = data.finalResult.items.find(item => item.odds.find(odd => odd.selectionId == id));
                     if(data.betLimits[0].max_odd < foundItem.odds[0].layPrice1){
@@ -361,6 +361,7 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
+                        console.log(this.innerHTML)
                         if(this.innerHTML !== `<span class="tbl-td-bg-pich-spn" >${foundItem.odds[0].layPrice1}</span>`){
                             this.innerHTML = `<span class="tbl-td-bg-pich-spn" style="background-color: blanchedalmond;">${foundItem.odds[0].layPrice1}</span>`
                         }
@@ -479,11 +480,9 @@ socket.on('connect', () => {
             });
 
             const spanElement = document.querySelectorAll('.tbl-td-bg-pich-spn');
-                console.log(spanElement)
                 setTimeout(() => {
                     spanElement.forEach(spanElement => {
                         if(spanElement.style){
-                            console.log("working")
                             spanElement.style.backgroundColor = '';
                         }// Remove background color
                       });
@@ -491,11 +490,9 @@ socket.on('connect', () => {
                 },200)
 
                 const spanElement2 = document.querySelectorAll('.tbl-td-bg-blu-spn');
-                console.log(spanElement2)
                 setTimeout(() => {
                     spanElement2.forEach(spanElement => {
                         if(spanElement.style){
-                            console.log("working")
                             spanElement.style.backgroundColor = '';
                         }// Remove background color
                       });
