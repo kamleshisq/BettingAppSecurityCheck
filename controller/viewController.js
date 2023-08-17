@@ -1721,7 +1721,8 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
     }
     // console.log(liveFootBall)
     // console.log(liveTennis.length)
-    // console.log(LiveCricket.length)
+    console.log(LiveCricket.length)
+    console.log(LiveCricket)
     res.status(200).render('./userSideEjs/inplayPage/main',{
         user,
         verticalMenus,
