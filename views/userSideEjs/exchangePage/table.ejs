@@ -27,9 +27,13 @@
               };
               var formattedTime = date.toLocaleString('en-US', options);
             %>
-            <%if(cricketSeries[i].matchdata[j].marketList.match_odd != null){ %>
+            
               <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/exchange_inPlay/match?id=<%=cricketSeries[i].matchdata[j].eventData.eventId%>'>
+                <%if(cricketSeries[i].matchdata[j].marketList.match_odd != null){ %>
+                  <td style="border-bottom: 0px;" >
+                    <%}else{ %>
                   <td style="border-bottom: 0px;" class="name1" id="<%=cricketSeries[i].matchdata[j].marketList.match_odd.marketId%>" >
+                <%} %>
                     <div class="exchange-pg-mytbl-body-cricket-data-dv">
                       <%if(cricketSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
                         <span class="exchange-pg-mytbl-body-liv-dot"></span>
@@ -77,33 +81,98 @@
                       </div> -->
                     </div>
                   </td>
-                  <td style="border-bottom: 0px;">
-                    <span class="tbl-td-bg-blu-spn">1.75</span>
-                  </td>
-                  <td style="border-bottom: 0px;">
-                    <span class="tbl-td-bg-pich-spn mylock-data">
-                      <i class="fa-solid fa-lock"></i>
-                    </span>
-                  </td>
-                  <td style="border-bottom: 0px;">
-                    <span class="tbl-td-bg-blu-spn">1.75</span>
-                  </td>
-                  <td style="border-bottom: 0px;">
-                    <span class="tbl-td-bg-pich-spn">1.75</span>
-                  </td>
-                  <td style="border-bottom: 0px;">
-                    <span class="tbl-td-bg-blu-spn mylock-data">
-                      <i class="fa-solid fa-lock"></i>
-                    </span>
-                  </td>
-                  <td style="border-bottom: 0px;">
-                    <span class="tbl-td-bg-pich-spn">1.75</span>
-                  </td>
+                  <%if(cricketSeries[i].matchdata[j].marketList.match_odd != null){ %>
+                    <% let runners = JSON.parse(cricketSeries[i].matchdata[j].marketList.match_odd.runners); %>
+                    <% let runners1 = []; %>
+                    <%let secIds = []; %>
+                    <%runners.forEach(item => {%>
+                        <%runners1.push(item.runner);%>
+                        <%secIds.push(item.secId);%>
+                    <%});%>
+                    <%if(runners1.length === 2){%>
+                      <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
+                      <td style="border-bottom: 0px;"  class="0L" id="<%=secIds[0]%>"></td>
+                      <td style="border-bottom: 0px;"  class="">
+                        <span class="tbl-td-bg-blu-spn mylock-data">
+                          <i class="fa-solid fa-lock"></i>
+                        </span>
+                      </td>
+                      <td style="border-bottom: 0px;"  class="">
+                        <span class="tbl-td-bg-pich-spn mylock-data">
+                          <i class="fa-solid fa-lock"></i>
+                        </span>
+                      </td>
+                      <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
+                      <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
+                      <td style="border-bottom: 0px;" class="multi_market" id="<%=LiveCricket[i].marketList.match_odd.marketId%>">
+                        <%if(user && userMultimarkets != null){ %>
+                          <%let check = userMultimarkets.marketIds.find(item => item == LiveCricket[i].marketList.match_odd.marketId) %>
+                          <%if(check){%>
+                            <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
+                          <%}else{%>
+                            <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
+                          <%}%>
+                        <%}else{%>
+                          <a><img src="../../assets/img/exchange/Vector.png" alt=""></a>
+                        <%}%>
+                      </td>
+                      <%}else{%>
+                        <td style="border-bottom: 0px;"  class="0B" id="<%=secIds[0]%>"></td>
+                          <td style="border-bottom: 0px;"  class="0L" id="<%=secIds[0]%>"></td>
+                          <td style="border-bottom: 0px;"  class="2B" id="<%=secIds[2]%>"></td>
+                          <td style="border-bottom: 0px;"  class="2L" id="<%=secIds[2]%>"></td>
+                          <td style="border-bottom: 0px;"  class="1B" id="<%=secIds[1]%>"></td>
+                          <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
+                          <td style="border-bottom: 0px;" class="multi_market" id="<%=LiveCricket[i].marketList.match_odd.marketId%>">
+                            <%if(user && userMultimarkets != null){ %>
+                              <%let check = userMultimarkets.marketIds.find(item => item == LiveCricket[i].marketList.match_odd.marketId) %>
+                            <%if(check){%>
+                              <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
+                            <%}else{%>
+                              <a><img src="../../assets/img/exchange/Vector.png" alt=""></a> 
+                            <%}%>
+                            <%}else{%>
+                              <a><img src="../../assets/img/exchange/Vector.png" alt=""></a>
+                            <%}%>
+                          </td>
+                      <%}%>
+                  <%}else{%>
+                    <td style="border-bottom: 0px;">
+                      <span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>
+                    </td>
+                    <td style="border-bottom: 0px;">
+                      <span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>
+                    </td>
+                    <td style="border-bottom: 0px;">
+                      <span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>
+                    </td>
+                    <td style="border-bottom: 0px;">
+                      <span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>
+                    </td>
+                    <td style="border-bottom: 0px;">
+                      <span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>
+                    </td>
+                    <td style="border-bottom: 0px;">
+                      <span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>
+                    </td>
+                  <%} %>
                   <td style="border-bottom: 0px;">
                    <a href="multimarket.html"><img src="assets/img/exchange/Vector.png" alt=""></a> 
                   </td>
               </tr>
-            <%} %>
+            
             <%} %>
         </tbody>
   
