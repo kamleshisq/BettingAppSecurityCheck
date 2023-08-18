@@ -26,7 +26,7 @@
                 month: 'short'
               };
               var formattedTime = date.toLocaleString('en-US', options);
-            %>
+              %>
             
               <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/exchange_inPlay/match?id=<%=cricketSeries[i].matchdata[j].eventData.eventId%>'>
                 <%if(cricketSeries[i].matchdata[j].marketList.match_odd != null){ %>
@@ -106,7 +106,7 @@
                       <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
                       <td style="border-bottom: 0px;" class="multi_market" id="<%=cricketSeries[i].matchdata[j].marketList.match_odd.marketId%>">
                         <%if(user && userMultimarkets != null){ %>
-                          <%let check = userMultimarkets.marketIds.find(item => item == cricketSeries[i].matchdata[j].match_odd.marketId) %>
+                          <%let check = userMultimarkets.marketIds.find(item => item == cricketSeries[i].matchdata[j].marketList.match_odd.marketId) %>
                           <%if(check){%>
                             <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
                           <%}else{%>
