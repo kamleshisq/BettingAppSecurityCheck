@@ -45,18 +45,34 @@ socket.on('connect', () => {
     // }
 
     
-    function togglePopupMain(idname, id, message){
-        document.getElementById(idname).classList.toggle("active");
-        document.getElementById(id).innerText  = message.toUpperCase()
-        // setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-    }
+    // function togglePopupMain(idname, id, message){
+    //     document.getElementById(idname).classList.toggle("active");
+    //     document.getElementById(id).innerText  = message.toUpperCase()
+    //     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
+    // }
 
-    $(document).on('click', ".close-btn" ,function(){
-        let parentdiv = this.parentNode
-        let grandParent = parentdiv.parentNode
-        let id = grandParent.id
-        document.getElementById(id).classList.remove("active");
-    })
+    // $(document).on('click', ".close-btn" ,function(){
+    //     let parentdiv = this.parentNode
+    //     let grandParent = parentdiv.parentNode
+    //     let id = grandParent.id
+    //     document.getElementById(id).classList.remove("active");
+    // })
+    function togglePopupMain(idname, id, message) {
+        const popup = document.getElementById(idname);
+        const popupContent = document.getElementById(id);
+        
+        popup.classList.toggle("active");
+        popupContent.innerText = message.toUpperCase();
+    
+        setTimeout(function() {
+            popup.classList.remove("active");
+        }, 5000);
+    }
+    
+    $(document).on('click', ".close-btn", function() {
+        const grandParent = $(this).closest('.popup');
+        grandParent.removeClass("active");
+    });
 
     //....................FOR UPDATE ROLE...................//
     const inputElementSearch = document.getElementById('search_field');
