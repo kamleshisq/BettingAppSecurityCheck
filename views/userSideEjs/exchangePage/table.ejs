@@ -440,19 +440,13 @@
                           <%
                           if(tennisSeries[i].matchdata[j].marketList.score != null){
                             let dataScore = tennisSeries[i].matchdata[j].marketList.score[0].data;
-                            let timeMatch = dataScore.match(/class="tennis-time">([^<]*)/);
-                            let time = timeMatch ? timeMatch[1].trim() : '';
-                            let scoreMatches = dataScore.match(/class="set current">([^<]*)/g);
-                                                        
-                            let scores = scoreMatches ? scoreMatches.map(score => score.replace(/class="set current">/g, '').trim()) : [];
-                            let setScores = scores.map(score => {
-                            let [team1Score, team2Score] = score.split('-').map(item => item.trim());
-                            return { team1Score, team2Score };
-                            });
+                            const scoreMatches = dataScore.match(/class="set current">([^<]*)/g);
+                            const setScores = scoreMatches
+                              ? scoreMatches.map(score => score.replace(/class="set current">/g, '').trim())
+                              : [];
 
                                                         
-                            console.log('Time:', time);
-                            console.log('Set Scores:', scoreMatches);
+                              console.log('Set Scores:', setScores);
                         %>
                         <div class="short-score">
                           <div class="block left">
