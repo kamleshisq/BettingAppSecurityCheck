@@ -1750,10 +1750,33 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
         userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
     }
-    // console.log(liveFootBall)
-    // console.log(liveTennis.length)
-    console.log(LiveCricket.length)
-    console.log(LiveCricket)
+    let cricketSeries = [];
+    let footbalSeries = [];
+    let tennisSeries = []; 
+    liveTennis.forEach(match => {
+        let seriesIndex = tennisSeries.findIndex(series => series.series === match.eventData.league);
+        if (seriesIndex === -1) {
+            tennisSeries.push({ series: match.eventData.league, matchdata: [match] });
+        } else {
+            tennisSeries[seriesIndex].matchdata.push(match);
+        }
+    });
+    liveFootBall.forEach(match => {
+        let seriesIndex = footbalSeries.findIndex(series => series.series === match.eventData.league);
+        if (seriesIndex === -1) {
+            footbalSeries.push({ series: match.eventData.league, matchdata: [match] });
+        } else {
+            footbalSeries[seriesIndex].matchdata.push(match);
+        }
+    });
+    LiveCricket.forEach(match => {
+        let seriesIndex = cricketSeries.findIndex(series => series.series === match.eventData.league);
+        if (seriesIndex === -1) {
+            cricketSeries.push({ series: match.eventData.league, matchdata: [match] });
+        } else {
+            cricketSeries[seriesIndex].matchdata.push(match);
+        }
+    });
     res.status(200).render('./userSideEjs/inplayPage/main',{
         user,
         verticalMenus,
@@ -1764,7 +1787,10 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
         LiveCricket,
         userLog,
         notifications:req.notifications,
-        userMultimarkets      
+        userMultimarkets,
+        cricketSeries,
+        footbalSeries,
+        tennisSeries
     })
 })
 
