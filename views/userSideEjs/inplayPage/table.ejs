@@ -475,7 +475,7 @@
                           <td style="border-bottom: 0px;"  class="1L" id="<%=secIds[1]%>"></td>
                           <td style="border-bottom: 0px;" class="multi_market" id="<%=tennisSeries[i].matchdata[j].marketList.match_odd.marketId%>">
                             <%if(user && userMultimarkets != null){ %>
-                              <%let check = userMultimarkets.marketIds.find(item => item == tennisSeries[i].matchdata[j].match_odd.marketId) %>
+                              <%let check = userMultimarkets.marketIds.find(item => item == tennisSeries[i].matchdata[j].marketList.match_odd.marketId) %>
                               <%if(check){%>
                                 <a><img src="../../assets/img/exchange/Vector2.svg" alt=""></a> 
                               <%}else{%>
