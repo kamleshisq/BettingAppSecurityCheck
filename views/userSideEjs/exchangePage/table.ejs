@@ -439,7 +439,15 @@
                         <%if(tennisSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
                           <%
                           if(tennisSeries[i].matchdata[j].marketList.score != null){
-                          
+                            let htmlData = tennisSeries[i].matchdata[j].marketList.score[0].data
+                            var tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = htmlData;
+                            var currentSetScores = Array.from(tempDiv.querySelectorAll('.set.current')).map(scoreElement => parseInt(scoreElement.textContent));
+                            var allSetScores = Array.from(tempDiv.querySelectorAll('.set')).map(scoreElement => parseInt(scoreElement.textContent));
+                            var previousSetScores = allSetScores.slice(0, allSetScores.length - currentSetScores.length);
+                            var previousSetWinner = previousSetScores[previousSetScores.length - 1] > previousSetScores[previousSetScores.length - 2] ? 'Player 1' : 'Player 2';
+                            console.log("Current set scores:", currentSetScores);
+                            console.log("Previous set winner:", previousSetWinner);
                         %>
                         <div class="short-score">
                           <div class="block left">
