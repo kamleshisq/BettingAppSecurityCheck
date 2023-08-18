@@ -438,13 +438,7 @@
                       <div class="exchange-pg-mytbl-body-cricket-data-dv">
                         <% if (tennisSeries[i].matchdata[j].eventData.type === "IN_PLAY") { %>
                           <% if (tennisSeries[i].matchdata[j].marketList.score != null) {
-                            const dataScore = tennisSeries[i].marketList.score[0].data;
-                            const timeMatch = dataScore.match(/class="tennis-time">([^<]*)/);
-                            const time = timeMatch ? timeMatch[1].trim() : '';
-                            const scoreMatches = dataScore.match(/class="set current">([^<]*)/g);
                             
-                            console.log('Time:', time);
-                            console.log('Set Scores:', scoreMatches);
                           %>
                           
                         <div class="short-score">
