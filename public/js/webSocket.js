@@ -4586,11 +4586,20 @@ socket.on('connect', () => {
               );
               var result = (parseFloat(newStake) * betValue) - parseFloat(newStake);
               console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
-              $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
-              $(this)
-                .closest("tr")
-                .find(".c-gren")
-                .text(result.toFixed(2));
+              if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
+                let result2 = (parseFloat(spanId) * betValue) - parseFloat(spanId)
+                $(this)
+                    .closest("tr")
+                    .find(".c-gren")
+                    .text(result2.toFixed(2));
+              }else{
+                  $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
+                  $(this)
+                    .closest("tr")
+                    .find(".c-gren")
+                    .text(result.toFixed(2));
+              }
             });
           });
 
