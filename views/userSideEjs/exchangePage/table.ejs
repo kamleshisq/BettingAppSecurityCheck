@@ -438,19 +438,7 @@
                       <div class="exchange-pg-mytbl-body-cricket-data-dv">
                         <<% if (tennisSeries[i].matchdata[j].eventData.type === "IN_PLAY") { %>
                           <% if (tennisSeries[i].matchdata[j].marketList.score != null) {
-                              const jsdom = require('jsdom');
-                              const { JSDOM } = jsdom;
-                      
-                              let htmlData = tennisSeries[i].matchdata[j].marketList.score[0].data;
-                              const dom = new JSDOM(htmlData);
-                              const document = dom.window.document;
-                      
-                              var currentSetScores = Array.from(document.querySelectorAll('.set.current')).map(scoreElement => parseInt(scoreElement.textContent));
-                              var allSetScores = Array.from(document.querySelectorAll('.set')).map(scoreElement => parseInt(scoreElement.textContent));
-                              var previousSetScores = allSetScores.slice(0, allSetScores.length - currentSetScores.length);
-                              var previousSetWinner = previousSetScores[previousSetScores.length - 1] > previousSetScores[previousSetScores.length - 2] ? 'Player 1' : 'Player 2';
-                              console.log("Current set scores:", currentSetScores);
-                              console.log("Previous set winner:", previousSetWinner);
+                              
                           %>
                         <div class="short-score">
                           <div class="block left">
