@@ -1809,6 +1809,15 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
         userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
     }
+    let cricketSeries = [];
+    cricket.forEach(match => {
+        let seriesIndex = cricketSeries.findIndex(series => series.series === match.eventData.league);
+        if (seriesIndex === -1) {
+            cricketSeries.push({ series: match.eventData.league, matchdata: [match] });
+        } else {
+            cricketSeries[seriesIndex].matchdata.push(match);
+        }
+    });
     res.status(200).render("./userSideEjs/cricketPage/main", {
         user,
         verticalMenus,
@@ -1818,7 +1827,8 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
         upcomintCricket,
         userLog,
         notifications:req.notifications,
-        userMultimarkets
+        userMultimarkets,
+        cricketSeries
     })
 })
 
