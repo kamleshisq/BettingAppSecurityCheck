@@ -225,7 +225,15 @@
                   <%} %>
                       <div class="exchange-pg-mytbl-body-cricket-data-dv">
                         <%if(footbalSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
-                          <span class="exchange-pg-mytbl-body-liv-dot"></span>
+                          <div class="short-score">
+                            <div class="block left">
+                              <span>1</span>
+                            </div>
+                            <div class="block right">
+                              <span>1</span>
+                              <span>1</span>
+                            </div>
+                          </div>
                           <p>
                             <%=formattedTime%>  <b><%=footbalSeries[i].matchdata[j].eventData.name%> <span class="flash-live-button">live</span></b>
                           </p>
