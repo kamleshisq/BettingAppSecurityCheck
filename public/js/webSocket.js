@@ -57,21 +57,25 @@ socket.on('connect', () => {
     //     let id = grandParent.id
     //     document.getElementById(id).classList.remove("active");
     // })
+    let popupTimeout; // Store the timeout ID
+
     function togglePopupMain(idname, id, message) {
         const popup = document.getElementById(idname);
         const popupContent = document.getElementById(id);
         
-        popup.classList.toggle("active");
+        popup.classList.add("active");
         popupContent.innerText = message.toUpperCase();
-    
-        setTimeout(function() {
+
+        clearTimeout(popupTimeout);
+        popupTimeout = setTimeout(function() {
             popup.classList.remove("active");
         }, 5000);
     }
-    
+
     $(document).on('click', ".close-btn", function() {
         const grandParent = $(this).closest('.popup');
         grandParent.removeClass("active");
+        clearTimeout(popupTimeout);
     });
 
     //....................FOR UPDATE ROLE...................//
