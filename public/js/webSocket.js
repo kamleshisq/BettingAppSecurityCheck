@@ -55,7 +55,7 @@ socket.on('connect', () => {
         let parentdiv = this.parentNode
         let grandParent = parentdiv.parentNode
         let id = grandParent.id
-        document.getElementById(idname).classList.remove("active");
+        document.getElementById(id).classList.remove("active");
     })
 
     //....................FOR UPDATE ROLE...................//
