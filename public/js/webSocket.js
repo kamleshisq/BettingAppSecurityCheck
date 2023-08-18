@@ -4882,7 +4882,10 @@ socket.on('connect', () => {
                 togglePopup('popup-2', "redPopUP2")
             }
             let buttonALlin = document.getElementsByClassName("ALLIN")
-            buttonALlin[0].id = `${data.user.availableBalance}`;
+            for (let i = 0; i < buttonALlin.length; i++) {
+                buttonALlin[i].id = `${data.user.availableBalance}`; // Replace "newId" with the desired ID value
+            }
+            // buttonALlin[0].id = 
             let html2 = ""
             document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${data.openBet.length})</h5>`
             document.getElementById("pills-profilebb-tab").innerHTML = `Open Bets (${data.openBet.length})`
