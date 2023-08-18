@@ -49,7 +49,14 @@ socket.on('connect', () => {
         document.getElementById(idname).classList.toggle("active");
         document.getElementById(id).innerText  = message.toUpperCase()
         setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-      }
+    }
+
+    $(document).on('click', ".close-btn" ,function(){
+        let parentdiv = this.parentNode
+        let grandParent = parentdiv.parentNode
+        let id = grandParent.id
+        console.log(id)
+    })
 
     //....................FOR UPDATE ROLE...................//
     const inputElementSearch = document.getElementById('search_field');
