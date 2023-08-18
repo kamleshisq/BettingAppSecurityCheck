@@ -36,7 +36,9 @@
                 <%} %>
                     <div class="exchange-pg-mytbl-body-cricket-data-dv">
                       <%if(cricketSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
-                        <span class="exchange-pg-mytbl-body-liv-dot"></span>
+                        <div class="short-score">
+                          
+                        </div>
                         <p>
                           <%=formattedTime%>  <b><%=cricketSeries[i].matchdata[j].eventData.name%> <span class="flash-live-button">live now</span></b>
                         </p>
