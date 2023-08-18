@@ -44,9 +44,9 @@
         <div class="nww-bet-slip-wrp-col2-inn">
           <%for(let i = 0; i < stakeLabledata.stakeArray.length; i++){%>
             <span id="<%=stakeLabledata.stakeArray[i].value%>">+<%=stakeLabledata.stakeArray[i].key%></span>
+            <%}%>
             <span id="<%=SportLimits.max_stake%>">MAX</span>
             <span id="<%=user.availableBalance%>">ALL IN</span>
-          <%}%>
         </div>
         <div class="nww-bet-slip-wrp-col3-txt1">
           <%if(user){ %>
