@@ -86,7 +86,7 @@
     <div class="popup" id="popup-1">
       <div class="overlay"></div>
       <div class="content">
-        <div class="close-btn" onclick="togglePopup('popup-1')">&times;</div>
+        <div class="close-btn" onclick="markCloseClicked(); togglePopup('popup-1')">&times;</div>
         <p id="redPopUP">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo aspernatur laborum rem sed laudantium excepturi veritatis voluptatum architecto, dolore quaerat totam officiis nisi animi accusantium alias inventore nulla atque debitis.</p>
       </div>
     </div>
@@ -94,7 +94,7 @@
     <div class="popup Error" id="popup-2">
       <div class="overlay"></div>
       <div class="content">
-        <div class="close-btn" onclick="togglePopup('popup-2')">&times;</div>
+        <div class="close-btn" onclick="markCloseClicked(); togglePopup('popup-2')">&times;</div>
         <p id="redPopUP2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo aspernatur laborum rem sed laudantium excepturi veritatis voluptatum architecto, dolore quaerat totam officiis nisi animi accusantium alias inventore nulla atque debitis.</p>
       </div>
     </div>
@@ -477,11 +477,26 @@
       </div>
 
       <script type="text/javascript">
-        function togglePopup(idname){
-          document.getElementById(idname).classList.toggle("active");
-          setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 2000);
+        let closeClicked = false;
+    
+        function togglePopup(idname) {
+            const popupElement = document.getElementById(idname);
+            
+            if (closeClicked) {
+                popupElement.classList.remove("active");
+                closeClicked = false;
+            } else {
+                popupElement.classList.add("active");
+                setTimeout(function() {
+                    popupElement.classList.remove("active");
+                }, 2000);
+            }
         }
-      </script>
+    
+        function markCloseClicked() {
+            closeClicked = true;
+        }
+    </script>
       <script>
         $(document).ready(function(){
           $("#setingnavbtnn").click(function(){
