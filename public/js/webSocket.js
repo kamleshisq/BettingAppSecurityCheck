@@ -48,7 +48,7 @@ socket.on('connect', () => {
     function togglePopupMain(idname, id, message){
         document.getElementById(idname).classList.toggle("active");
         document.getElementById(id).innerText  = message.toUpperCase()
-        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
+        // setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
     }
 
     $(document).on('click', ".close-btn" ,function(){
