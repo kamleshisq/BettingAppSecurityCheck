@@ -225,6 +225,20 @@
                   <%} %>
                       <div class="exchange-pg-mytbl-body-cricket-data-dv">
                         <%if(footbalSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
+                          <%
+                          if(footbalSeries[i].matchdata[j].marketList.score != null){
+                          let dataScore = footbalSeries[i].matchdata[j].marketList.score[0].data
+                          const timeMatch = dataScore.match(/class="football-time">([^<]*)/);
+                          const time = timeMatch ? timeMatch[1].trim() : '';
+
+                          // Extract score using regular expression
+                          const scoreMatch = dataScore.match(/class="football-score">([^<]*)/);
+                          const score = scoreMatch ? scoreMatch[1].trim() : '';
+
+                          console.log("Time:", time);
+                          console.log("Score:", score);
+                          }
+                          %>
                           <div class="short-score">
                             <div class="block left">
                               <span>1</span>
