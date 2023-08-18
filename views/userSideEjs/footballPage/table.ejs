@@ -18,7 +18,7 @@
               <tr class="series-title"><td colspan="9"><p><%=footbalSeries[i].series%></p></td></tr>
               <%for(let j = 0; j < footbalSeries[i].matchdata.length; j++){%>
                 <%
-                console.log(footbalSeries[i].matchdata[j])
+                
                 var timestamp = `${footbalSeries[i].matchdata[j].eventData.time}` * 1000; 
                 var date = new Date(timestamp);
                 var options = { 
@@ -36,9 +36,36 @@
                   <%} %>
                       <div class="exchange-pg-mytbl-body-cricket-data-dv">
                         <%if(footbalSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
-                          <span class="exchange-pg-mytbl-body-liv-dot"></span>
+                          <%
+                          if(footbalSeries[i].matchdata[j].marketList.score != null){
+                          let dataScore = footbalSeries[i].matchdata[j].marketList.score[0].data
+                          const timeMatch = dataScore.match(/class="football-time">([^<]*)/);
+                          const time = timeMatch ? timeMatch[1].trim() : '';
+
+                          // Extract score using regular expression
+                          const scoreMatch = dataScore.match(/class="football-score">([^<]*)/);
+                          const score = scoreMatch ? scoreMatch[1].trim() : '';
+                          let team1Score = score.split("-")[0]
+                          let team2Score = score.split("-")[1]
+                          %>
+                          <div class="short-score">
+                            <div class="block left">
+                              <span><%=time%></span>
+                            </div>
+                            <div class="block right">
+                              <span><%=team1Score%></span>
+                              <span><%=team2Score%></span>
+                            </div>
+                          </div>
+                          <%}else{%>
+                            <div class="short-score">
+                              <div class="block left">
+                                <span>In Play</span>
+                              </div>
+                            </div>
+                          <% }%>
                           <p>
-                            <%=formattedTime%>  <b><%=footbalSeries[i].matchdata[j].eventData.name%> <span class="flash-live-button">live now</span></b>
+                            <%=formattedTime%>  <b><%=footbalSeries[i].matchdata[j].eventData.name%> <span class="flash-live-button">live</span></b>
                           </p>
                         <%}else{%>
                           <%= j + 1%>)
