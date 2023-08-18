@@ -4882,7 +4882,7 @@ socket.on('connect', () => {
                 togglePopup('popup-2', "redPopUP2")
             }
             let buttonALlin = document.getElementsByClassName("ALLIN")
-            buttonALlin[i].id = `${data.user.availableBalance}`;
+            buttonALlin[0].id = `${data.user.availableBalance}`;
             let html2 = ""
             document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${data.openBet.length})</h5>`
             document.getElementById("pills-profilebb-tab").innerHTML = `Open Bets (${data.openBet.length})`
