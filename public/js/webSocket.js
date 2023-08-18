@@ -4585,7 +4585,7 @@ socket.on('connect', () => {
                 $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
               );
               var result = (parseFloat(newStake) * betValue) - parseFloat(newStake);
-              console.log(this.classList)
+              console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
               $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
               $(this)
                 .closest("tr")
