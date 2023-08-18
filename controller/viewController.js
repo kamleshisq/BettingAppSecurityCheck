@@ -1913,6 +1913,15 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
         userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
     }
+    let tennisSeries = [];
+    Tennis.forEach(match => {
+        let seriesIndex = tennisSeries.findIndex(series => series.series === match.eventData.league);
+        if (seriesIndex === -1) {
+            tennisSeries.push({ series: match.eventData.league, matchdata: [match] });
+        } else {
+            tennisSeries[seriesIndex].matchdata.push(match);
+        }
+    });
     res.status(200).render('.//userSideEjs/tennisPage/main',{
         user,
         verticalMenus,
@@ -1922,7 +1931,8 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
         upcomintTennis,
         userLog,
         notifications:req.notifications,
-        userMultimarkets
+        userMultimarkets,
+        tennisSeries
     })
 })
 
