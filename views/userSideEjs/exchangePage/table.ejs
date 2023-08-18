@@ -438,7 +438,17 @@
                       <div class="exchange-pg-mytbl-body-cricket-data-dv">
                         <% if (tennisSeries[i].matchdata[j].eventData.type === "IN_PLAY") { %>
                           <% if (tennisSeries[i].matchdata[j].marketList.score != null) {
-                              
+                            const dataScore = tennisMatches[i].marketList.score[0].data;
+                            const timeMatch = dataScore.match(/class="tennis-time">([^<]*)/);
+                            const time = timeMatch ? timeMatch[1].trim() : '';
+                            const scoreMatches = dataScore.match(/class="set current">([^<]*)/g);
+                            const scores = scoreMatches ? scoreMatches.map(score => score.replace(/class="set current">/g, '').trim()) : [];
+                            const setScores = scores.map(score => {
+                              const [team1Score, team2Score] = score.split('-').map(item => item.trim());
+                              return { team1Score, team2Score };
+                            });
+                            console.log('Time:', time);
+                            console.log('Set Scores:', setScores);
                           %>
                           
                         <div class="short-score">
