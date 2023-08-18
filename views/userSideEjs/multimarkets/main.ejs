@@ -15,7 +15,9 @@
                           <h3>MultiMarket</h3>
                           <%if(multimarket != null && multimarket.marketIds && multimarket.marketIds.length > 0){%>
                             <%-include("./tables")%>
-                          <%}%>
+                          <%}else{%>
+                            <p>There are currently no followed multi markets.</p>
+                          <%}>
   
                               
   
