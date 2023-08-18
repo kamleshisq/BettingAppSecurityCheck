@@ -105,6 +105,7 @@
   function checkScreenWidth() {
     var responsiveElements = document.querySelectorAll('responsive');
     responsiveElements.forEach(function(element) {
+      console.log("Working")
       if (window.innerWidth < 767) {
       element.classList.add('new-class');
     } else {
