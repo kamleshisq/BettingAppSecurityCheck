@@ -57,7 +57,7 @@ socket.on('connect', () => {
     //     let id = grandParent.id
     //     document.getElementById(id).classList.remove("active");
     // })
-    let popupTimeout; // Store the timeout ID
+    let popupTimeout; 
 
     function togglePopupMain(idname, id, message) {
         const popup = document.getElementById(idname);
