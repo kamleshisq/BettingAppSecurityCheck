@@ -26,12 +26,16 @@
         </div>
 
         <div class="nww-bet-slip-wrp-col1-txt">
+          <span class="minus">-</span>
           <span class="nww-bet-slip-wrp-col1-txt-num blue-text">1.75</span>
+          <span class="plus">+</span>
         </div>
 
         <div class="nww-bet-slip-wrp-col1-txt">
           <div class="nww-bet-slip-wrp-col1-txt-inn input-group-sm">
+            <span class="minus">-</span>
             <input type="number" class="form-control set-stake-form-input2" placeholder="Custom" aria-label="Last name">
+            <span class="plus">+</span>
           </div>
         </div>
       </div>
@@ -42,6 +46,18 @@
             <span id="<%=stakeLabledata.stakeArray[i].value%>">+<%=stakeLabledata.stakeArray[i].key%></span>
           <%}%>
         </div>
+        <div class="nww-bet-slip-wrp-col3-txt1">
+          <%if(user){ %>
+            <%if(match ){%>
+              <a class="eventId" id="<%=match.eventData.eventId%>"> Place Bet </a>
+            <%}else{ %>
+              <a class="eventId" id="<%=result.eventData.eventId%>"> Place Bet </a>
+              <%} %>
+          <%}else{ %>
+            <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
+          <%}%>
+        </div>
+
       </div>
 
       <div class="nww-bet-slip-wrp-col3">
