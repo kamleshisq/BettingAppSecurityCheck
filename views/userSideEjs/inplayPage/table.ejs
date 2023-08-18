@@ -1,12 +1,4 @@
-<%if(LiveCricket.length > 0 ){%>
-  <% let hasNonNullMatchOdd = false; %>
-  <% for (let i = 0; i < LiveCricket.length; i++) { %>
-    <% if (LiveCricket[i].marketList.match_odd !== null) { %>
-      <% hasNonNullMatchOdd = true; %>
-      <% break; %>
-    <% } %>
-  <% } %>
-  <%if(hasNonNullMatchOdd){%>
+
     <div class="exchange-pg-tbl-ro2 data-with-series">
       <%for(let i = 0; i < cricketSeries.length; i++){%>
         <%if(cricketSeries[i].series != "1"){ %>
@@ -189,18 +181,8 @@
       <%} %>
             
       </div>
-    <%}%>
-<%}%>
 
-<%if(liveFootBall.length > 0 ){%>
-  <% let hasNonNullMatchOdd = false; %>
-  <% for (let i = 0; i < liveFootBall.length; i++) { %>
-    <% if (liveFootBall[i].marketList.match_odd !== null) { %>
-      <% hasNonNullMatchOdd = true; %>
-      <% break; %>
-    <% } %>
-  <% } %>
-  <%if(hasNonNullMatchOdd){%>
+
     <div class="exchange-pg-tbl-ro2 data-with-series">
       <%for(let i = 0; i < footbalSeries.length; i++){%>
         <%if(footbalSeries[i].series != "1"){ %>
@@ -383,18 +365,9 @@
       <%} %>
             
       </div>
-  <%}%>
-<%}%>
+  
 
-<%if(liveTennis.length > 0 ){%>
-  <% let hasNonNullMatchOdd = false; %>
-  <% for (let i = 0; i < liveTennis.length; i++) { %>
-    <% if (liveTennis[i].marketList.match_odd !== null) { %>
-      <% hasNonNullMatchOdd = true; %>
-      <% break; %>
-    <% } %>
-  <% } %>
-  <%if(hasNonNullMatchOdd){%>
+
     <div class="exchange-pg-tbl-ro2 data-with-series">
       <%for(let i = 0; i < tennisSeries.length; i++){%>
         <%if(tennisSeries[i].series != "1"){ %>
@@ -577,6 +550,5 @@
       <%} %>
             
       </div>
-    <%}%>
-<%}%>
+    
 
