@@ -4794,36 +4794,37 @@ socket.on('connect', () => {
                 
             }
             let check = $(this).closest("tr").find("#changes").prop("checked");
-            if(specificSpan == data.odds){
-                if(data.stake === ""){
-                    // alert("Please select stake")
-                    togglePopupMain('popup-2', "redPopUP2", "Please select stake")
-                }else{
-                    if(data.odds != '\n                        \n                      '){
-                        socket.emit("betDetails", {data, LOGINDATA})
-                        showLoader();
-                    }else{
-                        togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
-                    }
-                }
-            }else{
-                if(check ){
-                    data.odds = specificSpan
-                    if(data.stake === ""){
-                        // alert("Please select stake")
-                        togglePopupMain('popup-2', "redPopUP2", "Please select stake")
-                    }else{
-                        if(data.odds != '\n                        \n                      '){
-                            socket.emit("betDetails", {data, LOGINDATA})
-                            showLoader();
-                        }else{
-                            togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
-                        }
-                    }
-                }else{
-                    togglePopupMain('popup-2', "redPopUP2", "Odds value changed, please try again ")
-                }
-            }
+            console.log(data)
+            // if(specificSpan == data.odds){
+            //     if(data.stake === ""){
+            //         // alert("Please select stake")
+            //         togglePopupMain('popup-2', "redPopUP2", "Please select stake")
+            //     }else{
+            //         if(data.odds != '\n                        \n                      '){
+            //             socket.emit("betDetails", {data, LOGINDATA})
+            //             showLoader();
+            //         }else{
+            //             togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
+            //         }
+            //     }
+            // }else{
+            //     if(check ){
+            //         data.odds = specificSpan
+            //         if(data.stake === ""){
+            //             // alert("Please select stake")
+            //             togglePopupMain('popup-2', "redPopUP2", "Please select stake")
+            //         }else{
+            //             if(data.odds != '\n                        \n                      '){
+            //                 socket.emit("betDetails", {data, LOGINDATA})
+            //                 showLoader();
+            //             }else{
+            //                 togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
+            //             }
+            //         }
+            //     }else{
+            //         togglePopupMain('popup-2', "redPopUP2", "Odds value changed, please try again ")
+            //     }
+            // }
             });
           });
 
