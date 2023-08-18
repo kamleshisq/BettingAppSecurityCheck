@@ -1875,6 +1875,15 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
         userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
     }
+    let footbalSeries = [];
+    footBall.forEach(match => {
+        let seriesIndex = footbalSeries.findIndex(series => series.series === match.eventData.league);
+        if (seriesIndex === -1) {
+            footbalSeries.push({ series: match.eventData.league, matchdata: [match] });
+        } else {
+            footbalSeries[seriesIndex].matchdata.push(match);
+        }
+    });
     res.status(200).render('.//userSideEjs/footballPage/main',{
         user,
         verticalMenus,
@@ -1884,7 +1893,8 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
         upcomintFootball,
         userLog,
         notifications:req.notifications,
-        userMultimarkets
+        userMultimarkets,
+        footbalSeries
     })
 })
 
