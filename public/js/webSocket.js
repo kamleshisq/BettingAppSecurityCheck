@@ -45,11 +45,31 @@ socket.on('connect', () => {
     // }
 
     
-    function togglePopupMain(idname, id, message){
-        document.getElementById(idname).classList.toggle("active");
-        document.getElementById(id).innerText  = message.toUpperCase()
-        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-      }
+    let closeClicked = false;
+
+    function togglePopupMain(idname, id, message) {
+        const popupElement = document.getElementById(idname);
+        const messageElement = document.getElementById(id);
+
+        if (closeClicked) {
+            // If close button was clicked, hide popup immediately
+            popupElement.classList.remove("active");
+            closeClicked = false;
+        } else {
+            // If close button was not clicked, show popup and set message
+            popupElement.classList.add("active");
+            messageElement.innerText = message.toUpperCase();
+
+            // Hide after a delay
+            setTimeout(function() {
+                popupElement.classList.remove("active");
+            }, 5000);
+        }
+    }
+
+    function markCloseClicked() {
+        closeClicked = true;
+    }
 
     //....................FOR UPDATE ROLE...................//
     const inputElementSearch = document.getElementById('search_field');
