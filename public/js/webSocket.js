@@ -1,3 +1,4 @@
+const e = require("express");
 
 
 
@@ -4669,11 +4670,19 @@ socket.on('connect', () => {
                 let NewStake = spanId - 1;
                 let result = (NewStake * Odds) - NewStake;
                 console.log(result)
-                $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
-                $(this)
-                .closest("tr")
-                .find(".c-gren")
-                .text(result.toFixed(2));
+                if(result === NaN){
+                    $(this).closest("tr").find('.set-stake-form-input2').val(0)
+                    $(this)
+                    .closest("tr")
+                    .find(".c-gren")
+                    .text(0);
+                }else{
+                    $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
+                    $(this)
+                    .closest("tr")
+                    .find(".c-gren")
+                    .text(result.toFixed(2));
+                }
             })
           })
           // Get all the rows with class "acount-stat-tbl-body-tr"
