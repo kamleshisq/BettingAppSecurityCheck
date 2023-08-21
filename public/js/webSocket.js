@@ -6437,16 +6437,16 @@ socket.on('connect', () => {
                     var formattedTime = date.toLocaleString('en-US', options);
                     
                     html += `<tr class="acount-stat-tbl-body-tr" >
-                    <td>${formattedTime}</td>
-                    <td>${result[i].marketName}</td>
-                    <td>${result[i].selectionName}</td>
-                    <td><span class="tbl-td-bg-blu-spn">${result[i].oddValue}</span></td>
-                    <td>${result[i].status}</td>
-                    <td class="c-gren">${result[i].Stake}</td>`
+                    <td title="Settlement Date" >${formattedTime}</td>
+                    <td title="Market" >${result[i].marketName}</td>
+                    <td title="Bet On" >${result[i].selectionName}</td>
+                    <td title="Odds" ><span class="tbl-td-bg-blu-spn">${result[i].oddValue}</span></td>
+                    <td title="Status" >${result[i].status}</td>
+                    <td class="c-gren" title="Stake">${result[i].Stake}</td>`
                     if(result[i].returns > 0){
-                        html += `<td class="c-gren">${result[i].returns}</td>`
+                        html += `<td class="c-gren" title="Profit/Loss">${result[i].returns}</td>`
                     }else{
-                        html += `<td class="c-reed">-${result[i].Stake}</td>`
+                        html += `<td class="c-reed" title="Profit/Loss">-${result[i].Stake}</td>`
                     }
                     html += "</tr>"
                 }
