@@ -4467,7 +4467,7 @@ socket.on('connect', () => {
                       </span>`
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
-                      $(this).parent().find(".match-status-message").text("Suspended")
+                      $(this).parent().find(".match-status-message").text("BETLOCK")
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         parentElement.removeClass("suspended")
