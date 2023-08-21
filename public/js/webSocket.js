@@ -5017,6 +5017,9 @@ socket.on('connect', () => {
 
           socket.on("liveCasinoPage", async(games) =>{
             let html = ""
+            if(!games.fevGames){
+                games.fevGames = []
+            }
             for(let i = 0; i < games.games.length; i++){
                 html += `<div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
                 <a class="liv-casino-games-cards-a" href="#">
