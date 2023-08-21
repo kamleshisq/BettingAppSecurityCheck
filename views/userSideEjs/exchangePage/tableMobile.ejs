@@ -49,43 +49,101 @@
                     </span>
                   <%}%>
 
-
-                  <span class="exch-mob-data-tbl-card-dv2-spns">
-                    <p> MO </p>
-                    <span>35</span>
-                  </span>
-                  <span class="exch-mob-data-tbl-card-dv2-spns">
-                    <p> F </p>
-                    <span>1</span>
-                  </span>
-                  <span class="exch-mob-data-tbl-card-dv2-spns">
-                    <p> F </p>
-                    <span>1</span>
-                  </span>
-                  <span class="exch-mob-data-tbl-card-dv2-spns">
-                    <p> F </p>
-                    <span>1</span>
-                  </span>
+                  <%if(cricketSeries[i].matchdata[j].marketList.match_odd != null){%>
+                    <span class="exch-mob-data-tbl-card-dv2-spns">
+                      <p> MO </p>
+                      <span>35</span>
+                    </span>
+                  <%} %>
+                  <%if(cricketSeries[i].matchdata[j].marketList.fancy != null || cricketSeries[i].matchdata[j].marketList.session!= null || cricketSeries[i].matchdata[j].marketList.odd_even!= null ){%>
+                    <span class="exch-mob-data-tbl-card-dv2-spns">
+                      <p> F </p>
+                      <span>1</span>
+                    </span>
+                  <%} %>
+                  <%if(cricketSeries[i].matchdata[j].marketList.bookmaker != null){%>
+                    <span class="exch-mob-data-tbl-card-dv2-spns">
+                      <p> B </p>
+                      <span>1</span>
+                    </span>
+                  <%}%>
                   <span class="exch-mob-data-tbl-card-dv2-spns">
                     <button href="multimarket.html"><img src="assets/img/exchange/Vector.png" alt=""/></button> 
                   </span>
                 </div>
               </div>
-      
-              <div class="exch-mob-data-tbl-card-ro2">
-                <div class="exch-mob-data-tbl-card-ro2-dv">
-                  <span class="data-blu-spntg">1.75</span>
-                  <span class="data-pink-spntg">1.75</span>
+            
+              <%if(cricketSeries[i].matchdata[j].marketList.match_odd != null){ %>
+              <% let runners = JSON.parse(cricketSeries[i].matchdata[j].marketList.match_odd.runners); %>
+              <% let runners1 = []; %>
+              <%let secIds = []; %>
+              <%runners.forEach(item => {%>
+                  <%runners1.push(item.runner);%>
+                  <%secIds.push(item.secId);%>
+              <%});%>
+              <%if(runners1.length === 2){%>
+                  <div class="exch-mob-data-tbl-card-ro2">
+                      <div class="exch-mob-data-tbl-card-ro2-dv">
+                        <span class=" 0B" id="<%=secIds[0]%>"> </span>
+                        <span class=" 0L" id="<%=secIds[0]%>"> </span>
+                      </div>
+                      <div class="exch-mob-data-tbl-card-ro2-dv">
+                          <span class="tbl-td-bg-blu-spn mylock-data">
+                              <i class="fa-solid fa-lock"></i>
+                            </span>
+                            <span class="tbl-td-bg-pich-spn mylock-data">
+                              <i class="fa-solid fa-lock"></i>
+                            </span>
+                      </div>
+                      <div class="exch-mob-data-tbl-card-ro2-dv">
+                        <span class=" 1B" id="<%=secIds[1]%>"> </span>
+                        <span class=" 1L" id="<%=secIds[1]%>"> </span>
+                      </div>
+                    </div>
+              <%}else{%>
+                  <div class="exch-mob-data-tbl-card-ro2">
+                    <div class="exch-mob-data-tbl-card-ro2-dv">
+                      <span class=" 0B" id="<%=secIds[0]%>"> </span>
+                      <span class=" 0L" id="<%=secIds[0]%>"> </span>
+                    </div>
+                    <div class="exch-mob-data-tbl-card-ro2-dv">
+                      <span class=" 2B" id="<%=secIds[2]%>"> </span>
+                      <span class=" 2L" id="<%=secIds[2]%>"> </span>
+                    </div>
+                    <div class="exch-mob-data-tbl-card-ro2-dv">
+                      <span class=" 1B" id="<%=secIds[1]%>"> </span>
+                      <span class=" 1L" id="<%=secIds[1]%>"> </span>
+                    </div>
+                  </div>
+              <%}%>
+              <%}else{ %>
+                <div class="exch-mob-data-tbl-card-ro2">
+                  <div class="exch-mob-data-tbl-card-ro2-dv">
+                    <span class="tbl-td-bg-blu-spn mylock-data">
+                      <i class="fa-solid fa-lock"></i>
+                    </span>
+                    <span class="tbl-td-bg-pich-spn mylock-data">
+                      <i class="fa-solid fa-lock"></i>
+                    </span>
+                  </div>
+                  <div class="exch-mob-data-tbl-card-ro2-dv">
+                      <span class="tbl-td-bg-blu-spn mylock-data">
+                          <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <span class="tbl-td-bg-pich-spn mylock-data">
+                          <i class="fa-solid fa-lock"></i>
+                        </span>
+                  </div>
+                  <div class="exch-mob-data-tbl-card-ro2-dv">
+                    <span class="tbl-td-bg-blu-spn mylock-data">
+                      <i class="fa-solid fa-lock"></i>
+                    </span>
+                    <span class="tbl-td-bg-pich-spn mylock-data">
+                      <i class="fa-solid fa-lock"></i>
+                    </span>
+                  </div>
                 </div>
-                <div class="exch-mob-data-tbl-card-ro2-dv">
-                  <span class="data-blu-spntg">1.75</span>
-                  <span class="data-pink-spntg">1.75</span>
-                </div>
-                <div class="exch-mob-data-tbl-card-ro2-dv">
-                  <span class="data-pink-spntg">1.75</span>
-                  <span class="data-blu-spntg">1.75</span>
-                </div>
-              </div>
+              <%} %>
             </a>
           </div>
         <%}%>
