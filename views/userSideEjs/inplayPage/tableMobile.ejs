@@ -1,4 +1,4 @@
-<%if(LiveCricket.length > 0 ){%>
+<%if(LiveCricket.length > 0 || upcomintCricket.length > 0){%>
   <div class="exch-mob-data-tbl-ro">
     <div class="exch-mob-data-tbl-ro-titl">
       <h6>Cricket</h6>
@@ -20,25 +20,40 @@
             %>
           <div class="exch-mob-data-tbl-card-wrp">
             <a class="exch-mob-data-tbl-card-wrp-a" href="/exchange_inPlay/match?id=<%=cricketSeries[i].matchdata[j].eventData.eventId%>">
+              <%if(cricketSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
+                <div class="top-mobile-table-data">
+                  <div class="short-score">
+                    <div class="block right">
+                      <span>In play</span>
+                    </div>
+                  </div>
+                  <span class="flash-live-button">live</span></b>
+                  <div class="date"><%=formattedTime%></div>
+                </div>
+              <%}else{%>
+                <div class="top-mobile-table-data">
+                  <!-- <div class="short-score">
+                    <div class="block right">
+                      <span>In play</span>
+                    </div>
+                  </div> -->
+                  <!-- <span class="flash-live-button">live</span></b> -->
+                  <div class="date"><%=formattedTime%></div>
+                </div>
+              <%}%>
               <div class="exch-mob-data-tbl-card-ro">
                 <div class="exch-mob-data-tbl-card-dv">
                   <p>
                     <%if(cricketSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
-                      <div class="short-score">
-                        <div class="block right">
-                          <span>In play</span>
-                        </div>
-                      </div>
-                      • <%=formattedTime%>
-                      <p>
-                        <b><%=cricketSeries[i].matchdata[j].eventData.name%></b> <span class="flash-live-button">live</span></b>
-                      </p>
-                    <%}else{%>
-                      <%= j + 1%>)
-                      • <%=formattedTime%>
+                      
+                      
                       <p>
                         <b><%=cricketSeries[i].matchdata[j].eventData.name%></b>
-                    </p>
+                      </p>
+                    <%}else{%>
+                      <p>
+                        <%= j + 1%>) <b><%=cricketSeries[i].matchdata[j].eventData.name%></b>
+                      </p>
                     <%} %>
                   </p>
                 </div>
@@ -154,7 +169,7 @@
 <%}%>
 
 
-<%if(liveFootBall.length > 0 ){%>
+<%if(liveFootBall.length > 0 || upcomintFootball.length > 0){%>
   <div class="exch-mob-data-tbl-ro">
     <div class="exch-mob-data-tbl-ro-titl">
       <h6>Football</h6>
@@ -176,16 +191,14 @@
             %>
           <div class="exch-mob-data-tbl-card-wrp">
             <a class="exch-mob-data-tbl-card-wrp-a" href="/exchange_inPlay/match?id=<%=footbalSeries[i].matchdata[j].eventData.eventId%>">
-              <div class="exch-mob-data-tbl-card-ro">
-                <div class="exch-mob-data-tbl-card-dv">
-                  <p>
-                    <%if(footbalSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
-                      <%
-                      if(footbalSeries[i].matchdata[j].marketList.score != null){
+              <div class="top-mobile-table-data">
+                <%if(footbalSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
+                  <%
+                  if(footbalSeries[i].matchdata[j].marketList.score != null){
                       let dataScore = footbalSeries[i].matchdata[j].marketList.score[0].data
                       const timeMatch = dataScore.match(/class="football-time">([^<]*)/);
                       const time = timeMatch ? timeMatch[1].trim() : '';
-
+                      
                       // Extract score using regular expression
                       const scoreMatch = dataScore.match(/class="football-score">([^<]*)/);
                       const score = scoreMatch ? scoreMatch[1].trim() : '';
@@ -207,16 +220,25 @@
                             <span>In Play</span>
                           </div>
                         </div>
-                      <% }%>
-                      • <%=formattedTime%>
+                        <% }%>
+                        <span class="flash-live-button">live</span></b>
+                        <div class="date"><%=formattedTime%></div>
+                        <%}else{ %>
+                          <div class="date"><%=formattedTime%></div>
+                        <%} %>
+                    </div>
+              <div class="exch-mob-data-tbl-card-ro">
+                <div class="exch-mob-data-tbl-card-dv">
+                  <p>
+                    <%if(footbalSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
+                      
                       <p>
-                        <b><%=footbalSeries[i].matchdata[j].eventData.name%></b> <span class="flash-live-button">live</span></b>
+                        <b><%=footbalSeries[i].matchdata[j].eventData.name%></b> 
                       </p>
                     <%}else{%>
-                      <%= j + 1%>)
-                      • <%=formattedTime%>
+                      
                       <p>
-                        <b><%=footbalSeries[i].matchdata[j].eventData.name%></b>
+                        <%= j + 1%>) <b><%=footbalSeries[i].matchdata[j].eventData.name%></b>
                     </p>
                     <%} %>
                   </p>
@@ -332,7 +354,7 @@
   </div>
 <%}%>
 
-<%if(liveTennis.length > 0 ){%>
+<%if(liveTennis.length > 0 || upcomintTennis.length > 0){%>
   <div class="exch-mob-data-tbl-ro">
     <div class="exch-mob-data-tbl-ro-titl">
       <h6>Tennis</h6>
@@ -354,11 +376,9 @@
             %>
           <div class="exch-mob-data-tbl-card-wrp">
             <a class="exch-mob-data-tbl-card-wrp-a" href="/exchange_inPlay/match?id=<%=tennisSeries[i].matchdata[j].eventData.eventId%>">
-              <div class="exch-mob-data-tbl-card-ro">
-                <div class="exch-mob-data-tbl-card-dv">
-                  <p>
-                    <%if(tennisSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
-                      <%
+              <div class="top-mobile-table-data">
+              <%if(tennisSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
+                <%
                       if(tennisSeries[i].matchdata[j].marketList.score != null){
                         let dataScore = tennisSeries[i].matchdata[j].marketList.score[0].data;
                         const scoreMatches = dataScore.match(/class="set current">([^<]*)/g);
@@ -386,15 +406,24 @@
                         </div>
                       </div>
                     <% }%>
-                      • <%=formattedTime%>
+                    <span class="flash-live-button">live</span></b>
+                    <div class="date"><%=formattedTime%></div>
+              <%}else{ %>
+                <div class="date"><%=formattedTime%></div>
+              <%} %>
+            </div>
+              <div class="exch-mob-data-tbl-card-ro">
+                <div class="exch-mob-data-tbl-card-dv">
+                  <p>
+                    <%if(tennisSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
+                      
                       <p>
-                        <b><%=tennisSeries[i].matchdata[j].eventData.name%></b> <span class="flash-live-button">live</span></b>
+                        <b><%=tennisSeries[i].matchdata[j].eventData.name%></b> 
                       </p>
                     <%}else{%>
-                      <%= j + 1%>)
-                      • <%=formattedTime%>
+                      
                       <p>
-                        <b><%=tennisSeries[i].matchdata[j].eventData.name%></b>
+                        <%= j + 1%>) <b><%=tennisSeries[i].matchdata[j].eventData.name%></b>
                     </p>
                     <%} %>
                   </p>
