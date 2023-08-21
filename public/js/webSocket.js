@@ -4663,7 +4663,8 @@ socket.on('connect', () => {
         
           $(document).ready(function(){
             $(".minus").click(function () {
-                
+                let spanId = $('.set-stake-form-input2').val()
+                console.log(spanId)
             })
           })
           // Get all the rows with class "acount-stat-tbl-body-tr"
