@@ -191,16 +191,14 @@
             %>
           <div class="exch-mob-data-tbl-card-wrp">
             <a class="exch-mob-data-tbl-card-wrp-a" href="/exchange_inPlay/match?id=<%=footbalSeries[i].matchdata[j].eventData.eventId%>">
-              <div class="exch-mob-data-tbl-card-ro">
-                <div class="exch-mob-data-tbl-card-dv">
-                  <p>
-                    <%if(footbalSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
-                      <%
-                      if(footbalSeries[i].matchdata[j].marketList.score != null){
+              <div class="top-mobile-table-data">
+                <%if(footbalSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
+                  <%
+                  if(footbalSeries[i].matchdata[j].marketList.score != null){
                       let dataScore = footbalSeries[i].matchdata[j].marketList.score[0].data
                       const timeMatch = dataScore.match(/class="football-time">([^<]*)/);
                       const time = timeMatch ? timeMatch[1].trim() : '';
-
+                      
                       // Extract score using regular expression
                       const scoreMatch = dataScore.match(/class="football-score">([^<]*)/);
                       const score = scoreMatch ? scoreMatch[1].trim() : '';
@@ -222,16 +220,23 @@
                             <span>In Play</span>
                           </div>
                         </div>
-                      <% }%>
-                      • <%=formattedTime%>
+                        <% }%>
+                        <span class="flash-live-button">live</span></b>
+                        <div class="date"><%=formattedTime%></div>
+                        <%} %>
+                    </div>
+              <div class="exch-mob-data-tbl-card-ro">
+                <div class="exch-mob-data-tbl-card-dv">
+                  <p>
+                    <%if(footbalSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
+                      
                       <p>
                         <b><%=footbalSeries[i].matchdata[j].eventData.name%></b> <span class="flash-live-button">live</span></b>
                       </p>
                     <%}else{%>
-                      <%= j + 1%>)
-                      • <%=formattedTime%>
+                      
                       <p>
-                        <b><%=footbalSeries[i].matchdata[j].eventData.name%></b>
+                        <%= j + 1%>) <b><%=footbalSeries[i].matchdata[j].eventData.name%></b>
                     </p>
                     <%} %>
                   </p>
