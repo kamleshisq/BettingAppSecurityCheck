@@ -6357,18 +6357,18 @@ socket.on('connect', () => {
                 let encodedEventName = encodeURIComponent(bets[i]._id);
                 html += `
                 <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/event/?eventname=${encodedEventName}'>
-                    <td>${i + 1}</td>
-                    <td>${bets[i]._id}</td>
-                    <td>${bets[i].uniqueMarketCount}</td>
-                    <td>${bets[i].totalData}</td>
-                    <td>${bets[i].Open}</td>
-                    <td>${bets[i].won}</td>
-                    <td>${bets[i].loss}</td>
-                    <td>${bets[i].Cancel}</td>`
+                    <td title="S.No" >${i + 1}</td>
+                    <td title="Event" >${bets[i]._id}</td>
+                    <td title="Market Count" >${bets[i].uniqueMarketCount}</td>
+                    <td title="Bets" >${bets[i].totalData}</td>
+                    <td title="Open" >${bets[i].Open}</td>
+                    <td title="Win" >${bets[i].won}</td>
+                    <td title="Lost" >${bets[i].loss}</td>
+                    <td title="Cancel" >${bets[i].Cancel}</td>`
                     if(bets[i].sumOfReturns > 0){
-                      html += `<td class="c-gren">${bets[i].sumOfReturns}</td>`
+                      html += `<td class="c-gren" title="Profit/Loss">${bets[i].sumOfReturns}</td>`
                     }else{
-                      html += `<td class="c-reed">${bets[i].sumOfReturns}</td>`
+                      html += `<td class="c-reed" title="Profit/Loss">${bets[i].sumOfReturns}</td>`
                       }
                 html += "</tr>"
             }
