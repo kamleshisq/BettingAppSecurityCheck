@@ -1,4 +1,8 @@
 <%if(LiveCricket.length > 0 || upcomintCricket.length > 0){%>
+  <div class="exch-mob-data-tbl-ro">
+    <div class="exch-mob-data-tbl-ro-titl">
+      <h6>Cricket</h6>
+    </div>
   <%for(let i = 0; i < cricketSeries.length; i++){%>
     <%if(cricketSeries[i].series != "1"){ %>
       <div class="series-wise-data">
@@ -138,6 +142,7 @@
       </div>
     <%}%>
   <%}%>
+  </div>
 <%}%>
 
 
