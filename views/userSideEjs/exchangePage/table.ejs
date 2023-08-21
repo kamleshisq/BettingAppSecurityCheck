@@ -19,13 +19,16 @@
             <%for(let j = 0; j < cricketSeries[i].matchdata.length; j++){%>
               <%
               
-              var timestamp = `${cricketSeries[i].matchdata[j].eventData.time}` * 1000; 
-              var date = new Date(timestamp);
-              var options = { 
-                day: '2-digit',
-                month: 'short'
-              };
-              var formattedTime = date.toLocaleString('en-US', options);
+              var timestamp = `${tennisSeries[i].matchdata[j].eventData.time}` * 1000; 
+                var date = new Date(timestamp);
+                var options = { 
+                  day: '2-digit',
+                  month: 'short',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true // This ensures the time is displayed in AM/PM format
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
               %>
             
               <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/exchange_inPlay/match?id=<%=cricketSeries[i].matchdata[j].eventData.eventId%>'>
@@ -208,11 +211,14 @@
               <%for(let j = 0; j < footbalSeries[i].matchdata.length; j++){%>
                 <%
                 
-                var timestamp = `${footbalSeries[i].matchdata[j].eventData.time}` * 1000; 
+                var timestamp = `${tennisSeries[i].matchdata[j].eventData.time}` * 1000; 
                 var date = new Date(timestamp);
                 var options = { 
                   day: '2-digit',
-                  month: 'short'
+                  month: 'short',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true // This ensures the time is displayed in AM/PM format
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
               %>
@@ -424,7 +430,10 @@
                 var date = new Date(timestamp);
                 var options = { 
                   day: '2-digit',
-                  month: 'short'
+                  month: 'short',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true // This ensures the time is displayed in AM/PM format
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
               %>
