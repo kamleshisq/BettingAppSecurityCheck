@@ -4466,7 +4466,7 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
-                      parentElement.addClass("suspended")
+                      parentElement.classList.add("suspended");
                       parentElement.find(".match-status-message").text("Suspended")
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
