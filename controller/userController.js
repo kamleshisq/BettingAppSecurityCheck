@@ -11,7 +11,7 @@ const accountStatement = require("../model/accountStatementByUserModel");
 // const { use } = require('../routes/userRoutes')
 
 exports.createUser = catchAsync(async(req, res, next)=>{
-    console.log(req.body)
+    // console.log(req.body)
     const user_type = await Role.findById(req.body.role);
     // console.log(user_type)
     // console.log(req.currentUser)
@@ -37,6 +37,7 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     req.body.roleName = user_type.roleName
     req.body.parent_id = req.currentUser.id
     req.body.parent_user_type_id = req.currentUser.user_type_id
+    req.body.userName = req.body.userName.toLowerCase();
     req.body.parentUsers = []
     if(req.currentUser.parentUsers){
         req.body.parentUsers = req.currentUser.parentUsers
