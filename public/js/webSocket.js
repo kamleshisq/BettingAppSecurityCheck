@@ -4673,7 +4673,7 @@ socket.on('connect', () => {
                     .closest("tr")
                     .find(".c-gren")
                     .text(0);
-                }else if(NewStake == -1){
+                }else if(NewStake < 0){
                     $(this).closest("tr").find('.set-stake-form-input2').val(0)
                     $(this)
                     .closest("tr")
