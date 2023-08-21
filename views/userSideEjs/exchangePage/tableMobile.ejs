@@ -43,9 +43,13 @@
                   </p>
                 </div>
                 <div class="exch-mob-data-tbl-card-dv2">
-                  <span class="exch-mob-data-tbl-card-dv2-spns">
-                    <i class="fa-solid fa-tv c-activee"></i>
-                  </span>
+                  <%if(cricketSeries[i].matchdata[j].eventData.isTv){%>
+                    <span class="exch-mob-data-tbl-card-dv2-spns">
+                      <i class="fa-solid fa-tv c-activee"></i>
+                    </span>
+                  <%}%>
+
+                  
                   <span class="exch-mob-data-tbl-card-dv2-spns">
                     <p> MO </p>
                     <span>35</span>
