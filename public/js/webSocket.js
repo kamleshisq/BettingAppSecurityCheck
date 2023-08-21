@@ -4415,7 +4415,7 @@ socket.on('connect', () => {
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
-                data.finalResult.items.some(item => {
+                let item = data.finalResult.items.some(item => {
                     if(item){
                         // console.log(id)
                         if(item.runners){
@@ -4427,6 +4427,7 @@ socket.on('connect', () => {
                         }
                     }
                 })
+                console.log(item)
                 if(this.id == `${section.secId}1` ){
                     if(data.betLimits[0].max_odd < section.backPrice || section.backPrice == "-" || section.backPrice == "1,000.00" || section.backPrice == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
