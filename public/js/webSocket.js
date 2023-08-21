@@ -4695,7 +4695,7 @@ socket.on('connect', () => {
             $(".plus").click(function () {
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
-                let NewStake = spanId + 100;
+                let NewStake = parseFloat(spanId) + 100;
                 let result = (NewStake * Odds) - NewStake;
                 if(!spanId){
                     $(this).closest("tr").find('.set-stake-form-input2').val(0)
