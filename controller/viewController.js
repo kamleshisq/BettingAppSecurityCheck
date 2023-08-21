@@ -127,13 +127,13 @@ exports.userTable = catchAsync(async(req, res, next) => {
       });
     let roles1 = await Role.find({role_level:{$in:req.currentUser.role.userAuthorization}}).sort({role_level:1});
     const data = await Promise.all(requests);
-    console.log(data)
+    // console.log(data)
     const users = data[0].child;
     const roles = roles1;
     const currentUser = req.currentUser
     const rows = data[0].rows
     const me = data[0].me
-    console.log(currentUser)
+    // console.log(currentUser)
     res.status(200).render('./userManagement/main',{
         title: "User Management",
         users,
@@ -329,7 +329,7 @@ exports.onlineUsers = catchAsync(async(req, res, next) => {
 });
 
 exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
-    console.log(req.query.id)
+    // console.log(req.query.id)
     let currentUser = req.currentUser
     let userDetails = await User.findById(req.query.id)
     // if(userDetails.roleName)
@@ -934,7 +934,7 @@ const hashedOutput = SHA256(privateKey, textToSign);
 exports.getPromotionPage = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find()
     let currentUser = req.currentUser
-    console.log(data)
+    // console.log(data)
     res.status(200).render("./promotion/promotion",{
         title:"Promotion",
         data,
@@ -1704,7 +1704,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
             cricketSeries[seriesIndex].matchdata.push(match);
         }
     });
-    console.log(footbalSeries);
+    // console.log(footbalSeries);
     if(user){
         userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
@@ -2013,7 +2013,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         } else {
             console.log("No 'src' attribute found in the iframe tag.");
         }
-        console.log(src, 123)
+        // console.log(src, 123)
     }
     const betLimit = await betLimitModel.find()
     // console.log(match.marketList.goals)
@@ -2282,7 +2282,7 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
     let games = await gameModel.find();
-    console.log(user._id)
+    // console.log(user._id)
     let userLog = await loginLogs.find({user_id:user.id})
     let bets = await betModel.find({userId:user._id}).sort({date:-1}).limit(20)
     let betsDetails = await betModel.aggregate([
@@ -2605,7 +2605,7 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
 
 exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
     let me = req.currentUser
-    console.log(me)
+    // console.log(me)
     let History
     if(me.roleName === "Admin"){
         History = await settlementHisory.find()
@@ -2625,7 +2625,7 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
 exports.getCommissionReport = catchAsync(async(req, res, next) => {
     let me = req.currentUser
     let data = await accountStatement.find({user_id:me._id,description: { $regex: /^commission for/ } }).sort({date:-1}).limit(20)
-    console.log(data)
+    // console.log(data)
     res.status(200).render("./commissionPage/commissionPage",{
         title:"Commission",
         me,
