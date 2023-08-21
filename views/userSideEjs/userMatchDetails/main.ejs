@@ -843,7 +843,7 @@
     const span = event.target;
     if (!span.classList.contains('tbl-bg-blu-spn')) return;
     console.log("WORKING", event.target.querySelector("span").classList)
-    if(span.classList.contains('mylock-data')) return;
+    if(event.target.querySelector("span").classList.contains('mylock-data')) return;
 
     event.preventDefault();
     const targetId = span.getAttribute('href');
