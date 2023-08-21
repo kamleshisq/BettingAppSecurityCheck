@@ -4543,7 +4543,7 @@ socket.on('connect', () => {
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         $(this).parent().find(".match-status-message").text("")
-                        parentElement.removeClass("suspended")
+                        parentElement.classList.remove("suspended")
                         this.innerHTML = `<span><b>${section.even}</b></span>` 
                     }
                 }
