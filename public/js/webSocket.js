@@ -4669,7 +4669,7 @@ socket.on('connect', () => {
                 let NewStake = spanId - 1;
                 let result = (NewStake * Odds) - NewStake;
                 console.log(result)
-                if(spanId){
+                if(NewStake == -1 || spanId){
                     $(this).closest("tr").find('.set-stake-form-input2').val(0)
                     $(this)
                     .closest("tr")
