@@ -4180,7 +4180,9 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
+                      this.removeAttribute("data-bs-toggle");
                     }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
                             this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         }else{
@@ -4198,7 +4200,9 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
+                      this.removeAttribute("data-bs-toggle");
                     }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
                             this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                         }else{
@@ -4217,7 +4221,9 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
+                      this.removeAttribute("data-bs-toggle");
                     }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
                             this.innerHTML = `<span><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                         }else{
@@ -4248,8 +4254,10 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
+                      this.removeAttribute("data-bs-toggle");
                     }else{
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
                             this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                         }else{
@@ -4268,8 +4276,10 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
+                      this.removeAttribute("data-bs-toggle");
                     }else{
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
                             this.innerHTML = `<span><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                         }else{
@@ -4288,8 +4298,10 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
+                      this.removeAttribute("data-bs-toggle");
                     }else{
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
                             this.innerHTML = `<span><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                         }else{
@@ -4420,7 +4432,9 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
+                      this.removeAttribute("data-bs-toggle");
                     }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
                         // this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.innerHTML = `<span><b>${section.backPrice}</b></span> <span> ${section.backSize}</span>`
                         // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
@@ -4449,7 +4463,9 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
+                      this.removeAttribute("data-bs-toggle");
                     }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.innerHTML = `<span><b>${section.layPrice}</b></span> <span> ${section.laySize}</span>`
                         // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
