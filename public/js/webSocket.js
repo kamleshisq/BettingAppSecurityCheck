@@ -5504,36 +5504,36 @@ socket.on('connect', () => {
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
                 html += `<tr class="acount-stat-tbl-body-tr">
-                    <td>${i+count}</td>
-                    <td>${formattedTime}</td>`
+                    <td title='Sr. No'>${i+count}</td>
+                    <td title='Date & Time'>${formattedTime}</td>`
                 if(bets[i].betType === "Casino"){
-                        html += "<td>-</td>"
+                        html += "<td title='Sports'>-</td>"
                 }else{
-                        html += `<td>${bets[i].betType}</td>`
+                        html += `<td title='Sports'>${bets[i].betType}</td>`
                 }
-                html += `<td>${bets[i].event}</td>`
+                html += `<td title='Event'>${bets[i].event}</td>`
                 if(bets[i].match){
-                        html +=  `<td>${bets[i].match}</td>`
+                        html +=  `<td title='Match'>${bets[i].match}</td>`
                 }else{
-                        html += "<td>-</td>"
+                        html += "<td title='Match'>-</td>"
                 }
                 if(bets[i].marketName){
-                        html += `<td>${bets[i].marketName}</td>`
+                        html += `<td title='Market'>${bets[i].marketName}</td>`
                 }else{
-                        html += "<td>-</td>"
+                        html += "<td title='Market'>-</td>"
                 }
                 if(bets[i].selectionName){
-                        html +=    `<td>${bets[i].selectionName}</td>
-                            <td>${bets[i].oddValue}</td>`
+                        html +=    `<td title='Bet On'>${bets[i].selectionName}</td>
+                            <td title='Odds'>${bets[i].oddValue}</td>`
                 }else{
-                        html +=    "<td>-</td><td>-</td>"
+                        html +=    "<td title='Bet On'>-</td><td title='Odds'>-</td>"
                 }
-                html += ` <td>${bets[i].status}</td>
-                        <td>${bets[i].Stake}</td>`
+                html += ` <td title='Status'>${bets[i].status}</td>
+                        <td title='Stake'>${bets[i].Stake}</td>`
                         if(bets[i].returns > 0){
-                           html += `<td class="c-gren">${bets[i].returns}</td>`
+                           html += `<td class="c-gren" title="Returns" >${bets[i].returns}</td>`
                         }else{
-                            html += `<td class="c-reed">${bets[i].returns}</td>`
+                            html += `<td class="c-reed" title="Returns" >${bets[i].returns}</td>`
                         }
                    html +=  "</tr>"
                     
