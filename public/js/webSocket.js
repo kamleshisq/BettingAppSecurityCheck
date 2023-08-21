@@ -4669,13 +4669,20 @@ socket.on('connect', () => {
                 let NewStake = spanId - 1;
                 let result = (NewStake * Odds) - NewStake;
                 console.log(result)
-                if(NewStake == -1 || spanId){
+                if(spanId){
                     $(this).closest("tr").find('.set-stake-form-input2').val(0)
                     $(this)
                     .closest("tr")
                     .find(".c-gren")
                     .text(0);
-                }else{
+                }else if(NewStake == -1){
+                    $(this).closest("tr").find('.set-stake-form-input2').val(0)
+                    $(this)
+                    .closest("tr")
+                    .find(".c-gren")
+                    .text(0);
+                }
+                else{
                     console.log("WORKING")
                     $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
                     $(this)
