@@ -4663,8 +4663,15 @@ socket.on('connect', () => {
         
           $(document).ready(function(){
             $(".minus").click(function () {
-                let spanId =  $(this).closest("tr").find('.set-stake-form-input2').val()
-                console.log(spanId)
+                let spanId =  parseFloat($(this).closest("tr").find('.set-stake-form-input2').val())
+                let Odds = parseFloat($(this).closest('tr'.find("nww-bet-slip-wrp-col1-txt-num").text))
+                let NewStake = spanId - 1;
+                let result = (NewStake * Odds) - NewStake;
+                $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
+                $(this)
+                .closest("tr")
+                .find(".c-gren")
+                .text(result.toFixed(2));
             })
           })
           // Get all the rows with class "acount-stat-tbl-body-tr"
