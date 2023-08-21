@@ -4433,11 +4433,11 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
-                      this.parentNode.addClass("suspended")
-                      this.parentNode.find(".match-status-message").text("Suspended")
+                      this.parent().addClass("suspended")
+                      this.parent().find(".match-status-message").text("Suspended")
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
-                        this.parentNode.removeClass("suspended")
+                        this.parent().removeClass("suspended")
                         // this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.innerHTML = `<span><b>${section.backPrice}</b></span> <span> ${section.backSize}</span>`
                         // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
