@@ -4619,7 +4619,7 @@ socket.on('connect', () => {
               var spanId = $(this).attr("id");
               let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
               let newStake
-              console.log(OldStake)
+            //   console.log(OldStake)
               if(OldStake == ""){
                 newStake = parseFloat(spanId)
               }else{
@@ -4681,7 +4681,7 @@ socket.on('connect', () => {
                     .text(0);
                 }
                 else{
-                    console.log("WORKING")
+                    // console.log("WORKING")
                     $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
                     $(this)
                     .closest("tr")
@@ -4703,7 +4703,7 @@ socket.on('connect', () => {
                     NewStake = 100
                 }
                 let result = (NewStake * Odds) - NewStake;
-                console.log(result)
+                // console.log(result)
                 if(!spanId){
                     $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
                     $(this)
