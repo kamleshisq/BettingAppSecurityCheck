@@ -4661,6 +4661,11 @@ socket.on('connect', () => {
             })
           })
         
+          $(document).ready(function(){
+            $(".minus").click(function () {
+                
+            })
+          })
           // Get all the rows with class "acount-stat-tbl-body-tr"
         //   const rows = document.querySelectorAll(".acount-stat-tbl-body-tr");
         
