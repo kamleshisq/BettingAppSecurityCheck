@@ -4427,19 +4427,14 @@ socket.on('connect', () => {
                         }
                     }
                 })
-                let patentElement = $(this).parentNode
-                console.log(patentElement)
                 if(this.id == `${section.secId}1` ){
                     if(data.betLimits[0].max_odd < section.backPrice || section.backPrice == "-" || section.backPrice == "1,000.00" || section.backPrice == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
-                      patentElement.addClass("suspended")
-                      patentElement.find(".match-status-message").text("Suspended")
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
-                        patentElement.removeClass("suspended")
                         // this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.innerHTML = `<span><b>${section.backPrice}</b></span> <span> ${section.backSize}</span>`
                         // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
@@ -4463,6 +4458,8 @@ socket.on('connect', () => {
                         }
                     }
                 })
+                let parentElement = this.parentNode
+                console.log(parentElement)
                 if(this.id == `${section.secId}2` ){
                     if(data.betLimits[0].max_odd < section.layPrice || section.layPrice == "-" || section.layPrice == "1,000.00" || section.layPrice == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
