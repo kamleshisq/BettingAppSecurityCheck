@@ -45,10 +45,14 @@ const userSchema = mongoose.Schema({
         type:Number,
         default:0
     },
-    clientPL:{
+    lifetimePL:{
         type:Number,
         default:0
     },
+    // clientPL:{
+    //     type:Number,
+    //     default:0
+    // },
     exposure:{
         type:Number,
         default:0
