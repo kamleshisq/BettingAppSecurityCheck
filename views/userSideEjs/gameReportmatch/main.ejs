@@ -20,7 +20,7 @@
             </div>
 
             <div class="acount-stat-ro2">
-                <div class="acount-stat-tbl-txt-wrp">
+                <div class="acount-stat-tbl-txt-wrp userSide-Table">
                     <table class="acount-stat-tbl">
 
                         <thead class="acount-stat-tbl-hed">
@@ -51,16 +51,16 @@
                                     var formattedTime = date.toLocaleString('en-US', options);
                                 %>
                                 <tr class="acount-stat-tbl-body-tr" >
-                                    <td><%=formattedTime%></td>
-                                    <td><%=result[i].marketName%></td>
-                                    <td><%=result[i].selectionName%></td>
-                                    <td><span class="tbl-td-bg-blu-spn"><%=result[i].oddValue%></span></td>
-                                    <td><%=result[i].status%></td>
-                                    <td class="c-gren"><%=result[i].Stake%></td>
+                                    <td title="Settlement Date" ><%=formattedTime%></td>
+                                    <td title="Market" ><%=result[i].marketName%></td>
+                                    <td title="Bet On" ><%=result[i].selectionName%></td>
+                                    <td title="Odds" ><span class="tbl-td-bg-blu-spn"><%=result[i].oddValue%></span></td>
+                                    <td title="Status" ><%=result[i].status%></td>
+                                    <td class="c-gren" title="Stake"><%=result[i].Stake%></td>
                                     <%if(result[i].returns > 0){%>
-                                        <td class="c-gren"><%=result[i].returns%></td>
+                                        <td class="c-gren" title="Profit/Loss"><%=result[i].returns%></td>
                                     <%}else{%>
-                                    <td class="c-reed">-<%=result[i].Stake%></td>
+                                    <td class="c-reed" title="Profit/Loss">-<%=result[i].Stake%></td>
                                     <%}%>
                                 </tr>
                             <%}%>
