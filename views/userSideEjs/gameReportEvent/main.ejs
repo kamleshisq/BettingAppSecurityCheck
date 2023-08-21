@@ -18,7 +18,7 @@
             </div>
 
             <div class="acount-stat-ro2">
-                <div class="acount-stat-tbl-txt-wrp">
+                <div class="acount-stat-tbl-txt-wrp userSide-Table">
                     <table class="acount-stat-tbl">
 
                         <thead class="acount-stat-tbl-hed">
@@ -38,16 +38,16 @@
                                 <% let encodedEventName = encodeURIComponent(result[i].match); %>
                                 <% let encodedEventName2 = encodeURIComponent(result[i].event); %>
                                 <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='/gameReport/match?matchName=<%=encodedEventName%>&eventName=<%=encodedEventName2%>'>
-                                    <td><%=result[i].match%></td>
-                                    <td><%=result[i].totalData%></td>
-                                    <td><%=result[i].win%></td>
-                                    <td><%=result[i].loss%></td>
-                                    <td><%=result[i].cancel%></td>
-                                    <td><%=result[i].open%></td>
+                                    <td title="Match" ><%=result[i].match%></td>
+                                    <td title="Bets" ><%=result[i].totalData%></td>
+                                    <td title="Win" ><%=result[i].win%></td>
+                                    <td title="Lost" ><%=result[i].loss%></td>
+                                    <td title="Void" ><%=result[i].cancel%></td>
+                                    <td title="Open" ><%=result[i].open%></td>
                                     <%if(result[i].totalSumOfReturns > 0){%>
-                                        <td class="c-gren"><%=result[i].totalSumOfReturns%></td>
+                                        <td class="c-gren" title="Profit/Loss" ><%=result[i].totalSumOfReturns%></td>
                                     <%}else{%>
-                                        <td class="c-reed"><%=result[i].totalSumOfReturns%></td>
+                                        <td class="c-reed" title="Profit/Loss" ><%=result[i].totalSumOfReturns%></td>
                                     <%}%>
                                 </tr>
                             <%}%>
