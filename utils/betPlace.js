@@ -147,14 +147,15 @@ if(!marketDetails.runners){
     if(!user){
         return "There is no user with that id"
     }
+    console.log(user.parentUsers[1])
     let commission = await commissionModel.find({userId:user.parentUsers[1]})
-    console.log(commission)
+    console.log(commission, 456)
     let commissionPer = 0
     if(marketDetails.title.startsWith('Match Odds') && commission[0].matchOdd.type == "ENTRY"){
       commissionPer = parseFloat(commission[0].matchOdd.percentage)/100
     }else if ((marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS')) && commission[0].Bookmaker.type == "ENTRY"){
       commissionPer = parseFloat(commission[0].Bookmaker.percentage)/100
-    }else if (commission[0].fency.type == "ENTRY" && !(marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('Match Odds'))){
+    }else if (commission[0].fency.type == "ENTRY" && !(marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('Match'))){
       commissionPer = parseFloat(commission[0].fency.percentage)/100
     }
 
