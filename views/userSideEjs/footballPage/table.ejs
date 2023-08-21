@@ -23,7 +23,10 @@
                 var date = new Date(timestamp);
                 var options = { 
                   day: '2-digit',
-                  month: 'short'
+                  month: 'short',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true // This ensures the time is displayed in AM/PM format
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
               %>

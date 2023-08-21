@@ -212,12 +212,15 @@
               <%
               
               var timestamp = `${footbalSeries[i].matchdata[j].eventData.time}` * 1000; 
-              var date = new Date(timestamp);
-              var options = { 
-                day: '2-digit',
-                month: 'short'
-              };
-              var formattedTime = date.toLocaleString('en-US', options);
+                var date = new Date(timestamp);
+                var options = { 
+                  day: '2-digit',
+                  month: 'short',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true // This ensures the time is displayed in AM/PM format
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
             %>
             
               <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/exchange_inPlay/match?id=<%=footbalSeries[i].matchdata[j].eventData.eventId%>'>
@@ -427,7 +430,10 @@
                 var date = new Date(timestamp);
                 var options = { 
                   day: '2-digit',
-                  month: 'short'
+                  month: 'short',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true // This ensures the time is displayed in AM/PM format
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
               %>
