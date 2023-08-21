@@ -5384,26 +5384,26 @@ socket.on('connect', () => {
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
                 html += `<tr class="acount-stat-tbl-body-tr">
-                    <td>${i+count}</td>
-                    <td>${formattedTime}</td>`
+                    <td title="SR No." >${i+count}</td>
+                    <td title="Date & Time" >${formattedTime}</td>`
                     if(userAcc[i].creditDebitamount > 0){
-                        html += `<td>${userAcc[i].creditDebitamount}</td>
-                        <td>0</td>`
+                        html += `<td title="Credit" >${userAcc[i].creditDebitamount}</td>
+                        <td title="Debit" >0</td>`
                     }else{
-                        html += ` <td>0</td>
-                        <td>${userAcc[i].creditDebitamount}</td>`
+                        html += ` <td title="Credit" >0</td>
+                        <td title="Debit" >${userAcc[i].creditDebitamount}</td>`
                     }
 
                     if(userAcc[i].stake){
-                        html += `<td>${userAcc[i].stake}</td>`
+                        html += `<td title="Stake" >${userAcc[i].stake}</td>`
                     }else{
-                        html += "<td>-</td>"
+                        html += `<td title="Stake" >-</td>`
                     }
 
-                    html += `<td>0</td>
-                    <td>${userAcc[i].balance}</td>
-                    <td>${userAcc[i].description}</td>
-                    <td>-</td>`
+                    html += `<td title="Pts" >0</td>
+                    <td title="Closing" >${userAcc[i].balance}</td>
+                    <td title="Description" >${userAcc[i].description}</td>
+                    <td title="Remark" >-</td>`
             }
             count += 20
             if(data.page == 0){
