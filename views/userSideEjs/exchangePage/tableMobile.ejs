@@ -20,15 +20,17 @@
             %>
           <div class="exch-mob-data-tbl-card-wrp">
             <a class="exch-mob-data-tbl-card-wrp-a" href="/exchange_inPlay/match?id=<%=cricketSeries[i].matchdata[j].eventData.eventId%>">
-              <div class="top-mobile-table-data">
-                <div class="short-score">
-                  <div class="block right">
-                    <span>In play</span>
+              <%if(cricketSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%
+                <div class="top-mobile-table-data">
+                  <div class="short-score">
+                    <div class="block right">
+                      <span>In play</span>
+                    </div>
                   </div>
+                  <div class="date"><%=formattedTime%></div>
+                  <span class="flash-live-button">live</span></b>
                 </div>
-                <div class="date"><%=formattedTime%></div>
-                <span class="flash-live-button">live</span></b>
-              </div>
+              <%}%>
               <div class="exch-mob-data-tbl-card-ro">
                 <div class="exch-mob-data-tbl-card-dv">
                   <p>
