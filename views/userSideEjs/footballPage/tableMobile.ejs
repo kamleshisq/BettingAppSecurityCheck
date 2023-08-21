@@ -10,13 +10,16 @@
         <%for(let j = 0; j < footbalSeries[i].matchdata.length; j++){%>
           <%
               
-              var timestamp = `${footbalSeries[i].matchdata[j].eventData.time}` * 1000; 
-              var date = new Date(timestamp);
-              var options = { 
-                day: '2-digit',
-                month: 'short'
-              };
-              var formattedTime = date.toLocaleString('en-US', options);
+          var timestamp = `${footbalSeries[i].matchdata[j].eventData.time}` * 1000; 
+          var date = new Date(timestamp);
+          var options = { 
+            day: '2-digit',
+            month: 'short',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true // This ensures the time is displayed in AM/PM format
+          };
+          var formattedTime = date.toLocaleString('en-US', options);
             %>
           <div class="exch-mob-data-tbl-card-wrp">
             <a class="exch-mob-data-tbl-card-wrp-a" href="/exchange_inPlay/match?id=<%=footbalSeries[i].matchdata[j].eventData.eventId%>">
