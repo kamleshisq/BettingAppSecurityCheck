@@ -407,7 +407,7 @@ exports.userLogin = catchAsync (async(req, res, next) => {
         });
         const validate = loginSchema.validate(req.body);
         // console.log(validate)
-        req.body.userName = req.body.userName.toLowerCase();
+        userName = req.body.userName.toLowerCase();
         if(validate.error){
             // console.log("working")
             res.status(404).json({
