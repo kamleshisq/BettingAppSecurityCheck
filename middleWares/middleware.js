@@ -41,7 +41,10 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         req._count = userLog.length
         global._admin = true
     }else if (req.originalUrl == "/api/v1/auth/userLogin"){
-        const id = await User.findOne({userName:req.body.userName.toLowerCase()})
+        let id
+        if(req.body.userName){
+            id = await User.findOne({userName:req.body.userName.toLowerCase()})
+        }
         // console.log(req.body)
         // console.log("WORKING")
         if(!id){

@@ -41,7 +41,7 @@
 
             <div class="acount-stat-ro2">
                 <div class="acount-stat-tbl-txt-wrp">
-                    <table class="acount-stat-tbl" id="table12">
+                    <table class="acount-stat-tbl userSide-Table" id="table12">
 
                         <thead class="acount-stat-tbl-hed">
                             <tr class="acount-stat-tbl-hed-tr">
@@ -74,24 +74,24 @@
                                     var formattedTime = date.toLocaleString('en-US', options);
                                 %>
                                 <tr class="acount-stat-tbl-body-tr">
-                                    <td><%=i+1%></td>
-                                    <td><%=formattedTime%></td>
+                                    <td title="SR No."><%=i+1%></td>
+                                    <td title="Date & Time"><%=formattedTime%></td>
                                     <%if(data[i].creditDebitamount > 0){%>
-                                        <td><%=data[i].creditDebitamount%></td>
-                                        <td>0</td>
+                                        <td title="Credit"><%=data[i].creditDebitamount%></td>
+                                        <td title="Debit">0</td>
                                     <%}else{%>
-                                        <td>0</td>
-                                        <td><%=data[i].creditDebitamount%></td>
+                                        <td title="Credit">0</td>
+                                        <td title="Debit"><%=data[i].creditDebitamount%></td>
                                     <%}%>
                                     <%if(data[i].stake){%>
-                                        <td><%=data[i].stake%></td>
+                                        <td title="Stake"><%=data[i].stake%></td>
                                     <%}else{%>
-                                        <td>-</td>
+                                        <td title="Stake">-</td>
                                     <%}%>
-                                    <td>0</td>
-                                    <td><%=data[i].balance%></td>
-                                    <td><%=data[i].description%></td>
-                                    <td>-</td>
+                                    <td title="Pts">0</td>
+                                    <td title="Closing"><%=data[i].balance%></td>
+                                    <td title="Description"><%=data[i].description%></td>
+                                    <td title="Remark">-</td>
                                 </tr>
                                 <%}%>
                                 <%}%>
