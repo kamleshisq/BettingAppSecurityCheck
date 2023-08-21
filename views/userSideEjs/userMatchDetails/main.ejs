@@ -843,24 +843,25 @@
     const span = event.target;
     if (!span.classList.contains('tbl-bg-blu-spn')) return;
     console.log("WORKING", event.target.querySelector("span").classList.contains('mylock-data'))
-    if(event.target.querySelector("span").classList.contains('mylock-data')) return;
+    if(!event.target.querySelector("span").classList.contains('mylock-data')){
+      event.preventDefault();
+      const targetId = span.getAttribute('href');
+      const targetCollapseDiv = document.querySelector(targetId);
+  
+      // Get the closest "table-data-2" div
+      const tableDataDiv = span.closest('.table-data-2');
+  
+      // Hide all other "my-exc-inn-colaps-txt-dv collapse" divs within the same "table-data-2" div
+      const collapseDivs = tableDataDiv.querySelectorAll('.my-exc-inn-colaps-txt-dv.collapse');
+      collapseDivs.forEach(div => {
+        if (div !== targetCollapseDiv) {
+          div.classList.remove('show');
+        }
+      });
+  
+      targetCollapseDiv.classList.toggle('show');
+    }
 
-    event.preventDefault();
-    const targetId = span.getAttribute('href');
-    const targetCollapseDiv = document.querySelector(targetId);
-
-    // Get the closest "table-data-2" div
-    const tableDataDiv = span.closest('.table-data-2');
-
-    // Hide all other "my-exc-inn-colaps-txt-dv collapse" divs within the same "table-data-2" div
-    const collapseDivs = tableDataDiv.querySelectorAll('.my-exc-inn-colaps-txt-dv.collapse');
-    collapseDivs.forEach(div => {
-      if (div !== targetCollapseDiv) {
-        div.classList.remove('show');
-      }
-    });
-
-    targetCollapseDiv.classList.toggle('show');
   }
 
   // Add a single click event listener to the document to handle all clicks
