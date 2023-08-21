@@ -4492,7 +4492,9 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
+                      this.removeAttribute("data-bs-toggle");
                     }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
                         this.innerHTML = `<span><b>${section.odd}</b></span>` 
                     }
                 }
@@ -4516,7 +4518,9 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
+                      this.removeAttribute("data-bs-toggle");
                     }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
                         this.innerHTML = `<span><b>${section.even}</b></span>` 
                     }
                 }
@@ -4540,7 +4544,9 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
+                      this.removeAttribute("data-bs-toggle");
                     }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
                         this.innerHTML = `<span><b>${section.yes}</b></span>` 
                     }
                 }
@@ -4565,7 +4571,9 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
+                      this.removeAttribute("data-bs-toggle");
                     }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
                         this.innerHTML = `<span><b>${section.no}</b></span>` 
                     }
                 }
