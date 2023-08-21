@@ -4591,6 +4591,7 @@ socket.on('connect', () => {
                     }
                 })
                 let parentElement = this.parentNode
+                console.log(section)
                 if(this.id == `${section.market_id}2` ){
                     if(section.ball_running){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
