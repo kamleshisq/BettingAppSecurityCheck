@@ -4663,7 +4663,7 @@ socket.on('connect', () => {
         
           $(document).ready(function(){
             $(".minus").click(function () {
-                let spanId = $('.set-stake-form-input2').val()
+                let spanId = $('.set-stake-form-input2')[0].val()
                 console.log(spanId)
             })
           })
