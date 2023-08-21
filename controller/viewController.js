@@ -2038,7 +2038,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         res.status(200).render("./userSideEjs/userMatchDetails/main",{
             user: req.currentUser,
             verticalMenus,
-            check:"Exchange",
+            check:"ExchangeIn",
             match,
             SportLimits,
             liveStream,
