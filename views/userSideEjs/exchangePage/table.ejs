@@ -19,7 +19,7 @@
             <%for(let j = 0; j < cricketSeries[i].matchdata.length; j++){%>
               <%
               
-              var timestamp = `${tennisSeries[i].matchdata[j].eventData.time}` * 1000; 
+              var timestamp = `${cricketSeries[i].matchdata[j].eventData.time}` * 1000; 
                 var date = new Date(timestamp);
                 var options = { 
                   day: '2-digit',
@@ -211,7 +211,7 @@
               <%for(let j = 0; j < footbalSeries[i].matchdata.length; j++){%>
                 <%
                 
-                var timestamp = `${tennisSeries[i].matchdata[j].eventData.time}` * 1000; 
+                var timestamp = `${footbalSeries[i].matchdata[j].eventData.time}` * 1000; 
                 var date = new Date(timestamp);
                 var options = { 
                   day: '2-digit',
