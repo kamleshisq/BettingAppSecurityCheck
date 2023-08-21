@@ -38,7 +38,7 @@
             </div>
 
             <div class="acount-stat-ro2">
-                <div class="acount-stat-tbl-txt-wrp">
+                <div class="acount-stat-tbl-txt-wrp userSide-Table">
                     <table class="acount-stat-tbl">
 
                         <thead class="acount-stat-tbl-hed">
@@ -53,13 +53,13 @@
                         <tbody class="acount-stat-tbl-body">
                             <%for(let i = 0; i < data.length; i++){%>
                                 <tr class="acount-stat-tbl-body-tr">
-                                    <td><%=data[i]._id%></td>
-                                    <td><%=data[i].losses%></td>
-                                    <td><%=data[i].wins%></td>
+                                    <td title="Game"><%=data[i]._id%></td>
+                                    <td title="Lost"><%=data[i].losses%></td>
+                                    <td title="Won"><%=data[i].wins%></td>
                                     <%if(data[i].profit < 0){%>
-                                        <td class="c-reed"><%=data[i].profit%></td>
+                                        <td class="c-reed" title="Profit/Loss"><%=data[i].profit%></td>
                                     <%}else{%>
-                                        <td class="c-gren"><%=data[i].profit%></td>
+                                        <td class="c-gren" title="Profit/Loss"><%=data[i].profit%></td>
                                     <%}%>
                                 </tr>
                             <%}%>
