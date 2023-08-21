@@ -4427,15 +4427,17 @@ socket.on('connect', () => {
                         }
                     }
                 })
-                console.log(item)
                 if(this.id == `${section.secId}1` ){
                     if(data.betLimits[0].max_odd < section.backPrice || section.backPrice == "-" || section.backPrice == "1,000.00" || section.backPrice == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
+                      this.parentNode.addClass("suspended")
+                      this.parentNode.find(".match-status-message").text("Suspended")
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
+                        this.parentNode.removeClass("suspended")
                         // this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.innerHTML = `<span><b>${section.backPrice}</b></span> <span> ${section.backSize}</span>`
                         // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
@@ -4465,8 +4467,11 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
+                      this.parentNode.addClass("suspended")
+                      this.parentNode.find(".match-status-message").text("Suspended")
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
+                        this.parentNode.removeClass("suspended")
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.innerHTML = `<span><b>${section.layPrice}</b></span> <span> ${section.laySize}</span>`
                         // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
