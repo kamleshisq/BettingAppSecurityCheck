@@ -4518,6 +4518,7 @@ socket.on('connect', () => {
                         }
                     }
                 })
+                console.log(section)
                 if(this.id == `${section.market_id}2` ){
                     if(data.betLimits[0].max_odd < section.even || section.even == "-" || section.even == "1,000.00" || section.even == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
