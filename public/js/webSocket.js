@@ -4470,7 +4470,8 @@ socket.on('connect', () => {
                       $(this).parent().find(".match-status-message").text("Suspended")
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
-                        parentElement.removeClass("suspended")
+                        parentElement.classList.remove("suspended")
+                        $(this).parent().find(".match-status-message").text("")
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.innerHTML = `<span><b>${section.layPrice}</b></span> <span> ${section.laySize}</span>`
                         // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
@@ -4590,13 +4591,29 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.market_id}2` ){
-                    if(data.betLimits[0].max_odd < section.no || section.no == "-" || section.no == "1,000.00" || section.no == "0"){
+                    if(section.ball_running){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.add("suspended");
+                      $(this).parent().find(".match-status-message").text("Ball Rinning")
+                    }else if(section.suspended){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.add("suspended");
+                      $(this).parent().find(".match-status-message").text("Suspended")
+                    }else if(data.betLimits[0].max_odd < section.no || section.no == "-" || section.no == "1,000.00" || section.no == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
+                        $(this).parent().find(".match-status-message").text("")
+                        parentElement.classList.remove("suspended")
                         this.innerHTML = `<span><b>${section.no}</b></span>` 
                     }
                 }
