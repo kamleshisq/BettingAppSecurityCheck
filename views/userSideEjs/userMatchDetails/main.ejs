@@ -842,7 +842,7 @@
   function handleSpanClick(event) {
     const span = event.target;
     if (!span.classList.contains('tbl-bg-blu-spn')) return;
-    console.log("WORKING", event)
+    console.log("WORKING", event.target.classList)
     if(span.classList.contains('mylock-data')) return;
 
     event.preventDefault();
