@@ -161,7 +161,9 @@ for(let i = 0; i < multimarket.marketIds.length; i++){
                         
                                 <div class="nww-bet-slip-wrp-col1-txt">
                                   <div class="nww-bet-slip-wrp-col1-txt-inn input-group-sm">
-                                    <input type="number" class="form-control set-stake-form-input2" placeholder="Custom" aria-label="Last name">
+                                    <span class="minus">-</span>
+                                    <input type="text" class="form-control set-stake-form-input2" placeholder="Custom" aria-label="Last name">
+                                    <span class="plus">+</span>
                                   </div>
                                 </div>
                               </div>
@@ -169,32 +171,50 @@ for(let i = 0; i < multimarket.marketIds.length; i++){
                               <div class="nww-bet-slip-wrp-col2">
                                 <div class="nww-bet-slip-wrp-col2-inn">
                                   <%for(let i = 0; i < stakeLabledata.stakeArray.length; i++){%>
-                                    <span id="<%=stakeLabledata.stakeArray[i].value%>">+<%=stakeLabledata.stakeArray[i].key%></span>
+                                    <!-- <span id="<%=stakeLabledata.stakeArray[i].value%>">+<%=stakeLabledata.stakeArray[i].key%></span> -->
+                                  <%}%>
+                                  <span id="100">+100</span>
+                                  <span id="1000">+1000</span>
+                                  <span id="50000">+50000</span>
+                                  <span id="10000">+10000</span>
+                                  <span id="<%=SportLimits.max_stake%>" class="MAX">MAX</span>
+                                  <%if(user){%>
+                                  <span id="<%=user.availableBalance%>" class="ALLIN">ALL IN</span>
                                   <%}%>
                                 </div>
-                              </div>
-                        
-                              <div class="nww-bet-slip-wrp-col3">
-                                <div class="nww-bet-slip-wrp-col3-txt1">
-                                  <p>
-                                    Please select a Stake Amount. Enter a custom amount by clicking on the custom box.
-                                  </p>
-                                </div>
-                        
                                 <div class="nww-bet-slip-wrp-col3-txt1">
                                   <%if(user){ %>
+                                    
                                       <a class="eventId" id="<%=result.eventData.eventId%>"> Place Bet </a>
                                   <%}else{ %>
                                     <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
                                   <%}%>
                                 </div>
-                        
                               </div>
+                        
                               <div class="nww-bet-slip-wrp-col3">
-                                <div class="nww-bet-slip-wrp-col3-txt1">
-                                  <label for="checkbox">Accept odds changes</label>
-                                  <input type="checkbox" name="checkbox" id="changes">
+                                <div class="nww-bet-slip-wrp-col3-txt1 betslip-checkbox">
+                                  <p>
+                                    Please select a Stake Amount. Enter a custom amount by clicking on the custom box.
+                                  </p>
+                                    <div class="nww-bet-slip-wrp-col3-txt1  betslip-checkbox">
+                                      <label for="checkbox">Accept any odds changes</label>
+                                      <input type="checkbox" name="checkbox" id="changes">
+                                    </div>
                                 </div>
+                        
+                                <!-- <div class="nww-bet-slip-wrp-col3-txt1">
+                                  <%if(user){ %>
+                                    <%if(match ){%>
+                                      <a class="eventId" id="<%=match.eventData.eventId%>"> Place Bet </a>
+                                    <%}else{ %>
+                                      <a class="eventId" id="<%=result.eventData.eventId%>"> Place Bet </a>
+                                      <%} %>
+                                  <%}else{ %>
+                                    <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
+                                  <%}%>
+                                </div> -->
+                        
                               </div>
                         
                             </div>
@@ -461,11 +481,8 @@ for(let i = 0; i < multimarket.marketIds.length; i++){
                                   </div>
                                   <div class="nww-bet-slip-wrp-col3-txt1">
                                     <%if(user){ %>
-                                      <%if(match ){%>
-                                        <a class="eventId" id="<%=match.eventData.eventId%>"> Place Bet </a>
-                                      <%}else{ %>
+                                      
                                         <a class="eventId" id="<%=result.eventData.eventId%>"> Place Bet </a>
-                                        <%} %>
                                     <%}else{ %>
                                       <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
                                     <%}%>
