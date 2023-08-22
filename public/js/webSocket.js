@@ -6891,6 +6891,73 @@ socket.on('connect', () => {
                 }
                 });
               });
+
+              $(document).ready(function(){
+                $(".minus").click(function () {
+                    let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
+                    let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
+                    let NewStake = spanId - 100;
+                    let result = (NewStake * Odds) - NewStake;
+                    if(!spanId){
+                        $(this).closest("tr").find('.set-stake-form-input2').val(0)
+                        $(this)
+                        .closest("tr")
+                        .find(".c-gren")
+                        .text(0);
+                    }else if(NewStake < 0){
+                        $(this).closest("tr").find('.set-stake-form-input2').val(0)
+                        $(this)
+                        .closest("tr")
+                        .find(".c-gren")
+                        .text(0);
+                    }
+                    else{
+                        // console.log("WORKING")
+                        $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
+                        $(this)
+                        .closest("tr")
+                        .find(".c-gren")
+                        .text(result.toFixed(2));
+                    }
+                })
+              })
+    
+              $(document).ready(function(){
+                $(".plus").click(function () {
+                    let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
+                    let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
+                    // let NewStake = parseFloat(spanId) + 100;
+                    let NewStake 
+                    if(spanId){
+                        NewStake = parseFloat(spanId) + 100;
+                    }else{
+                        NewStake = 100
+                    }
+                    let result = (NewStake * Odds) - NewStake;
+                    // console.log(result)
+                    if(!spanId){
+                        $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
+                        $(this)
+                        .closest("tr")
+                        .find(".c-gren")
+                        .text(result.toFixed(2));
+                    }else if(NewStake < 0){
+                        $(this).closest("tr").find('.set-stake-form-input2').val(0)
+                        $(this)
+                        .closest("tr")
+                        .find(".c-gren")
+                        .text(0);
+                    }
+                    else{
+                        // console.log("WORKING")
+                        $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
+                        $(this)
+                        .closest("tr")
+                        .find(".c-gren")
+                        .text(result.toFixed(2));
+                    }
+                })
+              })
     
             // function handlePlaceBetClick(event) {
             //     const clickedLink = event.target;
