@@ -43,31 +43,27 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+   document.addEventListener("DOMContentLoaded", function () {
   const passwordInputs = document.querySelectorAll('input[type="password"]');
   const eyeIcons = document.querySelectorAll('.change-pass-model-form-inputgrup .input-group-text');
 
   eyeIcons.forEach((eyeIcon, index) => {
-    eyeIcon.addEventListener("click", function () {
-      const passwordInput = passwordInputs[index];
-      const isVisible = passwordInput.getAttribute("type") === "text";
+    const passwordInput = passwordInputs[index];
 
-      if (isVisible) {
-        passwordInput.setAttribute("type", "password");
-        eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
-      } else {
-        passwordInput.setAttribute("type", "text");
-        eyeIcon.innerHTML = '<i class="fa-solid fa-eye"></i>';
+    eyeIcon.addEventListener("mousedown", function () {
+      passwordInput.setAttribute("type", "text");
+    });
 
-        // Hide the password after 3 seconds
-        setTimeout(function () {
-          passwordInput.setAttribute("type", "password");
-          eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
-        }, 3000);
-      }
+    eyeIcon.addEventListener("mouseup", function () {
+      passwordInput.setAttribute("type", "password");
+    });
+
+    eyeIcon.addEventListener("mouseout", function () {
+      passwordInput.setAttribute("type", "password");
     });
   });
 });
+
   </script>
   <% if (userLog && userLog.length === 1) { %>
     <%if(userLog[0].logs.length === 0){%>
