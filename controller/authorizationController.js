@@ -163,6 +163,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         return next(new AppError('Please log in to access', 404))
     }
     const tokenId = await loginLogs.findOne({session_id:token})
+    console.log(tokenId)
     if(!tokenId.isOnline){
         return next(new AppError('Please log in to access', 404))
     }
