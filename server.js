@@ -1354,6 +1354,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("UserUpdatePass", async(data) => {
+        console.log(data.LOGINDATA.LOGINTOKEN)
         let fullUrl = "http://127.0.0.1/api/v1/users/updateCurrentUserPass"
         fetch(fullUrl, {
             method: 'POST',
