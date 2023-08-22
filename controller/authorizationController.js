@@ -31,10 +31,12 @@ const createSendToken = async (user, statuscode, res, req)=>{
         // User is already logged in, handle as needed (e.g., invalidate session, prevent login)
         return res.status(403).json({
             status: "error",
-            message: "User is already logged in on another tab."
+            message: "User is already logged in"
         });
     }
+
     const token = createToken(user._id);
+    req.session.userId = user._id;
     // req.token = token
     const cookieOption = {
         expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN*24*60*60*1000)),
@@ -172,7 +174,12 @@ exports.isProtected = catchAsync( async (req, res, next) => {
             message:'the user belonging to this token does no longer available'
         })
     }
-    
+    if (req.session.userId && req.session.userId !== currentUser._id) {
+        return res.status(403).json({
+            status: "error",
+            message: "Please login to get access"
+        });
+    }
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){
             return res.status(404).json({
@@ -212,7 +219,6 @@ exports.isLogin = catchAsync( async (req, res, next) => {
         return next()
     }
     
-    
     const tokenId = await loginLogs.findOne({session_id:token})
     // console.log(tokenId, "TOKENID")
     if(!tokenId.isOnline){
@@ -226,6 +232,9 @@ exports.isLogin = catchAsync( async (req, res, next) => {
             status:"success",
             message:'the user belonging to this token does no longer available'
         })
+    }
+    if (req.session.userId && req.session.userId !== currentUser._id) {
+        return next()
     }
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){

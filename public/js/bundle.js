@@ -6276,7 +6276,7 @@ var createHorizontalMenu = /*#__PURE__*/function () {
         case 3:
           res = _context.sent;
           if (res.data.status === 'success') {
-            alert('Men created successfully!!!!');
+            alert('Menu created successfully!!!!');
             // $(".popup_body").removeClass("popup_body_show");
 
             window.setTimeout(function () {
