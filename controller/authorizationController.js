@@ -46,6 +46,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
     if(process.env.NODE_ENV === "production"){
         cookieOption.secure = true
         }
+    console.log(token)
     res.cookie('JWT', token, cookieOption)
     // console.log(res);
     user.password = undefined;
