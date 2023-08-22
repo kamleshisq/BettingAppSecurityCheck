@@ -36,7 +36,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
     // }
 
     const token = createToken(user._id);
-    req.session.userId = user._id;
+    // req.session.userId = user._id;
     // req.token = token
     const cookieOption = {
         expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN*24*60*60*1000)),
@@ -182,12 +182,12 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     }
     console.log(currentUser.id, "session")
     console.log(req.session.userId, "session")
-    if (req.session.userId && req.session.userId !== currentUser.id) {
-        return res.status(403).json({
-            status: "error",
-            message: "Please login to get access"
-        });
-    }
+    // if (req.session.userId && req.session.userId !== currentUser.id) {
+    //     return res.status(403).json({
+    //         status: "error",
+    //         message: "Please login to get access"
+    //     });
+    // }
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){
             return res.status(404).json({
@@ -241,9 +241,9 @@ exports.isLogin = catchAsync( async (req, res, next) => {
             message:'the user belonging to this token does no longer available'
         })
     }
-    if (req.session.userId && req.session.userId !== currentUser.id) {
-        return next()
-    }
+    // if (req.session.userId && req.session.userId !== currentUser.id) {
+    //     return next()
+    // }
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){
             return res.status(404).json({

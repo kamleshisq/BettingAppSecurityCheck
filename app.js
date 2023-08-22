@@ -49,11 +49,11 @@ app.use(express.json({limit:"10kb"}));
 app.use(fileUpload());
 app.use(express.urlencoded({ extended:true, limit: '10kb'}));
 app.use(cookieParser());
-app.use(session({
-    secret: 'your-secret-key-jk@123@jk',
-    resave: false,
-    saveUninitialized: true,
-}));
+// app.use(session({
+//     secret: 'your-secret-key-jk@123@jk',
+//     resave: false,
+//     saveUninitialized: true,
+// }));
 app.use(middlewares);
 crone();
 // app.get("/", (req, res)=> {
