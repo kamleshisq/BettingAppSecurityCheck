@@ -42,8 +42,11 @@ io.on('connection', (socket) => {
     // console.log(global)
     loginData.User = global._User
     loginData.Token = global._token.split(';')[0]
-    console.log(loginData.Token)
-    console.log(global._token)
+    if(!loginData.Token.startsWith("JWT")){
+        loginData.Token = global._token.split(';')[1]
+    }
+    // console.log(loginData.Token)
+    // console.log(global._token)
     socket.emit("loginUser", {
         loginData
     })
