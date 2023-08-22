@@ -36,7 +36,6 @@ const createSendToken = async (user, statuscode, res, req)=>{
     }
     const token = createToken(user._id);
     // req.token = token
-    localStorage.setItem('loggedIn', 'true');
     const cookieOption = {
         expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN*24*60*60*1000)),
         httpOnly: true,
@@ -173,13 +172,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
             message:'the user belonging to this token does no longer available'
         })
     }
-    const isLoggedIn = localStorage.getItem('loggedIn');
-    if (!isLoggedIn || isLoggedIn !== 'true') {
-        return res.status(404).json({
-            status:"success",
-            message:"Please login to get access"
-        })
-    }
+    
     if(currentUser.roleName != "DemoLogin"){
         if(!currentUser){
             return res.status(404).json({
@@ -218,10 +211,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     if(token == "loggedout"){
         return next()
     }
-    const isLoggedIn = localStorage.getItem('loggedIn');
-    if (!isLoggedIn || isLoggedIn !== 'true') {
-        return next()
-    }
+    
     
     const tokenId = await loginLogs.findOne({session_id:token})
     // console.log(tokenId, "TOKENID")
