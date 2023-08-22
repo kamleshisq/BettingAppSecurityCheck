@@ -151,7 +151,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     // console.log(req.headers.authorization, 456)
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         // console.log("WORKING")
-        console.log(req.headers)
+        console.log(req.headers.authorization)
         // console.log(req.headers.authorization.split(' ')[1].split("=")[1])
         token = req.headers.authorization.split(' ')[1].split("=")[1];
         if(!token){
