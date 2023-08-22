@@ -156,10 +156,10 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         // console.log(req.headers.authorization.split(' ')[1].split("=")[1])
         token = req.headers.authorization.split(' ')[1].split("=")[1];
         if(!token){
-            token = req.headers.authorization.split('  ')[1].split("=")[1];
+            token = req.headers.authorization.split(' ')[1]
         }
         if(!token){
-            token = req.headers.authorization.split(' ')[1]
+            token = req.headers.authorization.split('  ')[1].split("=")[1];
         }
     }else if(req.headers.cookie){
         token = parseCookies(req.headers.cookie).JWT;
