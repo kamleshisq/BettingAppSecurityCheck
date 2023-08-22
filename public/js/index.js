@@ -33,6 +33,7 @@ import { KYC } from "./kyc";
 if(document.querySelector('.loginForm')){
     document.querySelector('.loginForm').addEventListener('submit', e =>{
     e.preventDefault();
+    console.log("WORKING")
     const email = document.getElementById('uname').value;
     const password = document.getElementById('password').value;
     // console.log(email)
