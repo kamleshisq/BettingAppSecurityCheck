@@ -4572,6 +4572,7 @@ socket.on('connect', () => {
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         this.innerHTML = `<span><b>${section.yes}</b></span>` 
+                        this.innerHTML = `<span><b>${section.yes_rate}</b></span> <span> ${section.yes}</span>`
                     }
                 }
             });
