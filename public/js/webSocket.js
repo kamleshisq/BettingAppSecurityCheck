@@ -4527,7 +4527,7 @@ socket.on('connect', () => {
                       </span>`
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
-                      $(this).parent().find(".match-status-message").text("Ball Rinning")
+                      $(this).parent().find(".match-status-message").text("Ball Running")
                     }else if(section.suspended){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
@@ -4601,7 +4601,7 @@ socket.on('connect', () => {
                       </span>`
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
-                      $(this).parent().find(".match-status-message").text("Ball Rinning")
+                      $(this).parent().find(".match-status-message").text("Ball Running")
                     }else if(section.suspended){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
