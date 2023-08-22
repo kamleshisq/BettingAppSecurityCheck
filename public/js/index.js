@@ -30,16 +30,20 @@ import { KYC } from "./kyc";
 
 // console.log(document.querySelector('.loginForm'))
 // console.log(document.getElementById('uname').textContent)
-if(document.querySelector('.loginForm')){
-    document.querySelector('.loginForm').addEventListener('submit', e =>{
-    e.preventDefault();
-    console.log("WORKING")
-    const email = document.getElementById('uname').value;
-    const password = document.getElementById('password').value;
-    // console.log(email)
-    login(email, password);
-})};
+// if(document.querySelector('.loginForm')){
+//     document.querySelector('.loginForm').addEventListener('submit', e =>{
+//     e.preventDefault();
+//     console.log("WORKING")
+//     const email = document.getElementById('uname').value;
+//     const password = document.getElementById('password').value;
+//     // console.log(email)
+//     login(email, password);
+// })};
 
+$(document).on("submit", ".loginFormAdmin", function(e){
+    e.preventDefault()
+    console.log("Working")
+})
 $(document).on('click', ".logOut", function(e){
     e.preventDefault()
     logout()
