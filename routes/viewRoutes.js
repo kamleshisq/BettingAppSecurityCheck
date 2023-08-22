@@ -8,7 +8,7 @@ const notificationController =  require("../controller/notificationController");
 
 
 
-router.get('/adminLogin/', viewController.login);
+router.get('/adminLogin/',authController.isLogin ,viewController.login);
 router.get('/userlogin',viewController.userLogin );
 router.get('/registration',viewController.registration );
 
