@@ -1,8 +1,10 @@
 <%- include("../header") %>
-<div class="dashboard-main-wraper">
-  <section class="dashboard-welcome-section">
+<div class="height-100" style="background-color: #EAEEF7;">
+   
+  <section class="pad-top-bottom" style="padding-top: 70px ;">
+    <section style="padding-top: 10px;">
       <div class="new-head"> 
-          <h3>Welcome to Dashboard</h3>
+          <h3 style="font-weight: 700;font-size: 24px;">Welcome to Dashboard</h3>
           <!-- <form action="" style="display: flex;">
             <div class="input-group">
               <div class="input-group-prepend">
@@ -14,15 +16,22 @@
             <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
           </form> -->
       </div>
+    </section>
     <%- include("../loginUserAdminsideDetails") %>
   </section>
 
-  <section class="dashboard-main-grid">
-          <div class="grid-2">
-            <div class="chart grid-inner-box"> <div id="chart"></div> </div>
-            <div class="chart-right">
-                <div class="video-section">
-                  <div class="small-part"> 
+  <section class="">
+    <div class="">
+          <div class="video-section">
+            
+            <div class="" style="background-color: #fff; padding: 10px;border-radius: 10px;">
+              <div id="chart"></div>
+              
+            </div>
+
+            <div class="video-play">
+                <div class="video-section" style="height: auto;">
+                  <div class="small-part" style="background-color: #fff;"> 
                       <div class="hed-data">
                           <h3 class="fix-h3"><img src="../images/sum.png" alt=""> &nbsp; Summary</h3>
                           <%
@@ -68,7 +77,7 @@
                         </tbody>
                       </table>
                   </div>
-                  <div class="grid-inner-box user-managment">
+                  <div class="small-part" style="background-color: #fff;">
                     <div class="hed-data">
                       <h3 class="fix-h3"><img src="../images/sum.png" alt=""> &nbsp; User Management</h3>
                       <a class="fix-h2" href="/admin/userManagement">View Details</a>
@@ -97,10 +106,11 @@
                   </div>
               
                 </div>
-                <div class="video-section">
-                  <div class="grid-inner-box white-labels">
+                <div class="video-section--" style="margin-top: 15px;">
+                  <div class="video-play" style="background-color: #fff;padding: 10px;border-radius:10px;">
                     <div class="hed-data">
-                      <h3 class="fix-h3"><img src="../images/wl.png" alt="">White Labels</h3>
+                      <h3 class="fix-h3"><img src="../images/wl.png" alt=""> &nbsp; White Labels</h3>
+
                     </div>
                     <div class="full-adta">
                       <table>
@@ -159,19 +169,21 @@
             </div>
            
           </div>
-      
+      </div>
       </section>
 <!-- End skin device table-section-->
-<section class="dashboard-bottom-grid">
-  <div class="grid-2">
-    <div class="grid-col left">
-      <div class="grid-inner-box top-player">
+<section style="padding: 15px 0px;">
+  <div class="table-section">
+   
+    <div class="table_data_details">
+      <div class="spcare-table">
       <div class="hed-data">
-        <h3 class="fix-h3"><img src="../images/tp.png" alt="">Top Player</h3>
+        <h3 class="fix-h3"><img src="../images/tp.png" alt=""> &nbsp; Top Player</h3>
+        
     </div>
       <table>
         <thead>
-            <tr>
+            <tr style="text-align: center;">
               <th></th>
               <th>Player</th>
               <th>No.of Bets</th>
@@ -182,9 +194,9 @@
         <tbody>
           <%for(let i = 0; i < data.dashboard.topPlayers.length; i++){%>
             <%if((i%2)==0){%>
-              <tr>
+              <tr style="text-align: center;" class="blue">
             <%}else{%>
-              <tr>
+              <tr style="text-align: center;">
             <%}%>
             <td><%=i+1%></td>
             <td><%=data.dashboard.topPlayers[i].userName%></td>
@@ -196,14 +208,14 @@
       </table>
 </div>
 
-<div class="grid-inner-box categories">
+<div class="spcare-table">
       <div class="hed-data">
         <h3 class="fix-h3"><img src="../images/cat.png" alt=""> &nbsp; Categories</h3>
         
     </div>
       <table>
         <thead>
-            <tr>
+            <tr style="text-align: center;">
               <th></th>
               <th>Category</th>
               <th>No.of Matches</th>
@@ -214,9 +226,9 @@
         <tbody>
           <%for(let i = 0; i < data.dashboard.Categories.length; i++){ %>
             <%if((i%2)==0){%>
-              <tr>
+              <tr style="text-align: center;" class="blue">
             <%}else{%>
-              <tr>
+              <tr style="text-align: center;">
             <%}%>
             <td><%=i + 1 %></td>
             <td><%=data.dashboard.Categories[i]._id %></td>
@@ -314,7 +326,7 @@
         </tbody>
       </table>
       </div> -->
-      <div class="grid-inner-box alertbet">
+      <div class="spcare-table">
         <div class="hed-data">
           <h3 class="fix-h3"><img src="../images/alert.png" alt=""> &nbsp; Alert Bets</h3>
           <a class="fix-h2" href="/admin/alertbet">View Details</a>
@@ -322,7 +334,7 @@
       </div>
         <table>
           <thead>
-              <tr>
+              <tr style="text-align: center;">
                 <th></th>
                 <th>Palyer</th>
                 <th>Event</th>
@@ -334,9 +346,9 @@
           <tbody>
             <%for(let i = 0; i <  data.dashboard.alertBet.length; i++){%>
               <%if(i%2 == 0){ %>
-                <tr class="blue">
+                <tr style="text-align: center;" class="blue">
               <%}else{%>
-                <tr>
+                <tr style="text-align: center;" >
               <%} %>
               <td><%= i+1 %></td>
               <td><%= data.dashboard.alertBet[i].userName%></td>
@@ -351,28 +363,31 @@
     </div>
 
 <!--  -->
-    <div class="grid-col right">
-      <div class="grid-inner-box top-game">
+    <div class="table_data_details">
+      <div class="spcare-table">
       <div class="hed-data">
         <h3 class="fix-h3"><img src="../images/game.png" alt=""> &nbsp; Top Game</h3>
         
     </div>
       <table>
         <thead>
-            <tr">
+            <tr style="text-align: center;">
               <th></th>
               <th>Game</th>
               <th>No.of User </th>
               <th>No.of Bets</th>
               <th>Amount</th>
+
+              
+              
             </tr>
         </thead>
         <tbody>
           <%for(let i = 0; i < data.dashboard.topGames.length; i++){%>
             <%if((i%2)==0){%>
-              <tr>
+              <tr style="text-align: center;" class="blue">
             <%}else{%>
-              <tr>
+              <tr style="text-align: center;">
             <%}%>
               <td><%=i + 1%></td>
               <td><%=data.dashboard.topGames[i].event%></td>
@@ -381,18 +396,21 @@
               <td class="text-purple"><%=data.dashboard.topGames[i].totalReturns%></td>
             </tr>
           <%} %>
+          
+          
+         
         </tbody>
       </table>
     </div>
-    <div class="grid-inner-box settlements">
+    <div class="spcare-table">
       <div class="hed-data">
-        <h3 class="fix-h3"><img src="../images/setal.png" alt="">Settlements</h3>
+        <h3 class="fix-h3"><img src="../images/setal.png" alt=""> &nbsp; Settlements</h3>
         <a class="fix-h2" href="/admin/settlement">View Details</a>
         
     </div>
       <table>
         <thead>
-            <tr>
+            <tr style="text-align: center;">
               <th></th>
               <th>Sport</th>
               <th>Series</th>
@@ -404,9 +422,9 @@
         <tbody>
         <%for(let i = 0; i < data.dashboard.settlement.length; i++){%>
           <%if((i%2)==0){%>
-            <tr>
+            <tr style="text-align: center;" class="blue">
           <%}else{%>
-            <tr>
+            <tr style="text-align: center;">
           <%}%>
           <td><%=i+1%></td>
           <td><%=data.dashboard.settlement[i].sport %></td>
@@ -425,10 +443,16 @@
   </div>
 </section>
 </div>
+</div>
     
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+
+
+<script >
+ 
+    </script>
   </body>
 </html>
