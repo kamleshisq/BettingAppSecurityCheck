@@ -26,14 +26,14 @@ function parseCookies(cookieString) {
   }
 
 const createSendToken = async (user, statuscode, res, req)=>{
-    const existingToken = await loginLogs.findOne({ user_id: user._id, isOnline: true });
-    if (existingToken) {
-        // User is already logged in, handle as needed (e.g., invalidate session, prevent login)
-        return res.status(403).json({
-            status: "error",
-            message: "User is already logged in"
-        });
-    }
+    // const existingToken = await loginLogs.findOne({ user_id: user._id, isOnline: true });
+    // if (existingToken) {
+    //     // User is already logged in, handle as needed (e.g., invalidate session, prevent login)
+    //     return res.status(403).json({
+    //         status: "error",
+    //         message: "User is already logged in"
+    //     });
+    // }
 
     const token = createToken(user._id);
     req.session.userId = user._id;
