@@ -41,6 +41,34 @@
       </div>
     </div>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+  const passwordInputs = document.querySelectorAll('input[type="password"]');
+  const eyeIcons = document.querySelectorAll('.input-group-text');
+
+  eyeIcons.forEach((eyeIcon, index) => {
+    eyeIcon.addEventListener("click", function () {
+      const passwordInput = passwordInputs[index];
+      const isVisible = passwordInput.getAttribute("type") === "text";
+
+      if (isVisible) {
+        passwordInput.setAttribute("type", "password");
+        eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+      } else {
+        passwordInput.setAttribute("type", "text");
+        eyeIcon.innerHTML = '<i class="fa-solid fa-eye"></i>';
+
+        // Hide the password after 3 seconds
+        setTimeout(function () {
+          passwordInput.setAttribute("type", "password");
+          eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+        }, 3000);
+      }
+    });
+  });
+});
+  </script>
   <% if (userLog && userLog.length === 1) { %>
     <%if(userLog[0].logs.length === 0){%>
     <script>
