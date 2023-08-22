@@ -150,7 +150,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
 
 exports.login = catchAsync(async(req, res, next) => {
     // console.log("1")
-    // console.log(req.currentUser)
+    console.log(req.currentUser)
     // if(req.currentUser){
     //     if(req.currentUser)
     // }
