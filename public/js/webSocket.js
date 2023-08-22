@@ -7272,14 +7272,14 @@ socket.on('connect', () => {
                 // $(document).on("change", ".selected", function(e){
                 //     e.preventDefault()
                 //     let value = $(this).val()
-                //     socket.emit("FIlterDashBoard", {LOGINDATA, value})
+                    // socket.emit("FIlterDashBoard", {LOGINDATA, value})
                 // })
                 $(document).ready(function() {
                     $(".dropdown .item").click(function(e) {
                         e.preventDefault();
                         let value = $(this).attr("id");
                         $("#destination").text($(this).text());
-                        socket.emit("FilterDashboard", { LOGINDATA, value });
+                        socket.emit("FIlterDashBoard", { LOGINDATA, value });
                         // console.log(value)
                     });
                 });
