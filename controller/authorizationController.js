@@ -180,8 +180,8 @@ exports.isProtected = catchAsync( async (req, res, next) => {
             message:'the user belonging to this token does no longer available'
         })
     }
-    console.log(currentUser.id, "session")
-    console.log(req.session.userId, "session")
+    // console.log(currentUser.id, "session")
+    // console.log(req.session.userId, "session")
     // if (req.session.userId && req.session.userId !== currentUser.id) {
     //     return res.status(403).json({
     //         status: "error",
