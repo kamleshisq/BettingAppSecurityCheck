@@ -6991,9 +6991,9 @@ socket.on('connect', () => {
                 //     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
                 //   }
                 if(data.result === "Bet placed successfully"){
-                    togglePopup('popup-1', "redPopUP", data.result.toUpperCase())
+                    togglePopupMain('popup-1', "redPopUP", data.result.toUpperCase())
                 }else{
-                    togglePopup('popup-2', "redPopUP2", data.result.toUpperCase())
+                    togglePopupMain('popup-2', "redPopUP2", data.result.toUpperCase())
                 }
                 
                 let html2 = ""
