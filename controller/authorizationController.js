@@ -174,9 +174,9 @@ exports.isProtected = catchAsync( async (req, res, next) => {
             message:'the user belonging to this token does no longer available'
         })
     }
-    console.log(currentUser)
-    console.log(req.session.userId)
-    if (req.session.userId && req.session.userId !== currentUser._id) {
+    console.log(currentUser.id, "session")
+    console.log(req.session.userId, "session")
+    if (req.session.userId && req.session.userId !== currentUser.id) {
         return res.status(403).json({
             status: "error",
             message: "Please login to get access"
@@ -235,7 +235,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
             message:'the user belonging to this token does no longer available'
         })
     }
-    if (req.session.userId && req.session.userId !== currentUser._id) {
+    if (req.session.userId && req.session.userId !== currentUser.id) {
         return next()
     }
     if(currentUser.roleName != "DemoLogin"){
