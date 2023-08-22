@@ -67,9 +67,9 @@ socket.on('connect', () => {
         popupContent.innerText = message.toUpperCase();
 
         clearTimeout(popupTimeout);
-        popupTimeout = setTimeout(function() {
-            popup.classList.remove("active");
-        }, 5000);
+        // popupTimeout = setTimeout(function() {
+        //     popup.classList.remove("active");
+        // }, 5000);
     }
 
     $(document).on('click', ".close-btn", function() {
