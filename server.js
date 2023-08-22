@@ -41,8 +41,8 @@ io.on('connection', (socket) => {
     let loginData = {}
     // console.log(global)
     loginData.User = global._User
-    loginData.Token = global._token
-    // console.log(loginData.Token)
+    loginData.Token = global._token.split(';')[0]
+    console.log(loginData.Token)
     socket.emit("loginUser", {
         loginData
     })
