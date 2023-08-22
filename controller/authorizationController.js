@@ -175,6 +175,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         })
     }
     console.log(currentUser)
+    console.log(req.session.userId)
     if (req.session.userId && req.session.userId !== currentUser._id) {
         return res.status(403).json({
             status: "error",
