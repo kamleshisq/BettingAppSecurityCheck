@@ -6857,23 +6857,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //     // console.log(email)
 //     login(email, password);
 // })};
-var selectContainer = document.querySelector(".select-container");
-var select = document.querySelector(".select");
-var input = document.getElementById("input");
-var options = document.querySelectorAll(".select-container .option");
-select.onclick = function () {
-  selectContainer.classList.toggle("active");
-};
-options.forEach(function (e) {
-  e.addEventListener("click", function () {
-    input.value = e.innerText;
-    selectContainer.classList.remove("active");
-    options.forEach(function (e) {
-      e.classList.remove("selected");
-    });
-    e.classList.add("selected");
-  });
-});
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
   // console.log("Working")
