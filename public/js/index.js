@@ -42,7 +42,11 @@ import { KYC } from "./kyc";
 
 $(document).on("submit", ".loginFormAdmin", function(e){
     e.preventDefault()
-    console.log("Working")
+    // console.log("Working")
+    const email = document.getElementById('uname').value;
+    const password = document.getElementById('password').value;
+//     // console.log(email)
+    login(email, password);
 })
 $(document).on('click', ".logOut", function(e){
     e.preventDefault()

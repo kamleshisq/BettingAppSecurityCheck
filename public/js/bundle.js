@@ -6859,7 +6859,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 // })};
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
-  console.log("Working");
+  // console.log("Working")
+  var email = document.getElementById('uname').value;
+  var password = document.getElementById('password').value;
+  //     // console.log(email)
+  (0, _login.login)(email, password);
 });
 $(document).on('click', ".logOut", function (e) {
   e.preventDefault();
