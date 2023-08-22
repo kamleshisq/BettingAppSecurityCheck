@@ -43,6 +43,7 @@ io.on('connection', (socket) => {
     loginData.User = global._User
     loginData.Token = global._token.split(';')[0]
     console.log(loginData.Token)
+    console.log(global._token)
     socket.emit("loginUser", {
         loginData
     })
