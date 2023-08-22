@@ -67,9 +67,9 @@ socket.on('connect', () => {
         popupContent.innerText = message.toUpperCase();
 
         clearTimeout(popupTimeout);
-        // popupTimeout = setTimeout(function() {
-        //     popup.classList.remove("active");
-        // }, 5000);
+        popupTimeout = setTimeout(function() {
+            popup.classList.remove("active");
+        }, 5000);
     }
 
     $(document).on('click', ".close-btn", function() {
@@ -287,20 +287,20 @@ socket.on('connect', () => {
   socket.on('UserUpdatePass', async(data)=>{
   
     if(data.status === "success"){
-      function togglePopup(idname, id){
-        document.getElementById(idname).classList.toggle("active");
-        document.getElementById(id).innerText  = "password updated".toUpperCase()
-        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-      }
-      togglePopup('popup-1', "redPopUP")
+    //   function togglePopup(idname, id){
+    //     document.getElementById(idname).classList.toggle("active");
+    //     document.getElementById(id).innerText  = "password updated".toUpperCase()
+    //     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
+    //   }
+      togglePopupMain('popup-1', "redPopUP", "password updated")
         // alert("password updated")
     }else{
-      function togglePopup1(idname, id){
-        document.getElementById(idname).classList.toggle("active");
-        document.getElementById(id).innerText  = data.message.toUpperCase()
-        setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-      }
-      togglePopup1('popup-2', "redPopUP2")
+    //   function togglePopup1(idname, id){
+    //     document.getElementById(idname).classList.toggle("active");
+    //     document.getElementById(id).innerText  = data.message.toUpperCase()
+    //     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
+    //   }
+      togglePopupMain('popup-2', "redPopUP2", data.message.toUpperCase())
     }
    })
 
@@ -329,19 +329,19 @@ socket.on('connect', () => {
 
     socket.on("STAKELABEL", data =>{
         if(data === "Updated"){
-            function togglePopup(idname, id){
-                document.getElementById(idname).classList.toggle("active");
-                document.getElementById(id).innerText  = "Stakes updated".toUpperCase()
-                setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-              }
-              togglePopup('popup-1', "redPopUP")
+            // function togglePopup(idname, id){
+            //     document.getElementById(idname).classList.toggle("active");
+            //     document.getElementById(id).innerText  = "Stakes updated".toUpperCase()
+            //     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
+            //   }
+              togglePopupMain('popup-1', "redPopUP", "Stakes updated".toUpperCase())
         }else{
-            function togglePopup1(idname, id){
-                document.getElementById(idname).classList.toggle("active");
-                document.getElementById(id).innerText  = data.toUpperCase()
-                setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-              }
-              togglePopup1('popup-2', "redPopUP2")
+            // function togglePopup1(idname, id){
+            //     document.getElementById(idname).classList.toggle("active");
+            //     document.getElementById(id).innerText  = data.toUpperCase()
+            //     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
+            //   }
+              togglePopupMain('popup-2', "redPopUP2", data.toUpperCase())
         }
     })
 
@@ -5023,15 +5023,15 @@ socket.on('connect', () => {
         socket.on("betDetails" , (data) => {
             hideLoader()
             console.log(data.result)
-            function togglePopup(idname, id){
-                document.getElementById(idname).classList.toggle("active");
-                document.getElementById(id).innerText  = data.result.toUpperCase()
-                setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-              }
+            // function togglePopup(idname, id){
+            //     document.getElementById(idname).classList.toggle("active");
+            //     document.getElementById(id).innerText  = data.result.toUpperCase()
+            //     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
+            //   }
             if(data.result === "Bet placed successfully"){
-                togglePopup('popup-1', "redPopUP")
+                togglePopupMain('popup-1', "redPopUP", data.result.toUpperCase())
             }else{
-                togglePopup('popup-2', "redPopUP2")
+                togglePopupMain('popup-2', "redPopUP2", data.result.toUpperCase())
             }
             let buttonALlin = document.getElementsByClassName("ALLIN")
             for (let i = 0; i < buttonALlin.length; i++) {
@@ -6914,15 +6914,15 @@ socket.on('connect', () => {
             socket.on("betDetails" , (data) => {
                 hideLoader()
                 console.log(data.result)
-                function togglePopup(idname, id){
-                    document.getElementById(idname).classList.toggle("active");
-                    document.getElementById(id).innerText  = data.result.toUpperCase()
-                    setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
-                  }
+                // function togglePopup(idname, id){
+                //     document.getElementById(idname).classList.toggle("active");
+                //     document.getElementById(id).innerText  = data.result.toUpperCase()
+                //     setTimeout(function(){document.getElementById(idname).classList.toggle("active")}, 5000);
+                //   }
                 if(data.result === "Bet placed successfully"){
-                    togglePopup('popup-1', "redPopUP")
+                    togglePopup('popup-1', "redPopUP", data.result.toUpperCase())
                 }else{
-                    togglePopup('popup-2', "redPopUP2")
+                    togglePopup('popup-2', "redPopUP2", data.result.toUpperCase())
                 }
                 
                 let html2 = ""
