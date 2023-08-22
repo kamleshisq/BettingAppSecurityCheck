@@ -37,14 +37,30 @@
                             <option value="yesterday">Yesterday</option>
                             <option value="<%=formattedDate%>"><%=formattedDate%></option>
                           </select>
-                          <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Dropdown
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                              <button class="dropdown-item" type="button">Action</button>
-                              <button class="dropdown-item" type="button">Another action</button>
-                              <button class="dropdown-item" type="button">Something else here</button>
+                          
+                          <div class="select-container">
+                            <div class="select">
+                                <input type="text" id="input" placeholder="select" onfocus="this.blur();">
+                            </div>
+                            <div class="option-container">
+                                <div class="option">
+                                    <label> Html </label>
+                                </div>
+                                <div class="option">
+                                    <label>CSS</label>
+                                </div>
+                                <div class="option">
+                                    <label>JavaScript</label>
+                                </div>
+                                <div class="option">
+                                    <label>Python</label>
+                                </div>
+                                <div class="option">
+                                    <label>PHP</label>
+                                </div>
+                                <div class="option">
+                                    <label>MySQL</label>
+                                </div>
                             </div>
                           </div>
                       </div>
