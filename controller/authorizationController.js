@@ -154,6 +154,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         console.log(req.headers.authorization)
         // console.log(req.headers.authorization.split(' ')[1].split("=")[1])
         token = req.headers.authorization.split(' ')[1].split("=")[1];
+        console.log(token)
         if(!token){
             token = req.headers.authorization.split(' ')[1]
         }
