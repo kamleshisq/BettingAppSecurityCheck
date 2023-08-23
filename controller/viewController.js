@@ -2073,19 +2073,19 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         //     return date < Date.now() - 1000 * 60 * 60;
         // });
         let SportLimits = betLimit.find(item => item.type === "Sport")
-        let min = SportLimits.min_stake
-        let max =  SportLimits.max_stake
-        if (min >= 1000) {
-            SportLimits.min_stake = (min / 1000).toFixed(1) + 'K';
+        let min 
+        let max 
+        if (SportLimits.min_stake >= 1000) {
+            min = (SportLimits.min_stake / 1000).toFixed(1) + 'K';
         } else {
-            SportLimits.min_stake = min.toString();
+            min = SportLimits.min_stake.toString();
         }
-        if (max >= 1000) {
-            SportLimits.max_stake = (max / 1000).toFixed(1) + 'K';
+        if (SportLimits.max_stake >= 1000) {
+            max = (SportLimits.max_stake / 1000).toFixed(1) + 'K';
           } else {
-            SportLimits.max_stake = max.toString();
+            max = SportLimits.max_stake.toString();
         }
-        console.log(SportLimits)
+        console.log(SportLimits, min , max)
         let userLog
         let stakeLabledata
         let userMultimarkets
@@ -2115,7 +2115,9 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             betsOnthisMatch,
             rules,
             src,
-            userMultimarkets
+            userMultimarkets,
+            min,
+            max
     })
 });
 
