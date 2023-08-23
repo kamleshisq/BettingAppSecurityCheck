@@ -928,8 +928,9 @@ socket.on('connect', () => {
                   }
             }else if (!data.status){
                 alert("Bet Unlocked Successfully")
-                let  = document.getElementsByClassName("betLockStatus")
+                let elements = document.getElementsByClassName("betLockStatus")
                 for (var i = 0; i < elements.length; i++) {
+                    // console.log(element[i].classList)
                     elements[i].classList.remove("Locked");
                   }
             }
