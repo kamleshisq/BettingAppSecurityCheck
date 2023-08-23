@@ -110,7 +110,11 @@
                                   class="PasswordChange">P</button>
                                 <%}%>
                                   <%if(currentUser.role.authorization.includes('betLockAndUnloack')){%>
-                                    <button type="button" class="betLockStatus">B</button>
+                                    <%if(users[i].betLock){%>
+                                      <button type="button" class="betLockStatus">B</button>
+                                    <%else{ %>
+                                      <button type="button" class="betLockStatus Locked">B</button>
+                                    <%} %>
                                     <%}%>
                                       <%if(currentUser.role.authorization.includes('userStatus')){%>
                                         <button data-bs-toggle="modal" data-bs-target="#myModal4"

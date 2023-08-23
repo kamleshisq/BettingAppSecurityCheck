@@ -922,8 +922,10 @@ socket.on('connect', () => {
                 alert("Please Try again leter")
             }else if (data.status){
                 alert("Bet Locked Successfully")
+                document.getElementsByClassName("betLockStatus").classList.add("Locked")
             }else if (!data.status){
                 alert("Bet Unlocked Successfully")
+                document.getElementsByClassName("betLockStatus").classList.remove("Locked")
             }
         })
 
