@@ -1068,23 +1068,38 @@ socket.on('connect', () => {
             {
                 if(data.page == 0){
                     count = 1;
-
-                        $('table').html(`<tr style="text-align: center;font-size: 11px;">`+
+                    let html = ""
+                    if(LOGINDATA.LOGINUSER.roleName == "admin"){
+                        html = `<tr>`+
                         "<th>S.No</th>"+
                         "<th>User Name</th>"+
                         "<th>White lable</th>"+
+                        "<th>Type</th>"+
                         "<th>Credit Reference</th>"+
-                        "<th>Balance</th>"+
                         "<th>Available Balance</th>"+
                         "<th>Downlevel Balance</th>"+
-                        "<th>Client P/L</th>"+
+                        "<th>My P/L</th>"+
                         "<th>Upline P/L</th>"+
                         "<th>Exposure Limit</th>"+
                         "<th>Exposure</th>"+
-                        "<th>Lifetime Credit</th>"+
-                    " <th>Lifetime Deposite</th>"+
                         "<th>Action</th>"+
-                    "</tr>")
+                    "</tr>"
+                    }else{
+                        html = `<tr>`+
+                        "<th>S.No</th>"+
+                        "<th>User Name</th>"+
+                        "<th>Type</th>"+
+                        "<th>Credit Reference</th>"+
+                        "<th>Available Balance</th>"+
+                        "<th>Downlevel Balance</th>"+
+                        "<th>My P/L</th>"+
+                        "<th>Upline P/L</th>"+
+                        "<th>Exposure Limit</th>"+
+                        "<th>Exposure</th>"+
+                        "<th>Action</th>"+
+                    "</tr>"
+                    }
+                        $('table').html()
                 }
                 
             let html ="";
@@ -1092,10 +1107,10 @@ socket.on('connect', () => {
                 if((i+1) % 2 != 0){
 
                     html +=
-                    `<tr style="text-align: center;" class="blue" id="${count + i}" data-id="${response[i]._id}">`
+                    `<tr  class="trtable" id="${count + i}" data-id="${response[i]._id}">`
                 }else{
                     html +=
-                    `<tr style="text-align: center;"id="${count + i}" data-id="${response[i]._id}">` 
+                    `<tr class="trtable" id="${count + i}" data-id="${response[i]._id}">` 
                 }
                     
                 html += `<td> ${count + i} </td>
@@ -1106,19 +1121,22 @@ socket.on('connect', () => {
                         html+= `${response[i].userName}`
                     }
 
-                    html += `</td>
-                    <td> ${response[i].whiteLabel}</td>
-                    <td> ${response[i].creditReference}</td>
+                    html += `</td>`
+                    if(data.currentUser.roleName == "admin"){
+                        html += `<td> ${response[i].whiteLabel}</td>`
+                    }else{
+
+                    }
+                    html += `
+                    <td> ${response[i].roleName}</td>
                     <td> ${response[i].balance}</td>
                     <td> ${response[i].availableBalance}</td>
                     <td> ${response[i].downlineBalance}</td>
-                    <td style="color:#FE3030;"> ${response[i].clientPL}</td>
+                    <td> ${response[i].myPL}</td>
                     <td> ${response[i].uplinePL}</td>
                     <td> ${response[i].exposureLimit}</td>
                     <td> ${response[i].exposure}</td>
         
-                    <td> ${response[i].lifeTimeCredit}</td>
-                    <td> ${response[i].lifeTimeDeposit}</td>
                     `
                         if(data.currentUser.role.authorization.includes('accountControl')){
                             html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite"> D/W </button></td>`
