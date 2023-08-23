@@ -565,6 +565,7 @@
     const shareVisibleActual = document.getElementById('shareVisibleActual');
   
     roleSelect.addEventListener('change', function () {
+      console.log("WORK")
       if (roleSelect.value === '6492fe4fd09db28e00761694') { // Check if selected role is "user"
         shareVisibleActual.style.display = 'none'; // Hide the entire shareVisibleActual div
       } else {
