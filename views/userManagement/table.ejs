@@ -25,11 +25,12 @@
             <th>S.No</th>
             <th>User Name</th>
             <th>White Labels</th>
+            <th>Type</th>
             <th>Credit Reference</th>
             <th>Balance</th>
             <th>Available Balance</th>
             <th>Downlevel Balance</th>
-            <th>Client P/L</th>
+            <th>My P/L</th>
             <th>Upline P/L</th>
             <th>Exposure Limit</th>
             <th>Exposure</th>
@@ -68,6 +69,9 @@
                     <%=users[i].whiteLabel%>
                   </td>
                   <td>
+                    <%=users[i].roleName%>
+                  </td>
+                  <td>
                     <%=users[i].creditReference%>
                   </td>
                   <td>
@@ -80,7 +84,7 @@
                     <%=users[i].downlineBalance%>
                   </td>
                   <td class="red">
-                    <%=users[i].clientPL%>
+                    <%=users[i].myPL%>
                   </td>
                   <td>
                     <%=users[i].uplinePL%>
