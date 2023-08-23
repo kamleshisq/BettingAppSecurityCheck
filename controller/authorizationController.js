@@ -359,7 +359,7 @@ exports.logOut = catchAsync( async function logout(req, res) {
 	}
     await loginLogs.findOneAndUpdate({session_id:token[token.length-1]},{isOnline:false, logOut_time:date})
     // console.log(req.currentUser)
-    await User.findByIdAndUpdate(req.currentUser.id, {is_Online:false})
+    // await User.findByIdAndUpdate(req.currentUser.id, {is_Online:false})
 	res.cookie('JWT', 'loggedout', {
         expires: new Date(date + 500),
         httpOnly: true
