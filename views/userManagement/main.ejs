@@ -392,7 +392,7 @@
               <div class="row mt-2">
                 <div class="col">
                   New Domain
-                  <input type="checkbox" id="customOptionCheckbox">
+                  <input type="checkbox" class="hide" id="customOptionCheckbox">
                   <label for="">WhiteLabel</label>
                   <!-- <input type="text" name="whiteLabel" placeholder="Enter new role"> -->
                   <select id="whiteLabel" class="form-control ml0" >
@@ -551,12 +551,12 @@
   
     customOptionCheckbox.addEventListener('change', function () {
       if (this.checked) {
-        newWhiteLabelInput.style.display = 'block';
+        newWhiteLabelInput.classList.remove('hide')
         // Hide the select element
-        document.querySelector('select[name="whiteLabel"]').classList.add('hide') = 'none';
+        document.querySelector('select[name="whiteLabel"]').classList.add('hide')
       } else {
-        newWhiteLabelInput.style.display = 'none';
-        document.querySelector('select[name="whiteLabel"]').classList.remove('hide') = 'block';
+        newWhiteLabelInput.classList.add('hide')
+        document.querySelector('select[name="whiteLabel"]').classList.remove('hide')
       }
     });
   </script>
