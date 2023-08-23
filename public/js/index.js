@@ -73,10 +73,10 @@ const form = document.getElementById('Add-User');
 let data = new FormData(form) 
 const formDataObj = Object.fromEntries(data.entries());
 if(formDataObj.whiteLabel == ""){
-    formDataObj.whitLable = document.getElementById("whiteLabel").value
+    formDataObj.whiteLabel = document.getElementById("whiteLabel").value
 }
-console.log(formDataObj)
-// createUser(formDataObj)
+// console.log(formDataObj)
+createUser(formDataObj)
 });
 
 $(document).on('click','.updateBetLimit',function(e){
