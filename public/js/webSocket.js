@@ -930,7 +930,7 @@ socket.on('connect', () => {
                 alert("Bet Unlocked Successfully")
                 let  = document.getElementsByClassName("betLockStatus")
                 for (var i = 0; i < elements.length; i++) {
-                    elements[i].classList.add("Locked");
+                    elements[i].classList.remove("Locked");
                   }
             }
         })
