@@ -2074,14 +2074,14 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         // });
         let SportLimits = betLimit.find(item => item.type === "Sport")
         if (SportLimits.min_stake >= 1000) {
-            SportLimits.min_stake = (num / 1000).toFixed(1) + 'K';
+            SportLimits.min_stake = (SportLimits.min_stake / 1000).toFixed(1) + 'K';
           } else {
-            SportLimits.min_stake = num.toString();
+            SportLimits.min_stake = SportLimits.min_stake.toString();
         }
         if (SportLimits.max_stake >= 1000) {
-            SportLimits.max_stake = (num / 1000).toFixed(1) + 'K';
+            SportLimits.max_stake = (SportLimits.max_stake / 1000).toFixed(1) + 'K';
           } else {
-            SportLimits.max_stake = num.toString();
+            SportLimits.max_stake = SportLimits.max_stake.toString();
         }
         let userLog
         let stakeLabledata
