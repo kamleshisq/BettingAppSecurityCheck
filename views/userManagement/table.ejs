@@ -37,8 +37,8 @@
             <th>Exposure</th>
 
             <!-- <th>Exposure<br>0.00</th> -->
-            <th>Lifetime Credit</th>
-            <th>Lifetime Deposit</th>
+            <!-- <th>Lifetime Credit</th>
+            <th>Lifetime Deposit</th> -->
             <th colspan="6">Action</th>
 
 
@@ -96,12 +96,7 @@
                     <%=users[i].exposure%>
                   </td>
                   <!-- <td><%=users[i].userName%></td> -->
-                  <td>
-                    <%=users[i].lifeTimeCredit%>
-                  </td>
-                  <td>
-                    <%=users[i].lifeTimeDeposit%>
-                  </td>
+                  
                   <td>
                     <div class="btn-group">
                       <%if(currentUser.role.authorization.includes('accountControl')){%>
