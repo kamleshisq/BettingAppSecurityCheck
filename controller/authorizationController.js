@@ -121,7 +121,7 @@ exports.login = catchAsync (async(req, res, next) => {
         // }
         else{
             await User.findOneAndUpdate({_id:user._id}, {is_Online:true});
-            await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false});
+            // await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false});
             createSendToken(user, 200, res, req);
             // console.log(req.token)
 
