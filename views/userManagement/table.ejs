@@ -5,10 +5,11 @@
   <span data-rowid="1" class="rowId"></span>
   <div class="table-data-section">
     <div class="table-heading">
-      <h3><svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M2 0.5H16C16.5304 0.5 17.0391 0.710714 17.4142 1.08579C17.7893 1.46086 18 1.96957 18 2.5V9.58C16.4954 9.32723 14.951 9.65613 13.68 10.5H10V14.5H11.08C10.97 15.18 10.97 15.85 11.08 16.5H2C1.46957 16.5 0.960859 16.2893 0.585786 15.9142C0.210714 15.5391 0 15.0304 0 14.5V2.5C0 1.4 0.9 0.5 2 0.5ZM2 4.5V8.5H8V4.5H2ZM10 4.5V8.5H16V4.5H10ZM2 10.5V14.5H8V10.5H2ZM21 19.5V18.5C21 17.17 18.33 16.5 17 16.5C15.67 16.5 13 17.17 13 18.5V19.5H21ZM17 11.5C15.9 11.5 15 12.4 15 13.5C15 14.6 15.9 15.5 17 15.5C18.1 15.5 19 14.61 19 13.5C19 12.39 18.11 11.5 17 11.5Z" fill="#6359CA"/>
-        </svg>
-         &nbsp;User Management</h3>
+      <h3><svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M2.16659 0.125H16.7499C17.3025 0.125 17.8324 0.344493 18.2231 0.735194C18.6138 1.12589 18.8333 1.6558 18.8333 2.20833V9.58333C17.266 9.32003 15.6572 9.66263 14.3333 10.5417H10.4999V14.7083H11.6249C11.5103 15.4167 11.5103 16.1146 11.6249 16.7917H2.16659C1.61405 16.7917 1.08415 16.5722 0.693446 16.1815C0.302745 15.7908 0.083252 15.2609 0.083252 14.7083V2.20833C0.083252 1.0625 1.02075 0.125 2.16659 0.125ZM2.16659 4.29167V8.45833H8.41658V4.29167H2.16659ZM10.4999 4.29167V8.45833H16.7499V4.29167H10.4999ZM2.16659 10.5417V14.7083H8.41658V10.5417H2.16659ZM21.9583 19.9167V18.875C21.9583 17.4896 19.177 16.7917 17.7916 16.7917C16.4062 16.7917 13.6249 17.4896 13.6249 18.875V19.9167H21.9583ZM17.7916 11.5833C16.6458 11.5833 15.7083 12.5208 15.7083 13.6667C15.7083 14.8125 16.6458 15.75 17.7916 15.75C18.9374 15.75 19.8749 14.8229 19.8749 13.6667C19.8749 12.5104 18.9478 11.5833 17.7916 11.5833Z"
+            fill="#212121"></path>
+        </svg> User Management</h3>
       <div class="table-heading-btn">
         <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
         <%if(currentUser.role.authorization.includes('createDeleteUser')){%>
@@ -46,7 +47,7 @@
         <tbody class="new-body">
           <%for(let i=0; i<users.length; i++){%>
             <%if((i+1) % 2 !=0){%>
-              <tr class="blue trtable" id="<%=i+1%>" data-id="<%=users[i]._id%>">
+              <tr class="trtable" id="<%=i+1%>" data-id="<%=users[i]._id%>">
                 <%}else{%>
               <tr class="trtable" id="<%=i+1%>" data-id="<%=users[i]._id%>">
                 <%}%>
@@ -78,7 +79,7 @@
                   <td>
                     <%=users[i].downlineBalance%>
                   </td>
-                  <td style="color:#FE3030;">
+                  <td class="red">
                     <%=users[i].clientPL%>
                   </td>
                   <td>
@@ -98,38 +99,29 @@
                     <%=users[i].lifeTimeDeposit%>
                   </td>
                   <td>
-                    <%if(currentUser.role.authorization.includes('accountControl')){%>
-
-                      <button data-bs-toggle="modal" data-bs-target="#myModal" title="Deposit/Withdrawal" class="Deposite"> D/W </button>
-                      <%}%>
+                    <div class="btn-group">
+                      <%if(currentUser.role.authorization.includes('accountControl')){%>
+                        <button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite"> D/W </button>
+                        <%}%>
+                          <%if(currentUser.role.authorization.includes('accountControl')){%>
+                            <button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite"> D/W </button>
+                            <%}%>
+                              <%if(currentUser.role.authorization.includes('changeUserPassword')){%>
+                                <button data-bs-toggle="modal" data-bs-target="#myModal3"
+                                  class="PasswordChange">P</button>
+                                <%}%>
+                                  <%if(currentUser.role.authorization.includes('betLockAndUnloack')){%>
+                                    <button type="button" class="betLockStatus">B</button>
+                                    <%}%>
+                                      <%if(currentUser.role.authorization.includes('userStatus')){%>
+                                        <button data-bs-toggle="modal" data-bs-target="#myModal4"
+                                          class="StatusChange">CS</button>
+                                        <%}%>
+                                          <%if(currentUser.role.authorization.includes('userName')){%>
+                                            <button class="UserDetails"><i class="fa-solid fa-database"></i></button>
+                                            <%}%>
+                    </div>
                   </td>
-                  <%if(users[i].roleName==="Super-Duper-Admin" ) {%>
-                    <td><button data-bs-toggle="modal" data-bs-target="#myModal2" title="commission"  class="CreaditChange">C</button></td>
-                    <%} %>
-                      <td>
-                        <%if(currentUser.role.authorization.includes('changeUserPassword')){%>
-
-                          <button data-bs-toggle="modal" data-bs-target="#myModal3" title="Change Password" class="PasswordChange">P</button>
-                          <%}%>
-                      </td>
-                      <td>
-                        <%if(currentUser.role.authorization.includes('betLockAndUnloack')){%>
-
-                          <button type="button" class="betLockStatus" title="Betlock">B</button>
-                          <%}%>
-                      </td>
-                      <td class="text-purple">
-                        <%if(currentUser.role.authorization.includes('userStatus')){%>
-
-                          <button data-bs-toggle="modal" data-bs-target="#myModal4" title="Change Status" class="StatusChange">CS</button>
-                          <%}%>
-                      </td>
-                      <td>
-                        <%if(currentUser.role.authorization.includes('userName')){%>
-
-                          <button class="UserDetails" title="View Details"><i class="fa-solid fa-database"></i></button>
-                          <%}%>
-                      </td>
               </tr>
               <%}%>
 
