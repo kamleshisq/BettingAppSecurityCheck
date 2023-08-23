@@ -75,7 +75,8 @@ const formDataObj = Object.fromEntries(data.entries());
 if(formDataObj.whiteLabel == ""){
     formDataObj.whitLable = document.getElementById("whiteLabel").value
 }
-createUser(formDataObj)
+console.log(formDataObj)
+// createUser(formDataObj)
 });
 
 $(document).on('click','.updateBetLimit',function(e){

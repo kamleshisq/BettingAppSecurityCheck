@@ -6889,8 +6889,10 @@ $('#Add-User').submit(function (e) {
   if (formDataObj.whiteLabel == "") {
     formDataObj.whitLable = document.getElementById("whiteLabel").value;
   }
-  (0, _createUser.createUser)(formDataObj);
+  console.log(formDataObj);
+  // createUser(formDataObj)
 });
+
 $(document).on('click', '.updateBetLimit', function (e) {
   var rowId = $(this).parent().parent().attr('id');
   $('.rowId').attr('data-rowid', rowId);
