@@ -111,13 +111,15 @@ exports.login = catchAsync (async(req, res, next) => {
                 status:'error',
                 message:"Your account is inactive"
             })
-        }else if(user.is_Online){
-            // console.log(user)
-            res.status(404).json({
-                status:"error",
-                message:"User is already login"
-            })
-        }else{
+        }
+        // else if(user.is_Online){
+        //     // console.log(user)
+        //     res.status(404).json({
+        //         status:"error",
+        //         message:"User is already login"
+        //     })
+        // }
+        else{
             await User.findOneAndUpdate({_id:user._id}, {is_Online:true});
             await loginLogs.updateMany({user_id:user._id,isOnline:true},{isOnline:false});
             createSendToken(user, 200, res, req);
