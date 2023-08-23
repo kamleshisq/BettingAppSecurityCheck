@@ -2080,7 +2080,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             SportLimits.min_stake = SportLimits.min_stake.toString();
         }
         if (SportLimits.max_stake >= 1000) {
-            SportLimits.max_stake = (SportLimits.max_stake / 1000).toFixed(1) + 'K';
+            console.log(SportLimits.max_stake = (SportLimits.max_stake / 1000).toFixed(1) + 'K');
           } else {
             SportLimits.max_stake = SportLimits.max_stake.toString();
         }
