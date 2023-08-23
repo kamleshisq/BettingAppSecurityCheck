@@ -105,14 +105,25 @@ exports.betrequest = catchAsync(async(req, res, next) => {
     if(!user){
         return next(new AppError("There is no user with that id", 404))
     }
-    let parentUser
-    if(user.parentUsers.length < 2){
-        // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
-        // parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:data.data.stake}})
-        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0],{$inc:{availableBalance:req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
-    }else{
-        await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: -req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
-        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
+    // let parentUser
+    // if(user.parentUsers.length < 2){
+    //     // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
+    //     // parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:data.data.stake}})
+    //     parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0],{$inc:{availableBalance:req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
+    // }else{
+    //     await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: -req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
+    //     parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
+    // }
+    let amount = req.body.debitAmount
+    for(let i = user.parentUsers.length - 1; i >= 1; i--){
+        let parentUser1 = await userModel.findById(user.parentUser[i])
+        let parentUser2 = await userModel.findById(user.parentUser[i-1])
+        let parentUser1Amount = (parseFloat(parseFloat(amount) * parseFloat(parentUser1.myShare)/100))
+        let parentUser2Amount = (parseFloat(parseFloat(amount) * parseFloat(parentUser1.Share)/100))
+        await userModel.findByIdAndUpdate(user.parentUser[i], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount}})
+        if(i === 1){
+            await userModel.findByIdAndUpdate(user.parentUser[i], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser2Amount, lifetimePL : parentUser2Amount}})
+        }
     }
     // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
     // let A = await userModel.find({_id:user.parentUsers[0]})
@@ -143,20 +154,20 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         "stake": req.body.debitAmount,
         "transactionId":req.body.transactionId
     }
-    let Acc2 = {
-        "user_id":parentUser._id,
-        "description": description2,
-        "creditDebitamount" : req.body.debitAmount,
-        "balance" : parentUser.availableBalance + (req.body.debitAmount * 1),
-        "date" : Date.now(),
-        "userName" : parentUser.userName,
-        "role_type" : parentUser.role_type,
-        "Remark":"-",
-        "stake": req.body.debitAmount,
-        "transactionId":`${req.body.transactionId}Parent`
-    }
+    // let Acc2 = {
+    //     "user_id":parentUser._id,
+    //     "description": description2,
+    //     "creditDebitamount" : req.body.debitAmount,
+    //     "balance" : parentUser.availableBalance + (req.body.debitAmount * 1),
+    //     "date" : Date.now(),
+    //     "userName" : parentUser.userName,
+    //     "role_type" : parentUser.role_type,
+    //     "Remark":"-",
+    //     "stake": req.body.debitAmount,
+    //     "transactionId":`${req.body.transactionId}Parent`
+    // }
     accountStatement.create(Acc)
-    accountStatement.create(Acc2)
+    // accountStatement.create(Acc2)
 
     if(clientIP == "::ffff:3.9.120.247"){
         res.status(200).json({
