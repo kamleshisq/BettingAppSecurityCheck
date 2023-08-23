@@ -83,9 +83,15 @@
                   <td>
                     <%=users[i].downlineBalance%>
                   </td>
+                  <%if(users[i].myPL > 0){ %>
+                    <td class="green">
+                      <%=users[i].myPL%>
+                    </td>
+                  <%}else{ %>
                   <td class="red">
                     <%=users[i].myPL%>
                   </td>
+                  <%} %>
                   <td>
                     <%=users[i].uplinePL%>
                   </td>
