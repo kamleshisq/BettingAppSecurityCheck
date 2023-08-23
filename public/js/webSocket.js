@@ -1068,9 +1068,9 @@ socket.on('connect', () => {
             {
                 if(data.page == 0){
                     count = 1;
-                    let html = ""
+                    let html1 = ""
                     if(LOGINDATA.LOGINUSER.roleName == "admin"){
-                        html = `<tr>`+
+                        html1 = `<tr>`+
                         "<th>S.No</th>"+
                         "<th>User Name</th>"+
                         "<th>White lable</th>"+
@@ -1085,7 +1085,7 @@ socket.on('connect', () => {
                         "<th>Action</th>"+
                     "</tr>"
                     }else{
-                        html = `<tr>`+
+                        html1 = `<tr>`+
                         "<th>S.No</th>"+
                         "<th>User Name</th>"+
                         "<th>Type</th>"+
@@ -1099,7 +1099,7 @@ socket.on('connect', () => {
                         "<th>Action</th>"+
                     "</tr>"
                     }
-                        $('table').html()
+                        $('table').html(html1)
                 }
                 
             let html ="";
@@ -1136,28 +1136,30 @@ socket.on('connect', () => {
                     <td> ${response[i].uplinePL}</td>
                     <td> ${response[i].exposureLimit}</td>
                     <td> ${response[i].exposure}</td>
-        
+                    <td>
+                    <div class="btn-group">
                     `
                         if(data.currentUser.role.authorization.includes('accountControl')){
-                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite"> D/W </button></td>`
+                            html += `<button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite"> D/W </button>`
                         }
                         if(data.currentUser.role.authorization.includes('accountControl')){
-                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal2" class="CreaditChange">C</button></td>`
+                            html += `<button data-bs-toggle="modal" data-bs-target="#myModal2" class="CreaditChange">C</button>`
                         }
                         if(data.currentUser.role.authorization.includes('changeUserPassword')){
-                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal3" class="PasswordChange">P</button></td>`
+                            html += `<button data-bs-toggle="modal" data-bs-target="#myModal3" class="PasswordChange">P</button>`
                         }
                         if(data.currentUser.role.authorization.includes('betLockAndUnloack')){
-                            html += `<td><button type="button" class="betLockStatus">B</button></td>`
+                            html += `<button type="button" class="betLockStatus">B</button>`
                         }
                         if(data.currentUser.role.authorization.includes('userStatus')){
-                            html += `<td><button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange">CS</button></td>
+                            html += `<button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange">CS</button>
                             `
                         }
                         if(data.currentUser.role.authorization.includes('userName')){
                             html += `<button class="UserDetails"><i class="fa-solid fa-database"></i></button>`
                         }
-                      html += `</td> </tr>`
+                      html += `</div>
+                      </td></td> </tr>`
             }
             count += 10;
             $('table').append(html)
