@@ -2076,12 +2076,12 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         let min 
         let max 
         if (SportLimits.min_stake >= 1000) {
-            min = (SportLimits.min_stake / 1000).toFixed(1) + 'K';
+            min = (SportLimits.min_stake / 1000) + 'K';
         } else {
             min = SportLimits.min_stake.toString();
         }
         if (SportLimits.max_stake >= 1000) {
-            max = (SportLimits.max_stake / 1000).toFixed(1) + 'K';
+            max = (SportLimits.max_stake / 1000) + 'K';
           } else {
             max = SportLimits.max_stake.toString();
         }
