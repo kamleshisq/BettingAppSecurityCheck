@@ -72,7 +72,9 @@ e.preventDefault();
 const form = document.getElementById('Add-User');
 let data = new FormData(form) 
 const formDataObj = Object.fromEntries(data.entries());
-console.log(formDataObj)
+if(formDataObj.whiteLabel == ""){
+    formDataObj.whitLable = document.getElementById("whiteLabel").value
+}
 createUser(formDataObj)
 });
 

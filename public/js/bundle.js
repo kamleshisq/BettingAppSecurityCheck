@@ -6886,7 +6886,9 @@ $('#Add-User').submit(function (e) {
   var form = document.getElementById('Add-User');
   var data = new FormData(form);
   var formDataObj = Object.fromEntries(data.entries());
-  console.log(formDataObj);
+  if (formDataObj.whiteLabel == "") {
+    formDataObj.whitLable = document.getElementById("whiteLabel").value;
+  }
   (0, _createUser.createUser)(formDataObj);
 });
 $(document).on('click', '.updateBetLimit', function (e) {
