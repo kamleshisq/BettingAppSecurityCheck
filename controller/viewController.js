@@ -2073,16 +2073,17 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         //     return date < Date.now() - 1000 * 60 * 60;
         // });
         let SportLimits = betLimit.find(item => item.type === "Sport")
-        if (SportLimits.min_stake >= 1000) {
-            SportLimits.min_stake = (SportLimits.min_stake / 1000).toFixed(1) + 'K';
+        let min = SportLimits.min_stake
+        let max =  SportLimits.max_stake
+        if (min >= 1000) {
+            SportLimits.min_stake = (min / 1000).toFixed(1) + 'K';
         } else {
-              console.log("WORKING")
-            SportLimits.min_stake = SportLimits.min_stake.toString();
+            SportLimits.min_stake = min.toString();
         }
-        if (SportLimits.max_stake >= 1000) {
-            console.log(SportLimits.max_stake = (SportLimits.max_stake / 1000).toFixed(1) + 'K');
+        if (max >= 1000) {
+            SportLimits.max_stake = (max / 1000).toFixed(1) + 'K';
           } else {
-            SportLimits.max_stake = SportLimits.max_stake.toString();
+            SportLimits.max_stake = max.toString();
         }
         console.log(SportLimits)
         let userLog
