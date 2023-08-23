@@ -2119,6 +2119,16 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     //     return date < Date.now() - 1000 * 60 * 60;
     // });
     let SportLimits = betLimit.find(item => item.type === "Sport")
+    if (SportLimits.min_stake >= 1000) {
+        SportLimits.min_stake = (num / 1000).toFixed(1) + 'K';
+      } else {
+        SportLimits.min_stake = num.toString();
+    }
+    if (SportLimits.max_stake >= 1000) {
+        SportLimits.max_stake = (num / 1000).toFixed(1) + 'K';
+      } else {
+        SportLimits.max_stake = num.toString();
+    }
     let userLog
     let multimarket 
     let stakeLabledata
