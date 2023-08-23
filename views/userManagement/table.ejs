@@ -3,14 +3,12 @@
   <div class="currentUserDetails" id="currentUserDetails" data-currentuser='<%=JSON.stringify(currentUser)%>'></div>
   <div class="pageLink" data-page="1"></div>
   <span data-rowid="1" class="rowId"></span>
-<div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
+<div class="row">
   <div class="">
     
-  <h3 style="color:#6359CA;font-size: 18px;font-weight: 700;"><img src="../images/c-user.png" alt=""> &nbsp;User Management</h3>
+  <h3 ><img src="../images/c-user.png" alt=""> &nbsp;User Management</h3>
 </div>
-  <div style="justify-content: flex-end;
-  display: flex;
-  gap: 10px;">
+  <div>
   <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
   <%if(currentUser.role.authorization.includes('createDeleteUser')){%>
     <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add User</button>
@@ -23,7 +21,7 @@
 <div class="spcare-table_">
     <table id="table12">
       <thead>
-          <tr style="text-align: center;font-size: 11px;">
+          <tr >
             <th>S.No</th>
             <th>User Name</th>
             <th>White Labels</th>
@@ -49,9 +47,9 @@
       <tbody class="new-body">
         <%for(let i = 0; i<users.length; i++){%>
           <%if((i+1) % 2 != 0){%>
-            <tr style="text-align: center;" class="blue trtable" id="<%=i+1%>" data-id="<%=users[i]._id%>">
+            <tr  class="blue trtable" id="<%=i+1%>" data-id="<%=users[i]._id%>">
           <%}else{%>
-            <tr style="text-align: center;" class="trtable" id="<%=i+1%>" data-id="<%=users[i]._id%>">
+            <tr  class="trtable" id="<%=i+1%>" data-id="<%=users[i]._id%>">
           <%}%>
             <td><%=i + 1%></td>
             <td class="getOwnChild">
