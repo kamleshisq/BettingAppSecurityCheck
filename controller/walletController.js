@@ -122,8 +122,9 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         let parentUser2Amount = (parseFloat(parseFloat(amount) * parseFloat(parentUser1.Share)/100))
         await userModel.findByIdAndUpdate(user.parentUser[i], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount}})
         if(i === 1){
-            await userModel.findByIdAndUpdate(user.parentUser[i], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser2Amount, lifetimePL : parentUser2Amount}})
+            await userModel.findByIdAndUpdate(user.parentUser[i - 1], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser2Amount, lifetimePL : parentUser2Amount}})
         }
+        amount = parentUser2Amount
     }
     // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -req.body.debitAmount, downlineBalance: -req.body.debitAmount}})
     // let A = await userModel.find({_id:user.parentUsers[0]})
@@ -224,16 +225,27 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         // await accountStatement.findOneAndUpdate({transactionId:req.body.transactionId},Acc)
     }else{
         let bet = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:req.body.creditAmount});
-        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{balance: req.body.creditAmount, availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1, exposure:-bet.Stake}});
-        let parentUser
+        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1, exposure:-bet.Stake}});
+        // let parentUser
         let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/WON`
         let description2 = `Bet for ${game.game_name}/stake = ${bet.Stake}/user = ${user.userName}/WON `
-        if(user.parentUsers.length < 2){
-            // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
-            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -req.body.creditAmount, downlineBalance: req.body.creditAmount}})
-        }else{
-            await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: req.body.creditAmount, downlineBalance: req.body.creditAmount}})
-            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-req.body.creditAmount, downlineBalance: req.body.creditAmount}})
+        // if(user.parentUsers.length < 2){
+        //     // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
+        //     parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -req.body.creditAmount, downlineBalance: req.body.creditAmount}})
+        // }else{
+        //     await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: req.body.creditAmount, downlineBalance: req.body.creditAmount}})
+        //     parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-req.body.creditAmount, downlineBalance: req.body.creditAmount}})
+        // }
+        let debitAmountForP = req.body.creditAmount
+        for(let i = user.parentUsers.length - 1; i >= 1; i--){
+            let parentUser1 = await userModel.findById(user.parentUsers[i])
+            let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
+            let parentUser1Amount = parseFloat((parseFloat(debitAmountForP) * parseFloat(parentUser1.myShare))/100)
+            let parentUser2Amount = parseFloat((parseFloat(debitAmountForP) * parseFloat(parentUser1.Share))/100)
+            await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:req.body.creditAmount, myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount)}})
+            if(i === 1){
+                await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:req.body.creditAmount, myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount)}})
+            }
         }
         // console.log(user.parentUsers)
         if(!user){
@@ -264,18 +276,18 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             "transactionId":`${bet.transactionId}`
           })
 
-          await accountStatement.create({
-            "user_id":parentUser._id,
-            "description": description2,
-            "creditDebitamount" : -req.body.creditAmount,
-            "balance" : parentUser.availableBalance - req.body.creditAmount,
-            "date" : Date.now(),
-            "userName" : parentUser.userName,
-            "role_type" : parentUser.role_type,
-            "Remark":"-",
-            "stake": bet.Stake,
-            "transactionId":`${bet.transactionId}Parent`
-          })
+        //   await accountStatement.create({
+        //     "user_id":parentUser._id,
+        //     "description": description2,
+        //     "creditDebitamount" : -req.body.creditAmount,
+        //     "balance" : parentUser.availableBalance - req.body.creditAmount,
+        //     "date" : Date.now(),
+        //     "userName" : parentUser.userName,
+        //     "role_type" : parentUser.role_type,
+        //     "Remark":"-",
+        //     "stake": bet.Stake,
+        //     "transactionId":`${bet.transactionId}Parent`
+        //   })
 
 
         // let Acc = {
