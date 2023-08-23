@@ -6,6 +6,7 @@ const betModel = require("../model/betmodel");
 const accountModel = require("../model/accountStatementByUserModel");
 
 exports.dashboardData = catchAsync(async(req, res, next) => {
+    console.log(req.currentUser)
     const roles = await User.aggregate([
         {
             $match:{
