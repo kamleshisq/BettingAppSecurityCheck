@@ -6,8 +6,19 @@
             <i class="fa-solid fa-circle-info"></i> 
           </span></h6>
       </div>
+      <%
+      function formatNumberInK(num) {
+        if (num >= 1000) {
+          return (num / 1000).toFixed(1) + 'K';
+        } else {
+          return num.toString();
+        }
+      }
+      let max = formatNumberInK(SportLimits.max_stake)
+      let min = formatNumberInK(portLimits.min_stake)
+      %>
       <div class="exchange-pg-inn-banner-col-titi-txt-tim">
-          <h6><b>Min : <%=SportLimits.min_stake%>, Max : <%=SportLimits.max_stake%></b></h6>
+          <h6><b>Min : <%=min%>, Max : <%=max%></b></h6>
       </div>
     </div>
     <div class="star-hedtitl-dv multi_market" id="<%=match.marketList.match_odd.marketId%>">
