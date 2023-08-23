@@ -26,7 +26,7 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-header" style="text-align: center;">
+        <div class="modal-header">
           <!-- <h4 class="modal-title" style="color: #fff;">Deposit</h4> -->
         </div>
         <div class="modal-body">
@@ -34,7 +34,7 @@
             <div class="row">
               <div class="col">
                 <label for="">Choose Option</label>
-                <select name="type" class="DepositW" style="color: #fff;">
+                <select name="type" class="DepositW" >
                   <option value="deposit">Deposit</option>
                   <option value="withdrawl">Withdraw</option>
                 </select>
@@ -99,9 +99,9 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-header" style="text-align: center;">
+        <div class="modal-header" >
           <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-          <h4 class="modal-title" style="color: #fff;">Withdraw</h4>
+          <h4 class="modal-title" >Withdraw</h4>
         </div>
         <div class="modal-body">
           <form class="form-data">
@@ -165,9 +165,9 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-header" style="text-align: center;">
+        <div class="modal-header" >
           <!-- <button type="button" class="close" data-dismiss="modal"></button> -->
-          <h4 class="modal-title" style="color: #fff;">Commission</h4>
+          <h4 class="modal-title" >Commission</h4>
         </div>
         <div class="modal-body">
           <form class="form-data CommissionForm">
@@ -284,11 +284,11 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-header" style="text-align: center;">
-          <h4 class="modal-title" style="color: #fff;">Reset User Password</h4>
+        <div class="modal-header" >
+          <h4 class="modal-title" >Reset User Password</h4>
         </div>
         <div class="modal-body">
-          <p style="color: #fff;">Reset Password For Abitest<br>User Will Be Forced To Changed The Password On Login</p>
+          <p >Reset Password For Abitest<br>User Will Be Forced To Changed The Password On Login</p>
 
           <form class="form-data passReset-form">
             <div class="row">
@@ -325,15 +325,15 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-header" style="text-align: center;">
-          <h4 class="modal-title" style="color: #fff;">Change status</h4>
+        <div class="modal-header" >
+          <h4 class="modal-title" >Change status</h4>
         </div>
         <div class="modal-body">
           <form class="form-data userStatus">
             <div class="row">
               <div class="col">
                 <label for="">Account status</label>
-                <select name="status" class="form-control ml0" style="color: #000 !important;">Active
+                <select name="status" class="form-control ml0" >Active
                   <option value="true">Active</option>
                   <option value="false">Close</option>
                 </select>
@@ -363,8 +363,8 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-header" style="text-align: center;">
-          <h4 class="modal-title" style="color: #fff;">Add Account</h4>
+        <div class="modal-header" >
+          <h4 class="modal-title" >Add Account</h4>
         </div>
         <div class="modal-body">
           <form class="form-data" id="Add-User">
@@ -381,7 +381,7 @@
               </div>
               <div class="col">
                 <label for="">User Role</label>
-                <select name="role" id="roleSelect" class="form-control ml0" style="color: #000 !important;">
+                <select name="role" id="roleSelect" class="form-control ml0" >
                   <%for(let i = 0;i<roles.length; i++){%>
                     <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
                   <%}%>
@@ -395,12 +395,12 @@
                   <input type="checkbox" id="customOptionCheckbox">
                   <label for="">WhiteLabel</label>
                   <!-- <input type="text" name="whiteLabel" placeholder="Enter new role"> -->
-                  <select id="whiteLabel" class="form-control ml0" style="color: #000 !important;">
+                  <select id="whiteLabel" class="form-control ml0" >
                     <%for(let i = 0; i < WhiteLabel.length; i++){ %>
                       <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
                     <%} %>
                   </select>
-                  <input type="text" name="whiteLabel" id="newWhiteLabelInput" placeholder="Enter new WhiteLabel" style="display: none;">
+                  <input type="text" name="whiteLabel" id="newWhiteLabelInput" placeholder="Enter new WhiteLabel" >
                 </div>
               </div>
             <%} %>
@@ -461,7 +461,7 @@
                 <i class="bi bi-eye-slash" id="togglePassword"></i>
               </div>
             </div>
-            <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Add</button>
+            <button type="submit" class="btn-submit mt-3" >Add</button>
           </form>
         </div>
       </div>
@@ -478,8 +478,8 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-header" style="text-align: center;">
-          <h4 class="modal-title" style="color: #fff;">User Details</h4>
+        <div class="modal-header" >
+          <h4 class="modal-title" >User Details</h4>
         </div>
         <div class="modal-body">
           <form class="form-data" id="edit-form">
@@ -497,7 +497,7 @@
               </div>
               <div class="col">
                 <label for="">User Role</label>
-                <select class="form-control ml0" name="role" style="color: #000 !important;">
+                <select class="form-control ml0" name="role" >
                   <%for(let i = 0;i<roles.length; i++){%>
                   <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
                   <%}%>
@@ -507,7 +507,7 @@
             
             <div class="row mt-2">
               <div class="col">
-                <label for="">Share <span style="color: #46BCAA;">100</span></label>
+                <label for="">Share <span >100</span></label>
                 <input type="text" class="form-control ml0" placeholder="90" name="share">
               </div>
               <div class="col">
@@ -534,7 +534,7 @@
             <div class="row mt-2">
               <div class="col">
                 <label for="">Note</label>
-                <textarea id="w3review" placeholder="" name="w3review" rows="3" cols="50" style="width: 100%;border-radius: 5px;"></textarea>
+                <textarea id="w3review" placeholder="" name="w3review" rows="3" cols="50" ></textarea>
               </div>
             </div>
           
