@@ -97,34 +97,34 @@
                   <td>
                     <%if(currentUser.role.authorization.includes('accountControl')){%>
 
-                      <button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite"> D/W </button>
+                      <button data-bs-toggle="modal" data-bs-target="#myModal" title="Deposit/Withdrawal" class="Deposite"> D/W </button>
                       <%}%>
                   </td>
                   <%if(users[i].roleName==="Super-Duper-Admin" ) {%>
-                    <td><button data-bs-toggle="modal" data-bs-target="#myModal2" class="CreaditChange">C</button></td>
+                    <td><button data-bs-toggle="modal" data-bs-target="#myModal2" title="commission"  class="CreaditChange">C</button></td>
                     <%} %>
                       <td>
                         <%if(currentUser.role.authorization.includes('changeUserPassword')){%>
 
-                          <button data-bs-toggle="modal" data-bs-target="#myModal3" class="PasswordChange">P</button>
+                          <button data-bs-toggle="modal" data-bs-target="#myModal3" title="Change Password" class="PasswordChange">P</button>
                           <%}%>
                       </td>
                       <td>
                         <%if(currentUser.role.authorization.includes('betLockAndUnloack')){%>
 
-                          <button type="button" class="betLockStatus">B</button>
+                          <button type="button" class="betLockStatus" title="Betlock">B</button>
                           <%}%>
                       </td>
                       <td class="text-purple">
                         <%if(currentUser.role.authorization.includes('userStatus')){%>
 
-                          <button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange">CS</button>
+                          <button data-bs-toggle="modal" data-bs-target="#myModal4" title="Change Status" class="StatusChange">CS</button>
                           <%}%>
                       </td>
                       <td>
                         <%if(currentUser.role.authorization.includes('userName')){%>
 
-                          <button class="UserDetails"><i class="fa-solid fa-database"></i></button>
+                          <button class="UserDetails" title="View Details"><i class="fa-solid fa-database"></i></button>
                           <%}%>
                       </td>
               </tr>
