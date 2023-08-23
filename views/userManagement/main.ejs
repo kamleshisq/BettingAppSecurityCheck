@@ -553,10 +553,10 @@
       if (this.checked) {
         newWhiteLabelInput.style.display = 'block';
         // Hide the select element
-        document.querySelector('select[name="whiteLabel"]').style.display = 'none';
+        document.querySelector('select[name="whiteLabel"]').classList.add('hide') = 'none';
       } else {
         newWhiteLabelInput.style.display = 'none';
-        document.querySelector('select[name="whiteLabel"]').style.display = 'block';
+        document.querySelector('select[name="whiteLabel"]').classList.remove('hide') = 'block';
       }
     });
   </script>
