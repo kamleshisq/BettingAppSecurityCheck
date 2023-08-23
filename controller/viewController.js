@@ -2075,7 +2075,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         let SportLimits = betLimit.find(item => item.type === "Sport")
         if (SportLimits.min_stake >= 1000) {
             SportLimits.min_stake = (SportLimits.min_stake / 1000).toFixed(1) + 'K';
-          } else {
+        } else {
+              console.log("WORKING")
             SportLimits.min_stake = SportLimits.min_stake.toString();
         }
         if (SportLimits.max_stake >= 1000) {
