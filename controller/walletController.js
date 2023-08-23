@@ -82,7 +82,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         return `Invalide odds valur, Please play with atmost maximum odds (${betLimit.max_odd})`
     }
     // console.log(req.body)
-    let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{balance: -req.body.debitAmount, availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1, exposure:req.body.debitAmount}})
+    let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1, exposure:req.body.debitAmount}})
     // let betDetails = await betLimitModel.find()
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let date = Date.now()
