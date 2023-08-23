@@ -563,21 +563,16 @@
   <script>
     const roleSelect = document.getElementById('roleSelect');
     const shareVisibleActual = document.getElementById('shareVisibleActual');
-    
-    if (roleSelect.value === '6492fe4fd09db28e00761694') {
-      shareVisibleActual.style.display = 'none';
-    } else {
-      shareVisibleActual.style.display = 'block';
-    }
-
+  
     roleSelect.addEventListener('change', function () {
-      if (this.value === '6492fe4fd09db28e00761694') {
-        shareVisibleActual.style.display = 'none';
+      if (roleSelect.value === '6492fe4fd09db28e00761694') { // Check if selected role is "user"
+        shareVisibleActual.style.display = 'none'; // Hide the entire shareVisibleActual div
       } else {
-        shareVisibleActual.style.display = 'block';
+        shareVisibleActual.style.display = 'block'; // Show the shareVisibleActual div
       }
     });
   </script>
+
     <script type="text/javascript" src="../js/bundle.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
