@@ -72,7 +72,7 @@ e.preventDefault();
 const form = document.getElementById('Add-User');
 let data = new FormData(form) 
 const formDataObj = Object.fromEntries(data.entries());
-// console.log(formDataObj)
+console.log(formDataObj)
 createUser(formDataObj)
 });
 
