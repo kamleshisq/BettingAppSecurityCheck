@@ -392,10 +392,10 @@
               <div class="row mt-2">
                 <div class="col">
                   New Domain
-                  <input type="checkbox" class="hide" id="customOptionCheckbox">
+                  <input type="checkbox"  id="customOptionCheckbox">
                   <label for="">WhiteLabel</label>
                   <!-- <input type="text" name="whiteLabel" placeholder="Enter new role"> -->
-                  <select id="whiteLabel" class="form-control ml0" >
+                  <select id="whiteLabel" class="form-control ml0 hide" >
                     <%for(let i = 0; i < WhiteLabel.length; i++){ %>
                       <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
                     <%} %>
@@ -546,7 +546,7 @@
     </div>
   </div>
   <script>
-    const customOptionCheckbox = document.getElementById('customOptionCheckbox');
+    const customOptionCheckbox = document.getElementById('whiteLabel');
     const newWhiteLabelInput = document.getElementById('newWhiteLabelInput');
   
     customOptionCheckbox.addEventListener('change', function () {
