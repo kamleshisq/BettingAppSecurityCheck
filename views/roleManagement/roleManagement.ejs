@@ -45,21 +45,21 @@
           </div>
           <div class="option-group user_controller" id="user_controller">
             <h3>User Controller</h3>
-            <div class="input_group">
-              <%for(let i = 0; i < roleAuth.UserControll.length; i++){%>
+            <%for(let i = 0; i < roleAuth.UserControll.length; i++){%>
+              <div class="input_group">
                 <label for=<%=roleAuth.UserControll[i]%>><%=roleAuth.UserControll[i]%></label>
                 <input type="checkbox" name="userAuthorization" value="<%=roleAuth.UserControll[i]%>" id="check" class="<%=i%>">
+              </div>
               <%}%>
-            </div>
           </div>
           <div class="option-group role-auth">
             <h3>Role Auth</h3>
-            <div class="input_group">
-              <%for(let i = 0; i < roles.length; i++){%>
+            <%for(let i = 0; i < roles.length; i++){%>
+              <div class="input_group">
                 <label for=<%=roles[i].roleName%>><%=roles[i].roleName%></label>
                 <input type="checkbox" name="authorization" value="<%=roles[i].role_level%>" id="<%=roles[i].role_type%>">
+              </div>
               <%}%>
-            </div>
           </div>
           <div class="input_group submit">
               <button type="submit" class="btn-submit">Save</button>
