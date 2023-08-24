@@ -341,10 +341,10 @@ exports.rollBack = catchAsync(async(req, res, next) => {
     try{
     let user1 =  await userModel.findById(req.body.userId)
     let bet1 =  await betModel.findOne({transactionId:req.body.transactionId})
+    let clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
     // console.log(user, bet1)
     if(bet1 != null){
-            const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         let user;
         let balance;
         let parentUser;
