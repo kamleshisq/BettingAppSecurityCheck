@@ -546,17 +546,18 @@
     </div>
   </div>
   <script>
-    const customOptionCheckbox = document.getElementById('whiteLabel');
+    const customOptionCheckbox = document.getElementById('customOptionCheckbox');
     const newWhiteLabelInput = document.getElementById('newWhiteLabelInput');
+    const SElectWhiteLable = document.getElementById("whiteLabel")
   
     customOptionCheckbox.addEventListener('change', function () {
       if (this.checked) {
         newWhiteLabelInput.classList.remove('hide')
         // Hide the select element
-        document.querySelector('select[name="whiteLabel"]').classList.add('hide')
+        SElectWhiteLable.classList.add('hide')
       } else {
         newWhiteLabelInput.classList.add('hide')
-        document.querySelector('select[name="whiteLabel"]').classList.remove('hide')
+        SElectWhiteLable.classList.remove('hide')
       }
     });
   </script>
