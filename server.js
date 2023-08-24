@@ -35,6 +35,7 @@ const loginLogs =  require("./model/loginLogs");
 const settlement = require("./model/sattlementModel");
 const mapBet = require("./websocketController/mapBetsController");
 const commissionModel = require("./model/CommissionModel");
+const catalogController = require("./model/catalogControllModel");
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -2395,6 +2396,31 @@ io.on('connection', (socket) => {
         let CommissionData = await AccModel.find(filter).sort({date:-1}).skip(page * limit).limit(limit)
         console.log(CommissionData)
         socket.emit("CommissionRReport", {CommissionData, page})
+    })
+
+    socket.on('sportStatusChange',async(data) => {
+        try{
+            let msg;
+            let sport;
+            if(data.status){
+                sport = await catalogController.updateOne({Id:data.id},{status:true})
+                if(sport.type == 'event'){
+                    msg = 'event activated'
+                }else{
+                    msg = 'series activated'
+                }
+            }else{
+                sport = await catalogController.updateOne({Id:data.id},{status:false})
+                if(sport.type == 'event'){
+                    msg = 'event deactivated'
+                }else{
+                    msg = 'series deactivated'
+                }
+            }
+            socket.emit('sportStatusChange',{status:'success',msg})
+        }catch(error){
+            socket.emit('sportStatusChange',{status:'fail'})
+        }
     })
     
 })

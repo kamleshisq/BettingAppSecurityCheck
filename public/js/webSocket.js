@@ -8217,6 +8217,32 @@ socket.on('connect', () => {
             }
         })
     }
+
+    if(pathname == "/admin/catalogcontrol/compitations" || pathname == "/admin/catalogcontrol/compitations/events"){
+        $(document).on('click','.status_check',function(){
+            let status = $(this).prop('checked') ? true : false;
+            let id = $(this).data('id')
+            if(id){
+                if(confirm('do you want to change status')){
+                    socket.emit('sportStatusChange',{status,id})
+                }else{
+                    if(status){
+                        $(this).prop('checked','')
+                    }else{
+                        $(this).prop('checked','checked')
+                    }
+                }
+            }
+        })
+
+        socket.on('sportStatusChange',async(data)=>{
+            if(data.status == 'success'){
+                console.log(data.msg)
+            }else{
+                console.log('somethig went wrong!!')
+            }
+        })
+    }
     
     
    
