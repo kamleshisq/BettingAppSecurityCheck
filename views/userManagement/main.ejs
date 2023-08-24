@@ -395,12 +395,12 @@
                   <input type="checkbox"  id="customOptionCheckbox">
                   <label for="">WhiteLabel</label>
                   <!-- <input type="text" name="whiteLabel" placeholder="Enter new role"> -->
-                  <select id="whiteLabel" class="form-control ml0 hide" >
+                  <select id="whiteLabel" class="form-control ml0" >
                     <%for(let i = 0; i < WhiteLabel.length; i++){ %>
                       <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
                     <%} %>
                   </select>
-                  <input type="text" name="whiteLabel" id="newWhiteLabelInput" placeholder="Enter new WhiteLabel" >
+                  <input type="text" class="hide" name="whiteLabel" id="newWhiteLabelInput" placeholder="Enter new WhiteLabel" >
                 </div>
               </div>
             <%} %>
