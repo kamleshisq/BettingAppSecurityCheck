@@ -2732,7 +2732,7 @@ exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
     // let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
     // let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
     // console.log(liveTennis.length != 0)
-    // console.log(liveFootBall)
+    console.log(liveFootBall)
     res.status(200).render("./catalogController/catalogcontroller", {
         title:"catalogController",
         data:sportList,
