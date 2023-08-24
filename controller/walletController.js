@@ -82,7 +82,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         return `Invalide odds valur, Please play with atmost maximum odds (${betLimit.max_odd})`
     }
     // console.log(req.body)
-    let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1, exposure:req.body.debitAmount}})
+    let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1, exposure:req.body.debitAmount, uplinePL:req.body.debitAmount, pointsWL:-req.body.debitAmount}})
     // let betDetails = await betLimitModel.find()
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let date = Date.now()
@@ -121,9 +121,9 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         let parentUser2 = await userModel.findById(user.parentUsers[i-1])
         let parentUser1Amount = (parseFloat(parseFloat(amount) * parseFloat(parentUser1.myShare)/100))
         let parentUser2Amount = (parseFloat(parseFloat(amount) * parseFloat(parentUser1.Share)/100))
-        await userModel.findByIdAndUpdate(user.parentUsers[i], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount}})
+        await userModel.findByIdAndUpdate(user.parentUsers[i], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount, pointsWL:-req.body.debitAmount}})
         if(i === 1){
-            await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser2Amount, lifetimePL : parentUser2Amount}})
+            await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser2Amount, lifetimePL : parentUser2Amount, pointsWL:-req.body.debitAmount}})
         }
         amount = parentUser2Amount
     }
@@ -226,7 +226,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         // await accountStatement.findOneAndUpdate({transactionId:req.body.transactionId},Acc)
     }else{
         let bet = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:req.body.creditAmount});
-        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1, exposure:-bet.Stake}});
+        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1, exposure:-bet.Stake, uplinePL:req.body.creditAmount}});
         // let parentUser
         let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/WON`
         let description2 = `Bet for ${game.game_name}/stake = ${bet.Stake}/user = ${user.userName}/WON `

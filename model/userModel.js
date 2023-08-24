@@ -49,6 +49,10 @@ const userSchema = mongoose.Schema({
         type:Number,
         default:0
     },
+    pointsWL:{
+        type:Number,
+        default:0
+    },
     // clientPL:{
     //     type:Number,
     //     default:0
