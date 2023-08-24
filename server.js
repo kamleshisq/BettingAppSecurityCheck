@@ -40,8 +40,13 @@ io.on('connection', (socket) => {
     console.log('connected to client')
     let loginData = {}
     // console.log(global)
-    loginData.User = global._User
-    loginData.Token = global._token.split(';')[0]
+    if(global._token){
+        loginData.User = global._User
+        loginData.Token = global._token.split(';')[0]
+    }else{
+        loginData.User = ""
+        loginData.Token = ""
+    }
     if(!loginData.Token.startsWith("JWT")){
         loginData.Token = global._token.split(';')[1]
     }
