@@ -338,12 +338,12 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 });
 
 exports.rollBack = catchAsync(async(req, res, next) => {
+    try{
     let user1 =  await userModel.findById(req.body.userId)
     let bet1 =  await betModel.findOne({transactionId:req.body.transactionId})
 
     // console.log(user, bet1)
     if(bet1 != null){
-        try{
             const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         let user;
         let balance;
@@ -440,10 +440,6 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                 })
             }
         }
-    
-        }catch(err){
-            console.log(err)
-        }
     }else{
         if(clientIP == "::ffff:3.9.120.247"){
             res.status(200).json({
@@ -457,5 +453,9 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             })
         }
     }
+    
+        }catch(err){
+            console.log(err)
+        }
     
 })
