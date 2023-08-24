@@ -188,6 +188,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
 });
 
 exports.betResult = catchAsync(async(req, res, next) =>{
+
     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let check = await userModel.findById(req.body.userId);
     if(!check){
@@ -327,7 +328,8 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 });
 
 exports.rollBack = catchAsync(async(req, res, next) => {
-    const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    try{
+        const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     let user;
     let balance;
     let parentUser;
@@ -423,4 +425,9 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             })
         }
     }
+
+    }catch(err){
+        console.log(err)
+    }
+    
 })
