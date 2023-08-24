@@ -334,7 +334,7 @@ exports.rollBack = catchAsync(async(req, res, next) => {
     let balance;
     let parentUser;
     user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount, exposure:-req.body.rollbackAmount, uplinePL:-req.body.rollbackAmount, pointsWL:req.body.rollbackAmount}});
-    // console.log(user.parentUsers)
+    console.log(user, "USer")
     if(!user){
         if(clientIP == "::ffff:3.9.120.247"){
             res.status(200).json({
