@@ -43,25 +43,26 @@
               <label for="roleName">Role Name</label>
               <input type="text" class="form-control ml0" id="mySelect" placeholder="" name="name">
           </div>
-          <label for=""><h3>User Controller</h3></label>
-          <div class="user_controller" id="user_controller">
+          <div class="option-group user_controller" id="user_controller">
+            <h3>User Controller</h3>
+            <div class="input_group">
               <%for(let i = 0; i < roleAuth.UserControll.length; i++){%>
                 <label for=<%=roleAuth.UserControll[i]%>><%=roleAuth.UserControll[i]%></label>
                 <input type="checkbox" name="userAuthorization" value="<%=roleAuth.UserControll[i]%>" id="check" class="<%=i%>">
               <%}%>
+            </div>
           </div>
-          <label for=""><h3>Role Auth</h3></label>
-          <div class="input_group">
-            <%for(let i = 0; i < roles.length; i++){%>
-              <label for=<%=roles[i].roleName%>><%=roles[i].roleName%></label>
-              <input type="checkbox" name="authorization" value="<%=roles[i].role_level%>" id="<%=roles[i].role_type%>">
-            <%}%>
+          <div class="option-group role-auth">
+            <h3>Role Auth</h3>
+            <div class="input_group">
+              <%for(let i = 0; i < roles.length; i++){%>
+                <label for=<%=roles[i].roleName%>><%=roles[i].roleName%></label>
+                <input type="checkbox" name="authorization" value="<%=roles[i].role_level%>" id="<%=roles[i].role_type%>">
+              <%}%>
+            </div>
           </div>
-          <div class="input_group" id="role_controller">
-            
-          </div>
-          <div class="input_group">
-              <button type="submit" class="btn-submit mt-3">Save</button>
+          <div class="input_group submit">
+              <button type="submit" class="btn-submit">Save</button>
           </div>
       </form>
       </div>
@@ -71,8 +72,6 @@
 
 <div class="modal fade" id="myModaladduser" role="dialog">
   <div class="modal-dialog">
-  
-    <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
@@ -84,13 +83,13 @@
         <form class="createRole-form form-data"  id="Add-User">
           <div class="input_group row" >
             <div  class="col">
-                <label for="roleName"><h3>Role Name</h3></label>
+                <label for="roleName">Role Name</label>
                 <input type="text" name="roleName" placeholder="Enter Role Name" id="roleName" class="form-control ml0" required>
             </div>
           </div>
           <br>
-          <label for="UserC"><h3>User Controller</h3></label>
-          <div name="UserC" >
+          <div class="option-group user_controller">
+            <h3>User Controller</h3>
             <div class="input_group">
                 <label for="createDeleteUser">Create Delete User</label>
                 <input type="checkbox" name="authorization" value="createDeleteUser"  id="createDeleteUser" >
@@ -132,17 +131,18 @@
                 <input type="checkbox" name="authorization" value="logOutUser" id="logOutUser">
             </div>
           </div>
-          <br>
-          <label for=""><h3>Role Auth</h3></label>
-          <%for(let i=0;i<roles.length;i++){%>
+          <div class="option-group role-auth">
+            <h3>Role Auth</h3>
+            <%for(let i=0;i<roles.length;i++){%>
               <div class="input_group">
                   <label for=<%=roles[i].roleName%>><%=roles[i].roleName%></label>
                   <input type="checkbox" name="userAuthorization" value='<%=roles[i].role_level%>' 
                   id='<%=roles[i].roleName%>'>
               </div>
           <%}%>
-          <div class="input_group">
-              <button type="submit" class="btn-submit mt-3">Save</button>
+          </div>
+          <div class="input_group submit">
+              <button type="submit" class="btn-submit">Save</button>
           </div>
       </form>
       </div>
