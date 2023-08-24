@@ -2724,7 +2724,7 @@ exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
         {sport_name:"soccer",sportId:0}	,
         {sport_name:"tennis",sportId:2}
     ]
-    // console.log(sportList)
+    console.log(sportList)
     // const cricket = sportListData[0].gameList[0].eventList
     // let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
     // const footBall = sportListData[1].gameList.find(item => item.sport_name === "Football");
@@ -2732,7 +2732,7 @@ exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
     // let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
     // let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
     // console.log(liveTennis.length != 0)
-    console.log(liveFootBall)
+    console.log("liveFootBall")
     res.status(200).render("./catalogController/catalogcontroller", {
         title:"catalogController",
         data:sportList,
