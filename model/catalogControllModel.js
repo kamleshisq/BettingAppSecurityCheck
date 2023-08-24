@@ -24,4 +24,4 @@ const catalogControllerSchema = mongoose.Schema({
 
 const catalogController = mongoose.model("catalogController",catalogControllerSchema)
 
-module.exports = catalogController 
+module.exports = catalogController    
