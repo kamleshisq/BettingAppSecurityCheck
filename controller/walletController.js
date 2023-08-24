@@ -226,7 +226,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         // await accountStatement.findOneAndUpdate({transactionId:req.body.transactionId},Acc)
     }else{
         let bet = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:req.body.creditAmount});
-        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1, exposure:-bet.Stake, uplinePL:req.body.creditAmount}});
+        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1, exposure:-bet.Stake, uplinePL:req.body.creditAmount, pointsWL:req.body.creditAmount}});
         // let parentUser
         let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/WON`
         let description2 = `Bet for ${game.game_name}/stake = ${bet.Stake}/user = ${user.userName}/WON `
@@ -243,9 +243,9 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
             let parentUser1Amount = parseFloat((parseFloat(debitAmountForP) * parseFloat(parentUser1.myShare))/100)
             let parentUser2Amount = parseFloat((parseFloat(debitAmountForP) * parseFloat(parentUser1.Share))/100)
-            await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:req.body.creditAmount, myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount)}})
+            await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:req.body.creditAmount, myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:req.body.creditAmount}})
             if(i === 1){
-                await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:req.body.creditAmount, myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount)}})
+                await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:req.body.creditAmount, myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:req.body.creditAmount}})
             }
         }
         // console.log(user.parentUsers)
