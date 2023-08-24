@@ -8242,16 +8242,6 @@ socket.on('connect', () => {
                 console.log('somethig went wrong!!')
             }
         })
-    }
-    
-    
-   
-
-
-
-
-
-
-    
+    }    
 })
 })
