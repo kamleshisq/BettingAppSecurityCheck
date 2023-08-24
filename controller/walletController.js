@@ -9,6 +9,7 @@ const path = require('path');
 const fs = require('fs');
 const verify = require("../utils/verify");//
 const alert = require("../server");
+// const Decimal = require("decima")
 // const { use } = require('../app');
 function readPem (filename) {
     return fs.readFileSync(path.resolve(__dirname, '../prev/' + filename), 'utf8')
@@ -119,8 +120,10 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         console.log("WORKING")
         let parentUser1 = await userModel.findById(user.parentUsers[i])
         let parentUser2 = await userModel.findById(user.parentUsers[i-1])
-        let parentUser1Amount = ((parseFloat(parseFloat(amount) * parseFloat(parentUser1.myShare)/100))).toFixed(2)
-        let parentUser2Amount = ((parseFloat(parseFloat(amount) * parseFloat(parentUser1.Share)/100))).toFixed(2)
+        let parentUser1Amount = (parseFloat(amount) * parseFloat(parentUser1.myShare)/100)
+        let parentUser2Amount = (parseFloat(amount) * parseFloat(parentUser1.Share)/100)
+        parentUser1Amount = parentUser1Amount.toFixed(2)
+        parentUser2Amount = parentUser2Amount.toFixed(2)
         await userModel.findByIdAndUpdate(user.parentUsers[i], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount, pointsWL:-req.body.debitAmount}})
         if(i === 1){
             await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser2Amount, lifetimePL : parentUser2Amount, pointsWL:-req.body.debitAmount}})
@@ -241,8 +244,10 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         for(let i = user.parentUsers.length - 1; i >= 1; i--){
             let parentUser1 = await userModel.findById(user.parentUsers[i])
             let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
-            let parentUser1Amount = (parseFloat((parseFloat(debitAmountForP) * parseFloat(parentUser1.myShare))/100)).toFixed(2)
-            let parentUser2Amount = (parseFloat((parseFloat(debitAmountForP) * parseFloat(parentUser1.Share))/100)).toFixed(2)
+            let parentUser1Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.myShare))/100)
+            let parentUser2Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.Share))/100)
+            parentUser1Amount = parentUser1Amount.toFixed(2)
+            parentUser2Amount = parentUser2Amount.toFixed(2)
             await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:req.body.creditAmount, myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:req.body.creditAmount}})
             if(i === 1){
                 await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:req.body.creditAmount, myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:req.body.creditAmount}})
