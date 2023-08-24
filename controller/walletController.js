@@ -381,36 +381,36 @@ exports.rollBack = catchAsync(async(req, res, next) => {
         let acc = await accountStatement.find({transactionId:req.body.transactionId})
         if(bet){
             await betModel.findByIdAndUpdate(bet._id,{returns:0, status:"CANCEL"})
-        }
-        let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/CANCEL`
-        let description2 = `Bet for ${game.game_name}/stake = ${bet.Stake}/user = ${user.userName}/CANCEL `
-        if(acc){
-            // let Acc2 = {
-            //     "user_id":parentUser._id,
-            //     "description": description2,
-            //     "creditDebitamount" : -req.body.rollbackAmount,
-            //     "balance" : parentUser.availableBalance - req.body.rollbackAmount,
-            //     "date" : Date.now(),
-            //     "userName" : parentUser.userName,
-            //     "role_type" : parentUser.role_type,
-            //     "Remark":"-",
-            //     "stake": req.body.rollbackAmount,
-            //     "transactionId":req.body.transactionId
-            // }
-            let Acc = {
-                "user_id":req.body.userId,
-                "description": description,
-                "creditDebitamount" : req.body.rollbackAmount,
-                "balance" : user.availableBalance + req.body.rollbackAmount,
-                "date" : Date.now(),
-                "userName" : user.userName,
-                "role_type" : user.role_type,
-                "Remark":"-",
-                "stake": req.body.rollbackAmount,
-                "transactionId":req.body.transactionId
+            let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/CANCEL`
+            let description2 = `Bet for ${game.game_name}/stake = ${bet.Stake}/user = ${user.userName}/CANCEL `
+            if(acc){
+                // let Acc2 = {
+                //     "user_id":parentUser._id,
+                //     "description": description2,
+                //     "creditDebitamount" : -req.body.rollbackAmount,
+                //     "balance" : parentUser.availableBalance - req.body.rollbackAmount,
+                //     "date" : Date.now(),
+                //     "userName" : parentUser.userName,
+                //     "role_type" : parentUser.role_type,
+                //     "Remark":"-",
+                //     "stake": req.body.rollbackAmount,
+                //     "transactionId":req.body.transactionId
+                // }
+                let Acc = {
+                    "user_id":req.body.userId,
+                    "description": description,
+                    "creditDebitamount" : req.body.rollbackAmount,
+                    "balance" : user.availableBalance + req.body.rollbackAmount,
+                    "date" : Date.now(),
+                    "userName" : user.userName,
+                    "role_type" : user.role_type,
+                    "Remark":"-",
+                    "stake": req.body.rollbackAmount,
+                    "transactionId":req.body.transactionId
+                }
+                await accountStatement.create(Acc)
+                // await accountStatement.create(Acc2)
             }
-            await accountStatement.create(Acc)
-            // await accountStatement.create(Acc2)
         }
         console.log(balance)
         if(clientIP == "::ffff:3.9.120.247"){
