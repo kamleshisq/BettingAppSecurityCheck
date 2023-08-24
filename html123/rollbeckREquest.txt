@@ -1,0 +1,54 @@
+body: {
+  betType: 'Casino',
+  gameId: '200139',
+  operatorId: 'sheldon',
+  reqId: '7936e37b-d5d8-4ff6-b90d-80d84d1d0aea',
+  rollbackAmount: 1,
+  roundId: '77c5c515-ef0f-5c4b-92c3-ca3bf36a458a',
+  token: 'bcda0e52-c496-4478-8e4a-2ffc832f3ff2',
+  transactionId: '5cc144e5-cdf9-5077-a6da-1446d2d9fac7',
+  userId: '64e3726c14f020548e22f2c2'
+}
+signature: B92tOWhn+VaZBT6fqfetXHWjROUV9OpCvvTci7qYhvKD+P2g/WZDwkULzKpDR1NeyWW5Zhna6vDjSMIMBT6Q4NE9mL+ClK5VRZgQca6dMCNkHg7iwyY0wMiwNM9cy6i2hEcmu5fZJagiTW2EGyZM9yKqVTCLYj6oTsv5r901ClzffK1Y8Lg1c6vww+zogG0ShljVAeqsG6TAgT0E90m9X3r27IqVMVYAq4/m9454UQqXp+uHq06/SGkX4u+c2EfcfRjBMvBrlFaRUY4tU1osmuLIi6IEF2G03657XjEQ8Vyvpuy5LLfWTygha7CI+vgw+HE7P91osP3NbFvTlccMRA==
+PublicKey: -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvIV9XY+gAQT3i7uxYx3O
+ZIO/SWmWZgwc+DLN99AfaTIoMCUrFUMyZ8lKbEurvlMGWbte0LRrbb9IM1pXGLmT
+3XveeXeMn5Crfx7epPS52N8e4HRXRxnYSZ5sslbv7l8J8JYaHXVLu0YrEkL/X6IH
+JO0BDUYdE59Xjl1Zs7SJgzStd7YbObYuI9HAIJ/o8h+mB4bN2vOIWFDsmnCl8AcC
+dI9mkx4ZM/ENZzwYV0LLSr/4fN0vpg12QNoV9BqslJRbP1N6Hd/QKzBVu/h3/VS+
+3feUgg7Nqz7zhIodcZN4l/6dcZqfDaX9SblntLA5ieOwFP9pciRE86IRZ7tcHJwS
+8wIDAQAB
+-----END PUBLIC KEY-----
+true
+POST /wallet/rollbackrequest 500 20.378 ms - 342
+
+
+POST /wallet/betrequest - - ms - -
+body: {
+  betType: 'Casino',
+  gameId: '900005',
+  operatorId: 'sheldon',
+  reqId: '4dcfddfa-cd95-486f-ac3c-be91e6ea652a',
+  rollbackAmount: 5000,
+  roundId: '1692863531.4718053',
+  token: '725f9f5f-464a-45bb-8b3e-e5592ceb02e3',
+  transactionId: '9e3ca310-f71e-48b8-a75c-e18542df16a0',
+  userId: '64e5c3002ceb9abbb4e4d341'
+}
+signature: lpmOmBOHriDh+vjjEsXJNVL0rAloBrQEK2PVas4JO5sh41y+pQ/ZhHIbVUqPi4rTzuV/kBc8M1g3MtGsMhcj5GuU4iR/SJ4T8Gme1A59GiMeP8aBE2zm7Gq0/X0J0w7INp1E768TE5N+/SrElkp/jhlFriE9L49PteOrwgIVeh/vNvl8ClYAzTlYuMteYLdLyC4lE9JJeSK3vbQlizbK6s29fONPSl6TL2Xp/fnT5UvZGnj4/aD1dfFEfGiW9cRDINXL/KrzCqEag7OWETQeXYDoUwILf1jds+1MiAIYnpVLTEeawYew6fQuW3FkaSgpAEJre6/zAIKqg3pao7Gp8A==
+PublicKey: -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvIV9XY+gAQT3i7uxYx3O
+ZIO/SWmWZgwc+DLN99AfaTIoMCUrFUMyZ8lKbEurvlMGWbte0LRrbb9IM1pXGLmT
+3XveeXeMn5Crfx7epPS52N8e4HRXRxnYSZ5sslbv7l8J8JYaHXVLu0YrEkL/X6IH
+JO0BDUYdE59Xjl1Zs7SJgzStd7YbObYuI9HAIJ/o8h+mB4bN2vOIWFDsmnCl8AcC
+dI9mkx4ZM/ENZzwYV0LLSr/4fN0vpg12QNoV9BqslJRbP1N6Hd/QKzBVu/h3/VS+
+3feUgg7Nqz7zhIodcZN4l/6dcZqfDaX9SblntLA5ieOwFP9pciRE86IRZ7tcHJwS
+8wIDAQAB
+-----END PUBLIC KEY-----
+true
+POST /wallet/rollbackrequest 500 19.361 ms - 342
+
+
+TypeError: Cannot read properties of null (reading 'Stake')
+    at /var/www/bettingApp/controller/walletController.js:385:68
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

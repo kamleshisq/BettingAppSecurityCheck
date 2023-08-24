@@ -175,7 +175,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
         // }
         accountStatement.create(Acc)
         // accountStatement.create(Acc2)
-    
+        console.log("WORKING")
         if(clientIP == "::ffff:3.9.120.247"){
             res.status(200).json({
                 "balance": user.availableBalance - req.body.debitAmount,
