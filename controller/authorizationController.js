@@ -94,7 +94,7 @@ exports.login = catchAsync (async(req, res, next) => {
         })
     }else{
         const user = await User.findOne({userName}).select('+password');
-        // console.log(user.role_type)
+        console.log(user)
         if(!user || !(await user.correctPassword(password, user.password))){
             res.status(404).json({
                 status:'error',
