@@ -226,7 +226,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
         // await accountStatement.findOneAndUpdate({transactionId:req.body.transactionId},Acc)
     }else{
         let bet = await betModel.findOneAndUpdate({transactionId:req.body.transactionId},{status:"WON", returns:req.body.creditAmount});
-        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1, exposure:-bet.Stake, uplinePL:req.body.creditAmount, pointsWL:req.body.creditAmount}});
+        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance: req.body.creditAmount, myPL: req.body.creditAmount, Won:1, exposure:-bet.Stake, uplinePL:-req.body.creditAmount, pointsWL:req.body.creditAmount}});
         // let parentUser
         let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/WON`
         let description2 = `Bet for ${game.game_name}/stake = ${bet.Stake}/user = ${user.userName}/WON `
