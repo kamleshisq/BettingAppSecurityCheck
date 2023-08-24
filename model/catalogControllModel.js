@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const catalogControllerSchema = mongoose.Schema({
     Id:{
         type:String,
