@@ -117,13 +117,13 @@ exports.betrequest = catchAsync(async(req, res, next) => {
     let amount = req.body.debitAmount
     for(let i = user.parentUsers.length - 1; i >= 1; i--){
         console.log("WORKING")
-        let parentUser1 = await userModel.findById(user.parentUser[i])
-        let parentUser2 = await userModel.findById(user.parentUser[i-1])
+        let parentUser1 = await userModel.findById(user.parentUsers[i])
+        let parentUser2 = await userModel.findById(user.parentUsers[i-1])
         let parentUser1Amount = (parseFloat(parseFloat(amount) * parseFloat(parentUser1.myShare)/100))
         let parentUser2Amount = (parseFloat(parseFloat(amount) * parseFloat(parentUser1.Share)/100))
-        await userModel.findByIdAndUpdate(user.parentUser[i], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount}})
+        await userModel.findByIdAndUpdate(user.parentUsers[i], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount}})
         if(i === 1){
-            await userModel.findByIdAndUpdate(user.parentUser[i - 1], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser2Amount, lifetimePL : parentUser2Amount}})
+            await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser2Amount, lifetimePL : parentUser2Amount}})
         }
         amount = parentUser2Amount
     }
