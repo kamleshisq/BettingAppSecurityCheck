@@ -8,12 +8,12 @@
     <div class="container-fluid">
       <div class="new-head"> 
           <h3 >User Detail <%=userDetails.userName%></h3>
-          <!-- <form action="" style="display: flex;height: 30px;">
+          <!-- <form action="">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
               </div>
-              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
+              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
               
             </div>
             <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
@@ -44,9 +44,7 @@
                       <div class="container">
                           <div class="form-container">
                             <div class="form-column blue">
-                              <div class="modal-header" style="text-align: center;">
-                                  <h4 class="modal-title" style="color: #fff;">User Details</h4>
-                                </div>
+                              <div class="tab-heading"> <h4>User Details</h4> </div>
                               <form class="form-data userDetails" id="<%=userDetails._id%>">
                                   <div class="row">
                                       <div class="col form-group">
@@ -100,15 +98,14 @@
                   
                   </div>
               </div> 
-              <!-- <div id="FOOTBALL" class="tabcontent" style="margin-bottom:15px">
-                  <div class="row" style="padding:10px 0px">
+              <!-- <div id="FOOTBALL" class="tabcontent">
+                  <div class="row">
                       <div class="container">
                           <div class="form-container">
                             <div class="form-column blue">
-                              <div class="modal-header" style="text-align: center;">
-                                  <h4 class="modal-title" style="color: #fff;">User Config</h4>
+                              <div class="tab-heading">
+                                  <h4>User Config</h4>
                                 </div>
-                              
                             </div>
                           </div>
                         </div>
@@ -191,7 +188,7 @@
               </div>
               <div id="BASKETBALL" class="tabcontent">
                 <div class="row">
-                  <form action="" style="display: flex;height: 30px;">
+                  <form action="">
                       <div class="input-group">
                       <div class="cur-bet-amount-dv">
                           <!-- <select class="form-select form-select-sm acount-stat-ro-form-input" aria-label="Default select example">
@@ -230,14 +227,14 @@
                       </div>
                     </form>
                     <div class="pageId" data-pageid="1"></div>
-                    <section style="padding: 15px 0px;">
+                    <section>
                       <div class="container-fluid">
-                          <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
+                          <div class="row">
                           </div>
-                          <div class="table_data_details_ col-lg-12" style="background-color: #EAEEF7;">
+                          <div class="table_data_details_ col-lg-12">
                             <table >
                                 <thead>
-                                    <tr style="text-align: center;font-size: 11px;">
+                                    <tr>
                                       <th>S.No</th>
                                       <th>Date</th>
                                       <th>User Name</th>
@@ -256,9 +253,9 @@
                                   <% for(let i = 0; i < bets.length; i++){%>
                                     <% let date = new Date(bets[i].date)%>
                                     <%if((i%2)==0){%>
-                                        <tr style="text-align: center;" class="blue">
+                                        <tr>
                                     <%}else{%>
-                                        <tr style="text-align: center;" >
+                                        <tr>
                                     <%}%>
                                     <td><%=i + 1%></td>
                                     <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
@@ -295,7 +292,7 @@
                 </div>
               <div id="HORSE RACING" class="tabcontent">
                 <div class="row">
-                  <form action="" style="display: flex;height: 30px;">
+                  <form action="">
                   <div class="input-group">
                     <div class="cur-bet-amount-dv">
   
@@ -320,11 +317,11 @@
                     <button  id="pdfDownloadACC" class="btn acount-stat-ro-titl-form-btnn load">Download CSV</button>
                   </form>
                   <div class="pageIdACC" data-pageid="1"></div>
-                  <section style="padding: 15px 0px;">
+                  <section>
                     <div class="container-fluid">
-                        <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
+                        <div class="row">
                         </div>
-                        <div class="table_data_details_ col-lg-12" style="background-color: #EAEEF7;">
+                        <div class="table_data_details_ col-lg-12">
                           <table class="acount-stat-tbl" id="table12">
   
                             <thead class="acount-stat-tbl-hed">
@@ -393,11 +390,11 @@
               <div id="Greyhound" class="tabcontent">
                 <div class="row">
                   <div class="pageIdHistory" data-pageid="1"></div>
-                  <section style="padding: 15px 0px;">
+                  <section>
                     <div class="container-fluid">
-                        <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
+                        <div class="row">
                         </div>
-                        <div class="table_data_details_ col-lg-12" style="background-color: #EAEEF7;">
+                        <div class="table_data_details_ col-lg-12">
                           <table class="acount-stat-tbl" >
   
                             <thead class="acount-stat-tbl-hed">
@@ -463,7 +460,7 @@
                 </div>
               </div>
               <div id="Payment" class="tabcontent">
-                  <div class="row" style="padding:10px 0px">
+                  <div class="row">
                     
                   </div>
                 </div>
