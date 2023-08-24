@@ -338,109 +338,124 @@ exports.betResult = catchAsync(async(req, res, next) =>{
 });
 
 exports.rollBack = catchAsync(async(req, res, next) => {
-    let user =  await userModel.findById(req.body.userId)
+    let user1 =  await userModel.findById(req.body.userId)
     let bet1 =  await betModel.findOne({transactionId:req.body.transactionId})
-    console.log(user, bet1)
-    // try{
-    //     const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    // let user;
-    // let balance;
-    // let parentUser;
-    // user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount, exposure:-req.body.rollbackAmount, uplinePL:-req.body.rollbackAmount, pointsWL:req.body.rollbackAmount}});
-    // console.log(user, "USer")
-    // if(!user){
-    //     if(clientIP == "::ffff:3.9.120.247"){
-    //         res.status(200).json({
-    //             "status": "RS_OK",
-    //             "balance": 0
-    //         })
-    //     }else{
-    //         res.status(200).json({
-    //             "status": "OP_SUCCESS",
-    //             "balance": 0
-    //         })
-    //     }
-    // }else{
-    //     let game = {}
-    //     if(req.body.gameId){
-    //         game = await gameModel.findOne({game_id:(req.body.gameId)*1})
-    //     }else{
-    //         let game1 = await betModel.findOne({transactionId:req.body.transactionId})
-    //         game.game_name = game1.match
-    //     }
-    //     // if(user.parentUsers.length < 2){
-    //     //     // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
-    //     //     parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -req.body.rollbackAmount, downlineBalance: req.body.rollbackAmount}})
-    //     // }else{
-    //     //     await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: req.body.rollbackAmount, downlineBalance: req.body.rollbackAmount}})
-    //     //     parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-req.body.rollbackAmount, downlineBalance: req.body.rollbackAmount}})
-    //     // }
-    //     let debitAmountForP = req.body.rollbackAmount
-    //     for(let i = user.parentUsers.length - 1; i >= 1; i--){
-    //         let parentUser1 = await userModel.findById(user.parentUsers[i])
-    //         let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
-    //         let parentUser1Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.myShare))/100)
-    //         let parentUser2Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.Share))/100)
-    //         parentUser1Amount = Math.round(parentUser1Amount * 100) / 100;
-    //         parentUser2Amount = Math.round(parentUser2Amount * 100) / 100;
-    //         await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:req.body.rollbackAmount, myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:req.body.rollbackAmount}})
-    //         if(i === 1){
-    //             await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:req.body.rollbackAmount, myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:req.body.rollbackAmount}})
-    //         }
-    //         debitAmountForP = parentUser2Amount
-    //     }
-    //     balance = user.balance + req.body.rollbackAmount;
-    //     let bet =  await betModel.findOne({transactionId:req.body.transactionId})
-    //     let acc = await accountStatement.find({transactionId:req.body.transactionId})
-    //     if(bet){
-    //         await betModel.findByIdAndUpdate(bet._id,{returns:0, status:"CANCEL"})
-    //         let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/CANCEL`
-    //         let description2 = `Bet for ${game.game_name}/stake = ${bet.Stake}/user = ${user.userName}/CANCEL `
-    //         if(acc){
-    //             // let Acc2 = {
-    //             //     "user_id":parentUser._id,
-    //             //     "description": description2,
-    //             //     "creditDebitamount" : -req.body.rollbackAmount,
-    //             //     "balance" : parentUser.availableBalance - req.body.rollbackAmount,
-    //             //     "date" : Date.now(),
-    //             //     "userName" : parentUser.userName,
-    //             //     "role_type" : parentUser.role_type,
-    //             //     "Remark":"-",
-    //             //     "stake": req.body.rollbackAmount,
-    //             //     "transactionId":req.body.transactionId
-    //             // }
-    //             let Acc = {
-    //                 "user_id":req.body.userId,
-    //                 "description": description,
-    //                 "creditDebitamount" : req.body.rollbackAmount,
-    //                 "balance" : user.availableBalance + req.body.rollbackAmount,
-    //                 "date" : Date.now(),
-    //                 "userName" : user.userName,
-    //                 "role_type" : user.role_type,
-    //                 "Remark":"-",
-    //                 "stake": req.body.rollbackAmount,
-    //                 "transactionId":req.body.transactionId
-    //             }
-    //             await accountStatement.create(Acc)
-    //             // await accountStatement.create(Acc2)
-    //         }
-    //     }
-    //     console.log(balance)
-    //     if(clientIP == "::ffff:3.9.120.247"){
-    //         res.status(200).json({
-    //             "status": "RS_OK",
-    //             "balance": balance
-    //         })
-    //     }else{
-    //         res.status(200).json({
-    //             "status": "OP_SUCCESS",
-    //             "balance": balance
-    //         })
-    //     }
-    // }
 
-    // }catch(err){
-    //     console.log(err)
-    // }
+    // console.log(user, bet1)
+    if(bet1 != null){
+        try{
+            const clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+        let user;
+        let balance;
+        let parentUser;
+        user = await userModel.findByIdAndUpdate(req.body.userId,{$inc:{availableBalance:req.body.rollbackAmount, myPL: req.body.rollbackAmount, exposure:-req.body.rollbackAmount, uplinePL:-req.body.rollbackAmount, pointsWL:req.body.rollbackAmount}});
+        console.log(user, "USer")
+        if(!user){
+            if(clientIP == "::ffff:3.9.120.247"){
+                res.status(200).json({
+                    "status": "RS_OK",
+                    "balance": 0
+                })
+            }else{
+                res.status(200).json({
+                    "status": "OP_SUCCESS",
+                    "balance": 0
+                })
+            }
+        }else{
+            let game = {}
+            if(req.body.gameId){
+                game = await gameModel.findOne({game_id:(req.body.gameId)*1})
+            }else{
+                let game1 = await betModel.findOne({transactionId:req.body.transactionId})
+                game.game_name = game1.match
+            }
+            // if(user.parentUsers.length < 2){
+            //     // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (entry.Stake * entry.oddValue), downlineBalance: (entry.Stake * entry.oddValue)}})
+            //     parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -req.body.rollbackAmount, downlineBalance: req.body.rollbackAmount}})
+            // }else{
+            //     await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: req.body.rollbackAmount, downlineBalance: req.body.rollbackAmount}})
+            //     parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-req.body.rollbackAmount, downlineBalance: req.body.rollbackAmount}})
+            // }
+            let debitAmountForP = req.body.rollbackAmount
+            for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                let parentUser1 = await userModel.findById(user.parentUsers[i])
+                let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
+                let parentUser1Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.myShare))/100)
+                let parentUser2Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.Share))/100)
+                parentUser1Amount = Math.round(parentUser1Amount * 100) / 100;
+                parentUser2Amount = Math.round(parentUser2Amount * 100) / 100;
+                await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:req.body.rollbackAmount, myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:req.body.rollbackAmount}})
+                if(i === 1){
+                    await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:req.body.rollbackAmount, myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:req.body.rollbackAmount}})
+                }
+                debitAmountForP = parentUser2Amount
+            }
+            balance = user.balance + req.body.rollbackAmount;
+            let bet =  await betModel.findOne({transactionId:req.body.transactionId})
+            let acc = await accountStatement.find({transactionId:req.body.transactionId})
+            if(bet){
+                await betModel.findByIdAndUpdate(bet._id,{returns:0, status:"CANCEL"})
+                let description = `Bet for ${game.game_name}/stake = ${bet.Stake}/CANCEL`
+                let description2 = `Bet for ${game.game_name}/stake = ${bet.Stake}/user = ${user.userName}/CANCEL `
+                if(acc){
+                    // let Acc2 = {
+                    //     "user_id":parentUser._id,
+                    //     "description": description2,
+                    //     "creditDebitamount" : -req.body.rollbackAmount,
+                    //     "balance" : parentUser.availableBalance - req.body.rollbackAmount,
+                    //     "date" : Date.now(),
+                    //     "userName" : parentUser.userName,
+                    //     "role_type" : parentUser.role_type,
+                    //     "Remark":"-",
+                    //     "stake": req.body.rollbackAmount,
+                    //     "transactionId":req.body.transactionId
+                    // }
+                    let Acc = {
+                        "user_id":req.body.userId,
+                        "description": description,
+                        "creditDebitamount" : req.body.rollbackAmount,
+                        "balance" : user.availableBalance + req.body.rollbackAmount,
+                        "date" : Date.now(),
+                        "userName" : user.userName,
+                        "role_type" : user.role_type,
+                        "Remark":"-",
+                        "stake": req.body.rollbackAmount,
+                        "transactionId":req.body.transactionId
+                    }
+                    await accountStatement.create(Acc)
+                    // await accountStatement.create(Acc2)
+                }
+            }
+            console.log(balance)
+            if(clientIP == "::ffff:3.9.120.247"){
+                res.status(200).json({
+                    "status": "RS_OK",
+                    "balance": balance
+                })
+            }else{
+                res.status(200).json({
+                    "status": "OP_SUCCESS",
+                    "balance": balance
+                })
+            }
+        }
+    
+        }catch(err){
+            console.log(err)
+        }
+    }else{
+        if(clientIP == "::ffff:3.9.120.247"){
+            res.status(200).json({
+                "status": "RS_OK",
+                "balance": user1.availableBalance
+            })
+        }else{
+            res.status(200).json({
+                "status": "OP_SUCCESS",
+                "balance": user1.availableBalance
+            })
+        }
+    }
     
 })
