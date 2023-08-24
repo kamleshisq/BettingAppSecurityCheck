@@ -24,16 +24,23 @@
     <%}else{%>
       <div class="skin-data red">
     <%}%>
-     
       <h5>MY P/L</h5>
         <h6><%= me.myPL%></h6>
     </div>
-  <div class="skin-data red">
+    <%if(me.uplinePL > 0){%>
+      <div class="skin-data green">
+    <%}else{ %>
+      <div class="skin-data red">
+    <%} %>
     
     <h5>Upline P/L</h5>
       <h6><%= me.uplinePL%></h6>
   </div>
-  <div class="skin-data green">
+  <%if(me.lifetimePL > 0){%>
+    <div class="skin-data green">
+  <%}else{ %>
+    <div class="skin-data red">
+  <%} %>
     
     <h5>Lifetime P/L</h5>
       <h6><%= me.lifetimePL%></h6>
