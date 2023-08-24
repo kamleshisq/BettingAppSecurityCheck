@@ -7,7 +7,7 @@ const catalogControllerSchema = mongoose.Schema({
     },
     name:{
 
-        type:String,
+        type:String, 
         required:true
     },
     type:{
