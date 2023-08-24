@@ -247,6 +247,7 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             if(i === 1){
                 await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:req.body.creditAmount, myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:req.body.creditAmount}})
             }
+            debitAmountForP = parentUser2Amount
         }
         // console.log(user.parentUsers)
         if(!user){
