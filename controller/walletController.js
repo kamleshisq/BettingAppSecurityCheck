@@ -116,6 +116,7 @@ exports.betrequest = catchAsync(async(req, res, next) => {
     // }
     let amount = req.body.debitAmount
     for(let i = user.parentUsers.length - 1; i >= 1; i--){
+        console.log("WORKING")
         let parentUser1 = await userModel.findById(user.parentUser[i])
         let parentUser2 = await userModel.findById(user.parentUser[i-1])
         let parentUser1Amount = (parseFloat(parseFloat(amount) * parseFloat(parentUser1.myShare)/100))
