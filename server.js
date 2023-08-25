@@ -2400,7 +2400,22 @@ io.on('connection', (socket) => {
 
     socket.on('sportStatusChange',async(data) => {
         console.log(data)
-        // try{
+        let allData =  await getCrkAndAllData()
+        const cricket = allData[0].gameList[0].eventList
+        let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
+        let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
+        footBall = footBall.eventList
+        Tennis = Tennis.eventList
+        const resultSearch = cricket.concat(footBall, Tennis);
+        let result = resultSearch.find(item => item.eventData.compId == data.id)
+        let data = {
+            Id : data.id,
+            name : result.eventData.league,
+            type : league,
+            status : false      
+        }
+        console.log(data)
+         // try{
         //     let msg;
         //     let sport;
         //     if(data.status){
