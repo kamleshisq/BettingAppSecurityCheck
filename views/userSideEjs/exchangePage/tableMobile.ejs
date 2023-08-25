@@ -9,6 +9,7 @@
       <div class="series-wise-data">
         <div class="series-title"><%=cricketSeries[i].series%></div>
         <%for(let j = 0; j < cricketSeries[i].matchdata.length; j++){%>
+          <%if(!catalog.some(item => item.Id == cricketSeries[i].matchdata[j].eventData.eventId)){ %>
           <%
               
           var timestamp = `${cricketSeries[i].matchdata[j].eventData.time}` * 1000; 
@@ -166,6 +167,7 @@
             </a>
           </div>
         <%}%>
+        <%}%>
       </div>
       <%} %>
     <%}%>
@@ -185,6 +187,7 @@
       <div class="series-wise-data">
         <div class="series-title"><%=footbalSeries[i].series%></div>
         <%for(let j = 0; j < footbalSeries[i].matchdata.length; j++){%>
+          <%if(!catalog.some(item => item.Id == footbalSeries[i].matchdata[j].eventData.eventId)){ %>
           <%
               
           var timestamp = `${footbalSeries[i].matchdata[j].eventData.time}` * 1000; 
@@ -357,6 +360,7 @@
             </a>
           </div>
         <%}%>
+        <%}%>
       </div>
       <%}%>
     <%}%>
@@ -375,6 +379,7 @@
       <div class="series-wise-data">
         <div class="series-title"><%=tennisSeries[i].series%></div>
         <%for(let j = 0; j < tennisSeries[i].matchdata.length; j++){%>
+          <%if(!catalog.some(item => item.Id == tennisSeries[i].matchdata[j].eventData.eventId)){ %>
           <%
               
           var timestamp = `${tennisSeries[i].matchdata[j].eventData.time}` * 1000; 
@@ -546,6 +551,7 @@
               <%} %>
             </a>
           </div>
+        <%}%>
         <%}%>
       </div>
       <%} %>
