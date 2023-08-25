@@ -14,6 +14,10 @@ const commission = mongoose.Schema({
         type:{
             type:String,
             default:"WIN"
+        },
+        status:{
+            type:Boolean,
+            default:false
         }
     },
     Bookmaker:{
@@ -24,6 +28,10 @@ const commission = mongoose.Schema({
         type:{
             type:String,
             default:"WIN"
+        },
+        status:{
+            type:Boolean,
+            default:false
         }
     },
     fency:{
@@ -34,6 +42,10 @@ const commission = mongoose.Schema({
         type:{
             type:String,
             default:"WIN"
+        },
+        status:{
+            type:Boolean,
+            default:false
         }
     }
 })
