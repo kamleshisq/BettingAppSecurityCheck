@@ -37,25 +37,40 @@ exports.mapbet = async(data) => {
       userId:`${data.LOGINDATA.LOGINUSER._id}`,
       eventName: `${bets[0].match}`,
       date:Date.now(),
-      result:data.result
+      result:data.result,
+      marketName : data.marketName
     }
     await settlementHistory.create(dataForHistory)
     bets.forEach(async(bet) => {
         if(data.result === "yes" || data.result === "no"){
             if(bet.secId === "odd_Even_Yes" && data.result === "yes" || bet.secId === "odd_Even_No" && data.result === "no" ){
-                let bet1 = await betModel.findByIdAndUpdate(bet._id,{status:"WON", returns:Math.round(bet.Stake * bet.oddValue)})
-                        let user = await userModel.findByIdAndUpdate(bet.userId,{$inc:{balance: Math.round(bet.Stake * bet.oddValue), availableBalance: Math.round(bet.Stake * bet.oddValue), myPL: Math.round(bet.Stake * bet.oddValue), Won:1, exposure:- Math.round(bet.Stake)}})
+                let bet1 = await betModel.findByIdAndUpdate(bet._id,{status:"WON", returns:parseFloat(bet.Stake * bet.oddValue)})
+                        let user = await userModel.findByIdAndUpdate(bet.userId,{$inc:{availableBalance: parseFloat(bet.Stake * bet.oddValue), myPL: parseFloat(bet.Stake * bet.oddValue), Won:1, exposure:- parseFloat(bet.Stake), uplinePL:-parseFloat(bet.Stake * bet.oddValue), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
                         //og(user)
                         let description = `Bet for /stake = ${bet.Stake}/WON`
                         let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/WON `
-                        let parentUser
+                        // let parentUser
 
-                        if(user.parentUsers.length < 2){
-                            // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (bet.Stake * bet.oddValue), downlineBalance: (bet.Stake * bet.oddValue)}})
-                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -Math.round(bet.Stake * bet.oddValue), downlineBalance: Math.round(bet.Stake * bet.oddValue), myPL: -Math.round(bet.Stake * bet.oddValue)}})
-                        }else{
-                            await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: Math.round(bet.Stake * bet.oddValue), downlineBalance: Math.round(bet.Stake * bet.oddValue)}})
-                            parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance: -Math.round(bet.Stake * bet.oddValue), downlineBalance: Math.round(bet.Stake * bet.oddValue), myPL: -Math.round(bet.Stake * bet.oddValue)}})
+                        // if(user.parentUsers.length < 2){
+                        //     // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (bet.Stake * bet.oddValue), downlineBalance: (bet.Stake * bet.oddValue)}})
+                        //     parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -parseFloat(bet.Stake * bet.oddValue), downlineBalance: parseFloat(bet.Stake * bet.oddValue), myPL: -parseFloat(bet.Stake * bet.oddValue)}})
+                        // }else{
+                        //     await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: parseFloat(bet.Stake * bet.oddValue), downlineBalance: parseFloat(bet.Stake * bet.oddValue)}})
+                        //     parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance: -parseFloat(bet.Stake * bet.oddValue), downlineBalance: parseFloat(bet.Stake * bet.oddValue), myPL: -parseFloat(bet.Stake * bet.oddValue)}})
+                        // }
+                        let debitAmountForP = parseFloat(bet.Stake * bet.oddValue)
+                        for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                            let parentUser1 = await userModel.findById(user.parentUsers[i])
+                            let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
+                            let parentUser1Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.myShare))/100)
+                            let parentUser2Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.Share))/100)
+                            parentUser1Amount = Math.round(parentUser1Amount * 100) / 100;
+                            parentUser2Amount = Math.round(parentUser2Amount * 100) / 100;
+                            await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
+                            if(i === 1){
+                                await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
+                            }
+                            debitAmountForP = parentUser2Amount
                         }
                         
                         await accModel.create({
@@ -71,18 +86,18 @@ exports.mapbet = async(data) => {
                           "transactionId":`${bet.transactionId}`
                         })
 
-                        await accModel.create({
-                          "user_id":parentUser._id,
-                          "description": description2,
-                          "creditDebitamount" : -(bet.Stake * bet.oddValue),
-                          "balance" : parentUser.availableBalance - (bet.Stake * bet.oddValue),
-                          "date" : Date.now(),
-                          "userName" : parentUser.userName,
-                          "role_type" : parentUser.role_type,
-                          "Remark":"-",
-                          "stake": bet.Stake,
-                          "transactionId":`${bet.transactionId}Parent`
-                        })
+                        // await accModel.create({
+                        //   "user_id":parentUser._id,
+                        //   "description": description2,
+                        //   "creditDebitamount" : -(bet.Stake * bet.oddValue),
+                        //   "balance" : parentUser.availableBalance - (bet.Stake * bet.oddValue),
+                        //   "date" : Date.now(),
+                        //   "userName" : parentUser.userName,
+                        //   "role_type" : parentUser.role_type,
+                        //   "Remark":"-",
+                        //   "stake": bet.Stake,
+                        //   "transactionId":`${bet.transactionId}Parent`
+                        // })
             }else{
             let user = await userModel.findById(bet.userId)
               // let commission = await commissionModel.find({userId:user.parentUsers[1]})
@@ -94,13 +109,13 @@ exports.mapbet = async(data) => {
               await betModel.findByIdAndUpdate(bet._id,{status:"LOSS"})
               await userModel.findByIdAndUpdate(bet.userId,{$inc:{Loss:1, exposure:-parseFloat(bet.Stake)}})
               // if(commissionPer > 0){
-              //   let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - Math.round(commissionPer * bet.Stake), availableBalance : -Math.round(commissionPer * bet.Stake)}})
-              //   let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: Math.round(commissionPer * bet.Stake), availableBalance : Math.round(commissionPer * bet.Stake)}})
+              //   let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - parseFloat(commissionPer * bet.Stake), availableBalance : -parseFloat(commissionPer * bet.Stake)}})
+              //   let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: parseFloat(commissionPer * bet.Stake), availableBalance : parseFloat(commissionPer * bet.Stake)}})
               //   await accModel.create({
               //     "user_id":WhiteLableUser._id,
               //     "description": `commission for ${bet.match}/stake = ${bet.Stake}`,
-              //     "creditDebitamount" : - Math.round(commissionPer * bet.Stake),
-              //     "balance" : WhiteLableUser.availableBalance - Math.round(commissionPer * bet.Stake),
+              //     "creditDebitamount" : - parseFloat(commissionPer * bet.Stake),
+              //     "balance" : WhiteLableUser.availableBalance - parseFloat(commissionPer * bet.Stake),
               //     "date" : Date.now(),
               //     "userName" : WhiteLableUser.userName,
               //     "role_type" : WhiteLableUser.role_type,
@@ -112,8 +127,8 @@ exports.mapbet = async(data) => {
               //   await accModel.create({
               //     "user_id":houseUser._id,
               //     "description": `commission for ${bet.match}/stake = ${bet.Stake}/from user ${WhiteLableUser.userName}`,
-              //     "creditDebitamount" : Math.round(commissionPer * bet.Stake),
-              //     "balance" : houseUser.availableBalance + Math.round(commissionPer * bet.Stake),
+              //     "creditDebitamount" : parseFloat(commissionPer * bet.Stake),
+              //     "balance" : houseUser.availableBalance + parseFloat(commissionPer * bet.Stake),
               //     "date" : Date.now(),
               //     "userName" : houseUser.userName,
               //     "role_type" : houseUser.role_type,
@@ -125,24 +140,40 @@ exports.mapbet = async(data) => {
             }
         }else{
             if(bet.selectionName.toLowerCase().includes(data.result.toLowerCase())){
-                let bet1 = await betModel.findByIdAndUpdate(bet._id,{status:"WON", returns:Math.round(bet.Stake * bet.oddValue)})
-                let user = await userModel.findByIdAndUpdate(bet.userId,{$inc:{balance: Math.round(bet.Stake * bet.oddValue), availableBalance: Math.round(bet.Stake * bet.oddValue), myPL: Math.round(bet.Stake * bet.oddValue), Won:1, exposure:-parseFloat(bet.Stake)}})
+                let bet1 = await betModel.findByIdAndUpdate(bet._id,{status:"WON", returns:parseFloat(bet.Stake * bet.oddValue)})
+                let user = await userModel.findByIdAndUpdate(bet.userId,{$inc:{availableBalance: parseFloat(bet.Stake * bet.oddValue), myPL: parseFloat(bet.Stake * bet.oddValue), Won:1, exposure:-parseFloat(bet.Stake), uplinePL:-parseFloat(bet.Stake * bet.oddValue), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
                 let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
                 let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/WON `
                 let parentUser
 
-                if(user.parentUsers.length < 2){
-                    // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (bet.Stake * bet.oddValue), downlineBalance: (bet.Stake * bet.oddValue)}})
-                    parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -Math.round(bet.Stake * bet.oddValue), downlineBalance: Math.round(bet.Stake * bet.oddValue), myPL: -Math.round(bet.Stake * bet.oddValue)}})
-                }else{
-                    await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: Math.round(bet.Stake * bet.oddValue), downlineBalance: Math.round(bet.Stake * bet.oddValue)}})
-                    parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-Math.round(bet.Stake * bet.oddValue), downlineBalance: Math.round(bet.Stake * bet.oddValue), myPL: -Math.round(bet.Stake * bet.oddValue)}})
+                // if(user.parentUsers.length < 2){
+                //     // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: (bet.Stake * bet.oddValue), downlineBalance: (bet.Stake * bet.oddValue)}})
+                //     parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance: -parseFloat(bet.Stake * bet.oddValue), downlineBalance: parseFloat(bet.Stake * bet.oddValue), myPL: -parseFloat(bet.Stake * bet.oddValue)}})
+                // }else{
+                //     await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: parseFloat(bet.Stake * bet.oddValue), downlineBalance: parseFloat(bet.Stake * bet.oddValue)}})
+                //     parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-parseFloat(bet.Stake * bet.oddValue), downlineBalance: parseFloat(bet.Stake * bet.oddValue), myPL: -parseFloat(bet.Stake * bet.oddValue)}})
+                // }
+
+                let debitAmountForP = parseFloat(bet.Stake * bet.oddValue)
+                for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                    let parentUser1 = await userModel.findById(user.parentUsers[i])
+                    let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
+                    let parentUser1Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.myShare))/100)
+                    let parentUser2Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.Share))/100)
+                    parentUser1Amount = Math.round(parentUser1Amount * 100) / 100;
+                    parentUser2Amount = Math.round(parentUser2Amount * 100) / 100;
+                    await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
+                    if(i === 1){
+                        await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
+                    }
+                    debitAmountForP = parentUser2Amount
                 }
+
                 //og()
                 await accModel.create({
                   "user_id":user._id,
                   "description": description,
-                  "creditDebitamount" : Math.round(bet.Stake * bet.oddValue),
+                  "creditDebitamount" : parseFloat(bet.Stake * bet.oddValue),
                   "balance" : user.availableBalance + (bet.Stake * bet.oddValue),
                   "date" : Date.now(),
                   "userName" : user.userName,
@@ -152,18 +183,18 @@ exports.mapbet = async(data) => {
                   "transactionId":`${bet.transactionId}`
                 })
 
-                await accModel.create({
-                  "user_id":parentUser._id,
-                  "description": description2,
-                  "creditDebitamount" : -Math.round(bet.Stake * bet.oddValue),
-                  "balance" : parentUser.availableBalance - (bet.Stake * bet.oddValue),
-                  "date" : Date.now(),
-                  "userName" : parentUser.userName,
-                  "role_type" : parentUser.role_type,
-                  "Remark":"-",
-                  "stake": bet.Stake,
-                  "transactionId":`${bet.transactionId}Parent`
-                })
+                // await accModel.create({
+                //   "user_id":parentUser._id,
+                //   "description": description2,
+                //   "creditDebitamount" : -parseFloat(bet.Stake * bet.oddValue),
+                //   "balance" : parentUser.availableBalance - (bet.Stake * bet.oddValue),
+                //   "date" : Date.now(),
+                //   "userName" : parentUser.userName,
+                //   "role_type" : parentUser.role_type,
+                //   "Remark":"-",
+                //   "stake": bet.Stake,
+                //   "transactionId":`${bet.transactionId}Parent`
+                // })
             }else{
               // let user = await userModel.findById(bet.userId)
               // let commission = await commissionModel.find({userId:user.parentUsers[1]})
@@ -176,13 +207,13 @@ exports.mapbet = async(data) => {
               await betModel.findByIdAndUpdate(bet._id,{status:"LOSS"})
               await userModel.findByIdAndUpdate(bet.userId,{$inc:{Loss:1, exposure:-parseFloat(bet.Stake)}})
               // if(commissionPer > 0){
-              //     let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - Math.round(commissionPer * bet.Stake), availableBalance : -Math.round(commissionPer * bet.Stake)}})
-              //     let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: Math.round(commissionPer * bet.Stake), availableBalance : Math.round(commissionPer * bet.Stake)}})
+              //     let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - parseFloat(commissionPer * bet.Stake), availableBalance : -parseFloat(commissionPer * bet.Stake)}})
+              //     let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: parseFloat(commissionPer * bet.Stake), availableBalance : parseFloat(commissionPer * bet.Stake)}})
               //     await accModel.create({
               //       "user_id":WhiteLableUser._id,
               //       "description": `commission for ${bet.match}/stake = ${bet.Stake}`,
-              //       "creditDebitamount" : - Math.round(commissionPer * bet.Stake),
-              //       "balance" : WhiteLableUser.availableBalance - Math.round(commissionPer * bet.Stake),
+              //       "creditDebitamount" : - parseFloat(commissionPer * bet.Stake),
+              //       "balance" : WhiteLableUser.availableBalance - parseFloat(commissionPer * bet.Stake),
               //       "date" : Date.now(),
               //       "userName" : WhiteLableUser.userName,
               //       "role_type" : WhiteLableUser.role_type,
@@ -194,8 +225,8 @@ exports.mapbet = async(data) => {
               //     await accModel.create({
               //       "user_id":houseUser._id,
               //       "description": `commission for ${bet.match}/stake = ${bet.Stake}/from user ${WhiteLableUser.userName}`,
-              //       "creditDebitamount" : Math.round(commissionPer * bet.Stake),
-              //       "balance" : houseUser.availableBalance + Math.round(commissionPer * bet.Stake),
+              //       "creditDebitamount" : parseFloat(commissionPer * bet.Stake),
+              //       "balance" : houseUser.availableBalance + parseFloat(commissionPer * bet.Stake),
               //       "date" : Date.now(),
               //       "userName" : houseUser.userName,
               //       "role_type" : houseUser.role_type,
