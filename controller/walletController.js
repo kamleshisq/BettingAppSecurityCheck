@@ -124,8 +124,8 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             let parentUser2 = await userModel.findById(user.parentUsers[i-1])
             let parentUser1Amount = (parseFloat(amount) * parseFloat(parentUser1.myShare)/100)
             let parentUser2Amount = (parseFloat(amount) * parseFloat(parentUser1.Share)/100)
-            parentUser1Amount = Math.round(parentUser1Amount * 100) / 100;
-            parentUser2Amount = Math.round(parentUser2Amount * 100) / 100;
+            parentUser1Amount = Math.round(parentUser1Amount * 10000) / 10000;
+            parentUser2Amount = Math.round(parentUser2Amount * 10000) / 10000;
             await userModel.findByIdAndUpdate(user.parentUsers[i], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount, pointsWL:-req.body.debitAmount}})
             if(i === 1){
                 await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser2Amount, lifetimePL : parentUser2Amount, pointsWL:-req.body.debitAmount}})
@@ -253,8 +253,8 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
                 let parentUser1Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.myShare))/100)
                 let parentUser2Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.Share))/100)
-                parentUser1Amount = Math.round(parentUser1Amount * 100) / 100;
-                parentUser2Amount = Math.round(parentUser2Amount * 100) / 100;
+                parentUser1Amount = Math.round(parentUser1Amount * 10000) / 10000;
+                parentUser2Amount = Math.round(parentUser2Amount * 10000) / 10000;
                 await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:req.body.creditAmount, myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:req.body.creditAmount}})
                 if(i === 1){
                     await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:req.body.creditAmount, myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:req.body.creditAmount}})
@@ -383,8 +383,8 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                 let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
                 let parentUser1Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.myShare))/100)
                 let parentUser2Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.Share))/100)
-                parentUser1Amount = Math.round(parentUser1Amount * 100) / 100;
-                parentUser2Amount = Math.round(parentUser2Amount * 100) / 100;
+                parentUser1Amount = Math.round(parentUser1Amount * 10000) / 10000;
+                parentUser2Amount = Math.round(parentUser2Amount * 10000) / 10000;
                 await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:req.body.rollbackAmount, myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:req.body.rollbackAmount}})
                 if(i === 1){
                     await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:req.body.rollbackAmount, myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:req.body.rollbackAmount}})
