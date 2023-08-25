@@ -8276,12 +8276,34 @@ socket.on('connect', () => {
           })
 
           socket.on("eventIdForMarketList", async(data) => {
+            let i = 0
             for (var marketKey in data.marketList) {
                 if (data.marketList.hasOwnProperty(marketKey)) {
                   var market = data.marketList[marketKey];
                   if (market !== null && typeof market === "object") {
+                    i ++
                     console.log("Market Key:", marketKey);
                     console.log("Market Object:", market);
+                    let html = ""
+                    if(Array.isArray(market)){
+                        for(let j = 0; j < market.length; j++){
+                            html += `
+                            <tr>
+                            <td>${i + j }</td>
+                            <td>${market[j].title}</td>
+                            <td></td>
+                            </tr>
+                        `
+                        }
+                    }else{
+                        html += `
+                            <tr>
+                            <td>${i}</td>
+                            <td>${market.title}</td>
+                            <td></td>
+                            </tr>
+                        `
+                    }
                   }
                 }
               }
