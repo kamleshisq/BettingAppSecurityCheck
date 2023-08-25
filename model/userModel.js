@@ -39,15 +39,27 @@ const userSchema = mongoose.Schema({
     },
     myPL:{
         type:Number,
-        default:0
+        default:0,
+        set: function(value) {
+            const roundedValue = parseFloat(value.toFixed(4));
+            return roundedValue;
+        }
     },
     uplinePL:{
         type:Number,
-        default:0
+        default:0,
+        set: function(value) {
+            const roundedValue = parseFloat(value.toFixed(4));
+            return roundedValue;
+        }
     },
     lifetimePL:{
         type:Number,
-        default:0
+        default:0,
+        set: function(value) {
+            const roundedValue = parseFloat(value.toFixed(4));
+            return roundedValue;
+        }
     },
     pointsWL:{
         type:Number,
