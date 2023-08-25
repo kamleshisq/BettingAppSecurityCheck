@@ -736,6 +736,22 @@ socket.on('connect', () => {
             let data = Object.fromEntries(fd.entries());
             data.id = this.id
             console.log(data)
+            if(matchOddsStatus){
+                data.matchOddsStatus = true
+            }else{
+                data.matchOddsStatus = false
+            }
+            if(fencyStatus){
+                data.fencyStatus = true
+            }else{
+                data.fencyStatus = false
+            }
+            if(matchOddsStatus){
+                data.matchOddsStatus = true
+            }else{
+                data.matchOddsStatus = false
+            }
+            console.log(data)
             socket.emit("updateCommission", {LOGINDATA, data})
         })
 
@@ -1498,33 +1514,6 @@ socket.on('connect', () => {
                     <html>
                         <head>
                         <title>Account Statement</title>
-                        <style>
-                            .ownAccDetails {
-                                color: black;
-                                border: none;
-                                background-color: inherit;
-                                padding: 14px 28px;
-                                font-size: 16px;
-                                cursor: pointer;
-                                display: inline-block;
-                            }
-                            body {
-                            font-family: Arial, sans-serif;
-                            margin: 20px;
-                            }
-                            table {
-                            border-collapse: collapse;
-                            width: 100%;
-                            }
-                            th, td {
-                            border: 1px solid #ccc;
-                            padding: 8px;
-                            }
-                            th {
-                            background-color: #f2f2f2;
-                            font-weight: bold;
-                            }
-                        </style>
                         </head>
                         <body>
                         ${table.outerHTML}
@@ -1618,7 +1607,7 @@ socket.on('connect', () => {
             let html = ``
             if(data.transactionId){
                 html += `<thead>
-                <tr style="text-align: center;font-size: 11px;color: #fff;">
+                <tr >
                   <th>Date</th>
                   <th>Event</th>
                   <th>Market</th>
@@ -1629,8 +1618,8 @@ socket.on('connect', () => {
                   <th>Returns</th>
                 </tr>
             </thead>`
-                html += `<tbody class="new-body" style="font-size: 11px;">
-                <tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>
+                html += `<tbody class="new-body" >
+                <tr  class="blue"><td>${new Date(data.date)}</td>
                 <td>${data.event}</td>`
                 if(data.marketName){
                     html += `<td>${data.marketName}</td>`
@@ -1656,7 +1645,7 @@ socket.on('connect', () => {
                 model.find('table').html(html)
             }else{
                 html += `<thead>
-                <tr style="text-align: center;font-size: 11px;color: #fff;">
+                <tr >
                   <th>Date</th>
                   <th>Credit</th>
                   <th>Debit</th>
@@ -1666,7 +1655,7 @@ socket.on('connect', () => {
                   <th>Remarks</th>
                 </tr>
             </thead>
-            <tbody class="new-body" style="font-size: 11px;">`
+            <tbody class="new-body" >`
                 html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>`
                 if(data.creditDebitamount>0){
                     html += `<td>${data.creditDebitamount}</td><td>0</td>`
@@ -1863,7 +1852,7 @@ socket.on('connect', () => {
                 if(data.page == 0){
                     count1 = 1;
 
-                        $('table').html(`<tr style="text-align: center;font-size: 11px;">+
+                        $('table').html(`<tr >+
                         "<th>S.No</th>" +
                         "<th>Date</th>" +
                         "<th>Time</th>" +
@@ -1955,7 +1944,7 @@ socket.on('connect', () => {
                             }
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><button class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+                        <td><button class="ownAccDetails" id="${data.json.userAcc[i]._id}"  data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
                         <td>-</td>`
                     }
                 }
