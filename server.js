@@ -2443,6 +2443,18 @@ io.on('connection', (socket) => {
             socket.emit("MarketMatch", resultSearch)
         }
     })
+
+    socket.on("eventIdForMarketList", async(data) => {
+        let allData =  await getCrkAndAllData()
+        const cricket = allData[0].gameList[0].eventList
+        let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
+        let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
+        footBall = footBall.eventList
+        Tennis = Tennis.eventList
+        const resultSearch = cricket.concat(footBall, Tennis);
+        let result = resultSearch.find(item => item.eventData.eventId === data.id)
+        console.log(result)
+    })
     
 })
 

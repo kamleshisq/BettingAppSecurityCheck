@@ -8270,7 +8270,9 @@ socket.on('connect', () => {
 
           $(document).on("click", ".matchName", function(e){
             e.preventDefault()
-            console.log($(this).attr('id'))
+            // console.log($(this).attr('id'))
+            let id = $(this).attr('id')
+            socket.emit("eventIdForMarketList", {LOGINDATA, id})
           })
     }
 })
