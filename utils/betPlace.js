@@ -185,10 +185,10 @@ if(!marketDetails.runners){
             parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
             parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
             console.log(parentUser1Amount, parentUser2Amount)
-            await userModel.findByIdAndUpdate(user.parentUsers[i], {$inc:{downlineBalance:-parseFloat(data.data.stake), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount, pointsWL:-parseFloat(data.data.stake)}})
-            if(i === 1){
-                await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {$inc:{downlineBalance:-parseFloat(data.data.stake), myPL : parentUser2Amount, lifetimePL : parentUser2Amount, pointsWL:-parseFloat(data.data.stake)}})
-            }
+            // await userModel.findByIdAndUpdate(user.parentUsers[i], {$inc:{downlineBalance:-parseFloat(data.data.stake), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount, pointsWL:-parseFloat(data.data.stake)}})
+            // if(i === 1){
+            //     await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {$inc:{downlineBalance:-parseFloat(data.data.stake), myPL : parentUser2Amount, lifetimePL : parentUser2Amount, pointsWL:-parseFloat(data.data.stake)}})
+            // }
             await userModel.findByIdAndUpdate(user.parentUsers[i], {
                 $inc: {
                     downlineBalance: -(data.data.stake),
