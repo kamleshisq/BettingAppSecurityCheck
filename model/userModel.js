@@ -180,6 +180,10 @@ const userSchema = mongoose.Schema({
     maxCreditReference:{
         type:Number,
         default:100000
+    },
+    commission:{
+        type:Number,
+        default:0
     }
 })
 
