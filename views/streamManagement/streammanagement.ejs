@@ -1,81 +1,53 @@
 <%- include("../header") %>
   <!--Container Main start-->
-  <div class="height-100" style="background-color: #EAEEF7;">
-
-  <section class="pad-top-bottom" style="padding:70px 0px 10px;">
+  <div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
     <div class="container-fluid">
-    <section>
-      <div class="align-fix"> 
-          <h1 class="main-heading">Operation</h1>
-          <form action="" style="display: flex;height: 30px;">
+      <div class="new-head"> 
+          <h3 class="main-heading">Stream Management</h3>
+          <form action="">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
               </div>
-              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
-              
+              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
             </div>
             <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
           </form>
       </div>
-    </section>
     <%- include("../loginUserAdminsideDetails") %>
   </section>
 
-  <section style="padding: 15px 0px;">
+  <section>
     <div class="container-fluid">
-    <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
-      <div class="">
-        
-      <h3 class="fix-h3"><img src="../images/c-user.png" alt=""> &nbsp;Stream Management</h3>
-    </div>
-    <div class="header-front">
-    <div>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          Stream Managements 
-        </button>
-        <%- include("../operationsDropdown") %>
-      </div>
-    </div>
-    <div class="date-link">
-      <span class="up-down-form">Select Event</span>
-      <form action="">
-        <select name="" id="" style="background-color: #fff;color: #000;border: 2px solid #EAEEF7;">
-          <option value="">Cricket</option>
-          
-          <option value="">Cricket</option>
-          <option value="">FOOTBALL</option>
-
-          <option value="">TENNIS</option>
-          <option value="">BASKETBALL</option>
-          <option value="">BASEBALL</option>
-          <option value="">Primium</option>
-          <option value="">Sports Books</option>
-
-        </select>
-        
-        </form>
-      </div>
-      <div>
-        <form action="" >
-          <input type="text" placeholder="Stream URL" style="border: 2px solid #EAEEF7;border-radius: 5px;height: 35px;">
-        </form>
-      </div>
-   
-      <div  class="loc"style="">
-      <button class="btn-filter"> Add Stream URL</button>
-    </div>
-  </div>
-  <section class="">
-    <div class="">
-      <div class="table_data_details_ col-lg-12">
-      
-        <!-- <div class="spcare-table_">
-              <div class="hed-data">
-                <h3 class="fix-h3"><img src="../images/tp.png" alt=""> &nbsp; Top Player</h3>
-                
-            </div> -->
+        <div class="table-data-section">
+            <div class="table-heading">
+                <h3>Stream Management</h3>
+                <div class="table-heading-btn">
+                  <form action="" class="game-analysis-heading-from">
+                    <div class="input-group">
+                      <label>Select Event</label>
+                      <select name="" id="">
+                        <option value="">Cricket</option>
+                        <option value="">Cricket</option>
+                        <option value="">FOOTBALL</option>
+                        <option value="">TENNIS</option>
+                        <option value="">BASKETBALL</option>
+                        <option value="">BASEBALL</option>
+                        <option value="">Primium</option>
+                        <option value="">Sports Books</option>
+              
+                      </select>
+                    </div>  
+                    <div class="input-group">
+                      <label>Url</label>
+                      <input type="text" placeholder="Stream URL">
+                    </div> 
+                    </form>
+                    <button class="btn-filter"> Add Stream URL</button>
+                </div>
+            </div>
+            <div class="data-table">
               <table>
                 <thead>
                     <tr style="text-align: center;font-size: 11px;">
@@ -83,87 +55,77 @@
                       <th>Event</th>
                       <th>Open Date </th>
                       <th>Stream Link</th>
-                      
                     </tr>
                 </thead>
                 <tbody class="new-body">
-                  <tr style="text-align: center;" class="blue">
+                  <tr>
                     <td>1</td>
                     <td>Cricket </td>
                     <td>22-12-2022, 03:05</td>
-                    <td><a class="btn-red">Delete </a> <a class="btn-red">Delete to all </a></td>
-                    
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
                   </tr>
-                  <tr style="text-align: center;">
+                  <tr>
                     <td>1</td>
                     <td>Cricket </td>
                     <td>22-12-2022, 03:05</td>
-                    <td><a class="btn-red">Delete </a> <a class="btn-red">Delete to all </a></td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
                   </tr>
-                  <tr style="text-align: center;" class="blue">
+                  <tr>
                     <td>1</td>
                     <td>Cricket </td>
                     <td>22-12-2022, 03:05</td>
-                    <td><a class="btn-red">Delete </a> <a class="btn-red">Delete to all </a></td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
                   </tr>
-                  <tr style="text-align: center;">
+                  <tr>
                     <td>1</td>
                     <td>Cricket </td>
                     <td>22-12-2022, 03:05</td>
-                    <td><a class="btn-red">Delete </a> <a class="btn-red">Delete to all </a></td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
                   </tr>
-                  <tr style="text-align: center;" class="blue">
+                  <tr>
                     <td>1</td>
                     <td>Cricket </td>
                     <td>22-12-2022, 03:05</td>
-                    <td><a class="btn-red">Delete </a> <a class="btn-red">Delete to all </a></td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
                   </tr>
-                  <tr style="text-align: center;">
+                  <tr>
                     <td>1</td>
                     <td>Cricket </td>
                     <td>22-12-2022, 03:05</td>
-                    <td><a class="btn-red">Delete </a> <a class="btn-red">Delete to all </a></td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
                   </tr>
-                  <tr style="text-align: center;" class="blue">
+                  <tr>
                     <td>1</td>
                     <td>Cricket </td>
                     <td>22-12-2022, 03:05</td>
-                    <td><a class="btn-red">Delete </a> <a class="btn-red">Delete to all </a></td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
                   </tr>
-                  <tr style="text-align: center;">
+                  <tr>
                     <td>1</td>
                     <td>Cricket </td>
                     <td>22-12-2022, 03:05</td>
-                    <td><a class="btn-red">Delete </a> <a class="btn-red">Delete to all </a></td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
                   </tr>
-                  <tr style="text-align: center;" class="blue">
+                  <tr>
                     <td>1</td>
                     <td>Cricket </td>
                     <td>22-12-2022, 03:05</td>
-                    <td><a class="btn-red">Delete </a> <a class="btn-red">Delete to all </a></td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
                   </tr>
-                  <tr style="text-align: center;">
+                  <tr>
                     <td>1</td>
                     <td>Cricket </td>
                     <td>22-12-2022, 03:05</td>
-                    <td><a class="btn-red">Delete </a> <a class="btn-red">Delete to all </a></td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
                   </tr>
-                 
-                  
-                 
                 </tbody>
               </table>
-              </div>
             </div>
+        </div>
+    </div>
+</section>
+</div>
 
-            </div>
-          </div>
-        </section>
-<!-- seling section -->
-
-<!--  -->
-
-<!--  -->
 <div class="modal fade" id="myModaladduser" role="dialog">
   <div class="modal-dialog">
   
@@ -194,7 +156,7 @@
     
   </div>
 </div>
-  </div>
+
     
 <script src="/js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
