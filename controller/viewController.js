@@ -2731,7 +2731,7 @@ exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
         {sport_name:"cricket",sportId:4}	,
         {sport_name:"Greyhound Racing",sportId:0}	,
         {sport_name:"Horse Racing",sportId:77}	,
-        {sport_name:"soccer",sportId:0}	,
+        {sport_name:"Football",sportId:1}	,
         {sport_name:"tennis",sportId:2}
     ]
     console.log(sportList)
