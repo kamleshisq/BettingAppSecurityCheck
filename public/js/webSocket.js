@@ -8247,7 +8247,7 @@ socket.on('connect', () => {
     
     if(pathname == "/admin/commissionMarkets"){
         $(document).ready(function() {
-            $('#MarketMatch').on('change', function() {
+            $('#MarketMatch').on('input change', function() {
               var inputValue = $(this).val();
               console.log(inputValue);
             });
