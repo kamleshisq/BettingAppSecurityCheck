@@ -2723,7 +2723,7 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
 
 exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    const sportListData = await getCrkAndAllData()
+    // const sportListData = await getCrkAndAllData()
     // const sportList = sportListData[1].gameList
     const sportList =[
         {sport_name:"baseball",sportId:0},
