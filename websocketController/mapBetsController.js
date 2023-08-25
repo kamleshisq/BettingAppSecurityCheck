@@ -38,7 +38,7 @@ exports.mapbet = async(data) => {
       eventName: `${bets[0].match}`,
       date:Date.now(),
       result:data.result,
-      marketName : data.marketName
+      marketName : `${bets[0].marketName}`
     }
     await settlementHistory.create(dataForHistory)
     bets.forEach(async(bet) => {
