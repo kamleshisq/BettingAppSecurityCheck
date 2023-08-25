@@ -2421,7 +2421,7 @@ io.on('connection', (socket) => {
             let createData = {
                 Id : data.id,
                 name : result.eventData.league,
-                type : league,
+                type : "league",
                 status : false      
             }
             let cataLog = await catalogController.create(createData)
