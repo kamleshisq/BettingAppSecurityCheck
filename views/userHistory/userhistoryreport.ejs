@@ -1,97 +1,51 @@
 <%- include("../header") %>
   <!--Container Main start-->
-  <div class="height-100" style="background-color: #EAEEF7;">
-   
-
-
-
-<!-- End banner Slider -->
-
-<!-- skin device sec -->
-
-  <section class="pad-top-bottom" style="padding-top: 70px ;">
+  <div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
     <div class="container-fluid">
-    <section style="padding-top: 10px;">
       <div class="new-head"> 
-          <h3 class="main-heading">User History</h3>
-          <form action="" style="display: flex;height: 30px;">
+          <h3>User History</h3>
+          <form action="">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
               </div>
-              <input type="text" id="searchUser" onkeyup="myFunction()" list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
+              <input type="text" id="searchUser" onkeyup="myFunction()" list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
               <div class="wrapper">
-                <ul id="search" class="users">
-              
-                </ul>
-                <ul id="button" class="button">
-                  
-                </ul>
+                <ul id="search" class="users"> </ul>
+                <ul id="button" class="button"> </ul>
               </div>
             </div>
           </form>
       </div>
-   
-    </section>
     <%- include("../loginUserAdminsideDetails") %>
   </section>
-  <div class="pageId" data-pageid="1"></div>
-  <section style="padding: 15px 0px;">
+
+  <section>
     <div class="container-fluid">
-    <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
-      <div class="">
-        
-      <h3 class="fix-h3"><img src="../images/reports.png" alt=""> &nbsp;User history</h3>
-    </div>
-    <div class="cms-rep">
-    <div>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #6359cA !important;color: #fff !important;border: 2px solid #6359CA;">
-          User history
-        </button>
-        <%- include("../reportSubDropDown") %>
-      </div>
-    </div>
-    
-      <div>
-        <span class="up-down-form">From Date</span>
-      <form action="">
-        
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="fromDate"> 
-      </form>
-        </div>
-        <div>
-          <span class="up-down-form">To Date</span>  
-          <form action="">
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="toDate"> 
-          </form>
-          </div>
-
-          <div>
-            <button class="btn-filter filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
-
-          </div>
-     
-  </div>
-  <section class="">
-    <div class="">
-      <div class="table_data_details_ col-lg-12">
-      
-        <!-- <div class="spcare-table_">
-              <div class="hed-data">
-                <h3 class="fix-h3"><img src="../images/tp.png" alt=""> &nbsp; Top Player</h3>
-                
-            </div> -->
+        <div class="table-data-section">
+            <div class="table-heading">
+                <div class="table-heading-btn">
+                  <form action="" class="settlement-heading-from">
+                    <div class="input-group">
+                      <label class="up-down-form">From Date</label>
+                      <input type="date" id="fromDate">
+                    </div> 
+                    <div class="input-group">
+                      <label class="up-down-form">To Date</label>
+                      <input type="date" id="toDate">
+                    </div> 
+                    </form>
+                    <button class="btn-filter filter"><i class="fa-solid fa-filter"></i> Filter</button>
+                </div>
+            </div>
+            <div class="data-table">
               <%- include("./table")%>
-              </div>
             </div>
-
-            </div>
-          </div>
-            </section>
-<!-- end gallary -->
-
-
+        </div>
+    </div>
+</section>
+  <div class="pageId" data-pageid="1"></div>
   </div>
   <script>
     function myFunction() {

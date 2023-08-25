@@ -1,6 +1,6 @@
 <table>
     <thead>
-        <tr style="text-align: center;font-size: 11px;">
+        <tr>
           <th>S.No</th>
           <th>User Name</th>
           <th>Date & Time</th>
@@ -9,13 +9,13 @@
           
         </tr>
     </thead>
-    <tbody class="new-body" style="font-size: 11px;">
+    <tbody class="new-body">
         <%for(let i = 0; i < Logs.length; i++){%>
             <% let date = new Date(Logs[i].login_time)%>
             <%if((i%2) == 0){%>
-                <tr style="text-align: center;" class="blue">
+                <tr>
             <%}else{%>
-                <tr style="text-align: center;">
+                <tr>
             <%}%>
             <td><%=i+1%></td>
             <td><%=Logs[i].userName%></td>
