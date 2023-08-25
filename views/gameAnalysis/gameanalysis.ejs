@@ -1,12 +1,10 @@
 <%- include("../header") %>
   <!--Container Main start-->
-  <div class="height-100" style="background-color: #EAEEF7;">
-
-  <section class="pad-top-bottom" style="padding:70px 0px 10px;">
+  <div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
     <div class="container-fluid">
-    <section>
-      <div class="align-fix"> 
-          <h1 class="main-heading">Game Analysis</h1>
+      <div class="new-head"> 
+          <h3>Game Analysis</h3>
           <!-- <form action="" style="display: flex; height: 30px;">
             <div class="input-group">
               <div class="input-group-prepend">
@@ -18,109 +16,64 @@
             <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
           </form> -->
       </div>
-    </section>
     <%- include("../loginUserAdminsideDetails") %>
   </section>
 
-  <section style="padding: 15px 0px;">
+  <section>
     <div class="container-fluid">
-    <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
-      <div class="">
-        
-      <h3 class="fix-h3"><img src="../images/c-user.png" alt=""> &nbsp;Game Analysis</h3>
-    </div>
-    <div class="header-front">
-    <div>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #fff;color: #000;border: 2px solid #6359CA; padding: 6px 34px;">
-          Game Analysis
-        </button>
-        <%- include("../operationsDropdown") %>
-      </div>
-    </div>
-    <div>
-      <span class="up-down-form">Select Sports</span>
-      <form action="">
-        <select name="Sport" id="Sport">
-          <option value="Cricket">Cricket</option>
-          <option value="Football">FOOTBALL</option>
-          <option value="Tennis">TENNIS</option>
-          <option value="Basketball">BASKETBALL</option>
-          <option value="Baseball">BASEBALL</option>
-         
-        </select>
-      </form>
-    </div>
-    <div>
-      <span class="up-down-form">Select Market</span>
-
-      <form action="">
-        <select name="" id="">
-          <option value="All">All</option>
-          <option value="Match Odds">Match Odds</option>
-          <option value="Bookmaker 0%Comm">BookMaker</option>
-          <option value="Fancy">Fancy</option>
-          <!-- <option value="">GoalMarket</option> -->
-         
-        </select>
-      </form>
-    </div>
-    <div>
-      <span class="up-down-form">Select Event</span>
-      <form action="">
-        <select name="Event" id="Event">
-          <option value="">Cricket</option>
-          <option value="">FOOTBALL</option>
-          <option value="">TENNIS</option>
-          <option value="">BASKETBALL</option>
-          <option value="">BASEBALL</option>
-         
-        </select>
-      </form>
-    </div>
-      <div>
-        <span class="up-down-form">From Date</span>
-      <form action="">
-        
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
-      </form>
-        </div>
-        <div>
-          <span class="up-down-form">To Date</span>  
-          <form action="">
-          <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
-          </form>
-          </div>
-      <div  class="loc"style="">
-      <button class="btn-filter"><i class="fa-solid fa-download"></i> &nbsp; Refresh</button>
-    
-    </div>
-  </div>
-
-  <!-- <div class="new-line-buttton">
-    <a href="" class="blue-bd">Total Game Played<br><%=(gameAnalist.length)+1%></a>
-    <a href="" class="blue-bd">Total Bets <br> 100</a>
-    <a href="" class="blue-bd">Total User <br> 0</a>
-    <a href="" class="blue-bd">Won <br> 45456</a>
-    <a href="" class="blue-bd">Lost <br> 2546</a>
-    <a href="" class="blue-bd">Void <br> 1586</a>
-    <a href="" class="blue-bd">Open <br> 545</a> 
-    <a href="" class="blue-bd">P/L <br> 654586</a>
-  </div> -->
-
-
-
-<div id="Account" class="tabcontent" style="margin-bottom:15px">
- 
-      <div class="table_data_details_ col-lg-12">
-              <%- include("./table") %>
-              </div>
+        <div class="table-data-section">
+            <div class="table-heading game-analysis-heading">
+                <h3>Game Analysis</h3>
+                <div class="table-heading-btn">
+                  <form action="" class="game-analysis-heading-from">
+                    <div class="input-group">
+                      <label>Select Sports</label>
+                      <select name="Sport" id="Sport">
+                        <option value="Cricket">Cricket</option>
+                        <option value="Football">FOOTBALL</option>
+                        <option value="Tennis">TENNIS</option>
+                        <option value="Basketball">BASKETBALL</option>
+                        <option value="Baseball">BASEBALL</option>
+                      </select>
+                    </div> 
+                    <div class="input-group">
+                      <label>Select Market</label>
+                      <select name="" id="">
+                        <option value="All">All</option>
+                        <option value="Match Odds">Match Odds</option>
+                        <option value="Bookmaker 0%Comm">BookMaker</option>
+                        <option value="Fancy">Fancy</option>
+                        <!-- <option value="">GoalMarket</option> -->
+                      </select>
+                    </div> 
+                    <div class="input-group">
+                      <label>Select Event</label>
+                      <select name="Event" id="Event">
+                        <option value="">Cricket</option>
+                        <option value="">FOOTBALL</option>
+                        <option value="">TENNIS</option>
+                        <option value="">BASKETBALL</option>
+                        <option value="">BASEBALL</option>
+                      </select>
+                    </div> 
+                    <div class="input-group">
+                      <label class="up-down-form">From Date</label>
+                      <input type = "date">
+                    </div> 
+                    <div class="input-group">
+                      <label class="up-down-form">To Date</label>
+                      <input type = "date">
+                    </div> 
+                    </form>
+                    <button class="btn-filter"><i class="fa-solid fa-download"></i> &nbsp; Refresh</button>
+                </div>
             </div>
-
-            
-      </div>
+            <div class="data-table">
+              <%- include("./table") %>
+            </div>
+        </div>
     </div>
-  </section>
+</section>
 </div>
 
 <div class="modal fade" id="myModaladduser" role="dialog">
@@ -153,7 +106,6 @@
     
   </div>
 </div>
-  </div>
     
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
