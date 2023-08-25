@@ -18,7 +18,7 @@
         <tbody class="acount-stat-tbl-body">
             <tr class="series-title"><td colspan="9"><p><%=cricketSeries[i].series%></p></td></tr>
             <%for(let j = 0; j < cricketSeries[i].matchdata.length; j++){%>
-              <%if(!catalog.some(item => item.id == cricketSeries[i].matchdata[j].eventData.eventId){ %>
+              <%if(!catalog.some(item => item.id == cricketSeries[i].matchdata[j].eventData.eventId)){ %>
               <%
               
               var timestamp = `${cricketSeries[i].matchdata[j].eventData.time}` * 1000; 
@@ -213,7 +213,7 @@
           <tbody class="acount-stat-tbl-body">
               <tr class="series-title"><td colspan="9"><p><%=footbalSeries[i].series%></p></td></tr>
               <%for(let j = 0; j < footbalSeries[i].matchdata.length; j++){%>
-                <%if(!catalog.some(item => item.id == footbalSeries[i].matchdata[j].eventData.eventId){ %>
+                <%if(!catalog.some(item => item.id == footbalSeries[i].matchdata[j].eventData.eventId)){ %>
                 <%
                 
                 var timestamp = `${footbalSeries[i].matchdata[j].eventData.time}` * 1000; 
@@ -431,7 +431,7 @@
           <tbody class="acount-stat-tbl-body">
               <tr class="series-title"><td colspan="9"><p><%=tennisSeries[i].series%></p></td></tr>
               <%for(let j = 0; j < tennisSeries[i].matchdata.length; j++){%>
-                <%if(!catalog.some(item => item.id == tennisSeries[i].matchdata[j].eventData.eventId){ %>
+                <%if(!catalog.some(item => item.id == tennisSeries[i].matchdata[j].eventData.eventId)){ %>
                 <%
                 
                 var timestamp = `${tennisSeries[i].matchdata[j].eventData.time}` * 1000; 
