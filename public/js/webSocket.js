@@ -8260,6 +8260,12 @@ socket.on('connect', () => {
 
           socket.on("MarketMatch", async(data) => {
             console.log(data)
+            let html = ""
+            for(let i = 0; i < data.length; i++){
+                html += `<li id="${data[i].eventData.eventId}" >${data[i].eventData.name}</li>`
+            }
+            document.getElementById("myMarkets").innerHTML = html
+            // document.getElementById("demonames1").innerHTML = html
           })
     }
 })
