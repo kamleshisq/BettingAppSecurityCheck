@@ -142,15 +142,15 @@ if(!marketDetails.runners){
     }
     await betmodel.create(betPlaceData)
     await accountStatementByUserModel.create(Acc)
-    let parentUser
-    let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{balance: - parseFloat(data.data.stake), availableBalance: - parseFloat(data.data.stake), myPL: - parseFloat(data.data.stake), Bets : 1, exposure: parseFloat(data.data.stake)}})
+    // let parentUser
+    let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{availableBalance: - parseFloat(data.data.stake), myPL: - parseFloat(data.data.stake), Bets : 1, exposure: parseFloat(data.data.stake), uplinePL:parseFloat(data.data.stake), pointsWL:-parseFloat(data.data.stake)}})
     if(!user){
         return "There is no user with that id"
     }
     // console.log(user.parentUsers[1])
     // let commission = await commissionModel.find({userId:user.parentUsers[1]})
     // console.log(commission, 456)
-    let commissionPer = 0
+    // let commissionPer = 0
     // if(marketDetails.title.startsWith('Match Odds') && commission[0].matchOdd.type == "ENTRY"){
     //   commissionPer = parseFloat(commission[0].matchOdd.percentage)/100
     // }else if ((marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS')) && commission[0].Bookmaker.type == "ENTRY"){
@@ -163,27 +163,44 @@ if(!marketDetails.runners){
 
 
 
-    if(user.parentUsers.length < 2){
-        // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
-        // parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:data.data.stake}})
-        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0],{$inc:{availableBalance:parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake), myPL: parseFloat(data.data.stake)}})
-    }else{
-        await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: -parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake)}})
-        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake), myPL: parseFloat(data.data.stake)}})
+    // if(user.parentUsers.length < 2){
+    //     // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
+    //     // parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:data.data.stake}})
+    //     parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0],{$inc:{availableBalance:parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake), myPL: parseFloat(data.data.stake)}})
+    // }else{
+    //     await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: -parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake)}})
+    //     parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake), myPL: parseFloat(data.data.stake)}})
+    // }
+
+    let amount = parseFloat(data.data.stake);
+    for(let i = user.parentUsers.length - 1; i >= 1; i--){
+        console.log("WORKING")
+        let parentUser1 = await userModel.findById(user.parentUsers[i])
+        let parentUser2 = await userModel.findById(user.parentUsers[i-1])
+        let parentUser1Amount = (parseFloat(amount) * parseFloat(parentUser1.myShare)/100)
+        let parentUser2Amount = (parseFloat(amount) * parseFloat(parentUser1.Share)/100)
+        parentUser1Amount = Math.round(parentUser1Amount * 100) / 100;
+        parentUser2Amount = Math.round(parentUser2Amount * 100) / 100;
+        await userModel.findByIdAndUpdate(user.parentUsers[i], {$inc:{downlineBalance:-parseFloat(data.data.stake), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount, pointsWL:-parseFloat(data.data.stake)}})
+        if(i === 1){
+            await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {$inc:{downlineBalance:-parseFloat(data.data.stake), myPL : parentUser2Amount, lifetimePL : parentUser2Amount, pointsWL:-parseFloat(data.data.stake)}})
+        }
+        amount = parentUser2Amount
     }
-    let Acc2 = {
-        "user_id":parentUser._id,
-        "description": description2,
-        "creditDebitamount" : parseFloat(data.data.stake),
-        "balance" : parentUser.availableBalance + parseFloat(data.data.stake),
-        "date" : Date.now(),
-        "userName" : parentUser.userName,
-        "role_type" : parentUser.role_type,
-        "Remark":"-",
-        "stake": parseFloat(data.data.stake),
-        "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}Parent`
-    }
-    await accountStatementByUserModel.create(Acc2)
+
+    // let Acc2 = {
+    //     "user_id":parentUser._id,
+    //     "description": description2,
+    //     "creditDebitamount" : parseFloat(data.data.stake),
+    //     "balance" : parentUser.availableBalance + parseFloat(data.data.stake),
+    //     "date" : Date.now(),
+    //     "userName" : parentUser.userName,
+    //     "role_type" : parentUser.role_type,
+    //     "Remark":"-",
+    //     "stake": parseFloat(data.data.stake),
+    //     "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}Parent`
+    // }
+    // await accountStatementByUserModel.create(Acc2)
     // if(commissionPer > 0){
     //     let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - Math.round(commissionPer * data.data.stake), availableBalance : -Math.round(commissionPer * data.data.stake)}})
     //     let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: Math.round(commissionPer * data.data.stake), availableBalance : Math.round(commissionPer * data.data.stake)}}) 

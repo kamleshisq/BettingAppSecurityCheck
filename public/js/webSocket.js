@@ -3792,7 +3792,7 @@ socket.on('connect', () => {
                 let html = ``
                 if(data.status){
                     html += `Enable`
-                    document.getElementById(`${data.id}`).classList.add("enable")
+                    document.getElementById(`${data.id}`).classList.remove("disable")
                 }else{
                     html += `Disable`
                     document.getElementById(`${data.id}`).classList.add("disable")
