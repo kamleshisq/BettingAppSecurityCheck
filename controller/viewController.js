@@ -2747,7 +2747,7 @@ exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
 exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     const sportId = req.query.sportId
-    console.log(sportId)
+    // console.log(sportId)
     const sportListData = await getCrkAndAllData()
     let series;
     let seriesObjList = []
@@ -2762,16 +2762,21 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
             if(!seriesList.includes(item.eventData.compId)){
                 seriesList.push(item.eventData.compId)
                 let status = await catalogController.findOne({Id:item.eventData.compId})
-                if(!status){
-                    await catalogController.create({
-                        Id:item.eventData.compId,
-                        name:item.eventData.league,
-                        type:"league"
-                    })
-                    seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:true,sportId:sportId})
-                }else{
-                    seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:status.status,sportId})
-                }
+                // if(!status){
+                //     await catalogController.create({
+                //         Id:item.eventData.compId,
+                //         name:item.eventData.league,
+                //         type:"league"
+                //     })
+                //     seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:true,sportId:sportId})
+                // }else{
+                    if(status){
+                        seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:false,sportId})
+
+                    }else{
+                        seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:true,sportId})
+                    }
+                // }
             }
         })
         Promise.all(seriesPromise).then(()=>{
