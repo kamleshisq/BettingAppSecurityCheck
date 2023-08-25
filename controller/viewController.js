@@ -2828,11 +2828,11 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
                 let status = await catalogController.findOne({Id:item.eventData.eventId})
                 let count = 0;
                 if(!status){
-                    await catalogController.create({
-                        Id:item.eventData.eventId,
-                        name:item.eventData.name,
-                        type:"event"
-                    })
+                    // await catalogController.create({
+                    //     Id:item.eventData.eventId,
+                    //     name:item.eventData.name,
+                    //     type:"event"
+                    // })
                     count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
                     seriesObjList.push({name:item.eventData.name,created_on:item.eventData.created_on,status:true,count,eventId:item.eventData})
                     
