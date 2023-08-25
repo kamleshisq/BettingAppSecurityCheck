@@ -2844,6 +2844,7 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
             }
             
         })
+        console.log(seriesObjList)
         Promise.all(eventListPromis).then(()=>{
             return res.status(200).render("./catalogController/events", {
                 title:"catalogController",
