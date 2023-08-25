@@ -2399,6 +2399,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('sportStatusChange',async(data) => {
+        console.log(data)
         try{
             let msg;
             let sport;
