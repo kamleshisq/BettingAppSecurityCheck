@@ -8263,7 +8263,9 @@ socket.on('connect', () => {
             console.log(data)
             let html = ""
             for(let i = 0; i < data.length; i++){
+                html += "<ul>"
                 html += `<li id="${data[i].eventData.eventId}" class="matchName">${data[i].eventData.name}</li>`
+                html += "</ul>"
             }
             document.getElementById("myMarkets").innerHTML = html
             // document.getElementById("demonames1").innerHTML = html
