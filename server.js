@@ -2480,7 +2480,7 @@ io.on('connection', (socket) => {
         }else{
             let createData = {
                 Id : data.id,
-                name : result.eventData.league,
+                name : result.eventData.name,
                 type : "event",
                 status : false      
             }
