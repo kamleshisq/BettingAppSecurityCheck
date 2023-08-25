@@ -173,19 +173,23 @@ if(!marketDetails.runners){
     // }
 
     let amount = parseFloat(data.data.stake);
-    for(let i = user.parentUsers.length - 1; i >= 1; i--){
-        console.log("WORKING")
-        let parentUser1 = await userModel.findById(user.parentUsers[i])
-        let parentUser2 = await userModel.findById(user.parentUsers[i-1])
-        let parentUser1Amount = (parseFloat(amount) * parseFloat(parentUser1.myShare)/100)
-        let parentUser2Amount = (parseFloat(amount) * parseFloat(parentUser1.Share)/100)
-        parentUser1Amount = Math.round(parentUser1Amount * 100) / 100;
-        parentUser2Amount = Math.round(parentUser2Amount * 100) / 100;
-        await userModel.findByIdAndUpdate(user.parentUsers[i], {$inc:{downlineBalance:-parseFloat(data.data.stake), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount, pointsWL:-parseFloat(data.data.stake)}})
-        if(i === 1){
-            await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {$inc:{downlineBalance:-parseFloat(data.data.stake), myPL : parentUser2Amount, lifetimePL : parentUser2Amount, pointsWL:-parseFloat(data.data.stake)}})
+    try{
+        for(let i = user.parentUsers.length - 1; i >= 1; i--){
+            console.log("WORKING")
+            let parentUser1 = await userModel.findById(user.parentUsers[i])
+            let parentUser2 = await userModel.findById(user.parentUsers[i-1])
+            let parentUser1Amount = (parseFloat(amount) * parseFloat(parentUser1.myShare)/100)
+            let parentUser2Amount = (parseFloat(amount) * parseFloat(parentUser1.Share)/100)
+            parentUser1Amount = Math.round(parentUser1Amount * 100) / 100;
+            parentUser2Amount = Math.round(parentUser2Amount * 100) / 100;
+            await userModel.findByIdAndUpdate(user.parentUsers[i], {$inc:{downlineBalance:-parseFloat(data.data.stake), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount, pointsWL:-parseFloat(data.data.stake)}})
+            if(i === 1){
+                await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {$inc:{downlineBalance:-parseFloat(data.data.stake), myPL : parentUser2Amount, lifetimePL : parentUser2Amount, pointsWL:-parseFloat(data.data.stake)}})
+            }
+            amount = parentUser2Amount
         }
-        amount = parentUser2Amount
+    }catch(err){
+        return err
     }
 
     // let Acc2 = {
