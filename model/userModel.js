@@ -41,7 +41,7 @@ const userSchema = mongoose.Schema({
         type:Number,
         default:0,
         set: function(value) {
-            const roundedValue = parseFloat(value.toFixed(4));
+            const roundedValue = parseFloat(value).toFixed(4);
             return roundedValue;
         }
     },
@@ -49,7 +49,7 @@ const userSchema = mongoose.Schema({
         type:Number,
         default:0,
         set: function(value) {
-            const roundedValue = parseFloat(value.toFixed(4));
+            const roundedValue = parseFloat(value).toFixed(4);
             return roundedValue;
         }
     },
@@ -57,7 +57,7 @@ const userSchema = mongoose.Schema({
         type:Number,
         default:0,
         set: function(value) {
-            const roundedValue = parseFloat(value.toFixed(4));
+            const roundedValue = parseFloat(value).toFixed(4);
             return roundedValue;
         }
     },
