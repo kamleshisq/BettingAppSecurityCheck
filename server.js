@@ -2408,12 +2408,31 @@ io.on('connection', (socket) => {
         Tennis = Tennis.eventList
         const resultSearch = cricket.concat(footBall, Tennis);
         let result = resultSearch.find(item => item.eventData.compId == data.id)
-        // let data = {
-        //     Id : data.id,
-        //     name : result.eventData.league,
-        //     type : league,
-        //     status : false      
-        // }
+        if(data.status){
+            let cataLog =  await catalogController.updateOne({Id:data.id},{status:true})
+            if(cataLog){
+                msg = 'series activated'
+                socket.emit('sportStatusChange',{status:'success',msg})
+            }else{
+                msg = "Something went wrong please try again later!"
+                socket.emit('sportStatusChange',{status:'success',msg})
+            }
+        }else{
+            let createData = {
+                Id : data.id,
+                name : result.eventData.league,
+                type : league,
+                status : false      
+            }
+            let cataLog = await catalogController.create(createData)
+            if(cataLog){
+                msg = 'series deactivated'
+                socket.emit('sportStatusChange',{status:'success',msg})
+            }else{
+                msg = "Something went wrong please try again later!"
+                socket.emit('sportStatusChange',{status:'success',msg})
+            }
+        }
         // console.log(data)
          // try{
         //     let msg;
