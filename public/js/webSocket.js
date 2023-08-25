@@ -8291,7 +8291,12 @@ socket.on('connect', () => {
                             <tr>
                             <td>${i + j }</td>
                             <td>${market[j].title}</td>
-                            <td></td>
+                            <td width="120px"> <div class="on-off-btn-section">
+                              <span class="on-off">OFF &nbsp; <label class="switch">
+                              <input class="checkbox" name="autoSattled" type="checkbox" checked id="checkbox">
+                              <span class="slider round"></span>
+                              </label>&nbsp; ON</span>
+                          </div></td>
                             </tr>
                         `
                         }
@@ -8300,7 +8305,12 @@ socket.on('connect', () => {
                             <tr>
                             <td>${i}</td>
                             <td>${market.title}</td>
-                            <td></td>
+                            <td width="120px"> <div class="on-off-btn-section">
+                              <span class="on-off">OFF &nbsp; <label class="switch">
+                              <input class="checkbox" name="autoSattled" type="checkbox" checked id="checkbox">
+                              <span class="slider round"></span>
+                              </label>&nbsp; ON</span>
+                          </div></td>
                             </tr>
                         `
                     }
