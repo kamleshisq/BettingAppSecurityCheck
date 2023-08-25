@@ -212,6 +212,7 @@ if(!marketDetails.runners){
             amount = parentUser2Amount
         }
     }catch(err){
+        console.log(err)
         return err
     }
 
