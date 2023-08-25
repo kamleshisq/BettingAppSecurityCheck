@@ -8233,6 +8233,16 @@ socket.on('connect', () => {
                         $(this).prop('checked','checked')
                     }
                 }
+            }else if(id == 0) {
+                if(confirm('do you want to change status')){
+                    socket.emit('sportStatusChange',{status,id})
+                }else{
+                    if(status){
+                        $(this).prop('checked','')
+                    }else{
+                        $(this).prop('checked','checked')
+                    }
+                }
             }
         })
 
