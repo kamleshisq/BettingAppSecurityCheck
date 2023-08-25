@@ -3791,9 +3791,11 @@ socket.on('connect', () => {
             if(data.message === "updated"){
                 let html = ``
                 if(data.status){
-                    html += `<a class="btn-green">Enable </a>`
+                    html += `Enable`
+                    document.getElementById(`${data.id}`).classList.add("enable")
                 }else{
-                    html += `<a class="btn-green">Disable </a>`
+                    html += `Disable`
+                    document.getElementById(`${data.id}`).classList.add("disable")
                 }
                 document.getElementById(`${data.id}`).innerHTML = html
             }else{
