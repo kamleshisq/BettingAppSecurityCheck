@@ -2453,9 +2453,9 @@ io.on('connection', (socket) => {
         footBall = footBall.eventList
         Tennis = Tennis.eventList
         const resultSearch = cricket.concat(footBall, Tennis);
-        console.log(resultSearch)
+        // console.log(resultSearch)
         let result = resultSearch.find(item => item.eventData.eventId == data.id)
-        console.log(result)
+        console.log(result, 123)
     })
     
 })
