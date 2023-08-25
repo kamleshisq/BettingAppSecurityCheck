@@ -8246,7 +8246,7 @@ socket.on('connect', () => {
     
     
     if(pathname == "/admin/commissionMarkets"){
-        $(document).on("change", function(e){
+        $(document).on("change", ".searchUser", function(e){
             e.preventDefault()
             console.log("working")
         })
