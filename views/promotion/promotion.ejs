@@ -1,0 +1,389 @@
+<%- include("../header") %>
+<style>
+  .green{
+    background-color: #46BCAA;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 13px;
+    color: #fff;
+  }
+  .green>h5{
+    font-size: 15px;
+  }
+  .green>h6{
+    font-size: 13px;
+  }
+  .accordion-collapse {
+    border: solid rgba(0,0,0,.125);
+    border-width: 0 1px;
+    width: 100% !important; 
+    background: #fff;
+    -webkit-font-smoothing: subpixel-antialiased;
+    border-radius: 10px;
+}
+  .red{
+    background-color: #FE3030;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 13px;
+    color: #fff;
+
+  }
+  .red>h5{
+    font-size: 15px;
+  }
+  .red>h6{
+    font-size: 13px;
+  }
+  .accordion-item:last-of-type .accordion-button.collapsed {
+    border-bottom-width: 1px;
+    border-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.accordion-header {
+    margin-bottom: 10px;
+}
+.accordion-button {
+    
+    color: #6359ca;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 10px;
+    font-weight: 700;
+    font-family: 'poppins';
+   
+
+}
+.accordion-item:first-of-type .accordion-button {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-family: 'poppins';
+}
+.accordion-button:not(.collapsed) {
+    color: #6359CA;
+    background-color: #fff;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: #6359CA;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #fff;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #fff;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+  height: 25px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+[data-tab-info] {
+  display: none;
+}
+
+.active[data-tab-info] {
+  display: block;
+}
+
+.tabs {
+  padding: 10px 10px;
+  display: flex;
+  gap: 6px;
+  background: transparent;
+  border-bottom: 0px solid #b2b2b2;
+  justify-content: flex-start;
+  border-radius: 0px;
+}
+
+.tabs span {
+ 
+  padding: 10px;
+    font-size: 17px;
+    padding: 8px 20px;
+    font-weight: 400;
+    /* color: #fff; */
+    border-radius: 5px;
+    border: none;
+    color: #212121;
+    background: #fff;
+
+}
+
+.tabs.active {
+  background-color:transparent;
+  color: #000;
+  font-weight: 700;
+}
+.tabs span:hover {
+
+  cursor: pointer;
+  color: black;
+}
+</style>
+  <!--Container Main start-->
+  <div class="height-100" style="background-color: #EAEEF7;">
+
+  <section class="pad-top-bottom" style="padding-top: 70px ;">
+    <div class="container-fluid">
+    <section style="padding-top: 10px;">
+      <div class="new-head"> 
+        <h3 class="main-heading">Promotion</h3>
+        <form action="" style="display: flex;">
+            
+        </form>
+    </div>
+    </div>
+    </section>
+
+    
+  <section style="padding: 15px 0px;">
+    <div class="container-fluid">
+    <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
+    <div style="justify-content: flex-end;
+    display: flex;
+    gap: 10px;">
+      <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add Position</button>
+    </div>
+    
+  <section class="">
+    <div class="">
+      <div class="table_data_details_ col-lg-12">
+  
+              <table>
+                <thead>
+                    <tr style="text-align: center;font-size: 11px;">
+                      <th>S.No</th>
+                      <th>Name</th>
+                      <th>Link</th>
+                      <th>click</th>
+                      <th>Image</th>
+                      <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="new-body" style="font-size: 11px;">
+                <%for(let i = 0; i < data.length; i++){%>
+                  <tr style="text-align: center;" class="blue">
+                    <td><%=i + 1%></td>
+                    <td class="promotionData" ><%=data[i].position%></td>
+                    <td  ><%=data[i].link%></td>
+                    <td  ><%=data[i].click%></td>
+                    <%if(data[i].video){%>
+                      <td><video src="../img/<%=data[i].position%>.mp4" type="video/mp4" class="form__user-photo"></td>
+                    <%}else{%>
+                      <td><img src="../img/<%=data[i].position%>.png" alt="img" class="form__user-photo"></td>
+                    <%}%>
+                    <td><button data-bs-toggle="modal" data-bs-target="#myModal5" id="<%=data[i].id%>" class="promotionDetails"><i class="fa-solid fa-database"></i></button>
+                    <button class="Delete" id="<%=data[i].id%>"><i class="fa-solid fa-trash-can" ></i></button></td>
+                  </tr>
+                <%}%>
+                </tbody>
+              </table>
+              </div>
+            </div>
+
+            </div>
+          </div>
+            </section>
+  
+  
+          </div>  <div class="modal fade" id="myModal5" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-header" style="text-align: center;">
+                  <h4 class="modal-title" style="color: #fff;">Promotion Details</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="form-data1" id="edit-form1">
+                    <div class="row">
+                      <div class="col">
+                        <label for="name">Name</label>
+                        <input type="text" readonly class="form-control ml0" id="name" name="name">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="link">Link</label>
+                        <input type="url" class="form-control ml0" id="link" name="link">
+                      </div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                      <label for="check">Status</label>
+                      <span>OFF &nbsp; <label class="switch">
+                        <input type="checkbox" id="check" name="check">
+                        <span class="slider round"></span>
+                        </label>&nbsp; ON</span>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col" id="img">
+                      </div>
+                      <div class="col" >
+                        <input type="file" name="file" id="file">
+                      </div>
+                    </div>
+                    <button type="submit" class="btn-submit mt-3">Save</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="modal fade" id="myModaladduser" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-header" style="text-align: center;">
+                  <h4 class="modal-title" style="color: #fff;">Add Position</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="form-data2" id="edit-form2">
+                    <div class="row">
+                      <div class="col">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control ml0" id="name1" name="name" required>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="url">URL</label>
+                        <input type="url" class="form-control ml0" id="url1" name="url" required>
+                      </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="row">
+                      <div class="col" >
+                        <input type="file" name="file" id="file1" required>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn-submit mt-3">Save</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"  
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>-->
+    <script type="text/javascript" src="../js/bundle.js"></script>    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"> -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+
+    <!-- <script type="text/javascript">
+    	AOS.init();
+  	</script>
+   <script>
+    
+    const currentUrl = window.location.href;
+    const links = document.querySelectorAll('ul li a');
+    links.forEach(link => {
+      if (link.href === currentUrl) {
+        link.classList.add('active');
+      }
+    });
+
+    
+    $("#testimonial-slider").owlCarousel({
+      loop:true,
+      autoplay:true,
+      margin:10,
+        nav:true,
+        dots: true,
+        speed: 1000,
+			infinite: true,
+			autoplaySpeed: 1000,
+			autoplay: true,
+			cssEase: 'cubic-bezier(0.600, -0.280, 0.735, 0.045)',
+      
+       responsive:{
+          0:{
+              items:1
+          },
+          600:{
+              items:1,
+        
+          },
+          1000:{
+              items:2
+          }
+      }
+   });	
+  </script>
+  <script>
+    const video = document.getElementById('video');
+    const playButton = document.getElementById('play-button');
+    
+    playButton.addEventListener('click', function() {
+      video.play();
+      playButton.style.display = 'none';
+    });
+
+    
+  </script> -->
+
+</body>
+    </html>

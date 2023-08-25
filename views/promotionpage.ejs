@@ -1,0 +1,46 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<h2>hello</h2>
+
+<%for(let i = 0; i < data.length; i++){%>
+    <%if(data[i].status){%>
+        <%if(data[i].video){%>
+            <a id="foo" class="foo" onclick="buttonclick('<%=data[i]._id%>');"  >
+                <video width="400" controls >
+                    <source src="img/<%=data[i].position%>.mp4" type="video/mp4">
+                </video>
+            </a>
+        <%}else{%>
+            <a id="foo" class="foo"  onclick="buttonclick('<%=data[i]._id%>');">
+                <img src="img/<%=data[i].position%>.png" alt="img"  width="500" height="600"><br>
+            </a>
+        <%}%>
+    <%}%>
+<%}%>
+
+
+<script >
+let id
+let on 
+const socket = io();
+function buttonclick(data){
+        id = data
+        on = true
+    }
+    socket.on('connect', () => {
+    console.log("websocket Connected")
+    function emitSocket(){
+        if(on){
+            socket.emit('UpdateBYID', id)
+            on = false
+            window.location.href = 'https://www.isquaretechnologies.com/'
+        }
+        setTimeout(()=>{
+            emitSocket()
+        }, 300)
+    }
+    emitSocket()
+})
+    
+
+</script>

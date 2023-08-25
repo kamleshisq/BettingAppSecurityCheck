@@ -1,0 +1,193 @@
+<%- include("../header") %>
+  <!--Container Main start-->
+  <div class="height-100" style="background-color: #EAEEF7;">
+
+<section class="pad-top-bottom-" style="padding-top: 70px ;">
+  <section style="padding-top: 10px;">
+    <div class="container-fluid">
+    <div class="align-fix"> 
+        <h1 class="main-heading">CMS Management</h1>
+      </div>
+    </div>
+  </section>
+  <div class=""> 
+     
+  </div>
+</section>
+
+<section class="" style="padding-top: 10px;">
+  <div class="container-fluid">
+      <div class="tab end" >
+          <!-- <button class="tablinks"  onclick="openCity(event, 'Cricket')"> Telegram  </button> -->
+          <button class="tablinks" id="defaultOpen"onclick="openCity(event, 'FOOTBALL')"> Website </button>
+      </div>
+        <div id="FOOTBALL" class="tabcontent" style="margin-bottom:15px;">
+            <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #fff  !important;color: #000;border: 2px solid #6359CA; padding: 6px 34px;">
+                Page Manager
+            </button>
+            <%- include("../dropdownManager")%>
+            </div>
+            <br>
+            <div class="row" style="padding:10px 0px;background-color: #ffff;border-radius: 10px;">
+                <div class="container-fluid" id="verticalMenuManager"> 
+                    <section class="verticalMenuManager" >
+                        <div class="new-head">
+                            <h3 style="font-weight: 700;font-size: 24px;">Page Management</h3>
+                            <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add Page</button>
+                        </div>
+                        <div class="table_data_details_ col-lg-12">
+                            <table>
+                              <thead>
+                                <th>Sr. No.</th>
+                                <th>Name</th>
+                                <th>Update</th>
+                              </thead>
+                              <tbody >
+                                <%for(let i = 0; i < pages.length; i++){%>
+                                  <tr>
+                                    <th><%= i+1 %></th>
+                                    <th><%=pages[i].Name%></th>
+                                    <th><button data-bs-toggle="modal" data-bs-target="#uploadFile" id="<%=pages[i]._id%>" class="UploadEjs"><i class="fa-solid fa-database"></i></button></th>
+                                  </tr>
+                                <%}%>
+                              </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            
+
+
+
+        <div class="modal fade" id="myModaladduser" role="dialog">
+            <div class="modal-dialog">
+            
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-header" style="text-align: center;">
+                <h4 class="modal-title" style="color: #fff;">Add page</h4>
+                </div>
+                <div class="modal-body">
+                <form class="uploadEJS">
+                    <div class="row">
+                    <div class="col">
+                        <label for="Name">Name</label>
+                        <input type="text" class="form-control ml0" name="Name">
+                    </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col">
+                        <label for="heading">Heading</label>
+                        <input type="text" class="form-control ml0" name="heading">
+                    </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col">
+                        <label for="details">Details</label>
+                        <textarea  class="form-control ml0" name="details"></textarea>
+                    </div>
+                    </div>
+                    <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Add</button>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="uploadFile" role="dialog">
+          <div class="modal-dialog">
+          
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-header" style="text-align: center;">
+            <h4 class="modal-title" style="color: #fff;">Update Page</h4>
+            </div>
+            <div class="modal-body">
+            <form class="updatePages" id="updatePages">
+                <div class="row mt-2">
+                  <div class="col">
+                    <label for="heading">Heading</label>
+                    <input type="text" class="form-control ml0 heading"  name="heading">
+                </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col">
+                    <label for="details">Details</label>
+                    <textarea class="form-control ml0" name="details"></textarea>
+                </div>
+                </div>
+                <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Update</button>
+            </form>
+            </div>
+        </div>
+          </div>
+      </div>
+
+
+
+    </div>
+</section>
+
+
+<div class="modal fade" id="adduser" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header" style="text-align: center;">
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        <h4 class="modal-title" style="color: #fff;">Slider Upload</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-data">
+          <div class="row">
+            <div class="col">
+              <label for="">Image</label>
+              <input type="file" class="form-control ml0" placeholder="" name="email">
+            </div>
+          </div>
+                   <button type="button" class="btn-submit mt-3">Add </button>
+        </form>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+</div>
+<script type="text/javascript" src="../js/bundle.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+
+<script>
+  function openCity(evt, cityName) {
+var i, tabcontent, tablinks;
+tabcontent = document.getElementsByClassName("tabcontent");
+for (i = 0; i < tabcontent.length; i++) {
+tabcontent[i].style.display = "none";
+}
+tablinks = document.getElementsByClassName("tablinks");
+for (i = 0; i < tablinks.length; i++) {
+tablinks[i].className = tablinks[i].className.replace(" active", "");
+}
+document.getElementById(cityName).style.display = "block";
+evt.currentTarget.className += " active";
+
+}
+document.getElementById("defaultOpen").click();
+</script>
+</body>
+    </html>

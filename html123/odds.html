@@ -1,0 +1,86 @@
+<div class="exchange-pg-inn-banner-col2">
+    <div class="exchange-pg-inn-banner-col-titi">
+        <div class="exchange-pg-inn-banner-col-titi-txt">
+            <h6 class="market" id="<%=match.marketList.match_odd.marketId%>"><span>Match Odds</span> &nbsp; <i class="fa-solid fa-circle-info"></i></h6>
+        </div>
+        <div class="exchange-pg-inn-banner-col-titi-txt-tim">
+            <h6><b>Min : <%=SportLimits.min_stake%>, Max : <%=SportLimits.max_stake%></b></h6>
+        </div>
+    </div>
+
+    <div class="exchange-pg-inn-tbl">
+        <table class="acount-stat-tbl">
+
+            <thead class="acount-stat-tbl-hed2">
+                <tr class="acount-stat-tbl-hed-tr2" >
+                    <th style="text-align: left;" class="bod-red-lft ">Market</th>
+                    <th style="text-align: center;" colspan="3">Back</th>
+                    <th style="text-align: center;" colspan="3" class="bod-red-rit">Lay</th>
+                </tr>
+            </thead>
+
+            <tbody class="acount-stat-tbl-body">
+                <% let runners = JSON.parse(match.marketList.match_odd.runners); %>
+                <% const runners1 = []; %>
+                <%const secIds = []; %>
+                <%runners.forEach(item => {%>
+                    <%runners1.push(item.runner);%>
+                    <%secIds.push(item.secId);%>
+                <%});%>
+                <%for(let i = 0; i < runners1.length; i++){%>
+                    <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                        <td id="<%=match.marketList.match_odd.marketId%>" class="runnerName" style=" text-align: left;">
+                            <%=runners1[i]%>
+                        </td>
+                        
+                        <td >
+                            <button class="tbl-bg-blu-spn match_odd_Blue button" id="<%=secIds[i]%>1" >
+                                
+                            </button> 
+                        </td>
+    
+                        <td >
+                            <button class="tbl-bg-blu-spn match_odd_Blue button" id="<%=secIds[i]%>2">
+                                
+                            </button> 
+                        </td>
+    
+                        <td >
+                            <button class="tbl-bg-blu-spn match_odd_Blue button" id="<%=secIds[i]%>3">
+                                
+                            </button> 
+                        </td>
+    
+                        <td >
+                            <button class="tbl-bg-pech-spn match_odd_Red button" id="<%=secIds[i]%>4">
+                                
+                            </button> 
+                        </td>
+                        
+                        <td >
+                            <button class="tbl-bg-pech-spn match_odd_Red button" id="<%=secIds[i]%>5">
+                                
+                            </button> 
+                        </td>
+                        
+                        <td >
+                            <button class="tbl-bg-pech-spn match_odd_Red button" id="<%=secIds[i]%>6">
+                                
+                            </button> 
+                        </td>
+                        
+                    </tr>
+                <%}%>
+                
+            </tbody>
+
+          </table>
+    </div>
+
+    <div class="exchange-pg-inn-tbl-marqq-dv">
+        <div class="exchange-pg-inn-tbl-marqq-dv-wrp">
+            <marquee>West Indies Women vs Ireland Women : Advance Toss & Fancy Bets Started in Our Exchange 🏏</marquee>
+        </div>
+    </div>
+
+</div>

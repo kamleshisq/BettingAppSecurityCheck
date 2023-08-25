@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/webSocket.js"></script>
+<head>
+    <style>
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #ffffff;
+        }
+        
+        li {
+          float: left;
+        }
+        
+        li a {
+          display: block;
+          color: rgb(0, 0, 0);
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+        }
+        
+        li a:hover {
+          background-color: #ffffff;
+        }
+        .box_section {
+    width: 100%;
+    display: inline-block;
+    margin: 0 0 0;
+}
+
+.box_section .box {
+    width: calc(50% - 13px);
+    float: left;
+    margin-right: -120px;
+}
+
+.box_section .box:nth-child(even) {
+    margin-right: 0;
+}
+
+.box_section .box a.foo img {
+    width: 50%;
+    height: 50%;
+}
+.box_section .box a.foo video {
+    width: 50%;
+    height: 50%;
+}
+        </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <title>Home</title>
+</head>
+<body>
+    <ul>
+        <%if(user){%>
+            <li><button type="button"  class="logOut"><a>logOut</a></button></li>
+            <li><button class="edit"><a href="/edit">Edit</a></button></li>
+            <li><button class="account"><a href="/myAccountStatment">My Account Statement</a></button></li>
+            <li><button class="account"><a href="/changeUserPassword">change password</a></button></li>
+        <%}else{%>
+            <li><button class="account"><a href="/userlogin">Login</a></button></li>
+        <%}%>
+            <li><button class="account"><a href="/ALLGAMEFORTESTING">Casino</a></button></li>
+            <li><button class="account"><a href="/SPORT">Sport Radar</a></button></li>
+            <li><button class="account"><a href="/exchange_sports/inplay">Exchange</a></button></li>
+      </ul>
+
+      <div class="box_section">
+      <%for(let i = 0; i < data.length; i++){%>
+        <%if(data[i].status){%>
+            <%if(data[i].video){%>
+              <div class="box">
+                <a id="<%=data[i]._id%>" class="foo">
+                    <video  controls width="500" height="600" >
+                        <source src="img/<%=data[i].position%>.mp4" type="video/mp4">
+                    </video>
+                </a>
+              </div>
+            <%}else{%>
+              <div class="box">
+            
+                <a id="<%=data[i]._id%>" class="foo" >
+                    <img src="img/<%=data[i].position%>.png" alt="img"  width="500" height="600"><br>
+                </a>
+                </div>
+            <%}%>
+            <%}%>
+            <%}%>
+          </div>
+<script src="userJs/logOut.js"></script>
+</body>
+</html>

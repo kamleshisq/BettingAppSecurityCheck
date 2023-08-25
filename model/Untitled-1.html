@@ -1,0 +1,227 @@
+<div class="row" style="padding:10px 0px;background-color: #ffff;border-radius: 10px;">
+  <%let Sport = sliders.find(item => item.name == "Sport")%>
+  <%let Casino = sliders.find(item => item.name == "Casino")%>
+  <%let Royal_Gaming = sliders.find(item => item.name == "Royal_Gaming")%>
+  <div class="container-fluid" id="verticalMenuManager"> 
+      <section class="verticalMenuManager" >
+          <div class="new-head">
+              <h3 style="font-weight: 700;font-size: 24px;">Slider Management</h3>
+          </div>
+          <div class="table_data_details_ col-lg-12">
+            <div class="row" style="padding:10px 0px">
+              <div class="tabs">
+                <span data-tab-value="#tab_21" style="background-color: #6359CA; color: #fff;" id="FS">FEATURED SPORTS</span>
+                <span data-tab-value="#tab_11" style="background-color: #6359CA; color: #fff;" id="OS">OUR CASINO</span>
+                <span data-tab-value="#tab_31" style="background-color: #6359CA; color: #fff;" id="RG">ROYAL GAMING</span>
+              </div>
+              <div class="tab-content">
+                <div class="tabs__tab " id="tab_21" data-tab-info>
+                  <div class="accordion" id="accordionPanelsStayOpenExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="panelsStayOpen-headingtwo">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsetwo" aria-expanded="true" aria-controls="panelsStayOpen-collapsetwo">
+                          FEATURED SPORTS
+                        </button>
+                      </h2>
+                      <div id="panelsStayOpen-collapsetwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingtwo">
+                        <div class="accordion-body" style="gap: 5px;display: flex;flex-direction: column; background-color: #6359CA;">
+                          <div class="row" id="RGVd">
+                            <form class="SF" id="SF" >
+                              <div class="row">
+                                <div class="col">
+                                  <label for="url" >Url</label>
+                                  <input type="text" id="url"  class="form-control ml0" name="url">
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  <label for="Number" >Number</label>
+                                  <input type="number" id="Number"  class="form-control ml0" name="Number">
+                                </div>
+                              </div>
+                              <div class="row mt-2">
+                                <div class="col" id="backgroundImage">
+                  
+                                </div>
+                                <div class="col" >
+                                  <input type="file" name="file" id="file">
+                                </div>
+                              </div>
+                              <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Save</button>
+                            </form>
+                          <div> 
+                            <br><br>
+                            <div class="new-head">
+                              <h3 style="font-weight: 700;font-size: 24px; color: #ffffff;">Images</h3>
+                              <button class="btn-filter-image" id="<%=Sport._id%>" data-bs-toggle="modal" data-bs-target="#addImage"><i class="fa-solid fa-plus"></i> &nbsp; Add Image</button>
+                            </div>
+                            <!-- <label >Images</label> -->
+                            <table style="color: rgb(255, 255, 255);">
+                              <thead>
+                                <th>name</th>
+                                <th>url</th>
+                                <th>Image</th>
+                                <th>Update</th>
+                                <th>delete</th>
+                              </thead>
+                              <tbody>
+                                <%for(let i=0; i < Sport.images.length; i++){%>
+                                  <tr>
+                                    <td><%=Sport.images[i].name%></td>
+                                    <td><%=Sport.images[i].url%></td>
+                                    <td><img src="../sliderImages/<%=Sport.images[i].name%>.png" alt="img" class="form__user-photo"></td>
+                                    <td></td>
+                                    <td><button class="dleteImageSport" id="<%=Sport.images[i].name%>">Delete</button></td>
+                                  </tr>
+                                <%}%>
+                              </tbody>
+                            </table>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="tab-content">
+                <div class="tabs__tab " id="tab_31" data-tab-info>
+                  <div class="accordion" id="accordionPanelsStayOpenExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="panelsStayOpen-headingtwo">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsetwo" aria-expanded="true" aria-controls="panelsStayOpen-collapsetwo">
+                          ROYAL GAMING
+                        </button>
+                      </h2>
+                      <div id="panelsStayOpen-collapsetwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingtwo">
+                        <div class="accordion-body" style="gap: 5px;display: flex;flex-direction: column; background-color: #6359CA;">
+                          <div class="row" id="RGVd">
+                            <form class="RGF" id="RGF" >
+                              <div class="row">
+                                <div class="col">
+                                  <label for="url" >Url</label>
+                                  <input type="text" id="url" class="form-control ml0" name="url">
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  <label for="Number" >Number</label>
+                                  <input type="number" id="Number"  class="form-control ml0" name="Number">
+                                </div>
+                              </div>
+                              <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Save</button>
+                            </form>
+                            <div>
+                              <br><br>
+                            <div class="new-head">
+                              <h3 style="font-weight: 700;font-size: 24px; color: #ffffff;">Images</h3>
+                              <button class="btn-filter-image" id="<%=Royal_Gaming._id%>" data-bs-toggle="modal" data-bs-target="#addImage"><i class="fa-solid fa-plus"></i> &nbsp; Add Image</button>
+                            </div>
+                            <table style="color: rgb(255, 255, 255);">
+                              <thead>
+                                <th>name</th>
+                                <th>url</th>
+                                <th>Image</th>
+                                <th>Update</th>
+                                <th>delete</th>
+                              </thead>
+                              <tbody>
+                                <%for(let i=0; i < Royal_Gaming.images.length; i++){%>
+                                  <tr>
+                                    <td><%=Royal_Gaming.images[i].name%></td>
+                                    <td><%=Royal_Gaming.images[i].url%></td>
+                                    <td><img src="../sliderImages/<%=Royal_Gaming.images[i].name%>.png" alt="img" class="form__user-photo"></td>
+                                    <td></td>
+                                    <td><button class="dleteImageRoyal" id="<%=Royal_Gaming.images[i].name%>">Delete</button></td>
+                                  </tr>
+                                <%}%>
+                              </tbody>
+                            </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="tab-content">
+                <div class="tabs__tab " id="tab_11" data-tab-info>
+                  <div class="accordion" id="accordionPanelsStayOpenExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="panelsStayOpen-headingtwo">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsetwo" aria-expanded="true" aria-controls="panelsStayOpen-collapsetwo">
+                          OUR CASINO
+                        </button>
+                      </h2>
+                      <div id="panelsStayOpen-collapsetwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingtwo">
+                        <div class="accordion-body" style="gap: 5px;display: flex;flex-direction: column; background-color: #6359CA;">
+                          <div class="row" id="RGVd">
+                            <form class="OCF" id="OCF" >
+                              <div class="row">
+                                <div class="col">
+                                  <label for="url" >Url</label>
+                                  <input type="text" id="url"  class="form-control ml0" name="url">
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  <label for="Number" >Number</label>
+                                  <input type="number" id="Number"  class="form-control ml0" name="Number">
+                                </div>
+                              </div>
+                              <button type="submit" class="btn-submit mt-3" style="background-color: #46BCAA;">Save</button>
+                            </form>
+                          <div>
+                            <br><br>
+                            <div class="new-head">
+                              <h3 style="font-weight: 700;font-size: 24px; color: #ffffff;">Images</h3>
+                              <button class="btn-filter-image" id="<%=Casino._id%>" data-bs-toggle="modal" data-bs-target="#addImage"><i class="fa-solid fa-plus"></i> &nbsp; Add Image</button>
+                            </div>
+                            <table style="color: rgb(255, 255, 255);">
+                              <thead>
+                                <th>name</th>
+                                <th>url</th>
+                                <th>Image</th>
+                                <th>Update</th>
+                                <th>delete</th>
+                              </thead>
+                              <tbody>
+                                <%for(let i=0; i < Casino.images.length; i++){%>
+                                  <tr>
+                                    <td><%=Casino.images[i].name%></td>
+                                    <td><%=Casino.images[i].url%></td>
+                                    <td><img src="../sliderImages/<%=Casino.images[i].name%>.png" alt="img" class="form__user-photo"></td>
+                                    <td></td>
+                                    <td><button class="dleteImageCasino" id="<%=Casino.images[i].name%>">Delete</button></td>
+                                  </tr>
+                                <%}%>
+                              </tbody>
+                            </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+      </section>
+  </div>
+</div>

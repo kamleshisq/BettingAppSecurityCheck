@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<style>
+    .container{
+        margin: 0px;
+        padding: 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    form{
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+    .input_group{
+        margin: 3px;
+    }
+</style>
+<body>
+    <div class="updateRole">
+        <form class="UpdateRole-form" id="UpdateRole-form">
+            <div class="input_group">
+                <label for="roleName">Role Name</label>
+                <select name="roleName" id="mySelect" >
+                    <%for(let i = 0; i < roles.length; i++){%>
+                        <option value=<%=roles[i]._id%> ><%=roles[i].roleName%></option>
+                    <%}%>
+                  </select>
+            </div>
+            <h3>User Controller</h3>
+            <div class="user_controller" id="user_controller">
+                
+            </div>
+            <h3>Role Auth</h3>
+            <div class="input_group">
+                <%for(let i=0;i<roles.length;i++){%>
+                    <label for=<%=roles[i].roleName%>><%=roles[i].roleName%></label>
+                    <input type="checkbox" name="userAuthorization" value="<%=roles[i].role_level%>" id="<%=roles[i].role_type%>">
+                <%}%>
+            </div>
+            <div class="input_group" id="role_controller">
+                
+            </div>
+            <div class="input_group">
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+
+
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="js/webSocket.js"></script>
+<script type="text/javascript" src="js/bundle.js"></script>
+
+</body>
+</html>

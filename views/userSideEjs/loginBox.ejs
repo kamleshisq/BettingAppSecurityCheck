@@ -1,0 +1,81 @@
+<div class="modal fade my-model-loginmodl" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content myloginmodl-content">
+        <!-- <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Modal 1</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div> -->
+        <div class="modal-body myloginmodl-body">
+          <div class="myloginmodl-body-txt-wrp">
+            <div class="myloginmodl-body-txt-ro">
+              <div class="col-lg-6 col-md-6 col-12 myloginmodl-body-txt-col">
+                <div class="myloginmodl-body-txt-col-txtimg">
+                  <img class="img-fluid mymodelloginimg" src="/assets/img/home/mymodelloginimg.png" alt="">
+                  <img class="img-fluid mymodelloginimg-mbl" src="/assets/img/home/mymodelloginimg-mbl.png" alt="">
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-12 myloginmodl-body-txt-col2">
+                <div class="myloginmodl-body-txt-col-txtform container">
+                  <div class="myloginmodl-form-logodv">
+                    <img class="myloginmodl-form-logo" src="/assets/img/Royal77701.png" alt="">
+                  </div>
+                  <form class="myloginmodl-form-dv">
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label myloginmodl-lbl">E-mail / username</label>
+                      <input type="text" class="form-control myloginmodl-input" id="exampleInputEmail1" aria-describedby="emailHelp" name="userName">
+                      
+                    </div>
+                    <div class="mb-3 ">
+                      <label for="exampleInputPassword1" class="form-label myloginmodl-lbl">Password</label>
+                      <div class="input-group mb-3 myloginmodl-formgroup">
+                        <input type="password" class="form-control myloginmodl-formgroup-input" placeholder="" aria-label="Username" aria-describedby="basic-addon1" name="password">
+                        <span class="input-group-text myloginmodl-formgroup-input-spn" id="basic-addon1"><i class="fa-solid fa-eye-slash"></i></span>
+                      </div>
+                    </div>
+                    <div class="myloginmodl-form-btn-dv">
+                      <button type="submit" class="btn myloginmodl-loginbtnn">LOGIN</button>
+                      <button type="button" class="btn myloginmodl-demo-loginbtnn">DEMO LOGIN</button>
+                    </div>
+                    <div class="myloginmodl-form-regesterbtn-dv">
+                      <p>Don’t have an account? <a class="myloginmodl-form-regesterbtn" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" >Register.</a></p>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer myloginmodl-fotr">
+          <!-- <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button> -->
+          <button type="button" class="myloginmodl-fotr-closbtn" data-bs-dismiss="modal" aria-label="Close">BACK TO HOME</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  const passwordInput = document.querySelector('input[name="password"]');
+  const eyeIcon = document.querySelector('.myloginmodl-formgroup-input-spn');
+
+  eyeIcon.addEventListener("click", function () {
+    const isVisible = passwordInput.getAttribute("type") === "text";
+
+    if (isVisible) {
+      passwordInput.setAttribute("type", "password");
+      eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+    } else {
+      passwordInput.setAttribute("type", "text");
+      eyeIcon.innerHTML = '<i class="fa-solid fa-eye"></i>';
+
+      // Hide the password after 3 seconds
+      setTimeout(function () {
+        passwordInput.setAttribute("type", "password");
+        eyeIcon.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+      }, 3000);
+    }
+  });
+});
+</script>
+
+<script type="text/javascript" src="../js/bundle.js"></script>

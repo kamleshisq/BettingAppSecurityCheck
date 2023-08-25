@@ -1,0 +1,582 @@
+<%- include("../header") %>
+
+  <!--Container Main start-->
+  <div class="dashboard-main-wraper" >
+
+  <section class="dashboard-welcome-section" >
+    <div class="container-fluid">
+      <%- include("./filterSection") %>
+    <%- include("../loginUserAdminsideDetails") %>
+  </div>
+  </section>
+
+  
+<section>
+  <%- include("./table") %>
+</section>
+
+<!-- end gallary -->
+
+  </div>
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header">
+          <!-- <h4 class="modal-title" style="color: #fff;">Deposit</h4> -->
+        </div>
+        <div class="modal-body">
+          <form class="form-data acc-form">
+            <div class="row">
+              <div class="col">
+                <label for="">Choose Option</label>
+                <select name="type" class="DepositW" >
+                  <option value="deposit">Deposit</option>
+                  <option value="withdrawl">Withdraw</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">From User</label>
+                <input type="text" class="form-control ml0" placeholder="Enter User Name" name="fromUser" readonly>
+                <!-- <input type="hidden" name="id"> -->
+
+              </div>
+              <div class="col">
+                <label for="">Balance</label>
+                <input type="text" class="form-control ml0" placeholder="Balance" name="fuBalance" readonly>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">To User</label>
+                <input type="text" class="form-control ml0" placeholder="Enter User Name" name="toUser" readonly>
+              </div>
+              <div class="col">
+                <label for="">Balance</label>
+                <input type="text" class="form-control ml0" placeholder="Balance" name="tuBalance" readonly>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Client P&L</label>
+                <input type="text" class="form-control ml0" placeholder="0.00" name="clintPL">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Remarks</label>
+                <input type="text" class="form-control ml0" placeholder="Abitest" name="remark">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Password</label>
+                <input type="text" class="form-control ml0" placeholder="" name="Password">
+              </div>
+              <div class="col">
+                <label for="">Balance</label>
+                <input type="number" class="form-control ml0" placeholder="Add Funds" name="amount">
+              </div>
+            </div>
+            <button type="submit" class="btn-submit mt-3">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header" >
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+          <h4 class="modal-title" >Withdraw</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-data">
+            <div class="row">
+              <div class="col">
+                <label for="">From User</label>
+                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
+              </div>
+              <div class="col">
+                <label for="">Balance</label>
+                <input type="text" class="form-control ml0" placeholder="1000700.100" name="pswd">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">To User</label>
+                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
+              </div>
+              <div class="col">
+                <label for="">Balance</label>
+                <input type="text" class="form-control ml0" placeholder="1000700.100" name="pswd">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Client P&L</label>
+                <input type="text" class="form-control ml0" placeholder="0.00" name="email">
+              </div>
+              <div class="col">
+                <label for="">Balance</label>
+                <input type="text" class="form-control ml0" placeholder="0" name="pswd">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Remarks</label>
+                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Transcation Code</label>
+                <input type="text" class="form-control ml0" placeholder="" name="email">
+              </div>
+              <div class="col">
+                <label for="">Balance</label>
+                <input type="text" class="form-control ml0" placeholder="Add Funds" name="pswd">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header" >
+          <!-- <button type="button" class="close" data-dismiss="modal"></button> -->
+          <h4 class="modal-title" >Commission</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-data CommissionForm">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Market Name</th>
+                  <th>Commission Type</th>
+                  <th>OFF / ON</th>
+                  <th>Percentage Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>matchOdds</td>
+                  <td>
+                    <select class="form-control" name="matchOddsType">
+                      <option value="WIN">WIN_COMMISSION</option>
+                      <!-- <option value="ENTRY">Entry Wise Commission</option> -->
+                      <!-- Add more options as needed -->
+                    </select>
+                  </td>
+                  <td>
+                    <span> &nbsp; <label class="switch">
+                      <input class="checkbox" name="matchOddsStatus" type="checkbox">
+                      <span class="slider round"></span>
+                      </label>&nbsp; </span>
+                  </td>
+                  <td>
+                    <!-- <input type="number" class="form-control" name="matchOdds"> -->
+                    <select name="matchOdds">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Bookmaker</td>
+                  <td>
+                    <select class="form-control" name="BookmakerType">
+                      <!-- <option value="WIN">WIN_COMMISSION</option> -->
+                      <option value="ENTRY">Entry Wise Commission</option>
+                      <option value="NET_LOSS">Net Losing Commission</option>
+                      <option value="ENTRY_LOSS_">Entry Wise Losing Commission</option>
+                    </select>
+                  </td>
+                  <td>
+                    <span> &nbsp; <label class="switch">
+                      <input class="checkbox" name="BookmakerStatus" type="checkbox">
+                      <span class="slider round"></span>
+                      </label>&nbsp; </span>
+                  </td>
+                  <td>
+                    <!-- <input type="number" class="form-control" name="Bookmaker"> -->
+                    <select name="Bookmaker">
+                      <option value="0.25">0.25</option>
+                      <option value="0.5">0.5</option>
+                      <option value="0.75">0.75</option>
+                      <option value="1">1</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>fency</td>
+                  <td>
+                    <select class="form-control" name="fencyType">
+                      <!-- <option value="WIN">WIN_COMMISSION</option> -->
+                      <option value="ENTRY" selected>Entry Wise Commission</option>
+                      <!-- Add more options as needed -->
+                    </select>
+                  </td>
+                  <td>
+                    <span> &nbsp; <label class="switch">
+                      <input class="checkbox" name="fencyStatus" type="checkbox">
+                      <span class="slider round"></span>
+                      </label>&nbsp; </span>
+                  </td>
+                  <td>
+                    <!-- <input type="number" class="form-control" name="fency" > -->
+                    <select name="fency" >
+                      <option value="0.25">0.25</option>
+                      <option value="0.5">0.5</option>
+                      <option value="0.75">0.75</option>
+                      <option value="1">1</option>
+                      <option value="1.25">1.25</option>
+                      <option value="1.5">1.5</option>
+                      <option value="1.75">1.75</option>
+                      <option value="2">2</option>
+                      <option value="2.25">2.25</option>
+                      <option value="2.50">2.50</option>
+                      <option value="2.75">2.75</option>
+                      <option value="3">3</option>
+                    </select>
+                  </td>
+                </tr>
+                <!-- Add more rows for other markets -->
+              </tbody>
+            </table>
+            <button type="submit" class="btn-submit mt-3">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModal3" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header" >
+          <h4 class="modal-title" >Reset User Password</h4>
+        </div>
+        <div class="modal-body">
+          <p >Reset Password For Abitest<br>User Will Be Forced To Changed The Password On Login</p>
+
+          <form class="form-data passReset-form">
+            <div class="row">
+              <div class="col">
+                <label for="">Enter New Password</label>
+                <input type="password" class="form-control ml0" placeholder="*****" name="password">
+              </div>
+              <div class="col">
+                <label for="">Confirm Password</label>
+                <input type="password" class="form-control ml0" placeholder="*****" name="passwordConfirm">
+              </div>
+            </div>
+            
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Your Password</label>
+                <input type="password" class="form-control ml0" placeholder="******" name="Password">
+              </div>
+            </div>
+          <button type="submit" class="btn-submit mt-3">Confirm</button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+   
+
+  <div class="modal fade" id="myModal4" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header" >
+          <h4 class="modal-title" >Change status</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-data userStatus">
+            <div class="row">
+              <div class="col">
+                <label for="">Account status</label>
+                <select name="status" class="form-control ml0" >Active
+                  <option value="true">Active</option>
+                  <option value="false">Close</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Enter Your Password</label>
+                <input type="password" class="form-control ml0" placeholder="******" name="Password">
+              </div>
+            </div>
+          <button type="submit" class="btn-submit mt-3">Confirm</button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+   
+
+  <div class="modal fade" id="myModaladduser" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header" >
+          <h4 class="modal-title" >Add Account</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-data" id="Add-User">
+            <div class="row">
+              <div class="col">
+                <label for="">Name</label>
+                <input type="text" class="form-control ml0" placeholder="" name="name">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">User ID</label>
+                <input type="text" class="form-control ml0" placeholder="Abitest" name="userName">
+              </div>
+              <div class="col">
+                <label for="">User Role</label>
+                <select name="role" id="roleSelect" class="form-control ml0" >
+                  <%for(let i = 0;i<roles.length; i++){%>
+                    <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
+                  <%}%>
+                </select>
+              </div>
+            </div>
+            <%if(currentUser.roleName === "Admin"){ %>
+              <div class="row mt-2">
+                <div class="col">
+                  New Domain
+                  <input type="checkbox" class="hide" id="customOptionCheckbox">
+                  <label for="">WhiteLabel</label>
+                  <!-- <input type="text" name="whiteLabel" placeholder="Enter new role"> -->
+                  <select id="whiteLabel" class="form-control ml0" >
+                    <%for(let i = 0; i < WhiteLabel.length; i++){ %>
+                      <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
+                    <%} %>
+                  </select>
+                  <input type="text" name="whiteLabel" id="newWhiteLabelInput" placeholder="Enter new WhiteLabel" >
+                </div>
+              </div>
+            <%} %>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Email ID</label>
+                <input type="email" class="form-control ml0" placeholder="Abitest" name="email">
+              </div>
+              <div class="col">
+                <label for="">Contact No.</label>
+                <input type="number" class="form-control ml0" placeholder="Abitest" name="contact">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Password</label>
+                <input type="password" class="form-control ml0" placeholder="" name="password">
+              </div>
+              <div class="col">
+                <label for="">Confirm Password</label>
+                <input type="password" class="form-control ml0" placeholder="" name="passwordConfirm">
+              </div>
+            </div>
+            <div class="row mt-2" id="shareVisibleActual">
+              <div class="col">
+                <label for="">Share</label>
+                <input type="text" id="Share" class="form-control ml0" placeholder="0" name="share">
+              </div>
+              <div class="col">
+                <label for="">Visible</label>
+                <input type="text" id="myShare" class="form-control ml0" placeholder="0" name="Visible">
+              </div>
+              <div class="col">
+                <label for="">Actual</label>
+                <input type="text" class="form-control ml0" placeholder="0" name="Actual">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Credit Reference</label>
+                <input type="text" class="form-control ml0" placeholder="0" name="Credit">
+              </div>
+              <div class="col">
+                <label for="exposureLimit">Expose Limits</label>
+                <input type="number" class="form-control ml0" placeholder="0" name="exposureLimit">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Note</label>
+                <input type="text" class="form-control ml0" placeholder="" name="Note">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Password</label>
+                <input type="password" class="form-control ml0" placeholder="" name="Password">
+                <i class="bi bi-eye-slash" id="togglePassword"></i>
+              </div>
+            </div>
+            <button type="submit" class="btn-submit mt-3" >Add</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  
+  </div>  <div class="modal fade" id="myModal5" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header" >
+          <h4 class="modal-title" >User Details</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-data" id="edit-form">
+            <div class="row">
+              <div class="col">
+                <label for="">Name</label>
+                <input type="text" class="form-control ml0" name="name">
+                <input type="hidden" id="id" name="id">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">User Name</label>
+                <input type="text" class="form-control ml0" name="userName">
+              </div>
+              <div class="col">
+                <label for="">User Role</label>
+                <select class="form-control ml0" name="role" >
+                  <%for(let i = 0;i<roles.length; i++){%>
+                  <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
+                  <%}%>
+                </select>
+              </div>
+            </div>
+            
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Share <span >100</span></label>
+                <input type="text" class="form-control ml0" placeholder="90" name="share">
+              </div>
+              <div class="col">
+                <label for="">My Share</label>
+                <input type="text" class="form-control ml0" placeholder="10" name="myShare">
+              </div>
+              <div class="col">
+                <label for="">Actual</label>
+                <input type="text" class="form-control ml0" placeholder="10" name="actual">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Credit Reference</label>
+                <input type="text" class="form-control ml0" name="cdReference">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="exposureLimit">Expose Limits</label>
+                <input type="number" class="form-control ml0" placeholder="0" name="exposureLimit">
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Note</label>
+                <textarea id="w3review" placeholder="" name="w3review" rows="3" cols="50" ></textarea>
+              </div>
+            </div>
+          
+  
+            <button type="submit" class="btn-submit mt-3">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const customOptionCheckbox = document.getElementById('customOptionCheckbox');
+    const newWhiteLabelInput = document.getElementById('newWhiteLabelInput');
+  
+    customOptionCheckbox.addEventListener('change', function () {
+      if (this.checked) {
+        newWhiteLabelInput.classList.remove('hide')
+        // Hide the select element
+        document.querySelector('select[name="whiteLabel"]').classList.add('hide')
+      } else {
+        newWhiteLabelInput.classList.add('hide')
+        document.querySelector('select[name="whiteLabel"]').classList.remove('hide')
+      }
+    });
+  </script>
+  <script>
+  
+    document.getElementById('roleSelect').addEventListener('change', function () {
+      console.log("WORK")
+      if (document.getElementById('roleSelect').value === '6492fe4fd09db28e00761694') {  
+        document.getElementById('shareVisibleActual').classList.add("hide") 
+      } else {
+        document.getElementById('shareVisibleActual').classList.remove("hide") 
+      }
+    });
+  </script>
+
+    <script type="text/javascript" src="../js/bundle.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+
+  </body>
+</html>

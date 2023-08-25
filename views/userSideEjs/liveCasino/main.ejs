@@ -1,0 +1,743 @@
+<%-include("../headers")%>
+
+
+      <!-- ----= EXCHANGE PAGE BANNER SECTION START =-----   -->
+      <section class="exchange-pg-main-sec">
+        <div class="container-fluid exchange-pg-main-contnr">
+          <div class="col-lg-12 col-md-12 col-12 exchange-pg-main-col">
+            <div class="exchange-pg-main-col-ro mob-exchange-pg-main-col-ro ">
+                <div class="exchange-pg-main-col-big col-lg-9 col-md-9 col-12">
+                    <div class="exchange-pg-main-col-big-wrp">
+                        <section class="exchange-pg-banner-sec">
+                          <%let topbanner = data.find(item => item.position === "livecasino_Top")%>
+                            <%if(topbanner){%>
+                              <div class="exchange-pg-banner-sec-wrp promotionLink" id="<%=topbanner._id%>" onclick="window.location.href='<%=topbanner.link%>'">
+                                <img class="hiro-banner-img img-fluid" src="/img/<%=topbanner.Image%>.png" alt="banner image">
+                              </div>
+                            <%}%>
+                        </section>
+                        
+                        <div class="liv-casino-txt-ro">
+                          <div class="liv-casino-txt-ro-contnr">
+                            <div class="liv-casino-nav-ro">
+                              <div class="liv-casino-nav-tabcol">
+                                <ul class="nav nav-pills liv-casino-nav-tab-ul" id="pills-tab" role="tablist">
+                                  <li class="nav-item liv-casino-nav-tab-li" role="presentation">
+                                    <button class="nav-link liv-casino-nav-tab-btnn active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">All Games</button>
+                                  </li>
+                                  <li class="nav-item liv-casino-nav-tab-li" role="presentation">
+                                    <button class="nav-link liv-casino-nav-tab-btnn" id="pills-profile1-tab" data-bs-toggle="pill" data-bs-target="#pills-profile1" type="button" role="tab" aria-controls="pills-profile1" aria-selected="false">My Favourites </button>
+                                  </li>
+                                  <li class="nav-item liv-casino-nav-tab-li" role="presentation">
+                                    <button class="nav-link liv-casino-nav-tab-btnn" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Roulette </button>
+                                  </li>
+                                  <li class="nav-item liv-casino-nav-tab-li" role="presentation">
+                                    <button class="nav-link liv-casino-nav-tab-btnn" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Baccarat</button>
+                                  </li>
+                                  <li class="nav-item liv-casino-nav-tab-li" role="presentation">
+                                    <button class="nav-link liv-casino-nav-tab-btnn" id="pills-contact2-tab" data-bs-toggle="pill" data-bs-target="#pills-contact2" type="button" role="tab" aria-controls="pills-contact2" aria-selected="false"> Live</button>
+                                  </li>
+                                  <li class="nav-item liv-casino-nav-tab-li" role="presentation">
+                                    <button class="nav-link liv-casino-nav-tab-btnn" id="pills-contact3-tab" data-bs-toggle="pill" data-bs-target="#pills-contact3" type="button" role="tab" aria-controls="pills-contact3" aria-selected="false"> Virtual</button>
+                                  </li>
+                                  
+                                </ul>
+                                
+                              </div>
+                              <div class="liv-casino-nav-serchcol">
+                                <div class="input-group input-group-sm flex-nowrap liv-casino-nav-serchcol-inputgrop">
+                                  <!-- <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
+                                  <span class="input-group-text" id="addon-wrapping">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                  </span> -->
+                                </div>
+                                
+                                <div class="input-group flex-nowrap liv-casino-nav-serchcol-inputgrop2">
+                                  <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                    <option selected value="All">All</option>
+                                    <option value="RG">Royal Gaming</option>
+                                    <option value="EZUGI">Ezugi</option>
+                                    <option value="DC">Evolution Gaming</option>
+                                  </select>
+                                </div>
+
+                              </div>
+                            </div>
+
+                            <div class="liv-casino-nav-tab-txtdv">
+                              <div class="tab-content liv-casino-nav-tab-txtwrp" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+                                  <div class="liv-casino-nav-tab-txtcards-dv" id="games">
+                                    <%for(let i = 0; i < games.length; i++){%>
+                                      <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
+                                          <a class="liv-casino-games-cards-a">
+                                            <div class="liv-casino-games-cards-imgdv">
+                                              <img class="img-fluid img-bdr-red15 forIMG" src="<%=games[i].url_thumb%>" alt="">
+                                              <div class="liv-casino-games-cards-txt">
+                                                <div class="liv-casino-games-cards-txtcol">
+                                                  <h6><%=games[i].game_name%></h6>
+                                                  <%if(gamesFe.includes(games[i]._id)){ %>
+                                                      <i id="<%=games[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i>
+                                                      <%} else{ %>
+                                                      <i id="<%=games[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>
+                                                  <%} %>
+                                                </div>
+                                              </div>
+                                              <div class="liv-casino-games-cards-txt2">
+                                                  <%if(user){%>
+                                                      <a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=<%=games[i]._id%>">PLAY NOW</a>
+                                                      <%}else{%>
+                                                      <!-- <a class="liv-casino-games-cards-txt2-btn" href="/cards?gameId=<%=games[i]._id%>">LOGIN TO CONTINUE</a> -->
+                                                      <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
+                                                      <%}%>
+                                              </div>
+                                            </div>
+                                          </a>
+                                        </div>
+                                  <%}%>
+
+                                  </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-profile1" role="tabpanel" aria-labelledby="pills-profile1-tab" tabindex="0">
+                                  <div class="liv-casino-nav-tab-txtcards-dv" id="gamesFevorite">
+                                    <%for(let i = 0; i < games.length; i++){%>
+                                      <%if(gamesFe.includes(games[i]._id)){ %>
+                                      <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
+                                          <a class="liv-casino-games-cards-a">
+                                            <div class="liv-casino-games-cards-imgdv">
+                                              <img class="img-fluid img-bdr-red15 forIMG" src="<%=games[i].url_thumb%>" alt="">
+                                              <div class="liv-casino-games-cards-txt">
+                                                <div class="liv-casino-games-cards-txtcol">
+                                                  <h6><%=games[i].game_name%></h6>
+                                                      <i id="<%=games[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i> 
+                                                </div>
+                                              </div>
+                                              <div class="liv-casino-games-cards-txt2">
+                                                  <%if(user){%>
+                                                      <a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=<%=games[i]._id%>">PLAY NOW</a>
+                                                      <%}else{%>
+                                                      <!-- <a class="liv-casino-games-cards-txt2-btn" href="/cards?gameId=<%=games[i]._id%>">LOGIN TO CONTINUE</a> -->
+                                                      <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
+                                                      <%}%>
+                                              </div>
+                                            </div>
+                                          </a>
+                                        </div>
+                                      <%} %>
+                                  <%}%>
+
+                                  </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+                                  <div class="liv-casino-nav-tab-txtcards-dv" id="roulette">
+                                    <% const data1array = games.filter(item => {
+                                      const gameName = item.game_name.toLowerCase();
+                                      const category = item.category.toLowerCase();
+                                      return gameName.includes('roulette') || category.includes('roulette');
+                                    }); %>
+                                    <%for(let i = 0; i < data1array.length; i++){%>
+                                      <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
+                                          <a class="liv-casino-games-cards-a">
+                                            <div class="liv-casino-games-cards-imgdv">
+                                              <img class="img-fluid img-bdr-red15 forIMG" src="<%=data1array[i].url_thumb%>" alt="">
+                                              <div class="liv-casino-games-cards-txt">
+                                                <div class="liv-casino-games-cards-txtcol">
+                                                  <h6><%=data1array[i].game_name%></h6>
+                                                  <%if(gamesFe.includes(data1array[i]._id)){ %>
+                                                    <i id="<%=data1array[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i>
+                                                    <%} else{ %>
+                                                    <!-- <i id="<%=games[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i> -->
+                                                    <i id="<%=data1array[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>
+                                                <%} %>
+                                                </div>
+                                              </div>
+                                              <div class="liv-casino-games-cards-txt2">
+                                                  <%if(user){%>
+                                                      <a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=<%=data1array[i]._id%>">PLAY NOW</a>
+                                                      <%}else{%>
+                                                      <!-- <a class="liv-casino-games-cards-txt2-btn" href="/cards?gameId=<%=games[i]._id%>">LOGIN TO CONTINUE</a> -->
+                                                      <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
+                                                      <%}%>
+                                              </div>
+                                            </div>
+                                          </a>
+                                        </div>
+                                    <%}%>
+                                  </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
+                                  <div class="liv-casino-nav-tab-txtcards-dv" id="baccarat">
+                                    <% const data2array = games.filter(item => {
+                                      const gameName = item.game_name.toLowerCase();
+                                      const category = item.category.toLowerCase();
+                                      return gameName.includes('baccarat') || category.includes('baccarat');
+                                    }); %>
+                                    <%for(let i = 0; i < data2array.length; i++){%>
+                                      <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
+                                          <a class="liv-casino-games-cards-a">
+                                            <div class="liv-casino-games-cards-imgdv">
+                                              <img class="img-fluid img-bdr-red15 forIMG" src="<%=data2array[i].url_thumb%>" alt="">
+                                              <div class="liv-casino-games-cards-txt">
+                                                <div class="liv-casino-games-cards-txtcol">
+                                                  <h6><%=data2array[i].game_name%></h6>
+                                                  <%if(gamesFe.includes(data2array[i]._id)){ %>
+                                                    <i id="<%=data2array[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i>
+                                                    <%} else{ %>
+                                                    <i id="<%=data2array[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>
+                                                <%} %>
+                                                </div>
+                                              </div>
+                                              <div class="liv-casino-games-cards-txt2">
+                                                  <%if(user){%>
+                                                      <a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=<%=data2array[i]._id%>">PLAY NOW</a>
+                                                      <%}else{%>
+                                                      <!-- <a class="liv-casino-games-cards-txt2-btn" href="/cards?gameId=<%=games[i]._id%>">LOGIN TO CONTINUE</a> -->
+                                                      <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
+                                                      <%}%>
+                                              </div>
+                                            </div>
+                                          </a>
+                                        </div>
+                                    <%}%>
+                                  </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-contact2" role="tabpanel" aria-labelledby="pills-contact2-tab" tabindex="0">
+                                  <div class="liv-casino-nav-tab-txtcards-dv" id="live">
+                                    <% const data3array = games.filter(item => {
+                                      const gameName = item.game_name.toLowerCase();
+                                      const category = item.category.toLowerCase();
+                                      return gameName.includes('live') || category.includes('live');
+                                    }); %>
+                                    <%for(let i = 0; i < data3array.length; i++){%>
+                                      <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
+                                          <a class="liv-casino-games-cards-a">
+                                            <div class="liv-casino-games-cards-imgdv">
+                                              <img class="img-fluid img-bdr-red15 forIMG" src="<%=data3array[i].url_thumb%>" alt="">
+                                              <div class="liv-casino-games-cards-txt">
+                                                <div class="liv-casino-games-cards-txtcol">
+                                                  <h6><%=data3array[i].game_name%></h6>
+                                                  <%if(gamesFe.includes(data3array[i]._id)){ %>
+                                                    <i id="<%=data3array[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i>
+                                                    <%} else{ %>
+                                                    <i id="<%=data3array[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>
+                                                <%} %>
+                                                </div>
+                                              </div>
+                                              <div class="liv-casino-games-cards-txt2">
+                                                  <%if(user){%>
+                                                      <a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=<%=data3array[i]._id%>">PLAY NOW</a>
+                                                      <%}else{%>
+                                                      <!-- <a class="liv-casino-games-cards-txt2-btn" href="/cards?gameId=<%=games[i]._id%>">LOGIN TO CONTINUE</a> -->
+                                                      <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
+                                                      <%}%>
+                                              </div>
+                                            </div>
+                                          </a>
+                                        </div>
+                                    <%}%>
+                                  </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-contact3" role="tabpanel" aria-labelledby="pills-contact3-tab" tabindex="0">
+                                  <div class="liv-casino-nav-tab-txtcards-dv" id="vertuals">
+
+                                    <%let vertuals = games.filter(item => item.category == "Virtual")%>
+                                    <%for(let i = 0; i < vertuals.length; i++){%>
+                                      <div class="liv-casino-games-cards-dv col-lg-3 col-md-3 col-6">
+                                        <a class="liv-casino-games-cards-a">
+                                          <div class="liv-casino-games-cards-imgdv">
+                                            <img class="img-fluid img-bdr-red15 forIMG" src="<%=vertuals[i].url_thumb%>" alt="">
+                                            <div class="liv-casino-games-cards-txt">
+                                              <div class="liv-casino-games-cards-txtcol">
+                                                <h6><%=vertuals[i].game_name%></h6>
+                                                <%if(gamesFe.includes(vertuals[i]._id)){ %>
+                                                  <i id="<%=vertuals[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart fa-solid liked-star"></i>
+                                                  <%} else{ %>
+                                                  <i id="<%=vertuals[i]._id%>" class="fa-regular fa-heart my-heart-icon fevoriteHeart"></i>
+                                              <%} %>
+                                              </div>
+                                            </div>
+                                            <div class="liv-casino-games-cards-txt2">
+                                              <%if(user){%>
+                                                <a class="liv-casino-games-cards-txt2-btn" href="/live_casinoInPlay?gameId=<%=vertuals[i]._id%>">PLAY NOW</a>
+                                                <%}else{%>
+                                                <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
+                                                <%}%>
+                                            </div>
+                                          </div>
+                                        </a>
+                                      </div>
+                                    <%}%>
+
+                                  </div>
+                                </div>
+                                
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!-- <div class="exchange-pg-main-col-mini col-lg-3 col-md-3 col-12">
+                  <div class="exchange-pg-rit-ro">
+                    <ul class="nav nav-pills mb-3 exc-pg-rit-tabdv" id="pills-tab" role="tablist">
+                      <li class="nav-item exc-pg-rit-tabli" role="presentation">
+                        <button class="nav-link active exc-pg-rit-tab-btn" id="pills-homea-tab" data-bs-toggle="pill" data-bs-target="#pills-homea" type="button" role="tab" aria-controls="pills-homea" aria-selected="true">Providers</button>
+                      </li>
+                      <li class="nav-item exc-pg-rit-tabli" role="presentation">
+                        <button class="nav-link exc-pg-rit-tab-btn" id="pills-profileb-tab" data-bs-toggle="pill" data-bs-target="#pills-profileb" type="button" role="tab" aria-controls="pills-profileb" aria-selected="false">Trending Games</button>
+                      </li>
+                    </ul>
+                    <div class="tab-content exc-pg-rit-tabtxt" id="pills-tabContent">
+                      <div class="tab-pane fade show active exc-pg-rit-tabtxt-datadv" id="pills-homea" role="tabpanel" aria-labelledby="pills-homea-tab" tabindex="0">
+
+                        <div class="liv-casino-game-providr-tav-txtdv">
+
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino/live-casino-games-provoder01.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino/live-casino-games-provoder02.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino/live-casino-games-provoder03.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino/live-casino-games-provoder04.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino/live-casino-games-provoder05.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino/live-casino-games-provoder06.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino/live-casino-games-provoder07.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino/live-casino-games-provoder08.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino/live-casino-games-provoder09.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                        </div>
+
+                      </div>
+                      <div class="tab-pane fade exc-pg-rit-tabtxt-datadv" id="pills-profileb" role="tabpanel" aria-labelledby="pills-profile-tabb" tabindex="0">
+                        <div class="liv-casino-game-providr-tav-txtdv">
+
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino//live-casino-tranding-games01.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino//live-casino-tranding-games02.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino//live-casino-tranding-games01.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino//live-casino-tranding-games02.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino//live-casino-tranding-games01.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino//live-casino-tranding-games02.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino//live-casino-tranding-games01.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                          <div class="liv-casino-game-providr-tav-txt-col col-lg-6 col-md-6 col-6">
+                            <div class="liv-casino-game-providr-tav-txt-img">
+                              <a href="#">
+                                <img class="img-fluid img-bdr-red15 forIMG" src="assets/img/live-casino//live-casino-tranding-games02.png" alt="">
+                              </a>
+                            </div>
+                          </div>
+  
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- ----= EXCHANGE PAGE BANNER SECTION END =-----   -->
+
+
+      
+
+      <!-- ----= SIDEBAR SECTION START =-----   -->
+      <%-include('../sideBar')%>
+
+      <!-- ----= SIDEBAR SECTION END =-----   -->
+
+      <div class="mbl-botom-mnu-spacer"></div>
+      <!-- ----= MOBILE BOTTOM MENU SECTION START =-----   -->
+      <%-include("../mobileMenu")%>
+      <!-- ----= MOBILE BOTTOM MENU SECTION END =-----   -->
+
+
+      <!-- ----=MODEL1 SECTION START =-----   -->
+      <!-- Modal -->
+      <%-include('../loginBox')%>
+      <%-include('../registration')%>
+      <%-include('../updatePass')%>
+      <%-include("../stakeLabel")%>
+      
+      
+      <!-- ----=MODEL1 SECTION END =-----   -->
+
+    </main>
+
+    <!-- JQUERY  -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
+      integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <!-- JQUERY  -->
+
+    <!-- AOS ANIMATION CDN  -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"
+      integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script>
+      AOS.init({
+        duration: 1200,
+      });
+    </script>
+    <!-- AOS ANIMATION CDN  -->
+
+    <!-- SLICK SLIDER CDN  -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
+      integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script>
+      $(".hiroslide").slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        arrows: true,
+        dots: false,
+        speed: 500,
+        infinite: true,
+        autoplaySpeed: 5000,
+        autoplay: true,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 4,
+              slidesToScroll: 1,
+              infinite: true,
+              arrows: false,
+              dots: false,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              arrows: false,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+          // You can unslick at a given breakpoint now by adding:
+          // settings: "unslick"
+          // instead of a settings object
+        ],
+      });
+
+      $(".hiroslide2").slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        arrows: false,
+        dots: true,
+        speed: 300,
+        infinite: true,
+        autoplaySpeed: 1500,
+        autoplay: true,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              infinite: true,
+              arrows: false,
+              dots: true,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              arrows: false,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+          // You can unslick at a given breakpoint now by adding:
+          // settings: "unslick"
+          // instead of a settings object
+        ],
+      });
+
+      $(".testimonial").slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: true,
+        dots: true,
+        speed: 300,
+        infinite: true,
+        autoplaySpeed: 3000,
+        autoplay: true,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              infinite: true,
+              arrows: false,
+              dots: true,
+            },
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              arrows: false,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+          // You can unslick at a given breakpoint now by adding:
+          // settings: "unslick"
+          // instead of a settings object
+        ],
+      });
+    </script>
+
+    <!-- SLICK SLIDER CDN  -->
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+    
+    <!-- <script>
+      $('#offsetmenubtnn').click(function() {
+          $('#offsetmenubody').css({
+              'transform': 'translateX(0px)',
+              'transition': 'all 0.3s ease-in-out',
+          });
+      });
+    </script> -->
+
+    <script>
+      $(document).ready(function(){
+        $("#offsetmenubtnn").click(function(){
+          $("#offsetmenubody").toggleClass("offset-mnu-width");
+        });
+      });
+    </script>
+    
+    <script>
+      $(document).ready(function(){
+        $("#offsetmenubtnn").click(function(){
+          $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
+        });
+      });
+    </script>
+
+    <script>
+      $(document).ready(function(){
+        $("#offsertmnuclosbtn").click(function(){
+          $("#offsetmenubody").toggleClass("offset-mnu-width");
+        });
+      });
+    </script>
+
+    <script>
+      $(document).ready(function(){
+        $("#offsertmnuclosbtn").click(function(){
+          $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
+        });
+      });
+    </script>
+    
+    <!-- <script>
+      $(document).ready(function(){
+        $("#botommainmnubtnn").click(function(){
+          $("#botommnuwrp").toggleClass("botom-mnu-wrp");
+        });
+      });
+    </script> -->
+
+    <!-- ---------- CAPTCHA CODE ----------  -->
+    <script>
+      // Generate a random CAPTCHA code
+      function generateCaptcha() {
+        var captcha = '';
+        var possibleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        for (var i = 0; i < 6; i++) {
+          captcha += possibleChars.charAt(Math.floor(Math.random() * possibleChars.length));
+        }
+        return captcha;
+      }
+    
+      // Display the CAPTCHA code on the page
+      function displayCaptcha() {
+        var captchaCode = document.getElementById('captchaCode');
+        captcha = generateCaptcha();
+        captchaCode.textContent = captcha;
+      }
+    
+      // Validate the user's input
+      function validateCaptcha() {
+        var userInput = document.getElementById('captchaInput').value;
+        if (userInput === captcha) {
+          alert('CAPTCHA code is correct. Form submitted!');
+        } else {
+          alert('CAPTCHA code is incorrect. Please try again.');
+          displayCaptcha(); // Refresh CAPTCHA on incorrect input
+        }
+        return false; // Prevent form submission
+      }
+    
+      // Refresh the CAPTCHA code
+      document.getElementById('refreshCaptcha').addEventListener('click', displayCaptcha);
+    
+      // Generate a new CAPTCHA code when the page loads
+      var captcha = generateCaptcha();
+      displayCaptcha();
+    
+      // Attach the validation function to the form's submit event
+      document.getElementById('captchaForm').addEventListener('submit', validateCaptcha);
+    </script>
+    
+    
+    <!-- ---------- CAPTCHA CODE ----------  -->
+
+
+  </body>
+</html>
+<!-- <script>
+  function myFunction(x) {
+    x.classList.toggle("fa-solid");
+    x.classList.toggle("liked-star");
+  }
+  </script> -->

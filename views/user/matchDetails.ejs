@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.vertical-menu {
+  width: 200px;
+}
+
+.vertical-menu a {
+  background-color: #eee;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      padding: 20px;
+      background-color: #f2f2f2;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+.vertical-menu a:hover {
+  background-color: #ccc;
+}
+
+.vertical-menu a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #ffffff;
+        }
+        
+        li {
+          float: left;
+        }
+        
+        li a {
+          display: block;
+          color: rgb(0, 0, 0);
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+        }
+        
+        li a:hover {
+          background-color: #ffffff;
+        }
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        #bet-slip {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        div {
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="button"] {
+            display: inline-block;
+            padding: 8px 12px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+        }
+</style>
+<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<body>
+    <ul>
+        <%if(user){%>
+            <li><button type="button"  class="logOut"><a>logOut</a></button></li>
+            <li><button class="edit"><a href="/edit">Edit</a></button></li>
+            <li><button class="account"><a href="/myAccountStatment">My Account Statement</a></button></li>
+            <li><button class="account"><a href="/changeUserPassword">change password</a></button></li>
+        <%}else{%>
+            <li><button class="account"><a href="/userlogin">Login</a></button></li>
+        <%}%>
+            <li><button class="account"><a href="/ALLGAMEFORTESTING">Casino</a></button></li>
+            <li><button class="account"><a href="/SPORT">Sport Radar</a></button></li>
+            <li><button class="account"><a href="/exchange_sports/inplay">Exchange</a></button></li>
+      </ul>
+
+<div class="vertical-menu">
+  <a href="/exchange_sports/inplay" >In Play</a>
+  <a href="/exchange_sports/cricket" >cricket</a>
+  <a href="/exchange_sports/tennis">Tennis</a>
+  <a href="/exchange_sports/football">Football</a>
+</div>
+
+<div id="Score">
+
+</div>
+
+<div id="<%=liveCricket.eventData.sportId%>" class="details">
+    <h2 class="eventName" id="<%=liveCricket.eventData.eventId%>"><%=liveCricket.eventData.name%></h2><h3><%=liveCricket.eventData.league%></h3>
+
+    <%if(liveCricket.marketList.match_odd != null){%>
+        <table class="market match_odd" id="<%=liveCricket.marketList.match_odd.marketId%>">
+            <thead style="text-align: center;font-size: 11px;">
+              <tr>
+                <th colspan="5">MATCH STAKES      MIN:<%=liveCricket.marketList.match_odd.min_stack%> MAX:<%=liveCricket.marketList.match_odd.max_stack%></th>
+              </tr>
+            </thead>
+            <tbody class="new-body">
+                <tr>
+                  <td>MARKET</td>
+                  <td>BACK</td>
+                  <td>LAY</td>
+                </tr>
+                <% let runners = JSON.parse(liveCricket.marketList.match_odd.runners); %>
+                <% const runners1 = []; %>
+                <%const secIds = []; %>
+                <%runners.forEach(item => {%>
+                    <%runners1.push(item.runner);%>
+                    <%secIds.push(item.secId);%>
+                <%});%>
+                <%for(let i = 0; i < runners1.length; i++){%>
+                    <tr>
+                        <td class="name1"> <%=runners1[i]%></td>
+                        <td class="BACK <%=i%>" id="<%=secIds[i]%>"  ><button class="button" id="<%=secIds[i]%>0"></button> <button class="button" id="<%=secIds[i]%>1"></button><button class="button" id="<%=secIds[i]%>2"></button></td>
+                        <td class="LAY <%=i%>" id="<%=secIds[i]%>"  ><button class="button" id="<%=secIds[i]%>3"></button> <button class="button" id="<%=secIds[i]%>4"></button><button class="button" id="<%=secIds[i]%>5"></button></td>
+                    </tr>
+                <%}%>
+              </tbody>
+            </table>
+    <%}%>
+    <br><br><br>
+    
+</div>
+
+
+ <!-- Popup form -->
+ <div id="popupForm" class="popup">
+  <h2>Bet Slip</h2>
+  <form id="bet-form">
+    <div>
+        <label for="bet-title">Title:</label>
+        <input type="text" id="bet-title" name="title" required>
+    </div>
+    <div>
+        <label for="bet-odds">Odds:</label>
+        <input type="number" id="bet-odds" name="odds" step="0.01" required>
+    </div>
+    <div>
+        <label for="bet-stake">Stake:</label>
+        <input type="number" id="bet-stake" name="stake" step="0.01" required>
+    </div>
+    <div>
+      <input type="checkbox" id="option1" name="option1" value="Option 1">
+      <label for="option1">Auto change Odds value </label><br>
+    </div>
+    <div>
+        <label for="bet-stake-options">Stake Options:</label>
+        <div>
+            <button type="button" onclick="updateStake('5')">5</button>
+            <button type="button" onclick="updateStake('10')">10</button>
+            <button type="button" onclick="updateStake('20')">20</button>
+            <button type="button" onclick="updateStake('50')">50</button>
+            <button type="button" onclick="updateStake('100')">100</button>
+            <button type="button" onclick="updateStake('200')">200</button>
+        </div>
+    </div>
+    <div>
+        <input type="submit" name="button" value="Place Bet" id="SUBMIT">
+    </div>
+</form>
+  </div>
+
+
+  <script>
+    function updateStake(value) {
+        var stakeLabel = document.getElementById("bet-stake");
+        stakeLabel.value = value;
+    }
+</script>
+<script src="../userJs/logOut.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/webSocket.js"></script>
+</body>
+</html>

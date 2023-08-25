@@ -1,0 +1,27 @@
+<div class="exchange-pg-inn-banner-col mbl-see-no-exchange-pg-inn-banner-col">
+    <div class="exchange-pg-inn-banner-col-titi">
+        <div class="exchange-pg-inn-banner-col-titi-txt">
+            <h6><%=match.eventData.league%> / <span><%=match.eventData.name%></span></h6>
+        </div>
+        <div class="exchange-pg-inn-banner-col-titi-txt-tim">
+            <i class="fa-regular fa-clock"></i>
+            <%
+              var timestamp = `${match.eventData.time}` * 1000; 
+              var date = new Date(timestamp);
+              var options = { 
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true
+              };
+              var formattedTime = date.toLocaleString('en-US', options);
+          %>
+            <h6><%=formattedTime%></h6>
+        </div>
+    </div>
+    <div class="exchange-pg-inn-banner-tv score">
+        
+    </div>
+</div>

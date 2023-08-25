@@ -1,0 +1,152 @@
+<%- include("../header") %>
+  <!--Container Main start-->
+  <div class="height-100" style="background-color: #EAEEF7;">
+
+  <section class="" style="padding:80px 0px 10px;">
+    <div class="container-fluid">
+    <section>
+      <div class="align-fix"> 
+          <h1 class="main-heading">House Management</h1>
+          <!-- <form action="" style="display: flex;height: 30px;">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
+              
+            </div>
+            <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
+          </form> -->
+      </div>
+    </section>
+    <%- include("../loginUserAdminsideDetails") %>
+  </section>
+
+  <section style="padding: 15px 0px;">
+    <div class="container-fluid">
+    <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
+      <div class="">
+        
+      <h3 class="fix-h3"><img src="../images/c-user.png" alt=""> &nbsp;House Management</h3>
+    </div>
+    <div class="header-front">
+    <div>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          House Management 
+        </button>
+        <%- include("../operationsDropdown") %>
+      </div>
+    </div>
+      <div  class="loc"style="">
+      <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
+      <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add HouseFund</button>
+      <button class="btn-green">Amount  &nbsp; <%=currentUser.availableBalance%></button>
+
+    </div>
+  </div>
+  <section class="">
+    <div class="">
+      <div class="table_data_details_ col-lg-12">
+      
+        <!-- <div class="spcare-table_">
+              <div class="hed-data">
+                <h3 class="fix-h3"><img src="../images/tp.png" alt=""> &nbsp; Top Player</h3>
+                
+            </div> -->
+              <table id="table12">
+                <thead>
+                    <tr style="text-align: center;font-size: 11px;">
+                      <th>S.No</th>
+                      <th>Date</th>
+                      <th>Transcation Type</th>
+                      <th>From</th>
+                      <th><i class="fa-solid fa-arrow-right"></i></th>
+                      <th>To</th>
+                      <th>Credit / Debit </th>
+                      <th>Balance</th>
+                      <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody class="new-body" id="tableBody">
+                  <%for(let i = 0; i < fundList.length; i++){ %>
+                    <%
+                      var date = new Date(fundList[i].date);
+                      var options = { 
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: true
+                      };
+                      var formattedTime = date.toLocaleString('en-US', options);
+                      var formattedTimeWithoutComma = formattedTime.replace(",", "");
+                    %>
+                    <%if(i%2 == 0){ %>
+                      <tr style="text-align: center;" class="blue">
+                    <%}else{ %>
+                      <tr style="text-align: center;" >
+                      <%}%>
+                      <td><%= i+1 %></td>
+                      <td><%=formattedTimeWithoutComma%></td>
+                      <td>Deposit</td>
+                      <td>Betbhai</td>
+                      <td> <i class="fa-solid fa-arrow-right"></i> </td>
+                      <td>Betbhai</td>
+                      <td><%=fundList[i].amount%></td>
+                      <td><%=fundList[i].closingBalance%></td>
+                      <td><%=fundList[i].Remark%></td>
+                  <%} %>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+            </div>
+
+            </div>
+          </div>
+        </section>
+<!-- seling section -->
+
+<div class="modal fade" id="myModaladduser" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header" style="text-align: center;">
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        <h4 class="modal-title" style="color: #fff;">Add HouseFunds</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-data HouseFund">
+          <div class="row">
+            <div class="col">
+              <label for="">Amounts</label>
+              <input type="number" class="form-control ml0" required placeholder="1000000" name="amount">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="">Remark</label>
+              <input type="text" class="form-control ml0" required name="Remark">
+            </div>
+          </div>
+                   <button type="submit" class="btn-submit mt-3">AddFunds &nbsp; <img src="../images/sub.png" alt=""></button>
+        </form>
+      </div>
+    </div>
+    
+  </div>
+</div>
+  </div>
+    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+
+</body>
+</html>

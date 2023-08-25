@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #ffffff;
+        }
+        
+        li {
+          float: left;
+        }
+        
+        li a {
+          display: block;
+          color: rgb(0, 0, 0);
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+        }
+        
+        li a:hover {
+          background-color: #ffffff;
+        }
+        </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/webSocket.js"></script>
+
+    <title>Home</title>
+</head>
+<body>
+    <ul>
+        <%if(user){%>
+            <li><button type="button"  class="logOut"><a>logOut</a></button></li>
+            <li><button class="edit"><a href="/edit">Edit</a></button></li>
+            <li><button class="account"><a href="/myAccountStatment">My Account Statement</a></button></li>
+            <li><button class="account"><a href="/changeUserPassword">change password</a></button></li>
+        <%}else{%>
+            <li><button class="account"><a href="/userlogin">Login</a></button></li>
+        <%}%>
+            <li><button class="account"><a href="/ALLGAMEFORTESTING">Casino</a></button></li>
+            <li><button class="account"><a href="/SPORT">Sport Radar</a></button></li>
+      </ul>
+
+<iframe src="<%=url%>" width="100%" height="670" style="padding-top: 70px;"></iframe>
+
+<script src="userJs/logOut.js"></script>
+</body>
+</html>

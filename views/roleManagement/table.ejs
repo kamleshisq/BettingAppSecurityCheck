@@ -1,0 +1,55 @@
+<section style="padding: 15px 0px;">
+    <div class="container-fluid">
+    <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
+      <div class="">
+        
+      <h3 class="fix-h3"><img src="../images/role.png" alt=""> &nbsp;Role Management</h3>
+    </div>
+      <div style="justify-content: flex-end;
+      display: flex;
+      gap: 10px;">
+      <button class="btn-filter"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
+      <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add Role</button>
+    </div>
+  
+  <div class="row">
+      <div class="table_data_details col-lg-12">
+        
+  <div class="spcare-table_">
+        <table>
+          <thead>
+              <tr style="text-align: center;font-size: 11px;">
+                <th>S.No</th>
+                <th>Role Id</th> 
+                <th>Role Lavel</th>
+                <th>Actions</th>
+              </tr>
+          </thead>
+          <tbody class="new-body table-new-tr">
+            <%for(let i = 0; i < roles.length; i++){%>
+                <%if((i % 2) == 0){%>
+                    <tr class="blue">
+                        <td><%=i + 1%></td>
+                        <td class="getRoleForPopUP" data-bs-dismiss="<%=JSON.stringify(roles[i])%>"><%=roles[i].name%></td>
+                        <td><%=roles[i].role_level%></td>
+                        <td><button data-bs-toggle="modal" data-bs-target="#myModal5" class="RoleDetails"><i class="fa-solid fa-database"></i></button></td>
+                    </tr>
+                <%}else{%>
+                    <tr>
+                        <td><%=i + 1%></td>
+                        <td class="getRoleForPopUP" data-bs-dismiss="<%=JSON.stringify(roles[i])%>"><%=roles[i].name%></td>
+                        <td><%=roles[i].role_level%></td>
+                        <td><button data-bs-toggle="modal" data-bs-target="#myModal5" class="RoleDetails"><i class="fa-solid fa-database"></i></button></td>
+                    </tr>
+                <%}%>
+            <%}%>
+          </tbody>
+        </table>
+        </div>
+      </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>

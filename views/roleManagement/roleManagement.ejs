@@ -1,0 +1,164 @@
+<%- include("../header") %>
+<div class="height-100" style="background-color: #EAEEF7;">
+
+    <section class="pad-top-bottom" style="padding:70px 0px 10px;">
+      <div class="container-fluid">
+        <section style="padding-top: 10px;">
+            <div class="new-head"> 
+                <h3 style="font-weight: 700;font-size: 24px;">Welcome to Role Management</h3>
+                <form action="" style="display: flex;">
+                  <!-- <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+                    </div>
+                    <input type="text" placeholder="search user" style="margin-right: 13px;" id="searchUser" class="searchUser">
+                    
+                  </div> -->
+                  <!-- <button ><i class="fa-solid fa-filter"></i>&nbsp;Filter</button> -->
+                    <!-- <label for="role" style="color-scheme: #0000;">Choose a Role</label> -->
+                    
+                    
+                      <!-- <br><br> -->
+                  <button class="logOut">logout</button>
+                </form>
+            </div>
+          </section>
+          <%- include("../loginUserAdminsideDetails") %>
+  </div>
+  </section>
+
+  <%- include("./table") %>
+</div>
+
+</div>  <div class="modal fade" id="myModal5" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header" style="text-align: center;">
+        <h4 class="modal-title" style="color: #fff;">Update Role</h4>
+      </div>
+      <div class="modal-body updateRole">
+        <form class="UpdateRole-form" >
+          <div class="input_group">
+              <label for="roleName">Role Name</label>
+              <input type="text" class="form-control ml0" id="mySelect" placeholder="" name="name">
+          </div>
+          <label for=""><h3>User Controller</h3></label>
+          <div class="user_controller" id="user_controller">
+              <%for(let i = 0; i < roleAuth.UserControll.length; i++){%>
+                <label for=<%=roleAuth.UserControll[i]%>><%=roleAuth.UserControll[i]%></label>
+                <input type="checkbox" name="userAuthorization" value="<%=roleAuth.UserControll[i]%>" id="check" class="<%=i%>">
+              <%}%>
+          </div>
+          <label for=""><h3>Role Auth</h3></label>
+          <div class="input_group">
+            <%for(let i = 0; i < roles.length; i++){%>
+              <label for=<%=roles[i].roleName%>><%=roles[i].roleName%></label>
+              <input type="checkbox" name="authorization" value="<%=roles[i].role_level%>" id="<%=roles[i].role_type%>">
+            <%}%>
+          </div>
+          <div class="input_group" id="role_controller">
+            
+          </div>
+          <div class="input_group">
+              <button type="submit" class="btn-submit mt-3">Save</button>
+          </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModaladduser" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header" style="text-align: center;">
+        <h4 class="modal-title" style="color: #fff;">Add Role</h4>
+      </div>
+      <div class="modal-body">
+        <form class="createRole-form form-data"  id="Add-User">
+          <div class="input_group row" >
+            <div  class="col">
+                <label for="roleName"><h3>Role Name</h3></label>
+                <input type="text" name="roleName" placeholder="Enter Role Name" id="roleName" class="form-control ml0" required>
+            </div>
+          </div>
+          <br>
+          <label for="UserC"><h3>User Controller</h3></label>
+          <div name="UserC" >
+            <div class="input_group">
+                <label for="createDeleteUser">Create Delete User</label>
+                <input type="checkbox" name="authorization" value="createDeleteUser"  id="createDeleteUser" >
+            </div>
+            <div class="input_group">
+                <label for="betLockAndUnloack">Bet Unlock</label>
+                <input type="checkbox" name="authorization" value="betLockAndUnloack" id="betLockAndUnloack" >
+            </div>
+            <div class="input_group">
+                <label for="userStatus">User Status</label>
+                <input type="checkbox" name="authorization" value="userStatus" id="userStatus">
+            </div>
+            <div class="input_group">
+                <label for="userName">User Name</label>
+                <input type="checkbox" name="authorization" value="userName" id="userName">
+            </div>
+            <div class="input_group">
+                <label for="roleController">Role Controller</label>
+                <input type="checkbox" name="authorization" value="roleController" id="roleController">
+            </div>
+            <div class="input_group">
+                <label for="allUserLogOut">All User Log Out</label>
+                <input type="checkbox" name="authorization" value="allUserLogOut" id="allUserLogOut">
+            </div>
+            <div class="input_group">
+                <label for="changeUserPassword">Change Password</label>
+                <input type="checkbox" name="authorization" value="changeUserPassword" id="changeUserPassword">
+            </div>
+            <div class="input_group">
+                <label for="userManagement">User Management</label>
+                <input type="checkbox" name="authorization" value="userManagement" id="userManagement">
+            </div>
+            <div class="input_group">
+                <label for="roleNameaccountControl">Account Controller</label>
+                <input type="checkbox" name="authorization" value="accountControl" id="accountControl">
+            </div>
+            <div class="input_group">
+                <label for="logOutUser">Log Out User</label>
+                <input type="checkbox" name="authorization" value="logOutUser" id="logOutUser">
+            </div>
+          </div>
+          <br>
+          <label for=""><h3>Role Auth</h3></label>
+          <%for(let i=0;i<roles.length;i++){%>
+              <div class="input_group">
+                  <label for=<%=roles[i].roleName%>><%=roles[i].roleName%></label>
+                  <input type="checkbox" name="userAuthorization" value='<%=roles[i].role_level%>' 
+                  id='<%=roles[i].roleName%>'>
+              </div>
+          <%}%>
+          <div class="input_group">
+              <button type="submit" class="btn-submit mt-3">Save</button>
+          </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <script type="text/javascript" src="../js/bundle.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+
+</body>  
+</html>

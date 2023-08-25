@@ -1,0 +1,22 @@
+<table>
+    <thead>
+        <tr style="text-align: center;font-size: 11px;">
+          <th>S.No</th>
+          <th>User Name</th>
+          <th>Action</th>
+        </tr>
+    </thead>
+    <tbody class="new-body">
+    <%for(let i =0; i< users.length; i++){%>
+        <tr style="text-align: center;" class="blue">
+            <td><%=i+1%></td>
+            <td><%=users[i].userName%></td>
+            <td>
+
+                <button type="button" id="<%=users[i]._id%>" class="logout">Logout</button>
+            </td>
+        </tr>
+    <%}%>
+     
+    </tbody>
+  </table>

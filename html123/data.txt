@@ -1,0 +1,27 @@
+{
+  type: 'deposit',
+  fromUser: 'New_Company2',
+  fuBalance: '-17739',
+  toUser: 'new_test_User4',
+  tuBalance: '14126',
+  clintPL: '0',
+  remark: 'asdasdasdads',
+  Password: 'fgfgfgfg',
+  amount: '78787',
+  id: '649574d51109042453f3cebb'
+}
+
+
+
+{
+  type: 'withdrawl',
+  fromUser: 'new_test_User4',
+  fuBalance: '14126',
+  toUser: 'New_Company2',
+  tuBalance: '-17739',
+  clintPL: '0',
+  remark: 'asdasdasdads',
+  Password: '123456789',
+  amount: '500',
+  id: '649574d51109042453f3cebb'
+}
