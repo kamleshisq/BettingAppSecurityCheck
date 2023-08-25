@@ -1761,6 +1761,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
     }
+    let catalog = await catalogController.find()
     res.status(200).render('./userSideEjs/exchangePage/main',{
         user,
         verticalMenus,
@@ -1777,7 +1778,8 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         userMultimarkets,
         cricketSeries,
         footbalSeries,
-        tennisSeries
+        tennisSeries,
+        catalog
         
     })
 })
