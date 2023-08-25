@@ -8249,7 +8249,7 @@ socket.on('connect', () => {
         $(document).ready(function() {
             $('#MarketMatch').on('input change', function() {
               var inputValue = $(this).val();
-              console.log(inputValue);
+              socket.emit("MarketMatch", {LOGINDATA, inputValue})
             });
           });
     }

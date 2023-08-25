@@ -2422,6 +2422,10 @@ io.on('connection', (socket) => {
             socket.emit('sportStatusChange',{status:'fail'})
         }
     })
+
+    socket.on("MarketMatch", async(data) => {
+        console.log(data)
+    })
     
 })
 
