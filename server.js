@@ -2400,28 +2400,28 @@ io.on('connection', (socket) => {
 
     socket.on('sportStatusChange',async(data) => {
         console.log(data)
-        try{
-            let msg;
-            let sport;
-            if(data.status){
-                sport = await catalogController.updateOne({Id:data.id},{status:true})
-                if(sport.type == 'event'){
-                    msg = 'event activated'
-                }else{
-                    msg = 'series activated'
-                }
-            }else{
-                sport = await catalogController.updateOne({Id:data.id},{status:false})
-                if(sport.type == 'event'){
-                    msg = 'event deactivated'
-                }else{
-                    msg = 'series deactivated'
-                }
-            }
-            socket.emit('sportStatusChange',{status:'success',msg})
-        }catch(error){
-            socket.emit('sportStatusChange',{status:'fail'})
-        }
+        // try{
+        //     let msg;
+        //     let sport;
+        //     if(data.status){
+        //         sport = await catalogController.updateOne({Id:data.id},{status:true})
+        //         if(sport.type == 'event'){
+        //             msg = 'event activated'
+        //         }else{
+        //             msg = 'series activated'
+        //         }
+        //     }else{
+        //         sport = await catalogController.updateOne({Id:data.id},{status:false})
+        //         if(sport.type == 'event'){
+        //             msg = 'event deactivated'
+        //         }else{
+        //             msg = 'series deactivated'
+        //         }
+        //     }
+        //     socket.emit('sportStatusChange',{status:'success',msg})
+        // }catch(error){
+        //     socket.emit('sportStatusChange',{status:'fail'})
+        // }
     })
 
     socket.on("MarketMatch", async(data) => {
