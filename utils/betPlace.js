@@ -3,7 +3,7 @@ const betmodel = require('../model/betmodel');
 const accountStatementByUserModel = require("../model/accountStatementByUserModel");
 const betLimitModel = require('../model/betLimitModel');
 const cricketAndOtherSport = require('../utils/getSportAndCricketList');
-// const commissionModel = require("../model/CommissionModel");
+const Decimal = require('decimal.js');
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -178,16 +178,36 @@ if(!marketDetails.runners){
             console.log("WORKING")
             let parentUser1 = await userModel.findById(user.parentUsers[i])
             let parentUser2 = await userModel.findById(user.parentUsers[i-1])
-            let parentUser1Amount = (parseFloat(amount) * parseFloat(parentUser1.myShare)/100)
-            let parentUser2Amount = (parseFloat(amount) * parseFloat(parentUser1.Share)/100)
+            let parentUser1Amount = new Decimal(parentUser1.myShare).times(amount).dividedBy(100)
+            let parentUser2Amount = new Decimal(parentUser1.Share).times(amount).dividedBy(100);
             // parentUser1Amount = Math.round(parentUser1Amount * 10000) / 10000;
             // parentUser2Amount = Math.round(parentUser2Amount * 10000) / 10000;
-            parentUser1Amount = Number(parentUser1Amount.toFixed(4)); // Rounding to 4 decimal places
-            parentUser2Amount = Number(parentUser2Amount.toFixed(4));
+            parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+            parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
             console.log(parentUser1Amount, parentUser2Amount)
             await userModel.findByIdAndUpdate(user.parentUsers[i], {$inc:{downlineBalance:-parseFloat(data.data.stake), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount, pointsWL:-parseFloat(data.data.stake)}})
             if(i === 1){
                 await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {$inc:{downlineBalance:-parseFloat(data.data.stake), myPL : parentUser2Amount, lifetimePL : parentUser2Amount, pointsWL:-parseFloat(data.data.stake)}})
+            }
+            await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                $inc: {
+                    downlineBalance: -(data.data.stake).toNumber(),
+                    myPL: parentUser1Amount.toNumber(),
+                    uplinePL: parentUser2Amount.toNumber(),
+                    lifetimePL: parentUser1Amount.toNumber(),
+                    pointsWL: -(data.data.stake).toNumber()
+                }
+            });
+        
+            if (i === 1) {
+                await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                    $inc: {
+                        downlineBalance: -(data.data.stake).toNumber(),
+                        myPL: parentUser2Amount.toNumber(),
+                        lifetimePL: parentUser2Amount.toNumber(),
+                        pointsWL: -(data.data.stake).toNumber()
+                    }
+                });
             }
             amount = parentUser2Amount
         }

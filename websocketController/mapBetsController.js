@@ -3,6 +3,7 @@ const accModel = require("../model/accountStatementByUserModel");
 const betModel = require("../model/betmodel");
 // const commissionModel = require("../model/CommissionModel")
 const settlementHistory = require("../model/settelementHistory");
+const Decimal = require('decimal.js');
 
 exports.mapbet = async(data) => {
     //og(data)
@@ -62,16 +63,36 @@ exports.mapbet = async(data) => {
                         for(let i = user.parentUsers.length - 1; i >= 1; i--){
                             let parentUser1 = await userModel.findById(user.parentUsers[i])
                             let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
-                            let parentUser1Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.myShare))/100)
-                            let parentUser2Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.Share))/100)
+                            let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                            let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
                             // parentUser1Amount = Math.round(parentUser1Amount * 10000) / 10000;
                             // parentUser2Amount = Math.round(parentUser2Amount * 10000) / 10000;
-                            parentUser1Amount = Number(parentUser1Amount.toFixed(4)); // Rounding to 4 decimal places
-                            parentUser2Amount = Number(parentUser2Amount.toFixed(4));
-                            await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
-                            if(i === 1){
-                                await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
-                            }
+                            parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                            parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                            // await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
+                            // if(i === 1){
+                            //     await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
+                            // }
+                            await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                              $inc: {
+                                  downlineBalance: (bet.Stake * bet.oddValue).toNumber(),
+                                  myPL: -parentUser1Amount.toNumber(),
+                                  uplinePL: -parentUser2Amount.toNumber(),
+                                  lifetimePL: -parentUser1Amount.toNumber(),
+                                  pointsWL: (bet.Stake * bet.oddValue).toNumber()
+                              }
+                          });
+                      
+                          if (i === 1) {
+                              await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                                  $inc: {
+                                      downlineBalance: (bet.Stake * bet.oddValue).toNumber(),
+                                      myPL: -parentUser2Amount.toNumber(),
+                                      lifetimePL: -parentUser2Amount.toNumber(),
+                                      pointsWL: (bet.Stake * bet.oddValue).toNumber()
+                                  }
+                              });
+                          }
                             debitAmountForP = parentUser2Amount
                         }
                         
@@ -160,16 +181,36 @@ exports.mapbet = async(data) => {
                 for(let i = user.parentUsers.length - 1; i >= 1; i--){
                     let parentUser1 = await userModel.findById(user.parentUsers[i])
                     let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
-                    let parentUser1Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.myShare))/100)
-                    let parentUser2Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.Share))/100)
+                    let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                    let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
                     // parentUser1Amount = Math.round(parentUser1Amount * 10000) / 10000;
                     // parentUser2Amount = Math.round(parentUser2Amount * 10000) / 10000;
-                    parentUser1Amount = Number(parentUser1Amount.toFixed(4)); // Rounding to 4 decimal places
-                    parentUser2Amount = Number(parentUser2Amount.toFixed(4));
-                    await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
-                    if(i === 1){
-                        await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
-                    }
+                    parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                    parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                    // await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
+                    // if(i === 1){
+                    //     await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
+                    // }
+                    await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                      $inc: {
+                          downlineBalance: (bet.Stake * bet.oddValue).toNumber(),
+                          myPL: -parentUser1Amount.toNumber(),
+                          uplinePL: -parentUser2Amount.toNumber(),
+                          lifetimePL: -parentUser1Amount.toNumber(),
+                          pointsWL: (bet.Stake * bet.oddValue).toNumber()
+                      }
+                  });
+              
+                  if (i === 1) {
+                      await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                          $inc: {
+                              downlineBalance: (bet.Stake * bet.oddValue).toNumber(),
+                              myPL: -parentUser2Amount.toNumber(),
+                              lifetimePL: -parentUser2Amount.toNumber(),
+                              pointsWL: (bet.Stake * bet.oddValue).toNumber()
+                          }
+                      });
+                  }
                     debitAmountForP = parentUser2Amount
                 }
 

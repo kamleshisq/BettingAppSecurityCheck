@@ -9,6 +9,7 @@ const path = require('path');
 const fs = require('fs');
 const verify = require("../utils/verify");//
 const alert = require("../server");
+const Decimal = require("decimal.js")
 // const Decimal = require("decima")
 // const { use } = require('../app');
 function readPem (filename) {
@@ -122,15 +123,35 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             console.log("WORKING")
             let parentUser1 = await userModel.findById(user.parentUsers[i])
             let parentUser2 = await userModel.findById(user.parentUsers[i-1])
-            let parentUser1Amount = (parseFloat(amount) * parseFloat(parentUser1.myShare)/100)
-            let parentUser2Amount = (parseFloat(amount) * parseFloat(parentUser1.Share)/100)
+            let parentUser1Amount = new Decimal(parentUser1.myShare).times(amount).dividedBy(100)
+            let parentUser2Amount = new Decimal(parentUser1.Share).times(amount).dividedBy(100);
             // parentUser1Amount = Math.round(parentUser1Amount * 10000) / 10000;
             // parentUser2Amount = Math.round(parentUser2Amount * 10000) / 10000;
-            parentUser1Amount = Number(parentUser1Amount.toFixed(4)); // Rounding to 4 decimal places
-            parentUser2Amount = Number(parentUser2Amount.toFixed(4));
-            await userModel.findByIdAndUpdate(user.parentUsers[i], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount, pointsWL:-req.body.debitAmount}})
-            if(i === 1){
-                await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser2Amount, lifetimePL : parentUser2Amount, pointsWL:-req.body.debitAmount}})
+            parentUser1Amount =parentUser1Amount.toDecimalPlaces(4);
+            parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+            // await userModel.findByIdAndUpdate(user.parentUsers[i], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount, pointsWL:-req.body.debitAmount}})
+            // if(i === 1){
+            //     await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {$inc:{downlineBalance:-parseFloat(req.body.debitAmount), myPL : parentUser2Amount, lifetimePL : parentUser2Amount, pointsWL:-req.body.debitAmount}})
+            // }
+            await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                $inc: {
+                    downlineBalance: -req.body.debitAmount.toNumber(),
+                    myPL: parentUser1Amount.toNumber(),
+                    uplinePL: parentUser2Amount.toNumber(),
+                    lifetimePL: parentUser1Amount.toNumber(),
+                    pointsWL: -req.body.debitAmount.toNumber()
+                }
+            });
+        
+            if (i === 1) {
+                await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                    $inc: {
+                        downlineBalance: -req.body.debitAmount.toNumber(),
+                        myPL: parentUser2Amount.toNumber(),
+                        lifetimePL: parentUser2Amount.toNumber(),
+                        pointsWL: -req.body.debitAmount.toNumber()
+                    }
+                });
             }
             amount = parentUser2Amount
         }
@@ -253,15 +274,35 @@ exports.betResult = catchAsync(async(req, res, next) =>{
             for(let i = user.parentUsers.length - 1; i >= 1; i--){
                 let parentUser1 = await userModel.findById(user.parentUsers[i])
                 let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
-                let parentUser1Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.myShare))/100)
-                let parentUser2Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.Share))/100)
+                let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
                 // parentUser1Amount = Math.round(parentUser1Amount * 10000) / 10000;
                 // parentUser2Amount = Math.round(parentUser2Amount * 10000) / 10000;
-                parentUser1Amount = Number(parentUser1Amount.toFixed(4)); // Rounding to 4 decimal places
-                parentUser2Amount = Number(parentUser2Amount.toFixed(4));
-                await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:req.body.creditAmount, myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:req.body.creditAmount}})
-                if(i === 1){
-                    await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:req.body.creditAmount, myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:req.body.creditAmount}})
+                parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                // await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:req.body.creditAmount, myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:req.body.creditAmount}})
+                // if(i === 1){
+                //     await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:req.body.creditAmount, myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:req.body.creditAmount}})
+                // }
+                await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                    $inc: {
+                        downlineBalance: req.body.creditAmount.toNumber(),
+                        myPL: -parentUser1Amount.toNumber(),
+                        uplinePL: -parentUser2Amount.toNumber(),
+                        lifetimePL: -parentUser1Amount.toNumber(),
+                        pointsWL: req.body.creditAmount.toNumber()
+                    }
+                });
+            
+                if (i === 1) {
+                    await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                        $inc: {
+                            downlineBalance: req.body.creditAmount.toNumber(),
+                            myPL: -parentUser2Amount.toNumber(),
+                            lifetimePL: -parentUser2Amount.toNumber(),
+                            pointsWL: req.body.creditAmount.toNumber()
+                        }
+                    });
                 }
                 debitAmountForP = parentUser2Amount
             }
@@ -385,15 +426,35 @@ exports.rollBack = catchAsync(async(req, res, next) => {
             for(let i = user.parentUsers.length - 1; i >= 1; i--){
                 let parentUser1 = await userModel.findById(user.parentUsers[i])
                 let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
-                let parentUser1Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.myShare))/100)
-                let parentUser2Amount = ((parseFloat(debitAmountForP) * parseFloat(parentUser1.Share))/100)
+                let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
                 // parentUser1Amount = Math.round(parentUser1Amount * 10000) / 10000;
                 // parentUser2Amount = Math.round(parentUser2Amount * 10000) / 10000;
-                parentUser1Amount = Number(parentUser1Amount.toFixed(4));
-                parentUser2Amount = Number(parentUser2Amount.toFixed(4));
-                await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:req.body.rollbackAmount, myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:req.body.rollbackAmount}})
-                if(i === 1){
-                    await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:req.body.rollbackAmount, myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:req.body.rollbackAmount}})
+                parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                // await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:req.body.rollbackAmount, myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:req.body.rollbackAmount}})
+                // if(i === 1){
+                //     await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:req.body.rollbackAmount, myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:req.body.rollbackAmount}})
+                // }
+                await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                    $inc: {
+                        downlineBalance: req.body.rollbackAmount.toNumber(),
+                        myPL: -parentUser1Amount.toNumber(),
+                        uplinePL: -parentUser2Amount.toNumber(),
+                        lifetimePL: -parentUser1Amount.toNumber(),
+                        pointsWL: req.body.rollbackAmount.toNumber()
+                    }
+                });
+            
+                if (i === 1) {
+                    await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                        $inc: {
+                            downlineBalance: req.body.rollbackAmount.toNumber(),
+                            myPL: -parentUser2Amount.toNumber(),
+                            lifetimePL: -parentUser2Amount.toNumber(),
+                            pointsWL: req.body.rollbackAmount.toNumber()
+                        }
+                    });
                 }
                 debitAmountForP = parentUser2Amount
             }
