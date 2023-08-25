@@ -8242,6 +8242,14 @@ socket.on('connect', () => {
                 console.log('somethig went wrong!!')
             }
         })
-    }    
+    }
+    
+    
+    if(pathname == "/admin/commissionMarkets"){
+        $(document).on("change", function(e){
+            e.preventDefault()
+            console.log("working")
+        })
+    }
 })
 })
