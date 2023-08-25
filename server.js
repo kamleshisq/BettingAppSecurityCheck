@@ -2467,7 +2467,7 @@ io.on('connection', (socket) => {
         footBall = footBall.eventList
         Tennis = Tennis.eventList
         const resultSearch = cricket.concat(footBall, Tennis);
-        let result = resultSearch.find(item => item.eventData.compId == data.id)
+        let result = resultSearch.find(item => item.eventData.eventId == data.id)
         if(data.status){
             let cataLog =  await catalogController.findOneAndDelete({Id:data.id},{status:true})
             if(cataLog){
