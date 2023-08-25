@@ -191,21 +191,21 @@ if(!marketDetails.runners){
             }
             await userModel.findByIdAndUpdate(user.parentUsers[i], {
                 $inc: {
-                    downlineBalance: -(data.data.stake).toNumber(),
-                    myPL: parentUser1Amount.toNumber(),
-                    uplinePL: parentUser2Amount.toNumber(),
-                    lifetimePL: parentUser1Amount.toNumber(),
-                    pointsWL: -(data.data.stake).toNumber()
+                    downlineBalance: -(data.data.stake),
+                    myPL: parentUser1Amount,
+                    uplinePL: parentUser2Amount,
+                    lifetimePL: parentUser1Amount,
+                    pointsWL: -(data.data.stake)
                 }
             });
         
             if (i === 1) {
                 await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
                     $inc: {
-                        downlineBalance: -(data.data.stake).toNumber(),
-                        myPL: parentUser2Amount.toNumber(),
-                        lifetimePL: parentUser2Amount.toNumber(),
-                        pointsWL: -(data.data.stake).toNumber()
+                        downlineBalance: -(data.data.stake),
+                        myPL: parentUser2Amount,
+                        lifetimePL: parentUser2Amount,
+                        pointsWL: -(data.data.stake)
                     }
                 });
             }

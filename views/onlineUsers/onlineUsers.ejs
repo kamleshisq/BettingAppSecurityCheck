@@ -1,18 +1,16 @@
 <%- include("../header") %>
   <!--Container Main start-->
-  <div class="height-100" style="background-color: #EAEEF7;">
-
-  <section class="pad-top-bottom" style="padding:70px 0px 10px;">
+  <div class="dashboard-main-wraper">
+  <section class="new-head">
     <div class="container-fluid">
-    <section>
-      <div class="align-fix"> 
-          <h1 class="main-heading">Online Users</h1>
-          <form action="" style="display: flex;height: 30px;">
+      <div class="new-head"> 
+          <h3>Online Users</h3>
+          <form action="">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
               </div>
-              <input type="text" id="searchUser"  list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
+              <input type="text" id="searchUser"  list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
               <div class="wrapper">
                 <ul id="search" class="users">
               
@@ -25,45 +23,21 @@
             </div>
           </form>
       </div>
-    </section>
     <%- include("../loginUserAdminsideDetails") %>
   </section>
-  <div class="pageId" data-pageid="1"></div>
-  <section style="padding: 15px 0px;">
+  <section>
     <div class="container-fluid">
-    <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
-      <div class="">
-        
-      <h3 class="fix-h3"><img src="../images/c-user.png" alt=""> &nbsp;Online Users</h3>
-    </div>
-    <div class="header-front">
-    <div>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #fff;color: #000;border: 2px solid #6359CA; padding: 6px 34px;">
-          Online Users
-        </button>
-        <%- include("../operationsDropdown") %>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-
-
-
-<div id="Account" class="tabcontent" style="margin-bottom:15px">
- 
-      <div class="table_data_details_ col-lg-12">
-              <%- include("./table") %>
-              </div>
+        <div class="table-data-section">
+            <div class="table-heading">
+                <h3>Online Users</h3>
             </div>
-
-             
-
-
-      </div>
+            <div class="data-table">
+              <%- include("./table") %>
+            </div>
+        </div>
     </div>
-  </section>
+</section>
+  <div class="pageId" data-pageid="1"></div>
 </div>
 
 <div class="modal fade" id="myModaladduser" role="dialog">
@@ -96,7 +70,6 @@
     
   </div>
 </div>
-  </div>
     
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

@@ -1,6 +1,6 @@
 <table>
     <thead>
-        <tr style="text-align: center;font-size: 11px;">
+        <tr>
           <th>S.No</th>
           <th>User Name</th>
           <th>Action</th>
@@ -8,12 +8,13 @@
     </thead>
     <tbody class="new-body">
     <%for(let i =0; i< users.length; i++){%>
-        <tr style="text-align: center;" class="blue">
+        <tr>
             <td><%=i+1%></td>
             <td><%=users[i].userName%></td>
             <td>
-
-                <button type="button" id="<%=users[i]._id%>" class="logout">Logout</button>
+                <div class="btn-group">
+                    <button type="button" id="<%=users[i]._id%>" class="btn logout">Logout</button>
+                </div>
             </td>
         </tr>
     <%}%>
