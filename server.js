@@ -2424,7 +2424,24 @@ io.on('connection', (socket) => {
     })
 
     socket.on("MarketMatch", async(data) => {
-        console.log(data)
+        if(data != "LessTheN3"){
+            let allData =  await getCrkAndAllData()
+            const cricket = allData[0].gameList[0].eventList
+            let LiveCricket = cricket.filter(item =>  item.eventData.name.toLowerCase().includes(data.inputValue.toLowerCase()))
+            let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
+            let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
+            footBall = footBall.eventList
+            Tennis = Tennis.eventList
+            let liveFootBall = footBall.filter(item =>  item.eventData.name.toLowerCase().includes(data.inputValue.toLowerCase()));
+            let liveTennis = Tennis.filter(item =>  item.eventData.name.toLowerCase().includes(data.inputValue.toLowerCase()))
+            const resultSearch = LiveCricket.concat(liveFootBall, liveTennis);
+            // console.log(resultSearch)
+            // console.log(data)
+            socket.emit("MarketMatch", resultSearch)
+        }else{
+            let resultSearch = []
+            socket.emit("MarketMatch", resultSearch)
+        }
     })
     
 })

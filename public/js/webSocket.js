@@ -8249,9 +8249,18 @@ socket.on('connect', () => {
         $(document).ready(function() {
             $('#MarketMatch').on('input change', function() {
               var inputValue = $(this).val();
-              socket.emit("MarketMatch", {LOGINDATA, inputValue})
+              if(inputValue.length > 3){
+                socket.emit("MarketMatch", {LOGINDATA, inputValue});
+                }else{
+                    socket.emit("MarketMatch", "LessTheN3");
+                }
+                // socket.emit("MarketMatch", {LOGINDATA, inputValue})
             });
           });
+
+          socket.on("MarketMatch", async(data) => {
+            console.log(data)
+          })
     }
 })
 })
