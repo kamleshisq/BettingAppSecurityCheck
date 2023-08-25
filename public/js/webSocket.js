@@ -8246,10 +8246,12 @@ socket.on('connect', () => {
     
     
     if(pathname == "/admin/commissionMarkets"){
-        $(document).on("change", ".searchUser", function(e){
-            e.preventDefault()
-            console.log("working")
-        })
+        $(document).ready(function() {
+            $('#MarketMatch').on('change', function() {
+              var inputValue = $(this).val();
+              console.log(inputValue);
+            });
+          });
     }
 })
 })
