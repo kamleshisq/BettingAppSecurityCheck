@@ -8222,17 +8222,18 @@ socket.on('connect', () => {
         $(document).on('click','.status_check',function(){
             let status = $(this).prop('checked') ? true : false;
             let id = $(this).data('id')
-            if(id){
-                if(confirm('do you want to change status')){
-                    socket.emit('sportStatusChange',{status,id})
-                }else{
-                    if(status){
-                        $(this).prop('checked','')
-                    }else{
-                        $(this).prop('checked','checked')
-                    }
-                }
-            }
+            console.log(id)
+            // if(id){
+            //     if(confirm('do you want to change status')){
+            //         socket.emit('sportStatusChange',{status,id})
+            //     }else{
+            //         if(status){
+            //             $(this).prop('checked','')
+            //         }else{
+            //             $(this).prop('checked','checked')
+            //         }
+            //     }
+            // }
         })
 
         socket.on('sportStatusChange',async(data)=>{
