@@ -5,6 +5,7 @@
     </div>
   <%for(let i = 0; i < tennisSeries.length; i++){%>
     <%if(tennisSeries[i].series != "1"){ %>
+      <%if(!catalog.some(item => item.name == tennisSeries[i].series)){ %>
       <div class="series-wise-data">
         <div class="series-title"><%=tennisSeries[i].series%></div>
         <%for(let j = 0; j < tennisSeries[i].matchdata.length; j++){%>
@@ -181,6 +182,7 @@
           </div>
         <%}%>
       </div>
+      <%} %>
     <%}%>
   <%}%>
   </div>

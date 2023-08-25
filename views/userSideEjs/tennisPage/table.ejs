@@ -2,6 +2,7 @@
   <div class="exchange-pg-tbl-ro2 data-with-series">
     <%for(let i = 0; i < tennisSeries.length; i++){%>
       <%if(tennisSeries[i].series != "1"){ %>
+        <%if(!catalog.some(item => item.name == tennisSeries[i].series)){ %>
         <table class="acount-stat-tbl myTable">
     
           <thead class="acount-stat-tbl-hed">
@@ -206,6 +207,7 @@
           </tbody>
     
         </table>
+        <%} %>
       <%}%>
     <%} %>
           

@@ -1831,6 +1831,7 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
             cricketSeries[seriesIndex].matchdata.push(match);
         }
     });
+    let catalog = await catalogController.find()
     res.status(200).render('./userSideEjs/inplayPage/main',{
         user,
         verticalMenus,
@@ -1844,7 +1845,8 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
         userMultimarkets,
         cricketSeries,
         footbalSeries,
-        tennisSeries
+        tennisSeries,
+        catalog
     })
 })
 
@@ -1872,6 +1874,7 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
             cricketSeries[seriesIndex].matchdata.push(match);
         }
     });
+    let catalog = await catalogController.find()
     res.status(200).render("./userSideEjs/cricketPage/main", {
         user,
         verticalMenus,
@@ -1882,7 +1885,8 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
         userLog,
         notifications:req.notifications,
         userMultimarkets,
-        cricketSeries
+        cricketSeries,
+        catalog
     })
 })
 
@@ -1938,6 +1942,7 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
             footbalSeries[seriesIndex].matchdata.push(match);
         }
     });
+    let catalog = await catalogController.find()
     res.status(200).render('.//userSideEjs/footballPage/main',{
         user,
         verticalMenus,
@@ -1948,7 +1953,8 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
         userLog,
         notifications:req.notifications,
         userMultimarkets,
-        footbalSeries
+        footbalSeries,
+        catalog
     })
 })
 
@@ -1976,6 +1982,7 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
             tennisSeries[seriesIndex].matchdata.push(match);
         }
     });
+    let catalog = await catalogController.find()
     res.status(200).render('.//userSideEjs/tennisPage/main',{
         user,
         verticalMenus,
@@ -1986,7 +1993,8 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
         userLog,
         notifications:req.notifications,
         userMultimarkets,
-        tennisSeries
+        tennisSeries,
+        catalog
     })
 })
 
