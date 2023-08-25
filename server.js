@@ -2409,7 +2409,7 @@ io.on('connection', (socket) => {
         const resultSearch = cricket.concat(footBall, Tennis);
         let result = resultSearch.find(item => item.eventData.compId == data.id)
         if(data.status){
-            let cataLog =  await catalogController.updateOne({Id:data.id},{status:true})
+            let cataLog =  await catalogController.findOneAndDelete({Id:data.id},{status:true})
             if(cataLog){
                 msg = 'series activated'
                 socket.emit('sportStatusChange',{status:'success',msg})
