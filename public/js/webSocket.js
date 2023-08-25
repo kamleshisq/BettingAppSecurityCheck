@@ -8277,6 +8277,7 @@ socket.on('connect', () => {
 
           socket.on("eventIdForMarketList", async(data) => {
             let i = 0
+            let html = ""
             for (var marketKey in data.marketList) {
                 if (data.marketList.hasOwnProperty(marketKey)) {
                   var market = data.marketList[marketKey];
@@ -8284,7 +8285,6 @@ socket.on('connect', () => {
                     i ++
                     console.log("Market Key:", marketKey);
                     console.log("Market Object:", market);
-                    let html = ""
                     if(Array.isArray(market)){
                         for(let j = 0; j < market.length; j++){
                             html += `
@@ -8307,6 +8307,8 @@ socket.on('connect', () => {
                   }
                 }
               }
+
+              document.getElementById("markets").innerHTML = html
           })
     }
 })
