@@ -2845,7 +2845,15 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
             currentUser: user
         })
     }
+})
 
+
+exports.CommissionMarkets = catchAsync(async(req, res, next) => {
     
-   
+    const me = req.currentUser
+    res.status(200).render("./commissionMarket/main",{
+        title:"CommiSSion Markets",
+        me,
+        currentUser:me
+    })
 })
