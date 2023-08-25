@@ -1,72 +1,40 @@
 <%- include("../header") %>
   <!--Container Main start-->
-  <div class="height-100" style="background-color: #EAEEF7;">
-
-  <section class="pad-top-bottom" style="padding:70px 0px 10px;">
+  <div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
     <div class="container-fluid">
-    <section>
-      <div class="align-fix"> 
-          <h1 class="main-heading"> <%=title%></h1>
-          <form action="" style="display: flex;height: 30px;">
+      <div class="new-head"> 
+          <h3><%=title%></h3>
+          <form action="">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
               </div>
-              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
-              
+              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
             </div>
-            <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
+            <button class="btn-filter"><i class="fa-solid fa-filter"></i> Filter</button>
           </form>
       </div>
-    </section>
     <%- include("../loginUserAdminsideDetails") %>
-
-
   </section>
 
-  <section style="padding: 15px 0px;">
+  <section>
     <div class="container-fluid">
-    <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
-      <div class="">
-        
-      <h3 class="fix-h3"><img src="../images/c-user.png" alt=""> &nbsp;Notification</h3>
-    </div>
-    <div class="header-front">
-    <div>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          Notification 
-        </button>
-        <%- include("../operationsDropdown") %>
-      </div>
-    </div>
-      <div  class="loc"style="">
-      <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add New Notification</button>
-    </div>
-  </div>
-
-  <section class="">
-    <div class="">
-      <br>
-      <div class="table_data_details_ col-lg-12">
-      
-        <!-- <div class="spcare-table_">
-              <div class="hed-data">
-                <h3 class="fix-h3"><img src="../images/tp.png" alt=""> &nbsp; Top Player</h3>
-                
-            </div> -->
+        <div class="table-data-section">
+            <div class="table-heading">
+                <h3><%=title%></h3>
+                <div class="table-heading-btn">
+                  <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> Add New Notification</button>
+                </div>
+            </div>
+            <div class="data-table">
               <%- include('./table') %>
-              </div>
             </div>
+        </div>
+    </div>
+</section>
+</div>
 
-            </div>
-          </div>
-        </section>
-<!-- seling section -->
-
-<!--  -->
-
-<!--  -->
 <div class="modal fade" id="myModaladduser" role="dialog">
   <div class="modal-dialog">
   
@@ -105,16 +73,13 @@
               <input type="date" class="form-control ml0"  name="Edate">
             </div>
           </div>
-          
-            <button type="submit" class="btn-green mt-3 btn-ju" >Save</button>
+            <button type="submit" class="btn-submit btn-green mt-3 btn-ju" >Save</button>
         </form>
       </div>
-    </div>
-    
+    </div>    
   </div>
 </div>
-  </div>
-    
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
