@@ -182,8 +182,8 @@ if(!marketDetails.runners){
             let parentUser2Amount = (parseFloat(amount) * parseFloat(parentUser1.Share)/100)
             // parentUser1Amount = Math.round(parentUser1Amount * 10000) / 10000;
             // parentUser2Amount = Math.round(parentUser2Amount * 10000) / 10000;
-            parentUser1Amount = parseFloat(parentUser1Amount.toFixed(4)); // Rounding to 4 decimal places
-            parentUser2Amount = parseFloat(parentUser2Amount.toFixed(4));
+            parentUser1Amount = Number(parentUser1Amount.toFixed(4)); // Rounding to 4 decimal places
+            parentUser2Amount = Number(parentUser2Amount.toFixed(4));
             console.log(parentUser1Amount, parentUser2Amount)
             await userModel.findByIdAndUpdate(user.parentUsers[i], {$inc:{downlineBalance:-parseFloat(data.data.stake), myPL : parentUser1Amount, uplinePL: parentUser2Amount, lifetimePL : parentUser1Amount, pointsWL:-parseFloat(data.data.stake)}})
             if(i === 1){
