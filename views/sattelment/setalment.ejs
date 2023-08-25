@@ -35,15 +35,15 @@
                 <input type = "date">
               </div> 
               </form>
-              <div class="on-off-btn">
-                <span for="autoSattled">Auto Settlements</span>
+              <div class="on-off-btn-section">
+                <label for="autoSattled">Auto Settlements</label>
                 <%if(settlement.status){%>
-                  <span>OFF &nbsp; <label class="switch">
+                  <span class="on-off">OFF &nbsp; <label class="switch">
                   <input class="checkbox" name="autoSattled" type="checkbox" checked id="checkbox">
                   <span class="slider round"></span>
                   </label>&nbsp; ON</span>
                 <%}else{%>
-                  <span>OFF &nbsp; <label class="switch">
+                  <span class="on-off">OFF &nbsp; <label class="switch">
                     <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
                     <span class="slider round"></span>
                     </label>&nbsp; ON</span>
