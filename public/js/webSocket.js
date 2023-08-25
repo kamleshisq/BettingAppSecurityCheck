@@ -8274,6 +8274,18 @@ socket.on('connect', () => {
             let id = $(this).attr('id')
             socket.emit("eventIdForMarketList", {LOGINDATA, id})
           })
+
+          socket.on("eventIdForMarketList", async(data) => {
+            for (var marketKey in data.marketList) {
+                if (data.marketList.hasOwnProperty(marketKey)) {
+                  var market = data.marketList[marketKey];
+                  if (market !== null && typeof market === "object") {
+                    console.log("Market Key:", marketKey);
+                    console.log("Market Object:", market);
+                  }
+                }
+              }
+          })
     }
 })
 })

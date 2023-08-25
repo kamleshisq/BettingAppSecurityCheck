@@ -2445,7 +2445,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("eventIdForMarketList", async(data) => {
-        console.log(data.id)
+        // console.log(data.id)
         let allData =  await getCrkAndAllData()
         const cricket = allData[0].gameList[0].eventList
         let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
@@ -2455,7 +2455,8 @@ io.on('connection', (socket) => {
         const resultSearch = cricket.concat(footBall, Tennis);
         // console.log(resultSearch)
         let result = resultSearch.find(item => item.eventData.eventId == data.id)
-        console.log(result, 123)
+        // console.log(result, 123)
+        socket.emit("eventIdForMarketList", result)
     })
     
 })
