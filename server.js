@@ -2445,6 +2445,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("eventIdForMarketList", async(data) => {
+        console.log(data.id)
         let allData =  await getCrkAndAllData()
         const cricket = allData[0].gameList[0].eventList
         let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
