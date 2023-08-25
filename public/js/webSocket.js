@@ -736,20 +736,20 @@ socket.on('connect', () => {
             let data = Object.fromEntries(fd.entries());
             data.id = this.id
             console.log(data)
-            if(matchOddsStatus){
+            if(data.matchOddsStatus){
                 data.matchOddsStatus = true
             }else{
                 data.matchOddsStatus = false
             }
-            if(fencyStatus){
+            if(data.fencyStatus){
                 data.fencyStatus = true
             }else{
                 data.fencyStatus = false
             }
-            if(matchOddsStatus){
-                data.matchOddsStatus = true
+            if(data.BookmakerStatus){
+                data.BookmakerStatus = true
             }else{
-                data.matchOddsStatus = false
+                data.BookmakerStatus = false
             }
             console.log(data)
             socket.emit("updateCommission", {LOGINDATA, data})
