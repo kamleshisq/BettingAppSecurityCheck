@@ -9,6 +9,7 @@
       <div class="series-wise-data">
         <div class="series-title"><%=cricketSeries[i].series%></div>
         <%for(let j = 0; j < cricketSeries[i].matchdata.length; j++){%>
+          <%if(!catalog.some(item => item.Id == cricketSeries[i].matchdata[j].eventData.eventId)){ %>
           <%
               
           var timestamp = `${cricketSeries[i].matchdata[j].eventData.time}` * 1000; 
@@ -165,6 +166,7 @@
               <%} %>
             </a>
           </div>
+        <%}%>
         <%}%>
       </div>
       <%} %>

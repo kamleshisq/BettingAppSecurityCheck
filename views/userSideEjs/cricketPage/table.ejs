@@ -18,6 +18,7 @@
           <tbody class="acount-stat-tbl-body">
               <tr class="series-title"><td colspan="9"><p><%=cricketSeries[i].series%></p></td></tr>
               <%for(let j = 0; j < cricketSeries[i].matchdata.length; j++){%>
+                <%if(!catalog.some(item => item.Id == cricketSeries[i].matchdata[j].eventData.eventId)){ %>
                 <%
                 
                 var timestamp = `${cricketSeries[i].matchdata[j].eventData.time}` * 1000; 
@@ -180,6 +181,7 @@
                     <%} %>
                 </tr>
               
+              <%} %>
               <%} %>
           </tbody>
     
