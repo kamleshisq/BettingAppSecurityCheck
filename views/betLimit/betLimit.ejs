@@ -1,68 +1,28 @@
 <%- include("../header") %>
   <!--Container Main start-->
-  <div class="height-100" style="background-color: #EAEEF7;">
-
-  <section class="pad-top-bottom" style="padding:70px 0px 10px;">
+  <div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
     <div class="container-fluid">
-    <section>
-      <div class="align-fix"> 
-          <h1 class="main-heading"><%=title%></h1>
-          
+      <div class="new-head"> 
+          <h3><%=title%></h3>          
       </div>
-    </section>
     <%- include("../loginUserAdminsideDetails") %>
   </section>
 
-  <section style="padding: 15px 0px;">
+  <section>
     <div class="container-fluid">
-    <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
-      <div class="">
-        
-      <h3 class="fix-h3"><img src="../images/c-user.png" alt=""> &nbsp;Bet Limits </h3>
-    </div>
-    <div class="header-front">
-    <div>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          Bet Limits
-        </button>
-        <%- include("../operationsDropdown") %>
-      </div>
-    </div>
-<div class="flex-w">
-    <div>
-      <form action="">
-        
-      </form>
-
-    </div>
-      <div>
-        
-        </div>
-        <div>
-         
-          </div>
-        </div>
-
-
-      <div  class="loc">
-      
-    </div>
-  </div>
-  <section class="">
-    <div class="">
-      <br>
-      <div class="table_data_details_ col-lg-12">
-            <%- include("./table") %>
-              </div>
+        <div class="table-data-section">
+            <div class="table-heading">
+                <h3><%=title%></h3>
             </div>
-
+            <div class="data-table">
+              <%- include("./table") %>
             </div>
-          </div>
-        </section>
-<!-- seling section -->
+        </div>
+    </div>
+</section>
+</div>
 
-<!--  -->
 
 <!--  -->
 <div class="modal fade" id="myModal2" role="dialog">
@@ -73,9 +33,9 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
       </div>
-      <div class="modal-header" style="text-align: center;">
+      <div class="modal-header" >
         <!-- <button type="button" class="close" data-dismiss="modal"></button> -->
-        <h4 class="modal-title" style="color: #fff;">Change Bet Limit</h4>
+        <h4 class="modal-title">Change Bet Limit</h4>
       </div>
       <div class="modal-body">
         <form class="form-data form-betLimit">
@@ -91,9 +51,6 @@
               <label for="">Min Stake</label>
               <input type="text" class="form-control ml0" placeholder="10000000" name="min_stake">
             </div>
-           
-          </div>
-          <div class="row">
             <div class="col">
               <label for="">Max Stake</label>
               <input type="text" class="form-control ml0" placeholder="0" name="max_stake">
@@ -104,8 +61,6 @@
               <label for="">Max Profit</label>
               <input type="text" class="form-control ml0" placeholder="0" name="max_profit">
             </div>
-          </div>
-          <div class="row">
             <div class="col">
               <label for="">Max Odd</label>
               <input type="text" class="form-control ml0" placeholder="0" name="max_odd">
@@ -117,7 +72,6 @@
               <input type="text" class="form-control ml0" placeholder="0" name="delay">
             </div>
           </div>
-         
           <div class="row mt-2">
             <div class="col">
               <label for="">Transcation Password</label>
@@ -130,7 +84,7 @@
     </div>
   </div>
 </div>
-  </div>
+  
 
 <script src="/js/bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
