@@ -135,21 +135,21 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             // }
             await userModel.findByIdAndUpdate(user.parentUsers[i], {
                 $inc: {
-                    downlineBalance: -req.body.debitAmount.toNumber(),
-                    myPL: parentUser1Amount.toNumber(),
-                    uplinePL: parentUser2Amount.toNumber(),
-                    lifetimePL: parentUser1Amount.toNumber(),
-                    pointsWL: -req.body.debitAmount.toNumber()
+                    downlineBalance: -req.body.debitAmount,
+                    myPL: parentUser1Amount,
+                    uplinePL: parentUser2Amount,
+                    lifetimePL: parentUser1Amount,
+                    pointsWL: -req.body.debitAmount
                 }
             });
         
             if (i === 1) {
                 await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
                     $inc: {
-                        downlineBalance: -req.body.debitAmount.toNumber(),
-                        myPL: parentUser2Amount.toNumber(),
-                        lifetimePL: parentUser2Amount.toNumber(),
-                        pointsWL: -req.body.debitAmount.toNumber()
+                        downlineBalance: -req.body.debitAmount,
+                        myPL: parentUser2Amount,
+                        lifetimePL: parentUser2Amount,
+                        pointsWL: -req.body.debitAmount
                     }
                 });
             }
@@ -286,21 +286,21 @@ exports.betResult = catchAsync(async(req, res, next) =>{
                 // }
                 await userModel.findByIdAndUpdate(user.parentUsers[i], {
                     $inc: {
-                        downlineBalance: req.body.creditAmount.toNumber(),
-                        myPL: -parentUser1Amount.toNumber(),
-                        uplinePL: -parentUser2Amount.toNumber(),
-                        lifetimePL: -parentUser1Amount.toNumber(),
-                        pointsWL: req.body.creditAmount.toNumber()
+                        downlineBalance: req.body.creditAmount,
+                        myPL: -parentUser1Amount,
+                        uplinePL: -parentUser2Amount,
+                        lifetimePL: -parentUser1Amount,
+                        pointsWL: req.body.creditAmount
                     }
                 });
             
                 if (i === 1) {
                     await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
                         $inc: {
-                            downlineBalance: req.body.creditAmount.toNumber(),
-                            myPL: -parentUser2Amount.toNumber(),
-                            lifetimePL: -parentUser2Amount.toNumber(),
-                            pointsWL: req.body.creditAmount.toNumber()
+                            downlineBalance: req.body.creditAmount,
+                            myPL: -parentUser2Amount,
+                            lifetimePL: -parentUser2Amount,
+                            pointsWL: req.body.creditAmount
                         }
                     });
                 }
@@ -438,21 +438,21 @@ exports.rollBack = catchAsync(async(req, res, next) => {
                 // }
                 await userModel.findByIdAndUpdate(user.parentUsers[i], {
                     $inc: {
-                        downlineBalance: req.body.rollbackAmount.toNumber(),
-                        myPL: -parentUser1Amount.toNumber(),
-                        uplinePL: -parentUser2Amount.toNumber(),
-                        lifetimePL: -parentUser1Amount.toNumber(),
-                        pointsWL: req.body.rollbackAmount.toNumber()
+                        downlineBalance: req.body.rollbackAmount,
+                        myPL: -parentUser1Amount,
+                        uplinePL: -parentUser2Amount,
+                        lifetimePL: -parentUser1Amount,
+                        pointsWL: req.body.rollbackAmount
                     }
                 });
             
                 if (i === 1) {
                     await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
                         $inc: {
-                            downlineBalance: req.body.rollbackAmount.toNumber(),
-                            myPL: -parentUser2Amount.toNumber(),
-                            lifetimePL: -parentUser2Amount.toNumber(),
-                            pointsWL: req.body.rollbackAmount.toNumber()
+                            downlineBalance: req.body.rollbackAmount,
+                            myPL: -parentUser2Amount,
+                            lifetimePL: -parentUser2Amount,
+                            pointsWL: req.body.rollbackAmount
                         }
                     });
                 }

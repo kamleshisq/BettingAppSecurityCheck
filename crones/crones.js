@@ -120,21 +120,21 @@ module.exports = () => {
                             // }
                             await userModel.findByIdAndUpdate(user.parentUsers[i], {
                                 $inc: {
-                                    downlineBalance: (entry.Stake * entry.oddValue).toNumber(),
-                                    myPL: -parentUser1Amount.toNumber(),
-                                    uplinePL: -parentUser2Amount.toNumber(),
-                                    lifetimePL: -parentUser1Amount.toNumber(),
-                                    pointsWL: (entry.Stake * entry.oddValue).toNumber()
+                                    downlineBalance: (entry.Stake * entry.oddValue),
+                                    myPL: -parentUser1Amount,
+                                    uplinePL: -parentUser2Amount,
+                                    lifetimePL: -parentUser1Amount,
+                                    pointsWL: (entry.Stake * entry.oddValue)
                                 }
                             });
                         
                             if (i === 1) {
                                 await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
                                     $inc: {
-                                        downlineBalance: (entry.Stake * entry.oddValue).toNumber(),
-                                        myPL: -parentUser2Amount.toNumber(),
-                                        lifetimePL: -parentUser2Amount.toNumber(),
-                                        pointsWL: (entry.Stake * entry.oddValue).toNumber()
+                                        downlineBalance: (entry.Stake * entry.oddValue),
+                                        myPL: -parentUser2Amount,
+                                        lifetimePL: -parentUser2Amount,
+                                        pointsWL: (entry.Stake * entry.oddValue)
                                     }
                                 });
                             }
@@ -191,21 +191,21 @@ module.exports = () => {
                             // }
                             await userModel.findByIdAndUpdate(user.parentUsers[i], {
                                 $inc: {
-                                    downlineBalance: (entry.Stake * entry.oddValue).toNumber(),
-                                    myPL: -parentUser1Amount.toNumber(),
-                                    uplinePL: -parentUser2Amount.toNumber(),
-                                    lifetimePL: -parentUser1Amount.toNumber(),
-                                    pointsWL: (entry.Stake * entry.oddValue).toNumber()
+                                    downlineBalance: (entry.Stake * entry.oddValue),
+                                    myPL: -parentUser1Amount,
+                                    uplinePL: -parentUser2Amount,
+                                    lifetimePL: -parentUser1Amount,
+                                    pointsWL: (entry.Stake * entry.oddValue)
                                 }
                             });
                         
                             if (i === 1) {
                                 await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
                                     $inc: {
-                                        downlineBalance: (entry.Stake * entry.oddValue).toNumber(),
-                                        myPL: -parentUser2Amount.toNumber(),
-                                        lifetimePL: -parentUser2Amount.toNumber(),
-                                        pointsWL: (entry.Stake * entry.oddValue).toNumber()
+                                        downlineBalance: (entry.Stake * entry.oddValue),
+                                        myPL: -parentUser2Amount,
+                                        lifetimePL: -parentUser2Amount,
+                                        pointsWL: (entry.Stake * entry.oddValue)
                                     }
                                 });
                             }

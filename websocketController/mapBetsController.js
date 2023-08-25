@@ -75,21 +75,21 @@ exports.mapbet = async(data) => {
                             // }
                             await userModel.findByIdAndUpdate(user.parentUsers[i], {
                               $inc: {
-                                  downlineBalance: (bet.Stake * bet.oddValue).toNumber(),
-                                  myPL: -parentUser1Amount.toNumber(),
-                                  uplinePL: -parentUser2Amount.toNumber(),
-                                  lifetimePL: -parentUser1Amount.toNumber(),
-                                  pointsWL: (bet.Stake * bet.oddValue).toNumber()
+                                  downlineBalance: (bet.Stake * bet.oddValue),
+                                  myPL: -parentUser1Amount,
+                                  uplinePL: -parentUser2Amount,
+                                  lifetimePL: -parentUser1Amount,
+                                  pointsWL: (bet.Stake * bet.oddValue)
                               }
                           });
                       
                           if (i === 1) {
                               await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
                                   $inc: {
-                                      downlineBalance: (bet.Stake * bet.oddValue).toNumber(),
-                                      myPL: -parentUser2Amount.toNumber(),
-                                      lifetimePL: -parentUser2Amount.toNumber(),
-                                      pointsWL: (bet.Stake * bet.oddValue).toNumber()
+                                      downlineBalance: (bet.Stake * bet.oddValue),
+                                      myPL: -parentUser2Amount,
+                                      lifetimePL: -parentUser2Amount,
+                                      pointsWL: (bet.Stake * bet.oddValue)
                                   }
                               });
                           }
@@ -193,21 +193,21 @@ exports.mapbet = async(data) => {
                     // }
                     await userModel.findByIdAndUpdate(user.parentUsers[i], {
                       $inc: {
-                          downlineBalance: (bet.Stake * bet.oddValue).toNumber(),
-                          myPL: -parentUser1Amount.toNumber(),
-                          uplinePL: -parentUser2Amount.toNumber(),
-                          lifetimePL: -parentUser1Amount.toNumber(),
-                          pointsWL: (bet.Stake * bet.oddValue).toNumber()
+                          downlineBalance: (bet.Stake * bet.oddValue),
+                          myPL: -parentUser1Amount,
+                          uplinePL: -parentUser2Amount,
+                          lifetimePL: -parentUser1Amount,
+                          pointsWL: (bet.Stake * bet.oddValue)
                       }
                   });
               
                   if (i === 1) {
                       await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
                           $inc: {
-                              downlineBalance: (bet.Stake * bet.oddValue).toNumber(),
-                              myPL: -parentUser2Amount.toNumber(),
-                              lifetimePL: -parentUser2Amount.toNumber(),
-                              pointsWL: (bet.Stake * bet.oddValue).toNumber()
+                              downlineBalance: (bet.Stake * bet.oddValue),
+                              myPL: -parentUser2Amount,
+                              lifetimePL: -parentUser2Amount,
+                              pointsWL: (bet.Stake * bet.oddValue)
                           }
                       });
                   }
