@@ -8270,7 +8270,7 @@ socket.on('connect', () => {
 
           $(document).on("click", ".matchName", function(e){
             e.preventDefault()
-            console.log($(this).id)
+            console.log($(this).attr('id'))
           })
     }
 })
