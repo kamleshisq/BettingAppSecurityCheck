@@ -763,8 +763,10 @@ socket.on('connect', () => {
                 }else{
                     $('[name="matchOddsStatus"]').prop('checked', false);
                 }
-
                 document.getElementById("bookmakerPer").innerHTML = optionhtml
+                form.find('select[name="Bookmaker"]').val(`${data.commissionData[0].Bookmaker.percentage}`)
+                form.find('select[name="fency"]').val(`${data.commissionData[0].fency.percentage}`)
+                form.find('select[name="matchOdds"]').val(`${data.commissionData[0].matchOdd.percentage}`)
             }
         })
 
