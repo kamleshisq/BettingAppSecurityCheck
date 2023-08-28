@@ -2558,11 +2558,12 @@ io.on('connection', (socket) => {
     socket.on("commissionMarketbyId", async(data) => {
         try{
             if(data.isChecked){
-                let data1 = await commissionMarketModel.findOneAndDelete({marketId:data.userId})
+                let data1 = await commissionMarketModel.findOneAndDelete({marketId:data.marketId})
             }else{
-                let data1 = await commissionMarketModel.create({marketId:data.userId})
+                let data1 = await commissionMarketModel.create({marketId:data.marketId})
             }
         }catch(err){
+            console.log(err)
             socket.emit("commissionMarketbyId", "err")
         }
     })
