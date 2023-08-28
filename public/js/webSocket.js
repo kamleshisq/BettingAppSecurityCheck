@@ -747,21 +747,21 @@ socket.on('connect', () => {
                     <option value="1">1</option>`
                 }
                 if(data.commissionData[0].Bookmaker.status){
-
+                    $('[name="BookmakerStatus"]').prop('checked', true);
                 }else{
-
+                    $('[name="BookmakerStatus"]').prop('checked', false);
                 }
 
                 if(data.commissionData[0].fency.status){
-
+                    $('[name="fencyStatus"]').prop('checked', true);
                 }else{
-                    
+                    $('[name="fencyStatus"]').prop('checked', false);
                 }
 
                 if(data.commissionData[0].matchOdd.status){
-
+                    $('[name="matchOddsStatus"]').prop('checked', true);
                 }else{
-                    
+                    $('[name="matchOddsStatus"]').prop('checked', false);
                 }
 
                 document.getElementById("bookmakerPer").innerHTML = optionhtml
