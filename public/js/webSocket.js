@@ -8343,7 +8343,7 @@ socket.on('connect', () => {
                         }
                     }else{
                         html += `
-                            <tr id='${market[j].marketId}'>  
+                            <tr id='${market.marketId}'>  
                             <td>${i}</td>
                             <td>${market.title}</td>
                             <td width="120px"> <div class="on-off-btn-section">
