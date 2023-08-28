@@ -35,6 +35,7 @@ const sattlementModel =  require("../model/sattlementModel");
 const commissionModel = require("../model/CommissionModel");
 const settlementHisory = require("../model/settelementHistory");
 const catalogController = require("./../model/catalogControllModel")
+const commissionReportModel = require("../model/commissionReport");
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -2884,6 +2885,15 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
+    let data =  await commissionReportModel.aggregate([
+        {
+            $group: {
+              _id: '$Sport',
+              totalCommissionPoints: { $sum: '$commPoints' }
+            }
+        }
+    ])
+    console.log(data)
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReport/main", {
         title:"Commission Report",
@@ -2891,6 +2901,7 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
         verticalMenus,
         check:"Comm",
         userLog,
-        notifications:req.notifications
+        notifications:req.notifications,
+        data
     })
 })
