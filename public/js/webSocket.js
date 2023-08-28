@@ -8329,7 +8329,7 @@ socket.on('connect', () => {
                     if(Array.isArray(market)){
                         for(let j = 0; j < market.length; j++){
                             html += `
-                            <tr>
+                            <tr id='${market[j].marketId}'>
                             <td>${i + j }</td>
                             <td>${market[j].title}</td>
                             <td width="120px"> <div class="on-off-btn-section">
@@ -8343,7 +8343,7 @@ socket.on('connect', () => {
                         }
                     }else{
                         html += `
-                            <tr>
+                            <tr id='${market[j].marketId}'>  
                             <td>${i}</td>
                             <td>${market.title}</td>
                             <td width="120px"> <div class="on-off-btn-section">
