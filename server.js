@@ -36,6 +36,7 @@ const settlement = require("./model/sattlementModel");
 const mapBet = require("./websocketController/mapBetsController");
 const commissionModel = require("./model/CommissionModel");
 const catalogController = require("./model/catalogControllModel");
+const commissionMarketModel = require("./model/CommissionMarketsModel");
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -2555,7 +2556,15 @@ io.on('connection', (socket) => {
     })
 
     socket.on("commissionMarketbyId", async(data) => {
-        console.log(data)
+        try{
+            if(data.isChecked){
+                let data1 = await commissionMarketModel.findOneAndDelete({marketId:data.userId})
+            }else{
+                let data1 = await commissionMarketModel.create({marketId:data.userId})
+            }
+        }catch(err){
+            socket.emit("commissionMarketbyId", "err")
+        }
     })
     
 })

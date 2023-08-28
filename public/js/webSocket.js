@@ -8370,5 +8370,11 @@ socket.on('connect', () => {
         socket.emit("commissionMarketbyId", {marketId, isChecked, LOGINDATA});
     })
 
+    socket.on("commissionMarketbyId", data =>{
+        if(data == "err"){
+            alert("Opps, somthing went wrong please try again leter")
+        }
+    })
+
 })
 })
