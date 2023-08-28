@@ -24,7 +24,7 @@ const commissionRepport = mongoose.Schema({
     },
     status:{
         type:String,
-        default:Pending
+        default:"Pending"
     },
     event:{
         type:String
