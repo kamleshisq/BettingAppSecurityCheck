@@ -340,7 +340,7 @@ exports.mapbet = async(data) => {
                           let parentUser = await userModel.findById(user.parentUsers[i - 1])
                           let commissionChild = await commissionModel.find({userId:childUser.id})
                           let commissionPer = 0
-                          if ((bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS')) && commissionChild[0].Bookmaker.type == "NET_LOSS" && commissionChild[0].Bookmaker.status){
+                          if ((bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS')) && commissionChild[0].Bookmaker.type == "ENTRY_LOSS_" && commissionChild[0].Bookmaker.status){
                             commissionPer = commissionChild[0].Bookmaker.percentage
                           }
                           let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
