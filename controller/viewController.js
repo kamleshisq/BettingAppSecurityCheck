@@ -2876,4 +2876,21 @@ exports.CommissionMarkets = catchAsync(async(req, res, next) => {
         me,
         currentUser:me
     })
+});
+
+exports.getCommissionReportUserSide = catchAsync(async(res, res, next) => {
+    const me = req.currentUser
+    let userLog
+    if(req.currentUser){
+        userLog = await loginLogs.find({user_id:req.currentUser._id})
+    }
+    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    res.status(200).render("./userSideEjs/commissionReport/main", {
+        title:"Commission Report",
+        user:req.currentUser,
+        verticalMenus,
+        check:"Comm",
+        userLog,
+        notifications:req.notifications
+    })
 })

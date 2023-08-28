@@ -100,9 +100,11 @@ router.get("/myGameReport", authController.isProtected, notificationController.m
 router.get("/event", authController.isProtected, notificationController.myNotifications ,viewController.getGameReportInPageUser);
 router.get("/gameReport/match", authController.isProtected, notificationController.myNotifications ,viewController.getGameReportInINPageUser);
 router.get("/myAccountStatment", authController.isProtected, notificationController.myNotifications ,viewController.myAccountStatment);
+router.get("/myCommissionReports", authController.isProtected, notificationController.myNotifications ,viewController.getCommissionReportUserSide);
 router.get("/myProfile", authController.isProtected, notificationController.myNotifications ,viewController.myProfile);
 router.get("/profile", authController.isProtected, notificationController.myNotifications ,viewController.getMyProfileUser);
 router.get("/Kyc", authController.isProtected, notificationController.myNotifications ,viewController.getMyKycPage);
+
 
 
 //Testing//
