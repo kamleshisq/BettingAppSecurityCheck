@@ -149,16 +149,7 @@ if(!marketDetails.runners){
     if(!user){
         return "There is no user with that id"
     }
-    console.log(user.parentUsers[1])
-    let commission = await commissionModel.find({userId:user.id})
-    console.log(commission, 456)
-    let commissionPer = 0
-    if ((marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS')) && commission[0].Bookmaker.type == "ENTRY"){
-      commissionPer = parseFloat(commission[0].Bookmaker.percentage)/100
-    }else if (commission[0].fency.type == "ENTRY" && !(marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('Match'))){
-      commissionPer = parseFloat(commission[0].fency.percentage)/100
-    }
-    console.log(commission, commissionPer)
+    
                     
 
 
@@ -259,6 +250,21 @@ if(!marketDetails.runners){
     //       "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}Parent`
     //     })
     // } 
+
+    //FOR CIMMISSION//
+    console.log(user)
+    let commission = await commissionModel.find({userId:user.id})
+    console.log(commission, 456)
+    let commissionPer = 0
+    if ((marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS')) && commission[0].Bookmaker.type == "ENTRY"){
+      commissionPer = parseFloat(commission[0].Bookmaker.percentage)/100
+    }else if (commission[0].fency.type == "ENTRY" && !(marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('Match'))){
+      commissionPer = parseFloat(commission[0].fency.percentage)/100
+    }
+    console.log(commission, commissionPer)
+
+
+
     return "Bet placed successfully"
 }
 
