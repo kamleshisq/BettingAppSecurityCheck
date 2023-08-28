@@ -8364,7 +8364,8 @@ socket.on('connect', () => {
     }
     $(document).on("change", ".checkbox", function(e) {
         e.preventDefault()
-        console.log($(this).val())
+        const isChecked = $(this).prop("checked");
+        console.log(isChecked)
     })
 
 })
