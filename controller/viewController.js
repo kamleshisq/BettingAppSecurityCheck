@@ -2934,7 +2934,7 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
     ])
     console.log(data)
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
-    res.status(200).render("./userSideEjs/commissionReport/main", {
+    res.status(200).render("./userSideEjs/commissionReportsIn/main", {
         title:"Commission Report",
         user:req.currentUser,
         verticalMenus,
