@@ -5,6 +5,7 @@ const betLimitModel = require('../model/betLimitModel');
 const cricketAndOtherSport = require('../utils/getSportAndCricketList');
 const commissionRepportModel = require("../model/commissionReport");
 const commissionModel = require("../model/CommissionModel");
+const commissionMarketModel = require("../model/CommissionMarketsModel");
 const Decimal = require('decimal.js');
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -207,7 +208,7 @@ if(!marketDetails.runners){
         return err
     }
     // console.log(user)
-    let commissionMarket = await commissionMarket.find()
+    let commissionMarket = await commissionMarketModel.find()
     if(commissionMarket.some(item => item.marketId == data.data.market)){
         let commission = await commissionModel.find({userId:user.id})
         // console.log(commission, 456)
