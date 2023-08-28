@@ -225,7 +225,7 @@
                   </td>
                   <td>
                     <!-- <input type="number" class="form-control" name="Bookmaker"> -->
-                    <select name="Bookmaker" class="bookmakerPer">
+                    <select name="Bookmaker" id="bookmakerPer">
                       <!-- <option value="0.25">0.25</option>
                       <option value="0.5">0.5</option>
                       <option value="0.75">0.75</option>
@@ -606,6 +606,7 @@
                       <option value="0.75">0.75</option>
                       <option value="1">1</option>`
       }
+      document.getElementById("bookmakerPer").innerHTML = html
     })
   </script>
 
