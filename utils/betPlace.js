@@ -235,7 +235,7 @@ if(!marketDetails.runners){
     try{
         for(let i = user.parentUsers.length - 1; i >= 1; i--){
             let childUser = await userModel.findById(user.parentUsers[i])
-            let parentUser = await userModel.findById(user.parentUsers[i])
+            let parentUser = await userModel.findById(user.parentUsers[i - 1])
             let commissionChild = await commissionModel.find({userId:childUser.id})
             let commissionPer = 0
             if ((marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS')) && commissionChild[0].Bookmaker.type == "ENTRY" && commissionChild[0].Bookmaker.status){
