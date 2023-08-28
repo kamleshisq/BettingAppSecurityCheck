@@ -8319,9 +8319,9 @@ socket.on('connect', () => {
           socket.on("eventIdForMarketList", async(data) => {
             let i = 0
             let html = ""
-            for (var marketKey in data.marketList) {
-                if (data.marketList.hasOwnProperty(marketKey)) {
-                  var market = data.marketList[marketKey];
+            for (var marketKey in data.result.marketList) {
+                if (data.result.marketList.hasOwnProperty(marketKey)) {
+                  var market = data.result.marketList[marketKey];
                   if (market !== null && typeof market === "object") {
                     i ++
                     console.log("Market Key:", marketKey);
@@ -8331,29 +8331,47 @@ socket.on('connect', () => {
                             html += `
                             <tr id='${market[j].marketId}'>
                             <td>${i + j }</td>
-                            <td>${market[j].title}</td>
-                            <td width="120px"> <div class="on-off-btn-section">
-                              <span class="on-off">OFF &nbsp; <label class="switch">
-                              <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
-                              <span class="slider round"></span>
-                              </label>&nbsp; ON</span>
-                          </div></td>
-                            </tr>
-                        `
+                            <td>${market[j].title}</td>`
+                            if(data.data1.includes(market[j].marketId)){
+                                html += `<td width="120px"> <div class="on-off-btn-section">
+                                <span class="on-off">OFF &nbsp; <label class="switch">
+                                <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
+                                <span class="slider round"></span>
+                                </label>&nbsp; ON</span>
+                            </div></td>
+                              </tr>`
+                            }else{
+                                html += `<td width="120px"> <div class="on-off-btn-section">
+                                <span class="on-off">OFF &nbsp; <label class="switch">
+                                <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
+                                <span class="slider round"></span>
+                                </label>&nbsp; ON</span>
+                            </div></td>
+                              </tr>`
+                            }
                         }
                     }else{
                         html += `
                             <tr id='${market.marketId}'>  
                             <td>${i}</td>
-                            <td>${market.title}</td>
-                            <td width="120px"> <div class="on-off-btn-section">
-                              <span class="on-off">OFF &nbsp; <label class="switch">
-                              <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
-                              <span class="slider round"></span>
-                              </label>&nbsp; ON</span>
-                          </div></td>
-                            </tr>
-                        `
+                            <td>${market.title}</td>`
+                            if(data.data1.includes(market.marketId)){
+                                html += `<td width="120px"> <div class="on-off-btn-section">
+                                <span class="on-off">OFF &nbsp; <label class="switch">
+                                <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
+                                <span class="slider round"></span>
+                                </label>&nbsp; ON</span>
+                            </div></td>
+                              </tr>`
+                            }else{
+                                html += `<td width="120px"> <div class="on-off-btn-section">
+                                <span class="on-off">OFF &nbsp; <label class="switch">
+                                <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
+                                <span class="slider round"></span>
+                                </label>&nbsp; ON</span>
+                            </div></td>
+                              </tr>`
+                            }
                     }
                   }
                 }

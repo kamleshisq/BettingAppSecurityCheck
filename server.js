@@ -2551,8 +2551,9 @@ io.on('connection', (socket) => {
         const resultSearch = cricket.concat(footBall, Tennis);
         // console.log(resultSearch)
         let result = resultSearch.find(item => item.eventData.eventId == data.id)
+        let data1 = await commissionMarketModel.find()
         // console.log(result, 123)
-        socket.emit("eventIdForMarketList", result)
+        socket.emit("eventIdForMarketList", {result, data1})
     })
 
     socket.on("commissionMarketbyId", async(data) => {
