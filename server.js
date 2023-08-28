@@ -2553,6 +2553,10 @@ io.on('connection', (socket) => {
         // console.log(result, 123)
         socket.emit("eventIdForMarketList", result)
     })
+
+    socket.on("commissionMarketbyId", async(data) => {
+        console.log(data)
+    })
     
 })
 

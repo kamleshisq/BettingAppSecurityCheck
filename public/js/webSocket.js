@@ -8367,9 +8367,7 @@ socket.on('connect', () => {
         const isChecked = $(this).prop("checked");
         let parentNode = this.closest('tr')
         let marketId = parentNode.id
-        console.log(parentNode)
-        console.log(marketId)
-        console.log(isChecked)
+        socket.emit("commissionMarketbyId", {marketId, isChecked, LOGINDATA});
     })
 
 })

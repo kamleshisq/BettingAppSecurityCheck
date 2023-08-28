@@ -4,7 +4,8 @@ const mongoose = require("mongoose")
 const commissionMarket = mongoose.Schema({
     marketId:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     }
 })
 
