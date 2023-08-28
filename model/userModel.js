@@ -211,7 +211,7 @@ userSchema.pre(/^find/, function(next){
     next()
 })
 
-schema.pre('save', function (next) {
+userSchema.pre('save', function (next) {
     this.myPL = roundToTwoDecimals(this.myPL);
     this.uplinePL = roundToTwoDecimals(this.uplinePL);
     this.lifetimePL = roundToTwoDecimals(this.lifetimePL);
