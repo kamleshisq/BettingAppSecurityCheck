@@ -10,7 +10,103 @@
         <h3>CMS Management</h3>
       </div>
     </div>
-  </section>    
+  </section> 
+
+  <section>
+    <div class="container-fluid" id="verticalMenuManager">
+      <div class="table-data-section verticalMenuManager">
+        <div class="table-heading">
+            <h3>Game Rules Management</h3>
+            <div class="table-heading-btn">
+              <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add New </button>
+            </div>
+        </div>
+        <div class="data-table">
+          <table>
+            <thead>
+              <th>Sr. No.</th>
+              <th>Name</th>
+              <th>description</th>
+            </thead>
+            <tbody id="table123">
+              <%for(let i = 0; i < rules.length; i++){%>
+              <tr>
+                <td><%= i+1 %></td>
+                <td><%=rules[i].name%></td>
+                <td><button class="description" data-bs-toggle="modal" data-bs-target="#uploadFile" id="<%=rules[i]._id%>" ><i class="fa-solid fa-database"></i></button></td>
+              </tr>
+              <%}%>
+            </tbody>
+          </table>
+
+          <div class="modal fade" id="myModaladduser" role="dialog">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-header">
+                  <h4 class="modal-title">Add Rule</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="uploadRulesPage">
+                    <div class="row">
+                      <div class="col">
+                        <label for="name">Game || Market</label>
+                        <input type="text" class="form-control ml0" name="name">
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+
+                      <div class="col">
+                        <label for="description">Details</label>
+                        <textarea id="detailsTextArea" class="form-control ml0 " name="description"></textarea>
+                      </div>                              
+                    </div>
+                    <button type="submit" class="btn-submit mt-3">Add</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="uploadFile" role="dialog">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-header">
+                  <h4 class="modal-title">Update Page</h4>
+                </div>
+                <div class="modal-body">
+                  <form class="updaterules" id="updaterules">
+                    <div class="row mt-2">
+                      <div class="col">
+                        <label for="name">Name</label>
+                        <input  type="text" class="form-control ml0 name"  name="name">
+                      </div>
+                    </div>
+                    <div class="row mt-2">
+                      <div class="col">
+                        <label for="description">Details</label>
+                        <textarea id="detailsTextArea1"  class="form-control ml0 " name="description"></textarea>
+                      </div>  
+                    </div>
+                    <button type="submit" class="btn-submit mt-3">Update</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
 </div>
 
 <script type="text/javascript" src="../js/bundle.js"></script> 

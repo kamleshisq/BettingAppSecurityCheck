@@ -747,6 +747,8 @@ socket.on('connect', () => {
                     <option value="1">1</option>`
                 }
 
+                
+
                 document.getElementById("bookmakerPer").innerHTML = optionhtml
             }
         })
