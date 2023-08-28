@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 const commissionRepport = mongoose.Schema({
     userId:{
         type:String,
-        required:true,
-        unique:true
+        required:true
     },
     market:{
         type:String,
