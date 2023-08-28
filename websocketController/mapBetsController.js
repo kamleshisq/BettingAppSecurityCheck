@@ -242,7 +242,7 @@ exports.mapbet = async(data) => {
                       let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
                       if(commissionPer > 0){
                         let user1 = await userModel.findByIdAndUpdate(user.id, {$inc:{commission:commissionCoin}})
-                        // console.log(user)
+                        console.log(user)
                         // console.log(user1)
                         let commissionReportData = {
                             userId:user.id,
