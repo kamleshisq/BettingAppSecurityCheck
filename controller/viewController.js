@@ -2878,7 +2878,7 @@ exports.CommissionMarkets = catchAsync(async(req, res, next) => {
     })
 });
 
-exports.getCommissionReportUserSide = catchAsync(async(res, res, next) => {
+exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     let userLog
     if(req.currentUser){
