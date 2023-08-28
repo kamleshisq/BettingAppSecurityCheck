@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 // const validator = require('validator');
 const bycrypt = require('bcrypt');
-const { default: isEmail } = require('validator/lib/isEmail');
+// const { default: isEmail } = require('validator/lib/isEmail');
 // const { string } = require('joi');
 
 const userSchema = mongoose.Schema({
@@ -41,24 +41,21 @@ const userSchema = mongoose.Schema({
         type:Number,
         default:0,
         set: function(value) {
-            const roundedValue = parseFloat(value).toFixed(4);
-            return roundedValue;
+             return parseFloat(value).toFixed(2);
         }
     },
     uplinePL:{
         type:Number,
         default:0,
         set: function(value) {
-            const roundedValue = parseFloat(value).toFixed(4);
-            return roundedValue;
+             return parseFloat(value).toFixed(2);
         }
     },
     lifetimePL:{
         type:Number,
         default:0,
         set: function(value) {
-            const roundedValue = parseFloat(value).toFixed(4);
-            return roundedValue;
+             return parseFloat(value).toFixed(2);
         }
     },
     pointsWL:{
