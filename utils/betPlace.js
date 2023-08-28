@@ -218,9 +218,9 @@ if(!marketDetails.runners){
     let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
     console.log(commissionCoin)
     if(commissionPer > 0){
-        let user1 = userModel.findByIdAndUpdate(user.id, {$inc:{commission:commissionCoin}})
-        console.log(user)
-        console.log(user1)
+        let user1 = await userModel.findByIdAndUpdate(user.id, {$inc:{commission:commissionCoin}})
+        // console.log(user)
+        // console.log(user1)
         let commissionReportData = {
             userId:user.id,
             market:marketDetails.title,
@@ -248,7 +248,7 @@ if(!marketDetails.runners){
             let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
             console.log(commissionCoin)
             if(commissionPer > 0){
-                let user1 = userModel.findByIdAndUpdate(childUser.id, {$inc:{commission:commissionCoin}})
+                let user1 = await userModel.findByIdAndUpdate(childUser.id, {$inc:{commission:commissionCoin}})
                 console.log(user1.userName)
                 let commissionReportData = {
                     userId:childUser.id,
