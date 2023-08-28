@@ -261,7 +261,7 @@ if(!marketDetails.runners){
     }else if (commission[0].fency.type == "ENTRY" && !(marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('Match')) && commission[0].fency.status){
       commissionPer = parseFloat(commission[0].fency.percentage)/100
     }
-    // console.log(commission, commissionPer)
+    console.log(commission, commissionPer)
     
 
 
