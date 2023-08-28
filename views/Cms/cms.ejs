@@ -1,61 +1,46 @@
 <%- include("../header") %>
-  <!--Container Main start-->
-  <div class="height-100" style="background-color: #EAEEF7;">
-
-<section class="pad-top-bottom-" style="padding-top: 70px ;">
-  <section style="padding-top: 10px;">
+<!--Container Main start-->
+<div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
     <div class="container-fluid">
-    <div class="align-fix"> 
-        <h1 class="main-heading">CMS Management</h1>
+      <div class="new-head"> 
+          <h3>CMS Management</h3>
+        </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="table-data-section CMD__website">
+        <%- include("./website") %>
       </div>
     </div>
   </section>
-  <div class=""> 
-     
-  </div>
-</section>
 
-<section class="" style="padding-top: 10px;">
-  <div class="container-fluid">
-      <div class="tab end" >
-          <!-- <button class="tablinks"  onclick="openCity(event, 'Cricket')"> Telegram  </button> -->
-          <button class="tablinks" id="defaultOpen"onclick="openCity(event, 'FOOTBALL')"> Website </button>
-      </div>
-            
-
-          <!--  -->
-                <%- include("./website") %>
-    </div>
-</section>
-
-
-<div class="modal fade" id="adduser" role="dialog">
-  <div class="modal-dialog">
-  
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-      </div>
-      <div class="modal-header" style="text-align: center;">
-        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-        <h4 class="modal-title" style="color: #fff;">Slider Upload</h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-data">
-          <div class="row">
-            <div class="col">
-              <label for="">Image</label>
-              <input type="file" class="form-control ml0" placeholder="" name="email">
+  <div class="modal fade" id="adduser" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header">
+          <h4 class="modal-title">Slider Upload</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-data">
+            <div class="row">
+              <div class="col">
+                <label for="">Image</label>
+                <input type="file" class="form-control ml0" placeholder="" name="email">
+              </div>
             </div>
-          </div>
-                   <button type="button" class="btn-submit mt-3">Add </button>
-        </form>
+            <button type="button" class="btn-submit mt-3">Add </button>
+          </form>
+        </div>
       </div>
     </div>
-    
   </div>
-</div>
 
 </div>
 <script type="text/javascript" src="../js/bundle.js"></script> 
@@ -81,4 +66,4 @@ evt.currentTarget.className += " active";
 document.getElementById("defaultOpen").click();
 </script>
 </body>
-    </html>
+</html>

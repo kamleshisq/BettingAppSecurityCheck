@@ -66,6 +66,10 @@ const catalogController = require("./../model/catalogControllModel")
 // });
 
 exports.userTable = catchAsync(async(req, res, next) => {
+    let AllUsers = await User.find()
+    for(let i = 0; i < AllUsers.length; i++){
+        await commissionModel.create({userId:AllUsers[i].id})
+    }
     // console.log(global._loggedInToken)
     // console.log(req.token, req.currentUser);
     // let users

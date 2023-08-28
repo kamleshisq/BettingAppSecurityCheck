@@ -27,7 +27,7 @@ const commission = mongoose.Schema({
         },
         type:{
             type:String,
-            default:"WIN"
+            default:"ENTRY"
         },
         status:{
             type:Boolean,
@@ -41,7 +41,7 @@ const commission = mongoose.Schema({
         },
         type:{
             type:String,
-            default:"WIN"
+            default:"ENTRY"
         },
         status:{
             type:Boolean,
