@@ -746,8 +746,23 @@ socket.on('connect', () => {
                     <option value="0.75">0.75</option>
                     <option value="1">1</option>`
                 }
+                if(data.commissionData[0].Bookmaker.status){
 
-                
+                }else{
+
+                }
+
+                if(data.commissionData[0].fency.status){
+
+                }else{
+                    
+                }
+
+                if(data.commissionData[0].matchOdd.status){
+
+                }else{
+                    
+                }
 
                 document.getElementById("bookmakerPer").innerHTML = optionhtml
             }
