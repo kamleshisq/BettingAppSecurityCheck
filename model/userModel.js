@@ -211,6 +211,11 @@ userSchema.pre(/^find/, function(next){
     next()
 })
 
+schema.methods.updateDownlineBalance = async function(newBalance) {
+    this.downlineBalance = parseFloat(newBalance).toFixed(2);
+    await this.save();
+};
+
 // userSchema.pre(/^find/, async function(next){
 //     this.find({isActive:true})
 // })
