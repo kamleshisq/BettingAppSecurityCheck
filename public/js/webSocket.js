@@ -8366,7 +8366,9 @@ socket.on('connect', () => {
         e.preventDefault()
         const isChecked = $(this).prop("checked");
         let parentNode = this.closest('tr')
+        let marketId = parentNode.id
         console.log(parentNode)
+        console.log(marketId)
         console.log(isChecked)
     })
 
