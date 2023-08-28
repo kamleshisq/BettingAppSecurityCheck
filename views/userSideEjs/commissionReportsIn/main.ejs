@@ -50,7 +50,13 @@
                     </tr>
                 </thead>
                 <tbody class="acount-stat-tbl-body">
-                    
+                    <%for(let i = 0; i < data.length; i++)%>
+                      <tr>
+                        <td><%=i+1%></td>
+                        <td><%=data[i]._id%></td>
+                        <td><%=data[i].totalCommissionPoints%></td>
+                      </tr>
+                    <%}%>
                 </tbody>
             </table>
               <div class="loadMoredive">
