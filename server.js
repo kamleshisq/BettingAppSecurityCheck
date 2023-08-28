@@ -2359,9 +2359,9 @@ io.on('connection', (socket) => {
         console.log(data)
         try{
             let newValues = {
-                matchOdd: { percentage: data.data.matchOdds, type: `${data.data.matchOddsType}` },
-                Bookmaker: { percentage: data.data.Bookmaker, type:  `${data.data.BookmakerType}` },
-                fency: { percentage: data.data.fency, type: `${data.data.fencyType}` }
+                matchOdd: { percentage: data.data.matchOdds, type: `${data.data.matchOddsType}` , status: data.data.matchOddsStatus},
+                Bookmaker: { percentage: data.data.Bookmaker, type:  `${data.data.BookmakerType}`, status: data.data.BookmakerStatus},
+                fency: { percentage: data.data.fency, type: `${data.data.fencyType}`, status: data.data.fencyStatus}
             }
             let newdata = await commissionModel.findOneAndUpdate({userId:data.data.id}, newValues)
 

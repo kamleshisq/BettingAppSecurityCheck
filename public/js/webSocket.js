@@ -791,8 +791,8 @@ socket.on('connect', () => {
             }else{
                 data.BookmakerStatus = false
             }
-            console.log(data)
-            // socket.emit("updateCommission", {LOGINDATA, data})
+            // console.log(data)
+            socket.emit("updateCommission", {LOGINDATA, data})
         })
 
         socket.on("updateCommission", async(data) =>  {
