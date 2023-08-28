@@ -2888,7 +2888,7 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
     let data =  await commissionReportModel.aggregate([
         {
             $match:{
-                userId: req.currentUser._id
+                userId: req.currentUser.id
             }
         },
         {
