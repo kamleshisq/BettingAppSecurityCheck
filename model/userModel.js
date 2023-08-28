@@ -211,10 +211,16 @@ userSchema.pre(/^find/, function(next){
     next()
 })
 
-userSchema.methods.updateMyPL = async function(newBalance) {
-    this.downlineBalance = parseFloat(newBalance).toFixed(2);
-    await this.save();
-};
+schema.pre('save', function (next) {
+    this.myPL = roundToTwoDecimals(this.myPL);
+    this.uplinePL = roundToTwoDecimals(this.uplinePL);
+    this.lifetimePL = roundToTwoDecimals(this.lifetimePL);
+    next();
+});
+
+function roundToTwoDecimals(value) {
+    return parseFloat(value).toFixed(2);
+}
 
 // userSchema.pre(/^find/, async function(next){
 //     this.find({isActive:true})
