@@ -206,6 +206,28 @@ if(!marketDetails.runners){
         console.log(err)
         return err
     }
+    console.log(user)
+    let commission = await commissionModel.find({userId:user.id})
+    // console.log(commission, 456)
+    let commissionPer = 0
+    if ((marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status){
+      commissionPer = commission[0].Bookmaker.percentage
+    }else if (commission[0].fency.type == "ENTRY" && !(marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('Match')) && commission[0].fency.status){
+      commissionPer = commission[0].fency.percentage
+    }
+    let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
+    console.log(commissionCoin)
+    // if(commissionPer > 0){
+    //     let user = findByIdAndUpdate(user.id, {$inc:{commission:commissionCoin}})
+    //     let commissionReportData = {
+    //         userId:user.id,
+    //         market:marketDetails.title,
+    //         commType:'Entry Wise Commission',
+    //         percentage:commissionPer,
+    //         commPoints:commissionCoin,
+    //         event:
+    //     }
+    // }
 
     // let Acc2 = {
     //     "user_id":parentUser._id,
@@ -252,17 +274,7 @@ if(!marketDetails.runners){
     // } 
 
     //FOR CIMMISSION//
-    console.log(user)
-    let commission = await commissionModel.find({userId:user.id})
-    // console.log(commission, 456)
-    let commissionPer = 0
-    if ((marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status){
-      commissionPer = parseFloat(commission[0].Bookmaker.percentage)/100
-    }else if (commission[0].fency.type == "ENTRY" && !(marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('Match')) && commission[0].fency.status){
-      commissionPer = parseFloat(commission[0].fency.percentage)/100
-    }
-    console.log(commission, commissionPer)
-    
+   
 
 
 
