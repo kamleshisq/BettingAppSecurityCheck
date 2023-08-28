@@ -2391,7 +2391,6 @@ socket.on('connect', () => {
             let status = $(this).prop('checked') ? true : false;
                 let id = $(this).data('id')
                 if(id){
-
                     socket.emit('casionoStatusChange',{status,id})
                 }
         })
