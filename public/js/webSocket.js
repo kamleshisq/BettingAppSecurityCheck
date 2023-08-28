@@ -691,7 +691,7 @@ socket.on('connect', () => {
         })
 
         socket.on("commissionData", data => {
-            // console.log(data)
+            console.log(data)
             if(data.status === "error"){
                 alert("Please try again later")
             }else{
@@ -747,7 +747,7 @@ socket.on('connect', () => {
                     <option value="1">1</option>`
                 }
 
-                document.getElementById("bookmakerPer").innerHTML = html
+                document.getElementById("bookmakerPer").innerHTML = optionhtml
             }
         })
 
