@@ -8362,7 +8362,10 @@ socket.on('connect', () => {
               document.getElementById("markets").innerHTML = html
           })
     }
-    $(document).on("change", ".checkbox", function(e) {})
+    $(document).on("change", ".checkbox", function(e) {
+        e.preventDefault()
+        console.log(this.val())
+    })
 
 })
 })
