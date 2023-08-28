@@ -219,6 +219,7 @@ userSchema.pre('save', function (next) {
 });
 
 function roundToTwoDecimals(value) {
+    console.log("WORKINGSCHEMAAAA")
     return parseFloat(value).toFixed(2);
 }
 
