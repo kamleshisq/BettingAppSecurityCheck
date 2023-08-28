@@ -1,6 +1,9 @@
 const userModel = require("../model/userModel");
 const accModel = require("../model/accountStatementByUserModel");
 const betModel = require("../model/betmodel");
+const commissionRepportModel = require("../model/commissionReport");
+const commissionModel = require("../model/CommissionModel");
+const commissionMarketModel = require("../model/CommissionMarketsModel");
 // const commissionModel = require("../model/CommissionModel")
 const settlementHistory = require("../model/settelementHistory");
 const Decimal = require('decimal.js');
@@ -228,18 +231,66 @@ exports.mapbet = async(data) => {
                   "transactionId":`${bet.transactionId}`
                 })
 
-                // await accModel.create({
-                //   "user_id":parentUser._id,
-                //   "description": description2,
-                //   "creditDebitamount" : -parseFloat(bet.Stake * bet.oddValue),
-                //   "balance" : parentUser.availableBalance - (bet.Stake * bet.oddValue),
-                //   "date" : Date.now(),
-                //   "userName" : parentUser.userName,
-                //   "role_type" : parentUser.role_type,
-                //   "Remark":"-",
-                //   "stake": bet.Stake,
-                //   "transactionId":`${bet.transactionId}Parent`
-                // })
+                let commissionMarket = await commissionMarketModel.find()
+                if(commissionMarket.some(item => item.marketId == bet.marketId)){
+                  try{
+                    let commission = await commissionModel.find({userId:user.id})
+                    let commissionPer = 0
+                    if (bet.marketName == "Match Odds" && commission[0].matchOdd.status){
+                        commissionPer = commission[0].matchOdd.percentage
+                      }
+                      let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
+                      if(commissionPer > 0){
+                        let user1 = await userModel.findByIdAndUpdate(user.id, {$inc:{commission:commissionCoin}})
+                        // console.log(user)
+                        // console.log(user1)
+                        let commissionReportData = {
+                            userId:user.id,
+                            market:bet.marketName,
+                            commType:'Win Commission',
+                            percentage:commissionPer,
+                            commPoints:commissionCoin,
+                            event:bet.event,
+                            match:bet.match,
+                            Sport:bet.gameId
+                        }
+                        let commisssioReport = await commissionRepportModel.create(commissionReportData)
+                    }
+                    }catch(err){
+                        console.log(err)
+                    }
+
+                    try{
+                      for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                          let childUser = await userModel.findById(user.parentUsers[i])
+                          let parentUser = await userModel.findById(user.parentUsers[i - 1])
+                          let commissionChild = await commissionModel.find({userId:childUser.id})
+                          let commissionPer = 0
+                          if (bet.marketName == "Match Odds" && commissionChild[0].matchOdd.status){
+                              commissionPer = commissionChild[0].matchOdd.percentage
+                            }
+                          let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
+                          console.log(commissionCoin)
+                          if(commissionPer > 0){
+                              let user1 = await userModel.findByIdAndUpdate(childUser.id, {$inc:{commissionChild:commissionCoin}})
+                              console.log(user1.userName)
+                              let commissionReportData = {
+                                  userId:childUser.id,
+                                  market:bet.marketName,
+                                  commType:'Win Commission',
+                                  percentage:commissionPer,
+                                  commPoints:commissionCoin,
+                                  event:bet.event,
+                                  match:bet.match,
+                                  Sport:bet.gameId
+                              }
+                              let commisssioReport = await commissionRepportModel.create(commissionReportData)
+                          }
+                      }
+                  }catch(err){
+                      console.log(err)
+                  }
+                }
             }else{
               // let user = await userModel.findById(bet.userId)
               // let commission = await commissionModel.find({userId:user.parentUsers[1]})
