@@ -218,7 +218,7 @@ if(!marketDetails.runners){
     let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
     console.log(commissionCoin)
     if(commissionPer > 0){
-        let user = userModel.findByIdAndUpdate(user.id, {$inc:{commission:commissionCoin}})
+        let user1 = userModel.findByIdAndUpdate(user.id, {$inc:{commission:commissionCoin}})
         let commissionReportData = {
             userId:user.id,
             market:marketDetails.title,
