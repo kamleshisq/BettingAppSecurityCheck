@@ -217,17 +217,20 @@ if(!marketDetails.runners){
     }
     let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
     console.log(commissionCoin)
-    // if(commissionPer > 0){
-    //     let user = findByIdAndUpdate(user.id, {$inc:{commission:commissionCoin}})
-    //     let commissionReportData = {
-    //         userId:user.id,
-    //         market:marketDetails.title,
-    //         commType:'Entry Wise Commission',
-    //         percentage:commissionPer,
-    //         commPoints:commissionCoin,
-    //         event:
-    //     }
-    // }
+    if(commissionPer > 0){
+        let user = findByIdAndUpdate(user.id, {$inc:{commission:commissionCoin}})
+        let commissionReportData = {
+            userId:user.id,
+            market:marketDetails.title,
+            commType:'Entry Wise Commission',
+            percentage:commissionPer,
+            commPoints:commissionCoin,
+            event:liveBetGame.eventData.league,
+            match:data.data.title,
+            Sport:liveBetGame.eventData.sportId
+        }
+        let commisssioReport = await commissionRepportModel.create(commissionReportData)
+    }
 
     // let Acc2 = {
     //     "user_id":parentUser._id,
