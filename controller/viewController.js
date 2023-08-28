@@ -2887,6 +2887,11 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
     }
     let data =  await commissionReportModel.aggregate([
         {
+            $match:{
+                userId: req.currentUser._id
+            }
+        },
+        {
             $group: {
               _id: '$Sport',
               totalCommissionPoints: { $sum: '$commPoints' }
