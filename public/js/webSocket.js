@@ -8361,7 +8361,7 @@ socket.on('connect', () => {
 
     socket.on("commissionMarketbyId", data =>{
         if(data == "err"){
-            alert("Opps, somthing went wrong please try again leter")
+            // alert("Opps, somthing went wrong please try again leter")
         }
     })
 
