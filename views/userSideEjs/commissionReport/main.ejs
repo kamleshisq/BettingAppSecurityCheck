@@ -51,6 +51,7 @@
                 </thead>
                 <tbody class="acount-stat-tbl-body">
                     <%for(let i = 0; i < data.length; i++){%>
+                        <tr>
                         <td><%=i+1%></td>
                         <%if(data[i]._id == 4){%>
                             <td>Cricket</td>
@@ -60,6 +61,7 @@
                             <td>Tennis</td>
                         <%}%>
                         <td><%=data[i].totalCommissionPoints%></td>
+                    </tr>
                     <%} %>
                 </tbody>
             </table>
