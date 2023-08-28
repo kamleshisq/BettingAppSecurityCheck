@@ -166,7 +166,7 @@ if(!marketDetails.runners){
     let amount = parseFloat(data.data.stake);
     try{
         for(let i = user.parentUsers.length - 1; i >= 1; i--){
-            console.log("WORKING")
+            // console.log("WORKING")
             let parentUser1 = await userModel.findById(user.parentUsers[i])
             let parentUser2 = await userModel.findById(user.parentUsers[i-1])
             let parentUser1Amount = new Decimal(parentUser1.myShare).times(amount).dividedBy(100)
@@ -206,7 +206,7 @@ if(!marketDetails.runners){
         console.log(err)
         return err
     }
-    console.log(user)
+    // console.log(user)
     let commission = await commissionModel.find({userId:user.id})
     // console.log(commission, 456)
     let commissionPer = 0
@@ -219,6 +219,7 @@ if(!marketDetails.runners){
     console.log(commissionCoin)
     if(commissionPer > 0){
         let user1 = userModel.findByIdAndUpdate(user.id, {$inc:{commission:commissionCoin}})
+        console.log(user1.userName)
         let commissionReportData = {
             userId:user.id,
             market:marketDetails.title,
@@ -244,8 +245,10 @@ if(!marketDetails.runners){
               commissionPer = commissionChild[0].fency.percentage
             }
             let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
+            console.log(commissionCoin)
             if(commissionPer > 0){
                 let user1 = userModel.findByIdAndUpdate(childUser.id, {$inc:{commission:commissionCoin}})
+                console.log(user1.userName)
                 let commissionReportData = {
                     userId:childUser.id,
                     market:marketDetails.title,
