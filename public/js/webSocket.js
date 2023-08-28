@@ -8332,7 +8332,7 @@ socket.on('connect', () => {
                             <tr id='${market[j].marketId}'>
                             <td>${i + j }</td>
                             <td>${market[j].title}</td>`
-                            if(data.data1.includes(market[j].marketId)){
+                            if(data.data1.some(item => item.marketId == market[j].marketId)){
                                 html += `<td width="120px"> <div class="on-off-btn-section">
                                 <span class="on-off">OFF &nbsp; <label class="switch">
                                 <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
@@ -8355,7 +8355,7 @@ socket.on('connect', () => {
                             <tr id='${market.marketId}'>  
                             <td>${i}</td>
                             <td>${market.title}</td>`
-                            if(data.data1.includes(market.marketId)){
+                            if(data.data1.some(item => item.marketId == market.marketId)){
                                 html += `<td width="120px"> <div class="on-off-btn-section">
                                 <span class="on-off">OFF &nbsp; <label class="switch">
                                 <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
