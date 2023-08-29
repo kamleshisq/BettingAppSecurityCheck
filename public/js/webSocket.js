@@ -995,7 +995,7 @@ socket.on('connect', () => {
             }else if (data.status){
                 alert("Bet Locked Successfully")
                 let row = $('#'+data.rowid)
-                row.find('.betLockStatus').classList.add("Locked")
+                row.find('.betLockStatus').addClass("Locked")
                 // let element = document.getElementsByClassName("betLockStatus")
                 // for (var i = 0; i < element.length; i++) {
                 //     element[i].classList.add("Locked");
@@ -1003,7 +1003,7 @@ socket.on('connect', () => {
             }else if (!data.status){
                 alert("Bet Unlocked Successfully")
                 let row = $('#'+data.rowid)
-                row.find('.betLockStatus').classList.remove("Locked")
+                row.find('.betLockStatus').removeClass("Locked")
                 // let elements = document.getElementsByClassName("betLockStatus")
                 // for (var i = 0; i < elements.length; i++) {
                 //     // console.log(element[i].classList)
