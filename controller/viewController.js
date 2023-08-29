@@ -2980,3 +2980,38 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
         data
     })
 })
+
+exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
+    const me = req.currentUser
+    let sportId = req.query.id
+    let userLog
+    if(req.currentUser){
+        userLog = await loginLogs.find({user_id:req.currentUser._id})
+    }
+    console.log(sportId)
+    // let data =  await commissionReportModel.aggregate([
+    //     {
+    //         $match:{
+    //             userId: req.currentUser.id,
+    //             event:sportId
+    //         }
+    //     },
+    //     {
+    //         $group: {
+    //           _id: '$match',
+    //           totalCommissionPoints: { $sum: '$commPoints' }
+    //         }
+    //     }
+    // ])
+    // console.log(data)
+    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    res.status(200).render("./userSideEjs/commissionReportEventwise/main", {
+        title:"Commission Report",
+        user:req.currentUser,
+        verticalMenus,
+        check:"Comm",
+        userLog,
+        notifications:req.notifications,
+        // data
+    })
+})

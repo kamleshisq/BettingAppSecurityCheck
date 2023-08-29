@@ -103,6 +103,7 @@ router.get("/myAccountStatment", authController.isProtected, notificationControl
 router.get("/myCommissionReports", authController.isProtected, notificationController.myNotifications ,viewController.getCommissionReportUserSide);
 router.get("/myCommissionReportsIn", authController.isProtected, notificationController.myNotifications ,viewController.getCommissionReporIntUserSide);
 router.get("/myCommissionReportsInEvent", authController.isProtected, notificationController.myNotifications ,viewController.getCommissionReporEvent);
+router.get("/myCommissionReportsMatch", authController.isProtected, notificationController.myNotifications ,viewController.getCommissionReporMatch);
 router.get("/myProfile", authController.isProtected, notificationController.myNotifications ,viewController.myProfile);
 router.get("/profile", authController.isProtected, notificationController.myNotifications ,viewController.getMyProfileUser);
 router.get("/Kyc", authController.isProtected, notificationController.myNotifications ,viewController.getMyKycPage);
