@@ -2236,23 +2236,92 @@ socket.on('connect', () => {
     // }
 
     if(pathname == "/admin/casinocontrol"){
-        let baccarat = false;
-        let RGV = false;
-        let EZ = false;
-        let EG = false;
-        $(BACCARAT).click(function(){
-            if(!baccarat){
-                // console.log("1")
-                socket.emit('baccarat', "on")
-                baccarat = true
-            }
-        })
-
         $("#RGV").click(function(){
             if(!RGV){
                 // console.log(2)
                 socket.emit('RGV', "on")
                 RGV=true
+            }
+        })
+        let BACCARAT,CASUALGAMES,FISHSHOOTING ,ANDARBAHAR,INSTANTWINGAMES,LIVE,BLACKJACK,FH,GAME,KENO,LIVEBACCARAT= false;
+        let RGV = false;
+        let EZ = false;
+        let EG = false;
+        $("#BACCARAT").click(function(){
+            if(!BACCARAT){
+                console.log("1")
+                socket.emit('BACCARAT', "on")
+                BACCARAT = true
+            }
+        })
+        $("#ANDARBAHAR").click(function(){
+            if(!ANDARBAHAR){
+                console.log("1")
+                socket.emit('ANDARBAHAR', "on")
+                ANDARBAHAR = true
+            }
+        })
+        $("#CASUALGAMES").click(function(){
+            if(!CASUALGAMES){
+                // console.log("1")
+                socket.emit('CASUALGAMES', "on")
+                CASUALGAMES = true
+            }
+        })
+        $("#FISHSHOOTING").click(function(){
+            if(!FISHSHOOTING){
+                // console.log("1")
+                socket.emit('FISHSHOOTING', "on")
+                FISHSHOOTING = true
+            }
+        })
+        $("#INSTANTWINGAMES").click(function(){
+            if(!INSTANTWINGAMES){
+                // console.log("1")
+                socket.emit('INSTANTWINGAMES', "on")
+                INSTANTWINGAMES = true
+            }
+        })
+        $("#LIVE").click(function(){
+            if(!LIVE){
+                // console.log("1")
+                socket.emit('LIVE', "on")
+                LIVE = true
+            }
+        })
+        $("#BLACKJACK").click(function(){
+            if(!BLACKJACK){
+                // console.log("1")
+                socket.emit('BLACKJACK', "on")
+                BLACKJACK = true
+            }
+        })
+        $("#FH").click(function(){
+            if(!FH){
+                // console.log("1")
+                socket.emit('FH', "on")
+                FH = true
+            }
+        })
+        $("#GAME").click(function(){
+            if(!GAME){
+                // console.log("1")
+                socket.emit('GAME', "on")
+                GAME = true
+            }
+        })
+        $("#KENO").click(function(){
+            if(!KENO){
+                // console.log("1")
+                socket.emit('KENO', "on")
+                KENO = true
+            }
+        })
+        $("#LIVEBACCARAT").click(function(){
+            if(!LIVEBACCARAT){
+                // console.log("1")
+                socket.emit('LIVEBACCARAT', "on")
+                LIVEBACCARAT = true
             }
         })
 
@@ -2270,28 +2339,30 @@ socket.on('connect', () => {
             }
         })
 
-        socket.on('baccarat1', (data1) => {
+        socket.on('baccarat1', (data) => {
+            console.log(data)
             let html = ""
-            for(let i = 0 ; i < data1.length; i++){
-                if(data1[i].status){
+            for(let i = 0 ; i < data.data.length; i++){
+                if(data.data[i].status){
                     html += `<div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;">
-                    <span>${data1[i].game_name} (${data1[i].sub_provider_name})</span>
+                    <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>
                     <span>OFF &nbsp; <label class="switch">
-                    <input type="checkbox" checked>
+                    <input type="checkbox" class="change_status" data-id="${data.data[i].game_id}" checked>
                     <span class="slider round"></span>
                     </label>&nbsp; ON</span>
                   </div>`
                 }else{
                     html += `<div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;">
-                    <span>${data1[i].game_name} (${data1[i].sub_provider_name})</span>
+                    <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>
                     <span>OFF &nbsp; <label class="switch">
-                    <input type="checkbox">
+                    <input type="checkbox" class="change_status" data-id="${data.data[i].game_id}">
                     <span class="slider round"></span>
                     </label>&nbsp; ON</span>
                   </div>`
                 }
             }
-            document.getElementById('accordion-body').innerHTML = html
+            console.log($('#'+data.id).parent().next())
+            $('#'+data.id).parent().next().children('.accordion-body').html(html)
         });
 
         socket.on("RGV1", (data)=>{
@@ -2345,6 +2416,19 @@ socket.on('connect', () => {
             }else if(data.provider == "EG"){
                 document.getElementById('ZEd').innerHTML = html
             }
+        })
+
+        $(document).on('click','.change_status',function(e){
+            let status = $(this).prop('checked') ? true : false;
+                let id = $(this).data('id')
+                if(id){
+
+                    socket.emit('casionoStatusChange',{status,id})
+                }
+        })
+
+        socket.on('casionoStatusChange',async(data)=>{
+            console.log(data)
         })
     }
 
