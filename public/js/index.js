@@ -401,7 +401,7 @@ $(document).on('click','.RoleDetails',function(){
     // console.log("Working") 
     let modleName = $(this).data('bs-target')
     let roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss')
-    console.log(roledata)
+    // console.log(roledata)
     let form = $(modleName).find('.UpdateRole-form')
     // let x = form.find('input[id="check"]').length
     // console.log(x)
@@ -419,9 +419,9 @@ $(document).on('click','.RoleDetails',function(){
     for(let i = 0; i < roledata.userAuthorization.length; i++){
         form.find(`input[value = "${roledata.userAuthorization[i]}"]`).attr("checked", "checked");
     }
-    document.getElementById("role_controller").innerHTML = `
-            <label for="level"> <h3>Role Level </h3></label><br>
-            <input type="number" name="level" placeholder='${roledata.role_level}' id='role_level'>`
+    // document.getElementById("role_controller").innerHTML = `
+    //         <label for="level"> <h3>Role Level </h3></label><br>
+    //         <input type="number" name="level" placeholder='${roledata.role_level}' id='role_level'>`
 });
 // console.log($(".RoleDetails"))
 // console.log($(".load"))
