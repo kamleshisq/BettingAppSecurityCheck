@@ -525,7 +525,7 @@ exports.mapbet = async(data) => {
         }
     });
 
-    let data = await netCommission.aggregate([
+    let NetData = await netCommission.aggregate([
       {
         $group: {
           _id: "$userId",
