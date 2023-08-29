@@ -303,6 +303,7 @@ exports.mapbet = async(data) => {
               await betModel.findByIdAndUpdate(bet._id,{status:"LOSS"})
               let user =  await userModel.findByIdAndUpdate(bet.userId,{$inc:{Loss:1, exposure:-parseFloat(bet.Stake)}})
               let commissionMarket = await commissionMarketModel.find()
+                console.log(commissionMarket, bet.marketId)
                 if(commissionMarket.some(item => item.marketId == bet.marketId)){
                   try{
                     let commission = await commissionModel.find({userId:user.id})
