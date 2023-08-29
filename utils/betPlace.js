@@ -72,9 +72,16 @@ async function placeBet(data){
             break;
         }else if(marketList.hasOwnProperty(key)) {
             const marketData = marketList[key];
-            if (marketData.marketId === data.data.market) {
-              marketDetails =  marketData;
-              break;
+            if(marketData.marketId){
+                if (marketData.marketId === data.data.market) {
+                  marketDetails =  marketData;
+                  break;
+                }
+            }else{
+                if (marketData.market_id === data.data.market) {
+                    marketDetails =  marketData;
+                    break;
+                  }
             }
       }}
 let betPlaceData = {}
