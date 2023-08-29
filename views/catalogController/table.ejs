@@ -1,27 +1,27 @@
 <table>
     <thead>
-        <tr style="text-align: center;font-size: 11px;">
-          <th>S.No</th>
-          <th>Sport</th>
-          <th>Action</th>
+        <tr>
+            <th>S.No</th>
+            <th>Sport</th>
+            <th>Action</th>
         </tr>
     </thead>
-    <tbody class="new-body" style="font-size: 11px;">
+    <tbody class="new-body">
         <% for(let i = 0; i < data.length; i++){%>
-            <%if((i%2)==0){%>
-                <tr style="text-align: center;" class="blue">
+        <%if((i%2)==0){%>
+        <tr>
             <%}else{%>
-                <tr style="text-align: center;" >
-            <%}%>
-            <td><%=i + 1%></td>
-            <td><%=data[i].sport_name%></td>
-            <td>
-                <div class="btn-group">
-                    <button class="series_list"> <a href="/admin/catalogcontrol/compitations?sportId=<%=data[i].sportId%>">Series List</a></button>
-                </div>
-            </td>
-        <%}%>
-      
-     
+            <tr>
+                <%}%>
+                <td><%=i + 1%></td>
+                <td><%=data[i].sport_name%></td>
+                <td>
+                    <div class="btn-group">
+                        <button class="series_list"> <a href="/admin/catalogcontrol/compitations?sportId=<%=data[i].sportId%>">Series List</a></button>
+                    </div>
+                </td>
+                <%}%>
+            </tr>
+        </tr>
     </tbody>
-   </table> 
+</table>
