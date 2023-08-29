@@ -456,18 +456,84 @@ io.on('connection', (socket) => {
         socket.emit('URLlINK', urldata.url)
     })
 
-    socket.on('baccarat', async(A) => {
-        // console.log(data)
+    socket.on('BACCARAT', async(A) => {
+       
         let data
-        data = await gameModel.find({game_name:new RegExp("Baccarat","i")})
-        socket.emit('baccarat1', data)
+        data = await gameModel.find({$or:[{game_name:new RegExp("BACCARAT","i")},{category:new RegExp("BACCARAT","i")},{game_code:new RegExp("BACCARAT","i")}]})
+        socket.emit('baccarat1', {data,id:"BACCARAT"})
     })
+    socket.on('CASUALGAMES', async(A) => {
+        let data
+        data = await gameModel.find({$or:[{game_name:new RegExp("CASUAL","i")},{category:new RegExp("CASUAL","i")},{game_code:new RegExp("CASUAL","i")}]})
+        socket.emit('baccarat1', {data,id:"CASUALGAMES"})
+    })
+    socket.on('FISHSHOOTING', async(A) => {
+        let data
+        data = await gameModel.find({$or:[{game_name:new RegExp("FISH","i")},{category:new RegExp("FISH","i")},{game_code:new RegExp("FISH","i")}]})
+        socket.emit('baccarat1', {data,id:"FISHSHOOTING"})
+    })
+    socket.on('INSTANTWINGAMES', async(A) => {
+        let data
+        data = await gameModel.find({$or:[{game_name:new RegExp("INSTANT","i")},{category:new RegExp("INSTANT","i")},{game_code:new RegExp("INSTANT","i")}]})
+        socket.emit('baccarat1', {data,id:"INSTANTWINGAMES"})
+    })
+    socket.on('LIVE', async(A) => {
+        let data
+        data = await gameModel.find({$or:[{game_name:new RegExp("LIVE","i")},{category:new RegExp("LIVE","i")},{game_code:new RegExp("LIVE","i")}]})
+        socket.emit('baccarat1', {data,id:"LIVE"})
+    })
+    socket.on('BLACKJACK', async(A) => {
+        let data
+        data = await gameModel.find({$or:[{game_name:new RegExp("BLACK","i")},{category:new RegExp("BLACK","i")},{game_code:new RegExp("BLACK","i")}]})
+        socket.emit('baccarat1', {data,id:"BLACKJACK"})
+    })
+    socket.on('FH', async(A) => {
+        let data
+        data = await gameModel.find({$or:[{game_name:new RegExp("FH","i")},{category:new RegExp("FH","i")},{game_code:new RegExp("FH","i")}]})
+        socket.emit('baccarat1', {data,id:"FH"})
+    })
+    socket.on('GAME', async(A) => {
+        let data
+        data = await gameModel.find({$or:[{game_name:new RegExp("GAME","i")},{category:new RegExp("GAME","i")},{game_code:new RegExp("GAME","i")}]})
+        socket.emit('baccarat1', {data,id:"GAME"})
+    })
+    socket.on('KENO', async(A) => {
+        let data
+        data = await gameModel.find({$or:[{game_name:new RegExp("KENO","i")},{category:new RegExp("KENO","i")},{game_code:new RegExp("KENO","i")}]})
+        socket.emit('baccarat1', {data,id:"KENO"})
+    })
+    socket.on('LIVEBACCARAT', async(A) => {
+        let data
+        data = await gameModel.find({$or:[{game_name:new RegExp("BACCARAT","i")},{category:new RegExp("BACCARAT","i")},{game_code:new RegExp("BACCARAT","i")}]})
+        socket.emit('baccarat1', {data,id:"LIVEBACCARAT"})
+    })
+    socket.on('ANDARBAHAR', async(A) => {
+        let data
+        data = await gameModel.find({$or:[{game_name:new RegExp("ANDAR","i")},{category:new RegExp("ANDAR","i")},{game_code:new RegExp("ANDAR","i")}]})
+        socket.emit('baccarat1', {data,id:"ANDARBAHAR"})
+    })
+
+
 
     socket.on("RGV", async(A)=>{
         let data;
         data = await gameModel.find({sub_provider_name:"Royal Gaming Virtual"})
-        // console.log(data)
+       
         socket.emit("RGV1", {data, provider:"RGV"})
+    })
+
+    socket.on('casionoStatusChange',async(data)=>{
+        try{
+            if(data.status){
+                await gameModel.updateOne({game_id:data.id},{status:true})
+            }else{
+                await gameModel.updateOne({game_id:data.id},{status:false})
+            }
+            socket.emit('casionoStatusChange',{status:'success'})
+        }catch(error){
+            socket.emit('casionoStatusChange',{status:'fail'})
+
+        }
     })
 
     socket.on('ElementID',async(data)=>{
