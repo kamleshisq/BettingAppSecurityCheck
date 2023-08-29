@@ -120,6 +120,7 @@ if(!marketDetails.runners){
 }else{
     let runnersData = JSON.parse(marketDetails.runners)
     console.log(runnersData, 12121212121)
+    console.log(data.data.secId, "secId")
     let betOn = runnersData.find(item => item.secId == data.data.secId)
     console.log(betOn)
     console.log(data.data)
