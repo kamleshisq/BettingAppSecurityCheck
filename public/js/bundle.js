@@ -7232,7 +7232,7 @@ $(document).on('click', '.Withdraw', function () {
 $(document).on('click', '.RoleDetails', function () {
   // console.log("Working") 
   var modleName = $(this).data('bs-target');
-  var roledata = $(this).parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
+  var roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
   console.log(roledata);
   var form = $(modleName).find('.UpdateRole-form');
   // let x = form.find('input[id="check"]').length
