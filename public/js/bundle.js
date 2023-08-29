@@ -5916,8 +5916,10 @@ var deleteRole = function deleteRole(data) {
     type: 'post',
     data: data,
     success: function success(data) {
-      setTimeout(alert('role deleted successfully'), 1000);
-      window.location.reload(true);
+      if (data.status == 'success') {
+        setTimeout(alert('role deleted successfully'), 1000);
+        window.location.reload(true);
+      }
     },
     error: function error(_error) {
       alert(_error.responseJSON.message);

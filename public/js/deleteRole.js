@@ -4,8 +4,10 @@ export const deleteRole = (data) => {
         type:'post',
         data,
         success:function(data){
-            setTimeout(alert('role deleted successfully'),1000)
-            window.location.reload(true)
+            if(data.status == 'success'){
+                setTimeout(alert('role deleted successfully'),1000)
+                window.location.reload(true)
+            }
         },
         error:function(error){
             alert(error.responseJSON.message)
