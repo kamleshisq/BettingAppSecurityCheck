@@ -976,6 +976,7 @@ io.on('connection', (socket) => {
             console.log(data)
             if(data.data.secId.slice(-1) == 2){
                 name = `layPrice${data.data.secId.slice(-1) - 3}`
+                name =  name.slice(0, -2)
             }else{
                 name = `backPrice${data.data.secId.slice(-1)}`
                 name = name.slice(0, -1)
