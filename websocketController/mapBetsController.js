@@ -307,9 +307,9 @@ exports.mapbet = async(data) => {
                   try{
                     let commission = await commissionModel.find({userId:user.id})
                     let commissionPer = 0
-                    if (bet.marketName == "Match Odds" && commission[0].matchOdd.status){
-                        commissionPer = commission[0].matchOdd.percentage
-                      }
+                    // if (bet.marketName == "Match Odds" && commission[0].matchOdd.status){
+                    //     commissionPer = commission[0].matchOdd.percentage
+                    //   }
                       if ((bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS')) && commission[0].Bookmaker.type == "ENTRY_LOSS_" && commission[0].Bookmaker.status){
                         commissionPer = commission[0].Bookmaker.percentage
                       }
@@ -321,7 +321,7 @@ exports.mapbet = async(data) => {
                         let commissionReportData = {
                             userId:user.id,
                             market:bet.marketName,
-                            commType:'Net loss Commission',
+                            commType:'Entry Wise loss Commission',
                             percentage:commissionPer,
                             commPoints:commissionCoin,
                             event:bet.event,
