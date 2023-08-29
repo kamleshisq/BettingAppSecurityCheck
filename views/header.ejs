@@ -231,7 +231,7 @@ input:checked + .slider:before {
   }
 </style> -->
 </head>
-<body id="body-pd" class="fix-width-body" >
+<body id="body-pd" class="fix-width-body body-pd" >
   <div class="container-fluid">
   <header class="header" id="header">
     <div class="menu-top">
@@ -389,5 +389,12 @@ input:checked + .slider:before {
   $(document).on("click", ".setiing-admin", function(e){
 
     $(this).find("ul").toggleClass("open-ul");
+  })
+</script>
+
+<script>
+  $(document).on("click", "#header-toggle", function(e){
+    e.preventDefault()
+    $('#body-pd').classList.remove('body-pd');
   })
 </script>
