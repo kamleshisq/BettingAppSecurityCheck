@@ -248,6 +248,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="new-body">
+                                  <%if(bets.length !== 0){%>
                                   <% for(let i = 0; i < bets.length; i++){%>
                                     <% let date = new Date(bets[i].date)%>
                                     <%if((i%2)==0){%>
@@ -275,6 +276,11 @@
                                     <td><%=bets[i].status%></td>
                                     <td><%=bets[i].returns%></td>
                                 </tr>
+                                <%}%>
+                                <%}else{%>
+                                  <tr>
+                                    <td>No record found</td>
+                                  </tr>
                                 <%}%>
                                   
                                  
@@ -368,6 +374,10 @@
                                         <td>-</td>
                                     </tr>
                                     <%}%>
+                                    <%}else{%>
+                                      <tr>
+                                        <td>No record found</td>
+                                      </tr>
                                     <%}%>
                             </tbody>
     
@@ -442,6 +452,10 @@
                                         
                                     </tr>
                                     <%}%>
+                                    <%}else{%>
+                                      <tr>
+                                        <td>No record found</td>
+                                      </tr>
                                     <%}%>
                             </tbody>
     
