@@ -28,7 +28,7 @@ const path = require('path');
 const middlewares = require("./middleWares/middleware");
 const fileUpload = require('express-fileupload');
 const requestIp = require("request-ip");
-const crone = require('./crones/crones');
+const crone = require('./crones/crones'); 
 // const ejs = require("ejs");
 app.use(requestIp.mw());
 app.set('trust proxy', true);
