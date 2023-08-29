@@ -2989,20 +2989,14 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
     console.log(sportId)
-    // let data =  await commissionReportModel.aggregate([
-    //     {
-    //         $match:{
-    //             userId: req.currentUser.id,
-    //             event:sportId
-    //         }
-    //     },
-    //     {
-    //         $group: {
-    //           _id: '$match',
-    //           totalCommissionPoints: { $sum: '$commPoints' }
-    //         }
-    //     }
-    // ])
+    let data =  await commissionReportModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id,
+                match:sportId
+            }
+        }
+    ])
     // console.log(data)
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportMatch/main", {
@@ -3012,6 +3006,6 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
         check:"Comm",
         userLog,
         notifications:req.notifications,
-        // data
+        data
     })
 })
