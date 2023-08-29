@@ -2247,13 +2247,7 @@ socket.on('connect', () => {
     // }
 
     if(pathname == "/admin/casinocontrol"){
-        $("#RGV").click(function(){
-            if(!RGV){
-                // console.log(2)
-                socket.emit('RGV', "on")
-                RGV=true
-            }
-        })
+      
         let BACCARAT,CASUALGAMES,FISHSHOOTING ,ANDARBAHAR,INSTANTWINGAMES,LIVE,BLACKJACK,FH,GAME,KENO,LIVEBACCARAT= false;
         let RGV = false;
         let EZ = false;
@@ -2336,28 +2330,16 @@ socket.on('connect', () => {
             }
         })
 
-        $('#EZ').click(function(){
-            if(!EZ){
-                socket.emit('EZ', "on")
-                EZ = true
-            }
-        })
 
-        $('#EG').click(function(){
-            if(!EG){
-                socket.emit('EG', "on")
-                EG = true
-            }
-        })
 
         socket.on('baccarat1', (data) => {
             console.log(data)
             let html = ""
             for(let i = 0 ; i < data.data.length; i++){
                 if(data.data[i].status){
-                    html += `<div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;">
+                    html += `<div class="new-head on-off-btn-section" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;">
                     <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>
-                    <span>OFF &nbsp; <label class="switch">
+                    <span class="on-off">OFF &nbsp; <label class="switch">
                     <input type="checkbox" class="change_status" data-id="${data.data[i].game_id}" checked>
                     <span class="slider round"></span>
                     </label>&nbsp; ON</span>
@@ -2375,6 +2357,28 @@ socket.on('connect', () => {
             console.log($('#'+data.id).parent().next())
             $('#'+data.id).parent().next().children('.accordion-body').html(html)
         });
+
+        $("#RGV").click(function(){
+            if(!RGV){
+                // console.log(2)
+                socket.emit('RGV', "on")
+                RGV=true
+            }
+        })
+
+        $('#EZ').click(function(){
+            if(!EZ){
+                socket.emit('EZ', "on")
+                EZ = true
+            }
+        })
+
+        $('#EG').click(function(){
+            if(!EG){
+                socket.emit('EG', "on")
+                EG = true
+            }
+        })
 
         socket.on("RGV1", (data)=>{
             let html = ""
