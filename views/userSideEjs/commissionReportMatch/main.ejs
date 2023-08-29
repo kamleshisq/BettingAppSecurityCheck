@@ -54,7 +54,16 @@
                     </tr>
                 </thead>
                 <tbody class="acount-stat-tbl-body">
-                    
+                    <%for(let i = 0; i < data.length; i++){%>
+                        <tr>
+                            <td><%=i+1%></td>
+                            <td><%=data[i].market%></td>
+                            <td><%=data[i].commType%></td>
+                            <td><%=data[i].percentage%></td>
+                            <td><%=data[i].commPoints%></td>
+                            <td><%=data[i].status%></td>
+                        </tr>
+                    <%}%>
                 </tbody>
             </table>
               <!-- <div class="loadMoredive">
