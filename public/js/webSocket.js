@@ -1155,7 +1155,7 @@ socket.on('connect', () => {
                     count = 1;
                     let html1 = ""
                     if(LOGINDATA.LOGINUSER.roleName == "admin"){
-                        html1 = `<tr>`+
+                        html1 = `<thead><tr>`+
                         "<th>S.No</th>"+
                         "<th>User Name</th>"+
                         "<th>White lable</th>"+
@@ -1168,9 +1168,9 @@ socket.on('connect', () => {
                         "<th>Exposure Limit</th>"+
                         "<th>Exposure</th>"+
                         "<th>Action</th>"+
-                    "</tr>"
+                    "</tr></thead>"
                     }else{
-                        html1 = `<tr>`+
+                        html1 = `<thead><tr>`+
                         "<th>S.No</th>"+
                         "<th>User Name</th>"+
                         "<th>Type</th>"+
@@ -1182,12 +1182,12 @@ socket.on('connect', () => {
                         "<th>Exposure Limit</th>"+
                         "<th>Exposure</th>"+
                         "<th>Action</th>"+
-                    "</tr>"
+                    "</tr></thead>"
                     }
                         $('table').html(html1)
                 }
                 
-            let html ="";
+            let html ="<tbody class='new-body'>";
             for(let i = 0; i < response.length; i++){ 
                 if((i+1) % 2 != 0){
 
@@ -1244,7 +1244,7 @@ socket.on('connect', () => {
                             html += `<button class="UserDetails"><i class="fa-solid fa-database"></i></button>`
                         }
                       html += `</div>
-                      </td></td> </tr>`
+                      </td></td> </tr></tbody>`
             }
             count += 10;
             $('table').append(html)
