@@ -2345,7 +2345,7 @@ socket.on('connect', () => {
                     </label>&nbsp; ON</span>
                   </div>`
                 }else{
-                    html += `<div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;">
+                    html += `<div class="new-head on-off-btn-section" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;">
                     <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>
                     <span>OFF &nbsp; <label class="switch">
                     <input type="checkbox" class="change_status" data-id="${data.data[i].game_id}">
@@ -2385,42 +2385,54 @@ socket.on('connect', () => {
             // console.log(data.data)
             for(let i = 0; i < data.data.length ; i++){
                 if((i%2)==0){
-                    html += `<div class="col-lg-4">
-                        <div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;margin-bottom: 10px;">
-                      <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>
-                      <span>OFF &nbsp; <label class="switch">`
+                    html += `
+                        <div class="new-head on-off-btn-section" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;margin-bottom: 10px;">
+                      <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>`
                       if(data.data[i].status){
-                        html += `<input type="checkbox" checked>`
+                        html += `<span class="on-off">OFF &nbsp; <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                                </label>&nbsp; ON</span>`
                       }else{
-                        html += `<input type="checkbox">`
+                        html += `<span>OFF &nbsp; <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
+                                </label>&nbsp; ON</span>`
                       }
-                      html +=`<span class="slider round"></span>
-                      </label>&nbsp; ON</span>
-                    </div>`
+                      html +=`</div>`
                 }else if(((i%2)-1)==0){
-                    html += `<div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;margin-bottom: 10px;">
-                      <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>
-                      <span>OFF &nbsp; <label class="switch">`
+                    html += `<div class="new-head on-off-btn-section" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;margin-bottom: 10px;">
+                      <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>`
                       if(data.data[i].status){
-                        html += `<input type="checkbox" checked>`
+                        html += `<span class="on-off">OFF &nbsp; <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>&nbsp; ON</span>`
                       }else{
-                        html += `<input type="checkbox">`
+                        html += `<span>OFF &nbsp; <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>&nbsp; ON</span>`
                       }
-                      html +=`<span class="slider round"></span>
-                      </label>&nbsp; ON</span>
+                      html +=`
                     </div>
-                    </div>`
+                    `
                 }else{
-                    html += `<div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;margin-bottom: 10px;">
+                    html += `<div class="new-head on-off-btn-section" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;margin-bottom: 10px;">
                       <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>
-                      <span>OFF &nbsp; <label class="switch">`
+                      `
                       if(data.data[i].status){
-                        html += `<input type="checkbox" checked>`
+                        html += ` <span class="on-off">OFF &nbsp; <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider round"></span>
+                                </label>&nbsp; ON</span>`
                       }else{
-                        html += `<input type="checkbox">`
+                        html += ` <span >OFF &nbsp; <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
+                                </label>&nbsp; ON</span>`
                       }
-                      html +=`<span class="slider round"></span>
-                      </label>&nbsp; ON</span>
+                      html +=`
                     </div>`
                 }
             }
