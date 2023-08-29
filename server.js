@@ -1427,7 +1427,11 @@ io.on('connection', (socket) => {
         if(data.LOGINDATA.LOGINUSER != "" && data.LOGINDATA.LOGINUSER != undefined){
             console.log(data.LOGINDATA.LOGINUSER._id)
            let fevGames1 = await CasinoFevoriteModel.findOne({userId:data.LOGINDATA.LOGINUSER._id})
-           fevGames = fevGames1.gameId
+           if(fevGames1){
+               fevGames = fevGames1.gameId
+           }else{
+            fevGames = []
+           }
         }
         socket.emit("liveCasinoPage", {games, fevGames})
     })
