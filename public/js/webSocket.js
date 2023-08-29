@@ -535,6 +535,7 @@ socket.on('connect', () => {
 
 
     $(document).on("click", ".commission", function(e){
+        e.preventDefault()
         socket.emit("claimCommission", {LOGINDATA})
     })
 
