@@ -2347,7 +2347,7 @@ socket.on('connect', () => {
                 }else{
                     html += `<div class="new-head on-off-btn-section" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;">
                     <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>
-                    <span>OFF &nbsp; <label class="switch">
+                    <span class="on-off">OFF &nbsp; <label class="switch">
                     <input type="checkbox" class="change_status" data-id="${data.data[i].game_id}">
                     <span class="slider round"></span>
                     </label>&nbsp; ON</span>
@@ -2394,7 +2394,7 @@ socket.on('connect', () => {
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }else{
-                        html += `<span>OFF &nbsp; <label class="switch">
+                        html += `<span class="on-off">OFF &nbsp; <label class="switch">
                                 <input type="checkbox">
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
@@ -2409,7 +2409,7 @@ socket.on('connect', () => {
                                     <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }else{
-                        html += `<span>OFF &nbsp; <label class="switch">
+                        html += `<span class="on-off">OFF &nbsp; <label class="switch">
                                     <input type="checkbox">
                                     <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
@@ -2427,7 +2427,7 @@ socket.on('connect', () => {
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }else{
-                        html += ` <span >OFF &nbsp; <label class="switch">
+                        html += ` <span class="on-off">OFF &nbsp; <label class="switch">
                                 <input type="checkbox">
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
