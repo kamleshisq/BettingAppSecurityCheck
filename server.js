@@ -1008,6 +1008,7 @@ io.on('connection', (socket) => {
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
         // console.log(marketDetails.data.items)
         let thatMarket = marketDetails.data.items[0]
+        console.log(thatMarket, 11111)
         if(data.data.secId.startsWith('odd_Even_')){
             if(data.data.secId == "odd_Even_Yes"){
                 let odds = thatMarket.odd
