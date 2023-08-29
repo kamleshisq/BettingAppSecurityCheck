@@ -15,5 +15,6 @@ router.get('/getAllRoles',roleController.getAllRole);
 router.post('/updateRoleLavel', roleController.updateRoleLevel);
 router.get("/getRoleById", roleController.getRoleById);
 router.post("/updateRoleById", roleController.updateRoleById , roleController.updateRoleLevel);
+router.post("/deleteRole" , roleController.deleteRole);
 
 module.exports = router;

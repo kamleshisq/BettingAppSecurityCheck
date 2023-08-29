@@ -5903,7 +5903,29 @@ var updateRole = /*#__PURE__*/function () {
   };
 }();
 exports.updateRole = updateRole;
-},{"axios":"../../node_modules/axios/index.js"}],"updatePASSWORD.js":[function(require,module,exports) {
+},{"axios":"../../node_modules/axios/index.js"}],"deleteRole.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.deleteRole = void 0;
+var deleteRole = function deleteRole(data) {
+  $.ajax({
+    url: '/api/v1/role/deleteRole',
+    type: 'post',
+    data: data,
+    success: function success(data) {
+      setTimeout(alert('role deleted successfully'), 1000);
+      window.location.reload(true);
+    },
+    error: function error(_error) {
+      alert(_error.responseJSON.message);
+    }
+  });
+};
+exports.deleteRole = deleteRole;
+},{}],"updatePASSWORD.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6822,6 +6844,7 @@ var _debitCredit = require("./debitCredit");
 var _editUser = require("./editUser");
 var _createRole = require("./createRole");
 var _updateRoleByaxios = require("./updateRoleByaxios");
+var _deleteRole = require("./deleteRole");
 var _updatePASSWORD = require("./updatePASSWORD");
 var _userStatus = require("./userStatus");
 var _updateRow = require("./updateRow");
@@ -7258,6 +7281,14 @@ $(document).on('click', '.RoleDetails', function () {
 // console.log($(".RoleDetails"))
 // console.log($(".load"))
 
+$(document).on('click', '.deleteRole', function (e) {
+  var roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
+  if (confirm('do you want to delete this role')) {
+    (0, _deleteRole.deleteRole)({
+      "id": roledata._id
+    });
+  }
+});
 $(document).on('submit', ".form-data1", function (e) {
   e.preventDefault();
   var id = $('.form-data1').attr('id');
@@ -7374,7 +7405,7 @@ $(document).on('submit', ".kycForm", function (e) {
   // console.log(data)
   (0, _kyc.KYC)(fd);
 });
-},{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./updateRow":"updateRow.js","./updatePromotion":"updatePromotion.js","./createPromotion":"createPromotion.js","./deletePormotion":"deletePormotion.js","./betLimit":"betLimit.js","./createHorizontalMenu":"createHorizontalMenu.js","./updateHorizonatlMenu":"updateHorizonatlMenu.js","./createBanner":"createBanner.js","./updateBanner":"updateBanner.js","./createpage":"createpage.js","./addImage":"addImage.js","./updateSlider":"updateSlider.js","./addSlider":"addSlider.js","./userLogin":"userLogin.js","./kyc":"kyc.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./deleteRole":"deleteRole.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./updateRow":"updateRow.js","./updatePromotion":"updatePromotion.js","./createPromotion":"createPromotion.js","./deletePormotion":"deletePormotion.js","./betLimit":"betLimit.js","./createHorizontalMenu":"createHorizontalMenu.js","./updateHorizonatlMenu":"updateHorizonatlMenu.js","./createBanner":"createBanner.js","./updateBanner":"updateBanner.js","./createpage":"createpage.js","./addImage":"addImage.js","./updateSlider":"updateSlider.js","./addSlider":"addSlider.js","./userLogin":"userLogin.js","./kyc":"kyc.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

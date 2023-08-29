@@ -7,6 +7,7 @@ import { editUser } from "./editUser";
 // import { betLockStatus } from "./batLockStatus";
 import { createRole } from "./createRole";
 import { updateRole } from "./updateRoleByaxios";
+import {deleteRole} from "./deleteRole"
 import { updatePassword } from "./updatePASSWORD";
 import { userStatus } from "./userStatus";
 // import { betLockStatus } from "./betLock";
@@ -426,6 +427,12 @@ $(document).on('click','.RoleDetails',function(){
 // console.log($(".RoleDetails"))
 // console.log($(".load"))
 
+$(document).on('click','.deleteRole',function(e){
+    let roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss')
+    if(confirm('do you want to delete this role')){
+        deleteRole({"id":roledata._id})
+    }
+})
 
 $(document).on('submit', ".form-data1", function(e){
     e.preventDefault()

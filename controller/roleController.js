@@ -165,3 +165,11 @@ exports.updateRoleById = catchAsync(async(req, res, next) => {
     }
     next()
 })
+
+exports.deleteRole = catchAsync(async(req,res,next)=>{
+    console.log(req.body)
+    await Role.findByIdAndDelete(req.body.id)
+    res.statu(200).json({
+        status:'success'
+    })
+})
