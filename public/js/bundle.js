@@ -7251,7 +7251,9 @@ $(document).on('click', '.RoleDetails', function () {
   for (var _i3 = 0; _i3 < roledata.userAuthorization.length; _i3++) {
     form.find("input[value = \"".concat(roledata.userAuthorization[_i3], "\"]")).attr("checked", "checked");
   }
-  document.getElementById("role_controller").innerHTML = "\n            <label for=\"level\"> <h3>Role Level </h3></label><br>\n            <input type=\"number\" name=\"level\" placeholder='".concat(roledata.role_level, "' id='role_level'>");
+  // document.getElementById("role_controller").innerHTML = `
+  //         <label for="level"> <h3>Role Level </h3></label><br>
+  //         <input type="number" name="level" placeholder='${roledata.role_level}' id='role_level'>`
 });
 // console.log($(".RoleDetails"))
 // console.log($(".load"))
