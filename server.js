@@ -938,7 +938,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('betDetails', async(data) => {
-        console.log(data)
+        // console.log(data)
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
         // console.log(marketDetails.data.items)
         let thatMarket = marketDetails.data.items[0]
@@ -978,6 +978,7 @@ io.on('connection', (socket) => {
             }else{
                 name = `backPrice${data.data.secId.slice(-1)}`
             }
+            console.log(realodd)
             let odds = realodd[name];
             data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
