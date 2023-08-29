@@ -1,6 +1,6 @@
 <%- include("../header") %>
 <!--Container Main start-->
-<div class="dashboard-main-wraper Casino__control">
+<div class="dashboard-main-wraper">
 
   <section class="dashboard-welcome-section">
     <div class="container-fluid">
@@ -18,7 +18,7 @@
     </div>
   </section>
 
-  <section>
+  <section class="Casino__control">
     <div class="container-fluid">
       <div class="tab end" >
         <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'Cricket')"> Game Level  </button>
@@ -56,10 +56,10 @@
                     <div class="accordion-body">
                       <%if(data){%>
                       <%for(let i = 0; i < data.length; i++){%>
-                      <div class="new-head">
+                      <div class="new-head on-off-btn-section">
                         <span><%=data[i].game_name%> (<%=data[i].sub_provider_name%>)</span>
                         <%if(data[i].status){%>
-                        <span>OFF &nbsp; <label class="switch">
+                        <span class="on-off">OFF &nbsp; <label class="switch">
                           <input type="checkbox" checked>
                           <span class="slider round"></span>
                         </label>&nbsp; ON</span>
@@ -194,15 +194,15 @@
         </div>
       </div>
 
-      <div id="FOOTBALL" class="tabcontent" style="margin-bottom:15px;">
-        <div class="row" style="padding:10px 0px">
+      <div id="FOOTBALL" class="tabcontent">
+        <div class="row">
           <!--  -->
-          <div class="tabs">
+          <!-- <div class="tabs">
             <span data-tab-value="#tab_11" id="RG">Royal Gaming</span>
             <span data-tab-value="#tab_21" id="RGV">Royal Gaming Virtual</span>
             <span data-tab-value="#tab_31" id="EZ">Ezugi</span>
             <span data-tab-value="#tab_41" id="EG">Evolution Gaming</span>
-          </div>
+          </div> -->
 
           <div class="tab-content">
             <div class="tabs__tab active" id="tab_11" data-tab-info>
@@ -220,9 +220,9 @@
                         <%for(let i = 0; i < RG.length; i++){%>
                         <%if((i%2==0)){%>
                         <div class="col-lg-4">
-                          <div class="new-head">
+                          <div class="new-head on-off-btn-section">
                             <span><%=RG[i].game_name%> (<%=RG[i].sub_provider_name%>)</span>
-                            <span>OFF &nbsp; <label class="switch">
+                            <span class="on-off">OFF &nbsp; <label class="switch">
                               <%if(RG[i].status){%>
                               <input type="checkbox" checked>
                               <%}else{%>
@@ -232,9 +232,9 @@
                             </label>&nbsp; ON</span>
                           </div>
                           <%}else if(((i-1)%2 ==0)){%>
-                          <div class="new-head">
+                          <div class="new-head on-off-btn-section">
                             <span><%=RG[i].game_name%> (<%=RG[i].sub_provider_name%>)</span>
-                            <span>OFF &nbsp; <label class="switch">
+                            <span class="on-off">OFF &nbsp; <label class="switch">
                               <%if(RG[i].status){%>
                               <input type="checkbox" checked>
                               <%}else{%>
@@ -245,9 +245,9 @@
                           </div>
                         </div>
                         <%}else{%>
-                        <div class="new-head">
+                        <div class="new-head on-off-btn-section">
                           <span><%=RG[i].game_name%> (<%=RG[i].sub_provider_name%>)</span>
-                          <span>OFF &nbsp; <label class="switch">
+                          <span class="on-off">OFF &nbsp; <label class="switch">
                             <%if(RG[i].status){%>
                             <input type="checkbox" checked>
                             <%}else{%>

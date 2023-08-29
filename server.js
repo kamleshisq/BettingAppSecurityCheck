@@ -2595,7 +2595,7 @@ io.on('connection', (socket) => {
 
     socket.on("claimCommission", async(data) => {
         console.log(data)
-        
+        let user = await user
     })
     
 })
