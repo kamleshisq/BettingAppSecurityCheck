@@ -2103,7 +2103,7 @@ io.on('connection', (socket) => {
             let status = !user.betLock
             user.betLock = status
             await User.findByIdAndUpdate(data.dataId, {betLock:status})
-            socket.emit("BetLockUnlock", {user, status})
+            socket.emit("BetLockUnlock", {user, status,rowid:data.id})
 
         }catch(err){
             console.log(err)

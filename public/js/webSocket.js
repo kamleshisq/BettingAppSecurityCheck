@@ -994,17 +994,21 @@ socket.on('connect', () => {
                 alert("Please Try again leter")
             }else if (data.status){
                 alert("Bet Locked Successfully")
-                let element = document.getElementsByClassName("betLockStatus")
-                for (var i = 0; i < element.length; i++) {
-                    element[i].classList.add("Locked");
-                  }
+                let row = $('#'+data.rowid)
+                row.find('.betLockStatus').classList.add("Locked")
+                // let element = document.getElementsByClassName("betLockStatus")
+                // for (var i = 0; i < element.length; i++) {
+                //     element[i].classList.add("Locked");
+                //   }
             }else if (!data.status){
                 alert("Bet Unlocked Successfully")
-                let elements = document.getElementsByClassName("betLockStatus")
-                for (var i = 0; i < elements.length; i++) {
-                    // console.log(element[i].classList)
-                    elements[i].classList.remove("Locked");
-                  }
+                let row = $('#'+data.rowid)
+                row.find('.betLockStatus').classList.remove("Locked")
+                // let elements = document.getElementsByClassName("betLockStatus")
+                // for (var i = 0; i < elements.length; i++) {
+                //     // console.log(element[i].classList)
+                //     elements[i].classList.remove("Locked");
+                //   }
             }
         })
 
