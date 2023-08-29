@@ -208,7 +208,7 @@ $('.createRole-form1').submit(function(e) {
     }
     let roleName = $('#roleName').val();
     let data = {
-        authorization,
+        authorization:authorization,
         userAuthorization:roleAuthorization,
         roleName
     }
