@@ -210,7 +210,8 @@ $('.createRole-form1').submit(function(e) {
     let data = {
         authorization:authorization,
         userAuthorization:roleAuthorization,
-        roleName
+        roleName,
+        name:roleName
     }
     console.log(data)
     createRole(data)
