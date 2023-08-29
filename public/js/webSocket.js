@@ -534,7 +534,9 @@ socket.on('connect', () => {
     })
 
 
-
+    $(document).on("click", ".commission", function(e){
+        socket.emit("claimCommission", {LOGINDATA})
+    })
 
     // if(pathname == "/admin/updateRole"){
     //     let x = "121"

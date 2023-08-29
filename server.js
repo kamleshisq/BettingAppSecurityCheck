@@ -2592,6 +2592,11 @@ io.on('connection', (socket) => {
             socket.emit("commissionMarketbyId", "err")
         }
     })
+
+    socket.on("claimCommission", async(data) => {
+        console.log(data)
+        
+    })
     
 })
 
