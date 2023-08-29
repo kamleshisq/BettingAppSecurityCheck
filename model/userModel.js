@@ -193,6 +193,10 @@ const userSchema = mongoose.Schema({
     commission:{
         type:Number,
         default:0
+    },
+    netCommisssion:{
+        type:Number,
+        default:0
     }
 })
 
