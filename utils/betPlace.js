@@ -95,7 +95,6 @@ async function placeBet(data){
 let betPlaceData = {}
 console.log(marketDetails, 454545454454454545544544444444444)
 if(!marketDetails.runners){
-    console.log(data.data)
     betPlaceData = {
         userId : data.LOGINDATA.LOGINUSER._id,
         userName : data.LOGINDATA.LOGINUSER.userName,
@@ -120,6 +119,8 @@ if(!marketDetails.runners){
 }else{
     let runnersData = JSON.parse(marketDetails.runners)
     let betOn = runnersData.find(item => item.secId == data.data.secId)
+    console.log(betOn)
+    console.log(data.data)
     // console.log(betOn)
     // return 123
     //og(betOn, 456)
