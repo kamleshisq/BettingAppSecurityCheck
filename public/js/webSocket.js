@@ -1213,7 +1213,10 @@ socket.on('connect', () => {
 
                     }
                     html += `
-                    <td> ${response[i].roleName}</td>
+                    <td>  <span class="role-type">
+                            ${response[i].roleName}
+                        </span>
+                        </td>
                     <td> ${response[i].balance}</td>
                     <td> ${response[i].availableBalance}</td>
                     <td> ${response[i].downlineBalance}</td>
