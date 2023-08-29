@@ -198,7 +198,7 @@
                   </td>
                   <td>
                     <!-- <input type="number" class="form-control" name="matchOdds"> -->
-                    <select name="matchOdds">
+                    <select name="matchOdds" required>
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -210,7 +210,7 @@
                 <tr>
                   <td>Bookmaker</td>
                   <td>
-                    <select class="form-control bookmakerType" name="BookmakerType">
+                    <select class="form-control bookmakerType" name="BookmakerType" required>
                       <!-- <option value="WIN">WIN_COMMISSION</option> -->
                       <option value="ENTRY">Entry Wise Commission</option>
                       <option value="NET_LOSS">Net Losing Commission</option>
@@ -225,7 +225,7 @@
                   </td>
                   <td>
                     <!-- <input type="number" class="form-control" name="Bookmaker"> -->
-                    <select name="Bookmaker" id="bookmakerPer">
+                    <select name="Bookmaker" id="bookmakerPer" required> 
                       <!-- <option value="0.25">0.25</option>
                       <option value="0.5">0.5</option>
                       <option value="0.75">0.75</option>
@@ -236,7 +236,7 @@
                 <tr>
                   <td>fency</td>
                   <td>
-                    <select class="form-control" name="fencyType">
+                    <select class="form-control" name="fencyType" required>
                       <!-- <option value="WIN">WIN_COMMISSION</option> -->
                       <option value="ENTRY" selected>Entry Wise Commission</option>
                       <!-- Add more options as needed -->
@@ -250,7 +250,7 @@
                   </td>
                   <td>
                     <!-- <input type="number" class="form-control" name="fency" > -->
-                    <select name="fency" >
+                    <select name="fency" required>
                       <option value="0.25">0.25</option>
                       <option value="0.5">0.5</option>
                       <option value="0.75">0.75</option>
@@ -333,7 +333,7 @@
             <div class="row">
               <div class="col">
                 <label for="">Account status</label>
-                <select name="status" class="form-control ml0" >Active
+                <select name="status" class="form-control ml0" required>
                   <option value="true">Active</option>
                   <option value="false">Close</option>
                 </select>
@@ -343,7 +343,7 @@
             <div class="row mt-2">
               <div class="col">
                 <label for="">Enter Your Password</label>
-                <input type="password" class="form-control ml0" placeholder="******" name="Password">
+                <input type="password" class="form-control ml0" placeholder="******" name="Password" required>
               </div>
             </div>
           <button type="submit" class="btn-submit mt-3">Confirm</button>
