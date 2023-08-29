@@ -2669,6 +2669,7 @@ io.on('connection', (socket) => {
                 let desc1 = `Claim Commisiion`
                 let desc2 = `Claim Commisiion of chiled user ${user.userName}`
                 let childdata = {
+                    user_id:data.LOGINDATA.LOGINUSER._id,
                     description : desc1,
                     creditDebitamount : user.commission,
                     balance : user.availableBalance + user.commission,
@@ -2677,6 +2678,7 @@ io.on('connection', (socket) => {
                     role_type:user.role_type,
                 }
                 let perentData = {
+                    user_id:data.LOGINDATA.LOGINUSER.parent_id,
                     description : desc2,
                     creditDebitamount : parenet.commission,
                     balance : parenet.availableBalance + user.commission,
