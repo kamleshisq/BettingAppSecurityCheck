@@ -79,8 +79,11 @@ async function placeBet(data){
                 if(Array.isArray(marketData)){
                     // console.log(marketData)
                     let book = marketData.find(item => item.marketId == data.data.market)
+                    if(book){
+                        marketDetails = book
+                        break;
+                    }
                     // console.log(book, "book")
-                    marketDetails = book
                 }else{
                     if (marketData.marketId === data.data.market) {
                         marketDetails =  marketData;
