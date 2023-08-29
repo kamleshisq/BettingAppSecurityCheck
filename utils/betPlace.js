@@ -76,6 +76,7 @@ async function placeBet(data){
             if(marketData != null){
                 // console.log(marketData)
                 if(Array.isArray(marketData)){
+                    console.log(marketData)
                     let book = marketData.find(item => item.marketId == data.data.market)
                     console.log(book, "book")
                     marketDetails = book
