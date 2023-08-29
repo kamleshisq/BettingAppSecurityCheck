@@ -1248,7 +1248,7 @@ socket.on('connect', () => {
             }
             html += `</tbody>`
             count += 10;
-            $('tbody').append(html)
+            $('table').append(html)
                 // html = '';
                 // for(let i=0;i<data.Rows;i++){
                 //     html += `<a href='/userManagement?id=${data.me_id}&page=${i}' class="pagination">${i + 1}</a>`
