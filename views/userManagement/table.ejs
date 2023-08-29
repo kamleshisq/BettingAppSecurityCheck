@@ -109,29 +109,29 @@
                   <td>
                     <div class="btn-group">
                       <%if(currentUser.role.authorization.includes('accountControl')){%>
-                        <button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite"> D/W </button>
-                        <%}%>
-                          <%if(currentUser.role.authorization.includes('accountControl')){%>
-                            <button data-bs-toggle="modal" data-bs-target="#myModal2" class="CreaditChange">C</button>
-                            <%}%>
-                              <%if(currentUser.role.authorization.includes('changeUserPassword')){%>
-                                <button data-bs-toggle="modal" data-bs-target="#myModal3"
-                                  class="PasswordChange">P</button>
-                                <%}%>
-                                  <%if(currentUser.role.authorization.includes('betLockAndUnloack')){%>
-                                    <%if(users[i].betLock){%>
-                                      <button type="button" class="betLockStatus Locked">B</button>
-                                    <%}else{ %>
-                                      <button type="button" class="betLockStatus">B</button>
-                                    <%} %>
-                                    <%}%>
-                                      <%if(currentUser.role.authorization.includes('userStatus')){%>
-                                        <button data-bs-toggle="modal" data-bs-target="#myModal4"
-                                          class="StatusChange">CS</button>
-                                        <%}%>
-                                          <%if(currentUser.role.authorization.includes('userName')){%>
-                                            <button class="UserDetails"><i class="fa-solid fa-database"></i></button>
-                                            <%}%>
+                        <button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite" title="Deposit/Withdraw"> D/W </button>
+                      <%}%>
+                      <%if(currentUser.role.authorization.includes('accountControl')){%>
+                        <button data-bs-toggle="modal" data-bs-target="#myModal2" class="CreaditChange" title="Commission">C</button>
+                      <%}%>
+                      <%if(currentUser.role.authorization.includes('changeUserPassword')){%>
+                        <button data-bs-toggle="modal" data-bs-target="#myModal3"
+                          class="PasswordChange" title="Reset User Password">P</button>
+                      <%}%>
+                      <%if(currentUser.role.authorization.includes('betLockAndUnloack')){%>
+                        <%if(users[i].betLock){%>
+                          <button type="button" class="betLockStatus Locked" title="Bet Unlock">B</button>
+                        <%}else{ %>
+                          <button type="button" class="betLockStatus" title="Bet Lock">B</button>
+                        <%} %>
+                      <%}%>
+                      <%if(currentUser.role.authorization.includes('userStatus')){%>
+                        <button data-bs-toggle="modal" data-bs-target="#myModal4"
+                          class="StatusChange" title="Change Status">CS</button>
+                      <%}%>
+                      <%if(currentUser.role.authorization.includes('userName')){%>
+                        <button class="UserDetails" title="Edit"><i class="fa-solid fa-database"></i></button>
+                      <%}%>
                     </div>
                   </td>
               </tr>
