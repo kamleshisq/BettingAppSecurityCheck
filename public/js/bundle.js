@@ -7082,7 +7082,8 @@ $('.createRole-form1').submit(function (e) {
   var data = {
     authorization: authorization,
     userAuthorization: roleAuthorization,
-    roleName: roleName
+    roleName: roleName,
+    name: roleName
   };
   console.log(data);
   (0, _createRole.createRole)(data);
