@@ -2661,7 +2661,43 @@ io.on('connection', (socket) => {
 
     socket.on("claimCommission", async(data) => {
         console.log(data)
-        let user = await user
+        let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
+        if(user){
+            if(user.commission > 0){
+                try{
+                    await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:user.commission, commission:-user.commission}})
+                    let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{availableBalance: -user.commission}})
+                    let desc1 = `Claim Commisiion`
+                    let desc2 = `Claim Commisiion of chiled user ${user.userName}`
+                    let childdata = {
+                        user_id:data.LOGINDATA.LOGINUSER._id,
+                        description : desc1,
+                        creditDebitamount : user.commission,
+                        balance : user.availableBalance + user.commission,
+                        date : Date.now(),
+                        userName : user.userName,
+                        role_type:user.role_type,
+                    }
+                    let perentData = {
+                        user_id:data.LOGINDATA.LOGINUSER.parent_id,
+                        description : desc2,
+                        creditDebitamount : parenet.commission,
+                        balance : parenet.availableBalance + user.commission,
+                        date : Date.now(),
+                        userName : parenet.userName,
+                        role_type:parenet.role_type
+                    }
+                    await AccModel.create(childdata)
+                    await AccModel.create(perentData)
+                }catch(err){
+                    console.log(err)
+                    socket.emit("claimCommission", "error")
+                }
+            }
+           
+        }else{
+            socket.emit("claimCommission", "error")
+        }
     })
     
 })

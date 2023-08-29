@@ -539,6 +539,15 @@ socket.on('connect', () => {
         socket.emit("claimCommission", {LOGINDATA})
     })
 
+    socket.on("claimCommission", data => {
+        if(data == "error"){
+            togglePopupMain('popup-2', "redPopUP2", "Please try again later")
+        }else{
+         let claimButoons = document.getElementsByClassName("commission")
+            console.log(claimButoons)
+        }
+    })
+
     // if(pathname == "/admin/updateRole"){
     //     let x = "121"
     //     // let y = document.getElementById("mySelect").value
