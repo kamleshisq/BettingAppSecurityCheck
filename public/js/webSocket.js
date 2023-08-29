@@ -544,9 +544,7 @@ socket.on('connect', () => {
             togglePopupMain('popup-2', "redPopUP2", "Please try again later")
         }else{
          let claimButoons = document.getElementsByClassName("commission")
-         for(let i = 0; i < claimButoons.length; i++){
-            claimButoons[i].innerHTML = `<i class="fa-solid fa-money-check-dollar"></i>  Claim Commission (00)`
-         }
+            console.log(claimButoons)
         }
     })
 
