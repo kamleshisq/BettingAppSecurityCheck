@@ -33,5 +33,5 @@ const netCommission = mongoose.Schema({
 })
 
 
-const netCommissionModel = mongoose.model("netCommission", netCommissionModel)
+const netCommissionModel = mongoose.model("netCommission", netCommission)
 module.exports = netCommissionModel
