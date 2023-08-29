@@ -72,7 +72,7 @@ async function placeBet(data){
             break;
         }else if(marketList.hasOwnProperty(key)) {
             const marketData = marketList[key];
-            console.log(marketDatam, "marketdata1212121")
+            console.log(marketData, "marketdata1212121")
             if(marketData != null){
                 // console.log(marketData)
                 if(Array.isArray(marketData)){
