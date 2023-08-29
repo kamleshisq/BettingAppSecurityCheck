@@ -9,13 +9,14 @@ export const betLockStatus = (data,rowId) => {
             // console.log(data)
             if(data.status === 'success'){
                 alert(data.message)
-                let html = `<td class='getOwnChild' data-bs-dismiss='${JSON.stringify(data.user)}'>`;
-                if(data.user.roleName != 'user'){
-                    html += `<a href='/admin/userManagement?id=${data.user._id}'>${data.user.userName}</a></td>`
-                }else{
-                    html += `${data.user.userName}</td>`
-                }
-                $('tr[id = '+rowId+']').children().eq(1).replaceWith((html))
+                // let html = `<td class='getOwnChild' data-bs-dismiss='${JSON.stringify(data.user)}'>`;
+                // if(data.user.roleName != 'user'){
+                //     html += `<a href='/admin/userManagement?id=${data.user._id}'>${data.user.userName}</a></td>`
+                // }else{
+                //     html += `${data.user.userName}</td>`
+                // }
+                // $('tr[id = '+rowId+']').children().eq(1).replaceWith((html))
+                window.location.reload(true)
             }
 
             // let id = JSON.parse(document.querySelector('#back').getAttribute('data-me'))._id
