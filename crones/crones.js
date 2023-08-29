@@ -84,6 +84,7 @@ module.exports = () => {
             result = data
         })
         if(result.data.length != 0){
+            let NetLoosingUsers = []
             marketIds.forEach(async(marketIds) => {
                 let marketresult = result.data.find(item => item.mid === marketIds)
                 if(marketresult === undefined){
@@ -364,6 +365,31 @@ module.exports = () => {
                                 }catch(err){
                                     console.log(err)
                                 }
+
+                                try{
+                                    let commission = await commissionModel.find({userId:user.id})
+                                    let commissionPer = 0
+                                    // if (bet.marketName == "Match Odds" && commission[0].matchOdd.status){
+                                    //     commissionPer = commission[0].matchOdd.percentage
+                                    //   }
+                                      if ((bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS')) && commission[0].Bookmaker.type == "NET_LOSS" && commission[0].Bookmaker.status){
+                                        commissionPer = commission[0].Bookmaker.percentage
+                                      }
+                                      let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
+                                      if(commissionPer > 0){
+                                        let user1 = await userModel.findByIdAndUpdate(user.id, {$inc:{netCommisssion:commissionCoin}})
+                                        if(!NetLoosingUsers.some(item => item == user1.id)){
+                                            NetLoosingUsers.push(user1.id)
+                                        }
+                                    }
+                                    }catch(err){
+                                        console.log(err)
+                                    } 
+                                
+                                
+
+
+
                         }
                     }
                     // const userName = entry.userName;
