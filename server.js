@@ -974,7 +974,7 @@ io.on('connection', (socket) => {
             let realodd = thatMarket.runners.find(item => item.secId == data.data.secId.slice(0,-1))
             let name
             console.log(data)
-            if(data.data.secId.slice(-1) > 3){
+            if(data.data.secId.slice(-1) == 2){
                 name = `layPrice${data.data.secId.slice(-1) - 3}`
             }else{
                 name = `backPrice${data.data.secId.slice(-1)}`
