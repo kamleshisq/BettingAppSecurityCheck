@@ -1,99 +1,65 @@
 <%- include("../header") %>
-  <!--Container Main start-->
-  <div class="height-100" style="background-color: #EAEEF7;">
-   
-
-
-
-<!-- End banner Slider -->
-
-<!-- skin device sec -->
-
-  <section class="" style="padding-top: 70px ;">
+<!--Container Main start-->
+<div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
     <div class="container-fluid">
-    <section style="padding-top: 10px;">
       <div class="new-head"> 
-          <h1 class="main-heading">Catalog Management</h1>
-          <!-- <form action="" style="display: flex;height: 30px;">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-              </div>
-              <input type="text" id="searchUser"  list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
-              <div class="wrapper">
-                <ul id="search" class="users">
-              
-                </ul>
-                <ul id="button" class="button">
-                  
-                </ul>
-              </div>
-              
-            </div>
-          </form> -->
+        <h3>Catalog Management</h3>
       </div>
-   
-    </section>
-  </section>
-<div class="pageId" data-pageid="1"></div>
-  <section style="padding: 15px 0px;">
-    <div class="container-fluid">
-    <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
-      <div class="">
-        
-      <h3 class="fix-h3"><img src="../images/reports.png" alt=""> &nbsp;Catalog Management</h3>
     </div>
-  <section class="">
-    <div class="">
-      <div class="table_data_details_ col-lg-12">
-        <table>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="table-data-section">
+        <div class="data-table">
+          <table>
             <thead>
-                <tr style="text-align: center;font-size: 11px;">
-                    <th>S.No</th>
-                    <th>Enabled</th>
-                    <th>Competition Name</th>
-                    <th>Action</th>
-                </tr>
+              <tr>
+                <th>S.No</th>
+                <th>Enabled</th>
+                <th>Competition Name</th>
+                <th>Action</th>
+              </tr>
             </thead>
-            <tbody class="new-body" style="font-size: 11px;">
-                <% for(let i = 0; i < data.length; i++){%>
-                    <%if((i%2)==0){%>
-                        <tr style="text-align: center;" class="blue">
+            <tbody class="new-body">
+              <% for(let i = 0; i < data.length; i++){%>
+              <%if((i%2)==0){%>
+              <tr>
+                <%}else{%>
+                <tr>
+                  <%}%>
+                  <td><%=i + 1%></td>
+                  <td>
+                    <%if(data[i].status){%>
+                    <input type="checkbox" class="status_check" data-id="<%=data[i].compId%>"  checked>
                     <%}else{%>
-                        <tr style="text-align: center;" >
+                    <input type="checkbox" class="status_check" data-id="<%=data[i].compId%>">
                     <%}%>
-                    <td><%=i + 1%></td>
-                    <td>
-                        <%if(data[i].status){%>
-                            <input type="checkbox" class="status_check" data-id="<%=data[i].compId%>"  checked>
-                        <%}else{%>
-                            <input type="checkbox" class="status_check" data-id="<%=data[i].compId%>">
-                        <%}%>
-                    </td>
-                    <td><%=data[i].name%></td>
-                    <td>
-                        <div class="btn-group">
-                            <button class="series_list"> <a href="/admin/catalogcontrol/compitations/events?compId=<%=data[i].compId%>&sportId=<%=data[i].sportId%>">Event List</a></button>
-                        </div>
-                    </td>
-                <%}%>
-              
-             
+                  </td>
+                  <td><%=data[i].name%></td>
+                  <td>
+                    <div class="btn-group">
+                      <button class="series_list"> <a href="/admin/catalogcontrol/compitations/events?compId=<%=data[i].compId%>&sportId=<%=data[i].sportId%>">Event List</a></button>
+                    </div>
+                  </td>
+                  <%}%>
+                </tr>
+              </tr>
             </tbody>
           </table>
-              </div>
-            </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            </div>
-          </div>
-            </section>
-<!-- end gallary -->
+  <div class="pageId" data-pageid="1"></div>
 
+</div>
 
-  </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
 
 </body>
-    </html> 
+</html> 
