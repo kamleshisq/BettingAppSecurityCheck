@@ -400,7 +400,7 @@ $(document).on('click','.Withdraw',function(){
 $(document).on('click','.RoleDetails',function(){
     // console.log("Working") 
     let modleName = $(this).data('bs-target')
-    let roledata = $(this).parent('td').siblings('.getRoleForPopUP').data('bs-dismiss')
+    let roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss')
     console.log(roledata)
     let form = $(modleName).find('.UpdateRole-form')
     // let x = form.find('input[id="check"]').length
