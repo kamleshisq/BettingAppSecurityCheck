@@ -212,6 +212,7 @@ $('.createRole-form1').submit(function(e) {
         userAuthorization:roleAuthorization,
         roleName
     }
+    console.log(data)
     createRole(data)
 })
 
