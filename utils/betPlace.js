@@ -122,6 +122,9 @@ if(!marketDetails.runners){
     console.log(runnersData, 12121212121)
     console.log(data.data.secId, "secId")
     let betOn = runnersData.find(item => item.secId == data.data.secId)
+    if(!betOn){
+        betOn = runnersData.find(item => item.secId == data.data.secId.slice(0,-1))
+    }
     console.log(betOn)
     console.log(data.data)
     // console.log(betOn)
