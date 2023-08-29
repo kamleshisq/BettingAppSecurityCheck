@@ -2390,12 +2390,12 @@ socket.on('connect', () => {
                       <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>`
                       if(data.data[i].status){
                         html += `<span class="on-off">OFF &nbsp; <label class="switch">
-                                <input type="checkbox" checked>
+                                <input type="checkbox" class="change_status" checked>
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }else{
                         html += `<span class="on-off">OFF &nbsp; <label class="switch">
-                                <input type="checkbox">
+                                <input type="checkbox" class="change_status">
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }
@@ -2405,12 +2405,12 @@ socket.on('connect', () => {
                       <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>`
                       if(data.data[i].status){
                         html += `<span class="on-off">OFF &nbsp; <label class="switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" class="change_status" checked>
                                     <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }else{
                         html += `<span class="on-off">OFF &nbsp; <label class="switch">
-                                    <input type="checkbox">
+                                    <input type="checkbox" class="change_status">
                                     <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }
@@ -2423,12 +2423,12 @@ socket.on('connect', () => {
                       `
                       if(data.data[i].status){
                         html += ` <span class="on-off">OFF &nbsp; <label class="switch">
-                                <input type="checkbox" checked>
+                                <input type="checkbox" class="change_status" checked>
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }else{
                         html += ` <span class="on-off">OFF &nbsp; <label class="switch">
-                                <input type="checkbox">
+                                <input type="checkbox" class="change_status">
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }
