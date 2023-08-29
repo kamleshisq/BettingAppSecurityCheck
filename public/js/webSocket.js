@@ -1244,8 +1244,9 @@ socket.on('connect', () => {
                             html += `<button class="UserDetails"><i class="fa-solid fa-database"></i></button>`
                         }
                       html += `</div>
-                      </td></td> </tr></tbody>`
+                      </td></td> </tr>`
             }
+            html += `</tbody>`
             count += 10;
             $('table').append(html)
                 // html = '';
