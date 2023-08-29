@@ -11,7 +11,7 @@ exports.createRole = catchAsync(async(req, res, next) => {
     // console.log(roleLength)
     req.body.role_level = roleLength + 1;
     req.body.role_type = roleLength + 1;
-    // console.log(req.body);
+    console.log(req.body);
     const newROle = await Role.create(req.body);
     if(!newROle){
         return next(new AppError("Ops, Something went wrong please try agin later", 404))
@@ -164,4 +164,12 @@ exports.updateRoleById = catchAsync(async(req, res, next) => {
         })
     }
     next()
+})
+
+exports.deleteRole = catchAsync(async(req,res,next)=>{
+    console.log(req.body)
+    await Role.findByIdAndDelete(req.body.id)
+    res.status(200).json({
+        status:'success'
+    })
 })

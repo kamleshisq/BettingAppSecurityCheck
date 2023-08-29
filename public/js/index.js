@@ -7,6 +7,7 @@ import { editUser } from "./editUser";
 // import { betLockStatus } from "./batLockStatus";
 import { createRole } from "./createRole";
 import { updateRole } from "./updateRoleByaxios";
+import {deleteRole} from "./deleteRole"
 import { updatePassword } from "./updatePASSWORD";
 import { userStatus } from "./userStatus";
 // import { betLockStatus } from "./betLock";
@@ -193,7 +194,7 @@ $(document).on('submit','.acc-form',async function(e) {
 //     betLockStatus(data)
 // })
 
-$('.createRole-form').submit(function(e) {
+$('.createRole-form1').submit(function(e) {
     e.preventDefault()
     let authorization = []; 
     let authCheck = document.querySelectorAll("input[name='authorization']:checked");
@@ -207,7 +208,7 @@ $('.createRole-form').submit(function(e) {
     }
     let roleName = $('#roleName').val();
     let data = {
-        authorization,
+        authorization:authorization,
         userAuthorization:roleAuthorization,
         roleName
     }
@@ -247,31 +248,7 @@ $('.createRole-form').submit(function(e) {
 // };
 
 
-$(document).on("submit", ".UpdateRole-form", function(e){
-    e.preventDefault()
-    let id = $(this).attr("id")
-    let roleName = document.getElementById("mySelect").value
-    let role_level = document.getElementById("role_level").value
-    let authorization = [];
-    let roleAuthorization = [];
-    let authCheck = document.querySelectorAll("input[name='authorization']:checked");
-    for (let i = 0 ; i < authCheck.length; i++) {
-        roleAuthorization.push(authCheck[i].value)
-    }
-    let checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-    for (let i = 0 ; i < checkboxes.length; i++) {
-        authorization.push(checkboxes[i].value)
-    }
-    let data = {
-        id,
-        authorization,
-        userAuthorization:roleAuthorization,
-        roleName,
-        role_level
-    }
-    console.log(data)
-    updateRole(data)
-})
+
 
 if(document.querySelector('.ChangeFORM')){
     document.querySelector('.ChangeFORM').addEventListener('submit', e =>{
@@ -423,9 +400,36 @@ $(document).on('click','.RoleDetails',function(){
     //         <label for="level"> <h3>Role Level </h3></label><br>
     //         <input type="number" name="level" placeholder='${roledata.role_level}' id='role_level'>`
 });
-// console.log($(".RoleDetails"))
-// console.log($(".load"))
 
+$(document).on("submit", ".UpdateRole-form", function(e){
+    e.preventDefault()
+    let id = $(this).attr("id")
+    let roleName = document.getElementById("mySelect").value
+    let authorization = [];
+    let roleAuthorization = [];
+    let authCheck = document.querySelectorAll("input[name='authorization']:checked");
+    for (let i = 0 ; i < authCheck.length; i++) {
+        roleAuthorization.push(authCheck[i].value)
+    }
+    let checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
+    for (let i = 0 ; i < checkboxes.length; i++) {
+        authorization.push(checkboxes[i].value)
+    }
+    let data = {
+        id,
+        authorization,
+        userAuthorization:roleAuthorization,
+        roleName
+        }
+    console.log(data)
+    updateRole(data)
+})
+$(document).on('click','.deleteRole',function(e){
+    let roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss')
+    if(confirm('do you want to delete this role')){
+        deleteRole({"id":roledata._id})
+    }
+})
 
 $(document).on('submit', ".form-data1", function(e){
     e.preventDefault()

@@ -5843,7 +5843,7 @@ var createRole = function createRole(data) {
     type: 'post',
     data: data,
     success: function success(data) {
-      setTimeout(alert('role created successfully'), window.location.href = '/admin/userManagement');
+      setTimeout(alert('role created successfully'), window.location.reload(true));
     },
     error: function error(_error) {
       alert(_error.responseJSON.message);
@@ -5903,7 +5903,31 @@ var updateRole = /*#__PURE__*/function () {
   };
 }();
 exports.updateRole = updateRole;
-},{"axios":"../../node_modules/axios/index.js"}],"updatePASSWORD.js":[function(require,module,exports) {
+},{"axios":"../../node_modules/axios/index.js"}],"deleteRole.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.deleteRole = void 0;
+var deleteRole = function deleteRole(data) {
+  $.ajax({
+    url: '/api/v1/role/deleteRole',
+    type: 'post',
+    data: data,
+    success: function success(data) {
+      if (data.status == 'success') {
+        setTimeout(alert('role deleted successfully'), 1000);
+        window.location.reload(true);
+      }
+    },
+    error: function error(_error) {
+      alert(_error.responseJSON.message);
+    }
+  });
+};
+exports.deleteRole = deleteRole;
+},{}],"updatePASSWORD.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6822,6 +6846,7 @@ var _debitCredit = require("./debitCredit");
 var _editUser = require("./editUser");
 var _createRole = require("./createRole");
 var _updateRoleByaxios = require("./updateRoleByaxios");
+var _deleteRole = require("./deleteRole");
 var _updatePASSWORD = require("./updatePASSWORD");
 var _userStatus = require("./userStatus");
 var _updateRow = require("./updateRow");
@@ -7041,7 +7066,7 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
 //     betLockStatus(data)
 // })
 
-$('.createRole-form').submit(function (e) {
+$('.createRole-form1').submit(function (e) {
   e.preventDefault();
   var authorization = [];
   var authCheck = document.querySelectorAll("input[name='authorization']:checked");
@@ -7093,31 +7118,6 @@ $('.createRole-form').submit(function (e) {
 //     })
 // };
 
-$(document).on("submit", ".UpdateRole-form", function (e) {
-  e.preventDefault();
-  var id = $(this).attr("id");
-  var roleName = document.getElementById("mySelect").value;
-  var role_level = document.getElementById("role_level").value;
-  var authorization = [];
-  var roleAuthorization = [];
-  var authCheck = document.querySelectorAll("input[name='authorization']:checked");
-  for (var i = 0; i < authCheck.length; i++) {
-    roleAuthorization.push(authCheck[i].value);
-  }
-  var checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-  for (var _i2 = 0; _i2 < checkboxes.length; _i2++) {
-    authorization.push(checkboxes[_i2].value);
-  }
-  var data = {
-    id: id,
-    authorization: authorization,
-    userAuthorization: roleAuthorization,
-    roleName: roleName,
-    role_level: role_level
-  };
-  console.log(data);
-  (0, _updateRoleByaxios.updateRole)(data);
-});
 if (document.querySelector('.ChangeFORM')) {
   document.querySelector('.ChangeFORM').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -7248,16 +7248,45 @@ $(document).on('click', '.RoleDetails', function () {
   for (var i = 0; i < roledata.authorization.length; i++) {
     form.find("input[value = \"".concat(roledata.authorization[i], "\"]")).attr("checked", "checked");
   }
-  for (var _i3 = 0; _i3 < roledata.userAuthorization.length; _i3++) {
-    form.find("input[value = \"".concat(roledata.userAuthorization[_i3], "\"]")).attr("checked", "checked");
+  for (var _i2 = 0; _i2 < roledata.userAuthorization.length; _i2++) {
+    form.find("input[value = \"".concat(roledata.userAuthorization[_i2], "\"]")).attr("checked", "checked");
   }
   // document.getElementById("role_controller").innerHTML = `
   //         <label for="level"> <h3>Role Level </h3></label><br>
   //         <input type="number" name="level" placeholder='${roledata.role_level}' id='role_level'>`
 });
-// console.log($(".RoleDetails"))
-// console.log($(".load"))
 
+$(document).on("submit", ".UpdateRole-form", function (e) {
+  e.preventDefault();
+  var id = $(this).attr("id");
+  var roleName = document.getElementById("mySelect").value;
+  var authorization = [];
+  var roleAuthorization = [];
+  var authCheck = document.querySelectorAll("input[name='authorization']:checked");
+  for (var i = 0; i < authCheck.length; i++) {
+    roleAuthorization.push(authCheck[i].value);
+  }
+  var checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
+  for (var _i3 = 0; _i3 < checkboxes.length; _i3++) {
+    authorization.push(checkboxes[_i3].value);
+  }
+  var data = {
+    id: id,
+    authorization: authorization,
+    userAuthorization: roleAuthorization,
+    roleName: roleName
+  };
+  console.log(data);
+  (0, _updateRoleByaxios.updateRole)(data);
+});
+$(document).on('click', '.deleteRole', function (e) {
+  var roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
+  if (confirm('do you want to delete this role')) {
+    (0, _deleteRole.deleteRole)({
+      "id": roledata._id
+    });
+  }
+});
 $(document).on('submit', ".form-data1", function (e) {
   e.preventDefault();
   var id = $('.form-data1').attr('id');
@@ -7374,7 +7403,7 @@ $(document).on('submit', ".kycForm", function (e) {
   // console.log(data)
   (0, _kyc.KYC)(fd);
 });
-},{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./updateRow":"updateRow.js","./updatePromotion":"updatePromotion.js","./createPromotion":"createPromotion.js","./deletePormotion":"deletePormotion.js","./betLimit":"betLimit.js","./createHorizontalMenu":"createHorizontalMenu.js","./updateHorizonatlMenu":"updateHorizonatlMenu.js","./createBanner":"createBanner.js","./updateBanner":"updateBanner.js","./createpage":"createpage.js","./addImage":"addImage.js","./updateSlider":"updateSlider.js","./addSlider":"addSlider.js","./userLogin":"userLogin.js","./kyc":"kyc.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./deleteRole":"deleteRole.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./updateRow":"updateRow.js","./updatePromotion":"updatePromotion.js","./createPromotion":"createPromotion.js","./deletePormotion":"deletePormotion.js","./betLimit":"betLimit.js","./createHorizontalMenu":"createHorizontalMenu.js","./updateHorizonatlMenu":"updateHorizonatlMenu.js","./createBanner":"createBanner.js","./updateBanner":"updateBanner.js","./createpage":"createpage.js","./addImage":"addImage.js","./updateSlider":"updateSlider.js","./addSlider":"addSlider.js","./userLogin":"userLogin.js","./kyc":"kyc.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

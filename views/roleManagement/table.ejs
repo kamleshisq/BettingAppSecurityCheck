@@ -26,14 +26,24 @@
                   <td><%=i + 1%></td>
                   <td class="getRoleForPopUP" data-bs-dismiss="<%=JSON.stringify(roles[i])%>"><%=roles[i].name%></td>
                   <td><%=roles[i].role_level%></td>
-                  <td><div class="btn-group"><button data-bs-toggle="modal" data-bs-target="#myModal5" class="RoleDetails"><i class="fa-solid fa-database"></i></button></div></td>
+                  <td>
+                    <div class="btn-group">
+                      <button data-bs-toggle="modal" data-bs-target="#myModal5" class="RoleDetails"><i class="fa-solid fa-database"></i></button>
+                      <button class="deleteRole">Delete</button>
+                    </div>
+                  </td>
               </tr>
           <%}else{%>
               <tr>
                   <td><%=i + 1%></td>
                   <td class="getRoleForPopUP" data-bs-dismiss="<%=JSON.stringify(roles[i])%>"><%=roles[i].name%></td>
                   <td><%=roles[i].role_level%></td>
-                  <td><div class="btn-group"><button data-bs-toggle="modal" data-bs-target="#myModal5" class="RoleDetails"><i class="fa-solid fa-database"></i></button></div></td>
+                  <td>
+                    <div class="btn-group">
+                      <button data-bs-toggle="modal" data-bs-target="#myModal5" class="RoleDetails"><i class="fa-solid fa-database"></i></button>
+                      <button class="deleteRole">Delete</button>
+                    </div>
+                  </td>
               </tr>
           <%}%>
       <%}%>
