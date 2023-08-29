@@ -1,64 +1,56 @@
-<div id="FOOTBALL" class="tabcontent" style="margin-bottom:15px">
-  <div class="row" style="padding:10px 0px">
-  <%for(let i = 0; i < liveFootBall.length; i++){%>
-      <section style="background-color: #fff;padding: 10px;border-radius:10px;margin-top: 15px;">
-          <div class="container-fluid">
-          <div class="new-head">
-            <h3 class="head-hr"><%= liveFootBall[i].eventData.name %></h3>
-            <a class="btn-filter" href="/admin/viewall?id=<%=liveFootBall[i].eventData.eventId%>">View Details &nbsp;<i class="fa-solid fa-chevron-right"></i></a>
-          </div>
-          <%if(liveFootBall[i].marketList.match_odd != null){%>
-            <div class="video-section-1">
-            
-              <div class="video-play">
-                
-                <div class="hed-data">
-                  <h3 class="fix-h3 live-head"> MATCH ODDS </h3>
-                  
-              </div>
-                <div class="full-adta">
-                  <table>
-                    <thead>
-                        <tr style="text-align: center;">
-                        
-                          <th style="text-align: left;">OUTCOMES/RUNNER</th>
-                          <th>EXPOSURE</th>
-                          <th>TOTAL BETS</th>
-                          
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <% let runners = JSON.parse(liveFootBall[i].marketList.match_odd.runners); %>
-                    <% const runners1 = []; %>
-                    <%const secIds = []; %>
-                    <%runners.forEach(item => {%>
-                        <%runners1.push(item.runner);%>
-                        <%secIds.push(item.secId);%>
-                    <%});%>
-                    <%for(let j = 0; j < runners1.length; j++){%>
-                      <%if((j%2)===1){%>
-                        <tr style="text-align: center;" class="blue">
-                      <%}else{%>
-                        <tr style="text-align: center;">
+<div id="FOOTBALL" class="tabcontent">
+  <div class="row">
+    <%for(let i = 0; i < liveFootBall.length; i++){%>
+    <section>
+      <div class="container-fluid">
+        <div class="new-head">
+          <h3 class="head-hr"><%= liveFootBall[i].eventData.name %></h3>
+          <a class="btn-filter" href="/admin/viewall?id=<%=liveFootBall[i].eventData.eventId%>">View Details &nbsp;<i class="fa-solid fa-chevron-right"></i></a>
+        </div>
+        <%if(liveFootBall[i].marketList.match_odd != null){%>
+        <div class="video-section-1">
+          <div class="video-play">
+            <div class="hed-data">
+              <h3 class="live-head"> MATCH ODDS </h3>
+            </div>
+            <div class="full-adta">
+              <table>
+                <thead>
+                  <tr>
+                    <th>OUTCOMES/RUNNER</th>
+                    <th>EXPOSURE</th>
+                    <th>TOTAL BETS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% let runners = JSON.parse(liveFootBall[i].marketList.match_odd.runners); %>
+                  <% const runners1 = []; %>
+                  <%const secIds = []; %>
+                  <%runners.forEach(item => {%>
+                  <%runners1.push(item.runner);%>
+                  <%secIds.push(item.secId);%>
+                  <%});%>
+                  <%for(let j = 0; j < runners1.length; j++){%>
+                  <%if((j%2)===1){%>
+                  <tr>
+                    <%}else{%>
+                    <tr>
                       <%}%>
-                      <td style="text-align: left;"><%=runners1[j]%></td>
-                      <td style="color:#46BCAA;" id="<%=secIds[j]%>">00</td>
+                      <td><%=runners1[j]%></td>
+                      <td id="<%=secIds[j]%>">00</td>
                       <td id="<%=secIds[j]%>B">00</td>
-                    <%}%>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+                      <%}%>
+                    </tr>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <%}%>
-        </div> 
-        </section>
-  <%}%> 
-    
-
-
-    
-
-</div>
-<!-- <button class="btn btn-view-all">View All</button> -->
+        </div>
+        <%}%>
+      </div> 
+    </section>
+    <%}%> 
+  </div>
+  <!-- <button class="btn btn-view-all">View All</button> -->
 </div>
