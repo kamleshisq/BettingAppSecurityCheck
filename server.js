@@ -2689,6 +2689,7 @@ io.on('connection', (socket) => {
                     }
                     await AccModel.create(childdata)
                     await AccModel.create(perentData)
+                    socket.emit("claimCommission", "Success")
                 }catch(err){
                     console.log(err)
                     socket.emit("claimCommission", "error")
