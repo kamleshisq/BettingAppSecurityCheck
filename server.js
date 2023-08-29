@@ -1023,7 +1023,7 @@ io.on('connection', (socket) => {
                 }
                 data.data.odds = odds
             }
-        }else if(thatMarket.title != "Bookmaker 0%Comm" && thatMarket.title != "TOSS"){
+        }else if(thatMarket.title != "Bookmaker 0%Comm" && thatMarket.title != "TOSS" && thatMarket.title != 'BOOKMAKER 0% COMM'){
             // console.log(thatMarket, 45454545454)
             let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
             let name
@@ -1035,7 +1035,7 @@ io.on('connection', (socket) => {
             let odds = realodd[name];
             data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
-        }else if(thatMarket.title == "Bookmaker 0%Comm" || thatMarket.title == "TOSS"){
+        }else if(thatMarket.title == "Bookmaker 0%Comm" || thatMarket.title == "TOSS" || thatMarket.title != 'BOOKMAKER 0% COMM'){
             // console.log(thatMarket, 4545454)
             let realodd = thatMarket.runners.find(item => item.secId == data.data.secId.slice(0,-1))
             let name
