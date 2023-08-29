@@ -7066,7 +7066,7 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
 //     betLockStatus(data)
 // })
 
-$('.createRole-form').submit(function (e) {
+$('.createRole-form1').submit(function (e) {
   e.preventDefault();
   var authorization = [];
   var authCheck = document.querySelectorAll("input[name='authorization']:checked");

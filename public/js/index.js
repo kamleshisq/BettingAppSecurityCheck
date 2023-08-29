@@ -194,7 +194,7 @@ $(document).on('submit','.acc-form',async function(e) {
 //     betLockStatus(data)
 // })
 
-$('.createRole-form').submit(function(e) {
+$('.createRole-form1').submit(function(e) {
     e.preventDefault()
     let authorization = []; 
     let authCheck = document.querySelectorAll("input[name='authorization']:checked");
