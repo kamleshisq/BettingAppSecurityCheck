@@ -7233,7 +7233,7 @@ $(document).on('click', '.RoleDetails', function () {
   // console.log("Working")
   var modleName = $(this).data('bs-target');
   var roledata = $(this).parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
-  var form = $(modleName).find('.UpdateRole-form');
+  console.log(roledata);
   // let x = form.find('input[id="check"]').length
   // console.log(x)
   // for(let i = 0; i < x ; i++){
@@ -7396,7 +7396,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49873" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51581" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
