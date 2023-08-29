@@ -351,7 +351,7 @@ exports.mapbet = async(data) => {
                               let commissionReportData = {
                                   userId:childUser.id,
                                   market:bet.marketName,
-                                  commType:'Net loss Commission',
+                                  commType:'Entry Wise loss Commission',
                                   percentage:commissionPer,
                                   commPoints:commissionCoin,
                                   event:bet.event,
