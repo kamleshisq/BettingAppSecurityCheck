@@ -30,7 +30,7 @@
               <tr>
                 <td><%= i+1%></td>
                 <td><%= betsEventWise[i].marketName%></td>
-                <%if(betsEventWise[i].marketName != "Match Odds"){%>
+                <%if(betsEventWise[i].marketName != "Match Odds" || betsEventWise[i].marketName != "Bookmaker 0%Comm" || betsEventWise[i].marketName != "TOSS"){%>
                 <td>
                   <select class="selectOption" >
                     <option value="yes">Yes</option>
