@@ -310,7 +310,7 @@ exports.mapbet = async(data) => {
                     if (bet.marketName == "Match Odds" && commission[0].matchOdd.status){
                         commissionPer = commission[0].matchOdd.percentage
                       }
-                      if ((bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS')) && commission[0].Bookmaker.type == "NET_LOSS" && commission[0].Bookmaker.status){
+                      if ((bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS')) && commission[0].Bookmaker.type == "ENTRY_LOSS_" && commission[0].Bookmaker.status){
                         commissionPer = commission[0].Bookmaker.percentage
                       }
                       let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
