@@ -550,7 +550,7 @@ exports.mapbet = async(data) => {
       }
     ])
 
-    console.log(data)
+    console.log(NetData)
 
 
 }
