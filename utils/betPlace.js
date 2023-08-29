@@ -72,7 +72,7 @@ async function placeBet(data){
             }
             break;
         }else if(marketList.hasOwnProperty(key)) {
-            console.log(marketList, "LIST")
+            // console.log(marketList, "LIST")
             const marketData = marketList[key];
             // console.log(marketData, "marketdata1212121")
             if(marketData != null){
@@ -94,7 +94,7 @@ async function placeBet(data){
             }
       }}
 let betPlaceData = {}
-console.log(marketDetails, 454545454454454545544544444444444)
+// console.log(marketDetails, 454545454454454545544544444444444)
 if(!marketDetails.runners){
     betPlaceData = {
         userId : data.LOGINDATA.LOGINUSER._id,
