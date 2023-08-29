@@ -973,15 +973,16 @@ io.on('connection', (socket) => {
             // console.log(thatMarket, 4545454)
             let realodd = thatMarket.runners.find(item => item.secId == data.data.secId.slice(0,-1))
             let name
+            console.log(data)
             if(data.data.secId.slice(-1) > 3){
                 name = `layPrice${data.data.secId.slice(-1) - 3}`
             }else{
                 name = `backPrice${data.data.secId.slice(-1)}`
             }
-            console.log(name)
+            // console.log(name)
             name = name.slice(0, -1)
-            console.log(name)
-            console.log(realodd[name], realodd, "realodds")
+            // console.log(name)
+            // console.log(realodd[name], realodd, "realodds")
             let odds = realodd[name];
             data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
