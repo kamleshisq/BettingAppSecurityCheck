@@ -42,11 +42,11 @@
                         <span><%=data[i].game_name%> (<%=data[i].sub_provider_name%>)</span>
                         <%if(data[i].status){%>
                         <span class="on-off">OFF &nbsp; <label class="switch">
-                          <input type="checkbox" checked>
+                          <input type="checkbox" class="change_status" checked>
                           <span class="slider round"></span>
                         </label>&nbsp; ON</span>
                         <%}else{%>
-                        <span>OFF &nbsp; <label class="switch">
+                        <span>OFF &nbsp; <label class="switch change_status">
                           <input type="checkbox">
                           <span class="slider round"></span>
                         </label>&nbsp; ON</span>
@@ -204,39 +204,51 @@
                         
                           <div class="new-head on-off-btn-section">
                             <span><%=RG[i].game_name%> (<%=RG[i].sub_provider_name%>)</span>
-                            <span class="on-off">OFF &nbsp; <label class="switch">
-                              <%if(RG[i].status){%>
+                            <%if(RG[i].status){%>
+                              <span class="on-off">OFF &nbsp; <label class="switch">
                               <input type="checkbox" checked>
-                              <%}else{%>
-                              <input type="checkbox">
-                              <%}%>
                               <span class="slider round"></span>
-                            </label>&nbsp; ON</span>
+                              </label>&nbsp; ON</span>
+                            <%}else{%>
+                              <span >OFF &nbsp; <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
+                                </label>&nbsp; ON</span>
+                            <%}%>
+                              
                           </div>
                           <%}else if(((i-1)%2 ==0)){%>
                           <div class="new-head on-off-btn-section">
                             <span><%=RG[i].game_name%> (<%=RG[i].sub_provider_name%>)</span>
-                            <span class="on-off">OFF &nbsp; <label class="switch">
-                              <%if(RG[i].status){%>
+                            <%if(RG[i].status){%>
+                              <span class="on-off">OFF &nbsp; <label class="switch">
                               <input type="checkbox" checked>
-                              <%}else{%>
-                              <input type="checkbox">
-                              <%}%>
                               <span class="slider round"></span>
-                            </label>&nbsp; ON</span>
+                             </label>&nbsp; ON</span>
+                              <%}else{%>
+                                <span>OFF &nbsp; <label class="switch">
+                                  <input type="checkbox">
+                                  <span class="slider round"></span>
+                                 </label>&nbsp; ON</span>
+                              <%}%>
+                              
                           </div>
                         
                         <%}else{%>
                         <div class="new-head on-off-btn-section">
                           <span><%=RG[i].game_name%> (<%=RG[i].sub_provider_name%>)</span>
-                          <span class="on-off">OFF &nbsp; <label class="switch">
-                            <%if(RG[i].status){%>
+                          <%if(RG[i].status){%>
+                            <span class="on-off">OFF &nbsp; <label class="switch">
                             <input type="checkbox" checked>
-                            <%}else{%>
-                            <input type="checkbox">
-                            <%}%>
                             <span class="slider round"></span>
-                          </label>&nbsp; ON</span>
+                            </label>&nbsp; ON</span>
+                            <%}else{%>
+                              <span >OFF &nbsp; <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
+                                </label>&nbsp; ON</span>
+                            <%}%>
+                            
                         </div>
                         <%}%>
                         <%}%>

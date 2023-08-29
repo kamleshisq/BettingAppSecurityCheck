@@ -457,7 +457,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on('BACCARAT', async(A) => {
-       
         let data
         data = await gameModel.find({$or:[{game_name:new RegExp("BACCARAT","i")},{category:new RegExp("BACCARAT","i")},{game_code:new RegExp("BACCARAT","i")}]})
         socket.emit('baccarat1', {data,id:"BACCARAT"})
