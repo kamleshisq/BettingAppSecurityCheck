@@ -86,6 +86,7 @@ async function placeBet(data){
             }
       }}
 let betPlaceData = {}
+console.log(marketDetails)
 if(!marketDetails.runners){
     betPlaceData = {
         userId : data.LOGINDATA.LOGINUSER._id,
