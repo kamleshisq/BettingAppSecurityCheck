@@ -34,7 +34,7 @@
             <div class="row">
               <div class="col">
                 <label for="">Choose Option</label>
-                <select name="type" class="DepositW" >
+                <select name="type" class="DepositW"  required>
                   <option value="deposit">Deposit</option>
                   <option value="withdrawl">Withdraw</option>
                 </select>
@@ -43,29 +43,29 @@
             <div class="row mt-2">
               <div class="col">
                 <label for="">From User</label>
-                <input type="text" class="form-control ml0" placeholder="Enter User Name" name="fromUser" readonly>
+                <input type="text" class="form-control ml0" placeholder="Enter User Name" name="fromUser" readonly required>
                 <!-- <input type="hidden" name="id"> -->
 
               </div>
               <div class="col">
                 <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="Balance" name="fuBalance" readonly>
+                <input type="text" class="form-control ml0" placeholder="Balance" name="fuBalance" readonly required>
               </div>
             </div>
             <div class="row mt-2">
               <div class="col">
                 <label for="">To User</label>
-                <input type="text" class="form-control ml0" placeholder="Enter User Name" name="toUser" readonly>
+                <input type="text" class="form-control ml0" placeholder="Enter User Name" name="toUser" readonly required>
               </div>
               <div class="col">
                 <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="Balance" name="tuBalance" readonly>
+                <input type="text" class="form-control ml0" placeholder="Balance" name="tuBalance" readonly required>
               </div>
             </div>
             <div class="row mt-2">
               <div class="col">
                 <label for="">Client P&L</label>
-                <input type="text" class="form-control ml0" placeholder="0.00" name="clintPL">
+                <input type="text" class="form-control ml0" placeholder="0.00" name="clintPL" readonly required>
               </div>
             </div>
             <div class="row mt-2">
@@ -77,11 +77,11 @@
             <div class="row mt-2">
               <div class="col">
                 <label for="">Password</label>
-                <input type="text" class="form-control ml0" placeholder="" name="Password">
+                <input type="text" class="form-control ml0" placeholder="" name="Password" required>
               </div>
               <div class="col">
                 <label for="">Balance</label>
-                <input type="number" class="form-control ml0" placeholder="Add Funds" name="amount">
+                <input type="number" class="form-control ml0" placeholder="Add Funds" name="amount" required>
               </div>
             </div>
             <button type="submit" class="btn-submit mt-3">Submit</button>
