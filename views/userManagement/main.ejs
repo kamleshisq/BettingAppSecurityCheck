@@ -210,11 +210,7 @@
                 <tr>
                   <td>Bookmaker</td>
                   <td>
-<<<<<<< HEAD
-                    <select class="form-control" name="BookmakerType">
-=======
                     <select class="form-control bookmakerType" name="BookmakerType">
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                       <!-- <option value="WIN">WIN_COMMISSION</option> -->
                       <option value="ENTRY">Entry Wise Commission</option>
                       <option value="NET_LOSS">Net Losing Commission</option>
@@ -229,19 +225,11 @@
                   </td>
                   <td>
                     <!-- <input type="number" class="form-control" name="Bookmaker"> -->
-<<<<<<< HEAD
-                    <select name="Bookmaker">
-                      <option value="0.25">0.25</option>
-                      <option value="0.5">0.5</option>
-                      <option value="0.75">0.75</option>
-                      <option value="1">1</option>
-=======
                     <select name="Bookmaker" id="bookmakerPer">
                       <!-- <option value="0.25">0.25</option>
                       <option value="0.5">0.5</option>
                       <option value="0.75">0.75</option>
                       <option value="1">1</option> -->
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                     </select>
                   </td>
                 </tr>
@@ -404,11 +392,7 @@
               <div class="row mt-2">
                 <div class="col">
                   New Domain
-<<<<<<< HEAD
-                  <input type="checkbox" class="hide" id="customOptionCheckbox">
-=======
                   <input type="checkbox"  id="customOptionCheckbox">
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                   <label for="">WhiteLabel</label>
                   <!-- <input type="text" name="whiteLabel" placeholder="Enter new role"> -->
                   <select id="whiteLabel" class="form-control ml0" >
@@ -416,11 +400,7 @@
                       <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
                     <%} %>
                   </select>
-<<<<<<< HEAD
-                  <input type="text" name="whiteLabel" id="newWhiteLabelInput" placeholder="Enter new WhiteLabel" >
-=======
                   <input type="text" class="hide" name="whiteLabel" id="newWhiteLabelInput" placeholder="Enter new WhiteLabel" >
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                 </div>
               </div>
             <%} %>
@@ -568,26 +548,16 @@
   <script>
     const customOptionCheckbox = document.getElementById('customOptionCheckbox');
     const newWhiteLabelInput = document.getElementById('newWhiteLabelInput');
-<<<<<<< HEAD
-=======
     const SElectWhiteLable = document.getElementById("whiteLabel")
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
   
     customOptionCheckbox.addEventListener('change', function () {
       if (this.checked) {
         newWhiteLabelInput.classList.remove('hide')
         // Hide the select element
-<<<<<<< HEAD
-        document.querySelector('select[name="whiteLabel"]').classList.add('hide')
-      } else {
-        newWhiteLabelInput.classList.add('hide')
-        document.querySelector('select[name="whiteLabel"]').classList.remove('hide')
-=======
         SElectWhiteLable.classList.add('hide')
       } else {
         newWhiteLabelInput.classList.add('hide')
         SElectWhiteLable.classList.remove('hide')
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
       }
     });
   </script>
@@ -602,8 +572,6 @@
       }
     });
   </script>
-<<<<<<< HEAD
-=======
   <script>
     $(document).on("change", ".bookmakerType", function(e){
       e.preventDefault()
@@ -641,7 +609,6 @@
       document.getElementById("bookmakerPer").innerHTML = html
     })
   </script>
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 
     <script type="text/javascript" src="../js/bundle.js"></script>
     

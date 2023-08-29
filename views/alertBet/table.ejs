@@ -1,55 +1,4 @@
 <table>
-<<<<<<< HEAD
-    <thead>
-        <tr style="text-align: center;font-size: 11px;">
-          <th>S.No</th>
-          <th>Date</th>
-          <th>User Name</th>
-          <th>Event</th>
-          <th>Market </th>
-          <th>Odds</th>
-          <th>Match</th>
-          <th>Bet On</th>
-          <th>Stake</th>
-          <th>Txn ID </th>
-          <th>Status</th>
-          <th>Actions</th>                      
-        </tr>
-    </thead>
-    <tbody class="new-body">
-      <% for(let i = 0; i < bets.length; i++){%>
-        <% let date = new Date(bets[i].date)%>
-        <%if((i%2)==0){%>
-            <tr style="text-align: center;" class="blue">
-        <%}else{%>
-            <tr style="text-align: center;" >
-        <%}%>
-        <td><%=i + 1%></td>
-        <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
-        <td><%=bets[i].userName%></td>
-        <td><%=bets[i].event%></td>
-        <%if(bets[i].match){%>
-          <td><%=bets[i].marketName%></td>
-          <td><%=bets[i].oddValue%></td>
-          <td><%=bets[i].match%></td>
-          <td><%=bets[i].selectionName%></td>
-        <%}else{%>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-        <%}%>
-        <td><%=bets[i].Stake%></td>
-        <td><%=bets[i].transactionId%></td>
-        <td><%=bets[i].status%></td>
-        <td><button class="voidBet" id="<%=bets[i]._id%>"> Cancel Bet</button><button class="acceptBet" id="<%=bets[i]._id%>"> accept Bet</button></td>
-    </tr>
-    <%}%>
-      
-     
-    </tbody>
-  </table>
-=======
   <thead>
       <tr>
         <th>S.No</th>
@@ -104,4 +53,3 @@
    
   </tbody>
 </table>
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd

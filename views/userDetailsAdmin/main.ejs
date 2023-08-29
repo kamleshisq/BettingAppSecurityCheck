@@ -1,38 +1,19 @@
 <%- include("../header") %>
   <!--Container Main start-->
   <div class="dashboard-main-wraper">
-<<<<<<< HEAD
-   
-
-
-
-<!-- End banner Slider -->
-=======
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 
 <!-- skin device sec -->
 
   <section class="dashboard-welcome-section" >
     <div class="container-fluid">
-<<<<<<< HEAD
-    <section >
-      <div class="align-fix"> 
-          <h3 >User Detail <%=userDetails.userName%></h3>
-          <!-- <form action="" style="display: flex;height: 30px;">
-=======
       <div class="new-head"> 
           <h3 >User Detail <%=userDetails.userName%></h3>
           <!-- <form action="">
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
               </div>
-<<<<<<< HEAD
-              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
-=======
               <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
               
             </div>
             <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
@@ -43,209 +24,6 @@
     
 <!-- seling section -->
 
-<<<<<<< HEAD
-<section class="pad-top-bottom-" >
-  <div class="container-fluid">
-      
-      <div class="tab end" >
-
-        <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'Cricket')"> User Details  </button>
-        <!-- <button class="tablinks" onclick="openCity(event, 'FOOTBALL')"> User Config</button> -->
-        <button class="tablinks" onclick="openCity(event, 'TENNIS')"> Wallet Settings</button>
-        <button class="tablinks" onclick="openCity(event, 'BASEBALL')"> Balance  </button>
-        <button class="tablinks" onclick="openCity(event, 'BASKETBALL')"> BetList</button>
-        <button class="tablinks" onclick="openCity(event, 'HORSE RACING')"> Account Statement</button>
-        <button class="tablinks" onclick="openCity(event, 'Greyhound')"> Login History</button>
-        <%if(currentUser.roleName === "Admin"){%>
-        <button class="tablinks" onclick="openCity(event, 'Payment')"> Payment</button>
-        <%}%>
-        
-    </div>
-
-            
-            <div id="Cricket" class="tabcontent" style="margin-bottom:15px">
-                <div class="row" style="padding:10px 0px">
-                    <div class="container">
-                        <div class="form-container">
-                          <div class="form-column blue">
-                            <div class="modal-header" style="text-align: center;">
-                                <h4 class="modal-title" style="color: #fff;">User Details</h4>
-                              </div>
-                            <form class="form-data userDetails" id="<%=userDetails._id%>">
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <label for="name">Name</label>
-                                        <input type="text" readonly  id="name" name="name" placeholder="<%=userDetails.name%>" value="<%=userDetails.name%>">
-                                    </div>
-                                    <div class="col form-group">
-                                        <label for="userName">User Name</label>
-                                        <input type="text" readonly id="userName" name="userName" placeholder="<%=userDetails.userName%>" value="<%=userDetails.userName%>">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <label for="contact">Contact</label>
-                                        <input type="text" readonly id="contact" name="contact" placeholder="<%=userDetails.contact%>" value="<%=userDetails.contact%>">
-                                    </div>
-                                    <div class="col form-group">
-                                        <label for="email">Email</label>
-                                        <input type="email" readonly id="email" name="email" placeholder="<%=userDetails.email%>" value="<%=userDetails.email%>">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <label for="userRole">User Role</label>
-                                        <input type="text" readonly id="userRole" name="userRole" placeholder="<%=userDetails.roleName%>" value="<%=userDetails.roleName%>">
-                                    </div>
-                                    <div class="col form-group">
-                                        <label for="Share">Share</label>
-                                        <input type="number" id="Share" name="Share" placeholder="<%=userDetails.Share%>" value="<%=userDetails.Share%>">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <label for="myShare">My Share</label>
-                                        <input type="number" id="myShare" name="myShare" placeholder="<%=userDetails.myShare%>" value="<%=userDetails.myShare%>">
-                                    </div>
-                                    <div class="col form-group">
-                                        <label for="creditReference">Credit Reference</label>
-                                        <input type="number" readonly id="creditReference" name="creditReference" placeholder="<%=userDetails.creditReference%>" value="<%=userDetails.creditReference%>">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <button type="submit">Submit</button>
-                                    </div>
-                                </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                
-                </div>
-            </div> 
-            <!-- <div id="FOOTBALL" class="tabcontent" style="margin-bottom:15px">
-                <div class="row" style="padding:10px 0px">
-                    <div class="container">
-                        <div class="form-container">
-                          <div class="form-column blue">
-                            <div class="modal-header" style="text-align: center;">
-                                <h4 class="modal-title" style="color: #fff;">User Config</h4>
-                              </div>
-                            
-                          </div>
-                        </div>
-                      </div>
-                </div>
-            </div>  -->
-            <div id="TENNIS" class="tabcontent" style="margin-bottom:15px">
-                <div class="row" style="padding:10px 0px">
-                    <div class="container">
-                        <div class="form-container">
-                          <div class="form-column blue">
-                            <form class="Wallet" id="<%=userDetails._id%>">
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <label for="maxCreditReference">Max Credit Ref</label>
-                                        <input type="number" id="maxCreditReference" name="maxCreditReference" placeholder="<%=userDetails.maxCreditReference%>" value="<%=userDetails.maxCreditReference%>">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <label for="transferLock">Transfer Lock</label>
-                                        <select name="transferLock" id="transferLock">
-                                            <%if(userDetails.transferLock){ %>
-                                                <option value="true"selected >Active</option>
-                                                <option value="false"  >In-Active</option>
-                                            <%}else{ %>
-                                                <option value="true" >Active</option>
-                                                <option value="false"selected>In-Active</option>
-                                            <%} %>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col form-group">
-                                        <button type="submit" >save</button>
-                                    </div>
-                                </div>
-                            </form>
-                            
-                          </div>
-                        </div>
-                      </div>
-                </div>
-            </div>
-            <div id="BASEBALL" class="tabcontent" style="margin-bottom:15px">
-              <div class="row" style="padding:10px 0px">
-                <div class="container">
-                    <div class="form-container">
-                      <div class="form-column blue">
-                        <form class="Wallet" >
-                            <div class="row">
-                                <div class="col form-group">
-                                    <label for="availableBalance">Available Bal</label>
-                                    <input type="number" readonly id="availableBalance" name="availableBalance" placeholder="<%=userDetails.availableBalance%>" value="<%=userDetails.availableBalance%>">
-                                </div>
-                                <div class="col form-group">
-                                    <label for="creditReference">Credit Reference</label>
-                                    <input type="number" readonly id="creditReference" name="creditReference" placeholder="<%=userDetails.creditReference%>" value="<%=userDetails.creditReference%>">
-                                </div>
-                                <div class="col form-group">
-                                    <label for="exposure">Net Exposure</label>
-                                    <input type="number" readonly id="exposure" name="exposure" placeholder="<%=userDetails.exposure%>" value="<%=userDetails.exposure%>">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col form-group">
-                                    <label for="downlineBalance">Downlevel Bal</label>
-                                    <input type="number" readonly id="downlineBalance" name="downlineBalance" placeholder="<%=userDetails.downlineBalance%>" value="<%=userDetails.downlineBalance%>">
-                                </div>
-                                <div class="col form-group">
-                                    <label for="uplinePL">Upline P/L</label>
-                                    <input type="number" readonly id="uplinePL" name="uplinePL" placeholder="<%=userDetails.uplinePL%>" value="<%=userDetails.uplinePL%>">
-                                </div>
-                            </div>
-                        </form>
-                        
-                      </div>
-                    </div>
-                  </div>
-              </div>
-            </div>
-            <div id="BASKETBALL" class="tabcontent" style="margin-bottom:15px">
-              <div class="row" style="padding:10px 0px">
-                <form action="" style="display: flex;height: 30px;">
-                    <div class="input-group">
-                    <div class="cur-bet-amount-dv">
-                        <!-- <select class="form-select form-select-sm acount-stat-ro-form-input" aria-label="Default select example">
-                            <option selected>All Reports</option>
-                            <option value="1">Deposit/Withdraw Reports</option>
-                            <option value="2">Game Reports</option>
-                        </select> -->
-                        <% if(betsDetails.length > 0){ %>
-                          <span class="cur-bet-amount-spn">Total Bets : <span><%=betsDetails[0].totalCount %></span></span>
-                          <%if(betsDetails[0].totalReturns > 0){ %>
-                            <span class="cur-bet-amount-spn">Total Amount : <span class="c-gren"><%=betsDetails[0].totalReturns %></span></span>
-                          <%}else{%>
-                            <span class="cur-bet-amount-spn">Total Amount : <span class="c-reed"><%=betsDetails[0].totalReturns %></span></span>
-                            <%} %>
-                        <%}else {%>
-                          <span class="cur-bet-amount-spn">Total Bets : <span>00</span></span>
-                            <span class="cur-bet-amount-spn">Total Amount : <span class="c-reed">0</span></span>
-                        <%} %>
-                    </div>
-                </div>
-
-                    <div class="">
-                        <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="FdateBet">
-                    </div>
-                    <div class="">
-                        <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="TdateBet">
-                    </div>
-                    <div class="">
-                        <select id="selectBet" class="form-select form-select-sm acount-stat-ro-form-input" aria-label="Default select example">
-=======
 <section>
   <div class="container-fluid">
       <div class="tab-data-section">
@@ -437,75 +215,12 @@
                           <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="FdateBet">
                           <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="TdateBet">
                           <select id="selectBet" class="form-select form-select-sm acount-stat-ro-form-input" aria-label="Default select example">
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                             <option selected>All Bets</option>
                             <option value="OPEN">Open</option>
                             <option value="CANCEL">Void</option>
                             <option value="WON">Won</option>
                             <option value="LOSS">Loss</option>
                         </select>
-<<<<<<< HEAD
-                    </div>
-                  </form>
-                  <div class="pageId" data-pageid="1"></div>
-                  <section style="padding: 15px 0px;">
-                    <div class="container-fluid">
-                        <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
-                        </div>
-                        <div class="table_data_details_ col-lg-12" style="background-color: #EAEEF7;">
-                          <table >
-                              <thead>
-                                  <tr style="text-align: center;font-size: 11px;">
-                                    <th>S.No</th>
-                                    <th>Date</th>
-                                    <th>User Name</th>
-                                    <th>Event</th>
-                                    <th>Market </th>
-                                    <th>Odds</th>
-                                    <th>Match</th>
-                                    <th>Bet On</th>
-                                    <th>Stake</th>
-                                    <th>Txn ID </th>
-                                    <th>Status</th>
-                                    <th>P/L</th>
-                                  </tr>
-                              </thead>
-                              <tbody class="new-body">
-                                <% for(let i = 0; i < bets.length; i++){%>
-                                  <% let date = new Date(bets[i].date)%>
-                                  <%if((i%2)==0){%>
-                                      <tr style="text-align: center;" class="blue">
-                                  <%}else{%>
-                                      <tr style="text-align: center;" >
-                                  <%}%>
-                                  <td><%=i + 1%></td>
-                                  <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
-                                  <td><%=bets[i].userName%></td>
-                                  <td><%=bets[i].event%></td>
-                                  <%if(bets[i].match){%>
-                                    <td><%=bets[i].marketName%></td>
-                                    <td><%=bets[i].oddValue%></td>
-                                    <td><%=bets[i].match%></td>
-                                    <td><%=bets[i].selectionName%></td>
-                                  <%}else{%>
-                                      <td>-</td>
-                                      <td>-</td>
-                                      <td>-</td>
-                                      <td>-</td>
-                                  <%}%>
-                                  <td><%=bets[i].Stake%></td>
-                                  <td><%=bets[i].transactionId%></td>
-                                  <td><%=bets[i].status%></td>
-                                  <td><%=bets[i].returns%></td>
-                              </tr>
-                              <%}%>
-                                
-                               
-                              </tbody>
-                            </table>
-                            <div class="loadMoredive" >
-                                <a id="loadMore">Load More</a>
-=======
                       </div>
                     </div>
                     </form>
@@ -657,71 +372,10 @@
                         </table>
                             <div class="loadMorediveACC" >
                                 <a id="loadMoreACC">Load More</a>
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                               </div>
                           </div>
                     </div>
                 </section>
-<<<<<<< HEAD
-                  </div>
-              </div>
-            </div>
-            <div id="HORSE RACING" class="tabcontent" style="margin-bottom:15px">
-              <div class="row" style="padding:10px 0px">
-                <form action="" style="display: flex;height: 30px;">
-                <div class="input-group">
-                  <div class="cur-bet-amount-dv">
-
-                  </div>
-                </div>
-                  <div class="">
-                      <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="FdateACC">
-                  </div>
-                  <div class="">
-                      <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="TdateACC">
-                  </div>
-                  <div class="">
-                      <select id="selectACC" class="form-select form-select-sm acount-stat-ro-form-input" aria-label="Default select example">
-                          <option selected>All Reports</option>
-                          <option value="1">Deposit/Withdraw Reports</option>
-                          <option value="2">Game Reports</option>
-                      </select>
-                  </div>
-                  
-                  
-                  <button  id="downloadBtnACC" class="btn acount-stat-ro-titl-form-btnn load">Download PDF </button>
-                  <button  id="pdfDownloadACC" class="btn acount-stat-ro-titl-form-btnn load">Download CSV</button>
-                </form>
-                <div class="pageIdACC" data-pageid="1"></div>
-                <section style="padding: 15px 0px;">
-                  <div class="container-fluid">
-                      <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
-                      </div>
-                      <div class="table_data_details_ col-lg-12" style="background-color: #EAEEF7;">
-                        <table class="acount-stat-tbl" id="table12">
-
-                          <thead class="acount-stat-tbl-hed">
-                              <tr class="acount-stat-tbl-hed-tr">
-                                  <th class="bod-red-lft">SR No.</th>
-                                  <th>Date & Time</th>
-                                  <th>Credit</th>
-                                  <th>Debit</th>
-                                  <th>Stake</th>
-                                  <th>Pts</th>
-                                  <th>Closing</th>
-                                  <th>Description</th>
-                                  <th class="bod-red-rit">Remark</th>
-                              </tr>
-                          </thead>
-  
-                          <tbody class="acount-stat-tbl-body">
-                              <%if(ACCount.length != 0){%>
-                              <%for(let i = 0; i < ACCount.length; i++){%>
-                                  <%
-                                      <!-- var timestamp = `${ACCount[i].time}`;  -->
-                                      var date = new Date(ACCount[i].date);
-                                      var options = { 
-=======
                 </div>
               </div>
               <div id="Greyhound" class="tabcontent">
@@ -751,128 +405,12 @@
                                         <!-- var timestamp = `${historty[i].time}`;  -->
                                         var date = new Date(historty[i].login_time);
                                         var options = { 
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                                           year: 'numeric',
                                           month: 'long',
                                           day: 'numeric',
                                           hour: 'numeric',
                                           minute: 'numeric',
                                           hour12: true
-<<<<<<< HEAD
-                                      };
-                                      var formattedTime = date.toLocaleString('en-US', options);
-                                  %>
-                                  <tr class="acount-stat-tbl-body-tr">
-                                      <td><%=i+1%></td>
-                                      <td><%=formattedTime%></td>
-                                      <%if(ACCount[i].creditDebitamount > 0){%>
-                                          <td><%=ACCount[i].creditDebitamount%></td>
-                                          <td>0</td>
-                                      <%}else{%>
-                                          <td>0</td>
-                                          <td><%=ACCount[i].creditDebitamount%></td>
-                                      <%}%>
-                                      <%if(ACCount[i].stake){%>
-                                          <td><%=ACCount[i].stake%></td>
-                                      <%}else{%>
-                                          <td>-</td>
-                                      <%}%>
-                                      <td>0</td>
-                                      <td><%=ACCount[i].balance%></td>
-                                      <td><%=ACCount[i].description%></td>
-                                      <td>-</td>
-                                  </tr>
-                                  <%}%>
-                                  <%}%>
-                          </tbody>
-  
-                      </table>
-                          <div class="loadMorediveACC" >
-                              <a id="loadMoreACC">Load More</a>
-                            </div>
-                        </div>
-                  </div>
-              </section>
-              </div>
-            </div>
-            <div id="Greyhound" class="tabcontent" style="margin-bottom:15px">
-              <div class="row" style="padding:10px 0px">
-                <div class="pageIdHistory" data-pageid="1"></div>
-                <section style="padding: 15px 0px;">
-                  <div class="container-fluid">
-                      <div class="row" style="background-color: #fff;padding: 15px 0px;border-radius: 10px;margin: auto;">
-                      </div>
-                      <div class="table_data_details_ col-lg-12" style="background-color: #EAEEF7;">
-                        <table class="acount-stat-tbl" >
-
-                          <thead class="acount-stat-tbl-hed">
-                              <tr class="acount-stat-tbl-hed-tr">
-                                  <th class="bod-red-lft">SR No.</th>
-                                  <th>Login Date & Time</th>
-                                  <th>LogOut Date & Time</th>
-                                  <th>IP</th>
-                                  <th class="bod-red-rit">Audit Type</th>
-                              </tr>
-                          </thead>
-  
-                          <tbody class="acount-stat-tbl-body111">
-                              <%if(historty.length != 0){%>
-                              <%for(let i = 0; i < historty.length; i++){%>
-                                  <%
-                                      <!-- var timestamp = `${historty[i].time}`;  -->
-                                      var date = new Date(historty[i].login_time);
-                                      var options = { 
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric',
-                                        hour: 'numeric',
-                                        minute: 'numeric',
-                                        hour12: true
-                                      };
-                                      var formattedTime = date.toLocaleString('en-US', options);
-                                      let date2
-                                      let formattedTime2
-                                      if(!historty[i].isOnline){
-                                         date2 = new Date(historty[i].logOut_time);
-                                         formattedTime2 = date2.toLocaleString('en-US', options);
-
-                                      }
-                                  %>
-                                  <tr class="acount-stat-tbl-body-tr">
-                                      <td><%=i+1%></td>
-                                      <td><%=formattedTime%></td>
-                                      <%if(!historty[i].isOnline){ %>
-                                        <td><%=formattedTime2%></td> 
-                                      <%}else{ %>
-                                        <td>-</td>
-                                      <%} %>
-                                      <td><%=historty[i].ip_address%></td>
-                                      <%if(historty[i].isOnline){ %>
-                                      <td>Online</td>
-                                      <%}else{ %>
-                                        <td>LogOut</td>
-                                      <%} %>
-                                      
-                                  </tr>
-                                  <%}%>
-                                  <%}%>
-                          </tbody>
-  
-                      </table>
-                          <div class="loadMorediveHistory" >
-                              <a id="loadMoreHistory">Load More</a>
-                            </div>
-                        </div>
-                  </div>
-              </section>
-              </div>
-            </div>
-            <div id="Payment" class="tabcontent" style="margin-bottom:15px">
-                <div class="row" style="padding:10px 0px">
-                  
-                </div>
-              </div>
-=======
                                         };
                                         var formattedTime = date.toLocaleString('en-US', options);
                                         let date2
@@ -918,7 +456,6 @@
                   </div>
                 </div>
       </div>
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
   </div>
 </section>
  

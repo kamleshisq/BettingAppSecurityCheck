@@ -3,14 +3,10 @@ const betmodel = require('../model/betmodel');
 const accountStatementByUserModel = require("../model/accountStatementByUserModel");
 const betLimitModel = require('../model/betLimitModel');
 const cricketAndOtherSport = require('../utils/getSportAndCricketList');
-<<<<<<< HEAD
-const commissionModel = require("../model/CommissionModel");
-=======
 const commissionRepportModel = require("../model/commissionReport");
 const commissionModel = require("../model/CommissionModel");
 const commissionMarketModel = require("../model/CommissionMarketsModel");
 const Decimal = require('decimal.js');
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -25,10 +21,7 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
     }
 
 async function placeBet(data){
-<<<<<<< HEAD
-=======
     console.log(data, "data1")
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
     if(check.availableBalance < data.data.stake){
         return "You do not have sufficient balance for bet"
@@ -79,15 +72,6 @@ async function placeBet(data){
             }
             break;
         }else if(marketList.hasOwnProperty(key)) {
-<<<<<<< HEAD
-            const marketData = marketList[key];
-            if (marketData.marketId === data.data.market) {
-              marketDetails =  marketData;
-              break;
-            }
-      }}
-let betPlaceData = {}
-=======
             // console.log(marketList, "LIST")
             const marketData = marketList[key];
             // console.log(marketData, "marketdata1212121")
@@ -111,7 +95,6 @@ let betPlaceData = {}
       }}
 let betPlaceData = {}
 // console.log(marketDetails, 454545454454454545544544444444444)
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 if(!marketDetails.runners){
     betPlaceData = {
         userId : data.LOGINDATA.LOGINUSER._id,
@@ -137,11 +120,8 @@ if(!marketDetails.runners){
 }else{
     let runnersData = JSON.parse(marketDetails.runners)
     let betOn = runnersData.find(item => item.secId == data.data.secId)
-<<<<<<< HEAD
-=======
     console.log(betOn)
     console.log(data.data)
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     // console.log(betOn)
     // return 123
     //og(betOn, 456)
@@ -184,89 +164,16 @@ if(!marketDetails.runners){
     }
     await betmodel.create(betPlaceData)
     await accountStatementByUserModel.create(Acc)
-<<<<<<< HEAD
-    let parentUser
-    let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{balance: - parseFloat(data.data.stake), availableBalance: - parseFloat(data.data.stake), myPL: - parseFloat(data.data.stake), Bets : 1, exposure: parseFloat(data.data.stake)}})
-    if(!user){
-        return "There is no user with that id"
-    }
-    console.log(user.parentUsers[1])
-    let commission = await commissionModel.find({userId:user.parentUsers[1]})
-    console.log(commission, 456)
-    let commissionPer = 0
-    if(marketDetails.title.startsWith('Match Odds') && commission[0].matchOdd.type == "ENTRY"){
-      commissionPer = parseFloat(commission[0].matchOdd.percentage)/100
-    }else if ((marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS')) && commission[0].Bookmaker.type == "ENTRY"){
-      commissionPer = parseFloat(commission[0].Bookmaker.percentage)/100
-    }else if (commission[0].fency.type == "ENTRY" && !(marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('Match'))){
-      commissionPer = parseFloat(commission[0].fency.percentage)/100
-    }
-
-=======
     // let parentUser
     let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{availableBalance: - parseFloat(data.data.stake), myPL: - parseFloat(data.data.stake), Bets : 1, exposure: parseFloat(data.data.stake), uplinePL:parseFloat(data.data.stake), pointsWL:-parseFloat(data.data.stake)}})
     if(!user){
         return "There is no user with that id"
     }
     
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                     
 
 
 
-<<<<<<< HEAD
-    if(user.parentUsers.length < 2){
-        // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
-        // parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:data.data.stake}})
-        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0],{$inc:{availableBalance:parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake), myPL: parseFloat(data.data.stake)}})
-    }else{
-        await userModel.updateMany({ _id: { $in: user.parentUsers.slice(2) } }, {$inc:{balance: -parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake)}})
-        parentUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:parseFloat(data.data.stake), downlineBalance: -parseFloat(data.data.stake), myPL: parseFloat(data.data.stake)}})
-    }
-    let Acc2 = {
-        "user_id":parentUser._id,
-        "description": description2,
-        "creditDebitamount" : parseFloat(data.data.stake),
-        "balance" : parentUser.availableBalance + parseFloat(data.data.stake),
-        "date" : Date.now(),
-        "userName" : parentUser.userName,
-        "role_type" : parentUser.role_type,
-        "Remark":"-",
-        "stake": parseFloat(data.data.stake),
-        "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}Parent`
-    }
-    await accountStatementByUserModel.create(Acc2)
-    if(commissionPer > 0){
-        let WhiteLableUser = await userModel.findByIdAndUpdate(user.parentUsers[1], {$inc:{myPL: - Math.round(commissionPer * data.data.stake), availableBalance : -Math.round(commissionPer * data.data.stake)}})
-        let houseUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{myPL: Math.round(commissionPer * data.data.stake), availableBalance : Math.round(commissionPer * data.data.stake)}}) 
-
-        await accountStatementByUserModel.create({
-          "user_id":WhiteLableUser._id,
-          "description": `commission for ${data.data.title}/stake = ${data.data.stake}`,
-          "creditDebitamount" : - Math.round(commissionPer * data.data.stake),
-          "balance" : WhiteLableUser.availableBalance - Math.round(commissionPer * data.data.stake),
-          "date" : Date.now(),
-          "userName" : WhiteLableUser.userName,
-          "role_type" : WhiteLableUser.role_type,
-          "Remark":"-",
-          "stake": data.data.stake,
-          "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`
-        })
-
-        await accountStatementByUserModel.create({
-          "user_id":houseUser._id,
-          "description": `commission for ${data.data.title}/stake = ${data.data.stake}/from user ${WhiteLableUser.userName}`,
-          "creditDebitamount" : Math.round(commissionPer * data.data.stake),
-          "balance" : houseUser.availableBalance + Math.round(commissionPer * data.data.stake),
-          "date" : Date.now(),
-          "userName" : houseUser.userName,
-          "role_type" : houseUser.role_type,
-          "Remark":"-",
-          "stake": data.data.stake,
-          "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}Parent`
-        })
-    } 
-=======
     // if(user.parentUsers.length < 2){
     //     // await userModel.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: -data.data.stake, downlineBalance: -data.data.stake}})
     //     // parentUser = await userModel.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:data.data.stake}})
@@ -431,7 +338,6 @@ if(!marketDetails.runners){
 
 
 
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     return "Bet placed successfully"
 }
 

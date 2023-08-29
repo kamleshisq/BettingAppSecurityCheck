@@ -94,11 +94,7 @@ exports.login = catchAsync (async(req, res, next) => {
         })
     }else{
         const user = await User.findOne({userName}).select('+password');
-<<<<<<< HEAD
-        // console.log(user.role_type)
-=======
         console.log(user)
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
         if(!user || !(await user.correctPassword(password, user.password))){
             res.status(404).json({
                 status:'error',
@@ -235,19 +231,11 @@ exports.isLogin = catchAsync( async (req, res, next) => {
         return next()
     }
     
-<<<<<<< HEAD
-    // const tokenId = await loginLogs.findOne({session_id:token})
-    // console.log(tokenId, "TOKENID")
-    // if(!tokenId.isOnline){
-    //     return next()
-    // }
-=======
     const tokenId = await loginLogs.findOne({session_id:token})
     // console.log(tokenId, "TOKENID")
     if(!tokenId.isOnline){
         return next()
     }
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     // console.log(token)
     const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
     const currentUser = await User.findById(decoded.A);

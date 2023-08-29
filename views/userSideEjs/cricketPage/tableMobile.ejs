@@ -5,17 +5,11 @@
     </div>
   <%for(let i = 0; i < cricketSeries.length; i++){%>
     <%if(cricketSeries[i].series != "1"){ %>
-<<<<<<< HEAD
-      <div class="series-wise-data">
-        <div class="series-title"><%=cricketSeries[i].series%></div>
-        <%for(let j = 0; j < cricketSeries[i].matchdata.length; j++){%>
-=======
       <%if(!catalog.some(item => item.name == cricketSeries[i].series)){ %>
       <div class="series-wise-data">
         <div class="series-title"><%=cricketSeries[i].series%></div>
         <%for(let j = 0; j < cricketSeries[i].matchdata.length; j++){%>
           <%if(!catalog.some(item => item.Id == cricketSeries[i].matchdata[j].eventData.eventId)){ %>
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
           <%
               
           var timestamp = `${cricketSeries[i].matchdata[j].eventData.time}` * 1000; 
@@ -63,11 +57,7 @@
                       </p>
                     <%}else{%>
                       <p>
-<<<<<<< HEAD
-                        <b><%=cricketSeries[i].matchdata[j].eventData.name%></b>
-=======
                          <b><%=cricketSeries[i].matchdata[j].eventData.name%></b>
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                       </p>
                     <%} %>
                   </p>
@@ -177,13 +167,9 @@
             </a>
           </div>
         <%}%>
-<<<<<<< HEAD
-      </div>
-=======
         <%}%>
       </div>
       <%} %>
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     <%}%>
   <%}%>
   </div>

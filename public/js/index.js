@@ -401,11 +401,7 @@ $(document).on('click','.RoleDetails',function(){
     // console.log("Working")
     let modleName = $(this).data('bs-target')
     let roledata = $(this).parent('td').siblings('.getRoleForPopUP').data('bs-dismiss')
-<<<<<<< HEAD
-    console.log(roledata)
-=======
     let form = $(modleName).find('.UpdateRole-form')
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     // let x = form.find('input[id="check"]').length
     // console.log(x)
     // for(let i = 0; i < x ; i++){

@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 // const validator = require('validator');
 const bycrypt = require('bcrypt');
-<<<<<<< HEAD
-const { default: isEmail } = require('validator/lib/isEmail');
-=======
 // const { default: isEmail } = require('validator/lib/isEmail');
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 // const { string } = require('joi');
 
 const userSchema = mongoose.Schema({
@@ -43,16 +39,6 @@ const userSchema = mongoose.Schema({
     },
     myPL:{
         type:Number,
-<<<<<<< HEAD
-        default:0
-    },
-    uplinePL:{
-        type:Number,
-        default:0
-    },
-    lifetimePL:{
-        type:Number,
-=======
         default:0,
         set: function(value) {
              return parseFloat(value).toFixed(2);
@@ -74,7 +60,6 @@ const userSchema = mongoose.Schema({
     },
     pointsWL:{
         type:Number,
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
         default:0
     },
     // clientPL:{
@@ -204,13 +189,10 @@ const userSchema = mongoose.Schema({
     maxCreditReference:{
         type:Number,
         default:100000
-<<<<<<< HEAD
-=======
     },
     commission:{
         type:Number,
         default:0
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     }
 })
 
@@ -229,8 +211,6 @@ userSchema.pre(/^find/, function(next){
     next()
 })
 
-<<<<<<< HEAD
-=======
 // userSchema.pre('save', function (next) {
 //     this.myPL = roundToTwoDecimals(this.myPL);
 //     this.uplinePL = roundToTwoDecimals(this.uplinePL);
@@ -272,7 +252,6 @@ userSchema.virtual('roundedPointsWL').get(function () {
 }).set(function (value) {
     this.pointsWL = parseFloat(value);
 });
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 // userSchema.pre(/^find/, async function(next){
 //     this.find({isActive:true})
 // })

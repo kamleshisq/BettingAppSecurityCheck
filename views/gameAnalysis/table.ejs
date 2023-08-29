@@ -1,45 +1,4 @@
 <table>
-<<<<<<< HEAD
-    <thead>
-        <tr >
-          <th>S.No</th>
-          <th>Games</th>
-          <th>Total Users</th>
-          <th>Total Bets</th>
-          <th>Won</th>
-          <th>Lost</th>
-          <th>Void </th>
-          <th>Open </th>
-          <th>P/L</th>
-        </tr>
-    </thead>
-    <tbody class="new-body">
-      <%for(let i = 0; i<gameAnalist.length; i++){%>
-        <%if(i % 2 == 0){%>
-          <tr class="blue">
-        <%}else{%>
-          <tr  >
-        <%}%>
-          <td><%=i + 1%></td>
-          <td><%=gameAnalist[i]._id%></td>
-          <td><%=gameAnalist[i].Total_User%></td>
-          <td><%=gameAnalist[i].betcount%></td>
-          <td> <%=gameAnalist[i].won%> </td>
-          <td><%=gameAnalist[i].loss%></td>
-          <td>-</td>
-          <td><%=gameAnalist[i].open%></td>
-          <%if(gameAnalist[i].returns > 0){%>
-            <td style="color:#46BCAA">+<%=gameAnalist[i].returns%></td>
-          <%}else{%>
-            <td style="color:#FE3030"><%=gameAnalist[i].returns%></td>
-          <%}%>
-        </tr>
-      <%}%>
-      
-     
-    </tbody>
-  </table>
-=======
   <thead>
       <tr >
         <th>S.No</th>
@@ -79,4 +38,3 @@
    
   </tbody>
 </table>
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd

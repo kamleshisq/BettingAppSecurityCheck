@@ -14,13 +14,10 @@ const commission = mongoose.Schema({
         type:{
             type:String,
             default:"WIN"
-<<<<<<< HEAD
-=======
         },
         status:{
             type:Boolean,
             default:false
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
         }
     },
     Bookmaker:{
@@ -30,15 +27,11 @@ const commission = mongoose.Schema({
         },
         type:{
             type:String,
-<<<<<<< HEAD
-            default:"WIN"
-=======
             default:"ENTRY"
         },
         status:{
             type:Boolean,
             default:false
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
         }
     },
     fency:{
@@ -48,15 +41,11 @@ const commission = mongoose.Schema({
         },
         type:{
             type:String,
-<<<<<<< HEAD
-            default:"WIN"
-=======
             default:"ENTRY"
         },
         status:{
             type:Boolean,
             default:false
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
         }
     }
 })

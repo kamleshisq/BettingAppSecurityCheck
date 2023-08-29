@@ -690,45 +690,6 @@ socket.on('connect', () => {
             socket.emit('commissionData', {LOGINDATA, dataId})
         })
 
-<<<<<<< HEAD
-        // socket.on("commissionData", data => {
-        //     // console.log(data)
-        //     if(data.status === "error"){
-        //         alert("Please try again later")
-        //     }else{
-        //         console.log(data)
-        //         let modleName = "#myModal2"
-        //         let form = $(modleName).find('.form-data')
-        //         console.log(data.commissionData[0].matchOdd.percentage)
-        //         form.attr('id', data.id);
-        //         form.find('input[name="matchOdds"]').attr('value', data.commissionData[0].matchOdd.percentage);
-        //         form.find('input[name="Bookmaker"]').attr('value', data.commissionData[0].Bookmaker.percentage);
-        //         form.find('input[name="fency"]').attr('value', data.commissionData[0].fency.percentage);
-        //         let html1 = `<option value="WIN" selected>WIN_COMMISSION</option>
-        //         <option value="ENTRY">Entry Wise Commission</option>`
-        //         let html2 = `<option value="WIN">WIN_COMMISSION</option>
-        //         <option value="ENTRY" selected>Entry Wise Commission</option>`
-
-        //         if(data.commissionData[0].fency.type == "WIN"){
-        //             form.find('select[name="fencyType"]').html(html1)
-        //         }else{
-        //             form.find('select[name="fencyType"]').html(html2)
-        //         }
-
-        //         if(data.commissionData[0].Bookmaker.type == "WIN"){
-        //             form.find('select[name="BookmakerType"]').html(html1)
-        //         }else{
-        //             form.find('select[name="BookmakerType"]').html(html2)
-        //         }
-
-        //         if(data.commissionData[0].matchOdd.type == "WIN"){
-        //             form.find('select[name="matchOddsType"]').html(html1)
-        //         }else{
-        //             form.find('select[name="matchOddsType"]').html(html2)
-        //         }
-        //     }
-        // })
-=======
         socket.on("commissionData", data => {
             console.log(data)
             if(data.status === "error"){
@@ -808,7 +769,6 @@ socket.on('connect', () => {
                 form.find('select[name="matchOdds"]').val(`${data.commissionData[0].matchOdd.percentage}`)
             }
         })
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 
 
         $(document).on("submit", ".CommissionForm", function(e){
@@ -818,8 +778,6 @@ socket.on('connect', () => {
             let data = Object.fromEntries(fd.entries());
             data.id = this.id
             console.log(data)
-<<<<<<< HEAD
-=======
             if(data.matchOddsStatus){
                 data.matchOddsStatus = true
             }else{
@@ -836,7 +794,6 @@ socket.on('connect', () => {
                 data.BookmakerStatus = false
             }
             // console.log(data)
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
             socket.emit("updateCommission", {LOGINDATA, data})
         })
 
@@ -1238,11 +1195,7 @@ socket.on('connect', () => {
 
                     }
                     html += `
-<<<<<<< HEAD
-                    <td><span class="role-type"> ${response[i].roleName} </span></td>
-=======
                     <td> ${response[i].roleName}</td>
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                     <td> ${response[i].balance}</td>
                     <td> ${response[i].availableBalance}</td>
                     <td> ${response[i].downlineBalance}</td>
@@ -1603,36 +1556,6 @@ socket.on('connect', () => {
                     <html>
                         <head>
                         <title>Account Statement</title>
-<<<<<<< HEAD
-                        <style>
-                            .ownAccDetails {
-                                color: black;
-                                border: none;
-                                background-color: inherit;
-                                padding: 14px 28px;
-                                font-size: 16px;
-                                cursor: pointer;
-                                display: inline-block;
-                            }
-                            body {
-                            font-family: Arial, sans-serif;
-                            margin: 20px;
-                            }
-                            table {
-                            border-collapse: collapse;
-                            width: 100%;
-                            }
-                            th, td {
-                            border: 1px solid #ccc;
-                            padding: 8px;
-                            }
-                            th {
-                            background-color: #f2f2f2;
-                            font-weight: bold;
-                            }
-                        </style>
-=======
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                         </head>
                         <body>
                         ${table.outerHTML}
@@ -1726,11 +1649,7 @@ socket.on('connect', () => {
             let html = ``
             if(data.transactionId){
                 html += `<thead>
-<<<<<<< HEAD
-                <tr style="text-align: center;font-size: 11px;color: #fff;">
-=======
                 <tr >
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                   <th>Date</th>
                   <th>Event</th>
                   <th>Market</th>
@@ -1741,13 +1660,8 @@ socket.on('connect', () => {
                   <th>Returns</th>
                 </tr>
             </thead>`
-<<<<<<< HEAD
-                html += `<tbody class="new-body" style="font-size: 11px;">
-                <tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>
-=======
                 html += `<tbody class="new-body" >
                 <tr  class="blue"><td>${new Date(data.date)}</td>
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                 <td>${data.event}</td>`
                 if(data.marketName){
                     html += `<td>${data.marketName}</td>`
@@ -1773,11 +1687,7 @@ socket.on('connect', () => {
                 model.find('table').html(html)
             }else{
                 html += `<thead>
-<<<<<<< HEAD
-                <tr style="text-align: center;font-size: 11px;color: #fff;">
-=======
                 <tr >
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                   <th>Date</th>
                   <th>Credit</th>
                   <th>Debit</th>
@@ -1787,11 +1697,7 @@ socket.on('connect', () => {
                   <th>Remarks</th>
                 </tr>
             </thead>
-<<<<<<< HEAD
-            <tbody class="new-body" style="font-size: 11px;">`
-=======
             <tbody class="new-body" >`
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                 html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>`
                 if(data.creditDebitamount>0){
                     html += `<td>${data.creditDebitamount}</td><td>0</td>`
@@ -1988,11 +1894,7 @@ socket.on('connect', () => {
                 if(data.page == 0){
                     count1 = 1;
 
-<<<<<<< HEAD
-                        $('table').html(`<tr style="text-align: center;font-size: 11px;">+
-=======
                         $('table').html(`<tr >+
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                         "<th>S.No</th>" +
                         "<th>Date</th>" +
                         "<th>Time</th>" +
@@ -2084,11 +1986,7 @@ socket.on('connect', () => {
                             }
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
-<<<<<<< HEAD
-                        <td><button class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
-=======
                         <td><button class="ownAccDetails" id="${data.json.userAcc[i]._id}"  data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                         <td>-</td>`
                     }
                 }
@@ -2335,91 +2233,6 @@ socket.on('connect', () => {
     // }
 
     if(pathname == "/admin/casinocontrol"){
-<<<<<<< HEAD
-        let BACCARAT,CASUALGAMES,FISHSHOOTING ,ANDARBAHAR,INSTANTWINGAMES,LIVE,BLACKJACK,FH,GAME,KENO,LIVEBACCARAT= false;
-        let RGV = false;
-        let EZ = false;
-        let EG = false;
-        $("#BACCARAT").click(function(){
-            if(!BACCARAT){
-                console.log("1")
-                socket.emit('BACCARAT', "on")
-                BACCARAT = true
-            }
-        })
-        $("#ANDARBAHAR").click(function(){
-            if(!ANDARBAHAR){
-                console.log("1")
-                socket.emit('ANDARBAHAR', "on")
-                ANDARBAHAR = true
-            }
-        })
-        $("#CASUALGAMES").click(function(){
-            if(!CASUALGAMES){
-                // console.log("1")
-                socket.emit('CASUALGAMES', "on")
-                CASUALGAMES = true
-            }
-        })
-        $("#FISHSHOOTING").click(function(){
-            if(!FISHSHOOTING){
-                // console.log("1")
-                socket.emit('FISHSHOOTING', "on")
-                FISHSHOOTING = true
-            }
-        })
-        $("#INSTANTWINGAMES").click(function(){
-            if(!INSTANTWINGAMES){
-                // console.log("1")
-                socket.emit('INSTANTWINGAMES', "on")
-                INSTANTWINGAMES = true
-            }
-        })
-        $("#LIVE").click(function(){
-            if(!LIVE){
-                // console.log("1")
-                socket.emit('LIVE', "on")
-                LIVE = true
-            }
-        })
-        $("#BLACKJACK").click(function(){
-            if(!BLACKJACK){
-                // console.log("1")
-                socket.emit('BLACKJACK', "on")
-                BLACKJACK = true
-            }
-        })
-        $("#FH").click(function(){
-            if(!FH){
-                // console.log("1")
-                socket.emit('FH', "on")
-                FH = true
-            }
-        })
-        $("#GAME").click(function(){
-            if(!GAME){
-                // console.log("1")
-                socket.emit('GAME', "on")
-                GAME = true
-            }
-        })
-        $("#KENO").click(function(){
-            if(!KENO){
-                // console.log("1")
-                socket.emit('KENO', "on")
-                KENO = true
-            }
-        })
-        $("#LIVEBACCARAT").click(function(){
-            if(!LIVEBACCARAT){
-                // console.log("1")
-                socket.emit('LIVEBACCARAT', "on")
-                LIVEBACCARAT = true
-            }
-        })
-
-
-=======
         let baccarat = false;
         let RGV = false;
         let EZ = false;
@@ -2431,7 +2244,6 @@ socket.on('connect', () => {
                 baccarat = true
             }
         })
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 
         $("#RGV").click(function(){
             if(!RGV){
@@ -2455,17 +2267,6 @@ socket.on('connect', () => {
             }
         })
 
-<<<<<<< HEAD
-        socket.on('baccarat1', (data) => {
-            console.log(data)
-            let html = ""
-            for(let i = 0 ; i < data.data.length; i++){
-                if(data.data[i].status){
-                    html += `<div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;">
-                    <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>
-                    <span>OFF &nbsp; <label class="switch">
-                    <input type="checkbox" class="change_status" data-id="${data.data[i].game_id}" checked>
-=======
         socket.on('baccarat1', (data1) => {
             let html = ""
             for(let i = 0 ; i < data1.length; i++){
@@ -2474,32 +2275,20 @@ socket.on('connect', () => {
                     <span>${data1[i].game_name} (${data1[i].sub_provider_name})</span>
                     <span>OFF &nbsp; <label class="switch">
                     <input type="checkbox" checked>
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                     <span class="slider round"></span>
                     </label>&nbsp; ON</span>
                   </div>`
                 }else{
                     html += `<div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;">
-<<<<<<< HEAD
-                    <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>
-                    <span>OFF &nbsp; <label class="switch">
-                    <input type="checkbox" class="change_status" data-id="${data.data[i].game_id}">
-=======
                     <span>${data1[i].game_name} (${data1[i].sub_provider_name})</span>
                     <span>OFF &nbsp; <label class="switch">
                     <input type="checkbox">
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                     <span class="slider round"></span>
                     </label>&nbsp; ON</span>
                   </div>`
                 }
             }
-<<<<<<< HEAD
-            console.log($('#'+data.id).parent().next())
-            $('#'+data.id).parent().next().children('.accordion-body').html(html)
-=======
             document.getElementById('accordion-body').innerHTML = html
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
         });
 
         socket.on("RGV1", (data)=>{
@@ -2554,47 +2343,6 @@ socket.on('connect', () => {
                 document.getElementById('ZEd').innerHTML = html
             }
         })
-<<<<<<< HEAD
-
-        $(document).on('click','.change_status',function(e){
-            let status = $(this).prop('checked') ? true : false;
-                let id = $(this).data('id')
-                if(id){
-                    socket.emit('casionoStatusChange',{status,id})
-                }
-        })
-
-        socket.on('casionoStatusChange',async(data)=>{
-            console.log(data)
-        })
-    }
-
-    if(pathname == "/admin/catalogcontrol/compitations" || pathname == "/admin/catalogcontrol/compitations/events"){
-        $(document).on('click','.status_check',function(){
-            let status = $(this).prop('checked') ? true : false;
-            let id = $(this).data('id')
-            if(id){
-                if(confirm('do you want to change status')){
-                    socket.emit('sportStatusChange',{status,id})
-                }else{
-                    if(status){
-                        $(this).prop('checked','')
-                    }else{
-                        $(this).prop('checked','checked')
-                    }
-                }
-            }
-        })
-
-        socket.on('sportStatusChange',async(data)=>{
-            if(data.status == 'success'){
-                console.log(data.msg)
-            }else{
-                console.log('somethig went wrong!!')
-            }
-        })
-=======
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     }
 
 
@@ -4074,17 +3822,11 @@ socket.on('connect', () => {
             if(data.message === "updated"){
                 let html = ``
                 if(data.status){
-<<<<<<< HEAD
-                    html += `<a class="btn-green">Enable </a>`
-                }else{
-                    html += `<a class="btn-green">Disable </a>`
-=======
                     html += `Enable`
                     document.getElementById(`${data.id}`).classList.remove("disable")
                 }else{
                     html += `Disable`
                     document.getElementById(`${data.id}`).classList.add("disable")
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                 }
                 document.getElementById(`${data.id}`).innerHTML = html
             }else{
@@ -8508,18 +8250,6 @@ socket.on('connect', () => {
             }
         })
     }
-<<<<<<< HEAD
-    
-    
-   
-
-
-
-
-
-
-    
-=======
 
     if(pathname == "/admin/catalogcontrol/compitations"){
         $(document).on('click','.status_check',function(){
@@ -8706,6 +8436,5 @@ socket.on('connect', () => {
         }
     })
 
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 })
 })

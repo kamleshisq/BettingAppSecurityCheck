@@ -35,23 +35,13 @@ const loginLogs =  require("./model/loginLogs");
 const settlement = require("./model/sattlementModel");
 const mapBet = require("./websocketController/mapBetsController");
 const commissionModel = require("./model/CommissionModel");
-<<<<<<< HEAD
-const catalogController = require("./model/catalogControllModel")
-=======
 const catalogController = require("./model/catalogControllModel");
 const commissionMarketModel = require("./model/CommissionMarketsModel");
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
     let loginData = {}
     // console.log(global)
-<<<<<<< HEAD
-    loginData.User = global._User
-    loginData.Token = global._token.split(';')[0]
-    if(!loginData.Token.startsWith("JWT")){
-        loginData.Token = global._token.split(';')[1]
-=======
     if(global._token){
         loginData.User = global._User
         loginData.Token = global._token.split(';')[0]
@@ -61,7 +51,6 @@ io.on('connection', (socket) => {
     }else{
         loginData.User = ""
         loginData.Token = ""
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     }
     // console.log(loginData.Token)
     // console.log(global._token)
@@ -467,94 +456,6 @@ io.on('connection', (socket) => {
         socket.emit('URLlINK', urldata.url)
     })
 
-<<<<<<< HEAD
-
-    // Game Controller ********************
-    
-    socket.on('BACCARAT', async(A) => {
-       
-        let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("BACCARAT","i")},{category:new RegExp("BACCARAT","i")},{game_code:new RegExp("BACCARAT","i")}]})
-        socket.emit('baccarat1', {data,id:"BACCARAT"})
-    })
-    socket.on('CASUALGAMES', async(A) => {
-        let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("CASUAL","i")},{category:new RegExp("CASUAL","i")},{game_code:new RegExp("CASUAL","i")}]})
-        socket.emit('baccarat1', {data,id:"CASUALGAMES"})
-    })
-    socket.on('FISHSHOOTING', async(A) => {
-        let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("FISH","i")},{category:new RegExp("FISH","i")},{game_code:new RegExp("FISH","i")}]})
-        socket.emit('baccarat1', {data,id:"FISHSHOOTING"})
-    })
-    socket.on('INSTANTWINGAMES', async(A) => {
-        let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("INSTANT","i")},{category:new RegExp("INSTANT","i")},{game_code:new RegExp("INSTANT","i")}]})
-        socket.emit('baccarat1', {data,id:"INSTANTWINGAMES"})
-    })
-    socket.on('LIVE', async(A) => {
-        let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("LIVE","i")},{category:new RegExp("LIVE","i")},{game_code:new RegExp("LIVE","i")}]})
-        socket.emit('baccarat1', {data,id:"LIVE"})
-    })
-    socket.on('BLACKJACK', async(A) => {
-        let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("BLACK","i")},{category:new RegExp("BLACK","i")},{game_code:new RegExp("BLACK","i")}]})
-        socket.emit('baccarat1', {data,id:"BLACKJACK"})
-    })
-    socket.on('FH', async(A) => {
-        let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("FH","i")},{category:new RegExp("FH","i")},{game_code:new RegExp("FH","i")}]})
-        socket.emit('baccarat1', {data,id:"FH"})
-    })
-    socket.on('GAME', async(A) => {
-        let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("GAME","i")},{category:new RegExp("GAME","i")},{game_code:new RegExp("GAME","i")}]})
-        socket.emit('baccarat1', {data,id:"GAME"})
-    })
-    socket.on('KENO', async(A) => {
-        let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("KENO","i")},{category:new RegExp("KENO","i")},{game_code:new RegExp("KENO","i")}]})
-        socket.emit('baccarat1', {data,id:"KENO"})
-    })
-    socket.on('LIVEBACCARAT', async(A) => {
-        let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("BACCARAT","i")},{category:new RegExp("BACCARAT","i")},{game_code:new RegExp("BACCARAT","i")}]})
-        socket.emit('baccarat1', {data,id:"LIVEBACCARAT"})
-    })
-    socket.on('ANDARBAHAR', async(A) => {
-        let data
-        data = await gameModel.find({$or:[{game_name:new RegExp("ANDAR","i")},{category:new RegExp("ANDAR","i")},{game_code:new RegExp("ANDAR","i")}]})
-        socket.emit('baccarat1', {data,id:"ANDARBAHAR"})
-    })
-
-
-
-    socket.on("RGV", async(A)=>{
-        let data;
-        data = await gameModel.find({sub_provider_name:"Royal Gaming Virtual"})
-       
-        socket.emit("RGV1", {data, provider:"RGV"})
-    })
-
-    socket.on('casionoStatusChange',async(data)=>{
-        try{
-            if(data.status){
-                await gameModel.updateOne({game_id:data.id},{status:true})
-            }else{
-                await gameModel.updateOne({game_id:data.id},{status:false})
-            }
-            socket.emit('casionoStatusChange',{status:'success'})
-        }catch(error){
-            socket.emit('casionoStatusChange',{status:'fail'})
-
-        }
-    })
-    
-
-    socket.on('ElementID',async(data)=>{
-       
-=======
     socket.on('baccarat', async(A) => {
         // console.log(data)
         let data
@@ -571,7 +472,6 @@ io.on('connection', (socket) => {
 
     socket.on('ElementID',async(data)=>{
         // console.log(data)
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
         const acc = await AccModel.findById(data)
         // console.log(acc, 132)
         let bet = {}
@@ -1038,15 +938,9 @@ io.on('connection', (socket) => {
 
 
     socket.on('betDetails', async(data) => {
-<<<<<<< HEAD
-        console.log(data)
-        let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
-        console.log(marketDetails.data.items)
-=======
         // console.log(data)
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
         // console.log(marketDetails.data.items)
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
         let thatMarket = marketDetails.data.items[0]
         if(data.data.secId.startsWith('odd_Even_')){
             if(data.data.secId == "odd_Even_Yes"){
@@ -1063,12 +957,8 @@ io.on('connection', (socket) => {
                 }
                 data.data.odds = odds
             }
-<<<<<<< HEAD
-        }else{
-=======
         }else if(thatMarket.title != "Bookmaker 0%Comm" && thatMarket.title != "TOSS"){
             // console.log(thatMarket, 45454545454)
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
             let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
             let name
             if(data.data.secId.slice(-1) > 3){
@@ -1079,8 +969,6 @@ io.on('connection', (socket) => {
             let odds = realodd[name];
             data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
-<<<<<<< HEAD
-=======
         }else{
             // console.log(thatMarket, 4545454)
             let realodd = thatMarket.runners.find(item => item.secId == data.data.secId.slice(0,-1))
@@ -1099,7 +987,6 @@ io.on('connection', (socket) => {
             let odds = realodd[name];
             data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
         }
         // console.log(data.data)
         let result = await placeBet(data)
@@ -1832,34 +1719,6 @@ io.on('connection', (socket) => {
         // console.log(data)
     })
 
-<<<<<<< HEAD
-    socket.on('sportStatusChange',async(data) => {
-        try{
-            let msg;
-            let sport;
-            if(data.status){
-                sport = await catalogController.updateOne({Id:data.id},{status:true})
-                if(sport.type == 'event'){
-                    msg = 'event activated'
-                }else{
-                    msg = 'series activated'
-                }
-            }else{
-                sport = await catalogController.updateOne({Id:data.id},{status:false})
-                if(sport.type == 'event'){
-                    msg = 'event deactivated'
-                }else{
-                    msg = 'series deactivated'
-                }
-            }
-            socket.emit('sportStatusChange',{status:'success',msg})
-        }catch(error){
-            socket.emit('sportStatusChange',{status:'fail'})
-        }
-    })
-
-=======
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     socket.on("UserSideSEarchLive", async(data) => {
         if(data != "LessTheN3"){
             let allData =  await getCrkAndAllData()
@@ -2520,21 +2379,12 @@ io.on('connection', (socket) => {
     })
 
     socket.on("updateCommission", async(data) => {
-<<<<<<< HEAD
-        console.log(data)
-        try{
-            let newValues = {
-                matchOdd: { percentage: data.data.matchOdds, type: `${data.data.matchOddsType}` },
-                Bookmaker: { percentage: data.data.Bookmaker, type:  `${data.data.BookmakerType}` },
-                fency: { percentage: data.data.fency, type: `${data.data.fencyType}` }
-=======
         // console.log(data)
         try{
             let newValues = {
                 matchOdd: { percentage: data.data.matchOdds, type: `${data.data.matchOddsType}` , status: data.data.matchOddsStatus},
                 Bookmaker: { percentage: data.data.Bookmaker, type:  `${data.data.BookmakerType}`, status: data.data.BookmakerStatus},
                 fency: { percentage: data.data.fency, type: `${data.data.fencyType}`, status: data.data.fencyStatus}
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
             }
             let newdata = await commissionModel.findOneAndUpdate({userId:data.data.id}, newValues)
 
@@ -2571,8 +2421,6 @@ io.on('connection', (socket) => {
         console.log(CommissionData)
         socket.emit("CommissionRReport", {CommissionData, page})
     })
-<<<<<<< HEAD
-=======
 
     socket.on('sportStatusChange',async(data) => {
         console.log(data)
@@ -2744,7 +2592,6 @@ io.on('connection', (socket) => {
             socket.emit("commissionMarketbyId", "err")
         }
     })
->>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     
 })
 
