@@ -5843,7 +5843,7 @@ var createRole = function createRole(data) {
     type: 'post',
     data: data,
     success: function success(data) {
-      setTimeout(alert('role created successfully'), window.location.href = '/admin/userManagement');
+      setTimeout(alert('role created successfully'), window.location.reload(true));
     },
     error: function error(_error) {
       alert(_error.responseJSON.message);
@@ -7118,31 +7118,6 @@ $('.createRole-form').submit(function (e) {
 //     })
 // };
 
-$(document).on("submit", ".UpdateRole-form", function (e) {
-  e.preventDefault();
-  var id = $(this).attr("id");
-  var roleName = document.getElementById("mySelect").value;
-  var role_level = document.getElementById("role_level").value;
-  var authorization = [];
-  var roleAuthorization = [];
-  var authCheck = document.querySelectorAll("input[name='authorization']:checked");
-  for (var i = 0; i < authCheck.length; i++) {
-    roleAuthorization.push(authCheck[i].value);
-  }
-  var checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-  for (var _i2 = 0; _i2 < checkboxes.length; _i2++) {
-    authorization.push(checkboxes[_i2].value);
-  }
-  var data = {
-    id: id,
-    authorization: authorization,
-    userAuthorization: roleAuthorization,
-    roleName: roleName,
-    role_level: role_level
-  };
-  console.log(data);
-  (0, _updateRoleByaxios.updateRole)(data);
-});
 if (document.querySelector('.ChangeFORM')) {
   document.querySelector('.ChangeFORM').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -7273,16 +7248,37 @@ $(document).on('click', '.RoleDetails', function () {
   for (var i = 0; i < roledata.authorization.length; i++) {
     form.find("input[value = \"".concat(roledata.authorization[i], "\"]")).attr("checked", "checked");
   }
-  for (var _i3 = 0; _i3 < roledata.userAuthorization.length; _i3++) {
-    form.find("input[value = \"".concat(roledata.userAuthorization[_i3], "\"]")).attr("checked", "checked");
+  for (var _i2 = 0; _i2 < roledata.userAuthorization.length; _i2++) {
+    form.find("input[value = \"".concat(roledata.userAuthorization[_i2], "\"]")).attr("checked", "checked");
   }
   // document.getElementById("role_controller").innerHTML = `
   //         <label for="level"> <h3>Role Level </h3></label><br>
   //         <input type="number" name="level" placeholder='${roledata.role_level}' id='role_level'>`
 });
-// console.log($(".RoleDetails"))
-// console.log($(".load"))
 
+$(document).on("submit", ".UpdateRole-form", function (e) {
+  e.preventDefault();
+  var id = $(this).attr("id");
+  var roleName = document.getElementById("mySelect").value;
+  var authorization = [];
+  var roleAuthorization = [];
+  var authCheck = document.querySelectorAll("input[name='authorization']:checked");
+  for (var i = 0; i < authCheck.length; i++) {
+    roleAuthorization.push(authCheck[i].value);
+  }
+  var checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
+  for (var _i3 = 0; _i3 < checkboxes.length; _i3++) {
+    authorization.push(checkboxes[_i3].value);
+  }
+  var data = {
+    id: id,
+    authorization: authorization,
+    userAuthorization: roleAuthorization,
+    roleName: roleName
+  };
+  console.log(data);
+  (0, _updateRoleByaxios.updateRole)(data);
+});
 $(document).on('click', '.deleteRole', function (e) {
   var roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
   if (confirm('do you want to delete this role')) {

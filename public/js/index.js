@@ -248,31 +248,7 @@ $('.createRole-form').submit(function(e) {
 // };
 
 
-$(document).on("submit", ".UpdateRole-form", function(e){
-    e.preventDefault()
-    let id = $(this).attr("id")
-    let roleName = document.getElementById("mySelect").value
-    let role_level = document.getElementById("role_level").value
-    let authorization = [];
-    let roleAuthorization = [];
-    let authCheck = document.querySelectorAll("input[name='authorization']:checked");
-    for (let i = 0 ; i < authCheck.length; i++) {
-        roleAuthorization.push(authCheck[i].value)
-    }
-    let checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-    for (let i = 0 ; i < checkboxes.length; i++) {
-        authorization.push(checkboxes[i].value)
-    }
-    let data = {
-        id,
-        authorization,
-        userAuthorization:roleAuthorization,
-        roleName,
-        role_level
-    }
-    console.log(data)
-    updateRole(data)
-})
+
 
 if(document.querySelector('.ChangeFORM')){
     document.querySelector('.ChangeFORM').addEventListener('submit', e =>{
@@ -424,9 +400,30 @@ $(document).on('click','.RoleDetails',function(){
     //         <label for="level"> <h3>Role Level </h3></label><br>
     //         <input type="number" name="level" placeholder='${roledata.role_level}' id='role_level'>`
 });
-// console.log($(".RoleDetails"))
-// console.log($(".load"))
 
+$(document).on("submit", ".UpdateRole-form", function(e){
+    e.preventDefault()
+    let id = $(this).attr("id")
+    let roleName = document.getElementById("mySelect").value
+    let authorization = [];
+    let roleAuthorization = [];
+    let authCheck = document.querySelectorAll("input[name='authorization']:checked");
+    for (let i = 0 ; i < authCheck.length; i++) {
+        roleAuthorization.push(authCheck[i].value)
+    }
+    let checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
+    for (let i = 0 ; i < checkboxes.length; i++) {
+        authorization.push(checkboxes[i].value)
+    }
+    let data = {
+        id,
+        authorization,
+        userAuthorization:roleAuthorization,
+        roleName
+        }
+    console.log(data)
+    updateRole(data)
+})
 $(document).on('click','.deleteRole',function(e){
     let roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss')
     if(confirm('do you want to delete this role')){

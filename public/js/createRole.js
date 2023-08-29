@@ -5,7 +5,7 @@ export const createRole = (data) => {
         data,
         success:function(data){
             setTimeout(alert('role created successfully'),
-            window.location.href='/admin/userManagement')
+            window.location.reload(true))
         },
         error:function(error){
             alert(error.responseJSON.message)
