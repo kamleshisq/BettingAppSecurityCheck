@@ -333,7 +333,7 @@ module.exports = () => {
                                 }
                                 }catch(err){
                                     console.log(err)
-                                }
+                                } 
                                 try{
                                     for(let i = user.parentUsers.length - 1; i >= 1; i--){
                                         let childUser = await userModel.findById(user.parentUsers[i])
