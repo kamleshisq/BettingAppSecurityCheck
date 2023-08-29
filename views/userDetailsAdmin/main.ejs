@@ -280,9 +280,11 @@
                                  
                                 </tbody>
                               </table>
-                              <div class="loadMoredive" >
-                                  <a id="loadMore">Load More</a>
-                                </div>
+                              <% for(bets.length > 0){%>
+                                <div class="loadMoredive" >
+                                    <a id="loadMore">Load More</a>
+                                  </div>
+                              <%}%>
                             </div>
                       </div>
                   </section>
@@ -370,9 +372,11 @@
                             </tbody>
     
                         </table>
-                            <div class="loadMorediveACC" >
-                                <a id="loadMoreACC">Load More</a>
-                              </div>
+                        <%if(ACCount.length != 0){%>
+                          <div class="loadMorediveACC" >
+                              <a id="loadMoreACC">Load More</a>
+                          </div>
+                        <%}%>
                           </div>
                     </div>
                 </section>
@@ -442,9 +446,11 @@
                             </tbody>
     
                         </table>
-                            <div class="loadMorediveHistory" >
-                                <a id="loadMoreHistory">Load More</a>
-                              </div>
+                        <%if(historty.length != 0){%>
+                          <div class="loadMorediveHistory" >
+                              <a id="loadMoreHistory">Load More</a>
+                            </div>
+                        <%}%>
                           </div>
                     </div>
                 </section>

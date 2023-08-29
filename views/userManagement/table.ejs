@@ -116,7 +116,7 @@
                       <%}%>
                       <%if(currentUser.role.authorization.includes('changeUserPassword')){%>
                         <button data-bs-toggle="modal" data-bs-target="#myModal3"
-                          class="PasswordChange" title="Reset User Password">P</button>
+                          class="PasswordChange" title="Change Password">P</button>
                       <%}%>
                       <%if(currentUser.role.authorization.includes('betLockAndUnloack')){%>
                         <%if(users[i].betLock){%>
@@ -130,7 +130,7 @@
                           class="StatusChange" title="Change Status">CS</button>
                       <%}%>
                       <%if(currentUser.role.authorization.includes('userName')){%>
-                        <button class="UserDetails" title="Edit"><i class="fa-solid fa-database"></i></button>
+                        <button class="UserDetails" title="View details"><i class="fa-solid fa-database"></i></button>
                       <%}%>
                     </div>
                   </td>
