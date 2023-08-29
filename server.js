@@ -978,7 +978,7 @@ io.on('connection', (socket) => {
             }else{
                 name = `backPrice${data.data.secId.slice(-1)}`
             }
-            console.log(realodd)
+            console.log(realodd[name], realodd, "realodds")
             let odds = realodd[name];
             data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
