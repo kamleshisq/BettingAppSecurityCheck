@@ -2,6 +2,10 @@
   <div class="exchange-pg-tbl-ro2 data-with-series">
     <%for(let i = 0; i < tennisSeries.length; i++){%>
       <%if(tennisSeries[i].series != "1"){ %>
+<<<<<<< HEAD
+=======
+        <%if(!catalog.some(item => item.name == tennisSeries[i].series)){ %>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
         <table class="acount-stat-tbl myTable">
     
           <thead class="acount-stat-tbl-hed">
@@ -17,6 +21,10 @@
           <tbody class="acount-stat-tbl-body">
               <tr class="series-title"><td colspan="9"><p><%=tennisSeries[i].series%></p></td></tr>
               <%for(let j = 0; j < tennisSeries[i].matchdata.length; j++){%>
+<<<<<<< HEAD
+=======
+                <%if(!catalog.some(item => item.Id == tennisSeries[i].matchdata[j].eventData.eventId)){ %>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                 <%
                 
                 var timestamp = `${tennisSeries[i].matchdata[j].eventData.time}` * 1000; 
@@ -203,9 +211,17 @@
                 </tr>
               
               <%} %>
+<<<<<<< HEAD
           </tbody>
     
         </table>
+=======
+              <%} %>
+          </tbody>
+    
+        </table>
+        <%} %>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
       <%}%>
     <%} %>
           

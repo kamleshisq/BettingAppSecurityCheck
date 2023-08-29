@@ -1,6 +1,10 @@
 <table>
     <thead>
+<<<<<<< HEAD
         <tr style="text-align: center;font-size: 11px;">
+=======
+        <tr>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
           <th>S.No</th>
           <th>User Name</th>
           <th>Date & Time</th>
@@ -9,6 +13,7 @@
           
         </tr>
     </thead>
+<<<<<<< HEAD
     <tbody class="new-body" style="font-size: 11px;">
         <%for(let i = 0; i < Logs.length; i++){%>
             <% let date = new Date(Logs[i].login_time)%>
@@ -16,6 +21,15 @@
                 <tr style="text-align: center;" class="blue">
             <%}else{%>
                 <tr style="text-align: center;">
+=======
+    <tbody class="new-body">
+        <%for(let i = 0; i < Logs.length; i++){%>
+            <% let date = new Date(Logs[i].login_time)%>
+            <%if((i%2) == 0){%>
+                <tr>
+            <%}else{%>
+                <tr>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
             <%}%>
             <td><%=i+1%></td>
             <td><%=Logs[i].userName%></td>

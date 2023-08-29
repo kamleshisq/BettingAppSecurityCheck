@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div id="FOOTBALL" class="tabcontent" style="margin-bottom:15px;">
     <div class="dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #fff  !important;color: #000;border: 2px solid #6359CA; padding: 6px 34px;">
@@ -210,12 +211,183 @@
                           </table>
                         </div>
                         </div>
+=======
+<section>
+  <div class="container-fluid">
+    <div class="table-data-section">
+      <div class="table-heading New_table_heading">
+        <h3>Navbar Menu Management</h3>
+        <div class="table-heading-btn">
+          <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add Menu</button>
+        </div>
+      </div>
+      <div class="data-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Menu Name</th>
+              <th>url</th>
+              <th>Number</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%for(let i = 0; i < verticalMenus.length; i++){%>
+            <%if((i%2)===0){%>
+            <tr>
+              <%}else{%>
+              <tr>
+                <%}%>
+                <td><%=verticalMenus[i].menuName%></td>
+                <td><%=verticalMenus[i].url%></td>
+                <td><%=verticalMenus[i].num%></td>
+                <td><button data-bs-toggle="modal" data-bs-target="#myModal5" id="<%=verticalMenus[i]._id%>" class="getVerticalMenuDetails"><i class="fa-solid fa-database"></i></button></td>
+                <td><button class="deleteVerticalMenuDetails" id="<%=verticalMenus[i]._id%>">Delete</button></td>
+              </tr>
+              <%}%>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container-fluid">
+    <div class="table-data-section">
+      <div class="table-heading New_table_heading">
+        <h3>Banner Management</h3>
+        <div class="table-heading-btn">
+            <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser2"><i class="fa-solid fa-plus"></i> &nbsp; Add Banner</button>
+        </div>
+      </div>
+      <div class="data-table Banner__management">
+        <table>
+          <thead>
+            <th>banner Name</th>
+            <th>Banner</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </thead>
+          <%for(let i = 0; i < banner.length; i++){%>
+          <%if((i%2)===0){%>
+          <tr>
+            <%}else{%>
+            <tr>
+              <%}%>
+              <td><%=banner[i].bannerName%></td>
+              <td><img src="../banner/<%=banner[i].banner%>.png" alt="img" class="form__user-photo"></td>
+              <td><button data-bs-toggle="modal" data-bs-target="#myModal7" id="<%=banner[i]._id%>" class="getBannerDetails"><i class="fa-solid fa-database"></i></button></td>
+              <td><button class="deleteBanner" id="<%=banner[i]._id%>">Delete</button></td>
+            </tr>
+            <%}%>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container-fluid">
+    <div class="table-data-section">
+      <div class="table-heading">
+        <h3>Slider Management</h3>
+        <div class="table-heading-btn">
+          <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#addSlider"><i class="fa-solid fa-plus"></i> &nbsp; Add Slider</button>
+        </div>
+      </div>
+      <div class="data-table Slider__management">
+        <div class="tabs">
+          <%for(let i = 0; i < sliders.length; i++){%>
+          <span data-tab-value="#tab_<%=sliders[i].Number%>" id="FS"><%=sliders[i].name%></span>
+          <%}%>
+        </div>
+        <%for(let i = 0; i < sliders.length; i++){%>
+        <div class="tab-content">
+          <div class="tabs__tab " id="tab_<%=sliders[i].Number%>" data-tab-info>
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingtwo">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsetwo" aria-expanded="true" aria-controls="panelsStayOpen-collapsetwo">
+                    <%=sliders[i].name%>
+                  </button>
+                </h2>
+                <div id="panelsStayOpen-collapsetwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingtwo">
+                  <div class="accordion-body">
+                    <div class="row" id="RGVd">
+                      <form class="slider-form" id="<%=sliders[i]._id%>" >
+                        <div class="row">
+                          <div class="col">
+                            <label for="name" >Name</label>
+                            <input type="text" id="name"  class="form-control ml0" name="name">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <label for="url" >Url</label>
+                            <input type="text" id="url"  class="form-control ml0" name="url">
+                          </div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col">
+                            <label for="Number" >Number</label>
+                            <input type="number" id="Number"  class="form-control ml0" name="Number">
+                          </div>
+                          <div class="col">
+                            <label for="check">Status</label>
+                            <span>OFF &nbsp; <label class="switch">
+                              <input type="checkbox" id="check" name="check">
+                              <span class="slider round"></span>
+                            </label>&nbsp; ON</span>
+                          </div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col" id="backgroundImage">
+                            <label>Background Image</label>
+                            <img src="../sliderBackgroundImages/<%=sliders[i].backGroundImage%>.png" alt="img" class="form__user-photo">
+                          </div>
+                          <div class="col" >
+                            <input type="file" name="file" id="file">
+                          </div>
+                        </div>
+                        <button type="submit" class="btn-submit mt-3">Save</button>
+                        <button type="click" id="<%=sliders[i]._id%>" class="deleteSlider btn-submit mt-3">Delete</button>
+                      </form>
+                      <div class="Table_heads"> 
+                        <div class="new-head">
+                          <h3>Images</h3>
+                          <button class="btn-filter-image" id="<%=sliders[i]._id%>" data-bs-toggle="modal" data-bs-target="#addImage"><i class="fa-solid fa-plus"></i> &nbsp; Add Image</button>
+                        </div>
+                        <!-- <label >Images</label> -->
+                        <table>
+                          <thead>
+                            <th>name</th>
+                            <th>url</th>
+                            <th>Image</th>
+                            <th>delete</th>
+                          </thead>
+                          <tbody>
+                            <%for(let j=0; j < sliders[i].images.length; j++){%>
+                            <tr>
+                              <td><%=sliders[i].images[j].name%></td>
+                              <td><%=sliders[i].images[j].url%></td>
+                              <td><img src="../sliderImages/<%=sliders[i].images[j].name%>.png" alt="img" class="form__user-photo"></td>
+                              <td><button class="dleteImageSport" id="<%=sliders[i].images[j].name%>//<%=sliders[i].name%>">Delete</button></td>
+                            </tr>
+                            <%}%>
+                          </tbody>
+                        </table>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+<<<<<<< HEAD
           <%}%>
         </div>
       </div>
@@ -584,6 +756,356 @@
 
 
   <script>
+=======
+          </div>
+        </div>
+        <%}%>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="myModaladduser" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title">Add Menu</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-data20" id="Add-User0">
+          <div class="row">
+            <div class="col">
+              <label for="menuName">Name</label>
+              <input type="text" class="form-control ml0" placeholder="" name="menuName">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="url">url</label>
+              <input type="text" id="url" class="form-control ml0" placeholder="Abitest" name="url">
+            </div>
+          </div>
+          <button type="submit" class="btn-submit mt-3">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModaladduser1" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title">Add Menu</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-data22" id="Add-User2">
+          <div class="row">
+            <div class="col">
+              <label for="menuName">Name</label>
+              <input type="text" id="menuName" class="form-control ml0" placeholder="" name="menuName">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="url">url</label>
+              <input type="text" id="url" class="form-control ml0" placeholder="Abitest" name="url">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="page">Page</label>
+              <input type="text" id="page" class="form-control ml0" placeholder="0" name="page">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="Icon">Icon</label>
+              <input type="file" id="Icon" class="form-control ml0" placeholder="0" name="Icon">
+            </div>
+          </div>
+          <button type="submit" class="btn-submit mt-3">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModal5" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title">Menu Details</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-data21" id="Add-User1">
+          <div class="row">
+            <div class="col">
+              <label for="menuName">Name</label>
+              <input type="text" class="form-control ml0" placeholder="" name="menuName">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="num">Number</label>
+              <input type="number" class="form-control ml0" placeholder="" name="num">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="url">url</label>
+              <input type="text" class="form-control ml0" placeholder="Abitest" name="url">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="check">Status</label>
+              <span>OFF &nbsp; <label class="switch">
+                <input type="checkbox" id="check" name="check">
+                <span class="slider round"></span>
+                </label>&nbsp; ON</span>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit mt-3">submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModal6" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title">Menu Details</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-data23" id="Add-User3">
+          <div class="row">
+            <div class="col">
+              <label for="menuName">Name</label>
+              <input type="text" class="form-control ml0" placeholder="" name="menuName">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="url">url</label>
+              <input type="text" class="form-control ml0" placeholder="Abitest" name="url">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="num">Number</label>
+              <input type="number" class="form-control ml0" placeholder="" name="num">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="page">Page</label>
+              <input type="text" class="form-control ml0" placeholder="0" name="page">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col" id="img">
+
+            </div>
+            <div class="col" >
+              <input type="file" name="file" id="file">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="check">Status</label>
+              <span>OFF &nbsp; <label class="switch">
+                <input type="checkbox" id="check" name="check">
+                <span class="slider round"></span>
+                </label>&nbsp; ON</span>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit mt-3">submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModaladduser2" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title">Add Banner</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-data24" id="Add-User0">
+          <div class="row">
+            <div class="col">
+              <label for="bannerName">Name</label>
+              <input type="text" class="form-control ml0" placeholder="" name="bannerName">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="url">url</label>
+              <input type="url" class="form-control ml0" placeholder="Abitest" name="url">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="banner">Banner</label>
+              <input type="file" id="banner" class="form-control ml0" placeholder="0" name="banner">
+            </div>
+          </div>
+          <button type="submit" class="btn-submit mt-3">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addSlider" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title">Add Slider</h4>
+      </div>
+      <div class="modal-body">
+        <form class="addSlider-form" id="Add-User0">
+          <div class="row">
+            <div class="col">
+              <label for="name">Name</label>
+              <input type="text" class="form-control ml0" placeholder="" name="name">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="url">url</label>
+              <input type="text" class="form-control ml0" placeholder="Abitest" name="url">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="backgroundImage">Background Image</label>
+              <input type="file" id="backgroundImage" class="form-control ml0" placeholder="0" name="backgroundImage">
+            </div>
+          </div>
+          <button type="submit" class="btn-submit mt-3">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModal7" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title">Banner Details</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-data25" id="Add-User4">
+          <div class="row">
+            <div class="col">
+              <label for="bannerName">Name</label>
+              <input type="text" class="form-control ml0" placeholder="" name="bannerName">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="url">Url</label>
+              <input type="text" class="form-control ml0" placeholder="" name="url">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col" id="banner12">
+
+            </div>
+            <div class="col" >
+              <input type="file" name="file" id="file">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="check">Status</label>
+              <span>OFF &nbsp; <label class="switch">
+                <input type="checkbox" id="check" name="check">
+                <span class="slider round"></span>
+                </label>&nbsp; ON</span>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit mt-3">submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addImage" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title">Add image</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-data26" >
+          <div class="row">
+            <div class="col">
+              <label for="menuName">Name</label>
+              <input type="text" class="form-control ml0" placeholder="" name="menuName">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="url">url</label>
+              <input type="text" id="url" class="form-control ml0" placeholder="Abitest" name="url">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="image">image</label>
+              <input type="file" id="image" class="form-control ml0" placeholder="Abitest" name="image">
+            </div>
+          </div>
+          <button type="submit" class="btn-submit mt-3">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     function openCity(evt, cityName) {
 var i, tabcontent, tablinks;
 tabcontent = document.getElementsByClassName("tabcontent");
@@ -600,7 +1122,10 @@ evt.currentTarget.className += " active";
 }
 document.getElementById("defaultOpen").click();
 </script>
+<<<<<<< HEAD
 </script>
+=======
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 
 <script>
 const tabs = document.querySelectorAll('[data-tab-value]')

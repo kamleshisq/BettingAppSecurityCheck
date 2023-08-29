@@ -690,6 +690,7 @@ socket.on('connect', () => {
             socket.emit('commissionData', {LOGINDATA, dataId})
         })
 
+<<<<<<< HEAD
         // socket.on("commissionData", data => {
         //     // console.log(data)
         //     if(data.status === "error"){
@@ -727,6 +728,87 @@ socket.on('connect', () => {
         //         }
         //     }
         // })
+=======
+        socket.on("commissionData", data => {
+            console.log(data)
+            if(data.status === "error"){
+                alert("Please try again later")
+            }else{
+                console.log(data)
+                let modleName = "#myModal2"
+                let form = $(modleName).find('.form-data')
+                console.log(data.commissionData[0].matchOdd.percentage)
+                form.attr('id', data.id);
+                form.find('input[name="matchOdds"]').attr('value', data.commissionData[0].matchOdd.percentage);
+                form.find('input[name="Bookmaker"]').attr('value', data.commissionData[0].Bookmaker.percentage);
+                form.find('input[name="fency"]').attr('value', data.commissionData[0].fency.percentage);
+                let html1 = `<option value="ENTRY" selected>Entry Wise Commission</option>
+                <option value="NET_LOSS">Net Losing Commission</option>
+                <option value="ENTRY_LOSS_">Entry Wise Losing Commission</option>`
+                let html2 = `<option value="ENTRY">Entry Wise Commission</option>
+                <option value="NET_LOSS" selected>Net Losing Commission</option>
+                <option value="ENTRY_LOSS_">Entry Wise Losing Commission</option>`
+                let html3 = `<option value="ENTRY">Entry Wise Commission</option>
+                <option value="NET_LOSS">Net Losing Commission</option>
+                <option value="ENTRY_LOSS_" selected>Entry Wise Losing Commission</option>`
+
+               let optionhtml= ''
+                if(data.commissionData[0].Bookmaker.type == "ENTRY"){
+                    form.find('select[name="BookmakerType"]').html(html1)
+                    optionhtml += `<option value="0.025">0.025</option>
+                    <option value="0.05">0.05</option>
+                    <option value="0.075">0.075</option>
+                    <option value="0.1">0.1</option>
+                    <option value="0.125">0.125</option>
+                    <option value="0.15">0.15</option>
+                    <option value="0.175">0.175</option>
+                    <option value="0.2">0.2</option>
+                    `
+                }else if(data.commissionData[0].Bookmaker.type == "NET_LOSS") {
+                    form.find('select[name="BookmakerType"]').html(html2)
+                    optionhtml += ` <option value="0.25">0.25</option>
+                      <option value="0.5">0.5</option>
+                      <option value="0.75">0.75</option>
+                      <option value="1">1</option>
+                      <option value="1.25">1.25</option>
+                      <option value="1.5">1.5</option>
+                      <option value="1.75">1.75</option>
+                      <option value="2">2</option>
+                      <option value="2.25">2.25</option>
+                      <option value="2.50">2.50</option>
+                      <option value="2.75">2.75</option>
+                      <option value="3">3</option>`
+                }else if (data.commissionData[0].Bookmaker.type == "ENTRY_LOSS_"){
+                    form.find('select[name="BookmakerType"]').html(html3)
+                    optionhtml += `<option value="0.25">0.25</option>
+                    <option value="0.5">0.5</option>
+                    <option value="0.75">0.75</option>
+                    <option value="1">1</option>`
+                }
+                if(data.commissionData[0].Bookmaker.status){
+                    $('[name="BookmakerStatus"]').prop('checked', true);
+                }else{
+                    $('[name="BookmakerStatus"]').prop('checked', false);
+                }
+
+                if(data.commissionData[0].fency.status){
+                    $('[name="fencyStatus"]').prop('checked', true);
+                }else{
+                    $('[name="fencyStatus"]').prop('checked', false);
+                }
+
+                if(data.commissionData[0].matchOdd.status){
+                    $('[name="matchOddsStatus"]').prop('checked', true);
+                }else{
+                    $('[name="matchOddsStatus"]').prop('checked', false);
+                }
+                document.getElementById("bookmakerPer").innerHTML = optionhtml
+                form.find('select[name="Bookmaker"]').val(`${data.commissionData[0].Bookmaker.percentage}`)
+                form.find('select[name="fency"]').val(`${data.commissionData[0].fency.percentage}`)
+                form.find('select[name="matchOdds"]').val(`${data.commissionData[0].matchOdd.percentage}`)
+            }
+        })
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 
 
         $(document).on("submit", ".CommissionForm", function(e){
@@ -736,6 +818,25 @@ socket.on('connect', () => {
             let data = Object.fromEntries(fd.entries());
             data.id = this.id
             console.log(data)
+<<<<<<< HEAD
+=======
+            if(data.matchOddsStatus){
+                data.matchOddsStatus = true
+            }else{
+                data.matchOddsStatus = false
+            }
+            if(data.fencyStatus){
+                data.fencyStatus = true
+            }else{
+                data.fencyStatus = false
+            }
+            if(data.BookmakerStatus){
+                data.BookmakerStatus = true
+            }else{
+                data.BookmakerStatus = false
+            }
+            // console.log(data)
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
             socket.emit("updateCommission", {LOGINDATA, data})
         })
 
@@ -1137,7 +1238,11 @@ socket.on('connect', () => {
 
                     }
                     html += `
+<<<<<<< HEAD
                     <td><span class="role-type"> ${response[i].roleName} </span></td>
+=======
+                    <td> ${response[i].roleName}</td>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                     <td> ${response[i].balance}</td>
                     <td> ${response[i].availableBalance}</td>
                     <td> ${response[i].downlineBalance}</td>
@@ -1498,6 +1603,7 @@ socket.on('connect', () => {
                     <html>
                         <head>
                         <title>Account Statement</title>
+<<<<<<< HEAD
                         <style>
                             .ownAccDetails {
                                 color: black;
@@ -1525,6 +1631,8 @@ socket.on('connect', () => {
                             font-weight: bold;
                             }
                         </style>
+=======
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                         </head>
                         <body>
                         ${table.outerHTML}
@@ -1618,7 +1726,11 @@ socket.on('connect', () => {
             let html = ``
             if(data.transactionId){
                 html += `<thead>
+<<<<<<< HEAD
                 <tr style="text-align: center;font-size: 11px;color: #fff;">
+=======
+                <tr >
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                   <th>Date</th>
                   <th>Event</th>
                   <th>Market</th>
@@ -1629,8 +1741,13 @@ socket.on('connect', () => {
                   <th>Returns</th>
                 </tr>
             </thead>`
+<<<<<<< HEAD
                 html += `<tbody class="new-body" style="font-size: 11px;">
                 <tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>
+=======
+                html += `<tbody class="new-body" >
+                <tr  class="blue"><td>${new Date(data.date)}</td>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                 <td>${data.event}</td>`
                 if(data.marketName){
                     html += `<td>${data.marketName}</td>`
@@ -1656,7 +1773,11 @@ socket.on('connect', () => {
                 model.find('table').html(html)
             }else{
                 html += `<thead>
+<<<<<<< HEAD
                 <tr style="text-align: center;font-size: 11px;color: #fff;">
+=======
+                <tr >
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                   <th>Date</th>
                   <th>Credit</th>
                   <th>Debit</th>
@@ -1666,7 +1787,11 @@ socket.on('connect', () => {
                   <th>Remarks</th>
                 </tr>
             </thead>
+<<<<<<< HEAD
             <tbody class="new-body" style="font-size: 11px;">`
+=======
+            <tbody class="new-body" >`
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                 html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>`
                 if(data.creditDebitamount>0){
                     html += `<td>${data.creditDebitamount}</td><td>0</td>`
@@ -1863,7 +1988,11 @@ socket.on('connect', () => {
                 if(data.page == 0){
                     count1 = 1;
 
+<<<<<<< HEAD
                         $('table').html(`<tr style="text-align: center;font-size: 11px;">+
+=======
+                        $('table').html(`<tr >+
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                         "<th>S.No</th>" +
                         "<th>Date</th>" +
                         "<th>Time</th>" +
@@ -1955,7 +2084,11 @@ socket.on('connect', () => {
                             }
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
+<<<<<<< HEAD
                         <td><button class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+=======
+                        <td><button class="ownAccDetails" id="${data.json.userAcc[i]._id}"  data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                         <td>-</td>`
                     }
                 }
@@ -2202,6 +2335,7 @@ socket.on('connect', () => {
     // }
 
     if(pathname == "/admin/casinocontrol"){
+<<<<<<< HEAD
         let BACCARAT,CASUALGAMES,FISHSHOOTING ,ANDARBAHAR,INSTANTWINGAMES,LIVE,BLACKJACK,FH,GAME,KENO,LIVEBACCARAT= false;
         let RGV = false;
         let EZ = false;
@@ -2285,6 +2419,19 @@ socket.on('connect', () => {
         })
 
 
+=======
+        let baccarat = false;
+        let RGV = false;
+        let EZ = false;
+        let EG = false;
+        $(BACCARAT).click(function(){
+            if(!baccarat){
+                // console.log("1")
+                socket.emit('baccarat', "on")
+                baccarat = true
+            }
+        })
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 
         $("#RGV").click(function(){
             if(!RGV){
@@ -2308,6 +2455,7 @@ socket.on('connect', () => {
             }
         })
 
+<<<<<<< HEAD
         socket.on('baccarat1', (data) => {
             console.log(data)
             let html = ""
@@ -2317,21 +2465,41 @@ socket.on('connect', () => {
                     <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>
                     <span>OFF &nbsp; <label class="switch">
                     <input type="checkbox" class="change_status" data-id="${data.data[i].game_id}" checked>
+=======
+        socket.on('baccarat1', (data1) => {
+            let html = ""
+            for(let i = 0 ; i < data1.length; i++){
+                if(data1[i].status){
+                    html += `<div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;">
+                    <span>${data1[i].game_name} (${data1[i].sub_provider_name})</span>
+                    <span>OFF &nbsp; <label class="switch">
+                    <input type="checkbox" checked>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                     <span class="slider round"></span>
                     </label>&nbsp; ON</span>
                   </div>`
                 }else{
                     html += `<div class="new-head" style="background-color: #EAEEF7;padding: 5px 15px;    border-radius: 10px;">
+<<<<<<< HEAD
                     <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>
                     <span>OFF &nbsp; <label class="switch">
                     <input type="checkbox" class="change_status" data-id="${data.data[i].game_id}">
+=======
+                    <span>${data1[i].game_name} (${data1[i].sub_provider_name})</span>
+                    <span>OFF &nbsp; <label class="switch">
+                    <input type="checkbox">
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                     <span class="slider round"></span>
                     </label>&nbsp; ON</span>
                   </div>`
                 }
             }
+<<<<<<< HEAD
             console.log($('#'+data.id).parent().next())
             $('#'+data.id).parent().next().children('.accordion-body').html(html)
+=======
+            document.getElementById('accordion-body').innerHTML = html
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
         });
 
         socket.on("RGV1", (data)=>{
@@ -2386,6 +2554,7 @@ socket.on('connect', () => {
                 document.getElementById('ZEd').innerHTML = html
             }
         })
+<<<<<<< HEAD
 
         $(document).on('click','.change_status',function(e){
             let status = $(this).prop('checked') ? true : false;
@@ -2424,6 +2593,8 @@ socket.on('connect', () => {
                 console.log('somethig went wrong!!')
             }
         })
+=======
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     }
 
 
@@ -3903,9 +4074,17 @@ socket.on('connect', () => {
             if(data.message === "updated"){
                 let html = ``
                 if(data.status){
+<<<<<<< HEAD
                     html += `<a class="btn-green">Enable </a>`
                 }else{
                     html += `<a class="btn-green">Disable </a>`
+=======
+                    html += `Enable`
+                    document.getElementById(`${data.id}`).classList.remove("disable")
+                }else{
+                    html += `Disable`
+                    document.getElementById(`${data.id}`).classList.add("disable")
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                 }
                 document.getElementById(`${data.id}`).innerHTML = html
             }else{
@@ -8329,6 +8508,7 @@ socket.on('connect', () => {
             }
         })
     }
+<<<<<<< HEAD
     
     
    
@@ -8339,5 +8519,193 @@ socket.on('connect', () => {
 
 
     
+=======
+
+    if(pathname == "/admin/catalogcontrol/compitations"){
+        $(document).on('click','.status_check',function(){
+            let status = $(this).prop('checked') ? true : false;
+            let id = $(this).data('id')
+            console.log(id)
+            if(id){
+                if(confirm('do you want to change status')){
+                    socket.emit('sportStatusChange',{status,id})
+                }else{
+                    if(status){
+                        $(this).prop('checked','')
+                    }else{
+                        $(this).prop('checked','checked')
+                    }
+                }
+            }else if(id == 0) {
+                if(confirm('do you want to change status')){
+                    socket.emit('sportStatusChange',{status,id})
+                }else{
+                    if(status){
+                        $(this).prop('checked','')
+                    }else{
+                        $(this).prop('checked','checked')
+                    }
+                }
+            }
+        })
+
+        socket.on('sportStatusChange',async(data)=>{
+            if(data.status == 'success'){
+                console.log(data.msg)
+            }else{
+                console.log('somethig went wrong!!')
+            }
+        })
+    }
+
+
+    if(pathname === "/admin/catalogcontrol/compitations/events"){
+        $(document).on('click','.status_check',function(){
+            let status = $(this).prop('checked') ? true : false;
+            let id = $(this).data('id')
+            console.log(id)
+            if(id){
+                if(confirm('do you want to change status')){
+                    socket.emit('sportStatusChange2',{status,id})
+                }else{
+                    if(status){
+                        $(this).prop('checked','')
+                    }else{
+                        $(this).prop('checked','checked')
+                    }
+                }
+            }else if(id == 0) {
+                if(confirm('do you want to change status')){
+                    socket.emit('sportStatusChange2',{status,id})
+                }else{
+                    if(status){
+                        $(this).prop('checked','')
+                    }else{
+                        $(this).prop('checked','checked')
+                    }
+                }
+            }
+        })
+        socket.on('sportStatusChange2',async(data)=>{
+            if(data.status == 'success'){
+                console.log(data.msg)
+            }else{
+                console.log('somethig went wrong!!')
+            }
+        })
+    }
+    
+    
+    if(pathname == "/admin/commissionMarkets"){
+        $(document).ready(function() {
+            $('#MarketMatch').on('input change', function() {
+              var inputValue = $(this).val();
+              if(inputValue.length > 3){
+                socket.emit("MarketMatch", {LOGINDATA, inputValue});
+                }else{
+                    socket.emit("MarketMatch", "LessTheN3");
+                }
+                // socket.emit("MarketMatch", {LOGINDATA, inputValue})
+            });
+          });
+
+          socket.on("MarketMatch", async(data) => {
+            console.log(data)
+            let html = ""
+            for(let i = 0; i < data.length; i++){
+                html += "<ul>"
+                html += `<li id="${data[i].eventData.eventId}" class="matchName">${data[i].eventData.name}</li>`
+                html += "</ul>"
+            }
+            document.getElementById("myMarkets").innerHTML = html
+            // document.getElementById("demonames1").innerHTML = html
+          })
+
+          $(document).on("click", ".matchName", function(e){
+            e.preventDefault()
+            // console.log($(this).attr('id'))
+            let id = $(this).attr('id')
+            socket.emit("eventIdForMarketList", {LOGINDATA, id})
+          })
+
+          socket.on("eventIdForMarketList", async(data) => {
+            let i = 0
+            let html = ""
+            for (var marketKey in data.result.marketList) {
+                if (data.result.marketList.hasOwnProperty(marketKey)) {
+                  var market = data.result.marketList[marketKey];
+                  if (market !== null && typeof market === "object") {
+                    i ++
+                    console.log("Market Key:", marketKey);
+                    console.log("Market Object:", market);
+                    if(Array.isArray(market)){
+                        for(let j = 0; j < market.length; j++){
+                            html += `
+                            <tr id='${market[j].marketId}'>
+                            <td>${i + j }</td>
+                            <td>${market[j].title}</td>`
+                            if(data.data1.some(item => item.marketId == market[j].marketId)){
+                                html += `<td width="120px"> <div class="on-off-btn-section">
+                                <span class="on-off">OFF &nbsp; <label class="switch">
+                                <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
+                                <span class="slider round"></span>
+                                </label>&nbsp; ON</span>
+                            </div></td>
+                              </tr>`
+                            }else{
+                                html += `<td width="120px"> <div class="on-off-btn-section">
+                                <span class="on-off">OFF &nbsp; <label class="switch">
+                                <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
+                                <span class="slider round"></span>
+                                </label>&nbsp; ON</span>
+                            </div></td>
+                              </tr>`
+                            }
+                        }
+                    }else{
+                        html += `
+                            <tr id='${market.marketId}'>  
+                            <td>${i}</td>
+                            <td>${market.title}</td>`
+                            if(data.data1.some(item => item.marketId == market.marketId)){
+                                html += `<td width="120px"> <div class="on-off-btn-section">
+                                <span class="on-off">OFF &nbsp; <label class="switch">
+                                <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
+                                <span class="slider round"></span>
+                                </label>&nbsp; ON</span>
+                            </div></td>
+                              </tr>`
+                            }else{
+                                html += `<td width="120px"> <div class="on-off-btn-section">
+                                <span class="on-off">OFF &nbsp; <label class="switch">
+                                <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
+                                <span class="slider round"></span>
+                                </label>&nbsp; ON</span>
+                            </div></td>
+                              </tr>`
+                            }
+                    }
+                  }
+                }
+              }
+
+              document.getElementById("markets").innerHTML = html
+          })
+    }
+    $(document).on("change", ".checkbox", function(e) {
+        e.preventDefault()
+        const isChecked = $(this).prop("checked");
+        let parentNode = this.closest('tr')
+        let marketId = parentNode.id
+        socket.emit("commissionMarketbyId", {marketId, isChecked, LOGINDATA});
+    })
+
+    socket.on("commissionMarketbyId", data =>{
+        if(data == "err"){
+            // alert("Opps, somthing went wrong please try again leter")
+        }
+    })
+
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 })
 })

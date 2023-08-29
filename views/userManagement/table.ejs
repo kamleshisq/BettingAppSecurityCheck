@@ -11,6 +11,10 @@
             fill="#212121"></path>
         </svg> User Management</h3>
       <div class="table-heading-btn">
+<<<<<<< HEAD
+=======
+        <button class="btn-filter"><i class="fa-solid fa-money-check-dollar"></i> &nbsp; Claim Commission (<%=currentUser.commission%>)</button>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
         <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
         <%if(currentUser.role.authorization.includes('createDeleteUser')){%>
           <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i
@@ -31,7 +35,11 @@
             <th>Credit Reference</th>
             <th>Available Balance</th>
             <th>Downlevel Balance</th>
+<<<<<<< HEAD
             <th>My P/L</th>
+=======
+            <th>Points W/L</th>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
             <th>Upline P/L</th>
             <th>Exposure Limit</th>
             <th>Exposure</th>
@@ -72,7 +80,13 @@
                     </td>
                   <%}%>
                   <td>
+<<<<<<< HEAD
                     <%=users[i].roleName%>
+=======
+                    <span class="role-type">
+                      <%=users[i].roleName%>
+                    </span>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                   </td>
                   <td>
                     <%=users[i].balance%>
@@ -83,9 +97,21 @@
                   <td>
                     <%=users[i].downlineBalance%>
                   </td>
+<<<<<<< HEAD
                   <td class="red">
                     <%=users[i].myPL%>
                   </td>
+=======
+                  <%if(users[i].pointsWL > 0){ %>
+                    <td class="green">
+                      <%=users[i].pointsWL%>
+                    </td>
+                  <%}else{ %>
+                  <td class="red">
+                    <%=users[i].pointsWL%>
+                  </td>
+                  <%} %>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                   <td>
                     <%=users[i].uplinePL%>
                   </td>

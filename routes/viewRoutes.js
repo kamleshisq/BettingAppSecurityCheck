@@ -53,9 +53,12 @@ router.get("/admin/gameAnalysis", authController.isProtected, authController.isA
 router.get("/admin/streammanagement", authController.isProtected, authController.isAdmin,viewController.getStreamManagementPage);
 router.get("/admin/Notification", authController.isProtected, authController.isAdmin,viewController.getNotificationsPage);
 router.get("/admin/casinocontrol", authController.isProtected, authController.isAdmin,viewController.getCasinoControllerPage);
+<<<<<<< HEAD
 router.get("/admin/catalogcontrol", authController.isProtected, authController.isAdmin,viewController.getCatalogControllerPage);
 router.get("/admin/catalogcontrol/compitations", authController.isProtected, authController.isAdmin,viewController.getCatalogCompetationControllerPage);
 router.get("/admin/catalogcontrol/compitations/events", authController.isProtected, authController.isAdmin,viewController.getCatalogeventsControllerPage);
+=======
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 router.get("/pp", viewController.promotion);
 router.get('/ALLGAMEFORTESTING', authController.isProtected, viewController.getAllCasinoPageFOrTEsting);
 router.get("/SPORT",authController.isProtected, gameController.sport ,viewController.getSpoertPage);
@@ -69,6 +72,13 @@ router.get("/admin/cms", authController.isProtected, authController.isAdmin, vie
 router.get("/admin/pageManager", authController.isProtected, authController.isAdmin, viewController.getPageManagement);
 router.get("/admin/gameRules", authController.isProtected, authController.isAdmin, viewController.gameRulesPage);
 router.get("/admin/userdetails", authController.isProtected, authController.isAdmin, viewController.userDetailsAdminSide);
+<<<<<<< HEAD
+=======
+router.get("/admin/catalogcontrol", authController.isProtected, authController.isAdmin,viewController.getCatalogControllerPage);
+router.get("/admin/commissionMarkets", authController.isProtected, authController.isAdmin, viewController.CommissionMarkets)
+router.get("/admin/catalogcontrol/compitations", authController.isProtected, authController.isAdmin,viewController.getCatalogCompetationControllerPage);
+router.get("/admin/catalogcontrol/compitations/events", authController.isProtected, authController.isAdmin,viewController.getCatalogeventsControllerPage);
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 
 //user routs
 
@@ -99,11 +109,20 @@ router.get("/myGameReport", authController.isProtected, notificationController.m
 router.get("/event", authController.isProtected, notificationController.myNotifications ,viewController.getGameReportInPageUser);
 router.get("/gameReport/match", authController.isProtected, notificationController.myNotifications ,viewController.getGameReportInINPageUser);
 router.get("/myAccountStatment", authController.isProtected, notificationController.myNotifications ,viewController.myAccountStatment);
+<<<<<<< HEAD
+=======
+router.get("/myCommissionReports", authController.isProtected, notificationController.myNotifications ,viewController.getCommissionReportUserSide);
+router.get("/myCommissionReportsIn", authController.isProtected, notificationController.myNotifications ,viewController.getCommissionReporIntUserSide);
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 router.get("/myProfile", authController.isProtected, notificationController.myNotifications ,viewController.myProfile);
 router.get("/profile", authController.isProtected, notificationController.myNotifications ,viewController.getMyProfileUser);
 router.get("/Kyc", authController.isProtected, notificationController.myNotifications ,viewController.getMyKycPage);
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 //Testing//
 // router.get("/exchange_sports/inplay", authController.isLogin, viewController.getExchangePage);
 // router.get("/exchange_sports/cricket", authController.isProtected, viewController.getCricketpage);

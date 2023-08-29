@@ -1,5 +1,6 @@
 <%- include("../header") %>
   <!--Container Main start-->
+<<<<<<< HEAD
   <div class="height-100" style="background-color: #EAEEF7;">
    
 
@@ -15,10 +16,19 @@
       <div class="new-head"> 
           <h3 class="main-heading">User History</h3>
           <form action="" style="display: flex;height: 30px;">
+=======
+  <div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
+    <div class="container-fluid">
+      <div class="new-head"> 
+          <h3>User History</h3>
+          <form action="">
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
               </div>
+<<<<<<< HEAD
               <input type="text" id="searchUser" onkeyup="myFunction()" list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" style="margin-right: 13px;height: 32px;">
               <div class="wrapper">
                 <ul id="search" class="users">
@@ -27,10 +37,17 @@
                 <ul id="button" class="button">
                   
                 </ul>
+=======
+              <input type="text" id="searchUser" onkeyup="myFunction()" list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
+              <div class="wrapper">
+                <ul id="search" class="users"> </ul>
+                <ul id="button" class="button"> </ul>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
               </div>
             </div>
           </form>
       </div>
+<<<<<<< HEAD
    
     </section>
     <%- include("../loginUserAdminsideDetails") %>
@@ -92,6 +109,36 @@
 <!-- end gallary -->
 
 
+=======
+    <%- include("../loginUserAdminsideDetails") %>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+        <div class="table-data-section">
+            <div class="table-heading">
+                <div class="table-heading-btn">
+                  <form action="" class="settlement-heading-from">
+                    <div class="input-group">
+                      <label class="up-down-form">From Date</label>
+                      <input type="date" id="fromDate">
+                    </div> 
+                    <div class="input-group">
+                      <label class="up-down-form">To Date</label>
+                      <input type="date" id="toDate">
+                    </div> 
+                    </form>
+                    <button class="btn-filter filter"><i class="fa-solid fa-filter"></i> Filter</button>
+                </div>
+            </div>
+            <div class="data-table">
+              <%- include("./table")%>
+            </div>
+        </div>
+    </div>
+</section>
+  <div class="pageId" data-pageid="1"></div>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
   </div>
   <script>
     function myFunction() {

@@ -1,6 +1,10 @@
 <table>
     <thead>
+<<<<<<< HEAD
         <tr style="text-align: center;font-size: 11px;">
+=======
+        <tr>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
           <th>S.No</th>
           <th>Event</th>
           <th>Message </th>
@@ -10,17 +14,39 @@
     <tbody class="new-body">
         <%for(let i = 0; i < notifications.length; i++){%>
             <%if((i%2)==0){%>
+<<<<<<< HEAD
                 <tr style="text-align: center;" class="blue">
             <%}else{%>
                 <tr style="text-align: center;">
+=======
+                <tr>
+            <%}else{%>
+                <tr>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
             <%}%>    
             <td><%=i + 1%></td>
             <td><%=notifications[i].title%></td>
             <td><%=notifications[i].message%></td>
             <%if(notifications[i].status){%>
+<<<<<<< HEAD
                 <td><button class="update" id="<%=notifications[i]._id%>"><a class="btn-green">Enable </a></button> &nbsp; <button class="Delete" id="<%=notifications[i]._id%>1"><a class="btn-green">Delete  </a></button></td>
             <%}else{%>
                 <td><button class="update" id="<%=notifications[i]._id%>"><a class="btn-green">Disable </a></button> &nbsp; <button class="Delete" id="<%=notifications[i]._id%>1"><a class="btn-green">Delete  </a></button></td>
+=======
+                <td>
+                    <div class="btn-group">
+                        <button class="btn update" id="<%=notifications[i]._id%>">Enable</button>
+                        <button class="btn delete" id="<%=notifications[i]._id%>1">Delete</button>
+                    </div>
+                </td>
+            <%}else{%>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn update" id="<%=notifications[i]._id%>">Disable</button>
+                        <button class="btn delete" id="<%=notifications[i]._id%>1">Delete</button>
+                    </div>
+                </td>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
             <%}%>
           </tr>
         <%}%>

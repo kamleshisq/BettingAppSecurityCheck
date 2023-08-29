@@ -18,7 +18,11 @@ const mongoose = require("mongoose");
 const SHA256 = require("../utils/sha256");
 const sportList = require("../utils/getSportList");
 const getCrkAndAllData = require("../utils/getSportAndCricketList");
+<<<<<<< HEAD
 const getmarketDetails = require("../utils/getmarketsbymarketId");
+=======
+const getmarketDetails = require("../utils/getmarketsbymarketId"); 
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 const fs = require('fs');
 const path = require('path');
 const bannerModel = require('../model/bannerModel');
@@ -35,6 +39,10 @@ const sattlementModel =  require("../model/sattlementModel");
 const commissionModel = require("../model/CommissionModel");
 const settlementHisory = require("../model/settelementHistory");
 const catalogController = require("./../model/catalogControllModel")
+<<<<<<< HEAD
+=======
+const commissionReportModel = require("../model/commissionReport");
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -66,6 +74,13 @@ const catalogController = require("./../model/catalogControllModel")
 // });
 
 exports.userTable = catchAsync(async(req, res, next) => {
+<<<<<<< HEAD
+=======
+    // let AllUsers = await User.find()
+    // for(let i = 0; i < AllUsers.length; i++){
+    //     await commissionModel.create({userId:AllUsers[i].id})
+    // }
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     // console.log(global._loggedInToken)
     // console.log(req.token, req.currentUser);
     // let users
@@ -1362,6 +1377,7 @@ exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
     })
 })
 
+<<<<<<< HEAD
 exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     const sportListData = await getCrkAndAllData()
@@ -1499,6 +1515,8 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
    
 })
 
+=======
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 exports.promotion = catchAsync(async(req, res, next) => {
     const data = await promotionModel.find()
     res.status(200).render("promotionpage",{
@@ -1898,6 +1916,10 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         userMultimarkets = await multimarkets.findOne({userId:user.id})
         userLog = await loginLogs.find({user_id:user._id})
     }
+<<<<<<< HEAD
+=======
+    let catalog = await catalogController.find()
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     res.status(200).render('./userSideEjs/exchangePage/main',{
         user,
         verticalMenus,
@@ -1914,7 +1936,12 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         userMultimarkets,
         cricketSeries,
         footbalSeries,
+<<<<<<< HEAD
         tennisSeries
+=======
+        tennisSeries,
+        catalog
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
         
     })
 })
@@ -1966,6 +1993,10 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
             cricketSeries[seriesIndex].matchdata.push(match);
         }
     });
+<<<<<<< HEAD
+=======
+    let catalog = await catalogController.find()
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     res.status(200).render('./userSideEjs/inplayPage/main',{
         user,
         verticalMenus,
@@ -1979,7 +2010,12 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
         userMultimarkets,
         cricketSeries,
         footbalSeries,
+<<<<<<< HEAD
         tennisSeries
+=======
+        tennisSeries,
+        catalog
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     })
 })
 
@@ -2007,6 +2043,10 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
             cricketSeries[seriesIndex].matchdata.push(match);
         }
     });
+<<<<<<< HEAD
+=======
+    let catalog = await catalogController.find()
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     res.status(200).render("./userSideEjs/cricketPage/main", {
         user,
         verticalMenus,
@@ -2017,7 +2057,12 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
         userLog,
         notifications:req.notifications,
         userMultimarkets,
+<<<<<<< HEAD
         cricketSeries
+=======
+        cricketSeries,
+        catalog
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     })
 })
 
@@ -2073,6 +2118,10 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
             footbalSeries[seriesIndex].matchdata.push(match);
         }
     });
+<<<<<<< HEAD
+=======
+    let catalog = await catalogController.find()
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     res.status(200).render('.//userSideEjs/footballPage/main',{
         user,
         verticalMenus,
@@ -2083,7 +2132,12 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
         userLog,
         notifications:req.notifications,
         userMultimarkets,
+<<<<<<< HEAD
         footbalSeries
+=======
+        footbalSeries,
+        catalog
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     })
 })
 
@@ -2111,6 +2165,10 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
             tennisSeries[seriesIndex].matchdata.push(match);
         }
     });
+<<<<<<< HEAD
+=======
+    let catalog = await catalogController.find()
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     res.status(200).render('.//userSideEjs/tennisPage/main',{
         user,
         verticalMenus,
@@ -2121,7 +2179,12 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
         userLog,
         notifications:req.notifications,
         userMultimarkets,
+<<<<<<< HEAD
         tennisSeries
+=======
+        tennisSeries,
+        catalog
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     })
 })
 
@@ -2214,12 +2277,20 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         let min 
         let max 
         if (SportLimits.min_stake >= 1000) {
+<<<<<<< HEAD
             min = (SportLimits.min_stake / 1000).toFixed(1) + 'K';
+=======
+            min = (SportLimits.min_stake / 1000) + 'K';
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
         } else {
             min = SportLimits.min_stake.toString();
         }
         if (SportLimits.max_stake >= 1000) {
+<<<<<<< HEAD
             max = (SportLimits.max_stake / 1000).toFixed(1) + 'K';
+=======
+            max = (SportLimits.max_stake / 1000) + 'K';
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
           } else {
             max = SportLimits.max_stake.toString();
         }
@@ -2846,4 +2917,227 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
         currentUser:me,
         data
     })
+<<<<<<< HEAD
 } )
+=======
+} )
+
+exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    // const sportListData = await getCrkAndAllData()
+    // const sportList = sportListData[1].gameList
+    const sportList =[
+        {sport_name:"baseball",sportId:0},
+        {sport_name:"basketball",sportId:0}	,
+        {sport_name:"cricket",sportId:4}	,
+        {sport_name:"Greyhound Racing",sportId:0}	,
+        {sport_name:"Horse Racing",sportId:77}	,
+        {sport_name:"Football",sportId:1}	,
+        {sport_name:"tennis",sportId:2}
+    ]
+    console.log(sportList)
+    // const cricket = sportListData[0].gameList[0].eventList
+    // let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
+    // const footBall = sportListData[1].gameList.find(item => item.sport_name === "Football");
+    // const Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis");
+    // let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
+    // let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
+    // console.log(liveTennis.length != 0)
+    console.log("liveFootBall")
+    res.status(200).render("./catalogController/catalogcontroller", {
+        title:"catalogController",
+        data:sportList,
+        me: user,
+        currentUser: user
+    })
+    // res.status(200).json({
+    //     data:sportList
+    // })
+})
+
+exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    const sportId = req.query.sportId
+    // console.log(sportId)
+    const sportListData = await getCrkAndAllData()
+    let series;
+    let seriesObjList = []
+    let seriesList = []
+    if(sportId == 4){
+        series = sportListData[0].gameList[0]
+    }else{
+        series = sportListData[1].gameList.find(item => item.sportId == sportId)
+    }
+    if(series){
+        let seriesPromise = series.eventList.map(async(item)=>{
+            if(!seriesList.includes(item.eventData.compId)){
+                seriesList.push(item.eventData.compId)
+                let status = await catalogController.findOne({Id:item.eventData.compId})
+                // if(!status){
+                //     await catalogController.create({
+                //         Id:item.eventData.compId,
+                //         name:item.eventData.league,
+                //         type:"league"
+                //     })
+                //     seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:true,sportId:sportId})
+                // }else{
+                    if(status){
+                        seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:false,sportId})
+
+                    }else{
+                        seriesObjList.push({name:item.eventData.league,compId:item.eventData.compId,status:true,sportId})
+                    }
+                // }
+            }
+        })
+        Promise.all(seriesPromise).then(()=>{
+            return res.status(200).render("./catalogController/compitition", {
+                title:"catalogController",
+                data:seriesObjList,
+                me: user,
+                currentUser: user
+            })
+        })
+    }else{
+        return res.status(200).render("./catalogController/compitition", {
+            title:"catalogController",
+            data:seriesObjList,
+            me: user,
+            currentUser: user
+        })
+    }
+   
+    
+})
+
+exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
+    let user = req.currentUser
+    const compId = req.query.compId
+    const sportId = req.query.sportId
+    const sportListData = await getCrkAndAllData()
+    let series;
+    let seriesObjList = []
+    if(sportId == 4){
+        series = sportListData[0].gameList[0]
+    }else{
+        series = sportListData[1].gameList.find(item => item.sportId == sportId)
+    }
+
+    if(series){
+        let = eventListPromis = series.eventList.map(async(item) => {
+            if(item.eventData.compId == compId){
+                let status = await catalogController.findOne({Id:item.eventData.eventId})
+                let count = 0;
+                if(!status){
+                    // await catalogController.create({
+                    //     Id:item.eventData.eventId,
+                    //     name:item.eventData.name,
+                    //     type:"event"
+                    // })
+                    count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+                    seriesObjList.push({name:item.eventData.name,created_on:item.eventData.created_on,status:true,count,eventId:item.eventData.eventId})
+                    
+                }else{
+                    count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+                    seriesObjList.push({name:item.eventData.name,created_on:item.eventData.created_on,status:status.status,count,eventId:item.eventData.eventId})
+
+                }
+            }
+            
+        })
+        console.log(seriesObjList)
+        Promise.all(eventListPromis).then(()=>{
+            return res.status(200).render("./catalogController/events", {
+                title:"catalogController",
+                data:seriesObjList,
+                me: user,
+                currentUser: user
+            })
+        })
+    }else{
+        return res.status(200).render("./catalogController/events", {
+            title:"catalogController",
+            data:seriesObjList,
+            me: user,
+            currentUser: user
+        })
+    }
+})
+
+
+exports.CommissionMarkets = catchAsync(async(req, res, next) => {
+    
+    const me = req.currentUser
+    res.status(200).render("./commissionMarket/main",{
+        title:"CommiSSion Markets",
+        me,
+        currentUser:me
+    })
+});
+
+exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
+    const me = req.currentUser
+    let userLog
+    if(req.currentUser){
+        userLog = await loginLogs.find({user_id:req.currentUser._id})
+    }
+    let data =  await commissionReportModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id
+            }
+        },
+        {
+            $group: {
+              _id: '$Sport',
+              totalCommissionPoints: { $sum: '$commPoints' }
+            }
+        }
+    ])
+    console.log(data)
+    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    res.status(200).render("./userSideEjs/commissionReport/main", {
+        title:"Commission Report",
+        user:req.currentUser,
+        verticalMenus,
+        check:"Comm",
+        userLog,
+        notifications:req.notifications,
+        data
+    })
+})
+
+exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
+    const me = req.currentUser
+    let sportId = req.query.id
+    let userLog
+    if(req.currentUser){
+        userLog = await loginLogs.find({user_id:req.currentUser._id})
+    }
+    let data =  await commissionReportModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id,
+                Sport:sportId
+            }
+        },
+        {
+            $group: {
+              _id: '$event',
+              totalCommissionPoints: { $sum: '$commPoints' }
+            }
+        }
+    ])
+    console.log(data)
+    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    res.status(200).render("./userSideEjs/commissionReportsIn/main", {
+        title:"Commission Report",
+        user:req.currentUser,
+        verticalMenus,
+        check:"Comm",
+        userLog,
+        notifications:req.notifications,
+        data
+    })
+})
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd

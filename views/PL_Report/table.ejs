@@ -1,5 +1,6 @@
 <table>
     <thead>
+<<<<<<< HEAD
         <tr style="text-align: center;font-size: 11px;">
           <th>User Name</th>
           <th>Won</th>
@@ -22,5 +23,28 @@
         <%}%>
       
       
+=======
+      <tr>
+        <th>User Name</th>
+        <th>Won</th>
+        <th>Lost</th>
+        <th>Profit/Lost</th>
+      </tr>
+    </thead>
+    <tbody class="new-body">
+      <%for(let i = 0; i < users.length; i++){%>
+      <%if((i%2) == 0){%>
+      <tr>
+        <%}else{%>
+        <tr>
+          <%}%>
+          <td><%=users[i].userName%></td>
+          <td><%=users[i].Won%></td>
+          <td><%=users[i].Loss%></td>
+          <td><%=users[i].myPL%></td>
+        </tr>
+        <%}%>
+      </tr>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
     </tbody>
   </table>

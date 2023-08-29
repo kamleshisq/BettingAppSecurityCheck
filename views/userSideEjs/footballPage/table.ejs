@@ -2,6 +2,10 @@
   <div class="exchange-pg-tbl-ro2 data-with-series">
     <%for(let i = 0; i < footbalSeries.length; i++){%>
       <%if(footbalSeries[i].series != "1"){ %>
+<<<<<<< HEAD
+=======
+        <%if(!catalog.some(item => item.name == footbalSeries[i].series)){ %>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
         <table class="acount-stat-tbl myTable">
     
           <thead class="acount-stat-tbl-hed">
@@ -17,6 +21,10 @@
           <tbody class="acount-stat-tbl-body">
               <tr class="series-title"><td colspan="9"><p><%=footbalSeries[i].series%></p></td></tr>
               <%for(let j = 0; j < footbalSeries[i].matchdata.length; j++){%>
+<<<<<<< HEAD
+=======
+                <%if(!catalog.some(item => item.Id == footbalSeries[i].matchdata[j].eventData.eventId)){ %>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                 <%
                 
                 var timestamp = `${footbalSeries[i].matchdata[j].eventData.time}` * 1000; 
@@ -71,7 +79,10 @@
                             <span class="date-formatted"><%=formattedTime%></span>  <b><%=footbalSeries[i].matchdata[j].eventData.name%> <span class="flash-live-button">live</span></b>
                           </p>
                         <%}else{%>
+<<<<<<< HEAD
                           
+=======
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                           <p>
                             <span class="date-formatted"><%=formattedTime%></span>  <b><%=footbalSeries[i].matchdata[j].eventData.name%></b>
                           </p>
@@ -204,9 +215,17 @@
                 </tr>
               
               <%} %>
+<<<<<<< HEAD
           </tbody>
     
         </table>
+=======
+              <%} %>
+          </tbody>
+    
+        </table>
+        <%}%>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
       <%}%>
     <%} %>
           

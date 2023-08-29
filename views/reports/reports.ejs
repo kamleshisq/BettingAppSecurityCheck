@@ -1,4 +1,5 @@
 <%- include("../header") %>
+<<<<<<< HEAD
   <!--Container Main start-->
   <div class="height-100" style="background-color: #EAEEF7;">
    
@@ -156,9 +157,95 @@
 
 
   </div>
+=======
+<!--Container Main start-->
+<div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
+    <div class="container-fluid">
+      <div class="new-head"> 
+        <h3>Bet List</h3>
+        <form action="">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+            </div>
+            <input type="text" id="searchUser"  list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
+            <div class="wrapper">
+              <ul id="search" class="users">
+
+              </ul>
+              <ul id="button" class="button">
+
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+      <%- include("../loginUserAdminsideDetails") %>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="table-data-section">
+        <div class="table-heading">
+          <div class="table-heading-btn">
+            <form action="" class="game-analysis-heading-from">
+              <div class="input-group">
+                <label>Select Game</label>
+                <select name="" id="fGame">
+                  <option value="Cricket" selected>Cricket</option>
+                  <option value="FOOTBALL">FOOTBALL</option>
+                  <option value="TENNIS">TENNIS</option>
+                  <option value="BASKETBALL">BASKETBALL</option>
+                  <option value="BASEBALL">BASEBALL</option>
+                  <option value="Primium">Primium</option>
+                  <option value="Sports Books">Sports Books</option>
+                  <option value="Casino">Casino</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label>Filter Bets</label>
+                <select name="" id="fBets">
+                  <option value="OPEN" selected>Open Bets</option>
+                  <option value="SETTLE">Settle</option>
+                  <option value="WON">Won</option>
+                  <option value="LOSS">Lost</option>
+                  <option value="VOLD">Vold</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label>From Date</label>
+                <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="fromDate"> 
+              </div>
+              <div class="input-group">
+                <label>To Date</label>
+                <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="toDate"> 
+              </div>
+            </form>
+            <button class="btn-filter filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
+            <button class="btn-filter"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
+          </div>
+        </div>
+        <div class="data-table">
+          <%- include("./table") %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="pageId" data-pageid="1"></div>
+
+</div>
+
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
 
 </body>
+<<<<<<< HEAD
     </html>
+=======
+</html>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd

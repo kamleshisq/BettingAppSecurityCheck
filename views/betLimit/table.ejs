@@ -1,7 +1,11 @@
 <div class="rowId" data-rowid="1"></div>
 <table>
   <thead>
+<<<<<<< HEAD
       <tr style="text-align: center;font-size: 11px;">
+=======
+      <tr>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
         <th>Type</th>
         <th>Min Stake</th>
         <th>Max Stake </th>
@@ -13,14 +17,26 @@
   </thead>
   <tbody class="new-body">
       <%for(let i = 0; i<betLimit.length; i++){%>
+<<<<<<< HEAD
           <tr style="text-align: center;" id="<%=i + 1%>">
+=======
+          <tr id="<%=i + 1%>">
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
             <td class="btn-filter"><%=betLimit[i].type%></td>
             <td><input type="text" class="form-datas" value='<%=betLimit[i].min_stake%>' readonly></td>
             <td><input type="text" class="form-datas" value='<%=betLimit[i].max_stake%>' readonly></td>
             <td><input type="text" class="form-datas" value='<%=betLimit[i].max_profit%>' readonly></td>
             <td><input type="text" class="form-datas" value='<%=betLimit[i].max_odd%>' readonly></td>
             <td><input type="text" class="form-datas" value='<%=betLimit[i].delay%>' readonly></td>
+<<<<<<< HEAD
             <td data-details="<%=JSON.stringify(betLimit[i])%>"><button type="button" data-bs-toggle="modal" data-bs-target="#myModal2"class="updateBetLimit">Update</button></td>
+=======
+            <td data-details="<%=JSON.stringify(betLimit[i])%>">
+              <div class="btn-group">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2"class="btn update updateBetLimit">Update</button>
+              </div>
+            </td>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
           </tr>
       <%}%>
   </tbody>

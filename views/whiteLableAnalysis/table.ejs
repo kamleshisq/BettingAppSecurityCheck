@@ -1,4 +1,5 @@
 <table>
+<<<<<<< HEAD
     <thead>
         <tr >
           <th>S.No</th>
@@ -25,3 +26,31 @@
        
       </tbody>
   </table>
+=======
+  <thead>
+      <tr >
+        <th>S.No</th>
+        <th>White Label</th>
+        <th>Active User</th>
+        <th>Total Online Users</th>
+        <th>P/L</th>
+      </tr>
+  </thead>
+  <tbody class="new-body">
+      <%for(let i = 0; i < whiteLabelWise.length; i++){%>
+        <%if((i%2)==0){%>
+          <tr>
+        <%}else{%>
+          <tr>
+        <%}%>
+        <td><%=i+1%></td>
+        <td><%=whiteLabelWise[i]._id%></td>
+        <td><%=whiteLabelWise[i].activeUser%></td>
+        <td><%=whiteLabelWise[i].onLineUser%></td>
+        <td><%=whiteLabelWise[i].pL%></td>
+          </tr>
+      <%}%>
+     
+    </tbody>
+</table>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd

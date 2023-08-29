@@ -1,4 +1,5 @@
 <%- include("../header") %>
+<<<<<<< HEAD
 <style>
   .green{
     background-color: #46BCAA;
@@ -175,12 +176,21 @@ input:checked + .slider:before {
       <div class="new-head"> 
         <h3 class="main-heading">Promotion</h3>
         <form action="" style="display: flex;">
+=======
+  <div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
+    <div class="container-fluid">
+      <div class="new-head"> 
+        <h3>Promotion</h3>
+        <form action="">
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
             
         </form>
     </div>
     </div>
     </section>
 
+<<<<<<< HEAD
     
   <section style="padding: 15px 0px;">
     <div class="container-fluid">
@@ -233,6 +243,57 @@ input:checked + .slider:before {
   
   
           </div>  <div class="modal fade" id="myModal5" role="dialog">
+=======
+    <section>
+      <div class="container-fluid">
+          <div class="table-data-section">
+              <div class="table-heading">
+                  <div class="table-heading-btn">
+                    <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add Position</button>
+                  </div>
+              </div>
+              <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                          <th>S.No</th>
+                          <th>Name</th>
+                          <th>Link</th>
+                          <th>click</th>
+                          <th>Image</th>
+                          <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="new-body">
+                    <%for(let i = 0; i < data.length; i++){%>
+                      <tr>
+                        <td><%=i + 1%></td>
+                        <td class="promotionData" ><%=data[i].position%></td>
+                        <td  ><%=data[i].link%></td>
+                        <td  ><%=data[i].click%></td>
+                        <%if(data[i].video){%>
+                          <td><video src="../img/<%=data[i].position%>.mp4" type="video/mp4" class="form__user-photo"></td>
+                        <%}else{%>
+                          <td><img src="../img/<%=data[i].position%>.png" alt="img" class="form__user-photo"></td>
+                        <%}%>
+                        <td>
+                          <div class="btn-group">
+                            <button data-bs-toggle="modal" data-bs-target="#myModal5" id="<%=data[i].id%>" class="btn promotionDetails"><i class="fa-solid fa-database"></i></button>
+                            <button class="btn delete" id="<%=data[i].id%>"><i class="fa-solid fa-trash-can" ></i></button>
+                          </div>  
+                        </td>
+                      </tr>
+                    <%}%>
+                    </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </section>
+  </div> 
+
+  <div class="modal fade" id="myModal5" role="dialog">
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
             <div class="modal-dialog">
             
               <!-- Modal content-->
@@ -240,8 +301,13 @@ input:checked + .slider:before {
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
                 </div>
+<<<<<<< HEAD
                 <div class="modal-header" style="text-align: center;">
                   <h4 class="modal-title" style="color: #fff;">Promotion Details</h4>
+=======
+                <div class="modal-header">
+                  <h4 class="modal-title">Promotion Details</h4>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                 </div>
                 <div class="modal-body">
                   <form class="form-data1" id="edit-form1">
@@ -261,10 +327,19 @@ input:checked + .slider:before {
 
                     <div class="row">
                       <label for="check">Status</label>
+<<<<<<< HEAD
                       <span>OFF &nbsp; <label class="switch">
                         <input type="checkbox" id="check" name="check">
                         <span class="slider round"></span>
                         </label>&nbsp; ON</span>
+=======
+                      <div class="on-off-btn-section">
+                        <span class="on-off">OFF &nbsp; <label class="switch">
+                          <input type="checkbox" id="check" name="check">
+                          <span class="slider round"></span>
+                          </label>&nbsp; ON</span>
+                      </div>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                     </div>
                     <br>
                     <div class="row">
@@ -290,8 +365,13 @@ input:checked + .slider:before {
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
                 </div>
+<<<<<<< HEAD
                 <div class="modal-header" style="text-align: center;">
                   <h4 class="modal-title" style="color: #fff;">Add Position</h4>
+=======
+                <div class="modal-header">
+                  <h4 class="modal-title">Add Position</h4>
+>>>>>>> 4dfe15377a0e35d954e7af35a413aa490c6221bd
                 </div>
                 <div class="modal-body">
                   <form class="form-data2" id="edit-form2">
