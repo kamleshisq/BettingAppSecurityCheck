@@ -970,7 +970,7 @@ io.on('connection', (socket) => {
             data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
         }else{
-            // console.log(thatMarket)
+            console.log(thatMarket, 4545454)
             let realodd = thatMarket.odds.find(item => item.secId == data.data.secId.slice(0,-1))
             let name
             if(data.data.secId.slice(-1) > 3){
