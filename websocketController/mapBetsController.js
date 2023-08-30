@@ -553,4 +553,4 @@ exports.mapbet = async(data) => {
     console.log(NetData, "netData")
 
 
-}
+}   
