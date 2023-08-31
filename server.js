@@ -1306,21 +1306,34 @@ io.on('connection', (socket) => {
         // ])
         // console.log(topGames, 1212121)
 
-        let users = await User.aggregate([
+        let topGames = await User.aggregate([
             {
               $match: {
-                parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id } }
+                isActive: true
               }
             },
             {
-              $group: {
-                _id: null,
-                userIds: { $push: '$_id' } 
+              $lookup: {
+                from: "users",
+                localField: "parentUsers",
+                foreignField: "_id",
+                as: "parentUsersData"
+              }
+            },
+            {
+              $unwind: "$parentUsersData"
+            },
+            {
+              $project: {
+                userName: 1,
+                parentUserNames: "$parentUsersData.userName", // Array of parent user names
+                parentUserShares: "$parentUsersData.Share"   // Array of parent user shares
+                // Add more projected fields as needed
               }
             }
-          ])
+          ]);
 
-          console.log(users)
+          console.log(topGames)
     })
 
 
