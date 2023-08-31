@@ -7606,6 +7606,7 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert("Please Try again later")
             }else{
+                $('#myModaladduser').modal('toggle');
                 let html = ""
                 const tbody = document.getElementById("tableBody");
                 const numberOfRows = tbody.getElementsByTagName("tr").length;
