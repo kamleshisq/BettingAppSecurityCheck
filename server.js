@@ -1335,28 +1335,56 @@ io.on('connection', (socket) => {
               $unwind: "$parentUsersData"
             },
             {
-              $project: {
-                _id: 1,
-                parentUserData: {
-                  parentUserName: "$parentUsersData.userName",
-                  parentUserShare: "$parentUsersData.Share"
+                $project: {
+                  _id: "$userName", // Use userName as _id
+                  parentUserData: {
+                    parentUserName: "$parentUsersData.userName",
+                    parentUserShare: "$parentUsersData.Share"
+                  }
+                }
+              },
+              {
+                $group: {
+                  _id: "$_id",
+                  originaluserId: { $first: "$_id" },
+                  parentData: { $push: "$parentUserData" }
+                }
+              },
+              {
+                $project: {
+                  _id: 0,
+                  originaluserId: 1,
+                  parentData: 1
+                }
+              },
+              {
+                $lookup: {
+                  from: "betmodels",
+                  localField: "originaluserId",
+                  foreignField: "userName", 
+                  as: "betData"
+                }
+              },
+              {
+                $unwind: "$betData"
+              },
+              {
+                $match: {
+                  "betData.status": "OPEN"
+                }
+              },
+              {
+                $group: {
+                  _id: "$originaluserId",
+                  parentData: { $first: "$parentData" },
+                  betData: { $push: "$betData" }
+                }
+              },
+              {
+                $match: {
+                  betData: { $ne: [] } // Exclude documents with empty betData array
                 }
               }
-            },
-            {
-              $group: {
-                _id: "$_id",
-                originaluserId: { $first: "$_id" },
-                parentData: { $push: "$parentUserData" }
-              }
-            },
-            {
-              $project: {
-                _id: 0,
-                originaluserId: 1,
-                parentData: 1
-              }
-            }
           ]);
 
           console.log(topGames, "topGames")
