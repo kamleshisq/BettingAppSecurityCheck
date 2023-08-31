@@ -3207,14 +3207,14 @@ socket.on('connect', () => {
             $('.pageId').attr('data-pageid','1')
             data.page = 0;
             if(fromDate != ''  && toDate != '' ){
-                filterData.date = {$gte : fromDate,$lte : toDate}
+                filterData.date = {$gte : fromDate,$lte : new Date(new Date(toDate).getTime() + ((24 * 60*60*1000)-1))}
             }else{
 
                 if(fromDate != '' ){
                     filterData.date = {$gte : fromDate}
                 }
                 if(toDate != '' ){
-                    filterData.date = {$lte : toDate}
+                    filterData.date = {$lte : new Date(new Date(toDate).getTime() + ((24 * 60*60*1000)-1))}
                 }
             }
             if(userName != ''){
