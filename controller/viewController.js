@@ -1674,7 +1674,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     let currentUser =  req.currentUser
     // console.log(liveFootBall)
     // console.log(liveTennis)
-    console.log(liveCricket)
+    // console.log(liveCricket)
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
         liveCricket,
