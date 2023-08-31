@@ -800,7 +800,7 @@ io.on('connection', (socket) => {
         const user = await User.findOne({userName:data.filterData.userName})
         if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
             delete data.filterData['userName']
-            let ubDetails = await Bet.find({status:"OPEN"}).skip(page * limit).limit(limit)
+            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
             socket.emit('betMoniter',{ubDetails,page})
         }
         else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
