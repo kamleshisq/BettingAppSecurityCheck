@@ -8374,14 +8374,14 @@ socket.on('connect', () => {
             fromdate = $(this).val();
             todate = $('#to_date').val();
             console.log(fromdate,todate)
-            socket.emit('settlement',{LOGINUSER,todate,fromdate})
+            socket.emit('settlement',{LOGINUSER:LOGINDATA.LOGINUSER,todate,fromdate})
 
         })
         $('#to_date').change(function(e){
             todate = $(this).val();
             fromdate = $('#from_date').val();
             console.log(fromdate,todate)
-            socket.emit('settlement',{LOGINUSER,todate,fromdate})
+            socket.emit('settlement',{LOGINUSER:LOGINDATA.LOGINUSER,todate,fromdate})
 
             
         })
