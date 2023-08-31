@@ -4093,6 +4093,7 @@ socket.on('connect', () => {
         })
 
         socket.on("createVerticalMenu", async(data)=>{
+            console.log(data)
             if(data.status === "success"){
                 alert("Menu Added Successfully")
                     window.setTimeout(()=>{
