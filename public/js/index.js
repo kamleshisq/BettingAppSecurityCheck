@@ -43,10 +43,10 @@ import { KYC } from "./kyc";
 
 $(document).ready(function(){
     if($(".nav .nav_list .nav_link").attr("href")==window.location.href){
-        $(".nav .nav_list .nav_link").attr("class","dropdown active");
+        $(".nav .nav_list .nav_link").attr("class","active");
     }
    else{
-      $(".nav .nav_list .nav_link").attr("class","dropdown");
+      $(".nav .nav_list .nav_link").attr("class","active");
      }
 });
 
