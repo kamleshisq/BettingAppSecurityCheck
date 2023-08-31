@@ -3230,7 +3230,7 @@ socket.on('connect', () => {
             // }
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
-            // console.log(data)
+            console.log(data)
             socket.emit('betMoniter',data)
 
         })
@@ -3283,7 +3283,7 @@ socket.on('connect', () => {
             
             let count = 11
             socket.on('betMoniter',(data) => {
-                // console.log(data)
+                console.log(data)
                 if(data.page === 0){
                     count = 1
                 }
