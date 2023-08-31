@@ -1727,7 +1727,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
                         cond: {
                             $in: [
                                 { $substrCP: [{ $toLower: "$$detail.marketName" }, 0, 3] },
-                                ["match", "bookmak", "toss"]
+                                ["mat", "boo", "tos"]
                             ]
                         }
                     }
