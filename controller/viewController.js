@@ -1747,13 +1747,13 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
                 details: { $push: "$details" }
             }
         },
-            {
-                $match: {
-                    "details.shortMarketName": {
-                        $in: ["mat", "boo", "tos"]
-                    }
-                }
-            },
+            // {
+            //     $match: {
+            //         "details.shortMarketName": {
+            //             $in: ["mat", "boo", "tos"]
+            //         }
+            //     }
+            // },
         {
             $project: {
                 _id: 0,
