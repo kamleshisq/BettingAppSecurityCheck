@@ -8516,6 +8516,7 @@ socket.on('connect', () => {
             document.getElementById("myMarkets").innerHTML = html
             $('#myMarkets').click(function(e){
                 $('#myMarkets').hide()
+                $('#MarketMatch').val('')
             })
             // document.getElementById("demonames1").innerHTML = html
           })
@@ -8593,10 +8594,11 @@ socket.on('connect', () => {
                 }
               }
               console.log(html)
-              if(html == ''){
+              console.log(html == "")
+              if(html == ""){
                 html += `<tr class="empty_table">No record found</tr>`
               }
-
+              console.log(html)
               document.getElementById("markets").innerHTML = html
           })
     }
