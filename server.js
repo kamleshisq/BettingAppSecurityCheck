@@ -2369,6 +2369,70 @@ io.on('connection', (socket) => {
         await settlement.findOneAndUpdate({userId:data.LOGINDATA.LOGINUSER._id},{status:data.status})
     })
 
+    socket.on('settlement',async(data)=>{
+        console.log(data)
+        const me = data.LOGINUSER
+        // console.log(me)
+        let betsEventWise = await Bet.aggregate([
+            {
+                $match: {
+                    status:"OPEN" ,
+                    eventdate: {$gte:data.from_date,$lte:data.to_date}
+                }
+            },
+            {
+                $lookup: {
+                  from: "users",
+                  localField: "userName",
+                  foreignField: "userName",
+                  as: "user"
+                }
+              },
+              {
+                $unwind: "$user"
+              },
+              {
+                $match: {
+                  "user.parentUsers": { $in: [me._id] }
+                }
+              },
+            //   {
+            //     $group: {
+            //       _id: "$match",
+            //       count: { $sum: 1 }
+            //     }
+            //   },
+            //   {
+            //     $project: {
+            //       _id: 0,
+            //       eventname: "$_id",
+            //       count: 1
+            //     }
+            //   }
+            {
+                $group: {
+                  _id: "$match",
+                  count: { $sum: 1 },
+                  eventdate: { $first: "$eventDate" }, 
+                  eventid: { $first: "$eventId" },
+                  series: {$first: "$event"} 
+                }
+              },
+              {
+                $project: {
+                  _id: 0,
+                  matchName: "$_id",
+                  eventdate: 1,
+                  eventid: 1,
+                  series:1,
+                  count: 1
+                }
+              }
+        ])
+        socket.emit('settlement',{betsEventWise})
+
+    })
+
     socket.on("VoidBetIn", async(data) => {
         try{
             let bets = await Bet.find({marketId:data.id, status: 'OPEN'})

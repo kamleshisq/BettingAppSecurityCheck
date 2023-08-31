@@ -8374,7 +8374,46 @@ socket.on('connect', () => {
             fromdate = $(this).val();
             todate = $('#to_date').val();
             console.log(fromdate,todate)
+            socket.emit('settlement',{LOGINUSER,todate,fromdate})
+
+        })
+        $('#to_date').change(function(e){
+            todate = $(this).val();
+            fromdate = $('#from_date').val();
+            console.log(fromdate,todate)
+            socket.emit('settlement',{LOGINUSER,todate,fromdate})
+
             
+        })
+
+        socket.on('settlement',async(data)=>{
+            console.log(data)
+            let html = ''
+            for(let i = 0; i < data.betsEventWise.length; i++){ 
+                html += `<tr>`
+                var timestamp = data.betsEventWise[i].eventdate * 1000; 
+                var date = new Date(timestamp);
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+                  
+                  html += `<td>${i+1} </td>
+                  <td>${formattedTime}</td>
+                  <td>${data.betsEventWise[i].series}</td>
+                  <td>${data.betsEventWise[i].matchName}</td>
+                  <td>${data.betsEventWise[i].count}</td>
+                  <td>${data.betsEventWise[i].count}</td>
+                  <td><a href="/admin/settlementIn?id=${data.betsEventWise[i].eventid}" class="btn-green">settle</a></td>
+                </tr>`
+            } 
+
+            $('tbody').html(html)
         })
     }
 
