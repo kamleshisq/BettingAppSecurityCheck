@@ -433,6 +433,7 @@ exports.mapbet = async(data) => {
 
 
                 if(commissionMarket.some(item => item.marketId == bet.marketId)){
+                  console.log('work1')
                   try{
                       let commission = await commissionModel.find({userId:user.id})
                       let commissionPer = 0
