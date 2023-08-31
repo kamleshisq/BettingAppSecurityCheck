@@ -8535,29 +8535,34 @@ socket.on('connect', () => {
                     console.log("Market Key:", marketKey);
                     console.log("Market Object:", market);
                     if(Array.isArray(market)){
-                        for(let j = 0; j < market.length; j++){
-                            html += `
-                            <tr id='${market[j].marketId}'>
-                            <td>${i + j }</td>
-                            <td>${market[j].title}</td>`
-                            if(data.data1.some(item => item.marketId == market[j].marketId)){
-                                html += `<td width="120px"> <div class="on-off-btn-section">
-                                <span class="on-off">OFF &nbsp; <label class="switch">
-                                <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
-                                <span class="slider round"></span>
-                                </label>&nbsp; ON</span>
-                            </div></td>
-                              </tr>`
-                            }else{
-                                html += `<td width="120px"> <div class="on-off-btn-section">
-                                <span class="on-off">OFF &nbsp; <label class="switch">
-                                <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
-                                <span class="slider round"></span>
-                                </label>&nbsp; ON</span>
-                            </div></td>
-                              </tr>`
+                        if(market.length !== 0){
+                            for(let j = 0; j < market.length; j++){
+                                html += `
+                                <tr id='${market[j].marketId}'>
+                                <td>${i + j }</td>
+                                <td>${market[j].title}</td>`
+                                if(data.data1.some(item => item.marketId == market[j].marketId)){
+                                    html += `<td width="120px"> <div class="on-off-btn-section">
+                                    <span class="on-off">OFF &nbsp; <label class="switch">
+                                    <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
+                                    <span class="slider round"></span>
+                                    </label>&nbsp; ON</span>
+                                </div></td>
+                                  </tr>`
+                                }else{
+                                    html += `<td width="120px"> <div class="on-off-btn-section">
+                                    <span class="on-off">OFF &nbsp; <label class="switch">
+                                    <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
+                                    <span class="slider round"></span>
+                                    </label>&nbsp; ON</span>
+                                </div></td>
+                                  </tr>`
+                                }
                             }
+                        }else{
+                            html += `<tr class="empty_table">No record found</tr>`
                         }
+                       
                     }else{
                         html += `
                             <tr id='${market.marketId}'>  
