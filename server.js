@@ -1281,7 +1281,7 @@ io.on('connection', (socket) => {
             .catch((error) => {
               console.error(error);
             });
-        let topGames = await betModel.aggregate([
+        let topGames = await Bet.aggregate([
             {
                 $match: {
                     status: { $ne: "OPEN" }
