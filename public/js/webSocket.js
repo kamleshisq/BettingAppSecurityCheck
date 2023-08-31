@@ -4034,18 +4034,18 @@ socket.on('connect', () => {
         marketId()
         
 
-        socket.on("aggreat", async(data) => {
-            console.log(data)
-            let stake1 = 0;
-            let stake2 = 0;
-            data.forEach(item => {
-                // document.getElementById(`${item._id}`).innerText = item.totalStake
-                item.betData.forEach(bet => {
+        // socket.on("aggreat", async(data) => {
+        //     console.log(data)
+        //     let stake1 = 0;
+        //     let stake2 = 0;
+        //     data.forEach(item => {
+        //         // document.getElementById(`${item._id}`).innerText = item.totalStake
+        //         item.betData.forEach(bet => {
                     
-                })
-                document.getElementById(`${item._id}B`).innerText = item.count
-            })
-        })
+        //         })
+        //         document.getElementById(`${item._id}B`).innerText = item.count
+        //     })
+        // })
     }
 
 
