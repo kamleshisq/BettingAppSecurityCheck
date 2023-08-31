@@ -1695,16 +1695,42 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
               "user.parentUsers": { $in: [req.currentUser.id] }
             }
           },
-          {
+        //   {
+        //     $group: {
+        //         _id: "$betType",
+        //         details: {
+        //             $push: {
+        //                 id: "$marketId",
+        //                 marketName: "$marketName",
+        //                 match:"$match",
+        //                 date:'$date'
+        //                 // Add other fields you want here
+        //             }
+        //         }
+        //     }
+        // },
+        {
             $group: {
-                _id: "$betType",
+                _id: {
+                    betType: "$betType",
+                    marketId: "$marketId"
+                },
+                marketName: { $first: "$marketName" },
+                match: { $first: "$match" },
+                date: { $first: "$date" },
+                stake: { $sum: "$stake" }
+            }
+        },
+        {
+            $group: {
+                _id: "$_id.betType",
                 details: {
                     $push: {
-                        id: "$marketId",
+                        id: "$_id.marketId",
                         marketName: "$marketName",
-                        match:"$match",
-                        date:'$date'
-                        // Add other fields you want here
+                        match: "$match",
+                        date: "$date",
+                        stake: "$stake"
                     }
                 }
             }
