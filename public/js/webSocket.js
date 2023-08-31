@@ -836,30 +836,30 @@ socket.on('connect', () => {
                 link.click();
               }          
     
-              function sanitizeCellValue(value) {
-                // Define a character whitelist (allow only printable ASCII and basic punctuation)
-                const allowedCharactersRegex = /[\x20-\x7E\u0020-\u007E]/g;
-                
-                return value.match(allowedCharactersRegex).join(',').trim();
-              }
+            function sanitizeCellValue(value) {
+            // Define a character whitelist (allow only printable ASCII and basic punctuation)
+            const allowedCharactersRegex = /[\x20-\x7E\u0020-\u007E]/g;
+            
+            return value.match(allowedCharactersRegex).join(',').trim();
+            }
               
-              function convertToCSV(table) {
-                const rows = table.querySelectorAll('tr');
+            function convertToCSV(table) {
+            const rows = table.querySelectorAll('tr');
+            
+            let csv = '';
+            for (const row of rows) {
+                const columns = row.querySelectorAll('td, th');
+                let rowData = '';
+                for (const column of columns) {
                 
-                let csv = '';
-                for (const row of rows) {
-                  const columns = row.querySelectorAll('td, th');
-                  let rowData = '';
-                  for (const column of columns) {
-                    
-                    const data = sanitizeCellValue(column.innerText);
-                    rowData += (data.includes(',') ? `"${data}"` : data) + ',';
-                  }
-                  csv += rowData.slice(0, -1) + '\n';
+                const data = sanitizeCellValue(column.innerText);
+                rowData += (data.includes(',') ? `"${data}"` : data) + ',';
                 }
-                
-                return csv;
-              }
+                csv += rowData.slice(0, -1) + '\n';
+            }
+            
+            return csv;
+            }
     
             document.getElementById('downloadBtn').addEventListener('click', function(e) {
                 e.preventDefault()
@@ -893,7 +893,7 @@ socket.on('connect', () => {
                     a.click();
                     document.body.removeChild(a);
                 }
-              });
+            });
 
         $(document).on('click','.Deposite',function(e){
             var row = this.closest("tr");
@@ -1268,8 +1268,7 @@ socket.on('connect', () => {
         let S = false
         let W = false
         let R = false
-
-        $('#searchUser, #ROLEselect, #WhiteLabel').bind("change keyup", function(){
+        $(document).on('bind','#searchUser, #ROLEselect, #WhiteLabel',function(e){
             // console.log($(this).hasClass("searchUser"), 123)
             if($(this).hasClass("WhiteLabel")){
                     filterData.whiteLabel = $(this).val()
