@@ -1673,6 +1673,30 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
     let currentUser =  req.currentUser
     console.log(req.currentUser)
+    let openBet = topGames = await betModel.aggregate([
+        {
+            $match: {
+                status: { $ne: "OPEN" }
+            }
+        },
+        {
+            $lookup: {
+              from: "users",
+              localField: "userName",
+              foreignField: "userName",
+              as: "user"
+            }
+          },
+          {
+            $unwind: "$user"
+          },
+          {
+            $match: {
+              "user.parentUsers": { $in: [req.currentUser.id] }
+            }
+          }
+    ])
+    console.log(openBet)
     // console.log(liveFootBall)
     // console.log(liveTennis)
     // console.log(liveCricket)
