@@ -6882,6 +6882,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //     // console.log(email)
 //     login(email, password);
 // })};
+$(document).ready(function () {
+  if ($(".nav .nav_list .nav_link").attr("href") == window.location.href) {
+    $(".nav .nav_list .nav_link").attr("class", "active");
+  } else {
+    $(".nav .nav_list .nav_link").attr("class", "active");
+  }
+});
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
   // console.log("Working")
@@ -7430,7 +7437,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49981" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50157" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

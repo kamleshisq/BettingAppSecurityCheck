@@ -41,7 +41,14 @@ import { KYC } from "./kyc";
 //     login(email, password);
 // })};
 
-
+$(document).ready(function(){
+    if($(".nav .nav_list .nav_link").attr("href")==window.location.href){
+        $(".nav .nav_list .nav_link").attr("class","active");
+    }
+   else{
+      $(".nav .nav_list .nav_link").attr("class","active");
+     }
+});
 
 
 $(document).on("submit", ".loginFormAdmin", function(e){
