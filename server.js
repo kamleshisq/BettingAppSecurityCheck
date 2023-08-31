@@ -1356,6 +1356,14 @@ io.on('connection', (socket) => {
                   originaluserId: 1,
                   parentData: 1
                 }
+              },
+              {
+                $lookup: {
+                  from: "betmodels",
+                  localField: "originaluserId",
+                  foreignField: "userName", 
+                  as: "betData"
+                }
               }
           ]);
 
