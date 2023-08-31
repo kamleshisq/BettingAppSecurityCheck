@@ -563,7 +563,7 @@ exports.mapbet = async(data) => {
         $project: {
           _id: 0,
           userId: "$_id.userId",
-          sport: "$_id.match",
+          match: "$_id.match",
           markets: 1
         }
       }
