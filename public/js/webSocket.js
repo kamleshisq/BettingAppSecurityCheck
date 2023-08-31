@@ -8367,6 +8367,15 @@ socket.on('connect', () => {
                 socket.emit("Autosettle", {LOGINDATA, status:false})
               }
         });
+
+        let fromdate;
+        let todate;
+        $('#from_date').change(function(e){
+            fromdate = $(this).val();
+            todate = $('#to_date').val();
+            console.log(fromdate,todate)
+            
+        })
     }
 
 
