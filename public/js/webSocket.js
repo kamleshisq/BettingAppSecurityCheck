@@ -1240,7 +1240,7 @@ socket.on('connect', () => {
                             html += `<button data-bs-toggle="modal" data-bs-target="#myModal3" class="PasswordChange" title="Change Password">P</button>`
                         }
                         if(data.currentUser.role.authorization.includes('betLockAndUnloack')){
-                            if(response[i][i].betLock){
+                            if(response[i].betLock){
                                 html += `<button type="button" class="betLockStatus Locked" title="Bet Unlock">B</button>`
                             }else{ 
                                 html += `<button type="button" class="betLockStatus" title="Bet Lock">B</button>`
