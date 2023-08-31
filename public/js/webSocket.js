@@ -3945,12 +3945,16 @@ socket.on('connect', () => {
 
         $(document).on('click', '.update', async function(){
             let id = $(this).attr('id')
-            socket.emit('updateStatus', {id, LOGINDATA})
+            if(confirm('do you want to change status')){
+                socket.emit('updateStatus', {id, LOGINDATA})
+            }
         })
 
-        $(document).on('click', '.Delete', async function(){
+        $(document).on('click', '.delete', async function(){
             let id = $(this).attr('id')
-            socket.emit('deleteNotification', {id, LOGINDATA})
+            if(confirm('do you want to delte this notification')){
+                socket.emit('deleteNotification', {id, LOGINDATA})
+            }
         })
 
         socket.on('updateStatus', async(data)=>{
