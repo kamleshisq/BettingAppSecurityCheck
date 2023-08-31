@@ -362,6 +362,7 @@ exports.mapbet = async(data) => {
               // }else if ((bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS')) && commission[0].Bookmaker.type == "WIN"){
               //   commissionPer = parseFloat(commission[0].Bookmaker.percentage)/100
               // }
+              console.log("Working")
               await betModel.findByIdAndUpdate(bet._id,{status:"LOSS"})
               let user =  await userModel.findByIdAndUpdate(bet.userId,{$inc:{Loss:1, exposure:-parseFloat(bet.Stake)}})
               let commissionMarket = await commissionMarketModel.find()
@@ -442,6 +443,7 @@ exports.mapbet = async(data) => {
                           commissionPer = commission[0].Bookmaker.percentage
                         }
                         let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
+                        console.log(commissionCoin , "commisiion")
                         if(commissionPer > 0){
                           let user1 = await userModel.findById(user.id)
                           console.log(user1)
@@ -471,7 +473,7 @@ exports.mapbet = async(data) => {
                                 commissionPer = commissionChild[0].Bookmaker.percentage
                               }
                               let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
-                              console.log(commissionCoin)
+                              console.log(commissionCoin , "commisiion")
                               if(commissionPer > 0){
                                   let user1 = await userModel.findById(childUser.id)
                                   // console.log(user1.userName)
