@@ -1,0 +1,82 @@
+<%-include("../header")%>
+
+
+<section class="exchange-pg-main-sec mob-dis-no">
+  <div class="container-fluid exchange-pg-main-contnr">
+    <div class="col-lg-11 col-md-11 col-12 exchange-pg-main-col">
+      <div class="exchange-pg-main-col-ro">
+          <div class="exchange-pg-main-col-big col-sm-9 col-12">
+              <div class="exchange-pg-main-col-big-wrp">
+                  <section class="exchange-pg-inn-banner-sec">
+                    <%-include("./matchDetails")%>
+
+                      
+
+                    <%if(match.marketList.match_odd != null){%>
+                      <%-include('./matchOdds')%>
+                    <%}%>
+                    <%if(match.marketList.bookmaker != null){%>
+                      <%-include("./bookmaker")%>
+                    <%}%>
+                    
+                    <%if(match.marketList.odd_even != null || match.marketList.session != null){%>
+                      <%-include("./fency")%>
+                    <%}%>
+
+                  </section>
+                  
+                  
+              </div>
+          </div>
+
+          <div class="exchange-pg-main-col-mini my-live-streacoldv col-lg-3 col-md-3 col-12 mbl-exchange-pg-main-col-mini">
+            <%if(user){ %>
+              <%if(liveStream.data){%>
+            <div class="exchange-pg-rit-ro mb-2">
+              <div class="exchange-pg-rit-ro-livetv-dv">
+                <div class="exchange-pg-rit-ro-livetv-titl">
+                  <h5>Live Stream</h5>
+                </div>
+                <div class=" exchange-pg-rit-ro-livetv-dv-wrp">
+                    <iframe src="<%=src%>"  class="my-livestrem-ifream"></iframe>
+                  </div>
+                </div>
+              </div>
+              <%}%>
+              <%} %>
+            <div class="exchange-pg-rit-ro mb-2">
+              <div class="exchange-pg-rit-ro-livetv-dv">
+                <div class="exchange-pg-rit-ro-livetv-titl" id="betsTitleSide">
+                  <h5>Open Bets (<%=betsOnthisMatch.length%>)</h5>
+                </div>
+                <div class="exchange-pg-rit-ro-livetv-dv-wrp " id="length1">
+                  <%if(betsOnthisMatch.length > 0){%>
+                    <table class="table-new-d">
+                      <thead>
+                        <tr class="thead-border my-open-bet-trr">
+                          <th>Selection</th>
+                          <th>Odds</th>
+                          <th>Stake</th>
+                        </tr>
+                      </thead>
+                      <tbody id="tableBET">
+                       <%for(let i = 0; i < betsOnthisMatch.length; i++){%>
+                        <tr>
+                          <td><%= betsOnthisMatch[i].selectionName%></td>
+                          <td><%= betsOnthisMatch[i].oddValue %></td>
+                          <td><%= betsOnthisMatch[i].Stake %></td>
+                        </tr>
+                        <%} %>
+                      </tbody>
+                    </table>
+                  <%} %>
+                  <!-- <img class="img-bdr-red15 img-fluid" src="../../assets/img/exchange/live-tv-img.png" alt=""> -->
+                </div>
+              </div>
+            </div>
+           
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
