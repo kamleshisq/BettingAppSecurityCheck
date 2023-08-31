@@ -63,7 +63,25 @@
                     </tr>
                   </thead>
                   <tbody>
-                  
+                    <% let runners = JSON.parse(liveCricket[i].eventData.runners); %>
+                    <% const runners1 = []; %>
+                  <%const secIds = []; %>
+                  <%runners.forEach(item => {%>
+                  <%runners1.push(item.runner);%>
+                  <%secIds.push(item.secId);%>
+                  <%});%>
+                  <%for(let j = 0; j < runners1.length; j++){%>
+                  <%if((j%2)===1){%>
+                  <tr>
+                    <%}else{%>
+                    <tr>
+                      <%}%>
+                      <td><%=runners1[j]%></td>
+                      <td>00</td>
+                      <td>00</td>
+                      <%}%>
+                    </tr>
+                  </tr>
                   </tbody>
                 </table>
               </div>
