@@ -12,7 +12,16 @@
 
                       
 
-                   
+                    <%if(match.marketList.match_odd != null){%>
+                      <%-include('./matchOdds')%>
+                    <%}%>
+                    <%if(match.marketList.bookmaker != null){%>
+                      <%-include("./bookmaker")%>
+                    <%}%>
+                    
+                    <%if(match.marketList.odd_even != null || match.marketList.session != null){%>
+                      <%-include("./fency")%>
+                    <%}%>
 
                   </section>
                   
