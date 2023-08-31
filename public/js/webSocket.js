@@ -4153,7 +4153,9 @@ socket.on('connect', () => {
 
         $(document).on('click', ".deleteVerticalMenuDetails", function(e){
             let id = $(this).attr('id')
-            socket.emit("deleteVerticalMenu", id)
+            if(confirm('do you want to delete this menu')){
+                socket.emit("deleteVerticalMenu", id)
+            }
         })
 
         socket.on("deleteVerticalMenu", async(data) => {
@@ -4218,7 +4220,9 @@ socket.on('connect', () => {
 
         $(document).on("click", ".deleteBanner", function(e){
             let id = $(this).attr('id')
-            socket.emit("deleteBanner", id)
+            if(confirm('do you want to delete this banner')){
+                socket.emit("deleteBanner", id)
+            }
         })
 
         socket.on("deleteBanner", data =>{
@@ -4253,7 +4257,9 @@ socket.on('connect', () => {
         $(document).on('click', ".dleteImageSport", function(e){
             e.preventDefault()
             let id = $(this).attr("id")
-            socket.emit("dleteImageSport", id)
+            if(confirm('do you want to delete this image')){
+                socket.emit("dleteImageSport", id)
+            }
         })
         socket.on("dleteImageSport", async(data)=>{
             alert(data)
@@ -4273,7 +4279,9 @@ socket.on('connect', () => {
         $(document).on('click', ".deleteSlider", function(e){
             e.preventDefault()
             let id = $(this).attr('id')
-            socket.emit('deleteSlider', id)
+            if(confirm('do you want to delete this slider')){
+                socket.emit('deleteSlider', id)
+            }
         })
         socket.on('deleteSlider', async(data) => {
             alert(data)
