@@ -3316,7 +3316,10 @@ socket.on('connect', () => {
                     <td>${bets[i].transactionId}</td>
                     <td>${bets[i].status}</td>
                     <td>${bets[i].returns}</td>
-                    <td><button class="voidBet" id="${bets[i]._id}">Cancel Bet</button><button class="alertBet" id="${bets[i]._id}"> Alert Bet</button></td>
+                    <td>
+                    <div class="btn-group">
+                    <button class="btn cancel" id="${bets[i]._id}">Cancel Bet</button>
+                    <button class="btn alert" id="${bets[i]._id}"> Alert Bet</button></div></td>
                     </tr>`
                 }
                 count += 10;
