@@ -1295,7 +1295,7 @@ io.on('connection', (socket) => {
 
 
     module.exports = function alert(data){
-        console.log(data)
+        // console.log(data)
         socket.emit("alertMessage", data)
     }
 
@@ -2370,7 +2370,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('settlement',async(data)=>{
-        console.log(data)
+        // console.log(data)
         const me = data.LOGINUSER
         // console.log(me)
         let betsEventWise = await Bet.aggregate([
