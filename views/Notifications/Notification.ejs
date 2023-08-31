@@ -5,7 +5,7 @@
     <div class="container-fluid">
       <div class="new-head"> 
           <h3><%=title%></h3>
-          <form action="">
+          <!-- <form action="">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
@@ -13,7 +13,7 @@
               <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
             </div>
             <button class="btn-filter"><i class="fa-solid fa-filter"></i> Filter</button>
-          </form>
+          </form> -->
       </div>
     <%- include("../loginUserAdminsideDetails") %>
   </section>
@@ -52,25 +52,25 @@
           <div class="row">
             <div class="col">
               <label for="">Title</label>
-              <input type="text" class="form-control ml0" placeholder="" name="title">
+              <input type="text" class="form-control ml0" placeholder="Title" name="title" required>
             </div>
           </div>
           <div class="row">
             <div class="col">
               <label for="">Message</label>
-              <input type="text" class="form-control ml0" placeholder="" name="message">
+              <input type="text" class="form-control ml0" placeholder="Message" name="message" required>
             </div>
           </div>
           <div class="row">
             <div class="col">
               <label for="">Start Date</label>
-              <input type="date" class="form-control ml0"  name="Sdate">
+              <input type="date" class="form-control ml0"  name="Sdate" required>
             </div>
           </div>
           <div class="row">
             <div class="col">
               <label for="">End Date</label>
-              <input type="date" class="form-control ml0"  name="Edate">
+              <input type="date" class="form-control ml0"  name="Edate" required>
             </div>
           </div>
             <button type="submit" class="btn-submit btn-green mt-3 btn-ju" >Save</button>
