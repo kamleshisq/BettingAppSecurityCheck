@@ -1155,7 +1155,7 @@ socket.on('connect', () => {
                     count = 1;
                     let html1 = ""
                     if(LOGINDATA.LOGINUSER.roleName == "admin"){
-                        html1 = `<tr>`+
+                        html1 = `<thead><tr>`+
                         "<th>S.No</th>"+
                         "<th>User Name</th>"+
                         "<th>White lable</th>"+
@@ -1168,9 +1168,9 @@ socket.on('connect', () => {
                         "<th>Exposure Limit</th>"+
                         "<th>Exposure</th>"+
                         "<th>Action</th>"+
-                    "</tr>"
+                    "</tr></thead>"
                     }else{
-                        html1 = `<tr>`+
+                        html1 = `<thead><tr>`+
                         "<th>S.No</th>"+
                         "<th>User Name</th>"+
                         "<th>Type</th>"+
@@ -1182,12 +1182,12 @@ socket.on('connect', () => {
                         "<th>Exposure Limit</th>"+
                         "<th>Exposure</th>"+
                         "<th>Action</th>"+
-                    "</tr>"
+                    "</tr></thead>"
                     }
                         $('table').html(html1)
                 }
                 
-            let html ="";
+            let html ="<tbody class='new-body'>";
             for(let i = 0; i < response.length; i++){ 
                 if((i+1) % 2 != 0){
 
@@ -1213,7 +1213,10 @@ socket.on('connect', () => {
 
                     }
                     html += `
-                    <td> ${response[i].roleName}</td>
+                    <td>  <span class="role-type">
+                            ${response[i].roleName}
+                        </span>
+                        </td>
                     <td> ${response[i].balance}</td>
                     <td> ${response[i].availableBalance}</td>
                     <td> ${response[i].downlineBalance}</td>
@@ -1246,6 +1249,7 @@ socket.on('connect', () => {
                       html += `</div>
                       </td></td> </tr>`
             }
+            html += `</tbody>`
             count += 10;
             $('table').append(html)
                 // html = '';
