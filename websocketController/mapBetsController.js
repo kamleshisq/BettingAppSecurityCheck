@@ -539,7 +539,8 @@ exports.mapbet = async(data) => {
           },
           totalReturn: { $sum: "$commPoints" },
           event: { $first: "$event" },
-          percentage: { $first: "$percentage" }
+          percentage: { $first: "$percentage" },
+          sport: { $first: "$Sport" } // Include sport field
         }
       },
       {
@@ -554,7 +555,7 @@ exports.mapbet = async(data) => {
               totalReturn: "$totalReturn",
               event: "$event",
               percentage: "$percentage",
-              sport : "$Sport"
+              sport: "$sport" // Include sport field here as well
             }
           }
         }
@@ -568,6 +569,7 @@ exports.mapbet = async(data) => {
         }
       }
     ]);
+    
 
     console.log(NetData)
     console.log(NetData[0].markets)
