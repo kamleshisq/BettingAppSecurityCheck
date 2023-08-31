@@ -1359,13 +1359,21 @@ io.on('connection', (socket) => {
             // },
             {
                 $lookup: {
-                  from: "betmodels", 
-                  localField: "originaluserId",
-                  foreignField: "userId",
+                  from: "betmodels", // Replace with your actual collection name
+                  let: { userIdStr: "$originaluserId" },
+                  pipeline: [
+                    {
+                      $match: {
+                        $expr: {
+                          $eq: ["$userId", "$$userIdStr"]
+                        }
+                      }
+                    }
+                  ],
                   as: "betData"
                 }
-            },
-            {
+              },
+              {
                 $project: {
                   _id: 0,
                   originaluserId: 1,
