@@ -1271,7 +1271,6 @@ io.on('connection', (socket) => {
                 }
               ])
                 .then((betResult) => {
-                    console.log(betResult)
                   socket.emit("aggreat", betResult)
                 })
                 .catch((error) => {
@@ -1281,114 +1280,6 @@ io.on('connection', (socket) => {
             .catch((error) => {
               console.error(error);
             });
-        // let topGames = await Bet.aggregate([
-        //     {
-        //         $match: {
-        //             status: "OPEN" 
-        //         }
-        //     },
-        //     {
-        //         $lookup: {
-        //           from: "users",
-        //           localField: "userName",
-        //           foreignField: "userName",
-        //           as: "user"
-        //         }
-        //       },
-        //       {
-        //         $unwind: "$user"
-        //       },
-        //       {
-        //         $match: {
-        //           "user.parentUsers": { $in: [data.LOGINUSER._id] }
-        //         }
-        //       }
-        // ])
-        // console.log(topGames, 1212121)
-
-        // let topGames = await User.aggregate([
-        //     {
-        //       $match: {
-        //         isActive: true
-        //       }
-        //     },
-        //     {
-        //       $addFields: {
-        //         parentUserIds: {
-        //           $map: {
-        //             input: "$parentUsers",
-        //             as: "parentId",
-        //             in: { $toObjectId: "$$parentId" }
-        //           }
-        //         }
-        //       }
-        //     },
-        //     {
-        //       $lookup: {
-        //         from: "users",
-        //         localField: "parentUserIds",
-        //         foreignField: "_id",
-        //         as: "parentUsersData"
-        //       }
-        //     },
-        //     {
-        //       $unwind: "$parentUsersData"
-        //     },
-        //     {
-        //         $project: {
-        //           _id: "$userName", // Use userName as _id
-        //           parentUserData: {
-        //             parentUserName: "$parentUsersData.userName",
-        //             parentUserShare: "$parentUsersData.Share"
-        //           }
-        //         }
-        //       },
-        //       {
-        //         $group: {
-        //           _id: "$_id",
-        //           originaluserId: { $first: "$_id" },
-        //           parentData: { $push: "$parentUserData" }
-        //         }
-        //       },
-        //       {
-        //         $project: {
-        //           _id: 0,
-        //           originaluserId: 1,
-        //           parentData: 1
-        //         }
-        //       },
-        //       {
-        //         $lookup: {
-        //           from: "betmodels",
-        //           localField: "originaluserId",
-        //           foreignField: "userName", 
-        //           as: "betData"
-        //         }
-        //       },
-        //       {
-        //         $unwind: "$betData"
-        //       },
-        //       {
-        //         $match: {
-        //           "betData.status": "OPEN"
-        //         }
-        //       },
-        //       {
-        //         $group: {
-        //           _id: "$originaluserId",
-        //           parentData: { $first: "$parentData" },
-        //           betData: { $push: "$betData" }
-        //         }
-        //       },
-        //       {
-        //         $match: {
-        //           betData: { $ne: [] } // Exclude documents with empty betData array
-        //         }
-        //       }
-        //   ]);
-
-        //   console.log(topGames, "topGames")
-        //   socket.emit("aggreat", topGames)
     })
 
 
