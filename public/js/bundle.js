@@ -6902,8 +6902,9 @@ $(document).ready(function () {
       // this.classList.add('active')
     }
   }
-});
 
+  colorLink();
+});
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
   // console.log("Working")
