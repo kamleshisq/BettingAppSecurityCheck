@@ -1281,30 +1281,46 @@ io.on('connection', (socket) => {
             .catch((error) => {
               console.error(error);
             });
-        let topGames = await Bet.aggregate([
+        // let topGames = await Bet.aggregate([
+        //     {
+        //         $match: {
+        //             status: "OPEN" 
+        //         }
+        //     },
+        //     {
+        //         $lookup: {
+        //           from: "users",
+        //           localField: "userName",
+        //           foreignField: "userName",
+        //           as: "user"
+        //         }
+        //       },
+        //       {
+        //         $unwind: "$user"
+        //       },
+        //       {
+        //         $match: {
+        //           "user.parentUsers": { $in: [data.LOGINUSER._id] }
+        //         }
+        //       }
+        // ])
+        // console.log(topGames, 1212121)
+
+        let users = await User.aggregate([
             {
-                $match: {
-                    status: "OPEN" 
-                }
+              $match: {
+                parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id } }
+              }
             },
             {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-              },
-              {
-                $unwind: "$user"
-              },
-              {
-                $match: {
-                  "user.parentUsers": { $in: [data.LOGINUSER._id] }
-                }
+              $group: {
+                _id: null,
+                userIds: { $push: '$_id' } 
               }
-        ])
-        console.log(topGames, 1212121)
+            }
+          ])
+
+          console.log(users)
     })
 
 
