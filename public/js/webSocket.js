@@ -7933,12 +7933,12 @@ socket.on('connect', () => {
                 }
             })
 
-            $(document).on('click', '.voidBet', async function(e){
+            $(document).on('click', '.cancel', async function(e){
                 e.preventDefault()
                 socket.emit('voidBet', this.id)
             })
     
-            $(document).on('click', '.acceptBet', async function(e){
+            $(document).on('click', '.accept', async function(e){
                 e.preventDefault()
                 socket.emit('acceptBet', this.id)
             })
