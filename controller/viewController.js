@@ -1718,7 +1718,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
                 marketName: { $first: "$marketName" },
                 match: { $first: "$match" },
                 date: { $first: "$date" },
-                stake: { $sum: "$stake" }
+                stake: { $sum: "$Stake" }
             }
         },
         {
