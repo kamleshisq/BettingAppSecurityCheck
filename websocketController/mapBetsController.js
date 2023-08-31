@@ -575,6 +575,7 @@ exports.mapbet = async(data) => {
     console.log(NetData[0].markets, "DATA")
 try{
   for(let i = 0; i < NetData.length; i++){
+    console.log("forLoop2")
     for(let j = 0; j < NetData[i].markets[j]; j++){
       let user = await userModel.findByIdAndUpdate(NetData[i].userId, {$inc:{netCommisssion: -NetData[i].markets[j].totalReturn, commission:NetData[i].markets[j].totalReturn  }})
       console.log(user, "user")
