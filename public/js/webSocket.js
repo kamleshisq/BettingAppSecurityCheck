@@ -8529,6 +8529,7 @@ socket.on('connect', () => {
           })
 
           socket.on("eventIdForMarketList", async(data) => {
+            console.log(data)
             let i = 0
             let html = ""
             for (var marketKey in data.result.marketList) {
