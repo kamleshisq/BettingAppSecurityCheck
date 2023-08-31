@@ -532,8 +532,10 @@ exports.mapbet = async(data) => {
     let NetData = await netCommission.aggregate([
       {
         $group: {
-          _id: "$userId",
-          match: { $first: "$match" },
+          _id: {
+            userId: "$userId",
+            market: "$market"  // Change this to the field representing market
+          },
           totalReturn: { $sum: "$commPoints" },
           event: { $first: "$event" },
           sport: { $first: "$Sport" },
@@ -543,16 +545,15 @@ exports.mapbet = async(data) => {
       {
         $project: {
           _id: 0,
-          id: "$match",
-          userId: "$_id",
-          match: 1,
+          userId: "$_id.userId",   // Extract userId from _id field
+          market: "$_id.market",   // Extract market from _id field
           totalReturn: 1,
           event: 1,
           sport: 1,
           percentage: 1
         }
       }
-    ])
+    ]);
 
     console.log(NetData, "netData")
 
