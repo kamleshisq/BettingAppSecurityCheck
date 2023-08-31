@@ -242,6 +242,7 @@ if(!marketDetails.runners){
         }else if (commission[0].fency.type == "ENTRY" && !(marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('Match')) && commission[0].fency.status){
           commissionPer = commission[0].fency.percentage
         }
+        console.log(commissionPer)
         let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
         console.log(commissionCoin)
         if(commissionPer > 0){
