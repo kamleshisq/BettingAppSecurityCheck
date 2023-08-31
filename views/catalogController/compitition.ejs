@@ -11,7 +11,9 @@
   <div class="bredcum-container">
     <ul>
         <li><a href="/admin/catalogcontrol">Sport</a></li>
-        <li><a href="/admin/catalogcontrol/compitations?sportId=<%=breadcumArr[0].id%>"><%=breadcumArr[0].name%></a></li>
+        <%if(breadcumArr.length !== 0){%>
+          <li><a href="/admin/catalogcontrol/compitations?sportId=<%=breadcumArr[0].id%>"><%=breadcumArr[0].name%></a></li>
+        <%}%>
     </ul>
   </div>
 
