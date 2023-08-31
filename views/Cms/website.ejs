@@ -30,7 +30,7 @@
                 <td>
                   <div class="btn-group">
                     <button data-bs-toggle="modal" data-bs-target="#myModal5" id="<%=verticalMenus[i]._id%>" class="getVerticalMenuDetails"><i class="fa-solid fa-database"></i></button>
-                  <button class="deleteVerticalMenuDetails" id="<%=verticalMenus[i]._id%>">Delete</button>
+                  <button class="btn delete deleteVerticalMenuDetails" id="<%=verticalMenus[i]._id%>">Delete</button>
                   </div>  
                 </td>
               </tr>
@@ -70,7 +70,7 @@
               <td>
                 <div class="btn-group">
                   <button data-bs-toggle="modal" data-bs-target="#myModal7" id="<%=banner[i]._id%>" class="getBannerDetails"><i class="fa-solid fa-database"></i></button>
-                <button class="deleteBanner" id="<%=banner[i]._id%>">Delete</button>
+                <button class="btn delete deleteBanner" id="<%=banner[i]._id%>">Delete</button>
                 </div>
               </td>
             </tr>
@@ -147,8 +147,10 @@
                             <input type="file" name="file" id="file">
                           </div>
                         </div>
-                        <button type="submit" class="btn-submit mt-3">Save</button>
+                        <div class="submit-btns">
+                          <button type="submit" class="btn-submit mt-3">Save</button>
                         <button type="click" id="<%=sliders[i]._id%>" class="deleteSlider btn-submit mt-3">Delete</button>
+                        </div>
                       </form>
                       <div class="Table_heads"> 
                         <div class="new-head">
@@ -161,7 +163,7 @@
                             <th>name</th>
                             <th>url</th>
                             <th>Image</th>
-                            <th>delete</th>
+                            <th>Action</th>
                           </thead>
                           <tbody>
                             <%for(let j=0; j < sliders[i].images.length; j++){%>
@@ -169,7 +171,7 @@
                               <td><%=sliders[i].images[j].name%></td>
                               <td><%=sliders[i].images[j].url%></td>
                               <td><img src="../sliderImages/<%=sliders[i].images[j].name%>.png" alt="img" class="form__user-photo"></td>
-                              <td><button class="dleteImageSport" id="<%=sliders[i].images[j].name%>//<%=sliders[i].name%>">Delete</button></td>
+                              <td><div class="btn-group"><button class="btn delete dleteImageSport" id="<%=sliders[i].images[j].name%>//<%=sliders[i].name%>">Delete</button></div></td>
                             </tr>
                             <%}%>
                           </tbody>
