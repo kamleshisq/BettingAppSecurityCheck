@@ -1366,13 +1366,23 @@ io.on('connection', (socket) => {
                 }
               },
               {
+                $unwind: "$betData"
+              },
+              {
                 $match: {
                   "betData.status": "OPEN"
                 }
               },
               {
+                $group: {
+                  _id: "$originaluserId",
+                  parentData: { $first: "$parentData" },
+                  betData: { $push: "$betData" }
+                }
+              },
+              {
                 $match: {
-                  betData: { $ne: [] } 
+                  betData: { $ne: [] } // Exclude documents with empty betData array
                 }
               }
           ]);
