@@ -7548,8 +7548,8 @@ socket.on('connect', () => {
             socket.emit("CommissionRReport", {page, LOGINDATA, filterData})
         }
 
-
-          $(window).scroll(function() {
+        $(window).scroll(async function() {
+            if($(document).height()-$(window).scrollTop() == window.innerHeight){
             var scroll = $(window).scrollTop();
             var windowHeight = $(window).height();
             var documentHeight = $(document).height();
@@ -7564,6 +7564,7 @@ socket.on('connect', () => {
                 filterData.fromDate = fromDate1,
                 filterData.toDate = toDate
                 socket.emit("CommissionRReport", {page, LOGINDATA, filterData})
+            }
             }
           })
           let count = 21
