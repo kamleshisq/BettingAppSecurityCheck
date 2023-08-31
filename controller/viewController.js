@@ -2883,10 +2883,10 @@ exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
     // const sportListData = await getCrkAndAllData()
     // const sportList = sportListData[1].gameList
     const sportList =[
-        {sport_name:"baseball",sportId:0},
-        {sport_name:"basketball",sportId:0}	,
+        {sport_name:"baseball",sportId:30},
+        {sport_name:"basketball",sportId:10}	,
         {sport_name:"cricket",sportId:4}	,
-        {sport_name:"Greyhound Racing",sportId:0}	,
+        {sport_name:"Greyhound Racing",sportId:20}	,
         {sport_name:"Horse Racing",sportId:77}	,
         {sport_name:"Football",sportId:1}	,
         {sport_name:"tennis",sportId:2}
@@ -2921,10 +2921,10 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
     let seriesList = []
     let breadcumArr = []
     const sportList =[
-        {sport_name:"baseball",sportId:0},
-        {sport_name:"basketball",sportId:0}	,
+        {sport_name:"baseball",sportId:30},
+        {sport_name:"basketball",sportId:10}	,
         {sport_name:"cricket",sportId:4}	,
-        {sport_name:"Greyhound Racing",sportId:0}	,
+        {sport_name:"Greyhound Racing",sportId:20}	,
         {sport_name:"Horse Racing",sportId:77}	,
         {sport_name:"Football",sportId:1}	,
         {sport_name:"tennis",sportId:2}
