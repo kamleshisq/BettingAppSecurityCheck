@@ -1187,7 +1187,7 @@ io.on('connection', (socket) => {
 
 
     socket.on("aggreat", async(data) => {
-        
+        console.log(data.ids)
         // console.log(data)
         // Bet.aggregate([
         //     {
