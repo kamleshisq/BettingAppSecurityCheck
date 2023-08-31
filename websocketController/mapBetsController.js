@@ -534,29 +534,27 @@ exports.mapbet = async(data) => {
         $group: {
           _id: {
             userId: "$userId",
-            match: "$match", // Second _id field
-            market: "$market" // Third _id field
+            match: "$match",
+            market: "$market"
           },
-          sports: {
-            $push: {
-              sport: "$Sport",
-              totalReturn: { $sum: "$commPoints" },
-              event: { $first: "$event" },
-              percentage: { $first: "$percentage" }
-            }
-          }
+          totalReturn: { $sum: "$commPoints" },
+          event: { $first: "$event" },
+          percentage: { $first: "$percentage" }
         }
       },
       {
         $group: {
-          _id: "$_id.userId",
-          matches: {
+          _id: {
+            userId: "$_id.userId",
+            match: "$_id.match"
+          },
+          markets: {
             $push: {
-              match: "$_id.match",
-              markets: {
-                market: "$_id.market",
-                sports: "$sports"
-              }
+              market: "$_id.market",
+              totalReturn: "$totalReturn",
+              event: "$event",
+              percentage: "$percentage",
+              sport : "$Sport"
             }
           }
         }
@@ -564,12 +562,12 @@ exports.mapbet = async(data) => {
       {
         $project: {
           _id: 0,
-          userId: "$_id",
-          matches: 1
+          userId: "$_id.userId",
+          sport: "$_id.sport",
+          markets: 1
         }
       }
     ]);
-    
 
     console.log(NetData)
     console.log(NetData[0].markets)
