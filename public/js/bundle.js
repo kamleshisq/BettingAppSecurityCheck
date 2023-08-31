@@ -6882,13 +6882,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //     // console.log(email)
 //     login(email, password);
 // })};
+var _window$location = window.location,
+  host = _window$location.host,
+  hostname = _window$location.hostname,
+  href = _window$location.href,
+  origin = _window$location.origin,
+  pathname = _window$location.pathname,
+  port = _window$location.port,
+  protocol = _window$location.protocol,
+  search = _window$location.search;
 $(document).ready(function () {
-  if ($(".nav .nav_list .nav_link").attr("href") == window.location.href) {
-    $(".nav .nav_list .nav_link").attr("class", "");
-  } else {
-    $(".nav .nav_list .nav_link").attr("class", "active");
+  var linkColor = document.querySelectorAll('.nav_link');
+  function colorLink() {
+    if (linkColor) {
+      linkColor.forEach(function (l) {
+        return l.classList.remove('active');
+      });
+      $("a[href='" + pathname + "'").addClass('active');
+      // this.classList.add('active')
+    }
   }
 });
+
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
   // console.log("Working")
@@ -7437,7 +7452,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49981" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50157" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

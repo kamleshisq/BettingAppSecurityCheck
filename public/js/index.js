@@ -41,14 +41,22 @@ import { KYC } from "./kyc";
 //     login(email, password);
 // })};
 
+const {
+    host, hostname, href, origin, pathname, port, protocol, search
+  } = window.location
+
 $(document).ready(function(){
-    if($(".nav .nav_list .nav_link").attr("href")==window.location.href){
-        $(".nav .nav_list .nav_link").attr("class","");
-    }
-   else{
-      $(".nav .nav_list .nav_link").attr("class","active");
-     }
+    const linkColor = document.querySelectorAll('.nav_link')
+	
+	function colorLink(){
+	if(linkColor){
+	linkColor.forEach(l=> l.classList.remove('active'))
+    $("a[href='"+pathname+"'").addClass('active')
+	// this.classList.add('active')
+	}
+	}
 });
+
 
 
 $(document).on("submit", ".loginFormAdmin", function(e){
