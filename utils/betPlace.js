@@ -268,6 +268,7 @@ if(!marketDetails.runners){
                 let parentUser = await userModel.findById(user.parentUsers[i - 1])
                 let commissionChild = await commissionModel.find({userId:childUser.id})
                 let commissionPer = 0
+                console.log(marketDetails.title)
                 if ((marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('BOOK')) && commissionChild[0].Bookmaker.type == "ENTRY" && commissionChild[0].Bookmaker.status){
                   commissionPer = commissionChild[0].Bookmaker.percentage
                 }else if (commissionChild[0].fency.type == "ENTRY" && !(marketDetails.title.startsWith('BOOK') || marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('Match')) && commissionChild[0].fency.status){
