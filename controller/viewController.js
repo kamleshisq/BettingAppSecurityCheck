@@ -2773,12 +2773,11 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
     let breadcumArr = []
     if(sportId == 4){
         series = sportListData[0].gameList[0]
-        breadcumArr.push({id:sportId,name:series.sport_name})
     }else{
         series = sportListData[1].gameList.find(item => item.sportId == sportId)
-        breadcumArr.push({id:sportId,name:series.sport_name})
     }
     if(series){
+        breadcumArr.push({id:sportId,name:series.sport_name})
         let seriesPromise = series.eventList.map(async(item)=>{
             if(!seriesList.includes(item.eventData.compId)){
                 seriesList.push(item.eventData.compId)
@@ -2834,17 +2833,16 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
     if(sportId == 4){
         series = sportListData[0].gameList[0]
         breadcumArr.push({id:sportId,name:series.sport_name})
-        nameArr.push(series.sport_name)
 
     }else{
         series = sportListData[1].gameList.find(item => item.sportId == sportId)
         breadcumArr.push({id:sportId,name:series.sport_name})
-        nameArr.push(series.sport_name)
 
 
     }
 
     if(series){
+        nameArr.push(series.sport_name)
         let = eventListPromis = series.eventList.map(async(item) => {
             if(item.eventData.compId == compId){
                 if(!nameArr.includes(item.eventData.league)){
