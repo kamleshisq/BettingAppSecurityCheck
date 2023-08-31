@@ -27,8 +27,8 @@
                         <%for(let k = 0; k < openBet[i].details[j].length; k++){%>
                           <tr>
                           <td><%=openBet[i].details[j][k].beton%></td>
-                          <td ><%=openBet[i].details[j][k].stake%></td>
-                          <td >00</td>
+                          <td id="<%=openBet[i].details[j][k].secId%>"><%=openBet[i].details[j][k].stake%></td>
+                          <td id="<%=openBet[i].details[j][k].secId%>"B><%=openBet[i].details[j][k].count%></td>
                         </tr>
                         <%}%>
                       </tbody>
