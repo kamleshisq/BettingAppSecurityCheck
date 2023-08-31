@@ -51,6 +51,8 @@ $(document).ready(function(){
 	function colorLink(){
 	if(linkColor){
 	linkColor.forEach(l=> l.classList.remove('active'))
+    console.log(pathname)
+    console.log( $("a[href='"+pathname+"'"))
     $("a[href='"+pathname+"'").addClass('active')
 	// this.classList.add('active')
 	}
