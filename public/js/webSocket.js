@@ -8514,6 +8514,9 @@ socket.on('connect', () => {
                 html += "</ul>"
             }
             document.getElementById("myMarkets").innerHTML = html
+            $('#myMarkets').click(function(e){
+                $('#myMarkets').hide()
+            })
             // document.getElementById("demonames1").innerHTML = html
           })
 
@@ -8588,6 +8591,10 @@ socket.on('connect', () => {
                     }
                   }
                 }
+              }
+              console.log(html)
+              if(html == ''){
+                html += `<tr class="empty_table">No record found</tr>`
               }
 
               document.getElementById("markets").innerHTML = html
