@@ -3230,7 +3230,7 @@ socket.on('connect', () => {
             // }
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
-            // console.log(data)
+            console.log(data)
             socket.emit('betMoniter',data)
 
         })
