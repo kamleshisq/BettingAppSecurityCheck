@@ -186,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	// linkColor.forEach(l=> l.classList.remove('active'))
 	// this.classList.add('active')
 	// }
-	}
+	// }
 	// linkColor.forEach(l=> l.addEventListener('click', colorLink))
 	
 	 // Your code to run since DOM is loaded and ready
