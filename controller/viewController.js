@@ -2836,13 +2836,26 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
     let seriesObjList = []
     let seriesList = []
     let breadcumArr = []
+    const sportList =[
+        {sport_name:"baseball",sportId:0},
+        {sport_name:"basketball",sportId:0}	,
+        {sport_name:"cricket",sportId:4}	,
+        {sport_name:"Greyhound Racing",sportId:0}	,
+        {sport_name:"Horse Racing",sportId:77}	,
+        {sport_name:"Football",sportId:1}	,
+        {sport_name:"tennis",sportId:2}
+    ]
+    sportList.map(item => {
+        if(item.sportId == sportId){
+            breadcumArr.push({name:item.sport_name,id:sportId})
+        }
+    })
     if(sportId == 4){
         series = sportListData[0].gameList[0]
     }else{
         series = sportListData[1].gameList.find(item => item.sportId == sportId)
     }
     if(series){
-        breadcumArr.push({id:sportId,name:series.sport_name})
         let seriesPromise = series.eventList.map(async(item)=>{
             if(!seriesList.includes(item.eventData.compId)){
                 seriesList.push(item.eventData.compId)
