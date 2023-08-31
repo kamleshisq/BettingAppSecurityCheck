@@ -3171,6 +3171,11 @@ socket.on('connect', () => {
             }
         })
 
+        $('#search > li').click(function(e){
+            $('.wrapper').hide()
+            $('#searchUser').val($(this).text())
+        })
+
         let toDate;
         let fromDate;
         let filterData = {}
