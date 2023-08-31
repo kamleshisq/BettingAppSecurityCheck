@@ -3950,7 +3950,7 @@ socket.on('connect', () => {
             }
         })
 
-        $(document).on('click', '.Delete', async function(){
+        $(document).on('click', '.delete', async function(){
             let id = $(this).attr('id')
             if(confirm('do you want to delte this notification')){
                 socket.emit('deleteNotification', {id, LOGINDATA})
