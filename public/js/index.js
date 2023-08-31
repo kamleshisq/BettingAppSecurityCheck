@@ -99,7 +99,7 @@ createUser(formDataObj)
 });
 
 $(document).on('click','.updateBetLimit',function(e){
-    let rowId = $(this).parent().parent().attr('id')
+    let rowId = $(this).parent().parent().parent().attr('id')
     $('.rowId').attr('data-rowid',rowId)
     let modleName = $(this).data('bs-target')
     let form = $(modleName).find('.form-data')
