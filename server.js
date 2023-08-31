@@ -1309,7 +1309,8 @@ io.on('connection', (socket) => {
         let topGames = await User.aggregate([
             {
               $match: {
-                isActive: true
+                isActive: true,
+                parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id } }
               }
             },
             {
@@ -1336,10 +1337,10 @@ io.on('connection', (socket) => {
               },
               {
                 $project: {
-                  userName: 1,
-                  parentUserNames: "$parentUsersData.userName", // Array of parent user names
-                  parentUserShares: "$parentUsersData.Share"   // Array of parent user shares
-                  // Add more projected fields as needed
+                    _id: 1,
+                    userName: 1,
+                    parentUserNames: "$parentUsersData.userName",
+                    parentUserShares: "$parentUsersData.Share"  
                 }
               }
           ]);
