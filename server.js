@@ -1364,6 +1364,16 @@ io.on('connection', (socket) => {
                   foreignField: "userName", 
                   as: "betData"
                 }
+              },
+              {
+                $match: {
+                  "betData.status": "OPEN"
+                }
+              },
+              {
+                $match: {
+                  betData: { $ne: [] } 
+                }
               }
           ]);
 
