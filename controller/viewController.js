@@ -1839,7 +1839,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
         // }
     ])
     console.log(openBet, "openBet")
-    console.log(openBet[0].details, "openBet")
+    console.log(openBet[0].details[0][0], "openBet")
     // console.log(liveFootBall)
     // console.log(liveTennis)
     // console.log(liveCricket)
