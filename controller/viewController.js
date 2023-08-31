@@ -1672,8 +1672,8 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
     let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
     let currentUser =  req.currentUser
-    console.log(liveFootBall)
-    console.log(liveTennis)
+    // console.log(liveFootBall)
+    // console.log(liveTennis)
     console.log(liveCricket)
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
