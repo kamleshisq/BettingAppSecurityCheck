@@ -1309,40 +1309,54 @@ io.on('connection', (socket) => {
         let topGames = await User.aggregate([
             {
               $match: {
-                isActive: true,
-                parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id } }
+                isActive: true
               }
             },
             {
-                $addFields: {
-                  parentUserIds: {
-                    $map: {
-                      input: "$parentUsers",
-                      as: "parentId",
-                      in: { $toObjectId: "$$parentId" }
-                    }
+              $addFields: {
+                parentUserIds: {
+                  $map: {
+                    input: "$parentUsers",
+                    as: "parentId",
+                    in: { $toObjectId: "$$parentId" }
                   }
                 }
-              },
-              {
-                $lookup: {
-                  from: "users",
-                  localField: "parentUserIds",
-                  foreignField: "_id",
-                  as: "parentUsersData"
-                }
-              },
-              {
-                $unwind: "$parentUsersData"
-              },
-              {
-                $project: {
-                    _id: 1,
-                    userName: 1,
-                    parentUserNames: "$parentUsersData.userName",
-                    parentUserShares: "$parentUsersData.Share"  
+              }
+            },
+            {
+              $lookup: {
+                from: "users",
+                localField: "parentUserIds",
+                foreignField: "_id",
+                as: "parentUsersData"
+              }
+            },
+            {
+              $unwind: "$parentUsersData"
+            },
+            {
+              $project: {
+                _id: 1,
+                parentUserData: {
+                  parentUserName: "$parentUsersData.userName",
+                  parentUserShare: "$parentUsersData.Share"
                 }
               }
+            },
+            {
+              $group: {
+                _id: "$_id",
+                originaluserId: { $first: "$_id" },
+                parentData: { $push: "$parentUserData" }
+              }
+            },
+            {
+              $project: {
+                _id: 0,
+                originaluserId: 1,
+                parentData: 1
+              }
+            }
           ]);
 
           console.log(topGames, "topGames")
