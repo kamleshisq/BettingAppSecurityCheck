@@ -1742,25 +1742,35 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
             }
         },
         {
+            $project: {
+                _id: 0,
+                bettype: "$_id.betType",
+                details: 1
+            }
+        },
+        {
+            $unwind: "$details"
+        },
+        {
+            $match: {
+                "details.shortMarketName": {
+                    $in: ["mat", "boo", "tos"]
+                }
+            }
+        },
+        {
             $group: {
                 _id: "$_id.betType",
                 details: { $push: "$details" }
             }
         },
-            // {
-            //     $match: {
-            //         "details.shortMarketName": {
-            //             $in: ["mat", "boo", "tos"]
-            //         }
-            //     }
-            // },
-        {
-            $project: {
-                _id: 0,
-                bettype: "$_id",
-                details: 1
-            }
-        }
+        // {
+        //     $project: {
+        //         _id: 0,
+        //         bettype: "$_id",
+        //         details: 1
+        //     }
+        // }
         // {
         //     $group: {
         //         _id: {
