@@ -2536,12 +2536,12 @@ io.on('connection', (socket) => {
             }
         }else if(data.filterData.fromDate == "" && data.filterData.toDate != ""){
             filter.date = {
-                $lte : new Date(data.filterData.toDate)
+                $lte : new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60 *60 *1000) - 1))
             }
         }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
             filter.date = {
                 $gte : new Date(data.filterData.fromDate),
-                $lte : new Date(data.filterData.toDate)
+                $lte : new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60 *60 *1000) - 1))
             }
         }
 
