@@ -1196,7 +1196,7 @@ io.on('connection', (socket) => {
         let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
         let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
         let liveData = liveCricket.concat(liveFootBall, liveTennis);
-        console.log(liveData)
+        // console.log(liveData)
         // console.log(data)
         // Bet.aggregate([
         //     {
