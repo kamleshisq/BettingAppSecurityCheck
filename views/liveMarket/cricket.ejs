@@ -2,13 +2,13 @@
   <div class="row">
     <%for(let i = 0; i < openBet.length; i++){%>
       <%if(openBet[i].bettype == "Cricket"){%>
-        <%for(let j = 0 ; j < openBet[i].details.length; j++){%>
-          <section>
-            <div class="container-fluid">
-              <div class="new-head">
-                <h3 class="head-hr"><%=  openBet[i].details[j].match %></h3>
-                <a class="btn-filter" >View Details &nbsp;<i class="fa-solid fa-chevron-right"></i></a>
-              </div>
+        <section>
+          <div class="container-fluid">
+            <div class="new-head">
+              <h3 class="head-hr"><%=  openBet[i].details[j].match %></h3>
+              <a class="btn-filter" >View Details &nbsp;<i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+            <%for(let j = 0 ; j < openBet[i].details.length; j++){%>
               <div class="video-section-1">
                 <div class="video-play">
                   <div class="hed-data">
@@ -30,8 +30,8 @@
                 </div>
               </div>
             </div> 
+            <%}%>
           </section>
-        <%}%>
       <%}%>
     <%}%>
     <%if(!openBet.some(item => item.bettype == "Cricket")){%>
