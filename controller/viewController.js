@@ -1713,18 +1713,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
             $project: {
                 _id: 0,
                 bettype: "$_id",
-                details: {
-                    $filter: {
-                        input: "$details",
-                        as: "detail",
-                        cond: {
-                            $in: [
-                                { $substrCP: [{ $toLower: "$$detail.marketName" }, 0, 7] },
-                                ["match", "bookmak", "toss"]
-                            ]
-                        }
-                    }
-                }
+                details: 1
             }
         }
     ])
