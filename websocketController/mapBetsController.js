@@ -362,6 +362,7 @@ exports.mapbet = async(data) => {
               // }else if ((bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS')) && commission[0].Bookmaker.type == "WIN"){
               //   commissionPer = parseFloat(commission[0].Bookmaker.percentage)/100
               // }
+              console.log("Working")
               await betModel.findByIdAndUpdate(bet._id,{status:"LOSS"})
               let user =  await userModel.findByIdAndUpdate(bet.userId,{$inc:{Loss:1, exposure:-parseFloat(bet.Stake)}})
               let commissionMarket = await commissionMarketModel.find()
