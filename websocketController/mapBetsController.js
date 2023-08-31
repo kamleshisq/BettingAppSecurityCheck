@@ -445,7 +445,8 @@ exports.mapbet = async(data) => {
                           commissionPer = commission[0].Bookmaker.percentage
                         }
                         let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
-                        // console.log(commissionCoin , "commisiion")
+                        console.log(commissionCoin , "commisiion")
+                        console.log(commissionPer, "Percentage")
                         if(commissionPer > 0){
                           let user1 = await userModel.findById(user.id)
                           // console.log(user1)
