@@ -1713,28 +1713,85 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
             $group: {
                 _id: {
                     betType: "$betType",
-                    marketId: "$marketId"
+                    marketId: "$marketId",
+                    beton: "$selectionName"
                 },
                 marketName: { $first: "$marketName" },
                 match: { $first: "$match" },
                 date: { $first: "$date" },
-                stake: { $sum: "$Stake" }
+                stake: { $sum: "$stake" }
+            }
+        },
+        {
+            $group: {
+                _id: {
+                    betType: "$_id.betType",
+                    marketId: "$_id.marketId"
+                },
+                details: {
+                    $push: {
+                        id: "$_id.marketId",
+                        marketName: "$marketName",
+                        shortMarketName: { $substrCP: [{ $toLower: "$marketName" }, 0, 3] },
+                        match: "$match",
+                        date: "$date",
+                        stake: "$stake",
+                        beton: "$_id.beton"
+                    }
+                }
             }
         },
         {
             $group: {
                 _id: "$_id.betType",
-                details: {
-                    $push: {
-                        id: "$_id.marketId",
-                        marketName: "$marketName",
-                        match: "$match",
-                        date: "$date",
-                        stake: "$stake"
-                    }
+                details: { $push: "$details" }
+            }
+        },
+        {
+            $match: {
+                "_id": {
+                    $in: ["mat", "boo", "tos"]
                 }
             }
         },
+        {
+            $project: {
+                _id: 0,
+                bettype: "$_id",
+                details: 1
+            }
+        }
+        // {
+        //     $group: {
+        //         _id: {
+        //             betType: "$_id.betType",
+        //             marketId: "$_id.marketId"
+        //         },
+        //         details: {
+        //             $push: {
+        //                 id: "$_id.marketId",
+        //                 marketName: "$marketName",
+        //                 match: "$match",
+        //                 date: "$date",
+        //                 stake: "$stake",
+        //                 beton: "$_id.beton"
+        //             }
+        //         }
+        //     }
+        // },
+        // {
+        //     $group: {
+        //         _id: "$_id.betType",
+        //         details: { $push: "$details" }
+        //     }
+        // },
+        // {
+        //     $project: {
+        //         _id: 0,
+        //         bettype: "$_id",
+        //         details: 1
+        //     }
+        // },
         // {
         //     $project: {
         //         _id: 0,
@@ -1742,26 +1799,26 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
         //         details: 1
         //     }
         // }
-        {
-            $project: {
-                _id: 0,
-                bettype: "$_id",
-                details: {
-                    $filter: {
-                        input: "$details",
-                        as: "detail",
-                        cond: {
-                            $in: [
-                                { $substrCP: [{ $toLower: "$$detail.marketName" }, 0, 3] },
-                                ["mat", "boo", "tos"]
-                            ]
-                        }
-                    }
-                }
-            }
-        }
+        // {
+        //     $project: {
+        //         _id: 0,
+        //         bettype: "$_id",
+        //         details: {
+        //             $filter: {
+        //                 input: "$details",
+        //                 as: "detail",
+        //                 cond: {
+        //                     $in: [
+        //                         { $substrCP: [{ $toLower: "$$detail.marketName" }, 0, 3] },
+        //                         ["mat", "boo", "tos"]
+        //                     ]
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
     ])
-    console.log(openBet[0].details)
+    console.log(openBet)
     // console.log(liveFootBall)
     // console.log(liveTennis)
     // console.log(liveCricket)

@@ -52,7 +52,11 @@
                 </td>
                 <%console.log(betsEventWise[i])%>
                 <%}%>
-                <td><button class="voidBet" id="<%=betsEventWise[i].marketId%>"> VOID</button><button class="acceptBet" id="<%=betsEventWise[i].marketId%>"> MAP</button></td>
+                <td>
+                  <div class="btn-group">
+                    <button class="voidBet" id="<%=betsEventWise[i].marketId%>"> VOID</button><button class="acceptBet" id="<%=betsEventWise[i].marketId%>"> MAP</button>
+                  </div>
+                </td>
               </tr>
               <%} %>
             </tbody>
