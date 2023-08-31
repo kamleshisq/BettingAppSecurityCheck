@@ -2459,6 +2459,8 @@ socket.on('connect', () => {
                 if(id){
                     if(confirm('do you want to change status')){
                         socket.emit('casionoStatusChange',{status,id})
+                    }else{
+                        $(this).prop('checked') ? $(this).prop('checked',false) : $(this).prop('checked',true)
                     }
                 }
         })
