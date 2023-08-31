@@ -1284,7 +1284,7 @@ io.on('connection', (socket) => {
         let topGames = await Bet.aggregate([
             {
                 $match: {
-                    status: { $ne: "OPEN" }
+                    status: "OPEN" 
                 }
             },
             {
