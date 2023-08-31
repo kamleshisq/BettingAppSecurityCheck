@@ -274,7 +274,7 @@ exports.mapbet = async(data) => {
                           // console.log(commissionCoin)
                           if(commissionPer > 0){
                               let user1 = await userModel.findByIdAndUpdate(childUser.id, {$inc:{commissionChild:commissionCoin}})
-                              console.log(user1.userName)
+                              // console.log(user1.userName)
                               let commissionReportData = {
                                   userId:childUser.id,
                                   market:bet.marketName,
@@ -305,7 +305,7 @@ exports.mapbet = async(data) => {
                         let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
                         if(commissionPer > 0){
                           let user1 = await userModel.findById(user.id)
-                          console.log(user1)
+                          // console.log(user1)
                           // console.log(user1)
                           let commissionReportData = {
                               userId:user.id,
@@ -332,7 +332,7 @@ exports.mapbet = async(data) => {
                                 commissionPer = commissionChild[0].Bookmaker.percentage
                               }
                               let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
-                              console.log(commissionCoin)
+                              // console.log(commissionCoin)
                               if(commissionPer > 0){
                                   let user1 = await userModel.findById(childUser.id)
                                   // console.log(user1.userName)
@@ -362,11 +362,11 @@ exports.mapbet = async(data) => {
               // }else if ((bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS')) && commission[0].Bookmaker.type == "WIN"){
               //   commissionPer = parseFloat(commission[0].Bookmaker.percentage)/100
               // }
-              console.log("Working")
+              // console.log("Working")
               await betModel.findByIdAndUpdate(bet._id,{status:"LOSS"})
               let user =  await userModel.findByIdAndUpdate(bet.userId,{$inc:{Loss:1, exposure:-parseFloat(bet.Stake)}})
               let commissionMarket = await commissionMarketModel.find()
-                console.log(commissionMarket, bet.marketId)
+                // console.log(commissionMarket, bet.marketId)
                 if(commissionMarket.some(item => item.marketId == bet.marketId)){
                   try{
                     let commission = await commissionModel.find({userId:user.id})
@@ -380,7 +380,7 @@ exports.mapbet = async(data) => {
                       let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
                       if(commissionPer > 0){
                         let user1 = await userModel.findByIdAndUpdate(user.id, {$inc:{commission:commissionCoin}})
-                        console.log(user)
+                        // console.log(user)
                         // console.log(user1)
                         let commissionReportData = {
                             userId:user.id,
@@ -408,10 +408,10 @@ exports.mapbet = async(data) => {
                             commissionPer = commissionChild[0].Bookmaker.percentage
                           }
                           let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
-                          console.log(commissionCoin)
+                          // console.log(commissionCoin)
                           if(commissionPer > 0){
                               let user1 = await userModel.findByIdAndUpdate(childUser.id, {$inc:{commissionChild:commissionCoin}})
-                              console.log(user1.userName)
+                              // console.log(user1.userName)
                               let commissionReportData = {
                                   userId:childUser.id,
                                   market:bet.marketName,
@@ -431,10 +431,10 @@ exports.mapbet = async(data) => {
                 }
 
 
-                console.log(bet.marketId)
-                console.log(commissionMarket)
+                // console.log(bet.marketId)
+                // console.log(commissionMarket)
                 if(commissionMarket.some(item => item.marketId == bet.marketId)){
-                  console.log('work1')
+                  // console.log('work1')
                   try{
                       let commission = await commissionModel.find({userId:user.id})
                       let commissionPer = 0
@@ -445,10 +445,10 @@ exports.mapbet = async(data) => {
                           commissionPer = commission[0].Bookmaker.percentage
                         }
                         let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
-                        console.log(commissionCoin , "commisiion")
+                        // console.log(commissionCoin , "commisiion")
                         if(commissionPer > 0){
                           let user1 = await userModel.findById(user.id)
-                          console.log(user1)
+                          // console.log(user1)
                           // console.log(user1)
                           let commissionReportData = {
                               userId:user.id,
@@ -475,7 +475,7 @@ exports.mapbet = async(data) => {
                                 commissionPer = commissionChild[0].Bookmaker.percentage
                               }
                               let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
-                              console.log(commissionCoin , "commisiion")
+                              // console.log(commissionCoin , "commisiion")
                               if(commissionPer > 0){
                                   let user1 = await userModel.findById(childUser.id)
                                   // console.log(user1.userName)
@@ -528,7 +528,7 @@ exports.mapbet = async(data) => {
             }
         }
     });
-
+    console.log('working')
     let NetData = await netCommission.aggregate([
       {
         $group: {
@@ -588,6 +588,7 @@ try{
         match:NetData[i].match,
         Sport:NetData[i].markets[j].sport
     }
+    console.log(commissionReportData)
     let commisiionReports = await commissionRepportModel.create(commissionReportData)
     console.log(commisiionReports, "commisiionReports")
     }
