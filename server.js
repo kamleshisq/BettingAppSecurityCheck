@@ -1346,7 +1346,7 @@ io.on('connection', (socket) => {
             {
               $group: {
                 _id: "$_id",
-                userName: '$userName',
+                // userName: '$userName',
                 originaluserId: { $first: "$_id" },
                 parentData: { $push: "$parentUserData" }
               }
