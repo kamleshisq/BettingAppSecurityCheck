@@ -589,7 +589,7 @@ exports.mapbet = async(data) => {
       }
       await commissionRepportModel.create(commissionReportData)
       }
-      await netCommission.findAndDelete({userId:NetData[i].userId, match:NetData[i].match})
+      await netCommission.deleteMany({userId:NetData[i].userId, match:NetData[i].match})
     }
 
 
