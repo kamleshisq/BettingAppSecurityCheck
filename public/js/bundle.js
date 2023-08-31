@@ -6882,11 +6882,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //     // console.log(email)
 //     login(email, password);
 // })};
-jQuery(function () {
-  var pgurl = window.location.href.substr(window.location.href.lastIndexOf("/") + 1);
-  jQuery(".nav .nav_list .nav_link").each(function () {
-    if (jQuery(this).attr("href") == pgurl || jQuery(this).attr("href") == '') jQuery(this).addClass("active");
-  });
+$(document).ready(function () {
+  if ($(".nav .nav_list .nav_link").attr("href") == window.location.href) {
+    $(".nav .nav_list .nav_link").attr("class", "dropdown active");
+  } else {
+    $(".nav .nav_list .nav_link").attr("class", "dropdown");
+  }
 });
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
