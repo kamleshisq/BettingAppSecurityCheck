@@ -8589,6 +8589,10 @@ socket.on('connect', () => {
                   }
                 }
               }
+              console.log(html)
+              if(html == ''){
+                html += `<tr class="empty_table">No record found</tr>`
+              }
 
               document.getElementById("markets").innerHTML = html
           })
