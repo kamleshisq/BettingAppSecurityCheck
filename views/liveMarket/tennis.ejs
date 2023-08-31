@@ -1,56 +1,39 @@
 <div id="TENNIS" class="tabcontent">
   <div class="row">
-    <%for(let i = 0; i < liveTennis.length; i++){%>
-    <section>
-      <div class="container-fluid">
-        <div class="new-head">
-          <h3 class="head-hr"><%= liveTennis[i].eventData.name %></h3>
-          <a class="btn-filter" href="/admin/viewall?id=<%=liveTennis[i].eventData.eventId%>">View Details &nbsp;<i class="fa-solid fa-chevron-right"></i></a>
-        </div>
-        <%if(liveTennis[i].marketList.match_odd != null){%>
-        <div class="video-section-1">
-          <div class="video-play">
-            <div class="hed-data">
-              <h3 class="live-head"> MATCH ODDS </h3>
-            </div>
-            <div class="full-adta">
-              <table>
-                <thead>
-                  <tr>
-                    <th>OUTCOMES/RUNNER</th>
-                    <th>EXPOSURE</th>
-                    <th>TOTAL BETS</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% let runners = JSON.parse(liveTennis[i].marketList.match_odd.runners); %>
-                  <% const runners1 = []; %>
-                  <%const secIds = []; %>
-                  <%runners.forEach(item => {%>
-                  <%runners1.push(item.runner);%>
-                  <%secIds.push(item.secId);%>
-                  <%});%>
-                  <%for(let j = 0; j < runners1.length; j++){%>
-                  <%if((j%2)===1){%>
-                  <tr>
-                    <%}else{%>
-                    <tr>
-                      <%}%>
-                      <td><%=runners1[j]%></td>
-                      <td id="<%=secIds[j]%>">00</td>
-                      <td id="<%=secIds[j]%>B">00</td>
-                      <%}%>
-                    </tr>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <%}%>
-      </div> 
-    </section>
-    <%}%>
+    <%for(let i = 0, i < openBet.length; i++){%> 
+      <%if(openBet[i].bettype == "Tennis"){%>
+        <%for(let j = 0 ; j < openBet[i].details.length; j++){%>
+          <section>
+            <div class="container-fluid">
+              <div class="new-head">
+                <h3 class="head-hr"><%=  openBet[i].details[j].match %></h3>
+                <a class="btn-filter" >View Details &nbsp;<i class="fa-solid fa-chevron-right"></i></a>
+              </div>
+              <div class="video-section-1">
+                <div class="video-play">
+                  <div class="hed-data">
+                    <h3 class="live-head"> openBet[i].details[j].marketName </h3>
+                  </div>
+                  <div class="full-adta">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>OUTCOMES/RUNNER</th>
+                          <th>EXPOSURE</th>
+                          <th>TOTAL BETS</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div> 
+          </section>
+        <%}>
+      <%} %>
+  <%} %>
   </div>
   <!-- <button class="btn btn-view-all">View All</button> -->
 </div>
