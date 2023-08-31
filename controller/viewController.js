@@ -3309,6 +3309,7 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
             src,
             userMultimarkets,
             min,
-            max
+            max,
+            currentUser:req.currentUser
     })
 });
