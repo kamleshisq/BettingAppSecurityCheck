@@ -4031,22 +4031,31 @@ socket.on('connect', () => {
 
     if(pathname === "/admin/liveMarket"){
         // function marketId(){
-        //     $(document).ready(function() {
-        //         var ids = [];
+            // $(document).ready(function() {
+            //     var ids = [];
           
-        //         $(".MarketIds").each(function() {
-        //           ids.push(this.id);
-        //         });
-        //         // console.log(ids)
-        //         socket.emit("aggreat", {ids, LOGINDATA})
-        //       });
+            //     $(".MarketIds").each(function() {
+            //       ids.push(this.id);
+            //     });
+            //     // console.log(ids)
+            //     socket.emit("aggreat", {ids, LOGINDATA})
+            //   });
         //       setTimeout(()=>{
         //         marketId()
         //       }, 60000)
         // }
         // marketId()
         function marketId(){
-            socket.emit("aggreat", LOGINDATA)
+            $(document).ready(function() {
+                var ids = [];
+          
+                $(".MarketIdsR").each(function() {
+                  ids.push(this.id);
+                });
+                // console.log(ids)
+                socket.emit("aggreat", {ids, LOGINDATA})
+                // socket.emit("aggreat", LOGINDATA)
+              });
               setTimeout(()=>{
                 if(pathname === "/admin/liveMarket"){
                     marketId()
