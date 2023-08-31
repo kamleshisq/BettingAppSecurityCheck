@@ -1350,13 +1350,13 @@ io.on('connection', (socket) => {
                 parentData: { $push: "$parentUserData" }
               }
             },
-            {
-              $project: {
-                _id: 0,
-                originaluserId: 1,
-                parentData: 1
-              }
-            },
+            // {
+            //   $project: {
+            //     _id: 0,
+            //     originaluserId: 1,
+            //     parentData: 1
+            //   }
+            // },
             {
                 $lookup: {
                   from: "betmodels", 
@@ -1365,6 +1365,14 @@ io.on('connection', (socket) => {
                   as: "betData"
                 }
             },
+            {
+                $project: {
+                  _id: 0,
+                  originaluserId: 1,
+                  parentData: 1,
+                  betData: 1
+                }
+              }
           ]);
 
           console.log(topGames, "topGames")
