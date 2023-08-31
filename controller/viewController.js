@@ -3293,7 +3293,7 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         }else{
             stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
         }
-        res.status(200).render("./userSideEjs/mainRiskAnalysis/main",{
+        res.status(200).render("./mainRiskAnalysis/main",{
             user: req.currentUser,
             verticalMenus,
             check:"ExchangeIn",
