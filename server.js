@@ -1271,6 +1271,7 @@ io.on('connection', (socket) => {
                 }
               ])
                 .then((betResult) => {
+                    console.log(betResult)
                   socket.emit("aggreat", betResult)
                 })
                 .catch((error) => {
