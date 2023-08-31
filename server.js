@@ -1271,6 +1271,7 @@ io.on('connection', (socket) => {
                 }
               ])
                 .then((betResult) => {
+                    console.log(betResult)
                   socket.emit("aggreat", betResult)
                 })
                 .catch((error) => {
@@ -1280,6 +1281,37 @@ io.on('connection', (socket) => {
             .catch((error) => {
               console.error(error);
             });
+        let topGames = await Bet.aggregate([
+            {
+                $match: {
+                    status: { $ne: "OPEN" }
+                }
+            },
+            {
+                $lookup: {
+                  from: "users",
+                  localField: "userName",
+                  foreignField: "userName",
+                  as: "user"
+                }
+              },
+              {
+                $unwind: "$user"
+              },
+              {
+                $match: {
+                  "user.parentUsers": { $in: [req.currentUser.id] }
+                }
+              },
+              {
+                            $group:{
+                                _id: '$secId',
+                                totalStake: { $sum: '$Stake' },
+                                count: { $sum: 1 }
+                            }
+                }
+        ])
+        console.log(topGames, 1212121)
     })
 
 

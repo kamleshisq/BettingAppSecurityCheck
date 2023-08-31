@@ -4030,7 +4030,8 @@ socket.on('connect', () => {
 
         socket.on("aggreat", async(data) => {
             data.forEach(item => {
-                document.getElementById(`${item._id}`).innerText = item.totalStake
+                // document.getElementById(`${item._id}`).innerText = item.totalStake
+                
                 document.getElementById(`${item._id}B`).innerText = item.count
             })
         })
