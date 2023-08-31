@@ -1719,7 +1719,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
                 marketName: { $first: "$marketName" },
                 match: { $first: "$match" },
                 date: { $first: "$date" },
-                stake: { $sum: "$stake" }
+                stake: { $sum: "$Stake" }
             }
         },
         {
@@ -1747,13 +1747,13 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
                 details: { $push: "$details" }
             }
         },
-        // {
-        //     $match: {
-        //         "_id": {
-        //             $in: ["mat", "boo", "tos"]
-        //         }
-        //     }
-        // },
+            {
+                $match: {
+                    "details.shortMarketName": {
+                        $in: ["mat", "boo", "tos"]
+                    }
+                }
+            },
         {
             $project: {
                 _id: 0,
