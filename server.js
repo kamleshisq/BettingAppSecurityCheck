@@ -285,7 +285,7 @@ io.on('connection', (socket) => {
     socket.on("SelectLogoutUserId",async(id)=>{
         // console.log(id)
         // let data = {userId:`${id}`}
-        const fullUrl = global._protocol + '://' + global._host + `/api/v1/auth/logOutSelectedUser?userId=`+id
+        const fullUrl = fullUrl `/api/v1/auth/logOutSelectedUser?userId=`+id
         fetch(fullUrl, {
             method: 'POST',
             headers: { 'Authorization': `Bearer ` + loginData.Token }
@@ -1295,7 +1295,7 @@ io.on('connection', (socket) => {
 
 
     module.exports = function alert(data){
-        console.log(data)
+        // console.log(data)
         socket.emit("alertMessage", data)
     }
 
@@ -2370,7 +2370,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('settlement',async(data)=>{
-        console.log(data)
+        // console.log(data)
         const me = data.LOGINUSER
         // console.log(me)
         let betsEventWise = await Bet.aggregate([
@@ -2396,19 +2396,6 @@ io.on('connection', (socket) => {
                   "user.parentUsers": { $in: [me._id] }
                 }
               },
-            //   {
-            //     $group: {
-            //       _id: "$match",
-            //       count: { $sum: 1 }
-            //     }
-            //   },
-            //   {
-            //     $project: {
-            //       _id: 0,
-            //       eventname: "$_id",
-            //       count: 1
-            //     }
-            //   }
             {
                 $group: {
                   _id: "$match",

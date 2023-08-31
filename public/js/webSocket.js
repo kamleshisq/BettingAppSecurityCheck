@@ -4093,6 +4093,7 @@ socket.on('connect', () => {
         })
 
         socket.on("createVerticalMenu", async(data)=>{
+            console.log(data)
             if(data.status === "success"){
                 alert("Menu Added Successfully")
                     window.setTimeout(()=>{
@@ -8613,7 +8614,7 @@ socket.on('connect', () => {
                                 }
                             }
                         }else{
-                            html += `<tr class="empty_table">No record found</tr>`
+                            html += `<tr class="empty_table"><td>No record found</td></tr>`
                         }
                        
                     }else{
@@ -8645,7 +8646,7 @@ socket.on('connect', () => {
               console.log(html)
               console.log(html == "")
               if(html == ""){
-                html += `<tr class="empty_table">No record found</tr>`
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
               }
               console.log(html)
               document.getElementById("markets").innerHTML = html
