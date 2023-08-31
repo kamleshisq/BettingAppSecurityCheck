@@ -1694,7 +1694,28 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
             $match: {
               "user.parentUsers": { $in: [req.currentUser.id] }
             }
-          }
+          },
+          {
+            $group: {
+                _id: "$bettype",
+                details: {
+                    $push: {
+                        id: "$marketId",
+                        marketName: "$marketName",
+                        match:"$match",
+                        date:'$date'
+                        // Add other fields you want here
+                    }
+                }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                bettype: "$_id",
+                details: 1
+            }
+        }
     ])
     console.log(openBet)
     // console.log(liveFootBall)
@@ -1706,6 +1727,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
         liveFootBall,
         liveTennis,
         currentUser,
+        openBet,
         me: currentUser
     })
 })
