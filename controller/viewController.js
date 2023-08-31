@@ -1697,7 +1697,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
           },
           {
             $group: {
-                _id: "$bettype",
+                _id: "$betType",
                 details: {
                     $push: {
                         id: "$marketId",
