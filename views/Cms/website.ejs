@@ -85,7 +85,7 @@
 <section>
   <div class="container-fluid">
     <div class="table-data-section">
-      <div class="table-heading">
+      <div class="table-heading New_table_heading">
         <h3>Slider Management</h3>
         <div class="table-heading-btn">
           <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#addSlider"><i class="fa-solid fa-plus"></i> &nbsp; Add Slider</button>
@@ -102,12 +102,12 @@
           <div class="tabs__tab " id="tab_<%=sliders[i].Number%>" data-tab-info>
             <div class="accordion" id="accordionPanelsStayOpenExample">
               <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-headingtwo">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsetwo" aria-expanded="true" aria-controls="panelsStayOpen-collapsetwo">
+                <h2 class="accordion-header" id="panelsStayOpen-heading<%=i%>">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsetwo<%=i%>" aria-expanded="true" aria-controls="panelsStayOpen-collapsetwo<%=i%>">
                     <%=sliders[i].name%>
                   </button>
                 </h2>
-                <div id="panelsStayOpen-collapsetwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingtwo">
+                <div id="panelsStayOpen-collapsetwo<%=i%>" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading<%=i%>">
                   <div class="accordion-body">
                     <div class="row" id="RGVd">
                       <form class="slider-form" id="<%=sliders[i]._id%>" >

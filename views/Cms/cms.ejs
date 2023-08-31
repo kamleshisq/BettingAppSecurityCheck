@@ -50,22 +50,40 @@
 <script type="text/javascript" src="../js/bundle.js"></script>
 
 
-<script>
-  function openCity(evt, cityName) {
-var i, tabcontent, tablinks;
-tabcontent = document.getElementsByClassName("tabcontent");
-for (i = 0; i < tabcontent.length; i++) {
-tabcontent[i].style.display = "none";
-}
-tablinks = document.getElementsByClassName("tablinks");
-for (i = 0; i < tablinks.length; i++) {
-tablinks[i].className = tablinks[i].className.replace(" active", "");
-}
-document.getElementById(cityName).style.display = "block";
-evt.currentTarget.className += " active";
+  <script>
+        function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+    
+  }
+  document.getElementById("defaultOpen").click();
+  </script>
+ </script>
 
-}
-document.getElementById("defaultOpen").click();
+<script>
+    const tabs = document.querySelectorAll('[data-tab-value]')
+      const tabInfos = document.querySelectorAll('[data-tab-info]')
+
+      tabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+              const target = document
+                  .querySelector(tab.dataset.tabValue);
+
+              tabInfos.forEach(tabInfo => {
+                  tabInfo.classList.remove('active')
+              })
+              target.classList.add('active');
+          })
+      })
 </script>
 </body>
 </html>
