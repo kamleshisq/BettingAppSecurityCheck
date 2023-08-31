@@ -568,7 +568,8 @@ exports.mapbet = async(data) => {
       }
     ]);
 
-    console.log(NetData.markets)
+    console.log(NetData)
+    console.log(NetData[0].markets)
 
     // for(let i = 0; i < NetData.length; i++){
     //   let user = await userModel.findByIdAndUpdate(NetData[i].userId, {$inc:{netCommisssion: -NetData[i].totalReturn, commission:NetData[i].totalReturn  }})
