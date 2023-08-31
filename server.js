@@ -1320,7 +1320,8 @@ io.on('connection', (socket) => {
                     as: "parentId",
                     in: { $toObjectId: "$$parentId" }
                   }
-                }
+                },
+                originaluserId: { $toObjectId: "$_id" } // Convert _id to ObjectId
               }
             },
             {
@@ -1336,7 +1337,7 @@ io.on('connection', (socket) => {
             },
             {
               $project: {
-                _id: 1,
+                userName: 1,
                 parentUserData: {
                   parentUserName: "$parentUsersData.userName",
                   parentUserShare: "$parentUsersData.Share"
@@ -1345,44 +1346,35 @@ io.on('connection', (socket) => {
             },
             {
               $group: {
-                _id: "$_id",
-                originaluserId: { $first: "$_id" },
+                _id: "$originaluserId",
                 parentData: { $push: "$parentUserData" }
               }
             },
-            // {
-            //   $project: {
-            //     _id: 0,
-            //     originaluserId: 1,
-            //     parentData: 1
-            //   }
-            // },
             {
-                $lookup: {
-                  from: "betmodels", // Replace with your actual collection name
-                  let: { userIdStr: "$originaluserId" },
-                  pipeline: [
-                    {
-                      $match: {
-                        $expr: {
-                          $eq: ["$userId", "$$userIdStr"]
-                        }
+              $lookup: {
+                from: "betmodels", // Replace with your actual collection name
+                let: { userIdStr: { $toString: "$_id" } },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: {
+                        $eq: ["$userId", "$$userIdStr"]
                       }
                     }
-                  ],
-                  as: "betData"
-                }
-              },
-              {
-                $project: {
-                  _id: 0,
-                  originaluserId: 1,
-                  parentData: 1,
-                  betData: 1
-                }
+                  }
+                ],
+                as: "betData"
               }
+            },
+            {
+              $project: {
+                originaluserId: "$_id",
+                _id: 0,
+                parentData: 1,
+                betData: 1
+              }
+            }
           ]);
-
           console.log(topGames, "topGames")
     })
 
