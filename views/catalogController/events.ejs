@@ -4,24 +4,17 @@
   <section class="dashboard-welcome-section">
     <div class="container-fluid">
       <div class="new-head">
-        <h3>Catalog Management</h3>
-        <!-- <form action="">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-            </div>
-            <input type="text" id="searchUser"  list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
-            <div class="wrapper">
-              <ul id="search" class="users">
-              </ul>
-              <ul id="button" class="button">
-              </ul>
-            </div>
-          </div>
-        </form> -->
+        <h3>Event Management</h3>
       </div>
     </div>
   </section>
+  <div class="bredcum-container">
+    <ul>
+        <li><a href="/admin/catalogcontrol"></a>Sport</li>
+        <li><a href="/admin/catalogcontrol/compitations?sportId=<%=breadcumArr[0].id%>"></a><%=breadcumArr[0].name%></li>
+        <li><a href="/admin/catalogcontrol/compitations/events?compId=<%=breadcumArr[1].id%>&sportId=<%=breadcumArr[1].sportId%>"></a><%=breadcumArr[1].name%></li>
+    </ul>
+  </div>
 
   <section>
     <div class="container-fluid">

@@ -2770,10 +2770,13 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
     let series;
     let seriesObjList = []
     let seriesList = []
+    let breadcumArr = []
     if(sportId == 4){
         series = sportListData[0].gameList[0]
+        breadcumArr.push({id:sportId,name:series.sport_name})
     }else{
         series = sportListData[1].gameList.find(item => item.sportId == sportId)
+        breadcumArr.push({id:sportId,name:series.sport_name})
     }
     if(series){
         let seriesPromise = series.eventList.map(async(item)=>{
@@ -2802,7 +2805,8 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
                 title:"catalogController",
                 data:seriesObjList,
                 me: user,
-                currentUser: user
+                currentUser: user,
+                breadcumArr
             })
         })
     }else{
@@ -2810,7 +2814,8 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
             title:"catalogController",
             data:seriesObjList,
             me: user,
-            currentUser: user
+            currentUser: user,
+            breadcumArr
         })
     }
    
@@ -2822,17 +2827,30 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
     const compId = req.query.compId
     const sportId = req.query.sportId
     const sportListData = await getCrkAndAllData()
+    let breadcumArr = []
+    let nameArr = []
     let series;
     let seriesObjList = []
     if(sportId == 4){
         series = sportListData[0].gameList[0]
+        breadcumArr.push({id:sportId,name:series.sport_name})
+        nameArr.push(series.sport_name)
+
     }else{
         series = sportListData[1].gameList.find(item => item.sportId == sportId)
+        breadcumArr.push({id:sportId,name:series.sport_name})
+        nameArr.push(series.sport_name)
+
+
     }
 
     if(series){
         let = eventListPromis = series.eventList.map(async(item) => {
             if(item.eventData.compId == compId){
+                if(!nameArr.includes(item.eventData.league)){
+                    breadcumArr.push({id:compId,name:item.eventData.league,sportId:sportId})
+                    nameArr.push(item.eventData.league)
+                }
                 let status = await catalogController.findOne({Id:item.eventData.eventId})
                 let count = 0;
                 if(!status){
@@ -2858,7 +2876,8 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
                 title:"catalogController",
                 data:seriesObjList,
                 me: user,
-                currentUser: user
+                currentUser: user,
+                breadcumArr
             })
         })
     }else{
@@ -2866,7 +2885,8 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
             title:"catalogController",
             data:seriesObjList,
             me: user,
-            currentUser: user
+            currentUser: user,
+            breadcumArr
         })
     }
 })
