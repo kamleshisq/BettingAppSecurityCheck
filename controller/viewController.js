@@ -1695,6 +1695,16 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
               "user.parentUsers": { $in: [req.currentUser.id] }
             }
           },
+          {
+            $addFields: {
+                shortMarketName: { $substrCP: [{ $toLower: "$marketName" }, 0, 3] }
+            }
+        },
+        {
+            $match: {
+                shortMarketName: { $in: ["mat", "boo", "tos"] }
+            }
+        },
         //   {
         //     $group: {
         //         _id: "$betType",
@@ -1732,7 +1742,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
                     $push: {
                         id: "$_id.marketId",
                         marketName: "$marketName",
-                        shortMarketName: { $substrCP: [{ $toLower: "$marketName" }, 0, 3] },
+                        shortMarketName: "$shortMarketName",
                         match: "$match",
                         date: "$date",
                         stake: "$stake",
@@ -1742,28 +1752,28 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
             }
         },
         {
-            $project: {
-                _id: 0,
-                bettype: "$_id.betType",
-                details: 1
-            }
-        },
-        {
-            $unwind: "$details"
-        },
-        {
-            $match: {
-                "details.shortMarketName": {
-                    $in: ["mat", "boo", "tos"]
-                }
-            }
-        },
-        {
             $group: {
                 _id: "$_id.betType",
                 details: { $push: "$details" }
             }
         },
+        {
+            $project: {
+                _id: 0,
+                bettype: "$_id",
+                details: 1
+            }
+        },
+        // {
+        //     $unwind: "$details"
+        // },
+        // {
+        //     $match: {
+        //         "details.shortMarketName": {
+        //             $in: ["mat", "boo", "tos"]
+        //         }
+        //     }
+        // },
         // {
         //     $project: {
         //         _id: 0,
