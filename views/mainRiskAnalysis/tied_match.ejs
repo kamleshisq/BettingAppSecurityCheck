@@ -1,0 +1,88 @@
+<div class="exchange-pg-inn-banner-col2">
+    <div class="exchange-pg-inn-banner-col-titi">
+        <div class="exchange-pg-inn-banner-col-titi-txt">
+            <h6><span>Match Tied</span> <span class="game-info-popup-spn" data-bs-toggle="modal" data-bs-target="#gameroulspop"> 
+                <i class="fa-solid fa-circle-info"></i> 
+              </span></h6>
+        </div>
+        <div class="exchange-pg-inn-banner-col-titi-txt-tim">
+            <h6><b>Min : <%=SportLimits.min_stake%>, Max : <%=SportLimits.max_stake%></b></h6>
+        </div>
+    </div>
+
+    <div class="exchange-pg-inn-tbl">
+        <table class="acount-stat-tbl market" id="<%=match.marketList.tied_match.marketId%>">
+
+            <thead class="acount-stat-tbl-hed2">
+                <tr class="acount-stat-tbl-hed-tr2" >
+                    <th style="text-align: left;" class="bod-red-lft ">Market</th>
+                    <th style="text-align: center;" colspan="3">Back</th>
+                    <th style="text-align: center;" colspan="3" class="bod-red-rit">Lay</th>
+                </tr>
+            </thead>
+
+            <tbody class="acount-stat-tbl-body">
+                <% let runners = JSON.parse(match.marketList.tied_match.runners); %>
+                <% const runners1 = []; %>
+                <%const secIds = []; %>
+                <%runners.forEach(item => {%>
+                    <%runners1.push(item.runner);%>
+                    <%secIds.push(item.secId);%>
+                <%});%>
+                <%for(let i = 0; i < runners1.length; i++){%>
+                    <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                        <td colspan="2" style=" text-align: left;">
+                            <%=runners1[i]%>
+                        </td>
+                        
+                        <td class="tbl-td-with5" >
+                            <snap data-bs-toggle="collapse" href="#bt-slp-colps-tied-match-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-tied-match-<%=i%>" class="tbl-bg-blu-spn tied_match_Blue button" id="<%=secIds[i]%>1" >
+                                
+                            </snap> 
+                        </td>
+    
+                        <td class="tbl-td-with5" >
+                            <snap data-bs-toggle="collapse" href="#bt-slp-colps-tied-match-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-tied-match-<%=i%>" class="tbl-bg-blu-spn tied_match_Blue button" id="<%=secIds[i]%>2">
+                                
+                            </snap> 
+                        </td>
+    
+                        <td class="tbl-td-with5" >
+                            <snap data-bs-toggle="collapse" href="#bt-slp-colps-tied-match-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-tied-match-<%=i%>" class="tbl-bg-blu-spn tied_match_Blue button" id="<%=secIds[i]%>3">
+                                
+                            </snap> 
+                        </td>
+    
+                        <td class="tbl-td-with5" >
+                            <snap data-bs-toggle="collapse" href="#bt-slp-colps-tied-match-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-tied-match-<%=i%>" class="tbl-bg-pech-spn tied_match_Red button" id="<%=secIds[i]%>4">
+                                
+                            </snap> 
+                        </td>
+                        
+                        <td class="tbl-td-with5" >
+                            <snap data-bs-toggle="collapse" href="#bt-slp-colps-tied-match-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-tied-match-<%=i%>" class="tbl-bg-pech-spn tied_match_Red button" id="<%=secIds[i]%>5">
+                                
+                            </snap> 
+                        </td>
+                        
+                        <td class="tbl-td-with5" >
+                            <snap data-bs-toggle="collapse" href="#bt-slp-colps-tied-match-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-tied-match-<%=i%>" class="tbl-bg-pech-spn tied_match_Red button" id="<%=secIds[i]%>6">
+                                
+                            </snap> 
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td colspan="8">
+                          <div class="my-exc-inn-colaps-txt-dv collapse" id="bt-slp-colps-tied-match-<%=i%>" >
+                            <%-include("../betslip")%>
+                          </div>
+                        </td>
+                      </tr>
+                <%}%>
+                
+            </tbody>
+          </table>
+    </div>
+
+</div>

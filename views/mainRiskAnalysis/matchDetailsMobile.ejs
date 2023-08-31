@@ -1,0 +1,104 @@
+<div class="mbl-exc-inn-tab-dv-main">
+  <div class="container-fluid">
+    <%-include("../navbar2")%>
+    <div class="mbl-exc-inn-tab-dv">
+      <div class="exchange-pg-inn-banner-col-titi titl-overflow-mbl-exc-inn mb-2">
+        <div class="exchange-pg-inn-banner-col-titi2 titl-overflow-mbl-exc-inn2">
+            <span class="exchange-pg-inn-banner-col-titi-txt">
+              <h6><%=match.eventData.league%> / <span><%=match.eventData.name%></span></h6>
+            </span>
+            <span class="exchange-pg-inn-banner-col-titi-txt-tim">
+              <i class="fa-regular fa-clock"></i>
+              <%
+              var timestamp = `${match.eventData.time}` * 1000; 
+              var date = new Date(timestamp);
+              var options = { 
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true
+              };
+              var formattedTime = date.toLocaleString('en-US', options);
+          %>
+              <h6><%=formattedTime%></h6>
+            </span>
+        </div>
+      </div>
+      <div class="mbl-exc-inn-tab-dvwrp">
+        <ul class="nav nav-pills mb-3 exc-pg-rit-tabdv exc-pg-rit-tabdv-mbl" id="pills-tab" role="tablist">
+          <li class="nav-item exc-pg-rit-tabli exc-pg-rit-tabli-mbl" role="presentation">
+            <button class="nav-link active exc-pg-rit-tab-btn exc-pg-rit-tab-btn-mbl" id="pills-homea-tab" data-bs-toggle="pill" data-bs-target="#pills-homea" type="button" role="tab" aria-controls="pills-homea" aria-selected="true">Score</button>
+          </li>
+          <li class="nav-item exc-pg-rit-tabli exc-pg-rit-tabli-mbl" role="presentation">
+            <button class="nav-link exc-pg-rit-tab-btn exc-pg-rit-tab-btn-mbl" id="pills-profileb-tab" data-bs-toggle="pill" data-bs-target="#pills-profileb" type="button" role="tab" aria-controls="pills-profileb" aria-selected="false">Live Stream</button>
+          </li>
+          <li class="nav-item exc-pg-rit-tabli exc-pg-rit-tabli-mbl" role="presentation">
+            <button class="nav-link exc-pg-rit-tab-btn exc-pg-rit-tab-btn-mbl" id="pills-profilebb-tab" data-bs-toggle="pill" data-bs-target="#pills-profilebb" type="button" role="tab" aria-controls="pills-profilebb" aria-selected="false">Open Bets (<%=betsOnthisMatch.length%>)</button>
+          </li>
+        </ul>
+        <div class="tab-content exc-pg-rit-tabtxt" id="pills-tabContent">
+          <div class="tab-pane fade show active exc-pg-rit-tabtxt-datadv" id="pills-homea" role="tabpanel" aria-labelledby="pills-homea-tab" tabindex="0">
+            <div class="exchange-pg-inn-banner-tv score">
+              
+            </div>
+          </div>
+          <div class="tab-pane fade exc-pg-rit-tabtxt-datadv" id="pills-profileb" role="tabpanel" aria-labelledby="pills-profileb-tab" tabindex="0">
+            <div class="exchange-pg-rit-ro-mbll">
+              <div class="exchange-pg-rit-ro-livetv-dv">
+                <div class="exchange-pg-rit-ro-livetv-titl">
+                  <h5>Live Stream</h5>
+                </div>
+                <div class="exchange-pg-rit-ro-livetv-dv-wrp">
+                  <%if(liveStream.data){%>
+                    <%-liveStream.data%>
+                  <%}%>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="tab-pane fade exc-pg-rit-tabtxt-datadv" id="pills-profilebb" role="tabpanel" aria-labelledby="pills-profilebb-tab" tabindex="0">
+            <div class="exchange-pg-inn-banner-tv pt-0" id="length2">
+                
+              <%if(betsOnthisMatch.length > 0){%>
+                <table class="table-new-d">
+                  <thead>
+                    <tr class="thead-border my-open-bet-trr">
+                      <th>Selection</th>
+                      <th>Odds</th>
+                      <th>Stake</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tableBET1">
+                   <%for(let i = 0; i < betsOnthisMatch.length; i++){%>
+                    <tr>
+                      <td><%= betsOnthisMatch[i].selectionName%></td>
+                      <td><%= betsOnthisMatch[i].oddValue %></td>
+                      <td><%= betsOnthisMatch[i].Stake %></td>
+                    </tr>
+                    <%} %>
+                  </tbody>
+                </table>
+              <%} %>
+                  
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mbl-exc-inn-tbl-datadv">
+      <%if(match.marketList.match_odd != null){%>
+        <%-include("./mobileMatchOdds")%>
+      <%} %>
+      <%if(match.marketList.bookmaker != null){%>
+        <%-include("./mobileBookmaker")%>
+      <%}%>
+      <%if(match.marketList.odd_even != null || match.marketList.session != null){%>
+        <%-include("./mobileFency")%>
+      <%}%>
+    </div>
+  </div>
+</div>
