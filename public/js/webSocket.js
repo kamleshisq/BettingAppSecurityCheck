@@ -3003,22 +3003,22 @@ socket.on('connect', () => {
         socket.on("SearchOnlineUser", (data) =>{
             console.log(data, 565464)
             let html = ``
-    if(data.page === 1){
-        for(let i = 0; i < data.onlineUsers.length; i++){
-            html += `<li class="searchList" id="${data.onlineUsers[i]._id}">${data.onlineUsers[i].userName}</li>`
-        }
-        document.getElementById('search').innerHTML = html
-        document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-    }else if(data.page === null){
-        document.getElementById("button").innerHTML = ``
-    }else{
-        html = document.getElementById('search').innerHTML
-        for(let i = 0; i < data.onlineUsers.length; i++){
-            html += `<li class="searchList" id="${data.onlineUsers[i]._id}">${data.onlineUsers[i].userName}</li>`
-        }
-        document.getElementById('search').innerHTML = html
-        document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-    }
+            if(data.page === 1){
+                for(let i = 0; i < data.onlineUsers.length; i++){
+                    html += `<li class="searchList" id="${data.onlineUsers[i]._id}">${data.onlineUsers[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }else if(data.page === null){
+                document.getElementById("button").innerHTML = ``
+            }else{
+                html = document.getElementById('search').innerHTML
+                for(let i = 0; i < data.onlineUsers.length; i++){
+                    html += `<li class="searchList" id="${data.onlineUsers[i]._id}">${data.onlineUsers[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }
         })
 
         $(".logout").click(function(){
@@ -3041,6 +3041,7 @@ socket.on('connect', () => {
             filterData = {}
             filterData.userName = this.textContent
             $('.pageId').attr('data-pageid','1')
+            $('.wrapper').hide()
             socket.emit('OnlineUser',{filterData,LOGINDATA,page:0})
             
         })
