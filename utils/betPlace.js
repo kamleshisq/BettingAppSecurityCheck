@@ -271,8 +271,11 @@ if(!marketDetails.runners){
                 console.log(marketDetails.title, "title")
                 if ((marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('BOOK')) && commissionChild[0].Bookmaker.type == "ENTRY" && commissionChild[0].Bookmaker.status){
                   commissionPer = commissionChild[0].Bookmaker.percentage
+                  console.log('Working1')
                 }else if (commissionChild[0].fency.type == "ENTRY" && !(marketDetails.title.startsWith('BOOK') || marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('Match')) && commissionChild[0].fency.status){
                   commissionPer = commissionChild[0].fency.percentage
+                  console.log('Working2')
+
                 }
                 let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
                 console.log(commissionCoin, "Commission")
