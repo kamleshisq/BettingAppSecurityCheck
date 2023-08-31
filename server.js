@@ -2396,19 +2396,6 @@ io.on('connection', (socket) => {
                   "user.parentUsers": { $in: [me._id] }
                 }
               },
-            //   {
-            //     $group: {
-            //       _id: "$match",
-            //       count: { $sum: 1 }
-            //     }
-            //   },
-            //   {
-            //     $project: {
-            //       _id: 0,
-            //       eventname: "$_id",
-            //       count: 1
-            //     }
-            //   }
             {
                 $group: {
                   _id: "$match",
