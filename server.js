@@ -1300,7 +1300,7 @@ io.on('connection', (socket) => {
               },
               {
                 $match: {
-                  "user.parentUsers": { $in: [req.currentUser.id] }
+                  "user.parentUsers": { $in: [data.LOGINUSER._id] }
                 }
               },
               {
