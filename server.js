@@ -1313,27 +1313,38 @@ io.on('connection', (socket) => {
               }
             },
             {
-              $lookup: {
-                from: "users",
-                localField: "parentUsers",
-                foreignField: "_id",
-                as: "parentUsersData"
+                $addFields: {
+                  parentUserIds: {
+                    $map: {
+                      input: "$parentUsers",
+                      as: "parentId",
+                      in: { $toObjectId: "$$parentId" }
+                    }
+                  }
+                }
+              },
+              {
+                $lookup: {
+                  from: "users",
+                  localField: "parentUserIds",
+                  foreignField: "_id",
+                  as: "parentUsersData"
+                }
+              },
+              {
+                $unwind: "$parentUsersData"
+              },
+              {
+                $project: {
+                  userName: 1,
+                  parentUserNames: "$parentUsersData.userName", // Array of parent user names
+                  parentUserShares: "$parentUsersData.Share"   // Array of parent user shares
+                  // Add more projected fields as needed
+                }
               }
-            },
-            {
-              $unwind: "$parentUsersData"
-            },
-            {
-              $project: {
-                userName: 1,
-                parentUserNames: "$parentUsersData.userName", // Array of parent user names
-                parentUserShares: "$parentUsersData.Share"   // Array of parent user shares
-                // Add more projected fields as needed
-              }
-            }
           ]);
 
-          console.log(topGames)
+          console.log(topGames, "topGames")
     })
 
 
