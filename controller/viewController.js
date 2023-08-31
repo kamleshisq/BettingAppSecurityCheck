@@ -1695,6 +1695,16 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
               "user.parentUsers": { $in: [req.currentUser.id] }
             }
           },
+          {
+            $addFields: {
+                shortMarketName: { $substrCP: [{ $toLower: "$marketName" }, 0, 3] }
+            }
+        },
+        {
+            $match: {
+                shortMarketName: { $in: ["mat", "boo", "tos"] }
+            }
+        },
         //   {
         //     $group: {
         //         _id: "$betType",
@@ -1719,7 +1729,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
                 marketName: { $first: "$marketName" },
                 match: { $first: "$match" },
                 date: { $first: "$date" },
-                stake: { $sum: "$stake" }
+                stake: { $sum: "$Stake" }
             }
         },
         {
@@ -1732,7 +1742,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
                     $push: {
                         id: "$_id.marketId",
                         marketName: "$marketName",
-                        shortMarketName: { $substrCP: [{ $toLower: "$marketName" }, 0, 3] },
+                        shortMarketName: "$shortMarketName",
                         match: "$match",
                         date: "$date",
                         stake: "$stake",
@@ -1747,20 +1757,30 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
                 details: { $push: "$details" }
             }
         },
-        // {
-        //     $match: {
-        //         "_id": {
-        //             $in: ["mat", "boo", "tos"]
-        //         }
-        //     }
-        // },
         {
             $project: {
                 _id: 0,
                 bettype: "$_id",
                 details: 1
             }
-        }
+        },
+        // {
+        //     $unwind: "$details"
+        // },
+        // {
+        //     $match: {
+        //         "details.shortMarketName": {
+        //             $in: ["mat", "boo", "tos"]
+        //         }
+        //     }
+        // },
+        // {
+        //     $project: {
+        //         _id: 0,
+        //         bettype: "$_id",
+        //         details: 1
+        //     }
+        // }
         // {
         //     $group: {
         //         _id: {
@@ -1819,7 +1839,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
         // }
     ])
     console.log(openBet, "openBet")
-    console.log(openBet[0].details, "openBet")
+    console.log(openBet[0].details[0][0], "openBet")
     // console.log(liveFootBall)
     // console.log(liveTennis)
     // console.log(liveCricket)
