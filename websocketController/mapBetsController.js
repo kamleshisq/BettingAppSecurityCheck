@@ -577,6 +577,7 @@ try{
   for(let i = 0; i < NetData.length; i++){
     for(let j = 0; j < NetData[i].markets[j]; j++){
       let user = await userModel.findByIdAndUpdate(NetData[i].userId, {$inc:{netCommisssion: -NetData[i].markets[j].totalReturn, commission:NetData[i].markets[j].totalReturn  }})
+      console.log(user, "user")
       let commissionReportData = {
         userId:NetData[i].userId,
         market:NetData[i].markets[j].market,
@@ -587,12 +588,13 @@ try{
         match:NetData[i].match,
         Sport:NetData[i].markets[j].sport
     }
-    await commissionRepportModel.create(commissionReportData)
+    let commisiionReports = await commissionRepportModel.create(commissionReportData)
+    console.log(commisiionReports, "commisiionReports")
     }
     await netCommission.deleteMany({userId:NetData[i].userId, match:NetData[i].match})
   }
 }catch(err){
-  
+
 }
 
 
