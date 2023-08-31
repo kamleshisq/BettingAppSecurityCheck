@@ -25,9 +25,11 @@
                       </thead>
                       <tbody id="<%=openBet[i].details[j].id%>" class="MarketIdsR">
                         <%for(let k = 0; k < openBet[i].details[j].length; k++){%>
-                          <td>openBet[i].details[j][k].beton</td>
-                          <td >openBet[i].details[j][k].stake</td>
+                          <tr>
+                          <td><%=openBet[i].details[j][k].beton%></td>
+                          <td ><%=openBet[i].details[j][k].stake%></td>
                           <td >00</td>
+                        </tr>
                         <%}%>
                       </tbody>
                     </table>
