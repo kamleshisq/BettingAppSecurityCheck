@@ -3294,6 +3294,7 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
             stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
         }
         res.status(200).render("./mainRiskAnalysis/main",{
+            title:"Risk Analysis",
             user: req.currentUser,
             verticalMenus,
             check:"ExchangeIn",
