@@ -7232,10 +7232,10 @@ $(document).on('click', '.Withdraw', function () {
 // });
 
 $(document).on('click', '.RoleDetails', function () {
-  // console.log("Working") 
+  console.log("Working");
   var modleName = $(this).data('bs-target');
   var roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
-  // console.log(roledata)
+  console.log(roledata);
   var form = $(modleName).find('.UpdateRole-form');
   // let x = form.find('input[id="check"]').length
   // console.log(x)
@@ -7430,11 +7430,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "50157" + '/');
-=======
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49981" + '/');
->>>>>>> f115d007cc66b114cbabc437b296c24824f8ba1d
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
