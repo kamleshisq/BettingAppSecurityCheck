@@ -6882,6 +6882,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //     // console.log(email)
 //     login(email, password);
 // })};
+jQuery(function () {
+  var pgurl = window.location.href.substr(window.location.href.lastIndexOf("/") + 1);
+  jQuery(".nav .nav_list .nav_link").each(function () {
+    if (jQuery(this).attr("href") == pgurl || jQuery(this).attr("href") == '') jQuery(this).addClass("active");
+  });
+});
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
   // console.log("Working")
@@ -7430,7 +7436,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49981" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50157" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
