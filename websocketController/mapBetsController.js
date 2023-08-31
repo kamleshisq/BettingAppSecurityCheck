@@ -572,7 +572,7 @@ exports.mapbet = async(data) => {
     
 
     console.log(NetData, "metDATA")
-    console.log(NetData[0].markets)
+    console.log(NetData[0].markets, "DATA")
 try{
   for(let i = 0; i < NetData.length; i++){
     for(let j = 0; j < NetData[i].markets[j]; j++){
@@ -588,7 +588,7 @@ try{
         match:NetData[i].match,
         Sport:NetData[i].markets[j].sport
     }
-    console.log(commissionReportData)
+    console.log(commissionReportData, "Data")
     let commisiionReports = await commissionRepportModel.create(commissionReportData)
     console.log(commisiionReports, "commisiionReports")
     }
