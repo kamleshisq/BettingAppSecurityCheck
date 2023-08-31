@@ -2532,16 +2532,16 @@ io.on('connection', (socket) => {
         filter.description = { $regex: /^commission for/ }
         if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
             filter.date = {
-                $gt : new Date(data.filterData.fromDate)
+                $gte : new Date(data.filterData.fromDate)
             }
         }else if(data.filterData.fromDate == "" && data.filterData.toDate != ""){
             filter.date = {
-                $lt : new Date(data.filterData.toDate)
+                $lte : new Date(data.filterData.toDate)
             }
         }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
             filter.date = {
                 $gte : new Date(data.filterData.fromDate),
-                $lt : new Date(data.filterData.toDate)
+                $lte : new Date(data.filterData.toDate)
             }
         }
 
