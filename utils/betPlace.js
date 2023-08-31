@@ -237,9 +237,9 @@ if(!marketDetails.runners){
         let commission = await commissionModel.find({userId:user.id})
         // console.log(commission, 456)
         let commissionPer = 0
-        if ((marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status){
+        if ((marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') ||  marketDetails.title.startsWith('BOOK')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status){
           commissionPer = commission[0].Bookmaker.percentage
-        }else if (commission[0].fency.type == "ENTRY" && !(marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('Match')) && commission[0].fency.status){
+        }else if (commission[0].fency.type == "ENTRY" && !(marketDetails.title.startsWith('BOOK') || marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('Match')) && commission[0].fency.status){
           commissionPer = commission[0].fency.percentage
         }
         console.log(commissionPer)
@@ -271,8 +271,11 @@ if(!marketDetails.runners){
                 console.log(marketDetails.title, "title")
                 if ((marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('BOOK')) && commissionChild[0].Bookmaker.type == "ENTRY" && commissionChild[0].Bookmaker.status){
                   commissionPer = commissionChild[0].Bookmaker.percentage
+                  console.log('Working1')
                 }else if (commissionChild[0].fency.type == "ENTRY" && !(marketDetails.title.startsWith('BOOK') || marketDetails.title.startsWith('Bookmake') || marketDetails.title.startsWith('TOSS') || marketDetails.title.startsWith('Match')) && commissionChild[0].fency.status){
                   commissionPer = commissionChild[0].fency.percentage
+                  console.log('Working2')
+
                 }
                 let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
                 console.log(commissionCoin, "Commission")
