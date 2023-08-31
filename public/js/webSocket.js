@@ -7848,6 +7848,7 @@ socket.on('connect', () => {
             filterData = {}
             filterData.userName = this.textContent
             $('.pageId').attr('data-pageid','1')
+            $('.wrapper').hide()
             socket.emit('AlertBet',{filterData,LOGINDATA,page:0})
             
         })
