@@ -8514,6 +8514,9 @@ socket.on('connect', () => {
                 html += "</ul>"
             }
             document.getElementById("myMarkets").innerHTML = html
+            $('#myMarkets').click(function(e){
+                $('#myMarkets').hide()
+            })
             // document.getElementById("demonames1").innerHTML = html
           })
 
