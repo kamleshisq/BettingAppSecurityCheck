@@ -534,28 +534,55 @@ exports.mapbet = async(data) => {
         $group: {
           _id: {
             userId: "$userId",
-            market: "$market"  // Change this to the field representing market
+            sport: "$Sport",
+            market: "$market"
           },
           totalReturn: { $sum: "$commPoints" },
           event: { $first: "$event" },
-          sport: { $first: "$Sport" },
           percentage: { $first: "$percentage" }
+        }
+      },
+      {
+        $group: {
+          _id: {
+            userId: "$_id.userId",
+            sport: "$_id.sport"
+          },
+          markets: {
+            $push: {
+              market: "$_id.market",
+              totalReturn: "$totalReturn",
+              event: "$event",
+              percentage: "$percentage"
+            }
+          }
         }
       },
       {
         $project: {
           _id: 0,
-          userId: "$_id.userId",   // Extract userId from _id field
-          market: "$_id.market",   // Extract market from _id field
-          totalReturn: 1,
-          event: 1,
-          sport: 1,
-          percentage: 1
+          userId: "$_id.userId",
+          sport: "$_id.sport",
+          markets: 1
         }
       }
     ]);
 
-    console.log(NetData, "netData")
+    console.log(NetData)
+
+    // for(let i = 0; i < NetData.length; i++){
+    //   let user = await userModel.findByIdAndUpdate(NetData[i].userId, {$inc:{netCommisssion: -NetData[i].totalReturn, commission:NetData[i].totalReturn  }})
+    //   let commissionReportData = {
+    //     userId:NetData[i].userId,
+    //     market:NetData[i].market,
+    //     commType:'Net lossing Commission',
+    //     percentage:NetData[i].percentage,
+    //     commPoints:NetData[i].totalReturn,
+    //     event:NetData[i].event,
+    //     match:NetData[i].totalReturn,
+    //     Sport:NetData[i].totalReturn
+    // }
+    // }
 
 
 }   
