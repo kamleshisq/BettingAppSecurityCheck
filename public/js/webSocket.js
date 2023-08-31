@@ -7943,6 +7943,7 @@ socket.on('connect', () => {
                 socket.emit('acceptBet', this.id)
             })
 
+            
             socket.on("acceptBet", (data)=>{
                 if(data.status === "error"){
                     alert("Please try again later")
