@@ -3332,13 +3332,13 @@ socket.on('connect', () => {
             })
 
     
-    $(document).on('click', '.voidBet', async function(e){
+    $(document).on('click', '.cancel', async function(e){
         e.preventDefault()
         socket.emit('voidBet', this.id)
     })
     
 
-    $(document).on("click", ".alertBet", function(e){
+    $(document).on("click", ".alert", function(e){
         e.preventDefault()
         socket.emit("alertBet", this.id)
     })
