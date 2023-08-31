@@ -2398,12 +2398,12 @@ socket.on('connect', () => {
                       <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>`
                       if(data.data[i].status){
                         html += `<span class="on-off">OFF &nbsp; <label class="switch">
-                                <input type="checkbox" class="change_status" checked>
+                                <input type="checkbox" data-id="${data.data[i].game_id}" class="change_status" checked>
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }else{
                         html += `<span class="on-off">OFF &nbsp; <label class="switch">
-                                <input type="checkbox" class="change_status">
+                                <input type="checkbox" data-id="${data.data[i].game_id}" class="change_status">
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }
@@ -2413,12 +2413,12 @@ socket.on('connect', () => {
                       <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>`
                       if(data.data[i].status){
                         html += `<span class="on-off">OFF &nbsp; <label class="switch">
-                                    <input type="checkbox" class="change_status" checked>
+                                    <input type="checkbox" data-id="${data.data[i].game_id}" class="change_status" checked>
                                     <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }else{
                         html += `<span class="on-off">OFF &nbsp; <label class="switch">
-                                    <input type="checkbox" class="change_status">
+                                    <input type="checkbox" data-id="${data.data[i].game_id}" class="change_status">
                                     <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }
@@ -2431,12 +2431,12 @@ socket.on('connect', () => {
                       `
                       if(data.data[i].status){
                         html += ` <span class="on-off">OFF &nbsp; <label class="switch">
-                                <input type="checkbox" class="change_status" checked>
+                                <input type="checkbox" data-id="${data.data[i].game_id}" class="change_status" checked>
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }else{
                         html += ` <span class="on-off">OFF &nbsp; <label class="switch">
-                                <input type="checkbox" class="change_status">
+                                <input type="checkbox" data-id="${data.data[i].game_id}" class="change_status">
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }
@@ -2457,13 +2457,18 @@ socket.on('connect', () => {
             let status = $(this).prop('checked') ? true : false;
                 let id = $(this).data('id')
                 if(id){
-
-                    socket.emit('casionoStatusChange',{status,id})
+                    if(confirm('do you want to change status')){
+                        socket.emit('casionoStatusChange',{status,id})
+                    }
                 }
         })
 
         socket.on('casionoStatusChange',async(data)=>{
-            console.log(data)
+            if(data.status == 'success'){
+                alert('status changed successfully')
+            }else{
+                alert('somthig watn wrong!!')
+            }
         })
     }
 
