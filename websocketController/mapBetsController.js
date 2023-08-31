@@ -594,7 +594,7 @@ try{
     await netCommission.deleteMany({userId:NetData[i].userId, match:NetData[i].match})
   }
 }catch(err){
-
+  console.log(err)
 }
 
 
