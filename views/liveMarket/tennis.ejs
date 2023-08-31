@@ -34,6 +34,9 @@
         <%}%>
       <%}%>
     <%}%>
+    <%if(!openBet.some(item => item.bettype == "Tennis")){%>
+      No data to display
+    <%}%>
   </div>
   <!-- <button class="btn btn-view-all">View All</button> -->
 </div>
