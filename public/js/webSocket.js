@@ -3171,10 +3171,6 @@ socket.on('connect', () => {
             }
         })
 
-        $('#search > li').click(function(e){
-            $('.wrapper').hide()
-            $('#searchUser').val($(this).text())
-        })
 
         let toDate;
         let fromDate;
@@ -3246,6 +3242,7 @@ socket.on('connect', () => {
             filterData = {}
             filterData.userName = this.textContent
             $('.pageId').attr('data-pageid','1')
+            $('.wrapper').hide()
             socket.emit('betMoniter',{filterData,LOGINDATA,page:0})
             
         })
