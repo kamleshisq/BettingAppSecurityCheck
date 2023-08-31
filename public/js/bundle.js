@@ -6898,6 +6898,8 @@ $(document).ready(function () {
       linkColor.forEach(function (l) {
         return l.classList.remove('active');
       });
+      console.log(pathname);
+      console.log($("a[href='" + pathname + "'"));
       $("a[href='" + pathname + "'").addClass('active');
       // this.classList.add('active')
     }
