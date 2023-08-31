@@ -46,7 +46,7 @@ $(document).ready(function(){
         $(".nav .nav_list .nav_link").attr("class","active");
     }
    else{
-      $(".nav .nav_list .nav_link").attr("class","active");
+      $(".nav .nav_list .nav_link").attr("class","");
      }
 });
 
