@@ -7546,7 +7546,7 @@ socket.on('connect', () => {
             page = 0
             $('.pageId').attr('data-pageid',1)
             socket.emit("CommissionRReport", {page, LOGINDATA, filterData})
-          }
+        }
 
 
           $(window).scroll(function() {
