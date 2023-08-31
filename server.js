@@ -1302,14 +1302,7 @@ io.on('connection', (socket) => {
                 $match: {
                   "user.parentUsers": { $in: [data.LOGINUSER._id] }
                 }
-              },
-              {
-                            $group:{
-                                _id: '$secId',
-                                totalStake: { $sum: '$Stake' },
-                                count: { $sum: 1 }
-                            }
-                }
+              }
         ])
         console.log(topGames, 1212121)
     })
