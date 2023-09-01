@@ -8459,13 +8459,15 @@ socket.on('connect', () => {
             $('.rowId').attr('data-rowid',page + 1)
             socket.emit('settlementHistory',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
         })
+        let limit = 50
         socket.on('settlementHistory',async(data)=>{
             console.log(data)
             let html = ''
+            limit = 50 * data.page
             for(let i = 0; i < data.History.length; i++){
                 var date = data.History[i].date
                 html += `<tr>
-                  <td>${i+1}</td>
+                  <td>${limit+1}</td>
                   <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear(), date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
                   <td>${data.History[i].eventName}</td>
                   <td>${data.History[i].marketName}</td>
