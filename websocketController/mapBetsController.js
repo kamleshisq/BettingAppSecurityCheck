@@ -577,6 +577,15 @@ exports.mapbet = async(data) => {
       
   
       console.log(NetData, "metDATA")
+      try{
+        for(let i = 0; i < NetData.length; i++){
+          console.log("forLoop2")
+          console.log(NetData[i])
+          console.log(NetData[i].markets)
+        }
+      }catch(err){
+        console.log(err)
+      }
     }
 
     processBets()
