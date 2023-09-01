@@ -3512,8 +3512,11 @@ socket.on('connect', () => {
 
         })
 
-        $(window).scroll(function() {
-            if($(document).height()-$(window).scrollTop() == window.innerHeight){
+        $(window).scroll(async function() {
+            var scroll = $(window).scrollTop();
+            var windowHeight = $(window).height();
+            var documentHeight = $(document).height();
+            if (scroll + windowHeight + 1 >= documentHeight) {
                 console.log('working')
                 let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
@@ -3560,7 +3563,7 @@ socket.on('connect', () => {
                     }else{
                         html += `<tr style="text-align: center;" >`
                     }
-                    html += `<td>${i + count}</td>
+                    html += `<td>${i + count + 1}</td>
                     <td>${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
                     <td>${bets[i].userName}</td>
                     <td>${bets[i].event}</td>
