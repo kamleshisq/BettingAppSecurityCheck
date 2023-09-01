@@ -579,5 +579,12 @@ exports.mapbet = async(data) => {
       console.log(NetData, "metDATA")
     }
 
+    processBets()
+      .then(() => {
+        console.log("Bets processing and netData aggregation completed.");
+      })
+      .catch((error) => {
+        console.error("An error occurred:", error);
+      });
 
 }   
