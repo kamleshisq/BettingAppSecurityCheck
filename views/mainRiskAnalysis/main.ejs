@@ -383,12 +383,14 @@
         </div>
 
         <div class="sidebar">
+          <%if(liveStream.data){%>
             <div class="sidebar-block live-match">
                 <div class="sidebar-title">Live stream</div>
                 <div class="sidebar-content">
-                <iframe></iframe>
+                <iframe src="<%=src%>" ></iframe>
                 </div>
             </div>
+            <%} %>
             <div class="sidebar-block open-bets-table">
               <div class="sidebar-title active">Open Bets</div>
               <div class="sidebar-content" style="display: block;">
