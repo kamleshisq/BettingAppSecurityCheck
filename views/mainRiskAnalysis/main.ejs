@@ -8,6 +8,7 @@
 
 <body>
   <%- include("../header") %>
+
   <div class="dashboard-main-wraper">
     <section class="dashboard-welcome-section">
       <div class="container-fluid">
@@ -17,6 +18,12 @@
       
     </section>
     <div class="analysis-data">
+      <div class="main-tab-btn">
+        <ul>
+            <li><button class="book-show active">Book</button></li>
+            <li><button class="open-bets-show">Open Bets</button></li>
+        </ul>
+    </div>
         <div class="content-left">
             <!-- Live match score -->
             <%if(match.eventData.type != "UPCOMING"){ %>
