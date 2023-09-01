@@ -2752,6 +2752,7 @@ io.on('connection', (socket) => {
                     }
                     await AccModel.create(childdata)
                     await AccModel.create(perentData)
+                    await netCommissionModel.updateMany({userId:data.LOGINDATA.LOGINUSER._id}, {status:'Deposit'})
                     socket.emit("claimCommission", "Success")
                 }catch(err){
                     console.log(err)
@@ -2759,7 +2760,6 @@ io.on('connection', (socket) => {
                 }
             }
 
-            await netCommissionModel.deleteMany({userId:data.LOGINDATA.LOGINUSER._id})
            
         }else{
             socket.emit("claimCommission", "error")
