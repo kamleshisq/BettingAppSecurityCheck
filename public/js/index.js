@@ -55,7 +55,7 @@ $(document).ready(function(){
         linkColor.forEach(l=> l.classList.remove('active'))
         $("a[href='"+pathname+"'").addClass('active')
         if(operationPathnameArr.includes(pathname) || reportsPathnameArr.includes(pathname) || cmsPathnameArr.includes(pathname)){
-            $("a[href='"+pathname+"'").parent().siblings('a').addClass('active')
+            $("a[href='"+pathname+"'").parent().parent().siblings('a').addClass('active')
         }
         // this.classList.add('active')
         }
