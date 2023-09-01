@@ -1049,7 +1049,7 @@ socket.on('connect', () => {
                 form.find('input[name = "tuBalance"]').attr('value',me.availableBalance)
                 form.find('input[name = "clintPL"]').attr('value',me.clientPL)
                 form.find('input[name = "fromUser"]').attr('value',userData.userName)
-                form.find('input[name = "amount"]').attr('value',userData.uplinePL)
+                form.find('input[name = "amount"]').attr('value',Math.abs(userData.uplinePL))
                 form.attr('id', userData._id);
             }
             }
