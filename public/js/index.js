@@ -45,7 +45,7 @@ const {
     host, hostname, href, origin, pathname, port, protocol, search
   } = window.location
 
-$(document).ready(function(){
+$(document).ready(function(){ 
     const linkColor = document.querySelectorAll('.nav_link')
 	const operationPathnameArr = ['/admin/houseManagement','/admin/whiteLableAnalysis','/admin/commissionMarkets','/admin/settlement','/admin/settlementHistory','/admin/commissionReport','/admin/gameanalysis','/admin/Notification','/admin/betmoniter','/admin/onlineUsers','/admin/alertbet','/admin/betlimit','/admin/voidbet']
     const reportsPathnameArr = ['/admin/gamereport','/admin/useracount','/admin/reports','/admin/userhistoryreport','/admin/plreport']

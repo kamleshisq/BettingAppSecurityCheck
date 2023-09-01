@@ -3514,6 +3514,7 @@ socket.on('connect', () => {
 
         $(window).scroll(function() {
             if($(document).height()-$(window).scrollTop() == window.innerHeight){
+                console.log('working')
                 let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
                 let data = {}
@@ -3546,14 +3547,15 @@ socket.on('connect', () => {
             }
             }); 
             
-            let count = 11
+            let count = 10
             socket.on('voidBET',(data) => {
                 // console.log(data)
+                count = 10 * data.page
                 let bets = data.ubDetails;
                 let html = '';
                     for(let i = 0; i < bets.length; i++){
                         let date = new Date(bets[i].date)
-                    if((i%2)==0){
+                    if(((i + count)%2)==0){
                         html += `<tr style="text-align: center;" class="blue">`
                     }else{
                         html += `<tr style="text-align: center;" >`
@@ -3580,7 +3582,6 @@ socket.on('connect', () => {
                     <td>${bets[i].returns}</td>
                     </tr>`
                 }
-                count += 10;
                 if(data.page == 0){
                     $('.new-body').html(html)
                 }else{
