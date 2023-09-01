@@ -8442,6 +8442,7 @@ socket.on('connect', () => {
         $(document).on('change','#Fdate',function(e){
             let from_date = $(this).val()
             let to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            console.log({$gte:from_date,$lte:to_date})
             socket.emit('settlementHistory',{from_date,to_date,USER:LOGINDATA.LOGINUSER})
         })
 
