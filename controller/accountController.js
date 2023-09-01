@@ -191,7 +191,7 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     childAccStatement.child_id = childUser.id;
     childAccStatement.user_id = childUser.id;
     childAccStatement.parent_id = parentUser.id;
-    childAccStatement.description = 'Settlement(withdraw)' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
+    childAccStatement.description = 'Settlement(withdraw) ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
     childAccStatement.creditDebitamount = -parseFloat(req.body.amount);
     childAccStatement.balance = (parseFloat(childUser.availableBalance)  - parseFloat(req.body.amount));
     childAccStatement.date = date
@@ -208,7 +208,7 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     ParentAccStatement.child_id = childUser.id;
     ParentAccStatement.user_id = parentUser.id;
     ParentAccStatement.parent_id = parentUser.id;
-    ParentAccStatement.description = 'Settlement(withdraw)' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
+    ParentAccStatement.description = 'Settlement(withdraw) ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
     ParentAccStatement.creditDebitamount = parseFloat(req.body.amount);
     ParentAccStatement.balance = (parseFloat(parentUser.availableBalance) + parseFloat(req.body.amount));
     ParentAccStatement.date = date
@@ -260,7 +260,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     childAccStatement.child_id = childUser.id;
     childAccStatement.user_id = childUser.id;
     childAccStatement.parent_id = parentUser.id;
-    childAccStatement.description = 'Settlement(deposite)' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
+    childAccStatement.description = 'Settlement(deposite) ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
     childAccStatement.creditDebitamount = req.body.amount;
     childAccStatement.balance = childUser.availableBalance + req.body.amount;
     childAccStatement.date = date
@@ -277,7 +277,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     ParentAccStatement.child_id = childUser.id;
     ParentAccStatement.user_id = parentUser.id;
     ParentAccStatement.parent_id = parentUser.id;
-    ParentAccStatement.description = 'Settlement(deposite)' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
+    ParentAccStatement.description = 'Settlement(deposite) ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
     ParentAccStatement.creditDebitamount = -(req.body.amount);
     ParentAccStatement.balance = parentUser.availableBalance - req.body.amount;
     ParentAccStatement.date = date
