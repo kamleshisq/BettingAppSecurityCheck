@@ -36,7 +36,7 @@
                               data = liveCricket.find(item => (item.marketList.bookmaker != null) &&(item.marketList.bookmaker[0].marketId == openBet[i].details[j][k].id))
                             }
                           %>
-                          if(!matchodd){
+                          <%if(!matchodd){%>
                             <% let runners = JSON.parse(data.marketList.match_odd.runners); %>
                             <% const runners1 = []; %>
                             <%const secIds = []; %>
