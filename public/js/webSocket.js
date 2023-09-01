@@ -990,7 +990,9 @@ socket.on('connect', () => {
             var row = this.closest("tr");
             var id = row.id;
             var dataId = row.getAttribute("data-id");
-            socket.emit("BetLockUnlock", {id, dataId})
+            if(confirm('do you want to change status')){
+                socket.emit("BetLockUnlock", {id, dataId})
+            }
         })
         socket.on("BetLockUnlock", data => {
             if(data.status === "error"){
@@ -1298,8 +1300,7 @@ socket.on('connect', () => {
 
             if($(this).hasClass("searchUser")){
                     filterData.userName = $(this).val()
-                    // console.log(filterData.userName)
-                    if(filterData.userName.length >= 0){
+                    if(filterData.userName.length > 0){
                         S = true
                     }else{
                         S = false
