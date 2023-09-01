@@ -3546,9 +3546,10 @@ socket.on('connect', () => {
             }
             }); 
             
-            let count = 11
+            let count = 10
             socket.on('voidBET',(data) => {
                 // console.log(data)
+                count = 10 * data.page
                 let bets = data.ubDetails;
                 let html = '';
                     for(let i = 0; i < bets.length; i++){
