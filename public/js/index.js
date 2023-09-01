@@ -47,15 +47,18 @@ const {
 
 $(document).ready(function(){
     const linkColor = document.querySelectorAll('.nav_link')
-	
+	const operationPathnameArr = ['/admin/houseManagement','/admin/whiteLableAnalysis','/admin/commissionMarkets','/admin/settlement','/admin/settlementHistory','/admin/commissionReport','/admin/gameanalysis','/admin/Notification','/admin/betmoniter','/admin/onlineUsers','/admin/alertbet','/admin/betlimit','/admin/voidbet']
+    const reportsPathnameArr = ['/admin/gamereport','/admin/useracount','/admin/reports','/admin/userhistoryreport','/admin/plreport']
+    const cmsPathnameArr = ['/admin/cms','/admin/pageManager','/admin/gameRules']
 	function colorLink(){
-	if(linkColor){
-	linkColor.forEach(l=> l.classList.remove('active'))
-    console.log(pathname)
-    console.log( $("a[href='"+pathname+"'"))
-    $("a[href='"+pathname+"'").addClass('active')
-	// this.classList.add('active')
-	}
+        if(linkColor){
+        linkColor.forEach(l=> l.classList.remove('active'))
+        $("a[href='"+pathname+"'").addClass('active')
+        if(operationPathnameArr.includes(pathname) || reportsPathnameArr.includes(pathname) || cmsPathnameArr.includes(pathname)){
+            $("a[href='"+pathname+"'").parent().siblings('a').addClass('active')
+        }
+        // this.classList.add('active')
+        }
 	}
     colorLink()
 });

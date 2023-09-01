@@ -6893,14 +6893,18 @@ var _window$location = window.location,
   search = _window$location.search;
 $(document).ready(function () {
   var linkColor = document.querySelectorAll('.nav_link');
+  var operationPathnameArr = ['/admin/houseManagement', '/admin/whiteLableAnalysis', '/admin/commissionMarkets', '/admin/settlement', '/admin/settlementHistory', '/admin/commissionReport', '/admin/gameanalysis', '/admin/Notification', '/admin/betmoniter', '/admin/onlineUsers', '/admin/alertbet', '/admin/betlimit', '/admin/voidbet'];
+  var reportsPathnameArr = ['/admin/gamereport', '/admin/useracount', '/admin/reports', '/admin/userhistoryreport', '/admin/plreport'];
+  var cmsPathnameArr = ['/admin/cms', '/admin/pageManager', '/admin/gameRules'];
   function colorLink() {
     if (linkColor) {
       linkColor.forEach(function (l) {
         return l.classList.remove('active');
       });
-      console.log(pathname);
-      console.log($("a[href='" + pathname + "'"));
       $("a[href='" + pathname + "'").addClass('active');
+      if (operationPathnameArr.includes(pathname) || reportsPathnameArr.includes(pathname) || cmsPathnameArr.includes(pathname)) {
+        $("a[href='" + pathname + "'").parent().siblings('a').addClass('active');
+      }
       // this.classList.add('active')
     }
   }
@@ -7456,7 +7460,6 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "49867" + '/');
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49911" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
