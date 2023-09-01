@@ -1191,14 +1191,14 @@ io.on('connection', (socket) => {
 
     socket.on("aggreat", async(data) => {
         console.log(data.ids)
-        const sportData = await getCrkAndAllData()
-        const cricket = sportData[0].gameList[0].eventList
-        let liveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY");
-        const footBall = sportData[1].gameList.find(item => item.sport_name === "Football");
-        const Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis");
-        let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
-        let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
-        let liveData = liveCricket.concat(liveFootBall, liveTennis);
+        // const sportData = await getCrkAndAllData()
+        // const cricket = sportData[0].gameList[0].eventList
+        // let liveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY");
+        // const footBall = sportData[1].gameList.find(item => item.sport_name === "Football");
+        // const Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis");
+        // let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
+        // let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
+        // let liveData = liveCricket.concat(liveFootBall, liveTennis);
         // console.log(liveData)
         // console.log(data)
         // Bet.aggregate([
@@ -1252,47 +1252,47 @@ io.on('connection', (socket) => {
         //     console.log(result)
         //   socket.emit("aggreat", result)
         // })
-        // User.aggregate([
-        //     {
-        //       $match: {
-        //         parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id } }
-        //       }
-        //     },
-        //     {
-        //       $group: {
-        //         _id: null,
-        //         userIds: { $push: '$_id' } 
-        //       }
-        //     }
-        //   ])
-        //     .then((userResult) => {
-        //       const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
+        User.aggregate([
+            {
+              $match: {
+                parentUsers: { $elemMatch: { $eq: data.LOGINUSER._id } }
+              }
+            },
+            {
+              $group: {
+                _id: null,
+                userIds: { $push: '$_id' } 
+              }
+            }
+          ])
+            .then((userResult) => {
+              const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
           
-        //       Bet.aggregate([
-        //         {
-        //           $match: {
-        //             userId: { $in: userIds },
-        //             status: 'OPEN'
-        //           }
-        //         },
-        //         {
-        //             $group:{
-        //                 _id: '$secId',
-        //                 totalStake: { $sum: '$Stake' },
-        //                 count: { $sum: 1 }
-        //             }
-        //         }
-        //       ])
-        //         .then((betResult) => {
-        //           socket.emit("aggreat", betResult)
-        //         })
-        //         .catch((error) => {
-        //           console.error(error);
-        //         });
-        //     })
-        //     .catch((error) => {
-        //       console.error(error);
-        //     });
+              Bet.aggregate([
+                {
+                  $match: {
+                    userId: { $in: userIds },
+                    status: 'OPEN'
+                  }
+                },
+                {
+                    $group:{
+                        _id: '$secId',
+                        totalStake: { $sum: '$Stake' },
+                        count: { $sum: 1 }
+                    }
+                }
+              ])
+                .then((betResult) => {
+                  socket.emit("aggreat", betResult)
+                })
+                .catch((error) => {
+                  console.error(error);
+                });
+            })
+            .catch((error) => {
+              console.error(error);
+            });
 
     })
 
