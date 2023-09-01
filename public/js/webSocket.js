@@ -2164,7 +2164,6 @@ socket.on('connect', () => {
             })
     
             $(window).scroll(function() {
-                // $(window).scroll(function() {
                     var scroll = $(window).scrollTop();
                     var windowHeight = $(window).height();
                     var documentHeight = $(document).height();
@@ -8445,12 +8444,58 @@ socket.on('connect', () => {
             if($('#Tdate').val() != ''){
                 to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
             }
-            console.log({$gte:from_date,$lte:to_date})
-            socket.emit('settlementHistory',{from_date,to_date,USER:LOGINDATA.LOGINUSER})
+            let page = 0
+            $('.rowId').attr('data-rowid',page + 1)
+            socket.emit('settlementHistory',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
         })
 
+        $(document).on('change','#Tdate',function(e){
+            let to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            let from_date
+            if($('#Fdate').val() != ''){
+                from_date = $('#Fdate').val()
+            }
+            let page = 0
+            $('.rowId').attr('data-rowid',page + 1)
+            socket.emit('settlementHistory',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
+        })
         socket.on('settlementHistory',async(data)=>{
             console.log(data)
+            let html = ''
+            for(let i = 0; i < data.History.length; i++){
+                var date = data.History[i].date
+                html += `<tr>
+                  <td>${i+1}</td>
+                  <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear(), date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
+                  <td>${data.History[i].eventName}</td>
+                  <td>${data.History[i].marketName}</td>
+                  <td>${data.History[i].result}</td>
+                </tr>`
+            } 
+            if(data.page == 0){
+                $('tbody').html(html)
+            }else{
+                $('tbody').append(html)
+            }
+        })
+
+        $(window).scroll(function() {
+            var scroll = $(window).scrollTop();
+            var windowHeight = $(window).height();
+            var documentHeight = $(document).height();
+            if (scroll + windowHeight >= documentHeight) {
+                let page = parseInt($('.rowId').attr('data-rowid'))
+                $('.rowId').attr('data-rowid',page + 1)
+                let to_date;
+                let from_date
+                if($('#Fdate').val() != ''){
+                    from_date = $('#Fdate').val()
+                }
+                if($('#Tdate').val() != ''){
+                    to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+                }
+                socket.emit('settlementHistory',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
+            }
         })
     }
 

@@ -2425,6 +2425,8 @@ io.on('connection', (socket) => {
 
     socket.on('settlementHistory',async(data)=>{
         let me = data.USER
+        let page = data.page;
+        let limit = 50
         // console.log(me)
         let History
         let filter = {}
@@ -2437,12 +2439,12 @@ io.on('connection', (socket) => {
         }
         console.log(filter)
         if(me.roleName === "Admin"){
-            History = await settlementHistory.find(filter)
+            History = await settlementHistory.find(filter).skip(page * limit).limit(limit)
         }else{
             filter.userId = me._id
-            History = await settlementHistory.find(filter)
+            History = await settlementHistory.find(filter).skip(page * limit).limit(limit)
         }
-        socket.emit('settlementHistory',{History})
+        socket.emit('settlementHistory',{History,page})
     })
 
     socket.on("VoidBetIn", async(data) => {
