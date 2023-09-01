@@ -8965,7 +8965,75 @@ socket.on('connect', () => {
                 }
             })
 
-            let id = search.split('=')[1]
+            $(".bookmaker_blue").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                let item = data.finalResult.items.some(item => {
+                    if(item){
+                        // console.log(id)
+                        if(item.runners){
+                            // console.log(item)
+                            let section1 = item.runners.find(item2 => item2.secId == id)
+                            if(section1){
+                                section = section1
+                            }
+                        }
+                    }
+                })
+                if(this.id == `${section.secId}1` ){
+                    if(data.betLimits[0].max_odd < section.backPrice || section.backPrice == "-" || section.backPrice == "1,000.00" || section.backPrice == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        // this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        this.innerHTML = `<strong>${section.backPrice}</strong> <span class="small"> ${section.backSize}</span>`
+                        // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
+                    }
+                }
+            })
+
+            $(".bookmaker_red").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    if(item){
+
+                        if(item.runners){
+                            let section1 = item.runners.find(item2 => item2.secId == id)
+                            if(section1){
+                                section = section1
+                            }
+                        }
+                    }
+                })
+                let parentElement = this.parentNode
+                console.log(parentElement)
+                if(this.id == `${section.secId}2` ){
+                    if(data.betLimits[0].max_odd < section.layPrice || section.layPrice == "-" || section.layPrice == "1,000.00" || section.layPrice == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
+                        parentElement.classList.remove("suspended")
+                        $(this).parent().find(".match-status-message").text("")
+                        // this.innerHTML = `<strong>${section.backPrice1}</strong> <span class="small"> ${section.backSize1}</span>`
+                        this.innerHTML = `<strong>${section.layPrice}</strong> <span class="small"> ${section.laySize}</span>`
+                        // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
+                        // this.innerHTML = `<b>${section.layPrice}</b> <br> ${section.laySize}`
+                    }
+                }
+            })
+
+        })
+
+
+        let id = search.split('=')[1]
             function eventID(){
                 socket.emit("eventId", id)
                 setTimeout(()=>{
@@ -8983,8 +9051,6 @@ socket.on('connect', () => {
                     }
                 }
             })
-
-        })
     }
 
 })
