@@ -1671,11 +1671,11 @@ exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
 exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     const sportData = await getCrkAndAllData()
     const cricket = sportData[0].gameList[0].eventList
-    let liveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY");
+    let liveCricket = cricket;
     const footBall = sportData[1].gameList.find(item => item.sport_name === "Football");
     const Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis");
-    let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
-    let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
+    let liveFootBall = footBall.eventList;
+    let liveTennis = Tennis.eventList
     let currentUser =  req.currentUser
     console.log(req.currentUser)
     let openBet = topGames = await betModel.aggregate([
