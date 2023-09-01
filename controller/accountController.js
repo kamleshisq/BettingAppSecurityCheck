@@ -178,8 +178,8 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     if(childUser.availableBalance < req.body.amount){
         return next(new AppError('withdrow amount must less than available balance',404))
     }
-    await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{downlineBalance:-req.body.amount,availableBalance:req.body.amount,}})
-    const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{balance:-req.body.amount,availableBalance:-req.body.amount}},{
+    await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.amount,}})
+    const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.amount},myPL:0,uplinePL:0},{
         new:true
     })
     
@@ -243,30 +243,15 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     if(childUser.role.role_level < parentUser.role.role_level){
         return next(new AppError("you do not have permission to perform this action", 404))
     } 
-    let userData = {}
-    let parentData = {}
+    
     if(parentUser.availableBalance < req.body.amount){
         return next(new AppError("Insufficient Credit Limit !"))
     }
 
-    userData.balance = parseFloat(childUser.balance + req.body.amount);
-    userData.availableBalance = parseFloat(childUser.availableBalance + req.body.amount);
-    // // userData.creditReference = {}
-    // // userData.lifeTimeCredit = (childUser.lifeTimeCredit + req.body.amount);
-    parentData.availableBalance = parseFloat(parentUser.availableBalance - req.body.amount);
-    // // parentData.lifeTimeDeposit = (parentUser.lifeTimeDeposit + req.body.amount);
-    parentData.downlineBalance = parseFloat(parentUser.downlineBalance + req.body.amount);
-    
-    // // console.log(userData)
-    const updatedChild = await User.findByIdAndUpdate(childUser.id, userData,{
-        new:true
-    });
-    await User.findByIdAndUpdate(childUser.id, {$inc:{creditReference:req.body.amount}})
-    const updatedparent =  await User.findByIdAndUpdate(parentUser.id, parentData);
+  
+    await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.amount},myPL:0,uplinePL:0})
+    await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.amount}});
     // // await User.findByIdAndUpdate(parentUser.id,{$inc:{lifeTimeDeposit:-req.body.amount}})
-    if(!updatedChild || !updatedparent){
-        return next(new AppError("Ops, Something went wrong Please try again later", 500))
-    }
     let childAccStatement = {}
     let ParentAccStatement = {}
     let date = Date.now()
@@ -277,7 +262,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     childAccStatement.parent_id = parentUser.id;
     childAccStatement.description = 'Settlement(deposite)' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
     childAccStatement.creditDebitamount = req.body.amount;
-    childAccStatement.balance = userData.availableBalance;
+    childAccStatement.balance = childUser.availableBalance + req.body.amount;
     childAccStatement.date = date
     childAccStatement.userName = childUser.userName
     childAccStatement.role_type = childUser.role_type
@@ -294,7 +279,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     ParentAccStatement.parent_id = parentUser.id;
     ParentAccStatement.description = 'Settlement(deposite)' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
     ParentAccStatement.creditDebitamount = -(req.body.amount);
-    ParentAccStatement.balance = parentData.availableBalance;
+    ParentAccStatement.balance = parentUser.availableBalance - req.body.amount;
     ParentAccStatement.date = date
     ParentAccStatement.userName = parentUser.userName;
     ParentAccStatement.role_type = parentUser.role_type
