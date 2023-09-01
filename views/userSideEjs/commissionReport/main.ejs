@@ -52,15 +52,15 @@
                 <tbody class="acount-stat-tbl-body">
                     <%for(let i = 0; i < data.length; i++){%>
                         <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/myCommissionReportsIn?id=<%=data[i]._id%>'>
-                        <td><%=i+1%></td>
+                        <td title="SR No." ><%=i+1%></td>
                         <%if(data[i]._id == 4){%>
-                            <td>Cricket</td>
+                            <td title="Sport" >Cricket</td>
                         <%}else if(data[i]._id == 1){%>
-                            <td>Football</td>
+                            <td title="Sport" >Football</td>
                         <%}else if(data[i]._id == 2){%>
-                            <td>Tennis</td>
+                            <td title="Sport" >Tennis</td>
                         <%}%>
-                        <td><%=data[i].totalCommissionPoints%></td>
+                        <td title="Commission" ><%=data[i].totalCommissionPoints%></td>
                     </tr>
                     <%} %>
                 </tbody>
