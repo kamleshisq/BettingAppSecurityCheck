@@ -1017,6 +1017,42 @@ socket.on('connect', () => {
             }
         })
 
+        $(document).on('click', ".Settlement", function(){
+            var row = this.closest("tr");
+            var id = row.id;
+            var dataId = row.getAttribute("data-id");
+            socket.emit("getUserDetaisl111", {id, dataId})
+        })
+
+        socket.on("getUserDetaisl111", data => {
+            if(data.status === "error"){
+                alert("Please Try again leter")
+            }else{
+            let modleName = "#myModal"
+            let form = $(modleName).find('.form-data')
+            let userData = data.user
+            let me = data.parent
+            let type = form.find('select[name = "type"]').val()
+            if(userData.uplinePL > 0){
+                form.find('select[name = "type"]').val("deposit")
+                form.find('input[name = "toUser"]').attr('value',userData.userName)
+                form.find('input[name = "fuBalance"]').attr('value',me.availableBalance)
+                form.find('input[name = "tuBalance"]').attr('value',userData.availableBalance)
+                form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
+                form.find('input[name = "fromUser"]').attr('value',me.userName)
+                form.attr('id', userData._id);
+            }else{
+                form.find('select[name = "type"]').val("withdrawl")
+                form.find('input[name = "toUser"]').attr('value',me.userName)
+                form.find('input[name = "fuBalance"]').attr('value',userData.availableBalance)
+                form.find('input[name = "tuBalance"]').attr('value',me.availableBalance)
+                form.find('input[name = "clintPL"]').attr('value',me.clientPL)
+                form.find('input[name = "fromUser"]').attr('value',userData.userName)
+                form.attr('id', userData._id);
+            }
+            }
+        })
+
         $(document).on('click','.StatusChange',function(){
             console.log("working")
             var row = this.closest("tr");

@@ -2791,6 +2791,18 @@ io.on('connection', (socket) => {
             socket.emit("claimCommission", "error")
         }
     })
+
+
+    socket.on('getUserDetaisl111', async(data) => {
+        try{
+            let user = await User.findById(data.dataId)
+            let parent = await User.findById(user.parent_id)
+            socket.emit("getUserDetaisl111", {user, status:"success", parent})
+        }catch(err){
+            console.log(err)
+            socket.emit("getUserDetaisl111", {message:"err", status:"error"})
+        }
+    })
     
 })
 
