@@ -7081,6 +7081,49 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
     return _ref3.apply(this, arguments);
   };
 }());
+$(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(e) {
+    var form, id, fd, formDataObj, user, trElements;
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
+        case 0:
+          e.preventDefault();
+          form = $(this)[0];
+          id = form.id;
+          fd = new FormData(form);
+          formDataObj = Object.fromEntries(fd.entries());
+          formDataObj.id = id;
+          console.log(formDataObj);
+          // const url = window.location.href
+          // const id = url.split("=")[1]
+          // formDataObj.id = id
+          // console.log(formDataObj)
+          // let rowId = $('.rowId').attr('data-rowid')
+          _context4.next = 9;
+          return creditDebitSettle(formDataObj);
+        case 9:
+          user = _context4.sent;
+          trElements = document.querySelectorAll('tr.trtable'); // console.log(trElements)
+          // console.log(user)
+          trElements.forEach(function (trElement) {
+            if (trElement.getAttribute('data-id') === user.id) {
+              console.log(trElement, 4545445454);
+            }
+          });
+          // console.log(rowId)
+          // let currentUser = $('#currentUserDetails').data('currentuser')
+          // updateRow(user,rowId,currentUser)
+          // console.log(user)
+        case 12:
+        case "end":
+          return _context4.stop();
+      }
+    }, _callee4, this);
+  }));
+  return function (_x4) {
+    return _ref4.apply(this, arguments);
+  };
+}());
 
 // $('.edit-form').submit(function(e){
 //     e.preventDefault();
