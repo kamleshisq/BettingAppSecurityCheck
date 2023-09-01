@@ -3453,22 +3453,36 @@ socket.on('connect', () => {
         let filterData = {}
         $(".searchUser").on('input', function(e){
             var $input = $(this),
-                val = $input.val();
-                list = $input.attr('list'),
-                match = $('#'+list + ' option').filter(function() {
-                    return ($(this).val() === val);
-                });
+                    val = $input.val();
+                    var listItems = document.getElementsByTagName("li");
+                for (var i = 0; i < listItems.length; i++) {
+                    if (listItems[i].textContent === val) {
+                        match = ($(this).val() === val);
+                      break; 
+                    }else{
+                        match = false
+                    }
+                  }
 
-                if(match.length > 0){
-                    // console.log(match.text())
+                if(match){
                     filterData = {}
-                    filterData.userName = match.text()
+                    filterData.userName = val
                     $('.pageId').attr('data-pageid','1')
                     socket.emit('voidBET',{filterData,LOGINDATA,page:0})
                 }
         })
 
-
+        $(document).on("click", ".searchList", function(){
+            // console.log("working")
+            // console.log(this.textContent)
+            document.getElementById("searchUser").value = this.textContent
+            filterData = {}
+            filterData.userName = this.textContent
+            $('.pageId').attr('data-pageid','1')
+            $('.wrapper').hide()
+            socket.emit('voidBET',{filterData,LOGINDATA,page:0})
+            
+        })
         $('.filter').click(function(){
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
