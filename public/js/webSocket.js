@@ -8440,6 +8440,9 @@ socket.on('connect', () => {
         })
     }
 
+    if(pathname == '/admin/settlementHistory'){
+        
+    }
 
     if(pathname === "/admin/settlementIn"){
        
