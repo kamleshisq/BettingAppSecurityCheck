@@ -33,6 +33,7 @@ const path = require('path');
 const houseFundModel = require('./model/houseFundmodel');
 const loginLogs =  require("./model/loginLogs");
 const settlement = require("./model/sattlementModel");
+const settlementHistory = require('./model/settelementHistory')
 const mapBet = require("./websocketController/mapBetsController");
 const commissionModel = require("./model/CommissionModel");
 const catalogController = require("./model/catalogControllModel");
@@ -2420,6 +2421,22 @@ io.on('connection', (socket) => {
         ])
         socket.emit('settlement',{betsEventWise})
 
+    })
+
+    socket.on('settlementHistory',async(data)=>{
+        let me = data.USER
+        // console.log(me)
+        let History
+        let filter = {}
+        filter.date = {$gte:data.from_date,$lte:data.to_date}
+        console.log(filter)
+        if(me.roleName === "Admin"){
+            History = await settlementHistory.find(filter)
+        }else{
+            filter.userId = me._id
+            History = await settlementHistory.find(filter)
+        }
+        socket.emit('settlementHistory',{History})
     })
 
     socket.on("VoidBetIn", async(data) => {

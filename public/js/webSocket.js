@@ -8446,7 +8446,7 @@ socket.on('connect', () => {
         })
 
         socket.on('settlementHistory',async(data)=>{
-
+            console.log(data)
         })
     }
 
