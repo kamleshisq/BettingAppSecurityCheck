@@ -8465,9 +8465,9 @@ socket.on('connect', () => {
             let html = ''
             limit = 50 * data.page
             for(let i = 0; i < data.History.length; i++){
-                var date = data.History[i].date
+                var date = new Date(data.History[i].date)
                 html += `<tr>
-                  <td>${limit+1}</td>
+                  <td>${limit+1+i}</td> 
                   <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear(), date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
                   <td>${data.History[i].eventName}</td>
                   <td>${data.History[i].marketName}</td>
@@ -8481,11 +8481,11 @@ socket.on('connect', () => {
             }
         })
 
-        $(window).scroll(function() {
+        $(window).scroll(async function() {
             var scroll = $(window).scrollTop();
             var windowHeight = $(window).height();
             var documentHeight = $(document).height();
-            if (scroll + windowHeight >= documentHeight) {
+            if (scroll + windowHeight + 1 >= documentHeight) {
                 console.log('working')
                 let page = parseInt($('.rowId').attr('data-rowid'))
                 $('.rowId').attr('data-rowid',page + 1)
