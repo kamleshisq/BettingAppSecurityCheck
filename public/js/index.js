@@ -3,6 +3,7 @@ import { logout } from "./logOut";
 import { reset } from "./resetPass";
 import { createUser } from "./createUser";
 import { debitCredit } from "./debitCredit";
+import {creditDebitSettle} from "./creditDebitSettle"
 import { editUser } from "./editUser";
 // import { betLockStatus } from "./batLockStatus";
 import { createRole } from "./createRole";
@@ -188,6 +189,34 @@ $(document).on('submit','.acc-form',async function(e) {
     // console.log(formDataObj)
     // let rowId = $('.rowId').attr('data-rowid')
     const user = await debitCredit(formDataObj)
+    var trElements = document.querySelectorAll('tr.trtable');
+    // console.log(trElements)
+    // console.log(user)
+    trElements.forEach(function(trElement) {
+        if (trElement.getAttribute('data-id') === user.id) {
+            console.log(trElement, 4545445454)
+        }
+    })
+    // console.log(rowId)
+    // let currentUser = $('#currentUserDetails').data('currentuser')
+    // updateRow(user,rowId,currentUser)
+    // console.log(user)
+})
+
+$(document).on('submit','.Settlement-form',async function(e) {
+    e.preventDefault()
+    let form = $(this)[0];
+    let id = form.id
+    let fd = new FormData(form);
+    let formDataObj = Object.fromEntries(fd.entries());
+    formDataObj.id = id ;
+    console.log(formDataObj)
+    // const url = window.location.href
+    // const id = url.split("=")[1]
+    // formDataObj.id = id
+    // console.log(formDataObj)
+    // let rowId = $('.rowId').attr('data-rowid')
+    const user = await creditDebitSettle(formDataObj)
     var trElements = document.querySelectorAll('tr.trtable');
     // console.log(trElements)
     // console.log(user)
