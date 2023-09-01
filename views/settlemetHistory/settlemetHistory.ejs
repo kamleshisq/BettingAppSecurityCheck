@@ -42,6 +42,7 @@
             <thead>
                 <tr>
                   <th>S.No</th>
+                  <th>Settelment Date</th>
                   <th>Event Name</th>
                   <th>Market Name</th>
                   <th>Results</th>
@@ -50,7 +51,21 @@
             <tbody class="new-body">
               <%for(let i = 0; i < History.length; i++){%>
                 <tr>
+                  <%
+                  var timestamp = History[i].date * 1000; 
+                  var date = new Date(timestamp);
+                  var options = { 
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: true
+                  };
+                  var formattedTime = date.toLocaleString('en-US', options);
+                  %>
                   <td><%= i+1%></td>
+                  <td><%=formattedTime%></td>
                   <td><%= History[i].eventName%></td>
                   <td><%= History[i].marketName%></td>
                   <td><%= History[i].result%></td>

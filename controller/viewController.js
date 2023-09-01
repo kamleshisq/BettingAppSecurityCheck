@@ -2911,11 +2911,11 @@ exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
     const sportList =[
         {sport_name:"baseball",sportId:30},
         {sport_name:"basketball",sportId:10}	,
-        {sport_name:"cricket",sportId:4}	,
+        {sport_name:"Cricket",sportId:4}	,
         {sport_name:"Greyhound Racing",sportId:20}	,
-        {sport_name:"Horse Racing",sportId:77}	,
+        {sport_name:"Horse racing",sportId:77}	,
         {sport_name:"Football",sportId:1}	,
-        {sport_name:"tennis",sportId:2}
+        {sport_name:"Tennis",sportId:2}
     ]
     console.log(sportList)
     // const cricket = sportListData[0].gameList[0].eventList
@@ -2949,11 +2949,11 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
     const sportList =[
         {sport_name:"baseball",sportId:30},
         {sport_name:"basketball",sportId:10}	,
-        {sport_name:"cricket",sportId:4}	,
+        {sport_name:"Cricket",sportId:4}	,
         {sport_name:"Greyhound Racing",sportId:20}	,
-        {sport_name:"Horse Racing",sportId:77}	,
+        {sport_name:"Horse racing",sportId:77}	,
         {sport_name:"Football",sportId:1}	,
-        {sport_name:"tennis",sportId:2}
+        {sport_name:"Tennis",sportId:2}
     ]
     sportList.map(item => {
         if(item.sportId == sportId){
