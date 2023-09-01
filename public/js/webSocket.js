@@ -4113,13 +4113,13 @@ socket.on('connect', () => {
         // marketId()
         function marketId(){
             $(document).ready(function() {
-                var ids = [];
+                // var ids = [];
           
-                $(".MarketIdsR").each(function() {
-                  ids.push(this.id);
-                });
+                // $(".MarketIdsR").each(function() {
+                //   ids.push(this.id);
+                // });
                 // console.log(ids)
-                socket.emit("aggreat", {ids, LOGINDATA})
+                socket.emit("aggreat",  LOGINDATA)
                 // socket.emit("aggreat", LOGINDATA)
               });
               setTimeout(()=>{
@@ -4131,18 +4131,17 @@ socket.on('connect', () => {
         marketId()
         
 
-        // socket.on("aggreat", async(data) => {
-        //     console.log(data)
-        //     let stake1 = 0;
-        //     let stake2 = 0;
-        //     data.forEach(item => {
-        //         // document.getElementById(`${item._id}`).innerText = item.totalStake
-        //         item.betData.forEach(bet => {
-                    
-        //         })
-        //         document.getElementById(`${item._id}B`).innerText = item.count
-        //     })
-        // })
+        socket.on("aggreat", async(data) => {
+            console.log(data)
+            let stake1 = 0;
+            let stake2 = 0;
+            data.forEach(item => {
+                item.betData.forEach(bet => {
+                    document.getElementById(`${item._id}`).innerText = item.totalStake
+                    document.getElementById(`${item._id}B`).innerText = item.count
+                })
+            })
+        })
     }
 
 
