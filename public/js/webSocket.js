@@ -1028,7 +1028,7 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert("Please Try again leter")
             }else{
-            let modleName = "#myModal"
+            let modleName = "#myModalSE"
             let form = $(modleName).find('.form-data')
             let userData = data.user
             let me = data.parent
