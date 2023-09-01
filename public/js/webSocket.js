@@ -3512,58 +3512,41 @@ socket.on('connect', () => {
 
         })
 
-        // $(window).scroll(function() {
-        //     if($(document).height()-$(window).scrollTop() == window.innerHeight){
-        //         console.log('working')
-               
-
-
-        //     }
-        //     }); 
-        const scrollableContainer = document.getElementsByClassName('dashboard-main-wraper');
-        const content = document.getElementById('dashboard-main-wraper');
-    
-        scrollableContainer.addEventListener('scroll', function() {
-          const scrollHeight = content.clientHeight - scrollableContainer.clientHeight;
-          const scrollPosition = scrollableContainer.scrollTop;
-    
-          // Define a threshold (e.g., 20 pixels from the bottom) to trigger the event
-          const threshold = 20;
-    
-          if (scrollHeight - scrollPosition <= threshold) {
-            // Fire your event here
-            console.log('Scrolled to the bottom!');
-            let page = parseInt($('.pageId').attr('data-pageid'));
-            $('.pageId').attr('data-pageid',page + 1)
-            let data = {}
-            let userName = $('.searchUser').val()
-            if(userName == ''){
-                filterData.userName = LOGINDATA.LOGINUSER.userName
-            }else{
-                filterData.userName = userName
-            }
-            if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
-                filterData.date = {$gte : fromDate,$lte : toDate}
-            }else{
-
-                if(fromDate != undefined && fromDate != '' ){
-                    filterData.date = {$gte : fromDate}
+        $(window).scroll(function() {
+            if($(document).height()-$(window).scrollTop() == window.innerHeight){
+                console.log('working')
+                let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                let data = {}
+                let userName = $('.searchUser').val()
+                if(userName == ''){
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
                 }
-                if(toDate != undefined && toDate != '' ){
-                    filterData.date = {$lte : toDate}
+                if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
+                    filterData.date = {$gte : fromDate,$lte : toDate}
+                }else{
+    
+                    if(fromDate != undefined && fromDate != '' ){
+                        filterData.date = {$gte : fromDate}
+                    }
+                    if(toDate != undefined && toDate != '' ){
+                        filterData.date = {$lte : toDate}
+                    }
                 }
+    
+                data.filterData = filterData;
+                data.page = page
+                data.LOGINDATA = LOGINDATA
+                // console.log(data)
+                socket.emit('voidBET',data)
+
             }
-
-            data.filterData = filterData;
-            data.page = page
-            data.LOGINDATA = LOGINDATA
-            // console.log(data)
-            socket.emit('voidBET',data)
-
-          }
-        })
+        }); 
+       
             
-            
+      
             let count = 10
             socket.on('voidBET',(data) => {
                 // console.log(data)
