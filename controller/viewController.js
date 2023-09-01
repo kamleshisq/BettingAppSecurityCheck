@@ -1074,6 +1074,11 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
               series:1,
               count: 1
             }
+          },
+          {
+              $sort:{
+                eventdate: -1
+              }
           }
     ])
     // let users = await User.find({roleName:"Super-Duper-Admin"})
