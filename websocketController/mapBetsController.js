@@ -292,68 +292,69 @@ exports.mapbet = async(data) => {
                       console.log(err)
                   }
                 }
-                if(commissionMarket.some(item => item.marketId == bet.marketId)){
-                  try{
-                      let commission = await commissionModel.find({userId:user.id})
-                      let commissionPer = 0
-                      // if (bet.marketName == "Match Odds" && commission[0].matchOdd.status){
-                      //     commissionPer = commission[0].matchOdd.percentage
-                      //   }
-                        if ((bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS')) && commission[0].Bookmaker.type == "NET_LOSS" && commission[0].Bookmaker.status){
-                          commissionPer = commission[0].Bookmaker.percentage
-                        }
-                        let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
-                        if(commissionPer > 0){
-                          let user1 = await userModel.findById(user.id)
-                          // console.log(user1)
-                          // console.log(user1)
-                          let commissionReportData = {
-                              userId:user.id,
-                              market:bet.marketName,
-                              // commType:'Entry Wise loss Commission',
-                              percentage:commissionPer,
-                              commPoints:(bet.Stake * bet.oddValue),
-                              event:bet.event,
-                              match:bet.match,
-                              Sport:bet.gameId
-                          }
-                          let commisssioReport = await netCommission.create(commissionReportData)
-                      }
-                      }catch(err){
-                          console.log(err)
-                      } 
-                      try{
-                          for(let i = user.parentUsers.length - 1; i >= 1; i--){
-                              let childUser = await userModel.findById(user.parentUsers[i])
-                              let parentUser = await userModel.findById(user.parentUsers[i - 1])
-                              let commissionChild = await commissionModel.find({userId:childUser.id})
-                              let commissionPer = 0
-                              if ((bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS')) && commissionChild[0].Bookmaker.type == "NET_LOSS" && commissionChild[0].Bookmaker.status){
-                                commissionPer = commissionChild[0].Bookmaker.percentage
-                              }
-                              let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
-                              // console.log(commissionCoin)
-                              if(commissionPer > 0){
-                                  let user1 = await userModel.findById(childUser.id)
-                                  // console.log(user1.userName)
-                                  let commissionReportData = {
-                                      userId:childUser.id,
-                                      market:bet.marketName,
-                                      // commType:'Net loss Commission',
-                                      percentage:commissionPer,
-                                      commPoints:(bet.Stake * bet.oddValue),
-                                      event:bet.event,
-                                      match:bet.match,
-                                      Sport:bet.gameId
-                                  }
-                                  let commisssioReport = await netCommission.create(commissionReportData)
-                              }
-                          }
-                      }catch(err){
-                          console.log(err)
-                      }
-              }
+              //   if(commissionMarket.some(item => item.marketId == bet.marketId)){
+              //     try{
+              //         let commission = await commissionModel.find({userId:user.id})
+              //         let commissionPer = 0
+              //         // if (bet.marketName == "Match Odds" && commission[0].matchOdd.status){
+              //         //     commissionPer = commission[0].matchOdd.percentage
+              //         //   }
+              //           if ((bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS')) && commission[0].Bookmaker.type == "NET_LOSS" && commission[0].Bookmaker.status){
+              //             commissionPer = commission[0].Bookmaker.percentage
+              //           }
+              //           let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
+              //           if(commissionPer > 0){
+              //             let user1 = await userModel.findById(user.id)
+              //             // console.log(user1)
+              //             // console.log(user1)
+              //             let commissionReportData = {
+              //                 userId:user.id,
+              //                 market:bet.marketName,
+              //                 // commType:'Entry Wise loss Commission',
+              //                 percentage:commissionPer,
+              //                 commPoints:(bet.Stake * bet.oddValue),
+              //                 event:bet.event,
+              //                 match:bet.match,
+              //                 Sport:bet.gameId
+              //             }
+              //             let commisssioReport = await netCommission.create(commissionReportData)
+              //         }
+              //         }catch(err){
+              //             console.log(err)
+              //         } 
+              //         try{
+              //             for(let i = user.parentUsers.length - 1; i >= 1; i--){
+              //                 let childUser = await userModel.findById(user.parentUsers[i])
+              //                 let parentUser = await userModel.findById(user.parentUsers[i - 1])
+              //                 let commissionChild = await commissionModel.find({userId:childUser.id})
+              //                 let commissionPer = 0
+              //                 if ((bet.marketName.startsWith('Bookmake') || bet.marketName.startsWith('TOSS')) && commissionChild[0].Bookmaker.type == "NET_LOSS" && commissionChild[0].Bookmaker.status){
+              //                   commissionPer = commissionChild[0].Bookmaker.percentage
+              //                 }
+              //                 let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
+              //                 // console.log(commissionCoin)
+              //                 if(commissionPer > 0){
+              //                     let user1 = await userModel.findById(childUser.id)
+              //                     // console.log(user1.userName)
+              //                     let commissionReportData = {
+              //                         userId:childUser.id,
+              //                         market:bet.marketName,
+              //                         // commType:'Net loss Commission',
+              //                         percentage:commissionPer,
+              //                         commPoints:(bet.Stake * bet.oddValue),
+              //                         event:bet.event,
+              //                         match:bet.match,
+              //                         Sport:bet.gameId
+              //                     }
+              //                     let commisssioReport = await netCommission.create(commissionReportData)
+              //                 }
+              //             }
+              //         }catch(err){
+              //             console.log(err)
+              //         }
+              // }
             }else{
+              console.log("elseWorking")
               // let user = await userModel.findById(bet.userId)
               // let commission = await commissionModel.find({userId:user.parentUsers[1]})
               // let commissionPer = 0
@@ -432,7 +433,7 @@ exports.mapbet = async(data) => {
 
 
                 // console.log(bet.marketId)
-                console.log(commissionMarket)
+                console.log(commissionMarket, "CommissionMarket")
                 if(commissionMarket.some(item => item.marketId == bet.marketId)){
                   console.log('work111111111111111111111111111111111111111111111111')
                   try{
@@ -573,7 +574,7 @@ exports.mapbet = async(data) => {
     
 
     console.log(NetData, "metDATA")
-    console.log(NetData[0].markets, "DATA")
+    // console.log(NetData[0].markets, "DATA")
 try{
   for(let i = 0; i < NetData.length; i++){
     console.log("forLoop2")
