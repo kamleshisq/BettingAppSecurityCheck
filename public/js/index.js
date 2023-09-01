@@ -216,15 +216,16 @@ $(document).on('submit','.Settlement-form',async function(e) {
     // formDataObj.id = id
     // console.log(formDataObj)
     // let rowId = $('.rowId').attr('data-rowid')
-    const user = await creditDebitSettle(formDataObj)
-    var trElements = document.querySelectorAll('tr.trtable');
-    // console.log(trElements)
-    // console.log(user)
-    trElements.forEach(function(trElement) {
-        if (trElement.getAttribute('data-id') === user.id) {
-            console.log(trElement, 4545445454)
-        }
-    })
+    creditDebitSettle(formDataObj)
+    // const user = await creditDebitSettle(formDataObj)
+    // var trElements = document.querySelectorAll('tr.trtable');
+    // // console.log(trElements)
+    // // console.log(user)
+    // trElements.forEach(function(trElement) {
+    //     if (trElement.getAttribute('data-id') === user.id) {
+    //         console.log(trElement, 4545445454)
+    //     }
+    // })
     // console.log(rowId)
     // let currentUser = $('#currentUserDetails').data('currentuser')
     // updateRow(user,rowId,currentUser)

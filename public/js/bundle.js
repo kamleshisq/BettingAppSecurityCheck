@@ -5793,7 +5793,7 @@ var creditDebitSettle = /*#__PURE__*/function () {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           if (!(data.type == "deposit")) {
-            _context.next = 17;
+            _context.next = 14;
             break;
           }
           _context.prev = 1;
@@ -5805,60 +5805,54 @@ var creditDebitSettle = /*#__PURE__*/function () {
           });
         case 4:
           res = _context.sent;
-          if (!(res.data.status === 'success')) {
-            _context.next = 9;
-            break;
+          if (res.data.status === 'success') {
+            alert('deposit successfully!!!!');
+            $('#myModalSE').modal('toggle');
+            window.setTimeout(function () {
+              location.reload(true);
+            }, 100);
+            // return res.data.user;
           }
-          alert('deposit successfully!!!!');
-          $(".popup_body").removeClass("popup_body_show");
-          // window.setTimeout(()=>{
-          //     location.assign('/userManagement')
-          // }, 100)
-          return _context.abrupt("return", res.data.user);
-        case 9:
-          _context.next = 15;
+          _context.next = 12;
           break;
-        case 11:
-          _context.prev = 11;
+        case 8:
+          _context.prev = 8;
           _context.t0 = _context["catch"](1);
           console.log(_context.t0);
           setTimeout(alert(_context.t0.response.data.message), 1500);
-        case 15:
-          _context.next = 31;
+        case 12:
+          _context.next = 25;
           break;
-        case 17:
-          _context.prev = 17;
-          _context.next = 20;
+        case 14:
+          _context.prev = 14;
+          _context.next = 17;
           return (0, _axios.default)({
             method: 'POST',
             url: '/api/v1/Account/withdrawlSettle',
             data: data
           });
-        case 20:
+        case 17:
           _res = _context.sent;
-          if (!(_res.data.status === 'success')) {
-            _context.next = 25;
-            break;
+          if (_res.data.status === 'success') {
+            alert('withdrawl successfully!!!!');
+            window.setTimeout(function () {
+              location.reload(true);
+            }, 100);
+            $('#myModalSE').modal('toggle');
+            // return res.data.user;
           }
-          alert('withdrawl successfully!!!!');
-          // window.setTimeout(()=>{
-          //     location.assign('/userManagement')
-          // }, 100)
-          $(".popup_body").removeClass("popup_body_show");
-          return _context.abrupt("return", _res.data.user);
-        case 25:
-          _context.next = 31;
+          _context.next = 25;
           break;
-        case 27:
-          _context.prev = 27;
-          _context.t1 = _context["catch"](17);
+        case 21:
+          _context.prev = 21;
+          _context.t1 = _context["catch"](14);
           console.log(_context.t1);
           setTimeout(alert(_context.t1.response.data.message), 1500);
-        case 31:
+        case 25:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[1, 11], [17, 27]]);
+    }, _callee, null, [[1, 8], [14, 21]]);
   }));
   return function creditDebitSettle(_x) {
     return _ref.apply(this, arguments);
@@ -7176,7 +7170,7 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
 }());
 $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(e) {
-    var form, id, fd, formDataObj, user, trElements;
+    var form, id, fd, formDataObj;
     return _regeneratorRuntime().wrap(function _callee4$(_context4) {
       while (1) switch (_context4.prev = _context4.next) {
         case 0:
@@ -7192,22 +7186,21 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
           // formDataObj.id = id
           // console.log(formDataObj)
           // let rowId = $('.rowId').attr('data-rowid')
-          _context4.next = 9;
-          return (0, _creditDebitSettle.creditDebitSettle)(formDataObj);
-        case 9:
-          user = _context4.sent;
-          trElements = document.querySelectorAll('tr.trtable'); // console.log(trElements)
-          // console.log(user)
-          trElements.forEach(function (trElement) {
-            if (trElement.getAttribute('data-id') === user.id) {
-              console.log(trElement, 4545445454);
-            }
-          });
+          (0, _creditDebitSettle.creditDebitSettle)(formDataObj);
+          // const user = await creditDebitSettle(formDataObj)
+          // var trElements = document.querySelectorAll('tr.trtable');
+          // // console.log(trElements)
+          // // console.log(user)
+          // trElements.forEach(function(trElement) {
+          //     if (trElement.getAttribute('data-id') === user.id) {
+          //         console.log(trElement, 4545445454)
+          //     }
+          // })
           // console.log(rowId)
           // let currentUser = $('#currentUserDetails').data('currentuser')
           // updateRow(user,rowId,currentUser)
           // console.log(user)
-        case 12:
+        case 8:
         case "end":
           return _context4.stop();
       }

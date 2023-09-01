@@ -11,11 +11,11 @@ export const creditDebitSettle = async(data)=>{
             });
             if(res.data.status === 'success'){
                 alert('deposit successfully!!!!');
-                $(".popup_body").removeClass("popup_body_show");
-                // window.setTimeout(()=>{
-                //     location.assign('/userManagement')
-                // }, 100)
-                return res.data.user;
+                $('#myModalSE').modal('toggle')
+                window.setTimeout(()=>{
+                    location.reload(true)
+                }, 100)
+                // return res.data.user;
             }
     
         }catch(err){
@@ -31,11 +31,11 @@ export const creditDebitSettle = async(data)=>{
             });
             if(res.data.status === 'success'){
                 alert('withdrawl successfully!!!!');
-                // window.setTimeout(()=>{
-                //     location.assign('/userManagement')
-                // }, 100)
-                $(".popup_body").removeClass("popup_body_show");
-                return res.data.user;
+                window.setTimeout(()=>{
+                    location.reload(true)
+                }, 100)
+                $('#myModalSE').modal('toggle')
+                // return res.data.user;
 
             }
     
