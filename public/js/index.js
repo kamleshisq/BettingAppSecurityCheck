@@ -3,6 +3,7 @@ import { logout } from "./logOut";
 import { reset } from "./resetPass";
 import { createUser } from "./createUser";
 import { debitCredit } from "./debitCredit";
+import {creditDebitSettle} from "./creditDebitSettle"
 import { editUser } from "./editUser";
 // import { betLockStatus } from "./batLockStatus";
 import { createRole } from "./createRole";
