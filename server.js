@@ -2428,7 +2428,13 @@ io.on('connection', (socket) => {
         // console.log(me)
         let History
         let filter = {}
-        filter.date = {$gte:data.from_date,$lte:data.to_date}
+        if(data.from_date && data.to_date){
+            filter.date = {$gte:data.from_date,$lte:data.to_date}
+        }else if(data.from_date && !data.to_date){
+            filter.date = {$gte:data.from_date}
+        }else if(data.to_date && !data.from_date){
+            filter.date = {$lte:data.to_date}
+        }
         console.log(filter)
         if(me.roleName === "Admin"){
             History = await settlementHistory.find(filter)
