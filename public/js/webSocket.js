@@ -4136,10 +4136,10 @@ socket.on('connect', () => {
             let stake1 = 0;
             let stake2 = 0;
             data.forEach(item => {
-                item.betData.forEach(bet => {
+                // item.betData.forEach(bet => {
                     document.getElementById(`${item._id}`).innerText = item.totalStake
                     document.getElementById(`${item._id}B`).innerText = item.count
-                })
+                // })
             })
         })
     }
