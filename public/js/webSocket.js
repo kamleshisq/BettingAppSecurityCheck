@@ -8486,6 +8486,7 @@ socket.on('connect', () => {
             var windowHeight = $(window).height();
             var documentHeight = $(document).height();
             if (scroll + windowHeight >= documentHeight) {
+                console.log('working')
                 let page = parseInt($('.rowId').attr('data-rowid'))
                 $('.rowId').attr('data-rowid',page + 1)
                 let to_date;
