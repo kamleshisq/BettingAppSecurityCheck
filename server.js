@@ -1190,7 +1190,7 @@ io.on('connection', (socket) => {
 
 
     socket.on("aggreat", async(data) => {
-        console.log(data.ids)
+        // console.log(data.ids)
         // const sportData = await getCrkAndAllData()
         // const cricket = sportData[0].gameList[0].eventList
         // let liveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY");
