@@ -39,11 +39,13 @@
     <div class="analysis-data">
         <div class="content-left">
             <!-- Live match score -->
-            <div class="live-score-banner">
-                <div class="live-score">
-                    
-                </div>
-            </div>
+            <%if(match.eventData.type != "UPCOMING"){ %>
+              <div class="live-score-banner">
+                  <div class="live-score">
+                      
+                  </div>
+              </div>
+            <%}>
             <!-- Match Odds -->
             <%if(match.marketList.match_odd != null){%>
               <div class="bets-table">
