@@ -990,7 +990,9 @@ socket.on('connect', () => {
             var row = this.closest("tr");
             var id = row.id;
             var dataId = row.getAttribute("data-id");
-            socket.emit("BetLockUnlock", {id, dataId})
+            if(confirm('do you want to change status')){
+                socket.emit("BetLockUnlock", {id, dataId})
+            }
         })
         socket.on("BetLockUnlock", data => {
             if(data.status === "error"){
@@ -1298,8 +1300,7 @@ socket.on('connect', () => {
 
             if($(this).hasClass("searchUser")){
                     filterData.userName = $(this).val()
-                    // console.log(filterData.userName)
-                    if(filterData.userName.length >= 0){
+                    if(filterData.userName.length > 0){
                         S = true
                     }else{
                         S = false
@@ -8672,20 +8673,20 @@ socket.on('connect', () => {
               console.log(html)
               document.getElementById("markets").innerHTML = html
           })
+          $(document).on("change", ".checkbox", function(e) {
+              e.preventDefault()
+              const isChecked = $(this).prop("checked");
+              let parentNode = this.closest('tr')
+              let marketId = parentNode.id
+              socket.emit("commissionMarketbyId", {marketId, isChecked, LOGINDATA});
+          })
+      
+          socket.on("commissionMarketbyId", data =>{
+              if(data == "err"){
+                  // alert("Opps, somthing went wrong please try again leter")
+              }
+          })
     }
-    $(document).on("change", ".checkbox", function(e) {
-        e.preventDefault()
-        const isChecked = $(this).prop("checked");
-        let parentNode = this.closest('tr')
-        let marketId = parentNode.id
-        socket.emit("commissionMarketbyId", {marketId, isChecked, LOGINDATA});
-    })
-
-    socket.on("commissionMarketbyId", data =>{
-        if(data == "err"){
-            // alert("Opps, somthing went wrong please try again leter")
-        }
-    })
 
 })
 })
