@@ -8429,14 +8429,18 @@ socket.on('connect', () => {
         let todate;
         $('#from_date').change(function(e){
             fromdate = $(this).val();
-            todate = $('#to_date').val();
+            if($('#to_date').val() != ''){
+                todate = new Date(new Date($('#to_date').val()).getTime() + ((24*60*60*1000)-1))
+            }
             console.log(fromdate,todate)
             socket.emit('settlement',{LOGINUSER:LOGINDATA.LOGINUSER,todate,fromdate})
 
         })
         $('#to_date').change(function(e){
-            todate = $(this).val();
-            fromdate = $('#from_date').val();
+            todate =  new Date(new Date($('#to_date').val()).getTime() + ((24*60*60*1000)-1))
+            if($('#from_date').val() != ''){
+                fromdate = $('#from_date').val();
+            }
             console.log(fromdate,todate)
             socket.emit('settlement',{LOGINUSER:LOGINDATA.LOGINUSER,todate,fromdate})
 
@@ -8448,7 +8452,7 @@ socket.on('connect', () => {
             let html = ''
             for(let i = 0; i < data.betsEventWise.length; i++){ 
                 html += `<tr>`
-                var timestamp = data.betsEventWise[i].eventdate * 1000; 
+                var timestamp = data.betsEventWise[i].eventdate; 
                 var date = new Date(timestamp);
                 var options = { 
                     year: 'numeric',
