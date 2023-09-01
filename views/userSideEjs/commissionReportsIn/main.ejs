@@ -52,9 +52,9 @@
                 <tbody class="acount-stat-tbl-body">
                     <%for(let i = 0; i < data.length; i++){%>
                       <tr onclick="window.location.href = '/myCommissionReportsInEvent?id=<%=data[i]._id%>';">
-                        <td><%=i+1%></td>
-                        <td><%=data[i]._id%></td>
-                        <td><%=data[i].totalCommissionPoints%></td>
+                        <td title="SR No." ><%=i+1%></td>
+                        <td title="Competition" ><%=data[i]._id%></td>
+                        <td title="Commission" ><%=data[i].totalCommissionPoints%></td>
                       </tr>
                     <%}%>
                 </tbody>
