@@ -51,6 +51,21 @@
                                   <td id="<%=secIds[j]%>B">00</td>
                               </tr>
                             <%}%>
+                          <%}else{%>
+                            <% let runners = JSON.parse(data.marketList.bookmaker[0].runners); %>
+                            <% const runners1 = []; %>
+                            <%const secIds = []; %>
+                            <%runners.forEach(item => {%>
+                            <%runners1.push(item.runner);%>
+                            <%secIds.push(item.secId);%>
+                            <%});%>
+                            <%for(let j = 0; j < runners1.length; j++){%>
+                              <tr>
+                                <td><%=runners1[j]%></td>
+                                  <td id="<%=secIds[j]%>">00</td>
+                                  <td id="<%=secIds[j]%>B">00</td>
+                              </tr>
+                            <%}%>
                           <%}%>
                         <%}%>
                       </tbody>
