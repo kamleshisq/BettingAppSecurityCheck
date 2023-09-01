@@ -1,82 +1,321 @@
-<%-include("../header")%>
+<!DOCTYPE html>
+<html>
 
+<head>
+    <title>Admin Table</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<style>
+    @import url(http://ollscores.com/css/style.css);
 
-<section class="exchange-pg-main-sec mob-dis-no">
-  <div class="container-fluid exchange-pg-main-contnr">
-    <div class="col-lg-11 col-md-11 col-12 exchange-pg-main-col">
-      <div class="exchange-pg-main-col-ro">
-          <div class="exchange-pg-main-col-big col-sm-9 col-12">
-              <div class="exchange-pg-main-col-big-wrp">
-                  <section class="exchange-pg-inn-banner-sec">
-                    <%-include("./matchDetails")%>
+    .analysis-data { font-weight: 300; display: grid; grid-template-columns: auto 50%; gap: 30px; }
+    .analysis-data strong { font-weight: 600; }
+    .analysis-data .title { display: flex; justify-content: space-between; background: var(--primary-color); color: #fff; padding: 10px 15px; border-radius: 30px; gap: 10px; }
+    .analysis-data .live-score-banner { padding: 15px; border-radius: 30px; background: #fff; border: 1px solid #d7d7d7; }
+    .analysis-data .bets-table{padding: 15px; border-radius: 30px; background: #fff; border: 1px solid #d7d7d7; margin-top: 15px;}
+    .analysis-data .bets-table .title{margin: 0 0 10px;}
+    .analysis-data .bets-table table tr .bets-option-btn{display: flex; width: 100%; gap: 10px; position: relative;}
+    .analysis-data .bets-table table tr .bets-option-btn .bets-btn-group{display: flex; gap: 10px; justify-content: center; flex: auto;}
+    .analysis-data .bets-table table tr .bets-option-btn .match-status-message { position: absolute; top: 0; left: 0; height: 100%; width: 100%; font-weight: 600; color: red; background: rgb(0, 0, 0, 0.6); text-align: center; display: flex; align-items: center; justify-content: center; text-transform: uppercase; border-radius: 5px; }
+    .analysis-data .bets-table table tr .bets-option-btn .bets-btn { background-color: #72bbef; color: #000; padding: 2px 5px 3px; font-size: 20px; line-height: 1; min-width: 75px; height: 42px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 5px; cursor: pointer; }
+    .analysis-data .bets-table table tr .bets-option-btn .bets-btn-group.pink .bets-btn{background-color: #f994ba;}
+    .analysis-data .bets-table table tr .bets-option-btn .bets-btn .small{font-size: 13px;}
+    .analysis-data .bets-table table tr th:first-child{width: 100%;}
+    .analysis-data .bets-table table tr  .min-max-text{white-space: nowrap; color: #182ea6;}
+    .bets-table .tab-data-section{all: unset;}
+    .bets-table .tab-data-section .tabcontent{all: unset; padding: 20px 0 0;}
+</style>
 
-                      
-
-                    <%if(match.marketList.match_odd != null){%>
-                      <%-include('./matchOdds')%>
-                    <%}%>
-                    <%if(match.marketList.bookmaker != null){%>
-                      <%-include("./bookmaker")%>
-                    <%}%>
-                    
-                    <%if(match.marketList.odd_even != null || match.marketList.session != null){%>
-                      <%-include("./fency")%>
-                    <%}%>
-
-                  </section>
-                  
-                  
-              </div>
-          </div>
-
-          <div class="exchange-pg-main-col-mini my-live-streacoldv col-lg-3 col-md-3 col-12 mbl-exchange-pg-main-col-mini">
-            <%if(user){ %>
-              <%if(liveStream.data){%>
-            <div class="exchange-pg-rit-ro mb-2">
-              <div class="exchange-pg-rit-ro-livetv-dv">
-                <div class="exchange-pg-rit-ro-livetv-titl">
-                  <h5>Live Stream</h5>
+<body>
+    <div class="analysis-data">
+        <div class="content-left">
+            <!-- Live match score -->
+            <div class="live-score-banner">
+                <div class="live-score">
+                    <img src="liveimg.jpg" width="100%" />
                 </div>
-                <div class=" exchange-pg-rit-ro-livetv-dv-wrp">
-                    <iframe src="<%=src%>"  class="my-livestrem-ifream"></iframe>
-                  </div>
-                </div>
-              </div>
-              <%}%>
-              <%} %>
-            <div class="exchange-pg-rit-ro mb-2">
-              <div class="exchange-pg-rit-ro-livetv-dv">
-                <div class="exchange-pg-rit-ro-livetv-titl" id="betsTitleSide">
-                  <h5>Open Bets (<%=betsOnthisMatch.length%>)</h5>
-                </div>
-                <div class="exchange-pg-rit-ro-livetv-dv-wrp " id="length1">
-                  <%if(betsOnthisMatch.length > 0){%>
-                    <table class="table-new-d">
-                      <thead>
-                        <tr class="thead-border my-open-bet-trr">
-                          <th>Selection</th>
-                          <th>Odds</th>
-                          <th>Stake</th>
-                        </tr>
-                      </thead>
-                      <tbody id="tableBET">
-                       <%for(let i = 0; i < betsOnthisMatch.length; i++){%>
-                        <tr>
-                          <td><%= betsOnthisMatch[i].selectionName%></td>
-                          <td><%= betsOnthisMatch[i].oddValue %></td>
-                          <td><%= betsOnthisMatch[i].Stake %></td>
-                        </tr>
-                        <%} %>
-                      </tbody>
-                    </table>
-                  <%} %>
-                  <!-- <img class="img-bdr-red15 img-fluid" src="../../assets/img/exchange/live-tv-img.png" alt=""> -->
-                </div>
-              </div>
             </div>
-           
-          </div>
-      </div>
+            <!-- Match Odds -->
+            <div class="bets-table">
+                <div class="title">
+                    <div class="text-left"><strong>Match Odds</strong></div>
+                    <div class="text-right"><strong>Min : 100, Max : 10K</strong></div>
+                </div>
+                <table>
+                    <tr>
+                        <th>Market</th>
+                        <th>
+                            <div class="bets-option-btn">
+                                <div class="bets-btn-group">Back</div>
+                                <div class="bets-btn-group">Lay</div>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>England</td>
+                        <td>
+                            <div class="bets-option-btn">
+                                <div class="bets-btn-group">
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>                                    
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>                                    
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>
+                                </div>
+                                <div class="bets-btn-group pink">
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>                                    
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>                                    
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>England</td>
+                        <td>
+                            <div class="bets-option-btn">
+                                <div class="bets-btn-group">
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>                                    
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>                                    
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>
+                                </div>
+                                <div class="bets-btn-group pink">
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>                                    
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>                                    
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- Bookmaker -->
+            <div class="bets-table">
+                <div class="title">
+                    <div class="text-left"><strong>Bookmaker</strong></div>
+                    <div class="text-right"><strong>Min : 100, Max : 10K</strong></div>
+                </div>
+                <table>
+                    <tr>
+                        <th>Market</th>
+                        <th>
+                            <div class="bets-option-btn">
+                                <div class="bets-btn-group">Back</div>
+                                <div class="bets-btn-group">Lay</div>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>England</td>
+                        <td>
+                            <div class="bets-option-btn">
+                                <div class="bets-btn-group">                                 
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>
+                                </div>
+                                <div class="bets-btn-group pink">                                  
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>England</td>
+                        <td>
+                            <div class="bets-option-btn">
+                                <div class="bets-btn-group">                                 
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>
+                                </div>
+                                <div class="bets-btn-group">                                  
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>
+                                </div>
+                                <div class="match-status-message">Suspended</div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- Toss -->
+            <div class="bets-table">
+                <div class="title">
+                    <div class="text-left"><strong>Toss</strong></div>
+                    <div class="text-right"><strong>Min : 100, Max : 10K</strong></div>
+                </div>
+                <table>
+                    <tr>
+                        <th>Market</th>
+                        <th>
+                            <div class="bets-option-btn">
+                                <div class="bets-btn-group">Back</div>
+                                <div class="bets-btn-group">Lay</div>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>England</td>
+                        <td>
+                            <div class="bets-option-btn">
+                                <div class="bets-btn-group">                                 
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>
+                                </div>
+                                <div class="bets-btn-group pink">                                  
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>England</td>
+                        <td>
+                            <div class="bets-option-btn">
+                                <div class="bets-btn-group">                                 
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>
+                                </div>
+                                <div class="bets-btn-group">                                  
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>
+                                </div>
+                                <div class="match-status-message">Suspended</div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- Fancy -->
+            <div class="bets-table">
+                <div class="title">
+                    <div class="text-left"><strong>Fancy</strong></div>
+                </div>
+                <div class="tab-data-section">
+                    <div class="tab">
+                        <button class="tablinks active">All</button>
+                        <button class="tablinks">Session</button>
+                        <button class="tablinks">W/P Market</button>
+                        <button class="tablinks">Odd/Even</button>
+                    </div>
+                    <div class="tabcontent" id="">
+                        <table>
+                            <tr>
+                                <th>Sessions</th>
+                                <th></th>
+                                <th>
+                                    <div class="bets-option-btn">
+                                        <div class="bets-btn-group">Yes</div>
+                                        <div class="bets-btn-group">No</div>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>England</td>
+                                <td><div class="min-max-text"><strong>Min : 100, Max : 10K</strong></div></td>
+                                <td>    
+                                <div class="bets-option-btn">
+                                    <div class="bets-btn-group">                                 
+                                        <div class="bets-btn">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                    <div class="bets-btn-group pink">                                  
+                                        <div class="bets-btn">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>England</td>
+                                <td><div class="min-max-text"><strong>Min : 100, Max : 10K</strong></div></td>
+                                <td>
+                                    <div class="bets-option-btn">
+                                        <div class="bets-btn-group">                                 
+                                            <div class="bets-btn">
+                                                <strong>1.54</strong>
+                                                <span class="small">469</span>
+                                            </div>
+                                        </div>
+                                        <div class="bets-btn-group">                                  
+                                            <div class="bets-btn">
+                                                <strong>1.54</strong>
+                                                <span class="small">469</span>
+                                            </div>
+                                        </div>
+                                        <div class="match-status-message">Suspended</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="live-match">
+                Live match
+            </div>
+            <div class="Open-bets-table">
+                Open Bets Table
+            </div>
+        </div>
     </div>
-  </div>
-</section>
+</body>
+
+</html>
