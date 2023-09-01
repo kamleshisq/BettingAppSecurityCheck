@@ -6943,7 +6943,7 @@ $('#Add-User').submit(function (e) {
   (0, _createUser.createUser)(formDataObj);
 });
 $(document).on('click', '.updateBetLimit', function (e) {
-  var rowId = $(this).parent().parent().attr('id');
+  var rowId = $(this).parent().parent().parent().attr('id');
   $('.rowId').attr('data-rowid', rowId);
   var modleName = $(this).data('bs-target');
   var form = $(modleName).find('.form-data');
