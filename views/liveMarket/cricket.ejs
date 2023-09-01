@@ -27,7 +27,7 @@
                         <%for(let k = 0; k < openBet[i].details[j].length; k++){%>
                           <%
                             let data 
-                            data = liveCricket.find(item => item.match_odd.marketId == openBet[i].details[j].id)
+                            data = liveCricket.find(item => item.marketList.match_odd.marketId == openBet[i].details[j].id)
                             console.log(data, "1212121212")
                           %>
                         <tr>
