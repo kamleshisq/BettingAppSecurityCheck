@@ -1040,6 +1040,7 @@ socket.on('connect', () => {
                 form.find('input[name = "tuBalance"]').attr('value',userData.availableBalance)
                 form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
                 form.find('input[name = "fromUser"]').attr('value',me.userName)
+                form.find('input[name = "amount"]').attr('value',userData.uplinePL)
                 form.attr('id', userData._id);
             }else{
                 form.find('select[name = "type"]').val("withdrawl")
@@ -1048,6 +1049,7 @@ socket.on('connect', () => {
                 form.find('input[name = "tuBalance"]').attr('value',me.availableBalance)
                 form.find('input[name = "clintPL"]').attr('value',me.clientPL)
                 form.find('input[name = "fromUser"]').attr('value',userData.userName)
+                form.find('input[name = "amount"]').attr('value',userData.uplinePL)
                 form.attr('id', userData._id);
             }
             }
