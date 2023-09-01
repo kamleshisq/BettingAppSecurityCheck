@@ -8393,13 +8393,13 @@ socket.on('connect', () => {
         let todate;
         $('#from_date').change(function(e){
             fromdate = $(this).val();
-            todate = $('#to_date').val();
+            todate = new Date(new Date($('#to_date').val()).getTime() + ((24*60*60*1000)-1))
             console.log(fromdate,todate)
             socket.emit('settlement',{LOGINUSER:LOGINDATA.LOGINUSER,todate,fromdate})
 
         })
         $('#to_date').change(function(e){
-            todate = $(this).val();
+            todate =  new Date(new Date($('#to_date').val()).getTime() + ((24*60*60*1000)-1))
             fromdate = $('#from_date').val();
             console.log(fromdate,todate)
             socket.emit('settlement',{LOGINUSER:LOGINDATA.LOGINUSER,todate,fromdate})

@@ -2375,12 +2375,20 @@ io.on('connection', (socket) => {
     socket.on('settlement',async(data)=>{
         // console.log(data)
         const me = data.LOGINUSER
+        let dataobj;
+        if(data.from_date && data.to_date){
+            dataobj = {$gte:data.from_date,$lte:data.to_date}
+        }else if(data.from_date && !data.to_date){
+            dataobj = {$gte:data.from_date}
+        }else if(!data.from_date && data.to_date){
+            dataobj = {$$lte:data.to_date}
+        }
         // console.log(me)
         let betsEventWise = await Bet.aggregate([
             {
                 $match: {
                     status:"OPEN" ,
-                    eventdate: {$gte:data.from_date,$lte:data.to_date}
+                    eventdate: dataobj
                 }
             },
             {
