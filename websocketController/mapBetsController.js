@@ -579,9 +579,25 @@ exports.mapbet = async(data) => {
       console.log(NetData, "metDATA")
       try{
         for(let i = 0; i < NetData.length; i++){
-          console.log("forLoop2")
-          console.log(NetData[i])
-          console.log(NetData[i].markets)
+          // console.log("forLoop2")
+          // console.log(NetData[i])
+          // console.log(NetData[i].markets)
+          for(let j = 0 ; j < NetData[i].markets.length; j++){
+            let user = await userModel.findByIdAndUpdate(NetData[i].userId, {$inc:{netCommisssion: -NetData[i].markets[j].totalReturn, commission:NetData[i].markets[j].totalReturn  }})
+              console.log(user, "user")
+              let commissionReportData = {
+                userId:NetData[i].userId,
+                market:NetData[i].markets[j].market,
+                commType:'Net lossing Commission',
+                percentage:NetData[i].markets[j].percentage,
+                commPoints:NetData[i].markets[j].totalReturn,
+                event:NetData[i].markets[j].event,
+                match:NetData[i].match,
+                Sport:NetData[i].markets[j].sport
+            }
+            let commisiionReports = await commissionRepportModel.create(commissionReportData)
+          }
+          await netCommission.deleteMany({userId:NetData[i].userId, match:NetData[i].match})
         }
       }catch(err){
         console.log(err)
