@@ -9051,6 +9051,42 @@ socket.on('connect', () => {
                     }
                 }
             })
+
+            function eventID(){
+                socket.emit("BETONEVENT", {id , LOGINDATA})
+                setTimeout(()=>{
+                    eventID()
+                }, 5000)
+
+            }
+            eventID()
+
+            socket.on('BETONEVENT', async(data) => {
+                let html = `<tr>
+                <th>Username</th>
+                <th>Place Date</th>
+                <th>Market</th>
+                <!-- <th>Bet Type</th> -->
+                <th>Odds</th>
+                <th>Stake</th>
+                <th>Action</th>
+                </tr>`
+                for(let i = 0; i < data.data.length; i++){
+                    html += `<tr>
+                    <td>${data.data[i].userName}</td>
+                    <td>01/09/23, 4:37:38 PM</td>
+                    <td>${data.data[i].marketName}</td>
+                    <!-- <td>${data.data[i].userName}</td> -->
+                    <td>${data.data[i].oddValue}</td>
+                    <td>${data.data[i].Stake}</td>
+                    <td><div class="btn-group"><button class="btn alert-btn">Alert</button></div></td>
+                </tr>`
+                }
+
+                document.getElementById('betTable').innerHTML = html
+            })
+
+
     }
 
 })
