@@ -3487,6 +3487,7 @@ socket.on('connect', () => {
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
+
             $('.pageId').attr('data-pageid','1')
             data.page = 0;
             if(fromDate != ''  && toDate != '' ){
@@ -8510,7 +8511,7 @@ socket.on('connect', () => {
                 var date = new Date(data.History[i].date)
                 html += `<tr>
                   <td>${limit+1+i}</td> 
-                  <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear(), date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
+                  <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + " "+ date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
                   <td>${data.History[i].eventName}</td>
                   <td>${data.History[i].marketName}</td>
                   <td>${data.History[i].result}</td>
