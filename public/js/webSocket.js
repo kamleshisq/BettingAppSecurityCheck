@@ -8901,18 +8901,16 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
-                      this.removeAttribute("data-bs-toggle");
                     }else{
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
-                        this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
-                            this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
+                            this.innerHTML = `<strong>${section.layPrice1}</strong> <span class="small">${section.laySize1}</span>`
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
                             // console.log(data1)
                             if(data1 != section.layPrice1){
-                                this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
+                                this.innerHTML = `<strong>${section.layPrice1}</strong> <span class="small">${section.laySize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
                         }
@@ -8925,16 +8923,16 @@ socket.on('connect', () => {
                       </span>`
                       this.removeAttribute("data-bs-toggle");
                     }else{
-                        // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        // this.innerHTML = `<strong>${section.backPrice1}</strong> <span class="small">${section.backSize1}</span>`
                         this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
-                            this.innerHTML = `<span><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
+                            this.innerHTML = `<strong>${section.layPrice2}</strong> <span class="small">${section.laySize2}</span>`
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
                             // console.log(data1)
                             if(data1 != section.layPrice2){
-                                this.innerHTML = `<span><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
+                                this.innerHTML = `<strong>${section.layPrice2}</strong> <span class="small">${section.laySize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
                         }
@@ -8947,16 +8945,16 @@ socket.on('connect', () => {
                       </span>`
                       this.removeAttribute("data-bs-toggle");
                     }else{
-                        // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        // this.innerHTML = `<strong>${section.backPrice1}</strong> <span class="small">${section.backSize1}</span>`
                         this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
-                            this.innerHTML = `<span><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
+                            this.innerHTML = `<strong>${section.layPrice3}</strong> <span class="small">${section.laySize3}</span>`
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
                             // console.log(data1)
                             if(data1 != section.layPrice3){
-                                this.innerHTML = `<span><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
+                                this.innerHTML = `<strong>${section.layPrice3}</strong> <span class="small">${section.laySize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
                         }
