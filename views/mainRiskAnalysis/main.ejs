@@ -319,12 +319,12 @@
                           </tr>
                           <%for(let i = 0; i < Bets.length; i++){%>
                             <tr>
-                                <td><%Bets[i].userName%></td>
+                                <td><%=Bets[i].userName%></td>
                                 <td>01/09/23, 4:37:38 PM</td>
-                                <td><%Bets[i].marketName%></td>
-                                <!-- <td><%Bets[i].userName%></td> -->
-                                <td><%Bets[i].oddValue%></td>
-                                <td><%Bets[i].Stake%></td>
+                                <td><%=Bets[i].marketName%></td>
+                                <!-- <td><%=Bets[i].userName%></td> -->
+                                <td><%=Bets[i].oddValue%></td>
+                                <td><%=Bets[i].Stake%></td>
                                 <td><div class="btn-group"><button class="btn alert-btn">Alert</button></div></td>
                             </tr>
                           <%}%>
