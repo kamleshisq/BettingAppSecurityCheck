@@ -7561,10 +7561,6 @@ socket.on('connect', () => {
 
         $(window).scroll(async function() {
             if($(document).height()-$(window).scrollTop() == window.innerHeight){
-            var scroll = $(window).scrollTop();
-            var windowHeight = $(window).height();
-            var documentHeight = $(document).height();
-            if (scroll + windowHeight >= documentHeight) {
                 console.log("working")
                 let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
@@ -7575,7 +7571,7 @@ socket.on('connect', () => {
                 filterData.fromDate = fromDate1,
                 filterData.toDate = toDate
                 socket.emit("CommissionRReport", {page, LOGINDATA, filterData})
-            }
+                
             }
           })
           let count = 21
@@ -8441,7 +8437,15 @@ socket.on('connect', () => {
     }
 
     if(pathname == '/admin/settlementHistory'){
-        
+        $(document).on('change','#Fdate',function(e){
+            let from_date = $(this).val()
+            let to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            socket.emit('settlementHistory',{from_date,to_date,USER:LOGINDATA.LOGINUSER})
+        })
+
+        socket.on('settlementHistory',async(data)=>{
+
+        })
     }
 
     if(pathname === "/admin/settlementIn"){
