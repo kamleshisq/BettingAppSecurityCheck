@@ -37,6 +37,7 @@ const mapBet = require("./websocketController/mapBetsController");
 const commissionModel = require("./model/CommissionModel");
 const catalogController = require("./model/catalogControllModel");
 const commissionMarketModel = require("./model/CommissionMarketsModel");
+const netCommissionModel = require('./model/netCommissionModel');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -2757,6 +2758,8 @@ io.on('connection', (socket) => {
                     socket.emit("claimCommission", "error")
                 }
             }
+
+            await netCommissionModel.deleteMany({userId:data.LOGINDATA.LOGINUSER._id})
            
         }else{
             socket.emit("claimCommission", "error")
