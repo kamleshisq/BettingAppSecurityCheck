@@ -27,25 +27,16 @@
           <div class="table-heading-btn">
             <form action="" class="settlement-heading-from">
               <%
-              let now = new Date()
-              function formatDate(date, format) {
-                const map = {
-                    mm: date.getMonth() + 1,
-                    dd: date.getDate(),
-                    yyyy: date.getFullYear()
-                }
-            
-                return format.replace(/mm|dd|yyyy/gi, matched => map[matched])
-              }
-              let formatedDate = formatDate(now,'yyyy-mm-dd')
+                let maxDate = new Date().toJSON().slice(0,10)
               %>
+              
               <div class="input-group">
                 <label class="up-down-form">From Date</label>
-                <input type = "date" id="Fdate" max="<%=formatedDate%>">
+                <input type = "date" id="Fdate" max="<%=maxDate%>">
               </div> 
               <div class="input-group">
                 <label class="up-down-form">To Date</label>
-                <input type = "date" id="Tdate" max="<%=formatedDate%>">
+                <input type = "date" id="Tdate" max="<%=maxDate%>">
               </div> 
               </form>
           </div>
