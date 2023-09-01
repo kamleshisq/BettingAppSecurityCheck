@@ -38,6 +38,7 @@ const commissionModel = require("./model/CommissionModel");
 const catalogController = require("./model/catalogControllModel");
 const commissionMarketModel = require("./model/CommissionMarketsModel");
 const netCommissionModel = require('./model/netCommissionModel');
+const commissionRepportModel = require('./model/commissionReport');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -2752,7 +2753,7 @@ io.on('connection', (socket) => {
                     }
                     await AccModel.create(childdata)
                     await AccModel.create(perentData)
-                    await netCommissionModel.updateMany({userId:data.LOGINDATA.LOGINUSER._id}, {status:'Deposit'})
+                    await commissionRepportModel.updateMany({userId:data.LOGINDATA.LOGINUSER._id}, {status:'Deposit'})
                     socket.emit("claimCommission", "Success")
                 }catch(err){
                     console.log(err)
