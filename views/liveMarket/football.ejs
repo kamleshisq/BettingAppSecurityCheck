@@ -36,7 +36,7 @@
                               dataF = liveFootBall.find(item => (item.marketList.bookmaker != null) &&(item.marketList.bookmaker[0].marketId == openBet[i].details[j][k].id))
                             }
                           %>
-                          if(dataF){
+                          <%if(dataF){%>
                             <%if(!matchodd){%>
                               <% let runners = JSON.parse(dataF.marketList.match_odd.runners); %>
                               <% const runners1 = []; %>
