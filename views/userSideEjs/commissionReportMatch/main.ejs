@@ -56,12 +56,12 @@
                 <tbody class="acount-stat-tbl-body">
                     <%for(let i = 0; i < data.length; i++){%>
                         <tr>
-                            <td><%=i+1%></td>
-                            <td><%=data[i].market%></td>
-                            <td><%=data[i].commType%></td>
-                            <td><%=data[i].percentage%></td>
-                            <td><%=data[i].commPoints%></td>
-                            <td><%=data[i].status%></td>
+                            <td title="SR No." ><%=i+1%></td>
+                            <td title="Market" ><%=data[i].market%></td>
+                            <td title="Commission Type" ><%=data[i].commType%></td>
+                            <td title="Percentage" ><%=data[i].percentage%></td>
+                            <td title="Commission Points" ><%=data[i].commPoints%></td>
+                            <td title="Status" ><%=data[i].status%></td>
                         </tr>
                     <%}%>
                 </tbody>
