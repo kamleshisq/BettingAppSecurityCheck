@@ -432,7 +432,7 @@ exports.mapbet = async(data) => {
 
 
                 // console.log(bet.marketId)
-                // console.log(commissionMarket)
+                console.log(commissionMarket)
                 if(commissionMarket.some(item => item.marketId == bet.marketId)){
                   console.log('work111111111111111111111111111111111111111111111111')
                   try{
