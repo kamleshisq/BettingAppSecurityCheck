@@ -312,20 +312,22 @@
                               <th>Username</th>
                               <th>Place Date</th>
                               <th>Market</th>
-                              <th>Bet Type</th>
+                              <!-- <th>Bet Type</th> -->
                               <th>Odds</th>
                               <th>Stake</th>
                               <th>Action</th>
                           </tr>
-                          <tr>
-                              <td>shreebala</td>
-                              <td>01/09/23, 4:37:38 PM</td>
-                              <td>MATCH_ODDS</td>
-                              <td>Pedro Martinez</td>
-                              <td>1.37</td>
-                              <td>100.00</td>
-                              <td><div class="btn-group"><button class="btn alert-btn">Alert</button></div></td>
-                          </tr>
+                          <%for(let i = 0; i < Bets.length; i++){%>
+                            <tr>
+                                <td><%Bets[i].userName%></td>
+                                <td>01/09/23, 4:37:38 PM</td>
+                                <td><%Bets[i].marketName%></td>
+                                <!-- <td><%Bets[i].userName%></td> -->
+                                <td><%Bets[i].oddValue%></td>
+                                <td><%Bets[i].Stake%></td>
+                                <td><div class="btn-group"><button class="btn alert-btn">Alert</button></div></td>
+                            </tr>
+                          <%}%>
                       </table>
                   </div>
               </div>
