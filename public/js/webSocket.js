@@ -8467,7 +8467,7 @@ socket.on('connect', () => {
             for(let i = 0; i < data.History.length; i++){
                 var date = new Date(data.History[i].date)
                 html += `<tr>
-                  <td>${limit+1}</td>
+                  <td>${limit+1+i}</td>
                   <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear(), date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
                   <td>${data.History[i].eventName}</td>
                   <td>${data.History[i].marketName}</td>
