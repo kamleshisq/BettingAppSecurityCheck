@@ -536,6 +536,12 @@ exports.mapbet = async(data) => {
 
       let NetData = await netCommission.aggregate([
         {
+          $match :{
+            market:`${bets[0].marketName}`,
+            match: `${bets[0].match}`
+          }
+        },
+        {
           $group: {
             _id: {
               userId: "$userId",
