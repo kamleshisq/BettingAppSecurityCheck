@@ -3561,6 +3561,7 @@ socket.on('connect', () => {
             socket.emit('voidBET',data)
 
           }
+        })
             
             
             let count = 10
