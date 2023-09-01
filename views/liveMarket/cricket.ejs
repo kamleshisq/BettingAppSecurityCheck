@@ -23,14 +23,40 @@
                           <th>TOTAL BETS</th>
                         </tr>
                       </thead>
-                      <tbody id="<%=openBet[i].details[j].id%>" class="MarketIdsR">
-                        <%for(let k = 0; k < openBet[i].details[j].length; k++){%>
+                      <tbody id="<%= openBet[i].details[j].id %>" class="MarketIdsR">
+                        <%
+                          let team1 = openBet[i].details[j][0].match.split('v')[0];
+                          let team2 = openBet[i].details[j][0].match.split('v')[1];
+                          let team3 = "The Draw";
+                        %>
+                        <% for (let k = 0; k < openBet[i].details[j].length; k++) { %>
                           <tr>
-                          <td><%=openBet[i].details[j][k].beton%></td>
-                          <td id="<%=openBet[i].details[j][k].secId%>"><%=openBet[i].details[j][k].stake%></td>
-                          <td id="<%=openBet[i].details[j][k].secId%>"B><%=openBet[i].details[j][k].count%></td>
-                        </tr>
-                        <%}%>
+                            <%
+                              let betonLowerCase = openBet[i].details[j][k].beton.toLowerCase();
+                            %>
+                            <td>
+                              <% if (betonLowerCase.includes(team1.toLowerCase()) || betonLowerCase.includes(team2.toLowerCase()) || betonLowerCase.includes(team3.toLowerCase())) { %>
+                                <%= team1 %> vs <%= team2 %>
+                              <% } else { %>
+                                <%= betonLowerCase %>
+                              <% } %>
+                            </td>
+                            <td id="<%= openBet[i].details[j][k].secId %>">
+                              <% if (betonLowerCase.includes(team1.toLowerCase()) || betonLowerCase.includes(team2.toLowerCase()) || betonLowerCase.includes(team3.toLowerCase())) { %>
+                                <%= openBet[i].details[j][k].stake %>
+                              <% } else { %>
+                                00
+                              <% } %>
+                            </td>
+                            <td id="<%= openBet[i].details[j][k].secId %>B">
+                              <% if (betonLowerCase.includes(team1.toLowerCase()) || betonLowerCase.includes(team2.toLowerCase()) || betonLowerCase.includes(team3.toLowerCase())) { %>
+                                <%= openBet[i].details[j][k].count %>
+                              <% } else { %>
+                                00
+                              <% } %>
+                            </td>
+                          </tr>
+                        <% } %>
                       </tbody>
                     </table>
                   </div>
