@@ -63,6 +63,9 @@ $(document).ready(function(){
         if(pathname == '/admin/catalogcontrol/compitations' || pathname == '/admin/catalogcontrol/compitations/events'){
             $("a[href='"+'/admin/catalogcontrol'+"'").addClass('active')
 
+        }else if(pahtname == '/admin/riskAnalysis'){
+            $("a[href='"+'/admin/liveMarket'+"'").addClass('active')
+
         }
         // this.classList.add('active')
         }
