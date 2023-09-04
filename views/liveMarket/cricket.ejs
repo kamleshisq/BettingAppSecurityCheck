@@ -4,7 +4,8 @@
       <%if(openBet[i].bettype == "Cricket"){%>
         <%for(let j = 0 ; j < openBet[i].details.length; j++){%>
           <%
-          let check = liveCricket.some(item => item.eventData.name == openBet[i].details[j][0].match)
+          let check = liveCricket.find(item => item.eventData.eventId == openBet[i].details[j][0].eventId)
+          console.log(check)
           %>
         <%if(check){%>
         <section>
