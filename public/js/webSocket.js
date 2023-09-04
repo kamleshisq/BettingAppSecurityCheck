@@ -9054,9 +9054,9 @@ socket.on('connect', () => {
 
             function eventID(){
                 socket.emit("BETONEVENT", {id , LOGINDATA})
-                setTimeout(()=>{
-                    eventID()
-                }, 5000)
+                // setTimeout(()=>{
+                //     eventID()
+                // }, 5000)
 
             }
             eventID()
