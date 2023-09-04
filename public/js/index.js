@@ -59,6 +59,11 @@ $(document).ready(function(){
             $("a[href='"+pathname+"'").parent().parent().siblings('a').addClass('active')
             $("a[href='"+pathname+"'").parent().parent().addClass('open')
         }
+        
+        if(pathname == '/admin/catalogcontrol/compitations' || pathname == '/admin/catalogcontrol/compitations/events'){
+            $("a[href='"+'/admin/catalogcontrol'+"'").addClass('active')
+
+        }
         // this.classList.add('active')
         }
 	}
