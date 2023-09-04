@@ -1,10 +1,11 @@
 <div id="Cricket" class="tabcontent">
   <div class="row">
+    <%let check = false %>
     <%for(let i = 0; i < openBet.length; i++){%>
       <%if(openBet[i].bettype == "Cricket"){%>
         <%for(let j = 0 ; j < openBet[i].details.length; j++){%>
           <%
-          let check = liveCricket.find(item => item.eventData.eventId == openBet[i].details[j][0].eventId)
+          let check = liveCricket.some(item => item.eventData.eventId == openBet[i].details[j][0].eventId)
           console.log(check)
           %>
         <%if(check){%>
@@ -90,6 +91,9 @@
     <%if(!openBet.some(item => item.bettype == "Cricket")){%>
       No data to display
     <%}%>
+    <%if(!check){%>
+      No data to display
+      <%}%>
   </div>
   <!-- <button class="btn btn-view-all">View All</button> -->
 </div>
