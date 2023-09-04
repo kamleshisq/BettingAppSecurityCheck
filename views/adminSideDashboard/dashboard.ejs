@@ -135,9 +135,9 @@
                         <tbody>
                           <%for(let i=0; i<data.dashboard.users.length;i++){%>
                             <%if((i % 2) == 0){%>
-                              <tr  class="blue">
-                                  <td><%=i + 1%></td>
-                                  <td><%=data.dashboard.users[i]._id%></td>
+                              <tr>
+                                  <td data-title="Sr No."><%=i + 1%></td>
+                                  <td data-title="Domain"><%=data.dashboard.users[i]._id%></td>
                                   <%for(let j=0; j<data.dashboard.roles.length;j++){%>
                                       <%let check = 0%>
                                       <%for(let k=0; k<data.dashboard.users[i].terms.length;k++){%>
@@ -207,10 +207,10 @@
             <%}else{%>
               <tr>
             <%}%>
-            <td><%=i+1%></td>
-            <td><%=data.dashboard.topPlayers[i].userName%></td>
-            <td><%=data.dashboard.topPlayers[i].Bets%></td>
-            <td><%=data.dashboard.topPlayers[i].Bets%></td>
+            <td data-title=""><%=i+1%></td>
+            <td data-title="Player"><%=data.dashboard.topPlayers[i].userName%></td>
+            <td data-title="No.of Bets"><%=data.dashboard.topPlayers[i].Bets%></td>
+            <td data-title="Points"><%=data.dashboard.topPlayers[i].Bets%></td>
               </tr>
           <%}%>
         </tbody>
@@ -241,11 +241,11 @@
             <%}else{%>
               <tr>
             <%}%>
-            <td><%=i + 1 %></td>
-            <td><%=data.dashboard.Categories[i]._id %></td>
-            <td><%=data.dashboard.Categories[i].uniqueEvent.length %></td>
-            <td><%=data.dashboard.Categories[i].totalBets %></td>
-            <td class="text-purple"><%=data.dashboard.Categories[i].totalReturns %></td>
+            <td data-title=""><%=i + 1 %></td>
+            <td data-title="Category"><%=data.dashboard.Categories[i]._id %></td>
+            <td data-title="No.of Matches"><%=data.dashboard.Categories[i].uniqueEvent.length %></td>
+            <td data-title="No.of Bets"><%=data.dashboard.Categories[i].totalBets %></td>
+            <td data-title="Amount" class="text-purple"><%=data.dashboard.Categories[i].totalReturns %></td>
           </tr>
           <%} %>
           
@@ -363,10 +363,10 @@
               <%}else{%>
                 <tr>
               <%} %>
-              <td><%= i+1 %></td>
-              <td><%= data.dashboard.alertBet[i].userName%></td>
-              <td><%= data.dashboard.alertBet[i].betType%></td>
-              <td class="text-purple"><%= data.dashboard.alertBet[i].Stake%></td>
+              <td data-title=""><%= i+1 %></td>
+              <td data-title="Palyer"><%= data.dashboard.alertBet[i].userName%></td>
+              <td data-title="Event"><%= data.dashboard.alertBet[i].betType%></td>
+              <td data-title="Points" class="text-purple"><%= data.dashboard.alertBet[i].Stake%></td>
             </tr>
               <%}%>
             
@@ -401,11 +401,11 @@
             <%}else{%>
               <tr>
             <%}%>
-              <td><%=i + 1%></td>
-              <td><%=data.dashboard.topGames[i].event%></td>
-              <td><%=data.dashboard.topGames[i].noOfUniqueUsers%></td>
-              <td><%=data.dashboard.topGames[i].totalCount%></td>
-              <td class="text-purple"><%=data.dashboard.topGames[i].totalReturns%></td>
+              <td data-title=""><%=i + 1%></td>
+              <td data-title="Game"><%=data.dashboard.topGames[i].event%></td>
+              <td data-title="No.of User"><%=data.dashboard.topGames[i].noOfUniqueUsers%></td>
+              <td data-title="No.of Bets"><%=data.dashboard.topGames[i].totalCount%></td>
+              <td data-title="Amount" class="text-purple"><%=data.dashboard.topGames[i].totalReturns%></td>
             </tr>
           <%} %>
         </tbody>
@@ -437,11 +437,11 @@
           <%}else{%>
             <tr>
           <%}%>
-          <td><%=i+1%></td>
-          <td><%=data.dashboard.settlement[i].sport %></td>
-          <td><%=data.dashboard.settlement[i].series %></td>
-          <td><%=data.dashboard.settlement[i].matchName %></td>
-          <td><%=data.dashboard.settlement[i].count %></td>
+          <td data-title=""><%=i+1%></td>
+          <td data-title="Sport"><%=data.dashboard.settlement[i].sport %></td>
+          <td data-title="Series"><%=data.dashboard.settlement[i].series %></td>
+          <td data-title="Event Name"><%=data.dashboard.settlement[i].matchName %></td>
+          <td data-title="Open Bets"><%=data.dashboard.settlement[i].count %></td>
         </tr>
         <%} %>
       </tbody>

@@ -9051,6 +9051,68 @@ socket.on('connect', () => {
                     }
                 }
             })
+
+            function eventID(){
+                socket.emit("BETONEVENT", {id , LOGINDATA})
+                setTimeout(()=>{
+                    eventID()
+                }, 5000)
+
+            }
+            eventID()
+
+            socket.on('BETONEVENT', async(data) => {
+                let html = `<tr>
+                <th>Username</th>
+                <th>Place Date</th>
+                <th>Market</th>
+                <!-- <th>Bet Type</th> -->
+                <th>Odds</th>
+                <th>Stake</th>
+                <th>Action</th>
+                </tr>`
+                for(let i = 0; i < data.data.length; i++){
+                    html += `<tr>
+                    <td>${data.data[i].userName}</td>
+                    <td>01/09/23, 4:37:38 PM</td>
+                    <td>${data.data[i].marketName}</td>
+                    <!-- <td>${data.data[i].userName}</td> -->
+                    <td>${data.data[i].oddValue}</td>
+                    <td>${data.data[i].Stake}</td>
+                    <td><div class="btn-group"><button class="btn alert-btn" id="${data.data[i]._id}">Alert</button></div></td>
+                </tr>`
+                }
+
+                document.getElementById('betTable').innerHTML = html
+            })
+
+            $(document).on("click", ".alert-btn", function(e){
+                e.preventDefault()
+                socket.emit("alertBet", this.id)
+            })
+
+            socket.on("alertBet", async(data) => {
+                if(data.status === "error"){
+                    alert("Please try again later")
+                }else{
+                    console.log(data.bet._id)
+                    const deleteButton = document.getElementById(data.bet._id);
+                    console.log(deleteButton)
+                    const row = deleteButton.closest('tr'); 
+                    if (row) {
+                        const table = row.parentNode;
+                        const rowIndex = Array.from(table.rows).indexOf(row);
+                        row.remove(); 
+                        // const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
+                        // rowsToUpdate.forEach((row, index) => {
+                        //     const srNoCell = row.cells[0]; 
+                        //     srNoCell.textContent = index + rowIndex + 1;
+                        //   });
+                      }
+                }
+            })
+
+
     }
 
 })

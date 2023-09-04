@@ -1677,7 +1677,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     let liveFootBall = footBall.eventList;
     let liveTennis = Tennis.eventList
     let currentUser =  req.currentUser
-    console.log(req.currentUser)
+    // console.log(req.currentUser)
     let openBet = topGames = await betModel.aggregate([
         {
             $match: {
@@ -3286,7 +3286,7 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         let userLog
         let stakeLabledata
         let userMultimarkets
-        let betsOnthisMatch = []
+        let Bets = []
         let rules = await gamrRuleModel.find()
         if(req.currentUser){
             userLog = await loginLogs.find({user_id:req.currentUser._id})
@@ -3295,7 +3295,30 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
             if(stakeLabledata === null){
                 stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
             }
-            betsOnthisMatch = await betModel.find({userId:req.currentUser._id, match:match.eventData.name, status: 'OPEN'})
+            Bets = await betModel.aggregate([
+                {
+                    $match: {
+                        status: "OPEN" ,
+                        eventId: req.query.id
+                    }
+                },
+                {
+                    $lookup: {
+                      from: "users",
+                      localField: "userName",
+                      foreignField: "userName",
+                      as: "user"
+                    }
+                  },
+                  {
+                    $unwind: "$user"
+                  },
+                  {
+                    $match: {
+                      "user.parentUsers": { $in: [req.currentUser.id] }
+                    }
+                  }
+            ])
         }else{
             stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
         }
@@ -3310,7 +3333,7 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
             userLog,
             notifications:req.notifications,
             stakeLabledata,
-            betsOnthisMatch,
+            Bets,
             rules,
             src,
             userMultimarkets,

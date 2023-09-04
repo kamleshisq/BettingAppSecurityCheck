@@ -2811,6 +2811,38 @@ io.on('connection', (socket) => {
             socket.emit("getUserDetaisl111", {message:"err", status:"error"})
         }
     })
+
+    socket.on('BETONEVENT', async(data) => {
+        try{
+            let Bets = await Bet.aggregate([
+                {
+                    $match: {
+                        status: "OPEN" ,
+                        eventId: data.id
+                    }
+                },
+                {
+                    $lookup: {
+                      from: "users",
+                      localField: "userName",
+                      foreignField: "userName",
+                      as: "user"
+                    }
+                  },
+                  {
+                    $unwind: "$user"
+                  },
+                  {
+                    $match: {
+                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
+                    }
+                  }
+            ])
+            socket.emit('BETONEVENT', {data:Bets, status:'success'})
+        }catch(err){
+            socket.emit('BETONEVENT', {message:"err", status:"error"})
+        }
+    })
     
 })
 
