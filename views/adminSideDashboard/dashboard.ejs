@@ -58,29 +58,29 @@
                         <tbody>
                           <tr class="flex-justify blue">
                             <td>Active Players</td>
-                            <td class="text-purple" id="userCount"><%=data.dashboard.userCount%></td>
+                            <td class="text-purple" id="userCount"><%= data.dashboard.userCount.toFixed(4) %></td>
                           </tr>
                           <tr class="flex-justify">
                             <td>Active Admins</td>
-                            <td class="text-purple" id="adminCount"><%=data.dashboard.adminCount%></td>
+                            <td class="text-purple" id="adminCount"><%= data.dashboard.adminCount.toFixed(4) %></td>
                           </tr>
                           <tr class="flex-justify blue">
                             <td>Turn Over</td>
-                            <td class="text-purple" id="turnOver"><%=data.dashboard.turnOver[0].totalAmount%></td>
+                            <td class="text-purple" id="turnOver"><%= data.dashboard.turnOver[0].totalAmount.toFixed(4) %></td>
                           </tr>
                           <tr class="flex-justify">
                             <td>Profit</td>
-                            <td class="text-purple" id="Profit"><%=currentUser.myPL%></td>
-                          </tr> 
+                            <td class="text-purple" id="Profit"><%= currentUser.myPL.toFixed(4) %></td>
+                          </tr>
                           <tr class="flex-justify blue">
                             <td>Total Bets</td>
-                            <%if(data.dashboard.betCount.length > 0){ %>
-                              <td class="text-purple" id="betCount"><%=data.dashboard.betCount[0].totalBets%></td>
-                            <%}else{ %>
-                              <td class="text-purple" id="betCount">0</td>
-                            <%} %>
+                            <% if (data.dashboard.betCount.length > 0) { %>
+                              <td class="text-purple" id="betCount"><%= data.dashboard.betCount[0].totalBets.toFixed(4) %></td>
+                            <% } else { %>
+                              <td class="text-purple" id="betCount">0.0000</td> <!-- Display 0 with 4 decimal places -->
+                            <% } %>
                           </tr>
-                        </tbody>
+                        </tbody>                        
                       </table>
                   </div>
                   <div class="inner-box-grid user-managment">
