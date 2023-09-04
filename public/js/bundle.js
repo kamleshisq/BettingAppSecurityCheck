@@ -6993,6 +6993,10 @@ $(document).ready(function () {
         $("a[href='" + pathname + "'").parent().parent().siblings('a').addClass('active');
         $("a[href='" + pathname + "'").parent().parent().addClass('open');
       }
+      console.log(pathname);
+      if (pathname == '/admin/catalogcontrol/compitations' || pathname == '/admin/catalogcontrol/compitations/events') {
+        $("a[href='" + '/admin/catalogcontrol' + "'").addClass('active');
+      }
       // this.classList.add('active')
     }
   }
@@ -7589,7 +7593,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62261" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55634" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
