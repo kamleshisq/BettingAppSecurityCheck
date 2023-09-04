@@ -1,6 +1,6 @@
 <div id="Cricket" class="tabcontent">
   <div class="row">
-    <%let check = false %>
+    <%let check1 = false %>
     <%for(let i = 0; i < openBet.length; i++){%>
       <%if(openBet[i].bettype == "Cricket"){%>
         <%for(let j = 0 ; j < openBet[i].details.length; j++){%>
@@ -9,6 +9,7 @@
           console.log(check)
           %>
         <%if(check){%>
+          <% check1=true %>
         <section>
           <div class="container-fluid">
             <div class="new-head">
