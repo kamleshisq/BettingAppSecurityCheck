@@ -1677,7 +1677,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     let liveFootBall = footBall.eventList;
     let liveTennis = Tennis.eventList
     let currentUser =  req.currentUser
-    console.log(req.currentUser)
+    // console.log(req.currentUser)
     let openBet = topGames = await betModel.aggregate([
         {
             $match: {
@@ -1849,7 +1849,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
         //     }
         // }
     ])
-    console.log(openBet[0].details, "openBet")
+    console.log(openBet, "openBet")
     // console.log(openBet[0].details[0][0], "openBet")
     // console.log(liveFootBall)
     // console.log(liveTennis)
