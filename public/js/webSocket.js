@@ -9079,7 +9079,7 @@ socket.on('connect', () => {
                     <!-- <td>${data.data[i].userName}</td> -->
                     <td>${data.data[i].oddValue}</td>
                     <td>${data.data[i].Stake}</td>
-                    <td><div class="btn-group"><button class="btn alert-btn">Alert</button></div></td>
+                    <td><div class="btn-group"><button class="btn alert-btn" id="${data.data[i].id}">Alert</button></div></td>
                 </tr>`
                 }
 
