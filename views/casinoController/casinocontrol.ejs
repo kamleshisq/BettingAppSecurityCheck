@@ -20,6 +20,7 @@
 
   <section class="Casino__control">
     <div class="container-fluid">
+      <div class="tab-data-section">
       <div class="tab end" >
         <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'Cricket')"> Game Level  </button>
         <button class="tablinks" onclick="openCity(event, 'FOOTBALL')"> Provider Level</button>
@@ -42,12 +43,12 @@
                         <span><%=data[i].game_name%> (<%=data[i].sub_provider_name%>)</span>
                         <%if(data[i].status){%>
                         <span class="on-off">OFF &nbsp; <label class="switch">
-                          <input type="checkbox" class="change_status" checked>
+                          <input type="checkbox" class="change_status" data-id="<%=data[i].game_id%>" checked>
                           <span class="slider round"></span>
                         </label>&nbsp; ON</span>
                         <%}else{%>
                         <span class="on-off">OFF &nbsp; <label class="switch change_status">
-                          <input type="checkbox" class="change_status">
+                          <input type="checkbox" data-id="<%=data[i].game_id%>" class="change_status">
                           <span class="slider round"></span>
                         </label>&nbsp; ON</span>
                         <%}%>
@@ -206,12 +207,12 @@
                             <span><%=RG[i].game_name%> (<%=RG[i].sub_provider_name%>)</span>
                             <%if(RG[i].status){%>
                               <span class="on-off">OFF &nbsp; <label class="switch">
-                              <input type="checkbox" class="change_status" checked>
+                              <input type="checkbox" data-id="<%=RG[i].game_id%>" class="change_status" checked>
                               <span class="slider round"></span>
                               </label>&nbsp; ON</span>
                             <%}else{%>
                               <span class="on-off">OFF &nbsp; <label class="switch">
-                                <input type="checkbox" class="change_status">
+                                <input type="checkbox" data-id="<%=RG[i].game_id%>" class="change_status">
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>
                             <%}%>
@@ -222,12 +223,12 @@
                             <span><%=RG[i].game_name%> (<%=RG[i].sub_provider_name%>)</span>
                             <%if(RG[i].status){%>
                               <span class="on-off">OFF &nbsp; <label class="switch">
-                              <input type="checkbox" class="change_status" checked>
+                              <input type="checkbox" data-id="<%=RG[i].game_id%>" class="change_status" checked>
                               <span class="slider round"></span>
                              </label>&nbsp; ON</span>
                               <%}else{%>
                                 <span class="on-off">OFF &nbsp; <label class="switch">
-                                  <input type="checkbox" class="change_status">
+                                  <input type="checkbox" data-id="<%=RG[i].game_id%>" class="change_status">
                                   <span class="slider round"></span>
                                  </label>&nbsp; ON</span>
                               <%}%>
@@ -239,12 +240,12 @@
                           <span><%=RG[i].game_name%> (<%=RG[i].sub_provider_name%>)</span>
                           <%if(RG[i].status){%>
                             <span class="on-off">OFF &nbsp; <label class="switch">
-                            <input type="checkbox" class="change_status" checked>
+                            <input type="checkbox" data-id="<%=RG[i].game_id%>" class="change_status" checked>
                             <span class="slider round"></span>
                             </label>&nbsp; ON</span>
                             <%}else{%>
                               <span class="on-off">OFF &nbsp; <label class="switch">
-                                <input type="checkbox" class="change_status">
+                                <input type="checkbox" data-id="<%=RG[i].game_id%>" class="change_status">
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>
                             <%}%>
@@ -265,11 +266,11 @@
               <div class="accordion" id="accordionPanelsStayOpenExample">
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="panelsStayOpen-headingtwo">
-                    <button class="accordion-button" id="RGV" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsetwo" aria-expanded="true" aria-controls="panelsStayOpen-collapsetwo">
+                    <button class="accordion-button collapsed" id="RGV" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsetwo" aria-expanded="true" aria-controls="panelsStayOpen-collapsetwo">
                       ROYAL GAMING VIRTUAL
                     </button>
                   </h2>
-                  <div id="panelsStayOpen-collapsetwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingtwo">
+                  <div id="panelsStayOpen-collapsetwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingtwo">
                     <div class="accordion-body">
                       <div class="row" id="RGVd">
                       </div>
@@ -283,12 +284,12 @@
               <div class="tabs__tab " id="tab_31" data-tab-info>
                 <div class="accordion" id="accordionPanelsStayOpenExample">
                   <div class="accordion-item">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingtwo">
-                      <button class="accordion-button" id="EZ" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsetwo" aria-expanded="true" aria-controls="panelsStayOpen-collapsetwo">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingthree">
+                      <button class="accordion-button collapsed" id="EZ" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsethree" aria-expanded="true" aria-controls="panelsStayOpen-collapsethree">
                         EZUGI
                       </button>
                     </h2>
-                    <div id="panelsStayOpen-collapsetwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingtwo">
+                    <div id="panelsStayOpen-collapsethree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingthree">
                       <div class="accordion-body">
                         <div class="row" id="EZUGId">
                         </div>
@@ -301,12 +302,12 @@
                 <div class="tabs__tab " id="tab_41" data-tab-info>
                   <div class="accordion" id="accordionPanelsStayOpenExample">
                     <div class="accordion-item">
-                      <h2 class="accordion-header" id="panelsStayOpen-headingtwo">
-                        <button class="accordion-button" id="EG" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsetwo" aria-expanded="true" aria-controls="panelsStayOpen-collapsetwo">
+                      <h2 class="accordion-header" id="panelsStayOpen-headingfour">
+                        <button class="accordion-button collapsed" id="EG" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapsefour" aria-expanded="true" aria-controls="panelsStayOpen-collapsefour">
                           EVOLUTION GAMING
                         </button>
                       </h2>
-                      <div id="panelsStayOpen-collapsetwo" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingtwo">
+                      <div id="panelsStayOpen-collapsefour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingfour">
                         <div class="accordion-body">
                           <div class="row" id="ZEd">
                           </div>
@@ -321,6 +322,7 @@
         </div>
       </div>
     </div>
+    </div>
   </section>
 
 </div>
@@ -329,6 +331,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+<script type="text/javascript" src="../js/bundle.js"></script>
+
 
   <script>
         function openCity(evt, cityName) {

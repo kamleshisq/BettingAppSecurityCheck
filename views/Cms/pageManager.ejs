@@ -29,9 +29,13 @@
                 <tbody >
                   <%for(let i = 0; i < pages.length; i++){%>
                   <tr>
-                    <th><%= i+1 %></th>
-                    <th><%=pages[i].Name%></th>
-                    <th><button data-bs-toggle="modal" data-bs-target="#uploadFile" id="<%=pages[i]._id%>" class="UploadEjs"><i class="fa-solid fa-database"></i></button></th>
+                    <td><%= i+1 %></td>
+                    <td><%=pages[i].Name%></td>
+                    <td>
+                      <div class="btn-group">
+                        <button data-bs-toggle="modal" data-bs-target="#uploadFile" id="<%=pages[i]._id%>" class="UploadEjs"><i class="fa-solid fa-database"></i></button>
+                      </div>
+                    </td>
                   </tr>
                   <%}%>
                 </tbody>
@@ -51,13 +55,13 @@
                         <div class="row">
                           <div class="col">
                             <label for="Name">Name</label>
-                            <input type="text" class="form-control ml0" name="Name">
+                            <input type="text" class="form-control ml0" name="Name" required>
                           </div>
                         </div>
                         <div class="row mt-2">
                           <div class="col">
                             <label for="heading">Heading</label>
-                            <input type="text" class="form-control ml0" name="heading">
+                            <input type="text" class="form-control ml0" name="heading" required>
                           </div>
                         </div>
                         <div class="row mt-2">
@@ -88,7 +92,7 @@
                         <div class="row mt-2">
                           <div class="col">
                             <label for="heading">Heading</label>
-                            <input type="text" class="form-control ml0 heading"  name="heading">
+                            <input type="text" class="form-control ml0 heading"  name="heading" required>
                           </div>
                         </div>
                         <div class="row mt-2">

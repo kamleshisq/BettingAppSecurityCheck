@@ -51,10 +51,10 @@
                 </thead>
                 <tbody class="acount-stat-tbl-body">
                     <%for(let i = 0; i < data.length; i++){%>
-                        <tr onclick="window.location.href = '/myCommissionReportsMatch?id=<%=data[i]._id%>';">
-                          <td><%=i+1%></td>
-                          <td><%=data[i]._id%></td>
-                          <td><%=data[i].totalCommissionPoints%></td>
+                        <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/myCommissionReportsMatch?id=<%=data[i]._id%>'>
+                          <td title="SR No." ><%=i+1%></td>
+                          <td title="Event" ><%=data[i]._id%></td>
+                          <td title="Commission" ><%=data[i].totalCommissionPoints%></td>
                         </tr>
                       <%}%>
                 </tbody>
@@ -95,7 +95,13 @@
 <!-- ----=MODEL2 SET STAKE =-----   -->
 
 </main>
-
+<script>
+  jQuery(document).ready(function($) {
+      $(".tbl-data-href").click(function() {
+          window.location = $(this).data("href");
+      });
+  });
+</script>
 <!-- JQUERY  -->
 <script
 src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"

@@ -51,16 +51,16 @@
                 </thead>
                 <tbody class="acount-stat-tbl-body">
                     <%for(let i = 0; i < data.length; i++){%>
-                        <tr onclick="window.location.href = '/myCommissionReportsIn?id=<%=data[i]._id%>';">
-                        <td><%=i+1%></td>
+                        <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/myCommissionReportsIn?id=<%=data[i]._id%>'>
+                        <td title="SR No." ><%=i+1%></td>
                         <%if(data[i]._id == 4){%>
-                            <td>Cricket</td>
+                            <td title="Sport" >Cricket</td>
                         <%}else if(data[i]._id == 1){%>
-                            <td>Football</td>
+                            <td title="Sport" >Football</td>
                         <%}else if(data[i]._id == 2){%>
-                            <td>Tennis</td>
+                            <td title="Sport" >Tennis</td>
                         <%}%>
-                        <td><%=data[i].totalCommissionPoints%></td>
+                        <td title="Commission" ><%=data[i].totalCommissionPoints%></td>
                     </tr>
                     <%} %>
                 </tbody>
@@ -103,6 +103,13 @@
 </main>
 
 <!-- JQUERY  -->
+<script>
+  jQuery(document).ready(function($) {
+      $(".tbl-data-href").click(function() {
+          window.location = $(this).data("href");
+      });
+  });
+</script>
 <script
 src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
 integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="

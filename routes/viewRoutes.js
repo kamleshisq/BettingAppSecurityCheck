@@ -70,6 +70,7 @@ router.get("/admin/catalogcontrol", authController.isProtected, authController.i
 router.get("/admin/commissionMarkets", authController.isProtected, authController.isAdmin, viewController.CommissionMarkets)
 router.get("/admin/catalogcontrol/compitations", authController.isProtected, authController.isAdmin,viewController.getCatalogCompetationControllerPage);
 router.get("/admin/catalogcontrol/compitations/events", authController.isProtected, authController.isAdmin,viewController.getCatalogeventsControllerPage);
+router.get("/admin/riskAnalysis", authController.isProtected, authController.isAdmin,viewController.RiskAnalysis);
 
 //user routs
 

@@ -3,6 +3,7 @@ import { logout } from "./logOut";
 import { reset } from "./resetPass";
 import { createUser } from "./createUser";
 import { debitCredit } from "./debitCredit";
+import {creditDebitSettle} from "./creditDebitSettle"
 import { editUser } from "./editUser";
 // import { betLockStatus } from "./batLockStatus";
 import { createRole } from "./createRole";
@@ -41,6 +42,28 @@ import { KYC } from "./kyc";
 //     login(email, password);
 // })};
 
+const {
+    host, hostname, href, origin, pathname, port, protocol, search
+  } = window.location
+
+$(document).ready(function(){ 
+    const linkColor = document.querySelectorAll('.nav_link')
+	const operationPathnameArr = ['/admin/houseManagement','/admin/whiteLableAnalysis','/admin/commissionMarkets','/admin/settlement','/admin/settlementHistory','/admin/commissionReport','/admin/gameanalysis','/admin/Notification','/admin/betmoniter','/admin/onlineUsers','/admin/alertbet','/admin/betlimit','/admin/voidbet']
+    const reportsPathnameArr = ['/admin/gamereport','/admin/useracount','/admin/reports','/admin/userhistoryreport','/admin/plreport']
+    const cmsPathnameArr = ['/admin/cms','/admin/pageManager','/admin/gameRules']
+	function colorLink(){
+        if(linkColor){
+        linkColor.forEach(l=> l.classList.remove('active'))
+        $("a[href='"+pathname+"'").addClass('active')
+        if(operationPathnameArr.includes(pathname) || reportsPathnameArr.includes(pathname) || cmsPathnameArr.includes(pathname)){
+            $("a[href='"+pathname+"'").parent().parent().siblings('a').addClass('active')
+            $("a[href='"+pathname+"'").parent().parent().addClass('open')
+        }
+        // this.classList.add('active')
+        }
+	}
+    colorLink()
+});
 
 
 
@@ -81,7 +104,7 @@ createUser(formDataObj)
 });
 
 $(document).on('click','.updateBetLimit',function(e){
-    let rowId = $(this).parent().parent().attr('id')
+    let rowId = $(this).parent().parent().parent().attr('id')
     $('.rowId').attr('data-rowid',rowId)
     let modleName = $(this).data('bs-target')
     let form = $(modleName).find('.form-data')
@@ -174,6 +197,35 @@ $(document).on('submit','.acc-form',async function(e) {
             console.log(trElement, 4545445454)
         }
     })
+    // console.log(rowId)
+    // let currentUser = $('#currentUserDetails').data('currentuser')
+    // updateRow(user,rowId,currentUser)
+    // console.log(user)
+})
+
+$(document).on('submit','.Settlement-form',async function(e) {
+    e.preventDefault()
+    let form = $(this)[0];
+    let id = form.id
+    let fd = new FormData(form);
+    let formDataObj = Object.fromEntries(fd.entries());
+    formDataObj.id = id ;
+    console.log(formDataObj)
+    // const url = window.location.href
+    // const id = url.split("=")[1]
+    // formDataObj.id = id
+    // console.log(formDataObj)
+    // let rowId = $('.rowId').attr('data-rowid')
+    creditDebitSettle(formDataObj)
+    // const user = await creditDebitSettle(formDataObj)
+    // var trElements = document.querySelectorAll('tr.trtable');
+    // // console.log(trElements)
+    // // console.log(user)
+    // trElements.forEach(function(trElement) {
+    //     if (trElement.getAttribute('data-id') === user.id) {
+    //         console.log(trElement, 4545445454)
+    //     }
+    // })
     // console.log(rowId)
     // let currentUser = $('#currentUserDetails').data('currentuser')
     // updateRow(user,rowId,currentUser)
@@ -377,10 +429,10 @@ $(document).on('click','.Withdraw',function(){
 
 
 $(document).on('click','.RoleDetails',function(){
-    // console.log("Working") 
+    console.log("Working") 
     let modleName = $(this).data('bs-target')
     let roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss')
-    // console.log(roledata)
+    console.log(roledata)
     let form = $(modleName).find('.UpdateRole-form')
     // let x = form.find('input[id="check"]').length
     // console.log(x)

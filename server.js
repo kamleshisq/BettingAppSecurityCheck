@@ -33,10 +33,13 @@ const path = require('path');
 const houseFundModel = require('./model/houseFundmodel');
 const loginLogs =  require("./model/loginLogs");
 const settlement = require("./model/sattlementModel");
+const settlementHistory = require('./model/settelementHistory')
 const mapBet = require("./websocketController/mapBetsController");
 const commissionModel = require("./model/CommissionModel");
 const catalogController = require("./model/catalogControllModel");
 const commissionMarketModel = require("./model/CommissionMarketsModel");
+const netCommissionModel = require('./model/netCommissionModel');
+const commissionRepportModel = require('./model/commissionReport');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -285,7 +288,7 @@ io.on('connection', (socket) => {
     socket.on("SelectLogoutUserId",async(id)=>{
         // console.log(id)
         // let data = {userId:`${id}`}
-        const fullUrl = global._protocol + '://' + global._host + `/api/v1/auth/logOutSelectedUser?userId=`+id
+        const fullUrl = fullUrl `/api/v1/auth/logOutSelectedUser?userId=`+id
         fetch(fullUrl, {
             method: 'POST',
             headers: { 'Authorization': `Bearer ` + loginData.Token }
@@ -800,7 +803,7 @@ io.on('connection', (socket) => {
         const user = await User.findOne({userName:data.filterData.userName})
         if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
             delete data.filterData['userName']
-            let ubDetails = await Bet.find({status:"OPEN"}).skip(page * limit).limit(limit)
+            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
             socket.emit('betMoniter',{ubDetails,page})
         }
         else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
@@ -1187,6 +1190,16 @@ io.on('connection', (socket) => {
 
 
     socket.on("aggreat", async(data) => {
+        // console.log(data.ids)
+        // const sportData = await getCrkAndAllData()
+        // const cricket = sportData[0].gameList[0].eventList
+        // let liveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY");
+        // const footBall = sportData[1].gameList.find(item => item.sport_name === "Football");
+        // const Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis");
+        // let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
+        // let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
+        // let liveData = liveCricket.concat(liveFootBall, liveTennis);
+        // console.log(liveData)
         // console.log(data)
         // Bet.aggregate([
         //     {
@@ -1280,11 +1293,12 @@ io.on('connection', (socket) => {
             .catch((error) => {
               console.error(error);
             });
+
     })
 
 
     module.exports = function alert(data){
-        console.log(data)
+        // console.log(data)
         socket.emit("alertMessage", data)
     }
 
@@ -2192,7 +2206,7 @@ io.on('connection', (socket) => {
         const user = await User.findOne({userName:data.filterData.userName})
         if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
             delete data.filterData['userName']
-            let ubDetails = await Bet.find({status:"Alert"}).skip(page * limit).limit(limit)
+            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
             socket.emit('AlertBet',{ubDetails,page})
         }
         else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
@@ -2358,6 +2372,89 @@ io.on('connection', (socket) => {
         await settlement.findOneAndUpdate({userId:data.LOGINDATA.LOGINUSER._id},{status:data.status})
     })
 
+    socket.on('settlement',async(data)=>{
+        // console.log(data)
+        const me = data.LOGINUSER
+        let dataobj;
+        if(data.from_date && data.to_date){
+            dataobj = {$gte:data.from_date,$lte:data.to_date}
+        }else if(data.from_date && !data.to_date){
+            dataobj = {$gte:data.from_date}
+        }else if(!data.from_date && data.to_date){
+            dataobj = {$$lte:data.to_date}
+        }
+        // console.log(me)
+        let betsEventWise = await Bet.aggregate([
+            {
+                $match: {
+                    status:"OPEN" ,
+                    eventdate: dataobj
+                }
+            },
+            {
+                $lookup: {
+                  from: "users",
+                  localField: "userName",
+                  foreignField: "userName",
+                  as: "user"
+                }
+              },
+              {
+                $unwind: "$user"
+              },
+              {
+                $match: {
+                  "user.parentUsers": { $in: [me._id] }
+                }
+              },
+            {
+                $group: {
+                  _id: "$match",
+                  count: { $sum: 1 },
+                  eventdate: { $first: "$eventDate" }, 
+                  eventid: { $first: "$eventId" },
+                  series: {$first: "$event"} 
+                }
+              },
+              {
+                $project: {
+                  _id: 0,
+                  matchName: "$_id",
+                  eventdate: 1,
+                  eventid: 1,
+                  series:1,
+                  count: 1
+                }
+              }
+        ])
+        socket.emit('settlement',{betsEventWise})
+
+    })
+
+    socket.on('settlementHistory',async(data)=>{
+        let me = data.USER
+        let page = data.page;
+        let limit = 50
+        // console.log(me)
+        let History
+        let filter = {}
+        if(data.from_date && data.to_date){
+            filter.date = {$gte:data.from_date,$lte:data.to_date}
+        }else if(data.from_date && !data.to_date){
+            filter.date = {$gte:data.from_date}
+        }else if(data.to_date && !data.from_date){
+            filter.date = {$lte:data.to_date}
+        }
+        console.log(filter)
+        if(me.roleName === "Admin"){
+            History = await settlementHistory.find(filter).skip(page * limit).limit(limit)
+        }else{
+            filter.userId = me._id
+            History = await settlementHistory.find(filter).skip(page * limit).limit(limit)
+        }
+        socket.emit('settlementHistory',{History,page})
+    })
+
     socket.on("VoidBetIn", async(data) => {
         try{
             let bets = await Bet.find({marketId:data.id, status: 'OPEN'})
@@ -2470,16 +2567,16 @@ io.on('connection', (socket) => {
         filter.description = { $regex: /^commission for/ }
         if(data.filterData.fromDate != "" && data.filterData.toDate == ""){
             filter.date = {
-                $gt : new Date(data.filterData.fromDate)
+                $gte : new Date(data.filterData.fromDate)
             }
         }else if(data.filterData.fromDate == "" && data.filterData.toDate != ""){
             filter.date = {
-                $lt : new Date(data.filterData.toDate)
+                $lte : new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60 *60 *1000) - 1))
             }
         }else if (data.filterData.fromDate != "" && data.filterData.toDate != ""){
             filter.date = {
                 $gte : new Date(data.filterData.fromDate),
-                $lt : new Date(data.filterData.toDate)
+                $lte : new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60 *60 *1000) - 1))
             }
         }
 
@@ -2689,15 +2786,61 @@ io.on('connection', (socket) => {
                     }
                     await AccModel.create(childdata)
                     await AccModel.create(perentData)
+                    await commissionRepportModel.updateMany({userId:data.LOGINDATA.LOGINUSER._id}, {status:'Deposit'})
                     socket.emit("claimCommission", "Success")
                 }catch(err){
                     console.log(err)
                     socket.emit("claimCommission", "error")
                 }
             }
+
            
         }else{
             socket.emit("claimCommission", "error")
+        }
+    })
+
+
+    socket.on('getUserDetaisl111', async(data) => {
+        try{
+            let user = await User.findById(data.dataId)
+            let parent = await User.findById(user.parent_id)
+            socket.emit("getUserDetaisl111", {user, status:"success", parent})
+        }catch(err){
+            console.log(err)
+            socket.emit("getUserDetaisl111", {message:"err", status:"error"})
+        }
+    })
+
+    socket.on('BETONEVENT', async(data) => {
+        try{
+            let Bets = await Bet.aggregate([
+                {
+                    $match: {
+                        status: "OPEN" ,
+                        eventId: data.id
+                    }
+                },
+                {
+                    $lookup: {
+                      from: "users",
+                      localField: "userName",
+                      foreignField: "userName",
+                      as: "user"
+                    }
+                  },
+                  {
+                    $unwind: "$user"
+                  },
+                  {
+                    $match: {
+                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
+                    }
+                  }
+            ])
+            socket.emit('BETONEVENT', {data:Bets, status:'success'})
+        }catch(err){
+            socket.emit('BETONEVENT', {message:"err", status:"error"})
         }
     })
     

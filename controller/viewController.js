@@ -1074,6 +1074,11 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
               series:1,
               count: 1
             }
+          },
+          {
+              $sort:{
+                eventdate: -1
+              }
           }
     ])
     // let users = await User.find({roleName:"Super-Duper-Admin"})
@@ -1666,18 +1671,196 @@ exports.getMatchDetailsPage = catchAsync(async(req, res, next) => {
 exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     const sportData = await getCrkAndAllData()
     const cricket = sportData[0].gameList[0].eventList
-    let liveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY");
+    let liveCricket = cricket;
     const footBall = sportData[1].gameList.find(item => item.sport_name === "Football");
     const Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis");
-    let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
-    let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
+    let liveFootBall = footBall.eventList;
+    let liveTennis = Tennis.eventList
     let currentUser =  req.currentUser
+    console.log(req.currentUser)
+    let openBet = topGames = await betModel.aggregate([
+        {
+            $match: {
+                status:"OPEN" 
+            }
+        },
+        {
+            $lookup: {
+              from: "users",
+              localField: "userName",
+              foreignField: "userName",
+              as: "user"
+            }
+          },
+          {
+            $unwind: "$user"
+          },
+          {
+            $match: {
+              "user.parentUsers": { $in: [req.currentUser.id] }
+            }
+          },
+          {
+            $addFields: {
+                shortMarketName: { $substrCP: [{ $toLower: "$marketName" }, 0, 3] }
+            }
+        },
+        {
+            $match: {
+                shortMarketName: { $in: ["mat", "boo", "tos"] }
+            }
+        },
+        //   {
+        //     $group: {
+        //         _id: "$betType",
+        //         details: {
+        //             $push: {
+        //                 id: "$marketId",
+        //                 marketName: "$marketName",
+        //                 match:"$match",
+        //                 date:'$date'
+        //                 // Add other fields you want here
+        //             }
+        //         }
+        //     }
+        // },
+        {
+            $group: {
+                _id: {
+                    betType: "$betType",
+                    marketId: "$marketId",
+                    beton: "$selectionName"
+                },
+                marketName: { $first: "$marketName" },
+                match: { $first: "$match" },
+                date: { $first: "$date" },
+                secId : { $first: "$secId" },
+                stake: { $sum: "$Stake" },
+                eventId : {$first : '$eventId'},
+                count:{$sum:1}
+            }
+        },
+        {
+            $group: {
+                _id: {
+                    betType: "$_id.betType",
+                    marketId: "$_id.marketId"
+                },
+                details: {
+                    $push: {
+                        id: "$_id.marketId",
+                        marketName: "$marketName",
+                        shortMarketName: "$shortMarketName",
+                        match: "$match",
+                        date: "$date",
+                        secId: '$secId',
+                        count:'$count',
+                        stake: "$stake",
+                        beton: "$_id.beton",
+                        eventId: '$eventId'
+                    }
+                }
+            }
+        },
+        {
+            $group: {
+                _id: "$_id.betType",
+                details: { $push: "$details" }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                bettype: "$_id",
+                details: 1
+            }
+        },
+        // {
+        //     $unwind: "$details"
+        // },
+        // {
+        //     $match: {
+        //         "details.shortMarketName": {
+        //             $in: ["mat", "boo", "tos"]
+        //         }
+        //     }
+        // },
+        // {
+        //     $project: {
+        //         _id: 0,
+        //         bettype: "$_id",
+        //         details: 1
+        //     }
+        // }
+        // {
+        //     $group: {
+        //         _id: {
+        //             betType: "$_id.betType",
+        //             marketId: "$_id.marketId"
+        //         },
+        //         details: {
+        //             $push: {
+        //                 id: "$_id.marketId",
+        //                 marketName: "$marketName",
+        //                 match: "$match",
+        //                 date: "$date",
+        //                 stake: "$stake",
+        //                 beton: "$_id.beton"
+        //             }
+        //         }
+        //     }
+        // },
+        // {
+        //     $group: {
+        //         _id: "$_id.betType",
+        //         details: { $push: "$details" }
+        //     }
+        // },
+        // {
+        //     $project: {
+        //         _id: 0,
+        //         bettype: "$_id",
+        //         details: 1
+        //     }
+        // },
+        // {
+        //     $project: {
+        //         _id: 0,
+        //         bettype: "$_id",
+        //         details: 1
+        //     }
+        // }
+        // {
+        //     $project: {
+        //         _id: 0,
+        //         bettype: "$_id",
+        //         details: {
+        //             $filter: {
+        //                 input: "$details",
+        //                 as: "detail",
+        //                 cond: {
+        //                     $in: [
+        //                         { $substrCP: [{ $toLower: "$$detail.marketName" }, 0, 3] },
+        //                         ["mat", "boo", "tos"]
+        //                     ]
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+    ])
+    console.log(openBet[0].details, "openBet")
+    // console.log(openBet[0].details[0][0], "openBet")
+    // console.log(liveFootBall)
+    // console.log(liveTennis)
+    // console.log(liveCricket)
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
         liveCricket,
         liveFootBall,
         liveTennis,
         currentUser,
+        openBet,
         me: currentUser
     })
 })
@@ -2697,12 +2880,13 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
 
 exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
     let me = req.currentUser
+    let limit = 50
     // console.log(me)
     let History
     if(me.roleName === "Admin"){
-        History = await settlementHisory.find()
+        History = await settlementHisory.find().limit(limit)
     }else{
-        History = await settlementHisory.find({userId:me._id})
+        History = await settlementHisory.find({userId:me._id}).limit(limit)
     }
     res.status(200).render("./settlemetHistory/settlemetHistory",{
         title:"SETTLEMENTS",
@@ -2731,13 +2915,13 @@ exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
     // const sportListData = await getCrkAndAllData()
     // const sportList = sportListData[1].gameList
     const sportList =[
-        {sport_name:"baseball",sportId:0},
-        {sport_name:"basketball",sportId:0}	,
-        {sport_name:"cricket",sportId:4}	,
-        {sport_name:"Greyhound Racing",sportId:0}	,
-        {sport_name:"Horse Racing",sportId:77}	,
+        {sport_name:"baseball",sportId:30},
+        {sport_name:"basketball",sportId:10}	,
+        {sport_name:"Cricket",sportId:4}	,
+        {sport_name:"Greyhound Racing",sportId:20}	,
+        {sport_name:"Horse racing",sportId:77}	,
         {sport_name:"Football",sportId:1}	,
-        {sport_name:"tennis",sportId:2}
+        {sport_name:"Tennis",sportId:2}
     ]
     console.log(sportList)
     // const cricket = sportListData[0].gameList[0].eventList
@@ -2767,6 +2951,21 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
     let series;
     let seriesObjList = []
     let seriesList = []
+    let breadcumArr = []
+    const sportList =[
+        {sport_name:"baseball",sportId:30},
+        {sport_name:"basketball",sportId:10}	,
+        {sport_name:"Cricket",sportId:4}	,
+        {sport_name:"Greyhound Racing",sportId:20}	,
+        {sport_name:"Horse racing",sportId:77}	,
+        {sport_name:"Football",sportId:1}	,
+        {sport_name:"Tennis",sportId:2}
+    ]
+    sportList.map(item => {
+        if(item.sportId == sportId){
+            breadcumArr.push({name:item.sport_name,id:sportId})
+        }
+    })
     if(sportId == 4){
         series = sportListData[0].gameList[0]
     }else{
@@ -2799,7 +2998,8 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
                 title:"catalogController",
                 data:seriesObjList,
                 me: user,
-                currentUser: user
+                currentUser: user,
+                breadcumArr
             })
         })
     }else{
@@ -2807,7 +3007,8 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
             title:"catalogController",
             data:seriesObjList,
             me: user,
-            currentUser: user
+            currentUser: user,
+            breadcumArr
         })
     }
    
@@ -2819,17 +3020,29 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
     const compId = req.query.compId
     const sportId = req.query.sportId
     const sportListData = await getCrkAndAllData()
+    let breadcumArr = []
+    let nameArr = []
     let series;
     let seriesObjList = []
     if(sportId == 4){
         series = sportListData[0].gameList[0]
+        breadcumArr.push({id:sportId,name:series.sport_name})
+
     }else{
         series = sportListData[1].gameList.find(item => item.sportId == sportId)
+        breadcumArr.push({id:sportId,name:series.sport_name})
+
+
     }
 
     if(series){
+        nameArr.push(series.sport_name)
         let = eventListPromis = series.eventList.map(async(item) => {
             if(item.eventData.compId == compId){
+                if(!nameArr.includes(item.eventData.league)){
+                    breadcumArr.push({id:compId,name:item.eventData.league,sportId:sportId})
+                    nameArr.push(item.eventData.league)
+                }
                 let status = await catalogController.findOne({Id:item.eventData.eventId})
                 let count = 0;
                 if(!status){
@@ -2855,7 +3068,8 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
                 title:"catalogController",
                 data:seriesObjList,
                 me: user,
-                currentUser: user
+                currentUser: user,
+                breadcumArr
             })
         })
     }else{
@@ -2863,7 +3077,8 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
             title:"catalogController",
             data:seriesObjList,
             me: user,
-            currentUser: user
+            currentUser: user,
+            breadcumArr
         })
     }
 })
@@ -3009,3 +3224,121 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
         data
     })
 })
+
+
+exports.RiskAnalysis = catchAsync(async(req, res, next) => {
+    let ip = req.ip
+    let ipv4
+    if (ip.indexOf('::ffff:') === 0) {
+        // Extract the IPv4 portion from the IPv6 address
+        ipv4 = ip.split('::ffff:')[1];
+    }else{
+        ipv4 = ip
+    }
+    let verticalMenus = await verticalMenuModel.find().sort({num:1});
+    const sportData = await getCrkAndAllData()
+    const cricket = sportData[0].gameList[0].eventList
+    let match = cricket.find(item => item.eventData.eventId == req.query.id);
+    if(match === undefined){
+        let data1liveCricket = sportData[1].gameList.map(item => item.eventList.find(item1 => item1.eventData.eventId == req.query.id))
+        match = data1liveCricket.find(item => item != undefined)
+    }
+    if(match == undefined){
+        res.status(404).json({
+            status:"Success",
+            message:"This match is no more live"
+        })
+    }
+    const liveStream = await liveStreameData(match.eventData.channelId, ipv4)
+    const src_regex = /src='([^']+)'/;
+    let match1
+    let src
+    if(liveStream.data){
+
+        match1 = liveStream.data.match(src_regex);
+        if (match1) {
+            src = match1[1];
+        } else {
+            console.log("No 'src' attribute found in the iframe tag.");
+        }
+        // console.log(src, 123)
+    }
+    const betLimit = await betLimitModel.find()
+    // console.log(match.marketList.goals)
+    // let session = match.marketList.session.filter(item => {
+        //     let date = new Date(item.updated_on);
+        //     return date < Date.now() - 1000 * 60 * 60;
+        // });
+        let SportLimits = betLimit.find(item => item.type === "Sport")
+        let min 
+        let max 
+        if (SportLimits.min_stake >= 1000) {
+            min = (SportLimits.min_stake / 1000) + 'K';
+        } else {
+            min = SportLimits.min_stake.toString();
+        }
+        if (SportLimits.max_stake >= 1000) {
+            max = (SportLimits.max_stake / 1000) + 'K';
+          } else {
+            max = SportLimits.max_stake.toString();
+        }
+        console.log(SportLimits, min , max)
+        let userLog
+        let stakeLabledata
+        let userMultimarkets
+        let Bets = []
+        let rules = await gamrRuleModel.find()
+        if(req.currentUser){
+            userLog = await loginLogs.find({user_id:req.currentUser._id})
+            userMultimarkets = await multimarkets.findOne({userId:req.currentUser._id})
+            stakeLabledata = await stakeLable.findOne({userId:req.currentUser._id})
+            if(stakeLabledata === null){
+                stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
+            }
+            Bets = await betModel.aggregate([
+                {
+                    $match: {
+                        status: "OPEN" ,
+                        eventId: req.query.id
+                    }
+                },
+                {
+                    $lookup: {
+                      from: "users",
+                      localField: "userName",
+                      foreignField: "userName",
+                      as: "user"
+                    }
+                  },
+                  {
+                    $unwind: "$user"
+                  },
+                  {
+                    $match: {
+                      "user.parentUsers": { $in: [req.currentUser.id] }
+                    }
+                  }
+            ])
+        }else{
+            stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
+        }
+        res.status(200).render("./mainRiskAnalysis/main",{
+            title:"Risk Analysis",
+            user: req.currentUser,
+            verticalMenus,
+            check:"ExchangeIn",
+            match,
+            SportLimits,
+            liveStream,
+            userLog,
+            notifications:req.notifications,
+            stakeLabledata,
+            Bets,
+            rules,
+            src,
+            userMultimarkets,
+            min,
+            max,
+            currentUser:req.currentUser
+    })
+});

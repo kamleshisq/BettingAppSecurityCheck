@@ -57,6 +57,9 @@ socket.on('connect', () => {
     //     let id = grandParent.id
     //     document.getElementById(id).classList.remove("active");
     // })
+
+
+    
     let popupTimeout; 
 
     function togglePopupMain(idname, id, message) {
@@ -836,30 +839,30 @@ socket.on('connect', () => {
                 link.click();
               }          
     
-              function sanitizeCellValue(value) {
-                // Define a character whitelist (allow only printable ASCII and basic punctuation)
-                const allowedCharactersRegex = /[\x20-\x7E\u0020-\u007E]/g;
-                
-                return value.match(allowedCharactersRegex).join(',').trim();
-              }
+            function sanitizeCellValue(value) {
+            // Define a character whitelist (allow only printable ASCII and basic punctuation)
+            const allowedCharactersRegex = /[\x20-\x7E\u0020-\u007E]/g;
+            
+            return value.match(allowedCharactersRegex).join(',').trim();
+            }
               
-              function convertToCSV(table) {
-                const rows = table.querySelectorAll('tr');
+            function convertToCSV(table) {
+            const rows = table.querySelectorAll('tr');
+            
+            let csv = '';
+            for (const row of rows) {
+                const columns = row.querySelectorAll('td, th');
+                let rowData = '';
+                for (const column of columns) {
                 
-                let csv = '';
-                for (const row of rows) {
-                  const columns = row.querySelectorAll('td, th');
-                  let rowData = '';
-                  for (const column of columns) {
-                    
-                    const data = sanitizeCellValue(column.innerText);
-                    rowData += (data.includes(',') ? `"${data}"` : data) + ',';
-                  }
-                  csv += rowData.slice(0, -1) + '\n';
+                const data = sanitizeCellValue(column.innerText);
+                rowData += (data.includes(',') ? `"${data}"` : data) + ',';
                 }
-                
-                return csv;
-              }
+                csv += rowData.slice(0, -1) + '\n';
+            }
+            
+            return csv;
+            }
     
             document.getElementById('downloadBtn').addEventListener('click', function(e) {
                 e.preventDefault()
@@ -893,7 +896,7 @@ socket.on('connect', () => {
                     a.click();
                     document.body.removeChild(a);
                 }
-              });
+            });
 
         $(document).on('click','.Deposite',function(e){
             var row = this.closest("tr");
@@ -987,7 +990,9 @@ socket.on('connect', () => {
             var row = this.closest("tr");
             var id = row.id;
             var dataId = row.getAttribute("data-id");
-            socket.emit("BetLockUnlock", {id, dataId})
+            if(confirm('do you want to change status')){
+                socket.emit("BetLockUnlock", {id, dataId})
+            }
         })
         socket.on("BetLockUnlock", data => {
             if(data.status === "error"){
@@ -1009,6 +1014,44 @@ socket.on('connect', () => {
                 //     // console.log(element[i].classList)
                 //     elements[i].classList.remove("Locked");
                 //   }
+            }
+        })
+
+        $(document).on('click', ".Settlement", function(){
+            var row = this.closest("tr");
+            var id = row.id;
+            var dataId = row.getAttribute("data-id");
+            socket.emit("getUserDetaisl111", {id, dataId})
+        })
+
+        socket.on("getUserDetaisl111", data => {
+            if(data.status === "error"){
+                alert("Please Try again leter")
+            }else{
+            let modleName = "#myModalSE"
+            let form = $(modleName).find('.form-data')
+            let userData = data.user
+            let me = data.parent
+            let type = form.find('select[name = "type"]').val()
+            if(userData.uplinePL > 0){
+                form.find('select[name = "type"]').val("deposit")
+                form.find('input[name = "toUser"]').attr('value',userData.userName)
+                form.find('input[name = "fuBalance"]').attr('value',me.availableBalance)
+                form.find('input[name = "tuBalance"]').attr('value',userData.availableBalance)
+                form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
+                form.find('input[name = "fromUser"]').attr('value',me.userName)
+                form.find('input[name = "amount"]').attr('value',userData.uplinePL)
+                form.attr('id', userData._id);
+            }else{
+                form.find('select[name = "type"]').val("withdrawl")
+                form.find('input[name = "toUser"]').attr('value',me.userName)
+                form.find('input[name = "fuBalance"]').attr('value',userData.availableBalance)
+                form.find('input[name = "tuBalance"]').attr('value',me.availableBalance)
+                form.find('input[name = "clintPL"]').attr('value',me.clientPL)
+                form.find('input[name = "fromUser"]').attr('value',userData.userName)
+                form.find('input[name = "amount"]').attr('value',Math.abs(userData.uplinePL))
+                form.attr('id', userData._id);
+            }
             }
         })
 
@@ -1228,23 +1271,28 @@ socket.on('connect', () => {
                     <div class="btn-group">
                     `
                         if(data.currentUser.role.authorization.includes('accountControl')){
-                            html += `<button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite"> D/W </button>`
+                            html += `<button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite" title="Deposit/Withdraw"> D/W </button>`
                         }
                         if(data.currentUser.role.authorization.includes('accountControl')){
-                            html += `<button data-bs-toggle="modal" data-bs-target="#myModal2" class="CreaditChange">C</button>`
+                            html += `<button data-bs-toggle="modal" data-bs-target="#myModal2" class="CreaditChange" title="Commission">C</button>`
                         }
                         if(data.currentUser.role.authorization.includes('changeUserPassword')){
-                            html += `<button data-bs-toggle="modal" data-bs-target="#myModal3" class="PasswordChange">P</button>`
+                            html += `<button data-bs-toggle="modal" data-bs-target="#myModal3" class="PasswordChange" title="Change Password">P</button>`
                         }
+                        html += `<button  data-bs-toggle="modal" data-bs-target="#myModal" class="Settlement" title="Settlement">S</button>`
                         if(data.currentUser.role.authorization.includes('betLockAndUnloack')){
-                            html += `<button type="button" class="betLockStatus">B</button>`
+                            if(response[i].betLock){
+                                html += `<button type="button" class="betLockStatus Locked" title="Bet Unlock">B</button>`
+                            }else{ 
+                                html += `<button type="button" class="betLockStatus" title="Bet Lock">B</button>`
+                            } 
                         }
                         if(data.currentUser.role.authorization.includes('userStatus')){
-                            html += `<button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange">CS</button>
+                            html += `<button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange" title="Change Status">CS</button>
                             `
                         }
                         if(data.currentUser.role.authorization.includes('userName')){
-                            html += `<button class="UserDetails"><i class="fa-solid fa-database"></i></button>`
+                            html += `<button class="UserDetails" title="View details"><i class="fa-solid fa-database"></i></button>`
                         }
                       html += `</div>
                       </td></td> </tr>`
@@ -1268,8 +1316,7 @@ socket.on('connect', () => {
         let S = false
         let W = false
         let R = false
-
-        $('#searchUser, #ROLEselect, #WhiteLabel').bind("change keyup", function(){
+        $(document).on('change keyup','#searchUser, #ROLEselect, #WhiteLabel',function(e){
             // console.log($(this).hasClass("searchUser"), 123)
             if($(this).hasClass("WhiteLabel")){
                     filterData.whiteLabel = $(this).val()
@@ -1292,8 +1339,7 @@ socket.on('connect', () => {
 
             if($(this).hasClass("searchUser")){
                     filterData.userName = $(this).val()
-                    // console.log(filterData.userName)
-                    if(filterData.userName.length >= 0){
+                    if(filterData.userName.length > 0){
                         S = true
                     }else{
                         S = false
@@ -2157,7 +2203,6 @@ socket.on('connect', () => {
             })
     
             $(window).scroll(function() {
-                // $(window).scroll(function() {
                     var scroll = $(window).scrollTop();
                     var windowHeight = $(window).height();
                     var documentHeight = $(document).height();
@@ -2398,12 +2443,12 @@ socket.on('connect', () => {
                       <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>`
                       if(data.data[i].status){
                         html += `<span class="on-off">OFF &nbsp; <label class="switch">
-                                <input type="checkbox" class="change_status" checked>
+                                <input type="checkbox" data-id="${data.data[i].game_id}" class="change_status" checked>
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }else{
                         html += `<span class="on-off">OFF &nbsp; <label class="switch">
-                                <input type="checkbox" class="change_status">
+                                <input type="checkbox" data-id="${data.data[i].game_id}" class="change_status">
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }
@@ -2413,12 +2458,12 @@ socket.on('connect', () => {
                       <span>${data.data[i].game_name} (${data.data[i].sub_provider_name})</span>`
                       if(data.data[i].status){
                         html += `<span class="on-off">OFF &nbsp; <label class="switch">
-                                    <input type="checkbox" class="change_status" checked>
+                                    <input type="checkbox" data-id="${data.data[i].game_id}" class="change_status" checked>
                                     <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }else{
                         html += `<span class="on-off">OFF &nbsp; <label class="switch">
-                                    <input type="checkbox" class="change_status">
+                                    <input type="checkbox" data-id="${data.data[i].game_id}" class="change_status">
                                     <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }
@@ -2431,12 +2476,12 @@ socket.on('connect', () => {
                       `
                       if(data.data[i].status){
                         html += ` <span class="on-off">OFF &nbsp; <label class="switch">
-                                <input type="checkbox" class="change_status" checked>
+                                <input type="checkbox" data-id="${data.data[i].game_id}" class="change_status" checked>
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }else{
                         html += ` <span class="on-off">OFF &nbsp; <label class="switch">
-                                <input type="checkbox" class="change_status">
+                                <input type="checkbox" data-id="${data.data[i].game_id}" class="change_status">
                                 <span class="slider round"></span>
                                 </label>&nbsp; ON</span>`
                       }
@@ -2457,13 +2502,20 @@ socket.on('connect', () => {
             let status = $(this).prop('checked') ? true : false;
                 let id = $(this).data('id')
                 if(id){
-
-                    socket.emit('casionoStatusChange',{status,id})
+                    if(confirm('do you want to change status')){
+                        socket.emit('casionoStatusChange',{status,id})
+                    }else{
+                        $(this).prop('checked') ? $(this).prop('checked',false) : $(this).prop('checked',true)
+                    }
                 }
         })
 
         socket.on('casionoStatusChange',async(data)=>{
-            console.log(data)
+            if(data.status == 'success'){
+                alert('status changed successfully')
+            }else{
+                alert('somthig watn wrong!!')
+            }
         })
     }
 
@@ -2990,22 +3042,22 @@ socket.on('connect', () => {
         socket.on("SearchOnlineUser", (data) =>{
             console.log(data, 565464)
             let html = ``
-    if(data.page === 1){
-        for(let i = 0; i < data.onlineUsers.length; i++){
-            html += `<li class="searchList" id="${data.onlineUsers[i]._id}">${data.onlineUsers[i].userName}</li>`
-        }
-        document.getElementById('search').innerHTML = html
-        document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-    }else if(data.page === null){
-        document.getElementById("button").innerHTML = ``
-    }else{
-        html = document.getElementById('search').innerHTML
-        for(let i = 0; i < data.onlineUsers.length; i++){
-            html += `<li class="searchList" id="${data.onlineUsers[i]._id}">${data.onlineUsers[i].userName}</li>`
-        }
-        document.getElementById('search').innerHTML = html
-        document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-    }
+            if(data.page === 1){
+                for(let i = 0; i < data.onlineUsers.length; i++){
+                    html += `<li class="searchList" id="${data.onlineUsers[i]._id}">${data.onlineUsers[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }else if(data.page === null){
+                document.getElementById("button").innerHTML = ``
+            }else{
+                html = document.getElementById('search').innerHTML
+                for(let i = 0; i < data.onlineUsers.length; i++){
+                    html += `<li class="searchList" id="${data.onlineUsers[i]._id}">${data.onlineUsers[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }
         })
 
         $(".logout").click(function(){
@@ -3028,6 +3080,7 @@ socket.on('connect', () => {
             filterData = {}
             filterData.userName = this.textContent
             $('.pageId').attr('data-pageid','1')
+            $('.wrapper').hide()
             socket.emit('OnlineUser',{filterData,LOGINDATA,page:0})
             
         })
@@ -3158,6 +3211,7 @@ socket.on('connect', () => {
             }
         })
 
+
         let toDate;
         let fromDate;
         let filterData = {}
@@ -3193,14 +3247,14 @@ socket.on('connect', () => {
             $('.pageId').attr('data-pageid','1')
             data.page = 0;
             if(fromDate != ''  && toDate != '' ){
-                filterData.date = {$gte : fromDate,$lte : toDate}
+                filterData.date = {$gte : fromDate,$lte : new Date(new Date(toDate).getTime() + ((24 * 60*60*1000)-1))}
             }else{
 
                 if(fromDate != '' ){
                     filterData.date = {$gte : fromDate}
                 }
                 if(toDate != '' ){
-                    filterData.date = {$lte : toDate}
+                    filterData.date = {$lte : new Date(new Date(toDate).getTime() + ((24 * 60*60*1000)-1))}
                 }
             }
             if(userName != ''){
@@ -3216,7 +3270,7 @@ socket.on('connect', () => {
             // }
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
-            // console.log(data)
+            console.log(data)
             socket.emit('betMoniter',data)
 
         })
@@ -3228,6 +3282,7 @@ socket.on('connect', () => {
             filterData = {}
             filterData.userName = this.textContent
             $('.pageId').attr('data-pageid','1')
+            $('.wrapper').hide()
             socket.emit('betMoniter',{filterData,LOGINDATA,page:0})
             
         })
@@ -3268,7 +3323,7 @@ socket.on('connect', () => {
             
             let count = 11
             socket.on('betMoniter',(data) => {
-                // console.log(data)
+                console.log(data)
                 if(data.page === 0){
                     count = 1
                 }
@@ -3301,7 +3356,10 @@ socket.on('connect', () => {
                     <td>${bets[i].transactionId}</td>
                     <td>${bets[i].status}</td>
                     <td>${bets[i].returns}</td>
-                    <td><button class="voidBet" id="${bets[i]._id}">Cancel Bet</button><button class="alertBet" id="${bets[i]._id}"> Alert Bet</button></td>
+                    <td>
+                    <div class="btn-group">
+                    <button class="btn cancel" id="${bets[i]._id}">Cancel Bet</button>
+                    <button class="btn alert" id="${bets[i]._id}"> Alert Bet</button></div></td>
                     </tr>`
                 }
                 count += 10;
@@ -3313,13 +3371,13 @@ socket.on('connect', () => {
             })
 
     
-    $(document).on('click', '.voidBet', async function(e){
+    $(document).on('click', '.cancel', async function(e){
         e.preventDefault()
         socket.emit('voidBet', this.id)
     })
     
 
-    $(document).on("click", ".alertBet", function(e){
+    $(document).on("click", ".alert", function(e){
         e.preventDefault()
         socket.emit("alertBet", this.id)
     })
@@ -3363,45 +3421,30 @@ socket.on('connect', () => {
                     // console.log(x)
                     socket.emit("SearchACC", {x, LOGINDATA})
                 }else{
-                    // document.getElementById('select').innerHTML = ``
+                    document.getElementById('search').innerHTML = ``
+                    document.getElementById("button").innerHTML = ''
                 }
             }
         })
 
 
         socket.on("ACCSEARCHRES", async(data)=>{
-            // console.log(data)
-            let html = ` `
-            for(let i = 0; i < data.length; i++){
-                html += `<option><button onclick="myFunction(${data[i].userName})">${data[i].userName}</button>`
-            }
-            // console.log(html)
-            document.getElementById('select').innerHTML = html
-
-            let datalist = document.querySelector('#text_editors');
-            // console.log(datalist)
-            let  select = document.querySelector('#select');
-            // console.log(select)
-            let options = select.options;
-            // console.log(options)
-
-
-
-            / when user selects an option from DDL, write it to text field /
-            select.addEventListener('change', fill_input);
-
-            function fill_input() {
-                    input.value = options[this.selectedIndex].value;
-            hide_select();
-            }
-
-            / when user wants to type in text field, hide DDL /
-            let input = document.querySelector('.searchUser');
-            input.addEventListener('focus', hide_select);
-
-            function hide_select() {
-            datalist.style.display = '';
-            //   button.textContent = "▼";
+            let html = ``
+            if(data.page === 1){
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }else if(data.page === null){
+                document.getElementById("button").innerHTML = ``
+            }else{
+                html = document.getElementById('search').innerHTML
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
             }
         })
 
@@ -3410,26 +3453,41 @@ socket.on('connect', () => {
         let filterData = {}
         $(".searchUser").on('input', function(e){
             var $input = $(this),
-                val = $input.val();
-                list = $input.attr('list'),
-                match = $('#'+list + ' option').filter(function() {
-                    return ($(this).val() === val);
-                });
+                    val = $input.val();
+                    var listItems = document.getElementsByTagName("li");
+                for (var i = 0; i < listItems.length; i++) {
+                    if (listItems[i].textContent === val) {
+                        match = ($(this).val() === val);
+                      break; 
+                    }else{
+                        match = false
+                    }
+                  }
 
-                if(match.length > 0){
-                    // console.log(match.text())
+                if(match){
                     filterData = {}
-                    filterData.userName = match.text()
+                    filterData.userName = val
                     $('.pageId').attr('data-pageid','1')
                     socket.emit('voidBET',{filterData,LOGINDATA,page:0})
                 }
         })
 
-
+        $(document).on("click", ".searchList", function(){
+            // console.log("working")
+            // console.log(this.textContent)
+            document.getElementById("searchUser").value = this.textContent
+            filterData = {}
+            filterData.userName = this.textContent
+            $('.pageId').attr('data-pageid','1')
+            $('.wrapper').hide()
+            socket.emit('voidBET',{filterData,LOGINDATA,page:0})
+            
+        })
         $('.filter').click(function(){
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
+
             $('.pageId').attr('data-pageid','1')
             data.page = 0;
             if(fromDate != ''  && toDate != '' ){
@@ -3457,6 +3515,7 @@ socket.on('connect', () => {
 
         $(window).scroll(function() {
             if($(document).height()-$(window).scrollTop() == window.innerHeight){
+                console.log('working')
                 let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
                 let data = {}
@@ -3469,7 +3528,7 @@ socket.on('connect', () => {
                 if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
                     filterData.date = {$gte : fromDate,$lte : toDate}
                 }else{
-
+    
                     if(fromDate != undefined && fromDate != '' ){
                         filterData.date = {$gte : fromDate}
                     }
@@ -3477,31 +3536,32 @@ socket.on('connect', () => {
                         filterData.date = {$lte : toDate}
                     }
                 }
-
+    
                 data.filterData = filterData;
                 data.page = page
                 data.LOGINDATA = LOGINDATA
                 // console.log(data)
                 socket.emit('voidBET',data)
 
-
-
             }
-            }); 
+        }); 
+       
             
-            let count = 11
+      
+            let count = 10
             socket.on('voidBET',(data) => {
                 // console.log(data)
+                count = 10 * data.page
                 let bets = data.ubDetails;
                 let html = '';
                     for(let i = 0; i < bets.length; i++){
                         let date = new Date(bets[i].date)
-                    if((i%2)==0){
+                    if(((i + count)%2)==0){
                         html += `<tr style="text-align: center;" class="blue">`
                     }else{
                         html += `<tr style="text-align: center;" >`
                     }
-                    html += `<td>${i + count}</td>
+                    html += `<td>${i + count + 1}</td>
                     <td>${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
                     <td>${bets[i].userName}</td>
                     <td>${bets[i].event}</td>
@@ -3523,7 +3583,6 @@ socket.on('connect', () => {
                     <td>${bets[i].returns}</td>
                     </tr>`
                 }
-                count += 10;
                 if(data.page == 0){
                     $('.new-body').html(html)
                 }else{
@@ -3932,12 +3991,16 @@ socket.on('connect', () => {
 
         $(document).on('click', '.update', async function(){
             let id = $(this).attr('id')
-            socket.emit('updateStatus', {id, LOGINDATA})
+            if(confirm('do you want to change status')){
+                socket.emit('updateStatus', {id, LOGINDATA})
+            }
         })
 
-        $(document).on('click', '.Delete', async function(){
+        $(document).on('click', '.delete', async function(){
             let id = $(this).attr('id')
-            socket.emit('deleteNotification', {id, LOGINDATA})
+            if(confirm('do you want to delte this notification')){
+                socket.emit('deleteNotification', {id, LOGINDATA})
+            }
         })
 
         socket.on('updateStatus', async(data)=>{
@@ -4017,8 +4080,32 @@ socket.on('connect', () => {
 
 
     if(pathname === "/admin/liveMarket"){
+        // function marketId(){
+            // $(document).ready(function() {
+            //     var ids = [];
+          
+            //     $(".MarketIds").each(function() {
+            //       ids.push(this.id);
+            //     });
+            //     // console.log(ids)
+            //     socket.emit("aggreat", {ids, LOGINDATA})
+            //   });
+        //       setTimeout(()=>{
+        //         marketId()
+        //       }, 60000)
+        // }
+        // marketId()
         function marketId(){
-            socket.emit("aggreat", LOGINDATA)
+            $(document).ready(function() {
+                // var ids = [];
+          
+                // $(".MarketIdsR").each(function() {
+                //   ids.push(this.id);
+                // });
+                // console.log(ids)
+                socket.emit("aggreat",  LOGINDATA)
+                // socket.emit("aggreat", LOGINDATA)
+              });
               setTimeout(()=>{
                 if(pathname === "/admin/liveMarket"){
                     marketId()
@@ -4029,9 +4116,16 @@ socket.on('connect', () => {
         
 
         socket.on("aggreat", async(data) => {
+            console.log(data)
+            let stake1 = 0;
+            let stake2 = 0;
             data.forEach(item => {
-                document.getElementById(`${item._id}`).innerText = item.totalStake
-                document.getElementById(`${item._id}B`).innerText = item.count
+                // item.betData.forEach(bet => {
+                    if(document.getElementById(`${item._id}`)){
+                        document.getElementById(`${item._id}`).innerText = item.totalStake
+                        document.getElementById(`${item._id}B`).innerText = item.count
+                    }
+                // })
             })
         })
     }
@@ -4050,6 +4144,7 @@ socket.on('connect', () => {
         })
 
         socket.on("createVerticalMenu", async(data)=>{
+            console.log(data)
             if(data.status === "success"){
                 alert("Menu Added Successfully")
                     window.setTimeout(()=>{
@@ -4109,7 +4204,9 @@ socket.on('connect', () => {
 
         $(document).on('click', ".deleteVerticalMenuDetails", function(e){
             let id = $(this).attr('id')
-            socket.emit("deleteVerticalMenu", id)
+            if(confirm('do you want to delete this menu')){
+                socket.emit("deleteVerticalMenu", id)
+            }
         })
 
         socket.on("deleteVerticalMenu", async(data) => {
@@ -4174,7 +4271,9 @@ socket.on('connect', () => {
 
         $(document).on("click", ".deleteBanner", function(e){
             let id = $(this).attr('id')
-            socket.emit("deleteBanner", id)
+            if(confirm('do you want to delete this banner')){
+                socket.emit("deleteBanner", id)
+            }
         })
 
         socket.on("deleteBanner", data =>{
@@ -4209,7 +4308,9 @@ socket.on('connect', () => {
         $(document).on('click', ".dleteImageSport", function(e){
             e.preventDefault()
             let id = $(this).attr("id")
-            socket.emit("dleteImageSport", id)
+            if(confirm('do you want to delete this image')){
+                socket.emit("dleteImageSport", id)
+            }
         })
         socket.on("dleteImageSport", async(data)=>{
             alert(data)
@@ -4229,7 +4330,9 @@ socket.on('connect', () => {
         $(document).on('click', ".deleteSlider", function(e){
             e.preventDefault()
             let id = $(this).attr('id')
-            socket.emit('deleteSlider', id)
+            if(confirm('do you want to delete this slider')){
+                socket.emit('deleteSlider', id)
+            }
         })
         socket.on('deleteSlider', async(data) => {
             alert(data)
@@ -7494,10 +7597,9 @@ socket.on('connect', () => {
             page = 0
             $('.pageId').attr('data-pageid',1)
             socket.emit("CommissionRReport", {page, LOGINDATA, filterData})
-          }
+        }
 
-
-          $(window).scroll(function() {
+        $(window).scroll(async function() {
             var scroll = $(window).scrollTop();
             var windowHeight = $(window).height();
             var documentHeight = $(document).height();
@@ -7572,6 +7674,7 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert("Please Try again later")
             }else{
+                // $('#myModaladduser').modal('toggle');
                 let html = ""
                 const tbody = document.getElementById("tableBody");
                 const numberOfRows = tbody.getElementsByTagName("tr").length;
@@ -7784,6 +7887,7 @@ socket.on('connect', () => {
             filterData = {}
             filterData.userName = this.textContent
             $('.pageId').attr('data-pageid','1')
+            $('.wrapper').hide()
             socket.emit('AlertBet',{filterData,LOGINDATA,page:0})
             
         })
@@ -7868,16 +7972,17 @@ socket.on('connect', () => {
                 }
             })
 
-            $(document).on('click', '.voidBet', async function(e){
+            $(document).on('click', '.cancel', async function(e){
                 e.preventDefault()
                 socket.emit('voidBet', this.id)
             })
     
-            $(document).on('click', '.acceptBet', async function(e){
+            $(document).on('click', '.accept', async function(e){
                 e.preventDefault()
                 socket.emit('acceptBet', this.id)
             })
 
+            
             socket.on("acceptBet", (data)=>{
                 if(data.status === "error"){
                     alert("Please try again later")
@@ -8323,8 +8428,124 @@ socket.on('connect', () => {
                 socket.emit("Autosettle", {LOGINDATA, status:false})
               }
         });
+
+        let fromdate;
+        let todate;
+        $('#from_date').change(function(e){
+            fromdate = $(this).val();
+            if($('#to_date').val() != ''){
+                todate = new Date(new Date($('#to_date').val()).getTime() + ((24*60*60*1000)-1))
+            }
+            console.log(fromdate,todate)
+            socket.emit('settlement',{LOGINUSER:LOGINDATA.LOGINUSER,todate,fromdate})
+
+        })
+        $('#to_date').change(function(e){
+            todate =  new Date(new Date($('#to_date').val()).getTime() + ((24*60*60*1000)-1))
+            if($('#from_date').val() != ''){
+                fromdate = $('#from_date').val();
+            }
+            console.log(fromdate,todate)
+            socket.emit('settlement',{LOGINUSER:LOGINDATA.LOGINUSER,todate,fromdate})
+
+            
+        })
+
+        socket.on('settlement',async(data)=>{
+            console.log(data)
+            let html = ''
+            for(let i = 0; i < data.betsEventWise.length; i++){ 
+                html += `<tr>`
+                var timestamp = data.betsEventWise[i].eventdate; 
+                var date = new Date(timestamp);
+                var options = { 
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+                  
+                  html += `<td>${i+1} </td>
+                  <td>${formattedTime}</td>
+                  <td>${data.betsEventWise[i].series}</td>
+                  <td>${data.betsEventWise[i].matchName}</td>
+                  <td>${data.betsEventWise[i].count}</td>
+                  <td>${data.betsEventWise[i].count}</td>
+                  <td><a href="/admin/settlementIn?id=${data.betsEventWise[i].eventid}" class="btn-green">settle</a></td>
+                </tr>`
+            } 
+
+            $('tbody').html(html)
+        })
     }
 
+    if(pathname == '/admin/settlementHistory'){
+        $(document).on('change','#Fdate',function(e){
+            let from_date = $(this).val()
+            let to_date
+            if($('#Tdate').val() != ''){
+                to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            }
+            let page = 0
+            $('.rowId').attr('data-rowid',page + 1)
+            socket.emit('settlementHistory',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
+        })
+
+        $(document).on('change','#Tdate',function(e){
+            let to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            let from_date
+            if($('#Fdate').val() != ''){
+                from_date = $('#Fdate').val()
+            }
+            let page = 0
+            $('.rowId').attr('data-rowid',page + 1)
+            socket.emit('settlementHistory',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
+        })
+        let limit = 50
+        socket.on('settlementHistory',async(data)=>{
+            console.log(data)
+            let html = ''
+            limit = 50 * data.page
+            for(let i = 0; i < data.History.length; i++){
+                var date = new Date(data.History[i].date)
+                html += `<tr>
+                  <td>${limit+1+i}</td> 
+                  <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + " "+ date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
+                  <td>${data.History[i].eventName}</td>
+                  <td>${data.History[i].marketName}</td>
+                  <td>${data.History[i].result}</td>
+                </tr>`
+            } 
+            if(data.page == 0){
+                $('tbody').html(html)
+            }else{
+                $('tbody').append(html)
+            }
+        })
+
+        $(window).scroll(async function() {
+            var scroll = $(window).scrollTop();
+            var windowHeight = $(window).height();
+            var documentHeight = $(document).height();
+            if (scroll + windowHeight + 1 >= documentHeight) {
+                console.log('working')
+                let page = parseInt($('.rowId').attr('data-rowid'))
+                $('.rowId').attr('data-rowid',page + 1)
+                let to_date;
+                let from_date
+                if($('#Fdate').val() != ''){
+                    from_date = $('#Fdate').val()
+                }
+                if($('#Tdate').val() != ''){
+                    to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+                }
+                socket.emit('settlementHistory',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
+            }
+        })
+    }
 
     if(pathname === "/admin/settlementIn"){
        
@@ -8470,6 +8691,10 @@ socket.on('connect', () => {
                 html += "</ul>"
             }
             document.getElementById("myMarkets").innerHTML = html
+            $('#myMarkets').click(function(e){
+                $('#myMarkets').hide()
+                $('#MarketMatch').val('')
+            })
             // document.getElementById("demonames1").innerHTML = html
           })
 
@@ -8481,6 +8706,7 @@ socket.on('connect', () => {
           })
 
           socket.on("eventIdForMarketList", async(data) => {
+            console.log(data)
             let i = 0
             let html = ""
             for (var marketKey in data.result.marketList) {
@@ -8491,29 +8717,34 @@ socket.on('connect', () => {
                     console.log("Market Key:", marketKey);
                     console.log("Market Object:", market);
                     if(Array.isArray(market)){
-                        for(let j = 0; j < market.length; j++){
-                            html += `
-                            <tr id='${market[j].marketId}'>
-                            <td>${i + j }</td>
-                            <td>${market[j].title}</td>`
-                            if(data.data1.some(item => item.marketId == market[j].marketId)){
-                                html += `<td width="120px"> <div class="on-off-btn-section">
-                                <span class="on-off">OFF &nbsp; <label class="switch">
-                                <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
-                                <span class="slider round"></span>
-                                </label>&nbsp; ON</span>
-                            </div></td>
-                              </tr>`
-                            }else{
-                                html += `<td width="120px"> <div class="on-off-btn-section">
-                                <span class="on-off">OFF &nbsp; <label class="switch">
-                                <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
-                                <span class="slider round"></span>
-                                </label>&nbsp; ON</span>
-                            </div></td>
-                              </tr>`
+                        if(market.length !== 0){
+                            for(let j = 0; j < market.length; j++){
+                                html += `
+                                <tr id='${market[j].marketId}'>
+                                <td>${i + j }</td>
+                                <td>${market[j].title}</td>`
+                                if(data.data1.some(item => item.marketId == market[j].marketId)){
+                                    html += `<td width="120px"> <div class="on-off-btn-section">
+                                    <span class="on-off">OFF &nbsp; <label class="switch">
+                                    <input class="checkbox" name="autoSattled" checked type="checkbox" id="checkbox">
+                                    <span class="slider round"></span>
+                                    </label>&nbsp; ON</span>
+                                </div></td>
+                                  </tr>`
+                                }else{
+                                    html += `<td width="120px"> <div class="on-off-btn-section">
+                                    <span class="on-off">OFF &nbsp; <label class="switch">
+                                    <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
+                                    <span class="slider round"></span>
+                                    </label>&nbsp; ON</span>
+                                </div></td>
+                                  </tr>`
+                                }
                             }
+                        }else{
+                            html += `<tr class="empty_table"><td>No record found</td></tr>`
                         }
+                       
                     }else{
                         html += `
                             <tr id='${market.marketId}'>  
@@ -8540,23 +8771,323 @@ socket.on('connect', () => {
                   }
                 }
               }
-
+              console.log(html)
+              console.log(html == "")
+              if(html == ""){
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+              }
+              console.log(html)
               document.getElementById("markets").innerHTML = html
           })
+          $(document).on("change", ".checkbox", function(e) {
+              e.preventDefault()
+              const isChecked = $(this).prop("checked");
+              let parentNode = this.closest('tr')
+              let marketId = parentNode.id
+              socket.emit("commissionMarketbyId", {marketId, isChecked, LOGINDATA});
+          })
+      
+          socket.on("commissionMarketbyId", data =>{
+              if(data == "err"){
+                  // alert("Opps, somthing went wrong please try again leter")
+              }
+          })
     }
-    $(document).on("change", ".checkbox", function(e) {
-        e.preventDefault()
-        const isChecked = $(this).prop("checked");
-        let parentNode = this.closest('tr')
-        let marketId = parentNode.id
-        socket.emit("commissionMarketbyId", {marketId, isChecked, LOGINDATA});
-    })
 
-    socket.on("commissionMarketbyId", data =>{
-        if(data == "err"){
-            // alert("Opps, somthing went wrong please try again leter")
+    if(pathname == "/admin/riskAnalysis"){
+        function marketId(){
+            $(document).ready(function() {
+                var ids = [];
+          
+                $(".market").each(function() {
+                  ids.push(this.id);
+                });
+                // console.log(ids)
+                socket.emit("marketId", ids)
+              });
+              setTimeout(()=>{
+                marketId()
+              }, 1000)
         }
-    })
+        marketId()
+
+
+        let first = true
+        socket.on("marketId", async(data) => {
+            console.log(data)
+            $(".match_odd_Blue").each(function() {
+                    
+                let id = this.id
+
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    section = item.odds.find(odd => odd.selectionId == id);
+                    return section !== undefined;
+                });
+                if(this.id == `${section.selectionId}1` ){
+                    console.log('Working')
+                    if(data.betLimits[0].max_odd < section.backPrice1 || section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        if(first){
+                            this.innerHTML = `<strong>${section.backPrice1}</strong> <span class="small">${section.backSize1}</span>`
+                        }else{
+                            let htmldiv = $('<div>').html(this.innerHTML)
+                            let data1 = htmldiv.find('span:first').text()
+                            if(data1 != section.backPrice1){
+                                this.innerHTML = `<strong>${section.backPrice1}</strong> <span class="small">${section.backSize1}</span>`
+                                this.style.backgroundColor = 'blanchedalmond';
+                            }
+                        }
+                        // this.innerHTML = `<strong>${section.backPrice1}</strong> <span class="small">${section.backSize1}</span>`
+                    }
+                }else if(this.id == `${section.selectionId}2`){
+                    if(data.betLimits[0].max_odd < section.backPrice2 || section.backPrice2 == "-" || section.backPrice2 == "1,000.00" || section.backPrice2 == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                    }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
+                        if(first){
+                            this.innerHTML = `<strong>${section.backPrice2}</strong> <span class="small">${section.backSize2}</span>`
+                        }else{
+
+                            let htmldiv = $('<div>').html(this.innerHTML)
+                            let data1 = htmldiv.find('span:first').text()
+                            if(data1 != section.backPrice2){
+                                this.innerHTML = `<strong>${section.backPrice2}</strong> <span class="small">${section.backSize2}</span>`
+                                this.style.backgroundColor = 'blanchedalmond';
+                            }
+                        }
+                        // this.innerHTML = `<strong>${section.backPrice2}</strong> <span class="small">${section.backSize2}</span>`
+                    }
+                }else if (this.id == `${section.selectionId}3`){
+                    if(data.betLimits[0].max_odd < section.backPrice3 || section.backPrice3 == "-" || section.backPrice3 == "1,000.00" || section.backPrice3 == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                    }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
+                        if(first){
+                            this.innerHTML = `<strong>${section.backPrice3}</strong> <span class="small">${section.backSize3}</span>`
+                        }else{
+                            let htmldiv = $('<div>').html(this.innerHTML)
+                            let data1 = htmldiv.find('span:first').text()
+                            // console.log(data1)
+                            if(data1 != section.backPrice3){
+                                this.innerHTML = `<strong>${section.backPrice3}</strong> <span class="small">${section.backSize3}</span>`
+                                this.style.backgroundColor = 'blanchedalmond';
+                            }
+                        }
+                    }
+                }
+            })
+
+
+            $(".match_odd_Red").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    section = item.odds.find(odd => odd.selectionId == id);
+                    return section !== undefined;
+                });
+                if(this.id == `${section.selectionId}4` ){
+                    if(data.betLimits[0].max_odd < section.layPrice1 || section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        if(first){
+                            this.innerHTML = `<strong>${section.layPrice1}</strong> <span class="small">${section.laySize1}</span>`
+                        }else{
+                            let htmldiv = $('<div>').html(this.innerHTML)
+                            let data1 = htmldiv.find('span:first').text()
+                            // console.log(data1)
+                            if(data1 != section.layPrice1){
+                                this.innerHTML = `<strong>${section.layPrice1}</strong> <span class="small">${section.laySize1}</span>`
+                                this.style.backgroundColor = 'blanchedalmond';
+                            }
+                        }
+                        
+                    }
+                }else if(this.id == `${section.selectionId}5`){
+                    if(data.betLimits[0].max_odd < section.layPrice2 || section.layPrice2 == "-" || section.layPrice2 == "1,000.00" || section.layPrice2 == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                    }else{
+                        // this.innerHTML = `<strong>${section.backPrice1}</strong> <span class="small">${section.backSize1}</span>`
+                        this.setAttribute("data-bs-toggle", "collapse");
+                        if(first){
+                            this.innerHTML = `<strong>${section.layPrice2}</strong> <span class="small">${section.laySize2}</span>`
+                        }else{
+                            let htmldiv = $('<div>').html(this.innerHTML)
+                            let data1 = htmldiv.find('span:first').text()
+                            // console.log(data1)
+                            if(data1 != section.layPrice2){
+                                this.innerHTML = `<strong>${section.layPrice2}</strong> <span class="small">${section.laySize2}</span>`
+                                this.style.backgroundColor = 'blanchedalmond';
+                            }
+                        }
+                        
+                    }
+                }else if (this.id == `${section.selectionId}6`){
+                    if(data.betLimits[0].max_odd < section.layPrice3 || section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                    }else{
+                        // this.innerHTML = `<strong>${section.backPrice1}</strong> <span class="small">${section.backSize1}</span>`
+                        this.setAttribute("data-bs-toggle", "collapse");
+                        if(first){
+                            this.innerHTML = `<strong>${section.layPrice3}</strong> <span class="small">${section.laySize3}</span>`
+                        }else{
+                            let htmldiv = $('<div>').html(this.innerHTML)
+                            let data1 = htmldiv.find('span:first').text()
+                            // console.log(data1)
+                            if(data1 != section.layPrice3){
+                                this.innerHTML = `<strong>${section.layPrice3}</strong> <span class="small">${section.laySize3}</span>`
+                                this.style.backgroundColor = 'blanchedalmond';
+                            }
+                        }
+                        
+                    }
+                }
+            })
+
+            $(".bookmaker_blue").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                let item = data.finalResult.items.some(item => {
+                    if(item){
+                        // console.log(id)
+                        if(item.runners){
+                            // console.log(item)
+                            let section1 = item.runners.find(item2 => item2.secId == id)
+                            if(section1){
+                                section = section1
+                            }
+                        }
+                    }
+                })
+                if(this.id == `${section.secId}1` ){
+                    if(data.betLimits[0].max_odd < section.backPrice || section.backPrice == "-" || section.backPrice == "1,000.00" || section.backPrice == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        // this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        this.innerHTML = `<strong>${section.backPrice}</strong> <span class="small"> ${section.backSize}</span>`
+                        // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
+                    }
+                }
+            })
+
+            $(".bookmaker_red").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    if(item){
+
+                        if(item.runners){
+                            let section1 = item.runners.find(item2 => item2.secId == id)
+                            if(section1){
+                                section = section1
+                            }
+                        }
+                    }
+                })
+                let parentElement = this.parentNode
+                console.log(parentElement)
+                if(this.id == `${section.secId}2` ){
+                    if(data.betLimits[0].max_odd < section.layPrice || section.layPrice == "-" || section.layPrice == "1,000.00" || section.layPrice == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
+                        parentElement.classList.remove("suspended")
+                        $(this).parent().find(".match-status-message").text("")
+                        // this.innerHTML = `<strong>${section.backPrice1}</strong> <span class="small"> ${section.backSize1}</span>`
+                        this.innerHTML = `<strong>${section.layPrice}</strong> <span class="small"> ${section.laySize}</span>`
+                        // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
+                        // this.innerHTML = `<b>${section.layPrice}</b> <br> ${section.laySize}`
+                    }
+                }
+            })
+
+        })
+
+
+        let id = search.split('=')[1]
+            function eventID(){
+                socket.emit("eventId", id)
+                setTimeout(()=>{
+                    eventID()
+                }, 500)
+
+            }
+            eventID()
+            socket.on("eventId", async(data)=>{
+                if(data != ""){
+                    let score = JSON.parse(data)
+                    let element = document.getElementsByClassName("live-score")
+                    for(let i = 0; i < element.length; i++){
+                        element[i].innerHTML = score[0].data
+                    }
+                }
+            })
+
+            function eventID(){
+                socket.emit("BETONEVENT", {id , LOGINDATA})
+                setTimeout(()=>{
+                    eventID()
+                }, 5000)
+
+            }
+            eventID()
+
+            socket.on('BETONEVENT', async(data) => {
+                let html = `<tr>
+                <th>Username</th>
+                <th>Place Date</th>
+                <th>Market</th>
+                <!-- <th>Bet Type</th> -->
+                <th>Odds</th>
+                <th>Stake</th>
+                <th>Action</th>
+                </tr>`
+                for(let i = 0; i < data.data.length; i++){
+                    html += `<tr>
+                    <td>${data.data[i].userName}</td>
+                    <td>01/09/23, 4:37:38 PM</td>
+                    <td>${data.data[i].marketName}</td>
+                    <!-- <td>${data.data[i].userName}</td> -->
+                    <td>${data.data[i].oddValue}</td>
+                    <td>${data.data[i].Stake}</td>
+                    <td><div class="btn-group"><button class="btn alert-btn">Alert</button></div></td>
+                </tr>`
+                }
+
+                document.getElementById('betTable').innerHTML = html
+            })
+
+
+    }
 
 })
 })
