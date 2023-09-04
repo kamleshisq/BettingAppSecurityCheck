@@ -34,7 +34,7 @@
                             let matchodd = false
                             console.log(openBet[i].details[j][k].id, "IDDDDD")
                             data = liveCricket.find(item => (item.marketList.match_odd != null) &&(item.marketList.match_odd.marketId == openBet[i].details[j][k].id))
-                            <!-- console.log(data, "1212121212") -->
+                            console.log(data, "1212121212")
                             if(!data){
                               matchodd = true
                               data = liveCricket.find(item => (item.marketList.bookmaker != null) &&(item.marketList.bookmaker[0].marketId == openBet[i].details[j][k].id))
