@@ -3,6 +3,10 @@
     <%for(let i = 0; i < openBet.length; i++){%>
       <%if(openBet[i].bettype == "Cricket"){%>
         <%for(let j = 0 ; j < openBet[i].details.length; j++){%>
+          <%
+          let check = liveCricket.find(item => item.eventData.name == openBet[i].details[j][0].match)
+          console.log(check, "CHECK")
+          %>
         <section>
           <div class="container-fluid">
             <div class="new-head">
