@@ -61,7 +61,7 @@
                   %>
                   <td><%= i+1%></td>
                   <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear(), date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
-                  <td><%= History[i].eventName%></td>
+                  <td class="text-nowrap"><%= History[i].eventName%></td>
                   <td><%= History[i].marketName%></td>
                   <td><%= History[i].result%></td>
                 </tr>
