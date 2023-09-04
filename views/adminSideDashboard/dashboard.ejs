@@ -142,7 +142,7 @@
                                       <%let check = 0%>
                                       <%for(let k=0; k<data.dashboard.users[i].terms.length;k++){%>
                                           <%if(data.dashboard.users[i].terms[k].roleType == data.dashboard.roles[j]._id){%>
-                                              <td class="text-purple"><%=data.dashboard.users[i].terms[k].total%></td>
+                                              <td data-title="<%=data.dashboard.roles[i]._id%>" class="text-purple"><%=data.dashboard.users[i].terms[k].total%></td>
                                               <%check = 1%>
                                           <%}%>
                                       <%}%>
@@ -153,18 +153,18 @@
                               </tr>
                             <%}else{%>
                               <tr  >
-                                <td><%=i + 1%></td>
-                                <td><%=data.dashboard.users[i]._id%></td>
+                                <td data-title="Sr No."><%=i + 1%></td>
+                                <td data-title="Domain"><%=data.dashboard.users[i]._id%></td>
                                 <%for(let j=0; j<data.dashboard.roles.length;j++){%>
                                     <%let check = 0%>
                                     <%for(let k=0; k<data.dashboard.users[i].terms.length;k++){%>
                                         <%if(data.dashboard.users[i].terms[k].roleType == data.dashboard.roles[j]._id){%>
-                                            <td class="text-purple"><%=data.dashboard.users[i].terms[k].total%></td>
+                                            <td data-title="<%=data.dashboard.roles[i]._id%>" class="text-purple"><%=data.dashboard.users[i].terms[k].total%></td>
                                             <%check = 1%>
                                         <%}%>
                                     <%}%>
                                     <%if(check != 1){%>
-                                        <td class="text-purple">0</td>
+                                        <td data-title="<%=data.dashboard.roles[i]._id%>" class="text-purple">0</td>
                                     <%}%>
                                 <%}%>
                             </tr>
