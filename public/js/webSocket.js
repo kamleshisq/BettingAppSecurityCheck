@@ -9269,19 +9269,26 @@ socket.on('connect', () => {
                     let html = `<tr><th>User name</th>
                     <th>${team1}</th>
                     <th>${team2}</th></tr>`
+                    let sumOfTeamA = 0
+                    let sumOfTeamB = 0
+                    let sumOfTeamC = 0
                     for(let i = 0; i < data.length; i++){
                         let team1data = 0 
                         let team2data = 0
                         if(data[0].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
                             team1data = data[0].selections[0].totalAmount
+                            sumOfTeamA += team1data
                             if(data[0].selections[1]){
                                 team2data = data[0].selections[1].totalAmount
+                                sumOfTeamB += team2data
                             }
                         }else{
                             if(data[0].selections[1]){
                                 team1data = data[0].selections[1].totalAmount
+                                sumOfTeamA += team1data
                             }
                             team2data = data[0].selections[0].totalAmount
+                            sumOfTeamB += team2data
                         }
                         html += `
                         <tr>
@@ -9289,8 +9296,14 @@ socket.on('connect', () => {
                             <td>${team1data}</td>
                             <td>${team2data}</td>
                         </tr>
+
                         `
                     }
+                    html += `<tr>
+                    <td>Total</td>
+                    <td>${sumOfTeamA}</td>
+                    <td>${sumOfTeamB}</td>
+                </tr>`
                     document.getElementById('match_odd').innerHTML = html
                 }else{
                     document.getElementById('match_odd').innerHTML = "There is no bets in this market"
