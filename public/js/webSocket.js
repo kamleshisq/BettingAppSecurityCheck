@@ -9275,19 +9275,20 @@ socket.on('connect', () => {
                     for(let i = 0; i < data.length; i++){
                         let team1data = 0 
                         let team2data = 0
-                        if(data[0].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
-                            team1data = data[0].selections[0].totalAmount
+                        console.log(data[i].selections[0].selectionName.toLowerCase(), team1.toLowerCase)
+                        if(data[i].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
+                            team1data = data[i].selections[0].totalAmount
                             sumOfTeamA += team1data
-                            if(data[0].selections[1]){
-                                team2data = data[0].selections[1].totalAmount
+                            if(data[i].selections[1]){
+                                team2data = data[i].selections[1].totalAmount
                                 sumOfTeamB += team2data
                             }
                         }else{
-                            if(data[0].selections[1]){
-                                team1data = data[0].selections[1].totalAmount
+                            if(data[i].selections[1]){
+                                team1data = data[i].selections[1].totalAmount
                                 sumOfTeamA += team1data
                             }
-                            team2data = data[0].selections[0].totalAmount
+                            team2data = data[i].selections[0].totalAmount
                             sumOfTeamB += team2data
                         }
                         html += `
