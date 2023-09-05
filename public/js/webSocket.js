@@ -9261,7 +9261,16 @@ socket.on('connect', () => {
             });
 
             socket.on('UerBook', data => {
-                console.log(data)
+                let html = `<tr><th>User name</th>
+                <th></th>
+                <th></th></tr>`
+                for(let i = 0; i < data.length; i++){
+                    html += `
+                    <tr>
+                        <td>${data[i].userName}
+                    </tr>
+                    `
+                }
             })
 
     }

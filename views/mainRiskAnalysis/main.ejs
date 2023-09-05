@@ -113,7 +113,7 @@
                       <div class="text-right">
                         <!-- <strong>Min : 100, Max : 10K</strong> -->
                         <div class="btn-group" >
-                            <button class="min-max-modal userBook" data-bs-toggle="modal" data-bs-target="#bookmaker-modal">User Book</button>
+                            <button class="min-max-modal userBook" data-bs-toggle="modal" data-bs-target="#matchodd-modal">User Book</button>
                             <button class="min-max-modal">User Book</button>
                             <button class="min-max-modal tbl-data-href" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button>
                         </div>
@@ -447,9 +447,9 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
         </div>
-        <div class="modal-header">
+        <!-- <div class="modal-header">
           <h4 class="modal-title">Match Odds</h4>
-        </div>
+        </div> -->
         <div class="modal-body">
           <div class="data-table">
             <table id="match_odd">
@@ -473,7 +473,11 @@
         <div class="modal-body">
             <div class="data-table">
           <table id="bookmakerTable">
-            
+            <tr>
+                <th>User name</th>
+                <th></th>
+                <th></th>
+            </tr>
           </table>
         </div>
         </div>
