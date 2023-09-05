@@ -9034,6 +9034,79 @@ socket.on('connect', () => {
                 }
             })
 
+
+            $(".only_over_blue").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    if(item){
+
+                        if(item.market_id == id){
+                            section = item
+                        }
+                    }
+                })
+                if(this.id == `${section.market_id}1` ){
+                    if(data.betLimits[0].max_odd < section.yes || section.yes == "-" || section.yes == "1,000.00" || section.yes == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        let x = (parseFloat(section.yes_rate) + 100)/100
+                        this.innerHTML = `<strong>${x}</strong> <span class="small"> ${section.yes}</span>`
+                    }
+                }
+            });
+
+
+            $(".only_over_red").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    if(item){
+
+                        if(item.market_id == id){
+                            section = item
+                        }
+                    }
+                })
+                let parentElement = this.parentNode
+                console.log(section.ball_running)
+                if(this.id == `${section.market_id}2` ){
+                    if(section.ball_running){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.add("suspended");
+                      $(this).parent().find(".match-status-message").text("Ball Running")
+                    }else if(section.suspended){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.add("suspended");
+                      $(this).parent().find(".match-status-message").text("Suspended")
+                    }else if(data.betLimits[0].max_odd < section.no || section.no == "-" || section.no == "1,000.00" || section.no == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                    }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
+                        $(this).parent().find(".match-status-message").text("")
+                        parentElement.classList.remove("suspended")
+                        let x = (parseFloat(section.no_rate) + 100)/100
+                        this.innerHTML = `<strong>${x}</strong> <span class="small"> ${section.no}</span>`
+                        // this.innerHTML = `<span><b>${section.no}</b></span>` 
+                    }
+                }
+            });
+
         })
 
 
