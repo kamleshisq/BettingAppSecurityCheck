@@ -7955,7 +7955,7 @@ socket.on('connect', () => {
                         <td class="text-nowrap" >${bets[i].marketName}</td>
                         <td>${bets[i].oddValue}</td>
                         <td class="text-nowrap" >${bets[i].match}</td>
-                        <td>${bets[i].selectionName}</td>`
+                        <td class="text-nowrap" >${bets[i].selectionName}</td>`
                     }else{
                         html += `<td>-</td>
                         <td>-</td><td>-</td><td>-</td>`
@@ -9250,8 +9250,7 @@ socket.on('connect', () => {
 
             $(document).ready(function () {
                 $('.userBook').click(function () {
-                    var closestMarket = $(this).closest('.market');
-                    console.log(closestMarket, 12321321321)
+                    var closestMarket = $(this).parents('.bets-table').find('.market');
                     if (closestMarket.length > 0) {
                         var marketId = closestMarket.attr('id');
                         console.log('Market ID:', marketId);
