@@ -9107,6 +9107,64 @@ socket.on('connect', () => {
                 }
             });
 
+            $(".odd_even_blue").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    if(item){
+
+                        if(item.market_id == id){
+                            section = item
+                        }
+                    }
+                })
+                if(this.id == `${section.market_id}1` ){
+                    if(data.betLimits[0].max_odd < section.odd || section.odd == "-" || section.odd == "1,000.00" || section.odd == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        this.innerHTML = `<strong>${section.odd}</strong>` 
+                    }
+                }
+            })
+
+            $(".odd_even_red").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    if(item){
+
+                        if(item.market_id == id){
+                            section = item
+                        }
+                    }
+                })
+                let parentElement = this.parentNode
+                if(this.id == `${section.market_id}2` ){
+                    if(section.ball_running){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else if(section.suspended){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }
+                    else if(data.betLimits[0].max_odd < section.even || section.even == "-" || section.even == "1,000.00" || section.even == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        this.innerHTML = `<strong>${section.even}</strong>` 
+                    }
+                }
+            });
+
         })
 
 
