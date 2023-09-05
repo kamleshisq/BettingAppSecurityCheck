@@ -56,8 +56,8 @@
                   <% let date = new Date(data[i].date)%>
                   <tr>
                       <td><%= i + 1%></td>
-                      <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
-                      <td><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+                      <td class="text-nowrap" ><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
+                      <td class="text-nowrap" ><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
                       <%if(data[i].creditDebitamount > 0){%>
                           <td><%=data[i].creditDebitamount%></td>
                           <td>-</td>

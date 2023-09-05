@@ -7633,8 +7633,8 @@ socket.on('connect', () => {
                 for(let i = 0; i < userAcc.length; i++){
                     let date = new Date(userAcc[i].date)
                     html += `<tr style="text-align: center;" class="blue"><td>${count + i}</td>
-                    <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
-                <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                    <td class="text-nowrap">${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
+                    <td class="text-nowrap">${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
                 if(userAcc[i].creditDebitamount > 0){
                     html += ` <td>${userAcc[i].creditDebitamount}</td>
                     <td>-</td>`
