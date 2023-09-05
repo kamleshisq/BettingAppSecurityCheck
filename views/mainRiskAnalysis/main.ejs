@@ -38,7 +38,9 @@
               <div class="bets-table">
                   <div class="title">
                       <div class="text-left market" id="<%=match.marketList.match_odd.marketId%>"><strong>Match Odds</strong></div>
-                      <div class="text-right"><strong>Min : <%=min%>, Max : <%=max%></strong></div>
+                      <div class="text-right">
+                        <strong>Min : <%=min%>, Max : <%=max%></strong>
+                        <button class="min-max-modal" data-bs-toggle="modal" data-bs-target="#matchodd-modal">Detail</button></div>
                   </div>
                       <% let runners = JSON.parse(match.marketList.match_odd.runners); %>
                     <% const runners1 = []; %>
@@ -102,7 +104,10 @@
               <div class="bets-table">
                   <div class="title">
                       <div class="text-left market" id="<%=match.marketList.bookmaker[0].marketId%>"><strong>Bookmaker</strong></div>
-                      <div class="text-right"><strong>Min : 100, Max : 10K</strong></div>
+                      <div class="text-right">
+                        <strong>Min : 100, Max : 10K</strong>
+                        <button class="min-max-modal" data-bs-toggle="modal" data-bs-target="#bookmaker-modal">Detail</button>
+                    </div>
                   </div>
                   <table>
                       <tr>
@@ -207,26 +212,26 @@
                   <div class="text-left"><strong>Fancy</strong></div>
               </div>
               <div class="tab-data-section">
-                  <div class="tab">
-                      <button class="tablinks active" data-tag="all">All</button>
-                      <%if(match.marketList.session != null){%>
-                        <%let sessionData = match.marketList.session.filter(item => item.status == 1 && !item.title.startsWith("Only") && item.title.includes("Over"))%>
-                        <%if(sessionData.length > 0){ %>
-                        <button class="tablinks" data-tag="session">Session</button>
-                        <%} %>
-                        <% let dataSessionOnly = match.marketList.session.filter(item => item.status == 1 && item.title.startsWith("Only")) %>
-                            <%if(dataSessionOnly.length > 0){%>
-                        <button class="tablinks" data-tag="Only_over">Only Overt</button>
-                        <%} %>
-                        <% let dataNotOnly = match.marketList.session.filter(item => item.status == 1 && !item.title.includes("Over")) %>
-                        <%if(dataNotOnly.length > 0 ) {%>
-                        <button class="tablinks" data-tag="wp_market">W/P Market</button>
-                        <%} %>
-                        <%}%>
-                        <%if(match.marketList.odd_even != null){%>
-                        <button class="tablinks" data-tag="odd_even">Odd/Even</button>
-                        <%}%>
-                  </div>
+                <div class="tab">
+                    <button class="tablinks active" data-tag="all">All</button>
+                    <%if(match.marketList.session != null){%>
+                      <%let sessionData = match.marketList.session.filter(item => item.status == 1 && !item.title.startsWith("Only") && item.title.includes("Over"))%>
+                      <%if(sessionData.length > 0){ %>
+                      <button class="tablinks" data-tag="session">Session</button>
+                      <%} %>
+                      <% let dataSessionOnly = match.marketList.session.filter(item => item.status == 1 && item.title.startsWith("Only")) %>
+                          <%if(dataSessionOnly.length > 0){%>
+                      <button class="tablinks" data-tag="Only_over">Only Overt</button>
+                      <%} %>
+                      <% let dataNotOnly = match.marketList.session.filter(item => item.status == 1 && !item.title.includes("Over")) %>
+                      <%if(dataNotOnly.length > 0 ) {%>
+                      <button class="tablinks" data-tag="wp_market">W/P Market</button>
+                      <%} %>
+                      <%}%>
+                      <%if(match.marketList.odd_even != null){%>
+                      <button class="tablinks" data-tag="odd_even">Odd/Even</button>
+                      <%}%>
+                </div>
                   <div class="tabcontent" id="session">
                       <table>
                           <tr>
@@ -438,6 +443,49 @@
     </div>
     </div>
 </body>
+
+<div class="modal fade" id="matchodd-modal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+        </div>
+        <div class="modal-header">
+          <h4 class="modal-title">Match Odds</h4>
+        </div>
+        <div class="modal-body">
+          <table>
+            <tr> <th>Market</th> <th>Demo col 1</th> <th>Demo col 2</th> </tr>
+            <tr> <td>Essex</td> <td>Demo col 1</td> <td>Demo col 2</th> </tr>
+            <tr> <td>Middlesex</td> <td>Demo col 1</td> <td>Demo col 2</th> </tr>
+            <tr> <td>The Draw</td> <td>Demo col 1</td> <td>Demo col 2</th> </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="bookmaker-modal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+        </div>
+        <div class="modal-header">
+          <h4 class="modal-title">Match Odds</h4>
+        </div>
+        <div class="modal-body">
+          <table>
+            <tr> <th>Market</th> <th>Demo col 1</th> <th>Demo col 2</th> </tr>
+            <tr> <td>Essex</td> <td>Demo col 1</td> <td>Demo col 2</th> </tr>
+            <tr> <td>Middlesex</td> <td>Demo col 1</td> <td>Demo col 2</th> </tr>
+            <tr> <td>The Draw</td> <td>Demo col 1</td> <td>Demo col 2</th> </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
