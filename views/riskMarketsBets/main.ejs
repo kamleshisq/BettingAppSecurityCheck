@@ -13,37 +13,39 @@
     <section class="dashboard-welcome-section">
       <div class="container-fluid">
         <div class="new-head"> 
-            <h3><%=bets[0].match%></h3><br>
-            <h4><%=bets[0].marketName%></h4>
-        </div>
-        <div class="sidebar-content">
-            <div class="data-table">
-                <table id="betTable">
-                    <tr>
-                        <th>Username</th>
-                        <th>Place Date</th>
-                        <th>Market</th>
-                        <!-- <th>Bet Type</th> -->
-                        <th>Odds</th>
-                        <th>Stake</th>
-                        <th>Action</th>
-                    </tr>
-                    <%for(let i = 0; i < bets.length; i++){%>
-                      <tr>
-                          <td><%=bets[i].userName%></td>
-                          <td>01/09/23, 4:37:38 PM</td>
-                          <td><%=bets[i].marketName%></td>
-                          <!-- <td><%=bets[i].userName%></td> -->
-                          <td><%=bets[i].oddValue%></td>
-                          <td><%=bets[i].Stake%></td>
-                          <td><div class="btn-group"><button class="btn alert-btn" id="<%=bets[i].id%>">Alert</button></div></td>
-                      </tr>
-                    <%}%>
-                </table>
-            </div>
+            <h3><%=bets[0].match%> <span class="match-odd-text"><%=bets[0].marketName%></span> </h3><br>
         </div>
     </section>
-    
+    <section>
+      <div class="container-fluid">
+        <div class="table-data-section">
+          <div class="data-table">
+              <table id="betTable">
+                  <tr>
+                      <th>Username</th>
+                      <th>Place Date</th>
+                      <th>Market</th>
+                      <!-- <th>Bet Type</th> -->
+                      <th>Odds</th>
+                      <th>Stake</th>
+                      <th>Action</th>
+                  </tr>
+                  <%for(let i = 0; i < bets.length; i++){%>
+                    <tr>
+                        <td><%=bets[i].userName%></td>
+                        <td>01/09/23, 4:37:38 PM</td>
+                        <td><%=bets[i].marketName%></td>
+                        <!-- <td><%=bets[i].userName%></td> -->
+                        <td><%=bets[i].oddValue%></td>
+                        <td><%=bets[i].Stake%></td>
+                        <td><div class="btn-group"><button class="btn alert-btn" id="<%=bets[i].id%>">Alert</button></div></td>
+                    </tr>
+                  <%}%>
+              </table>
+          </div>
+      </div>
+      </div>
+    </section>
     </div>
 </body>
 
