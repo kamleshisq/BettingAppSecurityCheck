@@ -2877,7 +2877,7 @@ io.on('connection', (socket) => {
                         userName: "$userName",
                         selectionName: "$selectionName",
                     },
-                    totalAmount: { $sum: { $multiply: ["$odds", "$stake"] } },
+                    totalAmount: { $sum: { $multiply: ["$oddValue", "$Stake"] } },
                     },
                 },
                 {
