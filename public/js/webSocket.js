@@ -9261,17 +9261,22 @@ socket.on('connect', () => {
             });
 
             socket.on('UerBook', data => {
-                let html = `<tr><th>User name</th>
-                <th></th>
-                <th></th></tr>`
-                for(let i = 0; i < data.length; i++){
-                    html += `
-                    <tr>
-                        <td>${data[i].userName}
-                    </tr>
-                    `
+                if(data.length > 0){
+                    let match = data[0].selections.matchName
+                    let team1 = match.split('v')[0]
+                    let team2 = match.split('v')[1]
+                    let html = `<tr><th>User name</th>
+                    <th>${team1}</th>
+                    <th>${team2}</th></tr>`
+                    for(let i = 0; i < data.length; i++){
+                        html += `
+                        <tr>
+                            <td>${data[i].userName}
+                        </tr>
+                        `
+                    }
+                    document.getElementById('match_odd').innerHTML = html
                 }
-                document.getElementById('match_odd').innerHTML = html
             })
 
     }
