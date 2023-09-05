@@ -9271,6 +9271,7 @@ socket.on('connect', () => {
                     </tr>
                     `
                 }
+                document.getElementById('match_odd').innerHTML = html
             })
 
     }
