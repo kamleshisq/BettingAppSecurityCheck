@@ -3342,3 +3342,13 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
             currentUser:req.currentUser
     })
 });
+
+
+exports.marketBets = catchAsync(async(req, res, next) => {
+    console.log(req.query.id)
+        res.status(200).render("./riskMarketsBets/main",{
+            title:"Risk Analysis",
+            user: req.currentUser,
+            currentUser:req.currentUser
+    })
+});
