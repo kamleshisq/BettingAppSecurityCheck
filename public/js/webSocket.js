@@ -9272,7 +9272,7 @@ socket.on('connect', () => {
                     for(let i = 0; i < data.length; i++){
                         let team1data = 0 
                         let team2data = 0
-                        if(team1 == data[0].selections[0].selectionName){
+                        if(data[0].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
                             team1data = data[0].selections[0].totalAmount
                             if(data[0].selections[1]){
                                 team2data = data[0].selections[1].totalAmount
