@@ -28,7 +28,17 @@
                         <th>Stake</th>
                         <th>Action</th>
                     </tr>
-                    
+                    <%for(let i = 0; i < bets.length; i++){%>
+                      <tr>
+                          <td><%=bets[i].userName%></td>
+                          <td>01/09/23, 4:37:38 PM</td>
+                          <td><%=bets[i].marketName%></td>
+                          <!-- <td><%=bets[i].userName%></td> -->
+                          <td><%=bets[i].oddValue%></td>
+                          <td><%=bets[i].Stake%></td>
+                          <td><div class="btn-group"><button class="btn alert-btn" id="<%=bets[i].id%>">Alert</button></div></td>
+                      </tr>
+                    <%}%>
                 </table>
             </div>
         </div>
