@@ -347,27 +347,6 @@
                                 </td>
                             </tr>
                         <%}%>
-                          <tr>
-                              <td>England</td>
-                              <td><div class="min-max-text"><strong>Min : 100, Max : 10K</strong></div></td>
-                              <td>
-                                  <div class="bets-option-btn">
-                                      <div class="bets-btn-group">                                 
-                                          <div class="bets-btn">
-                                              <strong>1.54</strong>
-                                              <span class="small">469</span>
-                                          </div>
-                                      </div>
-                                      <div class="bets-btn-group">                                  
-                                          <div class="bets-btn">
-                                              <strong>1.54</strong>
-                                              <span class="small">469</span>
-                                          </div>
-                                      </div>
-                                      <div class="match-status-message">Suspended</div>
-                                  </div>
-                              </td>
-                          </tr>
                       </table>
                   </div>
                   <%} %>
@@ -385,47 +364,28 @@
                                   </div>
                               </th>
                           </tr>
-                          <tr>
-                              <td>England</td>
-                              <td><div class="min-max-text"><strong>Min : 100, Max : 10K</strong></div></td>
-                              <td>    
-                              <div class="bets-option-btn">
-                                  <div class="bets-btn-group">                                 
-                                      <div class="bets-btn">
-                                          <strong>1.54</strong>
-                                          <span class="small">469</span>
-                                      </div>
-                                  </div>
-                                  <div class="bets-btn-group pink">                                  
-                                      <div class="bets-btn">
-                                          <strong>1.54</strong>
-                                          <span class="small">469</span>
-                                      </div>
-                                  </div>
-                              </div>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td>England</td>
-                              <td><div class="min-max-text"><strong>Min : 100, Max : 10K</strong></div></td>
-                              <td>
-                                  <div class="bets-option-btn">
-                                      <div class="bets-btn-group">                                 
-                                          <div class="bets-btn">
-                                              <strong>1.54</strong>
-                                              <span class="small">469</span>
-                                          </div>
-                                      </div>
-                                      <div class="bets-btn-group">                                  
-                                          <div class="bets-btn">
-                                              <strong>1.54</strong>
-                                              <span class="small">469</span>
-                                          </div>
-                                      </div>
-                                      <div class="match-status-message">Suspended</div>
-                                  </div>
-                              </td>
-                          </tr>
+                          <%for(let i = 0; i < match.marketList.odd_even.length; i++){%>
+                            <tr class="market" id="<%=match.marketList.odd_even[i].marketId%>">
+                                <td><%=match.marketList.odd_even[i].title%></td>
+                                <td><div class="min-max-text"><strong>Min : 100, Max : 10K</strong></div></td>
+                                <td>    
+                                <div class="bets-option-btn">
+                                    <div class="bets-btn-group">                                 
+                                        <div class="bets-btn odd_even_blue" id="<%=match.marketList.odd_even[i].marketId%>1">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                    <div class="bets-btn-group pink">                                  
+                                        <div class="bets-btn odd_even_red" id="<%=match.marketList.odd_even[i].marketId%>2">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                        <%}%>
                       </table>
                   </div>
                   <%}%>
