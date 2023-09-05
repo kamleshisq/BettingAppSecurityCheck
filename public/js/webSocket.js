@@ -9261,6 +9261,7 @@ socket.on('connect', () => {
             });
 
             socket.on('UerBook', data => {
+                console.log(data)
                 if(data.length > 0){
                     let match = data[0].selections[0].matchName
                     let team1 = match.split('v')[0]
@@ -9269,9 +9270,20 @@ socket.on('connect', () => {
                     <th>${team1}</th>
                     <th>${team2}</th></tr>`
                     for(let i = 0; i < data.length; i++){
+                        let team1data = 0 
+                        let team2data = 0
+                        if(team1 == data[0].selections[0].selectionName){
+                            team1data = data[0].selections[0].totalAmount
+                            team2data = data[0].selections[1].totalAmount
+                        }else{
+                            team1data = data[0].selections[1].totalAmount
+                            team2data = data[0].selections[0].totalAmount
+                        }
                         html += `
                         <tr>
-                            <td>${data[i].userName}
+                            <td>${data[i].userName}</td>
+                            <td>${team1data}</td>
+                            <td>${team2data}</td>
                         </tr>
                         `
                     }
