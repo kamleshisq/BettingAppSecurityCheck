@@ -7438,7 +7438,7 @@ socket.on('connect', () => {
           })
     }
 
-    if(pathname === "/admin/dashboard" && href === "http://ollscores.com/admin/dashboard"){
+    if(pathname === "/admin/dashboard" ){
         console.log(LOGINDATA.LOGINUSER)
         if(LOGINDATA.LOGINUSER != ""){
             console.log("WORKING")
