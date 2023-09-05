@@ -36,9 +36,10 @@
                       <th>Action</th>
                   </tr>
                   <%for(let i = 0; i < bets.length; i++){%>
+                    <% let date = new Date(bets[i].date)%>
                     <tr>
                         <td><%=bets[i].userName%></td>
-                        <td>01/09/23, 4:37:38 PM</td>
+                        <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
                         <td><%=bets[i].marketName%></td>
                         <!-- <td><%=bets[i].userName%></td> -->
                         <td><%=bets[i].oddValue%></td>

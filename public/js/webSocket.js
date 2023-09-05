@@ -3337,7 +3337,7 @@ socket.on('connect', () => {
                         html += `<tr style="text-align: center;" >`
                     }
                     html += `<td>${i + count}</td>
-                    <td>${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
+                    <td class="date-time">${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
                     <td>${bets[i].userName}</td>
                     <td class="text-nowrap">${bets[i].event}</td>
                     `
