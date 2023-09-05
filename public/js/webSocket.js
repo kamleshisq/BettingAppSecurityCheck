@@ -9253,7 +9253,7 @@ socket.on('connect', () => {
                     var closestMarket = $(this).parents('.bets-table').find('.market');
                     if (closestMarket.length > 0) {
                         var marketId = closestMarket.attr('id');
-                        console.log('Market ID:', marketId);
+                        socket.emit('UerBook', {marketId, LOGINDATA})
                     } else {
                         console.log('Market not found.');
                     }

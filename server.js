@@ -2843,6 +2843,11 @@ io.on('connection', (socket) => {
             socket.emit('BETONEVENT', {message:"err", status:"error"})
         }
     })
+
+
+    socket.on('UerBook', async(data) => {
+        console.log(data)
+    })
     
 })
 
