@@ -3347,6 +3347,7 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
 exports.marketBets = catchAsync(async(req, res, next) => {
     console.log(req.query.id)
     let bets = betModel.find({marketId:req.query.id})
+    console.log(bets)
         res.status(200).render("./riskMarketsBets/main",{
             title:"Risk Analysis",
             user: req.currentUser,
