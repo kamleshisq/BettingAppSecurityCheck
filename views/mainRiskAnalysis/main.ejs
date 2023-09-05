@@ -518,5 +518,16 @@
     });
 });
 </script>
+
+<script>
+     var betsButtons = document.querySelectorAll('.tbl-data-href');
+
+betsButtons.forEach(function(button) {
+    button.addEventListener('click', function () {
+        var newURL = button.getAttribute('data-href');
+        window.location.href = newURL;
+    });
+});
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </html>

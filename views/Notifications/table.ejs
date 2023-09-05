@@ -3,7 +3,7 @@
         <tr>
           <th>S.No</th>
           <th>Event</th>
-          <th>Message </th>
+          <th class="message" >Message </th>
           <th >Actions</th>
         </tr>
     </thead>
@@ -16,7 +16,7 @@
             <%}%>    
             <td><%=i + 1%></td>
             <td><%=notifications[i].title%></td>
-            <td><%=notifications[i].message%></td>
+            <td class="message"><%=notifications[i].message%></td>
             <%if(notifications[i].status){%>
                 <td>
                     <div class="btn-group">
