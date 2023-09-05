@@ -2900,6 +2900,7 @@ io.on('connection', (socket) => {
                 },
             ])
            console.log(Bets)
+           console.log(Bets.selectionName)
         }catch(err){
             socket.emit('UerBook', {message:"err", status:"error"})
         }
