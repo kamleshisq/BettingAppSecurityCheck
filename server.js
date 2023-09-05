@@ -2900,7 +2900,7 @@ io.on('connection', (socket) => {
                 },
             ])
            console.log(Bets)
-           console.log(Bets.selections)
+           console.log(Bets[0].selections)
         }catch(err){
             socket.emit('UerBook', {message:"err", status:"error"})
         }
