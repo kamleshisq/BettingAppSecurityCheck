@@ -209,9 +209,23 @@
               <div class="tab-data-section">
                   <div class="tab">
                       <button class="tablinks active" data-tag="all">All</button>
-                      <button class="tablinks" data-tag="session">Session</button>
-                      <button class="tablinks" data-tag="wp_market">W/P Market</button>
-                      <button class="tablinks" data-tag="odd_even">Odd/Even</button>
+                      <%if(match.marketList.session != null){%>
+                        <%let sessionData = match.marketList.session.filter(item => item.status == 1 && !item.title.startsWith("Only") && item.title.includes("Over"))%>
+                        <%if(sessionData.length > 0){ %>
+                        <button class="tablinks" data-tag="session">Session</button>
+                        <%} %>
+                        <% let dataSessionOnly = match.marketList.session.filter(item => item.status == 1 && item.title.startsWith("Only")) %>
+                            <%if(dataSessionOnly.length > 0){%>
+                        <button class="tablinks" data-tag="Only_over">Only Overt</button>
+                        <%} %>
+                        <% let dataNotOnly = match.marketList.session.filter(item => item.status == 1 && !item.title.includes("Over")) %>
+                        <%if(dataNotOnly.length > 0 ) {%>
+                        <button class="tablinks" data-tag="wp_market">W/P Market</button>
+                        <%} %>
+                        <%}%>
+                        <%if(match.marketList.odd_even != null){%>
+                        <button class="tablinks" data-tag="odd_even">Odd/Even</button>
+                        <%}%>
                   </div>
                   <div class="tabcontent" id="session">
                       <table>
