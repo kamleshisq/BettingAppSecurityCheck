@@ -39,11 +39,9 @@
                   <div class="title">
                       <div class="text-left market" id="<%=match.marketList.match_odd.marketId%>"><strong>Match Odds</strong></div>
                       <div class="text-right">
-                        <!-- <strong>Min : <%=min%>, Max : <%=max%></strong> -->
-                        <div class="title-button" >
-                            <button class="min-max-modal" data-bs-toggle="modal" data-bs-target="#matchodd-modal">User Book</button></div>
-                            <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.match_odd.marketId%>">Bets</button></div>
-                        </div>
+                        <strong>Min : <%=min%>, Max : <%=max%></strong>
+                        <button class="min-max-modal" data-bs-toggle="modal" data-bs-target="#matchodd-modal">User Book</button></div>
+                        <!-- <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.match_odd.marketId%>">Bets</button></div> -->
                   </div>
                       <% let runners = JSON.parse(match.marketList.match_odd.runners); %>
                     <% const runners1 = []; %>
@@ -108,11 +106,9 @@
                   <div class="title">
                       <div class="text-left market" id="<%=match.marketList.bookmaker[0].marketId%>"><strong>Bookmaker</strong></div>
                       <div class="text-right">
-                        <!-- <strong>Min : 100, Max : 10K</strong> -->
-                        <div  class="title-button" >
-                            <button class="min-max-modal" data-bs-toggle="modal" data-bs-target="#bookmaker-modal">User Book</button>
-                            <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button></div>
-                        </div>
+                        <strong>Min : 100, Max : 10K</strong>
+                        <button class="min-max-modal" data-bs-toggle="modal" data-bs-target="#bookmaker-modal">User Book</button>
+                        <!-- <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button></div> -->
                     </div>
                   </div>
                   <table>
@@ -256,7 +252,7 @@
                             <%for(let i = 0; i < sessionData.length; i++){%>
                                 <tr class="market" id="<%=sessionData[i].marketId%>">
                                     <td ><%=sessionData[i].title%></td>
-                                    
+                                    <td><div class="min-max-text"><strong>Min : 100, Max : 10K</strong></div></td>
                                     <td>    
                                     <div class="bets-option-btn">
                                         <div class="bets-btn-group">                                 
@@ -295,7 +291,7 @@
                             <%for(let i = 0; i < dataSessionOnly.length; i++){%>
                             <tr class="market" id="<%=sessionData[i].marketId%>">
                                 <td ><%=sessionData[i].title%></td>
-                                
+                                <td><div class="min-max-text"><strong>Min : 100, Max : 10K</strong></div></td>
                                 <td>    
                                 <div class="bets-option-btn">
                                     <div class="bets-btn-group">                                 
@@ -334,7 +330,7 @@
                           <%for(let i = 0; i < dataNotOnly.length; i++){%>
                             <tr class="market" id="<%=dataNotOnly[i].marketId%>">
                                 <td><%=dataNotOnly[i].title%></td>
-                                
+                                <td><div class="min-max-text"><strong>Min : 100, Max : 10K</strong></div></td>
                                 <td>    
                                 <div class="bets-option-btn">
                                     <div class="bets-btn-group">                                 
@@ -373,7 +369,7 @@
                           <%for(let i = 0; i < match.marketList.odd_even.length; i++){%>
                             <tr class="market" id="<%=match.marketList.odd_even[i].marketId%>">
                                 <td><%=match.marketList.odd_even[i].title%></td>
-                                
+                                <td><div class="min-max-text"><strong>Min : 100, Max : 10K</strong></div></td>
                                 <td>    
                                 <div class="bets-option-btn">
                                     <div class="bets-btn-group">                                 
