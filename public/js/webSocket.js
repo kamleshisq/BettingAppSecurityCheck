@@ -7573,7 +7573,11 @@ socket.on('connect', () => {
 
                 socket.on("FIlterDashBoard", data => {
                     console.log(data)
-                    document.getElementById('betCount').innerText = data.result.betCount
+                    if(data.result.betCount){
+                        document.getElementById('betCount').innerText = data.result.betCount
+                    }else{
+                        document.getElementById('betCount').innerText = 0
+                    }
                     document.getElementById('Profit').innerText = data.result.Income
                     document.getElementById('turnOver').innerText = data.result.turnOver
                     document.getElementById('adminCount').innerText = data.result.adminCount
