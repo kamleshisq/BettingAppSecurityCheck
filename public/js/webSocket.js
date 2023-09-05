@@ -8128,7 +8128,7 @@ socket.on('connect', () => {
                     var formattedTime = date.toLocaleString('en-US', options);
                     html += `<tr class="acount-stat-tbl-body-tr">
                         <td>${i+count}</td>
-                        <td>${formattedTime}</td>
+                        <td class="date-time">${formattedTime}</td>
                         <td>${bets[i].userName}</td>
                         <td>${bets[i].event}</td>`
                     if(bets[i].match){
@@ -8327,7 +8327,7 @@ socket.on('connect', () => {
                 var formattedTime = date.toLocaleString('en-US', options);
                 html += `<tr class="acount-stat-tbl-body-tr">
                     <td>${i+countAcc}</td>
-                    <td>${formattedTime}</td>`
+                    <td class="date-time">${formattedTime}</td>`
                     if(userAcc[i].creditDebitamount > 0){
                         html += `<td>${userAcc[i].creditDebitamount}</td>
                         <td>0</td>`
