@@ -53,6 +53,7 @@
                             <%runners1.push(item.runner);%>
                             <%secIds.push(item.secId);%>
                             <%});%>
+                            <%console.log(runners1.length, "LLLL")%>
                             <%for(let j = 0; j < runners1.length; j++){%>
                               <tr>
                                 <td><%=runners1[j]%></td>
@@ -71,7 +72,7 @@
                             <%for(let j = 0; j < runners1.length; j++){%>
                               <tr>
                                 <td><%=runners1[j]%></td>
-                                  <td id="<%=secIds[j]%>">01</td>
+                                  <td id="<%=secIds[j]%>">00</td>
                                   <td id="<%=secIds[j]%>B">00</td>
                               </tr>
                             <%}%>
