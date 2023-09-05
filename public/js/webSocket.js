@@ -9262,7 +9262,7 @@ socket.on('connect', () => {
 
             socket.on('UerBook', data => {
                 if(data.length > 0){
-                    let match = data[0].selections.matchName
+                    let match = data[0].selections[0].matchName
                     let team1 = match.split('v')[0]
                     let team2 = match.split('v')[1]
                     let html = `<tr><th>User name</th>
