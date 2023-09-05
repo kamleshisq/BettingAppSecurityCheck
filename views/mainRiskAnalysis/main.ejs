@@ -114,8 +114,8 @@
                         <!-- <strong>Min : 100, Max : 10K</strong> -->
                         <div class="btn-group" >
                             <button class="min-max-modal" data-bs-toggle="modal" data-bs-target="#bookmaker-modal">User Book</button>
-                            <button class="min-max-modal">User Book</button>
-                            <button class="min-max-modal">Bets</button>
+                            <button >User Book</button>
+                            <button >Bets</button>
                         </div>
                         <!-- <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button></div> -->
                     </div>
@@ -250,7 +250,6 @@
                         <table>
                             <tr>
                                 <th>Sessions</th>
-                                
                                 <th>
                                     <div class="bets-option-btn">
                                         <div class="bets-btn-group">Yes</div>
@@ -261,7 +260,6 @@
                             <%for(let i = 0; i < sessionData.length; i++){%>
                                 <tr class="market" id="<%=sessionData[i].marketId%>">
                                     <td ><%=sessionData[i].title%></td>
-                                    
                                     <td>    
                                     <div class="bets-option-btn">
                                         <div class="bets-btn-group">                                 
@@ -289,7 +287,6 @@
                         <table>
                             <tr>
                                 <th>Only Over</th>
-                                
                                 <th>
                                     <div class="bets-option-btn">
                                         <div class="bets-btn-group">Yes</div>
@@ -300,7 +297,6 @@
                             <%for(let i = 0; i < dataSessionOnly.length; i++){%>
                             <tr class="market" id="<%=sessionData[i].marketId%>">
                                 <td ><%=sessionData[i].title%></td>
-                                
                                 <td>    
                                 <div class="bets-option-btn">
                                     <div class="bets-btn-group">                                 
@@ -328,7 +324,6 @@
                       <table>
                           <tr>
                               <th>W/P Market</th>
-                              
                               <th>
                                   <div class="bets-option-btn">
                                       <div class="bets-btn-group">Yes</div>
@@ -339,7 +334,6 @@
                           <%for(let i = 0; i < dataNotOnly.length; i++){%>
                             <tr class="market" id="<%=dataNotOnly[i].marketId%>">
                                 <td><%=dataNotOnly[i].title%></td>
-                                
                                 <td>    
                                 <div class="bets-option-btn">
                                     <div class="bets-btn-group">                                 
@@ -367,7 +361,6 @@
                       <table>
                           <tr>
                               <th>Odd/Even</th>
-                              
                               <th>
                                   <div class="bets-option-btn">
                                       <div class="bets-btn-group">Yes</div>
@@ -378,7 +371,6 @@
                           <%for(let i = 0; i < match.marketList.odd_even.length; i++){%>
                             <tr class="market" id="<%=match.marketList.odd_even[i].marketId%>">
                                 <td><%=match.marketList.odd_even[i].title%></td>
-                                
                                 <td>    
                                 <div class="bets-option-btn">
                                     <div class="bets-btn-group">                                 
@@ -458,12 +450,14 @@
           <h4 class="modal-title">Match Odds</h4>
         </div>
         <div class="modal-body">
-          <table>
-            <tr> <th>Market</th> <th>Demo col 1</th> <th>Demo col 2</th> </tr>
-            <tr> <td>Essex</td> <td>Demo col 1</td> <td>Demo col 2</th> </tr>
-            <tr> <td>Middlesex</td> <td>Demo col 1</td> <td>Demo col 2</th> </tr>
-            <tr> <td>The Draw</td> <td>Demo col 1</td> <td>Demo col 2</th> </tr>
-          </table>
+          <div class="data-table">
+            <table>
+                <tr> <th>Market</th> <th>Demo col 1</th> <th>Demo col 2</th> </tr>
+                <tr> <td>Essex</td> <td>Demo col 1</td> <td>Demo col 2</th> </tr>
+                <tr> <td>Middlesex</td> <td>Demo col 1</td> <td>Demo col 2</th> </tr>
+                <tr> <td>The Draw</td> <td>Demo col 1</td> <td>Demo col 2</th> </tr>
+              </table>
+          </div>
         </div>
       </div>
     </div>
@@ -479,12 +473,14 @@
           <h4 class="modal-title">Match Odds</h4>
         </div>
         <div class="modal-body">
+            <div class="data-table">
           <table>
             <tr> <th>Market</th> <th>Demo col 1</th> <th>Demo col 2</th> </tr>
             <tr> <td>Essex</td> <td>Demo col 1</td> <td>Demo col 2</th> </tr>
             <tr> <td>Middlesex</td> <td>Demo col 1</td> <td>Demo col 2</th> </tr>
             <tr> <td>The Draw</td> <td>Demo col 1</td> <td>Demo col 2</th> </tr>
           </table>
+        </div>
         </div>
       </div>
     </div>
