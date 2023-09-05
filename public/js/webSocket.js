@@ -9260,6 +9260,10 @@ socket.on('connect', () => {
                 });
             });
 
+            socket.on('UerBook', data => {
+                console.log(data)
+            })
+
     }
 
 })

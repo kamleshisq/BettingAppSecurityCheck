@@ -2876,6 +2876,7 @@ io.on('connection', (socket) => {
                     _id: {
                         userName: "$userName",
                         selectionName: "$selectionName",
+                        matchName: "$match",
                     },
                     totalAmount: { $sum: { $multiply: ["$oddValue", "$Stake"] } },
                     },
@@ -2887,6 +2888,7 @@ io.on('connection', (socket) => {
                         $push: {
                         selectionName: "$_id.selectionName",
                         totalAmount: "$totalAmount",
+                        matchName: "$_id.matchName",
                         },
                     },
                     },
@@ -2901,6 +2903,7 @@ io.on('connection', (socket) => {
             ])
            console.log(Bets)
            console.log(Bets[0].selections)
+           socket.emit('UerBook', Bets);
         }catch(err){
             socket.emit('UerBook', {message:"err", status:"error"})
         }
