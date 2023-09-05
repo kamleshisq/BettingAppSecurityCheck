@@ -12,10 +12,15 @@
   <div class="dashboard-main-wraper">
     <section class="dashboard-welcome-section">
       <div class="container-fluid">
-        <div class="new-head"> 
-            <h3><%=bets[0].match%> <span class="match-odd-text"><%=bets[0].marketName%></span> </h3><br>
-        </div>
+        <%if(bets.length > 0){%>
+            <div class="new-head"> 
+                <h3><%=bets[0].match%> <span class="match-odd-text"><%=bets[0].marketName%></span> </h3><br>
+            </div>
+        <%}else{%>
+            <div class="new-head">There is no bets in this market</div>
+        <%}%>
     </section>
+    <%if(bets.length > 0){%>
     <section>
       <div class="container-fluid">
         <div class="table-data-section">
@@ -46,6 +51,7 @@
       </div>
       </div>
     </section>
+    <%}%>
     </div>
 </body>
 
