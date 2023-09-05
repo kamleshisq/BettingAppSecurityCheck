@@ -13,9 +13,25 @@
     <section class="dashboard-welcome-section">
       <div class="container-fluid">
         <div class="new-head"> 
-            <h3><%=bets[0].match%></h3>
+            <h3><%=bets[0].match%></h3><br>
+            <h4><%=bets[0].marketName%></h4>
         </div>
-      
+        <div class="sidebar-content">
+            <div class="data-table">
+                <table id="betTable">
+                    <tr>
+                        <th>Username</th>
+                        <th>Place Date</th>
+                        <th>Market</th>
+                        <!-- <th>Bet Type</th> -->
+                        <th>Odds</th>
+                        <th>Stake</th>
+                        <th>Action</th>
+                    </tr>
+                    
+                </table>
+            </div>
+        </div>
     </section>
     
     </div>
