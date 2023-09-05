@@ -41,7 +41,7 @@
                       <div class="text-right">
                         <strong>Min : <%=min%>, Max : <%=max%></strong>
                         <button class="min-max-modal" data-bs-toggle="modal" data-bs-target="#matchodd-modal">User Book</button></div>
-                        <button data-href="/admin/matchBets?id=<%=match.marketList.match_odd.marketId%>">Bets</button></div>
+                        <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.match_odd.marketId%>">Bets</button></div>
                   </div>
                       <% let runners = JSON.parse(match.marketList.match_odd.runners); %>
                     <% const runners1 = []; %>
@@ -108,7 +108,7 @@
                       <div class="text-right">
                         <strong>Min : 100, Max : 10K</strong>
                         <button class="min-max-modal" data-bs-toggle="modal" data-bs-target="#bookmaker-modal">User Book</button>
-                        <button data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button></div>
+                        <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button></div>
                     </div>
                   </div>
                   <table>
