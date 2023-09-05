@@ -9274,9 +9274,13 @@ socket.on('connect', () => {
                         let team2data = 0
                         if(team1 == data[0].selections[0].selectionName){
                             team1data = data[0].selections[0].totalAmount
-                            team2data = data[0].selections[1].totalAmount
+                            if(data[0].selections[1]){
+                                team2data = data[0].selections[1].totalAmount
+                            }
                         }else{
-                            team1data = data[0].selections[1].totalAmount
+                            if(data[0].selections[1]){
+                                team1data = data[0].selections[1].totalAmount
+                            }
                             team2data = data[0].selections[0].totalAmount
                         }
                         html += `
