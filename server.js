@@ -2870,7 +2870,34 @@ io.on('connection', (socket) => {
                     $match: {
                       "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
                     }
-                  }
+                  },
+                {
+                    $group: {
+                    _id: {
+                        userName: "$userName",
+                        selectionName: "$selectionName",
+                    },
+                    totalAmount: { $sum: { $multiply: ["$odds", "$stake"] } },
+                    },
+                },
+                {
+                    $group: {
+                    _id: "$_id.userName",
+                    selections: {
+                        $push: {
+                        selectionName: "$_id.selectionName",
+                        totalAmount: "$totalAmount",
+                        },
+                    },
+                    },
+                },
+                {
+                    $project: {
+                    _id: 0,
+                    userName: "$_id",
+                    selections: 1,
+                    },
+                },
             ])
            console.log(Bets)
         }catch(err){
