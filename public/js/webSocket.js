@@ -9251,6 +9251,7 @@ socket.on('connect', () => {
             $(document).ready(function () {
                 $('.userBook').click(function () {
                     var closestMarket = $(this).closest('.market');
+                    console.log(closestMarket, 12321321321)
                     if (closestMarket.length > 0) {
                         var marketId = closestMarket.attr('id');
                         console.log('Market ID:', marketId);
