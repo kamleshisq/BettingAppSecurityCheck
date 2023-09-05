@@ -2847,6 +2847,35 @@ io.on('connection', (socket) => {
 
     socket.on('UerBook', async(data) => {
         console.log(data)
+        try{
+            let Bets = await Bet.aggregate([
+                {
+                    $match: {
+                        status: "OPEN" ,
+                        marketId: data.marketId
+                    }
+                },
+                {
+                    $lookup: {
+                      from: "users",
+                      localField: "userName",
+                      foreignField: "userName",
+                      as: "user"
+                    }
+                  },
+                  {
+                    $unwind: "$user"
+                  },
+                  {
+                    $match: {
+                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
+                    }
+                  }
+            ])
+           console.log(Bets)
+        }catch(err){
+            socket.emit('UerBook', {message:"err", status:"error"})
+        }
     })
     
 })
