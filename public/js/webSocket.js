@@ -9292,6 +9292,8 @@ socket.on('connect', () => {
                         `
                     }
                     document.getElementById('match_odd').innerHTML = html
+                }else{
+                    document.getElementById('match_odd').innerHTML = "There is no bets in this market"
                 }
             })
 
