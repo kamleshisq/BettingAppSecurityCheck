@@ -7,11 +7,11 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
   let isBookmaker = false
   let isToss = false
   result = sportData[0].gameList[0].eventList.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == multimarket.marketIds[i])
-  console.log("WORKINGGGG", result)
-    if(!result){
-        let footBall = sportData[1].gameList.find(item => item.sport_name === "Football")
-        footBall = footBall.eventList
-        result = footBall.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == multimarket.marketIds[i])
+  if(!result){
+    let footBall = sportData[1].gameList.find(item => item.sport_name === "Football")
+    footBall = footBall.eventList
+    result = footBall.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == multimarket.marketIds[i])
+    console.log("WORKINGGGG", result)
         if(!result){
             let Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis")
             Tennis = Tennis.eventList
