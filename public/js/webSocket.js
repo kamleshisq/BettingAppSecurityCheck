@@ -9333,8 +9333,19 @@ socket.on('connect', () => {
             let data = Object.fromEntries(fd.entries());
             let id = LOGINDATA.LOGINUSER._id
             data.id = id
-            // socket.emit("updateRules", data)
-            console.log(data)
+            socket.emit("updateUserDetailssss", data)
+            // console.log(data)
+        })
+
+        socket.on('updateUserDetailssss', data => {
+            if(data.message == "err"){
+                togglePopupMain('popup-2', "redPopUP2", "Something went wrong please try again later")
+            }else{
+                togglePopupMain('popup-1', "redPopUP", "updated!")
+                setTimeout(()=>{
+                    window.location = '/profile'
+                  }, 500)
+            }
         })
     }
 

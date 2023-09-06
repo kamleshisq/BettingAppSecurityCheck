@@ -2909,6 +2909,16 @@ io.on('connection', (socket) => {
             socket.emit('UerBook', {message:"err", status:"error"})
         }
     })
+
+    socket.on("updateUserDetailssss", async(data) => {
+        try{
+            let user = await User.findByIdAndUpdate(data.id, {contact:data.contact, email:data.email})
+            socket.emit('updateUserDetailssss', user)
+        }catch(err){
+            console.log(err)
+            socket.emit('updateUserDetailssss', {message:"err", status:"error"})
+        }
+    })
     
 })
 
