@@ -2043,11 +2043,11 @@ io.on('connection', (socket) => {
         }
 
         betCount = await Bet.aggregate([
-            {
-                $match:{
-                    date:filter
-                }
-            },
+            // {
+            //     $match:{
+            //         date:filter
+            //     }
+            // },
             {
                 $lookup: {
                   from: "users",
