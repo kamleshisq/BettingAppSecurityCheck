@@ -474,6 +474,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             }
         ])
 
+        console.log(adminCount)
         betCount = await betModel.aggregate([
             {
                 $lookup: {
