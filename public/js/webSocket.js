@@ -9215,7 +9215,7 @@ socket.on('connect', () => {
                     let date = new Date(data.data[i].date)
                     html += `<tr>
                     <td>${data.data[i].userName}</td>
-                    <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
+                    <td class="date-time" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
                     <td>${data.data[i].marketName}</td>
                     <!-- <td>${data.data[i].userName}</td> -->
                     <td>${data.data[i].oddValue}</td>
