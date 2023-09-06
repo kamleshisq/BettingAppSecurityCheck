@@ -66,7 +66,11 @@
                           </tr>
                           <tr class="flex-justify">
                             <td>Active Admins</td>
-                            <td class="text-purple" id="adminCount"><%=data.dashboard.adminCount%></td>
+                            <%if(data.dashboard.adminCount.length > 0){%>
+                              <td class="text-purple" id="adminCount"><%=data.dashboard.adminCount[0].totalAmountt%></td>
+                              <%}else{%>
+                              <td class="text-purple" id="adminCount">00</td>
+                            <%}%>
                           </tr>
                           <tr class="flex-justify blue">
                             <td>Turn Over</td>
