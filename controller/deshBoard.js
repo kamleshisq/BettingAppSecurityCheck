@@ -4,7 +4,7 @@ const AppError = require('./../utils/AppError');
 const User = require("../model/userModel");
 const betModel = require("../model/betmodel");
 const accountModel = require("../model/accountStatementByUserModel");
-
+const loginLogs = require('../model/loginLogs');
 exports.dashboardData = catchAsync(async(req, res, next) => {
     let roles
     let users
@@ -410,11 +410,37 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         ])
 
 
-        userCount = await User.countDocuments({
-            roleName: 'user',
-            is_Online: true,
-            parentUsers : { $in: [req.currentUser.id] }
-        });
+        userCount = await loginLogs.aggregate([
+            {
+                $lookup: {
+                  from: "users",
+                  localField: "userName",
+                  foreignField: "userName",
+                  as: "user"
+                }
+            },
+            {
+                $unwind: "$user"
+            },
+            {
+                $match: {
+                  "user.parentUsers": { $in: [req.currentUser.id] },
+                  "user.roleName" : "user",
+                //   "user.is_Online" : true
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    uniqueUsers: { $addToSet: "$user._id" } 
+                }
+            },
+            {
+                $project: {
+                    totalAmount: { $size: "$uniqueUsers" } 
+                }
+            }
+        ])
 
         adminCount = await User.countDocuments({
             roleName: { $ne: 'user' },
