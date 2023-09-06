@@ -3196,6 +3196,15 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
         },
       ]);
     console.log(data)
+    let sport = ""
+    if(data[0]._id.match == 1){
+        sport = "Football"
+    }else if (data[0]._id.match == 4 ){
+        sport = "Cricket"
+    }else if (data[0]._id.match == 2){
+        sport = "Tennis"
+    }
+    let event = sportId
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportEventwise/main", {
         title:"Commission Report",
@@ -3204,7 +3213,9 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
         check:"Comm",
         userLog,
         notifications:req.notifications,
-        data
+        data,
+        sport,
+        event
     })
 })
 
