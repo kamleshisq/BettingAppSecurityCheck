@@ -1922,7 +1922,7 @@ io.on('connection', (socket) => {
             };
         } else if (data.value === "all") {
             filter = {
-                $lt : new Date(currentDateString)
+                
             };
         } else {
             filter = {
@@ -2043,11 +2043,11 @@ io.on('connection', (socket) => {
         }
 
         betCount = await Bet.aggregate([
-            // {
-            //     $match:{
-            //         date:filter
-            //     }
-            // },
+            {
+                $match:{
+                    date:filter
+                }
+            },
             {
                 $lookup: {
                   from: "users",
