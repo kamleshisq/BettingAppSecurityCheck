@@ -3182,7 +3182,7 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
         {
           $match: {
             userId: req.currentUser.id,
-            event: event,
+            event: sportId,
           },
         },
         {
