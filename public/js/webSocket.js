@@ -2054,7 +2054,7 @@ socket.on('connect', () => {
                             }
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><tag class="ownAccDetails" id="${data.json.userAcc[i]._id}"  data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></tag></td>
+                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}"  data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></a></td>
                         <td>-</td>`
                     }
                 }
