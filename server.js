@@ -1922,7 +1922,7 @@ io.on('connection', (socket) => {
             };
         } else if (data.value === "all") {
             filter = {
-                
+                $lt : new Date(currentDateString)
             };
         } else {
             filter = {
@@ -2042,32 +2042,61 @@ io.on('connection', (socket) => {
             result.Income = 0
         }
 
-        betCount = await Bet.aggregate([
-            {
-                $match:{
-                    date:filter
-                }
-            },
-            {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-              },
-              {
-                $unwind: "$user"
-              },
-              {
-                $match: {
-                  "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
-                }
-              },
-            {
-                $count: "totalBets"
-              }
-          ])
+        if(data.value === "all"){
+            betCount = await Bet.aggregate([
+                // {
+                //     $match:{
+                //         date:filter
+                //     }
+                // },
+                {
+                    $lookup: {
+                      from: "users",
+                      localField: "userName",
+                      foreignField: "userName",
+                      as: "user"
+                    }
+                  },
+                  {
+                    $unwind: "$user"
+                  },
+                  {
+                    $match: {
+                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
+                    }
+                  },
+                {
+                    $count: "totalBets"
+                  }
+              ])
+        }else{
+            betCount = await Bet.aggregate([
+                {
+                    $match:{
+                        date:filter
+                    }
+                },
+                {
+                    $lookup: {
+                      from: "users",
+                      localField: "userName",
+                      foreignField: "userName",
+                      as: "user"
+                    }
+                  },
+                  {
+                    $unwind: "$user"
+                  },
+                  {
+                    $match: {
+                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
+                    }
+                  },
+                {
+                    $count: "totalBets"
+                  }
+              ])
+        }
           console.log(betCount)
           if(betCount.length > 0){
             result.betCount = betCount[0].totalBets
