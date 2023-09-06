@@ -65,7 +65,7 @@
                 </thead>
                 <tbody class="acount-stat-tbl-body">
                     <%for(let i = 0; i < data.length; i++){%>
-                        <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/myCommissionReportsMatch?id=<%=data[i]._id%>'>
+                        <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/myCommissionReportsMatch?id=<%=data[i]._id.match%>'>
                           <td title="SR No." ><%=i+1%></td>
                           <td title="Event" ><%=data[i]._id.match%></td>
                           <td title="Commission" ><%=data[i].totalCommissionPoints%></td>
