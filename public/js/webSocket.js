@@ -9326,7 +9326,7 @@ socket.on('connect', () => {
             console.log(form)
         })
 
-        $(document).on('submit', "#user-details-page2", function(e){
+        $(document).on('submit', "#user-details-page", function(e){
             e.preventDefault()
             let form = $(this)[0];
             let fd = new FormData(form);
