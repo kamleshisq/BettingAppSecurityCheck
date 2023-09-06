@@ -3,12 +3,11 @@
 let multiTrue = true;
 console.log(multimarket, "444444444444444444")
 for(let i = 0; i <  multimarket.marketIds.length; i++){
-  console.log(i, 123)
-  console.log("WORKINGGGG")
-    let result
-    let isBookmaker = false
-    let isToss = false
-    result = sportData[0].gameList[0].eventList.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == multimarket.marketIds[i])
+  let result
+  let isBookmaker = false
+  let isToss = false
+  result = sportData[0].gameList[0].eventList.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == multimarket.marketIds[i])
+  console.log("WORKINGGGG", result)
     if(!result){
         let footBall = sportData[1].gameList.find(item => item.sport_name === "Football")
         footBall = footBall.eventList
