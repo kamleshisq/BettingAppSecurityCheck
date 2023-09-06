@@ -94,6 +94,7 @@ $(document).on("submit", ".loginFormAdmin", function(e){
 $(document).on('click', ".logOut", function(e){
     e.preventDefault()
     console.log('Working')
+    console.log(this)
     // logout()
 })
 
