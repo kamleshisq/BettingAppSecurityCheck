@@ -12,20 +12,7 @@
               <div class="featured-sec-ro--titl-txt">
                   <span class="titl-bodr-lft-spn2"></span>
                   <h3 class="featured-sec-ro--titl-txt-tg2">Commission Reports</h3>
-                  <div class="dragon-click" >
-                    <% 
-                    sport1 = ""
-                    if(sport == 1){
-                      sport1 = "Football"
-                  }else if (sport == 4 ){
-                      sport1 = "Cricket"
-                  }else if (sport == 2){
-                      sport1 = "Tennis"
-                  }
-                    %>
-                    <a href="/myCommissionReportsIn?id=<%=sport%>"><%=sport1%></a>
-                    <a href="/myCommissionReportsInEvent?id=<%=event%>"><%=event%></a>
-                  </div>
+                  
                   <!-- <span class="titl-bhind-txt-spn">featured sports</span> -->
               </div>
               <div class="pageId" data-pageid="1"></div>
@@ -52,7 +39,20 @@
               </div>
           </div>
       </div>
-
+      <div class="dragon-click" >
+        <% 
+        sport1 = ""
+        if(sport == 1){
+          sport1 = "Football"
+      }else if (sport == 4 ){
+          sport1 = "Cricket"
+      }else if (sport == 2){
+          sport1 = "Tennis"
+      }
+        %>
+        <a href="/myCommissionReportsIn?id=<%=sport%>"><%=sport1%></a>
+        <a href="/myCommissionReportsInEvent?id=<%=event%>"><%=event%></a>
+      </div>
       <div class="acount-stat-ro2">
           <div class="acount-stat-tbl-txt-wrp userSide-Table">
             <table class="acount-stat-tbl" >
