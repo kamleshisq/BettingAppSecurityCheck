@@ -68,7 +68,7 @@
                             <td>Active Admins</td>
                             <%console.log(data.dashboard.adminCount, 45454545454, data.dashboard.adminCount[0].totalAmount)%>
                             <%if(data.dashboard.adminCount.length > 0){%>
-                              <td class="text-purple" id="adminCount">111</td>
+                              <td class="text-purple" id="adminCount"><%=data.dashboard.adminCount[0].totalAmount%></td>
                               <%}else{%>
                               <td class="text-purple" id="adminCount">00</td>
                             <%}%>
