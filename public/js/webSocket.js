@@ -1983,8 +1983,8 @@ socket.on('connect', () => {
                     if((i%2)==0){
                         html += `<tr style="text-align: center;" class="blue" >
                         <td>${count1 + i}</td>
-                        <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
-                        <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
+                        <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
                         if(data.json.userAcc[i].stake){
                             html += `<td>${data.json.userAcc[i].stake}</td>`
                         }else{
