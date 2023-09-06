@@ -9322,7 +9322,8 @@ socket.on('connect', () => {
     if(pathname == "/profile"){
         $(document).on("click", ".Detail", function(e){
             e.preventDefault()
-            
+            let form = $('#user-details-page')
+            console.log(form)
         })
     }
 
