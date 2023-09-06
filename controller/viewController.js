@@ -3149,11 +3149,11 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
     ])
     // console.log(data)
     let sport = ""
-    if(sportId === 1){
+    if(sportId == 1){
         sport = "Football"
-    }else if (sportId === 4 ){
+    }else if (sportId == 4 ){
         sport = "Cricket"
-    }else if (sportId === 2){
+    }else if (sportId == 2){
         sport = "Tennis"
     }
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
