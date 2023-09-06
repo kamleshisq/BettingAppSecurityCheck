@@ -2016,7 +2016,7 @@ socket.on('connect', () => {
                             }
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><button class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></a></td>
                         <td>-</td>`
                     }else{
                         html += `<tr style="text-align: center;" >
