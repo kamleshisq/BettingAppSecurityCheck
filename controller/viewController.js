@@ -3148,14 +3148,7 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
         }
     ])
     // console.log(data)
-    let sport = ""
-    if(sportId == 1){
-        sport = "Football"
-    }else if (sportId == 4 ){
-        sport = "Cricket"
-    }else if (sportId == 2){
-        sport = "Tennis"
-    }
+    let sport = sportId
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportsIn/main", {
         title:"Commission Report",
@@ -3196,14 +3189,7 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
         },
       ]);
     console.log(data)
-    let sport = ""
-    if(data[0]._id.sportId == 1){
-        sport = "Football"
-    }else if (data[0]._id.sportId == 4 ){
-        sport = "Cricket"
-    }else if (data[0]._id.sportId == 2){
-        sport = "Tennis"
-    }
+    let sport = data[0]._id.sportId
     let event = sportId
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportEventwise/main", {
