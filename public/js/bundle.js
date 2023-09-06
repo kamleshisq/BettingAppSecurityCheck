@@ -7021,7 +7021,8 @@ $(document).on("submit", ".loginFormAdmin", function (e) {
 });
 $(document).on('click', ".logOut", function (e) {
   e.preventDefault();
-  (0, _logOut.logout)();
+  console.log('Working');
+  // logout()
 });
 
 // if(document.querySelector("ResetFORM")){
