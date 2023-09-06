@@ -130,7 +130,7 @@ socket.on('connect', () => {
 
 
 
-   $(document).on('submit', ".change-pass-model-form", function(e){
+   $(document).on('submit', ".change-pass-model-form1", function(e){
     e.preventDefault()
     let form = $(this)[0];
     let fd = new FormData(form);
@@ -9326,16 +9326,16 @@ socket.on('connect', () => {
             console.log(form)
         })
 
-        // $(document).on('submit', "#user-details-page", function(e){
-        //     e.preventDefault()
-        //     let form = $(this)[0];
-        //     let fd = new FormData(form);
-        //     let data = Object.fromEntries(fd.entries());
-        //     let id = LOGINDATA.LOGINUSER._id
-        //     data.id = id
-        //     // socket.emit("updateRules", data)
-        //     console.log(data)
-        // })
+        $(document).on('submit', "#user-details-page2", function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            let id = LOGINDATA.LOGINUSER._id
+            data.id = id
+            // socket.emit("updateRules", data)
+            console.log(data)
+        })
     }
 
 })
