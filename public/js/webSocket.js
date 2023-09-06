@@ -5690,36 +5690,45 @@ socket.on('connect', () => {
         //   });
 
 
-        function generatePDF(table) {
-            // Create a new empty PDF document
-            const doc = new jsPDF();
-            
-            // Add the table as an image to the PDF
-            doc.addHTML(table, function() {
-                // Save the PDF as a Blob
-                const pdfBlob = doc.output("blob");
-                
-                // Create a download link for the Blob
-                const link = document.createElement("a");
-                link.href = URL.createObjectURL(pdfBlob);
-                link.download = "account_statement.pdf";
-                
-                // Trigger a click event on the link to start the download
-                link.click();
-                
-                // Clean up
-                URL.revokeObjectURL(link.href);
-            });
-        }
-        
-        document.getElementById("pdfDownload").addEventListener("click", function(e) {
+        function generatePDF(htmlContent) {
+            const pdfContent = `
+              <!DOCTYPE html>
+              <html>
+                <head>
+                  <title>PDF Document</title>
+                </head>
+                <body>
+                  ${htmlContent}
+                </body>
+              </html>
+            `;
+          
+            const blob = new Blob([pdfContent], { type: 'application/pdf' });
+          
+            // Create a temporary anchor element to trigger the download
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'document.pdf';
+            a.style.display = 'none';
+          
+            // Append the anchor element to the document and trigger the download
+            document.body.appendChild(a);
+            a.click();
+          
+            // Clean up
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+          }
+          
+          document.getElementById('pdfDownload').addEventListener('click', function (e) {
             e.preventDefault();
-            const table = document.getElementById("table12");
-            
+            const table = document.getElementById('table12');
+          
             if (table) {
-                generatePDF(table);
+              generatePDF(table.outerHTML);
             }
-        });
+          });
+          
 
 
         function downloadCSV(csvContent, fileName) {
