@@ -3188,7 +3188,7 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
         {
           $group: {
             _id: {
-              sportId: '$sportId', // Group by sportId
+              sportId: '$Sport', // Group by sportId
               match: '$match',
             },
             totalCommissionPoints: { $sum: '$commPoints' },
