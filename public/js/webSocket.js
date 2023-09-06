@@ -5634,100 +5634,63 @@ socket.on('connect', () => {
 
     if(pathname === "/myAccountStatment"){
 
-        // function generatePDF(table) {
-        //     const printWindow = window.open('', '_blank');
-        //             printWindow.document.open();
-        //             printWindow.document.write(`
-        //             <html>
-        //                 <head>
-        //                 <title>Account Statement</title>
-        //                 <style>
-        //                     .ownAccDetails {
-        //                         color: black;
-        //                         border: none;
-        //                         background-color: inherit;
-        //                         padding: 14px 28px;
-        //                         font-size: 16px;
-        //                         cursor: pointer;
-        //                         display: inline-block;
-        //                     }
-        //                     body {
-        //                     font-family: Arial, sans-serif;
-        //                     margin: 20px;
-        //                     }
-        //                     table {
-        //                     border-collapse: collapse;
-        //                     width: 100%;
-        //                     }
-        //                     th, td {
-        //                     border: 1px solid #ccc;
-        //                     padding: 8px;
-        //                     }
-        //                     th {
-        //                     background-color: #f2f2f2;
-        //                     font-weight: bold;
-        //                     }
-        //                 </style>
-        //                 </head>
-        //                 <body>
-        //                 ${table.outerHTML}
-        //                 </body>
-        //             </html>
-        //             `);
-        //             printWindow.document.close();
+        function generatePDF(table) {
+            const printWindow = window.open('', '_blank');
+                    printWindow.document.open();
+                    printWindow.document.write(`
+                    <html>
+                        <head>
+                        <title>Account Statement</title>
+                        <style>
+                            .ownAccDetails {
+                                color: black;
+                                border: none;
+                                background-color: inherit;
+                                padding: 14px 28px;
+                                font-size: 16px;
+                                cursor: pointer;
+                                display: inline-block;
+                            }
+                            body {
+                            font-family: Arial, sans-serif;
+                            margin: 20px;
+                            }
+                            table {
+                            border-collapse: collapse;
+                            width: 100%;
+                            }
+                            th, td {
+                            border: 1px solid #ccc;
+                            padding: 8px;
+                            }
+                            th {
+                            background-color: #f2f2f2;
+                            font-weight: bold;
+                            }
+                        </style>
+                        </head>
+                        <body>
+                        ${table.outerHTML}
+                        </body>
+                    </html>
+                    `);
+                    printWindow.document.close();
 
-        //             printWindow.print();
+                    printWindow.print();
                 
-        //   }
-
-        // document.getElementById('pdfDownload').addEventListener('click', function(e) {
-        //     e.preventDefault()
-        //     const table = document.getElementById('table12');
-            
-        //     if (table) {
-        //       generatePDF(table);
-        //     }
-        //   });
-
-
-        function generatePDF(htmlContent) {
-            const pdfContent = `
-              <!DOCTYPE html>
-              <html>
-                <head>
-                  <title>PDF Document</title>
-                </head>
-                <body>
-                  ${htmlContent}
-                </body>
-              </html>
-            `;
-          
-            const blob = new Blob([pdfContent], { type: 'application/pdf' });
-          
-            // Create a temporary anchor element to trigger the download
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = 'document.pdf';
-            a.style.display = 'none';
-          
-            // Append the anchor element to the document and trigger the download
-            document.body.appendChild(a);
-            a.click();
-          
-            // Clean up
-            document.body.removeChild(a);
-            URL.revokeObjectURL(a.href);
           }
-          
-          document.getElementById('pdfDownload').addEventListener('click', function (e) {
-            e.preventDefault();
+
+        document.getElementById('pdfDownload').addEventListener('click', function(e) {
+            e.preventDefault()
             const table = document.getElementById('table12');
-          
+            
             if (table) {
-              generatePDF(table.outerHTML);
+              generatePDF(table);
             }
           });
+
+
+       
           
 
 
