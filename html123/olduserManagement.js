@@ -230,34 +230,36 @@ userSchema.pre(/^find/, function(next){
 //     return parseFloat(value).toFixed(2);
 // }
 
+userSchema.set('toJSON', { virtuals: true });
+
 userSchema.virtual('roundedDownlineBalance').get(function () {
     return this.downlineBalance.toFixed(2);
 }).set(function (value) {
-    this.downlineBalance = parseFloat(value);
+    this.downlineBalance = roundToTwoDecimals(value);
 });
 
 userSchema.virtual('roundedMyPL').get(function () {
     return this.myPL.toFixed(2);
 }).set(function (value) {
-    this.myPL = parseFloat(value);
+    this.myPL = roundToTwoDecimals(value);
 });
 
 userSchema.virtual('roundedUplinePL').get(function () {
     return this.uplinePL.toFixed(2);
 }).set(function (value) {
-    this.uplinePL = parseFloat(value);
+    this.uplinePL = roundToTwoDecimals(value);
 });
 
 userSchema.virtual('roundedLifetimePL').get(function () {
     return this.lifetimePL.toFixed(2);
 }).set(function (value) {
-    this.lifetimePL = parseFloat(value);
+    this.lifetimePL = roundToTwoDecimals(value);
 });
 
 userSchema.virtual('roundedPointsWL').get(function () {
     return this.pointsWL.toFixed(2);
 }).set(function (value) {
-    this.pointsWL = parseFloat(value);
+    this.pointsWL = roundToTwoDecimals(value);
 });
 // userSchema.pre(/^find/, async function(next){
 //     this.find({isActive:true})
