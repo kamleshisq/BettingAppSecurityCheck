@@ -2016,13 +2016,13 @@ socket.on('connect', () => {
                             }
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></a></td>
+                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>
                         <td>-</td>`
                     }else{
                         html += `<tr style="text-align: center;" >
                         <td>${count1 + i}</td>
-                        <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
-                        <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
+                        <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
                         if(data.json.userAcc[i].stake){
                             html += `<td>${data.json.userAcc[i].stake}</td>`
                         }else{
@@ -2054,7 +2054,7 @@ socket.on('connect', () => {
                             }
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}"  data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></a></td>
+                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}"  data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>
                         <td>-</td>`
                     }
                 }
