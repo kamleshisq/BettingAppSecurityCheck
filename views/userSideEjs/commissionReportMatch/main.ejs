@@ -12,6 +12,19 @@
               <div class="featured-sec-ro--titl-txt">
                   <span class="titl-bodr-lft-spn2"></span>
                   <h3 class="featured-sec-ro--titl-txt-tg2">Commission Reports</h3>
+                  <%
+                  sport1 = ""
+                  if(data[0].Sport == 1){
+                    sport1 = "Football"
+                }else if (data[0].Sport == 4 ){
+                    sport1 = "Cricket"
+                }else if (data[0].Sport == 2){
+                    sport1 = "Tennis"
+                }
+                  %>
+                  <a href="/myCommissionReportsIn?id=<%=data[0].Sport%>"></a><%=sport1%>
+                  <a href="/myCommissionReportsInEvent?id=<%=data[0].event%>"></a><%=data[0].event%>
+                  <a href="//myCommissionReportsMatch?id=<%=data[0].match%>"></a><%=data[0].match%>
                   <!-- <span class="titl-bhind-txt-spn">featured sports</span> -->
               </div>
               <div class="pageId" data-pageid="1"></div>
