@@ -826,6 +826,9 @@ io.on('connection', (socket) => {
         let filter = {
             status: "CANCEL"
         }
+        if(data.filterData.userName){
+            filter.userName = data.filterData.userName
+        }
         let betResult = await Bet.aggregate([
             {
                 $match:filter
