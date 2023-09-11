@@ -819,12 +819,12 @@ io.on('connection', (socket) => {
     })
 
 
-    socket.on('voidBET',async(data)=>{
+    socket.on('voidBET', async(data)=>{
         console.log(data)
         let limit = 10;
         let page = data.page;
         console.log(data.filterData)
-        let betResult = await betModel.aggregate([
+        let betResult = await Bet.aggregate([
             {
                 $match:{
                     status: 'CANCEL'
