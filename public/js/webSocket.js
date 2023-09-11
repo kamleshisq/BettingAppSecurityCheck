@@ -3690,8 +3690,14 @@ socket.on('connect', () => {
                 }
                 if(data.page == 0){
                     $('.new-body').html(html)
+                    if(!(data.betResult.length < 10)){
+                        document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
+                    }
                 }else{
                     $('.new-body').append(html)         
+                    if((data.betResult.length < 10)){
+                        document.getElementById('load-more').innerHTML = ""
+                    }
                 }
             })
 
