@@ -9405,7 +9405,35 @@ socket.on('connect', () => {
         })
 
         socket.on("gameAnalysis", data => {
-            console.log(data)
+            let html = ""
+            limit = 10 * data.page
+            for(let i = 0; i < data.gameAnalist.length; i++){
+                html += `<tr>
+                <td>${i + 1}</td>
+                <td>${data.gameAnalist[i]._id}</td>
+                <td>${data.gameAnalist[i].Total_User}</td>
+                <td>${data.gameAnalist[i].betcount}</td>
+                <td> ${data.gameAnalist[i].won} </td>
+                <td>${data.gameAnalist[i].loss}</td>
+                <td>-</td>
+                <td>${data.gameAnalist[i].open}</td>`
+                if(data.gameAnalist[i].returns > 0){
+                    html += `<td class="green">+${data.gameAnalist[i].returns.toFixed(2)}</td></tr>`
+                }else{
+                    html += `<td class="red">${data.gameAnalist[i].returns.toFixed(2)}</td></tr>`
+                }
+            } 
+            if(data.page == 0){
+                $('tbody').html(html)
+                if(!(data.gameAnalist.length < 10)){
+                    document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
+                }
+            }else{
+                $('tbody').append(html)
+                if((data.gameAnalist.length < 10)){
+                    document.getElementById('load-more').innerHTML = ""
+                }
+            }
         })
     }
 

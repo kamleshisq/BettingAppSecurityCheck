@@ -3046,7 +3046,7 @@ io.on('connection', (socket) => {
             }
         ])
         console.log(gameAnalist)
-        socket.emit('gameAnalysis', gameAnalist)
+        socket.emit('gameAnalysis', {gameAnalist, page})
     })
     
 })
