@@ -738,21 +738,20 @@ io.on('connection', (socket) => {
             .then((userResult) => {
               const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
               let Name123
+              data.filterData.userId = { $in: userIds }
               if(data.filterData.userName === data.LOGINDATA.LOGINUSER.userName){
-                  Name123 = {
-                      userId: { $in: userIds },
-                      status: {$ne:"OPEN"}
-                    }
-              }else{
-                Name123 = {
-                    userId: { $in: userIds },
-                    status: {$ne:"OPEN"},
-                    userName: data.filterData.userName
-              }}
+                  delete data.filterData['userName']
+              }
+
+              if(data.filterData.betType == "All"){
+                delete data.filterData['betType']
+              }
               
+
+
               Bet.aggregate([
                 {
-                  $match: Name123
+                  $match: data.filterData
                 },
                 {
                     $skip:(page * limit)
