@@ -819,11 +819,45 @@ io.on('connection', (socket) => {
     })
 
 
-    socket.on('voidBET',async(data)=>{
+    socket.on('voidBET', async(data)=>{
         console.log(data)
         let limit = 10;
         let page = data.page;
         console.log(data.filterData)
+        let betResult = await Bet.aggregate([
+            {
+                $match:{
+                    status: 'CANCEL'
+                }
+            },
+            {
+                $lookup:{
+                    from:'users',
+                    localField:'userName',
+                    foreignField:'userName',
+                    as:'userDetails'
+                }
+            },
+            {
+                $unwind:'$userDetails'
+            },
+            {
+                $match:{
+                    'userDetails.isActive':true,
+                    'userDetails.roleName':{$ne:'Admin'},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}},
+                }
+            },
+            {
+                $sort:{
+                    date:-1
+                }
+            },
+            {
+                $limit:10
+            }
+        ])
+        console.log(betResult)
 
     })
 
