@@ -822,30 +822,64 @@ io.on('connection', (socket) => {
         console.log(data)
         let limit = 10;
         let page = data.page;
-        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
-        let role_type =[]
-        for(let i = 0; i < roles.length; i++){
-            role_type.push(roles[i].role_type)
-        }
-        data.filterData.role_type = {
-            $in:role_type
-        }
-        data.filterData.status = 'CANCEL';
-        const user = await User.findOne({userName:data.filterData.userName})
-        if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
-            delete data.filterData['userName']
-            let ubDetails = await Bet.find({status:"CANCEL"}).skip(page * limit).limit(limit)
-            socket.emit('voidBET',{ubDetails,page})
-        }
-        else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
-            delete data.filterData['userName']
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('voidBET',{ubDetails,page})
-        }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('voidBET',{ubDetails,page})
+        // const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        // let role_type =[]
+        // for(let i = 0; i < roles.length; i++){
+        //     role_type.push(roles[i].role_type)
+        // }
+        // data.filterData.role_type = {
+        //     $in:role_type
+        // }
+        // data.filterData.status = 'CANCEL';
+        // const user = await User.findOne({userName:data.filterData.userName})
+        // if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
+        //     delete data.filterData['userName']
+        //     let ubDetails = await Bet.find({status:"CANCEL"}).skip(page * limit).limit(limit)
+        //     socket.emit('voidBET',{ubDetails,page})
+        // }
+        // else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
+        //     delete data.filterData['userName']
+        //     let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+        //     socket.emit('voidBET',{ubDetails,page})
+        // }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
+        //     let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+        //     socket.emit('voidBET',{ubDetails,page})
 
-        }
+        // }
+
+        User.aggregate([
+            {
+              $match: {
+                parentUsers: { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
+              }
+            },
+            {
+              $group: {
+                _id: null,
+                userIds: { $push: '$_id' } 
+              }
+            }
+          ])
+            .then((userResult) => {
+              const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
+              data.filterData.userId = { $in: userIds }
+              data.filterData.status = "CANCEL"
+          
+              Bet.aggregate([
+                {
+                  $match: data.filterData
+                },
+                { $limit : 10 }
+              ])
+                .then((betResult) => {
+                //   socket.emit("aggreat", betResult)
+                  console.log(betResult)
+                })
+                .catch((error) => {
+                  console.error(error);
+                });
+            })
+
     })
 
     socket.on('userPLDetail',async(data)=>{
