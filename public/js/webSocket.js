@@ -1896,7 +1896,7 @@ socket.on('connect', () => {
                 }else{
                     data.Tdate = Tdate
                 }                 
-                data.userName = this.id
+                data.id = this.id
                 SUSER = this.id
                 data.page = 0
                 data.LOGINDATA = LOGINDATA
