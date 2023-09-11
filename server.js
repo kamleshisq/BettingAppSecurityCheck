@@ -2989,7 +2989,7 @@ io.on('connection', (socket) => {
             }else if (data.market === "Bookmaker 0%Comm"){
                 filter.marketName = { '$regex': '^Bookma', '$options': 'i' }
             }else if (data.market === "Fancy"){
-                filter.marketName = { '$regex': '^(?!match|bookma)', '$options': 'i' }
+                filter.marketName = { '$not': { '$regex': '^(match|bookma)', '$options': 'i' } }
             }
         }
         console.log(filter)
