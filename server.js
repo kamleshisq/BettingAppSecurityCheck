@@ -2953,6 +2953,101 @@ io.on('connection', (socket) => {
             socket.emit('updateUserDetailssss', {message:"err", status:"error"})
         }
     })
+
+
+    socket.on('gameAnalysis', async(data) => {
+        let me = data.USER
+        let page = data.page;
+        let limit = 10
+        const roles = await Role.find({role_level: {$gt:me.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        // console.log(me)
+        let fWhitlabel;
+        if(me.role_type == 1){
+            fWhitlabel = {$ne:null}
+        }else{
+            fWhitlabel = me.whiteLabel
+        }
+        let filter = {}
+        if(data.from_date && data.to_date){
+            filter.date = {$gte:data.from_date,$lte:data.to_date}
+        }else if(data.from_date && !data.to_date){
+            filter.date = {$gte:data.from_date}
+        }else if(data.to_date && !data.from_date){
+            filter.date = {$lte:data.to_date}
+        }
+        console.log(filter)
+        const gameAnalist = await Bet.aggregate([
+            {
+                $match:filter
+            },
+            {
+                $lookup:{
+                    from:'users',
+                    localField:'userName',
+                    foreignField:'userName',
+                    as:'userDetails'
+                }
+            },
+            {
+                $unwind:'$userDetails'
+            },
+            {
+                $match:{
+                    'userDetails.isActive':true,
+                    'userDetails.roleName':{$ne:'Admin'},
+                    'userDetails.role_type':{$in:role_type},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:me._id}},
+                    'userDetails.whiteLabel':fWhitlabel
+                }
+            },
+            {
+                $group:{
+                    _id:{
+                        event:'$event',
+                        userName:'$userName'
+                    },
+                    betCount:{$sum:1},
+                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    open:{$sum:{$cond:[{$eq:['$status','OPEN']},1,0]}},
+                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','OPEN']]},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:'$_id.event',
+                    Total_User:{$sum:1},
+                    betcount:{$sum:'$betCount'},
+                    loss:{$sum:'$loss'},
+                    won:{$sum:'$won'},
+                    open:{$sum:'$open'},
+                    returns:{$sum:'$returns'}
+                }
+            },
+            {
+                $sort: {
+                    betcount: -1 ,
+                    open : -1,
+                    won : -1,
+                    loss : -1,
+                    Total_User:-1
+                }
+            },
+            {
+                $skip: page * 10
+            },
+            {
+                $limit: 10 
+            }
+        ])
+        console.log(gameAnalist)
+        socket.emit('gameAnalysis', gameAnalist)
+    })
     
 })
 

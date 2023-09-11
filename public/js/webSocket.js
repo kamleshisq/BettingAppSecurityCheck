@@ -9391,5 +9391,25 @@ socket.on('connect', () => {
         })
     }
 
+    if(pathname == "/admin/gameanalysis"){
+        $(document).on('click', ".load-more", function(e){
+            let page = parseInt($('.rowId').attr('data-rowid'))
+                $('.rowId').attr('data-rowid',page + 1)
+                let to_date;
+                let from_date
+                if($('#Fdate').val() != ''){
+                    from_date = $('#Fdate').val()
+                }
+                if($('#Tdate').val() != ''){
+                    to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+                }
+                socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
+        })
+
+        socket.on("gameAnalysis", data => {
+            console.log(data)
+        })
+    }
+
 })
 })
