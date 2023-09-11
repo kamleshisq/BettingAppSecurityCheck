@@ -263,7 +263,13 @@ userSchema.pre(/^find/, function(next){
 // })
 
 function roundToTwoDecimals(value) {
-    return parseFloat(value.toFixed(2));
+    if (typeof value === 'number' && !isNaN(value)) {
+        return parseFloat(value.toFixed(2));
+    } else {
+        // Handle cases where value is not a number or is undefined
+        // You can return an error message or a default value here.
+        return NaN; // or any other appropriate handling
+    }
 }
 
 userSchema.pre(/^find/, function (next) {
