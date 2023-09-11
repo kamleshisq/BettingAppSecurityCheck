@@ -230,38 +230,52 @@ userSchema.pre(/^find/, function(next){
 //     return parseFloat(value).toFixed(2);
 // }
 
-userSchema.virtual('roundedDownlineBalance').get(function () {
-    return this.downlineBalance.toFixed(2);
-}).set(function (value) {
-    this.downlineBalance = parseFloat(value);
-});
+// userSchema.virtual('roundedDownlineBalance').get(function () {
+//     return this.downlineBalance.toFixed(2);
+// }).set(function (value) {
+//     this.downlineBalance = parseFloat(value);
+// });
 
-userSchema.virtual('roundedMyPL').get(function () {
-    return this.myPL.toFixed(2);
-}).set(function (value) {
-    this.myPL = parseFloat(value);
-});
+// userSchema.virtual('roundedMyPL').get(function () {
+//     return this.myPL.toFixed(2);
+// }).set(function (value) {
+//     this.myPL = parseFloat(value);
+// });
 
-userSchema.virtual('roundedUplinePL').get(function () {
-    return this.uplinePL.toFixed(2);
-}).set(function (value) {
-    this.uplinePL = parseFloat(value);
-});
+// userSchema.virtual('roundedUplinePL').get(function () {
+//     return this.uplinePL.toFixed(2);
+// }).set(function (value) {
+//     this.uplinePL = parseFloat(value);
+// });
 
-userSchema.virtual('roundedLifetimePL').get(function () {
-    return this.lifetimePL.toFixed(2);
-}).set(function (value) {
-    this.lifetimePL = parseFloat(value);
-});
+// userSchema.virtual('roundedLifetimePL').get(function () {
+//     return this.lifetimePL.toFixed(2);
+// }).set(function (value) {
+//     this.lifetimePL = parseFloat(value);
+// });
 
-userSchema.virtual('roundedPointsWL').get(function () {
-    return this.pointsWL.toFixed(2);
-}).set(function (value) {
-    this.pointsWL = parseFloat(value);
-});
+// userSchema.virtual('roundedPointsWL').get(function () {
+//     return this.pointsWL.toFixed(2);
+// }).set(function (value) {
+//     this.pointsWL = parseFloat(value);
+// });
 // userSchema.pre(/^find/, async function(next){
 //     this.find({isActive:true})
 // })
+
+
+userSchema.pre('save', function (next) {
+    this.myPL = roundToTwoDecimals(this.myPL);
+    this.uplinePL = roundToTwoDecimals(this.uplinePL);
+    this.lifetimePL = roundToTwoDecimals(this.lifetimePL);
+    this.pointsWL = roundToTwoDecimals(this.pointsWL);
+    next();
+});
+
+function roundToTwoDecimals(value) {
+    return parseFloat(value.toFixed(2));
+}
+
 
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
     return await bycrypt.compare(candidatePassword, userPassword)
