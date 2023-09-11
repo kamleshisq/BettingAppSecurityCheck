@@ -1864,45 +1864,45 @@ socket.on('connect', () => {
         let searchU 
         let SUSER
         let match = false
-        $(".searchUser").on('input', function(e){
-            var $input = $(this),
-                val = $input.val();
-                // console.log(val,1234)
-                var listItems = document.getElementsByTagName("li");
-                for (var i = 0; i < listItems.length; i++) {
-                    if (listItems[i].textContent === val) {
-                        match = ($(this).val() === val);
-                      break; 
-                    }else{
-                        match = false
-                    }
-                  }
-                // console.log(match, 123)
-             if(match) {
-                searchU = true
-                let  data = {}
-                let Fdate = document.getElementById("Fdate").value
-                let Tdate = document.getElementById("Tdate").value
-                if(!Fdate){
-                    Fdate = 'undefined'
-                }
-                if(!Tdate){
-                    Tdate = 'undefined'
-                }
-                data.Fdate = Fdate;
-                data.Tdate = Tdate;
-                data.userName = val
-                SUSER = val
-                data.Tdate = document.getElementById("Tdate").value
-                data.page = 0
-                data.LOGINDATA = LOGINDATA
-                $('.pageLink').attr('data-page',1)
-                // console.log(data, 456)
-                 socket.emit( "UserSearchId", data)
-             }else{
-                searchU = false
-             }
-        });
+        // $(".searchUser").on('input', function(e){
+        //     var $input = $(this),
+        //         val = $input.val();
+        //         // console.log(val,1234)
+        //         var listItems = document.getElementsByTagName("li");
+        //         for (var i = 0; i < listItems.length; i++) {
+        //             if (listItems[i].textContent === val) {
+        //                 match = ($(this).val() === val);
+        //               break; 
+        //             }else{
+        //                 match = false
+        //             }
+        //           }
+        //         // console.log(match, 123)
+        //      if(match) {
+        //         searchU = true
+        //         let  data = {}
+        //         let Fdate = document.getElementById("Fdate").value
+        //         let Tdate = document.getElementById("Tdate").value
+        //         if(!Fdate){
+        //             Fdate = 'undefined'
+        //         }
+        //         if(!Tdate){
+        //             Tdate = 'undefined'
+        //         }
+        //         data.Fdate = Fdate;
+        //         data.Tdate = Tdate;
+        //         data.userName = val
+        //         SUSER = val
+        //         data.Tdate = document.getElementById("Tdate").value
+        //         data.page = 0
+        //         data.LOGINDATA = LOGINDATA
+        //         $('.pageLink').attr('data-page',1)
+        //         // console.log(data, 456)
+        //          socket.emit( "UserSearchId", data)
+        //      }else{
+        //         searchU = false
+        //      }
+        // });
 
         $(document).on("click", ".searchList", function(){
             // console.log("working")
