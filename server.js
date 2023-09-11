@@ -2407,9 +2407,10 @@ io.on('connection', (socket) => {
     })
 
     socket.on('settlement',async(data)=>{
-        // console.log(data)
+        console.log(data)
         const me = data.LOGINUSER
         let dataobj;
+
         if(data.from_date && data.to_date){
             dataobj = {$gte:new Date(data.from_date).getTime() ,$lte:new Date(data.to_date).getTime()}
         }else if(data.from_date && !data.to_date){
