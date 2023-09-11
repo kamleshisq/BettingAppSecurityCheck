@@ -8636,6 +8636,7 @@ socket.on('connect', () => {
                         srNoCell.textContent = index + rowIndex + 1;
                       });
                   }
+                alert('Bet canceled successfully')
             }
         })
 
@@ -8652,6 +8653,8 @@ socket.on('connect', () => {
         socket.on("VoidBetIn22", async(data) => {
             if(data.status === "error"){
                 alert(data.message.toUpperCase())
+            }else{
+                alert('Bet Maped Successfully')
             }
         })
     }
