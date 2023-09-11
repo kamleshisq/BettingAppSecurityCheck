@@ -7608,12 +7608,26 @@ socket.on('connect', () => {
             socket.emit("CommissionRReport", {page, LOGINDATA, filterData})
         }
 
-        $(window).scroll(async function() {
-            var scroll = $(window).scrollTop();
-            var windowHeight = $(window).height();
-            var documentHeight = $(document).height();
-            if (scroll + windowHeight >= documentHeight) {
-                console.log("working")
+        // $(window).scroll(async function() {
+        //     var scroll = $(window).scrollTop();
+        //     var windowHeight = $(window).height();
+        //     var documentHeight = $(document).height();
+        //     if (scroll + windowHeight >= documentHeight) {
+        //         console.log("working")
+        //         let page = parseInt($('.pageId').attr('data-pageid'));
+        //         $('.pageId').attr('data-pageid',page + 1)
+        //         let filterData = {};
+        //         let fromDate1 = $('#Fdate').val()
+        //         let toDate = $('#Tdate').val()
+        //         console.log(fromDate1)
+        //         filterData.fromDate = fromDate1,
+        //         filterData.toDate = toDate
+        //         socket.emit("CommissionRReport", {page, LOGINDATA, filterData})
+        //     }
+        //   })
+
+          $(document).on('click', ".load-more", function(e){
+            console.log("working")
                 let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
                 let filterData = {};
@@ -7623,8 +7637,8 @@ socket.on('connect', () => {
                 filterData.fromDate = fromDate1,
                 filterData.toDate = toDate
                 socket.emit("CommissionRReport", {page, LOGINDATA, filterData})
-            }
           })
+
           let count = 21
           socket.on("CommissionRReport", data => {
             console.log(data)
