@@ -2411,11 +2411,11 @@ io.on('connection', (socket) => {
         const me = data.LOGINUSER
         let dataobj;
         if(data.from_date && data.to_date){
-            dataobj = {$gte:data.from_date,$lte:data.to_date}
-        }else if(data.from_date && !data.to_date){
-            dataobj = {$gte:data.from_date}
-        }else if(!data.from_date && data.to_date){
-            dataobj = {$$lte:data.to_date}
+            dataobj = {$gte:data.from_date / 1000,$lte:data.to_date/1000}
+        }else if(data.from_date/1000 && !data.to_date/1000){
+            dataobj = {$gte:data.from_date/1000}
+        }else if(!data.from_date/1000 && data.to_date/1000){
+            dataobj = {$lte:data.to_date/1000}
         }
         // console.log(me)
         let betsEventWise = await Bet.aggregate([
