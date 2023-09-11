@@ -9416,7 +9416,7 @@ socket.on('connect', () => {
 
         $('#Sport').change(function() {
             console.log("Working")
-            let Sport = this.val()
+            let Sport = $(this).val()
             let to_date
             let from_date
             if($('#Fdate').val() != ''){
