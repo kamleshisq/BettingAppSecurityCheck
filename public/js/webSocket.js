@@ -3168,7 +3168,7 @@ socket.on('connect', () => {
     }
 
     if(pathname == "/admin/betmoniter"){
-        $('.searchUser').keyup(function(){
+        $(document).on('keyup','.searchUser',function(){
             // console.log('working')
             if($(this).hasClass("searchUser")){
                 // console.log($(this).val())
@@ -3215,7 +3215,7 @@ socket.on('connect', () => {
         let toDate;
         let fromDate;
         let filterData = {}
-        $(".searchUser").on('input', function(e){
+        $(document).on('input','.searchUser', function(e){
             var $input = $(this),
                     val = $input.val();
                     var listItems = document.getElementsByTagName("li");
