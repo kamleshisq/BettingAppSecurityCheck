@@ -823,6 +823,40 @@ io.on('connection', (socket) => {
         let limit = 10;
         let page = data.page;
         console.log(data.filterData)
+        let betResult = await betModel.aggregate([
+            {
+                $match:{
+                    status: 'CANCEL'
+                }
+            },
+            {
+                $lookup:{
+                    from:'users',
+                    localField:'userName',
+                    foreignField:'userName',
+                    as:'userDetails'
+                }
+            },
+            {
+                $unwind:'$userDetails'
+            },
+            {
+                $match:{
+                    'userDetails.isActive':true,
+                    'userDetails.roleName':{$ne:'Admin'},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}},
+                }
+            },
+            {
+                $sort:{
+                    date:-1
+                }
+            },
+            {
+                $limit:10
+            }
+        ])
+        console.log(betResult)
 
     })
 
