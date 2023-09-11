@@ -1992,14 +1992,14 @@ socket.on('connect', () => {
                             <td>0</td>`
                             if(data.json.userAcc[i].parent_id){
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
-                                    if(data.json[i].child_id == null){
-                                        html += `<td>-/${data.json[i].parent_id.userName}</td>`
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `<td>-/${data.json.userAcc[i].parent_id.userName}</td>`
                                     }else{
                                         html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
                                     }
                                 }else{
-                                    if(data.json[i].child_id == null){
-                                        html += `${data.json[i].parent_id.userName}/-`
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `${data.json.userAcc[i].parent_id.userName}/-`
                                     }else{
 
                                         html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
@@ -2013,14 +2013,14 @@ socket.on('connect', () => {
                             if(data.json.userAcc[i].parent_id){
                                 html += `<td>${data.json.userAcc[i].creditDebitamount}</td>`
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
-                                    if(data.json[i].child_id == null){
+                                    if(data.json.userAcc[i].child_id == null){
                                         html += `<td>${data.json.userAcc[i].parent_id.userName}/-</td>`
                                     }else{
 
                                         html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
                                     }
                                 }else{
-                                    if(data.json[i].child_id == null){
+                                    if(data.json.userAcc[i].child_id == null){
                                         html += `<td>-/${data.json.userAcc[i].parent_id.userName}</td>`
                                     }else{
 
@@ -2049,13 +2049,13 @@ socket.on('connect', () => {
                             <td>0</td>`
                             if(data.json.userAcc[i].parent_id){
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
-                                    if(data.json[i].child_id == null){
+                                    if(data.json.userAcc[i].child_id == null){
                                         html += `<td>-/${data.json.userAcc[i].parent_id.userName}</td>`
                                     }else{
                                         html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
                                     }
                                 }else{
-                                    if(data.json[i].child_id == null){
+                                    if(data.json.userAcc[i].child_id == null){
                                         html += `<td>${data.json.userAcc[i].parent_id.userName}/-</td>`
                                     }else{
                                         html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
@@ -2069,16 +2069,16 @@ socket.on('connect', () => {
                             if(data.json.userAcc[i].parent_id){
                                 html += `<td>${data.json.userAcc[i].creditDebitamount}</td>`
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
-                                    if(data.json[i].child_id == null){
+                                    if(data.json.userAcc[i].child_id == null){
                                         html += `<td>${data.json.userAcc[i].parent_id.userName}/-</td>`
                                     }else{
-                                        
                                         html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
                                     }
                                 }else{
-                                    if(data.json[i].child_id == null){
+                                    if(data.json.userAcc[i].child_id == null){
                                         html += `<td>-/${data.json.userAcc[i].parent_id.userName}</td>`
                                     }else{
+
                                         html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
                                     }
                                 }
@@ -3558,7 +3558,7 @@ socket.on('connect', () => {
             if(userName != ''){
                 filterData.userName = userName
             }else{
-                // filterData.userName = LOGINDATA.LOGINUSER.userName
+                filterData.userName = LOGINDATA.LOGINUSER.userName
             }
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
@@ -3608,7 +3608,7 @@ socket.on('connect', () => {
                 let data = {}
                 let userName = $('.searchUser').val()
                 if(userName == ''){
-                    // filterData.userName = LOGINDATA.LOGINUSER.userName
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
                 }else{
                     filterData.userName = userName
                 }
