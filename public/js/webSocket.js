@@ -1916,12 +1916,12 @@ socket.on('connect', () => {
                  data.id = SUSER,
                  data.page = page,
                  data.Fdate = Fdate,
-                 data.Tdate = Tdate,
+                 data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1),
                  data.LOGINDATA = LOGINDATA
             }{
                  data.page = page,
                  data.Fdate = Fdate,
-                 data.Tdate = Tdate,
+                 data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1),
                  data.LOGINDATA = LOGINDATA
             }
             socket.emit('AccountScroll',data)        
@@ -1938,12 +1938,12 @@ socket.on('connect', () => {
                 data.id = SUSER,
                 data.page = page,
                 data.Fdate = Fdate,
-                data.Tdate = Tdate,
+                data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1),
                 data.LOGINDATA = LOGINDATA
            }{
                 data.page = page,
                 data.Fdate = Fdate,
-                data.Tdate = Tdate,
+                data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1),
                 data.LOGINDATA = LOGINDATA
            }
             
