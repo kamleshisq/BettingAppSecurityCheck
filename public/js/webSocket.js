@@ -7592,6 +7592,7 @@ socket.on('connect', () => {
                     trElement.find('td:eq(1)').text(`${data.name}`);
                     // trElement.find('td:eq(1)').text(`${data.description}`);
                 }
+                alert("Updated!!")
 
             }
         })
