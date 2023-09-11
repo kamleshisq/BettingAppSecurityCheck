@@ -2176,6 +2176,7 @@ socket.on('connect', () => {
             $('.searchUser').keyup(function(){
                 // console.log('working')
                 if($(this).hasClass("searchUser")){
+
                     // console.log($(this).val())
                     if($(this).val().length >= 3 ){
                         let x = $(this).val(); 
@@ -2197,24 +2198,26 @@ socket.on('connect', () => {
     
     
             socket.on("ACCSEARCHRES", async(data)=>{
+                $('.wrapper').hide()
+
                 // console.log(data, 565464)
                 let html = ``
-        if(data.page === 1){
-            for(let i = 0; i < data.user.length; i++){
-                html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
-            }
-            document.getElementById('search').innerHTML = html
-            document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-        }else if(data.page === null){
-            document.getElementById("button").innerHTML = ``
-        }else{
-            html = document.getElementById('search').innerHTML
-            for(let i = 0; i < data.user.length; i++){
-                html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
-            }
-            document.getElementById('search').innerHTML = html
-            document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-        }
+                if(data.page === 1){
+                    for(let i = 0; i < data.user.length; i++){
+                        html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                    }
+                    document.getElementById('search').innerHTML = html
+                    document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+                }else if(data.page === null){
+                    document.getElementById("button").innerHTML = ``
+                }else{
+                    html = document.getElementById('search').innerHTML
+                    for(let i = 0; i < data.user.length; i++){
+                        html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                    }
+                    document.getElementById('search').innerHTML = html
+                    document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+                }
             })
     
             let searchU 
@@ -2281,6 +2284,7 @@ socket.on('connect', () => {
             $(document).on("click", ".searchList", function(){
                 // console.log("working")
                 // console.log(this.textContent)
+
                 document.getElementById("searchUser").value = this.textContent
                 filterData = {}
                 filterData.userName = this.textContent
@@ -2303,6 +2307,8 @@ socket.on('connect', () => {
                 filterData.status = fBets
                 data.filterData = filterData
                 data.LOGINDATA = LOGINDATA
+
+                $('.wrapper').hide()
                 socket.emit('userBetDetail',{filterData,LOGINDATA,page:0})
                 
             })
@@ -2380,9 +2386,17 @@ socket.on('connect', () => {
                 }
                 count += 10
                 if(data.page == 0){
+
+                    if(bets.length == 0){
+                        $('#load-more').hide()
+                        html = `<tr class="empty_table"><td>No record found</td></tr>`
+                    }
                     $('.new-body').html(html)
                 }else{
-                    $('.new-body').append(html)         
+                    if(bets.length == 0){
+                        $('#load-more').hide()
+                    }      
+                    $('.new-body').append(html)   
                 }
             })
     
