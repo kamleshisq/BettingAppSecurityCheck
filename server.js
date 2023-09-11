@@ -2407,22 +2407,23 @@ io.on('connection', (socket) => {
     })
 
     socket.on('settlement',async(data)=>{
-        // console.log(data)
+        console.log(data)
         const me = data.LOGINUSER
         let dataobj;
-        if(data.from_date && data.to_date){
-            dataobj = {$gte:data.from_date,$lte:data.to_date}
-        }else if(data.from_date && !data.to_date){
-            dataobj = {$gte:data.from_date}
-        }else if(!data.from_date && data.to_date){
-            dataobj = {$$lte:data.to_date}
+
+        if(data.fromdate && data.todate){
+            dataobj = {$gte:new Date(data.fromdate).getTime()/1000 ,$lte:new Date(data.todate).getTime()/1000}
+        }else if(data.fromdate && !data.todate){
+            dataobj = {$gte:new Date(data.fromdate).getTime()/1000}
+        }else if(!data.fromdate && data.todate){
+            dataobj = {$lte:new Date(data.todate).getTime()/1000}
         }
-        // console.log(me)
+        console.log(dataobj)
         let betsEventWise = await Bet.aggregate([
             {
                 $match: {
                     status:"OPEN" ,
-                    eventdate: dataobj
+                    eventDate: dataobj
                 }
             },
             {
