@@ -277,6 +277,7 @@ userSchema.pre(/^find/, function (next) {
     this.uplinePL = roundToTwoDecimals(this.uplinePL);
     this.lifetimePL = roundToTwoDecimals(this.lifetimePL);
     this.pointsWL = roundToTwoDecimals(this.pointsWL);
+    console.log(this.myPL, this.uplinePL,  this.lifetimePL, this.pointsWL)
     next();
 });
 
