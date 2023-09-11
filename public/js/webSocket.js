@@ -3680,9 +3680,10 @@ socket.on('connect', () => {
       
             let count = 10
             socket.on('voidBET',(data) => {
-                // console.log(data)
+                console.log("Working DATA")
+                console.log(data)
                 count = 10 * data.page
-                let bets = data.ubDetails;
+                let bets = data.betResult;
                 let html = '';
                     for(let i = 0; i < bets.length; i++){
                         let date = new Date(bets[i].date)
@@ -3715,8 +3716,14 @@ socket.on('connect', () => {
                 }
                 if(data.page == 0){
                     $('.new-body').html(html)
+                    if(!(data.betResult.length < 10)){
+                        document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
+                    }
                 }else{
                     $('.new-body').append(html)         
+                    if((data.betResult.length < 10)){
+                        document.getElementById('load-more').innerHTML = ""
+                    }
                 }
             })
 

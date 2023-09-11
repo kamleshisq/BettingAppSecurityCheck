@@ -819,15 +819,19 @@ io.on('connection', (socket) => {
 
 
     socket.on('voidBET', async(data)=>{
-        console.log(data)
+        // console.log(data)
         let limit = 10;
         let page = data.page;
         console.log(data.filterData)
+        let filter = {
+            status: "CANCEL"
+        }
+        if(data.filterData.userName){
+            filter.userName = data.filterData.userName
+        }
         let betResult = await Bet.aggregate([
             {
-                $match:{
-                    status: 'CANCEL'
-                }
+                $match:filter
             },
             {
                 $lookup:{
@@ -853,10 +857,14 @@ io.on('connection', (socket) => {
                 }
             },
             {
+                $skip:(10 * page)
+            },
+            {
                 $limit:10
             }
         ])
-        console.log(betResult)
+        // console.log(betResult)
+        socket.emit("voidBET", {betResult, page})
 
     })
 
