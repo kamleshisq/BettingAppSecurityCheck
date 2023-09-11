@@ -3041,7 +3041,7 @@ io.on('connection', (socket) => {
                 $limit: 10 
             }
         ])
-
+        console.log(gameAnalist)
         socket.emit('gameAnalysis', gameAnalist)
     })
     
