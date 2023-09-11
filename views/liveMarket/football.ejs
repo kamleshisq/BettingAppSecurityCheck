@@ -1,8 +1,15 @@
 <div id="FOOTBALL" class="tabcontent">
   <div class="row">
+    <%let check2 = false %>
       <%for(let i = 0; i < openBet.length; i++){%>
         <%if(openBet[i].bettype == "Football"){%>
           <%for(let j = 0 ; j < openBet[i].details.length; j++){%>
+            <%
+          let check = liveFootBall.some(item => item.eventData.eventId == openBet[i].details[j][0].eventId)
+          console.log(check)
+          %>
+          <%if(check){%>
+            <% check2=true %>
           <section>
             <div class="container-fluid">
               <div class="new-head">
@@ -77,12 +84,15 @@
                 </div>
               </div> 
             </section>
+            <%}%>
               <%}%>
         <%}%>
       <%}%>
       <%if(!openBet.some(item => item.bettype == "Football")){%>
         No data to display
-      <%}%>
+      <%}else if(!check2){%>
+        No data to display
+        <%}%>
   </div>
   <!-- <button class="btn btn-view-all">View All</button> -->
 </div>

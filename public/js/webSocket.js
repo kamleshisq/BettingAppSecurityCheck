@@ -130,7 +130,7 @@ socket.on('connect', () => {
 
 
 
-   $(document).on('submit', ".change-pass-model-form", function(e){
+   $(document).on('submit', ".change-pass-model-form1", function(e){
     e.preventDefault()
     let form = $(this)[0];
     let fd = new FormData(form);
@@ -1983,8 +1983,8 @@ socket.on('connect', () => {
                     if((i%2)==0){
                         html += `<tr style="text-align: center;" class="blue" >
                         <td>${count1 + i}</td>
-                        <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
-                        <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
+                        <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
                         if(data.json.userAcc[i].stake){
                             html += `<td>${data.json.userAcc[i].stake}</td>`
                         }else{
@@ -2016,13 +2016,13 @@ socket.on('connect', () => {
                             }
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><button class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>
                         <td>-</td>`
                     }else{
                         html += `<tr style="text-align: center;" >
                         <td>${count1 + i}</td>
-                        <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
-                        <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
+                        <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
                         if(data.json.userAcc[i].stake){
                             html += `<td>${data.json.userAcc[i].stake}</td>`
                         }else{
@@ -2054,7 +2054,7 @@ socket.on('connect', () => {
                             }
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><button class="ownAccDetails" id="${data.json.userAcc[i]._id}"  data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}"  data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>
                         <td>-</td>`
                     }
                 }
@@ -2853,7 +2853,7 @@ socket.on('connect', () => {
                 }
                 html += `<td>${i+count}</td>
                 <td>${Logs[i].userName}</td>
-                <td>${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()},${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
+                <td class="date-time" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()},${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
                 <td>${Logs[i].ip_address}</td>`
                 if(Logs[i].isOnline){
                     html += `<td>Active</td>`
@@ -3337,15 +3337,15 @@ socket.on('connect', () => {
                         html += `<tr style="text-align: center;" >`
                     }
                     html += `<td>${i + count}</td>
-                    <td>${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
+                    <td class="date-time">${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
                     <td>${bets[i].userName}</td>
-                    <td>${bets[i].event}</td>
+                    <td class="text-nowrap">${bets[i].event}</td>
                     `
                     if(bets[i].match){
                         html += `
-                        <td>${bets[i].marketName}</td>
+                        <td class="text-nowrap">${bets[i].marketName}</td>
                         <td>${bets[i].oddValue}</td>
-                        <td>${bets[i].match}</td>
+                        <td class="text-nowrap">${bets[i].match}</td>
                         <td>${bets[i].selectionName}</td>`
                     }else{
                         html += `<td>-</td>
@@ -3562,16 +3562,16 @@ socket.on('connect', () => {
                         html += `<tr style="text-align: center;" >`
                     }
                     html += `<td>${i + count + 1}</td>
-                    <td>${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
+                    <td class="date-time" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
                     <td>${bets[i].userName}</td>
-                    <td>${bets[i].event}</td>
+                    <td class="text-nowrap" >${bets[i].event}</td>
                     `
                     if(bets[i].match){
                         html += `
-                        <td>${bets[i].marketName}</td>
+                        <td class="text-nowrap" >${bets[i].marketName}</td>
                         <td>${bets[i].oddValue}</td>
-                        <td>${bets[i].match}</td>
-                        <td>${bets[i].selectionName}</td>`
+                        <td class="text-nowrap" >${bets[i].match}</td>
+                        <td class="text-nowrap" >${bets[i].selectionName}</td>`
                     }else{
                         html += `<td>-</td>
                         <td>-</td><td>-</td><td>-</td>`
@@ -5689,6 +5689,11 @@ socket.on('connect', () => {
             }
           });
 
+
+       
+          
+
+
         function downloadCSV(csvContent, fileName) {
             const link = document.createElement('a');
             const blob = new Blob([csvContent], { type: 'text/csv' });
@@ -7438,7 +7443,7 @@ socket.on('connect', () => {
           })
     }
 
-    if(pathname === "/admin/dashboard" && href === "http://ollscores.com/admin/dashboard"){
+    if(pathname === "/admin/dashboard" ){
         console.log(LOGINDATA.LOGINUSER)
         if(LOGINDATA.LOGINUSER != ""){
             console.log("WORKING")
@@ -7573,7 +7578,11 @@ socket.on('connect', () => {
 
                 socket.on("FIlterDashBoard", data => {
                     console.log(data)
-                    document.getElementById('betCount').innerText = data.result.betCount
+                    if(data.result.betCount){
+                        document.getElementById('betCount').innerText = data.result.betCount
+                    }else{
+                        document.getElementById('betCount').innerText = 0
+                    }
                     document.getElementById('Profit').innerText = data.result.Income
                     document.getElementById('turnOver').innerText = data.result.turnOver
                     document.getElementById('adminCount').innerText = data.result.adminCount
@@ -7629,8 +7638,8 @@ socket.on('connect', () => {
                 for(let i = 0; i < userAcc.length; i++){
                     let date = new Date(userAcc[i].date)
                     html += `<tr style="text-align: center;" class="blue"><td>${count + i}</td>
-                    <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
-                <td>${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                    <td class="text-nowrap">${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
+                    <td class="text-nowrap">${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
                 if(userAcc[i].creditDebitamount > 0){
                     html += ` <td>${userAcc[i].creditDebitamount}</td>
                     <td>-</td>`
@@ -7942,16 +7951,16 @@ socket.on('connect', () => {
                         html += `<tr style="text-align: center;" >`
                     }
                     html += `<td>${i + count}</td>
-                    <td>${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
+                    <td class="text-nowrap" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
                     <td>${bets[i].userName}</td>
-                    <td>${bets[i].event}</td>
+                    <td class="text-nowrap" >${bets[i].event}</td>
                     `
                     if(bets[i].match){
                         html += `
-                        <td>${bets[i].marketName}</td>
+                        <td class="text-nowrap" >${bets[i].marketName}</td>
                         <td>${bets[i].oddValue}</td>
-                        <td>${bets[i].match}</td>
-                        <td>${bets[i].selectionName}</td>`
+                        <td class="text-nowrap" >${bets[i].match}</td>
+                        <td class="text-nowrap" >${bets[i].selectionName}</td>`
                     }else{
                         html += `<td>-</td>
                         <td>-</td><td>-</td><td>-</td>`
@@ -8124,7 +8133,7 @@ socket.on('connect', () => {
                     var formattedTime = date.toLocaleString('en-US', options);
                     html += `<tr class="acount-stat-tbl-body-tr">
                         <td>${i+count}</td>
-                        <td>${formattedTime}</td>
+                        <td class="date-time">${formattedTime}</td>
                         <td>${bets[i].userName}</td>
                         <td>${bets[i].event}</td>`
                     if(bets[i].match){
@@ -8323,7 +8332,7 @@ socket.on('connect', () => {
                 var formattedTime = date.toLocaleString('en-US', options);
                 html += `<tr class="acount-stat-tbl-body-tr">
                     <td>${i+countAcc}</td>
-                    <td>${formattedTime}</td>`
+                    <td class="date-time">${formattedTime}</td>`
                     if(userAcc[i].creditDebitamount > 0){
                         html += `<td>${userAcc[i].creditDebitamount}</td>
                         <td>0</td>`
@@ -9030,6 +9039,137 @@ socket.on('connect', () => {
                 }
             })
 
+
+            $(".only_over_blue").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    if(item){
+
+                        if(item.market_id == id){
+                            section = item
+                        }
+                    }
+                })
+                if(this.id == `${section.market_id}1` ){
+                    if(data.betLimits[0].max_odd < section.yes || section.yes == "-" || section.yes == "1,000.00" || section.yes == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        let x = (parseFloat(section.yes_rate) + 100)/100
+                        this.innerHTML = `<strong>${x}</strong> <span class="small"> ${section.yes}</span>`
+                    }
+                }
+            });
+
+
+            $(".only_over_red").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    if(item){
+
+                        if(item.market_id == id){
+                            section = item
+                        }
+                    }
+                })
+                let parentElement = this.parentNode
+                console.log(section.ball_running)
+                if(this.id == `${section.market_id}2` ){
+                    if(section.ball_running){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.add("suspended");
+                      $(this).parent().find(".match-status-message").text("Ball Running")
+                    }else if(section.suspended){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.add("suspended");
+                      $(this).parent().find(".match-status-message").text("Suspended")
+                    }else if(data.betLimits[0].max_odd < section.no || section.no == "-" || section.no == "1,000.00" || section.no == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                    }else{
+                        this.setAttribute("data-bs-toggle", "collapse");
+                        $(this).parent().find(".match-status-message").text("")
+                        parentElement.classList.remove("suspended")
+                        let x = (parseFloat(section.no_rate) + 100)/100
+                        this.innerHTML = `<strong>${x}</strong> <span class="small"> ${section.no}</span>`
+                        // this.innerHTML = `<span><b>${section.no}</b></span>` 
+                    }
+                }
+            });
+
+            $(".odd_even_blue").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    if(item){
+
+                        if(item.market_id == id){
+                            section = item
+                        }
+                    }
+                })
+                if(this.id == `${section.market_id}1` ){
+                    if(data.betLimits[0].max_odd < section.odd || section.odd == "-" || section.odd == "1,000.00" || section.odd == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        this.innerHTML = `<strong>${section.odd}</strong>` 
+                    }
+                }
+            })
+
+            $(".odd_even_red").each(function() {
+                    
+                let id = this.id
+                id = id.slice(0, -1);
+                let section = null;
+                data.finalResult.items.some(item => {
+                    if(item){
+
+                        if(item.market_id == id){
+                            section = item
+                        }
+                    }
+                })
+                let parentElement = this.parentNode
+                if(this.id == `${section.market_id}2` ){
+                    if(section.ball_running){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else if(section.suspended){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }
+                    else if(data.betLimits[0].max_odd < section.even || section.even == "-" || section.even == "1,000.00" || section.even == "0"){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                    }else{
+                        this.innerHTML = `<strong>${section.even}</strong>` 
+                    }
+                }
+            });
+
         })
 
 
@@ -9072,21 +9212,141 @@ socket.on('connect', () => {
                 <th>Action</th>
                 </tr>`
                 for(let i = 0; i < data.data.length; i++){
+                    let date = new Date(data.data[i].date)
                     html += `<tr>
                     <td>${data.data[i].userName}</td>
-                    <td>01/09/23, 4:37:38 PM</td>
+                    <td class="date-time" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
                     <td>${data.data[i].marketName}</td>
                     <!-- <td>${data.data[i].userName}</td> -->
                     <td>${data.data[i].oddValue}</td>
                     <td>${data.data[i].Stake}</td>
-                    <td><div class="btn-group"><button class="btn alert-btn">Alert</button></div></td>
+                    <td><div class="btn-group"><button class="btn alert-btn" id="${data.data[i]._id}">Alert</button></div></td>
                 </tr>`
                 }
 
                 document.getElementById('betTable').innerHTML = html
             })
 
+            $(document).on("click", ".alert-btn", function(e){
+                e.preventDefault()
+                socket.emit("alertBet", this.id)
+            })
 
+            socket.on("alertBet", async(data) => {
+                if(data.status === "error"){
+                    alert("Please try again later")
+                }else{
+                    console.log(data.bet._id)
+                    const deleteButton = document.getElementById(data.bet._id);
+                    console.log(deleteButton)
+                    const row = deleteButton.closest('tr'); 
+                    if (row) {
+                        const table = row.parentNode;
+                        const rowIndex = Array.from(table.rows).indexOf(row);
+                        row.remove(); 
+                        // const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
+                        // rowsToUpdate.forEach((row, index) => {
+                        //     const srNoCell = row.cells[0]; 
+                        //     srNoCell.textContent = index + rowIndex + 1;
+                        //   });
+                      }
+                }
+            })
+
+            $(document).ready(function () {
+                $('.userBook').click(function () {
+                    var closestMarket = $(this).parents('.bets-table').find('.market');
+                    if (closestMarket.length > 0) {
+                        var marketId = closestMarket.attr('id');
+                        socket.emit('UerBook', {marketId, LOGINDATA})
+                    } else {
+                        console.log('Market not found.');
+                    }
+                });
+            });
+
+            socket.on('UerBook', data => {
+                console.log(data)
+                if(data.length > 0){
+                    let match = data[0].selections[0].matchName
+                    let team1 = match.split('v')[0]
+                    let team2 = match.split('v')[1]
+                    let html = `<tr><th>User name</th>
+                    <th>${team1}</th>
+                    <th>${team2}</th></tr>`
+                    let sumOfTeamA = 0
+                    let sumOfTeamB = 0
+                    let sumOfTeamC = 0
+                    for(let i = 0; i < data.length; i++){
+                        let team1data = 0 
+                        let team2data = 0
+                        console.log(data[i].selections[0].selectionName.toLowerCase(), team1.toLowerCase)
+                        if(data[i].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
+                            team1data = data[i].selections[0].totalAmount
+                            sumOfTeamA += team1data
+                            if(data[i].selections[1]){
+                                team2data = data[i].selections[1].totalAmount
+                                sumOfTeamB += team2data
+                            }
+                        }else{
+                            if(data[i].selections[1]){
+                                team1data = data[i].selections[1].totalAmount
+                                sumOfTeamA += team1data
+                            }
+                            team2data = data[i].selections[0].totalAmount
+                            sumOfTeamB += team2data
+                        }
+                        html += `
+                        <tr>
+                            <td>${data[i].userName}</td>
+                            <td>${team1data}</td>
+                            <td>${team2data}</td>
+                        </tr>
+
+                        `
+                    }
+                    html += `<tr>
+                    <td>Total</td>
+                    <td>${sumOfTeamA}</td>
+                    <td>${sumOfTeamB}</td>
+                </tr>`
+                    document.getElementById('match_odd').innerHTML = html
+                }else{
+                    document.getElementById('match_odd').innerHTML = "There is no bets in this market"
+                }
+            })
+
+    }
+
+
+    if(pathname == "/profile"){
+        $(document).on("click", ".Detail", function(e){
+            e.preventDefault()
+            let form = $('#user-details-page')
+            console.log(form)
+        })
+
+        $(document).on('submit', "#user-details-page", function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            let id = LOGINDATA.LOGINUSER._id
+            data.id = id
+            socket.emit("updateUserDetailssss", data)
+            // console.log(data)
+        })
+
+        socket.on('updateUserDetailssss', data => {
+            if(data.message == "err"){
+                togglePopupMain('popup-2', "redPopUP2", "Something went wrong please try again later")
+            }else{
+                togglePopupMain('popup-1', "redPopUP", "updated!")
+                setTimeout(()=>{
+                    window.location = '/profile'
+                  }, 500)
+            }
+        })
     }
 
 })

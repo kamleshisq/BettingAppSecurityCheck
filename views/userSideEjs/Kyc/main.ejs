@@ -361,3 +361,10 @@
 
   </body>
 </html>
+
+<script>
+     $("#formFileSm").change(function() {
+    filename = this.files[0].name;
+    $('.withdrow-txt-doc-upload-input-lbl').append('<span>'+filename+'</span>');
+    });
+</script>

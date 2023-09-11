@@ -1,8 +1,14 @@
 <div id="Cricket" class="tabcontent">
   <div class="row">
+    <%let check1 = false %>
     <%for(let i = 0; i < openBet.length; i++){%>
       <%if(openBet[i].bettype == "Cricket"){%>
         <%for(let j = 0 ; j < openBet[i].details.length; j++){%>
+          <%
+          let check = liveCricket.some(item => item.eventData.eventId == openBet[i].details[j][0].eventId)
+          %>
+        <%if(check){%>
+          <% check1=true %>
         <section>
           <div class="container-fluid">
             <div class="new-head">
@@ -25,17 +31,17 @@
                       </thead>
                       <tbody id="<%=openBet[i].details[j].id%>" class="MarketIdsR">
                         <%for(let k = 0; k < openBet[i].details[j].length; k++){%>
+                          <%if(k < 1){%>
                           <%
                             let data 
                             let matchodd = false
-                            console.log(openBet[i].details[j][k].id, "IDDDDD")
                             data = liveCricket.find(item => (item.marketList.match_odd != null) &&(item.marketList.match_odd.marketId == openBet[i].details[j][k].id))
-                            <!-- console.log(data, "1212121212") -->
                             if(!data){
                               matchodd = true
                               data = liveCricket.find(item => (item.marketList.bookmaker != null) &&(item.marketList.bookmaker[0].marketId == openBet[i].details[j][k].id))
                             }
                           %>
+                          <%if(data){%>
                           <%if(!matchodd){%>
                             <% let runners = JSON.parse(data.marketList.match_odd.runners); %>
                             <% const runners1 = []; %>
@@ -67,6 +73,8 @@
                               </tr>
                             <%}%>
                           <%}%>
+                          <%}%>
+                          <%}%>
                         <%}%>
                       </tbody>
                     </table>
@@ -76,11 +84,14 @@
             </div> 
           </section>
           <%}%>
+          <%}%>
       <%}%>
     <%}%>
     <%if(!openBet.some(item => item.bettype == "Cricket")){%>
       No data to display
-    <%}%>
+    <%}else if (!check1){%>
+      No data to display
+      <%}%>
   </div>
   <!-- <button class="btn btn-view-all">View All</button> -->
 </div>

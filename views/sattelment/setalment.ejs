@@ -82,9 +82,9 @@
                       var formattedTime = date.toLocaleString('en-US', options);
                   %>
                   <td><%=i+1 %></td>
-                  <td><%=formattedTime%></td>
-                  <td><%= betsEventWise[i].series%></td>
-                  <td><%= betsEventWise[i].matchName%></td>
+                  <td class="date-time"><%=formattedTime%></td>
+                  <td class="text-nowrap"><%= betsEventWise[i].series%></td>
+                  <td class="text-nowrap"><%= betsEventWise[i].matchName%></td>
                   <td><%= betsEventWise[i].count%></td>
                   <td><%= betsEventWise[i].count%></td>
                   <td><a href="/admin/settlementIn?id=<%=betsEventWise[i].eventid%>" class="btn-green">settle</a></td>

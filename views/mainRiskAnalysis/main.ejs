@@ -38,7 +38,14 @@
               <div class="bets-table">
                   <div class="title">
                       <div class="text-left market" id="<%=match.marketList.match_odd.marketId%>"><strong>Match Odds</strong></div>
-                      <div class="text-right"><strong>Min : <%=min%>, Max : <%=max%></strong></div>
+                      <div class="text-right">
+                        <!-- <strong>Min : <%=min%>, Max : <%=max%></strong> -->
+                        <div class="btn-group" >
+                            <button class="min-max-modal userBook" data-bs-toggle="modal" data-bs-target="#matchodd-modal">User Book</button>
+                            <button class="min-max-modal tbl-data-href" data-href="/admin/matchBets?id=<%=match.marketList.match_odd.marketId%>">Bets</button>
+                        </div>
+                        </div>
+                        <!-- <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.match_odd.marketId%>">Bets</button></div> -->
                   </div>
                       <% let runners = JSON.parse(match.marketList.match_odd.runners); %>
                     <% const runners1 = []; %>
@@ -102,7 +109,14 @@
               <div class="bets-table">
                   <div class="title">
                       <div class="text-left market" id="<%=match.marketList.bookmaker[0].marketId%>"><strong>Bookmaker</strong></div>
-                      <div class="text-right"><strong>Min : 100, Max : 10K</strong></div>
+                      <div class="text-right">
+                        <!-- <strong>Min : 100, Max : 10K</strong> -->
+                        <div class="btn-group" >
+                            <button class="min-max-modal userBook" data-bs-toggle="modal" data-bs-target="#matchodd-modal">User Book</button>
+                            <button class="min-max-modal tbl-data-href" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button>
+                        </div>
+                        <!-- <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button></div> -->
+                    </div>
                   </div>
                   <table>
                       <tr>
@@ -207,72 +221,107 @@
                   <div class="text-left"><strong>Fancy</strong></div>
               </div>
               <div class="tab-data-section">
-                  <div class="tab">
-                      <button class="tablinks active" data-tag="all">All</button>
+                <div class="tab">
+                    <button class="tablinks active" data-tag="all">All</button>
+                    <%if(match.marketList.session != null){%>
+                      <%let sessionData = match.marketList.session.filter(item => item.status == 1 && !item.title.startsWith("Only") && item.title.includes("Over"))%>
+                      <%if(sessionData.length > 0){ %>
                       <button class="tablinks" data-tag="session">Session</button>
+                      <%} %>
+                      <% let dataSessionOnly = match.marketList.session.filter(item => item.status == 1 && item.title.startsWith("Only")) %>
+                          <%if(dataSessionOnly.length > 0){%>
+                      <button class="tablinks" data-tag="Only_over">Only Overt</button>
+                      <%} %>
+                      <% let dataNotOnly = match.marketList.session.filter(item => item.status == 1 && !item.title.includes("Over")) %>
+                      <%if(dataNotOnly.length > 0 ) {%>
                       <button class="tablinks" data-tag="wp_market">W/P Market</button>
+                      <%} %>
+                      <%}%>
+                      <%if(match.marketList.odd_even != null){%>
                       <button class="tablinks" data-tag="odd_even">Odd/Even</button>
-                  </div>
-                  <div class="tabcontent" id="session">
-                      <table>
-                          <tr>
-                              <th>Sessions</th>
-                              <th></th>
-                              <th>
-                                  <div class="bets-option-btn">
-                                      <div class="bets-btn-group">Yes</div>
-                                      <div class="bets-btn-group">No</div>
-                                  </div>
-                              </th>
-                          </tr>
-                          <tr>
-                              <td>England</td>
-                              <td><div class="min-max-text"><strong>Min : 100, Max : 10K</strong></div></td>
-                              <td>    
-                              <div class="bets-option-btn">
-                                  <div class="bets-btn-group">                                 
-                                      <div class="bets-btn">
-                                          <strong>1.54</strong>
-                                          <span class="small">469</span>
-                                      </div>
-                                  </div>
-                                  <div class="bets-btn-group pink">                                  
-                                      <div class="bets-btn">
-                                          <strong>1.54</strong>
-                                          <span class="small">469</span>
-                                      </div>
-                                  </div>
-                              </div>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td>England</td>
-                              <td><div class="min-max-text"><strong>Min : 100, Max : 10K</strong></div></td>
-                              <td>
-                                  <div class="bets-option-btn">
-                                      <div class="bets-btn-group">                                 
-                                          <div class="bets-btn">
-                                              <strong>1.54</strong>
-                                              <span class="small">469</span>
-                                          </div>
-                                      </div>
-                                      <div class="bets-btn-group">                                  
-                                          <div class="bets-btn">
-                                              <strong>1.54</strong>
-                                              <span class="small">469</span>
-                                          </div>
-                                      </div>
-                                      <div class="match-status-message">Suspended</div>
-                                  </div>
-                              </td>
-                          </tr>
-                      </table>
-                  </div>
-                  <div class="tabcontent" id="wp_market">
+                      <%}%>
+                </div>
+                <%if(match.marketList.session != null){%>
+                    <%let sessionData = match.marketList.session.filter(item => item.status == 1 && !item.title.startsWith("Only") && item.title.includes("Over"))%>
+                    <%if(sessionData.length > 0){ %>
+                    <div class="tabcontent" id="session">
+                        <table>
+                            <tr>
+                                <th>Sessions</th>
+                                <th>
+                                    <div class="bets-option-btn">
+                                        <div class="bets-btn-group">Yes</div>
+                                        <div class="bets-btn-group">No</div>
+                                    </div>
+                                </th>
+                            </tr>
+                            <%for(let i = 0; i < sessionData.length; i++){%>
+                                <tr class="market" id="<%=sessionData[i].marketId%>">
+                                    <td ><%=sessionData[i].title%></td>
+                                    <td>    
+                                    <div class="bets-option-btn">
+                                        <div class="bets-btn-group">                                 
+                                            <div class="bets-btn only_over_blue" id="<%=sessionData[i].marketId%>1">
+                                                <strong>1.54</strong>
+                                                <span class="small">469</span>
+                                            </div>
+                                        </div>
+                                        <div class="bets-btn-group pink">                                  
+                                            <div class="bets-btn only_over_red" id="<%=sessionData[i].marketId%>2">
+                                                <strong>1.54</strong>
+                                                <span class="small">469</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </td>
+                                </tr>
+                            <%}%>
+                        </table>
+                    </div>
+                    <%} %>
+                    <% let dataSessionOnly = match.marketList.session.filter(item => item.status == 1 && item.title.startsWith("Only")) %>
+                    <%if(dataSessionOnly.length > 0){%>
+                    <div class="tabcontent" id="Only_over">
+                        <table>
+                            <tr>
+                                <th>Only Over</th>
+                                <th>
+                                    <div class="bets-option-btn">
+                                        <div class="bets-btn-group">Yes</div>
+                                        <div class="bets-btn-group">No</div>
+                                    </div>
+                                </th>
+                            </tr>
+                            <%for(let i = 0; i < dataSessionOnly.length; i++){%>
+                            <tr class="market" id="<%=sessionData[i].marketId%>">
+                                <td ><%=sessionData[i].title%></td>
+                                <td>    
+                                <div class="bets-option-btn">
+                                    <div class="bets-btn-group">                                 
+                                        <div class="bets-btn only_over_blue" id="<%=sessionData[i].marketId%>1">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                    <div class="bets-btn-group pink">                                  
+                                        <div class="bets-btn only_over_red" id="<%=sessionData[i].marketId%>2">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                            <%}%>
+                        </table>
+                    </div>
+                    <%} %>
+                    <% let dataNotOnly = match.marketList.session.filter(item => item.status == 1 && !item.title.includes("Over")) %>
+                    <%if(dataNotOnly.length > 0 ) {%>
+                    <div class="tabcontent" id="wp_market">
                       <table>
                           <tr>
                               <th>W/P Market</th>
-                              <th></th>
                               <th>
                                   <div class="bets-option-btn">
                                       <div class="bets-btn-group">Yes</div>
@@ -280,54 +329,36 @@
                                   </div>
                               </th>
                           </tr>
-                          <tr>
-                              <td>England</td>
-                              <td><div class="min-max-text"><strong>Min : 100, Max : 10K</strong></div></td>
-                              <td>    
-                              <div class="bets-option-btn">
-                                  <div class="bets-btn-group">                                 
-                                      <div class="bets-btn">
-                                          <strong>1.54</strong>
-                                          <span class="small">469</span>
-                                      </div>
-                                  </div>
-                                  <div class="bets-btn-group pink">                                  
-                                      <div class="bets-btn">
-                                          <strong>1.54</strong>
-                                          <span class="small">469</span>
-                                      </div>
-                                  </div>
-                              </div>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td>England</td>
-                              <td><div class="min-max-text"><strong>Min : 100, Max : 10K</strong></div></td>
-                              <td>
-                                  <div class="bets-option-btn">
-                                      <div class="bets-btn-group">                                 
-                                          <div class="bets-btn">
-                                              <strong>1.54</strong>
-                                              <span class="small">469</span>
-                                          </div>
-                                      </div>
-                                      <div class="bets-btn-group">                                  
-                                          <div class="bets-btn">
-                                              <strong>1.54</strong>
-                                              <span class="small">469</span>
-                                          </div>
-                                      </div>
-                                      <div class="match-status-message">Suspended</div>
-                                  </div>
-                              </td>
-                          </tr>
+                          <%for(let i = 0; i < dataNotOnly.length; i++){%>
+                            <tr class="market" id="<%=dataNotOnly[i].marketId%>">
+                                <td><%=dataNotOnly[i].title%></td>
+                                <td>    
+                                <div class="bets-option-btn">
+                                    <div class="bets-btn-group">                                 
+                                        <div class="bets-btn only_over_blue" id="<%=dataNotOnly[i].marketId%>1">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                    <div class="bets-btn-group pink">                                  
+                                        <div class="bets-btn only_over_red" id="<%=dataNotOnly[i].marketId%>2">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                        <%}%>
                       </table>
                   </div>
+                  <%} %>
+                <%}%>
+                <%if(match.marketList.odd_even != null){%>
                   <div class="tabcontent" id="odd_even">
                       <table>
                           <tr>
                               <th>Odd/Even</th>
-                              <th></th>
                               <th>
                                   <div class="bets-option-btn">
                                       <div class="bets-btn-group">Yes</div>
@@ -335,49 +366,30 @@
                                   </div>
                               </th>
                           </tr>
-                          <tr>
-                              <td>England</td>
-                              <td><div class="min-max-text"><strong>Min : 100, Max : 10K</strong></div></td>
-                              <td>    
-                              <div class="bets-option-btn">
-                                  <div class="bets-btn-group">                                 
-                                      <div class="bets-btn">
-                                          <strong>1.54</strong>
-                                          <span class="small">469</span>
-                                      </div>
-                                  </div>
-                                  <div class="bets-btn-group pink">                                  
-                                      <div class="bets-btn">
-                                          <strong>1.54</strong>
-                                          <span class="small">469</span>
-                                      </div>
-                                  </div>
-                              </div>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td>England</td>
-                              <td><div class="min-max-text"><strong>Min : 100, Max : 10K</strong></div></td>
-                              <td>
-                                  <div class="bets-option-btn">
-                                      <div class="bets-btn-group">                                 
-                                          <div class="bets-btn">
-                                              <strong>1.54</strong>
-                                              <span class="small">469</span>
-                                          </div>
-                                      </div>
-                                      <div class="bets-btn-group">                                  
-                                          <div class="bets-btn">
-                                              <strong>1.54</strong>
-                                              <span class="small">469</span>
-                                          </div>
-                                      </div>
-                                      <div class="match-status-message">Suspended</div>
-                                  </div>
-                              </td>
-                          </tr>
+                          <%for(let i = 0; i < match.marketList.odd_even.length; i++){%>
+                            <tr class="market" id="<%=match.marketList.odd_even[i].marketId%>">
+                                <td><%=match.marketList.odd_even[i].title%></td>
+                                <td>    
+                                <div class="bets-option-btn">
+                                    <div class="bets-btn-group">                                 
+                                        <div class="bets-btn odd_even_blue" id="<%=match.marketList.odd_even[i].marketId%>1">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                    <div class="bets-btn-group pink">                                  
+                                        <div class="bets-btn odd_even_red" id="<%=match.marketList.odd_even[i].marketId%>2">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                        <%}%>
                       </table>
                   </div>
+                  <%}%>
               </div>
           </div>
         </div>
@@ -406,14 +418,15 @@
                               <th>Action</th>
                           </tr>
                           <%for(let i = 0; i < Bets.length; i++){%>
+                            <% let date = new Date(Bets[i].date)%>
                             <tr>
                                 <td><%=Bets[i].userName%></td>
-                                <td>01/09/23, 4:37:38 PM</td>
+                                <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
                                 <td><%=Bets[i].marketName%></td>
                                 <!-- <td><%=Bets[i].userName%></td> -->
                                 <td><%=Bets[i].oddValue%></td>
                                 <td><%=Bets[i].Stake%></td>
-                                <td><div class="btn-group"><button class="btn alert-btn">Alert</button></div></td>
+                                <td><div class="btn-group"><button class="btn alert-btn" id="<%=Bets[i].id%>">Alert</button></div></td>
                             </tr>
                           <%}%>
                       </table>
@@ -425,8 +438,55 @@
     </div>
 </body>
 
+<div class="modal fade" id="matchodd-modal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+        </div>
+        <!-- <div class="modal-header">
+          <h4 class="modal-title">Match Odds</h4>
+        </div> -->
+        <div class="modal-body">
+          <div class="data-table">
+            <table id="match_odd">
+                
+              </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="bookmaker-modal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+        </div>
+        <div class="modal-header">
+          <h4 class="modal-title">Bookmaker</h4>
+        </div>
+        <div class="modal-body">
+            <div class="data-table">
+          <table id="bookmakerTable">
+            <tr>
+                <th>User name</th>
+                <th></th>
+                <th></th>
+            </tr>
+          </table>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/bundle.js"></script>
+
 <script>
   $(document).ready(function(){
     $('.bets-table .tab-data-section .tab .tablinks').click(function(){
@@ -456,4 +516,15 @@
 });
 </script>
 
+<script>
+     var betsButtons = document.querySelectorAll('.tbl-data-href');
+
+betsButtons.forEach(function(button) {
+    button.addEventListener('click', function () {
+        var newURL = button.getAttribute('data-href');
+        window.location.href = newURL;
+    });
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </html>

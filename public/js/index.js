@@ -59,6 +59,22 @@ $(document).ready(function(){
             $("a[href='"+pathname+"'").parent().parent().siblings('a').addClass('active')
             $("a[href='"+pathname+"'").parent().parent().addClass('open')
         }
+        console.log(pathname)
+        if(pathname == '/admin/catalogcontrol/compitations' || pathname == '/admin/catalogcontrol/compitations/events'){
+            $("a[href='"+'/admin/catalogcontrol'+"'").addClass('active')
+
+        }else if(pathname == '/admin/riskAnalysis'){
+            $("a[href='"+'/admin/liveMarket'+"'").addClass('active')
+
+        }else if(pathname == '/admin/userdetails'){
+            $("a[href='"+'/admin/userManagement'+"'").addClass('active')
+
+        }else if(pathname == '/admin/settlementIn'){
+            $("a[href='"+'/admin/settlement'+"'").addClass('active')
+            $("a[href='"+'/admin/settlement'+"'").parent().parent().siblings('a').addClass('active')
+            $("a[href='"+'/admin/settlement'+"'").parent().parent().addClass('open')
+
+        }
         // this.classList.add('active')
         }
 	}
@@ -77,6 +93,8 @@ $(document).on("submit", ".loginFormAdmin", function(e){
 })
 $(document).on('click', ".logOut", function(e){
     e.preventDefault()
+    // console.log('Working')
+    // console.log(this)
     logout()
 })
 
