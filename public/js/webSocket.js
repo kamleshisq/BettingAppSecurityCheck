@@ -1928,7 +1928,9 @@ socket.on('connect', () => {
                     data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
                 }else{
                     data.Tdate = Tdate
-                }                 data.LOGINDATA = LOGINDATA
+                }                 
+                
+                data.LOGINDATA = LOGINDATA
             }
             socket.emit('AccountScroll',data)        
         })
@@ -1957,8 +1959,10 @@ socket.on('connect', () => {
                     data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
                 }else{
                     data.Tdate = Tdate
-                }                data.LOGINDATA = LOGINDATA
+                }                
+                data.LOGINDATA = LOGINDATA
            }
+           console.log(data)
             
             socket.emit('AccountScroll',data)
         })
