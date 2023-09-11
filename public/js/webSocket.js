@@ -8489,18 +8489,10 @@ socket.on('connect', () => {
                 html += `<tr>`
                 var timestamp = new Date(data.betsEventWise[i].eventdate).getTime() * 1000; 
                 var date = new Date(timestamp);
-                var options = { 
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: true
-                };
-                var formattedTime = date.toLocaleString('en-US', options);
+                
                   
                   html += `<td>${i+1} </td>
-                  <td>${formattedTime}</td>
+                  <td class="date-time">${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + " "+ date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
                   <td>${data.betsEventWise[i].series}</td>
                   <td>${data.betsEventWise[i].matchName}</td>
                   <td>${data.betsEventWise[i].count}</td>
