@@ -9403,6 +9403,10 @@ socket.on('connect', () => {
                 }
                 socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
         })
+
+        socket.on("gameAnalist", data => {
+            console.log(data)
+        })
     }
 
 })

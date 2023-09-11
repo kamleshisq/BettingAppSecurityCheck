@@ -2956,7 +2956,82 @@ io.on('connection', (socket) => {
 
 
     socket.on('gameAnalysis', async(data) => {
-        console.log(data)
+        let me = data.USER
+        let page = data.page;
+        let limit = 10
+        // console.log(me)
+        let filter = {}
+        if(data.from_date && data.to_date){
+            filter.date = {$gte:data.from_date,$lte:data.to_date}
+        }else if(data.from_date && !data.to_date){
+            filter.date = {$gte:data.from_date}
+        }else if(data.to_date && !data.from_date){
+            filter.date = {$lte:data.to_date}
+        }
+        const gameAnalist = await Bet.aggregate([
+            {
+                $match:filter
+            },
+            {
+                $lookup:{
+                    from:'users',
+                    localField:'userName',
+                    foreignField:'userName',
+                    as:'userDetails'
+                }
+            },
+            {
+                $unwind:'$userDetails'
+            },
+            {
+                $match:{
+                    'userDetails.isActive':true,
+                    'userDetails.roleName':{$ne:'Admin'},
+                    'userDetails.role_type':{$in:role_type},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
+                    'userDetails.whiteLabel':fWhitlabel
+                }
+            },
+            {
+                $group:{
+                    _id:{
+                        event:'$event',
+                        userName:'$userName'
+                    },
+                    betCount:{$sum:1},
+                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    open:{$sum:{$cond:[{$eq:['$status','OPEN']},1,0]}},
+                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','OPEN']]},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:'$_id.event',
+                    Total_User:{$sum:1},
+                    betcount:{$sum:'$betCount'},
+                    loss:{$sum:'$loss'},
+                    won:{$sum:'$won'},
+                    open:{$sum:'$open'},
+                    returns:{$sum:'$returns'}
+                }
+            },
+            {
+                $sort: {
+                    betcount: -1 ,
+                    open : -1,
+                    won : -1,
+                    loss : -1,
+                    Total_User:-1
+                }
+            },
+            {
+                $limit: 10 
+            }
+        ])
+
+        socket.emit('gameAnalysis', gameAnalist)
     })
     
 })
