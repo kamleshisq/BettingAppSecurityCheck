@@ -3607,6 +3607,8 @@ socket.on('connect', () => {
         
         $(document).on('change','#Fdate',function(e){
             filterData = {}
+            filterData.Sport = $("#Sport").val()
+            filterData.market = $("#market").val()
             filterData.from_date = $(this).val()
             if($('#Tdate').val() != ''){
                 filterData.to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
@@ -3627,6 +3629,8 @@ socket.on('connect', () => {
 
         $(document).on('change','#Tdate',function(e){
             filterData = {}
+            filterData.Sport = $("#Sport").val()
+            filterData.market = $("#market").val()
             filterData.to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
             if($('#Fdate').val() != ''){
                 filterData.from_date = $('#Fdate').val()
@@ -3716,6 +3720,8 @@ socket.on('connect', () => {
                 if($('#Tdate').val() != ''){
                     filterData.to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
                 }
+                filterData.Sport = $("#Sport").val()
+                filterData.market = $("#market").val()
     
                 data.filterData = filterData;
                 data.page = page
@@ -7590,6 +7596,7 @@ socket.on('connect', () => {
                     trElement.find('td:eq(1)').text(`${data.name}`);
                     // trElement.find('td:eq(1)').text(`${data.description}`);
                 }
+                alert("Updated!!")
 
             }
         })
