@@ -7639,7 +7639,7 @@ socket.on('connect', () => {
                 socket.emit("CommissionRReport", {page, LOGINDATA, filterData})
           })
 
-          let count = 21
+          let count = 11
           socket.on("CommissionRReport", data => {
             console.log(data)
             // if(data.CommissionData.length > 0){
@@ -7666,15 +7666,21 @@ socket.on('connect', () => {
             </tr>`
                 }
 
-                count += 20
+                count += 10
                 if(data.page == 0){
                     // console.log(html)
                     $('.table-body').html(html)
+                    if(!(data.CommissionData.length < 10)){
+                        document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
+                    }
                     // if(data.CommissionData.length === 0){
                     //     $('.table-body').html("1")
                     // }
                 }else{
                     $('.table-body').append(html)         
+                    if((data.CommissionData.length < 10)){
+                        document.getElementById('load-more').innerHTML = ""
+                    }
                 }
           })
 

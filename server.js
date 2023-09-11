@@ -2592,7 +2592,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("CommissionRReport", async(data) => {
-        let limit = 20;
+        let limit = 10;
         let page = data.page;
         // console.log(page)
         // console.log(data.LOGINDATA.LOGINUSER)
