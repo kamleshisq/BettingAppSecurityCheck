@@ -1839,8 +1839,8 @@ io.on('connection', (socket) => {
                 $match: {
                     userName: data.LOGINUSER.userName,
                     date: {
-                        $gte: tenDaysAgo, // Change this to currentDate
-                        $lte: currentDate, // Add this line
+                        $gte: tenDaysAgo,
+                        $lte: currentDate,
                     },
                 },
             },
@@ -1865,7 +1865,7 @@ io.on('connection', (socket) => {
         ]);
     
         const newDataArray = [];
-        const currentDate1 = new Date(tenDaysAgo); // Change this to currentDate
+        const currentDate1 = new Date(tenDaysAgo);
         for (let i = 0; i < 10; i++) {
             const matchingData = accountForGraph.find(item =>
                 item._id.year === currentDate1.getFullYear() &&
@@ -1890,13 +1890,18 @@ io.on('connection', (socket) => {
             currentDate1.setDate(currentDate1.getDate() + 1);
         }
     
-        // console.log(newDataArray);
+        // Format data to two decimal places
+        const formattedDataArray = newDataArray.map(item => ({
+            _id: item._id,
+            totalIncome: item.totalIncome.toFixed(2),
+            totalIncome2: item.totalIncome2.toFixed(2),
+        }));
     
-        const Income = newDataArray.map(item => item.totalIncome);
-        const Revanue = newDataArray.map(item => item.totalIncome2);
-        socket.emit("chartMain", {Income, Revanue})
-        // Now you can use the Income and Revanue arrays as needed
+        const Income = formattedDataArray.map(item => parseFloat(item.totalIncome));
+        const Revanue = formattedDataArray.map(item => parseFloat(item.totalIncome2));
+        socket.emit("chartMain", { Income, Revanue });
     });
+    
 
     socket.on("FIlterDashBoard", async(data) => {
         let filter = {}
