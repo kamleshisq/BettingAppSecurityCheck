@@ -300,14 +300,18 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
 
 
 exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
-    console.log(req.query)
+    // console.log(req.query)
     let userAcc
     let page = req.query.page
+    let filter = {}
     if(!page){
         page = 0
     }
     limit = 10
     if(req.query.id){
+        if(req.query.userName){
+
+        }
         if(req.query.from && req.query.to){
             userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:req.query.from,$lte:req.query.to}}).sort({date: -1}).skip(page * limit).limit(limit);
         }else if(req.query.from && !req.query.to){
