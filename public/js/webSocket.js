@@ -3237,7 +3237,7 @@ socket.on('connect', () => {
         })
 
 
-        $('.filter').click(function(){
+        $('#fromDate,#toDate,#Sport,#market').change(function(){
             console.log("working")
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
