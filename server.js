@@ -2418,7 +2418,7 @@ io.on('connection', (socket) => {
         }else if(!data.fromdate && data.todate){
             dataobj = {$lte:new Date(data.todate)}
         }
-        console.log(dataobj)
+        // console.log(dataobj)
         let betsEventWise = await Bet.aggregate([
             {
                 $match: {
