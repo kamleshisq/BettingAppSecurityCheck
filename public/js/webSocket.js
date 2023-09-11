@@ -9392,6 +9392,45 @@ socket.on('connect', () => {
     }
 
     if(pathname == "/admin/gameanalysis"){
+        $(document).on('change','#Fdate',function(e){
+            let from_date = $(this).val()
+            let to_date
+            if($('#Tdate').val() != ''){
+                to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            }
+            let page = 0
+            $('.rowId').attr('data-rowid',page + 1)
+            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
+        })
+
+        $(document).on('change','#Tdate',function(e){
+            let to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            let from_date
+            if($('#Fdate').val() != ''){
+                from_date = $('#Fdate').val()
+            }
+            let page = 0
+            $('.rowId').attr('data-rowid',page + 1)
+            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
+        })
+
+        $(document).on('change', ".Sport", function(e){
+            console.log("Working")
+            let Sport = this.val()
+            let to_date
+            let from_date
+            if($('#Fdate').val() != ''){
+                from_date = $('#Fdate').val()
+            }
+            if($('#Tdate').val() != ''){
+                to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            }
+            let page = 0
+            $('.rowId').attr('data-rowid',page + 1)
+            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport})
+        })
+
+
         $(document).on('click', ".load-more", function(e){
             let page = parseInt($('.rowId').attr('data-rowid'))
                 $('.rowId').attr('data-rowid',page + 1)
@@ -9406,8 +9445,37 @@ socket.on('connect', () => {
                 socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
         })
 
+        let limit
         socket.on("gameAnalysis", data => {
-            console.log(data)
+            let html = ""
+            limit = 10 * data.page
+            for(let i = 0; i < data.gameAnalist.length; i++){
+                html += `<tr>
+                <td>${i + 1 + limit}</td>
+                <td>${data.gameAnalist[i]._id}</td>
+                <td>${data.gameAnalist[i].Total_User}</td>
+                <td>${data.gameAnalist[i].betcount}</td>
+                <td> ${data.gameAnalist[i].won} </td>
+                <td>${data.gameAnalist[i].loss}</td>
+                <td>-</td>
+                <td>${data.gameAnalist[i].open}</td>`
+                if(data.gameAnalist[i].returns > 0){
+                    html += `<td class="green">+${data.gameAnalist[i].returns.toFixed(2)}</td></tr>`
+                }else{
+                    html += `<td class="red">${data.gameAnalist[i].returns.toFixed(2)}</td></tr>`
+                }
+            } 
+            if(data.page == 0){
+                $('tbody').html(html)
+                if(!(data.gameAnalist.length < 10)){
+                    document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
+                }
+            }else{
+                $('tbody').append(html)
+                if((data.gameAnalist.length < 10)){
+                    document.getElementById('load-more').innerHTML = ""
+                }
+            }
         })
     }
 

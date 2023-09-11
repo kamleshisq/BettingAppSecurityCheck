@@ -2956,6 +2956,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('gameAnalysis', async(data) => {
+        console.log(data.Sport)
         let me = data.USER
         let page = data.page;
         let limit = 10
@@ -2973,11 +2974,11 @@ io.on('connection', (socket) => {
         }
         let filter = {}
         if(data.from_date && data.to_date){
-            filter.date = {$gte:data.from_date,$lte:data.to_date}
+            filter.date = {$gte:new Date(data.from_date),$lte:new Date(data.to_date)}
         }else if(data.from_date && !data.to_date){
-            filter.date = {$gte:data.from_date}
+            filter.date = {$gte:new Date(data.from_date)}
         }else if(data.to_date && !data.from_date){
-            filter.date = {$lte:data.to_date}
+            filter.date = {$lte:new Date(data.to_date)}
         }
         console.log(filter)
         const gameAnalist = await Bet.aggregate([
@@ -3046,7 +3047,7 @@ io.on('connection', (socket) => {
             }
         ])
         console.log(gameAnalist)
-        socket.emit('gameAnalysis', gameAnalist)
+        socket.emit('gameAnalysis', {gameAnalist, page})
     })
     
 })
