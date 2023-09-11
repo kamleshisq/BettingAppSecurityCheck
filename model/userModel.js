@@ -264,13 +264,13 @@ userSchema.pre(/^find/, function(next){
 //     this.find({isActive:true})
 // })
 
-
-userSchema.pre(/^find/, async function () {
+userSchema.pre(/^find/, function () {
     // This refers to the query
-    const docs = await this.find().lean();
+    const cursor = this.find().lean().cursor();
+    const docs = [];
 
-    // Round the numeric fields in each document
-    docs.forEach((doc) => {
+    cursor.eachAsync(async (doc) => {
+        // Round the numeric fields in the document
         if (doc.myPL !== undefined) {
             doc.myPL = roundToTwoDecimals(doc.myPL);
         }
@@ -283,11 +283,14 @@ userSchema.pre(/^find/, async function () {
         if (doc.pointsWL !== undefined) {
             doc.pointsWL = roundToTwoDecimals(doc.pointsWL);
         }
-    });
 
-    // Replace the query results with the rounded documents
-    this._results = docs;
+        docs.push(doc);
+    }).then(() => {
+        // Replace the query results with the rounded documents
+        this._results = docs;
+    });
 });
+
 
 
 // function roundToTwoDecimals(value) {
