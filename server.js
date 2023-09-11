@@ -737,7 +737,6 @@ io.on('connection', (socket) => {
           ])
             .then((userResult) => {
               const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-              let Name123
               data.filterData.userId = { $in: userIds }
               if(data.filterData.userName === data.LOGINDATA.LOGINUSER.userName){
                   delete data.filterData['userName']
@@ -754,6 +753,11 @@ io.on('connection', (socket) => {
               Bet.aggregate([
                 {
                   $match: data.filterData
+                },
+                {
+                    $sort:{
+                        date:-1
+                    }
                 },
                 {
                     $skip:(page * limit)
