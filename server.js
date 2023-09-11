@@ -829,6 +829,13 @@ io.on('connection', (socket) => {
         if(data.filterData.userName && data.filterData.userName != data.LOGINDATA.LOGINUSER.userName ){
             filter.userName = data.filterData.userName
         }
+        if(data.filterData.from_date && data.filterData.to_date){
+            filter.date = {$gte:new Date(data.filterData.from_date),$lte:new Date(data.filterData.to_date)}
+        }else if(data.filterData.from_date && !data.filterData.to_date){
+            filter.date = {$gte:new Date(data.filterData.from_date)}
+        }else if(data.filterData.to_date && !data.filterData.from_date){
+            filter.date = {$lte:new Date(data.filterData.to_date)}
+        }
         let betResult = await Bet.aggregate([
             {
                 $match:filter
