@@ -8485,7 +8485,7 @@ socket.on('connect', () => {
             let html = ''
             for(let i = 0; i < data.betsEventWise.length; i++){ 
                 html += `<tr>`
-                var timestamp = data.betsEventWise[i].eventdate * 1000; 
+                var timestamp = new Date(data.betsEventWise[i].eventdate).getTime() * 1000; 
                 var date = new Date(timestamp);
                 var options = { 
                     year: 'numeric',
