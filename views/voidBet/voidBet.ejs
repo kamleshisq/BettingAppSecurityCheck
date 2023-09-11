@@ -35,34 +35,34 @@
                   <form action="">
                     <div class="input-group">
                       <label>Select Sports</label>
-                      <select name="" id="">
-                        <option value="">Cricket</option>
-                        <option value="">FOOTBALL</option>
-                        <option value="">TENNIS</option>
-                        <option value="">BASKETBALL</option>
-                        <option value="">BASEBALL</option>
+                      <select name="Sport" id="Sport">
+                        <option value="All" selected> All </option>
+                        <option value="Cricket">Cricket</option>
+                        <option value="Football">FOOTBALL</option>
+                        <option value="Tennis">TENNIS</option>
+                        <option value="Basketball">BASKETBALL</option>
+                        <option value="Baseball">BASEBALL</option>
                       </select>
                     </div> 
                     <div class="input-group">
-                      <label>Select Event</label>
-                      <select name="" id="">
-                        <option value="">Cricket</option>
-                        <option value="">FOOTBALL</option>
-                        <option value="">TENNIS</option>
-                        <option value="">BASKETBALL</option>
-                        <option value="">BASEBALL</option>
+                      <label>Select Market</label>
+                      <select name="market" id="market">
+                        <option value="All">All</option>
+                        <option value="Match Odds">Match Odds</option>
+                        <option value="Bookmaker 0%Comm">BookMaker</option>
+                        <option value="Fancy">Fancy</option>
                       </select>
                     </div> 
                     <div class="input-group">
                       <label class="up-down-form">From Date</label>
-                      <input type="date" id="fromDate">
+                      <input type = "date" id="Fdate">
                     </div> 
                     <div class="input-group">
                       <label class="up-down-form">To Date</label>
-                      <input type="date" id="toDate">
+                      <input type = "date" id="Tdate">
                     </div> 
                     </form>
-                    <button class="btn-filter filter"><i class="fa-solid fa-filter"></i> Filter</button>
+                    <!-- <button class="btn-filter filter"><i class="fa-solid fa-filter"></i> Filter</button> -->
                 </div>
             </div>
             <div class="data-table">
@@ -74,6 +74,12 @@
 
   <div class="pageId" data-pageid="1"></div>
 </div>
+
+<div id="load-more" >
+  <%if(bets.length >= 10){ %>
+    <button class="load-more">Load More</button>
+    <%}%>
+  </div>
 
 <div class="modal fade" id="myModaladduser" role="dialog">
   <div class="modal-dialog">
