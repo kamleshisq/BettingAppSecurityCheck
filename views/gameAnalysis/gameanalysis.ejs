@@ -5,6 +5,7 @@
     <div class="container-fluid">
       <div class="new-head"> 
           <h3>Game Analysis</h3>
+          <div class="rowId" data-rowid="1"></div>
           <!-- <form action="" style="display: flex; height: 30px;">
             <div class="input-group">
               <div class="input-group-prepend">
@@ -75,6 +76,12 @@
     </div>
 </section>
 </div>
+
+<div id="load-more" >
+  <%if(gameAnalist.length >= 10){ %>
+    <button class="load-more">Load More</button>
+    <%}%>
+  </div>
 
 <div class="modal fade" id="myModaladduser" role="dialog">
   <div class="modal-dialog">
