@@ -9394,6 +9394,7 @@ socket.on('connect', () => {
     if(pathname == "/admin/gameanalysis"){
         $(document).on('change','#Fdate',function(e){
             let from_date = $(this).val()
+            let market = $("#market").val()
             let to_date
             if($('#Tdate').val() != ''){
                 to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
@@ -9401,11 +9402,12 @@ socket.on('connect', () => {
             let Sport = $("#Sport").val()
             let page = 0
             $('.rowId').attr('data-rowid',page + 1)
-            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport})
+            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
         })
 
         $(document).on('change','#Tdate',function(e){
             let to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            let market = $("#market").val()
             let from_date
             if($('#Fdate').val() != ''){
                 from_date = $('#Fdate').val()
@@ -9413,12 +9415,13 @@ socket.on('connect', () => {
             let Sport = $("#Sport").val()
             let page = 0
             $('.rowId').attr('data-rowid',page + 1)
-            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport})
+            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
         })
 
         $('#Sport').change(function() {
             // console.log("Working")
             let Sport = $(this).val()
+            let market = $("#market").val()
             let to_date
             let from_date
             if($('#Fdate').val() != ''){
@@ -9429,12 +9432,31 @@ socket.on('connect', () => {
             }
             let page = 0
             $('.rowId').attr('data-rowid',page + 1)
-            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport})
+            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+        })
+
+
+        $('#market').change(function() {
+            // console.log("Working")
+            let Sport = $("#Sport").val()
+            let market = $(this).val()
+            let to_date
+            let from_date
+            if($('#Fdate').val() != ''){
+                from_date = $('#Fdate').val()
+            }
+            if($('#Tdate').val() != ''){
+                to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            }
+            let page = 0
+            $('.rowId').attr('data-rowid',page + 1)
+            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
         })
 
 
         $(document).on('click', ".load-more", function(e){
             let page = parseInt($('.rowId').attr('data-rowid'))
+            let market = $("#market").val()
                 $('.rowId').attr('data-rowid',page + 1)
                 let to_date;
                 let from_date
@@ -9445,7 +9467,7 @@ socket.on('connect', () => {
                     to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
                 }
                 let Sport = $("#Sport").val()
-                socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport})
+                socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
         })
 
         let limit
