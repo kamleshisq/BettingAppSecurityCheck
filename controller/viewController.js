@@ -1203,6 +1203,15 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
                 open:{$sum:'$open'},
                 returns:{$sum:'$returns'}
             }
+        },
+        {
+            $sort: {
+                betcount: -1 ,
+                open : -1
+            }
+        },
+        {
+            $limit: 10 
         }
     ])
     // console.log(gameAnalist)
