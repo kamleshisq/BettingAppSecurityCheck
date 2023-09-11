@@ -2953,6 +2953,11 @@ io.on('connection', (socket) => {
             socket.emit('updateUserDetailssss', {message:"err", status:"error"})
         }
     })
+
+
+    socket.on('gameAnalysis', async(data) => {
+        console.log(data)
+    })
     
 })
 
