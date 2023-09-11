@@ -2261,7 +2261,7 @@ socket.on('connect', () => {
                     filterData.date = {$gte : fromDate,$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
                 }else{
                     if(fromDate != '' ){
-                        filterData.date = {$gte : fromDate}
+                        filterData.date = {$gte : '2023-09-01'}
                     }
                     if(toDate != '' ){
                         filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
