@@ -2956,6 +2956,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('gameAnalysis', async(data) => {
+        console.log(data.Sport)
         let me = data.USER
         let page = data.page;
         let limit = 10
