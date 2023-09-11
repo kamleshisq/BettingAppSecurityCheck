@@ -57,7 +57,11 @@
                     </div>
                     <%}%>
                   </td>
-                  <td><%=data[i].created_on%></td>
+                  <%
+                    let date;
+                    date = data[i].created_on * 1000
+                  %>
+                  <td><%=new Date(date) %></td>
                   <td><%=data[i].name%></td>
                   <td><%=data[i].count%></td>
                   <%}%>
