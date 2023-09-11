@@ -837,6 +837,7 @@ io.on('connection', (socket) => {
         }else if(data.filterData.to_date && !data.filterData.from_date){
             filter.date = {$lte:new Date(data.filterData.to_date)}
         }
+        console.log(filter)
         let betResult = await Bet.aggregate([
             {
                 $match:filter
