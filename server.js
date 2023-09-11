@@ -2422,7 +2422,7 @@ io.on('connection', (socket) => {
             {
                 $match: {
                     status:"OPEN" ,
-                    eventdate: dataobj
+                    eventDate: dataobj
                 }
             },
             {
