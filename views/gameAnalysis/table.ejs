@@ -28,9 +28,9 @@
         <td>-</td>
         <td><%=gameAnalist[i].open%></td>
         <%if(gameAnalist[i].returns > 0){%>
-          <td class="green">+<%=gameAnalist[i].returns%></td>
+          <td class="green">+<%=gameAnalist[i].returns.toFixed(2)%></td>
         <%}else{%>
-          <td class="red"><%=gameAnalist[i].returns%></td>
+          <td class="red"><%=gameAnalist[i].returns.toFixed(2)%></td>
         <%}%>
       </tr>
     <%}%>
