@@ -2965,6 +2965,12 @@ io.on('connection', (socket) => {
             role_type.push(roles[i].role_type)
         }
         // console.log(me)
+        let fWhitlabel;
+        if(me.role_type == 1){
+            fWhitlabel = {$ne:null}
+        }else{
+            fWhitlabel = me.whiteLabel
+        }
         let filter = {}
         if(data.from_date && data.to_date){
             filter.date = {$gte:data.from_date,$lte:data.to_date}
