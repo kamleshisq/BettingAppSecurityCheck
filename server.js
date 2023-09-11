@@ -857,7 +857,8 @@ io.on('connection', (socket) => {
                 $limit:10
             }
         ])
-        console.log(betResult)
+        // console.log(betResult)
+        socket.emit("voidBET", {betResult, page})
 
     })
 

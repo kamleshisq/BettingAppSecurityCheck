@@ -3651,9 +3651,9 @@ socket.on('connect', () => {
       
             let count = 10
             socket.on('voidBET',(data) => {
-                // console.log(data)
+                console.log(data)
                 count = 10 * data.page
-                let bets = data.ubDetails;
+                let bets = data.betResult;
                 let html = '';
                     for(let i = 0; i < bets.length; i++){
                         let date = new Date(bets[i].date)
