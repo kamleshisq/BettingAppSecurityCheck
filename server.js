@@ -838,7 +838,7 @@ io.on('connection', (socket) => {
         }else if(data.filterData.to_date && !data.filterData.from_date){
             filter.date = {$lte:new Date(data.filterData.to_date)}
         }
-        if(data.filterData.Sport != All){
+        if(data.filterData.Sport != "All"){
             filter.betType = data.filterData.Sport
         }
         // if(data.filterData.market != All){
