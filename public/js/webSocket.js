@@ -3524,43 +3524,10 @@ socket.on('connect', () => {
 
         })
 
-        $(window).scroll(function() {
-            if($(document).height()-$(window).scrollTop() == window.innerHeight){
-                console.log('working')
-                let page = parseInt($('.pageId').attr('data-pageid'));
-                $('.pageId').attr('data-pageid',page + 1)
-                let data = {}
-                let userName = $('.searchUser').val()
-                if(userName == ''){
-                    filterData.userName = LOGINDATA.LOGINUSER.userName
-                }else{
-                    filterData.userName = userName
-                }
-                if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
-                    filterData.date = {$gte : fromDate,$lte : toDate}
-                }else{
-    
-                    if(fromDate != undefined && fromDate != '' ){
-                        filterData.date = {$gte : fromDate}
-                    }
-                    if(toDate != undefined && toDate != '' ){
-                        filterData.date = {$lte : toDate}
-                    }
-                }
-    
-                data.filterData = filterData;
-                data.page = page
-                data.LOGINDATA = LOGINDATA
-                // console.log(data)
-                socket.emit('voidBET',data)
-
-            }
-        }); 
-       
-
-        // $(document).on('click', ".load-more", function(e){
-        //     console.log("WORKING")
-        //     let page = parseInt($('.pageId').attr('data-pageid'));
+        // $(window).scroll(function() {
+        //     if($(document).height()-$(window).scrollTop() == window.innerHeight){
+        //         console.log('working')
+        //         let page = parseInt($('.pageId').attr('data-pageid'));
         //         $('.pageId').attr('data-pageid',page + 1)
         //         let data = {}
         //         let userName = $('.searchUser').val()
@@ -3586,7 +3553,40 @@ socket.on('connect', () => {
         //         data.LOGINDATA = LOGINDATA
         //         // console.log(data)
         //         socket.emit('voidBET',data)
-        // })
+
+        //     }
+        // }); 
+       
+
+        $(document).on('click', ".load-more", function(e){
+            console.log("WORKING")
+            let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                let data = {}
+                let userName = $('.searchUser').val()
+                if(userName == ''){
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                }
+                if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
+                    filterData.date = {$gte : fromDate,$lte : toDate}
+                }else{
+    
+                    if(fromDate != undefined && fromDate != '' ){
+                        filterData.date = {$gte : fromDate}
+                    }
+                    if(toDate != undefined && toDate != '' ){
+                        filterData.date = {$lte : toDate}
+                    }
+                }
+    
+                data.filterData = filterData;
+                data.page = page
+                data.LOGINDATA = LOGINDATA
+                // console.log(data)
+                socket.emit('voidBET',data)
+        })
             
       
             let count = 10
