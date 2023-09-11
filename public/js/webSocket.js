@@ -1913,16 +1913,22 @@ socket.on('connect', () => {
             Tdate = document.getElementById("Tdate").value
             let data = {}
             if(searchU){
-                 data.id = SUSER,
-                 data.page = page,
-                 data.Fdate = Fdate,
-                 data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1),
-                 data.LOGINDATA = LOGINDATA
+                 data.id = SUSER
+                 data.page = page
+                 data.Fdate = Fdate
+                 if(data.Tdate != ''){
+                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+                }else{
+                    data.Tdate = Tdate
+                }                 data.LOGINDATA = LOGINDATA
             }{
-                 data.page = page,
-                 data.Fdate = Fdate,
-                 data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1),
-                 data.LOGINDATA = LOGINDATA
+                 data.page = page
+                 data.Fdate = Fdate
+                 if(data.Tdate != ''){
+                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+                }else{
+                    data.Tdate = Tdate
+                }                 data.LOGINDATA = LOGINDATA
             }
             socket.emit('AccountScroll',data)        
         })
@@ -1935,16 +1941,23 @@ socket.on('connect', () => {
             $('.pageLink').attr('data-page',page + 1)
             let data = {}
            if(searchU){
-                data.id = SUSER,
-                data.page = page,
-                data.Fdate = Fdate,
-                data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1),
+                data.id = SUSER
+                data.page = page
+                data.Fdate = Fdate
+                if(data.Tdate != ''){
+                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+                }else{
+                    data.Tdate = Tdate
+                }
                 data.LOGINDATA = LOGINDATA
            }{
-                data.page = page,
-                data.Fdate = Fdate,
-                data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1),
-                data.LOGINDATA = LOGINDATA
+                data.page = page
+                data.Fdate = Fdate
+                if(data.Tdate != ''){
+                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+                }else{
+                    data.Tdate = Tdate
+                }                data.LOGINDATA = LOGINDATA
            }
             
             socket.emit('AccountScroll',data)
