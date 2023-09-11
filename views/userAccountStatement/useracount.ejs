@@ -5,6 +5,7 @@
     <div class="container-fluid">
       <div class="new-head"> 
         <h3 class="main-heading">User Account Statement</h3>
+        <div class="rowId" data-rowid="1"></div>
         <form action="">
           <div class="input-group">
             <div class="input-group-prepend">
@@ -62,6 +63,7 @@
               </tr>
             </thead>
             <tbody class="new-body">
+              <%if(data.length !== 0){%>
               <%for(let i = 0; i < data.length; i++){%>
               <% let date = new Date(data[i].date)%>
               <%if((i%2 == 0)){%>
@@ -177,6 +179,9 @@
               </tr>
               <%}%>
               <%}%>
+              <%}else{%>
+                <tr class="empty_table"><td>No record found</td></tr>
+              <%}%>
             </tbody>
           </table>
         </div>
@@ -209,6 +214,11 @@
       </div>
     </div>
   </div>
+</div>
+<div id="load-more">
+  
+  <button class="load-more">Load More</button>
+  
 </div>
 
 <script type="text/javascript" src="../js/bundle.js"></script>

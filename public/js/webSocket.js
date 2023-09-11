@@ -1815,23 +1815,24 @@ socket.on('connect', () => {
         
             socket.on("ACCSEARCHRES", async(data)=>{
                 // console.log(data, 565464)
+                $('.wrapper').show()
                 let html = ``
-        if(data.page === 1){
-            for(let i = 0; i < data.user.length; i++){
-                html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
-            }
-            document.getElementById('search').innerHTML = html
-            document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-        }else if(data.page === null){
-            document.getElementById("button").innerHTML = ``
-        }else{
-            html = document.getElementById('search').innerHTML
-            for(let i = 0; i < data.user.length; i++){
-                html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
-            }
-            document.getElementById('search').innerHTML = html
-            document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-        }
+                if(data.page === 1){
+                    for(let i = 0; i < data.user.length; i++){
+                        html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                    }
+                    document.getElementById('search').innerHTML = html
+                    document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+                }else if(data.page === null){
+                    document.getElementById("button").innerHTML = ``
+                }else{
+                    html = document.getElementById('search').innerHTML
+                    for(let i = 0; i < data.user.length; i++){
+                        html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                    }
+                    document.getElementById('search').innerHTML = html
+                    document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+                }
             })
 
         let searchU 
@@ -1899,16 +1900,15 @@ socket.on('connect', () => {
                 data.page = 0
                 data.LOGINDATA = LOGINDATA
                 $('.pageLink').attr('data-page',1)
+                $('.wrapper').hide()
                 // console.log(data, 456)
-                 socket.emit( "UserSearchId", data)
+                socket.emit( "UserSearchId", data)
         })
 
-        $(document).on("click", ".load", function(){
+        $('#Fdate,#Tdate').change(function(){
             
             let page = 0;
-            $('.pageLink').attr('data-page',1)
-            let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
-           
+            $('.pageLink').attr('data-page',1)           
             Fdate = document.getElementById("Fdate").value
             Tdate = document.getElementById("Tdate").value
             let data = {}
@@ -1927,33 +1927,29 @@ socket.on('connect', () => {
             socket.emit('AccountScroll',data)        
         })
 
-        $(window).scroll(function() {
-            // console.log(LOGINDATA)
-            if($(document).height()-$(window).scrollTop() == window.innerHeight){
-            let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
-                // console.log(loginUser, id)
-                let page = parseInt($('.pageLink').attr('data-page'));
-                // console.log(page)
-                Fdate = document.getElementById("Fdate").value
-                Tdate = document.getElementById("Tdate").value
-                $('.pageLink').attr('data-page',page + 1)
-                let data = {}
-               if(searchU){
-                    data.id = SUSER,
-                    data.page = page,
-                    data.Fdate = Fdate,
-                    data.Tdate = Tdate,
-                    data.LOGINDATA = LOGINDATA
-               }{
-                    data.page = page,
-                    data.Fdate = Fdate,
-                    data.Tdate = Tdate,
-                    data.LOGINDATA = LOGINDATA
-               }
-                
-                socket.emit('AccountScroll',data)
-            }
-         }); 
+        $('#load-more').click(function(e){
+            let page = parseInt($('.pageLink').attr('data-page'));
+            // console.log(page)
+            Fdate = document.getElementById("Fdate").value
+            Tdate = document.getElementById("Tdate").value
+            $('.pageLink').attr('data-page',page + 1)
+            let data = {}
+           if(searchU){
+                data.id = SUSER,
+                data.page = page,
+                data.Fdate = Fdate,
+                data.Tdate = Tdate,
+                data.LOGINDATA = LOGINDATA
+           }{
+                data.page = page,
+                data.Fdate = Fdate,
+                data.Tdate = Tdate,
+                data.LOGINDATA = LOGINDATA
+           }
+            
+            socket.emit('AccountScroll',data)
+        })
+    
 
          let count1 = 11
          socket.on("Acc", async(data) => {
@@ -2059,6 +2055,16 @@ socket.on('connect', () => {
                     }
                 }
                 count1 += 10;
+                if(data.page == 0){
+                    if(data.json.userAcc.length == 0){
+                        html += `<tr class="empty_table"><td>No record found</td></tr>`
+                        $('#load-more').hide()
+                    }
+                }else {
+                    if(data.json.userAcc.length == 0){
+                        $('#load-more').hide()
+                    }
+                }
                 $('table').append(html)
             }
          })
