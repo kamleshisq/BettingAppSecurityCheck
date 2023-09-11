@@ -8461,10 +8461,10 @@ socket.on('connect', () => {
         let fromdate;
         let todate;
         $('#from_date').change(function(e){
-            fromdate =  new Date(Date.parse($('#from_date').val()) / 1000);
+            fromdate =  new Date((Date.parse($('#from_date').val()) + (6.5 * 60 * 60 * 1000)) / 1000);
             if($('#to_date').val() != ''){
                 
-                todate = new Date(Date.parse($('#to_date').val()) / 1000+ ((24*60*60*1000)-1))
+                todate = new Date(Date.parse($('#to_date').val()) / 1000 + ((24*60*60*1000)-1))
             }
             console.log(fromdate,todate)
             socket.emit('settlement',{LOGINUSER:LOGINDATA.LOGINUSER,todate,fromdate})
@@ -8474,7 +8474,7 @@ socket.on('connect', () => {
             todate = new Date(Date.parse($('#to_date').val()) / 1000+ ((24*60*60*1000)-1))
             if($('#from_date').val() != ''){
                 
-                fromdate = new Date(Date.parse($('#from_date').val()) / 1000);
+                fromdate =  new Date((Date.parse($('#from_date').val()) + (6.5 * 60 * 60 * 1000)) / 1000);
             }
             console.log(fromdate,todate)
             socket.emit('settlement',{LOGINUSER:LOGINDATA.LOGINUSER,todate,fromdate})
