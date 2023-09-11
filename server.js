@@ -2979,6 +2979,7 @@ io.on('connection', (socket) => {
         }else if(data.to_date && !data.from_date){
             filter.date = {$lte:data.to_date}
         }
+        console.log(filter)
         const gameAnalist = await Bet.aggregate([
             {
                 $match:filter
