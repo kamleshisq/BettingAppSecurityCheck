@@ -2413,7 +2413,7 @@ io.on('connection', (socket) => {
         if(data.from_date && data.to_date){
             dataobj = {$gte:data.from_date,$lte:data.to_date}
         }else if(data.from_date && !data.to_date){
-            dataobj = {$gte:"2023-09-25T14:40:24.600Z"}
+            dataobj = {$gte:"1970-01-19T14:40:24.600Z"}
         }else if(!data.from_date && data.to_date){
             dataobj = {$$lte:data.to_date}
         }
