@@ -1916,7 +1916,7 @@ socket.on('connect', () => {
                  data.id = SUSER
                  data.page = page
                  data.Fdate = Fdate
-                 if(data.Tdate != ''){
+                 if(Tdate != ''){
                     data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
                 }else{
                     data.Tdate = Tdate
@@ -1924,7 +1924,7 @@ socket.on('connect', () => {
             }{
                  data.page = page
                  data.Fdate = Fdate
-                 if(data.Tdate != ''){
+                 if(Tdate != ''){
                     data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
                 }else{
                     data.Tdate = Tdate
@@ -1946,7 +1946,7 @@ socket.on('connect', () => {
                 data.id = SUSER
                 data.page = page
                 data.Fdate = Fdate
-                if(data.Tdate != ''){
+                if(Tdate != ''){
                     data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
                 }else{
                     data.Tdate = Tdate
@@ -1955,7 +1955,7 @@ socket.on('connect', () => {
            }{
                 data.page = page
                 data.Fdate = Fdate
-                if(data.Tdate != ''){
+                if(Tdate != ''){
                     data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
                 }else{
                     data.Tdate = Tdate
