@@ -3000,7 +3000,7 @@ io.on('connection', (socket) => {
                     'userDetails.isActive':true,
                     'userDetails.roleName':{$ne:'Admin'},
                     'userDetails.role_type':{$in:role_type},
-                    'userDetails.parentUsers':{$elemMatch:{$eq:me.id}},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:me._id}},
                     'userDetails.whiteLabel':fWhitlabel
                 }
             },
