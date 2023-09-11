@@ -7639,7 +7639,7 @@ socket.on('connect', () => {
                 socket.emit("CommissionRReport", {page, LOGINDATA, filterData})
           })
 
-          let count = 21
+          let count = 11
           socket.on("CommissionRReport", data => {
             console.log(data)
             // if(data.CommissionData.length > 0){
