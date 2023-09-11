@@ -3380,13 +3380,17 @@ socket.on('connect', () => {
     
     $(document).on('click', '.cancel', async function(e){
         e.preventDefault()
-        socket.emit('voidBet', this.id)
+        if(confirm('do you want to cancel this bet')){
+            socket.emit('voidBet', this.id)
+        }
     })
     
 
     $(document).on("click", ".alert", function(e){
         e.preventDefault()
-        socket.emit("alertBet", this.id)
+        if(confirm('do you want to alert this bet')){
+            socket.emit("alertBet", this.id)
+        }
     })
     socket.on("alertBet", async(data) => {
         if(data.status === "error"){
