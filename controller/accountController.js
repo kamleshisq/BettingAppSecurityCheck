@@ -309,8 +309,10 @@ exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
     if(req.query.id){
         if(req.query.from && req.query.to){
             userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:req.query.from,$lte:req.query.to}}).sort({date: -1}).skip(page * limit).limit(limit);
-        }else{
-            userAcc = await accountStatement.find({user_id:req.query.id}).sort({date: -1}).skip(page * limit).limit(limit);
+        }else if(req.query.from && !req.query.to){
+            userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:req.query.from}}).sort({date: -1}).skip(page * limit).limit(limit);
+        }else if(!req.query.from && req.query.to){
+            userAcc = await accountStatement.find({user_id:req.query.id,date:{$lte:req.query.to}}).sort({date: -1}).skip(page * limit).limit(limit);
         }
     }
     // console.log(userAcc.length)
