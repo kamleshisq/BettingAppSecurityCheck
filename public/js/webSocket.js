@@ -3606,6 +3606,7 @@ socket.on('connect', () => {
         })
         
         $(document).on('change','#Fdate',function(e){
+            filterData = {}
             filterData.from_date = $(this).val()
             if($('#Tdate').val() != ''){
                 filterData.to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
@@ -3625,6 +3626,7 @@ socket.on('connect', () => {
         })
 
         $(document).on('change','#Tdate',function(e){
+            filterData = {}
             filterData.to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
             if($('#Fdate').val() != ''){
                 filterData.from_date = $('#Fdate').val()
@@ -3645,6 +3647,7 @@ socket.on('connect', () => {
        
 
         $(document).on('click', ".load-more", function(e){
+            filterData = {}
             // console.log("WORKING")
             let page = parseInt($('.pageId').attr('data-pageid'));
                 $('.pageId').attr('data-pageid',page + 1)
