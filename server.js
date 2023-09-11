@@ -2992,7 +2992,7 @@ io.on('connection', (socket) => {
                 filter.marketName = { '$not': { '$regex': '^(match|bookma)', '$options': 'i' } }
             }
         }
-        console.log(filter)
+        // console.log(filter)
         const gameAnalist = await Bet.aggregate([
             {
                 $match:filter
