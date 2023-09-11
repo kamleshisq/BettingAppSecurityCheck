@@ -822,30 +822,32 @@ io.on('connection', (socket) => {
         console.log(data)
         let limit = 10;
         let page = data.page;
-        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
-        let role_type =[]
-        for(let i = 0; i < roles.length; i++){
-            role_type.push(roles[i].role_type)
-        }
-        data.filterData.role_type = {
-            $in:role_type
-        }
-        data.filterData.status = 'CANCEL';
-        const user = await User.findOne({userName:data.filterData.userName})
-        if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
-            delete data.filterData['userName']
-            let ubDetails = await Bet.find({status:"CANCEL"}).skip(page * limit).limit(limit)
-            socket.emit('voidBET',{ubDetails,page})
-        }
-        else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
-            delete data.filterData['userName']
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('voidBET',{ubDetails,page})
-        }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('voidBET',{ubDetails,page})
+        console.log(data.filterData)
+        // const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        // let role_type =[]
+        // for(let i = 0; i < roles.length; i++){
+        //     role_type.push(roles[i].role_type)
+        // }
+        // data.filterData.role_type = {
+        //     $in:role_type
+        // }
+        // data.filterData.status = 'CANCEL';
+        // const user = await User.findOne({userName:data.filterData.userName})
+        // if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
+        //     delete data.filterData['userName']
+        //     let ubDetails = await Bet.find({status:"CANCEL"}).skip(page * limit).limit(limit)
+        //     socket.emit('voidBET',{ubDetails,page})
+        // }
+        // else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
+        //     delete data.filterData['userName']
+        //     let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+        //     socket.emit('voidBET',{ubDetails,page})
+        // }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
+        //     let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+        //     socket.emit('voidBET',{ubDetails,page})
 
-        }
+        // }
+
     })
 
     socket.on('userPLDetail',async(data)=>{
