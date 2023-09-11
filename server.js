@@ -749,6 +749,7 @@ io.on('connection', (socket) => {
                     status: {$ne:"OPEN"},
                     userName: data.filterData.userName
               }}
+              
               Bet.aggregate([
                 {
                   $match: Name123

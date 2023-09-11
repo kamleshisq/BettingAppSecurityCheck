@@ -2247,23 +2247,21 @@ socket.on('connect', () => {
             })
     
     
-            $('.filter').click(function(){
+            $('#fGame,#fBets,#fromDate,#toDate').change(function(){
                 let userName = $('.searchUser').val()
                 fromDate = $('#fromDate').val()
                 toDate = $('#toDate').val()
                 fGame = $('#fGame').val()
                 fBets = $('#fBets').val()
-                let page = $('.pageId').attr('data-pageid','1')
                 data.page = 0;
                 if(fromDate != ''  && toDate != '' ){
-                    filterData.date = {$gte : fromDate,$lte : toDate}
+                    filterData.date = {$gte : fromDate,$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
                 }else{
-    
                     if(fromDate != '' ){
                         filterData.date = {$gte : fromDate}
                     }
                     if(toDate != '' ){
-                        filterData.date = {$lte : toDate}
+                        filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
                     }
                 }
                 if(userName != ''){
@@ -2275,7 +2273,7 @@ socket.on('connect', () => {
                 filterData.status = fBets
                 data.filterData = filterData
                 data.LOGINDATA = LOGINDATA
-                // console.log(data)
+                console.log(data)
                 socket.emit('userBetDetail',data)
     
             })
@@ -2286,7 +2284,30 @@ socket.on('connect', () => {
                 document.getElementById("searchUser").value = this.textContent
                 filterData = {}
                 filterData.userName = this.textContent
-                $('.pageId').attr('data-pageid','1')
+                fromDate = $('#fromDate').val()
+                toDate = $('#toDate').val()
+                fGame = $('#fGame').val()
+                fBets = $('#fBets').val()
+                data.page = 0;
+                if(fromDate != ''  && toDate != '' ){
+                    filterData.date = {$gte : fromDate,$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                }else{
+                    if(fromDate != '' ){
+                        filterData.date = {$gte : fromDate}
+                    }
+                    if(toDate != '' ){
+                        filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                    }
+                }
+                if(userName != ''){
+                    filterData.userName = userName
+                }else{
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                }
+                filterData.betType = fGame
+                filterData.status = fBets
+                data.filterData = filterData
+                data.LOGINDATA = LOGINDATA
                 socket.emit('userBetDetail',{filterData,LOGINDATA,page:0})
                 
             })
