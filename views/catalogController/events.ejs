@@ -58,10 +58,20 @@
                     <%}%>
                   </td>
                   <%
-                    let date;
-                    date = data[i].created_on * 1000
+                    var timestamp = data[i].created_on * 1000 
+                    var date = new Date(timestamp);
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
                   %>
-                  <td><%=new Date(date) %></td>
+                 
+                  <td><%=formattedTime %></td>
                   <td><%=data[i].name%></td>
                   <td><%=data[i].count%></td>
                   <%}%>
