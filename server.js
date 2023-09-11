@@ -869,6 +869,14 @@ io.on('connection', (socket) => {
                 {
                   $match: data.filterData
                 },
+                {
+                    $sort:{
+                        date:-1
+                    }
+                },
+                {
+                    $skip:(page * 10)
+                },
                 { $limit : 10 }
               ])
                 .then((betResult) => {

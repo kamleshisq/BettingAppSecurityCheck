@@ -1463,6 +1463,11 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
                 status: 'CANCEL'
               }
             },
+            {
+                $sort:{
+                    date:-1
+                }
+            },
             { $limit : 10 }
           ])
             .then((betResult) => {
