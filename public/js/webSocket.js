@@ -3623,6 +3623,25 @@ socket.on('connect', () => {
             data.LOGINDATA = LOGINDATA
             socket.emit('voidBET',data)
         })
+
+        $(document).on('change','#Tdate',function(e){
+            filterData.to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            if($('#Fdate').val() != ''){
+                filterData.from_date = $('#Fdate').val()
+            }
+            let userName = $('.searchUser').val()
+                if(userName == ''){
+                    // filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                }
+            let page = 0
+            $('.rowId').attr('data-rowid',page + 1)
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            socket.emit('voidBET',data)
+        })
        
 
         $(document).on('click', ".load-more", function(e){
