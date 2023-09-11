@@ -9414,7 +9414,7 @@ socket.on('connect', () => {
             socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
         })
 
-        $(document).on('change', ".Sport", function(e){
+        $('#Sport').change(function() {
             console.log("Working")
             let Sport = this.val()
             let to_date
