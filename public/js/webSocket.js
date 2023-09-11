@@ -2314,6 +2314,10 @@ socket.on('connect', () => {
             })
 
             $('#load-more').click(function(e){
+                fromDate = $('#fromDate').val()
+                toDate = $('#toDate').val()
+                fGame = $('#fGame').val()
+                fBets = $('#fBets').val()
                 let page = parseInt($('.rowId').attr('data-rowid'));
                 $('.rowId').attr('data-rowid',page + 1)
                 let data = {}
