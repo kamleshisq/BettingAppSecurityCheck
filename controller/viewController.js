@@ -2880,7 +2880,7 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
 
 exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
     let me = req.currentUser
-    let limit = 50
+    let limit = 10
     // console.log(me)
     let History
     if(me.roleName === "Admin"){
