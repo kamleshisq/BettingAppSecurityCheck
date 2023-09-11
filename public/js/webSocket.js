@@ -8654,6 +8654,19 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert(data.message.toUpperCase())
             }else{
+                const deleteButton = document.getElementById(data.marketId);
+                // console.log(deleteButton)
+                const row = deleteButton.closest('tr'); 
+                if (row) {
+                    const table = row.parentNode;
+                    const rowIndex = Array.from(table.rows).indexOf(row);
+                    row.remove(); 
+                    const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
+                    rowsToUpdate.forEach((row, index) => {
+                        const srNoCell = row.cells[0]; 
+                        srNoCell.textContent = index + rowIndex + 1;
+                      });
+                  }
                 alert('Bet Maped Successfully')
             }
         })
