@@ -1813,27 +1813,27 @@ socket.on('connect', () => {
 
 
         
-            socket.on("ACCSEARCHRES", async(data)=>{
-                // console.log(data, 565464)
-                $('.wrapper').show()
-                let html = ``
-                if(data.page === 1){
-                    for(let i = 0; i < data.user.length; i++){
-                        html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
-                    }
-                    document.getElementById('search').innerHTML = html
-                    document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-                }else if(data.page === null){
-                    document.getElementById("button").innerHTML = ``
-                }else{
-                    html = document.getElementById('search').innerHTML
-                    for(let i = 0; i < data.user.length; i++){
-                        html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
-                    }
-                    document.getElementById('search').innerHTML = html
-                    document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+        socket.on("ACCSEARCHRES", async(data)=>{
+            // console.log(data, 565464)
+            $('.wrapper').show()
+            let html = ``
+            if(data.page === 1){
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
                 }
-            })
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }else if(data.page === null){
+                document.getElementById("button").innerHTML = ``
+            }else{
+                html = document.getElementById('search').innerHTML
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }
+        })
 
         let searchU 
         let SUSER
@@ -1953,8 +1953,9 @@ socket.on('connect', () => {
 
          let count1 = 11
          socket.on("Acc", async(data) => {
-            // console.log(data)
+            console.log(data)
             if(data.json.status == "success"){
+
                 if(data.page == 0){
                     count1 = 1;
 
