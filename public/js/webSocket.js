@@ -2314,8 +2314,8 @@ socket.on('connect', () => {
             })
 
             $('#load-more').click(function(e){
-                let page = parseInt($('.pageId').attr('data-pageid'));
-                $('.pageId').attr('data-pageid',page + 1)
+                let page = parseInt($('.rowId').attr('data-rowid'));
+                $('.rowId').attr('data-rowid',page + 1)
                 let data = {}
                 let userName = $('.searchUser').val()
                 if(userName == ''){
