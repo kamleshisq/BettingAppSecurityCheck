@@ -2173,6 +2173,43 @@ socket.on('connect', () => {
 
 
         if(pathname == "/admin/reports"){
+            function downloadCSV(csvContent, fileName) {
+                const link = document.createElement('a');
+                const blob = new Blob([csvContent], { type: 'text/csv' });
+                
+                link.href = URL.createObjectURL(blob);
+                link.download = fileName;
+                link.click();
+              }          
+    
+            function convertToCSV(table) {
+                const rows = table.querySelectorAll('tr');
+                const csv = [];
+                
+                for (const row of rows) {
+                  const rowData = [];
+                  const columns = row.querySelectorAll('td, th');
+                  
+                  for (const column of columns) {
+                    rowData.push(column.innerText);
+                  }
+                  
+                  csv.push(rowData.join(','));
+                }
+                
+                return csv.join('\n');
+              }
+    
+    
+            document.getElementById('downloadBtn').addEventListener('click', function() {
+                const table = document.getElementById('table12');             
+                if (table) {
+                  const csvContent = convertToCSV(table);
+                  downloadCSV(csvContent, 'report.csv');
+                }
+              });
+    
+
             $('.searchUser').keyup(function(){
                 // console.log('working')
                 if($(this).hasClass("searchUser")){
@@ -2198,7 +2235,7 @@ socket.on('connect', () => {
     
     
             socket.on("ACCSEARCHRES", async(data)=>{
-                $('.wrapper').hide()
+                $('.wrapper').show()
 
                 // console.log(data, 565464)
                 let html = ``
@@ -2261,7 +2298,7 @@ socket.on('connect', () => {
                     filterData.date = {$gte : fromDate,$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
                 }else{
                     if(fromDate != '' ){
-                        filterData.date = {$gte : '2023-09-01'}
+                        filterData.date = {$gte : fromDate}
                     }
                     if(toDate != '' ){
                         filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
