@@ -842,6 +842,24 @@ io.on('connection', (socket) => {
         }else if(data.filterData.to_date && !data.filterData.from_date){
             filter.date = {$lte:new Date(data.filterData.to_date)}
         }
+        // if(data.filterData.Sport != "All"){
+        //     filter.betType = data.filterData.Sport
+        // }
+        if(data.filterData.Sport != "All"){
+            filter.betType = data.filterData.Sport
+        }
+        // if(data.filterData.market != All){
+
+        // }
+        if(data.filterData.market != "All"){
+            if(data.filterData.market === "Match Odds"){
+                filter.marketName = { '$regex': '^Match', '$options': 'i' }
+            }else if (data.filterData.market === "Bookmaker 0%Comm"){
+                filter.marketName = { '$regex': '^Bookma', '$options': 'i' }
+            }else if (data.filterData.market === "Fancy"){
+                filter.marketName = { '$not': { '$regex': '^(match|bookma)', '$options': 'i' } }
+            }
+        }
         console.log(filter)
         let betResult = await Bet.aggregate([
             {
