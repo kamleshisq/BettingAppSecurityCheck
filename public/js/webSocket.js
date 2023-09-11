@@ -1,3 +1,4 @@
+const { doc } = require("prettier");
 
 
 
@@ -8530,8 +8531,14 @@ socket.on('connect', () => {
             } 
             if(data.page == 0){
                 $('tbody').html(html)
+                if(!(data.History.length >= 10)){
+                    document.getElementById.innerHTML = `<button class="load-more">Load More</button>`
+                }
             }else{
                 $('tbody').append(html)
+                if(!(data.History.length >= 10)){
+                    document.getElementById.innerHTML = ""
+                }
             }
         })
 
