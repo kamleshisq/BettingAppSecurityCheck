@@ -1193,7 +1193,7 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
                     $sum: {
                         $cond: [
                             { $in: ['$status', ['LOSS', 'OPEN']] },
-                            { $round: ['$returns', 2] }, // Round 'returns' to 2 decimal places
+                            { $subtract: [{ $multiply: ['$returns', 100] }, { $multiply: ['$Stake', 100] }] },
                             { $subtract: ['$returns', '$Stake'] }
                         ]
                     }
