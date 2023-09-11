@@ -2,9 +2,7 @@ const mongoose = require('mongoose');
 // const validator = require('validator');
 const bycrypt = require('bcrypt');
 
-function roundToTwoDecimals(value) {
-    return parseFloat(value.toFixed(2));
-}
+
 // const { default: isEmail } = require('validator/lib/isEmail');
 // const { string } = require('joi');
 
@@ -264,38 +262,18 @@ userSchema.pre(/^find/, function(next){
 //     this.find({isActive:true})
 // })
 
-userSchema.pre(/^find/, function () {
-    // This refers to the query
-    const cursor = this.find().lean().cursor();
-    const docs = [];
+function roundToTwoDecimals(value) {
+    return parseFloat(value.toFixed(2));
+}
 
-    cursor.eachAsync(async (doc) => {
-        // Round the numeric fields in the document
-        if (doc.myPL !== undefined) {
-            doc.myPL = roundToTwoDecimals(doc.myPL);
-        }
-        if (doc.uplinePL !== undefined) {
-            doc.uplinePL = roundToTwoDecimals(doc.uplinePL);
-        }
-        if (doc.lifetimePL !== undefined) {
-            doc.lifetimePL = roundToTwoDecimals(doc.lifetimePL);
-        }
-        if (doc.pointsWL !== undefined) {
-            doc.pointsWL = roundToTwoDecimals(doc.pointsWL);
-        }
-
-        docs.push(doc);
-    }).then(() => {
-        // Replace the query results with the rounded documents
-        this._results = docs;
-    });
+userSchema.pre(/^find/, function (next) {
+    this.myPL = roundToTwoDecimals(this.myPL);
+    this.uplinePL = roundToTwoDecimals(this.uplinePL);
+    this.lifetimePL = roundToTwoDecimals(this.lifetimePL);
+    this.pointsWL = roundToTwoDecimals(this.pointsWL);
+    next();
 });
 
-
-
-// function roundToTwoDecimals(value) {
-//     return parseFloat(value.toFixed(2));
-// }
 
 
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
