@@ -853,6 +853,9 @@ io.on('connection', (socket) => {
                 }
             },
             {
+                $skip:(10 * page)
+            },
+            {
                 $limit:10
             }
         ])
