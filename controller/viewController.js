@@ -2884,9 +2884,9 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
     // console.log(me)
     let History
     if(me.roleName === "Admin"){
-        History = await settlementHisory.find().limit(limit)
+        History = await settlementHisory.find().sort({ date: -1 }).limit(limit)
     }else{
-        History = await settlementHisory.find({userId:me._id}).limit(limit)
+        History = await settlementHisory.find({userId:me._id}).sort({ date: -1 }).limit(limit)
     }
     res.status(200).render("./settlemetHistory/settlemetHistory",{
         title:"SETTLEMENTS",
