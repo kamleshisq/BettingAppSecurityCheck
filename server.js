@@ -2983,6 +2983,15 @@ io.on('connection', (socket) => {
         if(data.Sport != "All"){
             filter.betType = data.Sport
         }
+        if(data.market != "All"){
+            if(data.market === "Match Odds"){
+                filter.marketName = { '$regex': '^Match', '$options': 'i' }
+            }else if (data.market === "Bookmaker 0%Comm"){
+                filter.marketName = { '$regex': '^Bookma', '$options': 'i' }
+            }else if (data.market === "Fancy"){
+                filter.marketName = { '$not': { '$regex': '^(match|bookma)', '$options': 'i' } }
+            }
+        }
         console.log(filter)
         const gameAnalist = await Bet.aggregate([
             {
