@@ -747,7 +747,9 @@ io.on('connection', (socket) => {
                 delete data.filterData['betType']
               }
               
-
+              if(data.filterData.status == 'All'){
+                data.filterData.status = {"$ne":"OPEN"}
+              }
 
               Bet.aggregate([
                 {
