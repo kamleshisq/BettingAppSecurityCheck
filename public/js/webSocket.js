@@ -8513,11 +8513,11 @@ socket.on('connect', () => {
             $('.rowId').attr('data-rowid',page + 1)
             socket.emit('settlementHistory',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
         })
-        let limit = 50
+        let limit = 10
         socket.on('settlementHistory',async(data)=>{
             console.log(data)
             let html = ''
-            limit = 50 * data.page
+            limit = 10 * data.page
             for(let i = 0; i < data.History.length; i++){
                 var date = new Date(data.History[i].date)
                 html += `<tr>
