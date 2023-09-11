@@ -3326,8 +3326,8 @@ socket.on('connect', () => {
                 }
                 let bets = data.ubDetails;
                 let html = '';
-                    for(let i = 0; i < bets.length; i++){
-                        let date = new Date(bets[i].date)
+                for(let i = 0; i < bets.length; i++){
+                    let date = new Date(bets[i].date)
                     if((i%2)==0){
                         html += `<tr style="text-align: center;" class="blue">`
                     }else{
@@ -3359,8 +3359,15 @@ socket.on('connect', () => {
                     <button class="btn alert" id="${bets[i]._id}"> Alert Bet</button></div></td>
                     </tr>`
                 }
+                if(html == ''){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                }
                 count += 10;
                 if(data.page == 0){
+                    if(bets.length == 0){
+                        $('#load-more').hide()
+                    }
+
                     $('.new-body').html(html)
                 }else{
                     if(bets.length == 0){
