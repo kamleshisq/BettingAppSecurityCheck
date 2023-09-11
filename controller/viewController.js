@@ -1462,6 +1462,14 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
                 'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
             }
         },
+        {
+            $sort:{
+                date:-1
+            }
+        },
+        {
+            $limit:10
+        }
     ])
     let me = req.currentUser
                 res.status(200).render("./voidBet/voidBet",{
