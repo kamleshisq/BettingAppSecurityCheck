@@ -1727,7 +1727,7 @@ socket.on('connect', () => {
                   <th>Status</th>
                   <th>Returns</th>
                 </tr>
-            </thead>`
+                </thead>`
                 html += `<tbody class="new-body" >
                 <tr  class="blue"><td>${new Date(data.date)}</td>
                 <td>${data.event}</td>`
@@ -1769,17 +1769,43 @@ socket.on('connect', () => {
                 html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>`
                 if(data.creditDebitamount>0){
                     html += `<td>${data.creditDebitamount}</td><td>0</td>`
-                    if(data.parent_id.userName == data.user_id.userName){
-                        html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
+                    if(data.parent_id){
+                        if(data.parent_id.userName == data.user_id.userName){
+                            if(data.child_id == null){
+                                html += `<td>-/${data.parent_id.userName}</td>`
+                            }else{
+                                html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
+                            }
+                        }else{
+                            if(data.child_id == null){
+
+                                html += `<td>${data.parent_id.userName}/-</td>`
+                            }else{
+
+                                html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
+                            }
+                        }
                     }else{
-                        html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
+                        html += "<td>-</td>"
                     }
                 }else{
                     html += `<td>0</td><td>${data.creditDebitamount}</td>`
-                    if(data.parent_id.userName == data.user_id.userName){
-                        html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
+                    if(data.parent_id){
+                        if(data.parent_id.userName == data.user_id.userName){
+                            if(data.child_id == null){
+                                html += `<td>${data.parent_id.userName}/-</td>`
+                            }else{
+                                html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
+                            }
+                        }else{
+                            if(data.child_id == null){
+                                html += `<td>-/${data.parent_id.userName}</td>`
+                            }else{
+                                html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
+                            }
+                        }
                     }else{
-                        html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
+                        html += `<td>-</td>`
                     }
                 }
                 
