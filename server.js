@@ -2995,8 +2995,12 @@ io.on('connection', (socket) => {
         console.log(filter)
         const gameAnalist = await Bet.aggregate([
             {
-                $match:filter
-            },
+                $match: {
+                  date: { '$gte': new Date('2023-09-06T00:00:00.000Z') },
+                  betType: 'Cricket',
+                  marketName: { '$regex': '^mathodd', '$options': 'i' }
+                }
+              },
             // {
             //     $lookup:{
             //         from:'users',
