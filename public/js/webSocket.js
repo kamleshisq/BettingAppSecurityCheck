@@ -9406,12 +9406,13 @@ socket.on('connect', () => {
                 socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
         })
 
+        let limit
         socket.on("gameAnalysis", data => {
             let html = ""
             limit = 10 * data.page
             for(let i = 0; i < data.gameAnalist.length; i++){
                 html += `<tr>
-                <td>${i + 1}</td>
+                <td>${i + 1 + limit}</td>
                 <td>${data.gameAnalist[i]._id}</td>
                 <td>${data.gameAnalist[i].Total_User}</td>
                 <td>${data.gameAnalist[i].betcount}</td>
