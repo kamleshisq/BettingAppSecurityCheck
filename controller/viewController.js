@@ -663,6 +663,11 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
                 status: {$ne:"OPEN"}
               }
             },
+            {
+                $sort:{
+                    date:-1
+                }
+            },
             { $limit : 10 }
           ])
             .then((betResult) => {
