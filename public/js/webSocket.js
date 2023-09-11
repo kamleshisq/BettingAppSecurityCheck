@@ -3654,6 +3654,7 @@ socket.on('connect', () => {
       
             let count = 10
             socket.on('voidBET',(data) => {
+                console.log("Working")
                 console.log(data)
                 count = 10 * data.page
                 let bets = data.betResult;
