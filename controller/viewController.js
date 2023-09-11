@@ -1206,7 +1206,8 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
         },
         {
             $sort: {
-                betcount: -1 
+                betcount: -1 ,
+                open : -1
             }
         },
         {
