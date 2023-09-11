@@ -3170,16 +3170,14 @@ socket.on('connect', () => {
     if(pathname == "/admin/betmoniter"){
         $(document).on('keyup','.searchUser',function(){
             // console.log('working')
-            if($(this).hasClass("searchUser")){
-                // console.log($(this).val())
-                if($(this).val().length >= 3 ){
-                    let x = $(this).val(); 
-                    // console.log(x)
-                    socket.emit("SearchACC", {x, LOGINDATA})
-                }else{
-                    document.getElementById('search').innerHTML = ``
-                    document.getElementById("button").innerHTML = ''
-                }
+            // console.log($(this).val())
+            if($(this).val().length >= 3 ){
+                let x = $(this).val(); 
+                // console.log(x)
+                socket.emit("SearchACC", {x, LOGINDATA})
+            }else{
+                document.getElementById('search').innerHTML = ``
+                document.getElementById("button").innerHTML = ''
             }
         })
 
