@@ -3191,6 +3191,8 @@ socket.on('connect', () => {
 
         socket.on("ACCSEARCHRES", async(data)=>{
             let html = ``
+            $('.wrapper').show()
+
             if(data.page === 1){
                 for(let i = 0; i < data.user.length; i++){
                     html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
