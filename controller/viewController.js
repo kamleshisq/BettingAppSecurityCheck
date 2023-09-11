@@ -3064,11 +3064,11 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
                     //     type:"event"
                     // })
                     count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
-                    seriesObjList.push({name:item.eventData.name,created_on:item.eventData.created_on,status:true,count,eventId:item.eventData.eventId})
+                    seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:true,count,eventId:item.eventData.eventId})
                     
                 }else{
                     count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
-                    seriesObjList.push({name:item.eventData.name,created_on:item.eventData.created_on,status:status.status,count,eventId:item.eventData.eventId})
+                    seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:status.status,count,eventId:item.eventData.eventId})
 
                 }
             }
