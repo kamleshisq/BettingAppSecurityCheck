@@ -265,34 +265,30 @@ userSchema.pre(/^find/, function(next){
 // })
 
 
-userSchema.pre(/^find/, function (next) {
+userSchema.pre(/^find/, async function () {
     // This refers to the query
-    this.find().lean().exec((err, docs) => {
-        if (err) {
-            return next(err);
+    const docs = await this.find().lean();
+
+    // Round the numeric fields in each document
+    docs.forEach((doc) => {
+        if (doc.myPL !== undefined) {
+            doc.myPL = roundToTwoDecimals(doc.myPL);
         }
-
-        // Round the numeric fields in each document
-        docs.forEach((doc) => {
-            if (doc.myPL !== undefined) {
-                doc.myPL = roundToTwoDecimals(doc.myPL);
-            }
-            if (doc.uplinePL !== undefined) {
-                doc.uplinePL = roundToTwoDecimals(doc.uplinePL);
-            }
-            if (doc.lifetimePL !== undefined) {
-                doc.lifetimePL = roundToTwoDecimals(doc.lifetimePL);
-            }
-            if (doc.pointsWL !== undefined) {
-                doc.pointsWL = roundToTwoDecimals(doc.pointsWL);
-            }
-        });
-
-        // Respond with the rounded documents
-        this._results = docs;
-        next();
+        if (doc.uplinePL !== undefined) {
+            doc.uplinePL = roundToTwoDecimals(doc.uplinePL);
+        }
+        if (doc.lifetimePL !== undefined) {
+            doc.lifetimePL = roundToTwoDecimals(doc.lifetimePL);
+        }
+        if (doc.pointsWL !== undefined) {
+            doc.pointsWL = roundToTwoDecimals(doc.pointsWL);
+        }
     });
+
+    // Replace the query results with the rounded documents
+    this._results = docs;
 });
+
 
 // function roundToTwoDecimals(value) {
 //     return parseFloat(value.toFixed(2));
