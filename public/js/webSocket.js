@@ -3558,7 +3558,7 @@ socket.on('connect', () => {
             if(userName != ''){
                 filterData.userName = userName
             }else{
-                filterData.userName = LOGINDATA.LOGINUSER.userName
+                // filterData.userName = LOGINDATA.LOGINUSER.userName
             }
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
@@ -3608,7 +3608,7 @@ socket.on('connect', () => {
                 let data = {}
                 let userName = $('.searchUser').val()
                 if(userName == ''){
-                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                    // filterData.userName = LOGINDATA.LOGINUSER.userName
                 }else{
                     filterData.userName = userName
                 }
