@@ -823,11 +823,12 @@ io.on('connection', (socket) => {
         let limit = 10;
         let page = data.page;
         console.log(data.filterData)
+        let filter = {
+            status: "CANCEL"
+        }
         let betResult = await Bet.aggregate([
             {
-                $match:{
-                    status: 'CANCEL'
-                }
+                $match:filter
             },
             {
                 $lookup:{
