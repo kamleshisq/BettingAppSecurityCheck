@@ -9398,9 +9398,10 @@ socket.on('connect', () => {
             if($('#Tdate').val() != ''){
                 to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
             }
+            let Sport = $("#Sport").val()
             let page = 0
             $('.rowId').attr('data-rowid',page + 1)
-            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
+            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport})
         })
 
         $(document).on('change','#Tdate',function(e){
@@ -9409,14 +9410,15 @@ socket.on('connect', () => {
             if($('#Fdate').val() != ''){
                 from_date = $('#Fdate').val()
             }
+            let Sport = $("#Sport").val()
             let page = 0
             $('.rowId').attr('data-rowid',page + 1)
-            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
+            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport})
         })
 
-        $(document).on('change', ".Sport", function(e){
-            console.log("Working")
-            let Sport = this.val()
+        $('#Sport').change(function() {
+            // console.log("Working")
+            let Sport = $(this).val()
             let to_date
             let from_date
             if($('#Fdate').val() != ''){
@@ -9442,7 +9444,8 @@ socket.on('connect', () => {
                 if($('#Tdate').val() != ''){
                     to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
                 }
-                socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
+                let Sport = $("#Sport").val()
+                socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport})
         })
 
         let limit
