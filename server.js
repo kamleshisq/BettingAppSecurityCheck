@@ -2980,6 +2980,9 @@ io.on('connection', (socket) => {
         }else if(data.to_date && !data.from_date){
             filter.date = {$lte:new Date(data.to_date)}
         }
+        if(data.Sport != "All"){
+            filter.betType = data.Sport
+        }
         console.log(filter)
         const gameAnalist = await Bet.aggregate([
             {
