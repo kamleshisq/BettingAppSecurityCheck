@@ -2973,11 +2973,11 @@ io.on('connection', (socket) => {
         }
         let filter = {}
         if(data.from_date && data.to_date){
-            filter.date = {$gte:data.from_date,$lte:data.to_date}
+            filter.date = {$gte:new Date(data.from_date),$lte:new Date(data.to_date)}
         }else if(data.from_date && !data.to_date){
-            filter.date = {$gte:data.from_date}
+            filter.date = {$gte:new Date(data.from_date)}
         }else if(data.to_date && !data.from_date){
-            filter.date = {$lte:data.to_date}
+            filter.date = {$lte:new Date(data.to_date)}
         }
         console.log(filter)
         const gameAnalist = await Bet.aggregate([
