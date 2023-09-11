@@ -1296,6 +1296,11 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
                 status: 'OPEN'
               }
             },
+            {
+                $sort:{
+                    date:-1
+                }
+            },
             { $limit : 10 }
           ])
             .then((betResult) => {

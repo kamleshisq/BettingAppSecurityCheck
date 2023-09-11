@@ -3270,6 +3270,7 @@ socket.on('connect', () => {
             // }
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
+            data.page = 0;
             console.log(data)
             socket.emit('betMoniter',data)
 
@@ -3287,39 +3288,35 @@ socket.on('connect', () => {
             
         })
 
-        $(window).scroll(function() {
-            if($(document).height()-$(window).scrollTop() == window.innerHeight){
-                let page = parseInt($('.pageId').attr('data-pageid'));
-                $('.pageId').attr('data-pageid',page + 1)
-                let data = {}
-                let userName = $('.searchUser').val()
-                if(userName == ''){
-                    filterData.userName = LOGINDATA.LOGINUSER.userName
-                }else{
-                    filterData.userName = userName
-                }
-                if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
-                    filterData.date = {$gte : fromDate,$lte : toDate}
-                }else{
-
-                    if(fromDate != undefined && fromDate != '' ){
-                        filterData.date = {$gte : fromDate}
-                    }
-                    if(toDate != undefined && toDate != '' ){
-                        filterData.date = {$lte : toDate}
-                    }
-                }
-
-                data.filterData = filterData;
-                data.page = page
-                data.LOGINDATA = LOGINDATA
-                // console.log(data)
-                socket.emit('betMoniter',data)
-
-
-
+        $('#load-more').click(function(e){
+            let page = parseInt($('.pageId').attr('data-pageid'));
+            $('.pageId').attr('data-pageid',page + 1)
+            let data = {}
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
             }
-            }); 
+            if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
+                filterData.date = {$gte : fromDate,$lte : toDate}
+            }else{
+
+                if(fromDate != undefined && fromDate != '' ){
+                    filterData.date = {$gte : fromDate}
+                }
+                if(toDate != undefined && toDate != '' ){
+                    filterData.date = {$lte : toDate}
+                }
+            }
+
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            // console.log(data)
+            socket.emit('betMoniter',data)
+        })
+      
             
             let count = 11
             socket.on('betMoniter',(data) => {
@@ -3366,6 +3363,9 @@ socket.on('connect', () => {
                 if(data.page == 0){
                     $('.new-body').html(html)
                 }else{
+                    if(bets.length == 0){
+                        $('#load-more').hide()
+                    }
                     $('.new-body').append(html)         
                 }
             })
