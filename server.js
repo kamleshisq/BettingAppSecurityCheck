@@ -2959,6 +2959,11 @@ io.on('connection', (socket) => {
         let me = data.USER
         let page = data.page;
         let limit = 10
+        const roles = await Role.find({role_level: {$gt:me.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
         // console.log(me)
         let filter = {}
         if(data.from_date && data.to_date){
@@ -2988,7 +2993,7 @@ io.on('connection', (socket) => {
                     'userDetails.isActive':true,
                     'userDetails.roleName':{$ne:'Admin'},
                     'userDetails.role_type':{$in:role_type},
-                    'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:me.id}},
                     'userDetails.whiteLabel':fWhitlabel
                 }
             },
