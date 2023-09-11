@@ -1438,55 +1438,86 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
     // }else{
     //     bets = await betModel.find({role_type:{$in:role_type},status:'CANCEL'}).limit(10)
     // }
-
-
-    User.aggregate([
+    let betResult = await betModel.aggregate([
         {
-          $match: {
-            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
-          }
+            $match:{
+                status: 'CANCEL'
+            }
         },
         {
-          $group: {
-            _id: null,
-            userIds: { $push: '$_id' } 
-          }
-        }
-      ])
-        .then((userResult) => {
-          const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-      
-          betModel.aggregate([
-            {
-              $match: {
-                userId: { $in: userIds },
-                status: 'CANCEL'
-              }
-            },
-            {
-                $sort:{
-                    date:-1
-                }
-            },
-            { $limit : 10 }
-          ])
-            .then((betResult) => {
-            //   socket.emit("aggreat", betResult)
-              let me = req.currentUser
+            $lookup:{
+                from:'users',
+                localField:'userName',
+                foreignField:'userName',
+                as:'userDetails'
+            }
+        },
+        {
+            $unwind:'$userDetails'
+        },
+        {
+            $match:{
+                'userDetails.isActive':true,
+                'userDetails.roleName':{$ne:'Admin'},
+                'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
+            }
+        },
+    ])
+    let me = req.currentUser
                 res.status(200).render("./voidBet/voidBet",{
                     title:"Void Bets",
                     bets:betResult,
                     me,
                     currentUser:me
                 })
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+
+    // User.aggregate([
+    //     {
+    //       $match: {
+    //         parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
+    //       }
+    //     },
+    //     {
+    //       $group: {
+    //         _id: null,
+    //         userIds: { $push: '$_id' } 
+    //       }
+    //     }
+    //   ])
+    //     .then((userResult) => {
+    //       const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
+      
+    //       betModel.aggregate([
+    //         {
+    //           $match: {
+    //             userId: { $in: userIds },
+    //             status: 'CANCEL'
+    //           }
+    //         },
+    //         {
+    //             $sort:{
+    //                 date:-1
+    //             }
+    //         },
+    //         { $limit : 10 }
+    //       ])
+    //         .then((betResult) => {
+    //         //   socket.emit("aggreat", betResult)
+    //           let me = req.currentUser
+    //             res.status(200).render("./voidBet/voidBet",{
+    //                 title:"Void Bets",
+    //                 bets:betResult,
+    //                 me,
+    //                 currentUser:me
+    //             })
+    //         })
+    //         .catch((error) => {
+    //           console.error(error);
+    //         });
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
 });
 
 
