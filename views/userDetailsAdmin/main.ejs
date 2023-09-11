@@ -355,7 +355,7 @@
                                     %>
                                     <tr class="acount-stat-tbl-body-tr">
                                         <td><%=i+1%></td>
-                                        <td><%=formattedTime%></td>
+                                        <td class="date-time"><%=formattedTime%></td>
                                         <%if(ACCount[i].creditDebitamount > 0){%>
                                             <td><%=ACCount[i].creditDebitamount%></td>
                                             <td>0</td>
@@ -437,9 +437,9 @@
                                     %>
                                     <tr class="acount-stat-tbl-body-tr">
                                         <td><%=i+1%></td>
-                                        <td><%=formattedTime%></td>
+                                        <td class="date-time"><%=formattedTime%></td>
                                         <%if(!historty[i].isOnline){ %>
-                                          <td><%=formattedTime2%></td> 
+                                          <td class="date-time"><%=formattedTime2%></td> 
                                         <%}else{ %>
                                           <td>-</td>
                                         <%} %>

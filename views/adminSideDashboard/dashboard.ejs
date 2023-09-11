@@ -2,7 +2,7 @@
 <div class="dashboard-main-wraper">
   <section class="dashboard-welcome-section">
       <div class="new-head"> 
-          <h3>Welcome to Dashboard</h3>
+          <h3>Dashboard</h3>
           <!-- <form action="" style="display: flex;">
             <div class="input-group">
               <div class="input-group-prepend">
@@ -40,12 +40,12 @@
                             <option value="<%=formattedDate%>"><%=formattedDate%></option>
                           </select> -->
                           <div class="wrapper-dropdown" id="dropdown">
-                            <span class="selected-display" id="destination">Select Options</span>
+                            <span class="selected-display" id="destination">All</span>
                             <svg class="arrow" id="drp-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="transition-all ml-auto rotate-180">
                               <path d="M7 14.5l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
                             <ul class="dropdown">
-                              <li class="item" id="all">Select Options</li>
+                              <li class="item" id="all">All</li>
                               <li class="item" id="today">Today</li>
                               <li class="item" id="yesterday">Yesterday</li>
                               <li class="item" id="<%=formattedDate%>" ><%=formattedDate%></li>
@@ -58,11 +58,19 @@
                         <tbody>
                           <tr class="flex-justify blue">
                             <td>Active Players</td>
-                            <td class="text-purple" id="userCount"><%=data.dashboard.userCount%></td>
+                            <%if(data.dashboard.userCount.length > 0){%>
+                            <td class="text-purple" id="userCount"><%=data.dashboard.userCount[0].totalAmount%></td>
+                            <%}else{%>
+                            <td class="text-purple" id="userCount">00</td>
+                            <%}%>
                           </tr>
                           <tr class="flex-justify">
                             <td>Active Admins</td>
-                            <td class="text-purple" id="adminCount"><%=data.dashboard.adminCount%></td>
+                            <%if(data.dashboard.adminCount.length > 0){%>
+                              <td class="text-purple" id="adminCount"><%=data.dashboard.adminCount[0].totalAmount%></td>
+                              <%}else{%>
+                              <td class="text-purple" id="adminCount">00</td>
+                            <%}%>
                           </tr>
                           <tr class="flex-justify blue">
                             <td>Turn Over</td>
@@ -70,7 +78,7 @@
                           </tr>
                           <tr class="flex-justify">
                             <td>Profit</td>
-                            <td class="text-purple" id="Profit"><%=currentUser.myPL%></td>
+                            <td class="text-purple" id="Profit"><%=data.dashboard.turnOver[0].Income%></td>
                           </tr> 
                           <tr class="flex-justify blue">
                             <td>Total Bets</td>
@@ -142,29 +150,29 @@
                                       <%let check = 0%>
                                       <%for(let k=0; k<data.dashboard.users[i].terms.length;k++){%>
                                           <%if(data.dashboard.users[i].terms[k].roleType == data.dashboard.roles[j]._id){%>
-                                              <td class="text-purple"><%=data.dashboard.users[i].terms[k].total%></td>
+                                              <td data-title="<%=data.dashboard.roles[j]._id%>" class="text-purple"><%=data.dashboard.users[i].terms[k].total%></td>
                                               <%check = 1%>
                                           <%}%>
                                       <%}%>
                                       <%if(check != 1){%>
-                                          <td class="text-purple">0</td>
+                                          <td  data-title="<%=data.dashboard.roles[j]._id%>" class="text-purple">0</td>
                                       <%}%>
                                   <%}%>
                               </tr>
                             <%}else{%>
                               <tr  >
-                                <td><%=i + 1%></td>
-                                <td><%=data.dashboard.users[i]._id%></td>
+                                <td data-title="Sr No." > <%=i + 1%></td>
+                                <td data-title="Domain" ><%=data.dashboard.users[i]._id%></td>
                                 <%for(let j=0; j<data.dashboard.roles.length;j++){%>
                                     <%let check = 0%>
                                     <%for(let k=0; k<data.dashboard.users[i].terms.length;k++){%>
                                         <%if(data.dashboard.users[i].terms[k].roleType == data.dashboard.roles[j]._id){%>
-                                            <td class="text-purple"><%=data.dashboard.users[i].terms[k].total%></td>
+                                            <td data-title="<%=data.dashboard.roles[j]._id%>" class="text-purple"><%=data.dashboard.users[i].terms[k].total%></td>
                                             <%check = 1%>
                                         <%}%>
                                     <%}%>
                                     <%if(check != 1){%>
-                                        <td class="text-purple">0</td>
+                                        <td data-title="<%=data.dashboard.roles[j]._id%>" class="text-purple">0</td>
                                     <%}%>
                                 <%}%>
                             </tr>

@@ -67,8 +67,8 @@
               <%if((i%2 == 0)){%>
               <tr>
                 <td><%= i + 1%></td>
-                <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
-                <td><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+                <td class="text-nowrap" ><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
+                <td class="text-nowrap" ><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
                 <%if(data[i].stake){%>
                 <td><%=data[i].stake%></td>
                 <%}else{%>
@@ -117,14 +117,14 @@
                 <%}%>
                 <%}%>
                 <td><%=data[i].balance%></td>
-                <td><button class="ownAccDetails" id="<%=data[i]._id%>" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=data[i].description%>&nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+                <td><a class="ownAccDetails" id="<%=data[i]._id%>" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=data[i].description%>&nbsp;</a></td>
                 <td>-</td>
               </tr>
               <%}else{%>
               <tr>
                 <td><%= i + 1%></td>
-                <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
-                <td><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+                <td class="text-nowrap" ><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
+                <td class="text-nowrap" ><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
                 <%if(data[i].stake){%>
                 <td><%=data[i].stake%></td>
                 <%}else{%>
@@ -172,7 +172,7 @@
                 <%}%>
                 <%}%>
                 <td><%=data[i].balance%></td>
-                <td><button class="ownAccDetails" id="<%=data[i]._id%>" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=data[i].description%> &nbsp;<i class="fa-solid fa-sort-down"></i></button></td>
+                <td><a class="ownAccDetails" id="<%=data[i]._id%>" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=data[i].description%> &nbsp;</a></td>
                 <td>-</td>
               </tr>
               <%}%>

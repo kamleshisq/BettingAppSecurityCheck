@@ -1839,8 +1839,8 @@ io.on('connection', (socket) => {
                 $match: {
                     userName: data.LOGINUSER.userName,
                     date: {
-                        $gte: tenDaysAgo, // Change this to currentDate
-                        $lte: currentDate, // Add this line
+                        $gte: tenDaysAgo,
+                        $lte: currentDate,
                     },
                 },
             },
@@ -1865,7 +1865,7 @@ io.on('connection', (socket) => {
         ]);
     
         const newDataArray = [];
-        const currentDate1 = new Date(tenDaysAgo); // Change this to currentDate
+        const currentDate1 = new Date(tenDaysAgo);
         for (let i = 0; i < 10; i++) {
             const matchingData = accountForGraph.find(item =>
                 item._id.year === currentDate1.getFullYear() &&
@@ -1890,13 +1890,18 @@ io.on('connection', (socket) => {
             currentDate1.setDate(currentDate1.getDate() + 1);
         }
     
-        // console.log(newDataArray);
+        // Format data to two decimal places
+        const formattedDataArray = newDataArray.map(item => ({
+            _id: item._id,
+            totalIncome: item.totalIncome.toFixed(2),
+            totalIncome2: item.totalIncome2.toFixed(2),
+        }));
     
-        const Income = newDataArray.map(item => item.totalIncome);
-        const Revanue = newDataArray.map(item => item.totalIncome2);
-        socket.emit("chartMain", {Income, Revanue})
-        // Now you can use the Income and Revanue arrays as needed
+        const Income = formattedDataArray.map(item => parseFloat(item.totalIncome));
+        const Revanue = formattedDataArray.map(item => parseFloat(item.totalIncome2));
+        socket.emit("chartMain", { Income, Revanue });
     });
+    
 
     socket.on("FIlterDashBoard", async(data) => {
         let filter = {}
@@ -2042,32 +2047,61 @@ io.on('connection', (socket) => {
             result.Income = 0
         }
 
-        betCount = await Bet.aggregate([
-            {
-                $match:{
-                    date:filter
-                }
-            },
-            {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-              },
-              {
-                $unwind: "$user"
-              },
-              {
-                $match: {
-                  "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
-                }
-              },
-            {
-                $count: "totalBets"
-              }
-          ])
+        if(data.value === "all"){
+            betCount = await Bet.aggregate([
+                // {
+                //     $match:{
+                //         date:filter
+                //     }
+                // },
+                {
+                    $lookup: {
+                      from: "users",
+                      localField: "userName",
+                      foreignField: "userName",
+                      as: "user"
+                    }
+                  },
+                  {
+                    $unwind: "$user"
+                  },
+                  {
+                    $match: {
+                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
+                    }
+                  },
+                {
+                    $count: "totalBets"
+                  }
+              ])
+        }else{
+            betCount = await Bet.aggregate([
+                {
+                    $match:{
+                        date:filter
+                    }
+                },
+                {
+                    $lookup: {
+                      from: "users",
+                      localField: "userName",
+                      foreignField: "userName",
+                      as: "user"
+                    }
+                  },
+                  {
+                    $unwind: "$user"
+                  },
+                  {
+                    $match: {
+                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
+                    }
+                  },
+                {
+                    $count: "totalBets"
+                  }
+              ])
+        }
           console.log(betCount)
           if(betCount.length > 0){
             result.betCount = betCount[0].totalBets
@@ -2841,6 +2875,82 @@ io.on('connection', (socket) => {
             socket.emit('BETONEVENT', {data:Bets, status:'success'})
         }catch(err){
             socket.emit('BETONEVENT', {message:"err", status:"error"})
+        }
+    })
+
+
+    socket.on('UerBook', async(data) => {
+        console.log(data)
+        try{
+            let Bets = await Bet.aggregate([
+                {
+                    $match: {
+                        status: "OPEN" ,
+                        marketId: data.marketId
+                    }
+                },
+                {
+                    $lookup: {
+                      from: "users",
+                      localField: "userName",
+                      foreignField: "userName",
+                      as: "user"
+                    }
+                  },
+                  {
+                    $unwind: "$user"
+                  },
+                  {
+                    $match: {
+                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
+                    }
+                  },
+                {
+                    $group: {
+                    _id: {
+                        userName: "$userName",
+                        selectionName: "$selectionName",
+                        matchName: "$match",
+                    },
+                    totalAmount: { $sum: { $multiply: ["$oddValue", "$Stake"] } },
+                    },
+                },
+                {
+                    $group: {
+                    _id: "$_id.userName",
+                    selections: {
+                        $push: {
+                        selectionName: "$_id.selectionName",
+                        totalAmount: "$totalAmount",
+                        matchName: "$_id.matchName",
+                        },
+                    },
+                    },
+                },
+                {
+                    $project: {
+                    _id: 0,
+                    userName: "$_id",
+                    selections: 1,
+                    },
+                },
+            ])
+           console.log(Bets)
+        //    console.log(Bets[0].selections)
+           socket.emit('UerBook', Bets);
+        }catch(err){
+
+            socket.emit('UerBook', {message:"err", status:"error"})
+        }
+    })
+
+    socket.on("updateUserDetailssss", async(data) => {
+        try{
+            let user = await User.findByIdAndUpdate(data.id, {contact:data.contact, email:data.email})
+            socket.emit('updateUserDetailssss', user)
+        }catch(err){
+            console.log(err)
+            socket.emit('updateUserDetailssss', {message:"err", status:"error"})
         }
     })
     

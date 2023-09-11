@@ -1849,7 +1849,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
         //     }
         // }
     ])
-    console.log(openBet[0].details, "openBet")
+    // console.log(openBet[0].details, "openBet")
     // console.log(openBet[0].details[0][0], "openBet")
     // console.log(liveFootBall)
     // console.log(liveTennis)
@@ -2361,7 +2361,7 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     }else{
         stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
     }
-    // console.log(multimarket)
+    console.log(multimarket)
     res.status(200).render("./userSideEjs/multimarkets/main",{
         user: req.currentUser,
         verticalMenus,
@@ -3147,7 +3147,8 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
             }
         }
     ])
-    console.log(data)
+    // console.log(data)
+    let sport = sportId
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportsIn/main", {
         title:"Commission Report",
@@ -3156,7 +3157,8 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
         check:"Comm",
         userLog,
         notifications:req.notifications,
-        data
+        data,
+        sport
     })
 })
 
@@ -3169,21 +3171,26 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
     console.log(sportId)
-    let data =  await commissionReportModel.aggregate([
+    let data = await commissionReportModel.aggregate([
         {
-            $match:{
-                userId: req.currentUser.id,
-                event:sportId
-            }
+          $match: {
+            userId: req.currentUser.id,
+            event: sportId,
+          },
         },
         {
-            $group: {
-              _id: '$match',
-              totalCommissionPoints: { $sum: '$commPoints' }
-            }
-        }
-    ])
+          $group: {
+            _id: {
+              sportId: '$Sport', // Group by sportId
+              match: '$match',
+            },
+            totalCommissionPoints: { $sum: '$commPoints' },
+          },
+        },
+      ]);
     console.log(data)
+    let sport = data[0]._id.sportId
+    let event = sportId
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportEventwise/main", {
         title:"Commission Report",
@@ -3192,7 +3199,9 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
         check:"Comm",
         userLog,
         notifications:req.notifications,
-        data
+        data,
+        sport,
+        event
     })
 })
 
@@ -3340,5 +3349,18 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
             min,
             max,
             currentUser:req.currentUser
+    })
+});
+
+
+exports.marketBets = catchAsync(async(req, res, next) => {
+    console.log(req.query.id)
+    let bets = await betModel.find({marketId:req.query.id, status: 'OPEN'})
+    console.log(bets)
+        res.status(200).render("./riskMarketsBets/main",{
+            title:"Risk Analysis",
+            user: req.currentUser,
+            currentUser:req.currentUser,
+            bets
     })
 });

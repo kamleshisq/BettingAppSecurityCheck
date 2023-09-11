@@ -7021,6 +7021,8 @@ $(document).on("submit", ".loginFormAdmin", function (e) {
 });
 $(document).on('click', ".logOut", function (e) {
   e.preventDefault();
+  // console.log('Working')
+  // console.log(this)
   (0, _logOut.logout)();
 });
 
@@ -7601,7 +7603,12 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "50596" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50444" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57326" + '/');
+>>>>>>> 58dcb43ffc0e2d98137a999468098f12f16dcf61
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
