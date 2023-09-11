@@ -349,6 +349,7 @@ io.on('connection', (socket) => {
     // })
 
     socket.on("AccountScroll", async(data)=>{
+        console.log(data)
         let fullUrl
         if(data.id){
             let id = await User.findOne({userName:data.id})

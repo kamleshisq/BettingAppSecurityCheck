@@ -1913,16 +1913,24 @@ socket.on('connect', () => {
             Tdate = document.getElementById("Tdate").value
             let data = {}
             if(searchU){
-                 data.id = SUSER,
-                 data.page = page,
-                 data.Fdate = Fdate,
-                 data.Tdate = Tdate,
-                 data.LOGINDATA = LOGINDATA
+                 data.id = SUSER
+                 data.page = page
+                 data.Fdate = Fdate
+                 if(Tdate != ''){
+                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+                }else{
+                    data.Tdate = Tdate
+                }                 data.LOGINDATA = LOGINDATA
             }{
-                 data.page = page,
-                 data.Fdate = Fdate,
-                 data.Tdate = Tdate,
-                 data.LOGINDATA = LOGINDATA
+                 data.page = page
+                 data.Fdate = Fdate
+                 if(Tdate != ''){
+                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+                }else{
+                    data.Tdate = Tdate
+                }                 
+                
+                data.LOGINDATA = LOGINDATA
             }
             socket.emit('AccountScroll',data)        
         })
@@ -1935,17 +1943,26 @@ socket.on('connect', () => {
             $('.pageLink').attr('data-page',page + 1)
             let data = {}
            if(searchU){
-                data.id = SUSER,
-                data.page = page,
-                data.Fdate = Fdate,
-                data.Tdate = Tdate,
+                data.id = SUSER
+                data.page = page
+                data.Fdate = Fdate
+                if(Tdate != ''){
+                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+                }else{
+                    data.Tdate = Tdate
+                }
                 data.LOGINDATA = LOGINDATA
            }{
-                data.page = page,
-                data.Fdate = Fdate,
-                data.Tdate = Tdate,
+                data.page = page
+                data.Fdate = Fdate
+                if(Tdate != ''){
+                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+                }else{
+                    data.Tdate = Tdate
+                }                
                 data.LOGINDATA = LOGINDATA
            }
+           console.log(data)
             
             socket.emit('AccountScroll',data)
         })
@@ -1992,9 +2009,18 @@ socket.on('connect', () => {
                             <td>0</td>`
                             if(data.json.userAcc[i].parent_id){
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
-                                    html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `<td>-/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    }else{
+                                        html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    }
                                 }else{
-                                    html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `${data.json.userAcc[i].parent_id.userName}/-`
+                                    }else{
+
+                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                                    }
                                 }
                             }else{
                                 html += "<td>-</td>"
@@ -2004,9 +2030,19 @@ socket.on('connect', () => {
                             if(data.json.userAcc[i].parent_id){
                                 html += `<td>${data.json.userAcc[i].creditDebitamount}</td>`
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
-                                    html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/-</td>`
+                                    }else{
+
+                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                                    }
                                 }else{
-                                    html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `<td>-/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    }else{
+
+                                        html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    }
                                 }
                             }else{
                                 html += `<td>${data.json.userAcc[i].creditDebitamount}</td><td>-</td>`
@@ -2030,9 +2066,17 @@ socket.on('connect', () => {
                             <td>0</td>`
                             if(data.json.userAcc[i].parent_id){
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
-                                    html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `<td>-/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    }else{
+                                        html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    }
                                 }else{
-                                    html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/-</td>`
+                                    }else{
+                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                                    }
                                 }
                             }else{
                                 html += "<td>-</td>"
@@ -2042,9 +2086,18 @@ socket.on('connect', () => {
                             if(data.json.userAcc[i].parent_id){
                                 html += `<td>${data.json.userAcc[i].creditDebitamount}</td>`
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
-                                    html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/-</td>`
+                                    }else{
+                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                                    }
                                 }else{
-                                    html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `<td>-/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    }else{
+
+                                        html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    }
                                 }
                             }else{
                                 html += `<td>${data.json.userAcc[i].creditDebitamount}</td><td>-</td>`
@@ -3522,7 +3575,7 @@ socket.on('connect', () => {
             if(userName != ''){
                 filterData.userName = userName
             }else{
-                // filterData.userName = LOGINDATA.LOGINUSER.userName
+                filterData.userName = LOGINDATA.LOGINUSER.userName
             }
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
@@ -3572,7 +3625,7 @@ socket.on('connect', () => {
                 let data = {}
                 let userName = $('.searchUser').val()
                 if(userName == ''){
-                    // filterData.userName = LOGINDATA.LOGINUSER.userName
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
                 }else{
                     filterData.userName = userName
                 }
