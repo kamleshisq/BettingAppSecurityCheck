@@ -2176,6 +2176,7 @@ socket.on('connect', () => {
             $('.searchUser').keyup(function(){
                 // console.log('working')
                 if($(this).hasClass("searchUser")){
+
                     // console.log($(this).val())
                     if($(this).val().length >= 3 ){
                         let x = $(this).val(); 
@@ -2197,24 +2198,26 @@ socket.on('connect', () => {
     
     
             socket.on("ACCSEARCHRES", async(data)=>{
+                $('.wrapper').hide()
+
                 // console.log(data, 565464)
                 let html = ``
-        if(data.page === 1){
-            for(let i = 0; i < data.user.length; i++){
-                html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
-            }
-            document.getElementById('search').innerHTML = html
-            document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-        }else if(data.page === null){
-            document.getElementById("button").innerHTML = ``
-        }else{
-            html = document.getElementById('search').innerHTML
-            for(let i = 0; i < data.user.length; i++){
-                html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
-            }
-            document.getElementById('search').innerHTML = html
-            document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-        }
+                if(data.page === 1){
+                    for(let i = 0; i < data.user.length; i++){
+                        html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                    }
+                    document.getElementById('search').innerHTML = html
+                    document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+                }else if(data.page === null){
+                    document.getElementById("button").innerHTML = ``
+                }else{
+                    html = document.getElementById('search').innerHTML
+                    for(let i = 0; i < data.user.length; i++){
+                        html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                    }
+                    document.getElementById('search').innerHTML = html
+                    document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+                }
             })
     
             let searchU 
@@ -2224,27 +2227,27 @@ socket.on('connect', () => {
             let fGame
             let fBets
             let filterData = {}
-            $(".searchUser").on('input', function(e){
-                var $input = $(this),
-                    val = $input.val();
-                    var listItems = document.getElementsByTagName("li");
-                for (var i = 0; i < listItems.length; i++) {
-                    if (listItems[i].textContent === val) {
-                        match = ($(this).val() === val);
-                      break; 
-                    }else{
-                        match = false
-                    }
-                  }
+            // $(".searchUser").on('input', function(e){
+            //     var $input = $(this),
+            //         val = $input.val();
+            //         var listItems = document.getElementsByTagName("li");
+            //     for (var i = 0; i < listItems.length; i++) {
+            //         if (listItems[i].textContent === val) {
+            //             match = ($(this).val() === val);
+            //           break; 
+            //         }else{
+            //             match = false
+            //         }
+            //       }
     
-                    if(match){
-                        // console.log(match.text())
-                        filterData = {}
-                        filterData.userName = val
-                        $('.pageId').attr('data-pageid','1')
-                        socket.emit('userBetDetail',{filterData,LOGINDATA,page:0})
-                    }
-            })
+            //         if(match){
+            //             // console.log(match.text())
+            //             filterData = {}
+            //             filterData.userName = val
+            //             $('.pageId').attr('data-pageid','1')
+            //             socket.emit('userBetDetail',{filterData,LOGINDATA,page:0})
+            //         }
+            // })
     
     
             $('#fGame,#fBets,#fromDate,#toDate').change(function(){
@@ -2281,6 +2284,7 @@ socket.on('connect', () => {
             $(document).on("click", ".searchList", function(){
                 // console.log("working")
                 // console.log(this.textContent)
+
                 document.getElementById("searchUser").value = this.textContent
                 filterData = {}
                 filterData.userName = this.textContent
@@ -2299,62 +2303,46 @@ socket.on('connect', () => {
                         filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
                     }
                 }
-                if(userName != ''){
-                    filterData.userName = userName
-                }else{
-                    filterData.userName = LOGINDATA.LOGINUSER.userName
-                }
                 filterData.betType = fGame
                 filterData.status = fBets
                 data.filterData = filterData
                 data.LOGINDATA = LOGINDATA
+
+                $('.wrapper').hide()
                 socket.emit('userBetDetail',{filterData,LOGINDATA,page:0})
                 
             })
-    
-            $(window).scroll(function() {
-                    var scroll = $(window).scrollTop();
-                    var windowHeight = $(window).height();
-                    var documentHeight = $(document).height();
-                    if (scroll + windowHeight >= documentHeight) {
-                    console.log("working")
-                    let page = parseInt($('.pageId').attr('data-pageid'));
-                    $('.pageId').attr('data-pageid',page + 1)
-                    let data = {}
-                    let userName = $('.searchUser').val()
-                    if(userName == ''){
-                        filterData.userName = LOGINDATA.LOGINUSER.userName
-                    }else{
-                        filterData.userName = userName
-                    }
-                    if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
-                        filterData.date = {$gte : fromDate,$lte : toDate}
-                    }else{
-    
-                        if(fromDate != undefined && fromDate != '' ){
-                            filterData.date = {$gte : fromDate}
-                        }
-                        if(toDate != undefined && toDate != '' ){
-                            filterData.date = {$lte : toDate}
-                        }
-                    }
-                    if(fGame !== undefined ){
-                        filterData.betType = fGame
-                    }
-                    if(fBets != undefined ){
-                        filterData.status = fBets
-                    }
-    
-                    data.filterData = filterData;
-                    data.page = page
-                    data.LOGINDATA = LOGINDATA
-                    // console.log(data)
-                    socket.emit('userBetDetail',data)
-    
-    
-    
+
+            $('#load-more').click(function(e){
+                let page = parseInt($('.rowId').attr('data-rowid'));
+                $('.rowId').attr('data-rowid',page + 1)
+                let data = {}
+                let userName = $('.searchUser').val()
+                if(userName == ''){
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
                 }
-             }); 
+                if(fromDate != ''  && toDate != '' ){
+                    filterData.date = {$gte : fromDate,$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                }else{
+                    if(fromDate != '' ){
+                        filterData.date = {$gte : fromDate}
+                    }
+                    if(toDate != '' ){
+                        filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                    }
+                }
+                filterData.betType = fGame
+                filterData.status = fBets
+                data.filterData = filterData;
+                data.page = page
+                data.LOGINDATA = LOGINDATA
+                console.log(data)
+                socket.emit('userBetDetail',data)
+            })
+    
+      
              
 
             let count = 11
@@ -2398,9 +2386,17 @@ socket.on('connect', () => {
                 }
                 count += 10
                 if(data.page == 0){
+
+                    if(bets.length == 0){
+                        $('#load-more').hide()
+                        html = `<tr class="empty_table"><td>No record found</td></tr>`
+                    }
                     $('.new-body').html(html)
                 }else{
-                    $('.new-body').append(html)         
+                    if(bets.length == 0){
+                        $('#load-more').hide()
+                    }      
+                    $('.new-body').append(html)   
                 }
             })
     
