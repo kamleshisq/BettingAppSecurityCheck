@@ -3646,6 +3646,58 @@ socket.on('connect', () => {
         })
        
 
+        $('#Sport').change(function() {
+            // console.log("Working")
+            let filterData = {}
+            filterData.Sport = $(this).val()
+            filterData.market = $("#market").val()
+            if($('#Fdate').val() != ''){
+                filterData.from_date = $('#Fdate').val()
+            }
+            if($('#Tdate').val() != ''){
+                filterData.to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            }
+            let userName = $('.searchUser').val()
+                if(userName == ''){
+                    // filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                }
+            let page = 0
+            $('.rowId').attr('data-rowid',page + 1)
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            socket.emit('voidBET',data)
+        })
+
+
+        $('#market').change(function() {
+            // console.log("Working")
+            let filterData = {}
+            filterData.Sport = $("#Sport").val()
+            filterData.market = $(this).val()
+            if($('#Fdate').val() != ''){
+                filterData.from_date = $('#Fdate').val()
+            }
+            if($('#Tdate').val() != ''){
+                filterData.to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            }
+            let userName = $('.searchUser').val()
+                if(userName == ''){
+                    // filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                }
+            let page = 0
+            $('.rowId').attr('data-rowid',page + 1)
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            socket.emit('voidBET',data)
+        })
+
+
         $(document).on('click', ".load-more", function(e){
             filterData = {}
             // console.log("WORKING")
