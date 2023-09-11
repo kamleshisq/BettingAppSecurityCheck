@@ -49,7 +49,7 @@ router.get("/admin/settlementIn", authController.isProtected, authController.isA
 router.get("/admin/settlementHistory", authController.isProtected, authController.isAdmin,viewController.getSettlementHistoryPage);
 router.get("/admin/commissionReport", authController.isProtected, authController.isAdmin,viewController.getCommissionReport);
 router.get("/admin/whiteLableAnalysis", authController.isProtected, authController.isAdmin,viewController.WhiteLabelAnalysis);
-router.get("/admin/gameAnalysis", authController.isProtected, authController.isAdmin,viewController.gameAnalysis);
+router.get("/admin/gameanalysis", authController.isProtected, authController.isAdmin,viewController.gameAnalysis);
 router.get("/admin/streammanagement", authController.isProtected, authController.isAdmin,viewController.getStreamManagementPage);
 router.get("/admin/Notification", authController.isProtected, authController.isAdmin,viewController.getNotificationsPage);
 router.get("/admin/casinocontrol", authController.isProtected, authController.isAdmin,viewController.getCasinoControllerPage);
