@@ -1886,23 +1886,25 @@ socket.on('connect', () => {
                 let  data = {}
                 let Fdate = document.getElementById("Fdate").value
                 let Tdate = document.getElementById("Tdate").value
-                if(!Fdate){
-                    Fdate = 'undefined'
-                }
-                if(!Tdate){
+               
+                if(Tdate != ''){
                     Tdate = 'undefined'
                 }
                 data.Fdate = Fdate;
-                data.Tdate = Tdate;
-                data.userName = this.textContent
-                SUSER = this.textContent
-                data.Tdate = document.getElementById("Tdate").value
+                if(Tdate != ''){
+                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+                }else{
+                    data.Tdate = Tdate
+                }                 
+                data.id = this.id
+                SUSER = this.id
                 data.page = 0
                 data.LOGINDATA = LOGINDATA
                 $('.pageLink').attr('data-page',1)
                 $('.wrapper').hide()
                 // console.log(data, 456)
-                socket.emit( "UserSearchId", data)
+                console.log(data)
+                socket.emit( "AccountScroll", data)
         })
 
         $('#Fdate,#Tdate').change(function(){
@@ -1916,11 +1918,12 @@ socket.on('connect', () => {
                  data.id = SUSER
                  data.page = page
                  data.Fdate = Fdate
-                 if(Tdate != ''){
+                if(Tdate != ''){
                     data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
                 }else{
                     data.Tdate = Tdate
-                }                 data.LOGINDATA = LOGINDATA
+                }                 
+                data.LOGINDATA = LOGINDATA
             }{
                  data.page = page
                  data.Fdate = Fdate

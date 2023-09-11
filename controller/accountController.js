@@ -300,9 +300,10 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
 
 
 exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
-    console.log(req.query)
+    // console.log(req.query)
     let userAcc
     let page = req.query.page
+    let filter = {}
     if(!page){
         page = 0
     }
