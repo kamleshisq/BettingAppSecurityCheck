@@ -8513,11 +8513,11 @@ socket.on('connect', () => {
             $('.rowId').attr('data-rowid',page + 1)
             socket.emit('settlementHistory',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
         })
-        let limit = 50
+        let limit = 10
         socket.on('settlementHistory',async(data)=>{
             console.log(data)
             let html = ''
-            limit = 50 * data.page
+            limit = 10 * data.page
             for(let i = 0; i < data.History.length; i++){
                 var date = new Date(data.History[i].date)
                 html += `<tr>
@@ -8530,18 +8530,39 @@ socket.on('connect', () => {
             } 
             if(data.page == 0){
                 $('tbody').html(html)
+                if(!(data.History.length < 10)){
+                    document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
+                }
             }else{
                 $('tbody').append(html)
+                if((data.History.length < 10)){
+                    document.getElementById('load-more').innerHTML = ""
+                }
             }
         })
 
-        $(window).scroll(async function() {
-            var scroll = $(window).scrollTop();
-            var windowHeight = $(window).height();
-            var documentHeight = $(document).height();
-            if (scroll + windowHeight + 1 >= documentHeight) {
-                console.log('working')
-                let page = parseInt($('.rowId').attr('data-rowid'))
+        // $(window).scroll(async function() {
+        //     var scroll = $(window).scrollTop();
+        //     var windowHeight = $(window).height();
+        //     var documentHeight = $(document).height();
+        //     if (scroll + windowHeight + 1 >= documentHeight) {
+        //         console.log('working')
+        //         let page = parseInt($('.rowId').attr('data-rowid'))
+        //         $('.rowId').attr('data-rowid',page + 1)
+        //         let to_date;
+        //         let from_date
+        //         if($('#Fdate').val() != ''){
+        //             from_date = $('#Fdate').val()
+        //         }
+        //         if($('#Tdate').val() != ''){
+        //             to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+        //         }
+        //         socket.emit('settlementHistory',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
+        //     }
+        // })
+
+        $(document).on('click', ".load-more", function(e){
+            let page = parseInt($('.rowId').attr('data-rowid'))
                 $('.rowId').attr('data-rowid',page + 1)
                 let to_date;
                 let from_date
@@ -8552,7 +8573,6 @@ socket.on('connect', () => {
                     to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
                 }
                 socket.emit('settlementHistory',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page})
-            }
         })
     }
 

@@ -2880,13 +2880,13 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
 
 exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
     let me = req.currentUser
-    let limit = 50
+    let limit = 10
     // console.log(me)
     let History
     if(me.roleName === "Admin"){
-        History = await settlementHisory.find().limit(limit)
+        History = await settlementHisory.find().sort({ date: -1 }).limit(limit)
     }else{
-        History = await settlementHisory.find({userId:me._id}).limit(limit)
+        History = await settlementHisory.find({userId:me._id}).sort({ date: -1 }).limit(limit)
     }
     res.status(200).render("./settlemetHistory/settlemetHistory",{
         title:"SETTLEMENTS",
@@ -2900,7 +2900,7 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
 
 exports.getCommissionReport = catchAsync(async(req, res, next) => {
     let me = req.currentUser
-    let data = await accountStatement.find({user_id:me._id,description: { $regex: /^commission for/ } }).sort({date:-1}).limit(20)
+    let data = await accountStatement.find({user_id:me._id,description: { $regex: /^commission for/ } }).sort({date:-1}).limit(10)
     // console.log(data)
     res.status(200).render("./commissionPage/commissionPage",{
         title:"Commission",
