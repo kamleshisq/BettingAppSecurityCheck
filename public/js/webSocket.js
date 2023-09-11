@@ -3604,68 +3604,25 @@ socket.on('connect', () => {
             socket.emit('voidBET',{filterData,LOGINDATA,page:0})
             
         })
-        // $('.filter').click(function(){
-        //     let userName = $('.searchUser').val()
-        //     fromDate = $('#fromDate').val()
-        //     toDate = $('#toDate').val()
-
-        //     $('.pageId').attr('data-pageid','1')
-        //     data.page = 0;
-        //     if(fromDate != ''  && toDate != '' ){
-        //         filterData.date = {$gte : fromDate,$lte : toDate}
-        //     }else{
-
-        //         if(fromDate != '' ){
-        //             filterData.date = {$gte : fromDate}
-        //         }
-        //         if(toDate != '' ){
-        //             filterData.date = {$lte : toDate}
-        //         }
-        //     }
-        //     if(userName != ''){
-        //         filterData.userName = userName
-        //     }else{
-        //         filterData.userName = LOGINDATA.LOGINUSER.userName
-        //     }
-        //     data.filterData = filterData
-        //     data.LOGINDATA = LOGINDATA
-        //     // console.log(data)
-        //     socket.emit('voidBET',data)
-
-        // })
-
-        // $(window).scroll(function() {
-        //     if($(document).height()-$(window).scrollTop() == window.innerHeight){
-        //         console.log('working')
-        //         let page = parseInt($('.pageId').attr('data-pageid'));
-        //         $('.pageId').attr('data-pageid',page + 1)
-        //         let data = {}
-        //         let userName = $('.searchUser').val()
-        //         if(userName == ''){
-        //             filterData.userName = LOGINDATA.LOGINUSER.userName
-        //         }else{
-        //             filterData.userName = userName
-        //         }
-        //         if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
-        //             filterData.date = {$gte : fromDate,$lte : toDate}
-        //         }else{
-    
-        //             if(fromDate != undefined && fromDate != '' ){
-        //                 filterData.date = {$gte : fromDate}
-        //             }
-        //             if(toDate != undefined && toDate != '' ){
-        //                 filterData.date = {$lte : toDate}
-        //             }
-        //         }
-    
-        //         data.filterData = filterData;
-        //         data.page = page
-        //         data.LOGINDATA = LOGINDATA
-        //         // console.log(data)
-        //         socket.emit('voidBET',data)
-
-        //     }
-        // }); 
+        
+        $(document).on('change','#Fdate',function(e){
+            filterData.from_date = $(this).val()
+            if($('#Tdate').val() != ''){
+                filterData.to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            }
+            let userName = $('.searchUser').val()
+                if(userName == ''){
+                    // filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                }
+            let page = 0
+            $('.rowId').attr('data-rowid',page + 1)
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            socket.emit('voidBET',data)
+        })
        
 
         $(document).on('click', ".load-more", function(e){
