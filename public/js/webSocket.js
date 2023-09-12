@@ -8772,14 +8772,14 @@ socket.on('connect', () => {
         socket.on("ACCSTATEMENTADMINSIDE", async(data) => {
             console.log(data)
             let userAcc = data.userAcc;
+            let page = data.page
+            let html = '';
 
             if(data.userAcc.length > 0){
             
             if(data.page === 0){
                 countAcc = 1
             }
-            let page = data.page
-            let html = '';
              for(let i = 0; i < userAcc.length; i++){
                 var date = new Date(userAcc[i].date);
                 var options = { 
