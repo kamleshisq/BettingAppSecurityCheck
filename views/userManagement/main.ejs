@@ -15,9 +15,16 @@
   <%- include("./table") %>
 </section>
 
-<!-- end gallary -->
+
 
   </div>
+  <%if(users.length !== 0){%>
+    <div id="load-more">
+      <button class="load-more">Load More</button>
+    </div>
+  <%}%>
+
+  <!-- models -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
     

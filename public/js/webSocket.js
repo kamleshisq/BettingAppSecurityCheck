@@ -1299,6 +1299,13 @@ socket.on('connect', () => {
             }
             html += `</tbody>`
             count += 10;
+            if(response.length == 0 && data.page == 0){
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
+
+            }
+            if(response.length == 0){
+                $('#load-more').hide()
+            }
             $('table').append(html)
                 // html = '';
                 // for(let i=0;i<data.Rows;i++){
@@ -1349,34 +1356,27 @@ socket.on('connect', () => {
         // console.log(W,S,R)
         // if(W || S || R){
                let page =  0;
-               $('.pageLink').attr('data-page',1)
+               $('.rowId').attr('data-rowid',1)
                let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
                socket.emit("search", {filterData,page,id, LOGINDATA })
         // }
     })
 
-    $(window).scroll(function() {
-        if($(document).height()-$(window).scrollTop() == window.innerHeight){
-            // console.log(W,S,R)
-            let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
+    $('#load-more').click(function(e){
+        let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
 
-            let page = parseInt($('.pageLink').attr('data-page'));
-        //  console.log(page)
+        let page = parseInt($('.rowId').attr('data-rowid'));
 
 
-            $('.pageLink').attr('data-page',page + 1)
-            if(W || S || R){
-                    
-                    
-                // let page = parseInt($('.pageLink').attr('data-page'));
-                // $('.pageLink').attr('data-page',page + 1)
-                // console.log(W, S, R)
-                socket.emit("search", {filterData,page,id, LOGINDATA })
-            }else{
-                getOwnChild(id,page ,'getOwnChild')
-            }
+        $('.rowId').attr('data-rowid',page + 1)
+        if(W || S || R){
+                
+            socket.emit("search", {filterData,page,id, LOGINDATA })
+        }else{
+            getOwnChild(id,page ,'getOwnChild')
         }
-     }); 
+    })
+   
         // socket.on("searchUser", (data)=>{
         //     // console.log(data[1]._id)
         //     console.log(data)
