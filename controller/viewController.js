@@ -640,52 +640,92 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
     //     role_type.push(roles[i].role_type)
     // }
     // const bets = await betModel.find({role_type:{$in:role_type}, status:{$ne:"OPEN"}}).limit(10)
-    User.aggregate([
+    let bets = await betLimitModel.aggregate([
         {
-          $match: {
-            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
-          }
+            $match: {
+            //   userId: { $in: userIds },
+              status: {$ne:"OPEN"}
+            }
         },
         {
-          $group: {
-            _id: null,
-            userIds: { $push: '$_id' } 
-          }
-        }
-      ])
-        .then((userResult) => {
-          const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
+            $lookup:{
+                from:'users',
+                localField:'userName',
+                foreignField:'userName',
+                as:'userDetails'
+            }
+        },
+        {
+            $unwind:'$userDetails'
+        },
+        {
+            $match:{
+                'userDetails.isActive':true,
+                'userDetails.roleName':{$ne:'Admin'},
+                'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
+            }
+        },
+        {
+            $sort:{
+                date:-1
+            }
+        },
+        { $limit : 10 }
+    ])
+
+    res.status(200).render("./reports/reports",{
+        title:"Reports",
+        bets:bets,
+        me : currentUser,
+        currentUser
+    })
+
+    // User.aggregate([
+    //     {
+    //       $match: {
+    //         parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
+    //       }
+    //     },
+    //     {
+    //       $group: {
+    //         _id: null,
+    //         userIds: { $push: '$_id' } 
+    //       }
+    //     }
+    //   ])
+    //     .then((userResult) => {
+    //       const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
       
-          betModel.aggregate([
-            {
-              $match: {
-                userId: { $in: userIds },
-                status: {$ne:"OPEN"}
-              }
-            },
-            {
-                $sort:{
-                    date:-1
-                }
-            },
-            { $limit : 10 }
-          ])
-            .then((betResult) => {
-            //   socket.emit("aggreat", betResult)
-                res.status(200).render("./reports/reports",{
-                    title:"Reports",
-                    bets:betResult,
-                    me : currentUser,
-                    currentUser
-                })
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+    //       betModel.aggregate([
+    //         {
+    //           $match: {
+    //             userId: { $in: userIds },
+    //             status: {$ne:"OPEN"}
+    //           }
+    //         },
+    //         {
+    //             $sort:{
+    //                 date:-1
+    //             }
+    //         },
+    //         { $limit : 10 }
+    //       ])
+    //         .then((betResult) => {
+    //         //   socket.emit("aggreat", betResult)
+    //             res.status(200).render("./reports/reports",{
+    //                 title:"Reports",
+    //                 bets:betResult,
+    //                 me : currentUser,
+    //                 currentUser
+    //             })
+    //         })
+    //         .catch((error) => {
+    //           console.error(error);
+    //         });
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
     // res.status(200).render('./reports/reports',{
     //     title:"Reports",
     //     me:currentUser,
