@@ -8850,6 +8850,7 @@ socket.on('connect', () => {
                   <td><a href="/admin/settlementIn?id=${data.betsEventWise[i].eventid}" class="btn-green">settle</a></td>
                 </tr>`
             } 
+            
 
             $('tbody').html(html)
         })
