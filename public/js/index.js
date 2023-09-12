@@ -23,6 +23,7 @@ import { createBanner } from "./createBanner";
 import { updateBanner } from "./updateBanner";
 import { createPage } from "./createpage";
 import { addImage } from "./addImage";
+import { editSliderInImage } from "./editSliderInImage";
 import { updateSlider } from "./updateSlider";
 import { createSlider } from "./addSlider";
 import { userLogin } from "./userLogin";
@@ -594,6 +595,15 @@ $(document).on('submit', ".form-data26", function(e){
     let fd = new FormData(form);
     fd.append('id', id)
     addImage(fd)
+})
+
+$(document).on('submit', ".editImageSportForm", function(e){
+    e.preventDefault()
+    let id = $(this).attr('id')
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    fd.append('id', id)
+    editSliderInImage(fd)
 })
 
 $(document).on('submit', ".slider-form", function(e){
