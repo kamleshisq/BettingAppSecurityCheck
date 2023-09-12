@@ -3760,7 +3760,7 @@ socket.on('connect', () => {
             data.LOGINDATA = LOGINDATA
             $('.pageId').attr('data-pageid','1')
             $('.wrapper').hide()
-            socket.emit('voidBET',{data})
+            socket.emit('voidBET',data)
             
         })
         
