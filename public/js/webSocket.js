@@ -8824,7 +8824,7 @@ socket.on('connect', () => {
                 $('.loadMorediveACC').hide()
             }
         }else{
-            if(userAcc.length == 0){
+            if(data.page == 0){
                 html += `<tr class="empty_table">
                 <td>No record found</td>
               </tr>`
@@ -8848,7 +8848,7 @@ socket.on('connect', () => {
             socket.emit("loadMorediveHistory", {page, id})
         })
 
-        let countHistory = 21
+        let countHistory = 11
         socket.on("loadMorediveHistory", data => {
             // console.log(data)
             if(data.length > 0){
@@ -8885,13 +8885,26 @@ socket.on('connect', () => {
                     }else{
                         html += ` <td>LogOut</td></tr>`
                     }
-    
+                    countHistory += 10
                 }
                 console.log(html)
-                $('.acount-stat-tbl-body111').append(html) 
+                if(data.page == 0){
+
+                    $('.acount-stat-tbl-body111').html(html) 
+                }else{
+
+                    $('.acount-stat-tbl-body111').append(html) 
+                }
 
             }else{
-                $('.loadMorediveHistory').html("")
+                if(data.page){
+                    html += `<tr class="empty_table">
+                    <td>No record found</td>
+                  </tr>`
+                    $('.acount-stat-tbl-body111').html(html) 
+
+                }
+                $('.loadMorediveHistory').hide()
             }
            
 
