@@ -59,6 +59,13 @@ exports.addImage = catchAsync(async(req, res, next) =>{
 });
 
 
+
+exports.editSliderinImage =  catchAsync(async(req, res, next) => {
+    console.log(req.files)
+    console.log(req.body, 121212121)
+})
+
+
 exports.updateSlider = catchAsync(async(req, res, next) => {
     let allSlider = await sliderModel.find()
     if(req.files){
