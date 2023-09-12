@@ -1,4 +1,3 @@
-const sourceCode = require("eslint/lib/source-code");
 
 
 
