@@ -3250,7 +3250,7 @@ io.on('connection', (socket) => {
 
            
         }else{
-            socket.emit("claimCommission", "error")
+            socket.emit("claimCommissionAdmin", "error")
         }
     })
     
