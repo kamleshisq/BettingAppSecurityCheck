@@ -11,7 +11,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
             </div>
-            <input type="text" id="searchUser"  list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
+            <input type="text" id="searchUser"  list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
             <div class="wrapper">
               <ul id="search" class="users">
 
@@ -62,7 +62,7 @@
                 <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="toDate"> 
               </div>
             </form>
-            <button class="btn-filter"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
+            <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Download CSV</button>
           </div>
         </div>
         <div class="data-table">
