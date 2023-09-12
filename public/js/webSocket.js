@@ -2294,26 +2294,35 @@ socket.on('connect', () => {
                 fGame = $('#fGame').val()
                 fBets = $('#fBets').val()
                 data.page = 0;
+                // let fromDate 
+                // let toDate
                 if(fromDate != ''  && toDate != '' ){
-                    filterData.date = {"$gte" : fromDate,"$lte" : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                    // filterData.date = {$gte : new Date(fromDate), $lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                    fromDate = new Date(fromDate)
+                    toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+
                 }else{
                     if(fromDate != '' ){
-                        filterData.date = {"$gte" : fromDate}
+                        // filterData.date = {$gte : new Date(fromDate)}
+                        fromDate = new Date(fromDate)
                     }
                     if(toDate != '' ){
-                        filterData.date = {"$lte" : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                        // filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                        toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
                     }
                 }
                 if(userName != ''){
                     filterData.userName = userName
                 }else{
-                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                    // filterData.userName = LOGINDATA.LOGINUSER.userName
                 }
                 filterData.betType = fGame
                 filterData.status = fBets
                 data.filterData = filterData
                 data.LOGINDATA = LOGINDATA
-                console.log(data)
+                data.fromDate = fromDate
+                data.toDate = toDate
+                // console.log(data)
                 socket.emit('userBetDetail',data)
     
             })
@@ -2331,22 +2340,29 @@ socket.on('connect', () => {
                 fBets = $('#fBets').val()
                 data.page = 0;
                 if(fromDate != ''  && toDate != '' ){
-                    filterData.date = {$gte : fromDate,$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                    // filterData.date = {$gte : new Date(fromDate), $lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                    fromDate = new Date(fromDate)
+                    toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+
                 }else{
                     if(fromDate != '' ){
-                        filterData.date = {$gte : fromDate}
+                        // filterData.date = {$gte : new Date(fromDate)}
+                        fromDate = new Date(fromDate)
                     }
                     if(toDate != '' ){
-                        filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                        // filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                        toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
                     }
                 }
                 filterData.betType = fGame
                 filterData.status = fBets
                 data.filterData = filterData
                 data.LOGINDATA = LOGINDATA
+                data.fromDate = fromDate
+                data.toDate = toDate
 
                 $('.wrapper').hide()
-                socket.emit('userBetDetail',{filterData,LOGINDATA,page:0})
+                socket.emit('userBetDetail',data)
                 
             })
 
@@ -2360,18 +2376,23 @@ socket.on('connect', () => {
                 let data = {}
                 let userName = $('.searchUser').val()
                 if(userName == ''){
-                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                    // filterData.userName = LOGINDATA.LOGINUSER.userName
                 }else{
                     filterData.userName = userName
                 }
                 if(fromDate != ''  && toDate != '' ){
-                    filterData.date = {$gte : fromDate,$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                    // filterData.date = {$gte : new Date(fromDate), $lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                    fromDate = new Date(fromDate)
+                    toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+
                 }else{
                     if(fromDate != '' ){
-                        filterData.date = {$gte : fromDate}
+                        // filterData.date = {$gte : new Date(fromDate)}
+                        fromDate = new Date(fromDate)
                     }
                     if(toDate != '' ){
-                        filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                        // filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                        toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
                     }
                 }
                 filterData.betType = fGame
@@ -2379,6 +2400,8 @@ socket.on('connect', () => {
                 data.filterData = filterData;
                 data.page = page
                 data.LOGINDATA = LOGINDATA
+                data.fromDate = fromDate
+                data.toDate = toDate
                 console.log(data)
                 socket.emit('userBetDetail',data)
             })
@@ -2433,11 +2456,17 @@ socket.on('connect', () => {
                         html = `<tr class="empty_table"><td>No record found</td></tr>`
                     }
                     $('.new-body').html(html)
+                    if(!(bets.length < 10)){
+                        document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
+                    }
                 }else{
                     if(bets.length == 0){
                         $('#load-more').hide()
                     }      
                     $('.new-body').append(html)   
+                    if((bets.length < 10)){
+                        document.getElementById('load-more').innerHTML = ""
+                    }
                 }
             })
     
@@ -2728,38 +2757,34 @@ socket.on('connect', () => {
             }
         })
 
-        $(window).scroll(function() {
-            if($(document).height()-$(window).scrollTop() == window.innerHeight){
-                let page = parseInt($('.pageId').attr('data-pageid'));
-                $('.pageId').attr('data-pageid',page + 1)
-                let data = {}
-                let userName = $('.searchUser').val()
-                if(userName == ''){
-                    filterData.userName = LOGINDATA.LOGINUSER.userName
-                }else{
-                    filterData.userName = userName
-                }
-                // if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
-                //     filterData.date = {$gte : fromDate,$lte : toDate}
-                // }else{
-
-                //     if(fromDate != undefined && fromDate != '' ){
-                //         filterData.date = {$gte : fromDate}
-                //     }
-                //     if(toDate != undefined && toDate != '' ){
-                //         filterData.date = {$lte : toDate}
-                //     }
-                // }    
-                data.filterData = filterData;
-                data.page = page
-                data.LOGINDATA = LOGINDATA
-                // console.log(data)
-                socket.emit('userPLDetail',data)
-
-
-
+        $('#load-more').click(function(e){
+            let page = parseInt($('.pageId').attr('data-pageid'));
+            $('.pageId').attr('data-pageid',page + 1)
+            let data = {}
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
             }
-         }); 
+            // if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
+            //     filterData.date = {$gte : fromDate,$lte : toDate}
+            // }else{
+
+            //     if(fromDate != undefined && fromDate != '' ){
+            //         filterData.date = {$gte : fromDate}
+            //     }
+            //     if(toDate != undefined && toDate != '' ){
+            //         filterData.date = {$lte : toDate}
+            //     }
+            // }    
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            // console.log(data)
+            socket.emit('userPLDetail',data)
+        })
+ 
 
         $(".searchUser").on('input', function(e){
             var $input = $(this),
@@ -2811,8 +2836,15 @@ socket.on('connect', () => {
                 </tr>`
             }
             if(page == 0){
+                if(users.length == 0){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    $('#load-more').hide()
+                }
                 $('.new-body').html(html)
             }else{
+                if(users.length == 0){
+                    $('#load-more').hide()
+                }
                 $('.new-body').append(html)
             }
           
@@ -8217,8 +8249,12 @@ socket.on('connect', () => {
                     <td>${bets[i].Stake}</td>
                     <td>${bets[i].transactionId}</td>
                     <td>${bets[i].status}</td>
-                    <td>${bets[i].returns}</td>
-                    <td><button class="voidBet" id="${bets[i]._id}">Cancel Bet</button><button class="alertBet" id="${bets[i]._id}"> Alert Bet</button></td>
+                    <td>
+                        <div class="btn-group">
+                            <button class="btn cancel" id="${bets[i]._id}"> Cancel Bet</button>
+                            <button class="btn accept" id="${bets[i]._id}"> accept Bet</button>
+                        </div>
+                    </td>
                     </tr>`
                 }
                 count += 10;

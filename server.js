@@ -696,7 +696,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on('userBetDetail',async(data)=>{
-        console.log(data)
         let limit = 10;
         let page = data.page;
         // console.log(data.filterData)
@@ -721,63 +720,118 @@ io.on('connection', (socket) => {
         //     socket.emit('userBetDetail',{ubDetails,page})
 
         // }
-        
-        User.aggregate([
+        // if(data.fromDate && data.toDate){
+        //     data.filterData.date = 
+        // }
+
+        if(data.fromDate && data.toDate){
+            data.filterData.date = {$gte:new Date(data.fromDate),$lte:new Date(data.toDate)}
+        }else if(data.fromDate && !data.toDate){
+            data.filterData.date = {$gte:new Date(data.fromDate)}
+        }else if(data.toDate && !data.fromDate){
+            data.filterData.date = {$lte:new Date(data.toDate)}
+        }
+
+        if(data.filterData.betType === 'All'){
+            delete data.filterData['betType']
+        }
+
+        if(data.filterData.status == 'All'){
+            data.filterData.status = {$ne: "OPEN"}
+        }
+        console.log(data.filterData)
+
+        let ubDetails = await Bet.aggregate([
             {
-              $match: {
-                parentUsers: { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
-              }
+                $match: data.filterData
             },
             {
-              $group: {
-                _id: null,
-                userIds: { $push: '$_id' } 
-              }
-            }
-          ])
-            .then((userResult) => {
-              const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-              data.filterData.userId = { $in: userIds }
-              if(data.filterData.userName === data.LOGINDATA.LOGINUSER.userName){
-                  delete data.filterData['userName']
-              }
-
-              if(data.filterData.betType == "All"){
-                delete data.filterData['betType']
-              }
-              
-              if(data.filterData.status == 'All'){
-                data.filterData.status = {"$ne":"OPEN"}
-              }
-
-              Bet.aggregate([
-                {
-                  $match: data.filterData
-                },
-                {
-                    $sort:{
-                        date:-1
-                    }
-                },
-                {
-                    $skip:(page * limit)
-                },
-                {
-                    $limit:limit
+                $lookup:{
+                    from:'users',
+                    localField:'userName',
+                    foreignField:'userName',
+                    as:'userDetails'
                 }
-              ])
-                .then((betResult) => {
-                //   socket.emit("aggreat", betResult)
-                    let ubDetails = betResult
-                    socket.emit('userBetDetail',{ubDetails,page})
-                })
-                .catch((error) => {
-                  console.error(error);
-                });
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+            },
+            {
+                $unwind:'$userDetails'
+            },
+            {
+                $match:{
+                    'userDetails.isActive':true,
+                    'userDetails.roleName':{$ne:'Admin'},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}},
+                }
+            },
+            {
+                $sort:{
+                    date:-1
+                }
+            },
+            {
+                $skip:(page * 10)
+            },
+            { $limit : 10 }
+        ])
+
+        socket.emit('userBetDetail',{ubDetails,page})
+
+        // User.aggregate([
+        //     {
+        //       $match: {
+        //         parentUsers: { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
+        //       }
+        //     },
+        //     {
+        //       $group: {
+        //         _id: null,
+        //         userIds: { $push: '$_id' } 
+        //       }
+        //     }
+        //   ])
+        //     .then((userResult) => {
+        //       const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
+        //       data.filterData.userId = { $in: userIds }
+        //       if(data.filterData.userName === data.LOGINDATA.LOGINUSER.userName){
+        //           delete data.filterData['userName']
+        //       }
+
+        //       if(data.filterData.betType == "All"){
+        //         delete data.filterData['betType']
+        //       }
+              
+            //   if(data.filterData.status == 'All'){
+            //     data.filterData.status = {$nin: ["OPEN", "ALERT"]}
+            //   }
+        //       console.log(data.filterData)
+        //       Bet.aggregate([
+        //         {
+        //           $match: data.filterData
+        //         },
+        //         {
+        //             $sort:{
+        //                 date:-1
+        //             }
+        //         },
+        //         {
+        //             $skip:(page * limit)
+        //         },
+        //         {
+        //             $limit:limit
+        //         }
+        //       ])
+        //         .then((betResult) => {
+        //         //   socket.emit("aggreat", betResult)
+        //             let ubDetails = betResult
+        //             socket.emit('userBetDetail',{ubDetails,page})
+        //         })
+        //         .catch((error) => {
+        //           console.error(error);
+        //         });
+        //     })
+        //     .catch((error) => {
+        //       console.error(error);
+        //     });
         
         
         // console.log(user)

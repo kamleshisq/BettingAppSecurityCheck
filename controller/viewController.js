@@ -640,52 +640,93 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
     //     role_type.push(roles[i].role_type)
     // }
     // const bets = await betModel.find({role_type:{$in:role_type}, status:{$ne:"OPEN"}}).limit(10)
-    User.aggregate([
+    let bets = await betModel.aggregate([
         {
-          $match: {
-            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
-          }
+            $match: {
+            //   userId: { $in: userIds },
+              status: {$ne:"OPEN"}
+            }
         },
         {
-          $group: {
-            _id: null,
-            userIds: { $push: '$_id' } 
-          }
-        }
-      ])
-        .then((userResult) => {
-          const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
+            $lookup:{
+                from:'users',
+                localField:'userName',
+                foreignField:'userName',
+                as:'userDetails'
+            }
+        },
+        {
+            $unwind:'$userDetails'
+        },
+        {
+            $match:{
+                'userDetails.isActive':true,
+                'userDetails.roleName':{$ne:'Admin'},
+                'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
+            }
+        },
+        {
+            $sort:{
+                date:-1
+            }
+        },
+        { $limit : 10 }
+    ])
+    console.log(bets)
+
+    res.status(200).render("./reports/reports",{
+        title:"Reports",
+        bets:bets,
+        me : currentUser,
+        currentUser
+    })
+
+    // User.aggregate([
+    //     {
+    //       $match: {
+    //         parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
+    //       }
+    //     },
+    //     {
+    //       $group: {
+    //         _id: null,
+    //         userIds: { $push: '$_id' } 
+    //       }
+    //     }
+    //   ])
+    //     .then((userResult) => {
+    //       const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
       
-          betModel.aggregate([
-            {
-              $match: {
-                userId: { $in: userIds },
-                status: {$ne:"OPEN"}
-              }
-            },
-            {
-                $sort:{
-                    date:-1
-                }
-            },
-            { $limit : 10 }
-          ])
-            .then((betResult) => {
-            //   socket.emit("aggreat", betResult)
-                res.status(200).render("./reports/reports",{
-                    title:"Reports",
-                    bets:betResult,
-                    me : currentUser,
-                    currentUser
-                })
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+    //       betModel.aggregate([
+    //         {
+    //           $match: {
+    //             userId: { $in: userIds },
+    //             status: {$ne:"OPEN"}
+    //           }
+    //         },
+    //         {
+    //             $sort:{
+    //                 date:-1
+    //             }
+    //         },
+    //         { $limit : 10 }
+    //       ])
+    //         .then((betResult) => {
+    //         //   socket.emit("aggreat", betResult)
+    //             res.status(200).render("./reports/reports",{
+    //                 title:"Reports",
+    //                 bets:betResult,
+    //                 me : currentUser,
+    //                 currentUser
+    //             })
+    //         })
+    //         .catch((error) => {
+    //           console.error(error);
+    //         });
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
     // res.status(200).render('./reports/reports',{
     //     title:"Reports",
     //     me:currentUser,
@@ -853,64 +894,90 @@ exports.useracount = catchAsync(async(req, res, next) => {
 exports.userhistoryreport = catchAsync(async(req, res, next) => {
     // const currentUser = global._User
     const currentUser = req.currentUser
-    // const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
-    // let role_type =[]
-    // for(let i = 0; i < roles.length; i++){
-    //     role_type.push(roles[i].role_type)
-    // }
-    // // console.log(role_type)
-    // let Logs
-    // if(currentUser.role_type == 1){
-    //     Logs = await loginLogs.find().limit(10)
-    // }else{
-    //     Logs = await loginLogs.find({ parentUsers:{$elemMatch:{$eq:req.currentUser.id}}}).limit(10)
-    // }
-    // console.log(Logs)
-    User.aggregate([
+   
+    let Logs = await loginLogs([
         {
-          $match: {
-            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
-          }
-        },
-        {
-          $group: {
-            _id: null,
-            userIds: { $push: '$_id' } 
-          }
-        }
-      ])
-        .then((userResult) => {
-          const userIds = userResult.length > 0 ? userResult[0].userIds : [];
-        loginLogs.aggregate([
-            {
-              $match:{
-                user_id:{$in:userIds}
-              }
-            },{
-                $sort:{
-                    login_time:-1
-                }
-            },
-            {
-                $limit:10
+            $lookup:{
+                from:'users',
+                localField:'userName',
+                foreignField:'userName',
+                as:'userDetails'
             }
-          ])
-            .then((Logs) => {
-            //   socket.emit("aggreat", betResult)
-            res.status(200).render('./userHistory/userhistoryreport',{
-                title:"UserHistory",
-                me:currentUser,
-                Logs,
-                currentUser
-            })
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+        },
+        // {
+        //     $unwind:'$userDetails'
+        // },
+        // {
+        //     $match:{
+        //         'userDetails.isActive':true,
+        //         'userDetails.roleName':{$ne:'Admin'},
+        //         'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
+        //     }
+        // },
+        // {
+        //     $sort:{
+        //         login_time:-1
+        //     }
+        // },
+        // {
+        //     $limit:10
+        // }
+    ])
+
+    console.log(Logs)
+
+    res.status(200).render('./userHistory/userhistoryreport',{
+        title:"UserHistory",
+        me:currentUser,
+        Logs,
+        currentUser
+    })
+
+    // User.aggregate([
+    //     {
+    //       $match: {
+    //         parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
+    //       }
+    //     },
+    //     {
+    //       $group: {
+    //         _id: null,
+    //         userIds: { $push: '$_id' } 
+    //       }
+    //     }
+    //   ])
+    //     .then((userResult) => {
+    //       const userIds = userResult.length > 0 ? userResult[0].userIds : [];
+    //     loginLogs.aggregate([
+    //         {
+    //           $match:{
+    //             user_id:{$in:userIds}
+    //           }
+    //         },{
+    //             $sort:{
+    //                 login_time:-1
+    //             }
+    //         },
+    //         {
+    //             $limit:10
+    //         }
+    //       ])
+    //         .then((Logs) => {
+    //         //   socket.emit("aggreat", betResult)
+    //         res.status(200).render('./userHistory/userhistoryreport',{
+    //             title:"UserHistory",
+    //             me:currentUser,
+    //             Logs,
+    //             currentUser
+    //         })
+    //         })
+    //         .catch((error) => {
+    //           console.error(error);
+    //         });
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
     })
 
 exports.plreport = catchAsync(async(req, res, next) => {
