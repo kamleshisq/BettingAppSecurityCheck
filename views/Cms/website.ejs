@@ -173,7 +173,7 @@
                               <td><img src="../sliderImages/<%=sliders[i].images[j].name%>.png" alt="img" class="form__user-photo"></td>
                               <td>
                                 <div class="btn-group">
-                                  <button  class="btn-filter" data-bs-toggle="modal" data-bs-target="#addSlider"  id="<%=sliders[i].images[j].name%>//<%=sliders[i].name%>">Edit</button>
+                                  <button  class="btn-filter editImageSport" data-bs-toggle="modal" data-bs-target="#EditSliderInImage"  id="<%=sliders[i].images[j].name%>//<%=sliders[i].name%>">Edit</button>
                                   <button class="btn delete dleteImageSport" id="<%=sliders[i].images[j].name%>//<%=sliders[i].name%>">Delete</button>
                                 </div>
                               </td>
@@ -448,6 +448,46 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="EditSliderInImage" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Image</h4>
+      </div>
+      <div class="modal-body">
+        <form class="addSlider-form" id="Add-User0">
+          <div class="row">
+            <div class="col">
+              <label for="name">Name</label>
+              <input type="text" class="form-control ml0" placeholder="" name="name" required>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="url">url</label>
+              <input type="text" class="form-control ml0" placeholder="Abitest" name="url" required>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label for="backgroundImage">Image</label>
+              <input type="file" id="backgroundImage" class="form-control ml0" placeholder="0" name="backgroundImage" required>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit mt-3">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <div class="modal fade" id="myModal7" role="dialog">
   <div class="modal-dialog">
