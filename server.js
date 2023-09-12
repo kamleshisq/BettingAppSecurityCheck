@@ -200,50 +200,89 @@ io.on('connection', (socket) => {
         console.log(data.filterData)
         let page = data.page;
         let limit = 10;
-        User.aggregate([
+        let filter = {}
+        if(data.filterData.userName){
+            filter.userName = data.filterData.userName
+        }
+        let users = await loginlogs.aggregate([
             {
-              $match: {
-                parentUsers: { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
-              }
+                $match:filter
             },
             {
-              $group: {
-                _id: null,
-                userIds: { $push: '$_id' } 
-              }
-            }
-          ])
-            .then((userResult) => {
-              const userIds = userResult.length > 0 ? userResult[0].userIds : [];
-              loginlogs.aggregate([
-                {
-                  $match:{
-                    user_id:{$in:userIds}
-                  }
-                },{
-                    $sort:{
-                        login_time:-1
-                    }
-                },
-                {
-                    $skip:(limit * page)
-                },
-                {
-                    $limit:limit
+                $lookup:{
+                    from:'users',
+                    localField:'userName',
+                    foreignField:'userName',
+                    as:'userDetails'
                 }
-              ])
-                .then((Logs) => {
-                //   socket.emit("aggreat", betResult)
-                let users = Logs
-                socket.emit('userHistory',{users,page})
-                })
-                .catch((error) => {
-                  console.error(error);
-                });
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+            },
+            {
+                $unwind:'$userDetails'
+            },
+            {
+                $match:{
+                    'userDetails.isActive':true,
+                    'userDetails.roleName':{$ne:'Admin'},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}},
+                }
+            },
+            {
+                $sort:{
+                    login_time:-1
+                }
+            },
+            {
+                $skip:(page * 10)
+            },
+            {
+                $limit:10
+            }
+        ])
+        socket.emit('userHistory',{users,page})
+        // User.aggregate([
+        //     {
+        //       $match: {
+        //         parentUsers: { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
+        //       }
+        //     },
+        //     {
+        //       $group: {
+        //         _id: null,
+        //         userIds: { $push: '$_id' } 
+        //       }
+        //     }
+        //   ])
+        //     .then((userResult) => {
+        //       const userIds = userResult.length > 0 ? userResult[0].userIds : [];
+        //       loginlogs.aggregate([
+        //         {
+        //           $match:{
+        //             user_id:{$in:userIds}
+        //           }
+        //         },{
+        //             $sort:{
+        //                 login_time:-1
+        //             }
+        //         },
+        //         {
+        //             $skip:(limit * page)
+        //         },
+        //         {
+        //             $limit:limit
+        //         }
+        //       ])
+        //         .then((Logs) => {
+        //         //   socket.emit("aggreat", betResult)
+        //         let users = Logs
+        //         socket.emit('userHistory',{users,page})
+        //         })
+        //         .catch((error) => {
+        //           console.error(error);
+        //         });
+        //     })
+        //     .catch((error) => {
+        //       console.error(error);
+        //     });
     })
     
     // status:'success',
