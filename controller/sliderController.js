@@ -68,6 +68,7 @@ exports.editSliderinImage =  catchAsync(async(req, res, next) => {
     let index = slider.images.findIndex(item => item.name == imageName)
     try{
         if(index !== -1) {
+            console.log(slider.images[index])
             if(req.files){
                 if(req.files.file.mimetype.startsWith('image')){
                     const image = req.files.file
