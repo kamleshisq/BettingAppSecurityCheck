@@ -9827,8 +9827,8 @@ socket.on('connect', () => {
                         html += `
                         <tr>
                             <td>${data[i].userName}</td>
-                            <td>${team1data}</td>
-                            <td>${team2data}</td>
+                            <td>${team1data.toFixed(2)}</td>
+                            <td>${team2data.toFixed(2)}</td>
                         </tr>
 
                         `
