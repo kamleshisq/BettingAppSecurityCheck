@@ -47,6 +47,7 @@
           </tr>
         </thead>
         <tbody class="new-body">
+          <%if(users){%>
           <%for(let i=0; i<users.length; i++){%>
             <%if((i+1) % 2 !=0){%>
               <tr class="trtable" id="<%=i+1%>" data-id="<%=users[i]._id%>">
@@ -136,7 +137,9 @@
                   </td>
               </tr>
               <%}%>
-
+              <%}else{%>
+                <tr class="empty_table"><td>No record found</td></tr>
+              <%}%>
         </tbody>
       </table>
     </div>
