@@ -239,50 +239,6 @@ io.on('connection', (socket) => {
             }
         ])
         socket.emit('userHistory',{users,page})
-        // User.aggregate([
-        //     {
-        //       $match: {
-        //         parentUsers: { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
-        //       }
-        //     },
-        //     {
-        //       $group: {
-        //         _id: null,
-        //         userIds: { $push: '$_id' } 
-        //       }
-        //     }
-        //   ])
-        //     .then((userResult) => {
-        //       const userIds = userResult.length > 0 ? userResult[0].userIds : [];
-        //       loginlogs.aggregate([
-        //         {
-        //           $match:{
-        //             user_id:{$in:userIds}
-        //           }
-        //         },{
-        //             $sort:{
-        //                 login_time:-1
-        //             }
-        //         },
-        //         {
-        //             $skip:(limit * page)
-        //         },
-        //         {
-        //             $limit:limit
-        //         }
-        //       ])
-        //         .then((Logs) => {
-        //         //   socket.emit("aggreat", betResult)
-        //         let users = Logs
-        //         socket.emit('userHistory',{users,page})
-        //         })
-        //         .catch((error) => {
-        //           console.error(error);
-        //         });
-        //     })
-        //     .catch((error) => {
-        //       console.error(error);
-        //     });
     })
     
     // status:'success',
