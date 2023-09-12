@@ -8227,14 +8227,14 @@ socket.on('connect', () => {
             $('.pageId').attr('data-pageid','1')
             data.page = 0;
             if(fromDate != ''  && toDate != '' ){
-                filterData.date = {$gte : fromDate,$lte : toDate}
+                filterData.date = {$gte : fromDate,$lte : new Date(new Date(toDate).getTime() + (24 * 60 * 60 * 1000))}
             }else{
     
                 if(fromDate != '' ){
                     filterData.date = {$gte : fromDate}
                 }
                 if(toDate != '' ){
-                    filterData.date = {$lte : toDate}
+                    filterData.date = {$lte : new Date(new Date(toDate).getTime() + (24 * 60 * 60 * 1000))}
                 }
             }
             if(userName != ''){
@@ -8379,12 +8379,18 @@ socket.on('connect', () => {
 
             $(document).on('click', '.cancel', async function(e){
                 e.preventDefault()
-                socket.emit('voidBet', this.id)
+                if(confirm('do you want to cancel this bet')){
+
+                    socket.emit('voidBet', this.id)
+                }
             })
     
             $(document).on('click', '.accept', async function(e){
                 e.preventDefault()
-                socket.emit('acceptBet', this.id)
+                if(confirm('do you want to accept this bet')){
+
+                    socket.emit('acceptBet', this.id)
+                }
             })
 
             
