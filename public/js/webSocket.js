@@ -2294,8 +2294,8 @@ socket.on('connect', () => {
                 fGame = $('#fGame').val()
                 fBets = $('#fBets').val()
                 data.page = 0;
-                let fromDate 
-                let toDate
+                // let fromDate 
+                // let toDate
                 if(fromDate != ''  && toDate != '' ){
                     // filterData.date = {$gte : new Date(fromDate), $lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
                     fromDate = new Date(fromDate)
