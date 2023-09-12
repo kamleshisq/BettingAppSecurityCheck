@@ -2456,7 +2456,7 @@ socket.on('connect', () => {
                         html = `<tr class="empty_table"><td>No record found</td></tr>`
                     }
                     $('.new-body').html(html)
-                    if(!(data.betResult.length < 10)){
+                    if(!(bets.length < 10)){
                         document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
                     }
                 }else{
@@ -2464,7 +2464,7 @@ socket.on('connect', () => {
                         $('#load-more').hide()
                     }      
                     $('.new-body').append(html)   
-                    if((data.betResult.length < 10)){
+                    if((bets.length < 10)){
                         document.getElementById('load-more').innerHTML = ""
                     }
                 }
