@@ -731,42 +731,50 @@ io.on('connection', (socket) => {
         }else if(data.toDate && !data.fromDate){
             data.filterData.date = {$lte:new Date(data.toDate)}
         }
+
+        if(data.filterData.betType === 'All'){
+            delete data.filterData['betType']
+        }
+
+        if(data.filterData.status == 'All'){
+            data.filterData.status = {$ne: "OPEN"}
+        }
         console.log(data.filterData)
 
-        // let bets = await Bet.aggregate([
-        //     {
-        //         $match: {
-        //         //   userId: { $in: userIds },
-        //           status: {$ne:"OPEN"}
-        //         }
-        //     },
-        //     {
-        //         $lookup:{
-        //             from:'users',
-        //             localField:'userName',
-        //             foreignField:'userName',
-        //             as:'userDetails'
-        //         }
-        //     },
-        //     {
-        //         $unwind:'$userDetails'
-        //     },
-        //     {
-        //         $match:{
-        //             'userDetails.isActive':true,
-        //             'userDetails.roleName':{$ne:'Admin'},
-        //             'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
-        //         }
-        //     },
-        //     {
-        //         $sort:{
-        //             date:-1
-        //         }
-        //     },
-        //     { $limit : 10 }
-        // ])
+        let ubDetails = await Bet.aggregate([
+            {
+                $match: data.filterData
+            },
+            {
+                $lookup:{
+                    from:'users',
+                    localField:'userName',
+                    foreignField:'userName',
+                    as:'userDetails'
+                }
+            },
+            {
+                $unwind:'$userDetails'
+            },
+            {
+                $match:{
+                    'userDetails.isActive':true,
+                    'userDetails.roleName':{$ne:'Admin'},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}},
+                }
+            },
+            {
+                $sort:{
+                    date:-1
+                }
+            },
+            {
+                $skip:(page * 10)
+            },
+            { $limit : 10 }
+        ])
 
-
+        socket.emit('userBetDetail',{ubDetails,page})
 
         // User.aggregate([
         //     {
@@ -792,9 +800,9 @@ io.on('connection', (socket) => {
         //         delete data.filterData['betType']
         //       }
               
-        //       if(data.filterData.status == 'All'){
-        //         data.filterData.status = {$nin: ["OPEN", "ALERT"]}
-        //       }
+            //   if(data.filterData.status == 'All'){
+            //     data.filterData.status = {$nin: ["OPEN", "ALERT"]}
+            //   }
         //       console.log(data.filterData)
         //       Bet.aggregate([
         //         {
