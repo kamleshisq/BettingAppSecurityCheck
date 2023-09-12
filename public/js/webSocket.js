@@ -2314,7 +2314,7 @@ socket.on('connect', () => {
                 if(userName != ''){
                     filterData.userName = userName
                 }else{
-                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                    // filterData.userName = LOGINDATA.LOGINUSER.userName
                 }
                 filterData.betType = fGame
                 filterData.status = fBets
