@@ -1361,19 +1361,20 @@ socket.on('connect', () => {
                socket.emit("search", {filterData,page,id, LOGINDATA })
         // }
 
-        $(document).on('click', ".COMMISSIONADMIN", function(e){
-            e.preventDefault()
-            console.log("working")
-            // socket.emit("claimCommissionAdmin", {LOGINDATA})
-        })
+    })
+    
+    $(document).on('click', ".COMMISSIONADMIN", function(e){
+        e.preventDefault()
+        console.log("working")
+        socket.emit("claimCommissionAdmin", {LOGINDATA})
+    })
 
-        socket.on('claimCommissionAdmin', data => {
-            if(data == "error"){
-                alert('commission claimed successfully')
-            }else{
-                alert("Please try again leter")
-            }
-        })
+    socket.on('claimCommissionAdmin', data => {
+        if(data == "error"){
+            alert('commission claimed successfully')
+        }else{
+            alert("Please try again leter")
+        }
     })
 
     $('#load-more').click(function(e){
