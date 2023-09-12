@@ -66,6 +66,7 @@ exports.editSliderinImage =  catchAsync(async(req, res, next) => {
     let slider = await sliderModel.findOne({name:name})
     let imageName = req.body.id.split("//")[0]
     let index = slider.images.findIndex(item => item.name == imageName)
+    console.log(req.body.name, req.body.url)
     try{
         if(index !== -1) {
             console.log(slider.images[index])
