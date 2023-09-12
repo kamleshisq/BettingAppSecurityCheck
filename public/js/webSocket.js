@@ -8013,13 +8013,14 @@ socket.on('connect', () => {
                 count += 10
                 if(data.page == 0){
                     // console.log(html)
-                    $('.table-body').html(html)
                     if(!(data.CommissionData.length < 10)){
                         document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
                     }
-                    // if(data.CommissionData.length === 0){
-                    //     $('.table-body').html("1")
-                    // }
+                    if(data.CommissionData.length === 0){
+                        html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    }
+                    $('.table-body').html(html)
+
                 }else{
                     $('.table-body').append(html)         
                     if((data.CommissionData.length < 10)){
@@ -8173,6 +8174,7 @@ socket.on('connect', () => {
         })
     
         socket.on("ACCSEARCHRES", async(data)=>{
+            $('.wrapper').show()
             let html = ``
             if(data.page === 1){
                 for(let i = 0; i < data.user.length; i++){
@@ -8215,7 +8217,7 @@ socket.on('connect', () => {
                     socket.emit('AlertBet',{filterData,LOGINDATA,page:0})
                 }
         })
-        $('.filter').click(function(){
+        $('#Sport,#market,#fromDate,#toDate').change(function(){
             console.log("working")
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
@@ -8343,6 +8345,9 @@ socket.on('connect', () => {
                 }
                 count += 10;
                 if(data.page == 0){
+                    if(bets.length == 0){
+                        html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    }
                     $('.new-body').html(html)
                 }else{
                     $('.new-body').append(html)         
@@ -8902,10 +8907,13 @@ socket.on('connect', () => {
                 </tr>`
             } 
             if(data.page == 0){
-                $('tbody').html(html)
                 if(!(data.History.length < 10)){
                     document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
                 }
+                if(data.History.length == 0){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                }
+                $('tbody').html(html)
             }else{
                 $('tbody').append(html)
                 if((data.History.length < 10)){
@@ -9858,10 +9866,14 @@ socket.on('connect', () => {
                 }
             } 
             if(data.page == 0){
-                $('tbody').html(html)
                 if(!(data.gameAnalist.length < 10)){
                     document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
                 }
+                if(data.gameAnalist.length == 0){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                }
+                $('tbody').html(html)
+
             }else{
                 $('tbody').append(html)
                 if((data.gameAnalist.length < 10)){
