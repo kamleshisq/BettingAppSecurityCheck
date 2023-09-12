@@ -916,7 +916,7 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
         },
         {
             $sort:{
-                date:-1
+                login_time:-1
             }
         },
         {
