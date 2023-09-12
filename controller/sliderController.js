@@ -1,6 +1,7 @@
 const sliderModel = require('../model/sliderModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require("../utils/AppError");
+const fs = require('fs')
 
 exports.createNewSlider = catchAsync(async(req, res, next) => {
     let allSlider = await sliderModel.find()
@@ -61,8 +62,42 @@ exports.addImage = catchAsync(async(req, res, next) =>{
 
 
 exports.editSliderinImage =  catchAsync(async(req, res, next) => {
-    console.log(req.files)
-    console.log(req.body, 121212121)
+    let name = req.body.id.split("//")[1]
+    let slider = await sliderModel.findOne({name:name})
+    let imageName = req.body.id.split("//")[0]
+    let index = slider.images.findIndex(item => item.name == imageName)
+    if(index !== -1) {
+        if(req.files){
+            if(req.files.file.mimetype.startsWith('image')){
+                const image = req.files.file
+                // console.log(logo)
+                image.mv(`public/sliderImages/${req.body.name}.png`, (err)=>{
+                    if(err) 
+                    return next(new AppError("Something went wrong please try again later", 400))
+                })
+                slider.images[index].name = req.body.name
+                slider.images[index].url = req.body.url
+                await slider.save()
+            }else{
+                return next(new AppError("Please upload an image file", 400))
+            }
+        }else{
+        let originalImage = `public/sliderImages/${slider.images[index].name}.png`
+        let updatedPath = `public/sliderImages/${req.body.name}.png`
+        fs.rename(originalImage, updatedPath, (err) => {
+            if (err) {
+              console.error('Error renaming file:', err);
+            } else {
+              console.log('File renamed successfully');
+            }
+          });
+        slider.images[index].name = req.body.name
+        slider.images[index].url = req.body.url
+        await slider.save()
+       } 
+    }else{
+        socket.emit('editImageSport', "Please try again later")
+    }
 })
 
 
