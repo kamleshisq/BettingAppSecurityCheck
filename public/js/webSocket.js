@@ -2738,6 +2738,7 @@ socket.on('connect', () => {
         
 
         socket.on("ACCSEARCHRES", async(data)=>{
+            $('.wrapper').show()
             let html = ``
             if(data.page === 1){
                 for(let i = 0; i < data.user.length; i++){
@@ -2786,27 +2787,27 @@ socket.on('connect', () => {
         })
  
 
-        $(".searchUser").on('input', function(e){
-            var $input = $(this),
-                val = $input.val();
-                var listItems = document.getElementsByTagName("li");
-                for (var i = 0; i < listItems.length; i++) {
-                    if (listItems[i].textContent === val) {
-                        match = ($(this).val() === val);
-                      break; 
-                    }else{
-                        match = false
-                    }
-                  }
+        // $(".searchUser").on('input', function(e){
+        //     var $input = $(this),
+        //         val = $input.val();
+        //         var listItems = document.getElementsByTagName("li");
+        //         for (var i = 0; i < listItems.length; i++) {
+        //             if (listItems[i].textContent === val) {
+        //                 match = ($(this).val() === val);
+        //               break; 
+        //             }else{
+        //                 match = false
+        //             }
+        //           }
 
-                if(match){
-                    // console.log(match.text())
-                    filterData = {}
-                    filterData.userName = val
-                    $('.pageId').attr('data-pageid','1')
-                    socket.emit('userPLDetail',{filterData,LOGINDATA,page:0})
-                }
-        })
+        //         if(match){
+        //             // console.log(match.text())
+        //             filterData = {}
+        //             filterData.userName = val
+        //             $('.pageId').attr('data-pageid','1')
+        //             socket.emit('userPLDetail',{filterData,LOGINDATA,page:0})
+        //         }
+        // })
         $(document).on("click", ".searchList", function(){
             // console.log("working")
             // console.log(this.textContent)
@@ -2814,6 +2815,7 @@ socket.on('connect', () => {
             filterData = {}
             filterData.userName = this.textContent
             $('.pageId').attr('data-pageid','1')
+            $('.wrapper').hide()
             socket.emit('userPLDetail',{filterData,LOGINDATA,page:0})
            
         })
