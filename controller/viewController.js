@@ -904,24 +904,24 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
                 as:'userDetails'
             }
         },
-        {
-            $unwind:'$userDetails'
-        },
-        {
-            $match:{
-                'userDetails.isActive':true,
-                'userDetails.roleName':{$ne:'Admin'},
-                'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
-            }
-        },
-        {
-            $sort:{
-                login_time:-1
-            }
-        },
-        {
-            $limit:10
-        }
+        // {
+        //     $unwind:'$userDetails'
+        // },
+        // {
+        //     $match:{
+        //         'userDetails.isActive':true,
+        //         'userDetails.roleName':{$ne:'Admin'},
+        //         'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
+        //     }
+        // },
+        // {
+        //     $sort:{
+        //         login_time:-1
+        //     }
+        // },
+        // {
+        //     $limit:10
+        // }
     ])
 
     console.log(Logs)
