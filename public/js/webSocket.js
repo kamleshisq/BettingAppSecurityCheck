@@ -8610,26 +8610,23 @@ socket.on('connect', () => {
                 }
                 count += 20
                 if(data.page == 0){
-                    if(bets.length == 0){
-                        html += `<tr class="empty_table">
-                        <td>No record found</td>
-                      </tr>`
-                    }
                     $('.new-body').html(html)
                 }else{
                     $('.new-body').append(html)         
-                }
-                if(bets.length == 0){
-                    $('.loadMoredive').hide()
                 }
                
             }else{
                 console.log("working")
                 if(data.page == 0){
+                    if(bets.length == 0){
+                        html += `<tr class="empty_table">
+                        <td>No record found</td>
+                      </tr>`
+                    }
                     $('.new-body').html("")
                 }
+                $('.loadMoredive').hide()
 
-                    $('.loadMoredive').html("")
             }
           })
 
@@ -8816,11 +8813,7 @@ socket.on('connect', () => {
             }
             countAcc += 20
             if(data.page == 0){
-                if(userAcc.length == 0){
-                    html += `<tr class="empty_table">
-                    <td>No record found</td>
-                  </tr>`
-                }
+               
                 $('.acount-stat-tbl-body').html(html)
             }else{
                 $('.acount-stat-tbl-body').append(html)         
@@ -8829,8 +8822,14 @@ socket.on('connect', () => {
                 $('.loadMorediveACC').hide()
             }
         }else{
-            console.log("working")
-                $('.loadMorediveACC').html("")
+            if(userAcc.length == 0){
+                html += `<tr class="empty_table">
+                <td>No record found</td>
+              </tr>`
+              $('.acount-stat-tbl-body').html(html)
+
+            }
+            $('.loadMorediveACC').hide()
         }
         })
 
