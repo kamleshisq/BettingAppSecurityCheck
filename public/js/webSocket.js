@@ -1371,9 +1371,9 @@ socket.on('connect', () => {
 
     socket.on('claimCommissionAdmin', data => {
         if(data == "error"){
-            alert('commission claimed successfully')
-        }else{
             alert("Please try again leter")
+        }else{
+            alert('commission claimed successfully')
         }
     })
 
