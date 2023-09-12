@@ -1364,7 +1364,8 @@ socket.on('connect', () => {
 
         $(document).on('click', ".COMMISSIONADMIN", function(e){
             e.preventDefault()
-            socket.emit("claimCommissionAdmin", {LOGINDATA})
+            console.log("working")
+            // socket.emit("claimCommissionAdmin", {LOGINDATA})
         })
 
         socket.on('claimCommissionAdmin', data => {
