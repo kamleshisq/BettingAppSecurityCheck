@@ -78,9 +78,15 @@ exports.editSliderinImage =  catchAsync(async(req, res, next) => {
                         if(err) 
                         return next(new AppError("Something went wrong please try again later", 400))
                     })
-                    slider.images[index].name = req.body.name
-                    slider.images[index].url = req.body.url
-                    await slider.save()
+                    // slider.images[index].name = req.body.name
+                    // slider.images[index].url = req.body.url
+                    // await slider.save()
+                    let updatedslider = await sliderModel.findOneAndUpdate({name:name},{
+                        $set: {
+                          [`images.${index}.name`]: req.body.name,
+                          [`images.${index}.url`]: req.body.url,
+                        },
+                      })
                     res.status(200).json({
                         status:"success"
                     })
@@ -97,9 +103,12 @@ exports.editSliderinImage =  catchAsync(async(req, res, next) => {
                   console.log('File renamed successfully');
                 }
               });
-            slider.images[index].name = req.body.name
-            slider.images[index].url = req.body.url
-            await slider.save()
+              let updatedslider = await sliderModel.findOneAndUpdate({name:name},{
+                $set: {
+                  [`images.${index}.name`]: req.body.name,
+                  [`images.${index}.url`]: req.body.url,
+                },
+              })
             res.status(200).json({
                 status:"success"
             })
