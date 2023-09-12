@@ -8275,11 +8275,6 @@ socket.on('connect', () => {
                     filterData.date = {$lte : toDate}
                 }
             }
-            if(userName != ''){
-                filterData.userName = userName
-            }else{
-                filterData.userName = LOGINDATA.LOGINUSER.userName
-            }
             // if(sport != "All"){
                 filterData.betType = sport
             // }
