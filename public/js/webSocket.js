@@ -2369,7 +2369,7 @@ socket.on('connect', () => {
                 let data = {}
                 let userName = $('.searchUser').val()
                 if(userName == ''){
-                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                    // filterData.userName = LOGINDATA.LOGINUSER.userName
                 }else{
                     filterData.userName = userName
                 }
