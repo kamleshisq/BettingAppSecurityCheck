@@ -2294,14 +2294,21 @@ socket.on('connect', () => {
                 fGame = $('#fGame').val()
                 fBets = $('#fBets').val()
                 data.page = 0;
+                let fromDate 
+                let toDate
                 if(fromDate != ''  && toDate != '' ){
-                    filterData.date = {$gte : new Date(fromDate), $lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                    // filterData.date = {$gte : new Date(fromDate), $lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                    fromDate = new Date(fromDate)
+                    toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+
                 }else{
                     if(fromDate != '' ){
-                        filterData.date = {$gte : new Date(fromDate)}
+                        // filterData.date = {$gte : new Date(fromDate)}
+                        fromDate = new Date(fromDate)
                     }
                     if(toDate != '' ){
-                        filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                        // filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                        toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
                     }
                 }
                 if(userName != ''){
@@ -2313,7 +2320,9 @@ socket.on('connect', () => {
                 filterData.status = fBets
                 data.filterData = filterData
                 data.LOGINDATA = LOGINDATA
-                console.log(data)
+                data.fromDate = fromDate
+                data.toDate = toDate
+                // console.log(data)
                 socket.emit('userBetDetail',data)
     
             })
