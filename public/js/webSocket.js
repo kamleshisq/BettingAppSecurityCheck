@@ -8197,26 +8197,26 @@ socket.on('connect', () => {
         let toDate;
         let fromDate;
         let filterData = {}
-        $(".searchUser").on('input', function(e){
-            var $input = $(this),
-                    val = $input.val();
-                    var listItems = document.getElementsByTagName("li");
-                for (var i = 0; i < listItems.length; i++) {
-                    if (listItems[i].textContent === val) {
-                        match = ($(this).val() === val);
-                      break; 
-                    }else{
-                        match = false
-                    }
-                  }
+        // $(".searchUser").on('input', function(e){
+        //     var $input = $(this),
+        //             val = $input.val();
+        //             var listItems = document.getElementsByTagName("li");
+        //         for (var i = 0; i < listItems.length; i++) {
+        //             if (listItems[i].textContent === val) {
+        //                 match = ($(this).val() === val);
+        //               break; 
+        //             }else{
+        //                 match = false
+        //             }
+        //           }
     
-                if(match){
-                    filterData = {}
-                    filterData.userName = val
-                    $('.pageId').attr('data-pageid','1')
-                    socket.emit('AlertBet',{filterData,LOGINDATA,page:0})
-                }
-        })
+        //         if(match){
+        //             filterData = {}
+        //             filterData.userName = val
+        //             $('.pageId').attr('data-pageid','1')
+        //             socket.emit('AlertBet',{filterData,LOGINDATA,page:0})
+        //         }
+        // })
         $('#Sport,#market,#fromDate,#toDate').change(function(){
             console.log("working")
             let userName = $('.searchUser').val()
@@ -8256,14 +8256,42 @@ socket.on('connect', () => {
         })
     
         $(document).on("click", ".searchList", function(){
-            // console.log("working")
-            // console.log(this.textContent)
+            
             document.getElementById("searchUser").value = this.textContent
-            filterData = {}
+            fromDate = $('#fromDate').val()
+            toDate = $('#toDate').val()
+            sport = $('#Sport').val()
+            market = $('#market').val()
+            $('.pageId').attr('data-pageid','1')
+            data.page = 0;
+            if(fromDate != ''  && toDate != '' ){
+                filterData.date = {$gte : fromDate,$lte : toDate}
+            }else{
+    
+                if(fromDate != '' ){
+                    filterData.date = {$gte : fromDate}
+                }
+                if(toDate != '' ){
+                    filterData.date = {$lte : toDate}
+                }
+            }
+            if(userName != ''){
+                filterData.userName = userName
+            }else{
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }
+            // if(sport != "All"){
+                filterData.betType = sport
+            // }
+            // if(market != "All"){
+                filterData.marketName = market
+            // }
+            data.filterData = filterData
+            data.LOGINDATA = LOGINDATA
             filterData.userName = this.textContent
             $('.pageId').attr('data-pageid','1')
             $('.wrapper').hide()
-            socket.emit('AlertBet',{filterData,LOGINDATA,page:0})
+            socket.emit('AlertBet',data)
             
         })
     
