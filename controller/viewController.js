@@ -895,7 +895,7 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
     // const currentUser = global._User
     const currentUser = req.currentUser
    
-    let Logs = await loginLogs([
+    let Logs = await loginLogs.aggregate([
         {
             $lookup:{
                 from:'users',
@@ -904,27 +904,27 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
                 as:'userDetails'
             }
         },
-        // {
-        //     $unwind:'$userDetails'
-        // },
-        // {
-        //     $match:{
-        //         'userDetails.isActive':true,
-        //         'userDetails.roleName':{$ne:'Admin'},
-        //         'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
-        //     }
-        // },
-        // {
-        //     $sort:{
-        //         login_time:-1
-        //     }
-        // },
-        // {
-        //     $limit:10
-        // }
+        {
+            $unwind:'$userDetails'
+        },
+        {
+            $match:{
+                'userDetails.isActive':true,
+                'userDetails.roleName':{$ne:'Admin'},
+                'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
+            }
+        },
+        {
+            $sort:{
+                login_time:-1
+            }
+        },
+        {
+            $limit:10
+        }
     ])
 
-    console.log(Logs)
+    // console.log(Logs)
 
     res.status(200).render('./userHistory/userhistoryreport',{
         title:"UserHistory",
