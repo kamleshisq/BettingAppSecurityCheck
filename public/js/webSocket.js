@@ -8564,7 +8564,7 @@ socket.on('connect', () => {
             socket.emit("BETSFORUSERAdminSide", {page, id, filterData})
           }
 
-          let count = 21
+          let count = 11
           socket.on("BETSFORUSERAdminSide", async(data) => {
             // console.log(data)
             if(data.bets.length > 0){
@@ -8609,7 +8609,7 @@ socket.on('connect', () => {
                     </tr>`
                         
                 }
-                count += 20
+                count += 10
                 if(data.page == 0){
                     $('.new-body').html(html)
                 }else{
@@ -8768,7 +8768,7 @@ socket.on('connect', () => {
           }
 
 
-        let countAcc = 21
+        let countAcc = 11
         socket.on("ACCSTATEMENTADMINSIDE", async(data) => {
             console.log(data)
             let userAcc = data.userAcc;
@@ -8813,7 +8813,7 @@ socket.on('connect', () => {
                     <td>${userAcc[i].description}</td>
                     <td>-</td>`
             }
-            countAcc += 20
+            countAcc += 10
             if(data.page == 0){
                
                 $('.acount-stat-tbl-body').html(html)
