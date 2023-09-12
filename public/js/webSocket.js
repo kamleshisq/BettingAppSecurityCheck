@@ -2983,6 +2983,36 @@ socket.on('connect', () => {
             // console.log(data)
             socket.emit('userHistory',data)
         })
+        $('#fromDate,#toDate').change(function(){
+                let page = 0
+                $('.pageId').attr('data-pageid',1)
+                let data = {}
+                let userName = $('.searchUser').val()
+                fromDate = $('#fromDate').val()
+                toDate = $('#toDate').val()
+                if(userName == ''){
+                    // filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                }
+                if(fromDate != ''  && toDate != '' ){
+                    filterData.fromDate = fromDate
+                    filterData.toDate = toDate
+                }else{
+    
+                    if(fromDate != '' ){
+                        filterData.fromDate = fromDate
+                    }
+                    if(toDate != '' ){
+                        filterData.toDate = toDate
+                    }
+                }
+                data.filterData = filterData;
+                data.page = page
+                data.LOGINDATA = LOGINDATA
+                // console.log(data)
+                socket.emit('userHistory',data)
+        })
 
         // $(window).scroll(function() {
         //     if($(document).height()-$(window).scrollTop() == window.innerHeight){
