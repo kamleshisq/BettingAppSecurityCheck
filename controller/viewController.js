@@ -394,6 +394,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
     let userDetails = await User.findById(req.query.id)
     // if(userDetails.roleName)
     // console.log(userDetails)
+    let limit = 10
     let bets
     let betsDetails
     if(userDetails.roleName != "user"){
@@ -420,7 +421,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
             }
         },
         {
-            $limit: 20
+            $limit: limit
         }
             ])
 
@@ -451,7 +452,7 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
                 ])
         
     }else{
-        bets = await betModel.find({userId:req.query.id}).sort({date:-1}).limit(20)
+        bets = await betModel.find({userId:req.query.id}).sort({date:-1}).limit(limit)
         betsDetails = await betModel.aggregate([
             {
                 $match:{
@@ -468,8 +469,8 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
         ])
     }
 
-    let ACCount = await accountStatement.find({user_id:req.query.id}).sort({date: -1}).limit(20)
-    let historty = await loginLogs.find({userName:userDetails.userName}).sort({login_time:-1}).limit(20)
+    let ACCount = await accountStatement.find({user_id:req.query.id}).sort({date: -1}).limit(limit)
+    let historty = await loginLogs.find({userName:userDetails.userName}).sort({login_time:-1}).limit(limit)
     // console.log(bets)
     // console.log(betsDetails)
     res.status(200).render("./userDetailsAdmin/main",{
