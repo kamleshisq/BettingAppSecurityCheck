@@ -8217,7 +8217,6 @@ socket.on('connect', () => {
                     <td>${bets[i].Stake}</td>
                     <td>${bets[i].transactionId}</td>
                     <td>${bets[i].status}</td>
-                    <td>${bets[i].returns}</td>
                     <td><button class="voidBet" id="${bets[i]._id}">Cancel Bet</button><button class="alertBet" id="${bets[i]._id}"> Alert Bet</button></td>
                     </tr>`
                 }
