@@ -696,7 +696,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on('userBetDetail',async(data)=>{
-        console.log(data.filterData)
         let limit = 10;
         let page = data.page;
         // console.log(data.filterData)
@@ -732,6 +731,7 @@ io.on('connection', (socket) => {
         }else if(data.toDate && !data.fromDate){
             data.filterData.date = {$lte:new Date(data.toDate)}
         }
+        console.log(data.filterData)
 
 
 
