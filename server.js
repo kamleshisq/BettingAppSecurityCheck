@@ -731,7 +731,7 @@ io.on('connection', (socket) => {
         }else if(data.toDate && !data.fromDate){
             data.filterData.date = {$lte:new Date(data.toDate)}
         }
-        console.log(data.filterData)
+        // console.log(data.filterData)
 
 
 
@@ -760,9 +760,9 @@ io.on('connection', (socket) => {
               }
               
               if(data.filterData.status == 'All'){
-                data.filterData.status = {"$ne":"OPEN"}
+                data.filterData.status = {$nin: ["OPEN", "ALERT"]}
               }
-
+              console.log(data.filterData)
               Bet.aggregate([
                 {
                   $match: data.filterData
