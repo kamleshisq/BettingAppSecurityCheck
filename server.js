@@ -197,6 +197,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('userHistory',async(data)=>{
+        console.log(data.filterData)
         let page = data.page;
         let limit = 10;
         User.aggregate([

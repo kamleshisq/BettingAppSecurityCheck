@@ -2919,33 +2919,33 @@ socket.on('connect', () => {
                 }
         })
 
-        $('.filter').click(function(){
-            let userName = $('.searchUser').val()
-            fromDate = $('#fromDate').val()
-            toDate = $('#toDate').val()
-            $('.pageId').attr('data-pageid','1')
-            data.page = 0;
-            if(fromDate != ''  && toDate != '' ){
-                filterData.login_time = {$gte : fromDate,$lte : toDate}
-            }else{
+        // $('.filter').click(function(){
+        //     let userName = $('.searchUser').val()
+        //     fromDate = $('#fromDate').val()
+        //     toDate = $('#toDate').val()
+        //     $('.pageId').attr('data-pageid','1')
+        //     data.page = 0;
+        //     if(fromDate != ''  && toDate != '' ){
+        //         filterData.login_time = {$gte : fromDate,$lte : toDate}
+        //     }else{
 
-                if(fromDate != '' ){
-                    filterData.login_time = {$gte : fromDate}
-                }
-                if(toDate != '' ){
-                    filterData.login_time = {$lte : toDate}
-                }
-            }
-            if(userName != ''){
-                filterData.userName = userName
-            }else{
-                filterData.userName = LOGINDATA.LOGINUSER.userName
-            }
-            data.filterData = filterData
-            data.LOGINDATA = LOGINDATA
-            // console.log(data)
-            socket.emit('userHistory',data)
-        })
+        //         if(fromDate != '' ){
+        //             filterData.login_time = {$gte : fromDate}
+        //         }
+        //         if(toDate != '' ){
+        //             filterData.login_time = {$lte : toDate}
+        //         }
+        //     }
+        //     if(userName != ''){
+        //         filterData.userName = userName
+        //     }else{
+        //         filterData.userName = LOGINDATA.LOGINUSER.userName
+        //     }
+        //     data.filterData = filterData
+        //     data.LOGINDATA = LOGINDATA
+        //     // console.log(data)
+        //     socket.emit('userHistory',data)
+        // })
 
         $(document).on("click", ".searchList", function(){
             // console.log("working")
