@@ -171,7 +171,12 @@
                               <td><%=sliders[i].images[j].name%></td>
                               <td><%=sliders[i].images[j].url%></td>
                               <td><img src="../sliderImages/<%=sliders[i].images[j].name%>.png" alt="img" class="form__user-photo"></td>
-                              <td><div class="btn-group"><button class="btn delete dleteImageSport" id="<%=sliders[i].images[j].name%>//<%=sliders[i].name%>">Delete</button></div></td>
+                              <td>
+                                <div class="btn-group">
+                                  <button class="btn Edit editImageSport" id="<%=sliders[i].images[j].name%>//<%=sliders[i].name%>">Edit</button>
+                                  <button class="btn delete dleteImageSport" id="<%=sliders[i].images[j].name%>//<%=sliders[i].name%>">Delete</button>
+                                </div>
+                              </td>
                             </tr>
                             <%}%>
                           </tbody>
