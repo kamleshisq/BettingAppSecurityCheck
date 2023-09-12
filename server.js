@@ -679,20 +679,39 @@ io.on('connection', (socket) => {
         // console.log(role_type, 123)
         
         var regexp = new RegExp(data.x);
-        let user
-        if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
-                user = await User.find({userName:regexp}).skip(page * limit).limit(limit)
-        }else{
-                // let role_Type = {
-                //     $in:role_type
-                // }
-                // let xfiletr  = {}
-                // xfiletr.role_Type = role_Type
-                // xfiletr.userName = regexp
-                // console.log(data.filterData)
-                // console.log(xfiletr)
-                user = await User.find({ role_type:{$in: role_type}, userName: regexp, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}} }).skip(page * limit).limit(limit)
-        }
+        let user = await User.aggregate([
+            {
+                $match:{
+                    userName:regexp,
+                    parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}}
+                }
+            },
+            {
+                $sort:{
+                    userName:-1,
+                    _id:-1
+                }
+            },
+            {
+                $skip:(page*limit)
+            },{
+                $limit:limit
+            }
+        ])
+
+        // if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
+        //         user = await User.find({userName:regexp}).skip(page * limit).limit(limit)
+        // }else{
+        //         // let role_Type = {
+        //         //     $in:role_type
+        //         // }
+        //         // let xfiletr  = {}
+        //         // xfiletr.role_Type = role_Type
+        //         // xfiletr.userName = regexp
+        //         // console.log(data.filterData)
+        //         // console.log(xfiletr)
+        //         user = await User.find({ role_type:{$in: role_type}, userName: regexp, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}} }).skip(page * limit).limit(limit)
+        // }
         page++
         if(user.length === 0 ){
             page = null
