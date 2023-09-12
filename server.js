@@ -679,6 +679,7 @@ io.on('connection', (socket) => {
         // console.log(role_type, 123)
         
         var regexp = new RegExp(data.x);
+
         let user = await User.aggregate([
             {
                 $match:{
@@ -1542,6 +1543,19 @@ io.on('connection', (socket) => {
             socket.emit('dleteImageSport', "image deleted")
         }else{
             socket.emit('dleteImageSport', "Please try again later")
+        }
+    })
+
+
+    socket.on('editImageSport', async(data) => {
+        let name = data.split("//")[1]
+        let slider = await sliderModel.findOne({name:name})
+        let imageName = data.split("//")[0]
+        let index = slider.images.findIndex(item => item.name == imageName)
+        if(index !== -1) {
+            console.log(index)
+        }else{
+            socket.emit('editImageSport', "Please try again later")
         }
     })
 
