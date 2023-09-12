@@ -894,64 +894,88 @@ exports.useracount = catchAsync(async(req, res, next) => {
 exports.userhistoryreport = catchAsync(async(req, res, next) => {
     // const currentUser = global._User
     const currentUser = req.currentUser
-    // const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
-    // let role_type =[]
-    // for(let i = 0; i < roles.length; i++){
-    //     role_type.push(roles[i].role_type)
-    // }
-    // // console.log(role_type)
-    // let Logs
-    // if(currentUser.role_type == 1){
-    //     Logs = await loginLogs.find().limit(10)
-    // }else{
-    //     Logs = await loginLogs.find({ parentUsers:{$elemMatch:{$eq:req.currentUser.id}}}).limit(10)
-    // }
-    // console.log(Logs)
-    User.aggregate([
+   
+    let Logs = await loginLogs([
         {
-          $match: {
-            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
-          }
+            $lookup:{
+                from:'users',
+                localField:'userName',
+                foreignField:'userName',
+                as:'userDetails'
+            }
         },
         {
-          $group: {
-            _id: null,
-            userIds: { $push: '$_id' } 
-          }
-        }
-      ])
-        .then((userResult) => {
-          const userIds = userResult.length > 0 ? userResult[0].userIds : [];
-        loginLogs.aggregate([
-            {
-              $match:{
-                user_id:{$in:userIds}
-              }
-            },{
-                $sort:{
-                    login_time:-1
-                }
-            },
-            {
-                $limit:10
+            $unwind:'$userDetails'
+        },
+        {
+            $match:{
+                'userDetails.isActive':true,
+                'userDetails.roleName':{$ne:'Admin'},
+                'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
             }
-          ])
-            .then((Logs) => {
-            //   socket.emit("aggreat", betResult)
-            res.status(200).render('./userHistory/userhistoryreport',{
-                title:"UserHistory",
-                me:currentUser,
-                Logs,
-                currentUser
-            })
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+        },
+        {
+            $sort:{
+                date:-1
+            }
+        },
+        {
+            $limit:10
+        }
+    ])
+
+    res.status(200).render('./userHistory/userhistoryreport',{
+        title:"UserHistory",
+        me:currentUser,
+        Logs,
+        currentUser
+    })
+
+    // User.aggregate([
+    //     {
+    //       $match: {
+    //         parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
+    //       }
+    //     },
+    //     {
+    //       $group: {
+    //         _id: null,
+    //         userIds: { $push: '$_id' } 
+    //       }
+    //     }
+    //   ])
+    //     .then((userResult) => {
+    //       const userIds = userResult.length > 0 ? userResult[0].userIds : [];
+    //     loginLogs.aggregate([
+    //         {
+    //           $match:{
+    //             user_id:{$in:userIds}
+    //           }
+    //         },{
+    //             $sort:{
+    //                 login_time:-1
+    //             }
+    //         },
+    //         {
+    //             $limit:10
+    //         }
+    //       ])
+    //         .then((Logs) => {
+    //         //   socket.emit("aggreat", betResult)
+    //         res.status(200).render('./userHistory/userhistoryreport',{
+    //             title:"UserHistory",
+    //             me:currentUser,
+    //             Logs,
+    //             currentUser
+    //         })
+    //         })
+    //         .catch((error) => {
+    //           console.error(error);
+    //         });
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
     })
 
 exports.plreport = catchAsync(async(req, res, next) => {
