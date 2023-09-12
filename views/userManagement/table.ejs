@@ -10,7 +10,7 @@
             fill="#212121"></path>
         </svg> User Management</h3>
       <div class="table-heading-btn">
-        <button class="btn-filter"><i class="fa-solid fa-money-check-dollar"></i> &nbsp; Claim Commission (<%=currentUser.commission%>)</button>
+        <button class="btn-filter COMMISSIONADMIN"><i class="fa-solid fa-money-check-dollar"></i> &nbsp; Claim Commission (<%=currentUser.commission%>)</button>
         <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
         <%if(currentUser.role.authorization.includes('createDeleteUser')){%>
               <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i

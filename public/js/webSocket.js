@@ -1,3 +1,4 @@
+const sourceCode = require("eslint/lib/source-code");
 
 
 
@@ -1360,6 +1361,19 @@ socket.on('connect', () => {
                let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
                socket.emit("search", {filterData,page,id, LOGINDATA })
         // }
+
+        $(document).on('click', ".COMMISSIONADMIN", function(e){
+            e.preventDefault()
+            socket.emit("claimCommissionAdmin", {LOGINDATA})
+        })
+
+        socket.on('claimCommissionAdmin', data => {
+            if(data == "error"){
+                alert('commission claimed successfully')
+            }else{
+                alert("Please try again leter")
+            }
+        })
     })
 
     $('#load-more').click(function(e){
