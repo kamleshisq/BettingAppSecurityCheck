@@ -4659,7 +4659,25 @@ socket.on('connect', () => {
         $(document).on('click', ".editImageSport", function(e){
             e.preventDefault()
             let id = $(this).attr('id')
+            let modleName = "#EditSliderInImage"
+            let form = $(modleName).find('.editImageSportForm')
+            form.attr('id', id);
             socket.emit("editImageSport", id)
+        })
+
+        socket.on('editImageSport', data => {
+            if(data == "Please try again later"){
+                alert(data)
+            }else{
+                let modleName = "#EditSliderInImage"
+                let form = $(modleName).find('.editImageSportForm')
+                form.find('input[name = "name"]').attr('value',data.name)
+                form.find('input[name = "url"]').attr('value',data.url)
+                document.getElementById('banner12345').innerHTML = `<img src="../sliderImages/${data.name}.png" alt="img" class="form__user-photo">`
+                if(PMD.status){
+                    form.find('input[name = "check"]').attr("checked", "checked");
+                }
+            }
         })
 
         socket.on('UpdateSport', async(data) => {
