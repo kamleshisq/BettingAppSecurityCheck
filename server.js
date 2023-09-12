@@ -696,7 +696,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('userBetDetail',async(data)=>{
-        console.log(data)
+        console.log(data.filterData)
         let limit = 10;
         let page = data.page;
         // console.log(data.filterData)
