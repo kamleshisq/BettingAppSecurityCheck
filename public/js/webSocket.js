@@ -2340,22 +2340,29 @@ socket.on('connect', () => {
                 fBets = $('#fBets').val()
                 data.page = 0;
                 if(fromDate != ''  && toDate != '' ){
-                    filterData.date = {$gte : fromDate,$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                    // filterData.date = {$gte : new Date(fromDate), $lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                    fromDate = new Date(fromDate)
+                    toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+
                 }else{
                     if(fromDate != '' ){
-                        filterData.date = {$gte : fromDate}
+                        // filterData.date = {$gte : new Date(fromDate)}
+                        fromDate = new Date(fromDate)
                     }
                     if(toDate != '' ){
-                        filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                        // filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                        toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
                     }
                 }
                 filterData.betType = fGame
                 filterData.status = fBets
                 data.filterData = filterData
                 data.LOGINDATA = LOGINDATA
+                data.fromDate = fromDate
+                data.toDate = toDate
 
                 $('.wrapper').hide()
-                socket.emit('userBetDetail',{filterData,LOGINDATA,page:0})
+                socket.emit('userBetDetail',data)
                 
             })
 
