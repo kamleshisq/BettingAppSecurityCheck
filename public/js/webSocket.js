@@ -9822,8 +9822,8 @@ socket.on('connect', () => {
                     }
                     html += `<tr>
                     <td>Total</td>
-                    <td>${sumOfTeamA}</td>
-                    <td>${sumOfTeamB}</td>
+                    <td>${sumOfTeamA.toFixed(2)}</td>
+                    <td>${sumOfTeamB.toFixed(2)}</td>
                 </tr>`
                     document.getElementById('match_odd').innerHTML = html
                 }else{
