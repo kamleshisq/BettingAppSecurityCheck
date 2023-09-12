@@ -726,11 +726,11 @@ io.on('connection', (socket) => {
         // }
 
         if(data.fromDate && data.toDate){
-            filter.date = {$gte:new Date(data.fromDate),$lte:new Date(data.toDate)}
+            data.filterData.date = {$gte:new Date(data.fromDate),$lte:new Date(data.toDate)}
         }else if(data.fromDate && !data.toDate){
-            filter.date = {$gte:new Date(data.fromDate)}
+            data.filterData.date = {$gte:new Date(data.fromDate)}
         }else if(data.toDate && !data.fromDate){
-            filter.date = {$lte:new Date(data.toDate)}
+            data.filterData.date = {$lte:new Date(data.toDate)}
         }
 
 
