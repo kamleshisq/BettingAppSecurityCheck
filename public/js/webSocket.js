@@ -3698,6 +3698,7 @@ socket.on('connect', () => {
 
         socket.on("ACCSEARCHRES", async(data)=>{
             let html = ``
+            $('.wrapper').show()
             if(data.page === 1){
                 for(let i = 0; i < data.user.length; i++){
                     html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
@@ -3719,36 +3720,47 @@ socket.on('connect', () => {
         let toDate;
         let fromDate;
         let filterData = {}
-        $(".searchUser").on('input', function(e){
-            var $input = $(this),
-                    val = $input.val();
-                    var listItems = document.getElementsByTagName("li");
-                for (var i = 0; i < listItems.length; i++) {
-                    if (listItems[i].textContent === val) {
-                        match = ($(this).val() === val);
-                      break; 
-                    }else{
-                        match = false
-                    }
-                  }
+        // $(".searchUser").on('input', function(e){
+        //     var $input = $(this),
+        //             val = $input.val();
+        //             var listItems = document.getElementsByTagName("li");
+        //         for (var i = 0; i < listItems.length; i++) {
+        //             if (listItems[i].textContent === val) {
+        //                 match = ($(this).val() === val);
+        //               break; 
+        //             }else{
+        //                 match = false
+        //             }
+        //           }
 
-                if(match){
-                    filterData = {}
-                    filterData.userName = val
-                    $('.pageId').attr('data-pageid','1')
-                    socket.emit('voidBET',{filterData,LOGINDATA,page:0})
-                }
-        })
+        //         if(match){
+        //             filterData = {}
+        //             filterData.userName = val
+        //             $('.pageId').attr('data-pageid','1')
+        //             socket.emit('voidBET',{filterData,LOGINDATA,page:0})
+        //         }
+        // })
 
         $(document).on("click", ".searchList", function(){
             // console.log("working")
             // console.log(this.textContent)
+            filterData.Sport = $("#Sport").val()
+            filterData.market = $("#market").val()
+            filterData.from_date = $("#Fdate").val()
+            filterData.to_date = $('#Tdate').val()
+            if($('#Tdate').val() != ''){
+                filterData.to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            }
             document.getElementById("searchUser").value = this.textContent
-            filterData = {}
             filterData.userName = this.textContent
+            let page = 0
+            $('.rowId').attr('data-rowid',page + 1)
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
             $('.pageId').attr('data-pageid','1')
             $('.wrapper').hide()
-            socket.emit('voidBET',{filterData,LOGINDATA,page:0})
+            socket.emit('voidBET',data)
             
         })
         
@@ -3915,10 +3927,14 @@ socket.on('connect', () => {
                     </tr>`
                 }
                 if(data.page == 0){
-                    $('.new-body').html(html)
                     if(!(data.betResult.length < 10)){
                         document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
                     }
+                    if(data.betResult.length == 0){
+                        html = `<tr class="empty_table"><td>No record found</td></tr>`
+                    }
+                    $('.new-body').html(html)
+
                 }else{
                     $('.new-body').append(html)         
                     if((data.betResult.length < 10)){
@@ -8242,14 +8258,14 @@ socket.on('connect', () => {
             $('.pageId').attr('data-pageid','1')
             data.page = 0;
             if(fromDate != ''  && toDate != '' ){
-                filterData.date = {$gte : fromDate,$lte : new Date(new Date(toDate).getTime() + (24 * 60 * 60 * 1000))}
+                filterData.date = {$gte : fromDate,$lte : new Date(new Date(toDate).getTime() + ((24 * 60 * 60 * 1000)-1))}
             }else{
     
                 if(fromDate != '' ){
                     filterData.date = {$gte : fromDate}
                 }
                 if(toDate != '' ){
-                    filterData.date = {$lte : new Date(new Date(toDate).getTime() + (24 * 60 * 60 * 1000))}
+                    filterData.date = {$lte : new Date(new Date(toDate).getTime() + ((24 * 60 * 60 * 1000)-1))}
                 }
             }
             if(userName != ''){
@@ -8280,14 +8296,14 @@ socket.on('connect', () => {
             $('.pageId').attr('data-pageid','1')
             data.page = 0;
             if(fromDate != ''  && toDate != '' ){
-                filterData.date = {$gte : fromDate,$lte : toDate}
+                filterData.date = {$gte : fromDate,$lte : new Date(new Date(toDate).getTime() + ((24 * 60 * 60 * 1000)-1))}
             }else{
     
                 if(fromDate != '' ){
                     filterData.date = {$gte : fromDate}
                 }
                 if(toDate != '' ){
-                    filterData.date = {$lte : toDate}
+                    filterData.date = {$lte : new Date(new Date(toDate).getTime() + ((24 * 60 * 60 * 1000)-1))}
                 }
             }
             // if(sport != "All"){
