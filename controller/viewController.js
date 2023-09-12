@@ -924,6 +924,8 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
         }
     ])
 
+    console.log(Logs)
+
     res.status(200).render('./userHistory/userhistoryreport',{
         title:"UserHistory",
         me:currentUser,
