@@ -99,6 +99,7 @@ exports.editSliderinImage =  catchAsync(async(req, res, next) => {
               });
             slider.images[index].name = req.body.name
             slider.images[index].url = req.body.url
+            console.log(slider)
             await slider.save()
             res.status(200).json({
                 status:"success"
