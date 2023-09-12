@@ -78,6 +78,9 @@ exports.editSliderinImage =  catchAsync(async(req, res, next) => {
                 slider.images[index].name = req.body.name
                 slider.images[index].url = req.body.url
                 await slider.save()
+                res.status(200).json({
+                    status:"success"
+                })
             }else{
                 return next(new AppError("Please upload an image file", 400))
             }
@@ -94,9 +97,12 @@ exports.editSliderinImage =  catchAsync(async(req, res, next) => {
         slider.images[index].name = req.body.name
         slider.images[index].url = req.body.url
         await slider.save()
+        res.status(200).json({
+            status:"success"
+        })
        } 
     }else{
-        socket.emit('editImageSport', "Please try again later")
+        return next(new AppError('please tyr again leter', 404))
     }
 })
 
