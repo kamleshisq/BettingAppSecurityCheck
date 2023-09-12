@@ -640,7 +640,7 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
     //     role_type.push(roles[i].role_type)
     // }
     // const bets = await betModel.find({role_type:{$in:role_type}, status:{$ne:"OPEN"}}).limit(10)
-    let bets = await betLimitModel.aggregate([
+    let bets = await betModel.aggregate([
         {
             $match: {
             //   userId: { $in: userIds },
@@ -672,6 +672,7 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
         },
         { $limit : 10 }
     ])
+    console.log(bets)
 
     res.status(200).render("./reports/reports",{
         title:"Reports",
