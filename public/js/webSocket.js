@@ -2962,60 +2962,123 @@ socket.on('connect', () => {
             $('.pageId').attr('data-pageid','1')
             data.page = 0;
             if(fromDate != ''  && toDate != '' ){
-                filterData.login_time = {$gte : fromDate,$lte : toDate}
+                filterData.fromDate = fromDate
+                filterData.toDate = toDate
             }else{
 
                 if(fromDate != '' ){
-                    filterData.login_time = {$gte : fromDate}
+                    filterData.fromDate = fromDate
                 }
                 if(toDate != '' ){
-                    filterData.login_time = {$lte : toDate}
+                    filterData.toDate = toDate
                 }
             }
             if(userName != ''){
                 filterData.userName = userName
             }else{
-                filterData.userName = LOGINDATA.LOGINUSER.userName
+                // filterData.userName = LOGINDATA.LOGINUSER.userName
             }
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             // console.log(data)
             socket.emit('userHistory',data)
         })
-
-        $(window).scroll(function() {
-            if($(document).height()-$(window).scrollTop() == window.innerHeight){
-                let page = parseInt($('.pageId').attr('data-pageid'));
-                $('.pageId').attr('data-pageid',page + 1)
+        $('#fromDate,#toDate').change(function(){
+                let page = 0
+                $('.pageId').attr('data-pageid',1)
                 let data = {}
                 let userName = $('.searchUser').val()
+                fromDate = $('#fromDate').val()
+                toDate = $('#toDate').val()
                 if(userName == ''){
-                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                    // filterData.userName = LOGINDATA.LOGINUSER.userName
                 }else{
                     filterData.userName = userName
                 }
-                if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
-                    filterData.login_time = {$gte : fromDate,$lte : toDate}
+                if(fromDate != ''  && toDate != '' ){
+                    filterData.fromDate = fromDate
+                    filterData.toDate = toDate
                 }else{
-
-                    if(fromDate != undefined && fromDate != '' ){
-                        filterData.login_time = {$gte : fromDate}
+    
+                    if(fromDate != '' ){
+                        filterData.fromDate = fromDate
                     }
-                    if(toDate != undefined && toDate != '' ){
-                        filterData.login_time = {$lte : toDate}
+                    if(toDate != '' ){
+                        filterData.toDate = toDate
                     }
                 }
-
                 data.filterData = filterData;
                 data.page = page
                 data.LOGINDATA = LOGINDATA
                 // console.log(data)
                 socket.emit('userHistory',data)
+        })
+
+        // $(window).scroll(function() {
+        //     if($(document).height()-$(window).scrollTop() == window.innerHeight){
+        //         let page = parseInt($('.pageId').attr('data-pageid'));
+        //         $('.pageId').attr('data-pageid',page + 1)
+        //         let data = {}
+        //         let userName = $('.searchUser').val()
+        //         if(userName == ''){
+        //             filterData.userName = LOGINDATA.LOGINUSER.userName
+        //         }else{
+        //             filterData.userName = userName
+        //         }
+        //         if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
+        //             filterData.login_time = {$gte : fromDate,$lte : toDate}
+        //         }else{
+
+        //             if(fromDate != undefined && fromDate != '' ){
+        //                 filterData.login_time = {$gte : fromDate}
+        //             }
+        //             if(toDate != undefined && toDate != '' ){
+        //                 filterData.login_time = {$lte : toDate}
+        //             }
+        //         }
+
+        //         data.filterData = filterData;
+        //         data.page = page
+        //         data.LOGINDATA = LOGINDATA
+        //         // console.log(data)
+        //         socket.emit('userHistory',data)
 
 
 
-            }
-         }); 
+        //     }
+        //  }); 
+
+
+         $(document).on('click', ".load-more", function(e){
+            let page = parseInt($('.pageId').attr('data-pageid'));
+                $('.pageId').attr('data-pageid',page + 1)
+                let data = {}
+                let userName = $('.searchUser').val()
+                fromDate = $('#fromDate').val()
+                toDate = $('#toDate').val()
+                if(userName == ''){
+                    // filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                }
+                if(fromDate != ''  && toDate != '' ){
+                    filterData.fromDate = fromDate
+                    filterData.toDate = toDate
+                }else{
+    
+                    if(fromDate != '' ){
+                        filterData.fromDate = fromDate
+                    }
+                    if(toDate != '' ){
+                        filterData.toDate = toDate
+                    }
+                }
+                data.filterData = filterData;
+                data.page = page
+                data.LOGINDATA = LOGINDATA
+                // console.log(data)
+                socket.emit('userHistory',data)
+         })
         
         let count = 11
         socket.on('userHistory',(data)=>{
@@ -3045,9 +3108,22 @@ socket.on('connect', () => {
             }
             count += 10
             if(page == 0){
+                if(Logs.length == 0){
+                    $('#load-more').hide()
+                    html = `<tr class="empty_table"><td>No record found</td></tr>`
+                }
                 $('.new-body').html(html)
+                if(!(Logs.length < 10)){
+                    document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
+                }
             }else{
+                if(Logs.length == 0){
+                    $('#load-more').hide()
+                }
                 $('.new-body').append(html)
+                if((Logs.length < 10)){
+                    document.getElementById('load-more').innerHTML = ""
+                }
             }
 
 

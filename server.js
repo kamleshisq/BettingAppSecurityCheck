@@ -200,50 +200,54 @@ io.on('connection', (socket) => {
         console.log(data.filterData)
         let page = data.page;
         let limit = 10;
-        User.aggregate([
+        let filter = {}
+        if(data.filterData.userName){
+            filter.userName = data.filterData.userName
+        }
+        if(data.filterData.fromDate && data.filterData.toDate){
+            filter.login_time = {$gte:new Date(data.filterData.fromDate),$lte:new Date(data.filterData.toDate)}
+        }else if(data.filterData.fromDate && !data.filterData.toDate){
+            filter.login_time = {$gte:new Date(data.filterData.fromDate)}
+        }else if(data.filterData.toDate && !data.filterData.fromDate){
+            filter.login_time = {$lte:new Date(data.filterData.toDate)}
+        }
+        console.log(filter)
+        let users = await loginlogs.aggregate([
             {
-              $match: {
-                parentUsers: { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
-              }
+                $match:filter
             },
             {
-              $group: {
-                _id: null,
-                userIds: { $push: '$_id' } 
-              }
-            }
-          ])
-            .then((userResult) => {
-              const userIds = userResult.length > 0 ? userResult[0].userIds : [];
-              loginlogs.aggregate([
-                {
-                  $match:{
-                    user_id:{$in:userIds}
-                  }
-                },{
-                    $sort:{
-                        login_time:-1
-                    }
-                },
-                {
-                    $skip:(limit * page)
-                },
-                {
-                    $limit:limit
+                $lookup:{
+                    from:'users',
+                    localField:'userName',
+                    foreignField:'userName',
+                    as:'userDetails'
                 }
-              ])
-                .then((Logs) => {
-                //   socket.emit("aggreat", betResult)
-                let users = Logs
-                socket.emit('userHistory',{users,page})
-                })
-                .catch((error) => {
-                  console.error(error);
-                });
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+            },
+            {
+                $unwind:'$userDetails'
+            },
+            {
+                $match:{
+                    'userDetails.isActive':true,
+                    'userDetails.roleName':{$ne:'Admin'},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}},
+                }
+            },
+            {
+                $sort:{
+                    login_time:-1
+                }
+            },
+            {
+                $skip:(page * 10)
+            },
+            {
+                $limit:10
+            }
+        ])
+        console.log(users)
+        socket.emit('userHistory',{users,page})
     })
     
     // status:'success',
@@ -675,20 +679,39 @@ io.on('connection', (socket) => {
         // console.log(role_type, 123)
         
         var regexp = new RegExp(data.x);
-        let user
-        if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
-                user = await User.find({userName:regexp}).skip(page * limit).limit(limit)
-        }else{
-                // let role_Type = {
-                //     $in:role_type
-                // }
-                // let xfiletr  = {}
-                // xfiletr.role_Type = role_Type
-                // xfiletr.userName = regexp
-                // console.log(data.filterData)
-                // console.log(xfiletr)
-                user = await User.find({ role_type:{$in: role_type}, userName: regexp, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}} }).skip(page * limit).limit(limit)
-        }
+        let user = await User.aggregate([
+            {
+                $match:{
+                    userName:regexp,
+                    parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}}
+                }
+            },
+            {
+                $sort:{
+                    userName:-1,
+                    _id:-1
+                }
+            },
+            {
+                $skip:(page*limit)
+            },{
+                $limit:limit
+            }
+        ])
+
+        // if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
+        //         user = await User.find({userName:regexp}).skip(page * limit).limit(limit)
+        // }else{
+        //         // let role_Type = {
+        //         //     $in:role_type
+        //         // }
+        //         // let xfiletr  = {}
+        //         // xfiletr.role_Type = role_Type
+        //         // xfiletr.userName = regexp
+        //         // console.log(data.filterData)
+        //         // console.log(xfiletr)
+        //         user = await User.find({ role_type:{$in: role_type}, userName: regexp, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}} }).skip(page * limit).limit(limit)
+        // }
         page++
         if(user.length === 0 ){
             page = null
