@@ -1554,7 +1554,7 @@ io.on('connection', (socket) => {
         let index = slider.images.findIndex(item => item.name == imageName)
         if(index !== -1) {
             let details = slider.images[index]
-            console.log(details)
+            socket.emit('editImageSport', details)
         }else{
             socket.emit('editImageSport', "Please try again later")
         }
