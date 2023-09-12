@@ -4656,6 +4656,12 @@ socket.on('connect', () => {
             },200)
         })
 
+        $(document).on('click', ".editImageSport", function(e){
+            e.preventDefault()
+            let id = $(this).attr('id')
+            socket.emit("editImageSport", id)
+        })
+
         socket.on('UpdateSport', async(data) => {
             alert(data)
             window.setTimeout(()=>{
