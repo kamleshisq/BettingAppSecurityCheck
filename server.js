@@ -246,6 +246,7 @@ io.on('connection', (socket) => {
                 $limit:10
             }
         ])
+        console.log(users)
         socket.emit('userHistory',{users,page})
     })
     
