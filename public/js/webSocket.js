@@ -3108,9 +3108,22 @@ socket.on('connect', () => {
             }
             count += 10
             if(page == 0){
+                if(Logs.length == 0){
+                    $('#load-more').hide()
+                    html = `<tr class="empty_table"><td>No record found</td></tr>`
+                }
                 $('.new-body').html(html)
+                if(!(Logs.length < 10)){
+                    document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
+                }
             }else{
+                if(Logs.length == 0){
+                    $('#load-more').hide()
+                }
                 $('.new-body').append(html)
+                if((Logs.length < 10)){
+                    document.getElementById('load-more').innerHTML = ""
+                }
             }
 
 
