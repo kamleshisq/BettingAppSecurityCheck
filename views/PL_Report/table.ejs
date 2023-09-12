@@ -8,6 +8,7 @@
       </tr>
     </thead>
     <tbody class="new-body">
+      <%if(users.length !== 0){%>
       <%for(let i = 0; i < users.length; i++){%>
       <%if((i%2) == 0){%>
       <tr>
@@ -21,5 +22,8 @@
         </tr>
         <%}%>
       </tr>
+      <%}else{%>
+        <tr class="empty_table"><td>No record found</td></tr>
+      <%}%>
     </tbody>
   </table>
