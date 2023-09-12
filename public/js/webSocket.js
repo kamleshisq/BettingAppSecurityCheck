@@ -1,4 +1,3 @@
-const sourceCode = require("eslint/lib/source-code");
 
 
 
@@ -8611,12 +8610,19 @@ socket.on('connect', () => {
                 }
                 count += 20
                 if(data.page == 0){
+                    if(bets.length == 0){
+                        html += `<tr class="empty_table">
+                        <td>No record found</td>
+                      </tr>`
+                    }
                     $('.new-body').html(html)
                 }else{
                     $('.new-body').append(html)         
                 }
-                let html12 = `<a id="loadMore">Load More</a>`
-                $('.loadMoredive').html(html12)
+                if(bets.length == 0){
+                    $('.loadMoredive').hide()
+                }
+               
             }else{
                 console.log("working")
                 if(data.page == 0){
@@ -8766,8 +8772,9 @@ socket.on('connect', () => {
 
         let countAcc = 21
         socket.on("ACCSTATEMENTADMINSIDE", async(data) => {
+            console.log(data)
             if(data.userAcc.length > 0){
-            console.log(data.page)
+            
             if(data.page === 0){
                 countAcc = 1
             }
@@ -8809,9 +8816,17 @@ socket.on('connect', () => {
             }
             countAcc += 20
             if(data.page == 0){
+                if(userAcc.length == 0){
+                    html += `<tr class="empty_table">
+                    <td>No record found</td>
+                  </tr>`
+                }
                 $('.acount-stat-tbl-body').html(html)
             }else{
                 $('.acount-stat-tbl-body').append(html)         
+            }
+            if(userAcc.length == 0){
+                $('.loadMorediveACC').hide()
             }
         }else{
             console.log("working")
