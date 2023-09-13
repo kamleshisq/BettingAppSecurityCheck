@@ -137,6 +137,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
     const users = data[0].child;
     const roles = roles1;
     const currentUser = req.currentUser
+    console.log(currentUser)
     const rows = data[0].rows
     const me = data[0].me
     // console.log(currentUser)
