@@ -1261,13 +1261,13 @@ socket.on('connect', () => {
                     }else{
                         html+= `${response[i].userName}`
                     }
-                    
-                    html += `<td>  <span class="role-type">
-                    ${response[i].roleName}
-                    </span>
-                    </td>`
-                    
                     html += `</td>`
+
+                    html += `<td>  <span class="role-type">
+                                ${response[i].roleName}
+                            </span>
+                            </td>`
+
                     if(data.currentUser.roleName == "Admin"){
                         html += `<td> ${response[i].whiteLabel}</td>`
                     }else{
@@ -1312,14 +1312,10 @@ socket.on('connect', () => {
             }
             html += `</tbody>`
             count += 10;
-            if(data.page == 0){
-                if(response.length == 0){
+            if(response.length == 0 && data.page == 0){
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
 
-                    html += `<tr class="empty_table"><td>No record found</td></tr>`
-                }
-                $('#load-more').show()
             }
-           
             if(response.length == 0){
                 $('#load-more').hide()
             }
@@ -1406,7 +1402,7 @@ socket.on('connect', () => {
         }
     })
 
-    $(document).on('click','#load-more',function(e){
+    $('#load-more').click(function(e){
         let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
 
         let page = parseInt($('.rowId').attr('data-rowid'));
