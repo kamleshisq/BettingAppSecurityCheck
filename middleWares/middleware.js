@@ -73,7 +73,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
 
     //         }
     // }
-    else if(req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin"){
+    else if(req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin" && req.originalUrl.startsWith('/admin')){
         //console.log(req.headers.cookie, "MIDDLEWARES")
         if(req.headers.cookie && !req.originalUrl.startsWith("/wallet")){
             // //console.log(global._loggedInToken)
@@ -97,9 +97,33 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             global._host = req.get('host')
             global._User = ""
         }
+    }else if(req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin"){
+        //console.log(req.headers.cookie, "MIDDLEWARES")
+        if(req.headers.cookie && !req.originalUrl.startsWith("/wallet")){
+            // //console.log(global._loggedInToken)
+            const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).JWT, isOnline:true})
+            // //console.log(req.headers.cookie)
+            if(login == null){
+                return next()
+            }
+            const user = await User.findById(login.user_id._id)
+            var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl
+            login.logs.push(req.method + " - " + fullUrl)
+            login.save()
+            global._token = req.headers.cookie
+            global._protocol = req.protocol
+            global._host = req.get('host')
+            global._User = user
+        }
+        else if (!req.originalUrl.startsWith("/api/v1")){
+            global._token = ""
+            global._protocol = req.protocol
+            global._host = req.get('host')
+            global._User = ""
+        }
     }else if(req.originalUrl == "/"){
         if(req.headers.cookie){
-            const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).ADMIN_JWT, isOnline:true})
+            const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).JWT, isOnline:true})
             console.log(login)
             if(login == null){
                 return next()
