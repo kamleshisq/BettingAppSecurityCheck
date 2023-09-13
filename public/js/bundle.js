@@ -7115,6 +7115,7 @@ $(document).ready(function () {
 
   colorLink();
 });
+$('input:checked').parents('.switch').addClass("on");
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
   // console.log("Working")
