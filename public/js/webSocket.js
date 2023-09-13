@@ -1197,7 +1197,7 @@ socket.on('connect', () => {
                 if(data.page == 0){
                     count = 1;
                     let html1 = ""
-                    if(LOGINDATA.LOGINUSER.roleName == "admin"){
+                    if(LOGINDATA.LOGINUSER.roleName == "Admin"){
                         html1 = `<thead><tr>`+
                         "<th>S.No</th>"+
                         "<th>User Name</th>"+
@@ -1250,7 +1250,7 @@ socket.on('connect', () => {
                     }
 
                     html += `</td>`
-                    if(data.currentUser.roleName == "admin"){
+                    if(data.currentUser.roleName == "Admin"){
                         html += `<td> ${response[i].whiteLabel}</td>`
                     }else{
 

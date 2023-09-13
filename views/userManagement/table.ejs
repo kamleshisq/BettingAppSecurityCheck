@@ -24,7 +24,7 @@
           <tr>
             <th>S.No</th>
             <th>User Name</th>
-            <%if(currentUser.roleName == "admin"){ %>
+            <%if(currentUser.roleName == "Admin"){ %>
               <th>White Labels</th>
             <%}%>
             <th>Type</th>
@@ -67,7 +67,7 @@
                         <%=users[i].userName%>
                           <%}%>
                   </td>
-                  <%if(currentUser.roleName == "admin"){ %>
+                  <%if(currentUser.roleName == "Admin"){ %>
                     <td>
                       <%=users[i].whiteLabel%>
                     </td>
