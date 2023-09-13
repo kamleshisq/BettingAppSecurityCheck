@@ -10,7 +10,7 @@ router.get('/logOut', authController.isProtected_User, authController.logOut);
 
 // Admin Panal
 router.use(authController.isProtected)
-router.get('/admin_logOut', authController.isProtected, authController.admin_logOut);  // use same routes in both
+router.get('/admin_logOut', authController.admin_logOut);  // use same routes in both
 router.get("/logOutAllUser", authController.restrictTo("allUserLogOut"), authController.logOutAllUser);
 router.post("/logOutSelectedUser", authController.logOutSelectedUser);
 
