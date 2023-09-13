@@ -676,24 +676,7 @@ socket.on('connect', () => {
 
     // console.log(window.location.href)
 
-    document.addEventListener("DOMContentLoaded", function() {
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        
-        checkboxes.forEach(function(checkbox) {
-          checkbox.addEventListener("change", function() {
-            var switches = document.querySelectorAll('.switch');
-            if (this.checked) {
-              switches.forEach(function(switchEl) {
-                switchEl.classList.add("on");
-              });
-            } else {
-              switches.forEach(function(switchEl) {
-                switchEl.classList.remove("on");
-              });
-            }
-          });
-        });
-      });
+
 
 
     if(pathname.startsWith('/admin/userManagement')){
