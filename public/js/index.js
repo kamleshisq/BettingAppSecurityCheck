@@ -390,11 +390,11 @@ $(document).on('click','.popup_back',function () {
 $(document).on('submit','.userStatus',function(e) {
     e.preventDefault()
     
-    let form = $(this)[0];
-    let fd = new FormData(form);
-    let id = form.id
-    let formDataObj = Object.fromEntries(fd.entries());
-    formDataObj.id = id
+    // let form = $(this)[0];
+    // let fd = new FormData(form);
+    // let id = form.id
+    // let formDataObj = Object.fromEntries(fd.entries());
+    // formDataObj.id = id
     // let rowId = $('.rowId').attr('data-rowid')
     console.log(formDataObj, "WORKING1212121")
     // var trElement = document.querySelector(`tr[data-id="${id}"]`);
