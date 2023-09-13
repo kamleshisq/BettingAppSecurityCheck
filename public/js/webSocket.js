@@ -1315,7 +1315,7 @@ socket.on('connect', () => {
             count += 10;
             if(response.length == 0 && data.page == 0){
                 html += `<tr class="empty_table"><td>No record found</td></tr>`
-
+                
             }
             if(response.length == 0){
                 $('#load-more').hide()
