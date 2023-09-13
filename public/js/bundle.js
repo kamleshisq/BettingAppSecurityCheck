@@ -7155,7 +7155,7 @@ $('#Add-User').submit(function (e) {
   if (formDataObj.whiteLabel == "") {
     formDataObj.whiteLabel = document.getElementById("whiteLabel").value;
   }
-  // console.log(formDataObj)
+  console.log(formDataObj);
   (0, _createUser.createUser)(formDataObj);
 });
 $(document).on('click', '.updateBetLimit', function (e) {

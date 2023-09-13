@@ -125,7 +125,7 @@ const formDataObj = Object.fromEntries(data.entries());
 if(formDataObj.whiteLabel == ""){
     formDataObj.whiteLabel = document.getElementById("whiteLabel").value
 }
-// console.log(formDataObj)
+console.log(formDataObj)
 createUser(formDataObj)
 });
 
