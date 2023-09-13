@@ -122,10 +122,11 @@ e.preventDefault();
 const form = document.getElementById('Add-User');
 let data = new FormData(form) 
 const formDataObj = Object.fromEntries(data.entries());
+console.log(formDataObj)
+
 if(formDataObj.whiteLabel == ""){
     formDataObj.whiteLabel = document.getElementById("whiteLabel").value
 }
-console.log(formDataObj)
 createUser(formDataObj)
 });
 
