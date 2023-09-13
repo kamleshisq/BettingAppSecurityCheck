@@ -7620,6 +7620,13 @@ $(document).on('submit', ".addSlider-form", function (e) {
   var fd = new FormData(form);
   (0, _addSlider.createSlider)(fd);
 });
+$(document).on('submit', ".myloginmodl-form-dv", function (e) {
+  e.preventDefault();
+  var form = $(this)[0];
+  var fd = new FormData(form);
+  var data = Object.fromEntries(fd.entries());
+  (0, _userLogin.userLogin)(data);
+});
 $(document).on("click", ".myloginmodl-demo-loginbtnn", function (e) {
   e.preventDefault();
   console.log("WORKING");
