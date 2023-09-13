@@ -117,7 +117,7 @@ io.on('connection', (socket) => {
 
     socket.on("search", async(data) => {
         // console.log(data.LOGINDATA.LOGINTOKEN);
-        // console.log(data.filterData);
+        console.log(data);
         let page = data.page; 
         let limit = 10
         // const me = await User.findById(data.id)
@@ -134,47 +134,49 @@ io.on('connection', (socket) => {
             var regexp = new RegExp(data.filterData.userName);
             data.filterData.userName = regexp
         }
-        if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
-            // console.log(data.filterData)
-            // console.log(data.filterData)
-            // user = await User.find({userName:new RegExp(data.filterData.userName,"i"), data.filterData})
-           
-            if(data.filterData.role_type){
-                // console.log(parseInt(data.filterData.role_type))
-                if(role_type.includes(parseInt(data.filterData.role_type))){
-                    user = await User.find(data.filterData).skip(page * limit).limit(limit)
+        if(data.filterData){
+            if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
+                // console.log(data.filterData)
+                // console.log(data.filterData)
+                // user = await User.find({userName:new RegExp(data.filterData.userName,"i"), data.filterData})
+                    if(data.filterData.role_type){
+                    // console.log(parseInt(data.filterData.role_type))
+                    if(role_type.includes(parseInt(data.filterData.role_type))){
+                        user = await User.find(data.filterData).skip(page * limit).limit(limit)
+                    }else{
+                        socket.emit('searchErr',{
+                            message:'you not have permition'
+                        })
+                    }
                 }else{
-                    socket.emit('searchErr',{
-                        message:'you not have permition'
-                    })
-                }
-            }else{
-                data.filterData.role_type = {
-                    $ne : 1
-                }
-                user = await User.find(data.filterData).skip(page * limit).limit(limit)
-            }
-          
-        }else{
-            if(data.filterData.role_type){
-                if(role_type.includes((data.filterData.role_type) * 1)){
-                    // console.log('here')
+                    data.filterData.role_type = {
+                        $ne : 1
+                    }
                     user = await User.find(data.filterData).skip(page * limit).limit(limit)
-                }else{
-                    socket.on('searchErr',{
-                        message:'you not have permition'
-                    })
-                }
+                }            
             }else{
+                if(data.filterData.role_type){
+                    if(role_type.includes((data.filterData.role_type) * 1)){
+                        // console.log('here')
+                        user = await User.find(data.filterData).skip(page * limit).limit(limit)
+                    }else{
+                        socket.on('searchErr',{
+                            message:'you not have permition'
+                        })
+                    }
+                }else{
 
-                let role_Type = {
-                    $in:role_type
+                    let role_Type = {
+                        $in:role_type
+                    }
+                    data.filterData.role_type = role_Type
+                    console.log(data.filterData)
+                    user = await User.find(data.filterData).skip(page * limit).limit(limit)
                 }
-                data.filterData.role_type = role_Type
-                console.log(data.filterData)
-                user = await User.find(data.filterData).skip(page * limit).limit(limit)
             }
-        }
+        }else{
+            user = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id}).skip(page * limit).limit(limit)
+           }
         let currentUser = data.LOGINDATA.LOGINUSER
 
         // console.log(user)
