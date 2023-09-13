@@ -478,12 +478,9 @@
                   New Domain
                   <input type="checkbox"  id="customOptionCheckbox">
                   </label>
-                  <label>WhiteLabel</label>
                   <!-- <input type="text" name="whiteLabel" placeholder="Enter new role"> -->
-                  <select id="whiteLabel" name="whiteLabel" class="form-control ml0"  required>
-=======
                   <label >WhiteLabel</label>
-                  <select id="whiteLabel" class="form-control ml0"  required>
+                  <select id="whiteLabel" name="whiteLabel" class="form-control ml0"  required>
                     <%for(let i = 0; i < WhiteLabel.length; i++){ %>
                       <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
                     <%} %>
