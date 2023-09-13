@@ -16,6 +16,7 @@ function parseCookies(cookieString) {
     return cookies;
   }
 
+
 const LoginLogs = catchAsync(async(req, res, next) => { 
     // console.log(req.headers.cookie, 456)
     // if(req.headers.cookie){
@@ -74,12 +75,13 @@ const LoginLogs = catchAsync(async(req, res, next) => {
     //         }
     // }
     else if((req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin" && req.originalUrl.startsWith('/admin')) || req.originalUrl.startsWith("/api/v1")){
-        console.log(req.headers, "MIDDLEWARES")
+        console.log(req.headers.cookie, "MIDDLEWARES")
         
         if(req.headers.cookie && !req.originalUrl.startsWith("/wallet")){
             // //console.log(global._loggedInToken)
             const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).ADMIN_JWT, isOnline:true})
             // //console.log(req.headers.cookie)
+            console.log(login.user_id)
             if(login == null){
                 return next()
             }
@@ -112,11 +114,12 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             global._User = ""
         }
     }else if((req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin") || req.originalUrl.startsWith("/api/v1")){
-        console.log(req.headers, "MIDDLEWARES_USER")
+        console.log(req.headers.cookie, "MIDDLEWARES_USER")
         if(req.headers.cookie && !req.originalUrl.startsWith("/wallet")){
             // //console.log(global._loggedInToken)
             const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).JWT, isOnline:true})
             // //console.log(req.headers.cookie)
+            console.log(login.user_id)
             if(login == null){
                 return next()
             }
