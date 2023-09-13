@@ -1241,18 +1241,25 @@ socket.on('connect', () => {
                     
                 html += `<td> ${count + i} </td>
                     <td class="getOwnChild" data-bs-dismiss='${JSON.stringify(response[i])}'>`
+                    if(response[i].isActive && !response[i].betLock){
+                        html + `<span class="user-status bet-lock" >BL</span>`
+                      }else if(response[i].isActive && response[i].betLock){ 
+                        html + `<span class="user-status active" >A</span>`
+                      }else{
+                        html + `<span class="user-status suspended" >S</span>`
+                      }
                     if(response[i].roleName != 'user'){
                         html+= `<a href='/admin/userManagement?id=${response[i]._id}'>${response[i].userName}</a>`
                     }else{
                         html+= `${response[i].userName}`
                     }
+                    html += `</td>`
 
                     html += `<td>  <span class="role-type">
                                 ${response[i].roleName}
                             </span>
                             </td>`
 
-                    html += `</td>`
                     if(data.currentUser.roleName == "Admin"){
                         html += `<td> ${response[i].whiteLabel}</td>`
                     }else{
