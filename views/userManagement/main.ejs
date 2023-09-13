@@ -481,6 +481,9 @@
                   <label>WhiteLabel</label>
                   <!-- <input type="text" name="whiteLabel" placeholder="Enter new role"> -->
                   <select id="whiteLabel" name="whiteLabel" class="form-control ml0"  required>
+=======
+                  <label >WhiteLabel</label>
+                  <select id="whiteLabel" class="form-control ml0"  required>
                     <%for(let i = 0; i < WhiteLabel.length; i++){ %>
                       <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
                     <%} %>
@@ -529,7 +532,11 @@
                 <input type="text" class="form-control ml0" placeholder="0" name="Credit" required>
               </div>
               <div class="col hide" id="ExposureLimits">
+<<<<<<< HEAD
                 <label >Expose Limits</label>
+=======
+                <label>Expose Limits</label>
+>>>>>>> c82b2aacb6405a1af426a45419ed3515bbdc7934
                 <input type="number" class="form-control ml0" placeholder="0" name="exposureLimit" required>
               </div>
             </div>
