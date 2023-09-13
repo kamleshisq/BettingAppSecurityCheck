@@ -74,7 +74,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
 
     //         }
     // }
-    else if((req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin" && req.originalUrl.startsWith('/admin')) || req.originalUrl.startsWith("/api/v1")){
+    else if((req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin" && req.originalUrl.startsWith('/admin') && !req.originalUrl.startsWith('/bundle.js.map')) || req.originalUrl.startsWith("/api/v1")){
         console.log(req.headers.cookie, "MIDDLEWARES")
         
         if(req.headers.cookie && !req.originalUrl.startsWith("/wallet")){
@@ -113,7 +113,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             global._host = req.get('host')
             global._User = ""
         }
-    }else if((req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin") || req.originalUrl.startsWith("/api/v1")){
+    }else if((req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin" && !req.originalUrl.startsWith('/bundle.js.map')) || req.originalUrl.startsWith("/api/v1")){
         console.log(req.headers.cookie, "MIDDLEWARES_USER")
         if(req.headers.cookie && !req.originalUrl.startsWith("/wallet")){
             // //console.log(global._loggedInToken)
