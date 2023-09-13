@@ -58,6 +58,7 @@
                     <%=i + 1%>
                   </td>
                   <td class="getOwnChild">
+                    <div class="user-status-section" >
                     <%if(users[i].isActive && users[i].betLock){%>
                       <span class="user-status bet-lock" >BL</span>
                     <%}else if(users[i].isActive && !users[i].betLock){ %>
@@ -73,6 +74,7 @@
                       <%}else{%>
                         <%=users[i].userName%>
                           <%}%>
+                        </div>
                   </td>
                   <td>
                     <span class="role-type">
