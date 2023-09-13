@@ -117,12 +117,12 @@ io.on('connection', (socket) => {
 
     socket.on("search", async(data) => {
         // console.log(data.LOGINDATA.LOGINTOKEN);
-        console.log(data);
+        // console.log(data);
         let page = data.page; 
         let limit = 10
         let user
         // const me = await User.findById(data.id)
-        console.log(data.LOGINDATA)
+        // console.log(data.LOGINDATA)
         const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
         if(Object.keys(data.filterData).length !== 0){
 
