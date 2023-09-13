@@ -218,7 +218,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     if(!token){
         return next(new AppError('Please log in to access', 404))
     }
-    console.log(token, "token")
+    // console.log(token, "token")
     const tokenId = await loginLogs.findOne({session_id:token})
     // console.log(tokenId, "ID")
     if(!tokenId.isOnline){
@@ -283,7 +283,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     if(!token){
         return next(new AppError('Please log in to access', 404))
     }
-    console.log(token, "token")
+    // console.log(token, "token")
     const tokenId = await loginLogs.findOne({session_id:token})
     // console.log(tokenId, "ID")
     if(!tokenId.isOnline){
