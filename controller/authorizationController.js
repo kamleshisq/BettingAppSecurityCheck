@@ -218,9 +218,9 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     if(!token){
         return next(new AppError('Please log in to access', 404))
     }
-    console.log(token, "token")
+    // console.log(token, "token")
     const tokenId = await loginLogs.findOne({session_id:token})
-    console.log(tokenId, "ID")
+    // console.log(tokenId, "ID")
     if(!tokenId.isOnline){
         return next(new AppError('Please log in to access', 404))
     }
@@ -266,8 +266,8 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     let token 
     // console.log(req.headers.authorization, 456)
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
-        console.log("WORKING")
-        console.log(req.headers.authorization)
+        // console.log("WORKING")
+        // console.log(req.headers.authorization)
         // console.log(req.headers.authorization.split(' ')[1].split("=")[1])
         token = req.headers.authorization.split(' ')[1].split("=")[1];
         if(!token){
@@ -283,9 +283,9 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     if(!token){
         return next(new AppError('Please log in to access', 404))
     }
-    console.log(token, "token")
+    // console.log(token, "token")
     const tokenId = await loginLogs.findOne({session_id:token})
-    console.log(tokenId, "ID")
+    // console.log(tokenId, "ID")
     if(!tokenId.isOnline){
         return next(new AppError('Please log in to access', 404))
     }

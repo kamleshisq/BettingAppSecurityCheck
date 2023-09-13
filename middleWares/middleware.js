@@ -74,7 +74,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
     //         }
     // }
     else if((req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin" && req.originalUrl.startsWith('/admin')) || req.originalUrl.startsWith("/api/v1")){
-        console.log(req.headers.cookie, "MIDDLEWARES")
+        console.log(req.headers, "MIDDLEWARES")
         
         if(req.headers.cookie && !req.originalUrl.startsWith("/wallet")){
             // //console.log(global._loggedInToken)
@@ -112,7 +112,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             global._User = ""
         }
     }else if((req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin") || req.originalUrl.startsWith("/api/v1")){
-        console.log(req.headers.cookie, "MIDDLEWARES_USER")
+        console.log(req.headers, "MIDDLEWARES_USER")
         if(req.headers.cookie && !req.originalUrl.startsWith("/wallet")){
             // //console.log(global._loggedInToken)
             const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).JWT, isOnline:true})
