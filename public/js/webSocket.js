@@ -681,13 +681,7 @@ socket.on('connect', () => {
 
     if(pathname.startsWith('/admin/userManagement')){
         console.log(LOGINDATA, 45654654)
-        function getOwnChild(id,page,token) {
-            socket.emit(token,{
-                id,
-                page
-            })
-        
-        }
+       
 
         let num1Input1 = document.getElementById('myShare');
         let num2Input1 = document.getElementById('Share');
@@ -1195,6 +1189,14 @@ socket.on('connect', () => {
         //         getOwnChild(id,page - 1,'getOwnChild')
         
         //     })
+
+        function getOwnChild(id,page,token) {
+            socket.emit(token,{
+                id,
+                page
+            })
+        
+        }
         let count = 11;
         socket.on('getOwnChild',(data) => {
             // console.log(data)
@@ -1417,12 +1419,10 @@ socket.on('connect', () => {
 
 
         $('.rowId').attr('data-rowid',page + 1)
-        if(W || S || R || US){
+       
                 
-            socket.emit("search", {filterData,page,id, LOGINDATA })
-        }else{
-            getOwnChild(id,page ,'getOwnChild')
-        }
+        socket.emit("search", {filterData,page,id, LOGINDATA })
+        
     })
    
         // socket.on("searchUser", (data)=>{
