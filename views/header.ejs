@@ -394,6 +394,16 @@ input:checked + .slider:before {
 </script>
 
 <script>
+  $('input:checkbox').change(function(){
+    if($(this).is(":checked")) {
+        $('.switch').addClass("on");
+    } else {
+        $('.switch').removeClass("on");
+    }
+});
+</script>
+
+<script>
   $(document).on("click", "#header-toggle", function(e){
     e.preventDefault()
     $('#body-pd').classList.remove('body-pd');
