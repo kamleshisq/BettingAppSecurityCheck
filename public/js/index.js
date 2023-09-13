@@ -83,6 +83,8 @@ $(document).ready(function(){
     colorLink()
 
     $('input:checked').parents('.switch').addClass("on");
+    
+       
 
 });
 
