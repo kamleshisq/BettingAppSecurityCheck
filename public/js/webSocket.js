@@ -4476,11 +4476,16 @@ socket.on('connect', () => {
                 let form = $(modleName).find('.form-data1')
                 let PMD = data
                 form.attr('id', PMD._id);
-                form.find('input[name = "check"]').removeAttr('checked');
+                // form.find('input[name = "check"]').removeAttr('checked');
                 form.find('input[name = "name"]').attr('value',PMD.position)
                 form.find('input[name = "link"]').attr('value',PMD.link)
                 if(PMD.status){
                     form.find('input[name = "check"]').attr("checked", "checked");
+                    form.find('input[name = "check"]').parent('switch').addClass('on');
+                }else{
+                    form.find('input[name = "check"]').attr("checked", "");
+                    form.find('input[name = "check"]').parent('switch').removeClass('on');
+
                 }
                 if(PMD.video){
                     form.find('#img').html(`<video src="../img/${PMD.position}.mp4" type="video/mp4" height=100 width=100>`)
