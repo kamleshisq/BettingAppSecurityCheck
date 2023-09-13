@@ -6,7 +6,7 @@ const authController = require('../controller/authorizationController');
 router.post('/login', authController.login);
 router.post('/userLogin', authController.userLogin);
 router.post('/userSignUp', authController.signUp);
-router.get('/logOut', authController.isProtected, authController.logOut);
+router.get('/logOut', authController.isProtected_User, authController.logOut);
 
 // Admin Panal
 router.use(authController.isProtected)
