@@ -120,21 +120,27 @@ io.on('connection', (socket) => {
         console.log(data);
         let page = data.page; 
         let limit = 10
+        let user
         // const me = await User.findById(data.id)
         console.log(data.LOGINDATA)
         const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
-        data.filterData.parentUsers = { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
-        let role_type =[]
-        for(let i = 0; i < roles.length; i++){
-            role_type.push(roles[i].role_type)
-        }
-        
-        let user
-        if(data.filterData.userName){
-            var regexp = new RegExp(data.filterData.userName);
-            data.filterData.userName = regexp
-        }
         if(Object.keys(data.filterData).length !== 0){
+
+            data.filterData.parentUsers = { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
+            let role_type =[]
+            for(let i = 0; i < roles.length; i++){
+                role_type.push(roles[i].role_type)
+            }
+            
+            
+            if(data.filterData.userName){
+                var regexp = new RegExp(data.filterData.userName);
+                data.filterData.userName = regexp
+            }
+            if(data.filterData.status){
+                data.filterData.isActive = data.filterData.status
+                delete data.filterData['status']
+            }
             if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
                 // console.log(data.filterData)
                 // console.log(data.filterData)
@@ -175,7 +181,7 @@ io.on('connection', (socket) => {
                 }
             }
         }else{
-            user = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id}).skip(page * limit).limit(limit)
+            user = await User.find({parent_id:data.id}).skip(page * limit).limit(limit)
            }
         let currentUser = data.LOGINDATA.LOGINUSER
 

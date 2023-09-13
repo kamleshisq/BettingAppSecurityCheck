@@ -18,6 +18,11 @@
           <option value="<%=roles[i].role_type%>"><%=roles[i].roleName%></option>
         <%}%>
       </select>
+      <select name="userStatus" id="userStatus" class="userStatus">
+        <option value="" selected>Sekect Status</option>
+        <option value="true">Active</option>
+        <option value="false">In Active</option>
+      </select>
       <%if(currentUser.role_type == 1){%>
         <select name="WhiteLabel" id="WhiteLabel" class="WhiteLabel">
           <option value="" selected >select WhiteLabel</option>
