@@ -293,7 +293,7 @@ io.on('connection', (socket) => {
     socket.on("SelectLogoutUserId",async(id)=>{
         // console.log(id)
         // let data = {userId:`${id}`}
-        const fullUrl = fullUrl `/api/v1/auth/logOutSelectedUser?userId=`+id
+        let fullUrl =  `/api/v1/auth/logOutSelectedUser?userId=`+id
         fetch(fullUrl, {
             method: 'POST',
             headers: { 'Authorization': `Bearer ` + loginData.Token }
