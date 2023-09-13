@@ -1250,12 +1250,13 @@ socket.on('connect', () => {
                 html += `<td> ${count + i} </td>
                     <td class="getOwnChild" data-bs-dismiss='${JSON.stringify(response[i])}'>`
                     if(response[i].isActive && response[i].betLock){
-                        html + `<span class="user-status bet-lock" >BL</span>`
+                        html += `<span class="user-status bet-lock" >BL</span>`
                       }else if(response[i].isActive && !response[i].betLock){ 
-                        html + `<span class="user-status active" >A</span>`
+                        html += `<span class="user-status active" >A</span>`
                       }else{
-                        html + `<span class="user-status suspended" >S</span>`
+                        html += `<span class="user-status suspended" >S</span>`
                       }
+
                     if(response[i].roleName != 'user'){
                         html+= `<a href='/admin/userManagement?id=${response[i]._id}'>${response[i].userName}</a>`
                     }else{
@@ -1312,14 +1313,10 @@ socket.on('connect', () => {
             }
             html += `</tbody>`
             count += 10;
-            if(data.page == 0){
-                if(response.length == 0){
+            if(response.length == 0 && data.page == 0){
+                html += `<tr class="empty_table"><td>No record found</td></tr>`
 
-                    html += `<tr class="empty_table"><td>No record found</td></tr>`
-                }
-                $('#load-more').show()
             }
-           
             if(response.length == 0){
                 $('#load-more').hide()
             }
@@ -1406,7 +1403,7 @@ socket.on('connect', () => {
         }
     })
 
-    $(document).on('click','#load-more',function(e){
+    $('#load-more').click(function(e){
         let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
 
         let page = parseInt($('.rowId').attr('data-rowid'));
