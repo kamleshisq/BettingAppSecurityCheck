@@ -9,7 +9,6 @@ export const userLogin = async(data) => {
             data
         });
         if(res.data.status === 'success'){
-            console.log(res.data)
             notificationsss({message : 'Logged in successfully!!!!', status:"success"});
             sessionStorage.setItem('loginUserDetails',JSON.stringify(res.data.data.user));
             sessionStorage.setItem('roles',JSON.stringify(res.data.data.roles))
@@ -20,9 +19,9 @@ export const userLogin = async(data) => {
             //         location.assign('/updatePassWord')
             //     }, 100)
             // }else{
-                // setTimeout(function() {
-                //     location.reload();
-                //   }, 300);
+                setTimeout(function() {
+                    location.reload();
+                  }, 300);
             // }
         }
 

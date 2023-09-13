@@ -6875,7 +6875,6 @@ var userLogin = /*#__PURE__*/function () {
         case 3:
           res = _context.sent;
           if (res.data.status === 'success') {
-            console.log(res.data);
             (0, _notificationsss.notificationsss)({
               message: 'Logged in successfully!!!!',
               status: "success"
@@ -6889,9 +6888,9 @@ var userLogin = /*#__PURE__*/function () {
             //         location.assign('/updatePassWord')
             //     }, 100)
             // }else{
-            // setTimeout(function() {
-            //     location.reload();
-            //   }, 300);
+            setTimeout(function () {
+              location.reload();
+            }, 300);
             // }
           }
           _context.next = 11;
