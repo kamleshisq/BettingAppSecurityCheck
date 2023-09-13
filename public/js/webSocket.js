@@ -7990,9 +7990,9 @@ socket.on('connect', () => {
     if(pathname === "/admin/commissionReport"){
         const FdateInput = document.getElementById('Fdate');
         const TdateInput = document.getElementById('Tdate');
-        FdateInput.addEventListener('change', handleInputChangeCommission);
-        TdateInput.addEventListener('change', handleInputChangeCommission);
-        function handleInputChangeCommission(event) {
+        FdateInput.addEventListener('change', handleInputChangeCommission());
+        TdateInput.addEventListener('change', handleInputChangeCommission());
+        function handleInputChangeCommission() {
             console.log("Work")
             let fromDate = $('#Fdate').val()
             let toDate = $('#Tdate').val()
