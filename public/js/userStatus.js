@@ -18,8 +18,8 @@ export const userStatus = (data, rawId) => {
             }
             // console.log(data, 1212121)
         },
-        error:function(error){
-            alert(error.responseJSON.message)
+        error:function(err){
+            alert(err.response.data.message)
         }
     })
 }

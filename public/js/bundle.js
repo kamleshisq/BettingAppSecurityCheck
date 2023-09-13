@@ -6145,8 +6145,8 @@ var userStatus = function userStatus(data, rawId) {
       // console.log(data, 1212121)
     },
 
-    error: function error(_error) {
-      alert(_error.responseJSON.message);
+    error: function error(err) {
+      alert(err.response.data.message);
     }
   });
 };
