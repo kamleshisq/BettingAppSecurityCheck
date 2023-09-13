@@ -1208,7 +1208,6 @@ socket.on('connect', () => {
                         "<th>Downlevel Balance</th>"+
                         "<th>My P/L</th>"+
                         "<th>Upline P/L</th>"+
-                        "<th>Exposure Limit</th>"+
                         "<th>Exposure</th>"+
                         "<th>Action</th>"+
                     "</tr></thead>"
@@ -1222,7 +1221,6 @@ socket.on('connect', () => {
                         "<th>Downlevel Balance</th>"+
                         "<th>My P/L</th>"+
                         "<th>Upline P/L</th>"+
-                        "<th>Exposure Limit</th>"+
                         "<th>Exposure</th>"+
                         "<th>Action</th>"+
                     "</tr></thead>"
@@ -1249,6 +1247,11 @@ socket.on('connect', () => {
                         html+= `${response[i].userName}`
                     }
 
+                    html += `<td>  <span class="role-type">
+                                ${response[i].roleName}
+                            </span>
+                            </td>`
+
                     html += `</td>`
                     if(data.currentUser.roleName == "Admin"){
                         html += `<td> ${response[i].whiteLabel}</td>`
@@ -1256,16 +1259,11 @@ socket.on('connect', () => {
 
                     }
                     html += `
-                    <td>  <span class="role-type">
-                            ${response[i].roleName}
-                        </span>
-                        </td>
                     <td> ${response[i].balance}</td>
                     <td> ${response[i].availableBalance}</td>
                     <td> ${response[i].downlineBalance}</td>
                     <td> ${response[i].myPL}</td>
                     <td> ${response[i].uplinePL}</td>
-                    <td> ${response[i].exposureLimit}</td>
                     <td> ${response[i].exposure}</td>
                     <td>
                     <div class="btn-group">
