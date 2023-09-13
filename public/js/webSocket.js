@@ -4471,7 +4471,7 @@ socket.on('connect', () => {
         });
 
         socket.on("PromotionIdByData", async(data) => {
-            
+                console.log(data)
                 let modleName = "#myModal5"
                 let form = $(modleName).find('.form-data1')
                 let PMD = data
