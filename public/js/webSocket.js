@@ -2729,7 +2729,6 @@ socket.on('connect', () => {
                 $(this).parents('.switch').addClass("on");
             }else{
                 $(this).parents('.switch').removeClass("on");
-
             }
             if(id){
                 if(confirm('do you want to change status')){

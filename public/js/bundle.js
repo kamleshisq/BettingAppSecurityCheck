@@ -7117,6 +7117,13 @@ $(document).ready(function () {
 
   colorLink();
   $('input:checked').parents('.switch').addClass("on");
+  $('input:checkbox').change(function () {
+    if ($(this).is(":checked")) {
+      $(this).parents('.switch').addClass("on");
+    } else {
+      $(this).parents('.switch').removeClass("on");
+    }
+  });
 });
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
@@ -7724,7 +7731,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60945" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50462" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
