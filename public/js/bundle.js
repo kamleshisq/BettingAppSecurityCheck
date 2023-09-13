@@ -5545,7 +5545,7 @@ var logout = /*#__PURE__*/function () {
           _context.next = 3;
           return (0, _axios.default)({
             method: 'GET',
-            url: '/api/v1/auth/logOut'
+            url: '/api/v1/auth/admin_logOut'
           });
         case 3:
           res = _context.sent;

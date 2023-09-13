@@ -6,7 +6,7 @@ const authController = require('../controller/authorizationController');
 
 
 // User Panal
-router.post("/updateCurrentUserPass", userController.currentUserPasswordupdate);
+router.post("/updateCurrentUserPass",authController.isProtected_User, userController.currentUserPasswordupdate);
 
 
 // Admin Panal
