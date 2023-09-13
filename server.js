@@ -140,8 +140,10 @@ io.on('connection', (socket) => {
             if(data.filterData.status){
                 if(data.filterData.status == 'true'){
                     data.filterData.isActive = true
-                }else{
+                }else if(data.filterData.status == 'false'){
                     data.filterData.isActive = false
+                }else{
+                    data.filterData.betLock = true
                 }
                 delete data.filterData['status']
             }
