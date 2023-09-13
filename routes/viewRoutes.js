@@ -8,7 +8,7 @@ const notificationController =  require("../controller/notificationController");
 
 
 
-router.get('/adminLogin/',authController.isLogin ,viewController.login);
+router.get('/adminLogin/',authController.isLogin_Admin ,viewController.login);
 router.get('/userlogin',viewController.userLogin );
 router.get('/registration',viewController.registration );
 
@@ -86,27 +86,27 @@ router.get("/slots", authController.isLogin, notificationController.myNotificati
 router.get("/Royal_casino", authController.isLogin, notificationController.myNotifications ,viewController.royalGamingPage);
 router.get("/virtuals", authController.isLogin, notificationController.myNotifications ,viewController.virtualsPage);
 router.get("/OtherGames", authController.isLogin, notificationController.myNotifications ,viewController.OthersGames);
-router.get("/cards", authController.isProtected, notificationController.myNotifications ,viewController.getCardInplayGame);
-router.get("/Royal_casinoInplay", authController.isProtected, notificationController.myNotifications ,viewController.getCardInplayGame);
-router.get("/live_casinoInPlay", authController.isProtected, notificationController.myNotifications ,viewController.getCardInplayGame);
-router.get("/virtualsInPlay", authController.isProtected, notificationController.myNotifications ,viewController.getCardInplayGame);
-router.get("/premium_sports", authController.isProtected, notificationController.myNotifications ,viewController.getSportBookGame);
-router.get('/MyPlStatement', authController.isProtected, notificationController.myNotifications ,viewController.userPlReports );
+router.get("/cards", authController.isProtected_User, notificationController.myNotifications ,viewController.getCardInplayGame);
+router.get("/Royal_casinoInplay", authController.isProtected_User, notificationController.myNotifications ,viewController.getCardInplayGame);
+router.get("/live_casinoInPlay", authController.isProtected_User, notificationController.myNotifications ,viewController.getCardInplayGame);
+router.get("/virtualsInPlay", authController.isProtected_User, notificationController.myNotifications ,viewController.getCardInplayGame);
+router.get("/premium_sports", authController.isProtected_User, notificationController.myNotifications ,viewController.getSportBookGame);
+router.get('/MyPlStatement', authController.isProtected_User, notificationController.myNotifications ,viewController.userPlReports );
 router.get("/exchange_inPlay/match", authController.isLogin, notificationController.myNotifications ,viewController.getExchangePageIn);
 router.get("/exchange/multimarkets", authController.isLogin, notificationController.myNotifications ,viewController.multimarkets);
 router.get("/live_casino", authController.isLogin, notificationController.myNotifications ,viewController.getLiveCasinoPage);
-router.get("/mybets", authController.isProtected, notificationController.myNotifications ,viewController.getMyBetsPageUser);
-router.get("/myGameReport", authController.isProtected, notificationController.myNotifications ,viewController.getGameReportPageUser);
-router.get("/event", authController.isProtected, notificationController.myNotifications ,viewController.getGameReportInPageUser);
-router.get("/gameReport/match", authController.isProtected, notificationController.myNotifications ,viewController.getGameReportInINPageUser);
-router.get("/myAccountStatment", authController.isProtected, notificationController.myNotifications ,viewController.myAccountStatment);
-router.get("/myCommissionReports", authController.isProtected, notificationController.myNotifications ,viewController.getCommissionReportUserSide);
-router.get("/myCommissionReportsIn", authController.isProtected, notificationController.myNotifications ,viewController.getCommissionReporIntUserSide);
-router.get("/myCommissionReportsInEvent", authController.isProtected, notificationController.myNotifications ,viewController.getCommissionReporEvent);
-router.get("/myCommissionReportsMatch", authController.isProtected, notificationController.myNotifications ,viewController.getCommissionReporMatch);
-router.get("/myProfile", authController.isProtected, notificationController.myNotifications ,viewController.myProfile);
-router.get("/profile", authController.isProtected, notificationController.myNotifications ,viewController.getMyProfileUser);
-router.get("/Kyc", authController.isProtected, notificationController.myNotifications ,viewController.getMyKycPage);
+router.get("/mybets", authController.isProtected_User, notificationController.myNotifications ,viewController.getMyBetsPageUser);
+router.get("/myGameReport", authController.isProtected_User, notificationController.myNotifications ,viewController.getGameReportPageUser);
+router.get("/event", authController.isProtected_User, notificationController.myNotifications ,viewController.getGameReportInPageUser);
+router.get("/gameReport/match", authController.isProtected_User, notificationController.myNotifications ,viewController.getGameReportInINPageUser);
+router.get("/myAccountStatment", authController.isProtected_User, notificationController.myNotifications ,viewController.myAccountStatment);
+router.get("/myCommissionReports", authController.isProtected_User, notificationController.myNotifications ,viewController.getCommissionReportUserSide);
+router.get("/myCommissionReportsIn", authController.isProtected_User, notificationController.myNotifications ,viewController.getCommissionReporIntUserSide);
+router.get("/myCommissionReportsInEvent", authController.isProtected_User, notificationController.myNotifications ,viewController.getCommissionReporEvent);
+router.get("/myCommissionReportsMatch", authController.isProtected_User, notificationController.myNotifications ,viewController.getCommissionReporMatch);
+router.get("/myProfile", authController.isProtected_User, notificationController.myNotifications ,viewController.myProfile);
+router.get("/profile", authController.isProtected_User, notificationController.myNotifications ,viewController.getMyProfileUser);
+router.get("/Kyc", authController.isProtected_User, notificationController.myNotifications ,viewController.getMyKycPage);
 
 
 

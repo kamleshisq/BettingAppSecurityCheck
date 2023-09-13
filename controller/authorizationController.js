@@ -47,7 +47,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
         cookieOption.secure = true
         }
     console.log(token)
-    res.cookie('JWT', token, cookieOption)
+    res.cookie('ADMIN_JWT', token, cookieOption)
     // console.log(res);
     user.password = undefined;
     // console.log(req.socket.localAddress)
@@ -73,7 +73,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
         }
     })
 }
-const admin_createSendToken = async (user, statuscode, res, req)=>{
+const user_createSendToken = async (user, statuscode, res, req)=>{
     // const existingToken = await loginLogs.findOne({ user_id: user._id, isOnline: true });
     // if (existingToken) {
     //     // User is already logged in, handle as needed (e.g., invalidate session, prevent login)
@@ -95,7 +95,7 @@ const admin_createSendToken = async (user, statuscode, res, req)=>{
         cookieOption.secure = true
         }
     console.log(token)
-    res.cookie('JWT_ADMIN', token, cookieOption)
+    res.cookie('JWT', token, cookieOption)
     // console.log(res);
     user.password = undefined;
     // console.log(req.socket.localAddress)
@@ -212,6 +212,71 @@ exports.isProtected = catchAsync( async (req, res, next) => {
             token = req.headers.authorization.split('  ')[1].split("=")[1];
         }
     }else if(req.headers.cookie){
+        token = parseCookies(req.headers.cookie).ADMIN_JWT;
+        console.log(token)
+    }
+    if(!token){
+        return next(new AppError('Please log in to access', 404))
+    }
+    console.log(token, "token")
+    const tokenId = await loginLogs.findOne({session_id:token})
+    console.log(tokenId, "ID")
+    if(!tokenId.isOnline){
+        return next(new AppError('Please log in to access', 404))
+    }
+    const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
+    const currentUser = await User.findById(decoded.A);
+    if(!currentUser){
+        return res.status(404).json({
+            status:"success",
+            message:'the user belonging to this token does no longer available'
+        })
+    }
+    // console.log(currentUser.id, "session")
+    // console.log(req.session.userId, "session")
+    // if (req.session.userId && req.session.userId !== currentUser.id) {
+    //     return res.status(403).json({
+    //         status: "error",
+    //         message: "Please login to get access"
+    //     });
+    // }
+    if(currentUser.roleName != "DemoLogin"){
+        if(!currentUser){
+            return res.status(404).json({
+                status:"success",
+                message:'the user belonging to this token does no longer available'
+            })
+        }else if(!currentUser.isActive){
+            return res.status(404).json({
+                status:"success",
+                message:'the user belonging to this token does no longer available'
+            })
+        }else if(!currentUser.is_Online){
+            return res.status(404).json({
+                status:"success",
+                message:"Please login to get access"
+            })
+        }
+    }
+    req.currentUser = currentUser
+    req.token = token
+    next()
+});
+exports.isProtected_User = catchAsync( async (req, res, next) => {
+    let token 
+    // console.log(req.headers.authorization, 456)
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+        console.log("WORKING")
+        console.log(req.headers.authorization)
+        // console.log(req.headers.authorization.split(' ')[1].split("=")[1])
+        token = req.headers.authorization.split(' ')[1].split("=")[1];
+        if(!token){
+            token = req.headers.authorization.split(' ')[1]
+        }
+        if(!token){
+            token = req.headers.authorization.split('  ')[1].split("=")[1];
+        }
+    }else if(req.headers.cookie){
         token = parseCookies(req.headers.cookie).JWT;
         // console.log(token)
     }
@@ -263,6 +328,59 @@ exports.isProtected = catchAsync( async (req, res, next) => {
     next()
 });
 
+exports.isLogin_Admin = catchAsync( async (req, res, next) => {
+    let token 
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+        token = req.headers.authorization.split(' ')[1].split("=")[1];
+    }else if(req.headers.cookie){
+        token = parseCookies(req.headers.cookie).ADMIN_JWT;
+        // console.log(token)
+    }
+    // console.log(token, "TOKEN")
+    if(!token){
+        return next()
+    }
+    if(token == "loggedout"){
+        return next()
+    }
+    
+    const tokenId = await loginLogs.findOne({session_id:token})
+    // console.log(tokenId, "TOKENID")
+    if(!tokenId.isOnline){
+        return next()
+    }
+    // console.log(token)
+    const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
+    const currentUser = await User.findById(decoded.A);
+    if(!currentUser){
+        return res.status(404).json({
+            status:"success",
+            message:'the user belonging to this token does no longer available'
+        })
+    }
+    // if (req.session.userId && req.session.userId !== currentUser.id) {
+    //     return next()
+    // }
+    if(currentUser.roleName != "DemoLogin"){
+        if(!currentUser){
+            return res.status(404).json({
+                status:"success",
+                message:'the user belonging to this token does no longer available'
+            })
+        }else if(!currentUser.isActive){
+            return res.status(404).json({
+                status:"success",
+                message:'the user belonging to this token does no longer available'
+            })
+        }else if(!currentUser.is_Online){
+            return next()
+        }
+    }
+    
+    req.currentUser = currentUser
+    req.token = token
+    next()
+});
 exports.isLogin = catchAsync( async (req, res, next) => {
     let token 
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
@@ -417,6 +535,45 @@ exports.logOut = catchAsync( async function logout(req, res) {
         status:'success'
     })
 });
+exports.admin_logOut = catchAsync( async function logout(req, res) {
+	const profilechema = Joi.object({
+		userid: Joi.number().required(),
+		parent_ids: Joi.optional().required(),
+	});
+	try {
+		profilechema.validate(req.body, {
+			abortEarly: true
+		});
+	} catch (error) {
+		return next(new AppError(error.details[0].message, 404));
+	}
+    // console.log(req.headers)
+	let token
+    // console.log(req.headers)
+    if(req.headers.authorization){
+        token = req.headers.authorization.split(' ');
+    }else{
+        token = req.headers.cookie.split('=')
+    }
+    // console.log(token)
+    let date = Date.now();
+    // console.log(global._loggedInToken)
+	let findToken=global._loggedInToken.findIndex((element)=>element.token===token[token.length-1]);
+	if (findToken >= 0) {
+		global._loggedInToken.splice(findToken, 1);
+	}
+    await loginLogs.findOneAndUpdate({session_id:token[token.length-1]},{isOnline:false, logOut_time:date})
+    // console.log(req.currentUser)
+    // await User.findByIdAndUpdate(req.currentUser.id, {is_Online:false})
+	res.cookie('ADMIN_JWT', 'loggedout', {
+        expires: new Date(date + 500),
+        httpOnly: true
+    });
+
+    res.status(200).json({
+        status:'success'
+    })
+});
 
 
 exports.logOutAllUser = catchAsync(async(req, res, next) => {
@@ -524,14 +681,14 @@ exports.userLogin = catchAsync (async(req, res, next) => {
             // }
             else{
                 await User.findOneAndUpdate({_id:user._id}, {is_Online:true})
-                createSendToken(user, 200, res, req);
+                user_createSendToken(user, 200, res, req);
                 // console.log(req.token)
     
             }
         }
     }else{
         let demoUser = await User.findOne({roleName: 'DemoLogin'})
-        createSendToken(demoUser, 200, res, req);
+        user_createSendToken(demoUser, 200, res, req);
     }
 });
 

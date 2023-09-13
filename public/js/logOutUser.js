@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export const logout = async() => {
+export const logoutUser = async() => {
     try{
         const res = await axios({
             method: 'GET',
-            url:'/api/v1/auth/admin_logOut'
+            url:'/api/v1/auth/logOut'
         });
         if(res.data.status === 'success'){
                 location.href = '/'

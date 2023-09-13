@@ -43,23 +43,14 @@ const commissionRepportModel = require('./model/commissionReport');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
-    let loginData = {}
-    // console.log(global)
-    if(global._token){
-        loginData.User = global._User
-        loginData.Token = global._token.split(';')[0]
-        if(!loginData.Token.startsWith("JWT")){
-            loginData.Token = global._token.split(';')[1]
-        }
-    }else{
-        loginData.User = ""
-        loginData.Token = ""
-    }
+   
     // console.log(loginData.Token)
     // console.log(global._token)
-    socket.emit("loginUser", {
-        loginData
-    })
+    if(global.loginData){
+        socket.emit("loginUser", {
+            loginData:global.loginData
+        })
+    }
     const urlRequestAdd = async(url,method, Token, user) => {
         const login = await loginlogs.findOne({session_id:Token, isOnline:true})
         
@@ -293,7 +284,7 @@ io.on('connection', (socket) => {
     socket.on("SelectLogoutUserId",async(id)=>{
         // console.log(id)
         // let data = {userId:`${id}`}
-        const fullUrl = fullUrl `/api/v1/auth/logOutSelectedUser?userId=`+id
+        let fullUrl =  `http://127.0.0.1/api/v1/auth/logOutSelectedUser?userId=`+id
         fetch(fullUrl, {
             method: 'POST',
             headers: { 'Authorization': `Bearer ` + loginData.Token }

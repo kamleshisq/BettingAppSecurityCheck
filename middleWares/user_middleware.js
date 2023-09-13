@@ -16,7 +16,7 @@ function parseCookies(cookieString) {
     return cookies;
   }
 
-const LoginLogs = catchAsync(async(req, res, next) => { 
+const LoginLogs = catchAsync(async(req, res, next) => {
     // console.log(req.headers.cookie, 456)
     // if(req.headers.cookie){
     //     console.log(parseCookies(req.headers.cookie).JWT)
@@ -73,46 +73,8 @@ const LoginLogs = catchAsync(async(req, res, next) => {
 
     //         }
     // }
-    else if((req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin" && req.originalUrl.startsWith('/admin')) || req.originalUrl.startsWith("/api/v1")){
-        console.log(req.headers.cookie, "MIDDLEWARES")
-        
-        if(req.headers.cookie && !req.originalUrl.startsWith("/wallet")){
-            // //console.log(global._loggedInToken)
-            const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).ADMIN_JWT, isOnline:true})
-            // //console.log(req.headers.cookie)
-            if(login == null){
-                return next()
-            }
-            const user = await User.findById(login.user_id._id)
-            var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl
-            login.logs.push(req.method + " - " + fullUrl)
-            login.save()
-            global._token = req.headers.cookie
-            global._protocol = req.protocol
-            global._host = req.get('host')
-            global._User = user
-            let loginData = {}
-            // console.log(global)
-            if(global._token){
-                loginData.User = global._User
-                loginData.Token = global._token.split(';')[0]
-                if(!loginData.Token.startsWith("ADMIN_JWT")){
-                    loginData.Token = global._token.split(';')[1]
-                }
-            }else{
-                loginData.User = ""
-                loginData.Token = ""
-            }
-            global.loginData = loginData
-        }
-        else if (!req.originalUrl.startsWith("/api/v1")){
-            global._token = ""
-            global._protocol = req.protocol
-            global._host = req.get('host')
-            global._User = ""
-        }
-    }else if((req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin") || req.originalUrl.startsWith("/api/v1")){
-        console.log(req.headers.cookie, "MIDDLEWARES_USER")
+    else if(req.originalUrl != "/" && req.originalUrl != "/adminLogin" && req.originalUrl != "/userlogin"){
+        //console.log(req.headers.cookie, "MIDDLEWARES")
         if(req.headers.cookie && !req.originalUrl.startsWith("/wallet")){
             // //console.log(global._loggedInToken)
             const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).JWT, isOnline:true})
@@ -128,19 +90,6 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             global._protocol = req.protocol
             global._host = req.get('host')
             global._User = user
-            let loginData = {}
-            // console.log(global)
-            if(global._token){
-                loginData.User = global._User
-                loginData.Token = global._token.split(';')[0]
-                if(!loginData.Token.startsWith("JWT")){
-                    loginData.Token = global._token.split(';')[1]
-                }
-            }else{
-                loginData.User = ""
-                loginData.Token = ""
-            }
-            global.loginData = loginData
         }
         else if (!req.originalUrl.startsWith("/api/v1")){
             global._token = ""
@@ -151,7 +100,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
     }else if(req.originalUrl == "/"){
         if(req.headers.cookie){
             const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).JWT, isOnline:true})
-            // console.log(login)
+            console.log(login)
             if(login == null){
                 return next()
             }

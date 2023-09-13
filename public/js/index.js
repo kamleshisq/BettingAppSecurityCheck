@@ -1,5 +1,6 @@
 import { login } from "./login";
 import { logout } from "./logOut";
+import {logoutUser} from "./logOutUser"
 import { reset } from "./resetPass";
 import { createUser } from "./createUser";
 import { debitCredit } from "./debitCredit";
@@ -97,6 +98,12 @@ $(document).on('click', ".logOut", function(e){
     // console.log('Working')
     // console.log(this)
     logout()
+})
+$(document).on('click', ".logOutUser", function(e){
+    e.preventDefault()
+    // console.log('Working')
+    // console.log(this)
+    logoutUser()
 })
 
 // if(document.querySelector("ResetFORM")){
@@ -621,6 +628,7 @@ $(document).on('submit', ".addSlider-form", function(e){
     let fd = new FormData(form);
     createSlider(fd)
 });
+
 
 $(document).on('submit', ".myloginmodl-form-dv", function(e){
     e.preventDefault()
