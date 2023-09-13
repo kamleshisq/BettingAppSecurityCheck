@@ -1356,6 +1356,7 @@ socket.on('connect', () => {
                let page =  0;
                $('.rowId').attr('data-rowid',1)
                let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
+               console.log(filterData)
                socket.emit("search", {filterData,page,id, LOGINDATA })
         // }
 
