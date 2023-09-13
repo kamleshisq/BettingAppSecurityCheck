@@ -4585,12 +4585,16 @@ socket.on('connect', () => {
                 let form = $(modleName).find('.form-data21')
                 let PMD = data.verticalMenu
                 form.attr('id', PMD._id);
-                form.find('input[name = "check"]').removeAttr('checked');
+                // form.find('input[name = "check"]').removeAttr('checked');
                 form.find('input[name = "menuName"]').attr('value',PMD.menuName)
                 form.find('input[name = "num"]').attr('value',PMD.num)
                 form.find('input[name = "url"]').attr('value',PMD.url)
                 if(PMD.status){
                     form.find('input[name = "check"]').attr("checked", "checked");
+                    form.find('input[name = "check"]').parent('.switch').addClass('on');
+                }else{
+                    form.find('input[name = "check"]').attr("checked", "");
+                    form.find('input[name = "check"]').parent('.switch').removeClass('on');
                 }
                 let html = ``
                 for(let i =0 ; i<data.page.length; i++){
@@ -4644,7 +4648,7 @@ socket.on('connect', () => {
                 let form = $(modleName).find('.form-data23')
                 let PMD = data
                 form.attr('id', PMD._id);
-                form.find('input[name = "check"]').removeAttr('checked');
+                // form.find('input[name = "check"]').removeAttr('checked');
                 form.find('input[name = "menuName"]').attr('value',PMD.menuName)
                 form.find('input[name = "url"]').attr('value',PMD.url)
                 form.find('input[name = "num"]').attr('value',PMD.Number)
@@ -4652,6 +4656,10 @@ socket.on('connect', () => {
                 document.getElementById('img').innerHTML = `<img src="../imgForHMenu/${PMD.icon}.png" alt="img" class="form__user-photo">`
                 if(PMD.status){
                     form.find('input[name = "check"]').attr("checked", "checked");
+                    form.find('input[name = "check"]').parent('.switch').addClass('on');
+                }else{
+                    form.find('input[name = "check"]').attr("checked", "");
+                    form.find('input[name = "check"]').parent('.switch').removeClass('on');
                 }
         })
 
@@ -4678,12 +4686,16 @@ socket.on('connect', () => {
                 let form = $(modleName).find('.form-data25')
                 let PMD = data
                 form.attr('id', PMD._id);
-                form.find('input[name = "check"]').removeAttr('checked');
+                // form.find('input[name = "check"]').removeAttr('checked');
                 form.find('input[name = "bannerName"]').attr('value',PMD.bannerName)
                 form.find('input[name = "url"]').attr('value',PMD.url)
                 document.getElementById('banner12').innerHTML = `<img src="../banner/${PMD.banner}.png" alt="img" class="form__user-photo">`
                 if(PMD.status){
                     form.find('input[name = "check"]').attr("checked", "checked");
+                    form.find('input[name = "check"]').parent('.switch').addClass('on');
+                }else{
+                    form.find('input[name = "check"]').attr("checked", "");
+                    form.find('input[name = "check"]').parent('.switch').removeClass('on');
                 }
         })
 
