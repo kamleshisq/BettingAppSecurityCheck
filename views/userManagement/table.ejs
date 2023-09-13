@@ -58,9 +58,9 @@
                     <%=i + 1%>
                   </td>
                   <td class="getOwnChild">
-                    <%if(users[i].isActive && !users[i].betLock){%>
+                    <%if(users[i].isActive && users[i].betLock){%>
                       <span class="user-status bet-lock" >BL</span>
-                    <%}else if(users[i].isActive && users[i].betLock){ %>
+                    <%}else if(users[i].isActive && !users[i].betLock){ %>
                       <span class="user-status active" >A</span>
                     <%}else{%>
                       <span class="user-status suspended" >S</span>

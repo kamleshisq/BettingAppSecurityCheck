@@ -1241,9 +1241,9 @@ socket.on('connect', () => {
                     
                 html += `<td> ${count + i} </td>
                     <td class="getOwnChild" data-bs-dismiss='${JSON.stringify(response[i])}'>`
-                    if(response[i].isActive && !response[i].betLock){
+                    if(response[i].isActive && response[i].betLock){
                         html + `<span class="user-status bet-lock" >BL</span>`
-                      }else if(response[i].isActive && response[i].betLock){ 
+                      }else if(response[i].isActive && !response[i].betLock){ 
                         html + `<span class="user-status active" >A</span>`
                       }else{
                         html + `<span class="user-status suspended" >S</span>`
