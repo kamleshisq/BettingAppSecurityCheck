@@ -1362,10 +1362,10 @@ socket.on('connect', () => {
         let W = false
         let R = false
         let US = false
-        $(document).on('change keyup','#searchUser, #ROLEselect, #WhiteLabel, #userStatusSelect',function(e){
+        $(document).on('change keyup','#searchUser, #ROLEselect, #WhiteLabelSelect, #userStatusSelect',function(e){
             // console.log($(this).hasClass("searchUser"), 123)
             console.log('check')
-            if($(this).hasClass("WhiteLabel")){
+            if($(this).hasClass("WhiteLabelSelect")){
                     filterData.whiteLabel = $(this).val()
                     if(filterData.whiteLabel != "" && filterData.whiteLabel != undefined){
                         W = true
