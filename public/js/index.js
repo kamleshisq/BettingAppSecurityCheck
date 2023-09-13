@@ -1,5 +1,6 @@
 import { login } from "./login";
 import { logout } from "./logOut";
+import {logoutUser} from "./logOutUser"
 import { reset } from "./resetPass";
 import { createUser } from "./createUser";
 import { debitCredit } from "./debitCredit";
@@ -97,6 +98,12 @@ $(document).on('click', ".logOut", function(e){
     // console.log('Working')
     // console.log(this)
     logout()
+})
+$(document).on('click', ".logOutUser", function(e){
+    e.preventDefault()
+    // console.log('Working')
+    // console.log(this)
+    logoutUser()
 })
 
 // if(document.querySelector("ResetFORM")){
