@@ -1256,6 +1256,8 @@ socket.on('connect', () => {
                       }else{
                         html + `<span class="user-status suspended" >S</span>`
                       }
+
+                      console.log(response[i], "WORKING")
                     if(response[i].roleName != 'user'){
                         html+= `<a href='/admin/userManagement?id=${response[i]._id}'>${response[i].userName}</a>`
                     }else{
