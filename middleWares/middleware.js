@@ -90,6 +90,19 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             global._protocol = req.protocol
             global._host = req.get('host')
             global._User = user
+            let loginData = {}
+            // console.log(global)
+            if(global._token){
+                loginData.User = global._User
+                loginData.Token = global._token.split(';')[0]
+                if(!loginData.Token.startsWith("ADMIN_JWT")){
+                    loginData.Token = global._token.split(';')[1]
+                }
+            }else{
+                loginData.User = ""
+                loginData.Token = ""
+            }
+            global.loginData = loginData
         }
         else if (!req.originalUrl.startsWith("/api/v1")){
             global._token = ""
@@ -114,6 +127,19 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             global._protocol = req.protocol
             global._host = req.get('host')
             global._User = user
+            let loginData = {}
+            // console.log(global)
+            if(global._token){
+                loginData.User = global._User
+                loginData.Token = global._token.split(';')[0]
+                if(!loginData.Token.startsWith("JWT")){
+                    loginData.Token = global._token.split(';')[1]
+                }
+            }else{
+                loginData.User = ""
+                loginData.Token = ""
+            }
+            global.loginData = loginData
         }
         else if (!req.originalUrl.startsWith("/api/v1")){
             global._token = ""
