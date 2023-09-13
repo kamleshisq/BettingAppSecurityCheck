@@ -119,7 +119,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             // //console.log(global._loggedInToken)
             const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).JWT, isOnline:true})
             // //console.log(req.headers.cookie)
-            console.log(login.user_id)
+            // console.log(login.user_id)
             if(login == null){
                 return next()
             }
