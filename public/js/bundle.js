@@ -7466,14 +7466,13 @@ $(document).on('submit', '.userStatus', function (e) {
   var formDataObj = Object.fromEntries(fd.entries());
   formDataObj.id = id;
   var rowId = $('.rowId').attr('data-rowid');
-  console.log(formDataObj, "WORKING1212121");
+  // console.log(formDataObj, "WORKING1212121")
   // var trElement = document.querySelector(`tr[data-id="${id}"]`);
   // let rowId = trElement.id
   // console.log(rowId)
   // console.log(formDataObj)
-  // userStatus(formDataObj, rowId)
+  (0, _userStatus.userStatus)(formDataObj, rowId);
 });
-
 $(document).on('click', '.Withdraw', function () {
   var rowId = $(this).parent().parent().attr('id');
   $('.rowId').attr('data-rowid', rowId);
@@ -7725,7 +7724,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50462" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60945" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
