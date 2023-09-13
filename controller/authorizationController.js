@@ -589,7 +589,7 @@ exports.userLogin = catchAsync (async(req, res, next) => {
             // }
             else{
                 await User.findOneAndUpdate({_id:user._id}, {is_Online:true})
-                createSendToken(user, 200, res, req);
+                user_createSendToken(user, 200, res, req);
                 // console.log(req.token)
     
             }
