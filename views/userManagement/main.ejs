@@ -480,12 +480,12 @@
                   </label>
                   <!-- <input type="text" name="whiteLabel" placeholder="Enter new role"> -->
                   <label >WhiteLabel</label>
-                  <select id="whiteLabel" name="whiteLabel" class="form-control ml0"  required>
+                  <select id="whiteLabel" name="whiteLabel" class="form-control ml0">
                     <%for(let i = 0; i < WhiteLabel.length; i++){ %>
                       <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
                     <%} %>
                   </select>
-                  <input type="text" class="hide" name="whiteLabel" id="newWhiteLabelInput" placeholder="Enter new WhiteLabel"  required>
+                  <input type="text" class="hide" name="whiteLabel" id="newWhiteLabelInput" placeholder="Enter new WhiteLabel" >
                 </div>
               </div>
             <%} %>
@@ -530,7 +530,7 @@
               </div>
               <div class="col hide" id="ExposureLimits">
                 <label >Expose Limits</label>
-                <input type="number" class="form-control ml0" placeholder="0" name="exposureLimit" required>
+                <input type="number" class="form-control ml0" placeholder="0" name="exposureLimit">
               </div>
             </div>
             <div class="row mt-2">
