@@ -7114,6 +7114,7 @@ $(document).ready(function () {
   }
 
   colorLink();
+  $('input:checked').parents('.switch').addClass("on");
 });
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
@@ -7466,8 +7467,8 @@ $(document).on('submit', '.userStatus', function (e) {
   console.log(formDataObj, "WORKING1212121");
   // var trElement = document.querySelector(`tr[data-id="${id}"]`);
   // let rowId = trElement.id
-  console.log(rowId);
-  console.log(formDataObj);
+  // console.log(rowId)
+  // console.log(formDataObj)
   (0, _userStatus.userStatus)(formDataObj, rowId);
 });
 $(document).on('click', '.Withdraw', function () {
