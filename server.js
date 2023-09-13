@@ -46,11 +46,9 @@ io.on('connection', (socket) => {
    
     // console.log(loginData.Token)
     // console.log(global._token)
-    if(global.loginData){
-        socket.emit("loginUser", {
-            loginData:global.loginData
-        })
-    }
+    socket.emit("loginUser", {
+        loginData:global.loginData
+    })
     const urlRequestAdd = async(url,method, Token, user) => {
         const login = await loginlogs.findOne({session_id:Token, isOnline:true})
         
