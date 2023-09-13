@@ -134,7 +134,7 @@ io.on('connection', (socket) => {
             var regexp = new RegExp(data.filterData.userName);
             data.filterData.userName = regexp
         }
-        if(Object.keys(data.filterData).length == 0){
+        if(Object.keys(data.filterData).length !== 0){
             if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
                 // console.log(data.filterData)
                 // console.log(data.filterData)
