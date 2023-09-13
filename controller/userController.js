@@ -183,9 +183,9 @@ exports.updateUserStatusCodeActive = catchAsync(async(req, res, next)=>{
         if(req.body.status === "suspended"){
             await User.findByIdAndUpdate(req.body.id, {isActive:false, betLock:true})
         }else if (req.body.status === "active"){
-            await User.findByIdAndUpdate(req.body.id, {isActive:true, betLock:true})
-        }else if (req.body.status === "betLock"){
             await User.findByIdAndUpdate(req.body.id, {isActive:true, betLock:false})
+        }else if (req.body.status === "betLock"){
+            await User.findByIdAndUpdate(req.body.id, {isActive:true, betLock:true})
         }
         res.status(200).json({
             status:"success"
