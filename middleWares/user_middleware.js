@@ -77,7 +77,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         //console.log(req.headers.cookie, "MIDDLEWARES")
         if(req.headers.cookie && !req.originalUrl.startsWith("/wallet")){
             // //console.log(global._loggedInToken)
-            const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).ADMIN_JWT, isOnline:true})
+            const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).JWT, isOnline:true})
             // //console.log(req.headers.cookie)
             if(login == null){
                 return next()
@@ -99,7 +99,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         }
     }else if(req.originalUrl == "/"){
         if(req.headers.cookie){
-            const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).ADMIN_JWT, isOnline:true})
+            const login = await loginLogs.findOne({session_id:parseCookies(req.headers.cookie).JWT, isOnline:true})
             console.log(login)
             if(login == null){
                 return next()
