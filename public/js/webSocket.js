@@ -1329,7 +1329,7 @@ socket.on('connect', () => {
         let W = false
         let R = false
         let US = false
-        $(document).on('change keyup','#searchUser, #ROLEselect, #WhiteLabel','#userStatus',function(e){
+        $(document).on('change keyup','#searchUser, #ROLEselect, #WhiteLabel','#userStatusSelect',function(e){
             // console.log($(this).hasClass("searchUser"), 123)
             if($(this).hasClass("WhiteLabel")){
                     filterData.whiteLabel = $(this).val()
@@ -1340,12 +1340,8 @@ socket.on('connect', () => {
                         delete filterData.whiteLabel 
                     }
             }
-            if($(this).hasClass("userStatus")){
-                    if($(this).val() == 'true' ){
-                        filterData.status = true
-                    }else{
-                        filterData.status = false
-                    }
+            if($(this).hasClass("userStatusSelect")){
+                    filterData.status = $(this).val()
                     if(filterData.status != "" && filterData.status != undefined){
                         US = true
                     }else{
