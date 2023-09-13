@@ -47,7 +47,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
         cookieOption.secure = true
         }
     console.log(token)
-    res.cookie('JWT', token, cookieOption)
+    res.cookie('ADMIN_JWT', token, cookieOption)
     // console.log(res);
     user.password = undefined;
     // console.log(req.socket.localAddress)
@@ -73,7 +73,7 @@ const createSendToken = async (user, statuscode, res, req)=>{
         }
     })
 }
-const admin_createSendToken = async (user, statuscode, res, req)=>{
+const user_createSendToken = async (user, statuscode, res, req)=>{
     // const existingToken = await loginLogs.findOne({ user_id: user._id, isOnline: true });
     // if (existingToken) {
     //     // User is already logged in, handle as needed (e.g., invalidate session, prevent login)
@@ -95,7 +95,7 @@ const admin_createSendToken = async (user, statuscode, res, req)=>{
         cookieOption.secure = true
         }
     console.log(token)
-    res.cookie('JWT_ADMIN', token, cookieOption)
+    res.cookie('JWT', token, cookieOption)
     // console.log(res);
     user.password = undefined;
     // console.log(req.socket.localAddress)
@@ -198,6 +198,71 @@ exports.checkPass = catchAsync(async(req, res, next) => {
 })
 
 exports.isProtected = catchAsync( async (req, res, next) => {
+    let token 
+    // console.log(req.headers.authorization, 456)
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+        console.log("WORKING")
+        console.log(req.headers.authorization)
+        // console.log(req.headers.authorization.split(' ')[1].split("=")[1])
+        token = req.headers.authorization.split(' ')[1].split("=")[1];
+        if(!token){
+            token = req.headers.authorization.split(' ')[1]
+        }
+        if(!token){
+            token = req.headers.authorization.split('  ')[1].split("=")[1];
+        }
+    }else if(req.headers.cookie){
+        token = parseCookies(req.headers.cookie).ADMIN_JWT;
+        console.log(token)
+    }
+    if(!token){
+        return next(new AppError('Please log in to access', 404))
+    }
+    console.log(token, "token")
+    const tokenId = await loginLogs.findOne({session_id:token})
+    console.log(tokenId, "ID")
+    if(!tokenId.isOnline){
+        return next(new AppError('Please log in to access', 404))
+    }
+    const decoded = await util.promisify(JWT.verify)(token, process.env.JWT_SECRET);
+    const currentUser = await User.findById(decoded.A);
+    if(!currentUser){
+        return res.status(404).json({
+            status:"success",
+            message:'the user belonging to this token does no longer available'
+        })
+    }
+    // console.log(currentUser.id, "session")
+    // console.log(req.session.userId, "session")
+    // if (req.session.userId && req.session.userId !== currentUser.id) {
+    //     return res.status(403).json({
+    //         status: "error",
+    //         message: "Please login to get access"
+    //     });
+    // }
+    if(currentUser.roleName != "DemoLogin"){
+        if(!currentUser){
+            return res.status(404).json({
+                status:"success",
+                message:'the user belonging to this token does no longer available'
+            })
+        }else if(!currentUser.isActive){
+            return res.status(404).json({
+                status:"success",
+                message:'the user belonging to this token does no longer available'
+            })
+        }else if(!currentUser.is_Online){
+            return res.status(404).json({
+                status:"success",
+                message:"Please login to get access"
+            })
+        }
+    }
+    req.currentUser = currentUser
+    req.token = token
+    next()
+});
+exports.isProtected_User = catchAsync( async (req, res, next) => {
     let token 
     // console.log(req.headers.authorization, 456)
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
@@ -531,7 +596,7 @@ exports.userLogin = catchAsync (async(req, res, next) => {
         }
     }else{
         let demoUser = await User.findOne({roleName: 'DemoLogin'})
-        createSendToken(demoUser, 200, res, req);
+        user_createSendToken(demoUser, 200, res, req);
     }
 });
 
