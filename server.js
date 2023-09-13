@@ -137,6 +137,10 @@ io.on('connection', (socket) => {
                 var regexp = new RegExp(data.filterData.userName);
                 data.filterData.userName = regexp
             }
+            if(data.filterData.status){
+                data.filterData.isActive = data.filterData.status
+                delete data.filterData['status']
+            }
             if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
                 // console.log(data.filterData)
                 // console.log(data.filterData)

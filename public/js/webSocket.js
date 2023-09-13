@@ -1321,7 +1321,8 @@ socket.on('connect', () => {
         let S = false
         let W = false
         let R = false
-        $(document).on('change keyup','#searchUser, #ROLEselect, #WhiteLabel',function(e){
+        let US = false
+        $(document).on('change keyup','#searchUser, #ROLEselect, #WhiteLabel','#userStatus',function(e){
             // console.log($(this).hasClass("searchUser"), 123)
             if($(this).hasClass("WhiteLabel")){
                     filterData.whiteLabel = $(this).val()
@@ -1330,6 +1331,19 @@ socket.on('connect', () => {
                     }else{
                         W = false
                         delete filterData.whiteLabel 
+                    }
+            }
+            if($(this).hasClass("userStatus")){
+                    if($(this).val() == 'true' ){
+                        filterData.status = true
+                    }else{
+                        filterData.status = false
+                    }
+                    if(filterData.status != "" && filterData.status != undefined){
+                        US = true
+                    }else{
+                        US = false
+                        delete filterData.status 
                     }
             }
             if($(this).hasClass("ROLEselect")){
@@ -1383,7 +1397,7 @@ socket.on('connect', () => {
 
 
         $('.rowId').attr('data-rowid',page + 1)
-        if(W || S || R){
+        if(W || S || R || US){
                 
             socket.emit("search", {filterData,page,id, LOGINDATA })
         }else{
@@ -7988,7 +8002,7 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/admin/commissionReport"){
-        
+
         const FdateInput = document.getElementById('Fdate');
         const TdateInput = document.getElementById('Tdate');
         FdateInput.addEventListener('change', handleInputChangeCommission);
