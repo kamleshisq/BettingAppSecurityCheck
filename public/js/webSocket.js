@@ -1329,7 +1329,7 @@ socket.on('connect', () => {
         let W = false
         let R = false
         let US = false
-        $(document).on('change keyup','#searchUser, #ROLEselect, #WhiteLabel','#userStatusSelect',function(e){
+        $(document).on('change keyup','#searchUser, #ROLEselect, #WhiteLabel, #userStatusSelect',function(e){
             // console.log($(this).hasClass("searchUser"), 123)
             console.log('check')
             if($(this).hasClass("WhiteLabel")){
