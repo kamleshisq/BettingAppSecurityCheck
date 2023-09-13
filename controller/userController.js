@@ -178,7 +178,22 @@ exports.updateUserStatusCodeActive = catchAsync(async(req, res, next)=>{
         return next(new AppError("There is no user with taht id", 404))
     }
 
-    console.log(req.body, "Body")
+    // console.log(req.body, "Body")
+    try{
+        if(req.body.status === "suspended"){
+            await User.findByIdAndUpdate(req.body.id, {isActive:false, betLock:true})
+        }else if (req.body.status === "active"){
+            await User.findByIdAndUpdate(req.body.id, {isActive:true, betLock:true})
+        }else if (req.body.status === "betLock"){
+            await User.findByIdAndUpdate(req.body.id, {isActive:true, betLock:false})
+        }
+        res.status(200).json({
+            status:"success"
+        })
+    }catch(err){
+        console.log(err)
+        return next(new AppError("Please try again leter", 404))
+    }
     // if(userDetails.isActive){
     //     res.status(200).json({
     //         status:"success",
