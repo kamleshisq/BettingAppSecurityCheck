@@ -4,9 +4,14 @@ const userController = require('../controller/userController')
 const authController = require('../controller/authorizationController');
 // const { route } = require('./roleRoutes');
 
-router.get("/createuser10000" , userController.createUser10000)
 
+// User Panal
+router.post("/admin_updateCurrentUserPass", userController.currentUserPasswordupdate);
+
+
+// Admin Panal
 router.use(authController.isProtected)
+router.get("/createuser10000" , userController.createUser10000)
 
 router.post("/updateCurrentUserPass", userController.currentUserPasswordupdate);
 //createDeleteUser//

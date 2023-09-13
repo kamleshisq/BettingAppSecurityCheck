@@ -23,7 +23,8 @@ router.get("/getLiveTv", viewController.getLiveTv);
 router.get("/getMarketResult", viewController.getMarketResult);
 
 
-// router.use()
+// Admin Panal 
+
 router.get('/admin/userManagement', authController.isProtected, authController.isAdmin,authController.restrictTo("userName"), viewController.userTable);
 router.get("/createUSer", authController.isProtected, authController.restrictTo("createDeleteUser"), viewController.createUser);
 router.get("/accountStatement", authController.isProtected, authController.restrictTo('accountControl'), viewController.accountStatement);
@@ -73,10 +74,7 @@ router.get("/admin/catalogcontrol/compitations/events", authController.isProtect
 router.get("/admin/riskAnalysis", authController.isProtected, authController.isAdmin,viewController.RiskAnalysis);
 router.get("/admin/matchBets", authController.isProtected, authController.isAdmin,viewController.marketBets);
 
-//user routs
-
-
-//Real??
+//User Panal
 router.get("/", authController.isLogin, notificationController.myNotifications ,viewController.userdashboard);
 router.get('/exchange', authController.isLogin, notificationController.myNotifications ,viewController.getUserExchangePage);
 router.get('/exchange/cricket', authController.isLogin, notificationController.myNotifications ,viewController.cricketPage);

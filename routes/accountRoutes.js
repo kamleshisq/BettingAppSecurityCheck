@@ -3,9 +3,13 @@ const router = express.Router()
 const accountController = require('../controller/accountController');
 const authController = require("../controller/authorizationController");
 
+// User Panal
 router.post("/getMyAccStatement",authController.isProtected, accountController.getMyAccountStatement);
 
+
+// Admin Panal
 router.use(authController.isProtected, authController.restrictTo('accountControl'))
+router.post("/admin_getMyAccStatement",authController.isProtected, accountController.getMyAccountStatement); //  user in both side
 
 router.post("/deposit", authController.checkPass ,accountController.deposit);
 router.get("/getAllStatement", accountController.getAllAccStatement);

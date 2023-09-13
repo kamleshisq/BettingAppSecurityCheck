@@ -73,6 +73,54 @@ const createSendToken = async (user, statuscode, res, req)=>{
         }
     })
 }
+const admin_createSendToken = async (user, statuscode, res, req)=>{
+    // const existingToken = await loginLogs.findOne({ user_id: user._id, isOnline: true });
+    // if (existingToken) {
+    //     // User is already logged in, handle as needed (e.g., invalidate session, prevent login)
+    //     return res.status(403).json({
+    //         status: "error",
+    //         message: "User is already logged in"
+    //     });
+    // }
+
+    const token = createToken(user._id);
+    // req.session.userId = user._id;
+    // req.token = token
+    const cookieOption = {
+        expires: new Date(Date.now() + (process.env.JWT_COOKIE_EXPIRES_IN*24*60*60*1000)),
+        httpOnly: true,
+        // secure: true
+        }
+    if(process.env.NODE_ENV === "production"){
+        cookieOption.secure = true
+        }
+    console.log(token)
+    res.cookie('JWT_ADMIN', token, cookieOption)
+    // console.log(res);
+    user.password = undefined;
+    // console.log(req.socket.localAddress)
+    // console.log(req.headers['user-agent'])
+    // req.loginUser = user
+    let time = Date.now()
+    await loginLogs.create({user_id:user._id,
+                            userName:user.userName, 
+                            role_Type:user.role_type,
+                            login_time:time, 
+                            isOnline: true, 
+                            ip_address:global.ip, 
+                            session_id:token, 
+                            device_info:req.headers['user-agent']})
+    global._loggedInToken.push({token:token,time:time})
+    // console.log(global._loggedInToken)
+    // const roles = await Role.find({role_level: {$gt:user.role.role_level}})
+    res.status(200).json({
+        status:"success",
+        token,
+        data: {
+            user
+        }
+    })
+}
 
 exports.login = catchAsync (async(req, res, next) => {
     let {
