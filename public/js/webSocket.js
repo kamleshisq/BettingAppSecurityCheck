@@ -4481,10 +4481,10 @@ socket.on('connect', () => {
                 form.find('input[name = "link"]').attr('value',PMD.link)
                 if(PMD.status){
                     form.find('input[name = "check"]').attr("checked", "checked");
-                    form.find('input[name = "check"]').parent('switch').addClass('on');
+                    form.find('input[name = "check"]').parent('.switch').addClass('on');
                 }else{
                     form.find('input[name = "check"]').attr("checked", "");
-                    form.find('input[name = "check"]').parent('switch').removeClass('on');
+                    form.find('input[name = "check"]').parent('.switch').removeClass('on');
 
                 }
                 if(PMD.video){
