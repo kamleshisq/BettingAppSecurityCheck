@@ -24,10 +24,10 @@
           <tr>
             <th>S.No</th>
             <th>User Name</th>
-            <%if(currentUser.roleName == "admin"){ %>
+            <th>Type</th>
+            <%if(currentUser.roleName == "Admin"){ %>
               <th>White Labels</th>
             <%}%>
-            <th>Type</th>
             <th>Credit Reference</th>
             <th>Available Balance</th>
             <th>Downlevel Balance</th>
@@ -67,16 +67,16 @@
                         <%=users[i].userName%>
                           <%}%>
                   </td>
-                  <%if(currentUser.roleName == "admin"){ %>
-                    <td>
-                      <%=users[i].whiteLabel%>
-                    </td>
-                  <%}%>
                   <td>
                     <span class="role-type">
                       <%=users[i].roleName%>
                     </span>
                   </td>
+                  <%if(currentUser.roleName == "Admin"){ %>
+                    <td>
+                      <%=users[i].whiteLabel%>
+                    </td>
+                  <%}%>
                   <td>
                     <%=users[i].balance%>
                   </td>
