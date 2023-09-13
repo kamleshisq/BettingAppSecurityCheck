@@ -7457,21 +7457,19 @@ $(document).on('click', '.popup_back', function () {
 });
 $(document).on('submit', '.userStatus', function (e) {
   e.preventDefault();
-
-  // let form = $(this)[0];
-  // let fd = new FormData(form);
-  // let id = form.id
-  // let formDataObj = Object.fromEntries(fd.entries());
-  // formDataObj.id = id
-  // let rowId = $('.rowId').attr('data-rowid')
+  var form = $(this)[0];
+  var fd = new FormData(form);
+  var id = form.id;
+  var formDataObj = Object.fromEntries(fd.entries());
+  formDataObj.id = id;
+  var rowId = $('.rowId').attr('data-rowid');
   console.log(formDataObj, "WORKING1212121");
   // var trElement = document.querySelector(`tr[data-id="${id}"]`);
   // let rowId = trElement.id
-  // // console.log(rowId)
-  // // console.log(formDataObj)
-  // userStatus(formDataObj, rowId)
+  console.log(rowId);
+  console.log(formDataObj);
+  (0, _userStatus.userStatus)(formDataObj, rowId);
 });
-
 $(document).on('click', '.Withdraw', function () {
   var rowId = $(this).parent().parent().attr('id');
   $('.rowId').attr('data-rowid', rowId);
