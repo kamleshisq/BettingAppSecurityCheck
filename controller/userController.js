@@ -173,38 +173,31 @@ exports.updateUserStatusCodeInactive = catchAsync(async(req, res, next) => {
 
 exports.updateUserStatusCodeActive = catchAsync(async(req, res, next)=>{
     // const userDetails = await User.findById(req.body.id);
-    let userDetails
-    if(req.currentUser.role.role_level == 1){
-        userDetails = await User.findById(req.body.id)
-    }else{
-        userDetails = await User.findOne({_id:req.body.id, whiteLabel:req.currentUser.whiteLabel})
-    }
+    let userDetails = await User.findById(req.body.id)
     if(!userDetails){
         return next(new AppError("There is no user with taht id", 404))
     }
 
-    if(req.currentUser.role.role_type > userDetails.role.role_type){
-        return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
-    }
-    if(userDetails.isActive){
-        res.status(200).json({
-            status:"success",
-            message:"User is already active"
-        })
-    }else{
-        const user = await User.findByIdAndUpdate(req.body.id, {isActive:true})
-        if(!user){
-            res.status(404).json({
-                status:'error',
-                message:"Ops, something went wrong please try again"
-            })
-        }else{
-            res.status(200).json({
-                status:"success",
-                user
-            })
-        }
-    }
+    console.log(req.body)
+    // if(userDetails.isActive){
+    //     res.status(200).json({
+    //         status:"success",
+    //         message:"User is already active"
+    //     })
+    // }else{
+    //     const user = await User.findByIdAndUpdate(req.body.id, {isActive:true})
+    //     if(!user){
+    //         res.status(404).json({
+    //             status:'error',
+    //             message:"Ops, something went wrong please try again"
+    //         })
+    //     }else{
+    //         res.status(200).json({
+    //             status:"success",
+    //             user
+    //         })
+    //     }
+    // }
 })
 
 exports.getAllUser = catchAsync(async(req, res, next) => {

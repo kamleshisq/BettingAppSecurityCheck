@@ -6121,12 +6121,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.userStatus = void 0;
 var userStatus = function userStatus(data, rawId) {
-  var url = data.status === 'true' ? '/api/v1/users/updateUserStatusActive' : '/api/v1/users/updateUserStatusInactive';
+  // let url = data.status === 'true' ? '/api/v1/users/updateUserStatusActive' : '/api/v1/users/updateUserStatusInactive';
+  var url = '/api/v1/users/updateUserStatusActive';
   $.ajax({
     url: url,
     type: 'post',
     data: {
       id: data.id,
+      status: data.status,
       Password: data.Password
     },
     success: function success(data) {
