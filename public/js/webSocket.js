@@ -9052,11 +9052,12 @@ socket.on('connect', () => {
                 </tr>`
             } 
             if(data.page == 0){
-                if(!(data.History.length < 10)){
+                if((data.History.length == 10)){
                     document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
                 }
                 if(data.History.length == 0){
                     html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    document.getElementById('load-more').innerHTML = ""
                 }
                 $('tbody').html(html)
             }else{
