@@ -1304,10 +1304,14 @@ socket.on('connect', () => {
             }
             html += `</tbody>`
             count += 10;
-            if(response.length == 0 && data.page == 0){
-                html += `<tr class="empty_table"><td>No record found</td></tr>`
+            if(data.page == 0){
+                if(response.length == 0){
 
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                }
+                $('#load-more').show()
             }
+           
             if(response.length == 0){
                 $('#load-more').hide()
             }
@@ -1394,7 +1398,7 @@ socket.on('connect', () => {
         }
     })
 
-    $('#load-more').click(function(e){
+    $(document).on('click','#load-more',function(e){
         let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
 
         let page = parseInt($('.rowId').attr('data-rowid'));
