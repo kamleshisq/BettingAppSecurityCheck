@@ -138,7 +138,11 @@ io.on('connection', (socket) => {
                 data.filterData.userName = regexp
             }
             if(data.filterData.status){
-                data.filterData.isActive = data.filterData.status
+                if(data.filterData.status == 'true'){
+                    data.filterData.isActive = true
+                }else{
+                    data.filterData.isActive = false
+                }
                 delete data.filterData['status']
             }
             if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
