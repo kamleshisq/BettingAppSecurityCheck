@@ -1356,6 +1356,7 @@ socket.on('connect', () => {
                let page =  0;
                $('.rowId').attr('data-rowid',1)
                let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
+               console.log(filterData)
                socket.emit("search", {filterData,page,id, LOGINDATA })
         // }
 
@@ -7987,11 +7988,12 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/admin/commissionReport"){
+        
         const FdateInput = document.getElementById('Fdate');
         const TdateInput = document.getElementById('Tdate');
         FdateInput.addEventListener('change', handleInputChangeCommission);
         TdateInput.addEventListener('change', handleInputChangeCommission);
-        function handleInputChangeCommission(event) {
+        function handleInputChangeCommission() {
             console.log("Work")
             let fromDate = $('#Fdate').val()
             let toDate = $('#Tdate').val()
