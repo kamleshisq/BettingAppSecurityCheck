@@ -527,7 +527,7 @@
                 <label for="">Credit Reference</label>
                 <input type="text" class="form-control ml0" placeholder="0" name="Credit" required>
               </div>
-              <div class="col">
+              <div class="col hide" id="ExposureLimits">
                 <label for="exposureLimit">Expose Limits</label>
                 <input type="number" class="form-control ml0" placeholder="0" name="exposureLimit" required>
               </div>
@@ -653,6 +653,12 @@
         document.getElementById('shareVisibleActual').classList.add("hide") 
       } else {
         document.getElementById('shareVisibleActual').classList.remove("hide") 
+      }
+
+      if (document.getElementById('roleSelect').value === '6492fe4fd09db28e00761694') {  
+        document.getElementById('ExposureLimits').classList.remove("hide") 
+      } else {
+        document.getElementById('ExposureLimits').classList.add("hide") 
       }
     });
   </script>
