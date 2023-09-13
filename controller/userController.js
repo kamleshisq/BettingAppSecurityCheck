@@ -552,11 +552,11 @@ exports.getOwnChild = catchAsync(async(req, res, next) => {
         if(me.role.role_level < req.currentUser.role.role_level){
             return next(new AppError('You do not have permission to perform this action',400))
         }
-        Rows = await User.count({parent_id: req.query.id,isActive:true})
-        child = await User.find({parent_id: req.query.id,isActive:true}).skip(page * limit).limit(limit);
+        Rows = await User.count({parent_id: req.query.id})
+        child = await User.find({parent_id: req.query.id}).skip(page * limit).limit(limit);
     }else{
-        Rows = await User.count({parent_id: req.currentUser._id,isActive:true})
-        child = await User.find({parent_id: req.currentUser._id,isActive:true}).skip(page * limit).limit(limit);
+        Rows = await User.count({parent_id: req.currentUser._id})
+        child = await User.find({parent_id: req.currentUser._id}).skip(page * limit).limit(limit);
         me = await User.findById(req.currentUser._id)
     }
     res.status(200).json({
