@@ -178,7 +178,7 @@ exports.updateUserStatusCodeActive = catchAsync(async(req, res, next)=>{
         return next(new AppError("There is no user with taht id", 404))
     }
 
-    console.log(req.body)
+    console.log(req.body, "Body")
     // if(userDetails.isActive){
     //     res.status(200).json({
     //         status:"success",

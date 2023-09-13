@@ -2725,12 +2725,6 @@ socket.on('connect', () => {
         $(document).on('click','.change_status',function(e){
             let status = $(this).prop('checked') ? true : false;
             let id = $(this).data('id')
-            if(status){
-                $(this).parents('.switch').addClass("on");
-            }else{
-                $(this).parents('.switch').removeClass("on");
-
-            }
             if(id){
                 if(confirm('do you want to change status')){
                     socket.emit('casionoStatusChange',{status,id})
