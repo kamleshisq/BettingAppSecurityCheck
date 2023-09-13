@@ -2726,6 +2726,7 @@ socket.on('connect', () => {
             let status = $(this).prop('checked') ? true : false;
             let id = $(this).data('id')
             if(status){
+                $(this).parents('.switch').addClass("on");
             }else{
                 $(this).parents('.switch').removeClass("on");
 
