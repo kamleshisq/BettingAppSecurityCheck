@@ -1079,6 +1079,8 @@ socket.on('connect', () => {
                 let form = $(modleName).find('.form-data')
                 // console.log(form)
                 form.attr('id', data.user._id);
+                console.log(data.user)
+                // form.find('select[name = "status"]').val("withdrawl")
             }
         })
         
