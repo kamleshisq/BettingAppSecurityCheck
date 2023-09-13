@@ -404,7 +404,7 @@ $(document).on('submit','.userStatus',function(e) {
     // let rowId = trElement.id
     // console.log(rowId)
     // console.log(formDataObj)
-    userStatus(formDataObj, rowId)
+    // userStatus(formDataObj, rowId)
 });
 
    
