@@ -1079,6 +1079,14 @@ socket.on('connect', () => {
                 let form = $(modleName).find('.form-data')
                 // console.log(form)
                 form.attr('id', data.user._id);
+                if(data.user.isActive && data.user.betLock){
+                    form.find('select[name = "status"]').val("betLock")
+                }else if(data.user.isActive && !data.user.betLock){
+                    form.find('select[name = "status"]').val("active")
+                }else{
+                    form.find('select[name = "status"]').val("suspended")
+                }
+                // console.log(data.user)
             }
         })
         
