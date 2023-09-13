@@ -7117,6 +7117,13 @@ $(document).ready(function () {
 
   colorLink();
   $('input:checked').parents('.switch').addClass("on");
+  $('input:checkbox').change(function () {
+    if ($(this).is(":checked")) {
+      $(this).parents('.switch').addClass("on");
+    } else {
+      $(this).parents('.switch').removeClass("on");
+    }
+  });
 });
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
