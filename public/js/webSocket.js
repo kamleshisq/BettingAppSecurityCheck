@@ -1261,13 +1261,13 @@ socket.on('connect', () => {
                     }else{
                         html+= `${response[i].userName}`
                     }
-                    html += `</td>`
-
+                    
                     html += `<td>  <span class="role-type">
-                                ${response[i].roleName}
-                            </span>
-                            </td>`
-
+                    ${response[i].roleName}
+                    </span>
+                    </td>`
+                    
+                    html += `</td>`
                     if(data.currentUser.roleName == "Admin"){
                         html += `<td> ${response[i].whiteLabel}</td>`
                     }else{
