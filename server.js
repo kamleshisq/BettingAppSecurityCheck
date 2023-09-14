@@ -2709,7 +2709,7 @@ io.on('connection', (socket) => {
         try{
              console.log(data, "BETDATA")
              if(data.result != ""){
-
+                
              }else{
                 socket.emit('VoidBetIn22', {message:"Please select a result", status:"error"})
              }
