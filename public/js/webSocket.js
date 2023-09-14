@@ -9226,7 +9226,7 @@ socket.on('connect', () => {
     }
 
 
-    if(pathname === "/admin/catalogcontrol/compitations/events"){
+    if(pathname === "/admin/catalogcontrol/compitations/events" || pathname == '/admin/eventcontrol'){
         $(document).on('click','.status_check',function(){
             let status = $(this).prop('checked') ? true : false;
             let id = $(this).data('id')
