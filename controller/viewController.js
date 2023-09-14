@@ -3023,7 +3023,7 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
             }
           }
     ])
-    
+    console.log(betsEventWiseOpen)
     res.status(200).render("./sattlementInPage/main",{
         title:"SETTLEMENTS",
         me,
