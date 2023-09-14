@@ -1142,6 +1142,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
         }
       ]);
       console.log(betsEventWise1, "NEWDATA")
+      console.log(betsEventWise1[0].data, "NEWDATA")
       // Now betsEventWise will contain an array of objects grouped by betType
       
     let betsEventWise = await betModel.aggregate([
