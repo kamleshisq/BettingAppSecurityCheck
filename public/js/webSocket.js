@@ -9223,7 +9223,9 @@ socket.on('connect', () => {
                       });
                   }
                   let html = ``
-                  if(document.getElementById('mapped-market-table').innerHTML != `<tr class="empty_table"><td>No MAPPED Markets! </td></tr>`){
+                  if(document.getElementById('mapped-market-table').innerHTML != `<tbody><tr class="empty_table"><td>No MAPPED Markets! </td></tr>
+                
+                  </tbody>`){
                       
                 }else{
                     html += `
