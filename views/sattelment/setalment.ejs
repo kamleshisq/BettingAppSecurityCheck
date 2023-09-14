@@ -12,6 +12,35 @@
   <!-- seling section -->
   <section class="liveMarket__risk">
     <div class="container-fluid">
+      <div class="table-heading">
+        <h3>Settelments</h3>
+        <div class="table-heading-btn">
+          <form action="" class="settlement-heading-from">
+            <div class="input-group">
+              <label class="up-down-form">From Date</label>
+              <input type = "date" id="from_date">
+            </div> 
+            <div class="input-group">
+              <label class="up-down-form">To Date</label>
+              <input type = "date" id="to_date">
+            </div> 
+            </form>
+            <div class="on-off-btn-section">
+              <label for="autoSattled">Auto Settlements</label>
+              <%if(settlement.status){%>
+                <span class="on-off">OFF &nbsp; <label class="switch">
+                <input class="checkbox" name="autoSattled" type="checkbox" checked id="checkbox">
+                <span class="slider round"></span>
+                </label>&nbsp; ON</span>
+              <%}else{%>
+                <span class="on-off">OFF &nbsp; <label class="switch">
+                  <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
+                  <span class="slider round"></span>
+                  </label>&nbsp; ON</span>
+              <%} %>
+            </div>
+        </div>
+      </div>
       <div class="tab-data-section">
       <div class="tab end" >
         <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'Cricket')"><img src="../images/cball.png" alt=""> &nbsp; Cricket  </button>
