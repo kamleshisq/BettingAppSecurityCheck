@@ -221,7 +221,7 @@
             <td data-title="Points"><%=data.dashboard.topPlayers[i].Bets%></td>
               </tr>
           <%}%>
-          <%if(data.dashboard.topPlayers.length > 0){%>
+          <%if(!data.dashboard.topPlayers.length > 0){%>
             <tr class="empty_table"><td>No record found</td></tr>
           <%}%>
         </tbody>
