@@ -2709,7 +2709,7 @@ io.on('connection', (socket) => {
         try{
              console.log(data, "BETDATA")
              if(data.result != ""){
-                let bets = await betModel.aggregate([
+                let bets = await Bet.aggregate([
                     {
                         $match:{
                             marketId:`${data.id}`,
