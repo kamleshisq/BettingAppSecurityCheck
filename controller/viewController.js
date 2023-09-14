@@ -1095,6 +1095,55 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     if(settlement === null){
         settlement = await sattlementModel.create({userId:me.id})
     }
+
+
+    let betsEventWise1 = await betModel.aggregate([
+        {
+          $match: {
+            status: "OPEN"
+          }
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "userName",
+            foreignField: "userName",
+            as: "user"
+          }
+        },
+        {
+          $unwind: "$user"
+        },
+        {
+          $match: {
+            "user.parentUsers": { $in: [req.currentUser.id] }
+          }
+        },
+        {
+          $group: {
+            _id: "$betType", // Group by betType
+            data: {
+              $push: {
+                eventdate: "$eventDate",
+                eventid: "$eventId",
+                series: "$event"
+              }
+            },
+            count: { $sum: 1 }
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            id: "$_id", // Rename _id to id
+            data: 1,
+            count: 1
+          }
+        }
+      ]);
+      console.log(betsEventWise1, "NEWDATA")
+      // Now betsEventWise will contain an array of objects grouped by betType
+      
     let betsEventWise = await betModel.aggregate([
         {
             $match: {
@@ -1167,7 +1216,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     // let sportData = await getCrkAndAllData()
     // const cricket1 = sportData[0].gameList[0].eventList
     // console.log(cricket1)
-    // console.log(betsEventWise)
+    console.log(betsEventWise)
     res.status(200).render("./sattelment/setalment",{
         title:"SETTLEMENTS",
         me,
