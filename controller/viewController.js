@@ -3021,7 +3021,7 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
               marketId: 1,
               count: 1,
               match : 1,
-              data:1
+              date:1
             }
           }
     ])
