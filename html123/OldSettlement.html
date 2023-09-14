@@ -1,0 +1,146 @@
+<%- include("../header") %>
+  <!--Container Main start-->
+  <div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
+    <div class="container-fluid">
+      <div class="new-head"> 
+          <h3>Settelments</h3>
+          <!-- <form action="">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
+              
+            </div>
+            <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
+          </form> -->
+      </div>
+    <%- include("../loginUserAdminsideDetails") %>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="table-data-section">
+        <div class="table-heading">
+          <h3>Settelments</h3>
+          <div class="table-heading-btn">
+            <form action="" class="settlement-heading-from">
+              <div class="input-group">
+                <label class="up-down-form">From Date</label>
+                <input type = "date" id="from_date">
+              </div> 
+              <div class="input-group">
+                <label class="up-down-form">To Date</label>
+                <input type = "date" id="to_date">
+              </div> 
+              </form>
+              <div class="on-off-btn-section">
+                <label for="autoSattled">Auto Settlements</label>
+                <%if(settlement.status){%>
+                  <span class="on-off">OFF &nbsp; <label class="switch">
+                  <input class="checkbox" name="autoSattled" type="checkbox" checked id="checkbox">
+                  <span class="slider round"></span>
+                  </label>&nbsp; ON</span>
+                <%}else{%>
+                  <span class="on-off">OFF &nbsp; <label class="switch">
+                    <input class="checkbox" name="autoSattled" type="checkbox" id="checkbox">
+                    <span class="slider round"></span>
+                    </label>&nbsp; ON</span>
+                <%} %>
+              </div>
+          </div>
+        </div>
+        <div class="data-table">
+          <table>
+            <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Event Date</th>
+                  <th>Series</th>
+                  <th>Event Name</th>
+                  <th>Total Bets</th>
+                  <th>Open Bets</th>
+                  <th></th>
+                </tr>
+            </thead>
+            <tbody class="new-body">
+              <%if(betsEventWise.length !== 0){%>
+              <%for(let i = 0; i < betsEventWise.length; i++){ %>
+                
+                <tr>
+                  <%
+                      var timestamp = betsEventWise[i].eventdate * 1000; 
+                      var date = new Date(timestamp);
+                      var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
+                     
+                  %>
+                  <td><%=i+1 %></td>
+                  <td class="date-time"><%=formattedTime%></td>
+                  <td class="text-nowrap"><%= betsEventWise[i].series%></td>
+                  <td class="text-nowrap"><%= betsEventWise[i].matchName%></td>
+                  <td><%= betsEventWise[i].count%></td>
+                  <td><%= betsEventWise[i].count%></td>
+                  <td><a href="/admin/settlementIn?id=<%=betsEventWise[i].eventid%>" class="btn-green">settle</a></td>
+                </tr>
+              <%} %>
+              <%}else{%>
+                <tr class="empty_table"><td>No record found</td></tr>
+              <%}%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+    </section>
+  </div>
+
+<!-- end gallary -->
+<div class="modal fade" id="myModaladduser" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        <h4 class="modal-title">Add HouseFunds</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-data">
+          <div class="row">
+            <div class="col">
+              <label for="">Amounts</label>
+              <input type="text" class="form-control ml0" placeholder="1000000" name="email">
+            </div>
+          </div>
+                   <button type="button" class="btn-submit mt-3">AddFunds &nbsp; <img src="../images/sub.png" alt=""></button>
+        </form>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+    
+
+  </div>
+ 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+<script type="text/javascript" src="../js/bundle.js"></script>
+
+
+</body>
+    </html>
