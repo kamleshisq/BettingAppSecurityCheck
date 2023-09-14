@@ -2708,6 +2708,8 @@ io.on('connection', (socket) => {
     socket.on('unmapBet', async(data) => {
         try{
 
+            console.log(data)
+
         }catch(err){
             console.log(err)
             socket.emit('unmapBet', {message:'err', status:'error'})
