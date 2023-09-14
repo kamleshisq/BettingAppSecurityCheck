@@ -70,6 +70,9 @@ const betSchema = mongoose.Schema({
     },
     eventDate:{
         type:Date
+    },
+    result:{
+        type:String
     }
 })
 
