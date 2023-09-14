@@ -3260,10 +3260,8 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
             item.eventData.status = true
             item.eventData.count = count
          }else{
-            console.log(status,item.eventData.name)
             item.eventData.status = false
             item.eventData.count = count
-            console.log(item)
          }
          return item
     })
