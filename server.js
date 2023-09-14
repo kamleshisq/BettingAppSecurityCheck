@@ -3269,6 +3269,19 @@ io.on('connection', (socket) => {
         socket.emit('gameAnalysis', {gameAnalist, page})
     })
 
+    socket.on('getEvetnsOfSport',async(data)=>{
+        console.log(data);
+        const sportData = await getCrkAndAllData()
+        let sportList;
+        if(data.sport == '4'){
+            sportList = sportData[0].gameList[0].eventList
+        }else{
+            sportList = sportData[1].gameList.find(item => item.eventData.sportId == parseInt(data.sport))
+        }
+
+        socket.emit('getEvetnsOfSport',sportList)
+
+    })
 
     socket.on('claimCommissionAdmin', async(data) => {
         console.log(data)
