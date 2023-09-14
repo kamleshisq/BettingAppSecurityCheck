@@ -3304,7 +3304,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 })
 
 
-exports.CommissionMarkets = catchAsync(async(req, res, next) => {
+exports.CommissionMarkets = catchAsync(async(req, res, next) => { 
     
     const me = req.currentUser
     res.status(200).render("./commissionMarket/main",{
