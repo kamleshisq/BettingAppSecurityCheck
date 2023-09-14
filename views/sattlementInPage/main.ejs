@@ -6,7 +6,7 @@
       <div class="table-heading">
         <h3>Settelments</h3>
         <div class="form">
-          <h4>title</h4>
+          <h4><%=betsEventWiseOpen%></h4>
         </div>
       </div>
     </div>
@@ -43,7 +43,6 @@
                 <tr>
                   <td><%= i+1%></td>
                   <td><%= betsEventWiseOpen[i].marketName%></td>
-                  <%console.log(betsEventWiseOpen[i].marketName, "marketName1")%>
                   <%if(betsEventWiseOpen[i].marketName != "Match Odds" && betsEventWiseOpen[i].marketName != "Bookmaker 0%Comm" && betsEventWiseOpen[i].marketName != "TOSS" && betsEventWiseOpen[i].marketName != "BOOKMAKER 0% COMM"){%>
                   <td>
                     <select class="selectOption" >
@@ -65,7 +64,6 @@
                       <option value="<%=option2 %>"><%=option2 %></option>
                     </select>
                   </td>
-                  <%console.log(betsEventWiseOpen[i])%>
                   <%}%>
                   <td>
                     <div class="btn-group">
