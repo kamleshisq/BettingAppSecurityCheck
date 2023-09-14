@@ -1097,7 +1097,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     }
 
 
-    let betsEventWise1 = await betModel.aggregate([
+    let betsEventWise = await betModel.aggregate([
         {
           $match: {
             status: "OPEN"
@@ -1157,70 +1157,70 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
       // Now betsEventWise will contain an array of objects grouped by betType
       // Each object contains the betType (id) and an array of objects with matchName and count
       
-      console.log(betsEventWise1, "NEWDATA")
-      console.log(betsEventWise1[0].data, "NEWDATA")
+      console.log(betsEventWise, "NEWDATA")
+      console.log(betsEventWise[0].data, "NEWDATA")
       // Now betsEventWise will contain an array of objects grouped by betType
       
-    let betsEventWise = await betModel.aggregate([
-        {
-            $match: {
-                status:"OPEN" 
-            }
-        },
-        {
-            $lookup: {
-              from: "users",
-              localField: "userName",
-              foreignField: "userName",
-              as: "user"
-            }
-          },
-          {
-            $unwind: "$user"
-          },
-          {
-            $match: {
-              "user.parentUsers": { $in: [req.currentUser.id] }
-            }
-          },
-        //   {
-        //     $group: {
-        //       _id: "$match",
-        //       count: { $sum: 1 }
-        //     }
-        //   },
-        //   {
-        //     $project: {
-        //       _id: 0,
-        //       eventname: "$_id",
-        //       count: 1
-        //     }
-        //   }
-        {
-            $group: {
-              _id: "$match",
-              count: { $sum: 1 },
-              eventdate: { $first: "$eventDate" }, 
-              eventid: { $first: "$eventId" },
-              series: {$first: "$event"} 
-            }
-          },
-          {
-            $project: {
-              _id: 0,
-              matchName: "$_id",
-              eventdate: 1,
-              eventid: 1,
-              series:1,
-              count: 1
-            }
-          },
-          {
-              $sort:{
-                eventdate: -1
-              }
-          }
-    ])
+    // let betsEventWise = await betModel.aggregate([
+    //     {
+    //         $match: {
+    //             status:"OPEN" 
+    //         }
+    //     },
+    //     {
+    //         $lookup: {
+    //           from: "users",
+    //           localField: "userName",
+    //           foreignField: "userName",
+    //           as: "user"
+    //         }
+    //       },
+    //       {
+    //         $unwind: "$user"
+    //       },
+    //       {
+    //         $match: {
+    //           "user.parentUsers": { $in: [req.currentUser.id] }
+    //         }
+    //       },
+    //     //   {
+    //     //     $group: {
+    //     //       _id: "$match",
+    //     //       count: { $sum: 1 }
+    //     //     }
+    //     //   },
+    //     //   {
+    //     //     $project: {
+    //     //       _id: 0,
+    //     //       eventname: "$_id",
+    //     //       count: 1
+    //     //     }
+    //     //   }
+    //     {
+    //         $group: {
+    //           _id: "$match",
+    //           count: { $sum: 1 },
+    //           eventdate: { $first: "$eventDate" }, 
+    //           eventid: { $first: "$eventId" },
+    //           series: {$first: "$event"} 
+    //         }
+    //       },
+    //       {
+    //         $project: {
+    //           _id: 0,
+    //           matchName: "$_id",
+    //           eventdate: 1,
+    //           eventid: 1,
+    //           series:1,
+    //           count: 1
+    //         }
+    //       },
+    //       {
+    //           $sort:{
+    //             eventdate: -1
+    //           }
+    //       }
+    // ])
     // let users = await User.find({roleName:"Super-Duper-Admin"})
     // for(let i = 0; i < users.length; i++){
     //     await commissionModel.create({userId:users[i].id})
