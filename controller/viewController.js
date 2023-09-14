@@ -3233,7 +3233,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
     let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
 
-    let newcricketEvents = await cricketList.eventList.map(async(item) => {
+    let newcricketEvents = cricketList.eventList.map(async(item) => {
          status = await catalogController.findOne({Id:item.eventData.eventId})
          count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
          if(!status){
@@ -3245,7 +3245,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
          }
          return item
     })
-    let newfootballEvents =await  footballList.eventList.map(async(item) => {
+    let newfootballEvents =  footballList.eventList.map(async(item) => {
          status = await catalogController.findOne({Id:item.eventData.eventId})
          count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
          if(!status){
@@ -3257,7 +3257,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
          }
          return item
     })
-    let newtennisEvents = await tennisList.eventList.map(async(item) => {
+    let newtennisEvents = tennisList.eventList.map(async(item) => {
          status = await catalogController.findOne({Id:item.eventData.eventId})
          count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
          if(!status){
