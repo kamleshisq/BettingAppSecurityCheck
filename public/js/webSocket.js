@@ -9192,7 +9192,7 @@ socket.on('connect', () => {
                       });
                   }
                   let html = ``
-                //   console.log(document.getElementById('open-market-table').getElementsByTagName('thead'))
+                  console.log(document.getElementById('open-market-table').getElementsByTagName('tbody'))
                   if(document.getElementById('open-market-table').getElementsByTagName('tbody').length != 0){
                       
                 }else{
@@ -9275,7 +9275,7 @@ socket.on('connect', () => {
                       });
                   }
                   let html = ``
-                //   console.log(document.getElementById('mapped-market-table').getElementsByTagName('thead'))
+                  console.log(document.getElementById('mapped-market-table').getElementsByTagName('tbody'))
                   if(document.getElementById('mapped-market-table').getElementsByTagName('tbody').length != 0){
                       
                 }else{
