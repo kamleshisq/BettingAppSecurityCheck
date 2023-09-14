@@ -9224,7 +9224,7 @@ socket.on('connect', () => {
                   }
                   let html = ``
                   console.log(document.getElementById('mapped-market-table').getElementsByTagName('thead'))
-                  if(document.getElementById('mapped-market-table').getElementsByTagName('thead')){
+                  if(document.getElementById('mapped-market-table').getElementsByTagName('thead').length != 0){
                       
                 }else{
                     html += `
@@ -9243,7 +9243,7 @@ socket.on('connect', () => {
                 <td></td>
                 </tr>
                 </tbody>   `
-                console.log(html)
+                document.getElementById('mapped-market-table').innerHTML = html
                 alert('Bet Maped Successfully')
             }
         })
