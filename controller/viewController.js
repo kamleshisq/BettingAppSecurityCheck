@@ -3036,6 +3036,50 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
             }
           }
     ])
+
+    let betsEventWiseMap = await betModel.aggregate([
+        {
+            $match: {
+                status:"MAP",
+                eventId:req.query.id
+            }
+        },
+        {
+            $lookup: {
+              from: "users",
+              localField: "userName",
+              foreignField: "userName",
+              as: "user"
+            }
+          },
+          {
+            $unwind: "$user"
+          },
+          {
+            $match: {
+              "user.parentUsers": { $in: [req.currentUser.id] }
+            }
+          },
+        {
+            $group: {
+              _id: "$marketName",
+              count: { $sum: 1 },
+              marketId: { $first: "$marketId" },
+              match: { $first: "$match" },
+              date: {$first:'$date'}
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              marketName: "$_id",
+              marketId: 1,
+              count: 1,
+              match : 1,
+              date:1
+            }
+          }
+    ])
     let data = await betModel.findOne({eventId:req.query.id})
     console.log(betsEventWiseOpen)
     res.status(200).render("./sattlementInPage/main",{
@@ -3043,7 +3087,8 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
         me,
         currentUser:me,
         betsEventWiseOpen,
-        data
+        data,
+        betsEventWiseMap
     })
 } )
 
