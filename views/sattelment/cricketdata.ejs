@@ -13,7 +13,7 @@
       </thead>
       <tbody class="new-body">
         <%if(betsEventWise.length !== 0){%>
-        <% let betsEventWiseData = betsEventWise.find(item => item.id = 'Cricket') %>
+        <% let betsEventWiseData = betsEventWise.find(item => item.id == 'Cricket') %>
         <%console.log(betsEventWiseData, "==> betsEventWiseData")%>
         <% let betsEventWiseData2 = betsEventWiseData.data%>
         <%for(let i = 0; i < betsEventWiseData2.length; i++){ %>
