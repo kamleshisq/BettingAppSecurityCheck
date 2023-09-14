@@ -5477,14 +5477,9 @@ socket.on('connect', () => {
 
 
           $(document).on('click','.tbl-td-with5',function(e){
-                // console.log("WORKING")
-                $(".minus").closest("tr").find('.set-stake-form-input2').val(NewStake)
+                console.log("WORKING")
+                $(".minus").closest("tr").find('.set-stake-form-input2').val(0)
                 $(".minus")
-                .closest("tr")
-                .find(".c-gren")
-                .text(0);
-
-                $(".set-stake-form-input2")
                 .closest("tr")
                 .find(".c-gren")
                 .text('00');
