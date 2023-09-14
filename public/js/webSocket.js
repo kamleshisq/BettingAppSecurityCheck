@@ -5475,6 +5475,23 @@ socket.on('connect', () => {
             })
           })
 
+
+          $(document).on('click','.tbl-td-with5',function(e){
+                // console.log("WORKING")
+                $(".minus").closest("tr").find('.set-stake-form-input2').val(NewStake)
+                $(".minus")
+                .closest("tr")
+                .find(".c-gren")
+                .text(0);
+
+                $(".set-stake-form-input2")
+                .closest("tr")
+                .find(".c-gren")
+                .text('00');
+               
+          })
+
+          
           $(document).ready(function(){
             $(".plus").click(function () {
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
