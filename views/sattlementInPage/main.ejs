@@ -123,28 +123,7 @@
                   <tr>
                     <td><%= i+1%></td>
                     <td><%= betsEventWiseMap[i].marketName%></td>
-                    <%if(betsEventWiseMap[i].marketName != "Match Odds" && betsEventWiseMap[i].marketName != "Bookmaker 0%Comm" && betsEventWiseMap[i].marketName != "TOSS" && betsEventWiseMap[i].marketName != "BOOKMAKER 0% COMM"){%>
-                    <td>
-                      <select class="selectOption" >
-                        <option value="" selected></option>
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                      </select>
-                    </td>
-                    <%}else {%>
-                    <% 
-                    let option = betsEventWiseMap[i].match.split(" v ")
-                    let option1 = option[0]
-                    let option2 = option[1]
-                    %>
-                    <td>
-                      <select class="selectOption">
-                        <option value="" selected></option>
-                        <option value="<%=option1 %>"><%=option1 %></option>
-                        <option value="<%=option2 %>"><%=option2 %></option>
-                      </select>
-                    </td>
-                    <%}%>
+                    <td><%= betsEventWiseMap[i].result></td>
                     <td>
                       <div class="btn-group">
                         <button class="voidBet" id="<%=betsEventWiseMap[i].marketId%>"> VOID</button><button class="acceptBet" id="<%=betsEventWiseMap[i].marketId%>"> MAP</button>
