@@ -165,8 +165,8 @@
                   <tr>
                     <th>S.No</th>
                     <th>Market Name</th>
-                    <th>Result</th>
-                    <th>Action</th>
+                    <th>Cancel Bet</th>
+                    <!-- <th>Action</th> -->
                   </tr>
                 </thead>
                 <tbody class="new-body">
@@ -174,14 +174,14 @@
                   <tr>
                     <td><%= i+1%></td>
                     <td><%= betsEventWiseCancel[i].marketName%></td>
-                    <td><%= betsEventWiseCancel[i].result%></td>
-                    <td>
+                    <td><%= betsEventWiseCancel[i].count%></td>
+                    <!-- <td>
                       <div class="btn-group">
                         <button class="Unmap" id="<%=betsEventWiseCancel[i].marketId%>"> Unmap</button>
                         <button class="Settle" id="<%=betsEventWiseCancel[i].marketId%>"> Settle</button>
                         <button class="voidBet" id="<%=betsEventWiseCancel[i].marketId%>"> VOID</button>
                       </div>
-                    </td>
+                    </td> -->
                   </tr>
                   <%} %>
                 </tbody>
