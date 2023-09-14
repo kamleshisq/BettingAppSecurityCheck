@@ -14,6 +14,7 @@
       <tbody class="new-body">
         <%if(betsEventWise.length !== 0){%>
         <% let betsEventWiseTennis = betsEventWise.find(item => item.id = 'Tennis') %>
+        <%console.log(betsEventWiseTennis, '===> betsEventWiseTennis')%>
         <% let betsEventWiseData2Tennis = betsEventWiseTennis.data%>
         <%for(let i = 0; i < betsEventWiseData2Tennis.length; i++){ %>
           
