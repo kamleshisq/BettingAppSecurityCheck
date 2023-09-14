@@ -2745,10 +2745,10 @@ io.on('connection', (socket) => {
                       },
                     },
                   ]);
-                console.log(bets)
-                // await Bet.updateMany({marketId:data.id}, {$set:{result:data.result, status:'MAP'}})
-                // let betdata = await Bet.findOne({marketId:data.id})
-                // socket.emit('VoidBetIn22', {status:"success", betdata, result:data.result})
+                // console.log(bets)
+                await Bet.updateMany({marketId:data.id}, {$set:{result:data.result, status:'MAP'}})
+                let betdata = await Bet.findOne({marketId:data.id})
+                socket.emit('VoidBetIn22', {status:"success", betdata, result:data.result})
              }else{
                 socket.emit('VoidBetIn22', {message:"Please select a result", status:"error"})
              }
