@@ -1095,12 +1095,17 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     if(settlement === null){
         settlement = await sattlementModel.create({userId:me.id})
     }
-
+    const currentDate = new Date(); // Current date
+    const fiveDaysAgo = new Date(currentDate);
+    fiveDaysAgo.setDate(currentDate.getDate() - 5);
 
     let betsEventWise = await betModel.aggregate([
         {
           $match: {
-            status: "OPEN"
+            date: {
+                $gte: fiveDaysAgo, 
+                $lte: currentDate, 
+              }
           }
         },
         {
