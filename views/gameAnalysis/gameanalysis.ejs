@@ -1,7 +1,6 @@
 <%- include("../header") %>
-
+<!--Container Main start-->
 <div class="dashboard-main-wraper">
-
   <section class="dashboard-welcome-section">
     <div class="container-fluid">
       <div class="new-head"> 
@@ -50,42 +49,25 @@
       </div>
     </div>
   </section>
-
-  <section class="Casino__control">
+    
+  <!-- seling section -->
+  <section class="liveMarket__risk">
     <div class="container-fluid">
       <div class="tab-data-section">
       <div class="tab end" >
-        <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'Cricket')"> Game Level  </button>
-        <button class="tablinks" onclick="openCity(event, 'FOOTBALL')"> Provider Level</button>
+        <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'Cricket')"><img src="../images/cball.png" alt=""> &nbsp; Cricket  </button>
+        <button class="tablinks"  onclick="openCity(event, 'FOOTBALL')"><img src="../images/fball.png" alt=""> &nbsp; FOOTBALL</button>
+       
       </div>
 
-      <div id="Cricket" class="tabcontent">
-        <div class="row">
-          <section>
-            <div class="container-fluid">
-              <div class="new-head">
-                <%- include("./accountLevel") %>
-              </div> 
-            </div>
-          </section>
-        </div>
-      </div>
+      <%- include("./accountLevel") %>
+            
+      <%- include("./marketLevel") %>
 
-      <div id="FOOTBALL" class="tabcontent">
-        <div class="row">
-          <section>
-            <div class="container-fluid">
-              <div class="new-head">
-                <%- include("./marketLevel") %>
-              </div> 
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+
     </div>
   </section>
-
+ 
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
@@ -94,7 +76,8 @@
 <script type="text/javascript" src="../js/bundle.js"></script>
 
 
-<script>
+
+  <script>
         function openCity(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -110,27 +93,7 @@
     
   }
   document.getElementById("defaultOpen").click();
-
-
-
   </script>
-
-<script>
-    const tabs = document.querySelectorAll('[data-tab-value]')
-      const tabInfos = document.querySelectorAll('[data-tab-info]')
-
-      tabs.forEach(tab => {
-          tab.addEventListener('click', () => {
-              const target = document
-                  .querySelector(tab.dataset.tabValue);
-
-              tabInfos.forEach(tabInfo => {
-                  tabInfo.classList.remove('active')
-              })
-              target.classList.add('active');
-          })
-      })
-</script>
 
 </body>
 </html>
