@@ -76,7 +76,9 @@
                   <td><%=data[i].name%></td>
                   <td><%=data[i].count%></td>
                   <td>
-                    <a class="btn-filter" href="/admin/riskAnalysis?id=<%=data[i].eventId%>">View Details &nbsp;<i class="fa-solid fa-chevron-right"></i></a>
+                    <div class="btn-group">
+                      <a class="btn" href="/admin/riskAnalysis?id=<%=data[i].eventId%>">View Details</a>
+                    </div>
                   </td>
                   <%}%>
                 </tr>
