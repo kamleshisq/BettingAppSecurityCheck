@@ -1123,7 +1123,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
           $group: {
             _id: {
               betType: "$betType",
-              matchName: "$matchName"
+              matchName: "$match"
             },
             count: { $sum: 1 },
             eventdate: { $first: "$eventDate" }, 
