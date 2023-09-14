@@ -9239,9 +9239,9 @@ socket.on('connect', () => {
                 </tbody>   `
 
                 if(document.getElementById('open-market-table').getElementsByTagName('thead').length != 0){
-                    document.getElementById('open-market-table').innerHTML = html
-                }else{
                     document.getElementById('open-market-table').append = html
+                }else{
+                    document.getElementById('open-market-table').innerHTML = html
                 }
                 alert('Bet Unmaped Successfully')
             }
@@ -9302,9 +9302,9 @@ socket.on('connect', () => {
                 </tr>
                 </tbody>   `
                 if(document.getElementById('mapped-market-table').getElementsByTagName('thead').length != 0){
-                    document.getElementById('mapped-market-table').innerHTML = html
-                }else{
                     document.getElementById('mapped-market-table').append = html
+                }else{
+                    document.getElementById('mapped-market-table').innerHTML = html
                 }
                 // document.getElementById('mapped-market-table').innerHTML = html
                 alert('Bet Maped Successfully')
