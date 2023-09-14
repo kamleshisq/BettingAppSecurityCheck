@@ -470,7 +470,7 @@ exports.restrictTo = (...roles) => {
 
 exports.restrictToOperator = (...roles) => {
     return function(req, res, next ){
-        let j = 1;
+        let j = 0;
         console.log(req.currentUser)
         for(let i=0; i < req.currentUser.role.operationAuthorization.length; i++){
             if(roles.includes(req.currentUser.role.operationAuthorization[i])){
