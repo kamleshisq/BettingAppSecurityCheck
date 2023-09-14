@@ -3255,7 +3255,6 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 
     let newcricketEvents = cricketList.eventList.map(async(item) => {
          status = await catalogController.findOne({Id:item.eventData.eventId})
-         console.log(status,item.eventData.eventId)
          count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
          if(!status){
             item.eventData.status = true
