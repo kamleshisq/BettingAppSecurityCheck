@@ -47,7 +47,7 @@
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody class="new-body">
+              <tbody class="new-body" id="openmarket" >
                 <%for(let i = 0; i < betsEventWiseOpen.length; i++){ %>
                 <tr>
                   <td><%= betsEventWiseOpen[i].marketName%></td>
@@ -115,7 +115,7 @@
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody class="new-body">
+                <tbody class="new-body" id="mapMarket">
                   <%for(let i = 0; i < betsEventWiseMap.length; i++){ %>
                   <tr>
                     <td><%= betsEventWiseMap[i].marketName%></td>

@@ -9192,8 +9192,8 @@ socket.on('connect', () => {
                       });
                   }
                   let html = ``
-                  console.log(document.getElementById('open-market-table').getElementsByTagName('thead'))
-                  if(document.getElementById('open-market-table').getElementsByTagName('thead').length != 0){
+                //   console.log(document.getElementById('open-market-table').getElementsByTagName('thead'))
+                  if(document.getElementById('open-market-table').getElementsByTagName('tbody').length != 0){
                       
                 }else{
                     html += `
@@ -9206,7 +9206,7 @@ socket.on('connect', () => {
                   </thead>
                     `
                 }
-                html += ` <tbody class="new-body"><tr>
+                html += ` <tbody class="new-body" id="openmarket"><tr>
                 <td>${data.betdata.marketName}</td>`
                 if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM"){
                     html += `<td>
@@ -9238,8 +9238,8 @@ socket.on('connect', () => {
                 </tr>
                 </tbody>   `
 
-                if(document.getElementById('open-market-table').getElementsByTagName('thead').length != 0){
-                    document.getElementById('open-market-table').append = html
+                if(document.getElementById('open-market-table').getElementsByTagName('tbody').length != 0){
+                    document.getElementById('openmarket').append = html
                 }else{
                     document.getElementById('open-market-table').innerHTML = html
                 }
@@ -9275,8 +9275,8 @@ socket.on('connect', () => {
                       });
                   }
                   let html = ``
-                  console.log(document.getElementById('mapped-market-table').getElementsByTagName('thead'))
-                  if(document.getElementById('mapped-market-table').getElementsByTagName('thead').length != 0){
+                //   console.log(document.getElementById('mapped-market-table').getElementsByTagName('thead'))
+                  if(document.getElementById('mapped-market-table').getElementsByTagName('tbody').length != 0){
                       
                 }else{
                     html += `
@@ -9289,7 +9289,7 @@ socket.on('connect', () => {
                   </thead>
                     `
                 }
-                html += ` <tbody class="new-body"><tr>
+                html += ` <tbody class="new-body" id="mapMarket"><tr>
                 <td>${data.betdata.marketName}</td>
                 <td>${data.result}</td>
                 <td>
@@ -9301,8 +9301,8 @@ socket.on('connect', () => {
                 </td>
                 </tr>
                 </tbody>   `
-                if(document.getElementById('mapped-market-table').getElementsByTagName('thead').length != 0){
-                    document.getElementById('mapped-market-table').append = html
+                if(document.getElementById('mapped-market-table').getElementsByTagName('tbody').length != 0){
+                    document.getElementById('mapMarket').append = html
                 }else{
                     document.getElementById('mapped-market-table').innerHTML = html
                 }
