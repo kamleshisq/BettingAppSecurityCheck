@@ -44,6 +44,15 @@
               <input type="text" class="form-control ml0" id="mySelect" placeholder="" name="name" required>
           </div>
           <div class="option-group user_controller" id="user_controller">
+            <h3>Operator</h3>
+            <%for(let i = 0; i < roleAuth.operationModel.length; i++){%>
+              <div class="input_group">
+                <label for=<%=roleAuth.operationModel[i]%>><%=roleAuth.operationModel[i]%></label>
+                <input type="checkbox" name="operator" value="<%=roleAuth.operationModel[i]%>" id="<%=roleAuth.operationModel[i]%>" class="<%=i%>">
+              </div>
+              <%}%>
+          </div>
+          <!-- <div class="option-group user_controller" id="user_controller">
             <h3>User Controller</h3>
             <%for(let i = 0; i < roleAuth.UserControll.length; i++){%>
               <div class="input_group">
@@ -51,8 +60,8 @@
                 <input type="checkbox" name="userAuthorization" value="<%=roleAuth.UserControll[i]%>" id="<%=roleAuth.UserControll[i]%>" class="<%=i%>">
               </div>
               <%}%>
-          </div>
-          <div class="option-group role-auth">
+          </div> -->
+          <!-- <div class="option-group role-auth">
             <h3>Role Auth</h3>
             <%for(let i = 0; i < roles.length; i++){%>
               <div class="input_group">
@@ -60,7 +69,7 @@
                 <input type="checkbox" name="authorization" value="<%=roles[i].role_level%>" id="<%=roles[i].roleName%>">
               </div>
               <%}%>
-          </div>
+          </div> -->
           <div class="input_group submit">
               <button type="submit" class="btn-submit">Save</button>
           </div>

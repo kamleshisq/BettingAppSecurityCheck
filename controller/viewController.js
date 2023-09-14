@@ -3170,6 +3170,71 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
     }
 })
 
+exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
+    let user = req.currentUser
+    const compId = req.query.compId
+    const sportId = req.query.sportId
+    const sportListData = await getCrkAndAllData()
+    let cricketEvents;
+    let footballEvents;
+    let tennisEvents;
+    let series;
+    let status;
+    let count;
+    let data = {};
+    if(sportId == 4){
+        series = sportListData[0].gameList[0]
+
+    }else{
+        series = sportListData[1].gameList.find(item => item.sportId == sportId)
+    }
+
+    let cricketList = sportListData[0].gameList[0]
+    let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
+
+    cricketEvents = cricketList.eventList.map(async(item) => {
+         status = await catalogController.findOne({Id:item.eventData.eventId})
+         count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+         if(!status){
+            item.eventData.status = true
+            item.eventData.count = count
+         }else{
+            item.eventData.status = false;
+            item.eventData.count = count
+         }
+    })
+    footballEvents = footballList.eventList.map(async(item) => {
+         status = await catalogController.findOne({Id:item.eventData.eventId})
+         count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+         if(!status){
+            item.eventData.status = true
+            item.eventData.count = count
+         }else{
+            item.eventData.status = false;
+            item.eventData.count = count
+         }
+    })
+    tennisEvents = tennisList.eventList.map(async(item) => {
+         status = await catalogController.findOne({Id:item.eventData.eventId})
+         count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+         if(!status){
+            item.eventData.status = true
+            item.eventData.count = count
+         }else{
+            item.eventData.status = false;
+            item.eventData.count = count
+         }
+    })
+    data = {cricketEvents,footballEvents,tennisEvents}
+    return res.status(200).render("./eventController", {
+        title:"eventController",
+        data,
+        me: user,
+        currentUser: user,
+    })
+})
+
 
 exports.CommissionMarkets = catchAsync(async(req, res, next) => {
     

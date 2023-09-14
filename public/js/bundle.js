@@ -7546,6 +7546,9 @@ $(document).on('click', '.RoleDetails', function () {
   for (var _i2 = 0; _i2 < roledata.userAuthorization.length; _i2++) {
     form.find("input[value = \"".concat(roledata.userAuthorization[_i2], "\"]")).attr("checked", "checked");
   }
+  for (var _i3 = 0; _i3 < roledata.operationAuthorization.length; _i3++) {
+    form.find("input[value = \"".concat(roledata.operationAuthorization[_i3], "\"]")).attr("checked", "checked");
+  }
   // document.getElementById("role_controller").innerHTML = `
   //         <label for="level"> <h3>Role Level </h3></label><br>
   //         <input type="number" name="level" placeholder='${roledata.role_level}' id='role_level'>`
@@ -7557,21 +7560,27 @@ $(document).on("submit", ".UpdateRole-form", function (e) {
   var roleName = document.getElementById("mySelect").value;
   var authorization = [];
   var roleAuthorization = [];
-  var authCheck = document.querySelectorAll("input[name='authorization']:checked");
-  for (var i = 0; i < authCheck.length; i++) {
-    roleAuthorization.push(authCheck[i].value);
-  }
-  var checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-  for (var _i3 = 0; _i3 < checkboxes.length; _i3++) {
-    authorization.push(checkboxes[_i3].value);
+  var operationAuthorization = [];
+  // let authCheck = document.querySelectorAll("input[name='authorization']:checked");
+  // for (let i = 0 ; i < authCheck.length; i++) {
+  //     roleAuthorization.push(authCheck[i].value)
+  // }
+  // let checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
+  // for (let i = 0 ; i < checkboxes.length; i++) {
+  //     authorization.push(checkboxes[i].value)
+  // }
+  var operator = document.querySelectorAll("input[name='operator']:checked");
+  for (var i = 0; i < operator.length; i++) {
+    operationAuthorization.push(operator[i].value);
   }
   var data = {
     id: id,
-    authorization: authorization,
-    userAuthorization: roleAuthorization,
-    roleName: roleName
+    // authorization,
+    // userAuthorization:roleAuthorization,
+    roleName: roleName,
+    operationAuthorization: operationAuthorization
   };
-  console.log(data);
+  // console.log(data)
   (0, _updateRoleByaxios.updateRole)(data);
 });
 $(document).on('click', '.deleteRole', function (e) {

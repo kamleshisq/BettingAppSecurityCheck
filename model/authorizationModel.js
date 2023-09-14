@@ -7,6 +7,9 @@ const Authorization1 = mongoose.Schema({
     }],
     RoleAuth:[{
         type:String
+    }],
+    operationModel:[{
+        type:String
     }]
 });
 
