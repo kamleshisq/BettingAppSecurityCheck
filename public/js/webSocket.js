@@ -9238,7 +9238,7 @@ socket.on('connect', () => {
                 </tr>
                 </tbody>   `
 
-                if(document.getElementById('open-market-table').getElementsByTagName('tbody').length != 0){
+                if(document.getElementById('open-market-table').getElementsByTagName('tbody').length === 0){
                     document.getElementById('openmarket').append = html
                 }else{
                     document.getElementById('open-market-table').innerHTML = html
@@ -9301,7 +9301,7 @@ socket.on('connect', () => {
                 </td>
                 </tr>
                 </tbody>   `
-                if(document.getElementById('mapped-market-table').getElementsByTagName('tbody').length != 0){
+                if(document.getElementById('mapped-market-table').getElementsByTagName('tbody').length === 0){
                     document.getElementById('mapMarket').append = html
                 }else{
                     document.getElementById('mapped-market-table').innerHTML = html
