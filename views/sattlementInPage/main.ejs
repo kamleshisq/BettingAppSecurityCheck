@@ -6,7 +6,20 @@
       <div class="table-heading">
         <h3>Settelments</h3>
         <div class="form">
-          <h4><%=betsEventWiseOpen%></h4>
+          <%
+          var timestamp = betsEventWiseOpen[i].date * 1000; 
+          var date = new Date(timestamp);
+          var options = { 
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true
+        };
+        var formattedTime = date.toLocaleString('en-US', options);
+          %>
+          <h4><%=betsEventWiseOpen[0].match%> / <%=formattedTime%></h4>
         </div>
       </div>
     </div>
