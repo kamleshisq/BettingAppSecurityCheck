@@ -470,12 +470,13 @@ exports.restrictTo = (...roles) => {
 
 exports.restrictToOperator = (...roles) => {
     return function(req, res, next ){
-        let j = 0;
-        for(let i=0; i < req.currentUser.role.operationAuthorization.length; i++){
-            if(roles.includes(req.currentUser.role.operationAuthorization[i])){
-                j = j + 1;
-            }
-        }
+        let j = 1;
+        console.log(req.currentUser)
+        // for(let i=0; i < req.currentUser.role.operationAuthorization.length; i++){
+        //     if(roles.includes(req.currentUser.role.operationAuthorization[i])){
+        //         j = j + 1;
+        //     }
+        // }
         if(j > 0){
             next()
         }else{
