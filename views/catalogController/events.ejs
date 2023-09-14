@@ -18,7 +18,7 @@
     </ul>
   </div>
 
-  <section>
+  <section class="eventController">
     <div class="container-fluid">
       <div class="table-data-section">
         <div class="data-table">
@@ -30,6 +30,7 @@
                 <th>Date</th>
                 <th>Team</th>
                 <th>Open Bet</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody class="new-body">
@@ -74,6 +75,9 @@
                   <td><%=formattedTime %></td>
                   <td><%=data[i].name%></td>
                   <td><%=data[i].count%></td>
+                  <td>
+                    <a class="btn-filter" href="/admin/riskAnalysis?id=<%=data[i].eventId%>">View Details &nbsp;<i class="fa-solid fa-chevron-right"></i></a>
+                  </td>
                   <%}%>
                 </tr>
               </tr>
