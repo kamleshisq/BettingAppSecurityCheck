@@ -9223,7 +9223,7 @@ socket.on('connect', () => {
                       });
                   }
                   let html = ``
-                  cons
+                  console.log(document.getElementById('mapped-market-table').getElementsByTagName('thead'))
                   if(document.getElementById('mapped-market-table').getElementsByTagName('thead')){
                       
                 }else{
