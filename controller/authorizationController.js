@@ -468,6 +468,25 @@ exports.restrictTo = (...roles) => {
     }
 };
 
+exports.restrictToOperator = (...roles) => {
+    return function(req, res, next ){
+        let j = 0;
+        for(let i=0; i < req.currentUser.role.operationAuthorization.length; i++){
+            if(roles.includes(req.currentUser.role.operationAuthorization[i])){
+                j = j + 1;
+            }
+        }
+        if(j > 0){
+            next()
+        }else{
+            return res.status(404).json({
+                status:'error',
+                message:'You do not have permission to perform this action'
+            })
+        }
+    }
+}
+
 
 exports.signUp = catchAsync( async(req, res, body) => {
 //    console.log(req.body)
