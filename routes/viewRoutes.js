@@ -71,6 +71,7 @@ router.get("/admin/catalogcontrol", authController.isProtected, authController.i
 router.get("/admin/commissionMarkets", authController.isProtected, authController.isAdmin, authController.restrictToOperator("commissionMarkets"),viewController.CommissionMarkets)
 router.get("/admin/catalogcontrol/compitations", authController.isProtected, authController.isAdmin,viewController.getCatalogCompetationControllerPage);
 router.get("/admin/catalogcontrol/compitations/events", authController.isProtected, authController.isAdmin,viewController.getCatalogeventsControllerPage);
+router.get("/admin/eventcontrol", authController.isProtected, authController.isAdmin,viewController.getEventControllerPage);
 router.get("/admin/riskAnalysis", authController.isProtected, authController.isAdmin,viewController.RiskAnalysis);
 router.get("/admin/matchBets", authController.isProtected, authController.isAdmin,viewController.marketBets);
 
