@@ -9170,7 +9170,7 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert(data.message.toUpperCase())
             }else{
-                const deleteButton = document.getElementById(data.marketId);
+                const deleteButton = document.getElementById(data.betdata.marketId);
                 // console.log(deleteButton)
                 const row = deleteButton.closest('tr'); 
                 if (row) {
