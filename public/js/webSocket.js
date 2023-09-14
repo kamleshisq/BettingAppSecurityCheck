@@ -10125,6 +10125,7 @@ socket.on('connect', () => {
         })
 
         socket.on('getEvetnsOfSport',async(data)=>{
+            console.log(data)
             let html =''
             html += `<option value="All" selected> Select Event </option>`
             for(let i = 0;i<data.sportList.length;i++){
