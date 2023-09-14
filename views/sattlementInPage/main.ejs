@@ -42,7 +42,6 @@
               <%if(betsEventWiseOpen.length > 0 ){%>
               <thead>
                 <tr>
-                  <th>S.No</th>
                   <th>Market Name</th>
                   <th>Result</th>
                   <th>Action</th>
@@ -51,7 +50,6 @@
               <tbody class="new-body">
                 <%for(let i = 0; i < betsEventWiseOpen.length; i++){ %>
                 <tr>
-                  <td><%= i+1%></td>
                   <td><%= betsEventWiseOpen[i].marketName%></td>
                   <%if(betsEventWiseOpen[i].marketName != "Match Odds" && betsEventWiseOpen[i].marketName != "Bookmaker 0%Comm" && betsEventWiseOpen[i].marketName != "TOSS" && betsEventWiseOpen[i].marketName != "BOOKMAKER 0% COMM"){%>
                   <td>
@@ -112,7 +110,6 @@
                 <%if(betsEventWiseMap.length > 0 ){%>
                 <thead>
                   <tr>
-                    <th>S.No</th>
                     <th>Market Name</th>
                     <th>Result</th>
                     <th>Action</th>
@@ -121,7 +118,6 @@
                 <tbody class="new-body">
                   <%for(let i = 0; i < betsEventWiseMap.length; i++){ %>
                   <tr>
-                    <td><%= i+1%></td>
                     <td><%= betsEventWiseMap[i].marketName%></td>
                     <td><%= betsEventWiseMap[i].result%></td>
                     <td>
@@ -151,7 +147,6 @@
                 <%if(betsEventWiseSettel.length > 0 ){%>
                 <thead>
                   <tr>
-                    <th>S.No</th>
                     <th>Market Name</th>
                     <th>Result</th>
                     <th>Settled Bets</th>
@@ -161,7 +156,6 @@
                 <tbody class="new-body">
                   <%for(let i = 0; i < betsEventWiseSettel.length; i++){ %>
                   <tr>
-                    <td><%= i+1%></td>
                     <td><%= betsEventWiseSettel[i].marketName%></td>
                     <td><%= betsEventWiseSettel[i].result%></td>
                     <td><%= betsEventWiseSettel[i].count%></td>
@@ -191,7 +185,6 @@
                 <%if(betsEventWiseCancel.length > 0 ){%>
                 <thead>
                   <tr>
-                    <th>S.No</th>
                     <th>Market Name</th>
                     <th>Cancel Bet</th>
                     <!-- <th>Action</th> -->
@@ -200,7 +193,6 @@
                 <tbody class="new-body">
                   <%for(let i = 0; i < betsEventWiseCancel.length; i++){ %>
                   <tr>
-                    <td><%= i+1%></td>
                     <td><%= betsEventWiseCancel[i].marketName%></td>
                     <td><%= betsEventWiseCancel[i].count%></td>
                   </tr>
