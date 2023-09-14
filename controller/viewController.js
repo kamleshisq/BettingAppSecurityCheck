@@ -1121,26 +1121,42 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
         },
         {
           $group: {
-            _id: "$betType", // Group by betType
+            _id: {
+              betType: "$betType",
+              matchName: "$matchName"
+            },
+            count: { $sum: 1 },
+            eventdate: { $first: "$eventDate" }, 
+            eventid: { $first: "$eventId" },
+            series: {$first: "$event"}
+          }
+        },
+        {
+          $group: {
+            _id: "$_id.betType",
             data: {
               $push: {
-                eventdate: "$eventDate",
-                eventid: "$eventId",
-                series: "$event"
+                matchName: "$_id.matchName",
+                count: "$count",
+                eventdate : '$eventdate',
+                eventid : "$eventid",
+                series : '$series'
               }
-            },
-            count: { $sum: 1 }
+            }
           }
         },
         {
           $project: {
             _id: 0,
             id: "$_id", // Rename _id to id
-            data: 1,
-            count: 1
+            data: 1
           }
         }
       ]);
+      
+      // Now betsEventWise will contain an array of objects grouped by betType
+      // Each object contains the betType (id) and an array of objects with matchName and count
+      
       console.log(betsEventWise1, "NEWDATA")
       console.log(betsEventWise1[0].data, "NEWDATA")
       // Now betsEventWise will contain an array of objects grouped by betType
