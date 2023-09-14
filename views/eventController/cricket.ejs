@@ -23,7 +23,7 @@
                     <%}%>
                     <td><%=i + 1%></td>
                     <td>
-                      <%if(data.cricketEvents[i].eventData.status == true){%>
+                      <%if(data.cricketEvents[i].eventData.status){%>
                       <div class="on-off-btn-section">
                         <span class="on-off">OFF &nbsp; <label class="switch on">
                         <input class="checkbox status_check" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].eventData.eventId%>" checked>
