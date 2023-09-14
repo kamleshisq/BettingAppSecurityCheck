@@ -1157,8 +1157,8 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
       // Now betsEventWise will contain an array of objects grouped by betType
       // Each object contains the betType (id) and an array of objects with matchName and count
       
-      console.log(betsEventWise, "NEWDATA")
-      console.log(betsEventWise[0].data, "NEWDATA")
+    //   console.log(betsEventWise, "NEWDATA")
+    //   console.log(betsEventWise[0].data, "NEWDATA")
       // Now betsEventWise will contain an array of objects grouped by betType
       
     // let betsEventWise = await betModel.aggregate([
