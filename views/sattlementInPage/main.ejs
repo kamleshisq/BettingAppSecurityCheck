@@ -154,6 +154,7 @@
                     <th>S.No</th>
                     <th>Market Name</th>
                     <th>Result</th>
+                    <th>Settled Bets</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -163,6 +164,7 @@
                     <td><%= i+1%></td>
                     <td><%= betsEventWiseSettel[i].marketName%></td>
                     <td><%= betsEventWiseSettel[i].result%></td>
+                    <td><%= betsEventWiseSettel[i].count%></td>
                     <td>
                       <div class="btn-group">
                         <button class="ROLLBACK" id="<%=betsEventWiseSettel[i].marketId%>"> ROLLBACK</button>
