@@ -3172,22 +3172,13 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
 
 exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     let user = req.currentUser
-    const compId = req.query.compId
-    const sportId = req.query.sportId
     const sportListData = await getCrkAndAllData()
     let cricketEvents;
     let footballEvents;
     let tennisEvents;
-    let series;
     let status;
     let count;
     let data = {};
-    if(sportId == 4){
-        series = sportListData[0].gameList[0]
-
-    }else{
-        series = sportListData[1].gameList.find(item => item.sportId == sportId)
-    }
 
     let cricketList = sportListData[0].gameList[0]
     let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
