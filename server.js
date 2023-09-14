@@ -2704,6 +2704,16 @@ io.on('connection', (socket) => {
         }     
     })
 
+
+    socket.on('unmapBet', async(data) => {
+        try{
+
+        }catch(err){
+            console.log(err)
+            socket.emit('unmapBet', {message:'err', status:'error'})
+        }
+    })
+
     socket.on("VoidBetIn22", async(data) => {
         // let marketIds = [`${data.id}`]
         try{
