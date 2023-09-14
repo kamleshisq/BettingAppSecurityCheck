@@ -12,6 +12,7 @@
                   <th>Date</th>
                   <th>Team</th>
                   <th>Open Bet</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody class="new-body">
@@ -56,6 +57,9 @@
                     <td><%=formattedTime %></td>
                     <td><%=data.tennisEvents[i].eventData.name%></td>
                     <td><%=data.tennisEvents[i].eventData.count%></td>
+                    <td>
+                      <a class="btn-filter" href="/admin/riskAnalysis?id=<%=data.cricketEvents[i].eventData.eventId%>">View Details &nbsp;<i class="fa-solid fa-chevron-right"></i></a>
+                    </td>
                     <%}%>
                   </tr>
                 </tr>
