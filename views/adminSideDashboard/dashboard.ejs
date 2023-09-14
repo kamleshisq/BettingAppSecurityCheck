@@ -259,7 +259,9 @@
             <td data-title="Amount" class="text-purple"><%=data.dashboard.Categories[i].totalReturns %></td>
           </tr>
           <%} %>
-          
+          <%if(!data.dashboard.Categories.length > 0){%>
+            <tr class="empty_table"><td>No record found</td></tr>
+          <%}%>
         </tbody>
       </table>
 </div>
@@ -380,7 +382,9 @@
               <td data-title="Points" class="text-purple"><%= data.dashboard.alertBet[i].Stake%></td>
             </tr>
               <%}%>
-            
+              <%if(!data.dashboard.alertBet.length > 0){%>
+                <tr class="empty_table"><td>No record found</td></tr>
+              <%}%>
           </tbody>
         </table>
   </div>
@@ -419,6 +423,9 @@
               <td data-title="Amount" class="text-purple"><%=data.dashboard.topGames[i].totalReturns%></td>
             </tr>
           <%} %>
+          <%if(!data.dashboard.topGames.length > 0){%>
+            <tr class="empty_table"><td>No record found</td></tr>
+          <%}%>
         </tbody>
       </table>
     </div>
@@ -455,6 +462,9 @@
           <td data-title="Open Bets"><%=data.dashboard.settlement[i].count %></td>
         </tr>
         <%} %>
+        <%if(!data.dashboard.settlement.length > 0){%>
+          <tr class="empty_table"><td>No record found</td></tr>
+        <%}%>
       </tbody>
       </table>
       </div>
