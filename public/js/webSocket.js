@@ -9191,6 +9191,53 @@ socket.on('connect', () => {
                         srNoCell.textContent = index + rowIndex + 1;
                       });
                   }
+                  let html = ``
+                  console.log(document.getElementById('open-market-table').getElementsByTagName('thead'))
+                  if(document.getElementById('open-market-table').getElementsByTagName('thead').length != 0){
+                      
+                }else{
+                    html += `
+                    <thead>
+                    <tr>
+                      <th>Market Name</th>
+                      <th>Result</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                    `
+                }
+                html += ` <tbody class="new-body"><tr>
+                <td>${data.betdata.marketName}</td>`
+                if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM"){
+                    html += `<td>
+                    <select class="selectOption" >
+                      <option value="" selected></option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  </td>`
+                }else{
+                    let option = data.betdata.match.split(" v ")
+                    let option1 = option[0]
+                    let option2 = option[1]
+                    html += `<td>
+                                <select class="selectOption">
+                                <option value="" selected></option>
+                                <option value="${option1 }">${option1 }</option>
+                                <option value="${option2 }">${option2 }</option>
+                                </select>
+                            </td>`
+                }
+                html += `<td>${data.result}</td>
+                <td>
+                    <div class="btn-group">
+                        <button class="voidBet" id="${data.betdata.marketId}"> VOID</button>
+                        <button class="acceptBet" id="${data.betdata.marketId}"> MAP</button>
+                    </div>
+                </td>
+                </tr>
+                </tbody>   `
+                document.getElementById('open-market-table').innerHTML = html
                 alert('Bet Unmaped Successfully')
             }
         })
