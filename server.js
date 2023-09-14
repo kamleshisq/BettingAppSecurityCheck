@@ -2734,7 +2734,7 @@ io.on('connection', (socket) => {
                       },
                       {
                         $group:{
-                            id:'$_id'
+                            _id:'$_id'
                         }
                       }
                 ])
