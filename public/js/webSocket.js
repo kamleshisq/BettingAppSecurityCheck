@@ -9222,10 +9222,9 @@ socket.on('connect', () => {
                         srNoCell.textContent = index + rowIndex + 1;
                       });
                   }
-                alert('Bet Maped Successfully')
-                let html = ``
-                if(document.getElementById('mapped-market-table').innerHTML != `<tr class="empty_table"><td>No MAPPED Markets! </td></tr>`){
-
+                  let html = ``
+                  if(document.getElementById('mapped-market-table').innerHTML != `<tr class="empty_table"><td>No MAPPED Markets! </td></tr>`){
+                      
                 }else{
                     html += `
                     <thead>
@@ -9243,6 +9242,8 @@ socket.on('connect', () => {
                 <td></td>
                 </tr>
                 </tbody>   `
+                console.log(html)
+                alert('Bet Maped Successfully')
             }
         })
     }
