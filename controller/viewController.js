@@ -3293,7 +3293,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     footballEvents = await Promise.all(newfootballEvents);
     tennisEvents = await Promise.all(newtennisEvents);
     data = {cricketEvents,footballEvents,tennisEvents}
-    console.log(cricketEvents)
+    // console.log(cricketEvents)
 
     return res.status(200).render("./eventController/eventController", {
         title:"eventController",
@@ -3304,7 +3304,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 })
 
 
-exports.CommissionMarkets = catchAsync(async(req, res, next) => {
+exports.CommissionMarkets = catchAsync(async(req, res, next) => { 
     
     const me = req.currentUser
     res.status(200).render("./commissionMarket/main",{
