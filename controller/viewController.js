@@ -3261,8 +3261,10 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
             item.eventData.status = true
             item.eventData.count = count
          }else{
+            console.log(status,item.eventData.name)
             item.eventData.status = false
             item.eventData.count = count
+            console.log(item)
          }
          return item
     })
@@ -3295,7 +3297,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     footballEvents = await Promise.all(newfootballEvents);
     tennisEvents = await Promise.all(newtennisEvents);
     data = {cricketEvents,footballEvents,tennisEvents}
-    console.log(cricketEvents)
+    // console.log(cricketEvents)
 
     return res.status(200).render("./eventController/eventController", {
         title:"eventController",
