@@ -2711,33 +2711,40 @@ io.on('connection', (socket) => {
              if(data.result != ""){
                 let bets = await Bet.aggregate([
                     {
-                        $match:{
-                            marketId:`${data.id}`,
-                            status:"OPEN"
-                        }
+                      $match: {
+                        marketId: `${data.id}`,
+                        status: "OPEN",
+                      },
                     },
                     {
-                        $lookup: {
-                          from: "users",
-                          localField: "userName",
-                          foreignField: "userName",
-                          as: "user"
-                        }
+                      $lookup: {
+                        from: "users",
+                        localField: "userName",
+                        foreignField: "userName",
+                        as: "user",
                       },
-                      {
-                        $unwind: "$user"
+                    },
+                    {
+                      $unwind: "$user",
+                    },
+                    {
+                      $match: {
+                        "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] },
                       },
-                      {
-                        $match: {
-                          "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
-                        }
+                    },
+                    {
+                      $group: {
+                        _id: null,
+                        betIds: { $push: { $toString: "$_id" } }, 
                       },
-                      {
-                        $group:{
-                            _id:'$_id'
-                        }
-                      }
-                ])
+                    },
+                    {
+                      $project: {
+                        _id: 0, 
+                        betIds: 1, 
+                      },
+                    },
+                  ]);
                 console.log(bets)
                 // await Bet.updateMany({marketId:data.id}, {$set:{result:data.result, status:'MAP'}})
                 // let betdata = await Bet.findOne({marketId:data.id})
