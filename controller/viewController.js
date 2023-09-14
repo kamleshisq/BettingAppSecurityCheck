@@ -2982,7 +2982,7 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     let me = req.currentUser
     // console.log("working")
     // console.log(req.query.id)
-    let betsEventWise = await betModel.aggregate([
+    let betsEventWiseOpen = await betModel.aggregate([
         {
             $match: {
                 status:"OPEN",
@@ -3023,11 +3023,12 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
             }
           }
     ])
+    
     res.status(200).render("./sattlementInPage/main",{
         title:"SETTLEMENTS",
         me,
         currentUser:me,
-        betsEventWise
+        betsEventWiseOpen
     })
 } )
 

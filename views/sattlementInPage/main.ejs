@@ -25,7 +25,53 @@
         <div class="row">
           <div class="data-table">
             <table id="open-market-table">
+              <%if(betsEventWise.length > 0 ){%>
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Market Name</th>
+                  <th>Result</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody class="new-body">
+                <%for(let i = 0; i < betsEventWise.length; i++){ %>
+                <tr>
+                  <td><%= i+1%></td>
+                  <td><%= betsEventWise[i].marketName%></td>
+                  <%console.log(betsEventWise[i].marketName, "marketName1")%>
+                  <%if(betsEventWise[i].marketName != "Match Odds" && betsEventWise[i].marketName != "Bookmaker 0%Comm" && betsEventWise[i].marketName != "TOSS" && betsEventWise[i].marketName != "BOOKMAKER 0% COMM"){%>
+                  <td>
+                    <select class="selectOption" >
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  </td>
+                  <%}else {%>
+                  <% 
+                  let option = betsEventWise[i].match.split(" v ")
+                  let option1 = option[0]
+                  let option2 = option[1]
+                  %>
+                  <td>
+                    <select class="selectOption">
+                      <option value="<%=option1 %>"><%=option1 %></option>
+                      <option value="<%=option2 %>"><%=option2 %></option>
+                    </select>
+                  </td>
+                  <%console.log(betsEventWise[i])%>
+                  <%}%>
+                  <td>
+                    <div class="btn-group">
+                      <button class="voidBet" id="<%=betsEventWise[i].marketId%>"> VOID</button><button class="acceptBet" id="<%=betsEventWise[i].marketId%>"> MAP</button>
+                    </div>
+                  </td>
+                </tr>
+                <%} %>
+              </tbody>
+              <%}else{ %>
               <tr class="empty_table"><td>No OPEN Markets! </td></tr>
+              <%}%>
             </table>
           </div>
         </div>
