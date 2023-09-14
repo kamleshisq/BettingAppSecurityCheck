@@ -3227,7 +3227,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
          }
     })
     data = {cricketEvents,footballEvents,tennisEvents}
-    return res.status(200).render("./eventController", {
+    return res.status(200).render("./eventController/eventController", {
         title:"eventController",
         data,
         me: user,
