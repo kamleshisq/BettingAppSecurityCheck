@@ -3194,6 +3194,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
             item.eventData.status = false;
             item.eventData.count = count
          }
+         return item
     })
     let newfootballEvents =await  footballList.eventList.map(async(item) => {
          status = await catalogController.findOne({Id:item.eventData.eventId})
@@ -3205,6 +3206,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
             item.eventData.status = false;
             item.eventData.count = count
          }
+         return item
     })
     let newtennisEvents = await tennisList.eventList.map(async(item) => {
          status = await catalogController.findOne({Id:item.eventData.eventId})
@@ -3216,6 +3218,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
             item.eventData.status = false;
             item.eventData.count = count
          }
+         return item
     })
 
     cricketEvents = await Promise.all(newcricketEvents);
