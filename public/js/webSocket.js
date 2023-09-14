@@ -9156,6 +9156,12 @@ socket.on('connect', () => {
             }
         })
 
+        $(document).on('click', ".Unmap", function(e){
+            e.preventDefault()
+            let id = this.id
+            socket.emit('unmapBet', {LOGINDATA, id})
+        })
+
         $(document).on("click", ".acceptBet", function(e){
             e.preventDefault()
             let id =  this.id

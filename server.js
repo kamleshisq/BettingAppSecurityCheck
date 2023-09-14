@@ -2709,10 +2709,39 @@ io.on('connection', (socket) => {
         try{
              console.log(data, "BETDATA")
              if(data.result != ""){
-
-                let bets = await Bet.updateMany({marketId:data.id}, {$set:{result:data.result, status:'MAP'}})
-                let betdata = await Bet.findOne({marketId:data.id})
-                socket.emit('VoidBetIn22', {status:"success", betdata, result:data.result})
+                let bets = await betModel.aggregate([
+                    {
+                        $match:{
+                            marketId:`${data.id}`,
+                            status:"OPEN"
+                        }
+                    },
+                    {
+                        $lookup: {
+                          from: "users",
+                          localField: "userName",
+                          foreignField: "userName",
+                          as: "user"
+                        }
+                      },
+                      {
+                        $unwind: "$user"
+                      },
+                      {
+                        $match: {
+                          "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
+                        }
+                      },
+                      {
+                        $group:{
+                            id:'$_id'
+                        }
+                      }
+                ])
+                console.log(bets)
+                // await Bet.updateMany({marketId:data.id}, {$set:{result:data.result, status:'MAP'}})
+                // let betdata = await Bet.findOne({marketId:data.id})
+                // socket.emit('VoidBetIn22', {status:"success", betdata, result:data.result})
              }else{
                 socket.emit('VoidBetIn22', {message:"Please select a result", status:"error"})
              }
