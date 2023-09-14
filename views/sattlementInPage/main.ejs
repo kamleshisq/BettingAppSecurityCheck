@@ -7,7 +7,7 @@
         <h3>Settelments</h3>
         <div class="form">
           <%
-          var timestamp = betsEventWiseOpen[0].date ; 
+          var timestamp = data.date ; 
           var date = new Date(timestamp);
           var options = { 
             year: 'numeric',
@@ -16,7 +16,7 @@
         };
         var formattedTime = date.toLocaleString('en-US', options);
           %>
-          <h4><%=betsEventWiseOpen[0].match%> / <%=formattedTime%></h4>
+          <h4><%=data.match%> / <%=formattedTime%></h4>
         </div>
       </div>
     </div>

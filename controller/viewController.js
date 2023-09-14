@@ -3036,12 +3036,14 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
             }
           }
     ])
+    let data = await betModel.findOne({eventId:req.query.id})
     console.log(betsEventWiseOpen)
     res.status(200).render("./sattlementInPage/main",{
         title:"SETTLEMENTS",
         me,
         currentUser:me,
-        betsEventWiseOpen
+        betsEventWiseOpen,
+        data
     })
 } )
 
