@@ -7546,6 +7546,9 @@ $(document).on('click', '.RoleDetails', function () {
   for (var _i2 = 0; _i2 < roledata.userAuthorization.length; _i2++) {
     form.find("input[value = \"".concat(roledata.userAuthorization[_i2], "\"]")).attr("checked", "checked");
   }
+  for (var _i3 = 0; _i3 < roledata.operationAuthorization.length; _i3++) {
+    form.find("input[value = \"".concat(roledata.operationAuthorization[_i3], "\"]")).attr("checked", "checked");
+  }
   // document.getElementById("role_controller").innerHTML = `
   //         <label for="level"> <h3>Role Level </h3></label><br>
   //         <input type="number" name="level" placeholder='${roledata.role_level}' id='role_level'>`
