@@ -25,7 +25,7 @@
         <div class="row">
           <div class="data-table">
             <table id="open-market-table">
-              <%if(betsEventWise.length > 0 ){%>
+              <%if(betsEventWiseOpen.length > 0 ){%>
               <thead>
                 <tr>
                   <th>S.No</th>
@@ -35,12 +35,12 @@
                 </tr>
               </thead>
               <tbody class="new-body">
-                <%for(let i = 0; i < betsEventWise.length; i++){ %>
+                <%for(let i = 0; i < betsEventWiseOpen.length; i++){ %>
                 <tr>
                   <td><%= i+1%></td>
-                  <td><%= betsEventWise[i].marketName%></td>
-                  <%console.log(betsEventWise[i].marketName, "marketName1")%>
-                  <%if(betsEventWise[i].marketName != "Match Odds" && betsEventWise[i].marketName != "Bookmaker 0%Comm" && betsEventWise[i].marketName != "TOSS" && betsEventWise[i].marketName != "BOOKMAKER 0% COMM"){%>
+                  <td><%= betsEventWiseOpen[i].marketName%></td>
+                  <%console.log(betsEventWiseOpen[i].marketName, "marketName1")%>
+                  <%if(betsEventWiseOpen[i].marketName != "Match Odds" && betsEventWiseOpen[i].marketName != "Bookmaker 0%Comm" && betsEventWiseOpen[i].marketName != "TOSS" && betsEventWiseOpen[i].marketName != "BOOKMAKER 0% COMM"){%>
                   <td>
                     <select class="selectOption" >
                       <option value="yes">Yes</option>
@@ -49,7 +49,7 @@
                   </td>
                   <%}else {%>
                   <% 
-                  let option = betsEventWise[i].match.split(" v ")
+                  let option = betsEventWiseOpen[i].match.split(" v ")
                   let option1 = option[0]
                   let option2 = option[1]
                   %>
@@ -59,11 +59,11 @@
                       <option value="<%=option2 %>"><%=option2 %></option>
                     </select>
                   </td>
-                  <%console.log(betsEventWise[i])%>
+                  <%console.log(betsEventWiseOpen[i])%>
                   <%}%>
                   <td>
                     <div class="btn-group">
-                      <button class="voidBet" id="<%=betsEventWise[i].marketId%>"> VOID</button><button class="acceptBet" id="<%=betsEventWise[i].marketId%>"> MAP</button>
+                      <button class="voidBet" id="<%=betsEventWiseOpen[i].marketId%>"> VOID</button><button class="acceptBet" id="<%=betsEventWiseOpen[i].marketId%>"> MAP</button>
                     </div>
                   </td>
                 </tr>
