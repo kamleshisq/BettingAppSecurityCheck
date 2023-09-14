@@ -9184,6 +9184,26 @@ socket.on('connect', () => {
                       });
                   }
                 alert('Bet Maped Successfully')
+                let html = ``
+                if(document.getElementById('mapped-market-table').innerHTML != `<tr class="empty_table"><td>No MAPPED Markets! </td></tr>`){
+
+                }else{
+                    html += `
+                    <thead>
+                    <tr>
+                      <th>Market Name</th>
+                      <th>Result</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                    `
+                }
+                html += ` <tbody class="new-body"><tr>
+                <td>${data.betdata.marketName}</td>
+                <td>${data.result}</td>
+                <td></td>
+                </tr>
+                </tbody>   `
             }
         })
     }

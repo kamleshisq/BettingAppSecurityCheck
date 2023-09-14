@@ -2709,7 +2709,8 @@ io.on('connection', (socket) => {
         try{
              console.log(data, "BETDATA")
              if(data.result != ""){
-                
+                let bets = await Bet.updateMany({eventId:data.is}, {$set:{result:data.result, status:'MAP'}})
+                socket.emit('VoidBetIn22', {status:"success", betdata:bets[0], result:data.result})
              }else{
                 socket.emit('VoidBetIn22', {message:"Please select a result", status:"error"})
              }
