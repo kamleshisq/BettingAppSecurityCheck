@@ -7577,10 +7577,9 @@ $(document).on("submit", ".UpdateRole-form", function (e) {
     roleName: roleName,
     operationAuthorization: operationAuthorization
   };
-  console.log(data);
-  // updateRole(data)
+  // console.log(data)
+  (0, _updateRoleByaxios.updateRole)(data);
 });
-
 $(document).on('click', '.deleteRole', function (e) {
   var roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
   if (confirm('do you want to delete this role')) {

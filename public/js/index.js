@@ -521,8 +521,8 @@ $(document).on("submit", ".UpdateRole-form", function(e){
         roleName,
         operationAuthorization
         }
-    console.log(data)
-    // updateRole(data)
+    // console.log(data)
+    updateRole(data)
 })
 $(document).on('click','.deleteRole',function(e){
     let roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss')

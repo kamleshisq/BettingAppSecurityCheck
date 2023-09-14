@@ -149,21 +149,21 @@ exports.getRoleById =catchAsync(async(req, res, next) => {
 });
 
 exports.updateRoleById = catchAsync(async(req, res, next) => {
-    // console.log(req.body)
-    const role = await Role.findByIdAndUpdate(req.body.id, {authorization:req.body.authorization, userAuthorization:req.body.userAuthorization, name:req.body.roleName})
-    // console.log(role)
-    if(!role){
-        return next(new AppError("Ops!, Something went wrong please try again later", 404))
-    }
-    req.body.id = role.id
-    // // console.log(req.body.id)
-    if(req.body.role_level == '' || req.body.role_level == undefined){
-        return res.status(200).json({
-            status:"success",
-            role
-        })
-    }
-    next()
+    console.log(req.body)
+    // const role = await Role.findByIdAndUpdate(req.body.id, {authorization:req.body.authorization, userAuthorization:req.body.userAuthorization, name:req.body.roleName})
+    // // console.log(role)
+    // if(!role){
+    //     return next(new AppError("Ops!, Something went wrong please try again later", 404))
+    // }
+    // req.body.id = role.id
+    // // // console.log(req.body.id)
+    // if(req.body.role_level == '' || req.body.role_level == undefined){
+    //     return res.status(200).json({
+    //         status:"success",
+    //         role
+    //     })
+    // }
+    // next()
 })
 
 exports.deleteRole = catchAsync(async(req,res,next)=>{
