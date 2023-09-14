@@ -9240,7 +9240,13 @@ socket.on('connect', () => {
                 html += ` <tbody class="new-body"><tr>
                 <td>${data.betdata.marketName}</td>
                 <td>${data.result}</td>
-                <td></td>
+                <td>
+                    <div class="btn-group">
+                        <button class="Unmap" id="${data.betdata.marketId}"> Unmap</button>
+                        <button class="Settle" id="${data.betdata.marketId}"> Settle</button>
+                        <button class="voidBet" id="${data.betdata.marketId}"> VOID</button>
+                    </div>
+                </td>
                 </tr>
                 </tbody>   `
                 document.getElementById('mapped-market-table').innerHTML = html
