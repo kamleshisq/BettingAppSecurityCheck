@@ -3193,7 +3193,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
     let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
 
-    let newcricketEvents = cricketList.eventList.map(async(item) => {
+    let newcricketEvents = await cricketList.eventList.map(async(item) => {
          status = await catalogController.findOne({Id:item.eventData.eventId})
          count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
          if(!status){
@@ -3204,7 +3204,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
             item.eventData.count = count
          }
     })
-    let newfootballEvents = footballList.eventList.map(async(item) => {
+    let newfootballEvents =await  footballList.eventList.map(async(item) => {
          status = await catalogController.findOne({Id:item.eventData.eventId})
          count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
          if(!status){
@@ -3215,7 +3215,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
             item.eventData.count = count
          }
     })
-    let newtennisEvents = tennisList.eventList.map(async(item) => {
+    let newtennisEvents = await tennisList.eventList.map(async(item) => {
          status = await catalogController.findOne({Id:item.eventData.eventId})
          count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
          if(!status){
@@ -3227,9 +3227,9 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
          }
     })
 
-    cricketEvents = await newcricketEvents;
-    footballEvents = await newfootballEvents;
-    tennisEvents = await newtennisEvents;
+    cricketEvents = await Promise.all(newcricketEvents);
+    footballEvents = await Promise.all(newfootballEvents);
+    tennisEvents = await Promise.all(newtennisEvents);
     data = {cricketEvents,footballEvents,tennisEvents}
     console.log(cricketEvents)
 
