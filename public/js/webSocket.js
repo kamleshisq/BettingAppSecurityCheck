@@ -9176,10 +9176,9 @@ socket.on('connect', () => {
 
         socket.on('unmapBet', data => {
             if(data.status === "error"){
-                alert("Please try again later")
+                alert(data.message.toUpperCase())
             }else{
-                // console.log(data.bet._id)
-                const deleteButton = document.getElementById(data.marketId);
+                const deleteButton = document.getElementById(data.betdata.marketId);
                 // console.log(deleteButton)
                 const row = deleteButton.closest('tr'); 
                 if (row) {
@@ -9192,7 +9191,7 @@ socket.on('connect', () => {
                         srNoCell.textContent = index + rowIndex + 1;
                       });
                   }
-                alert('Bet canceled successfully')
+                alert('Bet Unmaped Successfully')
             }
         })
 
