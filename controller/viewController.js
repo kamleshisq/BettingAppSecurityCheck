@@ -1133,7 +1133,12 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
             count: { $sum: 1 },
             eventdate: { $first: "$eventDate" }, 
             eventid: { $first: "$eventId" },
-            series: {$first: "$event"}
+            series: {$first: "$event"},
+            count2: { 
+                $sum: {
+                  $cond: [{ $eq: ["$status", "OPEN"] }, 1, 0],
+                },
+            },
           }
         },
         {
@@ -1145,7 +1150,8 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
                 count: "$count",
                 eventdate : '$eventdate',
                 eventid : "$eventid",
-                series : '$series'
+                series : '$series',
+                count2: "$count2",
               }
             }
           }
@@ -1153,7 +1159,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
         {
           $project: {
             _id: 0,
-            id: "$_id", // Rename _id to id
+            id: "$_id", 
             data: 1
           }
         }
@@ -1238,7 +1244,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     // let sportData = await getCrkAndAllData()
     // const cricket1 = sportData[0].gameList[0].eventList
     // console.log(cricket1)
-    // console.log(betsEventWise)
+    console.log(betsEventWise)
     res.status(200).render("./sattelment/setalment",{
         title:"SETTLEMENTS",
         me,
