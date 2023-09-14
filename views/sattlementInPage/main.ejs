@@ -145,14 +145,40 @@
 
       <div id="SETTLED" class="tabcontent">
         <section>
-        <div class="row">
-          <div class="data-table">
-            <table id="settle-market-table">
-              <tr class="empty_table"><td>No SETTLED Markets! </td></tr>
-            </table>
+          <div class="row">
+            <div class="data-table">
+              <table id="open-market-table">
+                <%if(betsEventWiseSettel.length > 0 ){%>
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Market Name</th>
+                    <th>Result</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody class="new-body">
+                  <%for(let i = 0; i < betsEventWiseSettel.length; i++){ %>
+                  <tr>
+                    <td><%= i+1%></td>
+                    <td><%= betsEventWiseSettel[i].marketName%></td>
+                    <td><%= betsEventWiseSettel[i].result%></td>
+                    <td>
+                      <div class="btn-group">
+                        <button class="ROLLBACK" id="<%=betsEventWiseSettel[i].marketId%>"> ROLLBACK</button>
+                        <button class="voidBet" id="<%=betsEventWiseSettel[i].marketId%>"> VOID</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <%} %>
+                </tbody>
+                <%}else{ %>
+                <tr class="empty_table"><td>No SETTLED Markets! </td></tr>
+                <%}%>
+              </table>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
       </div>
 
       <div id="VOIDED" class="tabcontent">
