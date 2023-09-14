@@ -9192,7 +9192,7 @@ socket.on('connect', () => {
                       });
                   }
                   let html = ``
-                //   console.log(document.getElementById('open-market-table').getElementsByTagName('thead'))
+                  console.log(document.getElementById('open-market-table').getElementsByTagName('tbody'))
                   if(document.getElementById('open-market-table').getElementsByTagName('tbody').length != 0){
                       
                 }else{
@@ -9238,13 +9238,19 @@ socket.on('connect', () => {
                 </tr>
                 </tbody>   `
 
-                if(document.getElementById('open-market-table').getElementsByTagName('tbody').length != 0){
+                if(document.getElementById('open-market-table').getElementsByTagName('tbody').length === 0){
                     document.getElementById('openmarket').append = html
                 }else{
                     document.getElementById('open-market-table').innerHTML = html
                 }
                 alert('Bet Unmaped Successfully')
             }
+        })
+
+        $(document).on('click', ".Settle", function(e){
+            e.preventDefault()
+            let id = this.id
+            socket.emit('Settle', {LOGINDATA, id})
         })
 
         $(document).on("click", ".acceptBet", function(e){
@@ -9275,7 +9281,7 @@ socket.on('connect', () => {
                       });
                   }
                   let html = ``
-                //   console.log(document.getElementById('mapped-market-table').getElementsByTagName('thead'))
+                  console.log(document.getElementById('mapped-market-table').getElementsByTagName('tbody'))
                   if(document.getElementById('mapped-market-table').getElementsByTagName('tbody').length != 0){
                       
                 }else{
@@ -9301,13 +9307,37 @@ socket.on('connect', () => {
                 </td>
                 </tr>
                 </tbody>   `
-                if(document.getElementById('mapped-market-table').getElementsByTagName('tbody').length != 0){
+                if(document.getElementById('mapped-market-table').getElementsByTagName('tbody').length === 0){
                     document.getElementById('mapMarket').append = html
                 }else{
                     document.getElementById('mapped-market-table').innerHTML = html
                 }
                 // document.getElementById('mapped-market-table').innerHTML = html
                 alert('Bet Maped Successfully')
+            }
+        })
+
+
+
+        socket.on("Settle", async(data) => {
+            if(data.status === "error"){
+                alert(data.message.toUpperCase())
+            }else{
+                const deleteButton = document.getElementById(data.betdata.marketId);
+                // console.log(deleteButton)
+                const row = deleteButton.closest('tr'); 
+                if (row) {
+                    const table = row.parentNode;
+                    const rowIndex = Array.from(table.rows).indexOf(row);
+                    row.remove(); 
+                    const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
+                    rowsToUpdate.forEach((row, index) => {
+                        const srNoCell = row.cells[0]; 
+                        srNoCell.textContent = index + rowIndex + 1;
+                      });
+                  }
+                  let html = ``
+                alert('Bet Settled Successfully')
             }
         })
     }
