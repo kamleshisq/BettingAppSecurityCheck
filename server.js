@@ -40,6 +40,7 @@ const catalogController = require("./model/catalogControllModel");
 const commissionMarketModel = require("./model/CommissionMarketsModel");
 const netCommissionModel = require('./model/netCommissionModel');
 const commissionRepportModel = require('./model/commissionReport');
+const { error } = require('console');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -2707,6 +2708,11 @@ io.on('connection', (socket) => {
         // let marketIds = [`${data.id}`]
         try{
              console.log(data, "BETDATA")
+             if(data.result != ""){
+
+             }else{
+                socket.emit('VoidBetIn22', {message:"Please select a result", status:"error"})
+             }
             //  let data1 = mapBet.mapbet(data)
             //  socket.emit('VoidBetIn22', {marketId:data.id, status:"success"})
         }catch(err){
