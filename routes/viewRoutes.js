@@ -44,31 +44,31 @@ router.get("/admin/userhistoryreport", authController.isProtected, authControlle
 router.get("/admin/plreport", authController.isProtected, authController.isAdmin,viewController.plreport)
 router.get("/admin/roleManagement", authController.isProtected, authController.isAdmin,viewController.roleManagement)
 router.get("/admin/promotion", authController.isProtected,authController.isAdmin, viewController.getPromotionPage);
-router.get("/admin/houseManagement", authController.isProtected, authController.isAdmin,viewController.getoperationsPage);
-router.get("/admin/settlement", authController.isProtected, authController.isAdmin,viewController.getSettlementPage);
-router.get("/admin/settlementIn", authController.isProtected, authController.isAdmin,viewController.getSettlementPageIn);
-router.get("/admin/settlementHistory", authController.isProtected, authController.isAdmin,viewController.getSettlementHistoryPage);
+router.get("/admin/houseManagement", authController.isProtected, authController.isAdmin, authController.restrictToOperator("HouseManagement"),viewController.getoperationsPage);
+router.get("/admin/settlement", authController.isProtected, authController.isAdmin, authController.restrictToOperator("settlements"),viewController.getSettlementPage);
+router.get("/admin/settlementIn", authController.isProtected, authController.isAdmin, authController.restrictToOperator("settlements"),viewController.getSettlementPageIn);
+router.get("/admin/settlementHistory", authController.isProtected, authController.isAdmin, authController.restrictToOperator("settlements"),viewController.getSettlementHistoryPage);
 router.get("/admin/commissionReport", authController.isProtected, authController.isAdmin,viewController.getCommissionReport);
-router.get("/admin/whiteLableAnalysis", authController.isProtected, authController.isAdmin,viewController.WhiteLabelAnalysis);
-router.get("/admin/gameanalysis", authController.isProtected, authController.isAdmin,viewController.gameAnalysis);
+router.get("/admin/whiteLableAnalysis", authController.isProtected, authController.isAdmin, authController.restrictToOperator("whiteLabelAnalysis"),viewController.WhiteLabelAnalysis);
+router.get("/admin/gameanalysis", authController.isProtected, authController.isAdmin, authController.restrictToOperator("gameAnalysis"),viewController.gameAnalysis);
 router.get("/admin/streammanagement", authController.isProtected, authController.isAdmin,viewController.getStreamManagementPage);
-router.get("/admin/Notification", authController.isProtected, authController.isAdmin,viewController.getNotificationsPage);
+router.get("/admin/Notification", authController.isProtected, authController.isAdmin,  authController.restrictToOperator("notification"),viewController.getNotificationsPage);
 router.get("/admin/casinocontrol", authController.isProtected, authController.isAdmin,viewController.getCasinoControllerPage);
 router.get("/pp", viewController.promotion);
 router.get('/ALLGAMEFORTESTING', authController.isProtected, viewController.getAllCasinoPageFOrTEsting);
 router.get("/SPORT",authController.isProtected, gameController.sport ,viewController.getSpoertPage);
-router.get("/admin/betmoniter", authController.isProtected, authController.isAdmin, viewController.getBetMoniterPage);
-router.get("/admin/alertbet", authController.isProtected, authController.isAdmin, viewController.getBetAlertPage);
-router.get("/admin/voidbet", authController.isProtected, authController.isAdmin, viewController.getVoidBetPage);
-router.get("/admin/betlimit", authController.isProtected, authController.isAdmin, viewController.getBetLimitPage);
-router.get("/admin/onlineUsers", authController.isProtected, authController.isAdmin, viewController.onlineUsers);
+router.get("/admin/betmoniter", authController.isProtected, authController.isAdmin, authController.restrictToOperator("betsMonitaring"),viewController.getBetMoniterPage);
+router.get("/admin/alertbet", authController.isProtected, authController.isAdmin, authController.restrictToOperator("alertBets") ,viewController.getBetAlertPage);
+router.get("/admin/voidbet", authController.isProtected, authController.isAdmin, authController.restrictToOperator("voidBets"), viewController.getVoidBetPage);
+router.get("/admin/betlimit", authController.isProtected, authController.isAdmin, authController.restrictToOperator("betLimits"), viewController.getBetLimitPage);
+router.get("/admin/onlineUsers", authController.isProtected, authController.isAdmin, authController.restrictToOperator("onlineUsers"),viewController.onlineUsers);
 router.get("/admin/liveMarket", authController.isProtected, authController.isAdmin, viewController.getLiveMarketsPage);
 router.get("/admin/cms", authController.isProtected, authController.isAdmin, viewController.getCmsPage);
 router.get("/admin/pageManager", authController.isProtected, authController.isAdmin, viewController.getPageManagement);
 router.get("/admin/gameRules", authController.isProtected, authController.isAdmin, viewController.gameRulesPage);
 router.get("/admin/userdetails", authController.isProtected, authController.isAdmin, viewController.userDetailsAdminSide);
 router.get("/admin/catalogcontrol", authController.isProtected, authController.isAdmin,viewController.getCatalogControllerPage);
-router.get("/admin/commissionMarkets", authController.isProtected, authController.isAdmin, viewController.CommissionMarkets)
+router.get("/admin/commissionMarkets", authController.isProtected, authController.isAdmin, authController.restrictToOperator("commissionMarkets"),viewController.CommissionMarkets)
 router.get("/admin/catalogcontrol/compitations", authController.isProtected, authController.isAdmin,viewController.getCatalogCompetationControllerPage);
 router.get("/admin/catalogcontrol/compitations/events", authController.isProtected, authController.isAdmin,viewController.getCatalogeventsControllerPage);
 router.get("/admin/eventcontrol", authController.isProtected, authController.isAdmin,viewController.getEventControllerPage);
