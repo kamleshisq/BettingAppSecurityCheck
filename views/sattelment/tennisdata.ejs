@@ -13,13 +13,13 @@
       </thead>
       <tbody class="new-body">
         <%if(betsEventWise.length !== 0){%>
-        <% let betsEventWiseData = betsEventWise.find(item => item.id = 'Tennis') %>
-        <% let betsEventWiseData2 = betsEventWiseData.data%>
-        <%for(let i = 0; i < betsEventWiseData2.length; i++){ %>
+        <% let betsEventWiseTennis = betsEventWise.find(item => item.id = 'Tennis') %>
+        <% let betsEventWiseData2Tennis = betsEventWiseTennis.data%>
+        <%for(let i = 0; i < betsEventWiseData2Tennis.length; i++){ %>
           
           <tr>
             <%
-                var timestamp = betsEventWiseData2[i].eventdate * 1000; 
+                var timestamp = betsEventWiseData2Tennis[i].eventdate * 1000; 
                 var date = new Date(timestamp);
                 var options = { 
                   year: 'numeric',
@@ -34,11 +34,11 @@
             %>
             <td><%=i+1 %></td>
             <td class="date-time"><%=formattedTime%></td>
-            <td class="text-nowrap"><%= betsEventWiseData2[i].series%></td>
-            <td class="text-nowrap"><%= betsEventWiseData2[i].matchName%></td>
-            <td><%= betsEventWiseData2[i].count%></td>
-            <td><%= betsEventWiseData2[i].count%></td>
-            <td><a href="/admin/settlementIn?id=<%=betsEventWiseData2[i].eventid%>" class="btn-green">settle</a></td>
+            <td class="text-nowrap"><%= betsEventWiseData2Tennis[i].series%></td>
+            <td class="text-nowrap"><%= betsEventWiseData2Tennis[i].matchName%></td>
+            <td><%= betsEventWiseData2Tennis[i].count%></td>
+            <td><%= betsEventWiseData2Tennis[i].count%></td>
+            <td><a href="/admin/settlementIn?id=<%=betsEventWiseData2Tennis[i].eventid%>" class="btn-green">settle</a></td>
           </tr>
         <%} %>
         <%}else{%>
