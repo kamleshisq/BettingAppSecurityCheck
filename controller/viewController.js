@@ -3259,7 +3259,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
             item.eventData.status = true
             item.eventData.count = count
          }else{
-            item.eventData.status = false;
+            item.eventData.status = false
             item.eventData.count = count
          }
          return item
@@ -3271,7 +3271,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
             item.eventData.status = true
             item.eventData.count = count
          }else{
-            item.eventData.status = false;
+            item.eventData.status = false
             item.eventData.count = count
          }
          return item
@@ -3283,7 +3283,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
             item.eventData.status = true
             item.eventData.count = count
          }else{
-            item.eventData.status = false;
+            item.eventData.status = false
             item.eventData.count = count
          }
          return item
