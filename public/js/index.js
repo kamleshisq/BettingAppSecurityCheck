@@ -500,22 +500,29 @@ $(document).on("submit", ".UpdateRole-form", function(e){
     let roleName = document.getElementById("mySelect").value
     let authorization = [];
     let roleAuthorization = [];
-    let authCheck = document.querySelectorAll("input[name='authorization']:checked");
-    for (let i = 0 ; i < authCheck.length; i++) {
-        roleAuthorization.push(authCheck[i].value)
+    let operationAuthorization = [];
+    // let authCheck = document.querySelectorAll("input[name='authorization']:checked");
+    // for (let i = 0 ; i < authCheck.length; i++) {
+    //     roleAuthorization.push(authCheck[i].value)
+    // }
+    // let checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
+    // for (let i = 0 ; i < checkboxes.length; i++) {
+    //     authorization.push(checkboxes[i].value)
+    // }
+    let operator = document.querySelectorAll("input[name='operator']:checked");
+    for( let i = 0; i < operator.length; i++){
+        operationAuthorization.push(operator[i].value)
     }
-    let checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-    for (let i = 0 ; i < checkboxes.length; i++) {
-        authorization.push(checkboxes[i].value)
-    }
+
     let data = {
         id,
-        authorization,
-        userAuthorization:roleAuthorization,
-        roleName
+        // authorization,
+        // userAuthorization:roleAuthorization,
+        roleName,
+        operationAuthorization
         }
     console.log(data)
-    updateRole(data)
+    // updateRole(data)
 })
 $(document).on('click','.deleteRole',function(e){
     let roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss')
