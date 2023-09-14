@@ -23,12 +23,21 @@
                     <%}%>
                     <td><%=i + 1%></td>
                     <td>
+                      <%if(data.cricketEvents[i].eventData.status){%>
+                      <div class="on-off-btn-section">
+                        <span class="on-off">OFF &nbsp; <label class="switch on">
+                        <input class="checkbox status_check" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].eventData.eventId%>" checked>
+                        <span class="slider round"></span>
+                        </label>&nbsp; ON</span>
+                      </div>
+                      <%}else{%>
                       <div class="on-off-btn-section">
                         <span class="on-off">OFF &nbsp; <label class="switch">
                         <input class="checkbox status_check" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].eventData.eventId%>">
                         <span class="slider round"></span>
                         </label>&nbsp; ON</span>
                       </div>
+                      <%}%>
                     </td>
                     <%
                       var timestamp = data.cricketEvents[i].eventData.time * 1000 
