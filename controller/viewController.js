@@ -3011,6 +3011,7 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
               count: { $sum: 1 },
               marketId: { $first: "$marketId" },
               match: { $first: "$match" },
+              date: {$first:'$date'}
             }
           },
           {
@@ -3019,11 +3020,12 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
               marketName: "$_id",
               marketId: 1,
               count: 1,
-              match : 1
+              match : 1,
+              data:1
             }
           }
     ])
-    
+    console.log(betsEventWiseOpen)
     res.status(200).render("./sattlementInPage/main",{
         title:"SETTLEMENTS",
         me,
