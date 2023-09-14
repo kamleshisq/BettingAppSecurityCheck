@@ -605,6 +605,40 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 }
             }
         ])
+
+
+
+        let topBets = await betModel.aggregate([
+            {
+                $match: {
+                    status:"OPEN" 
+                }
+            },
+            {
+                $lookup: {
+                  from: "users",
+                  localField: "userName",
+                  foreignField: "userName",
+                  as: "user"
+                }
+              },
+              {
+                $unwind: "$user"
+              },
+              {
+                $match: {
+                  "user.parentUsers": { $in: [req.currentUser.id] }
+                }
+              },
+              {
+                $sort:{
+                    Stake: 1
+                }
+              },
+              {
+                $limit:5
+              }
+        ])
     // }
     
     
@@ -649,6 +683,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     dashboard.alertBet = alertBet
     dashboard.settlement = betsEventWise
     dashboard.turnOver = turnOver
+    dashboard.topBets = topBets
     
     res.status(200).json({
         status:'success',
