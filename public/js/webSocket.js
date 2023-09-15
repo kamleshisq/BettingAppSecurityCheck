@@ -9149,6 +9149,12 @@ socket.on('connect', () => {
             // socket.emit("VoidBetIn", {LOGINDATA, id})
         })
 
+        $(document).on('submit', ".voidbet-form", function(e){
+            e.preventDefault();
+            let id = this.id
+            console.log(id)
+        })
+
         socket.on("VoidBetIn", async(data) => {
             if(data.status === "error"){
                 alert("Please try again later")
