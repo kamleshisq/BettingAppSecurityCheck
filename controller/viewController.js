@@ -3759,6 +3759,7 @@ exports.getSportBetLimit = catchAsync(async(req, res, next) => {
 
 exports.getBetLimitSportWise = catchAsync(async(req, res, next) => {
     const me = req.currentUser
+    console.log(req.query.game)
     const betLimit = await betLimitModel.find();
     const sportListData = await getCrkAndAllData()
     let cricketList = sportListData[0].gameList[0]
