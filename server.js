@@ -3354,6 +3354,7 @@ io.on('connection', (socket) => {
             let details = await betLimit.findOne({type:data})
             console.log(details)
             if(details){
+                console.log('working')
                 socket.emit('BetLimitDetails', details)
             }else{
                 socket.emit("BetLimitDetails", {message:'', status:'notFound'})
