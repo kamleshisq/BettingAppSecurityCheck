@@ -3779,6 +3779,7 @@ exports.getBetLimitSportWise = catchAsync(async(req, res, next) => {
         betLimit,
         me,
         currentUser:me,
-        gameData
+        gameData,
+        gameName:req.query.game
     })
 })
