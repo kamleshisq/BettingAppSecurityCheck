@@ -16,7 +16,7 @@ exports.mapbet = async(data) => {
         {
             $match:{
                 marketId:`${data.id}`,
-                status:"OPEN"
+                status:"MAP"
             }
         },
         {
