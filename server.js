@@ -3357,6 +3357,7 @@ io.on('connection', (socket) => {
                 console.log('working')
                 socket.emit('BetLimitDetails', details)
             }else{
+                console.log('121212')
                 socket.emit("BetLimitDetails", {message:'', status:'notFound'})
             }
 
