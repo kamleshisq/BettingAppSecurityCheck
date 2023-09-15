@@ -96,7 +96,7 @@ module.exports = () => {
                     if(entry.selectionName ==  marketresult.result){
                         // console.log("WORKING4564654654")
                         // console.log(entry)
-                        let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue)})
+                        let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue), result:marketresult.result})
                         let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{availableBalance: parseFloat(entry.Stake * entry.oddValue), myPL: parseFloat(entry.Stake * entry.oddValue), Won:1, exposure:-parseFloat(entry.Stake), uplinePL:-parseFloat(entry.Stake * entry.oddValue), pointsWL:parseFloat(entry.Stake * entry.oddValue)}})
                         let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
                         // let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/WON `
@@ -233,7 +233,7 @@ module.exports = () => {
                         }
 
                     }else if((entry.secId === "odd_Even_No" && marketresult.result === "lay") || (entry.secId === "odd_Even_Yes" && marketresult.result === "back")){
-                        let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue)})
+                        let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue), result:marketresult.result})
                         let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{availableBalance: parseFloat(entry.Stake * entry.oddValue), myPL: parseFloat(entry.Stake * entry.oddValue), Won:1, exposure:-parseFloat(entry.Stake), uplinePL:-parseFloat(entry.Stake * entry.oddValue), pointsWL:parseFloat(entry.Stake * entry.oddValue)}})
                         console.log(user)
                         let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
@@ -304,7 +304,7 @@ module.exports = () => {
                         // })
                     }else{
                         let bet = await betModel.findByIdAndUpdate(entry._id,{status:"LOSS"})
-                        let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{Loss:1, exposure:-parseFloat(entry.Stake)}})
+                        let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{Loss:1, exposure:-parseFloat(entry.Stake), result:marketresult.result}})
                         let commissionMarket = await commissionMarketModel.find()
                         if(commissionMarket.some(item => item.marketId == bet.marketId)){
                             try{
