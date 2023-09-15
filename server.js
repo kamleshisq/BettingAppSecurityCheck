@@ -2719,7 +2719,8 @@ io.on('connection', (socket) => {
     socket.on('Settle', async(data) => {
         try{
             console.log(data)
-            // let data1 = mapBet.mapbet(data)
+            let data1 = mapBet.mapbet(data)
+            socket.emit("VoidBetIn22", {message:"Settleed Process start", status:'success'})
             // socket.emit('VoidBetIn22', {marketId:data.id, status:"success"})
         }catch(err){
             console.log(err)
