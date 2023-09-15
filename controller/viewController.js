@@ -2435,20 +2435,20 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         //     let date = new Date(item.updated_on);
         //     return date < Date.now() - 1000 * 60 * 60;
         // });
-        let SportLimits = betLimit.find(item => item.type === "Sport")
-        let min 
-        let max 
-        if (SportLimits.min_stake >= 1000) {
-            min = (SportLimits.min_stake / 1000) + 'K';
-        } else {
-            min = SportLimits.min_stake.toString();
-        }
-        if (SportLimits.max_stake >= 1000) {
-            max = (SportLimits.max_stake / 1000) + 'K';
-          } else {
-            max = SportLimits.max_stake.toString();
-        }
-        console.log(SportLimits, min , max)
+        // let SportLimits = betLimit.find(item => item.type === "Sport")
+        // let min 
+        // let max 
+        // if (SportLimits.min_stake >= 1000) {
+        //     min = (SportLimits.min_stake / 1000) + 'K';
+        // } else {
+        //     min = SportLimits.min_stake.toString();
+        // }
+        // if (SportLimits.max_stake >= 1000) {
+        //     max = (SportLimits.max_stake / 1000) + 'K';
+        //   } else {
+        //     max = SportLimits.max_stake.toString();
+        // }
+        // console.log(SportLimits, min , max)
         let userLog
         let stakeLabledata
         let userMultimarkets
@@ -2470,7 +2470,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             verticalMenus,
             check:"ExchangeIn",
             match,
-            SportLimits,
+            // SportLimits,
             liveStream,
             userLog,
             notifications:req.notifications,
