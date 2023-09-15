@@ -2718,8 +2718,9 @@ io.on('connection', (socket) => {
 
     socket.on('Settle', async(data) => {
         try{
-            let data1 = mapBet.mapbet(data)
-            socket.emit('VoidBetIn22', {marketId:data.id, status:"success"})
+            console.log(data)
+            // let data1 = mapBet.mapbet(data)
+            // socket.emit('VoidBetIn22', {marketId:data.id, status:"success"})
         }catch(err){
             console.log(err)
             socket.emit("VoidBetIn22",{message:"err", status:"error"})
