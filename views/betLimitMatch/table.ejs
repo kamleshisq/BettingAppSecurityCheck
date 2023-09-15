@@ -10,7 +10,7 @@
       <%if(seriesMatch.length > 0){%>
         <thead>
             <tr>
-                <th>Competition</th>
+                <th>Market</th>
                 <th>Min Stake</th>
                 <th>Max Stake </th>
                 <th>Max Profit</th>
@@ -21,6 +21,7 @@
         </thead>
         <tbody class="new-body">
             <%for (var key in seriesMatch[0].marketList) {%>
+                <%console.log(key)%>
                 <%console.log(seriesMatch[0].marketList.key)%>
                 <%if (seriesMatch[0].marketList.hasOwnProperty(key) && seriesMatch[0].marketList.key != null) {%>
                     <tr>
