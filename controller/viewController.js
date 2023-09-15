@@ -3742,7 +3742,11 @@ exports.marketBets = catchAsync(async(req, res, next) => {
 
 exports.getSportBetLimit = catchAsync(async(req, res, next) => {
     const me = req.currentUser
-    const betLimit = await betLimitModel.find()
+    const betLimit = await betLimitModel.find();
+    // const sportListData = await getCrkAndAllData()
+    // let cricketList = sportListData[0].gameList[0]
+    // let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    // let tennisList = sportListData[1].gameList.find(item => item.sportId == 2) 
     res.status(200).render("./betSportLimit/main.ejs", {
         title:"Bet Limits",
         betLimit,
