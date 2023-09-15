@@ -222,10 +222,25 @@
         <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
       </div>
       <div class="modal-header">
-        <h4 class="modal-title">Settelment</h4>
+        <h4 class="modal-title">Void Bet</h4>
       </div>
       <div class="modal-body">
-        <h1>Void Bet</h1>
+        <p>This bet will be cancelled and cannot be reactivated.
+          Confirm your action to void this bet</p>
+          <form class="form-data voidbet-form">
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Remarks</label>
+                <input type="text" class="form-control ml0" name="remark" readonly="" required="">
+              </div>
+              <div class="col">
+                <label for="">Password</label>
+                <input type="password" class="form-control ml0" placeholder="Password" readonly="" required="">
+              </div>
+            </div>
+            <button type="submit" class="btn-submit mt-3">Yes, Confirm</button>
+            <button type="click" class="btn-cancel mt-3">Cancel</button>
+          </form>
       </div>
     </div>
   </div>
