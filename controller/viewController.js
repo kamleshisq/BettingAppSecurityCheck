@@ -3769,9 +3769,9 @@ exports.getBetLimitSportWise = catchAsync(async(req, res, next) => {
     if(req.query.game === "cricket"){
         gameData = cricketList.eventList
     }else if (req.query.game === "football"){
-        gameData = footballList
+        gameData = footballList.eventList
     }else if (req.query.game === "tennisList"){
-        gameData = tennisList
+        gameData = tennisList.eventList
     }
     let series = []
     gameData.forEach(match => {
