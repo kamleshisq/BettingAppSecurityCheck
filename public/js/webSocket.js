@@ -9322,7 +9322,7 @@ socket.on('connect', () => {
                   </thead>`}
                 html += ` <tbody class="new-body" id="mapMarket"><tr>
                 <td>${data.betdata.marketName}</td>
-                <td>${data.result}</td>
+                <td class="Result" >${data.result}</td>
                 <td>
                     <div class="btn-group">
                         <button class="Unmap" id="${data.betdata.marketId}"> Unmap</button>
