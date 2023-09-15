@@ -43,6 +43,7 @@ const netCommissionModel = require('./model/netCommissionModel');
 const commissionRepportModel = require('./model/commissionReport');
 const { error } = require('console');
 const checkPass = require("./websocketController/checkPassUser");
+const { type } = require('os');
 const checkPassAsync = util.promisify(checkPass.checkPass);
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
@@ -3352,9 +3353,9 @@ io.on('connection', (socket) => {
         try{
             let details = await betLimit.findOne({type:data})
             if(details){
-                socket.emit('BetLimitDetails', details)
+                socket.emit('BetLimitDetails', {details, type:data})
             }else{
-                socket.emit("BetLimitDetails", {message:'', status:'notFound'})
+                socket.emit("BetLimitDetails", {message:'', status:'notFound', type:data})
             }
 
         }catch(err){

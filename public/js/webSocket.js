@@ -677,7 +677,19 @@ socket.on('connect', () => {
 
 
     socket.on('BetLimitDetails', data => {
-        console.log(data)
+        if(data.status == "notFound"){
+            let form = $('#myModal2').find('.form-data')
+            form.find('input[name = "min_stake"]').val(100)
+            form.find('input[name = "max_stake"]').val(1000)
+            form.find('input[name = "max_profit"]').val(5000)
+            form.find('input[name = "max_odd"]').val(100)
+            form.find('input[name = "delay"]').val(5)
+            form.find('input[name = "type"]').val(data.type)
+        }else if(data.status == ""){
+
+        }else{
+
+        }
     })
 
 
