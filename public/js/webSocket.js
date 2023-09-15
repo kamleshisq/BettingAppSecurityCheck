@@ -688,7 +688,7 @@ socket.on('connect', () => {
         }else if(data.status == "err"){
             alert(data.message)
         }else{
-
+            console.log(data)
         }
     })
 
