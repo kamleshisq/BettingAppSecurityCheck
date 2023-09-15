@@ -9185,17 +9185,15 @@ socket.on('connect', () => {
                     const table = row.parentNode;
                     const rowIndex = Array.from(table.rows).indexOf(row);
                     row.remove(); 
-                    const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
-                    rowsToUpdate.forEach((row, index) => {
-                        const srNoCell = row.cells[0]; 
-                        srNoCell.textContent = index + rowIndex + 1;
-                      });
+                    // const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
+                    // rowsToUpdate.forEach((row, index) => {
+                    //     const srNoCell = row.cells[0]; 
+                    //     srNoCell.textContent = index + rowIndex + 1;
+                    //   });
                   }
                   let html = ``
-                  console.log(document.getElementById('open-market-table').getElementsByTagName('tbody'))
-                  if(document.getElementById('open-market-table').getElementsByTagName('tbody').length != 0){
-                      
-                }else{
+                  console.log(document.getElementById('open-market-table').getElementsByClassName('empty_table'))
+                  if(document.getElementById('open-market-table').getElementsByClassName('empty_table').length != 0){
                     html += `
                     <thead>
                     <tr>
@@ -9203,9 +9201,7 @@ socket.on('connect', () => {
                       <th>Result</th>
                       <th>Action</th>
                     </tr>
-                  </thead>
-                    `
-                }
+                  </thead>`}
                 html += ` <tbody class="new-body" id="openmarket"><tr>
                 <td>${data.betdata.marketName}</td>`
                 if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM"){
@@ -9228,8 +9224,7 @@ socket.on('connect', () => {
                                 </select>
                             </td>`
                 }
-                html += `<td class="Result" >${data.result}</td>
-                <td>
+                html += `<td>
                     <div class="btn-group">
                         <button class="voidBet" id="${data.betdata.marketId}"> VOID</button>
                         <button class="acceptBet" id="${data.betdata.marketId}"> MAP</button>
@@ -9238,8 +9233,8 @@ socket.on('connect', () => {
                 </tr>
                 </tbody>   `
 
-                if(document.getElementById('open-market-table').getElementsByTagName('tbody').length === 0){
-                    document.getElementById('openmarket').append = html
+                if(document.getElementById('open-market-table').getElementsByClassName('empty_table').length === 0){
+                    document.getElementById('openmarket').insertAdjacentHTML('beforeend', html);
                 }else{
                     document.getElementById('open-market-table').innerHTML = html
                 }
