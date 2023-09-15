@@ -42,6 +42,7 @@ const netCommissionModel = require('./model/netCommissionModel');
 const commissionRepportModel = require('./model/commissionReport');
 const { error } = require('console');
 const checkPass = require("./websocketController/checkPassUser");
+const checkPassAsync = util.promisify(checkPass.checkPass);
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -2642,7 +2643,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("VoidBetIn", async(data) => {
-        let checkPassOfUser =  checkPass.checkPass(data.LOGINDATA.LOGINUSER, data.data.password)
+        let checkPassOfUser =  await checkPassAsync(data.LOGINDATA.LOGINUSER, data.data.password)
         console.log(checkPassOfUser, "checkPassOfUser")
         // try{
         //     let bets = await Bet.find({marketId:data.id, status : {$in: ['OPEN', 'MAP']}})
