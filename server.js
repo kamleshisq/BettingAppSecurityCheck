@@ -3362,6 +3362,16 @@ io.on('connection', (socket) => {
             socket.emit('BetLimitDetails', {message:"try again leter", status:"err"})
         }
     })
+
+
+    socket.on('UpdateBetLimit', async(data) => {
+        try{
+            console.log(data)
+        }catch(err){
+            console.log(err)
+            socket.emit('UpdateBetLimit', {message:"Please try again leter", status:"err"})
+        }
+    })
     
 })
 
