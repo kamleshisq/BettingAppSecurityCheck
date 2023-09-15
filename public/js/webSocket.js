@@ -689,6 +689,13 @@ socket.on('connect', () => {
             alert(data.message)
         }else{
             console.log(data)
+            let form = $('#myModal2').find('.form-data')
+            form.find('input[name = "min_stake"]').val(data.details.min_stake)
+            form.find('input[name = "max_stake"]').val(data.details.max_stake)
+            form.find('input[name = "max_profit"]').val(data.details.max_profit)
+            form.find('input[name = "max_odd"]').val(data.details.max_odd)
+            form.find('input[name = "delay"]').val(0)
+            form.find('input[name = "type"]').val(data.type)
         }
     })
 
