@@ -3366,7 +3366,14 @@ io.on('connection', (socket) => {
 
     socket.on('UpdateBetLimit', async(data) => {
         try{
-            console.log(data)
+            let check = await betLimit.findOne({type:data.type})
+            if(check){
+                await betLimit.findOneAndUpdate({type:data.type}, data)
+                socket.emit('UpdateBetLimit', {status:'success'})
+            }else{
+                await betLimit.create(data)
+                socket.emit('UpdateBetLimit', {status:'success'})
+            }
         }catch(err){
             console.log(err)
             socket.emit('UpdateBetLimit', {message:"Please try again leter", status:"err"})

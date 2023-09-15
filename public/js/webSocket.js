@@ -702,6 +702,16 @@ socket.on('connect', () => {
     })
 
 
+    socket.on('UpdateBetLimit', data => {
+        if(data.status == "err"){
+            alert("please try again leter")
+        }else{
+            alert("updated!!")
+            window.location.reload()
+        }
+    })
+
+
 
 
     //..................FOR user management page...........//
