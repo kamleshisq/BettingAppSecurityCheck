@@ -64,6 +64,7 @@ router.get("/admin/betlimit", authController.isProtected, authController.isAdmin
 router.get("/admin/betlimit/sport", authController.isProtected, authController.isAdmin, authController.restrictToOperator("betLimits"), viewController.getSportBetLimit);
 router.get("/admin/betlimit/sports", authController.isProtected, authController.isAdmin, authController.restrictToOperator("betLimits"), viewController.getBetLimitSportWise);
 router.get("/admin/betlimit/sports/event", authController.isProtected, authController.isAdmin, authController.restrictToOperator("betLimits"), viewController.getBetLimitMatchWise);
+router.get("/admin/betlimit/sports/match", authController.isProtected, authController.isAdmin, authController.restrictToOperator("betLimits"), viewController.getBetLimitMatch);
 router.get("/admin/onlineUsers", authController.isProtected, authController.isAdmin, authController.restrictToOperator("onlineUsers"),viewController.onlineUsers);
 router.get("/admin/liveMarket", authController.isProtected, authController.isAdmin, viewController.getLiveMarketsPage);
 router.get("/admin/cms", authController.isProtected, authController.isAdmin, viewController.getCmsPage);
