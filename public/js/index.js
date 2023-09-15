@@ -142,20 +142,7 @@ if(formDataObj.whiteLabel == ""){
 createUser(formDataObj)
 });
 
-$(document).on('click','.updateBetLimit',function(e){
-    let rowId = $(this).parent().parent().parent().attr('id')
-    $('.rowId').attr('data-rowid',rowId)
-    let modleName = $(this).data('bs-target')
-    let form = $(modleName).find('.form-data')
-    let betLimit = $(this).parent().data('details')
-    form.find('input[name = "min_stake"]').val(betLimit.min_stake)
-    form.find('input[name = "max_stake"]').val(betLimit.max_stake)
-    form.find('input[name = "max_profit"]').val(betLimit.max_profit)
-    form.find('input[name = "max_odd"]').val(betLimit.max_odd)
-    form.find('input[name = "delay"]').val(betLimit.delay)
-    form.find('input[name = "type"]').val(betLimit.type)
-    form.find('input[name = "id"]').val(betLimit._id)
-})
+
 
 $(document).on('submit','.passReset-form',function(e){
     e.preventDefault();
