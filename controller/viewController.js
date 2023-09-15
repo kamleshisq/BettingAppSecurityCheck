@@ -3773,7 +3773,16 @@ exports.getBetLimitSportWise = catchAsync(async(req, res, next) => {
     }else if (req.query.game === "tennisList"){
         gameData = tennisList
     }
-    console.log(gameData)
+    let series = []
+    gameData.forEach(match => {
+        let seriesIndex = series.findIndex(series => series.series === match.eventData.league);
+        if (seriesIndex === -1) {
+            series.push({ series: match.eventData.league, matchdata: [match] });
+        } else {
+            series[seriesIndex].matchdata.push(match);
+        }
+    });
+    console.log(series)
     res.status(200).render("./betSportWise/main.ejs", {
         title:"Bet Limits",
         betLimit,
