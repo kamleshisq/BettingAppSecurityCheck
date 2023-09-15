@@ -9152,7 +9152,11 @@ socket.on('connect', () => {
         $(document).on('submit', ".voidbet-form", function(e){
             e.preventDefault();
             let id = this.id
-            console.log(id)
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            data.id = id
+            console.log(data)
         })
 
         socket.on("VoidBetIn", async(data) => {
