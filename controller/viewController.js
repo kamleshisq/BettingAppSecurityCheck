@@ -3764,11 +3764,20 @@ exports.getBetLimitSportWise = catchAsync(async(req, res, next) => {
     const sportListData = await getCrkAndAllData()
     let cricketList = sportListData[0].gameList[0]
     let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
-    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2) 
+    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
+    let gameData = []
+    if(req.query.game === "cricket"){
+        gameData = cricketList
+    }else if (req.query.game === "football"){
+        gameData = footballList
+    }else if (req.query.game === "tennisList"){
+        gameData = tennisList
+    }
     res.status(200).render("./betSportWise/main.ejs", {
         title:"Bet Limits",
         betLimit,
         me,
-        currentUser:me
+        currentUser:me,
+        gameData
     })
 })
