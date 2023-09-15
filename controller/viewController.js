@@ -1639,7 +1639,7 @@ exports.getBetLimitPage = catchAsync(async(req, res, next) => {
     let sportData = await betLimitModel.findOne({type:'Sport'})
     res.status(200).render("./betLimit/betLimit", {
         title:"Bet Limits",
-        betLimit,
+        // betLimit,
         me,
         currentUser:me,
         homeData,
