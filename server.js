@@ -2645,7 +2645,7 @@ io.on('connection', (socket) => {
 
     socket.on("VoidBetIn", async(data) => {
         try {
-            const checkPassOfUser = await checkPassAsync(data.LOGINDATA.LOGINUSER, data.data.password);
+            console.log(await checkPassAsync(data.LOGINDATA.LOGINUSER, data.data.password));
             console.log(checkPassOfUser, "checkPassOfUser");
           } catch (error) {
             console.error(error);
