@@ -5280,7 +5280,7 @@ socket.on('connect', () => {
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
                     }
-                    else if(data.betLimits[0].max_odd < section.even || section.even == "-" || section.even == "1,000.00" || section.even == "0"){
+                    else if( section.even == "-" || section.even == "1,000.00" || section.even == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -9931,7 +9931,7 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }
-                    else if(data.betLimits[0].max_odd < section.even || section.even == "-" || section.even == "1,000.00" || section.even == "0"){
+                    else if( section.even == "-" || section.even == "1,000.00" || section.even == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
