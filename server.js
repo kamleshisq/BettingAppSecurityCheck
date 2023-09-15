@@ -3346,6 +3346,11 @@ io.on('connection', (socket) => {
             socket.emit("claimCommissionAdmin", "error")
         }
     })
+
+
+    socket.on('BetLimitDetails', async(data) => {
+        console.log(data)
+    })
     
 })
 
