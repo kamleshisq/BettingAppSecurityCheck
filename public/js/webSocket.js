@@ -9307,7 +9307,7 @@ socket.on('connect', () => {
                 </tbody>   `
                 if(document.getElementById('mapped-market-table').getElementsByClassName('empty_table').length === 0){
                     console.log("WORKING")
-                    document.getElementById('mapMarket').append = html
+                    document.getElementById('mapMarket').insertAdjacentHTML('beforeend', html);
                 }else{
                     document.getElementById('mapped-market-table').innerHTML = html
                 }
