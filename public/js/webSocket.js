@@ -9228,7 +9228,7 @@ socket.on('connect', () => {
                                 </select>
                             </td>`
                 }
-                html += `<td>${data.result}</td>
+                html += `<td class="Result" >${data.result}</td>
                 <td>
                     <div class="btn-group">
                         <button class="voidBet" id="${data.betdata.marketId}"> VOID</button>
@@ -9250,7 +9250,9 @@ socket.on('connect', () => {
         $(document).on('click', ".Settle", function(e){
             e.preventDefault()
             let id = this.id
-            socket.emit('Settle', {LOGINDATA, id})
+            let resultTag = $(this).closest('tr').find('.Result')
+            let result = resultTag.text()
+            socket.emit('Settle', {LOGINDATA, id, result})
         })
 
         $(document).on("click", ".acceptBet", function(e){

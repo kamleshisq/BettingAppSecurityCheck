@@ -119,7 +119,7 @@
                   <%for(let i = 0; i < betsEventWiseMap.length; i++){ %>
                   <tr>
                     <td><%= betsEventWiseMap[i].marketName%></td>
-                    <td><%= betsEventWiseMap[i].result%></td>
+                    <td class="Result" ><%= betsEventWiseMap[i].result%></td>
                     <td>
                       <div class="btn-group">
                         <button class="Unmap" id="<%=betsEventWiseMap[i].marketId%>"> Unmap</button>
