@@ -10116,6 +10116,24 @@ socket.on('connect', () => {
         })
 
         $('#Sport').change(function() {
+            let Sport = $(this).val()
+            if(['1','2','4'].includes(Sport)){
+                socket.emit('getEvetnsOfSport',{sport:Sport})
+            }else{
+
+            }
+        })
+
+        socket.on('getEvetnsOfSport',async(data)=>{
+            console.log(data)
+            let html =''
+            html += `<option value="All" selected> Select Event </option>`
+            for(let i = 0;i<data.sportList.length;i++){
+                html += `<option value="${data.sportList[i].eventData.eventId}">${data.sportList[i].eventData.name}</option>`
+            }
+            $('#Event').html(html)
+        })
+        $('#Event').change(function() {
             // console.log("Working")
             let Sport = $(this).val()
             let market = $("#market").val()
