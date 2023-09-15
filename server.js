@@ -3350,6 +3350,18 @@ io.on('connection', (socket) => {
 
     socket.on('BetLimitDetails', async(data) => {
         console.log(data)
+        try{
+            let details = await betLimit.findOne({type:data})
+            console.log(details)
+            if(details){
+                socket.emit('BetLimitDetails', details)
+            }else{
+                socket.emit("BetLimitDetails", {message:'', status:'notFound'})
+            }
+
+        }catch(err){
+            socket.emit('BetLimitDetails', {message:"try again leter", status:"err"})
+        }
     })
     
 })
