@@ -9162,21 +9162,32 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert("Please try again later")
             }else{
-                // console.log(data.bet._id)
-                const deleteButton = document.getElementById(data.marketId);
-                // console.log(deleteButton)
+                const deleteButton = document.getElementById(data.betdata.marketId);
                 const row = deleteButton.closest('tr'); 
                 if (row) {
                     const table = row.parentNode;
                     const rowIndex = Array.from(table.rows).indexOf(row);
                     row.remove(); 
-                    const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
-                    rowsToUpdate.forEach((row, index) => {
-                        const srNoCell = row.cells[0]; 
-                        srNoCell.textContent = index + rowIndex + 1;
-                      });
                   }
-                alert('Bet canceled successfully')
+                  let html = ``
+                  console.log(document.getElementById('void-market-table').getElementsByClassName('empty_table'))
+                  if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length != 0){
+                    html += `
+                    <thead>
+                    <tr>
+                      <th>Market Name</th>
+                      <th>Cancel Bet</th>
+                    </tr>
+                  </thead>`}
+                html += ` <tbody class="new-body" id="voidMarket"><tr>
+                <td>${data.betdata.marketName}</td><td>${data.count + 1}</td></tr>
+                </tbody>`
+                if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length === 0){
+                    document.getElementById('voidMarket').insertAdjacentHTML('beforeend', html);
+                }else{
+                    document.getElementById('void-market-table').innerHTML = html
+                }
+                alert('Bets canceled successfully')
             }
         })
 

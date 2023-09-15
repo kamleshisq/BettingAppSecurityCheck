@@ -2704,7 +2704,7 @@ io.on('connection', (socket) => {
                     await AccModel.create(userAcc);
                     await AccModel.create(parentAcc);  // socket.emit('voidBet', {bet, status:"success"})
                 }
-                socket.emit('VoidBetIn', {marketId:data.id, status:"success"})
+                socket.emit('VoidBetIn', {betdata:bets[0], count:bets.length ,status:"success"})
             }
         }catch(err){
             console.log(err)
