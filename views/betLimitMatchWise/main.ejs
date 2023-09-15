@@ -9,10 +9,22 @@
     <%- include("../loginUserAdminsideDetails") %>
   </section>
   <div class="bredcum-container">
+
+    <%
+    let SPORT
+    if(seriesMatch[i].eventData.sportId === 2){
+        SPORT = tennis
+    }else if (seriesMatch[i].eventData.sportId === 1){
+        SPORT = football
+    }else if (seriesMatch[i].eventData.sportId === 4){
+        SPORT = cricket
+    }
+    %>
     <ul>
         <li><a href="/admin/betlimit" class="active">Bet Limit</a></li>
-        
-          <li class="active"><a href="/admin/betlimit/sport">Sport</a></li>
+        <li><a href="/admin/betlimit/sport">Sport</a></li>
+        <li><a href="/admin/betlimit/sports?gamme=<%=SPORT%>"><%=SPORT%></a></li>
+        <li class="active" ><a href="/admin/betlimit/sports/event?event=<%=seriesMatch[0].eventData.league%>"><%=seriesMatch[0].eventData.league%></a></li>
         
     </ul>
   </div>
