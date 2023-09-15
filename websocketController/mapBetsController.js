@@ -10,7 +10,7 @@ const settlementHistory = require("../model/settelementHistory");
 const Decimal = require('decimal.js');
 
 exports.mapbet = async(data) => {
-    //og(data)
+    console.log(data)
     // let bets = await betModel.find({marketId:`${data.id}`})
     let bets = await betModel.aggregate([
         {
