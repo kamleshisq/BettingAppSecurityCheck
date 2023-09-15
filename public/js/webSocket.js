@@ -9273,6 +9273,15 @@ socket.on('connect', () => {
             socket.emit('Settle', {LOGINDATA, id, result})
         })
 
+        socket.on('Settle', data => {
+            if(data.status === "error"){
+                alert(data.message.toUpperCase())
+            }else{
+                alert('Settleed Process start')
+                window.location.reload()
+            }
+        })
+
         $(document).on("click", ".acceptBet", function(e){
             e.preventDefault()
             let id =  this.id

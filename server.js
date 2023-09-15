@@ -2728,11 +2728,11 @@ io.on('connection', (socket) => {
         try{
             console.log(data)
             let data1 = mapBet.mapbet(data)
-            socket.emit("VoidBetIn22", {message:"Settleed Process start", status:'success'})
-            // socket.emit('VoidBetIn22', {marketId:data.id, status:"success"})
+            socket.emit("Settle", {message:"Settleed Process start", status:'success'})
+            // socket.emit('Settle', {marketId:data.id, status:"success"})
         }catch(err){
             console.log(err)
-            socket.emit("VoidBetIn22",{message:"err", status:"error"})
+            socket.emit("Settle",{message:"err", status:"error"})
         }
     })
 
