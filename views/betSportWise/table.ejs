@@ -27,7 +27,7 @@
             <!-- CRICKET -->
             <%for(let i = 0; i < series.length; i++){%>
                 <tr id="<%=i + 1%>">
-                    <td class="btn-filter"><%=series[i].series%></td>
+                    <td class="btn-filter"><a href="/admin/betlimit/sports/event?event=<%=series[i].series%>"></a><%=series[i].series%></td>
                     <td><input type="text" class="form-datas" value="100" readonly=""></td>
                     <td><input type="text" class="form-datas" value="1000" readonly=""></td>
                     <td><input type="text" class="form-datas" value="500" readonly=""></td>
