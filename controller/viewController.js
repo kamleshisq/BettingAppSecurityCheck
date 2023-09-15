@@ -3799,14 +3799,18 @@ exports.getBetLimitSportWise = catchAsync(async(req, res, next) => {
 exports.getBetLimitMatchWise = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     const betLimit = await betLimitModel.find();
-    // const sportListData = await getCrkAndAllData()
-    // let cricketList = sportListData[0].gameList[0]
-    // let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
-    // let tennisList = sportListData[1].gameList.find(item => item.sportId == 2) 
+    let cricketList = sportListData[0].gameList[0]
+    let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
+    let allData = cricketList.concat(footballList, tennisList)
+    let series = req.query.event
+    let seriesMatch = allData.filter(item => item.eventData.league == series)
+    console.log(seriesMatch)
     res.status(200).render("./betLimitMatchWise/main.ejs", {
         title:"Bet Limits",
         betLimit,
         me,
-        currentUser:me
+        currentUser:me,
+        seriesMatch
     })
 });
