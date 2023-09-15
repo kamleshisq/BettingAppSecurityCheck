@@ -9287,14 +9287,6 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert(data.message.toUpperCase())
             }else{
-                const deleteButton = document.getElementById(data.betdata.marketId);
-                // console.log(deleteButton)
-                const row = deleteButton.closest('tr'); 
-                if (row) {
-                    const table = row.parentNode;
-                    const rowIndex = Array.from(table.rows).indexOf(row);
-                    row.remove(); 
-                  }
                 alert('Settleed Process start');
                 window.location.reload();
             }
