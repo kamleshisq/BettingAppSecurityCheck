@@ -75,7 +75,7 @@
                   <%}%>
                   <td>
                     <div class="btn-group">
-                      <button class="voidBet" id="<%=betsEventWiseOpen[i].marketId%>"> VOID</button><button class="acceptBet" id="<%=betsEventWiseOpen[i].marketId%>"> MAP</button>
+                      <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" id="<%=betsEventWiseOpen[i].marketId%>"> VOID</button><button class="acceptBet" id="<%=betsEventWiseOpen[i].marketId%>"> MAP</button>
                     </div>
                   </td>
                 </tr>
@@ -124,7 +124,7 @@
                       <div class="btn-group">
                         <button class="Unmap" id="<%=betsEventWiseMap[i].marketId%>"> Unmap</button>
                         <button class="Settle" id="<%=betsEventWiseMap[i].marketId%>"> Settle</button>
-                        <button  data-bs-toggle="modal" data-bs-target="#myModalSE"  id="<%=betsEventWiseMap[i].marketId%>"> VOID</button>
+                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE"  id="<%=betsEventWiseMap[i].marketId%>"> VOID</button>
                       </div>
                     </td>
                   </tr>
@@ -162,7 +162,7 @@
                     <td>
                       <div class="btn-group">
                         <button class="ROLLBACK" id="<%=betsEventWiseSettel[i].marketId%>"> ROLLBACK</button>
-                        <button class="voidBet"  id="<%=betsEventWiseSettel[i].marketId%>"> VOID</button>
+                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" id="<%=betsEventWiseSettel[i].marketId%>"> VOID</button>
                       </div>
                     </td>
                   </tr>

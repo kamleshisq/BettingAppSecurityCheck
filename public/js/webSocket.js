@@ -9143,7 +9143,10 @@ socket.on('connect', () => {
         $(document).on("click", ".voidBet", function(e){
             e.preventDefault()
             let id =  this.id
-            socket.emit("VoidBetIn", {LOGINDATA, id})
+            let modleName = "#myModalSE"
+            let form = $(modleName).find('.voidbet-form')
+            form.attr('id', id);
+            // socket.emit("VoidBetIn", {LOGINDATA, id})
         })
 
         socket.on("VoidBetIn", async(data) => {
