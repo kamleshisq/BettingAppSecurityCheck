@@ -685,13 +685,21 @@ socket.on('connect', () => {
             form.find('input[name = "max_odd"]').val(100)
             form.find('input[name = "delay"]').val(5)
             form.find('input[name = "type"]').val(data.type)
-        }else if(data.status == ""){
-
+        }else if(data.status == "err"){
+            alert(data.message)
         }else{
 
         }
     })
 
+
+    $(document).on('submit', ".form-betLimit", function(e){
+        e.preventDefault()
+        let form = $(this)[0];
+        let fd = new FormData(form);
+        let data = Object.fromEntries(fd.entries());
+        console.log(data)
+    })
 
 
 
