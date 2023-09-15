@@ -2479,8 +2479,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             rules,
             src,
             userMultimarkets,
-            min,
-            max
+            // min,
+            // max
     })
 });
 
