@@ -9155,8 +9155,7 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
-            data.id = id
-            console.log(data)
+            socket.emit("VoidBetIn", {LOGINDATA, id, data})
         })
 
         socket.on("VoidBetIn", async(data) => {
