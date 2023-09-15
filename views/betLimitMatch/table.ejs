@@ -22,7 +22,7 @@
         <tbody class="new-body">
             <%for (var key in seriesMatch[0].marketList) {%>
                 <%console.log(key)%>
-                <%console.log(seriesMatch[0].marketList.match_odd)%>
+                <%console.log(seriesMatch[0].marketList.key)%>
                 <%if (seriesMatch[0].marketList.hasOwnProperty(key) && seriesMatch[0].marketList.key != null) {%>
                     <tr>
                         <td class="btn-filter"><%=seriesMatch[0].marketList.key%></td>
