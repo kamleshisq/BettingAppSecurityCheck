@@ -3808,7 +3808,7 @@ exports.getBetLimitMatchWise = catchAsync(async(req, res, next) => {
     let allData = cricketList.concat(footballList, tennisList)
     let series = req.query.event
     let seriesMatch = allData.filter(item => item.eventData.league == series)
-    console.log(seriesMatch)
+    // console.log(seriesMatch)
     res.status(200).render("./betLimitMatchWise/main.ejs", {
         title:"Bet Limits",
         betLimit,
