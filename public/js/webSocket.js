@@ -676,6 +676,10 @@ socket.on('connect', () => {
     })
 
 
+    socket.on('BetLimitDetails', data => {
+        console.log(data)
+    })
+
 
 
 
