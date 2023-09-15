@@ -9259,7 +9259,7 @@ socket.on('connect', () => {
             e.preventDefault()
             let id =  this.id
             var newColumnCell = $(this).closest('tr').find('.selectOption');
-            console.log(newColumnCell.val())
+            // console.log(newColumnCell.val())
             let result = newColumnCell.val()
             socket.emit("VoidBetIn22", {LOGINDATA, id, result})
             // console.log(id)
@@ -9283,10 +9283,8 @@ socket.on('connect', () => {
                       });
                   }
                   let html = ``
-                  console.log(document.getElementById('mapped-market-table').getElementsByTagName('tbody'))
-                  if(document.getElementById('mapped-market-table').getElementsByTagName('tbody').length != 0){
-                      
-                }else{
+                  console.log(document.getElementById('mapped-market-table').getElementsByClassName('empty_table'))
+                  if(document.getElementById('mapped-market-table').getElementsByClassName('empty_table').length != 0){
                     html += `
                     <thead>
                     <tr>
@@ -9294,9 +9292,7 @@ socket.on('connect', () => {
                       <th>Result</th>
                       <th>Action</th>
                     </tr>
-                  </thead>
-                    `
-                }
+                  </thead>`}
                 html += ` <tbody class="new-body" id="mapMarket"><tr>
                 <td>${data.betdata.marketName}</td>
                 <td>${data.result}</td>
@@ -9309,7 +9305,7 @@ socket.on('connect', () => {
                 </td>
                 </tr>
                 </tbody>   `
-                if(document.getElementById('mapped-market-table').getElementsByTagName('tbody').length === 0){
+                if(document.getElementById('mapped-market-table').getElementsByClassName('empty_table').length === 0){
                     document.getElementById('mapMarket').append = html
                 }else{
                     document.getElementById('mapped-market-table').innerHTML = html
