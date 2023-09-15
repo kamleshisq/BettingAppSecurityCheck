@@ -20,7 +20,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     $(function() {
-      $('.bet-list-dropdown a').click(function() {
+      $('.bet-list-dropdown span').click(function() {
         $(this).toggleClass('open');
         $(this).parents('tr').nextUntil('tr:not(.hide-row)').toggleClass('show');
       });
