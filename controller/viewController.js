@@ -3817,3 +3817,26 @@ exports.getBetLimitMatchWise = catchAsync(async(req, res, next) => {
         seriesMatch
     })
 });
+
+
+exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
+    const me = req.currentUser
+    const betLimit = await betLimitModel.find();
+    const sportListData = await getCrkAndAllData()
+    let cricketList = sportListData[0].gameList[0].eventList
+    let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    footballList = footballList.eventList
+    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
+    tennisList = tennisList.eventList
+    let allData = cricketList.concat(footballList, tennisList)
+    let series = req.query.match
+    let seriesMatch = allData.filter(item => item.eventData.name == series)
+    // console.log(seriesMatch)
+    res.status(200).render("./betLimitMatchWise/main.ejs", {
+        title:"Bet Limits",
+        betLimit,
+        me,
+        currentUser:me,
+        seriesMatch
+    })
+});
