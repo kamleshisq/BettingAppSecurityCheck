@@ -33,13 +33,13 @@ async function placeBet(data){
         betLimit = await betLimitModel.findOne({type:"Sport"})
     }
     // console.log(betLimit, 45654654654)
-    if(betLimit.min_stake > parseFloat(data.data.stake) ){
-        return `Invalide stake, Please play with atleast minimum stake (${betLimit.min_stake})`
-    }else if(betLimit.max_stake < parseFloat(data.data.stake)){
-        return `Invalide stake, Please play with atmost maximum stake (${betLimit.max_stake})`
-    }else if(betLimit.max_odd < parseFloat(data.data.odds)){
-        return `Invalide odds valur, Please play with atmost maximum odds (${betLimit.max_odd})`
-    }
+    // if(betLimit.min_stake > parseFloat(data.data.stake) ){
+    //     return `Invalide stake, Please play with atleast minimum stake (${betLimit.min_stake})`
+    // }else if(betLimit.max_stake < parseFloat(data.data.stake)){
+    //     return `Invalide stake, Please play with atmost maximum stake (${betLimit.max_stake})`
+    // }else if(betLimit.max_odd < parseFloat(data.data.odds)){
+    //     return `Invalide odds valur, Please play with atmost maximum odds (${betLimit.max_odd})`
+    // }
 
     let uniqueToken = generateString(5)
     const sportData = await cricketAndOtherSport()
