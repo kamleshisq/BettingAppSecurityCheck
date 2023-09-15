@@ -9294,43 +9294,9 @@ socket.on('connect', () => {
                     const table = row.parentNode;
                     const rowIndex = Array.from(table.rows).indexOf(row);
                     row.remove(); 
-                    // const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
-                    // rowsToUpdate.forEach((row, index) => {
-                    //     const srNoCell = row.cells[0]; 
-                    //     srNoCell.textContent = index + rowIndex + 1;
-                    //   });
                   }
-                  let html = ``
-                  console.log(document.getElementById('mapped-market-table').getElementsByClassName('empty_table'))
-                  if(document.getElementById('mapped-market-table').getElementsByClassName('empty_table').length != 0){
-                    html += `
-                    <thead>
-                    <tr>
-                      <th>Market Name</th>
-                      <th>Result</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>`}
-                html += ` <tbody class="new-body" id="mapMarket"><tr>
-                <td>${data.betdata.marketName}</td>
-                <td>${data.result}</td>
-                <td>
-                    <div class="btn-group">
-                        <button class="Unmap" id="${data.betdata.marketId}"> Unmap</button>
-                        <button class="Settle" id="${data.betdata.marketId}"> Settle</button>
-                        <button class="voidBet" id="${data.betdata.marketId}"> VOID</button>
-                    </div>
-                </td>
-                </tr>
-                </tbody>   `
-                if(document.getElementById('mapped-market-table').getElementsByClassName('empty_table').length === 0){
-                    console.log("WORKING")
-                    document.getElementById('mapMarket').insertAdjacentHTML('beforeend', html);
-                }else{
-                    document.getElementById('mapped-market-table').innerHTML = html
-                }
-                // document.getElementById('mapped-market-table').innerHTML = html
-                alert('Bet Maped Successfully')
+                alert('Settleed Process start');
+                window.location.reload();
             }
         })
 
