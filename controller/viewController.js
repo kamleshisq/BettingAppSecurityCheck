@@ -3832,7 +3832,7 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
     let series = req.query.match
     let seriesMatch = allData.filter(item => item.eventData.name == series)
     // console.log(seriesMatch)
-    res.status(200).render("./betLimitMatchWise/main.ejs", {
+    res.status(200).render("./betLimitMatch/main.ejs", {
         title:"Bet Limits",
         betLimit,
         me,
