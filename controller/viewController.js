@@ -3800,9 +3800,11 @@ exports.getBetLimitMatchWise = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     const betLimit = await betLimitModel.find();
     const sportListData = await getCrkAndAllData()
-    let cricketList = sportListData[0].gameList[0]
+    let cricketList = sportListData[0].gameList[0].eventList
     let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    footballList = footballList.eventList
     let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
+    tennisList = tennisList.eventList
     let allData = cricketList.concat(footballList, tennisList)
     let series = req.query.event
     let seriesMatch = allData.filter(item => item.eventData.league == series)
