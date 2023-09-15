@@ -1635,11 +1635,15 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
 exports.getBetLimitPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     const betLimit = await betLimitModel.find()
+    let homeData = await betLimit.find({type:Home})
+    let sportData = await betLimit.find({type:Sport})
     res.status(200).render("./betLimit/betLimit", {
         title:"Bet Limits",
         betLimit,
         me,
-        currentUser:me
+        currentUser:me,
+        homeData,
+        sportData
     })
 });
 

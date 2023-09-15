@@ -21,11 +21,11 @@
 <tbody class="new-body">
   <tr>
     <td><div class="bet-list-dropdown"><span dataId="home"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></span>Home</div></td>
-    <td><input type="text" class="form-datas" value="100" readonly=""></td>
-    <td><input type="text" class="form-datas" value="1000" readonly=""></td>
-    <td><input type="text" class="form-datas" value="500" readonly=""></td>
-    <td><input type="text" class="form-datas" value="100" readonly=""></td>
-    <td><input type="text" class="form-datas" value="10" readonly=""></td>
+    <td><input type="text" class="form-datas" value="<%=homeData.min_stake%>" readonly=""></td>
+    <td><input type="text" class="form-datas" value="<%=homeData.max_stake%>" readonly=""></td>
+    <td><input type="text" class="form-datas" value="<%=homeData.max_profit%>" readonly=""></td>
+    <td><input type="text" class="form-datas" value="<%=homeData.max_odd%>" readonly=""></td>
+    <td><input type="text" class="form-datas" value="00" readonly=""></td>
     <td>
       <div class="btn-group">
         <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
@@ -35,11 +35,11 @@
 
   <tr class="hide-row">
     <td><a href="/admin/betlimit/sport">Sport</a></td>
-    <td><input type="text" class="form-datas" value="100" readonly=""></td>
-    <td><input type="text" class="form-datas" value="10000" readonly=""></td>
-    <td><input type="text" class="form-datas" value="500" readonly=""></td>
-    <td><input type="text" class="form-datas" value="100" readonly=""></td>
-    <td><input type="text" class="form-datas" value="10" readonly=""></td>
+    <td><input type="text" class="form-datas" value="<%=sportData.min_stake%>" readonly=""></td>
+    <td><input type="text" class="form-datas" value="<%=sportData.max_stake%>" readonly=""></td>
+    <td><input type="text" class="form-datas" value="<%=sportData.max_profit%>" readonly=""></td>
+    <td><input type="text" class="form-datas" value="<%=sportData.max_odd%>" readonly=""></td>
+    <td><input type="text" class="form-datas" value="00" readonly=""></td>
     <td>
       <div class="btn-group">
         <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
