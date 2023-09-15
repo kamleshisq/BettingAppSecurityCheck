@@ -73,6 +73,12 @@ const betSchema = mongoose.Schema({
     },
     result:{
         type:String
+    },
+    remark:{
+        type:String
+    },
+    calcelUser:{
+        type:String
     }
 })
 
