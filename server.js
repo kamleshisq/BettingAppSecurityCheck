@@ -2643,7 +2643,7 @@ io.on('connection', (socket) => {
 
     socket.on("VoidBetIn", async(data) => {
         let checkPassOfUser =  checkPass.checkPass(data.LOGINDATA.LOGINUSER, data.data.password)
-        console.log(checkPassOfUser)
+        console.log(checkPassOfUser, "checkPassOfUser")
         // try{
         //     let bets = await Bet.find({marketId:data.id, status : {$in: ['OPEN', 'MAP']}})
         // for(const bet in bets){
