@@ -10340,6 +10340,7 @@ socket.on('connect', () => {
                     <td>-</td>
                     <td>${data.matchOdds[i].oddValue}</td>`
                     html += `<td>${data.matchOdds[i].returns}</td>`
+                    html += `<td>${data.matchOdds[i].returns}</td>`
                     html += `
                     <td>${data.matchOdds[i].status}</td>
                     <td>-</td>
