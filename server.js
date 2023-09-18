@@ -3295,7 +3295,7 @@ io.on('connection', (socket) => {
         const sportData = await getCrkAndAllData()
         let sportList;
         if(data.sport == '4'){
-            sportList = sportData[0].gameList[0].eventList
+            sportList = sportData[0].gameList[0]
         }else{
             sportList = sportData[1].gameList.find(item => item.sportId == parseInt(data.sport))
         }
