@@ -3453,7 +3453,7 @@ io.on('connection', (socket) => {
             let Marketname = data.type.split('/')[1]
             let dataDB = await betLimitMatchWisemodel.findOne({matchTitle:matchName})
             if(dataDB != null){
-    
+                console.log(dataDB)
             }else{
                 let marketDetails = {
                     matchTitle: matchName,
