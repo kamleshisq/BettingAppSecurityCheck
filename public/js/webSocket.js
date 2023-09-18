@@ -10292,6 +10292,21 @@ socket.on('connect', () => {
 
         })
 
+        $(document).on('click','.matchOddsBack',function(e){
+            let page =0
+            let market = $("#market").val()
+            let to_date;
+            let from_date
+            if($('#Fdate').val() != ''){
+                from_date = $('#Fdate').val()
+            }
+            if($('#Tdate').val() != ''){
+                to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            }
+            let Sport = $("#Event").val()
+            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+        })
+
         let limit
 
 
@@ -10330,6 +10345,7 @@ socket.on('connect', () => {
                     <td>-</td>
                     </tr>`
                 }
+                (`<div class="matchOddsBack">Match Odds</div>`).insertBefore($('#FOOTBALL').find('.row'))
                 if(data.page == 0){
                     html += `</tbody>`
                     $('#FOOTBALL').find('table').html(html)
@@ -10338,14 +10354,18 @@ socket.on('connect', () => {
 
                 }
 
+
             }else{
 
             }
-
-
         })
 
+
+
         socket.on("gameAnalysis", data => {
+            if($('#FOOTBALL').find('.matchOddsBack')){
+                $('#FOOTBALL').find('.matchOddsBack').html('')
+            }
             let html = ""
             let html2 = ""
             limit = 10 * data.page
@@ -10368,7 +10388,7 @@ socket.on('connect', () => {
             for(let i = 0; i < data.marketAnalist.length; i++){
                 html2 += `<tr>
                 <td>${i + 1 + limit}</td>
-                <td class="matchOdds" style="cursor:pointer;">${data.marketAnalist[i]._id}</td>
+                <td class="matchOdds">${data.marketAnalist[i]._id}</td>
                 <td>${data.marketAnalist[i].betcount}</td>
                 <td> ${data.marketAnalist[i].won} </td>
                 <td>${data.marketAnalist[i].loss}</td>
