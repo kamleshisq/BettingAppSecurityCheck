@@ -2576,9 +2576,13 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             rules,
             src,
             userMultimarkets,
-            minByMatch,
-            maxByMatch,
-            betLimitMarekt
+            betLimitMarekt,
+            minMatchOdds,
+            maxMatchOdds,
+            minFancy,
+            maxFancy,
+            minBookMaker,
+            maxBookMaker
     })
 });
 
