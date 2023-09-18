@@ -3509,6 +3509,7 @@ io.on('connection', (socket) => {
     socket.on('getEvetnsOfSport',async(data)=>{
         console.log(data);
         const sportData = await getCrkAndAllData()
+        console.log(sportData)
         let sportList;
         if(data.sport == '4'){
             sportList = sportData[0].gameList[0]
