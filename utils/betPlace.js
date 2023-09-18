@@ -154,7 +154,7 @@ let filtertinMatch = {}
 if(marketDetails.title.toLowerCase().startsWith('match')){
     // console.log("MATCHODD", minMatchOdds)
     // console.log(marketDetails.title)
-    let MATCHODDDATA = await betLimit.findOne({type:`${sportName}/matchOdds`})
+    let MATCHODDDATA = await betLimitModel.findOne({type:`${sportName}/matchOdds`})
     if(MATCHODDDATA){
         minMatchOdds = MATCHODDDATA.min_stake
         maxMatchOdds = MATCHODDDATA.max_stake
@@ -166,7 +166,7 @@ if(marketDetails.title.toLowerCase().startsWith('match')){
     }
 }else if(marketDetails.title.toLowerCase().startsWith('book')){
     // console.log("BOOKMAKER")
-    let BOOKMAKER = await betLimit.findOne({type:`${sportName}/bookMaker`})
+    let BOOKMAKER = await betLimitModel.findOne({type:`${sportName}/bookMaker`})
     if(BOOKMAKER){
         minBookMaker = BOOKMAKER.min_stake
         maxBookMaker = BOOKMAKER.max_stake
@@ -178,7 +178,7 @@ if(marketDetails.title.toLowerCase().startsWith('match')){
     }
 }else {
     // console.log("FENCY")
-    let FENCY = await betLimit.findOne({type:`${sportName}/fency`})
+    let FENCY = await betLimitModel.findOne({type:`${sportName}/fency`})
     if(FENCY){
         minFancy = FENCY.min_stake
         maxFancy = FENCY.max_stake
