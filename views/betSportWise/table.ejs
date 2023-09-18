@@ -29,6 +29,7 @@
               <%
                 let limitData = betLimit.find(item => item.type == "series[i].series")
               %>
+              <%=console.log(limitData, "LIMITDTA")%>
                 <tr id="<%=i + 1%>">
                     <td id="<%=series[i].series%>" class="btn-filter"><a href="/admin/betlimit/sports/event?event=<%=series[i].series%>"><%=series[i].series%></a></td>
                     <td><input type="text" class="form-datas" value="100" readonly=""></td>
