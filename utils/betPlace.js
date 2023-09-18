@@ -129,6 +129,8 @@ let filtertinMatch = {}
             $match:filtertinMatch
         }
     ])
+
+    console.log(betLimit, '==> betLimit')
     let maxByMatch = 0
     let minByMatch = 10000000000000
     for (let index = 0; index < betLimit.length; index++) {
@@ -186,6 +188,8 @@ let filtertinMatch = {}
             maxBookMaker = BOOKMAKER.max_stake
         }
     }
+
+    console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 // console.log(marketDetails, 454545454454454545544544444444444)
 if(marketDetails.title.toLowerCase().startsWith('match')){
     console.log("MATCHODD", minMatchOdds)
