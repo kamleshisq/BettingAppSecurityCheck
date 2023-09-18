@@ -3443,7 +3443,7 @@ io.on('connection', (socket) => {
             console.log(matchName, Marketname)
             let marketData = dataDb.marketDetails.find(item => item.title == Marketname)
             if(marketData){
-                socket.emit('updateBetLimitMATCH', marketData)
+                socket.emit('updateBetLimitMATCH', {marketData, data:data})
             }else{
                 socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data})
             }
