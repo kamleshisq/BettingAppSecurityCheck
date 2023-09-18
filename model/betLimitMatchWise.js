@@ -5,18 +5,13 @@ const betLimitMatchWise = mongoose.Schema({
     matchTitle:{
         type:String
     },
-    matchOdd:[{
+    marketDetails:[{
         title:String,
-        value:Number
+        value:[{
+            title:String,
+            value:Number
+        }]
     }],
-    bookMaker:[{
-        title:String,
-        value:Number
-    }],
-    fency:[{
-        title:String,
-        value:Number
-    }]
 })
 
 
