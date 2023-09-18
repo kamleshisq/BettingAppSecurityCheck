@@ -10277,9 +10277,8 @@ socket.on('connect', () => {
         })
 
         $(document).on('click','.matchOdds',function(e){
-            let page = parseInt($('.rowId').attr('data-rowid'))
+            let page = 0
             let market = $("#market").val()
-            $('.rowId').attr('data-rowid',page + 1)
             let to_date;
             let from_date
             if($('#Fdate').val() != ''){
@@ -10297,7 +10296,7 @@ socket.on('connect', () => {
             console.log(data)
             let html = ""
 
-            
+
         })
 
         let limit
