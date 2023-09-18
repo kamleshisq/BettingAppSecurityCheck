@@ -10175,7 +10175,7 @@ socket.on('connect', () => {
             if($('#Tdate').val() != ''){
                 to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
             }
-            let Sport = $("#Sport").val()
+            let Sport = $("#Event").val()
             let page = 0
             $('.rowId').attr('data-rowid',page + 1)
             socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
@@ -10188,7 +10188,7 @@ socket.on('connect', () => {
             if($('#Fdate').val() != ''){
                 from_date = $('#Fdate').val()
             }
-            let Sport = $("#Sport").val()
+            let Sport = $("#Event").val()
             let page = 0
             $('.rowId').attr('data-rowid',page + 1)
             socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
@@ -10213,6 +10213,7 @@ socket.on('connect', () => {
             }
             $('#Event').html(html)
         })
+
         $('#Event').change(function() {
             // console.log("Working")
             let Sport = $(this).val()
@@ -10233,7 +10234,7 @@ socket.on('connect', () => {
 
         $('#market').change(function() {
             // console.log("Working")
-            let Sport = $("#Sport").val()
+            let Sport = $("#Event").val()
             let market = $(this).val()
             let to_date
             let from_date

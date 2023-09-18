@@ -3209,7 +3209,7 @@ io.on('connection', (socket) => {
             filter.date = {$lte:new Date(data.to_date)}
         }
         if(data.Sport != "All"){
-            filter.betType = data.Sport
+            filter.eventId = data.Sport
         }
         if(data.market != "All"){
             if(data.market === "Match Odds"){
