@@ -1339,6 +1339,7 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
                 loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
                 won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
                 open:{$sum:{$cond:[{$eq:['$status','OPEN']},1,0]}},
+                void:{$sum:{$cond:[{$eq:['$status','CANCLE']},1,0]}},
                 returns:{$sum:{$cond:[{$in:['$status',['LOSS','OPEN']]},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
                 
             }
@@ -1351,6 +1352,7 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
                 loss:{$sum:'$loss'},
                 won:{$sum:'$won'},
                 open:{$sum:'$open'},
+                void:{$sum:'$void'},
                 returns:{$sum:'$returns'}
             }
         },
