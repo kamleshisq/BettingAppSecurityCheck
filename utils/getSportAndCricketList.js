@@ -24,7 +24,7 @@ async function getSportDATA(){
     let data
     try{
         data = await Promise.all(requests)
-
+        console.log(data, 454545)
     }catch(err){
         data = await Promise.all(requests2)
         console.log(data, 454545)
