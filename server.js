@@ -3463,7 +3463,35 @@ io.on('connection', (socket) => {
                 console.log(dataDB)
                 let marketData = dataDB.marketDetails.find(item => item.title == Marketname)
                 if(marketData){
-
+                    let index = dataDB.marketDetails.findIndex(item => item.title === Marketname);
+                    if (index !== -1) { 
+                        let newMarketDetailsForData = {
+                            title: Marketname,
+                            value: [
+                              {
+                                title: 'min_stake',
+                                value: parseInt(data.min_stake)
+                              },
+                              {
+                                title: 'max_stake',
+                                value: parseInt(data.max_stake)
+                              },
+                              {
+                                title: 'max_profit',
+                                value: parseInt(data.max_profit)
+                              },
+                              {
+                                title: 'max_odd',
+                                value: parseInt(data.max_odd)
+                              },
+                            ]
+                          }
+                          dataDB.marketDetails[index] = newMarketDetailsForData
+                          dataDB.save()
+                          socket.emit('updateBetLimitMarket', newMarketDetailsForData)
+                    }else{
+                        socket.emit('updateBetLimitMarket', {status:err} )
+                    }
                 }else{
                     let newMarketDetailsForData = {
                         title: Marketname,
