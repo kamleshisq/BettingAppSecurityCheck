@@ -7045,7 +7045,7 @@ var _updateRow = require("./updateRow");
 var _updatePromotion = require("./updatePromotion");
 var _createPromotion = require("./createPromotion");
 var _deletePormotion = require("./deletePormotion");
-var _betLimit2 = require("./betLimit");
+var _betLimit = require("./betLimit");
 var _createHorizontalMenu = require("./createHorizontalMenu");
 var _updateHorizonatlMenu = require("./updateHorizonatlMenu");
 var _createBanner = require("./createBanner");
@@ -7168,20 +7168,6 @@ $('#Add-User').submit(function (e) {
   }
   (0, _createUser.createUser)(formDataObj);
 });
-$(document).on('click', '.updateBetLimit', function (e) {
-  var rowId = $(this).parent().parent().parent().attr('id');
-  $('.rowId').attr('data-rowid', rowId);
-  var modleName = $(this).data('bs-target');
-  var form = $(modleName).find('.form-data');
-  var betLimit = $(this).parent().data('details');
-  form.find('input[name = "min_stake"]').val(betLimit.min_stake);
-  form.find('input[name = "max_stake"]').val(betLimit.max_stake);
-  form.find('input[name = "max_profit"]').val(betLimit.max_profit);
-  form.find('input[name = "max_odd"]').val(betLimit.max_odd);
-  form.find('input[name = "delay"]').val(betLimit.delay);
-  form.find('input[name = "type"]').val(betLimit.type);
-  form.find('input[name = "id"]').val(betLimit._id);
-});
 $(document).on('submit', '.passReset-form', function (e) {
   e.preventDefault();
   var form = $(this)[0];
@@ -7229,41 +7215,11 @@ $(document).on('submit', '#edit-form', /*#__PURE__*/function () {
 //     socket.emit('Login', data);
 //     })
 
-$(document).on('submit', '.form-betLimit', /*#__PURE__*/function () {
+$(document).on('submit', '.acc-form', /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
-    var form, fd, data, res, _betLimit, rowId;
+    var form, id, fd, formDataObj, user, trElements;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
-        case 0:
-          e.preventDefault();
-          form = $(this)[0];
-          fd = new FormData(form);
-          data = Object.fromEntries(fd.entries()); // console.log(data)
-          _context2.next = 6;
-          return (0, _betLimit2.betLimit)(data);
-        case 6:
-          res = _context2.sent;
-          if (res) {
-            _betLimit = res;
-            rowId = $('.rowId').attr('data-rowid');
-            $('#' + rowId).html("\n            <td class=\"btn-filter\">".concat(_betLimit.type, "</td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.min_stake, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.max_stake, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.max_profit, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.max_odd, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.delay, "'></td>\n            <td data-details='").concat(JSON.stringify(_betLimit), "'><button type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#myModal2\"class=\"updateBetLimit\">Update</button></td>"));
-            alert("updated SuccessFully");
-          }
-        case 8:
-        case "end":
-          return _context2.stop();
-      }
-    }, _callee2, this);
-  }));
-  return function (_x2) {
-    return _ref2.apply(this, arguments);
-  };
-}());
-$(document).on('submit', '.acc-form', /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(e) {
-    var form, id, fd, formDataObj, user, trElements;
-    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-      while (1) switch (_context3.prev = _context3.next) {
         case 0:
           e.preventDefault();
           form = $(this)[0];
@@ -7277,10 +7233,10 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           // formDataObj.id = id
           // console.log(formDataObj)
           // let rowId = $('.rowId').attr('data-rowid')
-          _context3.next = 9;
+          _context2.next = 9;
           return (0, _debitCredit.debitCredit)(formDataObj);
         case 9:
-          user = _context3.sent;
+          user = _context2.sent;
           trElements = document.querySelectorAll('tr.trtable'); // console.log(trElements)
           // console.log(user)
           trElements.forEach(function (trElement) {
@@ -7294,19 +7250,19 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           // console.log(user)
         case 12:
         case "end":
-          return _context3.stop();
+          return _context2.stop();
       }
-    }, _callee3, this);
+    }, _callee2, this);
   }));
-  return function (_x3) {
-    return _ref3.apply(this, arguments);
+  return function (_x2) {
+    return _ref2.apply(this, arguments);
   };
 }());
 $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(e) {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(e) {
     var form, id, fd, formDataObj;
-    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-      while (1) switch (_context4.prev = _context4.next) {
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
         case 0:
           e.preventDefault();
           form = $(this)[0];
@@ -7336,12 +7292,12 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
           // console.log(user)
         case 8:
         case "end":
-          return _context4.stop();
+          return _context3.stop();
       }
-    }, _callee4, this);
+    }, _callee3, this);
   }));
-  return function (_x4) {
-    return _ref4.apply(this, arguments);
+  return function (_x3) {
+    return _ref3.apply(this, arguments);
   };
 }());
 

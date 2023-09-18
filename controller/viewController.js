@@ -1634,12 +1634,16 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
 
 exports.getBetLimitPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
-    const betLimit = await betLimitModel.find()
+    // const betLimit = await betLimitModel.find()
+    let homeData = await betLimitModel.findOne({type:'Home'})
+    let sportData = await betLimitModel.findOne({type:'Sport'})
     res.status(200).render("./betLimit/betLimit", {
         title:"Bet Limits",
-        betLimit,
+        // betLimit,
         me,
-        currentUser:me
+        currentUser:me,
+        homeData,
+        sportData
     })
 });
 
@@ -2435,20 +2439,20 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         //     let date = new Date(item.updated_on);
         //     return date < Date.now() - 1000 * 60 * 60;
         // });
-        let SportLimits = betLimit.find(item => item.type === "Sport")
-        let min 
-        let max 
-        if (SportLimits.min_stake >= 1000) {
-            min = (SportLimits.min_stake / 1000) + 'K';
-        } else {
-            min = SportLimits.min_stake.toString();
-        }
-        if (SportLimits.max_stake >= 1000) {
-            max = (SportLimits.max_stake / 1000) + 'K';
-          } else {
-            max = SportLimits.max_stake.toString();
-        }
-        console.log(SportLimits, min , max)
+        // let SportLimits = betLimit.find(item => item.type === "Sport")
+        // let min 
+        // let max 
+        // if (SportLimits.min_stake >= 1000) {
+        //     min = (SportLimits.min_stake / 1000) + 'K';
+        // } else {
+        //     min = SportLimits.min_stake.toString();
+        // }
+        // if (SportLimits.max_stake >= 1000) {
+        //     max = (SportLimits.max_stake / 1000) + 'K';
+        //   } else {
+        //     max = SportLimits.max_stake.toString();
+        // }
+        // console.log(SportLimits, min , max)
         let userLog
         let stakeLabledata
         let userMultimarkets
@@ -2470,7 +2474,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             verticalMenus,
             check:"ExchangeIn",
             match,
-            SportLimits,
+            // SportLimits,
             liveStream,
             userLog,
             notifications:req.notifications,
@@ -2479,8 +2483,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             rules,
             src,
             userMultimarkets,
-            min,
-            max
+            // min,
+            // max
     })
 });
 
@@ -2496,17 +2500,17 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     //     let date = new Date(item.updated_on);
     //     return date < Date.now() - 1000 * 60 * 60;
     // });
-    let SportLimits = betLimit.find(item => item.type === "Sport")
-    if (SportLimits.min_stake >= 1000) {
-        SportLimits.min_stake = ( SportLimits.min_stake / 1000).toFixed(1) + 'K';
-      } else {
-        SportLimits.min_stake =  SportLimits.min_stake.toString();
-    }
-    if (SportLimits.max_stake >= 1000) {
-        SportLimits.max_stake = ( SportLimits.max_stake / 1000).toFixed(1) + 'K';
-      } else {
-        SportLimits.max_stake =  SportLimits.max_stake.toString();
-    }
+    // let SportLimits = betLimit.find(item => item.type === "Sport")
+    // if (SportLimits.min_stake >= 1000) {
+    //     SportLimits.min_stake = ( SportLimits.min_stake / 1000).toFixed(1) + 'K';
+    //   } else {
+    //     SportLimits.min_stake =  SportLimits.min_stake.toString();
+    // }
+    // if (SportLimits.max_stake >= 1000) {
+    //     SportLimits.max_stake = ( SportLimits.max_stake / 1000).toFixed(1) + 'K';
+    //   } else {
+    //     SportLimits.max_stake =  SportLimits.max_stake.toString();
+    // }
     let userLog
     let multimarket 
     let stakeLabledata
@@ -2530,7 +2534,7 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
         user: req.currentUser,
         verticalMenus,
         check:"Multi Markets",
-        SportLimits,
+        // SportLimits,
         userLog,
         notifications:req.notifications,
         multimarket,
@@ -3157,6 +3161,7 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
               marketId: { $first: "$marketId" },
               match: { $first: "$match" },
               date: {$first:'$date'},
+              result : {$first : '$result'}
             }
           },
           {
@@ -3167,6 +3172,7 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
               count: 1,
               match : 1,
               date:1,
+              result : 1
             }
           }
     ])
@@ -3734,5 +3740,107 @@ exports.marketBets = catchAsync(async(req, res, next) => {
             user: req.currentUser,
             currentUser:req.currentUser,
             bets
+    })
+});
+
+
+exports.getSportBetLimit = catchAsync(async(req, res, next) => {
+    const me = req.currentUser
+    const betLimit = await betLimitModel.find();
+    // const sportListData = await getCrkAndAllData()
+    // let cricketList = sportListData[0].gameList[0]
+    // let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    // let tennisList = sportListData[1].gameList.find(item => item.sportId == 2) 
+    res.status(200).render("./betSportLimit/main.ejs", {
+        title:"Bet Limits",
+        betLimit,
+        me,
+        currentUser:me
+    })
+});
+
+
+
+exports.getBetLimitSportWise = catchAsync(async(req, res, next) => {
+    const me = req.currentUser
+    console.log(req.query.game)
+    const betLimit = await betLimitModel.find();
+    const sportListData = await getCrkAndAllData()
+    let cricketList = sportListData[0].gameList[0]
+    let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
+    let gameData = []
+    if(req.query.game === "cricket"){
+        gameData = cricketList.eventList
+    }else if (req.query.game === "football"){
+        gameData = footballList.eventList
+    }else if (req.query.game === "tennis"){
+        gameData = tennisList.eventList
+    }
+    let series = []
+    gameData.forEach(match => {
+        let seriesIndex = series.findIndex(series => series.series === match.eventData.league);
+        if (seriesIndex === -1) {
+            series.push({ series: match.eventData.league, matchdata: [match] });
+        } else {
+            series[seriesIndex].matchdata.push(match);
+        }
+    });
+    console.log(series)
+    res.status(200).render("./betSportWise/main.ejs", {
+        title:"Bet Limits",
+        betLimit,
+        me,
+        currentUser:me,
+        gameData,
+        series,
+        gameName:req.query.game
+    })
+})
+
+
+
+exports.getBetLimitMatchWise = catchAsync(async(req, res, next) => {
+    const me = req.currentUser
+    const betLimit = await betLimitModel.find();
+    const sportListData = await getCrkAndAllData()
+    let cricketList = sportListData[0].gameList[0].eventList
+    let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    footballList = footballList.eventList
+    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
+    tennisList = tennisList.eventList
+    let allData = cricketList.concat(footballList, tennisList)
+    let series = req.query.event
+    let seriesMatch = allData.filter(item => item.eventData.league == series)
+    // console.log(seriesMatch)
+    res.status(200).render("./betLimitMatchWise/main.ejs", {
+        title:"Bet Limits",
+        betLimit,
+        me,
+        currentUser:me,
+        seriesMatch
+    })
+});
+
+
+exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
+    const me = req.currentUser
+    const betLimit = await betLimitModel.find();
+    const sportListData = await getCrkAndAllData()
+    let cricketList = sportListData[0].gameList[0].eventList
+    let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    footballList = footballList.eventList
+    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
+    tennisList = tennisList.eventList
+    let allData = cricketList.concat(footballList, tennisList)
+    let series = req.query.match
+    let seriesMatch = allData.filter(item => item.eventData.name == series)
+    console.log(seriesMatch)
+    res.status(200).render("./betLimitMatch/main.ejs", {
+        title:"Bet Limits",
+        betLimit,
+        me,
+        currentUser:me,
+        seriesMatch
     })
 });

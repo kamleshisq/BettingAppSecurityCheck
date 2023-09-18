@@ -1,4 +1,5 @@
 const app = require('./app');
+const util = require('util');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const fetch = require('node-fetch');
@@ -41,6 +42,9 @@ const commissionMarketModel = require("./model/CommissionMarketsModel");
 const netCommissionModel = require('./model/netCommissionModel');
 const commissionRepportModel = require('./model/commissionReport');
 const { error } = require('console');
+const checkPass = require("./websocketController/checkPassUser");
+const { type } = require('os');
+const checkPassAsync = util.promisify(checkPass.checkPass);
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -2642,62 +2646,67 @@ io.on('connection', (socket) => {
 
     socket.on("VoidBetIn", async(data) => {
         try{
-            let bets = await Bet.find({marketId:data.id, status: 'OPEN'})
-        for(const bet in bets){
-            // console.log(bets[bet].id, 12)
-            await Bet.findByIdAndUpdate(bets[bet].id, {status:"CANCEL"});
-            let user = await User.findByIdAndUpdate(bets[bet].userId, {$inc:{balance: bets[bet].Stake, availableBalance: bets[bet].Stake, myPL: bets[bet].Stake, exposure:-bets[bet].Stake}})
-            let description = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/CANCEL`
-            let description2 = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/user = ${user.userName}/CANCEL `
-            let userAcc = {
-                "user_id":user._id,
-                "description": description,
-                "creditDebitamount" : bets[bet].Stake,
-                "balance" : user.availableBalance + bets[bet].Stake,
-                "date" : Date.now(),
-                "userName" : user.userName,
-                "role_type" : user.role_type,
-                "Remark":"-",
-                "stake": bets[bet].Stake,
-                "transactionId":`${bets[bet].transactionId}`
-            }
-            let parentAcc
-            if(user.parentUsers.length < 2){
-                await User.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: bets[bet].Stake, downlineBalance: bets[bet].Stake}})
-                let parent = await User.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:-bets[bet].Stake}})
-                parentAcc = {
-                    "user_id":parent._id,
-                    "description": description2,
-                    "creditDebitamount" : -bets[bet].Stake,
-                    "balance" : parent.availableBalance - (bets[bet].Stake * 1),
-                    "date" : Date.now(),
-                    "userName" : parent.userName,
-                    "role_type" : parent.role_type,
-                    "Remark":"-",
-                    "stake": bets[bet].Stake,
-                    "transactionId":`${bets[bet].transactionId}Parent`
-                }
-                
+            let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
+            if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
+                socket.emit("VoidBetIn",{message:"please provide a valid password", status:"error"})
             }else{
-                await User.updateMany({ _id: { $in: user.parentUsers.slice(1) } }, {$inc:{balance: bets[bet].Stake, downlineBalance: bets[bet].Stake}})
-                let parent = await User.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-bets[bet].Stake}})
-                parentAcc = {
-                    "user_id":parent._id,
-                    "description": description2,
-                    "creditDebitamount" : -bets[bet].Stake,
-                    "balance" : parent.availableBalance - (bets[bet].Stake * 1),
-                    "date" : Date.now(),
-                    "userName" : parent.userName,
-                    "role_type" : parent.role_type,
-                    "Remark":"-",
-                    "stake": bets[bet].Stake,
-                    "transactionId":`${bets[bet].transactionId}Parent`
+                let bets = await Bet.find({marketId:data.id, status : {$in: ['OPEN', 'MAP']}})
+                for(const bet in bets){
+                    // console.log(bets[bet].id, 12)
+                    await Bet.findByIdAndUpdate(bets[bet].id, {status:"CANCEL", remark:data.data.remark, calcelUser:data.LOGINDATA.LOGINUSER.userName});
+                    let user = await User.findByIdAndUpdate(bets[bet].userId, {$inc:{balance: bets[bet].Stake, availableBalance: bets[bet].Stake, myPL: bets[bet].Stake, exposure:-bets[bet].Stake}})
+                    let description = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/CANCEL`
+                    let description2 = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/user = ${user.userName}/CANCEL `
+                    let userAcc = {
+                        "user_id":user._id,
+                        "description": description,
+                        "creditDebitamount" : bets[bet].Stake,
+                        "balance" : user.availableBalance + bets[bet].Stake,
+                        "date" : Date.now(),
+                        "userName" : user.userName,
+                        "role_type" : user.role_type,
+                        "Remark":"-",
+                        "stake": bets[bet].Stake,
+                        "transactionId":`${bets[bet].transactionId}`
+                    }
+                    let parentAcc
+                    if(user.parentUsers.length < 2){
+                        await User.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: bets[bet].Stake, downlineBalance: bets[bet].Stake}})
+                        let parent = await User.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:-bets[bet].Stake}})
+                        parentAcc = {
+                            "user_id":parent._id,
+                            "description": description2,
+                            "creditDebitamount" : -bets[bet].Stake,
+                            "balance" : parent.availableBalance - (bets[bet].Stake * 1),
+                            "date" : Date.now(),
+                            "userName" : parent.userName,
+                            "role_type" : parent.role_type,
+                            "Remark":"-",
+                            "stake": bets[bet].Stake,
+                            "transactionId":`${bets[bet].transactionId}Parent`
+                        }
+                        
+                    }else{
+                        await User.updateMany({ _id: { $in: user.parentUsers.slice(1) } }, {$inc:{balance: bets[bet].Stake, downlineBalance: bets[bet].Stake}})
+                        let parent = await User.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-bets[bet].Stake}})
+                        parentAcc = {
+                            "user_id":parent._id,
+                            "description": description2,
+                            "creditDebitamount" : -bets[bet].Stake,
+                            "balance" : parent.availableBalance - (bets[bet].Stake * 1),
+                            "date" : Date.now(),
+                            "userName" : parent.userName,
+                            "role_type" : parent.role_type,
+                            "Remark":"-",
+                            "stake": bets[bet].Stake,
+                            "transactionId":`${bets[bet].transactionId}Parent`
+                        }
+                    }
+                    await AccModel.create(userAcc);
+                    await AccModel.create(parentAcc);  // socket.emit('voidBet', {bet, status:"success"})
                 }
+                socket.emit('VoidBetIn', {betdata:bets[0], count:bets.length ,status:"success"})
             }
-            await AccModel.create(userAcc);
-            await AccModel.create(parentAcc);  // socket.emit('voidBet', {bet, status:"success"})
-        }
-        socket.emit('VoidBetIn', {marketId:data.id, status:"success"})
         }catch(err){
             console.log(err)
             socket.emit("VoidBetIn",{message:"err", status:"error"})
@@ -2718,11 +2727,13 @@ io.on('connection', (socket) => {
 
     socket.on('Settle', async(data) => {
         try{
-            
             console.log(data)
+            let data1 = mapBet.mapbet(data)
+            socket.emit("Settle", {message:"Settleed Process start", status:'success'})
+            // socket.emit('Settle', {marketId:data.id, status:"success"})
         }catch(err){
             console.log(err)
-            socket.emit("VoidBetIn22",{message:"err", status:"error"})
+            socket.emit("Settle",{message:"err", status:"error"})
         }
     })
 
@@ -3334,6 +3345,38 @@ io.on('connection', (socket) => {
            
         }else{
             socket.emit("claimCommissionAdmin", "error")
+        }
+    })
+
+
+    socket.on('BetLimitDetails', async(data) => {
+        try{
+            let details = await betLimit.findOne({type:data})
+            if(details){
+                socket.emit('BetLimitDetails', {details, type:data})
+            }else{
+                socket.emit("BetLimitDetails", {message:'', status:'notFound', type:data})
+            }
+
+        }catch(err){
+            socket.emit('BetLimitDetails', {message:"try again leter", status:"err"})
+        }
+    })
+
+
+    socket.on('UpdateBetLimit', async(data) => {
+        try{
+            let check = await betLimit.findOne({type:data.type})
+            if(check){
+                await betLimit.findOneAndUpdate({type:data.type}, data)
+                socket.emit('UpdateBetLimit', {status:'success'})
+            }else{
+                await betLimit.create(data)
+                socket.emit('UpdateBetLimit', {status:'success'})
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit('UpdateBetLimit', {message:"Please try again leter", status:"err"})
         }
     })
     
