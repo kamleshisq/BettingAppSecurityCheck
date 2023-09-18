@@ -188,18 +188,21 @@ let filtertinMatch = {}
     }
 // console.log(marketDetails, 454545454454454545544544444444444)
 if(marketDetails.title.toLowerCase().startsWith('matchod')){
+    console.log("MATCHODD")
     if(minMatchOdds > parseFloat(data.data.stake) ){
         return `Invalide stake, Please play with atleast minimum stake (${minMatchOdds})`
     }else if(maxMatchOdds < parseFloat(data.data.stake)){
         return `Invalide stake, Please play with atmost maximum stake (${maxMatchOdds})`
     }
 }else if(marketDetails.title.toLowerCase().startsWith('book')){
+    console.log("BOOKMAKER")
     if(minBookMaker > parseFloat(data.data.stake) ){
         return `Invalide stake, Please play with atleast minimum stake (${minBookMaker})`
     }else if(maxBookMaker < parseFloat(data.data.stake)){
         return `Invalide stake, Please play with atmost maximum stake (${maxBookMaker})`
     }
 }else {
+    console.log("FENCY")
     if(minFancy > parseFloat(data.data.stake) ){
         return `Invalide stake, Please play with atleast minimum stake (${minFancy})`
     }else if(maxFancy < parseFloat(data.data.stake)){
