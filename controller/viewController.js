@@ -2496,7 +2496,9 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
                 $match:filtertinMatch
             }
         ])
+        const betLimitMarekt = await betLimitMatchWisemodel.findOne({matchTitle:match.eventData.name})
         console.log(betLimit)
+        console.log(betLimitMarekt)
         res.status(200).render("./userSideEjs/userMatchDetails/main",{
             user: req.currentUser,
             verticalMenus,
