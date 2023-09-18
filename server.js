@@ -3481,7 +3481,7 @@ io.on('connection', (socket) => {
                       }
                     ]
                   };
-    
+                  await betLimitMatchWisemodel.create(marketDetails)
                 socket.emit('updateBetLimitMarket', marketDetails)
             }
         }catch(err){
