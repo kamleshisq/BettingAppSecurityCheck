@@ -30,7 +30,6 @@
                 console.log(series[i].series)
                 let limitData = betLimit.find(item => item.type == series[i].series)
               %>
-              <%=console.log(limitData, "LIMITDTA")%>
               <%if(limitData){%>
                 <tr id="<%=i + 1%>">
                   <td id="<%=series[i].series%>" class="btn-filter"><a href="/admin/betlimit/sports/event?event=<%=series[i].series%>"><%=series[i].series%></a></td>
