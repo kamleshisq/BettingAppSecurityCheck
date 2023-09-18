@@ -10196,6 +10196,7 @@ socket.on('connect', () => {
 
         $('#Sport').change(function() {
             let Sport = $(this).val()
+            console.log(Sport)
             if(['1','2','4'].includes(Sport)){
                 socket.emit('getEvetnsOfSport',{sport:Sport})
             }else{
