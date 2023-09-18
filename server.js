@@ -3403,6 +3403,109 @@ io.on('connection', (socket) => {
         socket.emit('matchOdds',{matchOdds,page})
     })
 
+    socket.on('childGameAnalist',async(data)=>{
+        let roleType = data.roleType;
+        let parent = data.parent
+        let users;
+        let me = data.USER
+        let page = data.page;
+        let limit = 10
+        const roles = await Role.find({role_level: {$gt:me.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        // console.log(me)
+
+        let filter = {}
+        if(data.from_date && data.to_date){
+            filter.date = {$gte:new Date(data.from_date),$lte:new Date(data.to_date)}
+        }else if(data.from_date && !data.to_date){
+            filter.date = {$gte:new Date(data.from_date)}
+        }else if(data.to_date && !data.from_date){
+            filter.date = {$lte:new Date(data.to_date)}
+        }
+        if(data.Sport != "All"){
+            filter.eventId = data.Sport
+        }
+        if(data.market != "All"){
+            if(data.market === "Match Odds"){
+                filter.marketName = { '$regex': '^Match', '$options': 'i' }
+            }else if (data.market === "Bookmaker 0%Comm"){
+                filter.marketName = { '$regex': '^Bookma', '$options': 'i' }
+            }else if (data.market === "Fancy"){
+                filter.marketName = { '$not': { '$regex': '^(match|bookma)', '$options': 'i' } }
+            }
+        }
+        if(roleType == '1'){
+            let admin = await User.findOne({role_type:1})
+            users = await User.find({parent_id:admin._id})
+        }
+
+        let newUsers = await users.map(async(ele) => {
+            console.log(ele.name)
+            ele.betDetails = await Bet.aggregate([
+                {
+                    $match:filter
+                },
+                {
+                    $lookup:{
+                        from:'users',
+                        localField:'userName',
+                        foreignField:'userName',
+                        as:'userDetails'
+                    }
+                },
+                {
+                    $unwind:'$userDetails'
+                },
+                {
+                    $match:{
+                        'userDetails.isActive':true,
+                        'userDetails.roleName':{$ne:'Admin'},
+                        'userDetails.role_type':{$in:role_type},
+                        'userDetails.parentUsers':{$elemMatch:{$eq:ele._id}}
+                    }
+                },
+                {
+                    $group:{
+                        _id:{
+                            userName:'$userName',
+                        },
+                        betcount:{$sum:1},
+                        loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                        won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                        open:{$sum:{$cond:[{$in:['$status',['MAP','OPEN']]},1,0]}},
+                        void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+                        returns:{$sum:{$cond:[{$in:['$status',['LOSS','OPEN']]},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+                        
+                    }
+                },
+                {
+                    $sort: {
+                        betcount: -1 ,
+                        open : -1,
+                        won : -1,
+                        loss : -1
+                    }
+                },
+                {
+                    $skip: page * limit
+                },
+                {
+                    $limit: limit 
+                }
+            ]) 
+        })
+
+        let result = await Promise.all(newUsers)
+
+        console.log(result)
+
+
+
+    })
+
     socket.on('getEvetnsOfSport',async(data)=>{
         console.log(data);
         const sportData = await getCrkAndAllData()

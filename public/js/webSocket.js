@@ -10334,6 +10334,23 @@ socket.on('connect', () => {
             socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
         })
 
+        $(document).on('click','.childgameAnalist',function(e){
+            let roleType = $(this).attr('data-roleType')
+            let parent = $(this).attr('data-parent')
+            let page = 0
+            let market = $("#market").val()
+            let to_date;
+            let from_date
+            if($('#Fdate').val() != ''){
+                from_date = $('#Fdate').val()
+            }
+            if($('#Tdate').val() != ''){
+                to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            }
+            let Sport = $("#Event").val()
+            socket.on('childGameAnalist',{roleType,parent,from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+        })
+
         let limit
 
 
@@ -10400,7 +10417,7 @@ socket.on('connect', () => {
             for(let i = 0; i < data.gameAnalist.length; i++){
                 html += `<tr>
                 <td>${i + 1 + limit}</td>
-                <td>${data.gameAnalist[i]._id}</td>
+                <td class="childgameAnalist" data-roleType="1" data-parent="${data.gameAnalist[i]._id}">${data.gameAnalist[i]._id}</td>
                 <td>${data.gameAnalist[i].Total_User}</td>
                 <td>${data.gameAnalist[i].betcount}</td>
                 <td> ${data.gameAnalist[i].won} </td>
