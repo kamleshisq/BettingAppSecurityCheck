@@ -36,6 +36,7 @@ const commissionModel = require("../model/CommissionModel");
 const settlementHisory = require("../model/settelementHistory");
 const catalogController = require("./../model/catalogControllModel")
 const commissionReportModel = require("../model/commissionReport");
+const betLimitMatchWisemodel = require('../model/betLimitMatchWise');
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -2434,7 +2435,6 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         }
         // console.log(src, 123)
     }
-    const betLimit = await betLimitModel.find()
     // console.log(match.marketList.goals)
     // let session = match.marketList.session.filter(item => {
         //     let date = new Date(item.updated_on);
@@ -2470,12 +2470,104 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         }else{
             stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
         }
+        let filtertinMatch = {}
+        let sportName = ''
+        if(match.eventData.sportId === 1){
+            filtertinMatch = {
+                type : {
+                    $in :['Home', "Football", 'Football/matchOdds', match.eventData.league, match.eventData.name]
+                }
+            }
+
+            sportName = 'Football'
+        }else if (match.eventData.sportId === 2){
+            filtertinMatch = {
+                type : {
+                    $in :['Home', "Tennis", 'Tennis/matchOdds', match.eventData.league, match.eventData.name]
+                }
+            }
+            sportName = 'Tennis'
+        }else if(match.eventData.sportId === 4){
+            filtertinMatch = {
+                type : {
+                    $in :['Home', "Cricket", 'Cricket/matchOdds', "Cricket/bookMaker", 'Cricket/fency', match.eventData.league, match.eventData.name]
+                }
+            }
+            sportName = 'Cricket'
+        }
+
+        const betLimit = await betLimitModel.aggregate([
+            {
+                $match:filtertinMatch
+            }
+        ])
+        let maxByMatch = 0
+        let minByMatch = 10000000000000
+        for (let index = 0; index < betLimit.length; index++) {
+            if (
+                betLimit[index].type === 'Home' ||
+                betLimit[index].type === sportName ||
+                betLimit[index].type === match.eventData.league ||
+                betLimit[index].type === match.eventData.name
+              ) {
+                if(minByMatch > betLimit[index].min_stake){
+                    minByMatch = betLimit[index].min_stake
+                }
+
+                if(maxByMatch < betLimit[index].max_stake){
+                    maxByMatch = betLimit[index].max_stake
+                }
+            }
+        }
+        let MATCHODDS = betLimit.find(item => item.type == `${sportName}/matchOdds`)
+        let FENCY = betLimit.find(item => item.type == `${sportName}/fency`)
+        let BOOKMAKER = betLimit.find(item => item.type == `${sportName}/bookMaker`)
+
+        let minBookMaker = minByMatch
+        let maxBookMaker = maxByMatch
+        let minMatchOdds = minByMatch
+        let maxMatchOdds = maxByMatch
+        let minFancy = minByMatch
+        let maxFancy = maxByMatch
+        if(MATCHODDS){
+            if(minMatchOdds > MATCHODDS.min_stake){
+                minMatchOdds = MATCHODDS.min_stake
+            }
+
+            if(maxMatchOdds < MATCHODDS.max_stake){
+                maxMatchOdds = MATCHODDS.max_stake
+            }
+        }
+
+        if(FENCY){
+            if(minFancy > FENCY.min_stake){
+                minFancy = FENCY.min_stake
+            }
+
+            if(maxFancy < FENCY.max_stake){
+                maxFancy = FENCY.max_stake
+            }
+        }
+
+        if(BOOKMAKER){
+            if(minBookMaker > BOOKMAKER.min_stake){
+                minBookMaker = BOOKMAKER.min_stake
+            }
+
+            if(maxBookMaker < BOOKMAKER.max_stake){
+                maxBookMaker = BOOKMAKER.max_stake
+            }
+        }
+
+        console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
+
+        const betLimitMarekt = await betLimitMatchWisemodel.findOne({matchTitle:match.eventData.name})
+        
         res.status(200).render("./userSideEjs/userMatchDetails/main",{
             user: req.currentUser,
             verticalMenus,
             check:"ExchangeIn",
             match,
-            // SportLimits,
             liveStream,
             userLog,
             notifications:req.notifications,
@@ -2484,8 +2576,13 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             rules,
             src,
             userMultimarkets,
-            // min,
-            // max
+            betLimitMarekt,
+            minMatchOdds,
+            maxMatchOdds,
+            minFancy,
+            maxFancy,
+            minBookMaker,
+            maxBookMaker
     })
 });
 
@@ -3837,6 +3934,8 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
     let allData = cricketList.concat(footballList, tennisList)
     let series = req.query.match
     let seriesMatch = allData.filter(item => item.eventData.name == series)
+    let betLimitMatchWise = await betLimitMatchWisemodel.findOne({matchTitle:series})
+    
     // console.log(seriesMatch)
     res.status(200).render("./betLimitMatch/main.ejs", {
         title:"Bet Limits",
@@ -3844,6 +3943,7 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
         me,
         currentUser:me,
         seriesMatch,
-        series
+        series,
+        betLimitMatchWise
     })
 });

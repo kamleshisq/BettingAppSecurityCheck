@@ -10391,7 +10391,24 @@ socket.on('connect', () => {
             }else if (data.status == "errr"){
                 alert('please try again leter')
             }else{
-
+                let form = $('#myModal2').find('.form-data')
+                console.log(data.marketData)
+                for(let i = 0; i < data.marketData.value.length; i++){
+                        if(data.marketData.value[i].title == 'min_stake'){
+                            form.find('input[name = "min_stake"]').val(data.marketData.value[i].value)
+                        }
+                        if(data.marketData.value[i].title == 'max_stake'){
+                            form.find('input[name = "max_stake"]').val(data.marketData.value[i].value)
+                        }
+                        if(data.marketData.value[i].title == 'max_profit'){
+                            form.find('input[name = "max_profit"]').val(data.marketData.value[i].value)
+                        }
+                        if(data.marketData.value[i].title == 'max_odd'){
+                            form.find('input[name = "max_odd"]').val(data.marketData.value[i].value)
+                        }
+                }
+                form.find('input[name = "delay"]').val(5)
+                form.find('input[name = "type"]').val(data.data)
             }
          })
 
@@ -10402,6 +10419,15 @@ socket.on('connect', () => {
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
             socket.emit('updateBetLimitMarket', data)
+         })
+
+         socket.on('updateBetLimitMarket', data => {
+            if(data.status == "err"){
+                alert('please try again leter')
+            }else{
+                alert('updated!')
+                window.location.reload()
+            }
          })
 
 

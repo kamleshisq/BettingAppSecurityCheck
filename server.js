@@ -3486,7 +3486,14 @@ io.on('connection', (socket) => {
         let Marketname = data.split('/')[1]
         let dataDb = await betLimitMatchWisemodel.findOne({matchTitle:matchName})
         if(dataDb != null){
-
+            console.log(dataDb)
+            console.log(matchName, Marketname)
+            let marketData = dataDb.marketDetails.find(item => item.title == Marketname)
+            if(marketData){
+                socket.emit('updateBetLimitMATCH', {marketData, data:data})
+            }else{
+                socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data})
+            }
         }else{
             socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data})
         }
@@ -3495,6 +3502,104 @@ io.on('connection', (socket) => {
 
     socket.on('updateBetLimitMarket', async(data) => {
         console.log(data)
+        try{
+            let matchName = data.type.split('/')[0]
+            let Marketname = data.type.split('/')[1]
+            let dataDB = await betLimitMatchWisemodel.findOne({matchTitle:matchName})
+            if(dataDB != null){
+                console.log(dataDB)
+                let marketData = dataDB.marketDetails.find(item => item.title == Marketname)
+                if(marketData){
+                    let index = dataDB.marketDetails.findIndex(item => item.title === Marketname);
+                    if (index !== -1) { 
+                        let newMarketDetailsForData = {
+                            title: Marketname,
+                            value: [
+                              {
+                                title: 'min_stake',
+                                value: parseInt(data.min_stake)
+                              },
+                              {
+                                title: 'max_stake',
+                                value: parseInt(data.max_stake)
+                              },
+                              {
+                                title: 'max_profit',
+                                value: parseInt(data.max_profit)
+                              },
+                              {
+                                title: 'max_odd',
+                                value: parseInt(data.max_odd)
+                              },
+                            ]
+                          }
+                          dataDB.marketDetails[index] = newMarketDetailsForData
+                          dataDB.save()
+                          socket.emit('updateBetLimitMarket', newMarketDetailsForData)
+                    }else{
+                        socket.emit('updateBetLimitMarket', {status:err} )
+                    }
+                }else{
+                    let newMarketDetailsForData = {
+                        title: Marketname,
+                        value: [
+                          {
+                            title: 'min_stake',
+                            value: parseInt(data.min_stake)
+                          },
+                          {
+                            title: 'max_stake',
+                            value: parseInt(data.max_stake)
+                          },
+                          {
+                            title: 'max_profit',
+                            value: parseInt(data.max_profit)
+                          },
+                          {
+                            title: 'max_odd',
+                            value: parseInt(data.max_odd)
+                          },
+                        ]
+                      }
+                      dataDB.marketDetails.push(newMarketDetailsForData)
+                      dataDB.save()
+                      socket.emit('updateBetLimitMarket', newMarketDetailsForData)
+                }
+            }else{
+                let marketDetails = {
+                    matchTitle: matchName,
+                    marketDetails: [
+                      {
+                        title: Marketname,
+                        value: [
+                          {
+                            title: 'min_stake',
+                            value: parseInt(data.min_stake)
+                          },
+                          {
+                            title: 'max_stake',
+                            value: parseInt(data.max_stake)
+                          },
+                          {
+                            title: 'max_profit',
+                            value: parseInt(data.max_profit)
+                          },
+                          {
+                            title: 'max_odd',
+                            value: parseInt(data.max_odd)
+                          },
+                        ]
+                      }
+                    ]
+                  };
+                  await betLimitMatchWisemodel.create(marketDetails)
+                socket.emit('updateBetLimitMarket', marketDetails)
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit('updateBetLimitMarket', {status:err} )
+        }
+       
     })
     
 })

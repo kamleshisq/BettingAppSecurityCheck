@@ -6,6 +6,7 @@ const cricketAndOtherSport = require('../utils/getSportAndCricketList');
 const commissionRepportModel = require("../model/commissionReport");
 const commissionModel = require("../model/CommissionModel");
 const commissionMarketModel = require("../model/CommissionMarketsModel");
+const betLimitMatchWisemodel = require('../model/betLimitMatchWise');
 const Decimal = require('decimal.js');
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -22,16 +23,19 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
 
 async function placeBet(data){
     console.log(data, "data1")
+    return;
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
     if(check.availableBalance < data.data.stake){
         return "You do not have sufficient balance for bet"
     }else if(check.exposureLimit === check.exposure){
         return "Please try again later, Your exposure Limit is full"
     }
-    let betLimit
-    if(data.data.spoetId){
-        betLimit = await betLimitModel.findOne({type:"Sport"})
-    }
+    // let betLimit
+    // if(data.data.spoetId){
+    //     betLimit = await betLimitModel.findOne({type:"Sport"})
+    // }
+
+    
     // console.log(betLimit, 45654654654)
     // if(betLimit.min_stake > parseFloat(data.data.stake) ){
     //     return `Invalide stake, Please play with atleast minimum stake (${betLimit.min_stake})`
@@ -94,7 +98,125 @@ async function placeBet(data){
             }
       }}
 let betPlaceData = {}
+// console.log(liveBetGame, "4545454545")
+let filtertinMatch = {}
+    let sportName = ''
+    if(data.data.spoetId == 1){
+        filtertinMatch = {
+            type : {
+                $in :['Home', "Football", 'Football/matchOdds', liveBetGame.eventData.league, liveBetGame.eventData.name]
+            }
+        }
+
+        sportName = 'Football'
+    }else if (data.data.spoetId == 2){
+        filtertinMatch = {
+            type : {
+                $in :['Home', "Tennis", 'Tennis/matchOdds', liveBetGame.eventData.league, liveBetGame.eventData.name]
+            }
+        }
+        sportName = 'Tennis'
+    }else if(data.data.spoetId == 4){
+        filtertinMatch = {
+            type : {
+                $in :['Home', "Cricket", 'Cricket/matchOdds', "Cricket/bookMaker", 'Cricket/fency', liveBetGame.eventData.league, liveBetGame.eventData.name]
+            }
+        }
+        sportName = 'Cricket'
+    }
+
+    // console.log(filtertinMatch)
+    const betLimit = await betLimitModel.aggregate([
+        {
+            $match:filtertinMatch
+        }
+    ])
+
+    // console.log(betLimit, '==> betLimit')
+    let maxByMatch = 0
+    let minByMatch = 10000000000000
+    for (let index = 0; index < betLimit.length; index++) {
+        if (
+            betLimit[index].type === 'Home' ||
+            betLimit[index].type === sportName ||
+            betLimit[index].type === liveBetGame.eventData.league ||
+            betLimit[index].type === liveBetGame.eventData.name
+          ) {
+            if(minByMatch > betLimit[index].min_stake){
+                minByMatch = betLimit[index].min_stake
+            }
+
+            if(maxByMatch < betLimit[index].max_stake){
+                maxByMatch = betLimit[index].max_stake
+            }
+        }
+    }
+    let MATCHODDS = betLimit.find(item => item.type == `${sportName}/matchOdds`)
+    let FENCY = betLimit.find(item => item.type == `${sportName}/fency`)
+    let BOOKMAKER = betLimit.find(item => item.type == `${sportName}/bookMaker`)
+
+    let minBookMaker = minByMatch
+    let maxBookMaker = maxByMatch
+    let minMatchOdds = minByMatch
+    let maxMatchOdds = maxByMatch
+    let minFancy = minByMatch
+    let maxFancy = maxByMatch
+    if(MATCHODDS){
+        if(minMatchOdds > MATCHODDS.min_stake){
+            minMatchOdds = MATCHODDS.min_stake
+        }
+
+        if(maxMatchOdds < MATCHODDS.max_stake){
+            maxMatchOdds = MATCHODDS.max_stake
+        }
+    }
+
+    if(FENCY){
+        if(minFancy > FENCY.min_stake){
+            minFancy = FENCY.min_stake
+        }
+
+        if(maxFancy < FENCY.max_stake){
+            maxFancy = FENCY.max_stake
+        }
+    }
+
+    if(BOOKMAKER){
+        if(minBookMaker > BOOKMAKER.min_stake){
+            minBookMaker = BOOKMAKER.min_stake
+        }
+
+        if(maxBookMaker < BOOKMAKER.max_stake){
+            maxBookMaker = BOOKMAKER.max_stake
+        }
+    }
+
+    // console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 // console.log(marketDetails, 454545454454454545544544444444444)
+if(marketDetails.title.toLowerCase().startsWith('match')){
+    // console.log("MATCHODD", minMatchOdds)
+    // console.log(marketDetails.title)
+    if(minMatchOdds > parseFloat(data.data.stake) ){
+        return `Invalide stake, Please play with atleast minimum stake (${minMatchOdds})`
+    }else if(maxMatchOdds < parseFloat(data.data.stake)){
+        return `Invalide stake, Please play with atmost maximum stake (${maxMatchOdds})`
+    }
+}else if(marketDetails.title.toLowerCase().startsWith('book')){
+    // console.log("BOOKMAKER")
+    if(minBookMaker > parseFloat(data.data.stake) ){
+        return `Invalide stake, Please play with atleast minimum stake (${minBookMaker})`
+    }else if(maxBookMaker < parseFloat(data.data.stake)){
+        return `Invalide stake, Please play with atmost maximum stake (${maxBookMaker})`
+    }
+}else {
+    // console.log("FENCY")
+    if(minFancy > parseFloat(data.data.stake) ){
+        return `Invalide stake, Please play with atleast minimum stake (${minFancy})`
+    }else if(maxFancy < parseFloat(data.data.stake)){
+        return `Invalide stake, Please play with atmost maximum stake (${maxFancy})`
+    }
+}
+
 if(!marketDetails.runners){
     betPlaceData = {
         userId : data.LOGINDATA.LOGINUSER._id,
