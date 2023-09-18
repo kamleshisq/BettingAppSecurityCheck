@@ -10307,11 +10307,11 @@ socket.on('connect', () => {
                 <td>${data.marketAnalist[i].void}</td>
                 <td>${data.marketAnalist[i].open}</td>`
                 if(data.marketAnalist[i].returns > 0){
-                    html2 += `<td class="green">+${data.marketAnalist[i].returns.toFixed(2)}</td></tr>`
+                    html2 += `<td class="green">+${data.marketAnalist[i].returns.toFixed(2)}</td>`
                 }else{
-                    html2 += `<td class="red">${data.marketAnalist[i].returns.toFixed(2)}</td></tr>`
+                    html2 += `<td class="red">${data.marketAnalist[i].returns.toFixed(2)}</td>`
                 }
-                html2 += `<td>-</td>`
+                html2 += `<td>-</td></tr>`
             } 
             if(data.page == 0){
                 if(!(data.gameAnalist.length < 10)){

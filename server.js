@@ -3315,7 +3315,7 @@ io.on('connection', (socket) => {
             {
                 $group:{
                     _id:'$marketName',
-                    betCount:{$sum:1},
+                    betcount:{$sum:1},
                     loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
                     won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
                     open:{$sum:{$cond:[{$in:['$status',['MAP','OPEN']]},1,0]}},
