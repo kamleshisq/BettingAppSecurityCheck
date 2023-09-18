@@ -3441,7 +3441,7 @@ io.on('connection', (socket) => {
         if(dataDb != null){
             console.log(dataDb)
             console.log(matchName, Marketname)
-            let marketData = dataDb.marketDetails.find(item => item.title == "Marketname")
+            let marketData = dataDb.marketDetails.find(item => item.title == Marketname)
             console.log(marketData, "marketDatamarketData")
         }else{
             socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data})
