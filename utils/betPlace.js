@@ -140,34 +140,55 @@ let filtertinMatch = {}
             }
         }
 
-        console.log(betLimit, "+==> BetLimit")
-        return;
+        let minMatchOdds = betLimit.min_stake
+        let maxMatchOdds = betLimit.max_stake
+        let minBookMaker = betLimit.min_stake
+        let maxBookMaker = betLimit.max_stake
+        let minFancy = betLimit.min_stake
+        let maxFancy = betLimit.max_stake
+        // console.log(betLimit, "+==> BetLimit")
+        // return;
 
     // console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 // console.log(marketDetails, 454545454454454545544544444444444)
-// if(marketDetails.title.toLowerCase().startsWith('match')){
-//     // console.log("MATCHODD", minMatchOdds)
-//     // console.log(marketDetails.title)
-//     if(minMatchOdds > parseFloat(data.data.stake) ){
-//         return `Invalide stake, Please play with atleast minimum stake (${minMatchOdds})`
-//     }else if(maxMatchOdds < parseFloat(data.data.stake)){
-//         return `Invalide stake, Please play with atmost maximum stake (${maxMatchOdds})`
-//     }
-// }else if(marketDetails.title.toLowerCase().startsWith('book')){
-//     // console.log("BOOKMAKER")
-//     if(minBookMaker > parseFloat(data.data.stake) ){
-//         return `Invalide stake, Please play with atleast minimum stake (${minBookMaker})`
-//     }else if(maxBookMaker < parseFloat(data.data.stake)){
-//         return `Invalide stake, Please play with atmost maximum stake (${maxBookMaker})`
-//     }
-// }else {
-//     // console.log("FENCY")
-//     if(minFancy > parseFloat(data.data.stake) ){
-//         return `Invalide stake, Please play with atleast minimum stake (${minFancy})`
-//     }else if(maxFancy < parseFloat(data.data.stake)){
-//         return `Invalide stake, Please play with atmost maximum stake (${maxFancy})`
-//     }
-// }
+if(marketDetails.title.toLowerCase().startsWith('match')){
+    // console.log("MATCHODD", minMatchOdds)
+    // console.log(marketDetails.title)
+    let MATCHODDDATA = await betLimit.findOne({type:`${sportName}/matchOdds`})
+    if(MATCHODDDATA){
+        minMatchOdds = MATCHODDDATA.min_stake
+        maxMatchOdds = MATCHODDDATA.max_stake
+    }
+    if(minMatchOdds > parseFloat(data.data.stake) ){
+        return `Invalide stake, Please play with atleast minimum stake (${minMatchOdds})`
+    }else if(maxMatchOdds < parseFloat(data.data.stake)){
+        return `Invalide stake, Please play with atmost maximum stake (${maxMatchOdds})`
+    }
+}else if(marketDetails.title.toLowerCase().startsWith('book')){
+    // console.log("BOOKMAKER")
+    let BOOKMAKER = await betLimit.findOne({type:`${sportName}/bookMaker`})
+    if(BOOKMAKER){
+        minBookMaker = BOOKMAKER.min_stake
+        maxBookMaker = BOOKMAKER.max_stake
+    }
+    if(minBookMaker > parseFloat(data.data.stake) ){
+        return `Invalide stake, Please play with atleast minimum stake (${minBookMaker})`
+    }else if(maxBookMaker < parseFloat(data.data.stake)){
+        return `Invalide stake, Please play with atmost maximum stake (${maxBookMaker})`
+    }
+}else {
+    // console.log("FENCY")
+    let FENCY = await betLimit.findOne({type:`${sportName}/fency`})
+    if(FENCY){
+        minFancy = FENCY.min_stake
+        maxFancy = FENCY.max_stake
+    }
+    if(minFancy > parseFloat(data.data.stake) ){
+        return `Invalide stake, Please play with atleast minimum stake (${minFancy})`
+    }else if(maxFancy < parseFloat(data.data.stake)){
+        return `Invalide stake, Please play with atmost maximum stake (${maxFancy})`
+    }
+}
 
 if(!marketDetails.runners){
     betPlaceData = {
