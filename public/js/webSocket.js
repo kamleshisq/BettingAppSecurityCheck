@@ -10345,7 +10345,7 @@ socket.on('connect', () => {
                     <td>-</td>
                     </tr>`
                 }
-                (`<div class="matchOddsBack">Match Odds</div>`).insertBefore($('#FOOTBALL').find('.row'))
+                $(`<div class="matchOddsBack">Match Odds</div>`).insertBefore($('#FOOTBALL').find('.row'))
                 if(data.page == 0){
                     html += `</tbody>`
                     $('#FOOTBALL').find('table').html(html)
