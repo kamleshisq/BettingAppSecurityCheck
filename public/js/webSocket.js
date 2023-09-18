@@ -10229,6 +10229,7 @@ socket.on('connect', () => {
             }
             let page = 0
             $('.rowId').attr('data-rowid',page + 1)
+            console.log(from_date,to_date,Sport,market,page)
             socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
         })
 
