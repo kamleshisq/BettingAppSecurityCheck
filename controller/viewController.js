@@ -3837,12 +3837,13 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
     let allData = cricketList.concat(footballList, tennisList)
     let series = req.query.match
     let seriesMatch = allData.filter(item => item.eventData.name == series)
-    console.log(seriesMatch)
+    // console.log(seriesMatch)
     res.status(200).render("./betLimitMatch/main.ejs", {
         title:"Bet Limits",
         betLimit,
         me,
         currentUser:me,
-        seriesMatch
+        seriesMatch,
+        series
     })
 });
