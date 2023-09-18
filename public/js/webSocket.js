@@ -10295,10 +10295,10 @@ socket.on('connect', () => {
                 if(data.gameAnalist.length == 0){
                     html += `<tr class="empty_table"><td>No record found</td></tr>`
                 }
-                $('tbody').html(html)
+                $('#Cricket > tbody').html(html)
 
             }else{
-                $('tbody').append(html)
+                $('#Cricket > tbody').append(html)
                 if((data.gameAnalist.length < 10)){
                     document.getElementById('load-more').innerHTML = ""
                 }
