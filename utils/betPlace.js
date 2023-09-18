@@ -97,7 +97,7 @@ async function placeBet(data){
             }
       }}
 let betPlaceData = {}
-console.log(liveBetGame, "4545454545")
+// console.log(liveBetGame, "4545454545")
 let filtertinMatch = {}
     let sportName = ''
     if(data.data.spoetId == 1){
@@ -124,14 +124,14 @@ let filtertinMatch = {}
         sportName = 'Cricket'
     }
 
-    console.log(filtertinMatch)
+    // console.log(filtertinMatch)
     const betLimit = await betLimitModel.aggregate([
         {
             $match:filtertinMatch
         }
     ])
 
-    console.log(betLimit, '==> betLimit')
+    // console.log(betLimit, '==> betLimit')
     let maxByMatch = 0
     let minByMatch = 10000000000000
     for (let index = 0; index < betLimit.length; index++) {
@@ -190,24 +190,24 @@ let filtertinMatch = {}
         }
     }
 
-    console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
+    // console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 // console.log(marketDetails, 454545454454454545544544444444444)
 if(marketDetails.title.toLowerCase().startsWith('match')){
-    console.log("MATCHODD", minMatchOdds)
+    // console.log("MATCHODD", minMatchOdds)
     if(minMatchOdds > parseFloat(data.data.stake) ){
         return `Invalide stake, Please play with atleast minimum stake (${minMatchOdds})`
     }else if(maxMatchOdds < parseFloat(data.data.stake)){
         return `Invalide stake, Please play with atmost maximum stake (${maxMatchOdds})`
     }
 }else if(marketDetails.title.toLowerCase().startsWith('book')){
-    console.log("BOOKMAKER")
+    // console.log("BOOKMAKER")
     if(minBookMaker > parseFloat(data.data.stake) ){
         return `Invalide stake, Please play with atleast minimum stake (${minBookMaker})`
     }else if(maxBookMaker < parseFloat(data.data.stake)){
         return `Invalide stake, Please play with atmost maximum stake (${maxBookMaker})`
     }
 }else {
-    console.log("FENCY")
+    // console.log("FENCY")
     if(minFancy > parseFloat(data.data.stake) ){
         return `Invalide stake, Please play with atleast minimum stake (${minFancy})`
     }else if(maxFancy < parseFloat(data.data.stake)){
