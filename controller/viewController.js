@@ -2470,6 +2470,14 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         }else{
             stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
         }
+
+        let minMatchOdds = 100
+        let maxMatchOdds = 1000
+        let minFancy = 100
+        let maxFancy = 1000
+        let minBookMaker = 100
+        let maxBookMaker = 1000
+
         let filtertinMatch = {}
         let sportName = ''
         if(match.eventData.sportId === 1){
@@ -2496,70 +2504,22 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             sportName = 'Cricket'
         }
 
-        const betLimit = await betLimitModel.aggregate([
-            {
-                $match:filtertinMatch
-            }
-        ])
-        let maxByMatch = 0
-        let minByMatch = 10000000000000
-        for (let index = 0; index < betLimit.length; index++) {
-            if (
-                betLimit[index].type === 'Home' ||
-                betLimit[index].type === sportName ||
-                betLimit[index].type === match.eventData.league ||
-                betLimit[index].type === match.eventData.name
-              ) {
-                if(minByMatch > betLimit[index].min_stake){
-                    minByMatch = betLimit[index].min_stake
-                }
-
-                if(maxByMatch < betLimit[index].max_stake){
-                    maxByMatch = betLimit[index].max_stake
+        let betLimit = await betLimitModel.findOne({type:match.eventData.name})
+        if(!betLimit){
+            betLimit = await betLimitModel.findOne({type:match.eventData.league})
+            if(!betLimit){
+                betLimit = await betLimitModel.findOne({type:sportName})
+                if(!betLimit){
+                    betLimit = await betLimitModel.findOne({type:'Sport'})
+                    if(!betLimit){
+                        betLimit = await betLimitModel.findOne({type:'Home'})
+                    }
                 }
             }
         }
-        let MATCHODDS = betLimit.find(item => item.type == `${sportName}/matchOdds`)
-        let FENCY = betLimit.find(item => item.type == `${sportName}/fency`)
-        let BOOKMAKER = betLimit.find(item => item.type == `${sportName}/bookMaker`)
 
-        let minBookMaker = minByMatch
-        let maxBookMaker = maxByMatch
-        let minMatchOdds = minByMatch
-        let maxMatchOdds = maxByMatch
-        let minFancy = minByMatch
-        let maxFancy = maxByMatch
-        if(MATCHODDS){
-            if(minMatchOdds > MATCHODDS.min_stake){
-                minMatchOdds = MATCHODDS.min_stake
-            }
-
-            if(maxMatchOdds < MATCHODDS.max_stake){
-                maxMatchOdds = MATCHODDS.max_stake
-            }
-        }
-
-        if(FENCY){
-            if(minFancy > FENCY.min_stake){
-                minFancy = FENCY.min_stake
-            }
-
-            if(maxFancy < FENCY.max_stake){
-                maxFancy = FENCY.max_stake
-            }
-        }
-
-        if(BOOKMAKER){
-            if(minBookMaker > BOOKMAKER.min_stake){
-                minBookMaker = BOOKMAKER.min_stake
-            }
-
-            if(maxBookMaker < BOOKMAKER.max_stake){
-                maxBookMaker = BOOKMAKER.max_stake
-            }
-        }
-
-        console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
+        console.log(betLimit)
+        // console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 
         const betLimitMarekt = await betLimitMatchWisemodel.findOne({matchTitle:match.eventData.name})
         
