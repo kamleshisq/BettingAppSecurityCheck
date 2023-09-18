@@ -28,7 +28,7 @@
             <td><%=gameAnalist[i].betcount%></td>
             <td> <%=gameAnalist[i].won%> </td>
             <td><%=gameAnalist[i].loss%></td>
-            <td>-</td>
+            <td><%=gameAnalist[i].void%></td>
             <td><%=gameAnalist[i].open%></td>
             <%if(gameAnalist[i].returns > 0){%>
               <td class="green">+<%=gameAnalist[i].returns.toFixed(2)%></td>
