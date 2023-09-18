@@ -2501,8 +2501,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
                 $match:filtertinMatch
             }
         ])
-        let maxByMatch 
-        let minByMatch
+        let maxByMatch = 0
+        let minByMatch = 10000000000000
         for (let index = 0; index < betLimit.length; index++) {
             if (
                 betLimit[index].type === 'Home' ||
@@ -2510,9 +2510,17 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
                 betLimit[index].type === match.eventData.league ||
                 betLimit[index].type === match.eventData.name
               ) {
-                console.log(betLimit[index])
+                if(minByMatch > betLimit[index].min_stake){
+                    minByMatch = betLimit[index].min_stake
+                }
+
+                if(maxByMatch < betLimit[index].max_stake){
+                    maxByMatch = betLimit[index].max_stake
+                }
             }
         }
+
+        console.log(minByMatch, maxByMatch)
 
         const betLimitMarekt = await betLimitMatchWisemodel.findOne({matchTitle:match.eventData.name})
         
