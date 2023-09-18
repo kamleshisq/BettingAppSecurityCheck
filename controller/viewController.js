@@ -1332,7 +1332,6 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
         {
             $group:{
                 _id:{
-                    event:'$event',
                     userName:'$userName',
                     whiteLabel:'$userDetails.whiteLabel'
                 },
@@ -1344,17 +1343,17 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
                 
             }
         },
-        // {
-        //     $group:{
-        //         _id:'$_id.whiteLabel',
-        //         Total_User:{$sum:1},
-        //         betcount:{$sum:'$betCount'},
-        //         loss:{$sum:'$loss'},
-        //         won:{$sum:'$won'},
-        //         open:{$sum:'$open'},
-        //         returns:{$sum:'$returns'}
-        //     }
-        // },
+        {
+            $group:{
+                _id:'$_id.whiteLabel',
+                Total_User:{$sum:1},
+                betcount:{$sum:'$betCount'},
+                loss:{$sum:'$loss'},
+                won:{$sum:'$won'},
+                open:{$sum:'$open'},
+                returns:{$sum:'$returns'}
+            }
+        },
         {
             $sort: {
                 betcount: -1 ,
