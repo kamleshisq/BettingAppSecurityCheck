@@ -2519,8 +2519,47 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
                 }
             }
         }
+        let MATCHODDS = betLimit.find(item => item.type == `${sportName}/matchOdds`)
+        let FENCY = betLimit.find(item => item.type == `${sportName}/fency`)
+        let BOOKMAKER = betLimit.find(item => item.type == `${sportName}/bookMaker`)
 
-        console.log(minByMatch, maxByMatch)
+        let minBookMaker = minByMatch
+        let maxBookMaker = maxByMatch
+        let minMatchOdds = minByMatch
+        let maxMatchOdds = maxByMatch
+        let minFancy = minByMatch
+        let maxFancy = maxByMatch
+        if(MATCHODDS){
+            if(minMatchOdds > MATCHODDS.min_stake){
+                minMatchOdds = MATCHODDS.min_stake
+            }
+
+            if(maxMatchOdds < MATCHODDS.max_stake){
+                maxMatchOdds = MATCHODDS.max_stake
+            }
+        }
+
+        if(FENCY){
+            if(minFancy > FENCY.min_stake){
+                minFancy = FENCY.min_stake
+            }
+
+            if(maxFancy < FENCY.max_stake){
+                maxFancy = FENCY.max_stake
+            }
+        }
+
+        if(BOOKMAKER){
+            if(minBookMaker > BOOKMAKER.min_stake){
+                minBookMaker = BOOKMAKER.min_stake
+            }
+
+            if(maxBookMaker < BOOKMAKER.max_stake){
+                maxBookMaker = BOOKMAKER.max_stake
+            }
+        }
+
+        console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 
         const betLimitMarekt = await betLimitMatchWisemodel.findOne({matchTitle:match.eventData.name})
         
@@ -2536,7 +2575,10 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             betsOnthisMatch,
             rules,
             src,
-            userMultimarkets
+            userMultimarkets,
+            minByMatch,
+            maxByMatch,
+            betLimitMarekt
     })
 });
 
