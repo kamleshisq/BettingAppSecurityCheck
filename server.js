@@ -3443,6 +3443,7 @@ io.on('connection', (socket) => {
             users = await User.find({parent_id:admin._id})
         }
 
+        console.log(users)
         let newUsers = await users.map(async(ele) => {
             console.log(ele.name)
             ele.betDetails = await Bet.aggregate([
@@ -3497,6 +3498,7 @@ io.on('connection', (socket) => {
                     $limit: limit 
                 }
             ]) 
+            return ele
         })
 
         let result = await Promise.all(newUsers)
