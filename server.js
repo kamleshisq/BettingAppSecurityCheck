@@ -45,6 +45,7 @@ const { error } = require('console');
 const checkPass = require("./websocketController/checkPassUser");
 const { type } = require('os');
 const checkPassAsync = util.promisify(checkPass.checkPass);
+const betLimitMatchWisemodel = require('./model/betLimitMatchWise');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -3382,7 +3383,10 @@ io.on('connection', (socket) => {
     })
 
     socket.on('updateBetLimitMATCH', async(data) => {
-        console.log(data)
+        let matchName = data.split('/')[0]
+        let Marketname = data.split('/')[1]
+        let dataDb = await betLimitMatchWisemodel.find({matchTitle:matchName})
+        console.log(dataDb)
     })
     
 })
