@@ -10208,8 +10208,8 @@ socket.on('connect', () => {
             console.log(data)
             let html =''
             html += `<option value="All" selected> Select Event </option>`
-            for(let i = 0;i<data.sportList.length;i++){
-                html += `<option value="${data.sportList[i].eventData.eventId}">${data.sportList[i].eventData.name}</option>`
+            for(let i = 0;i<data.eventList.length;i++){
+                html += `<option value="${data.eventList[i].eventData.eventId}">${data.eventList[i].eventData.name}</option>`
             }
             $('#Event').html(html)
         })
