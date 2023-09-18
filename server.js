@@ -3461,6 +3461,35 @@ io.on('connection', (socket) => {
             let dataDB = await betLimitMatchWisemodel.findOne({matchTitle:matchName})
             if(dataDB != null){
                 console.log(dataDB)
+                let marketData = dataDB.marketDetails.find(item => item.title == Marketname)
+                if(marketData){
+
+                }else{
+                    let newMarketDetailsForData = {
+                        title: Marketname,
+                        value: [
+                          {
+                            title: 'min_stake',
+                            value: parseInt(data.min_stake)
+                          },
+                          {
+                            title: 'max_stake',
+                            value: parseInt(data.max_stake)
+                          },
+                          {
+                            title: 'max_profit',
+                            value: parseInt(data.max_profit)
+                          },
+                          {
+                            title: 'max_odd',
+                            value: parseInt(data.max_odd)
+                          },
+                        ]
+                      }
+                      dataDB.marketDetails.push(newMarketDetailsForData)
+                      dataDB.save()
+                      socket.emit('updateBetLimitMarket', newMarketDetailsForData)
+                }
             }else{
                 let marketDetails = {
                     matchTitle: matchName,
