@@ -2471,13 +2471,6 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
         }
 
-        let minMatchOdds = 100
-        let maxMatchOdds = 1000
-        let minFancy = 100
-        let maxFancy = 1000
-        let minBookMaker = 100
-        let maxBookMaker = 1000
-
         let filtertinMatch = {}
         let sportName = ''
         if(match.eventData.sportId === 1){
@@ -2518,9 +2511,29 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             }
         }
 
+        let minMatchOdds = betLimit.min_stake
+        let maxMatchOdds = betLimit.max_stake
+        let minBookMaker = betLimit.min_stake
+        let maxBookMaker = betLimit.max_stake
+        let minFancy = betLimit.min_stake
+        let maxFancy = betLimit.max_stake
+        let MATCHODDDATA = await betLimitModel.findOne({type:`${sportName}/matchOdds`})
+        if(MATCHODDDATA){
+            minMatchOdds = MATCHODDDATA.min_stake
+            maxMatchOdds = MATCHODDDATA.max_stake
+        }
+        let BOOKMAKER = await betLimitModel.findOne({type:`${sportName}/bookMaker`})
+        if(BOOKMAKER){
+            minBookMaker = BOOKMAKER.min_stake
+            maxBookMaker = BOOKMAKER.max_stake
+        }
+        let FENCY = await betLimitModel.findOne({type:`${sportName}/fency`})
+        if(FENCY){
+            minFancy = FENCY.min_stake
+            maxFancy = FENCY.max_stake
+        }
 
-
-        console.log(betLimit)
+        // console.log(betLimit)
         // console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 
         const betLimitMarekt = await betLimitMatchWisemodel.findOne({matchTitle:match.eventData.name})
@@ -2539,7 +2552,13 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             src,
             userMultimarkets,
             betLimitMarekt,
-            betLimit
+            betLimit,
+            minBookMaker,
+            maxBookMaker,
+            minMatchOdds,
+            maxMatchOdds,
+            minFancy,
+            maxFancy
     })
 });
 
