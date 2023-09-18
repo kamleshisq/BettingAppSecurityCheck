@@ -3185,7 +3185,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('gameAnalysis', async(data) => {
-        console.log(data.Sport)
+        // console.log(data.Sport)
         let me = data.USER
         let page = data.page;
         let limit = 10
@@ -3195,12 +3195,7 @@ io.on('connection', (socket) => {
             role_type.push(roles[i].role_type)
         }
         // console.log(me)
-        let fWhitlabel;
-        if(me.role_type == 1){
-            fWhitlabel = {$ne:null}
-        }else{
-            fWhitlabel = me.whiteLabel
-        }
+    
         let filter = {}
         if(data.from_date && data.to_date){
             filter.date = {$gte:new Date(data.from_date),$lte:new Date(data.to_date)}
@@ -3282,10 +3277,10 @@ io.on('connection', (socket) => {
                 }
             },
             {
-                $skip: page * 10
+                $skip: page * limit
             },
             {
-                $limit: 10 
+                $limit: limit 
             }
         ])
 
@@ -3334,14 +3329,66 @@ io.on('connection', (socket) => {
                 }
             },
             {
-                $skip: page * 10
+                $skip: page * limit
             },
             {
-                $limit: 10 
+                $limit: limit 
             }
         ])
         // console.log(gameAnalist)
         socket.emit('gameAnalysis', {gameAnalist,marketAnalist, page})
+    })
+
+    socket.on('matchOdds',async(data)=>{
+        let me = data.USER
+        let page = data.page;
+        let limit = 10
+        const roles = await Role.find({role_level: {$gt:me.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        // console.log(me)
+
+        let filter = {}
+        if(data.from_date && data.to_date){
+            filter.date = {$gte:new Date(data.from_date),$lte:new Date(data.to_date)}
+        }else if(data.from_date && !data.to_date){
+            filter.date = {$gte:new Date(data.from_date)}
+        }else if(data.to_date && !data.from_date){
+            filter.date = {$lte:new Date(data.to_date)}
+        }
+        if(data.Sport != "All"){
+            filter.eventId = data.Sport
+        }
+        if(data.market != "All"){
+            if(data.market === "Match Odds"){
+                filter.marketName = { '$regex': '^Match', '$options': 'i' }
+            }else if (data.market === "Bookmaker 0%Comm"){
+                filter.marketName = { '$regex': '^Bookma', '$options': 'i' }
+            }else if (data.market === "Fancy"){
+                filter.marketName = { '$not': { '$regex': '^(match|bookma)', '$options': 'i' } }
+            }
+        }
+
+        const matchOdds =  await Bet.aggregate([
+            {
+                $match:filter
+            },
+            {
+                $sort: {
+                    date: -1 
+                }
+            },
+            {
+                $skip: page * limit
+            },
+            {
+                $limit: limit 
+            }
+        ])
+
+        socket.emi('matchOdds',{matchOdds,page})
     })
 
     socket.on('getEvetnsOfSport',async(data)=>{

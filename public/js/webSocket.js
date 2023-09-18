@@ -10263,17 +10263,41 @@ socket.on('connect', () => {
         $(document).on('click', ".load-more", function(e){
             let page = parseInt($('.rowId').attr('data-rowid'))
             let market = $("#market").val()
-                $('.rowId').attr('data-rowid',page + 1)
-                let to_date;
-                let from_date
-                if($('#Fdate').val() != ''){
-                    from_date = $('#Fdate').val()
-                }
-                if($('#Tdate').val() != ''){
-                    to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
-                }
-                let Sport = $("#Sport").val()
-                socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+            $('.rowId').attr('data-rowid',page + 1)
+            let to_date;
+            let from_date
+            if($('#Fdate').val() != ''){
+                from_date = $('#Fdate').val()
+            }
+            if($('#Tdate').val() != ''){
+                to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            }
+            let Sport = $("#Event").val()
+            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+        })
+
+        $(document).on('click','.matchOdds',function(e){
+            let page = parseInt($('.rowId').attr('data-rowid'))
+            let market = $("#market").val()
+            $('.rowId').attr('data-rowid',page + 1)
+            let to_date;
+            let from_date
+            if($('#Fdate').val() != ''){
+                from_date = $('#Fdate').val()
+            }
+            if($('#Tdate').val() != ''){
+                to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            }
+            let Sport = $("#Event").val()
+            socket.emit('matchOdds',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+
+        })
+
+        socket.on('matchOdds',async(data)=>{
+            console.log(data)
+            let html = ""
+
+            
         })
 
         let limit
@@ -10300,7 +10324,7 @@ socket.on('connect', () => {
             for(let i = 0; i < data.marketAnalist.length; i++){
                 html2 += `<tr>
                 <td>${i + 1 + limit}</td>
-                <td>${data.marketAnalist[i]._id}</td>
+                <td class="matchOdds" style="cursor:pointer;">${data.marketAnalist[i]._id}</td>
                 <td>${data.marketAnalist[i].betcount}</td>
                 <td> ${data.marketAnalist[i].won} </td>
                 <td>${data.marketAnalist[i].loss}</td>
@@ -10340,6 +10364,8 @@ socket.on('connect', () => {
                 }
             }
         })
+
+
     }
 
 
