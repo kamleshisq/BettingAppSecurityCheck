@@ -3386,7 +3386,7 @@ io.on('connection', (socket) => {
         let matchName = data.split('/')[0]
         let Marketname = data.split('/')[1]
         let dataDb = await betLimitMatchWisemodel.findOne({matchTitle:matchName})
-        if(dataDb){
+        if(dataDb != null){
 
         }else{
             socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data})
