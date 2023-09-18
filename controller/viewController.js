@@ -2517,17 +2517,17 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         let maxBookMaker = betLimit.max_stake
         let minFancy = betLimit.min_stake
         let maxFancy = betLimit.max_stake
-        let MATCHODDDATA = await betLimit.findOne({type:`${sportName}/matchOdds`})
+        let MATCHODDDATA = await betLimitModel.findOne({type:`${sportName}/matchOdds`})
         if(MATCHODDDATA){
             minMatchOdds = MATCHODDDATA.min_stake
             maxMatchOdds = MATCHODDDATA.max_stake
         }
-        let BOOKMAKER = await betLimit.findOne({type:`${sportName}/bookMaker`})
+        let BOOKMAKER = await betLimitModel.findOne({type:`${sportName}/bookMaker`})
         if(BOOKMAKER){
             minBookMaker = BOOKMAKER.min_stake
             maxBookMaker = BOOKMAKER.max_stake
         }
-        let FENCY = await betLimit.findOne({type:`${sportName}/fency`})
+        let FENCY = await betLimitModel.findOne({type:`${sportName}/fency`})
         if(FENCY){
             minFancy = FENCY.min_stake
             maxFancy = FENCY.max_stake
