@@ -2504,7 +2504,12 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         let maxByMatch 
         let minByMatch
         for (let index = 0; index < betLimit.length; index++) {
-            if(betLimit[index].type === ('Home' || sportName || match.eventData.league || match.eventData.name)){
+            if (
+                betLimit[index].type === 'Home' ||
+                betLimit[index].type === sportName ||
+                betLimit[index].type === match.eventData.league ||
+                betLimit[index].type === match.eventData.name
+              ) {
                 console.log(betLimit[index])
             }
         }
