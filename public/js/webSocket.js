@@ -10327,11 +10327,11 @@ socket.on('connect', () => {
                     html += `<tr class="empty_table"><td>No record found</td></tr>`
                 }
                 $('#Cricket').find('tbody').html(html)
-                $('#FOOTBALL').find('tbody').html(html)
+                $('#FOOTBALL').find('tbody').html(html2)
 
             }else{
                 $('#Cricket').find('tbody').append(html)
-                $('#FOOTBALL').find('tbody').append(html)
+                $('#FOOTBALL').find('tbody').append(html2)
                 if((data.gameAnalist.length < 10)){
                     document.getElementById('load-more').innerHTML = ""
                 }
