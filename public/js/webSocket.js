@@ -10317,7 +10317,7 @@ socket.on('connect', () => {
 
 
          socket.on('updateBetLimitMATCH', data =>{
-             if(data.status == "notFOund"){
+             if(data.status == "notFound"){
                 console.log('working')
             let form = $('#myModal2').find('.form-data')
             form.find('input[name = "min_stake"]').val(100)
