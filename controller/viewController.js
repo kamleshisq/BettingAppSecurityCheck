@@ -2435,7 +2435,6 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         }
         // console.log(src, 123)
     }
-    const betLimit = await betLimitModel.find()
     // console.log(match.marketList.goals)
     // let session = match.marketList.session.filter(item => {
         //     let date = new Date(item.updated_on);
@@ -2471,12 +2470,13 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         }else{
             stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
         }
+        const betLimit = await betLimitModel.find()
+        console.log(betLimit)
         res.status(200).render("./userSideEjs/userMatchDetails/main",{
             user: req.currentUser,
             verticalMenus,
             check:"ExchangeIn",
             match,
-            // SportLimits,
             liveStream,
             userLog,
             notifications:req.notifications,
@@ -2484,9 +2484,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             betsOnthisMatch,
             rules,
             src,
-            userMultimarkets,
-            // min,
-            // max
+            userMultimarkets
     })
 });
 
@@ -3839,7 +3837,7 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
     let series = req.query.match
     let seriesMatch = allData.filter(item => item.eventData.name == series)
     let betLimitMatchWise = await betLimitMatchWisemodel.findOne({matchTitle:series})
-    console.log(betLimitMatchWise, "==> DATA")
+    
     // console.log(seriesMatch)
     res.status(200).render("./betLimitMatch/main.ejs", {
         title:"Bet Limits",
