@@ -2474,19 +2474,19 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         if(match.eventData.sportId === 1){
             filtertinMatch = {
                 type : {
-                    $nin :['Home', "Football", 'Football/matchOdds', match.eventData.league, match.eventData.name]
+                    $in :['Home', "Football", 'Football/matchOdds', match.eventData.league, match.eventData.name]
                 }
             }
         }else if (match.eventData.sportId === 2){
             filtertinMatch = {
                 type : {
-                    $nin :['Home', "Tennis", 'Tennis/matchOdds', match.eventData.league, match.eventData.name]
+                    $in :['Home', "Tennis", 'Tennis/matchOdds', match.eventData.league, match.eventData.name]
                 }
             }
         }else if(match.eventData.sportId === 4){
             filtertinMatch = {
                 type : {
-                    $nin :['Home', "Cricket", 'Cricket/matchOdds', "Cricket/bookMaker", 'Cricket/fency', match.eventData.league, match.eventData.name]
+                    $in :['Home', "Cricket", 'Cricket/matchOdds', "Cricket/bookMaker", 'Cricket/fency', match.eventData.league, match.eventData.name]
                 }
             }
         }
