@@ -3448,41 +3448,47 @@ io.on('connection', (socket) => {
 
     socket.on('updateBetLimitMarket', async(data) => {
         console.log(data)
-        let matchName = data.type.split('/')[0]
-        let Marketname = data.type.split('/')[1]
-        let dataDB = await betLimitMatchWisemodel.findOne({matchTitle:matchName})
-        if(dataDB != null){
-
-        }else{
-            let marketDetails = {
-                matchTitle: matchName,
-                marketDetails: [
-                  {
-                    title: Marketname,
-                    value: [
+        try{
+            let matchName = data.type.split('/')[0]
+            let Marketname = data.type.split('/')[1]
+            let dataDB = await betLimitMatchWisemodel.findOne({matchTitle:matchName})
+            if(dataDB != null){
+    
+            }else{
+                let marketDetails = {
+                    matchTitle: matchName,
+                    marketDetails: [
                       {
-                        title: 'min_stake',
-                        value: parseInt(data.min_stake)
-                      },
-                      {
-                        title: 'max_stake',
-                        value: parseInt(data.max_stake)
-                      },
-                      {
-                        title: 'max_profit',
-                        value: parseInt(data.max_profit)
-                      },
-                      {
-                        title: 'max_odd',
-                        value: parseInt(data.max_odd)
-                      },
+                        title: Marketname,
+                        value: [
+                          {
+                            title: 'min_stake',
+                            value: parseInt(data.min_stake)
+                          },
+                          {
+                            title: 'max_stake',
+                            value: parseInt(data.max_stake)
+                          },
+                          {
+                            title: 'max_profit',
+                            value: parseInt(data.max_profit)
+                          },
+                          {
+                            title: 'max_odd',
+                            value: parseInt(data.max_odd)
+                          },
+                        ]
+                      }
                     ]
-                  }
-                ]
-              };
-
-            socket.emit('updateBetLimitMarket', marketDetails)
+                  };
+    
+                socket.emit('updateBetLimitMarket', marketDetails)
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit('updateBetLimitMarket', {status:err} )
         }
+       
     })
     
 })
