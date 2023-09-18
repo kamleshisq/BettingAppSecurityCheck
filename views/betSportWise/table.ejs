@@ -28,7 +28,7 @@
             <%for(let i = 0; i < series.length; i++){%>
               <%
                 console.log(series[i].series)
-                let limitData = betLimit.find(item => item.type == "series[i].series")
+                let limitData = betLimit.find(item => item.type == series[i].series)
               %>
               <%=console.log(limitData, "LIMITDTA")%>
               <%if(limitData){%>
