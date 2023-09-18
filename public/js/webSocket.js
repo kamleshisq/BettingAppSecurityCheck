@@ -671,8 +671,9 @@ socket.on('connect', () => {
 
     $(document).on('click','.updateBetLimit',function(e){
        let firstTd = $(this).closest("tr").find("td:first");
-       var innerText = firstTd.text();
-       socket.emit('BetLimitDetails', innerText)
+       var innerText = firstTd.id;
+       console.log(innerText)
+    //    socket.emit('BetLimitDetails', innerText)
     })
 
 
@@ -688,7 +689,7 @@ socket.on('connect', () => {
         }else if(data.status == "err"){
             alert(data.message)
         }else{
-            console.log(data)
+            // console.log(data)
             let form = $('#myModal2').find('.form-data')
             form.find('input[name = "min_stake"]').val(data.details.min_stake)
             form.find('input[name = "max_stake"]').val(data.details.max_stake)
