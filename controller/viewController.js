@@ -2471,24 +2471,29 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
         }
         let filtertinMatch = {}
+        let sportName = ''
         if(match.eventData.sportId === 1){
             filtertinMatch = {
                 type : {
                     $in :['Home', "Football", 'Football/matchOdds', match.eventData.league, match.eventData.name]
                 }
             }
+
+            sportName = 'Football'
         }else if (match.eventData.sportId === 2){
             filtertinMatch = {
                 type : {
                     $in :['Home', "Tennis", 'Tennis/matchOdds', match.eventData.league, match.eventData.name]
                 }
             }
+            sportName = 'Tennis'
         }else if(match.eventData.sportId === 4){
             filtertinMatch = {
                 type : {
                     $in :['Home', "Cricket", 'Cricket/matchOdds', "Cricket/bookMaker", 'Cricket/fency', match.eventData.league, match.eventData.name]
                 }
             }
+            sportName = 'Cricket'
         }
 
         const betLimit = await betLimitModel.aggregate([
@@ -2496,9 +2501,15 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
                 $match:filtertinMatch
             }
         ])
+        let maxByMatch 
+        let minByMatch
+        for (let index = 0; index < betLimit.length; index++) {
+            console.log(betLimit[index])
+            
+        }
+
         const betLimitMarekt = await betLimitMatchWisemodel.findOne({matchTitle:match.eventData.name})
-        console.log(betLimit)
-        console.log(betLimitMarekt)
+        
         res.status(200).render("./userSideEjs/userMatchDetails/main",{
             user: req.currentUser,
             verticalMenus,
