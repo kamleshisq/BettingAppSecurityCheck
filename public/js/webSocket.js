@@ -10342,6 +10342,14 @@ socket.on('connect', () => {
             socket.emit('updateBetLimitMarket', data)
          })
 
+         socket.on('updateBetLimitMarket', data => {
+            if(data.status == "err"){
+
+            }else{
+                alert('updated!')
+            }
+         })
+
 
 
     }
