@@ -124,6 +124,7 @@ let filtertinMatch = {}
         sportName = 'Cricket'
     }
 
+    console.log(filtertinMatch)
     const betLimit = await betLimitModel.aggregate([
         {
             $match:filtertinMatch
