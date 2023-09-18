@@ -187,7 +187,7 @@ let filtertinMatch = {}
         }
     }
 // console.log(marketDetails, 454545454454454545544544444444444)
-if(marketDetails.title.toLowerCase().startsWith('matchod')){
+if(marketDetails.title.toLowerCase().startsWith('match')){
     console.log("MATCHODD")
     if(minMatchOdds > parseFloat(data.data.stake) ){
         return `Invalide stake, Please play with atleast minimum stake (${minMatchOdds})`
