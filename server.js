@@ -3388,7 +3388,7 @@ io.on('connection', (socket) => {
             }
         ])
 
-        socket.emi('matchOdds',{matchOdds,page})
+        socket.emit('matchOdds',{matchOdds,page})
     })
 
     socket.on('getEvetnsOfSport',async(data)=>{
