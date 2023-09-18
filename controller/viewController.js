@@ -1369,7 +1369,7 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
     //         $limit: 10 
     //     }
     // ])
-    console.log(gameAnalist)
+    // console.log(gameAnalist)
 
     const me = req.currentUser
     res.status(200).render("./gameAnalysis/gameanalysis",{
