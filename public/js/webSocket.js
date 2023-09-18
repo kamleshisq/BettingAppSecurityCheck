@@ -10371,6 +10371,9 @@ socket.on('connect', () => {
                         if(data.marketData.value[i].title == 'min_stake'){
                             form.find('input[name = "min_stake"]').val(data.marketData.value[i].value)
                         }
+                        if(data.marketData.value[i].title == 'max_stake'){
+                            form.find('input[name = "max_stake"]').val(data.marketData.value[i].value)
+                        }
                         if(data.marketData.value[i].title == 'max_profit'){
                             form.find('input[name = "max_profit"]').val(data.marketData.value[i].value)
                         }
