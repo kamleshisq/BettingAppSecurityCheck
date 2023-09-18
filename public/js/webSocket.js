@@ -10397,9 +10397,10 @@ socket.on('connect', () => {
 
          socket.on('updateBetLimitMarket', data => {
             if(data.status == "err"){
-
+                alert('please try again leter')
             }else{
                 alert('updated!')
+                window.location.reload()
             }
          })
 
