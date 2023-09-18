@@ -10292,14 +10292,58 @@ socket.on('connect', () => {
 
         })
 
+        let limit
+
+
         socket.on('matchOdds',async(data)=>{
             console.log(data)
             let html = ""
+            limit = 10 * data.page
+            if(data.matchOdds.length !== 0){
+                if(data.page == 0){
+                    html += `
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>BET PLACED DATE</th>
+                            <th>USER</th>
+                            <th>BET ON</th>
+                            <th>ODDS</th>
+                            <th>AMOUNT </th>
+                            <th>PROFIT/LOSS </th>
+                            <th>STATUS</th>
+                            <th>IP ADDRESS</th>
+                        </tr>
+                    </thead><tbody>`
+                }
+
+                for(let i = 0;i<data.matchOdds.length;i++){
+                    html += `<tr>
+                    <td>${i + 1 + limit}</td>
+                    <td>${data.matchOdds[i].date}</td>
+                    <td>-</td>
+                    <td>${data.matchOdds[i].oddValue}</td>`
+                    html += `<td>${data.matchOdds[i].returns}</td>`
+                    html += `
+                    <td>${data.matchOdds[i].status}</td>
+                    <td>-</td>
+                    </tr>`
+                }
+                if(data.page == 0){
+                    html += `</tbody>`
+                    $('#FOOTBALL').find('table').html(html)
+                }else{
+                    $('#FOOTBALL').find('tbody').append(html)
+
+                }
+
+            }else{
+
+            }
 
 
         })
 
-        let limit
         socket.on("gameAnalysis", data => {
             let html = ""
             let html2 = ""
