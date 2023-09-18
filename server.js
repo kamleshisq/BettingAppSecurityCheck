@@ -3380,6 +3380,10 @@ io.on('connection', (socket) => {
             socket.emit('UpdateBetLimit', {message:"Please try again leter", status:"err"})
         }
     })
+
+    socket.on('updateBetLimitMATCH', async(data) => {
+        console.log(data)
+    })
     
 })
 
