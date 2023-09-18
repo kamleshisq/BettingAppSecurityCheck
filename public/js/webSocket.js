@@ -9192,6 +9192,33 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/admin/settlementIn"){
+
+
+        $(document).on('click', '.voidBet2', function(e){
+            e.preventDefault()
+            let id =  this.id
+            let modleName = "#myModalSE1"
+            let form = $(modleName).find('.voidbet-form2')
+            form.attr('id', id);
+        })
+
+        $(document).on('submit', ".voidbet-form2", function(e){
+            e.preventDefault();
+            let id = this.id
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            // console.log(data, id)
+            socket.emit("VoidBetIn2", {LOGINDATA, id, data})
+        })
+
+        socket.on('VoidBetIn2', data => {
+            if(data.status === "error"){
+                alert("Please try again later")
+            }else{ 
+                alert(data)
+            }
+        })
        
 
         $(document).on("click", ".voidBet", function(e){

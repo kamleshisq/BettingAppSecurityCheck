@@ -46,6 +46,7 @@ const checkPass = require("./websocketController/checkPassUser");
 const { type } = require('os');
 const checkPassAsync = util.promisify(checkPass.checkPass);
 const betLimitMatchWisemodel = require('./model/betLimitMatchWise');
+const voidbetAfterPlace = require('./utils/voideBetAfterPlace');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -2712,6 +2713,17 @@ io.on('connection', (socket) => {
             console.log(err)
             socket.emit("VoidBetIn",{message:"err", status:"error"})
         }     
+    })
+
+
+    socket.on('VoidBetIn2', async(data) => {
+        try{
+            let reultData = await voidbetAfterPlace(data)
+            socket.emit('VoidBetIn2', reultData)
+        }catch(err){
+            console.log(err)
+            socket.emit("VoidBetIn2",{message:"err", status:"error"})
+        }
     })
 
 
