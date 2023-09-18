@@ -1326,14 +1326,13 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
                 'userDetails.isActive':true,
                 'userDetails.roleName':{$ne:'Admin'},
                 'userDetails.role_type':{$in:role_type},
-                'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
-                'userDetails.whiteLabel':fWhitlabel
+                'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}}
             }
         },
         {
             $group:{
                 _id:{
-                    event:'$event',
+                    whiteLabel:'$userDetails.whiteLabel',
                     userName:'$userName'
                 },
                 betCount:{$sum:1},
@@ -1346,7 +1345,7 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
         },
         {
             $group:{
-                _id:'$_id.event',
+                _id:'$_id.whiteLabel',
                 Total_User:{$sum:1},
                 betcount:{$sum:'$betCount'},
                 loss:{$sum:'$loss'},
