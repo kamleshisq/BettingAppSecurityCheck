@@ -2718,8 +2718,8 @@ io.on('connection', (socket) => {
 
     socket.on('VoidBetIn2', async(data) => {
         try{
-            let data = await voidbetAfterPlace()
-            console.log(data)
+            let reultData = await voidbetAfterPlace(data)
+            console.log(reultData)
         }catch(err){
             console.log(err)
             socket.emit("VoidBetIn",{message:"err", status:"error"})
