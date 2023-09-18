@@ -3446,6 +3446,11 @@ io.on('connection', (socket) => {
             socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data})
         }
     })
+
+
+    socket.on('updateBetLimitMarket', async(data) => {
+        console.log(data)
+    })
     
 })
 

@@ -10354,7 +10354,7 @@ socket.on('connect', () => {
 
          socket.on('updateBetLimitMATCH', data =>{
              if(data.status == "notFound"){
-                console.log('working')
+                // console.log('working')
             let form = $('#myModal2').find('.form-data')
             form.find('input[name = "min_stake"]').val(100)
             form.find('input[name = "max_stake"]').val(1000)
@@ -10368,6 +10368,18 @@ socket.on('connect', () => {
 
             }
          })
+
+
+         $(document).on('submit', '.form-betLimitMatch', function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            socket.emit('updateBetLimitMarket', data)
+         })
+
+
+
     }
 
 })
