@@ -27,7 +27,7 @@
             <!-- CRICKET -->
             <%for(let i = 0; i < series.length; i++){%>
               <%
-                let limitData = betLimit.find(item => item.type == "<%=series[i].series%>")
+                let limitData = betLimit.find(item => item.type == "series[i].series")
               %>
                 <tr id="<%=i + 1%>">
                     <td id="<%=series[i].series%>" class="btn-filter"><a href="/admin/betlimit/sports/event?event=<%=series[i].series%>"><%=series[i].series%></a></td>
