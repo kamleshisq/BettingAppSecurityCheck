@@ -10324,7 +10324,7 @@ socket.on('connect', () => {
                     document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
                 }
                 if(data.marketAnalist.length == 0){
-                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    html2 += `<tr class="empty_table"><td>No record found</td></tr>`
                 }
                 $('#Cricket').find('tbody').html(html)
                 $('#FOOTBALL').find('tbody').html(html2)
