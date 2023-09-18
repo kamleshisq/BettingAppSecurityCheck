@@ -3385,7 +3385,7 @@ io.on('connection', (socket) => {
     socket.on('updateBetLimitMATCH', async(data) => {
         let matchName = data.split('/')[0]
         let Marketname = data.split('/')[1]
-        let dataDb = await betLimitMatchWisemodel.find({matchTitle:matchName})
+        let dataDb = await betLimitMatchWisemodel.findOne({matchTitle:matchName})
         console.log(dataDb)
     })
     
