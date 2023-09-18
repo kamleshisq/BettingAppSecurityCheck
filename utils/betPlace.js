@@ -23,6 +23,7 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
 
 async function placeBet(data){
     console.log(data, "data1")
+    return;
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
     if(check.availableBalance < data.data.stake){
         return "You do not have sufficient balance for bet"
@@ -194,7 +195,7 @@ let filtertinMatch = {}
 // console.log(marketDetails, 454545454454454545544544444444444)
 if(marketDetails.title.toLowerCase().startsWith('match')){
     // console.log("MATCHODD", minMatchOdds)
-    console.log(marketDetails.title)
+    // console.log(marketDetails.title)
     if(minMatchOdds > parseFloat(data.data.stake) ){
         return `Invalide stake, Please play with atleast minimum stake (${minMatchOdds})`
     }else if(maxMatchOdds < parseFloat(data.data.stake)){
