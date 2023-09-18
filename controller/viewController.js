@@ -1332,8 +1332,9 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
         {
             $group:{
                 _id:{
-                    whiteLabel:'$userDetails.whiteLabel',
-                    userName:'$userName'
+                    event:'$event',
+                    userName:'$userName',
+                    whiteLabel:'$$userDetails.whiteLabel'
                 },
                 betCount:{$sum:1},
                 loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
