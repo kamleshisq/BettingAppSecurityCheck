@@ -3404,6 +3404,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('childGameAnalist',async(data)=>{
+        console.log(data)
         let roleType = data.roleType;
         let parent = data.parent
         let users;
