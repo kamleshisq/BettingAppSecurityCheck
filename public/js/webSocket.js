@@ -671,9 +671,9 @@ socket.on('connect', () => {
 
     $(document).on('click','.updateBetLimit',function(e){
        let firstTd = $(this).closest("tr").find("td:first");
-       var idValue = firstTd.attr('id');
-       console.log(idValue)
-    //    socket.emit('BetLimitDetails', innerText)
+       var innerText = firstTd.attr('id');
+    //    console.log(idValue)
+       socket.emit('BetLimitDetails', innerText)
     })
 
 
