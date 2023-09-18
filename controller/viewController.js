@@ -36,6 +36,7 @@ const commissionModel = require("../model/CommissionModel");
 const settlementHisory = require("../model/settelementHistory");
 const catalogController = require("./../model/catalogControllModel")
 const commissionReportModel = require("../model/commissionReport");
+const betLimitMatchWisemodel = require('../model/betLimitMatchWise');
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -3837,6 +3838,8 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
     let allData = cricketList.concat(footballList, tennisList)
     let series = req.query.match
     let seriesMatch = allData.filter(item => item.eventData.name == series)
+    let betLimitMatchWise = await betLimitMatchWisemodel.findOne({matchTitle:series})
+    console.log(betLimitMatchWise)
     // console.log(seriesMatch)
     res.status(200).render("./betLimitMatch/main.ejs", {
         title:"Bet Limits",
