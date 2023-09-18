@@ -98,13 +98,12 @@ async function placeBet(data){
       }}
 let betPlaceData = {}
 console.log(liveBetGame, "4545454545")
-return;
 let filtertinMatch = {}
     let sportName = ''
     if(data.data.spoetId === 1){
         filtertinMatch = {
             type : {
-                $in :['Home', "Football", 'Football/matchOdds', match.eventData.league, match.eventData.name]
+                $in :['Home', "Football", 'Football/matchOdds', liveBetGame.eventData.league, liveBetGame.eventData.name]
             }
         }
 
@@ -112,14 +111,14 @@ let filtertinMatch = {}
     }else if (data.data.spoetId === 2){
         filtertinMatch = {
             type : {
-                $in :['Home', "Tennis", 'Tennis/matchOdds', match.eventData.league, match.eventData.name]
+                $in :['Home', "Tennis", 'Tennis/matchOdds', liveBetGame.eventData.league, liveBetGame.eventData.name]
             }
         }
         sportName = 'Tennis'
     }else if(data.data.spoetId === 4){
         filtertinMatch = {
             type : {
-                $in :['Home', "Cricket", 'Cricket/matchOdds', "Cricket/bookMaker", 'Cricket/fency', match.eventData.league, match.eventData.name]
+                $in :['Home', "Cricket", 'Cricket/matchOdds', "Cricket/bookMaker", 'Cricket/fency', liveBetGame.eventData.league, liveBetGame.eventData.name]
             }
         }
         sportName = 'Cricket'
