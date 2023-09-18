@@ -3288,8 +3288,60 @@ io.on('connection', (socket) => {
                 $limit: 10 
             }
         ])
-        console.log(gameAnalist)
-        socket.emit('gameAnalysis', {gameAnalist, page})
+
+        const marketAnalist =  await Bet.aggregate([
+            {
+                $match:filter
+            },
+            {
+                $lookup:{
+                    from:'users',
+                    localField:'userName',
+                    foreignField:'userName',
+                    as:'userDetails'
+                }
+            },
+            {
+                $unwind:'$userDetails'
+            },
+            {
+                $match:{
+                    'userDetails.isActive':true,
+                    'userDetails.roleName':{$ne:'Admin'},
+                    'userDetails.role_type':{$in:role_type},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:me._id}}
+                }
+            },
+            {
+                $group:{
+                    _id:'$marketName',
+                    betcount:{$sum:1},
+                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    open:{$sum:{$cond:[{$in:['$status',['MAP','OPEN']]},1,0]}},
+                    void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','OPEN']]},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+                    
+                }
+            },
+            {
+                $sort: {
+                    betcount: -1 ,
+                    open : -1,
+                    won : -1,
+                    loss : -1,
+                    Total_User:-1
+                }
+            },
+            {
+                $skip: page * 10
+            },
+            {
+                $limit: 10 
+            }
+        ])
+        // console.log(gameAnalist)
+        socket.emit('gameAnalysis', {gameAnalist,marketAnalist, page})
     })
 
     socket.on('getEvetnsOfSport',async(data)=>{

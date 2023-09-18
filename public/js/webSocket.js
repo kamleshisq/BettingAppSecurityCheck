@@ -10179,7 +10179,9 @@ socket.on('connect', () => {
             let Sport = $("#Event").val()
             let page = 0
             $('.rowId').attr('data-rowid',page + 1)
-            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+            if(Sport != ''){
+                socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+            }
         })
 
         $(document).on('change','#Tdate',function(e){
@@ -10192,7 +10194,9 @@ socket.on('connect', () => {
             let Sport = $("#Event").val()
             let page = 0
             $('.rowId').attr('data-rowid',page + 1)
-            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+            if(Sport != ''){
+                socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+            }        
         })
 
         $('#Sport').change(function() {
@@ -10230,7 +10234,9 @@ socket.on('connect', () => {
             let page = 0
             $('.rowId').attr('data-rowid',page + 1)
             console.log(from_date,to_date,Sport,market,page)
-            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+            if(Sport != ''){
+                socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+            }
         })
 
 
@@ -10248,7 +10254,9 @@ socket.on('connect', () => {
             }
             let page = 0
             $('.rowId').attr('data-rowid',page + 1)
-            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+            if(Sport != ''){
+                socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+            }
         })
 
 
@@ -10271,6 +10279,7 @@ socket.on('connect', () => {
         let limit
         socket.on("gameAnalysis", data => {
             let html = ""
+            let html2 = ""
             limit = 10 * data.page
             for(let i = 0; i < data.gameAnalist.length; i++){
                 html += `<tr>
@@ -10280,13 +10289,29 @@ socket.on('connect', () => {
                 <td>${data.gameAnalist[i].betcount}</td>
                 <td> ${data.gameAnalist[i].won} </td>
                 <td>${data.gameAnalist[i].loss}</td>
-                <td>-</td>
+                <td>${data.gameAnalist[i].void}</td>
                 <td>${data.gameAnalist[i].open}</td>`
                 if(data.gameAnalist[i].returns > 0){
                     html += `<td class="green">+${data.gameAnalist[i].returns.toFixed(2)}</td></tr>`
                 }else{
                     html += `<td class="red">${data.gameAnalist[i].returns.toFixed(2)}</td></tr>`
                 }
+            } 
+            for(let i = 0; i < data.marketAnalist.length; i++){
+                html2 += `<tr>
+                <td>${i + 1 + limit}</td>
+                <td>${data.marketAnalist[i]._id}</td>
+                <td>${data.marketAnalist[i].betcount}</td>
+                <td> ${data.marketAnalist[i].won} </td>
+                <td>${data.marketAnalist[i].loss}</td>
+                <td>${data.marketAnalist[i].void}</td>
+                <td>${data.marketAnalist[i].open}</td>`
+                if(data.marketAnalist[i].returns > 0){
+                    html2 += `<td class="green">+${data.marketAnalist[i].returns.toFixed(2)}</td>`
+                }else{
+                    html2 += `<td class="red">${data.marketAnalist[i].returns.toFixed(2)}</td>`
+                }
+                html2 += `<td>-</td></tr>`
             } 
             if(data.page == 0){
                 if(!(data.gameAnalist.length < 10)){
@@ -10295,11 +10320,22 @@ socket.on('connect', () => {
                 if(data.gameAnalist.length == 0){
                     html += `<tr class="empty_table"><td>No record found</td></tr>`
                 }
+                if(!(data.marketAnalist.length < 10)){
+                    document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
+                }
+                if(data.marketAnalist.length == 0){
+                    html2 += `<tr class="empty_table"><td>No record found</td></tr>`
+                }
                 $('#Cricket').find('tbody').html(html)
+                $('#FOOTBALL').find('tbody').html(html2)
 
             }else{
                 $('#Cricket').find('tbody').append(html)
+                $('#FOOTBALL').find('tbody').append(html2)
                 if((data.gameAnalist.length < 10)){
+                    document.getElementById('load-more').innerHTML = ""
+                }
+                if((data.marketAnalist.length < 10)){
                     document.getElementById('load-more').innerHTML = ""
                 }
             }
