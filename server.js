@@ -2719,10 +2719,10 @@ io.on('connection', (socket) => {
     socket.on('VoidBetIn2', async(data) => {
         try{
             let reultData = await voidbetAfterPlace(data)
-            console.log(reultData)
+            socket.emit('VoidBetIn2', reultData)
         }catch(err){
             console.log(err)
-            socket.emit("VoidBetIn",{message:"err", status:"error"})
+            socket.emit("VoidBetIn2",{message:"err", status:"error"})
         }
     })
 

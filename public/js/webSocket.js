@@ -9211,6 +9211,14 @@ socket.on('connect', () => {
             // console.log(data, id)
             socket.emit("VoidBetIn2", {LOGINDATA, id, data})
         })
+
+        socket.on('VoidBetIn2', data => {
+            if(data.status === "error"){
+                alert("Please try again later")
+            }else{ 
+                alert(data)
+            }
+        })
        
 
         $(document).on("click", ".voidBet", function(e){
