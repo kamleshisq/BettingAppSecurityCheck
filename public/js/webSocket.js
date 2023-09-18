@@ -10292,15 +10292,80 @@ socket.on('connect', () => {
 
         })
 
-        socket.on('matchOdds',async(data)=>{
-            console.log(data)
-            let html = ""
-
-
+        $(document).on('click','.matchOddsBack',function(e){
+            let page =0
+            let market = $("#market").val()
+            let to_date;
+            let from_date
+            if($('#Fdate').val() != ''){
+                from_date = $('#Fdate').val()
+            }
+            if($('#Tdate').val() != ''){
+                to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            }
+            let Sport = $("#Event").val()
+            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
         })
 
         let limit
+
+
+        socket.on('matchOdds',async(data)=>{
+            console.log(data)
+            let html = ""
+            limit = 10 * data.page
+            if(data.matchOdds.length !== 0){
+                if(data.page == 0){
+                    html += `
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>BET PLACED DATE</th>
+                            <th>USER</th>
+                            <th>BET ON</th>
+                            <th>ODDS</th>
+                            <th>AMOUNT </th>
+                            <th>PROFIT/LOSS </th>
+                            <th>STATUS</th>
+                            <th>IP ADDRESS</th>
+                        </tr>
+                    </thead><tbody>`
+                }
+
+                for(let i = 0;i<data.matchOdds.length;i++){
+                    html += `<tr>
+                    <td>${i + 1 + limit}</td>
+                    <td>${data.matchOdds[i].date}</td>
+                    <td>${data.matchOdds[i].userName}</td>
+                    <td>-</td>
+                    <td>${data.matchOdds[i].oddValue}</td>`
+                    html += `<td>${data.matchOdds[i].returns}</td>`
+                    html += `
+                    <td>${data.matchOdds[i].status}</td>
+                    <td>-</td>
+                    </tr>`
+                }
+                (`<div class="matchOddsBack">Match Odds</div>`).insertBefore($('#FOOTBALL').find('.row'))
+                if(data.page == 0){
+                    html += `</tbody>`
+                    $('#FOOTBALL').find('table').html(html)
+                }else{
+                    $('#FOOTBALL').find('tbody').append(html)
+
+                }
+
+
+            }else{
+
+            }
+        })
+
+
+
         socket.on("gameAnalysis", data => {
+            if($('#FOOTBALL').find('.matchOddsBack')){
+                $('#FOOTBALL').find('.matchOddsBack').html('')
+            }
             let html = ""
             let html2 = ""
             limit = 10 * data.page
@@ -10323,7 +10388,7 @@ socket.on('connect', () => {
             for(let i = 0; i < data.marketAnalist.length; i++){
                 html2 += `<tr>
                 <td>${i + 1 + limit}</td>
-                <td class="matchOdds" style="cursor:pointer;">${data.marketAnalist[i]._id}</td>
+                <td class="matchOdds">${data.marketAnalist[i]._id}</td>
                 <td>${data.marketAnalist[i].betcount}</td>
                 <td> ${data.marketAnalist[i].won} </td>
                 <td>${data.marketAnalist[i].loss}</td>
