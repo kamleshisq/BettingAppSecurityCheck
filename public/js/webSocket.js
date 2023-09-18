@@ -10321,6 +10321,7 @@ socket.on('connect', () => {
                     html += `<tr>
                     <td>${i + 1 + limit}</td>
                     <td>${data.matchOdds[i].date}</td>
+                    <td>${data.matchOdds[i].userName}</td>
                     <td>-</td>
                     <td>${data.matchOdds[i].oddValue}</td>`
                     html += `<td>${data.matchOdds[i].returns}</td>`
