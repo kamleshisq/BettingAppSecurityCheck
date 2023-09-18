@@ -672,12 +672,13 @@ socket.on('connect', () => {
     $(document).on('click','.updateBetLimit',function(e){
        let firstTd = $(this).closest("tr").find("td:first");
        var innerText = firstTd.attr('id');
-    //    console.log(idValue)
+       console.log(innerText)
        socket.emit('BetLimitDetails', innerText)
     })
 
 
     socket.on('BetLimitDetails', data => {
+        console.log(data)
         if(data.status == "notFound"){
             let form = $('#myModal2').find('.form-data')
             form.find('input[name = "min_stake"]').val(100)
