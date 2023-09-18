@@ -10200,7 +10200,7 @@ socket.on('connect', () => {
             if(['1','2','4'].includes(Sport)){
                 socket.emit('getEvetnsOfSport',{sport:Sport})
             }else{
-
+                $('#Event').html(`<option value="All" selected> Select Event </option>`)
             }
         })
 
