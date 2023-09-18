@@ -1344,17 +1344,17 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
                 
             }
         },
-        {
-            $group:{
-                _id:'$_id.whiteLabel',
-                Total_User:{$sum:1},
-                betcount:{$sum:'$betCount'},
-                loss:{$sum:'$loss'},
-                won:{$sum:'$won'},
-                open:{$sum:'$open'},
-                returns:{$sum:'$returns'}
-            }
-        },
+        // {
+        //     $group:{
+        //         _id:'$_id.whiteLabel',
+        //         Total_User:{$sum:1},
+        //         betcount:{$sum:'$betCount'},
+        //         loss:{$sum:'$loss'},
+        //         won:{$sum:'$won'},
+        //         open:{$sum:'$open'},
+        //         returns:{$sum:'$returns'}
+        //     }
+        // },
         {
             $sort: {
                 betcount: -1 ,
@@ -1368,7 +1368,7 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
             $limit: 10 
         }
     ])
-    // console.log(gameAnalist)
+    console.log(gameAnalist)
 
     const me = req.currentUser
     res.status(200).render("./gameAnalysis/gameanalysis",{
