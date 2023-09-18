@@ -34,7 +34,72 @@ async function placeBet(data){
     //     betLimit = await betLimitModel.findOne({type:"Sport"})
     // }
 
-    let filtertinMatch = {}
+    
+    // console.log(betLimit, 45654654654)
+    // if(betLimit.min_stake > parseFloat(data.data.stake) ){
+    //     return `Invalide stake, Please play with atleast minimum stake (${betLimit.min_stake})`
+    // }else if(betLimit.max_stake < parseFloat(data.data.stake)){
+    //     return `Invalide stake, Please play with atmost maximum stake (${betLimit.max_stake})`
+    // }else if(betLimit.max_odd < parseFloat(data.data.odds)){
+    //     return `Invalide odds valur, Please play with atmost maximum odds (${betLimit.max_odd})`
+    // }
+
+    let uniqueToken = generateString(5)
+    const sportData = await cricketAndOtherSport()
+    let gameList
+    let bettype
+    // console.log(data.data)
+    if(data.data.spoetId == 4){
+        gameList = sportData[0].gameList[0].eventList
+        bettype = 'Cricket'
+    }else if(data.data.spoetId == 1){
+        // console.log(sportData[1].gameList)
+        let footballdata = sportData[1].gameList.find(item => item.sport_name === "Football")
+        gameList = footballdata.eventList
+        bettype = "Football"
+    }else if (data.data.spoetId == 2){
+        let tennisData = sportData[1].gameList.find(item => item.sport_name === "Tennis")
+        gameList = tennisData.eventList
+        bettype = "Tennis"
+    }
+    let liveBetGame = gameList.find(item => item.eventData.eventId == data.data.eventId);
+    let marketDetails
+    let marketList = liveBetGame.marketList
+    for (let key in marketList) {
+        if (data.data.secId === "odd_Even_Yes" || data.data.secId === "odd_Even_No"){
+            const oddEvenData = marketList.odd_even;
+            marketDetails = oddEvenData.find(item => item.marketId === data.data.market)
+            if(!marketDetails){
+                let oddEvenData = marketList.session
+                marketDetails = oddEvenData.find(item => item.marketId === data.data.market)
+            }
+            break;
+        }else if(marketList.hasOwnProperty(key)) {
+            // console.log(marketList, "LIST")
+            const marketData = marketList[key];
+            // console.log(marketData, "marketdata1212121")
+            if(marketData != null){
+                // console.log(marketData)
+                if(Array.isArray(marketData)){
+                    // console.log(marketData)
+                    let book = marketData.find(item => item.marketId == data.data.market)
+                    if(book){
+                        marketDetails = book
+                        break;
+                    }
+                    // console.log(book, "book")
+                }else{
+                    if (marketData.marketId === data.data.market) {
+                        marketDetails =  marketData;
+                        break;
+                      }
+                }
+            }
+      }}
+let betPlaceData = {}
+console.log(liveBetGame, "4545454545")
+return;
+let filtertinMatch = {}
     let sportName = ''
     if(data.data.spoetId === 1){
         filtertinMatch = {
@@ -122,68 +187,6 @@ async function placeBet(data){
             maxBookMaker = BOOKMAKER.max_stake
         }
     }
-    // console.log(betLimit, 45654654654)
-    // if(betLimit.min_stake > parseFloat(data.data.stake) ){
-    //     return `Invalide stake, Please play with atleast minimum stake (${betLimit.min_stake})`
-    // }else if(betLimit.max_stake < parseFloat(data.data.stake)){
-    //     return `Invalide stake, Please play with atmost maximum stake (${betLimit.max_stake})`
-    // }else if(betLimit.max_odd < parseFloat(data.data.odds)){
-    //     return `Invalide odds valur, Please play with atmost maximum odds (${betLimit.max_odd})`
-    // }
-
-    let uniqueToken = generateString(5)
-    const sportData = await cricketAndOtherSport()
-    let gameList
-    let bettype
-    // console.log(data.data)
-    if(data.data.spoetId == 4){
-        gameList = sportData[0].gameList[0].eventList
-        bettype = 'Cricket'
-    }else if(data.data.spoetId == 1){
-        // console.log(sportData[1].gameList)
-        let footballdata = sportData[1].gameList.find(item => item.sport_name === "Football")
-        gameList = footballdata.eventList
-        bettype = "Football"
-    }else if (data.data.spoetId == 2){
-        let tennisData = sportData[1].gameList.find(item => item.sport_name === "Tennis")
-        gameList = tennisData.eventList
-        bettype = "Tennis"
-    }
-    let liveBetGame = gameList.find(item => item.eventData.eventId == data.data.eventId);
-    let marketDetails
-    let marketList = liveBetGame.marketList
-    for (let key in marketList) {
-        if (data.data.secId === "odd_Even_Yes" || data.data.secId === "odd_Even_No"){
-            const oddEvenData = marketList.odd_even;
-            marketDetails = oddEvenData.find(item => item.marketId === data.data.market)
-            if(!marketDetails){
-                let oddEvenData = marketList.session
-                marketDetails = oddEvenData.find(item => item.marketId === data.data.market)
-            }
-            break;
-        }else if(marketList.hasOwnProperty(key)) {
-            // console.log(marketList, "LIST")
-            const marketData = marketList[key];
-            // console.log(marketData, "marketdata1212121")
-            if(marketData != null){
-                // console.log(marketData)
-                if(Array.isArray(marketData)){
-                    // console.log(marketData)
-                    let book = marketData.find(item => item.marketId == data.data.market)
-                    if(book){
-                        marketDetails = book
-                        break;
-                    }
-                    // console.log(book, "book")
-                }else{
-                    if (marketData.marketId === data.data.market) {
-                        marketDetails =  marketData;
-                        break;
-                      }
-                }
-            }
-      }}
-let betPlaceData = {}
 // console.log(marketDetails, 454545454454454545544544444444444)
 if(marketDetails.title.toLowerCase().startsWith('matchod')){
     if(minMatchOdds > parseFloat(data.data.stake) ){
