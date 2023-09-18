@@ -135,8 +135,8 @@ let filtertinMatch = {}
         if (
             betLimit[index].type === 'Home' ||
             betLimit[index].type === sportName ||
-            betLimit[index].type === match.eventData.league ||
-            betLimit[index].type === match.eventData.name
+            betLimit[index].type === liveBetGame.eventData.league ||
+            betLimit[index].type === liveBetGame.eventData.name
           ) {
             if(minByMatch > betLimit[index].min_stake){
                 minByMatch = betLimit[index].min_stake
