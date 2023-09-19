@@ -1360,7 +1360,7 @@ socket.on('connect', () => {
                         if(data.currentUser.role.authorization.includes('changeUserPassword')){
                             html += `<button data-bs-toggle="modal" data-bs-target="#myModal3" class="PasswordChange" title="Change Password">P</button>`
                         }
-                        html += `<button  data-bs-toggle="modal" data-bs-target="#myModal" class="Settlement" title="Settlement">S</button>`
+                        html += `<button  data-bs-toggle="modal" data-bs-target="#myModalSE" class="Settlement" title="Settlement">S</button>`
                         // if(data.currentUser.role.authorization.includes('betLockAndUnloack')){
                         //     if(response[i].betLock){
                         //         html += `<button type="button" class="betLockStatus Locked" title="Bet Unlock">B</button>`
