@@ -3447,7 +3447,7 @@ io.on('connection', (socket) => {
             for(let i = 0; i < roles.length; i++){
                 role_type.push(roles[i].role_type)
             }
-            console.log(role_type)
+            console.log(ele_id,role_type)
             let betDetails = await Bet.aggregate([
                 {
                     $match:filter
@@ -3468,7 +3468,7 @@ io.on('connection', (socket) => {
                         'userDetails.isActive':true,
                         'userDetails.roleName':{$ne:'Admin'},
                         'userDetails.role_type':{$in:role_type},
-                        'userDetails.parentUsers':{$elemMatch:{$eq:'64956e701109042453f3c2ff'}}
+                        'userDetails.parentUsers':{$elemMatch:{$eq:ele._id}}
                     }
                 },
                 {
