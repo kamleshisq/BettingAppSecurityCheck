@@ -10576,7 +10576,7 @@ socket.on('connect', () => {
               
               $('#Cricket').find('table').html(html)
               $('#Cricket').find('.accountBreadcum').html(html2)
-              if(data.type == 'user'){
+              if(data.type != 'user'){
                   $('#Cricket').find('.accountBreadcum').after(html3)
               }
 
