@@ -61,21 +61,21 @@ async function voidbetBeforePlace(data){
                         // }
                         await User.findByIdAndUpdate(user.parentUsers[i], {
                           $inc: {
-                              downlineBalance:  -VoidAmount,
+                              downlineBalance:  bets[bet].Stake,
                               myPL: parentUser1Amount,
                               uplinePL: parentUser2Amount,
                               lifetimePL: parentUser1Amount,
-                              pointsWL:  -VoidAmount
+                              pointsWL:  bets[bet].Stake
                           }
                       });
                   
                       if (i === 1) {
                           await User.findByIdAndUpdate(user.parentUsers[i - 1], {
                               $inc: {
-                                  downlineBalance: -VoidAmount,
+                                  downlineBalance: bets[bet].Stake,
                                   myPL: parentUser2Amount,
                                   lifetimePL: parentUser2Amount,
-                                  pointsWL: -VoidAmount
+                                  pointsWL: bets[bet].Stake
                               }
                           });
                       }
