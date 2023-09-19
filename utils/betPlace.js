@@ -151,17 +151,16 @@ let filtertinMatch = {}
 let thatMarketLimit = await betLimitModel.findOne({type:data.data.market})
 console.log(thatMarketLimit, 1212122)
 if(thatMarketLimit){
-    minMatchOdds = thatMarketLimit.min_stake
-    maxMatchOdds = thatMarketLimit.max_stake
-    minBookMaker = thatMarketLimit.min_stake
-    maxBookMaker = thatMarketLimit.max_stake
-    minFancy = thatMarketLimit.min_stake
-    maxFancy = thatMarketLimit.max_stake
+    if(thatMarketLimit.min_stake > parseFloat(data.data.stake) ){
+        return `Invalide stake, Please play with atleast minimum stake (${thatMarketLimit.min_stake})`
+    }else if(thatMarketLimit.max_stake < parseFloat(data.data.stake)){
+        return `Invalide stake, Please play with atmost maximum stake (${thatMarketLimit.max_stake})`
+    }
 }
     console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 // console.log(marketDetails, 454545454454454545544544444444444)
 if(marketDetails.title.toLowerCase().startsWith('match')){
-    console.log("MATCHODD", minMatchOdds)
+    // console.log("MATCHODD", minMatchOdds)
     // console.log(marketDetails.title)
     let MATCHODDDATA = await betLimitModel.findOne({type:`${sportName}/matchOdds`})
     if(MATCHODDDATA){
