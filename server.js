@@ -3443,7 +3443,7 @@ io.on('connection', (socket) => {
             users = await User.find({parent_id:admin._id})
         }
 
-        let newUsers = await users.map(async(ele) => {
+        let newUsers = users.map(async(ele) => {
             ele.betDetails = await Bet.aggregate([
                 {
                     $match:filter
@@ -3496,7 +3496,7 @@ io.on('connection', (socket) => {
                     $limit: limit 
                 }
             ]) 
-            return 
+            return ele
             
         })
 
