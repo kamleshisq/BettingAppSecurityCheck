@@ -23,7 +23,7 @@ async function voidBET(data){
     //   await settlementHistory.create(dataForHistory)
     console.log(dataForHistory, 121212)
     for(const bets in allBetWithMarketId){
-        console.log(bets)
+        console.log(allBetWithMarketId[bets])
     }
 }
 //  return "WORKING"
