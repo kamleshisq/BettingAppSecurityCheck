@@ -10388,32 +10388,58 @@ socket.on('connect', () => {
             for(let i = 0; i < data.result.length; i++){
                 if(data.result[i].betDetails){
                     if(data.page == 0){
-                        html += `<thead>
-                        <tr >
-                          <th>S.No</th>
-                          <th>User Name</th>
-                          <th>Total Bets</th>
-                          <th>Won</th>
-                          <th>Lost</th>
-                          <th>Void </th>
-                          <th>Open </th>
-                          <th>P/L</th>
-                        </tr>
-                    </thead><tbody class="new-body">`
+                        if(data.result[i].ele.role_type == 2){
+
+                            html += `<thead>
+                            <tr >
+                              <th>S.No</th>
+                              <th>User Name</th>
+                              <th>Total Bets</th>
+                              <th>Won</th>
+                              <th>Lost</th>
+                              <th>Void </th>
+                              <th>Open </th>
+                              <th>P/L</th>
+                            </tr>
+                        </thead><tbody class="new-body">`
+                        }else{
+                            html += `<thead>
+                            <tr >
+                              <th>S.No</th>
+                              <th>Market</th>
+                              <th>Total Bets</th>
+                              <th>Won</th>
+                              <th>Lost</th>
+                              <th>Void </th>
+                              <th>Open </th>
+                              <th>P/L</th>
+                              <th>Result</th>
+                            </tr>
+                        </thead><tbody class="new-body">`
+                        }
                     }
                     html += `<tr>
-                    <td>${i + 1 + limit}</td>
-                    <td class="childgameAnalist" data-roleType="${data.result[i].ele.role_type}" data-parent="${data.result[i].ele._id}">${data.result[i].ele.userName}</td>
-                    <td>${data.result[i].betDetails.betcount}</td>
+                    <td>${i + 1 + limit}</td>`
+                    if(data.result[i].ele.role_type == 2){
+                        html += `<td class="childgameAnalist" data-roleType="${data.result[i].ele.role_type}" data-parent="${data.result[i].ele._id}">${data.result[i].ele.userName}</td>`
+                    }else{
+                        html += `<td class="matchOddOwn" data-roleType="${data.result[i].ele.role_type}" data-parent="${data.result[i].ele.userName}">${data.result[i].betDetails.marketName}</td>`
+                    }
+                    html += `<td>${data.result[i].betDetails.betcount}</td>
                     <td> ${data.result[i].betDetails.won} </td>
                     <td>${data.result[i].betDetails.loss}</td>
                     <td>${data.result[i].betDetails.void}</td>
                     <td>${data.result[i].betDetails.open}</td>`
                     if(data.result[i].betDetails.returns > 0){
-                        html += `<td class="green">+${data.result[i].betDetails.returns.toFixed(2)}</td></tr>`
+                        html += `<td class="green">+${data.result[i].betDetails.returns.toFixed(2)}</td>`
                     }else{
-                        html += `<td class="red">${data.result[i].betDetails.returns.toFixed(2)}</td></tr>`
+                        html += `<td class="red">${data.result[i].betDetails.returns.toFixed(2)}</td>`
                     }
+
+                    if(data.result[i].ele.role_type != 2){
+                        html += `<td>-</td>`
+                    }
+                    html += `</tr>`
                 }
             } 
         
