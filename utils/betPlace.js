@@ -148,7 +148,7 @@ let filtertinMatch = {}
         let maxFancy = betLimit.max_stake
         // console.log(betLimit, "+==> BetLimit")
         // return;
-let thatMarketLimit = await betLimit.findOne({type:data.data.market})
+let thatMarketLimit = await betLimitModel.findOne({type:data.data.market})
 if(thatMarketLimit){
     minMatchOdds = thatMarketLimit.min_stake
     maxMatchOdds = thatMarketLimit.max_stake
