@@ -14,6 +14,7 @@
       <tbody class="new-body">
         <%if(betsEventWise.length !== 0){%>
         <% let betsEventWiseTennis = betsEventWise.find(item => item.id == 'Tennis') %>
+        <%if(betsEventWiseTennis){%>
         <%console.log(betsEventWiseTennis, '===> betsEventWiseTennis')%>
         <% let betsEventWiseData2Tennis = betsEventWiseTennis.data%>
         <%for(let i = 0; i < betsEventWiseData2Tennis.length; i++){ %>
@@ -42,6 +43,9 @@
             <td><a href="/admin/settlementIn?id=<%=betsEventWiseData2Tennis[i].eventid%>" class="btn-green">settle</a></td>
           </tr>
         <%} %>
+        <%}else{%>
+          <tr class="empty_table"><td>No record found</td></tr>
+        <%}%>
         <%}else{%>
           <tr class="empty_table"><td>No record found</td></tr>
         <%}%>
