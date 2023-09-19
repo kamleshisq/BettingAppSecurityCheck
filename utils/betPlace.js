@@ -161,7 +161,7 @@ if(thatMarketLimit){
     console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 // console.log(marketDetails, 454545454454454545544544444444444)
 if(marketDetails.title.toLowerCase().startsWith('match')){
-    // console.log("MATCHODD", minMatchOdds)
+    console.log("MATCHODD", minMatchOdds)
     // console.log(marketDetails.title)
     let MATCHODDDATA = await betLimitModel.findOne({type:`${sportName}/matchOdds`})
     if(MATCHODDDATA){
