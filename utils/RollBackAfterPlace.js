@@ -1,7 +1,8 @@
 let User = require('../model/userModel');
-let accModel = require('../model/accountStatementByUserModel');
+let accountStatementModel = require('../model/accountStatementByUserModel');
 let Bet = require('../model/betmodel');
 let settlementHistory = require("../model/settelementHistory");
+let Decimal = require('decimal.js')
 
 
 async function rollBack(data){
@@ -21,8 +22,8 @@ async function rollBack(data){
             marketName : `${allBetWithMarketId[0].marketName}`,
             remark:data.data.remark
           }
-        //   await settlementHistory.create(dataForHistory)
-        console.log(dataForHistory)
+          await settlementHistory.create(dataForHistory)
+        // console.log(dataForHistory)
         try{
             for(const bets in allBetWithMarketId){
                 if(allBetWithMarketId[bets].status === 'WON'){
@@ -84,7 +85,7 @@ async function rollBack(data){
                     await accountStatementModel.create(userAcc);
                 }else{
                     let VoidAmount = allBetWithMarketId[bets].Stake.toFixed(2)
-                    await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"OPEN", returns:0, remark:data.data.remark, calcelUser:data.LOGINDATA.LOGINUSER.userName})
+                    await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"OPEN", remark:data.data.remark, calcelUser:data.LOGINDATA.LOGINUSER.userName})
                     let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{exposure:VoidAmount}})
                     // let description = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/OPEN`
                     // let userAcc = {
