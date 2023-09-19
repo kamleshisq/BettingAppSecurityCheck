@@ -3291,12 +3291,12 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
     let me = req.currentUser
     let limit = 10
     // console.log(me)
-    let History
-    if(me.roleName === "Admin"){
-        History = await settlementHisory.find().sort({ date: -1 }).limit(limit)
-    }else{
-        History = await settlementHisory.find({userId:me._id}).sort({ date: -1 }).limit(limit)
-    }
+    // let History
+    // if(me.roleName === "Admin"){
+    //     History = await settlementHisory.find().sort({ date: -1 }).limit(limit)
+    // }else{
+    //     History = await settlementHisory.find({userId:me._id}).sort({ date: -1 }).limit(limit)
+    // }
     let filter = {}
     if(me.roleName === "Admin"){
         filter = {}
