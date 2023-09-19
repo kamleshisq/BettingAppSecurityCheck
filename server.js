@@ -3735,7 +3735,13 @@ io.on('connection', (socket) => {
 
 
     socket.on('ROLLBACKDETAILS', async(data) => {
-        console.log(data)
+        try{
+            let resultDate = await rollBackBet(data)
+            socket.emit('ROLLBACKDETAILS', resultDate)
+        }catch(err){
+            console.log(err)
+            socket.emit("ROLLBACKDETAILS",{message:"err", status:"error"})
+        }
     })
     
 })
