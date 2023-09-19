@@ -10352,10 +10352,64 @@ socket.on('connect', () => {
             socket.emit('childGameAnalist',{roleType,parent,from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
         })
 
+        let limit
+
         socket.on('childGameAnalist',async(data)=>{
             console.log(data)
+            let html = ""
+            limit = 10 * data.page
+            for(let i = 0; i < data.result.length; i++){
+                if(data.result[i].betDetails){
+                    if(data.page == 0){
+                        html += `<thead>
+                        <tr >
+                          <th>S.No</th>
+                          <th>User Name</th>
+                          <th>Total Bets</th>
+                          <th>Won</th>
+                          <th>Lost</th>
+                          <th>Void </th>
+                          <th>Open </th>
+                          <th>P/L</th>
+                        </tr>
+                    </thead><tbody class="new-body">`
+                    }
+                    html += `<tr>
+                    <td>${i + 1 + limit}</td>
+                    <td class="childgameAnalist" data-roleType="${data.result[i].ele.role_type}" data-parent="${data.result[i].betDetails._id}">${data.result[i].betDetails._id}</td>
+                    <td>${data.result[i].betDetails.betcount}</td>
+                    <td> ${data.result[i].betDetails.won} </td>
+                    <td>${data.result[i].betDetails.loss}</td>
+                    <td>${data.result[i].betDetails.void}</td>
+                    <td>${data.result[i].betDetails.open}</td>`
+                    if(data.result[i].betDetails.returns > 0){
+                        html += `<td class="green">+${data.result[i].betDetails.returns.toFixed(2)}</td></tr>`
+                    }else{
+                        html += `<td class="red">${data.result[i].betDetails.returns.toFixed(2)}</td></tr>`
+                    }
+                }
+            } 
+        
+            if(data.page == 0){
+                if(!(data.gameAnalist.length < 10)){
+                    document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
+                }
+                if(data.gameAnalist.length == 0){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                }
+              
+                $('#Cricket').find('tbody').html(html)
+
+            }else{
+                $('#Cricket').find('tbody').append(html)
+               
+                if((data.gameAnalist.length < 10)){
+                    document.getElementById('load-more').innerHTML = ""
+                }
+                
+            }
         })
-        let limit
+
 
 
         socket.on('matchOdds',async(data)=>{

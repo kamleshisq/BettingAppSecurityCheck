@@ -3498,7 +3498,9 @@ io.on('connection', (socket) => {
                     $limit: limit 
                 }
             ]) 
-            return ({ele,betDetails:betDetails[0]})
+            if(betDetails.length !== 0){
+                return ({ele,betDetails:betDetails[0]})
+            }
             
         })
 
