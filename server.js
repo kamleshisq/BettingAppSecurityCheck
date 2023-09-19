@@ -3632,6 +3632,12 @@ io.on('connection', (socket) => {
     socket.on('updateBetLimitMATCH', async(data) => {
 
         console.log(data)
+        let data = await betLimit.findOne({type:data.id})
+        if(data != null){
+
+        }else{
+            socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data})
+        }
         // let matchName = data.split('/')[0]
         // let Marketname = data.split('/')[1]
         // let dataDb = await betLimitMatchWisemodel.findOne({matchTitle:matchName})
