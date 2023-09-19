@@ -524,6 +524,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render("./userSideEjs/home/homePage",{
+        title:'Home',
         user,
         data,
         verticalMenus,
