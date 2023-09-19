@@ -3540,7 +3540,7 @@ exports.CommissionMarkets = catchAsync(async(req, res, next) => {
     
     const me = req.currentUser
     res.status(200).render("./commissionMarket/main",{
-        title:"CommiSSion Markets",
+        title:"Commission Markets",
         me,
         currentUser:me
     })
