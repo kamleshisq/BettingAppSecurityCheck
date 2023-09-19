@@ -3659,11 +3659,13 @@ io.on('connection', (socket) => {
     socket.on('updateBetLimitMarket', async(data) => {
        let dbData = await betLimit.findOne({type:data.id})
        if(dbData){
-        console.log(dbData)
-        await betLimit.findOneAndUpdate({type:data.id}, {min_stake:data.min_stake, max_stake:data.max_stake, max_profit:data.max_profit, max_odd:data.max_odd, delay:data.delay})
+        // console.log(dbData)
+        let marketDetails = await betLimit.findOneAndUpdate({type:data.id}, {min_stake:data.min_stake, max_stake:data.max_stake, max_profit:data.max_profit, max_odd:data.max_odd, delay:data.delay})
+        socket.emit('updateBetLimitMarket', marketDetails)
        }else{
-        console.log(data)
-        await betLimit.create({type:data.id, min_stake:data.min_stake, max_stake:data.max_stake, max_profit:data.max_profit, max_odd:data.max_odd, delay:data.delay})
+        // console.log(data)
+        let marketDetails = await betLimit.create({type:data.id, min_stake:data.min_stake, max_stake:data.max_stake, max_profit:data.max_profit, max_odd:data.max_odd, delay:data.delay})
+        socket.emit('updateBetLimitMarket', marketDetails)
        }
        
     })
