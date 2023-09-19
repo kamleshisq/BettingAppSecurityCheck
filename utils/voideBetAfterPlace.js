@@ -2,6 +2,7 @@ const User = require('../model/userModel');
 const accountStatementModel = require("../model/accountStatementByUserModel");
 const Bet = require('../model/betmodel');
 const settlementHistory = require('../model/settelementHistory')
+const Decimal = require('decimal.js');
 
 async function voidBET(data){
  console.log(data, 444)  
@@ -24,11 +25,11 @@ async function voidBET(data){
     // console.log(dataForHistory, 121212)
     try{
         for(const bets in allBetWithMarketId){
-            console.log(allBetWithMarketId[bets])
-            console.log(allBetWithMarketId[bets].id)
+            // console.log(allBetWithMarketId[bets])
+            // console.log(allBetWithMarketId[bets].id)
             if(allBetWithMarketId[bets].status === 'WON'){
                 let VoidAmount = allBetWithMarketId[bets].returns.toFixed(2) - allBetWithMarketId[bets].Stake.toFixed(2)
-                console.log(VoidAmount, "VOidBetAMOUNT")
+                // console.log(VoidAmount, "VOidBetAMOUNT")
                 await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"CANCEL", returns:0, remark:data.data.remark, calcelUser:data.LOGINDATA.LOGINUSER.userName})
                 let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{balance: -VoidAmount, availableBalance: -VoidAmount, myPL: -VoidAmount}})
                 let description = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/CANCEL`
@@ -62,9 +63,9 @@ async function voidBET(data){
                     await User.findByIdAndUpdate(user.parentUsers[i], {
                       $inc: {
                           downlineBalance:  -VoidAmount,
-                          myPL: -parentUser1Amount,
-                          uplinePL: -parentUser2Amount,
-                          lifetimePL: -parentUser1Amount,
+                          myPL: parentUser1Amount,
+                          uplinePL: parentUser2Amount,
+                          lifetimePL: parentUser1Amount,
                           pointsWL:  -VoidAmount
                       }
                   });
@@ -73,8 +74,8 @@ async function voidBET(data){
                       await User.findByIdAndUpdate(user.parentUsers[i - 1], {
                           $inc: {
                               downlineBalance: -VoidAmount,
-                              myPL: -parentUser2Amount,
-                              lifetimePL: -parentUser2Amount,
+                              myPL: parentUser2Amount,
+                              lifetimePL: parentUser2Amount,
                               pointsWL: -VoidAmount
                           }
                       });
@@ -84,7 +85,60 @@ async function voidBET(data){
     
                 await accountStatementModel.create(userAcc);
             }else{
-    
+                let VoidAmount = allBetWithMarketId[bets].Stake.toFixed(2)
+                await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"CANCEL", returns:0, remark:data.data.remark, calcelUser:data.LOGINDATA.LOGINUSER.userName})
+                let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{balance: VoidAmount, availableBalance: VoidAmount, myPL: VoidAmount}})
+                let description = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/CANCEL`
+                let userAcc = {
+                    "user_id":user._id,
+                    "description": description,
+                    "creditDebitamount" : VoidAmount,
+                    "balance" : user.availableBalance + VoidAmount,
+                    "date" : Date.now(),
+                    "userName" : user.userName,
+                    "role_type" : user.role_type,
+                    "Remark":"-",
+                    "stake": allBetWithMarketId[bets].Stake,
+                    "transactionId":`${allBetWithMarketId[bets].transactionId}`
+                }
+
+                let debitAmountForP = VoidAmount
+
+                for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                    let parentUser1 = await User.findById(user.parentUsers[i])
+                    let parentUser2 = await User.findById(user.parentUsers[i - 1])
+                    let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                    let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                    // parentUser1Amount = Math.round(parentUser1Amount * 10000) / 10000;
+                    // parentUser2Amount = Math.round(parentUser2Amount * 10000) / 10000;
+                    parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                    parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                    // await User.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
+                    // if(i === 1){
+                    //     await User.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
+                    // }
+                    await User.findByIdAndUpdate(user.parentUsers[i], {
+                      $inc: {
+                          downlineBalance:  VoidAmount,
+                          myPL: -parentUser1Amount,
+                          uplinePL: -parentUser2Amount,
+                          lifetimePL: -parentUser1Amount,
+                          pointsWL:  VoidAmount
+                      }
+                  });
+              
+                  if (i === 1) {
+                      await User.findByIdAndUpdate(user.parentUsers[i - 1], {
+                          $inc: {
+                              downlineBalance: -VoidAmount,
+                              myPL: parentUser2Amount,
+                              lifetimePL: parentUser2Amount,
+                              pointsWL: -VoidAmount
+                          }
+                      });
+                  }
+                    debitAmountForP = parentUser2Amount
+                }
             }
         }
         return 'Process Start'
