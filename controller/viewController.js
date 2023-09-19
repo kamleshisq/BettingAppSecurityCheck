@@ -524,6 +524,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render("./userSideEjs/home/homePage",{
+        title:'Home',
         user,
         data,
         verticalMenus,
@@ -2121,6 +2122,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     }
     let catalog = await catalogController.find()
     res.status(200).render('./userSideEjs/exchangePage/main',{
+        title:"Exchange Page",
         user,
         verticalMenus,
         check:"Exchange",
@@ -2191,6 +2193,7 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
     });
     let catalog = await catalogController.find()
     res.status(200).render('./userSideEjs/inplayPage/main',{
+        title:'In Play',
         user,
         verticalMenus,
         check:"In-Play",
@@ -2234,6 +2237,7 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
     });
     let catalog = await catalogController.find()
     res.status(200).render("./userSideEjs/cricketPage/main", {
+        title:'Cricket',
         user,
         verticalMenus,
         check:"Cricket",
@@ -2266,6 +2270,7 @@ exports.cardsPage = catchAsync(async(req, res, next) => {
         check = "Slots"
     }
     res.status(200).render("./userSideEjs/cards/main",{
+        title:'Cards Games',
         user,
         verticalMenus,
         data,
@@ -2302,6 +2307,7 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
     });
     let catalog = await catalogController.find()
     res.status(200).render('.//userSideEjs/footballPage/main',{
+        title:'Football',
         user,
         verticalMenus,
         check:"Football",
@@ -2342,6 +2348,7 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
     });
     let catalog = await catalogController.find()
     res.status(200).render('.//userSideEjs/tennisPage/main',{
+        title:'Tennis',
         user,
         verticalMenus,
         check:"Tennis",
@@ -2716,6 +2723,7 @@ exports.royalGamingPage = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render("./userSideEjs/royalGamingPage/main",{
+        title:'Royal Games',
         user,
         verticalMenus,
         data,
