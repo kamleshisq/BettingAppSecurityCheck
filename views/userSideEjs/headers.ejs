@@ -3,8 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
-        <title>Royal 777</title>
+    <%if(title){%>
+      <title><%=title%></title>
+      <%}else{%>
+      <title>Royal 777</title>
+    <%}%>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -477,6 +480,7 @@
 
       <div class="exchange-pg-inn-tbl-marqq-dv2">
         <div class="exchange-pg-inn-tbl-marqq-dv-wrp2">
+          <!-- <button data-bs-toggle="modal" data-bs-target="#latest-notifiction-popup">Latest</button> -->
             <marquee>
               <%for(let i = 0; i < notifications.length; i++){%>
                 &nbsp; &nbsp;
@@ -487,6 +491,34 @@
         </div>
       </div>
 
+
+      <div id="latest-notifiction-popup"  class="modal fade latest-notifiction-popup" role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Notification</h2>
+                    <button type="button" class="closbtn" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                </div>
+                <div class="modal-body">
+                    <div class="notification-list">
+                        <div class="box">
+                            <div class="notification-header">17 Sep</div>
+                            <div class="notification-content">
+                                <div class="date-titme">
+                                    <p class="date">17:Sep</p>
+                                    <p class="time">15:33</p>
+                                </div>
+                                <div class="conent">
+                                    <p>South Africa v Australia :- 20 Over SA ' 78 - 79 ' (IST 14:33:39 - 14:34:11) WILL BE VOIDED DUE TO NO BALL</p>
+                                    <p class="cat">Cricket</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
       <!-- <script type="text/javascript">
         let closeClicked = false;
     
