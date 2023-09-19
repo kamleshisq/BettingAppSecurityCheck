@@ -3404,6 +3404,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('childGameAnalist',async(data)=>{
+        console.log(data)
         let roleType = data.roleType;
         let parent = data.parent
         let users;
@@ -3443,7 +3444,6 @@ io.on('connection', (socket) => {
         }
 
         let newUsers = await users.map(async(ele) => {
-            console.log(ele.name)
             ele.betDetails = await Bet.aggregate([
                 {
                     $match:filter
@@ -3496,6 +3496,8 @@ io.on('connection', (socket) => {
                     $limit: limit 
                 }
             ]) 
+            return 
+            
         })
 
         let result = await Promise.all(newUsers)
