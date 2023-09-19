@@ -1,5 +1,5 @@
 let User = require('../model/userModel');
-let accModel = require('../model/accountStatementByUserModel');
+let accountStatementModel = require('../model/accountStatementByUserModel');
 let Bet = require('../model/betmodel');
 let settlementHistory = require("../model/settelementHistory");
 let Decimal = require('decimal.js')
@@ -22,8 +22,8 @@ async function rollBack(data){
             marketName : `${allBetWithMarketId[0].marketName}`,
             remark:data.data.remark
           }
-        //   await settlementHistory.create(dataForHistory)
-        console.log(dataForHistory)
+          await settlementHistory.create(dataForHistory)
+        // console.log(dataForHistory)
         try{
             for(const bets in allBetWithMarketId){
                 if(allBetWithMarketId[bets].status === 'WON'){
