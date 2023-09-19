@@ -10254,7 +10254,7 @@ socket.on('connect', () => {
             let Sport = $("#Event").val()
             let page = 0
             $('.rowId').attr('data-rowid',page + 1)
-            if(Sport != ''){
+            if(Sport != 'All'){
                 socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
             }
         })
@@ -10269,7 +10269,7 @@ socket.on('connect', () => {
             let Sport = $("#Event").val()
             let page = 0
             $('.rowId').attr('data-rowid',page + 1)
-            if(Sport != ''){
+            if(Sport != 'All'){
                 socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
             }        
         })
@@ -10309,7 +10309,7 @@ socket.on('connect', () => {
             let page = 0
             $('.rowId').attr('data-rowid',page + 1)
             console.log(from_date,to_date,Sport,market,page)
-            if(Sport != ''){
+            if(Sport != 'All'){
                 socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
             }
         })
@@ -10329,7 +10329,7 @@ socket.on('connect', () => {
             }
             let page = 0
             $('.rowId').attr('data-rowid',page + 1)
-            if(Sport != ''){
+            if(Sport != 'All'){
                 socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
             }
         })
@@ -10668,7 +10668,6 @@ socket.on('connect', () => {
                 html3 = '<div class="welcome-info-btn">' + html3
 
 
-              console.log(html3)
               $('#Cricket').find('table').html(html)
               $('#Cricket').find('.bredcum-container').html(html2)
               if(data.type != 'user'){
