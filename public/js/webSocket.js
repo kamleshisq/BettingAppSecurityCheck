@@ -10395,7 +10395,7 @@ socket.on('connect', () => {
                     }
                     html += `<tr>
                     <td>${i + 1 + limit}</td>
-                    <td class="childgameAnalist" data-roleType="${data.result[i].ele.role_type}" data-parent="${data.result[i].ele.userName}">${data.result[i].ele.userName}</td>
+                    <td class="childgameAnalist" data-roleType="${data.result[i].ele.role_type}" data-parent="${data.result[i].ele._id}">${data.result[i].ele.userName}</td>
                     <td>${data.result[i].betDetails.betcount}</td>
                     <td> ${data.result[i].betDetails.won} </td>
                     <td>${data.result[i].betDetails.loss}</td>
