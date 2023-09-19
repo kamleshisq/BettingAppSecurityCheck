@@ -10436,7 +10436,6 @@ socket.on('connect', () => {
                     <td>-</td>
                     </tr>`
                 }
-                $(`<div class="matchOddsBack">Match Odds</div>`).insertBefore($('#FOOTBALL').find('.row'))
                 if(data.page == 0){
                     html += `</tbody>`
                     if(!(data.matchOdds.length < 10)){
@@ -10577,7 +10576,9 @@ socket.on('connect', () => {
               
               $('#Cricket').find('table').html(html)
               $('#Cricket').find('.accountBreadcum').html(html2)
-                $('#Cricket').find('.accountBreadcum').after(html3)
+              if(data.type == 'user'){
+                  $('#Cricket').find('.accountBreadcum').after(html3)
+              }
 
             }else{
                 $('#Cricket').find('tbody').append(html)
