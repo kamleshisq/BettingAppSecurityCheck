@@ -3311,9 +3311,14 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
             $match:filter
         },
         {
+            $addFields: {
+              userIdObjectId: { $toObjectId: '$userId' } 
+            }
+        },
+        {
             $lookup: {
                 from: "users",
-                localField: "userId",
+                localField: "userIdObjectId",
                 foreignField: '_id',
                 as: "user"
               }
