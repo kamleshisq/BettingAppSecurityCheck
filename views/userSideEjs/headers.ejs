@@ -513,8 +513,8 @@
                           hour12: true
                           };
                           var formattedTime = date.toLocaleString('en-US', options);
-                          var formattedDATE = formattedTime.split(",")[0];
-                          var formattedtime = formattedTime.split(",")[1];
+                          var formattedDATE = formattedTime.split(" at ")[0];
+                          var formattedtime = formattedTime.split(" at ")[1];
                         %>
                         <div class="box">
                             <div class="notification-header"><%=formattedDATE%></div>
