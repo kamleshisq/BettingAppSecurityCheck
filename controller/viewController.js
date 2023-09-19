@@ -3291,12 +3291,12 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
     let me = req.currentUser
     let limit = 10
     // console.log(me)
-    let History
-    if(me.roleName === "Admin"){
-        History = await settlementHisory.find().sort({ date: -1 }).limit(limit)
-    }else{
-        History = await settlementHisory.find({userId:me._id}).sort({ date: -1 }).limit(limit)
-    }
+    // let History
+    // if(me.roleName === "Admin"){
+    //     History = await settlementHisory.find().sort({ date: -1 }).limit(limit)
+    // }else{
+    //     History = await settlementHisory.find({userId:me._id}).sort({ date: -1 }).limit(limit)
+    // }
     let filter = {}
     if(me.roleName === "Admin"){
         filter = {}
@@ -3311,20 +3311,33 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
             $match:filter
         },
         {
+            $addFields: {
+              userIdObjectId: { $toObjectId: '$userId' } 
+            }
+        },
+        {
             $lookup: {
                 from: "users",
-                localField: "userId",
+                localField: "userIdObjectId",
                 foreignField: '_id',
                 as: "user"
               }
+        },
+        {
+            $sort:{
+                date:-1
+            }
+        },
+        {
+            $limit:limit
         }
     ])
-    console.log(History2)
+    console.log(History2[0].user)
     res.status(200).render("./settlemetHistory/settlemetHistory",{
         title:"Settlements",
         me,
         currentUser:me,
-        History
+        History:History2
     })
 } )
 
