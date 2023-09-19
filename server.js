@@ -3442,6 +3442,7 @@ io.on('connection', (socket) => {
         }
 
         let newUsers = users.map(async(ele) => {
+            role_type = []
             roles = await Role.find({role_level: {$gt:ele.role.role_level}});
             for(let i = 0; i < roles.length; i++){
                 role_type.push(roles[i].role_type)
@@ -3462,14 +3463,14 @@ io.on('connection', (socket) => {
                 {
                     $unwind:'$userDetails'
                 },
-                {
-                    $match:{
-                        'userDetails.isActive':true,
-                        'userDetails.roleName':{$ne:'Admin'},
-                        'userDetails.role_type':{$in:role_type},
-                        'userDetails.parentUsers':{$elemMatch:{$eq:ele._id}}
-                    }
-                },
+                // {
+                //     $match:{
+                //         'userDetails.isActive':true,
+                //         'userDetails.roleName':{$ne:'Admin'},
+                //         'userDetails.role_type':{$in:role_type},
+                //         'userDetails.parentUsers':{$elemMatch:{$eq:ele._id}}
+                //     }
+                // },
                 {
                     $group:{
                         _id:{
