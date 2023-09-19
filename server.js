@@ -3732,6 +3732,11 @@ io.on('connection', (socket) => {
         }
        
     })
+
+
+    socket.on('ROLLBACKDETAILS', async(data) => {
+        console.log(data)
+    })
     
 })
 

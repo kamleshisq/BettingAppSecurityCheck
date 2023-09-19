@@ -9235,7 +9235,8 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
-            console.log(data, id)
+            // console.log(data, id)
+            socket.emit("ROLLBACKDETAILS", {LOGINDATA, id, data})
         })
        
 
