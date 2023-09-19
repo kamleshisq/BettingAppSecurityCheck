@@ -3505,9 +3505,10 @@ io.on('connection', (socket) => {
             
         })
 
+        console.log(newUsers)
         let result = await Promise.all(newUsers)
 
-        // console.log(result)
+        console.log(result)
 
         socket.emit('childGameAnalist',{result,page})
 
