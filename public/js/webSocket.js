@@ -10822,22 +10822,13 @@ socket.on('connect', () => {
             }else{
                 let form = $('#myModal2').find('.form-data')
                 console.log(data.marketData)
-                for(let i = 0; i < data.marketData.value.length; i++){
-                        if(data.marketData.value[i].title == 'min_stake'){
-                            form.find('input[name = "min_stake"]').val(data.marketData.value[i].value)
-                        }
-                        if(data.marketData.value[i].title == 'max_stake'){
-                            form.find('input[name = "max_stake"]').val(data.marketData.value[i].value)
-                        }
-                        if(data.marketData.value[i].title == 'max_profit'){
-                            form.find('input[name = "max_profit"]').val(data.marketData.value[i].value)
-                        }
-                        if(data.marketData.value[i].title == 'max_odd'){
-                            form.find('input[name = "max_odd"]').val(data.marketData.value[i].value)
-                        }
-                }
-                form.find('input[name = "delay"]').val(5)
+                form.find('input[name = "min_stake"]').val(data.marketData.min_stake)
+                form.find('input[name = "max_stake"]').val(data.marketData.max_stake)
+                form.find('input[name = "max_profit"]').val(data.marketData.max_profit)
+                form.find('input[name = "max_odd"]').val(data.marketData.max_odd)
+                form.find('input[name = "delay"]').val(data.marketData.delay)
                 form.find('input[name = "type"]').val(data.data)
+                form.attr('id', data.id)
             }
          })
 

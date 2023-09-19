@@ -3634,7 +3634,7 @@ io.on('connection', (socket) => {
         console.log(data)
         let data1 = await betLimit.findOne({type:data.id})
         if(data1 != null){
-
+            socket.emit('updateBetLimitMATCH', {marketData:data1, data:data.innerText, id:data.id})
         }else{
             socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data.innerText, id:data.id})
         }
@@ -3660,6 +3660,7 @@ io.on('connection', (socket) => {
        let dbData = await betLimit.findOne({type:data.id})
        if(dbData){
         console.log(dbData)
+        await betLimit.findOneAndUpdate({type:data.id}, {min_stake:data.min_stake, max_stake:data.max_stake, max_profit:data.max_profit, max_odd:data.max_odd, delay:data.delay})
        }else{
         console.log(data)
         await betLimit.create({type:data.id, min_stake:data.min_stake, max_stake:data.max_stake, max_profit:data.max_profit, max_odd:data.max_odd, delay:data.delay})
