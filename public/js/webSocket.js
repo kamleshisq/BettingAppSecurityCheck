@@ -10468,6 +10468,7 @@ socket.on('connect', () => {
             let html2 = ""
             let html3 = ""
             limit = 10 * data.page
+            $('.welcome-info-btn').remove()
             for(let i = 0; i < data.result.length; i++){
                 if(data.result[i].betDetails){
                     if(data.page == 0){
@@ -10711,6 +10712,7 @@ socket.on('connect', () => {
             if($('#Cricket').find('.accountBreadcum')){
                 $('#Cricket').find('.accountBreadcum').html('')
             }
+            $('.welcome-info-btn').remove()
             let html = ""
             let html2 = ""
             limit = 10 * data.page
