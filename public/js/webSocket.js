@@ -10389,6 +10389,24 @@ socket.on('connect', () => {
 
         $(document).on('click','.matchOddsBack',function(e){
             $(this).removeClass('active')
+            let html = ""
+            html += ` <thead>
+            <tr>
+                <th>S.No</th>
+                <th>MARKET</th>
+                <th>Total Bets</th>
+                <th>Won</th>
+                <th>Lost</th>
+                <th>Void </th>
+                <th>Open </th>
+                <th>P/L</th>
+                <th>Result</th>
+            </tr>
+            </thead>
+            <tbody class="new-body">
+            
+            </tbody>`
+            $('#FOOTBALL').find('table').html(html)
             let page =0
             let market = $("#market").val()
             let to_date;
@@ -10520,9 +10538,9 @@ socket.on('connect', () => {
                     html += `<tr>
                     <td>${i + 1 + limit}</td>`
                     if(data.type == 'user'){
-                        html += `<td class="childgameAnalist" data-roleType="${data.result[i].ele.role_type}" data-parent="${data.result[i].ele.userName}">${data.result[i].ele.userName}</td>`
+                        html += `<td class="childgameAnalist cursor-pointer" data-roleType="${data.result[i].ele.role_type}" data-parent="${data.result[i].ele.userName}">${data.result[i].ele.userName}</td>`
                     }else{
-                        html += `<td class="matchOddOwn" data-roleType="${data.result[i].ele.role_type}" data-parent="${data.result[i].ele.userName}">${data.result[i].betDetails.marketName}</td>`
+                        html += `<td class="matchOddOwn cursor-pointer" data-roleType="${data.result[i].ele.role_type}" data-parent="${data.result[i].ele.userName}">${data.result[i].betDetails.marketName}</td>`
                     }
                     html += `<td>${data.result[i].betDetails.betcount}</td>
                     <td> ${data.result[i].betDetails.won} </td>
@@ -10565,7 +10583,7 @@ socket.on('connect', () => {
                 html3 += `</ul>`
 
                 html3 += `<div class="welcome-info-btn">`
-                if(data.result[0].betDetails.betcount >= 0){
+                if(data.result[0].betDetails.betcount > 0){
                     html3 += ` <div class="skin-data green">
                             <h5>Total Bets</h5>
                             <h6>${data.result[0].betDetails.betcount}</h6>
@@ -10577,7 +10595,7 @@ socket.on('connect', () => {
                             </div>`
                 }
                
-                if(data.result[0].betDetails.won >= 0){
+                if(data.result[0].betDetails.won > 0){
 
                     html3 += `<div class="skin-data green">
                         <h5>Won</h5>
@@ -10591,23 +10609,23 @@ socket.on('connect', () => {
 
                 }
 
-                if(data.result[0].betDetails.loss >= 0){
+                if(data.result[0].betDetails.loss > 0){
 
                     html3 += `<div class="skin-data green">
                         <h5>Lost</h5>
                         <h6>${data.result[0].betDetails.loss}</h6>
                         </div>`
                 }else{
-                    html3 += `<div class="skin-data green">
+                    html3 += `<div class="skin-data red">
                         <h5>Lost</h5>
                         <h6>${data.result[0].betDetails.loss}</h6>
                         </div>`
 
                 }
 
-                if(data.result[0].betDetails.void >= 0){
+                if(data.result[0].betDetails.void > 0){
                     
-                    html3 += `<div class="skin-data red">
+                    html3 += `<div class="skin-data green">
                         <h5>Void</h5>
                         <h6>${data.result[0].betDetails.void}</h6>
                     </div>`
@@ -10619,9 +10637,9 @@ socket.on('connect', () => {
 
                 }
                 
-                if(data.result[0].betDetails.open >= 0){
+                if(data.result[0].betDetails.open > 0){
 
-                    html3 += `<div class="skin-data red">
+                    html3 += `<div class="skin-data green">
                         <h5>Open</h5>
                         <h6>${data.result[0].betDetails.open}</h6>
                     </div>`
@@ -10633,9 +10651,9 @@ socket.on('connect', () => {
 
                 }
 
-                if(data.result[0].betDetails.returns >= 0){
+                if(data.result[0].betDetails.returns > 0){
 
-                    html3 += `<div class="skin-data red">
+                    html3 += `<div class="skin-data green">
                         <h5>P&L</h5>
                         <h6>${data.result[0].betDetails.returns.toFixed(2)}</h6>
                     </div>`
@@ -10735,7 +10753,7 @@ socket.on('connect', () => {
             for(let i = 0; i < data.gameAnalist.length; i++){
                 html += `<tr>
                 <td>${i + 1 + limit}</td>
-                <td class="childgameAnalist" data-roleType="1" data-parent="${data.gameAnalist[i]._id}">${data.gameAnalist[i]._id}</td>
+                <td class="childgameAnalist cursor-pointer" data-roleType="1" data-parent="${data.gameAnalist[i]._id}">${data.gameAnalist[i]._id}</td>
                 <td>${data.gameAnalist[i].Total_User}</td>
                 <td>${data.gameAnalist[i].betcount}</td>
                 <td> ${data.gameAnalist[i].won} </td>
@@ -10751,7 +10769,7 @@ socket.on('connect', () => {
             for(let i = 0; i < data.marketAnalist.length; i++){
                 html2 += `<tr>
                 <td>${i + 1 + limit}</td>
-                <td class="matchOdds">${data.marketAnalist[i]._id}</td>
+                <td class="matchOdds cursor-pointer">${data.marketAnalist[i]._id}</td>
                 <td>${data.marketAnalist[i].betcount}</td>
                 <td> ${data.marketAnalist[i].won} </td>
                 <td>${data.marketAnalist[i].loss}</td>
