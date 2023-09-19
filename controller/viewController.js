@@ -3322,6 +3322,14 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
                 foreignField: '_id',
                 as: "user"
               }
+        },
+        {
+            $sort:{
+                date:-1
+            }
+        },
+        {
+            $limit:limit
         }
     ])
     console.log(History2[0].user)
@@ -3329,7 +3337,7 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
         title:"Settlements",
         me,
         currentUser:me,
-        History
+        History:History2
     })
 } )
 
