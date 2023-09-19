@@ -10460,7 +10460,7 @@ socket.on('connect', () => {
             console.log(data)
             let html = ""
             let html2 = ""
-            let hmtl3 = ""
+            let html3 = ""
             limit = 10 * data.page
             for(let i = 0; i < data.result.length; i++){
                 if(data.result[i].betDetails){
