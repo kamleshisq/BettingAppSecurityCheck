@@ -11,9 +11,10 @@ async function voidBET(data){
 }else{
     let allBetWithMarketId = await betmodel.find({marketId:data.id})
     // console.log(allBetWithMarketId)
-    for(const allBetWithMarketId in bets){
+    for(const bets in allBetWithMarketId){
         // console.log(bets[bet].id, 12)
-        await Bet.findByIdAndUpdate(bets[bet].id, {status:"CANCEL", remark:data.data.remark, calcelUser:data.LOGINDATA.LOGINUSER.userName});
+        await Bet.findByIdA
+        ndUpdate(bets[bet].id, {status:"CANCEL", remark:data.data.remark, calcelUser:data.LOGINDATA.LOGINUSER.userName});
         let user = await User.findByIdAndUpdate(bets[bet].userId, {$inc:{balance: bets[bet].Stake, availableBalance: bets[bet].Stake, myPL: bets[bet].Stake, exposure:-bets[bet].Stake}})
         let description = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/CANCEL`
         let description2 = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/user = ${user.userName}/CANCEL `

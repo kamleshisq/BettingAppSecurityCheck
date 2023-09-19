@@ -3440,7 +3440,7 @@ io.on('connection', (socket) => {
         }
         if(roleType == '1'){
             let admin = await User.findOne({role_type:1})
-            users = await User.find({parent_id:admin._id})
+            users = await User.find({parent_id:admin._id,whiteLabel:parent})
         }
 
         let newUsers = users.map(async(ele) => {
