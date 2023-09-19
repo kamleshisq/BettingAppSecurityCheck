@@ -9238,6 +9238,14 @@ socket.on('connect', () => {
             // console.log(data, id)
             socket.emit("ROLLBACKDETAILS", {LOGINDATA, id, data})
         })
+
+        socket.on('ROLLBACKDETAILS', data => {
+            if(data.status === "error"){
+                alert("Please try again later")
+            }else{ 
+                alert(data)
+            }
+        })
        
 
         $(document).on("click", ".voidBet", function(e){
