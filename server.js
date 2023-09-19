@@ -3455,14 +3455,12 @@ io.on('connection', (socket) => {
         let roleType = data.roleType;
         let parent = data.parent
         let users;
-        let me = data.USER
+        let breadcum;
+        let type;
         let page = data.page;
         let limit = 10
         let roles;
         let role_type =[]
-       
-        // console.log(me)
-
         let filter = {}
         if(data.from_date && data.to_date){
             filter.date = {$gte:new Date(data.from_date),$lte:new Date(data.to_date)}
@@ -3484,10 +3482,20 @@ io.on('connection', (socket) => {
             }
         }
         if(roleType == '1'){
+            type = 'user'
             let admin = await User.findOne({role_type:1})
             users = await User.find({parent_id:admin._id,whiteLabel:parent,role_type:2})
-        }else{
+            breadcum = [parent]
+        }else if(roleType == '2'){
+            type = 'user'
+            let parentName = await User.findOne({_id:parent})
             users = await User.find({parentUsers:parent,role_type:5})
+            breadcum = [parentName.whiteLabel,parentName.userName]
+        }else if(roleType == '5'){
+            type = 'matchOdd'
+            users = await User.find({_id:parent})
+            let parentName = await User.findOne({_id:users[0].parent_id})
+            breadcum = [parentName.whiteLabel,parentName.userName,users[0].userName]
         }
 
         console.log(users)
@@ -3577,7 +3585,7 @@ io.on('connection', (socket) => {
 
         console.log(result)
 
-        socket.emit('childGameAnalist',{result,page,users})
+        socket.emit('childGameAnalist',{result,page,type,breadcum})
 
 
 

@@ -10459,7 +10459,7 @@ socket.on('connect', () => {
             for(let i = 0; i < data.result.length; i++){
                 if(data.result[i].betDetails){
                     if(data.page == 0){
-                        if(data.result[i].ele.role_type == 2){
+                        if(data.type == 'user'){
 
                             html += `<thead>
                             <tr >
@@ -10491,7 +10491,7 @@ socket.on('connect', () => {
                     }
                     html += `<tr>
                     <td>${i + 1 + limit}</td>`
-                    if(data.result[i].ele.role_type == 2){
+                    if(data.type == 'user'){
                         html += `<td class="childgameAnalist" data-roleType="${data.result[i].ele.role_type}" data-parent="${data.result[i].ele._id}">${data.result[i].ele.userName}</td>`
                     }else{
                         html += `<td class="matchOddOwn" data-roleType="${data.result[i].ele.role_type}" data-parent="${data.result[i].ele.userName}">${data.result[i].betDetails.marketName}</td>`
@@ -10507,7 +10507,7 @@ socket.on('connect', () => {
                         html += `<td class="red">${data.result[i].betDetails.returns.toFixed(2)}</td>`
                     }
 
-                    if(data.result[i].ele.role_type != 2){
+                    if(data.type != 'user'){
                         html += `<td>-</td>`
                     }
                     html += `</tr>`
