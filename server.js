@@ -3448,7 +3448,7 @@ io.on('connection', (socket) => {
                 role_type.push(roles[i].role_type)
             }
             console.log(role_type)
-            ele.betDetails = await Bet.aggregate([
+            let betDetails = await Bet.aggregate([
                 {
                     $match:filter
                 },
@@ -3501,8 +3501,7 @@ io.on('connection', (socket) => {
                 }
             ]) 
             console.log(ele.betDetails)
-            ele['new'] = true
-            return ele
+            return (ele,betDetails)
             
         })
 
