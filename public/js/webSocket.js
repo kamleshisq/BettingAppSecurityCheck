@@ -10374,6 +10374,7 @@ socket.on('connect', () => {
         })
 
         $(document).on('click','.matchOddsBack',function(e){
+            $(this).removeClass('active')
             let page =0
             let market = $("#market").val()
             let to_date;
@@ -10688,7 +10689,8 @@ socket.on('connect', () => {
                     <td>-</td>
                     </tr>`
                 }
-                $(`<div class="matchOddsBack">Match Odds</div>`).insertBefore($('#FOOTBALL').find('.row'))
+                $('.matchOddsBack').addClass('active')
+                $('.matchOddsBack').text('Match Odds')
                 if(data.page == 0){
                     html += `</tbody>`
                     $('#FOOTBALL').find('table').html(html)
