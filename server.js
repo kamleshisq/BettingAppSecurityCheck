@@ -3630,21 +3630,23 @@ io.on('connection', (socket) => {
     })
 
     socket.on('updateBetLimitMATCH', async(data) => {
-        let matchName = data.split('/')[0]
-        let Marketname = data.split('/')[1]
-        let dataDb = await betLimitMatchWisemodel.findOne({matchTitle:matchName})
-        if(dataDb != null){
-            console.log(dataDb)
-            console.log(matchName, Marketname)
-            let marketData = dataDb.marketDetails.find(item => item.title == Marketname)
-            if(marketData){
-                socket.emit('updateBetLimitMATCH', {marketData, data:data})
-            }else{
-                socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data})
-            }
-        }else{
-            socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data})
-        }
+
+        console.log(data)
+        // let matchName = data.split('/')[0]
+        // let Marketname = data.split('/')[1]
+        // let dataDb = await betLimitMatchWisemodel.findOne({matchTitle:matchName})
+        // if(dataDb != null){
+        //     console.log(dataDb)
+        //     console.log(matchName, Marketname)
+        //     let marketData = dataDb.marketDetails.find(item => item.title == Marketname)
+        //     if(marketData){
+        //         socket.emit('updateBetLimitMATCH', {marketData, data:data})
+        //     }else{
+        //         socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data})
+        //     }
+        // }else{
+        //     socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data})
+        // }
     })
 
 

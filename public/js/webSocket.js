@@ -10788,7 +10788,7 @@ socket.on('connect', () => {
             var innerText = firstTd.text();
             let id = firstTd.attr('id');
             console.log(innerText, id)
-            socket.emit("updateBetLimitMATCH", innerText)
+            socket.emit("updateBetLimitMATCH", {innerText, id})
          })
 
 
