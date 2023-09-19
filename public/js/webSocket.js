@@ -10352,7 +10352,7 @@ socket.on('connect', () => {
 
         })
         $(document).on('click','.matchOddOwn',function(e){
-            let result = $(this).parent().children().eq(8)
+            let result = $(this).parent().children().eq(8).text()
             $('.welcome-info-btn').append(`<div class="skin-data green">
             <h5>Result</h5>
             <h6>${result}</h6>
