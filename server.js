@@ -2570,11 +2570,19 @@ io.on('connection', (socket) => {
         let dataobj;
 
         if(data.fromdate && data.todate){
-            dataobj = {$gte:new Date(data.fromdate) ,$lte:new Date(data.todate)}
+            let fromDate = new Date(data.fromdate)
+            let toDate = new Date(data.todate)
+            fromDate = fromDate.getTime()/1000
+            toDate = toDate.getTime()/1000
+            dataobj = {$gte:new Date(fromDate) ,$lte:new Date(toDate)}
         }else if(data.fromdate && !data.todate){
-            dataobj = {$gte:new Date(data.fromdate)}
+            let fromDate = new Date(data.fromdate)
+            fromDate = fromDate.getTime()/1000
+            dataobj = {$gte:new Date(fromDate)}
         }else if(!data.fromdate && data.todate){
-            dataobj = {$lte:new Date(data.todate)}
+            let toDate = new Date(data.todate)
+            toDate = toDate.getTime()/1000
+            dataobj = {$lte:new Date(toDate)}
         }
         // console.log(dataobj)
         let betsEventWise = await Bet.aggregate([
