@@ -9268,7 +9268,11 @@ socket.on('connect', () => {
 
         socket.on("VoidBetIn", async(data) => {
             if(data.status === "error"){
-                alert("Please try again later")
+                if(data.message){
+                    alert(data.message)
+                }else{
+                    alert("Please try again later")
+                }
             }else{
                 const deleteButton = document.getElementById(data.betdata.marketId);
                 const row = deleteButton.closest('tr'); 
