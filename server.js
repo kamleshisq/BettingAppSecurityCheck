@@ -3657,8 +3657,12 @@ io.on('connection', (socket) => {
 
 
     socket.on('updateBetLimitMarket', async(data) => {
-        console.log(data, "+==> DATA")
-       
+       let dbData = await betLimit.findOne({type:data.id})
+       if(dbData){
+
+       }else{
+        console.log(data)
+       }
        
     })
 
