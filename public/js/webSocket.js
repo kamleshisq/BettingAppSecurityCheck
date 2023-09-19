@@ -10711,8 +10711,8 @@ socket.on('connect', () => {
             if($('#FOOTBALL').find('.matchOddsBack')){
                 $('#FOOTBALL').find('.matchOddsBack').html('')
             }
-            if($('#Cricket').find('.accountBreadcum')){
-                $('#Cricket').find('.accountBreadcum').html('')
+            if($('#Cricket').find('.bredcum-container')){
+                $('#Cricket').find('.bredcum-container').html('')
             }
             $('.welcome-info-btn').remove()
             let html = ""
