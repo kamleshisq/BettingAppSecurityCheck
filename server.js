@@ -3467,7 +3467,7 @@ io.on('connection', (socket) => {
                     $match:{
                         'userDetails.isActive':true,
                         'userDetails.roleName':{$ne:'Admin'},
-                        'userDetails.role_type':{$in:role_type},
+                        // 'userDetails.role_type':{$in:role_type},
                         'userDetails.parentUsers':{$elemMatch:{$eq:ele._id}}
                     }
                 },
