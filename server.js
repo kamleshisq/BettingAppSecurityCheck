@@ -3452,7 +3452,7 @@ io.on('connection', (socket) => {
             for(let i = 0; i < roles.length; i++){
                 role_type.push(roles[i].role_type)
             }
-            if(users.role_type == 2){
+            if(ele.role_type == 2){
                 userfilter = {
                     'userDetails.isActive':true,
                     'userDetails.roleName':{$ne:'Admin'},
@@ -3460,7 +3460,7 @@ io.on('connection', (socket) => {
                     'userDetails.parentUsers':{$elemMatch:{$eq:(ele._id).toString()}}
                 }
             }
-            else if(users.role_type == 5){
+            else if(ele.role_type == 5){
                 userfilter = {
                     'userDetails.isActive':true,
                     'userDetails.userName':ele.userName
