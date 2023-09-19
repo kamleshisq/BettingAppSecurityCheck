@@ -10786,7 +10786,8 @@ socket.on('connect', () => {
         $(document).on('click','.updateBetLimitMATCH',function(e){
             let firstTd = $(this).closest("tr").find("td:first");
             var innerText = firstTd.text();
-            console.log(innerText)
+            let id = firstTd.attr('id');
+            console.log(innerText, id)
             socket.emit("updateBetLimitMATCH", innerText)
          })
 
