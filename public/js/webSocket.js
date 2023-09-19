@@ -9150,6 +9150,7 @@ socket.on('connect', () => {
                   <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + " "+ date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
                   <td>${data.History[i].eventName}</td>
                   <td>${data.History[i].marketName}</td>
+                  <td>${data.History[i].user[0].userName}</td>
                   <td>${data.History[i].result}</td>
                 </tr>`
             } 

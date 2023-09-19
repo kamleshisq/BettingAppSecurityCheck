@@ -2645,7 +2645,40 @@ io.on('connection', (socket) => {
             filter.userId = me._id
             History = await settlementHistory.find(filter).sort({ date: -1 }).skip(page * limit).limit(limit)
         }
-        socket.emit('settlementHistory',{History,page})
+        if(me.roleName === "Admin"){
+        }else{
+            filter.userId = me._id
+        }
+        let History2 = await settlementHistory.aggregate([
+            {
+                $match:filter
+            },
+            {
+                $addFields: {
+                  userIdObjectId: { $toObjectId: '$userId' } 
+                }
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "userIdObjectId",
+                    foreignField: '_id',
+                    as: "user"
+                  }
+            },
+            {
+                $sort:{
+                    date:-1
+                }
+            },
+            {
+                $skip:(page * limit)
+            },
+            {
+                $limit:limit
+            }
+        ])
+        socket.emit('settlementHistory',{History:History2,page})
     })
 
     socket.on("VoidBetIn", async(data) => {
