@@ -9202,6 +9202,14 @@ socket.on('connect', () => {
             form.attr('id', id);
         })
 
+        $(document).on('click', '.ROLLBACK', function(e){
+            e.preventDefault()
+            let id = this.id
+            let modleName = "#myModalSE2"
+            let form = $(modleName).find('.rollBack-form')
+            form.attr('id', id);
+        })
+
         $(document).on('submit', ".voidbet-form2", function(e){
             e.preventDefault();
             let id = this.id
