@@ -3463,14 +3463,14 @@ io.on('connection', (socket) => {
                 {
                     $unwind:'$userDetails'
                 },
-                // {
-                //     $match:{
-                //         'userDetails.isActive':true,
-                //         'userDetails.roleName':{$ne:'Admin'},
-                //         'userDetails.role_type':{$in:role_type},
-                //         'userDetails.parentUsers':{$elemMatch:{$eq:ele._id}}
-                //     }
-                // },
+                {
+                    $match:{
+                        'userDetails.isActive':true,
+                        'userDetails.roleName':{$ne:'Admin'},
+                        'userDetails.role_type':{$in:role_type},
+                        'userDetails.parentUsers':{$elemMatch:{$eq:ele._id}}
+                    }
+                },
                 {
                     $group:{
                         _id:{
