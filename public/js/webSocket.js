@@ -10833,6 +10833,8 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
+            let id = $(this).id
+            console.log(id)
             socket.emit('updateBetLimitMarket', data)
          })
 
