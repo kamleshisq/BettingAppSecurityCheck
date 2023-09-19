@@ -158,7 +158,7 @@ if(thatMarketLimit){
     minFancy = thatMarketLimit.min_stake
     maxFancy = thatMarketLimit.max_stake
 }
-    // console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
+    console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 // console.log(marketDetails, 454545454454454545544544444444444)
 if(marketDetails.title.toLowerCase().startsWith('match')){
     // console.log("MATCHODD", minMatchOdds)
