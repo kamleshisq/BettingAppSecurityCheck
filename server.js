@@ -3499,13 +3499,14 @@ io.on('connection', (socket) => {
                     $limit: limit 
                 }
             ]) 
+            console.log(ele.betDetails)
             return ele
             
         })
 
         let result = await Promise.all(newUsers)
 
-        console.log(result)
+        // console.log(result)
 
         socket.emit('childGameAnalist',{result,page})
 
