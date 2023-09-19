@@ -19,9 +19,12 @@ const settlementHistory = mongoose.Schema({
     },
     result:{
         type:String,
-        required:true
+        // required:true
     },
     marketName:{
+        type:String
+    },
+    remark:{
         type:String
     }
 });
