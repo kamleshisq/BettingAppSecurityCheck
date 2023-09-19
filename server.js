@@ -2584,7 +2584,7 @@ io.on('connection', (socket) => {
             toDate = Math.floor(toDate.getTime()/1000)
             dataobj = {$lte:new Date(toDate)}
         }
-        // console.log(dataobj)
+        console.log(dataobj)
         let betsEventWise = await Bet.aggregate([
             {
                 $match: {
