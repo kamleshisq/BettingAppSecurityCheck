@@ -1274,7 +1274,7 @@ socket.on('connect', () => {
                         "<th>Credit Reference</th>"+
                         "<th>Available Balance</th>"+
                         "<th>Downlevel Balance</th>"+
-                        "<th>My P/L</th>"+
+                        "<th>Points W/L</th>"+
                         "<th>Upline P/L</th>"+
                         "<th>Exposure</th>"+
                         "<th>Action</th>"+
@@ -1287,7 +1287,7 @@ socket.on('connect', () => {
                         "<th>Credit Reference</th>"+
                         "<th>Available Balance</th>"+
                         "<th>Downlevel Balance</th>"+
-                        "<th>My P/L</th>"+
+                        "<th>Points W/L</th>"+
                         "<th>Upline P/L</th>"+
                         "<th>Exposure</th>"+
                         "<th>Action</th>"+
@@ -1337,9 +1337,16 @@ socket.on('connect', () => {
                     html += `
                     <td> ${response[i].balance}</td>
                     <td> ${response[i].availableBalance}</td>
-                    <td> ${response[i].downlineBalance}</td>
-                    <td> ${response[i].myPL}</td>
-                    <td> ${response[i].uplinePL}</td>
+                    <td> ${response[i].downlineBalance}</td>`
+                    if(response[i].pointsWL > 0){
+
+                        html += `<td class="green"> ${response[i].pointsWL}</td>`
+                    }else{
+                        html += `<td class="red"> ${response[i].pointsWL}</td>`
+
+                    }
+
+                    html += `<td> ${response[i].uplinePL}</td>
                     <td> ${response[i].exposure}</td>
                     <td>
                     <div class="btn-group">
