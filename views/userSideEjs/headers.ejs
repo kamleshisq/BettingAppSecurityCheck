@@ -514,14 +514,14 @@
                           };
                           var formattedTime = date.toLocaleString('en-US', options);
                           var formattedDATE = formattedTime.split(",")[0];
-                          var formattedTime = formattedTime.split(",")[1];
+                          var formattedtime = formattedTime.split(",")[1];
                         %>
                         <div class="box">
                             <div class="notification-header"><%=formattedDATE%></div>
                             <div class="notification-content">
                                 <div class="date-titme">
                                     <p class="date"><%=formattedDATE%></p>
-                                    <p class="time"><%=formattedTime%></p>
+                                    <p class="time"><%=formattedtime%></p>
                                 </div>
                                 <div class="conent">
                                     <p><%=notifications[i].message%></p>
