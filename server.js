@@ -3441,7 +3441,7 @@ io.on('connection', (socket) => {
             let admin = await User.findOne({role_type:1})
             users = await User.find({parent_id:admin._id,whiteLabel:parent,role_type:2})
         }else{
-            users = await User.find({parent_id:parent,role_type:5})
+            users = await User.find({parentUsers:parent,role_type:5})
         }
 
         console.log(users)
