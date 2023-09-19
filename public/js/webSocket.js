@@ -10351,6 +10351,9 @@ socket.on('connect', () => {
             socket.emit('childGameAnalist',{roleType,parent,from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
         })
 
+        socket.on('childGameAnalist',async(data)=>{
+            console.log(data)
+        })
         let limit
 
 

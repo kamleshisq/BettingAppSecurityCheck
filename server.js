@@ -3504,6 +3504,8 @@ io.on('connection', (socket) => {
 
         console.log(result)
 
+        socket.emit('childGameAnalist',{result,page})
+
 
 
     })
