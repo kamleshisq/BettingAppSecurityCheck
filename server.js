@@ -2677,7 +2677,7 @@ io.on('connection', (socket) => {
 
     socket.on('unmapBet', async(data) => {
         try{
-            await Bet.updateMany({ marketId: data.id }, { $unset: { result: 1 }, $set: { status: 'OPEN' } });
+            await Bet.updateMany({ marketId: data.id, status: 'MAP' }, { $unset: { result: 1 }, $set: { status: 'OPEN' } });
             let betdata = await Bet.findOne({marketId:data.id})
             socket.emit('unmapBet', {status:"success", betdata, result:data.result})
         }catch(err){
@@ -2740,7 +2740,7 @@ io.on('connection', (socket) => {
                     },
                   ]);
                 // console.log(bets)
-                await Bet.updateMany({marketId:data.id}, {$set:{result:data.result, status:'MAP'}})
+                await Bet.updateMany({marketId:data.id, status:'OPEN'}, {$set:{result:data.result, status:'MAP'}})
                 let betdata = await Bet.findOne({marketId:data.id})
                 socket.emit('VoidBetIn22', {status:"success", betdata, result:data.result})
              }else{
