@@ -3441,7 +3441,7 @@ io.on('connection', (socket) => {
             users = await User.find({parent_id:admin._id,whiteLabel:parent,role_type:2})
         }
 
-        let newUsers = await users.map(async(ele) => {
+        let newUsers = users.map(async(ele) => {
             role_type = []
             roles = await Role.find({role_level: {$gt:ele.role.role_level}});
             for(let i = 0; i < roles.length; i++){
