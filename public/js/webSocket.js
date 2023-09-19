@@ -10391,6 +10391,7 @@ socket.on('connect', () => {
             } 
         
             if(data.page == 0){
+                html += `</tbody>`
                 if(!(data.result.length < 10)){
                     document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
                 }
