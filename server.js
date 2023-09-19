@@ -3636,7 +3636,7 @@ io.on('connection', (socket) => {
         if(data1 != null){
 
         }else{
-            socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data})
+            socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data.innerText})
         }
         // let matchName = data.split('/')[0]
         // let Marketname = data.split('/')[1]
