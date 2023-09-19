@@ -47,19 +47,19 @@ async function voidBET(data){
                 }
                 let debitAmountForP = -VoidAmount
                 for(let i = user.parentUsers.length - 1; i >= 1; i--){
-                    let parentUser1 = await userModel.findById(user.parentUsers[i])
-                    let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
+                    let parentUser1 = await User.findById(user.parentUsers[i])
+                    let parentUser2 = await User.findById(user.parentUsers[i - 1])
                     let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
                     let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
                     // parentUser1Amount = Math.round(parentUser1Amount * 10000) / 10000;
                     // parentUser2Amount = Math.round(parentUser2Amount * 10000) / 10000;
                     parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
                     parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                    // await userModel.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
+                    // await User.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
                     // if(i === 1){
-                    //     await userModel.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
+                    //     await User.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
                     // }
-                    await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                    await User.findByIdAndUpdate(user.parentUsers[i], {
                       $inc: {
                           downlineBalance:  -VoidAmount,
                           myPL: -parentUser1Amount,
@@ -70,7 +70,7 @@ async function voidBET(data){
                   });
               
                   if (i === 1) {
-                      await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                      await User.findByIdAndUpdate(user.parentUsers[i - 1], {
                           $inc: {
                               downlineBalance: -VoidAmount,
                               myPL: -parentUser2Amount,
