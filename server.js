@@ -3447,7 +3447,7 @@ io.on('connection', (socket) => {
             for(let i = 0; i < roles.length; i++){
                 role_type.push(roles[i].role_type)
             }
-            console.log(ele_id,role_type)
+            console.log(ele._id,role_type)
             let betDetails = await Bet.aggregate([
                 {
                     $match:filter
