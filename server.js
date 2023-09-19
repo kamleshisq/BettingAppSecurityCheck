@@ -3660,6 +3660,7 @@ io.on('connection', (socket) => {
        let dbData = await betLimit.findOne({type:data.id})
        if(dbData){
         console.log(dbData)
+        await betLimit.findOneAndUpdate({type:data.id}, {min_stake:data.min_stake, max_stake:data.max_stake, max_profit:data.max_profit, max_odd:data.max_odd, delay:data.delay})
        }else{
         console.log(data)
         await betLimit.create({type:data.id, min_stake:data.min_stake, max_stake:data.max_stake, max_profit:data.max_profit, max_odd:data.max_odd, delay:data.delay})
