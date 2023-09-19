@@ -3435,12 +3435,12 @@ io.on('connection', (socket) => {
             breadcum = [parent]
         }else if(roleType == '2'){
             type = 'user'
-            let parentName = await User.findOne({_id:parent})
-            users = await User.find({parentUsers:parent,role_type:5})
+            let parentName = await User.findOne({userName:parent})
+            users = await User.find({parentUsers:parentName._id,role_type:5})
             breadcum = [parentName.whiteLabel,parentName.userName]
         }else if(roleType == '5'){
             type = 'matchOdd'
-            users = await User.find({_id:parent})
+            users = await User.find({userName:parent})
             let parentName = await User.findOne({_id:users[0].parent_id})
             breadcum = [parentName.whiteLabel,parentName.userName,users[0].userName]
         }
