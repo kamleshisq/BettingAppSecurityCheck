@@ -24,6 +24,12 @@
               <%if (seriesMatch[0].marketList.hasOwnProperty(key) && seriesMatch[0].marketList[key] != null ) {%>
                 <%if(Array.isArray(seriesMatch[0].marketList[key])){%>
                   <%for(let i = 0; i< seriesMatch[0].marketList[key].length; i++){%>
+                    <%
+                      let data = betLimit.find(item => item.type == seriesMatch[0].marketList[key][i].marketId)
+                      if(data){
+                    %>
+
+                    <%}else{%>
                     <tr>
                       <td id="<%=seriesMatch[0].marketList[key][i].marketId%>" class="btn-filter"><%=seriesMatch[0].marketList[key][i].title%></td>
                       <td><input type="text" class="form-datas" value="100" readonly=""></td>
@@ -37,8 +43,14 @@
                         </div>
                       </td>
                     </tr>
+                    <%}%>
                   <%}%>
                 <%}else{%>
+                  <%
+                  let data = betLimit.find(item => item.type == seriesMatch[0].marketList[key].marketId)
+                  if(data){
+                  %>
+                  <%}else{%>
                   <tr>
                       <td id="<%=seriesMatch[0].marketList[key].marketId%>" class="btn-filter"><%=key%></td>
                       <td><input type="text" class="form-datas" value="100" readonly=""></td>
@@ -52,6 +64,7 @@
                         </div>
                       </td>
                     </tr>
+                    <%}%>
                 <%}%>
               <%}%>
           <%}%>
