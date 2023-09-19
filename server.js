@@ -3634,7 +3634,7 @@ io.on('connection', (socket) => {
         console.log(data)
         let data1 = await betLimit.findOne({type:data.id})
         if(data1 != null){
-
+            socket.emit('updateBetLimitMATCH', {marketData:data1, data:data.innerText, id:data.id})
         }else{
             socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data.innerText, id:data.id})
         }
