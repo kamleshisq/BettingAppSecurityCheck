@@ -10409,7 +10409,7 @@ socket.on('connect', () => {
                     html += `<tr class="empty_table"><td>No record found</td></tr>`
                 }
               
-                $('#Cricket').find('tabel').html(html)
+                $('#Cricket').find('table').html(html)
 
             }else{
                 $('#Cricket').find('tbody').append(html)
