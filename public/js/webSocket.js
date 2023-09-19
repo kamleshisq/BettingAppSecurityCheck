@@ -10483,7 +10483,7 @@ socket.on('connect', () => {
             let html2 = ""
             let html3 = ""
             limit = 10 * data.page
-            $('.welcome-info-btn').remove()
+            $('.dashboard-welcome-section').html('')
             for(let i = 0; i < data.result.length; i++){
                 if(data.result[i].betDetails){
                     if(data.page == 0){
@@ -10652,7 +10652,7 @@ socket.on('connect', () => {
               $('#Cricket').find('table').html(html)
               $('#Cricket').find('.bredcum-container').html(html2)
               if(data.type != 'user'){
-                  $('#Cricket').find('.bredcum-container').after(html3)
+                  $('#Cricket').find('.dashboard-welcome-section').html(html3)
               }
 
             }else{
@@ -10704,7 +10704,7 @@ socket.on('connect', () => {
                     </tr>`
                 }
                 $('.matchOddsBack').addClass('active')
-                $('.matchOddsBack').text('Match Odds')
+                $('.matchOddsBack').html('<i class="fa-solid fa-angle-left"></i> Match Odds')
                 if(data.page == 0){
                     html += `</tbody>`
                     $('#FOOTBALL').find('table').html(html)
