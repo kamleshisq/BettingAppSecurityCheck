@@ -3468,7 +3468,7 @@ io.on('connection', (socket) => {
                         'userDetails.isActive':true,
                         'userDetails.roleName':{$ne:'Admin'},
                         'userDetails.role_type':{$in:role_type},
-                        'userDetails.parentUsers':{$elemMatch:{$eq:ele._id}}
+                        'userDetails.parentUsers':{$elemMatch:{$eq:'64956e701109042453f3c2ff'}}
                     }
                 },
                 {
@@ -3502,12 +3502,11 @@ io.on('connection', (socket) => {
             
         })
 
-        console.log(newUsers)
         let result = await Promise.all(newUsers)
 
         console.log(result)
 
-        socket.emit('childGameAnalist',{result,page,newUsers})
+        socket.emit('childGameAnalist',{result,page})
 
 
 
