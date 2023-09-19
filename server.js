@@ -3437,16 +3437,17 @@ io.on('connection', (socket) => {
             }
         }
         if(roleType == '1'){
-
             let admin = await User.findOne({role_type:1})
             users = await User.find({parent_id:admin._id,whiteLabel:parent,role_type:2})
         }
 
         let newUsers = users.map(async(ele) => {
+            role_type = []
             roles = await Role.find({role_level: {$gt:ele.role.role_level}});
             for(let i = 0; i < roles.length; i++){
                 role_type.push(roles[i].role_type)
             }
+            console.log(role_type)
             ele.betDetails = await Bet.aggregate([
                 {
                     $match:filter
