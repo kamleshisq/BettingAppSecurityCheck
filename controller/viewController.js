@@ -3324,7 +3324,7 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
               }
         }
     ])
-    console.log(History2)
+    console.log(History2[0].user)
     res.status(200).render("./settlemetHistory/settlemetHistory",{
         title:"Settlements",
         me,
