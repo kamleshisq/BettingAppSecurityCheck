@@ -3444,13 +3444,13 @@ io.on('connection', (socket) => {
             users = await User.find({parent_id:parent})
         }
 
+        console.log(users)
         let newUsers = users.map(async(ele) => {
             role_type = []
             roles = await Role.find({role_level: {$gt:ele.role.role_level}});
             for(let i = 0; i < roles.length; i++){
                 role_type.push(roles[i].role_type)
             }
-            console.log(ele._id,role_type)
             let betDetails = await Bet.aggregate([
                 {
                     $match:filter
