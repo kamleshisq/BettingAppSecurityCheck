@@ -3496,7 +3496,7 @@ io.on('connection', (socket) => {
                         open:{$sum:{$cond:[{$in:['$status',['MAP','OPEN']]},1,0]}},
                         void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
                         returns:{$sum:{$cond:[{$in:['$status',['LOSS','OPEN']]},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}},
-                        marketName:'$marketName'
+                        marketName:{ $first: '$marketName' }
                         
                     }
                 },
