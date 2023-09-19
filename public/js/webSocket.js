@@ -9202,6 +9202,14 @@ socket.on('connect', () => {
             form.attr('id', id);
         })
 
+        $(document).on('click', '.ROLLBACK', function(e){
+            e.preventDefault()
+            let id = this.id
+            let modleName = "#myModalSE2"
+            let form = $(modleName).find('.rollBack-form')
+            form.attr('id', id);
+        })
+
         $(document).on('submit', ".voidbet-form2", function(e){
             e.preventDefault();
             let id = this.id
@@ -9227,7 +9235,8 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
-            console.log(data, id)
+            // console.log(data, id)
+            socket.emit("ROLLBACKDETAILS", {LOGINDATA, id, data})
         })
        
 
