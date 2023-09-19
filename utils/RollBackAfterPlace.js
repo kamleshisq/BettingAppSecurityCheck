@@ -10,7 +10,8 @@ async function rollBack(data){
     if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
         return 'please provide a valid password'
     }else{ 
-        console.log(data, 444)
+        let allBetWithMarketId = await Bet.find({marketId:data.id})
+        console.log(allBetWithMarketId)
     } 
 }
 
