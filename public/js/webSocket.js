@@ -10345,6 +10345,22 @@ socket.on('connect', () => {
             socket.emit('matchOdds',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
 
         })
+        $(document).on('click','.matchOddOwn',function(e){
+            let own = $(this).attr('data-parent')
+            let page = 0
+            let market = $("#market").val()
+            let to_date;
+            let from_date
+            if($('#Fdate').val() != ''){
+                from_date = $('#Fdate').val()
+            }
+            if($('#Tdate').val() != ''){
+                to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            }
+            let Sport = $("#Event").val()
+            socket.emit('matchOddsOwn',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market,own})
+
+        })
 
         $(document).on('click','.matchOddsBack',function(e){
             let page =0
@@ -10381,6 +10397,61 @@ socket.on('connect', () => {
 
         let limit
 
+        socket.on('matchOddsOwn',async(data)=>{
+            console.log(data)
+            let html = ""
+            limit = 10 * data.page
+            if(data.matchOdds.length !== 0){
+                if(data.page == 0){
+                    html += `
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>BET PLACED DATE</th>
+                            <th>BET ON</th>
+                            <th>ODDS</th>
+                            <th>AMOUNT </th>
+                            <th>PROFIT/LOSS </th>
+                            <th>STATUS</th>
+                            <th>IP ADDRESS</th>
+                        </tr>
+                    </thead><tbody>`
+                }
+
+                for(let i = 0;i<data.matchOdds.length;i++){
+                    html += `<tr>
+                    <td>${i + 1 + limit}</td>
+                    <td>${data.matchOdds[i].date}</td>
+                    <td>${data.matchOdds[i].selectionName}</td>
+                    <td>${data.matchOdds[i].oddValue}</td>`
+                    html += `<td>${data.matchOdds[i].returns}</td>`
+                    html += `<td>${data.matchOdds[i].returns}</td>`
+                    html += `
+                    <td>${data.matchOdds[i].status}</td>
+                    <td>-</td>
+                    </tr>`
+                }
+                $(`<div class="matchOddsBack">Match Odds</div>`).insertBefore($('#FOOTBALL').find('.row'))
+                if(data.page == 0){
+                    html += `</tbody>`
+                    if(!(data.matchOdds.length < 10)){
+                        document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
+                    }
+                    if(data.matchOdds.length == 0){
+                        html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    }
+                  
+                    $('#Cricket').find('table').html(html)
+                }else{
+                    $('#Cricket').find('table').append(html)
+
+                }
+
+
+            }else{
+
+            }
+        })
         socket.on('childGameAnalist',async(data)=>{
             console.log(data)
             let html = ""
@@ -10493,7 +10564,7 @@ socket.on('connect', () => {
                     <td>${i + 1 + limit}</td>
                     <td>${data.matchOdds[i].date}</td>
                     <td>${data.matchOdds[i].userName}</td>
-                    <td>-</td>
+                    <td>${data.matchOdds[i].selectionName}</td>
                     <td>${data.matchOdds[i].oddValue}</td>`
                     html += `<td>${data.matchOdds[i].returns}</td>`
                     html += `<td>${data.matchOdds[i].returns}</td>`

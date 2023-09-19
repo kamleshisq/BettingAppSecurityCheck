@@ -3403,6 +3403,52 @@ io.on('connection', (socket) => {
 
         socket.emit('matchOdds',{matchOdds,page})
     })
+    socket.on('matchOddsOwn',async(data)=>{
+        let own = data.own
+        let page = data.page;
+        let limit = 10
+        let filter = {}
+        filter.userName = own
+        if(data.from_date && data.to_date){
+            filter.date = {$gte:new Date(data.from_date),$lte:new Date(data.to_date)}
+        }else if(data.from_date && !data.to_date){
+            filter.date = {$gte:new Date(data.from_date)}
+        }else if(data.to_date && !data.from_date){
+            filter.date = {$lte:new Date(data.to_date)}
+        }
+        if(data.Sport != "All"){
+            filter.eventId = data.Sport
+        }
+
+        if(data.market != "All"){
+            if(data.market === "Match Odds"){
+                filter.marketName = { '$regex': '^Match', '$options': 'i' }
+            }else if (data.market === "Bookmaker 0%Comm"){
+                filter.marketName = { '$regex': '^Bookma', '$options': 'i' }
+            }else if (data.market === "Fancy"){
+                filter.marketName = { '$not': { '$regex': '^(match|bookma)', '$options': 'i' } }
+            }
+        }
+
+        const matchOdds =  await Bet.aggregate([
+            {
+                $match:filter
+            },
+            {
+                $sort: {
+                    date: -1 
+                }
+            },
+            {
+                $skip: page * limit
+            },
+            {
+                $limit: limit 
+            }
+        ])
+
+        socket.emit('matchOddsOwn',{matchOdds,page})
+    })
 
     socket.on('childGameAnalist',async(data)=>{
         console.log(data)
