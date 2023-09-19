@@ -2,6 +2,7 @@ const Bet = require('../model/betmodel');
 const User = require('../model/userModel');
 const AccModel = require('../model/accountStatementByUserModel');
 const settlementHistoryModel = require('../model/settelementHistory');
+const Decimal =  require('decimal.js')
 
 
 
