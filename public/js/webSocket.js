@@ -9219,6 +9219,16 @@ socket.on('connect', () => {
                 alert(data)
             }
         })
+
+
+        $(document).on('submit', '.rollBack-form', function(e){
+            e.preventDefault()
+            let id = this.id
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            console.log(data, id)
+        })
        
 
         $(document).on("click", ".voidBet", function(e){
