@@ -803,7 +803,7 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
             .then((betResult) => {
             //   socket.emit("aggreat", betResult)
             res.status(200).render('./gamereports/gamereport',{
-                title:"gameReports",
+                title:"Game Reports",
                 me:currentUser,
                 games:betResult,
                 currentUser
@@ -884,7 +884,7 @@ exports.useracount = catchAsync(async(req, res, next) => {
         // console.log(json)
         const data = json.userAcc
         res.status(200).render('./userAccountStatement/useracount',{
-        title:"UserAccountStatement",
+        title:"User Account Statement",
         me:currentUser,
         data,
         currentUser
@@ -930,7 +930,7 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
     // console.log(Logs)
 
     res.status(200).render('./userHistory/userhistoryreport',{
-        title:"UserHistory",
+        title:"User History",
         me:currentUser,
         Logs,
         currentUser
@@ -1247,7 +1247,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     // console.log(cricket1)
     console.log(betsEventWise[0].data)
     res.status(200).render("./sattelment/setalment",{
-        title:"SETTLEMENTS",
+        title:"Settlements",
         me,
         currentUser:me,
         settlement,
@@ -1289,7 +1289,7 @@ exports.WhiteLabelAnalysis = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     // console.log(whiteLabelWise)
     res.status(200).render("./whiteLableAnalysis/whiteLableAnalysis",{
-        title:"whiteLableAnalysis",
+        title:"White Lable Analysis",
         whiteLabelWise,
         me,
         currentUser:me
@@ -1384,7 +1384,7 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
 exports.getStreamManagementPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     res.status(200).render("./streamManagement/streammanagement",{
-        title:"Streammanagement",
+        title:"Stream Management",
         me,
         currentUser:me
     })
@@ -1460,7 +1460,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
             //   socket.emit("aggreat", betResult)
               let me = req.currentUser
                 res.status(200).render("./betMonitering/betmoniter",{
-                    title:"Betmoniter",
+                    title:"Bet Moniter",
                     bets:betResult,
                     me,
                     currentUser:me
@@ -1534,7 +1534,7 @@ exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
     RG = await gameModel.find({sub_provider_name:"Royal Gaming"})
     // console.log(RG.length)
     res.status(200).render("./casinoController/casinocontrol", {
-        title:"casinoController",
+        title:"Casino Controller",
         data:data,
         RG,
         currentUser,
@@ -1554,7 +1554,7 @@ exports.getAllCasinoPageFOrTEsting = catchAsync(async(req, res, next) => {
     const data = await gameModel.find();
     let user = req.currentUser
     res.status(200).render('allCasinoGame', {
-        title:"allGame",
+        title:"All Games",
         data,
         user
     })
@@ -3254,7 +3254,7 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     let data = await betModel.findOne({eventId:req.query.id})
     console.log(betsEventWiseOpen)
     res.status(200).render("./sattlementInPage/main",{
-        title:"SETTLEMENTS",
+        title:"Settlements",
         me,
         currentUser:me,
         betsEventWiseOpen,
@@ -3276,7 +3276,7 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
         History = await settlementHisory.find({userId:me._id}).sort({ date: -1 }).limit(limit)
     }
     res.status(200).render("./settlemetHistory/settlemetHistory",{
-        title:"SETTLEMENTS",
+        title:"Settlements",
         me,
         currentUser:me,
         History
@@ -3320,7 +3320,7 @@ exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
     // console.log(liveTennis.length != 0)
     console.log("liveFootBall")
     res.status(200).render("./catalogController/catalogcontroller", {
-        title:"catalogController",
+        title:"Catalog Controller",
         data:sportList,
         me: user,
         currentUser: user
@@ -3382,7 +3382,7 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
         })
         Promise.all(seriesPromise).then(()=>{
             return res.status(200).render("./catalogController/compitition", {
-                title:"catalogController",
+                title:"Catalog Controller",
                 data:seriesObjList,
                 me: user,
                 currentUser: user,
@@ -3391,7 +3391,7 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
         })
     }else{
         return res.status(200).render("./catalogController/compitition", {
-            title:"catalogController",
+            title:"Catalog Controller",
             data:seriesObjList,
             me: user,
             currentUser: user,
@@ -3452,7 +3452,7 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
         console.log(seriesObjList)
         Promise.all(eventListPromis).then(()=>{
             return res.status(200).render("./catalogController/events", {
-                title:"catalogController",
+                title:"Catalog Controller",
                 data:seriesObjList,
                 me: user,
                 currentUser: user,
@@ -3461,7 +3461,7 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
         })
     }else{
         return res.status(200).render("./catalogController/events", {
-            title:"catalogController",
+            title:"Catalog Controller",
             data:seriesObjList,
             me: user,
             currentUser: user,
@@ -3528,7 +3528,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     // console.log(cricketEvents)
 
     return res.status(200).render("./eventController/eventController", {
-        title:"eventController",
+        title:"Event Controller",
         data,
         me: user,
         currentUser: user,
