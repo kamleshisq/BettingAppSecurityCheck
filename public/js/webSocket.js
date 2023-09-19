@@ -10802,6 +10802,7 @@ socket.on('connect', () => {
             form.find('input[name = "max_odd"]').val(100)
             form.find('input[name = "delay"]').val(5)
             form.find('input[name = "type"]').val(data.data)
+            form.attr(data.id)
             }else if (data.status == "errr"){
                 alert('please try again leter')
             }else{
