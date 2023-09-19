@@ -10437,7 +10437,7 @@ socket.on('connect', () => {
                     }
 
                     if(data.result[i].ele.role_type != 2){
-                        hmtl += `<td>-</td>`
+                        html += `<td>-</td>`
                     }
                     html += `</tr>`
                 }
