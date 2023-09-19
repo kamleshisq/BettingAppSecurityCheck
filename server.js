@@ -3501,7 +3501,7 @@ io.on('connection', (socket) => {
                 }
             ]) 
             console.log(ele.betDetails)
-            ele.new = true
+            ele['new'] = true
             return ele
             
         })
