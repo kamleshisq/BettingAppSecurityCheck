@@ -2659,7 +2659,7 @@ io.on('connection', (socket) => {
             }
         }catch(err){
             console.log(err)
-            socket.emit("VoidBetIn",{message:"err", status:"error"})
+            socket.emit("VoidBetIn",{status:"error"})
         }     
     })
 
