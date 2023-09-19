@@ -3441,16 +3441,34 @@ io.on('connection', (socket) => {
             let admin = await User.findOne({role_type:1})
             users = await User.find({parent_id:admin._id,whiteLabel:parent,role_type:2})
         }else{
-            users = await User.find({parent_id:parent})
+            users = await User.find({parent_id:parent,role_type:5})
         }
 
         console.log(users)
         let newUsers = users.map(async(ele) => {
+            let userfilter;
             role_type = []
             roles = await Role.find({role_level: {$gt:ele.role.role_level}});
             for(let i = 0; i < roles.length; i++){
                 role_type.push(roles[i].role_type)
             }
+            if(users.role_type == 2){
+                userfilter = {
+                    'userDetails.isActive':true,
+                    'userDetails.roleName':{$ne:'Admin'},
+                    'userDetails.role_type':{$in:role_type},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:(ele._id).toString()}}
+                }
+            }
+            else if(users.role_type == 5){
+                userfilter = {
+                    'userDetails.isActive':true,
+                    'userDetails.userName':ele.userName
+                }
+            }
+
+            
+
             let betDetails = await Bet.aggregate([
                 {
                     $match:filter
@@ -3467,12 +3485,7 @@ io.on('connection', (socket) => {
                     $unwind:'$userDetails'
                 },
                 {
-                    $match:{
-                        'userDetails.isActive':true,
-                        'userDetails.roleName':{$ne:'Admin'},
-                        'userDetails.role_type':{$in:role_type},
-                        'userDetails.parentUsers':{$elemMatch:{$eq:(ele._id).toString()}}
-                    }
+                    $match:userfilter
                 },
                 {
                     $group:{
