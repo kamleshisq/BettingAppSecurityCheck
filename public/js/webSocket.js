@@ -10501,7 +10501,7 @@ socket.on('connect', () => {
             let html2 = ""
             let html3 = ""
             limit = 10 * data.page
-            $('#Cricket').find('.dashboard-welcome-section').html('')
+            // $('#Cricket').find('.dashboard-welcome-section').html('')
             for(let i = 0; i < data.result.length; i++){
                 if(data.result[i].betDetails){
                     if(data.page == 0){
