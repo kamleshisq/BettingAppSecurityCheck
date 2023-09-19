@@ -86,7 +86,7 @@ async function voidbetBeforePlace(data){
                     }
                     // socket.emit('VoidBetIn', {betdata:bets[0], count:bets.length ,status:"success"})
                     let resultData = {
-                        betdata:bets[0], count:bets.length ,status:"success"
+                        betdata:bets[0], count:bets.length - 1 ,status:"success"
                     }
                     return resultData
     }catch(err){
