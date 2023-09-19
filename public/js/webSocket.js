@@ -9439,7 +9439,7 @@ socket.on('connect', () => {
                     <div class="btn-group">
                         <button class="Unmap" id="${data.betdata.marketId}"> Unmap</button>
                         <button class="Settle" id="${data.betdata.marketId}"> Settle</button>
-                        <button class="voidBet" id="${data.betdata.marketId}"> VOID</button>
+                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" id="${data.betdata.marketId}"> VOID</button>
                     </div>
                 </td>
                 </tr>
@@ -9451,7 +9451,7 @@ socket.on('connect', () => {
                     document.getElementById('mapped-market-table').innerHTML = html
                 }
                 // document.getElementById('mapped-market-table').innerHTML = html
-                alert('Bet Maped Successfully')
+                alert('Bets Maped Successfully')
             }
         })
 
