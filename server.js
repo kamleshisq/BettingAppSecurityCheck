@@ -3507,7 +3507,7 @@ io.on('connection', (socket) => {
         let resultPromise = await Promise.all(newUsers)
         let result = []
         for(let i = 0;i<resultPromise.length;i++){
-            if(!resultPromise[i]){
+            if(resultPromise[i]){
                 result.push(resultPromise[i])
             }
         }
