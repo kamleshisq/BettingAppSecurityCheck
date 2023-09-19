@@ -10785,7 +10785,7 @@ socket.on('connect', () => {
     if(pathname == "/admin/betlimit/sports/match"){
         $(document).on('click','.updateBetLimitMATCH',function(e){
             let firstTd = $(this).closest("tr").find("td:first");
-            var innerText = firstTd.attr('id');
+            var innerText = firstTd.text();
             console.log(innerText)
             socket.emit("updateBetLimitMATCH", innerText)
          })
