@@ -591,7 +591,7 @@ exports.myProfile = catchAsync(async(req, res, next) => {
     // .then(json =>
     //     console.log(json) 
         res.status(200).render("./userSideEjs/myProfile/main", {
-        title:"Account Statement",
+        title:"My Profile",
         user:req.currentUser,
         verticalMenus,
         check:"ACCC",
@@ -2395,6 +2395,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
     }
     // console.log(data)
     res.status(200).render("./userSideEjs/plStatemenet/main",{
+        title:'P/L Reports',
         user: req.currentUser,
         data,
         verticalMenus,
@@ -2546,6 +2547,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         const betLimitMarekt = await betLimitMatchWisemodel.findOne({matchTitle:match.eventData.name})
         
         res.status(200).render("./userSideEjs/userMatchDetails/main",{
+            title:match.eventData.name,
             user: req.currentUser,
             verticalMenus,
             check:"ExchangeIn",
@@ -2612,6 +2614,7 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     }
     console.log(multimarket)
     res.status(200).render("./userSideEjs/multimarkets/main",{
+        title:'Multi Markets',
         user: req.currentUser,
         verticalMenus,
         check:"Multi Markets",
@@ -2647,6 +2650,7 @@ exports.getCardInplayGame = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render("./userSideEjs/CardInplayPage/main",{
+        title:'Cards Games',
         user,
         verticalMenus,
         data,
@@ -2701,6 +2705,7 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render("./userSideEjs/SportBook/main",{
+        title:'Sports Book',
         user,
         verticalMenus,
         data,
@@ -2745,6 +2750,7 @@ exports.virtualsPage = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render("./userSideEjs/virtuals/main",{
+        title:'Virtuals Games',
         user,
         verticalMenus,
         data,
@@ -2765,6 +2771,7 @@ exports.OthersGames = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render("./userSideEjs/others/main",{
+        title:'Others Games',
         user,
         verticalMenus,
         data,
@@ -2790,6 +2797,7 @@ exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
         }
     }
     res.status(200).render("./userSideEjs/liveCasino/main", {
+        title:'Live Casino',
         user,
         verticalMenus,
         data,
@@ -2826,6 +2834,7 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
     ])
     // console.log(betsDetails)
     res.status(200).render("./userSideEjs/myBetsPage/main", {
+        title:'Bet Reports',
         user,
         verticalMenus,
         data,
@@ -2884,6 +2893,7 @@ exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
       ])
     //   console.log(bets)
     res.status(200).render("./userSideEjs/gameReportPage/main",{
+        title:'Game Reports',
         user,
         verticalMenus,
         data,
@@ -2944,6 +2954,7 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
       ]);
       
     res.status(200).render("./userSideEjs/gameReportEvent/main",{
+        title:'Game Reports',
         user,
         verticalMenus,
         data,
@@ -2965,6 +2976,7 @@ exports.getGameReportInINPageUser = catchAsync(async(req, res, next) => {
     let result = await betModel.find({event:req.query.eventName, match:req.query.matchName, userId:user.id}).limit(20)
     //   console.log(result)
     res.status(200).render("./userSideEjs/gameReportmatch/main",{
+        title:'Game Reports',
         user,
         verticalMenus,
         data,
@@ -3023,6 +3035,7 @@ exports.getMyProfileUser = catchAsync(async(req, res, next) => {
     ])
     // console.log(userProfileContent)
     res.status(200).render("./userSideEjs/userProfile/main",{
+        title:'My Profile',
         user,
         verticalMenus,
         data,
@@ -3065,6 +3078,7 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
     let games = await gameModel.find();
     let userLog = await loginLogs.find({user_id:user._id})
     res.status(200).render("./userSideEjs/Kyc/main",{
+        title:'KYC',
         user,
         verticalMenus,
         data,
