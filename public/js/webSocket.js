@@ -10666,7 +10666,7 @@ socket.on('connect', () => {
                 }
 
 
-              
+              console.log(html3)
               $('#Cricket').find('table').html(html)
               $('#Cricket').find('.bredcum-container').html(html2)
               if(data.type != 'user'){
