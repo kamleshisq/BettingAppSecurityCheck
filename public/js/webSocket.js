@@ -9361,7 +9361,7 @@ socket.on('connect', () => {
                 }
                 html += `<td>
                     <div class="btn-group">
-                        <button class="voidBet" id="${data.betdata.marketId}"> VOID</button>
+                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" id="${data.betdata.marketId}"> VOID</button>
                         <button class="acceptBet" id="${data.betdata.marketId}"> MAP</button>
                     </div>
                 </td>
