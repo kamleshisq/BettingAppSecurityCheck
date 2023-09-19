@@ -10580,7 +10580,7 @@ socket.on('connect', () => {
                         html2 += `<li class="childgameAnalist" data-roleType="5" data-parent="${data.breadcum[i]}">${data.breadcum[i]}</li>`
                     }
                 }
-                html3 += `</ul>`
+                html2 += `</ul>`
 
                 html3 += `<div class="welcome-info-btn">`
                 if(data.result[0].betDetails.betcount > 0){
