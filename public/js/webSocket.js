@@ -10656,7 +10656,7 @@ socket.on('connect', () => {
                     html3 += `<div class="skin-data green">
                         <h5>P&L</h5>
                         <h6>${data.result[0].betDetails.returns.toFixed(2)}</h6>
-                    </div>`
+                    </div></div>`
                 }else{
                     html3 += `<div class="skin-data red">
                         <h5>P&L</h5>
