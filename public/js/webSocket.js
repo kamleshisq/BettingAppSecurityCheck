@@ -10436,7 +10436,7 @@ socket.on('connect', () => {
                         html += `<td class="red">${data.result[i].betDetails.returns.toFixed(2)}</td>`
                     }
 
-                    if(data.result.ele.role_type != 2){
+                    if(data.result[i].ele.role_type != 2){
                         hmtl += `<td>-</td>`
                     }
                     html += `</tr>`
