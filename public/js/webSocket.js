@@ -10785,9 +10785,10 @@ socket.on('connect', () => {
     if(pathname == "/admin/betlimit/sports/match"){
         $(document).on('click','.updateBetLimitMATCH',function(e){
             let firstTd = $(this).closest("tr").find("td:first");
-            var innerText = firstTd.attr('id');
-            console.log(innerText)
-            socket.emit("updateBetLimitMATCH", innerText)
+            var innerText = firstTd.text();
+            let id = firstTd.attr('id');
+            console.log(innerText, id)
+            socket.emit("updateBetLimitMATCH", {innerText, id})
          })
 
 
@@ -10801,6 +10802,7 @@ socket.on('connect', () => {
             form.find('input[name = "max_odd"]').val(100)
             form.find('input[name = "delay"]').val(5)
             form.find('input[name = "type"]').val(data.data)
+            form.attr('id', data.id)
             }else if (data.status == "errr"){
                 alert('please try again leter')
             }else{
@@ -10831,6 +10833,8 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
+            let id = $(this).attr('id');
+            console.log(id)
             socket.emit('updateBetLimitMarket', data)
          })
 
