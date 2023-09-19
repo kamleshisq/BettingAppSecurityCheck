@@ -10405,6 +10405,7 @@ socket.on('connect', () => {
         socket.on('matchOddsOwn',async(data)=>{
             console.log(data)
             let html = ""
+            let html2 = ""
             limit = 10 * data.page
             if(data.matchOdds.length !== 0){
                 if(data.page == 0){
@@ -10444,8 +10445,99 @@ socket.on('connect', () => {
                     if(data.matchOdds.length == 0){
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
                     }
+
+                    html2 += `<div class="welcome-info-btn">`
+                    if(data.result[0].betDetails.betcount >= 0){
+                        html2 += ` <div class="skin-data green">
+                                <h5>Total Bets</h5>
+                                <h6>${data.result[0].betDetails.betcount}</h6>
+                                </div>`
+                    }else{
+                        html2 += ` <div class="skin-data red">
+                                <h5>Total Bets</h5>
+                                <h6>${data.result[0].betDetails.betcount}</h6>
+                                </div>`
+                    }
+                   
+                    if(data.result[0].betDetails.won >= 0){
+
+                        html2 += `<div class="skin-data green">
+                            <h5>Won</h5>
+                            <h6>${data.result[0].betDetails.won}</h6>
+                        </div>`
+                    }else{
+                        html2 = `<div class="skin-data red">
+                            <h5>Won</h5>
+                            <h6>${data.result[0].betDetails.won}</h6>
+                            </div>`
+
+                    }
+
+                    if(data.result[0].betDetails.loss >= 0){
+
+                        html2 += `<div class="skin-data green">
+                            <h5>Lost</h5>
+                            <h6>${data.result[0].betDetails.loss}</h6>
+                            </div>`
+                    }else{
+                        html2 += `<div class="skin-data green">
+                            <h5>Lost</h5>
+                            <h6>${data.result[0].betDetails.loss}</h6>
+                            </div>`
+
+                    }
+
+                    if(data.result[0].betDetails.void >= 0){
+                        
+                        hmlt2 += `<div class="skin-data red">
+                            <h5>Void</h5>
+                            <h6>${data.result[0].betDetails.void}</h6>
+                        </div>`
+                    }else{
+                        hmlt2 += `<div class="skin-data red">
+                            <h5>Void</h5>
+                            <h6>${data.result[0].betDetails.void}</h6>
+                        </div>`
+
+                    }
+                    
+                    if(data.result[0].betDetails.open >= 0){
+
+                        html2 += `<div class="skin-data red">
+                            <h5>Open</h5>
+                            <h6>${data.result[0].betDetails.open}</h6>
+                        </div>`
+                    }else{
+                        html2 += `<div class="skin-data red">
+                            <h5>Open</h5>
+                            <h6>${data.result[0].betDetails.open}</h6>
+                        </div>`
+
+                    }
+
+                    if(data.result[0].betDetails.returns >= 0){
+
+                        html2 += `<div class="skin-data red">
+                            <h5>P&L</h5>
+                            <h6>${data.result[0].betDetails.returns.toFixed(2)}</h6>
+                        </div>`
+                    }else{
+                        html2 += `<div class="skin-data red">
+                            <h5>P&L</h5>
+                            <h6>${data.result[0].betDetails.returns.toFixed(2)}</h6>
+                        </div>`
+
+                    }
+                    
+                    html2 += `<div class="skin-data red">
+                        <h5>Result</h5>
+                        <h6>-</h6>
+                    </div>
+                
+                    </div>`
                   
                     $('#Cricket').find('table').html(html)
+                    $('#Cricket').find('.accountBreadcum').after(html2)
                 }else{
                     $('#Cricket').find('table').append(html)
 
@@ -10540,37 +10632,97 @@ socket.on('connect', () => {
                         html2 += `<li class="childgameAnalist" data-roleType="5" data-parent="${data.breadcum[i]}">${data.breadcum[i]}</li>`
                     }
                 }
-                html2 += `</ul>`
+                html3 += `</ul>`
 
-                html3 += `<div class="welcome-info-btn">
-                <div class="skin-data green">
-                    <h5>Total Bets</h5>
-                    <h6>${data.result[0].betDetails.betcount}</h6>
-                </div>
-                <div class="skin-data green">
-                    <h5>Won</h5>
-                    <h6>${data.result[0].betDetails.won}</h6>
-                </div>
-                <div class="skin-data green">
-                    <h5>Lost</h5>
-                    <h6>${data.result[0].betDetails.loss}</h6>
-                </div>
-                <div class="skin-data red">
-                    <h5>Void</h5>
-                    <h6>${data.result[0].betDetails.void}</h6>
-                </div>
-                  
-                <div class="skin-data red">
-                    <h5>Open</h5>
-                    <h6>${data.result[0].betDetails.open}</h6>
-                </div>
+                html3 += `<div class="welcome-info-btn">`
+                if(data.result[0].betDetails.betcount >= 0){
+                    html3 += ` <div class="skin-data green">
+                            <h5>Total Bets</h5>
+                            <h6>${data.result[0].betDetails.betcount}</h6>
+                            </div>`
+                }else{
+                    html3 += ` <div class="skin-data red">
+                            <h5>Total Bets</h5>
+                            <h6>${data.result[0].betDetails.betcount}</h6>
+                            </div>`
+                }
+               
+                if(data.result[0].betDetails.won >= 0){
+
+                    html3 += `<div class="skin-data green">
+                        <h5>Won</h5>
+                        <h6>${data.result[0].betDetails.won}</h6>
+                    </div>`
+                }else{
+                    html3 = `<div class="skin-data red">
+                        <h5>Won</h5>
+                        <h6>${data.result[0].betDetails.won}</h6>
+                        </div>`
+
+                }
+
+                if(data.result[0].betDetails.loss >= 0){
+
+                    html3 += `<div class="skin-data green">
+                        <h5>Lost</h5>
+                        <h6>${data.result[0].betDetails.loss}</h6>
+                        </div>`
+                }else{
+                    html3 += `<div class="skin-data green">
+                        <h5>Lost</h5>
+                        <h6>${data.result[0].betDetails.loss}</h6>
+                        </div>`
+
+                }
+
+                if(data.result[0].betDetails.void >= 0){
+                    
+                    html3 += `<div class="skin-data red">
+                        <h5>Void</h5>
+                        <h6>${data.result[0].betDetails.void}</h6>
+                    </div>`
+                }else{
+                    html3 += `<div class="skin-data red">
+                        <h5>Void</h5>
+                        <h6>${data.result[0].betDetails.void}</h6>
+                    </div>`
+
+                }
                 
-                <div class="skin-data red">
-                    <h5>P&L</h5>
-                    <h6>${data.result[0].betDetails.returns.toFixed(2)}</h6>
+                if(data.result[0].betDetails.open >= 0){
+
+                    html3 += `<div class="skin-data red">
+                        <h5>Open</h5>
+                        <h6>${data.result[0].betDetails.open}</h6>
+                    </div>`
+                }else{
+                    html3 += `<div class="skin-data red">
+                        <h5>Open</h5>
+                        <h6>${data.result[0].betDetails.open}</h6>
+                    </div>`
+
+                }
+
+                if(data.result[0].betDetails.returns >= 0){
+
+                    html3 += `<div class="skin-data red">
+                        <h5>P&L</h5>
+                        <h6>${data.result[0].betDetails.returns.toFixed(2)}</h6>
+                    </div>`
+                }else{
+                    html3 += `<div class="skin-data red">
+                        <h5>P&L</h5>
+                        <h6>${data.result[0].betDetails.returns.toFixed(2)}</h6>
+                    </div>`
+
+                }
+                
+                html3 += `<div class="skin-data red">
+                    <h5>Result</h5>
+                    <h6>-</h6>
                 </div>
-              
-              </div>`
+            
+                </div>`
 
 
               
