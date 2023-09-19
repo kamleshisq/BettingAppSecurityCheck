@@ -24,6 +24,8 @@ async function voidBET(data){
     console.log(dataForHistory, 121212)
     for(const bets in allBetWithMarketId){
         console.log(allBetWithMarketId[bets])
+        console.log(allBetWithMarketId[bets].id)
+        // await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id)
     }
 }
 //  return "WORKING"
