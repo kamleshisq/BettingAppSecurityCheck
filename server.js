@@ -3500,8 +3500,7 @@ io.on('connection', (socket) => {
                     $limit: limit 
                 }
             ]) 
-            console.log(ele.betDetails)
-            return (ele,betDetails)
+            return ({ele,betDetails})
             
         })
 
