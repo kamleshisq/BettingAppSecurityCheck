@@ -139,6 +139,7 @@ async function voidBET(data){
                   }
                     debitAmountForP = parentUser2Amount
                 }
+                await accountStatementModel.create(userAcc);
             }
         }
         return 'Process Start'
