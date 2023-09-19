@@ -5,7 +5,7 @@ let settlementHistory = require("../model/settelementHistory");
 
 
 async function rollBack(data){
-    console.log(data)
+    console.log(data, "rollBack Data")
 }
 
 
