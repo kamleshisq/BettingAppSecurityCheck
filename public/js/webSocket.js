@@ -10382,6 +10382,7 @@ socket.on('connect', () => {
         })
 
         $(document).on('click','.childgameAnalist',function(e){
+
             let roleType = $(this).attr('data-roleType')
             let parent = $(this).attr('data-parent')
             let page = 0
@@ -10459,8 +10460,8 @@ socket.on('connect', () => {
         socket.on('childGameAnalist',async(data)=>{
             console.log(data)
             let html = ""
-            let html2 = ";"
-
+            let html2 = ""
+            let hmtl3 = ""
             limit = 10 * data.page
             for(let i = 0; i < data.result.length; i++){
                 if(data.result[i].betDetails){
@@ -10541,9 +10542,42 @@ socket.on('connect', () => {
                     }
                 }
                 html2 += `</ul>`
-                $('#Cricket').find('.accountBreadcum').html(html2)
+
+                html3 += `<div class="welcome-info-btn">
+                <div class="skin-data green">
+                    <h5>Total Bets</h5>
+                    <h6>${data.result[0].betDetails.betcount}</h6>
+                </div>
+                <div class="skin-data green">
+                    <h5>Won</h5>
+                    <h6>${data.result[0].betDetails.won}</h6>
+                </div>
+                <div class="skin-data green">
+                    <h5>Lost</h5>
+                    <h6>${data.result[0].betDetails.loss}</h6>
+                </div>
+                <div class="skin-data red">
+                    <h5>Void</h5>
+                    <h6>${data.result[0].betDetails.void}</h6>
+                </div>
+                  
+                <div class="skin-data red">
+                    <h5>Open</h5>
+                    <h6>${data.result[0].betDetails.open}</h6>
+                </div>
+                
+                <div class="skin-data red">
+                    <h5>P&L</h5>
+                    <h6>${data.result[0].betDetails.returns.toFixed(2)}</h6>
+                </div>
               
-                $('#Cricket').find('table').html(html)
+              </div>`
+
+
+              
+              $('#Cricket').find('table').html(html)
+              $('#Cricket').find('.accountBreadcum').html(html2)
+                $('#Cricket').find('.accountBreadcum').after(html3)
 
             }else{
                 $('#Cricket').find('tbody').append(html)
@@ -10613,6 +10647,9 @@ socket.on('connect', () => {
         socket.on("gameAnalysis", data => {
             if($('#FOOTBALL').find('.matchOddsBack')){
                 $('#FOOTBALL').find('.matchOddsBack').html('')
+            }
+            if($('#Cricket').find('.accountBreadcum')){
+                $('#Cricket').find('.accountBreadcum').html('')
             }
             let html = ""
             let html2 = ""
