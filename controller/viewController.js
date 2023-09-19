@@ -3297,6 +3297,7 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
     }else{
         History = await settlementHisory.find({userId:me._id}).sort({ date: -1 }).limit(limit)
     }
+    console.log(History)
     res.status(200).render("./settlemetHistory/settlemetHistory",{
         title:"Settlements",
         me,
