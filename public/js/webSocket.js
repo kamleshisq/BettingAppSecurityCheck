@@ -10348,6 +10348,7 @@ socket.on('connect', () => {
                 to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
             }
             let Sport = $("#Event").val()
+            console.log(roleType,parent,from_date,to_date,page, Sport, market)
             socket.emit('childGameAnalist',{roleType,parent,from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
         })
 
