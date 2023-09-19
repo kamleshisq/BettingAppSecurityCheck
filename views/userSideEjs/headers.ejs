@@ -502,7 +502,20 @@
                 <div class="modal-body">
                     <div class="notification-list">
                       <%for(let i = 0; i < notifications.length; i++){%>
-                        <%console.log(notifications[i], 121212)%>
+                        <%
+                          var date = new Date(notifications[i].startDate);
+                          var options = { 
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          hour12: true
+                          };
+                          var formattedTime = date.toLocaleString('en-US', options);
+                          var formattedTimeWithoutComma = formattedTime.replace(",", "");
+                        %>
+                        <%console.log(formattedTime, formattedTimeWithoutComma)%>
                         <div class="box">
                             <div class="notification-header">17 Sep</div>
                             <div class="notification-content">
