@@ -10501,7 +10501,7 @@ socket.on('connect', () => {
             let html2 = ""
             let html3 = ""
             limit = 10 * data.page
-            $('.dashboard-welcome-section').find('.welcome-info-btn').remove()
+            $('#Cricket').find('.dashboard-welcome-section').html('')
             for(let i = 0; i < data.result.length; i++){
                 if(data.result[i].betDetails){
                     if(data.page == 0){
@@ -10580,7 +10580,7 @@ socket.on('connect', () => {
                         html2 += `<li class="childgameAnalist" data-roleType="5" data-parent="${data.breadcum[i]}">${data.breadcum[i]}</li>`
                     }
                 }
-                html3 += `</ul>`
+                html2 += `</ul>`
 
                 html3 += `<div class="welcome-info-btn">`
                 if(data.result[0].betDetails.betcount > 0){
@@ -10656,7 +10656,7 @@ socket.on('connect', () => {
                     html3 += `<div class="skin-data green">
                         <h5>P&L</h5>
                         <h6>${data.result[0].betDetails.returns.toFixed(2)}</h6>
-                    </div>`
+                    </div></div>`
                 }else{
                     html3 += `<div class="skin-data red">
                         <h5>P&L</h5>
