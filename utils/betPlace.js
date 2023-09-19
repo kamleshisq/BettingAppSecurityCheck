@@ -148,7 +148,15 @@ let filtertinMatch = {}
         let maxFancy = betLimit.max_stake
         // console.log(betLimit, "+==> BetLimit")
         // return;
-
+let thatMarketLimit = await betLimit.findOne({type:data.data.market})
+if(thatMarketLimit){
+    minMatchOdds = thatMarketLimit.min_stake
+    maxMatchOdds = thatMarketLimit.max_stake
+    minBookMaker = thatMarketLimit.min_stake
+    maxBookMaker = thatMarketLimit.max_stake
+    minFancy = thatMarketLimit.min_stake
+    maxFancy = thatMarketLimit.max_stake
+}
     // console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 // console.log(marketDetails, 454545454454454545544544444444444)
 if(marketDetails.title.toLowerCase().startsWith('match')){

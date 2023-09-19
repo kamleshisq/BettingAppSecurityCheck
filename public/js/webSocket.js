@@ -10821,7 +10821,7 @@ socket.on('connect', () => {
                 alert('please try again leter')
             }else{
                 let form = $('#myModal2').find('.form-data')
-                console.log(data.marketData)
+                // console.log(data.marketData)
                 form.find('input[name = "min_stake"]').val(data.marketData.min_stake)
                 form.find('input[name = "max_stake"]').val(data.marketData.max_stake)
                 form.find('input[name = "max_profit"]').val(data.marketData.max_profit)
