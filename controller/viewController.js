@@ -3297,13 +3297,29 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
     }else{
         History = await settlementHisory.find({userId:me._id}).sort({ date: -1 }).limit(limit)
     }
-    // let filter = {}
-    // if(me.roleName === "Admin"){
-    //     History = await settlementHisory.find().sort({ date: -1 }).limit(limit)
-    // }else{
-    //     History = await settlementHisory.find({userId:me._id}).sort({ date: -1 }).limit(limit)
-    // }
-    console.log(History)
+    let filter = {}
+    if(me.roleName === "Admin"){
+        filter = {}
+    }else{
+        filter = {
+            userId:me._id
+        }
+    }
+
+    let History2 = await settlementHisory.aggregate([
+        {
+            $match:filter
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "userId",
+                foreignField: "id",
+                as: "user"
+              }
+        }
+    ])
+    console.log(History2)
     res.status(200).render("./settlemetHistory/settlemetHistory",{
         title:"Settlements",
         me,
