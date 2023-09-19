@@ -3448,7 +3448,7 @@ io.on('connection', (socket) => {
                 role_type.push(roles[i].role_type)
             }
             console.log(role_type)
-            ele.betDetails = await Bet.aggregate([
+            let betDetails = await Bet.aggregate([
                 {
                     $match:filter
                 },
@@ -3465,17 +3465,15 @@ io.on('connection', (socket) => {
                 },
                 {
                     $match:{
-                        'userDetails.isActive':true,
-                        'userDetails.roleName':{$ne:'Admin'},
-                        'userDetails.role_type':{$in:role_type},
-                        'userDetails.parentUsers':{$elemMatch:{$eq:ele._id}}
+                        // 'userDetails.isActive':true,
+                        // 'userDetails.roleName':{$ne:'Admin'},
+                        // 'userDetails.role_type':{$in:role_type},
+                        // 'userDetails.parentUsers':{$elemMatch:{$eq:ele._id}}
                     }
                 },
                 {
                     $group:{
-                        _id:{
-                            userName:'$userName',
-                        },
+                        _id:'$userName',
                         betcount:{$sum:1},
                         loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
                         won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
@@ -3500,16 +3498,16 @@ io.on('connection', (socket) => {
                     $limit: limit 
                 }
             ]) 
-            console.log(ele.betDetails)
-            return ele
+            return ({ele,betDetails:betDetails[0]})
             
         })
 
+        console.log(newUsers)
         let result = await Promise.all(newUsers)
 
-        // console.log(result)
+        console.log(result)
 
-        socket.emit('childGameAnalist',{result,page})
+        socket.emit('childGameAnalist',{result,page,newUsers})
 
 
 
