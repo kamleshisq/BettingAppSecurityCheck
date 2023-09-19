@@ -3632,8 +3632,8 @@ io.on('connection', (socket) => {
     socket.on('updateBetLimitMATCH', async(data) => {
 
         console.log(data)
-        let data = await betLimit.findOne({type:data.id})
-        if(data != null){
+        let data1 = await betLimit.findOne({type:data.id})
+        if(data1 != null){
 
         }else{
             socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data})
