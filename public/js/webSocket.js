@@ -1262,11 +1262,11 @@ socket.on('connect', () => {
             let response = data.response;
             if(data.status === 'success')
             {
+                let html = ""
                 if(data.page == 0){
                     count = 1;
-                    let html1 = ""
                     if(LOGINDATA.LOGINUSER.roleName == "Admin"){
-                        html1 = `<thead><tr>`+
+                        html = `<thead><tr>`+
                         "<th>S.No</th>"+
                         "<th>User Name</th>"+
                         "<th>White lable</th>"+
@@ -1280,7 +1280,7 @@ socket.on('connect', () => {
                         "<th>Action</th>"+
                     "</tr></thead>"
                     }else{
-                        html1 = `<thead><tr>`+
+                        html = `<thead><tr>`+
                         "<th>S.No</th>"+
                         "<th>User Name</th>"+
                         "<th>Type</th>"+
@@ -1293,10 +1293,10 @@ socket.on('connect', () => {
                         "<th>Action</th>"+
                     "</tr></thead>"
                     }
-                        $('table').html(html1)
+                        
+                    html ="<tbody class='new-body'>";
                 }
                 
-            let html ="<tbody class='new-body'>";
             for(let i = 0; i < response.length; i++){ 
                 if((i+1) % 2 != 0){
 
@@ -1371,20 +1371,26 @@ socket.on('connect', () => {
                       html += `</div>
                       </td></td> </tr>`
             }
-            html += `</tbody>`
             count += 10;
             if(data.page == 0){
                 if(response.length == 0){
                     html += `<tr class="empty_table"><td>No record found</td></tr>`
                 }
+                html += `</tbody>`
                 $('#load-more').show()
+
+                $('table').html(html)
+                if(response.length == 0){
+                    $('#load-more').hide()
+                }
+            }else{
+                if(response.length == 0){
+                    $('#load-more').hide()
+                }
+                $('tbody').append(html)
 
             }
             
-            if(response.length == 0){
-                $('#load-more').hide()
-            }
-            $('table').append(html)
                 // html = '';
                 // for(let i=0;i<data.Rows;i++){
                 //     html += `<a href='/userManagement?id=${data.me_id}&page=${i}' class="pagination">${i + 1}</a>`
