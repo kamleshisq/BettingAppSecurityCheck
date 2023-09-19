@@ -10528,7 +10528,7 @@ socket.on('connect', () => {
                 if(data.result.length == 0){
                     html += `<tr class="empty_table"><td>No record found</td></tr>`
                 }
-                html2 = `<div class="accountBreadcum"><ul>`
+                html2 = `<ul>`
                 for(let i = 0;i<data.breadcum.length;i++){
                     if(i == 0){
                         html2 += `<li class="childgameAnalist" data-roleType="1" data-parent="${data.breadcum[i]}">${data.breadcum[i]}</li>`
@@ -10540,8 +10540,8 @@ socket.on('connect', () => {
                         html2 += `<li class="childgameAnalist" data-roleType="5" data-parent="${data.breadcum[i]}">${data.breadcum[i]}</li>`
                     }
                 }
-                html2 += `</ul></div>`
-                $(html2).insertBefore($('#Cricket').find('.row'))
+                html2 += `</ul>`
+                $('#Cricket').find('.accountBreadcum').html(html2)
               
                 $('#Cricket').find('table').html(html)
 
