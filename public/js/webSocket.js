@@ -1082,6 +1082,7 @@ socket.on('connect', () => {
             let modleName = "#myModalSE"
             let form = $(modleName).find('.form-data')
             let userData = data.user
+            console.log(userData)
             let me = data.parent
             let type = form.find('select[name = "type"]').val()
             if(userData.uplinePL > 0){
