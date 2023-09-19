@@ -9,7 +9,7 @@ async function voidBET(data){
  if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
     return 'please provide a valid password'
 }else{
-    let allBetWithMarketId = await betmodel.find({marketId:data.id})
+    let allBetWithMarketId = await Bet.find({marketId:data.id})
     // console.log(allBetWithMarketId)
     let dataForHistory = {
         marketID:`${data.id}`,
