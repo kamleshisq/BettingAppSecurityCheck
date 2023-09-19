@@ -10501,7 +10501,7 @@ socket.on('connect', () => {
             let html2 = ""
             let html3 = ""
             limit = 10 * data.page
-            // $('#Cricket').find('.dashboard-welcome-section').html('')
+            $('#Cricket').find('.dashboard-welcome-section').html('')
             for(let i = 0; i < data.result.length; i++){
                 if(data.result[i].betDetails){
                     if(data.page == 0){
@@ -10582,7 +10582,6 @@ socket.on('connect', () => {
                 }
                 html2 += `</ul>`
 
-                html3 += `<div class="welcome-info-btn">`
                 if(data.result[0].betDetails.betcount > 0){
                     html3 += ` <div class="skin-data green">
                             <h5>Total Bets</h5>
@@ -10664,6 +10663,8 @@ socket.on('connect', () => {
                     </div></div>`
 
                 }
+
+                html3 = '<div class="welcome-info-btn">' + html3
 
 
               console.log(html3)
