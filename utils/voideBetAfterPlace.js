@@ -25,7 +25,14 @@ async function voidBET(data){
     for(const bets in allBetWithMarketId){
         console.log(allBetWithMarketId[bets])
         console.log(allBetWithMarketId[bets].id)
-        // await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id)
+        if(allBetWithMarketId[bets].status === 'WON'){
+            let VoidAmount = allBetWithMarketId[bets].returns.toFixed(2) - allBetWithMarketId[bets].Stake.toFixed(2)
+            console.log(VoidAmount, "VOidBetAMOUNT")
+            // await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"CANCEL", remark:data.data.remark, calcelUser:data.LOGINDATA.LOGINUSER.userName})
+            // let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{balance: allBetWithMarketId[bets].Stake, availableBalance: allBetWithMarketId[bets].Stake, myPL: allBetWithMarketId[bets].Stake, exposure:-allBetWithMarketId[bets].Stake}})
+        }else{
+
+        }
     }
 }
 //  return "WORKING"
