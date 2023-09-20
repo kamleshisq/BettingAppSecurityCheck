@@ -679,7 +679,7 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
     console.log(bets)
 
     res.status(200).render("./reports/reports",{
-        title:"Reports",
+        title:"Bet List",
         bets:bets,
         me : currentUser,
         currentUser
@@ -2045,7 +2045,7 @@ exports.getCmsPage = catchAsync(async(req, res, next) => {
     let banner = await bannerModel.find()
     let sliders = await sliderModel.find().sort({Number:1})
     res.status(200).render("./Cms/cms",{
-        title:"CMS",
+        title:"Home Page Management",
         user,
         me:user,
         currentUser:user,
@@ -3057,7 +3057,7 @@ exports.gameRulesPage = catchAsync(async(req, res, next) => {
     let sliders = await sliderModel.find().sort({Number:1})
     let rules = await gamrRuleModel.find()
     res.status(200).render("./Cms/ruleManager",{
-        title:"CMS",
+        title:"Rules Management",
         user,
         me:user,
         currentUser:user,
@@ -3348,7 +3348,7 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
     let data = await accountStatement.find({user_id:me._id,description: { $regex: /^commission for/ } }).sort({date:-1}).limit(10)
     // console.log(data)
     res.status(200).render("./commissionPage/commissionPage",{
-        title:"Commission",
+        title:"Commission History",
         me,
         currentUser:me,
         data
