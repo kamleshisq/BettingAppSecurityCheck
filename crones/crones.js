@@ -93,7 +93,7 @@ module.exports = () => {
                 }
                 let betsWithMarketId = await betModel.find({status:"OPEN", marketId : marketresult.mid});
                 betsWithMarketId.forEach(async(entry) => {
-                    if(entry.selectionName ==  marketresult.result){
+                    if(entry.selectionName ==  marketresult.result && entry.bettype2 == 'BACK' || entry.selectionName != marketresult.result && entry.bettype2 == "LAY"){
                         // console.log("WORKING4564654654")
                         // console.log(entry)
                         let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue), result:marketresult.result})
