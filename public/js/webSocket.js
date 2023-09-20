@@ -3047,7 +3047,7 @@ socket.on('connect', () => {
                 html += `<td>${users[i].userName}</td>
                 <td>${users[i].Won}</td>
                 <td>${users[i].Loss}</td>
-                <td>${users[i].myPL}</td>
+                <td>${users[i].myPL.toFixed(2)}</td>
                 </tr>`
             }
             if(page == 0){
