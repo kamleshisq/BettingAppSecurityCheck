@@ -1001,9 +1001,9 @@ socket.on('connect', () => {
 
                 form.find('input[name = "type"]').val('deposit')
                 form.find('input[name = "toUser"]').attr('value',toUser)
-                form.find('input[name = "fuBalance"]').attr('value',fromUSer)
+                form.find('input[name = "fuBalance"]').attr('value',fuBalance)
                 form.find('input[name = "tuBalance"]').attr('value',tuBalance)
-                form.find('input[name = "fromUser"]').attr('value',fuBalance)
+                form.find('input[name = "fromUser"]').attr('value',fromUSer)
             }
 
         })
@@ -1021,9 +1021,9 @@ socket.on('connect', () => {
 
                 form.find('input[name = "type"]').val('withdrawl')
                 form.find('input[name = "toUser"]').attr('value',toUser)
-                form.find('input[name = "fuBalance"]').attr('value',fromUSer)
+                form.find('input[name = "fuBalance"]').attr('value',fuBalance)
                 form.find('input[name = "tuBalance"]').attr('value',tuBalance)
-                form.find('input[name = "fromUser"]').attr('value',fuBalance)
+                form.find('input[name = "fromUser"]').attr('value',fromUSer)
             }else{
             }
 
