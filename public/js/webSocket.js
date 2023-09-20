@@ -9084,35 +9084,104 @@ socket.on('connect', () => {
 
         socket.on('settlement',async(data)=>{
             console.log(data)
-            let html = ''
+            let htmlC = ''
+            let htmlT = ''
+            let htmlF = ''
+            let CricketS = false
+            let TennisS = false
+            let FootballS = false
             for(let i = 0; i < data.betsEventWise.length; i++){ 
-                html += `<tr>`
-                var timestamp = new Date(data.betsEventWise[i].eventdate).getTime(); 
-                var date = new Date(timestamp);
-                var options = { 
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    hour12: true
-                };
-                var formattedTime = date.toLocaleString('en-US', options);
-                  
-                  html += `<td>${i+1} </td>
-                  <td>${formattedTime}</td>
-                  <td>${data.betsEventWise[i].series}</td>
-                  <td>${data.betsEventWise[i].matchName}</td>
-                  <td>${data.betsEventWise[i].count}</td>
-                  <td>${data.betsEventWise[i].count}</td>
-                  <td><a href="/admin/settlementIn?id=${data.betsEventWise[i].eventid}" class="btn-green">settle</a></td>
-                </tr>`
-            } 
-
-            if(data.betsEventWise.length == 0){
-                html += `<tr class="empty_table"><td>No record found</td></tr>`
+                if(data.betsEventWise[i].betType == "Cricket"){
+                    let c = 1
+                    CricketS = true
+                    htmlC += `<tr>`
+                    var timestamp = new Date(data.betsEventWise[i].eventdate).getTime(); 
+                    var date = new Date(timestamp);
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
+                      
+                      htmlC += `<td>${c} </td>
+                      <td>${formattedTime}</td>
+                      <td>${data.betsEventWise[i].series}</td>
+                      <td>${data.betsEventWise[i].matchName}</td>
+                      <td>${data.betsEventWise[i].count}</td>
+                      <td>${data.betsEventWise[i].count}</td>
+                      <td><a href="/admin/settlementIn?id=${data.betsEventWise[i].eventid}" class="btn-green">settle</a></td>
+                    </tr>`
+                    c++
+                }else if (data.betsEventWise[i].betType == "Tennis"){
+                    TennisS = true
+                    let t = 1
+                    htmlT += `<tr>`
+                    var timestamp = new Date(data.betsEventWise[i].eventdate).getTime(); 
+                    var date = new Date(timestamp);
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
+                      
+                      htmlT += `<td>${t} </td>
+                      <td>${formattedTime}</td>
+                      <td>${data.betsEventWise[i].series}</td>
+                      <td>${data.betsEventWise[i].matchName}</td>
+                      <td>${data.betsEventWise[i].count}</td>
+                      <td>${data.betsEventWise[i].count}</td>
+                      <td><a href="/admin/settlementIn?id=${data.betsEventWise[i].eventid}" class="btn-green">settle</a></td>
+                    </tr>`
+                    t++
+                }else if (data.betsEventWise[i].betType == "Football"){
+                    FootballS = true
+                    htmlF += `<tr>`
+                    let f = 1
+                    var timestamp = new Date(data.betsEventWise[i].eventdate).getTime(); 
+                    var date = new Date(timestamp);
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
+                      
+                      htmlF += `<td>${f} </td>
+                      <td>${formattedTime}</td>
+                      <td>${data.betsEventWise[i].series}</td>
+                      <td>${data.betsEventWise[i].matchName}</td>
+                      <td>${data.betsEventWise[i].count}</td>
+                      <td>${data.betsEventWise[i].count}</td>
+                      <td><a href="/admin/settlementIn?id=${data.betsEventWise[i].eventid}" class="btn-green">settle</a></td>
+                    </tr>`
+                    f++
+                }
+    
             }
-            $('tbody').html(html)
+
+            if(!CricketS){
+                htmlC = `<tr class="empty_table"><td>No record found</td></tr>`
+            }
+            if(!TennisS){
+                htmlT = `<tr class="empty_table"><td>No record found</td></tr>`
+            }
+            if(!FootballS){
+                htmlF = `<tr class="empty_table"><td>No record found</td></tr>`
+            }
+            $('#cricket-tbody').html(htmlC)
+            $('#football-tbody').html(htmlF)
+            $('#tennis-tbody').html(htmlF)
         })
     }
 
