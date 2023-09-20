@@ -430,7 +430,7 @@ $('.createRole-form1').submit(function(e) {
     let roleName = $('#roleName').val();
     let data = {
         operationAuthorization:authorization,
-        adminControll:roleAuthorization,
+        AdminController:roleAuthorization,
         roleName,
         name:roleName
     }
@@ -462,8 +462,8 @@ $(document).on('click','.RoleDetails',function(){
     for(let i = 0; i < roledata.userAuthorization.length; i++){
         form.find(`input[value = "${roledata.userAuthorization[i]}"]`).attr("checked", "checked");
     }
-    for(let i = 0; i < roledata.adminControll.length; i++){
-        form.find(`input[value = "${roledata.adminControll[i]}"]`).attr("checked", "checked");
+    for(let i = 0; i < roledata.AdminController.length; i++){
+        form.find(`input[value = "${roledata.AdminController[i]}"]`).attr("checked", "checked");
     }
     for(let i = 0; i < roledata.operationAuthorization.length; i++){
         form.find(`input[value = "${roledata.operationAuthorization[i]}"]`).attr("checked", "checked");
@@ -492,9 +492,9 @@ $(document).on("submit", ".UpdateRole-form", function(e){
     for( let i = 0; i < operator.length; i++){
         operationAuthorization.push(operator[i].value)
     }
-    let adminController = document.querySelectorAll("input[name='adminControll']:checked");
-    for( let i = 0; i < adminController.length; i++){
-        operationAuthorization.push(adminController[i].value)
+    let AdminController = document.querySelectorAll("input[name='adminControll']:checked");
+    for( let i = 0; i < AdminController.length; i++){
+        operationAuthorization.push(AdminController[i].value)
     }
 
     let data = {
@@ -503,7 +503,7 @@ $(document).on("submit", ".UpdateRole-form", function(e){
         // userAuthorization:roleAuthorization,
         roleName,
         operationAuthorization,
-        adminController
+        AdminController
         }
     // console.log(data)
     updateRole(data)

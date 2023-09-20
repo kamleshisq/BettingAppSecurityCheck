@@ -7478,7 +7478,7 @@ $('.createRole-form1').submit(function (e) {
   var roleName = $('#roleName').val();
   var data = {
     operationAuthorization: authorization,
-    adminControll: roleAuthorization,
+    AdminController: roleAuthorization,
     roleName: roleName,
     name: roleName
   };
@@ -7507,8 +7507,8 @@ $(document).on('click', '.RoleDetails', function () {
   for (var _i2 = 0; _i2 < roledata.userAuthorization.length; _i2++) {
     form.find("input[value = \"".concat(roledata.userAuthorization[_i2], "\"]")).attr("checked", "checked");
   }
-  for (var _i3 = 0; _i3 < roledata.adminControll.length; _i3++) {
-    form.find("input[value = \"".concat(roledata.adminControll[_i3], "\"]")).attr("checked", "checked");
+  for (var _i3 = 0; _i3 < roledata.AdminController.length; _i3++) {
+    form.find("input[value = \"".concat(roledata.AdminController[_i3], "\"]")).attr("checked", "checked");
   }
   for (var _i4 = 0; _i4 < roledata.operationAuthorization.length; _i4++) {
     form.find("input[value = \"".concat(roledata.operationAuthorization[_i4], "\"]")).attr("checked", "checked");
@@ -7537,9 +7537,9 @@ $(document).on("submit", ".UpdateRole-form", function (e) {
   for (var i = 0; i < operator.length; i++) {
     operationAuthorization.push(operator[i].value);
   }
-  var adminController = document.querySelectorAll("input[name='adminControll']:checked");
-  for (var _i5 = 0; _i5 < adminController.length; _i5++) {
-    operationAuthorization.push(adminController[_i5].value);
+  var AdminController = document.querySelectorAll("input[name='adminControll']:checked");
+  for (var _i5 = 0; _i5 < AdminController.length; _i5++) {
+    operationAuthorization.push(AdminController[_i5].value);
   }
   var data = {
     id: id,
@@ -7547,7 +7547,7 @@ $(document).on("submit", ".UpdateRole-form", function (e) {
     // userAuthorization:roleAuthorization,
     roleName: roleName,
     operationAuthorization: operationAuthorization,
-    adminController: adminController
+    AdminController: AdminController
   };
   // console.log(data)
   (0, _updateRoleByaxios.updateRole)(data);
