@@ -3761,6 +3761,17 @@ io.on('connection', (socket) => {
             console.log(err)
         }
     })
+
+    socket.on('HouseFundData', async(data) => {
+        try{
+            let page = data.page
+            let limit = 10
+            let houseData = await houseFundModel.find({userId:data.LOGINDATA.LOGINUSER._id}).sort({date:-1}).skip(page * limit).limit(limit)
+            socket.emit('HouseFundData', houseData)
+        }catch(err){
+            console.log(err)
+        }
+    })
     
 })
 

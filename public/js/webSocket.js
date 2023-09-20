@@ -8487,6 +8487,43 @@ socket.on('connect', () => {
                 document.body.removeChild(a);
             }
           });
+
+        $(document).on('click', '.load-more', function(e){
+            e.preventDefault()
+            let page = parseInt($('.rowId').attr('data-rowid'))
+            $('.rowId').attr('data-rowid',page + 1)
+            socket.emit('HouseFundData', {LOGINDATA, page})
+        })
+
+        socket.on('HouseFundData', data => {
+            let html = ''
+            for(const i in data){
+                var date = new Date(data[i].date);
+                var options = { 
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+                var formattedTimeWithoutComma = formattedTime.replace(",", "");
+                html += `<tr>
+                <td>${ i+1 }</td>
+                  <td class="date-time">${formattedTimeWithoutComma}</td>
+                  <td>Deposit</td>
+                  <td>Betbhai</td>
+                  <td> <i class="fa-solid fa-arrow-right"></i> </td>
+                  <td>Betbhai</td>
+                  <td>${data[i].amount}</td>
+                  <td>${data[i].closingBalance}</td>
+                  <td>${data[i].Remark}</td>
+                </tr>`
+            }
+
+            $('tbody').append(html)
+        })
     }
 
 
