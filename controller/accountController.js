@@ -167,7 +167,7 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
 exports.withdrawSettle = catchAsync(async(req, res, next) => {
     // const user = await User.findById(req.body.userId)
     console.log(req.body)
-    req.body.amount = parseFloat(req.body.amount) * -1
+    req.body.amount = parseFloat(req.body.amount)
     req.body.clintPL = parseFloat(req.body.clintPL)
 
     const childUser = await User.findById(req.body.id);
@@ -181,7 +181,7 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
         return next(new AppError('withdrow amount must less than available balance',404))
     }
     await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.clintPL,downlineBalance:-req.body.clintPL,myPL:req.body.amount}})
-    const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL},uplinePL:0},{
+    const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL},uplinePL:0,myPL:-req.body.amount,pointsWL:0},{
         new:true
     })
     
@@ -252,7 +252,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     }
 
   
-    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL,uplinePL:0}})
+    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL,uplinePL:0,pointsWL:0,myPL:req.body.amount}})
     await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL,myPL:-req.body.amount}});
     // // await User.findByIdAndUpdate(parentUser.id,{$inc:{lifeTimeDeposit:-req.body.amount}})
     let childAccStatement = {}
