@@ -3743,6 +3743,17 @@ io.on('connection', (socket) => {
             socket.emit("ROLLBACKDETAILS",{message:"err", status:"error"})
         }
     })
+
+
+    socket.on('marketLimitId', async(data) => {
+        try{
+            let LimitData = await betLimit.find({type:{$in:data}})
+            socket.emit('marketLimitId', LimitData)
+
+        }catch(err){
+            console.log(err)
+        }
+    })
     
 })
 

@@ -4984,10 +4984,19 @@ socket.on('connect', () => {
                     }
                 });
                 console.log(ids)
-                // socket.emit("marketLimitId", ids)
+                socket.emit("marketLimitId", ids)
               });
         }
         marketLimitId()
+
+        socket.on('marketLimitId', data => {
+            $('.market-limit').each(function(){
+                let limitData = data.find(item => item.type == this.id)
+                if(limitData){
+                    this.innerHTML = `Min : ${limitData.min_stake}, Max : ${limitData.max_stake}`
+                }
+            })
+        })
 
 
 
