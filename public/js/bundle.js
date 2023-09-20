@@ -7321,29 +7321,6 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
 //     betLockStatus(data)
 // })
 
-$('.createRole-form1').submit(function (e) {
-  e.preventDefault();
-  var authorization = [];
-  var authCheck = document.querySelectorAll("input[name='authorization']:checked");
-  for (var i = 0; i < authCheck.length; i++) {
-    authorization.push(authCheck[i].value);
-  }
-  var roleAuthorization = [];
-  var checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-  for (var _i = 0; _i < checkboxes.length; _i++) {
-    roleAuthorization.push(checkboxes[_i].value);
-  }
-  var roleName = $('#roleName').val();
-  var data = {
-    authorization: authorization,
-    userAuthorization: roleAuthorization,
-    roleName: roleName,
-    name: roleName
-  };
-  console.log(data);
-  (0, _createRole.createRole)(data);
-});
-
 // $('#searchUser').keyup(function(){
 //     let data = $(this).val()
 //     searchUser(data)
@@ -7486,6 +7463,28 @@ $(document).on('click', '.Withdraw', function () {
 //     $('.rowId').attr('data-rowid',rowId)
 // });
 
+$('.createRole-form1').submit(function (e) {
+  e.preventDefault();
+  var authorization = [];
+  var authCheck = document.querySelectorAll("input[name='operator']:checked");
+  for (var i = 0; i < authCheck.length; i++) {
+    authorization.push(authCheck[i].value);
+  }
+  var roleAuthorization = [];
+  var checkboxes = document.querySelectorAll("input[name='adminControll']:checked");
+  for (var _i = 0; _i < checkboxes.length; _i++) {
+    roleAuthorization.push(checkboxes[_i].value);
+  }
+  var roleName = $('#roleName').val();
+  var data = {
+    operationAuthorization: authorization,
+    adminControll: roleAuthorization,
+    roleName: roleName,
+    name: roleName
+  };
+  console.log(data);
+  (0, _createRole.createRole)(data);
+});
 $(document).on('click', '.RoleDetails', function () {
   console.log("Working");
   var modleName = $(this).data('bs-target');
@@ -7508,8 +7507,11 @@ $(document).on('click', '.RoleDetails', function () {
   for (var _i2 = 0; _i2 < roledata.userAuthorization.length; _i2++) {
     form.find("input[value = \"".concat(roledata.userAuthorization[_i2], "\"]")).attr("checked", "checked");
   }
-  for (var _i3 = 0; _i3 < roledata.operationAuthorization.length; _i3++) {
-    form.find("input[value = \"".concat(roledata.operationAuthorization[_i3], "\"]")).attr("checked", "checked");
+  for (var _i3 = 0; _i3 < roledata.adminControll.length; _i3++) {
+    form.find("input[value = \"".concat(roledata.adminControll[_i3], "\"]")).attr("checked", "checked");
+  }
+  for (var _i4 = 0; _i4 < roledata.operationAuthorization.length; _i4++) {
+    form.find("input[value = \"".concat(roledata.operationAuthorization[_i4], "\"]")).attr("checked", "checked");
   }
   // document.getElementById("role_controller").innerHTML = `
   //         <label for="level"> <h3>Role Level </h3></label><br>
@@ -7535,12 +7537,17 @@ $(document).on("submit", ".UpdateRole-form", function (e) {
   for (var i = 0; i < operator.length; i++) {
     operationAuthorization.push(operator[i].value);
   }
+  var adminController = document.querySelectorAll("input[name='adminControll']:checked");
+  for (var _i5 = 0; _i5 < adminController.length; _i5++) {
+    operationAuthorization.push(adminController[_i5].value);
+  }
   var data = {
     id: id,
     // authorization,
     // userAuthorization:roleAuthorization,
     roleName: roleName,
-    operationAuthorization: operationAuthorization
+    operationAuthorization: operationAuthorization,
+    adminController: adminController
   };
   // console.log(data)
   (0, _updateRoleByaxios.updateRole)(data);
@@ -7702,7 +7709,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49861" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49804" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
