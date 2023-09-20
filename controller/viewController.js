@@ -1285,7 +1285,15 @@ exports.WhiteLabelAnalysis = catchAsync(async(req, res, next) => {
                 onLineUser:{$sum:{$cond:[{$eq:['$is_Online',true]},1,0]}},
                 pL:{$sum:"$myPL"}
             }
-        }
+        },
+        {
+            $project: {
+              _id: 1,
+              activeUser: 1,
+              onLineUser: 1,
+              pL: { $round: ['$pL', 2] } 
+            }
+          }
     ])
     const me = req.currentUser
     // console.log(whiteLabelWise)
