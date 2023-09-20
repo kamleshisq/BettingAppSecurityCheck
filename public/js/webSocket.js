@@ -10441,7 +10441,6 @@ socket.on('connect', () => {
             }
             let Sport = $("#Event").val()
             let page = 0
-            $('.rowId').attr('data-rowid',page + 1)
             if(Sport != 'All'){
                 socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
             }
@@ -10456,7 +10455,6 @@ socket.on('connect', () => {
             }
             let Sport = $("#Event").val()
             let page = 0
-            $('.rowId').attr('data-rowid',page + 1)
             if(Sport != 'All'){
                 socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
             }        
@@ -10495,8 +10493,6 @@ socket.on('connect', () => {
                 to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
             }
             let page = 0
-            $('.rowId').attr('data-rowid',page + 1)
-            console.log(from_date,to_date,Sport,market,page)
             if(Sport != 'All'){
                 socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
             }
@@ -10516,7 +10512,23 @@ socket.on('connect', () => {
                 to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
             }
             let page = 0
-            $('.rowId').attr('data-rowid',page + 1)
+            if(Sport != 'All'){
+                socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+            }
+        })
+        $('.refresh').click(function() {
+            // console.log("Working")
+            let Sport = $("#Event").val()
+            let market = $('#market').val()
+            let to_date
+            let from_date
+            if($('#Fdate').val() != ''){
+                from_date = $('#Fdate').val()
+            }
+            if($('#Tdate').val() != ''){
+                to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            }
+            let page = 0
             if(Sport != 'All'){
                 socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
             }
@@ -10709,6 +10721,7 @@ socket.on('connect', () => {
                 }
             }
         })
+
         socket.on('childGameAnalist',async(data)=>{
             console.log(data)
             let html = ""
