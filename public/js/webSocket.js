@@ -964,8 +964,9 @@ socket.on('connect', () => {
             let form = $(modleName).find('.form-data')
             let userData = data.user
             let me = data.parent
-            let type = form.find('select[name = "type"]').val()
+            let type = form.find('input[name = "type"]').val()
             if(type == "deposit"){
+                form.find('.depositWD').addClass('active')
                 form.find('input[name = "toUser"]').attr('value',userData.userName)
                 form.find('input[name = "fuBalance"]').attr('value',me.availableBalance)
                 form.find('input[name = "tuBalance"]').attr('value',userData.availableBalance)
@@ -973,6 +974,7 @@ socket.on('connect', () => {
                 form.find('input[name = "fromUser"]').attr('value',me.userName)
                 form.attr('id', userData._id);
             }else{
+                form.find('.withdrawWD').addClass('active')
                 form.find('input[name = "toUser"]').attr('value',me.userName)
                 form.find('input[name = "fuBalance"]').attr('value',userData.availableBalance)
                 form.find('input[name = "tuBalance"]').attr('value',me.availableBalance)
@@ -983,38 +985,81 @@ socket.on('connect', () => {
             }
         })
 
-
-        $(document).on("change", ".DepositW", function(e){
-            e.preventDefault()
-            let type = $(this).val()
-            var row = this.closest('form');
-            // console.log(row.id)
-            var dataId = row.id;
-            // console.log(dataId)
-            socket.emit("DepositW", {dataId, type})
-        })
-
-        socket.on("DepositW", async(data) => {
+        $(document).on('click','#myModal .acc-form .depositWD',function(e){
             let modleName = "#myModal"
             let form = $(modleName).find('.form-data')
-            let userData = data.user
-            let me = data.parent
-            if(data.type == "withdrawl"){
-                form.find('input[name = "toUser"]').attr('value',me.userName)
-                form.find('input[name = "fuBalance"]').attr('value',userData.availableBalance)
-                form.find('input[name = "tuBalance"]').attr('value',me.availableBalance)
-                form.find('input[name = "clintPL"]').attr('value',me.clientPL)
-                form.find('input[name = "fromUser"]').attr('value',userData.userName)
-                form.attr('id', userData._id); 
+            let type = form.find('input[name = "type"]').val()
+            if(type == 'deposit'){
+
             }else{
-                form.find('input[name = "toUser"]').attr('value',userData.userName)
-                form.find('input[name = "fuBalance"]').attr('value',me.availableBalance)
-                form.find('input[name = "tuBalance"]').attr('value',userData.availableBalance)
-                form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
-                form.find('input[name = "fromUser"]').attr('value',me.userName)
-                form.attr('id', userData._id);                 
+                form.find('.withdrawWD').removeClass('active')
+                form.find('.depositWD').addClass('active')
+                let fromUSer = form.find('input[name = "toUser"]').val()
+                let toUser = form.find('input[name = "fromUser"]').val()
+                let tuBalance = form.find('input[name = "fuBalance"]').val()
+                let fuBalance = form.find('input[name = "tuBalance"]').val()
+
+                form.find('input[name = "type"]').val('deposit')
+                form.find('input[name = "toUser"]').attr('value',toUser)
+                form.find('input[name = "fuBalance"]').attr('value',fromUSer)
+                form.find('input[name = "tuBalance"]').attr('value',tuBalance)
+                form.find('input[name = "fromUser"]').attr('value',fuBalance)
             }
+
         })
+        $(document).on('click','#myModal .acc-form .withdrawWD',function(e){
+            let modleName = "#myModal"
+            let form = $(modleName).find('.form-data')
+            let type = form.find('input[name = "type"]').val()
+            if(type == 'deposit'){
+                form.find('.withdrawWD').addClass('active')
+                form.find('.depositWD').removeClass('active')
+                let fromUSer = form.find('input[name = "toUser"]').val()
+                let toUser = form.find('input[name = "fromUser"]').val()
+                let tuBalance = form.find('input[name = "fuBalance"]').val()
+                let fuBalance = form.find('input[name = "tuBalance"]').val()
+
+                form.find('input[name = "type"]').val('withdrawl')
+                form.find('input[name = "toUser"]').attr('value',toUser)
+                form.find('input[name = "fuBalance"]').attr('value',fromUSer)
+                form.find('input[name = "tuBalance"]').attr('value',tuBalance)
+                form.find('input[name = "fromUser"]').attr('value',fuBalance)
+            }else{
+            }
+
+        })
+
+        // $(document).on("change", ".DepositW", function(e){
+        //     e.preventDefault()
+        //     let type = $(this).val()
+        //     var row = this.closest('form');
+        //     // console.log(row.id)
+        //     var dataId = row.id;
+        //     // console.log(dataId)
+        //     socket.emit("DepositW", {dataId, type})
+        // })
+
+        // socket.on("DepositW", async(data) => {
+        //     let modleName = "#myModal"
+        //     let form = $(modleName).find('.form-data')
+        //     let userData = data.user
+        //     let me = data.parent
+        //     if(data.type == "withdrawl"){
+        //         form.find('input[name = "toUser"]').attr('value',me.userName)
+        //         form.find('input[name = "fuBalance"]').attr('value',userData.availableBalance)
+        //         form.find('input[name = "tuBalance"]').attr('value',me.availableBalance)
+        //         form.find('input[name = "clintPL"]').attr('value',me.clientPL)
+        //         form.find('input[name = "fromUser"]').attr('value',userData.userName)
+        //         form.attr('id', userData._id); 
+        //     }else{
+        //         form.find('input[name = "toUser"]').attr('value',userData.userName)
+        //         form.find('input[name = "fuBalance"]').attr('value',me.availableBalance)
+        //         form.find('input[name = "tuBalance"]').attr('value',userData.availableBalance)
+        //         form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
+        //         form.find('input[name = "fromUser"]').attr('value',me.userName)
+        //         form.attr('id', userData._id);                 
+        //     }
+        // })
 
 
         $(document).on('click','.PasswordChange',function(){
