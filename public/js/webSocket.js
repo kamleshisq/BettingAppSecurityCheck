@@ -966,7 +966,7 @@ socket.on('connect', () => {
             let me = data.parent
             let type = form.find('input[name = "type"]').val()
             if(type == "deposit"){
-                form.find('.depositWD').addClass('active')
+                form.find('.depositeWD').addClass('active')
                 form.find('input[name = "toUser"]').attr('value',userData.userName)
                 form.find('input[name = "fuBalance"]').attr('value',me.availableBalance)
                 form.find('input[name = "tuBalance"]').attr('value',userData.availableBalance)
@@ -985,7 +985,7 @@ socket.on('connect', () => {
             }
         })
 
-        $(document).on('click','#myModal .acc-form .depositWD',function(e){
+        $(document).on('click','#myModal .acc-form .depositeWD',function(e){
             let modleName = "#myModal"
             let form = $(modleName).find('.form-data')
             let type = form.find('input[name = "type"]').val()
@@ -993,7 +993,7 @@ socket.on('connect', () => {
 
             }else{
                 form.find('.withdrawWD').removeClass('active')
-                form.find('.depositWD').addClass('active')
+                form.find('.depositeWD').addClass('active')
                 let fromUSer = form.find('input[name = "toUser"]').val()
                 let toUser = form.find('input[name = "fromUser"]').val()
                 let tuBalance = form.find('input[name = "fuBalance"]').val()
@@ -1013,7 +1013,7 @@ socket.on('connect', () => {
             let type = form.find('input[name = "type"]').val()
             if(type == 'deposit'){
                 form.find('.withdrawWD').addClass('active')
-                form.find('.depositWD').removeClass('active')
+                form.find('.depositeWD').removeClass('active')
                 let fromUSer = form.find('input[name = "toUser"]').val()
                 let toUser = form.find('input[name = "fromUser"]').val()
                 let tuBalance = form.find('input[name = "fuBalance"]').val()
