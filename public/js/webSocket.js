@@ -8385,38 +8385,39 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert("Please Try again later")
             }else{
+                window.location.reload()
                 // $('#myModaladduser').modal('toggle');
-                let html = ""
-                const tbody = document.getElementById("tableBody");
-                const numberOfRows = tbody.getElementsByTagName("tr").length;
-                if(numberOfRows%2 == 0){
-                    html += `<tr style="text-align: center;" class="blue">`
-                }else{
-                    html += `<tr style="text-align: center;" >`
-                }
-                var date = new Date(data.date);
-                var options = { 
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: true
-                };
-                var formattedTime = date.toLocaleString('en-US', options);
-                var formattedTimeWithoutComma = formattedTime.replace(",", "");
-                html += `<td>${numberOfRows+1}</td>
-                <td>${formattedTimeWithoutComma}</td>
-                <td>Deposit</td>
-                <td>Betbhai</td>
-                <td> <i class="fa-solid fa-arrow-right"></i> </td>
-                <td>Betbhai</td>
-                <td>${data.amount}</td>
-                <td>${data.closingBalance}</td>
-                <td>${data.Remark}</td>
-              </tr>`
+            //     let html = ""
+            //     const tbody = document.getElementById("tableBody");
+            //     const numberOfRows = tbody.getElementsByTagName("tr").length;
+            //     if(numberOfRows%2 == 0){
+            //         html += `<tr style="text-align: center;" class="blue">`
+            //     }else{
+            //         html += `<tr style="text-align: center;" >`
+            //     }
+            //     var date = new Date(data.date);
+            //     var options = { 
+            //     year: 'numeric',
+            //     month: 'long',
+            //     day: 'numeric',
+            //     hour: 'numeric',
+            //     minute: 'numeric',
+            //     hour12: true
+            //     };
+            //     var formattedTime = date.toLocaleString('en-US', options);
+            //     var formattedTimeWithoutComma = formattedTime.replace(",", "");
+            //     html += `<td>${numberOfRows+1}</td>
+            //     <td>${formattedTimeWithoutComma}</td>
+            //     <td>Deposit</td>
+            //     <td>Betbhai</td>
+            //     <td> <i class="fa-solid fa-arrow-right"></i> </td>
+            //     <td>Betbhai</td>
+            //     <td>${data.amount}</td>
+            //     <td>${data.closingBalance}</td>
+            //     <td>${data.Remark}</td>
+            //   </tr>`
 
-              tbody.insertAdjacentHTML("beforeend", html);
+            //   tbody.insertAdjacentHTML("beforeend", html);
             }
         })
 
@@ -8487,6 +8488,45 @@ socket.on('connect', () => {
                 document.body.removeChild(a);
             }
           });
+
+        $(document).on('click', '.load-more', function(e){
+            e.preventDefault()
+            let page = parseInt($('.rowId').attr('data-rowid'))
+            $('.rowId').attr('data-rowid',page + 1)
+            socket.emit('HouseFundData', {LOGINDATA, page})
+        })
+
+        let count = 11
+        socket.on('HouseFundData', data => {
+            let html = ''
+            for(const i in data){
+                var date = new Date(data[i].date);
+                var options = { 
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+                };
+                var formattedTime = date.toLocaleString('en-US', options);
+                var formattedTimeWithoutComma = formattedTime.replace(",", "");
+                html += `<tr>
+                <td>${ count }</td>
+                  <td class="date-time">${formattedTimeWithoutComma}</td>
+                  <td>Deposit</td>
+                  <td>Betbhai</td>
+                  <td> <i class="fa-solid fa-arrow-right"></i> </td>
+                  <td>Betbhai</td>
+                  <td>${data[i].amount}</td>
+                  <td>${data[i].closingBalance}</td>
+                  <td>${data[i].Remark}</td>
+                </tr>`
+                count++
+            }
+
+            $('tbody').append(html)
+        })
     }
 
 
