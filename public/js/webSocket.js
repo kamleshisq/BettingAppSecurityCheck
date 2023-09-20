@@ -1075,13 +1075,15 @@ socket.on('connect', () => {
             socket.emit("getUserDetaisl111", {id, dataId})
         })
 
-        $(document).on('click','#myModalSE > .form-data > .deposite',function(e){
+        $(document).on('click','#myModalSE  .form-data  .deposite',function(e){
             let modleName = "#myModalSE"
             let form = $(modleName).find('.form-data')
             let typeValue = form.find('input[name = "type"]').val()
             if(typeValue == 'deposit'){
 
             }else if(typeValue == 'withdrawl'){
+                form.find('.deposite').addClass('active')
+                form.find('.withdraw').removeClass('active')
                 let fromUSer = form.find('input[name = "toUser"]').val()
                 let toUser = form.find('input[name = "fromUser"]').val()
                 let tuBalance = form.find('input[name = "fuBalance"]').val()
@@ -1093,16 +1095,17 @@ socket.on('connect', () => {
                 form.find('input[name = "fromUser"]').attr('value',fromUSer)
             }
         })
-        $(document).on('click','#myModalSE > .form-data > .withdraw',function(e){
+        $(document).on('click','#myModalSE  .form-data  .withdraw',function(e){
             let modleName = "#myModalSE"
             let form = $(modleName).find('.form-data')
             let typeValue = form.find('input[name = "type"]').val()
             if(typeValue == 'deposit'){
+                form.find('.deposite').removeClass('active')
+                form.find('.withdraw').addClass('active')
                 let fromUSer = form.find('input[name = "toUser"]').val()
                 let toUser = form.find('input[name = "fromUser"]').val()
                 let tuBalance = form.find('input[name = "fuBalance"]').val()
                 let fuBalance = form.find('input[name = "tuBalance"]').val()
-
                 form.find('input[name = "toUser"]').attr('value',toUser)
                 form.find('input[name = "fuBalance"]').attr('value',fuBalance)
                 form.find('input[name = "tuBalance"]').attr('value',tuBalance)
@@ -1122,6 +1125,8 @@ socket.on('connect', () => {
             console.log(userData)
             let me = data.parent
             let type = form.find('select[name = "type"]').val()
+            form.find('.deposite').removeClass('active')
+            form.find('.withdraw').removeClass('active')
             if(userData.uplinePL >= 0){
                 form.find('.deposite').addClass('active')
                 form.find('input[name = "type"]').val("deposit")
