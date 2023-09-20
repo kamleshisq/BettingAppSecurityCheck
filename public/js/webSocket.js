@@ -10935,9 +10935,9 @@ socket.on('connect', () => {
                 $('.matchOddsBack').html('<i class="fa-solid fa-angle-left"></i> Match Odds')
                 if(data.page == 0){
                     html += `</tbody>`
-                    if(data.matchOdds.length > 10){
-                        $('#FOOTBALL').find('#load-more-football').show()
-                    }
+                    // if(data.matchOdds.length == 10){
+                    // }
+                    $('#FOOTBALL').find('#load-more-football').show()
                     $('#FOOTBALL').find('table').html(html)
                 }else{
                     $('#FOOTBALL').find('tbody').append(html)
