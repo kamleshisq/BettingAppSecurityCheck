@@ -9181,7 +9181,7 @@ socket.on('connect', () => {
             }
             $('#cricket-tbody').html(htmlC)
             $('#football-tbody').html(htmlF)
-            $('#tennis-tbody').html(htmlF)
+            $('#tennis-tbody').html(htmlT)
         })
     }
 
