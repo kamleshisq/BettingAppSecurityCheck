@@ -1104,9 +1104,9 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     let betsEventWise = await betModel.aggregate([
         {
           $match: {
-            date: {
+            eventDate: {
                 $gte: fiveDaysAgo, 
-                $lte: currentDate, 
+                // $lte: currentDate, 
               }
           }
         },
