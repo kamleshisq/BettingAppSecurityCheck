@@ -7124,6 +7124,12 @@ $(document).ready(function () {
       $(this).parents('.switch').removeClass("on");
     }
   });
+  $('.searchUser').keypress(function (event) {
+    var keycode = event.keyCode ? event.keyCode : event.which;
+    if (keycode == '13') {
+      event.preventDefault();
+    }
+  });
 });
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
