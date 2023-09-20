@@ -4994,7 +4994,7 @@ socket.on('connect', () => {
             $('.market-limit').each(function(){
                 let limitData = data.find(item => item.type == this.id)
                 if(limitData){
-                    this.innerHTML = `Min : ${limitData.min_stake}, Max : ${limitData.max_stake}`
+                    this.innerHTML = `<b>Min : ${limitData.min_stake}, Max : ${limitData.max_stake}</b>`
                 }
             })
         })
