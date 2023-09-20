@@ -1162,6 +1162,7 @@ io.on('connection', (socket) => {
                     odds = thatMarket.yes
                 }
                 data.data.odds = odds
+                data.data.bettype2 = 'BACK'
                 
             }else{
                 let odds = thatMarket.even
@@ -1169,15 +1170,19 @@ io.on('connection', (socket) => {
                     odds = thatMarket.no
                 }
                 data.data.odds = odds
+                data.data.bettype2 = 'LAY'
             }
         }else if(thatMarket.title != "Bookmaker 0%Comm" && thatMarket.title != "TOSS" && thatMarket.title != 'BOOKMAKER 0% COMM'){
             // console.log(thatMarket, 45454545454)
             let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
             let name
+            // let bettype2
             if(data.data.secId.slice(-1) > 3){
                 name = `layPrice${data.data.secId.slice(-1) - 3}`
+                data.data.bettype2 = 'LAY'
             }else{
                 name = `backPrice${data.data.secId.slice(-1)}`
+                data.data.bettype2 = 'BACK'
             }
             let odds = realodd[name];
             data.data.odds = odds
@@ -1190,9 +1195,11 @@ io.on('connection', (socket) => {
             if(data.data.secId.slice(-1) == 2){
                 name = `layPrice${data.data.secId.slice(-1) - 3}`
                 name =  name.slice(0, -2)
+                data.data.bettype2 = 'LAY'
             }else{
                 name = `backPrice${data.data.secId.slice(-1)}`
                 name = name.slice(0, -1)
+                data.data.bettype2 = 'BACK'
             }
             // console.log(name)
             // console.log(name)
