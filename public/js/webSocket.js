@@ -9110,27 +9110,50 @@ socket.on('connect', () => {
 
         let fromdate;
         let todate;
-        $('#from_date').change(function(e){
-            fromdate =  new Date(Date.parse($('#from_date').val()));
-            if($('#to_date').val() != ''){
+        // $('#from_date').change(function(e){
+        //     fromdate =  new Date(Date.parse($('#from_date').val()));
+        //     if($('#to_date').val() != ''){
                 
-                todate = new Date(Date.parse($('#to_date').val()))
-            }
-            console.log(fromdate,todate)
-            socket.emit('settlement',{LOGINUSER:LOGINDATA.LOGINUSER,todate,fromdate})
+        //         todate = new Date(Date.parse($('#to_date').val()))
+        //     }
+        //     console.log(fromdate,todate)
+        //     socket.emit('settlement',{LOGINUSER:LOGINDATA.LOGINUSER,todate,fromdate})
 
-        })
-        $('#to_date').change(function(e){
-            todate = new Date(Date.parse($('#to_date').val()))
-            if($('#from_date').val() != ''){
+        // })
+        // $('#to_date').change(function(e){
+        //     todate = new Date(Date.parse($('#to_date').val()))
+        //     if($('#from_date').val() != ''){
                 
-                fromdate =  new Date((Date.parse($('#from_date').val())) );
-            }
-            console.log(fromdate,todate)
-            socket.emit('settlement',{LOGINUSER:LOGINDATA.LOGINUSER,todate,fromdate})
+        //         fromdate =  new Date((Date.parse($('#from_date').val())) );
+        //     }
+        //     console.log(fromdate,todate)
+        //     socket.emit('settlement',{LOGINUSER:LOGINDATA.LOGINUSER,todate,fromdate})
 
             
-        })
+        // })
+
+
+        $('#from_date').change(function (e) {
+            fromdate = new Date(Date.parse($('#from_date').val()));
+            fromdate.setHours(0, 0, 0, 0); // Set the time to midnight
+            if ($('#to_date').val() != '') {
+                todate = new Date(Date.parse($('#to_date').val()));
+                todate.setHours(0, 0, 0, 0); // Set the time to midnight
+            }
+            console.log(fromdate, todate);
+            socket.emit('settlement', { LOGINUSER: LOGINDATA.LOGINUSER, todate, fromdate });
+        });
+        
+        $('#to_date').change(function (e) {
+            todate = new Date(Date.parse($('#to_date').val()));
+            todate.setHours(0, 0, 0, 0); // Set the time to midnight
+            if ($('#from_date').val() != '') {
+                fromdate = new Date(Date.parse($('#from_date').val()));
+                fromdate.setHours(0, 0, 0, 0); // Set the time to midnight
+            }
+            console.log(fromdate, todate);
+            socket.emit('settlement', { LOGINUSER: LOGINDATA.LOGINUSER, todate, fromdate });
+        });
 
         socket.on('settlement',async(data)=>{
             if(data.betsEventWise.length !== 0){
