@@ -9166,6 +9166,41 @@ socket.on('connect', () => {
                     $('#cricket-tbody').html(`<tr class="empty_table"><td>No record found</td></tr>`)
                 }
 
+
+
+
+                let betsEventWiseData2 = data.betsEventWise.find(item => item.id == 'Football')
+                if(betsEventWiseData2){
+                    let htmlC = ''
+                    betsEventWiseData2 = betsEventWiseData2.data
+                    for(let i = 0; i < betsEventWiseData2.length; i++){
+                        htmlC += `<tr>`
+                    var timestamp = new Date(betsEventWiseData2[i].eventdate).getTime(); 
+                    var date = new Date(timestamp);
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
+                      
+                      htmlC += `<td>${ i + 1} </td>
+                      <td>${formattedTime}</td>
+                      <td>${betsEventWiseData2[i].series}</td>
+                      <td>${betsEventWiseData2[i].matchName}</td>
+                      <td>${betsEventWiseData2[i].count}</td>
+                      <td>${betsEventWiseData2[i].count2}</td>
+                      <td><a href="/admin/settlementIn?id=${betsEventWiseData2[i].eventid}" class="btn-green">settle</a></td>
+                    </tr>`
+                    }
+                    $('#cricket-tbody').html(htmlC)
+                }else{
+                    $('#cricket-tbody').html(`<tr class="empty_table"><td>No record found</td></tr>`)
+                }
+
             }
         })
     }
