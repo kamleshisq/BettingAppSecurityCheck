@@ -5394,6 +5394,10 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
+                    }else if(section.win_result != 'undefined' && section.win_result != " "){
+                        this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.add("suspended");
+                      $(this).parent().find(".match-status-message").text(section.win_result)
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         parentElement.classList.remove("suspended")
@@ -5454,6 +5458,10 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Ball Running")
+                    }else if(section.win_result != 'undefined' && section.win_result != " "){
+                        this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.add("suspended");
+                      $(this).parent().find(".match-status-message").text(section.win_result)
                     }else if(section.suspended){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
@@ -5529,6 +5537,10 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Ball Running")
+                    }else if(section.win_result != 'undefined' && section.win_result != " "){
+                        this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.add("suspended");
+                      $(this).parent().find(".match-status-message").text(section.win_result)
                     }else if(section.suspended){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
