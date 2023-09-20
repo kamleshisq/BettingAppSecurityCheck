@@ -2079,9 +2079,7 @@ socket.on('connect', () => {
                 let Fdate = document.getElementById("Fdate").value
                 let Tdate = document.getElementById("Tdate").value
                
-                if(Tdate != ''){
-                    Tdate = 'undefined'
-                }
+                
                 data.Fdate = Fdate;
                 if(Tdate != ''){
                     data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
