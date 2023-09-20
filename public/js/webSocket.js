@@ -11203,8 +11203,14 @@ socket.on('connect', () => {
 
                 html3 = '<div class="welcome-info-btn">' + html3
 
-                $('#Cricket').find('.dashboard-welcome-section').html(html3)
-                $('#FOOTBALL').find('.dashboard-welcome-section').html(html3)
+                if(data.gameAnalist.length > 0){
+
+                    $('#Cricket').find('.dashboard-welcome-section').html(html3)
+                }
+                if(data.marketAnalist.length > 0){
+
+                    $('#FOOTBALL').find('.dashboard-welcome-section').html(html3)
+                }
                 $('#Cricket').find('tbody').html(html)
                 $('#FOOTBALL').find('tbody').html(html2)
 
