@@ -1090,7 +1090,8 @@ socket.on('connect', () => {
                 let toUser = form.find('input[name = "fromUser"]').val()
                 let tuBalance = form.find('input[name = "fuBalance"]').val()
                 let fuBalance = form.find('input[name = "tuBalance"]').val()
-
+                
+                form.find('input[name = "type"]').val('deposit')
                 form.find('input[name = "toUser"]').attr('value',toUser)
                 form.find('input[name = "fuBalance"]').attr('value',fuBalance)
                 form.find('input[name = "tuBalance"]').attr('value',tuBalance)
@@ -1109,6 +1110,8 @@ socket.on('connect', () => {
                 let toUser = form.find('input[name = "fromUser"]').val()
                 let tuBalance = form.find('input[name = "fuBalance"]').val()
                 let fuBalance = form.find('input[name = "tuBalance"]').val()
+
+                form.find('input[name = "type"]').val('withdrawl')
                 form.find('input[name = "toUser"]').attr('value',toUser)
                 form.find('input[name = "fuBalance"]').attr('value',fuBalance)
                 form.find('input[name = "tuBalance"]').attr('value',tuBalance)
