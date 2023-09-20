@@ -7900,6 +7900,19 @@ socket.on('connect', () => {
                     document.getElementById('tableBET').innerHTML = html2
                 }
             })
+
+
+
+            $(document).on('click','.tbl-td-with5',function(e){
+                // console.log("WORKING")
+                $(".minus").closest("tr").find('.set-stake-form-input2').val(0)
+                $(".minus")
+                .closest("tr")
+                .find(".c-gren")
+                .text('00');
+            })
+
+
     }
 
     
