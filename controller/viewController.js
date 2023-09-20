@@ -1080,7 +1080,7 @@ exports.getPromotionPage = catchAsync(async(req, res, next) => {
 
 exports.getoperationsPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
-    const fundList = await houseFundModel.find({userId:me.id})
+    const fundList = await houseFundModel.find({userId:me.id}).sort({date:-1}).limit(10)
     res.status(200).render("./operations/operation",{
         title:"House Management",
         me,
