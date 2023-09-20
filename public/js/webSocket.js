@@ -9061,20 +9061,20 @@ socket.on('connect', () => {
         let fromdate;
         let todate;
         $('#from_date').change(function(e){
-            fromdate =  new Date(Date.parse($('#from_date').val())  / 1000);
+            fromdate =  new Date(Date.parse($('#from_date').val()));
             if($('#to_date').val() != ''){
                 
-                todate = new Date(Date.parse($('#to_date').val()) / 1000 + ((24*60*60*1000)-1))
+                todate = new Date(Date.parse($('#to_date').val()))
             }
             console.log(fromdate,todate)
             socket.emit('settlement',{LOGINUSER:LOGINDATA.LOGINUSER,todate,fromdate})
 
         })
         $('#to_date').change(function(e){
-            todate = new Date(Date.parse($('#to_date').val()) / 1000+ ((24*60*60*1000)-1))
+            todate = new Date(Date.parse($('#to_date').val()))
             if($('#from_date').val() != ''){
                 
-                fromdate =  new Date((Date.parse($('#from_date').val())) / 1000);
+                fromdate =  new Date((Date.parse($('#from_date').val())) );
             }
             console.log(fromdate,todate)
             socket.emit('settlement',{LOGINUSER:LOGINDATA.LOGINUSER,todate,fromdate})
@@ -9087,7 +9087,7 @@ socket.on('connect', () => {
             let html = ''
             for(let i = 0; i < data.betsEventWise.length; i++){ 
                 html += `<tr>`
-                var timestamp = new Date(data.betsEventWise[i].eventdate).getTime() * 1000; 
+                var timestamp = new Date(data.betsEventWise[i].eventdate).getTime(); 
                 var date = new Date(timestamp);
                 var options = { 
                     year: 'numeric',
