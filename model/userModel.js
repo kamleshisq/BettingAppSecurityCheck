@@ -278,6 +278,7 @@ userSchema.post(/^find/, function (docs) {
         docs.uplinePL = roundToTwoDecimals(docs.uplinePL);
         docs.lifetimePL = roundToTwoDecimals(docs.lifetimePL);
         docs.pointsWL = roundToTwoDecimals(docs.pointsWL);
+        console.log()
     }
 });
 
