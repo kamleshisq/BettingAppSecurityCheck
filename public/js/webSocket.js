@@ -8385,38 +8385,39 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert("Please Try again later")
             }else{
+                window.location.reload()
                 // $('#myModaladduser').modal('toggle');
-                let html = ""
-                const tbody = document.getElementById("tableBody");
-                const numberOfRows = tbody.getElementsByTagName("tr").length;
-                if(numberOfRows%2 == 0){
-                    html += `<tr style="text-align: center;" class="blue">`
-                }else{
-                    html += `<tr style="text-align: center;" >`
-                }
-                var date = new Date(data.date);
-                var options = { 
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: true
-                };
-                var formattedTime = date.toLocaleString('en-US', options);
-                var formattedTimeWithoutComma = formattedTime.replace(",", "");
-                html += `<td>${numberOfRows+1}</td>
-                <td>${formattedTimeWithoutComma}</td>
-                <td>Deposit</td>
-                <td>Betbhai</td>
-                <td> <i class="fa-solid fa-arrow-right"></i> </td>
-                <td>Betbhai</td>
-                <td>${data.amount}</td>
-                <td>${data.closingBalance}</td>
-                <td>${data.Remark}</td>
-              </tr>`
+            //     let html = ""
+            //     const tbody = document.getElementById("tableBody");
+            //     const numberOfRows = tbody.getElementsByTagName("tr").length;
+            //     if(numberOfRows%2 == 0){
+            //         html += `<tr style="text-align: center;" class="blue">`
+            //     }else{
+            //         html += `<tr style="text-align: center;" >`
+            //     }
+            //     var date = new Date(data.date);
+            //     var options = { 
+            //     year: 'numeric',
+            //     month: 'long',
+            //     day: 'numeric',
+            //     hour: 'numeric',
+            //     minute: 'numeric',
+            //     hour12: true
+            //     };
+            //     var formattedTime = date.toLocaleString('en-US', options);
+            //     var formattedTimeWithoutComma = formattedTime.replace(",", "");
+            //     html += `<td>${numberOfRows+1}</td>
+            //     <td>${formattedTimeWithoutComma}</td>
+            //     <td>Deposit</td>
+            //     <td>Betbhai</td>
+            //     <td> <i class="fa-solid fa-arrow-right"></i> </td>
+            //     <td>Betbhai</td>
+            //     <td>${data.amount}</td>
+            //     <td>${data.closingBalance}</td>
+            //     <td>${data.Remark}</td>
+            //   </tr>`
 
-              tbody.insertAdjacentHTML("beforeend", html);
+            //   tbody.insertAdjacentHTML("beforeend", html);
             }
         })
 
