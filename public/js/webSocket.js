@@ -4973,6 +4973,24 @@ socket.on('connect', () => {
 
     if(pathname === '/exchange_inPlay/match'){
 
+
+        function marketLimitId(){
+            $(document).ready(function() {
+                var ids = [];
+          
+                $(".market-limit").each(function() {
+                    if (!ids.includes(this.id)) {
+                        ids.push(this.id);
+                    }
+                });
+                console.log(ids)
+                // socket.emit("marketLimitId", ids)
+              });
+        }
+        marketLimitId()
+
+
+
         function showLoader() {
             document.getElementById("loader-overlay").style.display = "flex";
           }
