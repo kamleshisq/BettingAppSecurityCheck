@@ -2614,7 +2614,8 @@ io.on('connection', (socket) => {
                   count: { $sum: 1 },
                   eventdate: { $first: "$eventDate" }, 
                   eventid: { $first: "$eventId" },
-                  series: {$first: "$event"} 
+                  series: {$first: "$event"}, 
+                  betType : {$first: '$betType'}
                 }
               },
               {
@@ -2624,7 +2625,8 @@ io.on('connection', (socket) => {
                   eventdate: 1,
                   eventid: 1,
                   series:1,
-                  count: 1
+                  count: 1,
+                  betType: 1
                 }
               }
         ])
