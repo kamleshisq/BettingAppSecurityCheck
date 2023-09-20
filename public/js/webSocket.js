@@ -4983,13 +4983,14 @@ socket.on('connect', () => {
                         ids.push(this.id);
                     }
                 });
-                console.log(ids)
+                // console.log(ids)
                 socket.emit("marketLimitId", ids)
               });
         }
         marketLimitId()
 
         socket.on('marketLimitId', data => {
+            console.log(data, 'returnData')
             $('.market-limit').each(function(){
                 let limitData = data.find(item => item.type == this.id)
                 if(limitData){
