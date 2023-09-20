@@ -5457,7 +5457,8 @@ socket.on('connect', () => {
                         this.setAttribute("data-bs-toggle", "collapse");
                         // this.innerHTML = `<span><b>${section.yes}</b></span>` 
                         let x = (parseFloat(section.yes_rate) + 100)/100
-                        this.innerHTML = `<span><b>${x}</b></span> <span> ${section.yes}</span>`
+                        // this.innerHTML = `<span><b>${x}</b></span> <span> ${section.yes}</span>`
+                        this.innerHTML = `<span><b>${section.yes}</b></span> <span> ${section.yes_rate}</span>`
                     }
                 }
             });
@@ -5503,7 +5504,8 @@ socket.on('connect', () => {
                         $(this).parent().find(".match-status-message").text("")
                         parentElement.classList.remove("suspended")
                         let x = (parseFloat(section.no_rate) + 100)/100
-                        this.innerHTML = `<span><b>${x}</b></span> <span> ${section.no}</span>`
+                        // this.innerHTML = `<span><b>${x}</b></span> <span> ${section.no}</span>`
+                        this.innerHTML = `<span><b>${section.no}</b></span> <span> ${section.no_rate}</span>`
                         // this.innerHTML = `<span><b>${section.no}</b></span>` 
                     }
                 }
