@@ -8495,6 +8495,7 @@ socket.on('connect', () => {
             socket.emit('HouseFundData', {LOGINDATA, page})
         })
 
+        let count = 11
         socket.on('HouseFundData', data => {
             let html = ''
             for(const i in data){
@@ -8510,7 +8511,7 @@ socket.on('connect', () => {
                 var formattedTime = date.toLocaleString('en-US', options);
                 var formattedTimeWithoutComma = formattedTime.replace(",", "");
                 html += `<tr>
-                <td>${ i+1 }</td>
+                <td>${ count }</td>
                   <td class="date-time">${formattedTimeWithoutComma}</td>
                   <td>Deposit</td>
                   <td>Betbhai</td>
@@ -8520,6 +8521,7 @@ socket.on('connect', () => {
                   <td>${data[i].closingBalance}</td>
                   <td>${data[i].Remark}</td>
                 </tr>`
+                count++
             }
 
             $('tbody').append(html)
