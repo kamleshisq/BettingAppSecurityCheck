@@ -6564,9 +6564,10 @@ socket.on('connect', () => {
                 }
                 if(bets[i].selectionName){
                         html +=    `<td title='Bet On'>${bets[i].selectionName}</td>
+                        <td title="Bet Type" >${bets[i].bettype2}</td>
                             <td title='Odds'>${bets[i].oddValue}</td>`
                 }else{
-                        html +=    "<td title='Bet On'>-</td><td title='Odds'>-</td>"
+                        html +=    "<td title='Bet On'>-</td><td title='Bet Type' >-</td><td title='Odds'>-</td>"
                 }
                 html += ` <td title='Status'>${bets[i].status}</td>
                         <td title='Stake'>${bets[i].Stake}</td>`
