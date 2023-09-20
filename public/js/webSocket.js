@@ -10963,6 +10963,8 @@ socket.on('connect', () => {
                 $('#Cricket').find('.bredcum-container').html('')
             }
             $('.welcome-info-btn').remove()
+            $('.matchOddsBack').removeClass('active')
+
             let html = ""
             let html2 = ""
             limit = 10 * data.page
