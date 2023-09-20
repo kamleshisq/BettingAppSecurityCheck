@@ -10941,15 +10941,17 @@ socket.on('connect', () => {
                     $('#FOOTBALL').find('table').html(html)
                 }else{
                     $('#FOOTBALL').find('tbody').append(html)
-                    if(data.matchOdds.length <= 10){
-                        $('#FOOTBALL').find('#load-more-football').hide()
-                    }
+                    
 
                 }
 
 
             }else{
-
+                if(data.page > 0){
+                    if(data.matchOdds.length <= 10){
+                        $('#FOOTBALL').find('#load-more-football').hide()
+                    }
+                }
             }
         })
 
