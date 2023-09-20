@@ -9133,18 +9133,13 @@ socket.on('connect', () => {
         })
 
         socket.on('settlement',async(data)=>{
-            console.log(data)
-            let htmlC = ''
-            let htmlT = ''
-            let htmlF = ''
-            let CricketS = false
-            let TennisS = false
-            let FootballS = false
-            for(let i = 0; i < data.betsEventWise.length; i++){ 
-                if(data.betsEventWise[i].betType == "Cricket"){
-                    let c = 1
-                    CricketS = true
-                    htmlC += `<tr>`
+            if(data.betsEventWise.length !== 0){
+                let betsEventWiseData = data.betsEventWise.find(item => item.id == 'Cricket')
+                if(betsEventWiseData){
+                    let htmlC = ''
+                    betsEventWiseData = betsEventWiseData.data
+                    for(let i = 0; i < betsEventWiseData.length; i++){
+                        htmlC += `<tr>`
                     var timestamp = new Date(data.betsEventWise[i].eventdate).getTime(); 
                     var date = new Date(timestamp);
                     var options = { 
@@ -9157,7 +9152,7 @@ socket.on('connect', () => {
                     };
                     var formattedTime = date.toLocaleString('en-US', options);
                       
-                      htmlC += `<td>${c} </td>
+                      htmlC += `<td>${ i + 1} </td>
                       <td>${formattedTime}</td>
                       <td>${data.betsEventWise[i].series}</td>
                       <td>${data.betsEventWise[i].matchName}</td>
@@ -9165,73 +9160,13 @@ socket.on('connect', () => {
                       <td>${data.betsEventWise[i].count2}</td>
                       <td><a href="/admin/settlementIn?id=${data.betsEventWise[i].eventid}" class="btn-green">settle</a></td>
                     </tr>`
-                    c++
-                }else if (data.betsEventWise[i].betType == "Tennis"){
-                    TennisS = true
-                    let t = 1
-                    htmlT += `<tr>`
-                    var timestamp = new Date(data.betsEventWise[i].eventdate).getTime(); 
-                    var date = new Date(timestamp);
-                    var options = { 
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric',
-                        hour12: true
-                    };
-                    var formattedTime = date.toLocaleString('en-US', options);
-                      
-                      htmlT += `<td>${t} </td>
-                      <td>${formattedTime}</td>
-                      <td>${data.betsEventWise[i].series}</td>
-                      <td>${data.betsEventWise[i].matchName}</td>
-                      <td>${data.betsEventWise[i].count}</td>
-                      <td>${data.betsEventWise[i].count2}</td>
-                      <td><a href="/admin/settlementIn?id=${data.betsEventWise[i].eventid}" class="btn-green">settle</a></td>
-                    </tr>`
-                    t++
-                }else if (data.betsEventWise[i].betType == "Football"){
-                    FootballS = true
-                    htmlF += `<tr>`
-                    let f = 1
-                    var timestamp = new Date(data.betsEventWise[i].eventdate).getTime(); 
-                    var date = new Date(timestamp);
-                    var options = { 
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric',
-                        hour12: true
-                    };
-                    var formattedTime = date.toLocaleString('en-US', options);
-                      
-                      htmlF += `<td>${f} </td>
-                      <td>${formattedTime}</td>
-                      <td>${data.betsEventWise[i].series}</td>
-                      <td>${data.betsEventWise[i].matchName}</td>
-                      <td>${data.betsEventWise[i].count}</td>
-                      <td>${data.betsEventWise[i].count2}</td>
-                      <td><a href="/admin/settlementIn?id=${data.betsEventWise[i].eventid}" class="btn-green">settle</a></td>
-                    </tr>`
-                    f++
+                    }
+                    $('#cricket-tbody').html(htmlC)
+                }else{
+                    $('#cricket-tbody').html(`<tr class="empty_table"><td>No record found</td></tr>`)
                 }
-    
-            }
 
-            if(!CricketS){
-                htmlC = `<tr class="empty_table"><td>No record found</td></tr>`
             }
-            if(!TennisS){
-                htmlT = `<tr class="empty_table"><td>No record found</td></tr>`
-            }
-            if(!FootballS){
-                htmlF = `<tr class="empty_table"><td>No record found</td></tr>`
-            }
-            $('#cricket-tbody').html(htmlC)
-            $('#football-tbody').html(htmlF)
-            $('#tennis-tbody').html(htmlT)
         })
     }
 
