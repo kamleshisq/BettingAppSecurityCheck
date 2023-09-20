@@ -199,7 +199,7 @@ if(marketDetails.title.toLowerCase().startsWith('match')){
 }
 
 
-console.log(marketDetails, "+===> marketDetails")
+console.log(marketDetails, data.data, '+===>DATA')
 
 // if(!marketDetails.runners){
 //     betPlaceData = {
