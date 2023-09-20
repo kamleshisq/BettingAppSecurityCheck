@@ -10000,6 +10000,26 @@ socket.on('connect', () => {
         marketId()
 
 
+        let eventId = search.split('=')[1]
+        function eventIDFOrScore(){
+            socket.emit("eventId", eventId)
+            setTimeout(()=>{
+                eventIDFOrScore()
+            }, 500)
+
+        }
+        eventIDFOrScore()
+        socket.on("eventId", async(data)=>{
+            if(data != ""){
+                let score = JSON.parse(data)
+                let element = document.getElementsByClassName("live-score")
+                for(let i = 0; i < element.length; i++){
+                    element[i].innerHTML = score[0].data
+                }
+            }
+        })
+
+
         let first = true
         socket.on("marketId", async(data) => {
             console.log(data)
