@@ -9140,7 +9140,7 @@ socket.on('connect', () => {
                     betsEventWiseData = betsEventWiseData.data
                     for(let i = 0; i < betsEventWiseData.length; i++){
                         htmlC += `<tr>`
-                    var timestamp = new Date(data.betsEventWise[i].eventdate).getTime(); 
+                    var timestamp = new Date(betsEventWiseData[i].eventdate).getTime(); 
                     var date = new Date(timestamp);
                     var options = { 
                         year: 'numeric',
@@ -9154,11 +9154,11 @@ socket.on('connect', () => {
                       
                       htmlC += `<td>${ i + 1} </td>
                       <td>${formattedTime}</td>
-                      <td>${data.betsEventWise[i].series}</td>
-                      <td>${data.betsEventWise[i].matchName}</td>
-                      <td>${data.betsEventWise[i].count}</td>
-                      <td>${data.betsEventWise[i].count2}</td>
-                      <td><a href="/admin/settlementIn?id=${data.betsEventWise[i].eventid}" class="btn-green">settle</a></td>
+                      <td>${betsEventWiseData[i].series}</td>
+                      <td>${betsEventWiseData[i].matchName}</td>
+                      <td>${betsEventWiseData[i].count}</td>
+                      <td>${betsEventWiseData[i].count2}</td>
+                      <td><a href="/admin/settlementIn?id=${betsEventWiseData[i].eventid}" class="btn-green">settle</a></td>
                     </tr>`
                     }
                     $('#cricket-tbody').html(htmlC)
