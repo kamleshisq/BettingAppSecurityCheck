@@ -1075,6 +1075,43 @@ socket.on('connect', () => {
             socket.emit("getUserDetaisl111", {id, dataId})
         })
 
+        $(document).on('click','#myModalSE > .form-data > .deposite',function(e){
+            let modleName = "#myModalSE"
+            let form = $(modleName).find('.form-data')
+            let typeValue = form.find('input[name = "type"]').val()
+            if(typeValue == 'deposit'){
+
+            }else if(typeValue == 'withdrawl'){
+                let fromUSer = form.find('input[name = "toUser"]').val()
+                let toUser = form.find('input[name = "fromUser"]').val()
+                let tuBalance = form.find('input[name = "fuBalance"]').val()
+                let fuBalance = form.find('input[name = "tuBalance"]').val()
+
+                form.find('input[name = "toUser"]').attr('value',toUser)
+                form.find('input[name = "fuBalance"]').attr('value',fuBalance)
+                form.find('input[name = "tuBalance"]').attr('value',tuBalance)
+                form.find('input[name = "fromUser"]').attr('value',fromUSer)
+            }
+        })
+        $(document).on('click','#myModalSE > .form-data > .withdraw',function(e){
+            let modleName = "#myModalSE"
+            let form = $(modleName).find('.form-data')
+            let typeValue = form.find('input[name = "type"]').val()
+            if(typeValue == 'deposit'){
+                let fromUSer = form.find('input[name = "toUser"]').val()
+                let toUser = form.find('input[name = "fromUser"]').val()
+                let tuBalance = form.find('input[name = "fuBalance"]').val()
+                let fuBalance = form.find('input[name = "tuBalance"]').val()
+
+                form.find('input[name = "toUser"]').attr('value',toUser)
+                form.find('input[name = "fuBalance"]').attr('value',fuBalance)
+                form.find('input[name = "tuBalance"]').attr('value',tuBalance)
+                form.find('input[name = "fromUser"]').attr('value',fromUSer)
+            }else if(typeValue == 'withdrawl'){
+                
+            }
+        })
+
         socket.on("getUserDetaisl111", data => {
             if(data.status === "error"){
                 alert("Please Try again leter")
@@ -1086,7 +1123,8 @@ socket.on('connect', () => {
             let me = data.parent
             let type = form.find('select[name = "type"]').val()
             if(userData.uplinePL > 0){
-                form.find('select[name = "type"]').val("deposit")
+                form.find('.deposite').addClass('active')
+                form.find('input[name = "type"]').val("deposit")
                 form.find('input[name = "toUser"]').attr('value',userData.userName)
                 form.find('input[name = "fuBalance"]').attr('value',me.availableBalance)
                 form.find('input[name = "tuBalance"]').attr('value',userData.availableBalance)
@@ -1095,7 +1133,8 @@ socket.on('connect', () => {
                 form.find('input[name = "amount"]').attr('value',userData.uplinePL)
                 form.attr('id', userData._id);
             }else{
-                form.find('select[name = "type"]').val("withdrawl")
+                form.find('.withdraw').addClass('active')
+                form.find('input[name = "type"]').val("withdrawl")
                 form.find('input[name = "toUser"]').attr('value',me.userName)
                 form.find('input[name = "fuBalance"]').attr('value',userData.availableBalance)
                 form.find('input[name = "tuBalance"]').attr('value',me.availableBalance)
