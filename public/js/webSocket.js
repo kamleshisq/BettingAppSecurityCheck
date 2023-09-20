@@ -9999,6 +9999,25 @@ socket.on('connect', () => {
         }
         marketId()
 
+        let ids = search.split('=')[1]
+        function eventID(){
+            socket.emit("eventId", ids)
+            setTimeout(()=>{
+                eventID()
+            }, 500)
+
+        }
+        eventID()
+        socket.on("eventId", async(data)=>{
+            if(data != ""){
+                let score = JSON.parse(data)
+                let element = document.getElementsByClassName("live-score")
+                for(let i = 0; i < element.length; i++){
+                    element[i].innerHTML = score[0].data
+                }
+            }
+        })
+
 
         let first = true
         socket.on("marketId", async(data) => {
