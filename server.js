@@ -2608,25 +2608,43 @@ io.on('connection', (socket) => {
                   "user.parentUsers": { $in: [me._id] }
                 }
               },
-            {
+              {
                 $group: {
-                  _id: "$match",
+                  _id: {
+                    betType: "$betType",
+                    matchName: "$match"
+                  },
                   count: { $sum: 1 },
                   eventdate: { $first: "$eventDate" }, 
                   eventid: { $first: "$eventId" },
-                  series: {$first: "$event"}, 
-                  betType : {$first: '$betType'}
+                  series: {$first: "$event"},
+                  count2: { 
+                      $sum: {
+                        $cond: [{ $eq: ["$status", "OPEN"] }, 1, 0],
+                      },
+                  },
+                }
+              },
+              {
+                $group: {
+                  _id: "$_id.betType",
+                  data: {
+                    $push: {
+                      matchName: "$_id.matchName",
+                      count: "$count",
+                      eventdate : '$eventdate',
+                      eventid : "$eventid",
+                      series : '$series',
+                      count2: "$count2",
+                    }
+                  }
                 }
               },
               {
                 $project: {
                   _id: 0,
-                  matchName: "$_id",
-                  eventdate: 1,
-                  eventid: 1,
-                  series:1,
-                  count: 1,
-                  betType: 1
+                  id: "$_id", 
+                  data: 1
                 }
               }
         ])

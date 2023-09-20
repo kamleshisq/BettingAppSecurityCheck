@@ -9162,7 +9162,7 @@ socket.on('connect', () => {
                       <td>${data.betsEventWise[i].series}</td>
                       <td>${data.betsEventWise[i].matchName}</td>
                       <td>${data.betsEventWise[i].count}</td>
-                      <td>${data.betsEventWise[i].count}</td>
+                      <td>${data.betsEventWise[i].count2}</td>
                       <td><a href="/admin/settlementIn?id=${data.betsEventWise[i].eventid}" class="btn-green">settle</a></td>
                     </tr>`
                     c++
@@ -9187,7 +9187,7 @@ socket.on('connect', () => {
                       <td>${data.betsEventWise[i].series}</td>
                       <td>${data.betsEventWise[i].matchName}</td>
                       <td>${data.betsEventWise[i].count}</td>
-                      <td>${data.betsEventWise[i].count}</td>
+                      <td>${data.betsEventWise[i].count2}</td>
                       <td><a href="/admin/settlementIn?id=${data.betsEventWise[i].eventid}" class="btn-green">settle</a></td>
                     </tr>`
                     t++
@@ -9212,7 +9212,7 @@ socket.on('connect', () => {
                       <td>${data.betsEventWise[i].series}</td>
                       <td>${data.betsEventWise[i].matchName}</td>
                       <td>${data.betsEventWise[i].count}</td>
-                      <td>${data.betsEventWise[i].count}</td>
+                      <td>${data.betsEventWise[i].count2}</td>
                       <td><a href="/admin/settlementIn?id=${data.betsEventWise[i].eventid}" class="btn-green">settle</a></td>
                     </tr>`
                     f++
