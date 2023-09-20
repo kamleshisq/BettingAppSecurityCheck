@@ -167,7 +167,7 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
 exports.withdrawSettle = catchAsync(async(req, res, next) => {
     // const user = await User.findById(req.body.userId)
     console.log(req.body)
-    req.body.amount = parseFloat(req.body.amount) * -1
+    req.body.amount = parseFloat(req.body.amount)
     req.body.clintPL = parseFloat(req.body.clintPL)
 
     const childUser = await User.findById(req.body.id);
