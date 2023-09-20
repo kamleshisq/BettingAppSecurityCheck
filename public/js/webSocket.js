@@ -10513,7 +10513,7 @@ socket.on('connect', () => {
         })
 
 
-        $(document).on('click', ".load-more", function(e){
+        $(document).on('click', ".load-more-football", function(e){
             let page = parseInt($('.rowId').attr('data-rowid'))
             let market = $("#market").val()
             $('.rowId').attr('data-rowid',page + 1)
@@ -10526,7 +10526,23 @@ socket.on('connect', () => {
                 to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
             }
             let Sport = $("#Event").val()
-            socket.emit('gameAnalysis',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+            socket.emit('matchOdds',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
+        })
+        $(document).on('click', ".load-more-cricket", function(e){
+            let page = parseInt($('.rowId2').attr('data-rowid2'))
+            let market = $("#market").val()
+            $('.rowId2').attr('data-rowid2',page + 1)
+            let to_date;
+            let from_date
+            let own = $('.matchOddOwn').attr('data-parent')
+            if($('#Fdate').val() != ''){
+                from_date = $('#Fdate').val()
+            }
+            if($('#Tdate').val() != ''){
+                to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
+            }
+            let Sport = $("#Event").val()
+            socket.emit('matchOdds',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market,own})
         })
 
         $(document).on('click','.matchOdds',function(e){
@@ -10664,9 +10680,14 @@ socket.on('connect', () => {
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
                     }
                     $('#Cricket').find('table').html(html)
+                    if(data.matchOdds.length > 10){
+                        $('#Cricket').find('#load-more-cricket').show()
+                    }
                 }else{
                     $('#Cricket').find('table').append(html)
-
+                    if(data.matchOdds.length <= 10){
+                        $('#Cricket').find('#load-more-cricket').hide()
+                    }
                 }
 
 
@@ -10904,9 +10925,15 @@ socket.on('connect', () => {
                 $('.matchOddsBack').html('<i class="fa-solid fa-angle-left"></i> Match Odds')
                 if(data.page == 0){
                     html += `</tbody>`
+                    if(data.matchOdds.length > 10){
+                        $('#FOOTBALL').find('#load-more-football').show()
+                    }
                     $('#FOOTBALL').find('table').html(html)
                 }else{
                     $('#FOOTBALL').find('tbody').append(html)
+                    if(data.matchOdds.length <= 10){
+                        $('#FOOTBALL').find('#load-more-football').hide()
+                    }
 
                 }
 
