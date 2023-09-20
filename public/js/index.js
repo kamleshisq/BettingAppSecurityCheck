@@ -256,28 +256,6 @@ $(document).on('submit','.Settlement-form',async function(e) {
 //     betLockStatus(data)
 // })
 
-$('.createRole-form1').submit(function(e) {
-    e.preventDefault()
-    let authorization = []; 
-    let authCheck = document.querySelectorAll("input[name='authorization']:checked");
-    for (let i = 0 ; i < authCheck.length; i++) {
-     authorization.push(authCheck[i].value)
-    }
-    let roleAuthorization = [];
-    let checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-    for (let i = 0 ; i < checkboxes.length; i++) {
-        roleAuthorization.push(checkboxes[i].value)
-    }
-    let roleName = $('#roleName').val();
-    let data = {
-        authorization:authorization,
-        userAuthorization:roleAuthorization,
-        roleName,
-        name:roleName
-    }
-    console.log(data)
-    createRole(data)
-})
 
 // $('#searchUser').keyup(function(){
 //     let data = $(this).val()
@@ -437,6 +415,30 @@ $(document).on('click','.Withdraw',function(){
 
 
 
+$('.createRole-form1').submit(function(e) {
+    e.preventDefault()
+    let authorization = []; 
+    let authCheck = document.querySelectorAll("input[name='operator']:checked");
+    for (let i = 0 ; i < authCheck.length; i++) {
+     authorization.push(authCheck[i].value)
+    }
+    let roleAuthorization = [];
+    let checkboxes = document.querySelectorAll("input[name='adminControll']:checked");
+    for (let i = 0 ; i < checkboxes.length; i++) {
+        roleAuthorization.push(checkboxes[i].value)
+    }
+    let roleName = $('#roleName').val();
+    let data = {
+        operationAuthorization:authorization,
+        adminControll:roleAuthorization,
+        roleName,
+        name:roleName
+    }
+    console.log(data)
+    createRole(data)
+})
+
+
 
 $(document).on('click','.RoleDetails',function(){
     console.log("Working") 
@@ -459,6 +461,9 @@ $(document).on('click','.RoleDetails',function(){
     }
     for(let i = 0; i < roledata.userAuthorization.length; i++){
         form.find(`input[value = "${roledata.userAuthorization[i]}"]`).attr("checked", "checked");
+    }
+    for(let i = 0; i < roledata.adminControll.length; i++){
+        form.find(`input[value = "${roledata.adminControll[i]}"]`).attr("checked", "checked");
     }
     for(let i = 0; i < roledata.operationAuthorization.length; i++){
         form.find(`input[value = "${roledata.operationAuthorization[i]}"]`).attr("checked", "checked");
@@ -487,13 +492,18 @@ $(document).on("submit", ".UpdateRole-form", function(e){
     for( let i = 0; i < operator.length; i++){
         operationAuthorization.push(operator[i].value)
     }
+    let adminController = document.querySelectorAll("input[name='adminControll']:checked");
+    for( let i = 0; i < adminController.length; i++){
+        operationAuthorization.push(adminController[i].value)
+    }
 
     let data = {
         id,
         // authorization,
         // userAuthorization:roleAuthorization,
         roleName,
-        operationAuthorization
+        operationAuthorization,
+        adminController
         }
     // console.log(data)
     updateRole(data)

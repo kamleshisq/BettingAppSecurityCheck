@@ -26,6 +26,9 @@ const roleSchema = mongoose.Schema({
     }],
     operationAuthorization:[{
         type:String
+    }],
+    AdminController:[{
+        type:String
     }]
 })
 
