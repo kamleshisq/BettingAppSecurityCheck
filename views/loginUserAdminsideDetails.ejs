@@ -2,48 +2,48 @@
   <div class="skin-data green">
       
       <h5>Credit Reference</h5>
-      <h6><%= me.creditReference%></h6>
+      <h6><%= me.creditReference.toFixed(2)%></h6>
   </div>
   <!-- <div class="skin-data green">
     
     <h5>Balance</h5>
-      <h6><%= me.balance%></h6>
+      <h6><%= me.balance.toFixed(2)%></h6>
   </div> -->
   <div class="skin-data green">
     
     <h5>Available Balance</h5>
-      <h6><%= me.availableBalance%></h6>
+      <h6><%= me.availableBalance.toFixed(2)%></h6>
   </div>
   <div class="skin-data green">
     
     <h5>Downline Balance</h5>
-      <h6><%= me.downlineBalance%></h6>
+      <h6><%= me.downlineBalance.toFixed(2)%></h6>
   </div>
-  <%if(me.myPL > 0){%>
+  <%if(me.myPL.toFixed(2) > 0){%>
   <div class="skin-data green">
     <%}else{%>
       <div class="skin-data red">
     <%}%>
       <h5>MY P/L</h5>
-        <h6><%= me.myPL%></h6>
+        <h6><%= me.myPL.toFixed(2)%></h6>
     </div>
-    <%if(me.uplinePL > 0){%>
+    <%if(me.uplinePL.toFixed(2) > 0){%>
       <div class="skin-data green">
     <%}else{ %>
       <div class="skin-data red">
     <%} %>
     
     <h5>Upline P/L</h5>
-      <h6><%= me.uplinePL%></h6>
+      <h6><%= me.uplinePL.toFixed(2)%></h6>
   </div>
-  <%if(me.lifetimePL > 0){%>
+  <%if(me.lifetimePL.toFixed(2) > 0){%>
     <div class="skin-data green">
   <%}else{ %>
     <div class="skin-data red">
   <%} %>
     
     <h5>Lifetime P/L</h5>
-      <h6><%= me.lifetimePL%></h6>
+      <h6><%= me.lifetimePL.toFixed(2)%></h6>
   </div>
 
 </div>
