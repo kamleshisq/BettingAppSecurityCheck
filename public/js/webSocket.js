@@ -10568,6 +10568,11 @@ socket.on('connect', () => {
         })
 
         $(document).on('click','.matchOdds',function(e){
+            let result = $(this).parent().children().eq(8).text()
+            $('#FOOTBALL').find('.welcome-info-btn').append(`<div class="skin-data green">
+            <h5>Result</h5>
+            <h6>${result}</h6>
+            </div>`)
             let page = 0
             let market = $("#market").val()
             let to_date;
@@ -10584,7 +10589,7 @@ socket.on('connect', () => {
         })
         $(document).on('click','.matchOddOwn',function(e){
             let result = $(this).parent().children().eq(8).text()
-            $('.welcome-info-btn').append(`<div class="skin-data green">
+            $('#Cricket').find('.welcome-info-btn').append(`<div class="skin-data green">
             <h5>Result</h5>
             <h6>${result}</h6>
             </div>`)
@@ -10997,8 +11002,21 @@ socket.on('connect', () => {
 
             let html = ""
             let html2 = ""
+            let html3 = ""
+            let tb = 0;
+            let w = 0;
+            let l = 0;
+            let v = 0;
+            let o = 0;
+            let pl = 0;
             limit = 10 * data.page
             for(let i = 0; i < data.gameAnalist.length; i++){
+                tb += data.gameAnalist[i].betcount
+                w += data.gameAnalist[i].won
+                l += data.gameAnalist[i].loss
+                v += data.gameAnalist[i].void
+                o += data.gameAnalist[i].open
+                pl += data.gameAnalist[i].returns
                 html += `<tr>
                 <td>${i + 1 + limit}</td>
                 <td class="childgameAnalist cursor-pointer" data-roleType="1" data-parent="${data.gameAnalist[i]._id}">${data.gameAnalist[i]._id}</td>
@@ -11043,6 +11061,93 @@ socket.on('connect', () => {
                 if(data.marketAnalist.length == 0){
                     html2 += `<tr class="empty_table"><td>No record found</td></tr>`
                 }
+
+                if(tb > 0){
+                    html3 += ` <div class="skin-data green">
+                            <h5>Total Bets</h5>
+                            <h6>${tb}</h6>
+                            </div>`
+                }else{
+                    html3 += ` <div class="skin-data red">
+                            <h5>Total Bets</h5>
+                            <h6>${tb}</h6>
+                            </div>`
+                }
+               
+                if(w > 0){
+
+                    html3 += `<div class="skin-data green">
+                        <h5>Won</h5>
+                        <h6>${w}</h6>
+                    </div>`
+                }else{
+                    html3 = `<div class="skin-data red">
+                        <h5>Won</h5>
+                        <h6>${w}</h6>
+                        </div>`
+
+                }
+
+                if(l > 0){
+
+                    html3 += `<div class="skin-data green">
+                        <h5>Lost</h5>
+                        <h6>${l}</h6>
+                        </div>`
+                }else{
+                    html3 += `<div class="skin-data red">
+                        <h5>Lost</h5>
+                        <h6>${l}</h6>
+                        </div>`
+
+                }
+
+                if(v > 0){
+                    
+                    html3 += `<div class="skin-data green">
+                        <h5>Void</h5>
+                        <h6>${v}</h6>
+                    </div>`
+                }else{
+                    html3 += `<div class="skin-data red">
+                        <h5>Void</h5>
+                        <h6>${v}</h6>
+                    </div>`
+
+                }
+                
+                if(o > 0){
+
+                    html3 += `<div class="skin-data green">
+                        <h5>Open</h5>
+                        <h6>${o}</h6>
+                    </div>`
+                }else{
+                    html3 += `<div class="skin-data red">
+                        <h5>Open</h5>
+                        <h6>${o}</h6>
+                    </div>`
+
+                }
+
+                if(pl > 0){
+
+                    html3 += `<div class="skin-data green">
+                        <h5>P&L</h5>
+                        <h6>${pl.toFixed(2)}</h6>
+                    </div></div>`
+                }else{
+                    html3 += `<div class="skin-data red">
+                        <h5>P&L</h5>
+                        <h6>${pl.toFixed(2)}</h6>
+                    </div></div>`
+
+                }
+
+                html3 = '<div class="welcome-info-btn">' + html3
+
+                $('#Cricket').find('.dashboard-welcome-section').html(html3)
+                $('#FOOTBALL').find('.dashboard-welcome-section').html(html3)
                 $('#Cricket').find('tbody').html(html)
                 $('#FOOTBALL').find('tbody').html(html2)
 
