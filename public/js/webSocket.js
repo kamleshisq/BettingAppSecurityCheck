@@ -1316,7 +1316,7 @@ socket.on('connect', () => {
                 if(data.page == 0){
                     count = 1;
                     if(LOGINDATA.LOGINUSER.roleName == "Admin"){
-                        html = `<thead><tr>`+
+                        html += `<thead><tr>`+
                         "<th>S.No</th>"+
                         "<th>User Name</th>"+
                         "<th>White lable</th>"+
@@ -1330,7 +1330,7 @@ socket.on('connect', () => {
                         "<th>Action</th>"+
                     "</tr></thead>"
                     }else{
-                        html = `<thead><tr>`+
+                        html += `<thead><tr>`+
                         "<th>S.No</th>"+
                         "<th>User Name</th>"+
                         "<th>Type</th>"+
@@ -1344,109 +1344,109 @@ socket.on('connect', () => {
                     "</tr></thead>"
                     }
                         
-                    html ="<tbody class='new-body'>";
+                    html +="<tbody class='new-body'>";
                 }
                 
-            for(let i = 0; i < response.length; i++){ 
-                if((i+1) % 2 != 0){
+                for(let i = 0; i < response.length; i++){ 
+                    if((i+1) % 2 != 0){
 
-                    html +=
-                    `<tr  class="trtable" id="${count + i}" data-id="${response[i]._id}">`
+                        html +=
+                        `<tr  class="trtable" id="${count + i}" data-id="${response[i]._id}">`
+                    }else{
+                        html +=
+                        `<tr class="trtable" id="${count + i}" data-id="${response[i]._id}">` 
+                    }
+                        
+                    html += `<td> ${count + i} </td>
+                        <td class="getOwnChild" data-bs-dismiss='${JSON.stringify(response[i])}'><div class="user-status-section">`
+                        if(response[i].isActive && response[i].betLock){
+                            html += `<span class="user-status bet-lock" >BL</span>`
+                        }else if(response[i].isActive && !response[i].betLock){ 
+                            html += `<span class="user-status active" >A</span>`
+                        }else{
+                            html += `<span class="user-status suspended" >S</span>`
+                        }
+
+                        if(response[i].roleName != 'user'){
+                            html+= `<a href='/admin/userManagement?id=${response[i]._id}'>${response[i].userName}</a>`
+                        }else{
+                            html+= `${response[i].userName}`
+                        }
+                        html += `</div></td>`
+
+                        html += `<td>  <span class="role-type">
+                                    ${response[i].roleName}
+                                </span>
+                                </td>`
+
+                        if(data.currentUser.roleName == "Admin"){
+                            html += `<td> ${response[i].whiteLabel}</td>`
+                        }else{
+
+                        }
+                        html += `
+                        <td> ${response[i].balance}</td>
+                        <td> ${response[i].availableBalance}</td>
+                        <td> ${response[i].downlineBalance}</td>`
+                        if(response[i].pointsWL > 0){
+
+                            html += `<td class="green"> ${response[i].pointsWL}</td>`
+                        }else{
+                            html += `<td class="red"> ${response[i].pointsWL}</td>`
+
+                        }
+
+                        html += `<td> ${response[i].uplinePL}</td>
+                        <td> ${response[i].exposure}</td>
+                        <td>
+                        <div class="btn-group">
+                        `
+                            if(data.currentUser.role.authorization.includes('accountControl')){
+                                html += `<button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite" title="Deposit/Withdraw"> D/W </button>`
+                            }
+                            if(data.currentUser.role.authorization.includes('accountControl')){
+                                html += `<button data-bs-toggle="modal" data-bs-target="#myModal2" class="CreaditChange" title="Commission">C</button>`
+                            }
+                            if(data.currentUser.role.authorization.includes('changeUserPassword')){
+                                html += `<button data-bs-toggle="modal" data-bs-target="#myModal3" class="PasswordChange" title="Change Password">P</button>`
+                            }
+                            html += `<button  data-bs-toggle="modal" data-bs-target="#myModalSE" class="Settlement" title="Settlement">S</button>`
+                            // if(data.currentUser.role.authorization.includes('betLockAndUnloack')){
+                            //     if(response[i].betLock){
+                            //         html += `<button type="button" class="betLockStatus Locked" title="Bet Unlock">B</button>`
+                            //     }else{ 
+                            //         html += `<button type="button" class="betLockStatus" title="Bet Lock">B</button>`
+                            //     } 
+                            // }
+                            if(data.currentUser.role.authorization.includes('userStatus')){
+                                html += `<button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange" title="Change Status">CS</button>
+                                `
+                            }
+                            if(data.currentUser.role.authorization.includes('userName')){
+                                html += `<button class="UserDetails" title="View details"><i class="fa-solid fa-database"></i></button>`
+                            }
+                        html += `</div>
+                        </td></td> </tr>`
+                }
+                count += 10;
+                if(data.page == 0){
+                    if(response.length == 0){
+                        html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    }
+                    html += `</tbody>`
+                    $('#load-more').show()
+
+                    $('table').html(html)
+                    if(response.length == 0){
+                        $('#load-more').hide()
+                    }
                 }else{
-                    html +=
-                    `<tr class="trtable" id="${count + i}" data-id="${response[i]._id}">` 
-                }
-                    
-                html += `<td> ${count + i} </td>
-                    <td class="getOwnChild" data-bs-dismiss='${JSON.stringify(response[i])}'><div class="user-status-section">`
-                    if(response[i].isActive && response[i].betLock){
-                        html += `<span class="user-status bet-lock" >BL</span>`
-                      }else if(response[i].isActive && !response[i].betLock){ 
-                        html += `<span class="user-status active" >A</span>`
-                      }else{
-                        html += `<span class="user-status suspended" >S</span>`
-                      }
-
-                    if(response[i].roleName != 'user'){
-                        html+= `<a href='/admin/userManagement?id=${response[i]._id}'>${response[i].userName}</a>`
-                    }else{
-                        html+= `${response[i].userName}`
+                    if(response.length == 0){
+                        $('#load-more').hide()
                     }
-                    html += `</div></td>`
+                    $('tbody').append(html)
 
-                    html += `<td>  <span class="role-type">
-                                ${response[i].roleName}
-                            </span>
-                            </td>`
-
-                    if(data.currentUser.roleName == "Admin"){
-                        html += `<td> ${response[i].whiteLabel}</td>`
-                    }else{
-
-                    }
-                    html += `
-                    <td> ${response[i].balance}</td>
-                    <td> ${response[i].availableBalance}</td>
-                    <td> ${response[i].downlineBalance}</td>`
-                    if(response[i].pointsWL > 0){
-
-                        html += `<td class="green"> ${response[i].pointsWL}</td>`
-                    }else{
-                        html += `<td class="red"> ${response[i].pointsWL}</td>`
-
-                    }
-
-                    html += `<td> ${response[i].uplinePL}</td>
-                    <td> ${response[i].exposure}</td>
-                    <td>
-                    <div class="btn-group">
-                    `
-                        if(data.currentUser.role.authorization.includes('accountControl')){
-                            html += `<button data-bs-toggle="modal" data-bs-target="#myModal" class="Deposite" title="Deposit/Withdraw"> D/W </button>`
-                        }
-                        if(data.currentUser.role.authorization.includes('accountControl')){
-                            html += `<button data-bs-toggle="modal" data-bs-target="#myModal2" class="CreaditChange" title="Commission">C</button>`
-                        }
-                        if(data.currentUser.role.authorization.includes('changeUserPassword')){
-                            html += `<button data-bs-toggle="modal" data-bs-target="#myModal3" class="PasswordChange" title="Change Password">P</button>`
-                        }
-                        html += `<button  data-bs-toggle="modal" data-bs-target="#myModalSE" class="Settlement" title="Settlement">S</button>`
-                        // if(data.currentUser.role.authorization.includes('betLockAndUnloack')){
-                        //     if(response[i].betLock){
-                        //         html += `<button type="button" class="betLockStatus Locked" title="Bet Unlock">B</button>`
-                        //     }else{ 
-                        //         html += `<button type="button" class="betLockStatus" title="Bet Lock">B</button>`
-                        //     } 
-                        // }
-                        if(data.currentUser.role.authorization.includes('userStatus')){
-                            html += `<button data-bs-toggle="modal" data-bs-target="#myModal4" class="StatusChange" title="Change Status">CS</button>
-                            `
-                        }
-                        if(data.currentUser.role.authorization.includes('userName')){
-                            html += `<button class="UserDetails" title="View details"><i class="fa-solid fa-database"></i></button>`
-                        }
-                      html += `</div>
-                      </td></td> </tr>`
-            }
-            count += 10;
-            if(data.page == 0){
-                if(response.length == 0){
-                    html += `<tr class="empty_table"><td>No record found</td></tr>`
                 }
-                html += `</tbody>`
-                $('#load-more').show()
-
-                $('table').html(html)
-                if(response.length == 0){
-                    $('#load-more').hide()
-                }
-            }else{
-                if(response.length == 0){
-                    $('#load-more').hide()
-                }
-                $('tbody').append(html)
-
-            }
             
                 // html = '';
                 // for(let i=0;i<data.Rows;i++){
@@ -1508,7 +1508,6 @@ socket.on('connect', () => {
         // console.log(W,S,R)
         // if(W || S || R){
                let page =  0;
-               $('.rowId').attr('data-rowid',1)
                let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
                console.log(filterData)
                socket.emit("search", {filterData,page,id, LOGINDATA })
