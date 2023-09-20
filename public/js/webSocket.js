@@ -1079,6 +1079,8 @@ socket.on('connect', () => {
             let modleName = "#myModalSE"
             let form = $(modleName).find('.form-data')
             let typeValue = form.find('input[name = "type"]').val()
+            console.log(typeValue)
+
             if(typeValue == 'deposit'){
 
             }else if(typeValue == 'withdrawl'){
@@ -1099,6 +1101,7 @@ socket.on('connect', () => {
             let modleName = "#myModalSE"
             let form = $(modleName).find('.form-data')
             let typeValue = form.find('input[name = "type"]').val()
+            console.log(typeValue)
             if(typeValue == 'deposit'){
                 form.find('.deposite').removeClass('active')
                 form.find('.withdraw').addClass('active')
