@@ -1122,7 +1122,7 @@ socket.on('connect', () => {
             console.log(userData)
             let me = data.parent
             let type = form.find('select[name = "type"]').val()
-            if(userData.uplinePL > 0){
+            if(userData.uplinePL >= 0){
                 form.find('.deposite').addClass('active')
                 form.find('input[name = "type"]').val("deposit")
                 form.find('input[name = "toUser"]').attr('value',userData.userName)
