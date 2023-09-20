@@ -2588,7 +2588,7 @@ io.on('connection', (socket) => {
         let betsEventWise = await Bet.aggregate([
             {
                 $match: {
-                    status:"OPEN" ,
+                    // status:"OPEN" ,
                     eventDate: dataobj
                 }
             },
