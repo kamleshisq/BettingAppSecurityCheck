@@ -1195,9 +1195,11 @@ io.on('connection', (socket) => {
             if(data.data.secId.slice(-1) == 2){
                 name = `layPrice${data.data.secId.slice(-1) - 3}`
                 name =  name.slice(0, -2)
+                data.data.bettype2 = 'LAY'
             }else{
                 name = `backPrice${data.data.secId.slice(-1)}`
                 name = name.slice(0, -1)
+                data.data.bettype2 = 'BACK'
             }
             // console.log(name)
             // console.log(name)

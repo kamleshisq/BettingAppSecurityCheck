@@ -79,6 +79,9 @@ const betSchema = mongoose.Schema({
     },
     calcelUser:{
         type:String
+    },
+    bettype2:{
+        type:String
     }
 })
 
