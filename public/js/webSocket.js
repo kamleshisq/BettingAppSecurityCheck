@@ -9201,6 +9201,8 @@ socket.on('connect', () => {
                     $('#football-tbody').html(`<tr class="empty_table"><td>No record found</td></tr>`)
                 }
 
+            }else{
+                $('tbody').html('<tr class="empty_table"><td>No record found</td></tr>')
             }
         })
     }
