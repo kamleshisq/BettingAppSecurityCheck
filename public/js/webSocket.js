@@ -10690,7 +10690,7 @@ socket.on('connect', () => {
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
                     }
                     $('#Cricket').find('table').html(html)
-                    if(data.matchOdds.length > 10){
+                    if(data.matchOdds.length == 10){
                         $('#Cricket').find('#load-more-cricket').show()
                     }
                 }else{
@@ -10702,7 +10702,11 @@ socket.on('connect', () => {
 
 
             }else{
-
+                if(data.page > 0){
+                    if(data.matchOdds.length <= 10){
+                        $('#Cricket').find('#load-more-cricket').hide()
+                    }
+                }
             }
         })
         socket.on('childGameAnalist',async(data)=>{
@@ -10935,14 +10939,15 @@ socket.on('connect', () => {
                 $('.matchOddsBack').html('<i class="fa-solid fa-angle-left"></i> Match Odds')
                 if(data.page == 0){
                     html += `</tbody>`
-                    // if(data.matchOdds.length == 10){
-                    // }
-                    $('#FOOTBALL').find('#load-more-football').show()
+                    if(data.matchOdds.length == 10){
+                        $('#FOOTBALL').find('#load-more-football').show()
+                    }
                     $('#FOOTBALL').find('table').html(html)
                 }else{
                     $('#FOOTBALL').find('tbody').append(html)
-                    
-
+                    if(data.matchOdds.length <= 10){
+                        $('#FOOTBALL').find('#load-more-football').hide()
+                    }
                 }
 
 
