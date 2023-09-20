@@ -273,10 +273,12 @@ function roundToTwoDecimals(value) {
 }
 
 userSchema.post(/^find/, function (docs) {
-    docs.myPL = roundToTwoDecimals(docs.myPL);
-    docs.uplinePL = roundToTwoDecimals(docs.uplinePL);
-    docs.lifetimePL = roundToTwoDecimals(docs.lifetimePL);
-    docs.pointsWL = roundToTwoDecimals(docs.pointsWL);
+    if(docs){
+        docs.myPL = roundToTwoDecimals(docs.myPL);
+        docs.uplinePL = roundToTwoDecimals(docs.uplinePL);
+        docs.lifetimePL = roundToTwoDecimals(docs.lifetimePL);
+        docs.pointsWL = roundToTwoDecimals(docs.pointsWL);
+    }
 });
 
 
