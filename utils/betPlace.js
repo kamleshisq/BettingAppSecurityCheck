@@ -214,7 +214,7 @@ if(!marketDetails.runners){
         event : liveBetGame.eventData.league,
         gameId : liveBetGame.eventData.sportId,
         eventId: liveBetGame.eventData.eventId,
-        eventDate : liveBetGame.eventData.time,
+        eventDate : (liveBetGame.eventData.time) * 1000,
         marketName : marketDetails.title,
         selectionName : marketDetails.title,
         marketId : data.data.market,
