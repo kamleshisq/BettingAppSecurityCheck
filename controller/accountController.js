@@ -167,7 +167,9 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
 exports.withdrawSettle = catchAsync(async(req, res, next) => {
     // const user = await User.findById(req.body.userId)
     console.log(req.body)
-    req.body.amount = parseFloat(req.body.amount)
+    req.body.amount = parseFloat(req.body.amount) * -1
+    req.body.clintPL = parseFloat(req.body.clintPL)
+
     const childUser = await User.findById(req.body.id);
     const parentUser = await User.findById(childUser.parent_id);
     // // console.log(user)
@@ -178,8 +180,8 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     if(childUser.availableBalance < req.body.amount){
         return next(new AppError('withdrow amount must less than available balance',404))
     }
-    await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.amount,}})
-    const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.amount},myPL:0,uplinePL:0},{
+    await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.clintPL,downlineBalance:-req.body.clintPL,myPL:req.body.amount}})
+    const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL},uplinePL:0},{
         new:true
     })
     
@@ -238,6 +240,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     // }
     const parentUser = await User.findById(childUser.parent_id);
     req.body.amount = parseFloat(req.body.amount)
+    req.body.clintPL = parseFloat(req.body.clintPL) * -1
     // // console.log(req.body)
     // // console.log(childUser)
     if(childUser.role.role_level < parentUser.role.role_level){
@@ -249,8 +252,8 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     }
 
   
-    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.amount},myPL:0,uplinePL:0})
-    await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.amount}});
+    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL,uplinePL:0}})
+    await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL,myPL:-req.body.amount}});
     // // await User.findByIdAndUpdate(parentUser.id,{$inc:{lifeTimeDeposit:-req.body.amount}})
     let childAccStatement = {}
     let ParentAccStatement = {}
