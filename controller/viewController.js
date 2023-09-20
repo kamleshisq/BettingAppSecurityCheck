@@ -1560,7 +1560,7 @@ exports.promotion = catchAsync(async(req, res, next) => {
 });
 
 exports.getAllCasinoPageFOrTEsting = catchAsync(async(req, res, next) => {
-    const data = await gameModel.find();
+    const data = await gameModel.find({status:false});
     let user = req.currentUser
     res.status(200).render('allCasinoGame', {
         title:"All Games",
@@ -2265,7 +2265,7 @@ exports.cardsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:false});
     let userLog
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
@@ -2752,7 +2752,7 @@ exports.virtualsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:false});
     let userLog
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
@@ -2794,7 +2794,7 @@ exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:false});
     let userLog
     let gamesFe = []
     if(user){
@@ -2822,7 +2822,7 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:false});
     // console.log(user._id)
     let userLog = await loginLogs.find({user_id:user.id})
     let bets = await betModel.find({userId:user._id}).sort({date:-1}).limit(20)
@@ -2860,7 +2860,7 @@ exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:false});
     let userLog = await loginLogs.find({user_id:user._id})
     let bets = await betModel.aggregate([
         {
@@ -2917,7 +2917,7 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:false});
     let userLog = await loginLogs.find({user_id:user._id})
     let result = await betModel.aggregate([
         {
@@ -2978,7 +2978,7 @@ exports.getGameReportInINPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:false});
     let userLog = await loginLogs.find({user_id:user._id})
     // console.log(req.query)
     let result = await betModel.find({event:req.query.eventName, match:req.query.matchName, userId:user.id}).limit(20)
@@ -3000,7 +3000,7 @@ exports.getMyProfileUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:false});
     let userLog = await loginLogs.find({user_id:user._id})
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
@@ -3083,7 +3083,7 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:false});
     let userLog = await loginLogs.find({user_id:user._id})
     res.status(200).render("./userSideEjs/Kyc/main",{
         title:'KYC',
