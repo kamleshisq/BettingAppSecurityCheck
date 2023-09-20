@@ -10372,14 +10372,14 @@ socket.on('connect', () => {
 
 
         let id = search.split('=')[1]
-            function eventID(){
+            function eventID12(){
                 socket.emit("eventId", id)
                 setTimeout(()=>{
-                    eventID()
+                    eventID12()
                 }, 500)
 
             }
-            eventID()
+            eventID12()
             socket.on("eventId", async(data)=>{
                 if(data != ""){
                     let score = JSON.parse(data)
