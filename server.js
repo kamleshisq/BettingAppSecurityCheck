@@ -2618,6 +2618,7 @@ io.on('connection', (socket) => {
                   eventdate: { $first: "$eventDate" }, 
                   eventid: { $first: "$eventId" },
                   series: {$first: "$event"},
+                  betType : {$first: '$betType'},
                   count2: { 
                       $sum: {
                         $cond: [{ $eq: ["$status", "OPEN"] }, 1, 0],
@@ -2636,6 +2637,7 @@ io.on('connection', (socket) => {
                       eventid : "$eventid",
                       series : '$series',
                       count2: "$count2",
+                      betType : '$betType'
                     }
                   }
                 }
