@@ -4847,7 +4847,7 @@ socket.on('connect', () => {
                 let PMD = data
                 form.attr('id', PMD._id);
                 // form.find('input[name = "check"]').removeAttr('checked');
-                form.find('input[name = "bannerName"]').attr('value',PMD.bannerName)
+                form.find('input[name = "Name"]').attr('value',PMD.bannerName)
                 form.find('input[name = "url"]').attr('value',PMD.url)
                 document.getElementById('banner12').innerHTML = `<img src="../banner/${PMD.banner}.png" alt="img" class="form__user-photo">`
                 if(PMD.status){
