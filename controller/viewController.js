@@ -161,55 +161,7 @@ exports.login = catchAsync(async(req, res, next) => {
     console.log(req.currentUser)
     if(req.currentUser){
         if(req.currentUser.role_type < 5){
-            var WhiteLabel = await whiteLabel.find()
-            let urls = [
-                {
-                    url:`http://172.105.58.243/api/v1/users/getOwnChild?id=${req.currentUser.id}`,
-                    name:'user'
-                },
-                {
-                    url:`http://172.105.58.243/api/v1/role/getAuthROle`,
-                    name:'role'
-                }
-            ]
-            let requests = urls.map((item) => {
-                return new Promise((resolve, reject) => {
-                  request(
-                    {
-                      url: item.url,
-                      headers: {
-                        'Content-type': 'application/json',
-                        'Authorization': `Bearer ${req.token}`,
-                      },
-                    },
-                    (error, response, body) => {
-                      if (error) {
-                        reject(error);
-                      } else {
-                        resolve(JSON.parse(body));
-                      }
-                    }
-                  );
-                });
-              });
-            let roles1 = await Role.find({role_level:{$in:req.currentUser.role.userAuthorization}}).sort({role_level:1});
-            const data = await Promise.all(requests);
-            // console.log(data)
-            const users = data[0].child;
-            const roles = roles1;
-            const currentUser = req.currentUser
-            const rows = data[0].rows
-            const me = data[0].me
-            res.status(200).render('./userManagement/main',{
-                title: "User Management",
-                users,
-                rows,
-                currentUser,
-                me,
-                WhiteLabel,
-                roles
-                // userLogin:global._loggedInToken
-            })
+           res.redirect('/admin/dashboard')
         }
     }
     res.status(200).render('loginPage', {
