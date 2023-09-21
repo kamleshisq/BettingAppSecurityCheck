@@ -7179,10 +7179,10 @@ $('#Add-User').submit(function (e) {
       checkedValues.push(checkboxes[i].value);
     }
   }
-  console.log(checkedValues);
-  // createUser(formDataObj)
+  formDataObj.OperatorAuthorization = checkedValues;
+  // console.log(checkedValues);
+  (0, _createUser.createUser)(formDataObj);
 });
-
 $(document).on('submit', '.passReset-form', function (e) {
   e.preventDefault();
   var form = $(this)[0];
