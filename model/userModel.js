@@ -199,7 +199,10 @@ const userSchema = mongoose.Schema({
     netCommisssion:{
         type:Number,
         default:0
-    }
+    },
+    OperatorAuthorization:[{
+            type:String
+        }]
 })
 
 userSchema.pre('save', async function(next){
