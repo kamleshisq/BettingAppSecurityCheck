@@ -479,6 +479,7 @@ $(document).on("submit", ".UpdateRole-form", function(e){
     let roleName = document.getElementById("mySelect").value
     let authorization = [];
     let roleAuthorization = [];
+    let AdminController = []
     let operationAuthorization = [];
     // let authCheck = document.querySelectorAll("input[name='authorization']:checked");
     // for (let i = 0 ; i < authCheck.length; i++) {
@@ -492,9 +493,9 @@ $(document).on("submit", ".UpdateRole-form", function(e){
     for( let i = 0; i < operator.length; i++){
         operationAuthorization.push(operator[i].value)
     }
-    let AdminController = document.querySelectorAll("input[name='adminControll']:checked");
-    for( let i = 0; i < AdminController.length; i++){
-        operationAuthorization.push(AdminController[i].value)
+    let adminauth = document.querySelectorAll("input[name='adminControll']:checked");
+    for( let i = 0; i < adminauth.length; i++){
+        AdminController.push(adminauth[i].value)
     }
 
     let data = {
