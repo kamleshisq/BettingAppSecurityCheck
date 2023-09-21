@@ -436,36 +436,37 @@ exports.isLogin = catchAsync( async (req, res, next) => {
 });
 
 exports.restrictTo = (...roles) => {
-    return function(req, res, next){
-        // if(!roles.includes(req.currentUser.role)){
-            // return res.status(404).json({
-            //     status:'error',
-            //     message:'You do not have permission to perform this action'
-            // })
-        // }
-        // next()
-        let j = 0;
-        // console.log(req.currentUser)
-        for(let i=0 ; i < req.currentUser.role.authorization.length; i++){
-            // console.log(req.currentUser.role.authorization[i])
-            // console.log(roles)
-            // console.log(roles.includes(req.currentUser.role.authorization[i]))
-            // console.log(req.currentUser.role.authorization[i])
-            // console.log(req.currentUser.role.authorization[i])
-            if(roles.includes(req.currentUser.role.authorization[i])){
-                j = j + 1;
-            }
-        }
-        if(j > 0){
-            next()
-        }else{
-            return res.status(404).json({
-                status:'error',
-                message:'You do not have permission to perform this action'
-            })
-        }
+    next()
+    // return function(req, res, next){
+    //     // if(!roles.includes(req.currentUser.role)){
+    //         // return res.status(404).json({
+    //         //     status:'error',
+    //         //     message:'You do not have permission to perform this action'
+    //         // })
+    //     // }
+    //     // next()
+    //     let j = 0;
+    //     // console.log(req.currentUser)
+    //     for(let i=0 ; i < req.currentUser.role.authorization.length; i++){
+    //         // console.log(req.currentUser.role.authorization[i])
+    //         // console.log(roles)
+    //         // console.log(roles.includes(req.currentUser.role.authorization[i]))
+    //         // console.log(req.currentUser.role.authorization[i])
+    //         // console.log(req.currentUser.role.authorization[i])
+    //         if(roles.includes(req.currentUser.role.authorization[i])){
+    //             j = j + 1;
+    //         }
+    //     }
+    //     if(j > 0){
+    //         next()
+    //     }else{
+    //         return res.status(404).json({
+    //             status:'error',
+    //             message:'You do not have permission to perform this action'
+    //         })
+    //     }
 
-    }
+    // }
 };
 
 exports.restrictToOperator = (...roles) => {
