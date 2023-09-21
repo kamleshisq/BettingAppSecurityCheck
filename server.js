@@ -2579,6 +2579,7 @@ io.on('connection', (socket) => {
         if(data.fromdate && data.todate){
             let fromDate = new Date(data.fromdate)
             let toDate = new Date(data.todate)
+            toDate.setDate(toDate.getDate() + 1);
             // fromDate = Math.floor(fromDate.getTime()/1000)
             // toDate = Math.floor(toDate.getTime()/1000)
             dataobj = {$gte:new Date(fromDate) ,$lte:new Date(toDate)}
@@ -2589,6 +2590,7 @@ io.on('connection', (socket) => {
         }else if(!data.fromdate && data.todate){
             let toDate = new Date(data.todate)
             // toDate = Math.floor(toDate.getTime()/1000)
+            toDate.setDate(toDate.getDate() + 1);
             dataobj = {$lte:new Date(toDate)}
         }
         console.log(dataobj, "dateObj")
@@ -2669,11 +2671,11 @@ io.on('connection', (socket) => {
         let History
         let filter = {}
         if(data.from_date && data.to_date){
-            filter.date = {$gte:data.from_date,$lte:data.to_date}
+            filter.date = {$gte:new Date(data.from_date),$lte:new Date(data.to_date)}
         }else if(data.from_date && !data.to_date){
-            filter.date = {$gte:data.from_date}
+            filter.date = {$gte:new Date(data.from_date)}
         }else if(data.to_date && !data.from_date){
-            filter.date = {$lte:data.to_date}
+            filter.date = {$lte:new Date(data.to_date)}
         }
         console.log(filter)
         if(me.roleName === "Admin"){
