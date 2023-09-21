@@ -7523,6 +7523,7 @@ $(document).on("submit", ".UpdateRole-form", function (e) {
   var id = $(this).attr("id");
   var roleName = document.getElementById("mySelect").value;
   var authorization = [];
+  var AdminController = [];
   var roleAuthorization = [];
   var operationAuthorization = [];
   // let authCheck = document.querySelectorAll("input[name='authorization']:checked");
@@ -7537,9 +7538,9 @@ $(document).on("submit", ".UpdateRole-form", function (e) {
   for (var i = 0; i < operator.length; i++) {
     operationAuthorization.push(operator[i].value);
   }
-  var AdminController = document.querySelectorAll("input[name='adminControll']:checked");
-  for (var _i5 = 0; _i5 < AdminController.length; _i5++) {
-    operationAuthorization.push(AdminController[_i5].value);
+  var adminAuth = document.querySelectorAll("input[name='adminControll']:checked");
+  for (var _i5 = 0; _i5 < adminAuth.length; _i5++) {
+    AdminController.push(adminAuth[_i5].value);
   }
   var data = {
     id: id,
