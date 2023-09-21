@@ -10732,7 +10732,7 @@ socket.on('connect', () => {
             html += ` <thead>
             <tr>
                 <th>S.No</th>
-                <th>MARKET</th>
+                <th>Market</th>
                 <th>Total Bets</th>
                 <th>Won</th>
                 <th>Lost</th>
@@ -10791,13 +10791,13 @@ socket.on('connect', () => {
                     <thead>
                         <tr>
                             <th>S.No</th>
-                            <th>BET PLACED DATE</th>
-                            <th>BET ON</th>
-                            <th>ODDS</th>
-                            <th>AMOUNT </th>
-                            <th>PROFIT/LOSS </th>
-                            <th>STATUS</th>
-                            <th>IP ADDRESS</th>
+                            <th>Bet Placed Date</th>
+                            <th>Bet On</th>
+                            <th>Odds</th>
+                            <th>Amount </th>
+                            <th>P/L </th>
+                            <th>Status</th>
+                            <th>Ip Address</th>
                         </tr>
                     </thead><tbody>`
                 }
@@ -11054,14 +11054,14 @@ socket.on('connect', () => {
                     <thead>
                         <tr>
                             <th>S.No</th>
-                            <th>BET PLACED DATE</th>
-                            <th>USER</th>
-                            <th>BET ON</th>
-                            <th>ODDS</th>
-                            <th>AMOUNT </th>
-                            <th>PROFIT/LOSS </th>
-                            <th>STATUS</th>
-                            <th>IP ADDRESS</th>
+                            <th>Bet Placed Date</th>
+                            <th>User</th>
+                            <th>Bet ON</th>
+                            <th>Odds</th>
+                            <th>Amount </th>
+                            <th>P/L </th>
+                            <th>Status</th>
+                            <th>Ip Address</th>
                         </tr>
                     </thead><tbody>`
                 }
