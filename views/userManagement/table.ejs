@@ -47,7 +47,7 @@
           </tr>
         </thead>
         <tbody class="new-body">
-          <%if(users){%>
+          <%if(users.length > 0){%>
           <%for(let i=0; i<users.length; i++){%>
             <%if((i+1) % 2 !=0){%>
               <tr class="trtable" id="<%=i+1%>" data-id="<%=users[i]._id%>">
