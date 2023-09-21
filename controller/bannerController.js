@@ -26,7 +26,7 @@ exports.createBanner = catchAsync(async(req, res, next) => {
 
 
 exports.updateBanner = catchAsync(async(req, res, next) => {
-    console.log(req.body)
+    console.log(req.body, "data")
     if(req.body.check){
         req.body.status = true
     }else{
