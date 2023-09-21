@@ -436,7 +436,9 @@ exports.isLogin = catchAsync( async (req, res, next) => {
 });
 
 exports.restrictTo = (...roles) => {
-    next()
+    return function(req, res, next){
+        next()
+    }
     // return function(req, res, next){
     //     // if(!roles.includes(req.currentUser.role)){
     //         // return res.status(404).json({
