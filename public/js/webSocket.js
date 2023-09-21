@@ -10803,9 +10803,10 @@ socket.on('connect', () => {
                 }
 
                 for(let i = 0;i<data.matchOdds.length;i++){
+                    let date = new Date(data.matchOdds[i].date)
                     html += `<tr>
                     <td>${i + 1 + limit}</td>
-                    <td>${data.matchOdds[i].date}</td>
+                    <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + " "+ date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
                     <td>${data.matchOdds[i].selectionName}</td>
                     <td>${data.matchOdds[i].oddValue}</td>`
                     html += `<td>${data.matchOdds[i].returns}</td>`
@@ -11067,9 +11068,10 @@ socket.on('connect', () => {
                 }
 
                 for(let i = 0;i<data.matchOdds.length;i++){
+                    let date = new Date(data.matchOdds[i].date)
                     html += `<tr>
                     <td>${i + 1 + limit}</td>
-                    <td>${data.matchOdds[i].date}</td>
+                    <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + " "+ date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
                     <td>${data.matchOdds[i].userName}</td>
                     <td>${data.matchOdds[i].selectionName}</td>
                     <td>${data.matchOdds[i].oddValue}</td>`
