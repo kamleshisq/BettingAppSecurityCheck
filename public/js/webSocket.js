@@ -10729,6 +10729,7 @@ socket.on('connect', () => {
         $(document).on('click','.matchOddsBack',function(e){
             $(this).removeClass('active')
             let html = ""
+            let html2 = ""
             html += ` <thead>
             <tr>
                 <th>S.No</th>
@@ -10745,7 +10746,24 @@ socket.on('connect', () => {
             <tbody class="new-body">
             
             </tbody>`
+            html2 += ` <thead>
+            <tr >
+              <th>S.No</th>
+              <th>White Label</th>
+              <th>Active Users</th>
+              <th>Total Bets</th>
+              <th>Won</th>
+              <th>Lost</th>
+              <th>Void </th>
+              <th>Open </th>
+              <th>P/L</th>
+            </tr>
+            </thead>
+            <tbody class="new-body">
+            
+            </tbody>`
             $('#FOOTBALL').find('table').html(html)
+            $('#Cricket').find('table').html(html2)
             let page =0
             let market = $("#market").val()
             let to_date;
