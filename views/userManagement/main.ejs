@@ -639,7 +639,7 @@
           <h4 class="modal-title" >User Details</h4>
         </div>
         <div class="modal-body">
-          <form class="form-data" id="edit-form">
+          <form class="form-data createRole-form hide" id="edit-form">
             <div class="row">
               <div class="col">
                 <label for="">Name</label>
@@ -735,9 +735,9 @@
       }
 
       if (document.getElementById('roleSelect').value === '650bccdbb3fdc8c922c34bbe') {  
-        document.getElementById('operator-authorization').classList.add("hide") 
-      } else {
         document.getElementById('operator-authorization').classList.remove("hide") 
+      } else {
+        document.getElementById('operator-authorization').classList.add("hide") 
       }
     });
   </script>
