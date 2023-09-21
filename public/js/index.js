@@ -144,7 +144,7 @@ console.log(formDataObj)
 if(formDataObj.whiteLabel == ""){
     formDataObj.whiteLabel = document.getElementById("whiteLabel").value
 }
-createUser(formDataObj)
+// createUser(formDataObj)
 });
 
 
