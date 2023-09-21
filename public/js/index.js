@@ -144,6 +144,24 @@ console.log(formDataObj)
 if(formDataObj.whiteLabel == ""){
     formDataObj.whiteLabel = document.getElementById("whiteLabel").value
 }
+
+let checkedValues = [];
+if(formDataObj.role == "650bccdbb3fdc8c922c34bbe"){
+var checkboxes = document.querySelectorAll('input[name="operator"]');
+checkboxes.forEach(function(checkbox) {
+  checkbox.addEventListener('change', function() {
+    if (checkbox.checked) {
+      checkedValues.push(checkbox.value);
+    } else {
+      var index = checkedValues.indexOf(checkbox.value);
+      if (index !== -1) {
+        checkedValues.splice(index, 1);
+      }
+    }
+});
+});
+}
+console.log(checkedValues);
 // createUser(formDataObj)
 });
 
