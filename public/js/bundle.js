@@ -7524,6 +7524,7 @@ $(document).on("submit", ".UpdateRole-form", function (e) {
   var roleName = document.getElementById("mySelect").value;
   var authorization = [];
   var roleAuthorization = [];
+  var AdminController = [];
   var operationAuthorization = [];
   // let authCheck = document.querySelectorAll("input[name='authorization']:checked");
   // for (let i = 0 ; i < authCheck.length; i++) {
@@ -7537,9 +7538,9 @@ $(document).on("submit", ".UpdateRole-form", function (e) {
   for (var i = 0; i < operator.length; i++) {
     operationAuthorization.push(operator[i].value);
   }
-  var AdminController = document.querySelectorAll("input[name='adminControll']:checked");
-  for (var _i5 = 0; _i5 < AdminController.length; _i5++) {
-    operationAuthorization.push(AdminController[_i5].value);
+  var adminauth = document.querySelectorAll("input[name='adminControll']:checked");
+  for (var _i5 = 0; _i5 < adminauth.length; _i5++) {
+    AdminController.push(adminauth[_i5].value);
   }
   var data = {
     id: id,
@@ -7709,7 +7710,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49804" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50479" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
