@@ -27,9 +27,9 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     if(user_type.role_level < req.currentUser.role.role_level){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
     }
-    if(!req.currentUser.role.userAuthorization.includes(user_type.role_type)){
-        return next(new AppError("You do not have permission to perform this action", 404))
-    }
+    // if(!req.currentUser.role.userAuthorization.includes(user_type.role_type)){
+    //     return next(new AppError("You do not have permission to perform this action", 404))
+    // }
     if(!req.body.whiteLabel){
         return next(new AppError("please provide a white lable for user", 404))
     }
