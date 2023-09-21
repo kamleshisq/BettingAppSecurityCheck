@@ -7174,19 +7174,10 @@ $('#Add-User').submit(function (e) {
   }
   var checkedValues = [];
   if (formDataObj.role == "650bccdbb3fdc8c922c34bbe") {
-    var checkboxes = document.querySelectorAll('input[name="operator"]');
-    checkboxes.forEach(function (checkbox) {
-      checkbox.addEventListener('change', function () {
-        if (checkbox.checked) {
-          checkedValues.push(checkbox.value);
-        } else {
-          var index = checkedValues.indexOf(checkbox.value);
-          if (index !== -1) {
-            checkedValues.splice(index, 1);
-          }
-        }
-      });
-    });
+    var checkboxes = document.querySelectorAll("input[name='operator']:checked");
+    for (var i = 0; i < checkboxes.length; i++) {
+      checkedValues.push(checkboxes[i].value);
+    }
   }
   console.log(checkedValues);
   // createUser(formDataObj)
