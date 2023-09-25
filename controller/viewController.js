@@ -1082,11 +1082,11 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
           $group: {
             _id: {
               betType: "$betType",
-              matchName: "$match"
+              eventid: "$eventId"
             },
             count: { $sum: 1 },
             eventdate: { $first: "$eventDate" }, 
-            eventid: { $first: "$eventId" },
+            matchName: { $first: "$match" },
             series: {$first: "$event"},
             count2: { 
                 $sum: {
@@ -1100,10 +1100,10 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
             _id: "$_id.betType",
             data: {
               $push: {
-                matchName: "$_id.matchName",
+                matchName: "$matchName",
                 count: "$count",
                 eventdate : '$eventdate',
-                eventid : "$eventid",
+                eventid : "$_id.eventid",
                 series : '$series',
                 count2: "$count2",
               }
