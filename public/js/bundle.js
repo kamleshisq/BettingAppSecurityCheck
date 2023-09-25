@@ -7168,13 +7168,9 @@ $('#Add-User').submit(function (e) {
   var form = document.getElementById('Add-User');
   var data = new FormData(form);
   var formDataObj = Object.fromEntries(data.entries());
-<<<<<<< HEAD
-  console.log(formDataObj);
-=======
   if (formDataObj.role == "select") {
     alert('please select role of user');
   }
->>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
   if (formDataObj.whiteLabel == "") {
     formDataObj.whiteLabel = document.getElementById("whiteLabel").value;
   }
@@ -7186,10 +7182,7 @@ $('#Add-User').submit(function (e) {
     }
   }
   formDataObj.OperatorAuthorization = checkedValues;
-<<<<<<< HEAD
-=======
   console.log(formDataObj, "+==> data");
->>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
   // console.log(checkedValues);
   (0, _createUser.createUser)(formDataObj);
 });
@@ -7729,11 +7722,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-<<<<<<< HEAD
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51857" + '/');
-=======
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50090" + '/');
->>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52194" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

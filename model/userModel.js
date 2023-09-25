@@ -276,29 +276,17 @@ function roundToTwoDecimals(value) {
 }
 
 userSchema.post(/^find/, function (docs) {
-<<<<<<< HEAD
-    console.log(docs)
-=======
     // console.log(docs)
->>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
     // if(docs){
     if(docs != null){
         if(Array.isArray(docs)){
             for(const i in docs){
-<<<<<<< HEAD
-                console.log(docs[i], "MODEL")
-=======
                 // console.log(docs[i], "MODEL")
->>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
                 docs[i].myPL = roundToTwoDecimals(docs[i].myPL);
                 docs[i].uplinePL = roundToTwoDecimals(docs[i].uplinePL);
                 docs[i].lifetimePL = roundToTwoDecimals(docs[i].lifetimePL);
                 docs[i].pointsWL = roundToTwoDecimals(docs[i].pointsWL);
-<<<<<<< HEAD
-                console.log(docs[i].myPL, "MODEL")
-=======
                 // console.log(docs[i].myPL, "MODEL")
->>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
             }
         }else{
             docs.myPL = roundToTwoDecimals(docs.myPL);

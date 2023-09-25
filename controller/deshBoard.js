@@ -591,22 +591,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
               }
         ])
     
-<<<<<<< HEAD
-        turnOver = await accountModel.aggregate([
-            {
-                $match:{
-                    user_id:req.currentUser._id
-                }
-            },
-            {
-                $group: {
-                    _id: null,
-                    totalAmount: { $sum: { $abs: "$creditDebitamount" } },
-                    Income : {$sum: '$creditDebitamount'},
-                }
-            }
-        ])
-=======
         // turnOver = await accountModel.aggregate([
         //     {
         //         $match:{
@@ -644,7 +628,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             }
           ]);
           
->>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
 
 
 

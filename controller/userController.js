@@ -42,10 +42,6 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     if(req.currentUser.parentUsers){
         req.body.parentUsers = req.currentUser.parentUsers
     }
-<<<<<<< HEAD
-    req.body.parentUsers.push(req.currentUser._id)
-    // console.log(req.body)
-=======
     console.log(req.body.parentUsers, '+==> parentsUser')
     req.body.parentUsers.push(req.currentUser._id)
     console.log(req.body.parentUsers, '+==> parentsUser')
@@ -57,7 +53,6 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     if(req.body.Visible){
         req.body.myShare = req.body.Visible
     }
->>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
     const newUser = await User.create(req.body);
     if(req.body.roleName === "Admin" || req.body.roleName === "Super-Duper-Admin"){
        await settlementModel.create({userId:newUser.id})
