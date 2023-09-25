@@ -3784,6 +3784,15 @@ io.on('connection', (socket) => {
             console.log(err)
         }
     })
+
+    socket.on('delteStreame',async(id) =>{
+        try{
+            await Stream.findByIdAndDelete(id)
+            socket.emit('delteStreame',{status:'success'})
+        }catch(err){
+            console.log(err)
+        }
+    })
     
 })
 

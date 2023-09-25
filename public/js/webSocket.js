@@ -11411,7 +11411,15 @@ socket.on('connect', () => {
             let id = $(this).closest('tr').attr('data-id')
             let rowId = $(this).closest('tr').attr('id')
             $('.rowId').attr('data-rowid',rowId)
-            console.log(id)
+            if(confirm('do you want to delete this stream')){
+                socket.emit('delteStreame',id)
+            }
+        })
+
+        socket.on('delteStreame',async(data)=>{
+            if(data.status == 'success'){
+                alert('stream deleted successfully')
+            }
         })
     }
 
