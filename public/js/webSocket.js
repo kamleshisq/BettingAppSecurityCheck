@@ -12,7 +12,7 @@ socket.on('disconnect', () => {
 });
 let c = 0
 socket.on('connect', () => {
-    console.log("websocket Connected")
+    console.log("websocket Connected 45454545")
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
         console.log('WORKING45654', data)
