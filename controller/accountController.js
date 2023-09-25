@@ -180,7 +180,7 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     if(childUser.availableBalance < req.body.amount){
         return next(new AppError('withdrow amount must less than available balance',404))
     }
-    await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.clintPL,downlineBalance:-req.body.clintPL,myPL:req.body.amount}})
+    await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.clintPL,downlineBalance:-req.body.clintPL,myPL:0}})
     const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL},uplinePL:0,myPL:-req.body.amount,pointsWL:0},{
         new:true
     })
