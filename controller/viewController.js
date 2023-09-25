@@ -1198,7 +1198,7 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     // let sportData = await getCrkAndAllData()
     // const cricket1 = sportData[0].gameList[0].eventList
     // console.log(cricket1)
-    console.log(betsEventWise[0].data, '==>DATA')
+    // console.log(betsEventWise[0].data, '==>DATA')
     res.status(200).render("./sattelment/setalment",{
         title:"Settlements",
         me,
@@ -3234,7 +3234,7 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     ])
 
     let data = await betModel.findOne({eventId:req.query.id})
-    console.log(betsEventWiseOpen)
+    console.log(betsEventWiseOpen, '==>OPENBETS')
     res.status(200).render("./sattlementInPage/main",{
         title:"Settlements",
         me,
