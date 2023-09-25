@@ -591,20 +591,43 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
               }
         ])
     
+        // turnOver = await accountModel.aggregate([
+        //     {
+        //         $match:{
+        //             user_id:req.currentUser._id
+        //         }
+        //     },
+        //     {
+        //         $group: {
+        //             _id: null,
+        //             totalAmount: { $sum: { $abs: "$creditDebitamount" } },
+        //             Income : {$sum: '$creditDebitamount'},
+        //         }
+        //     }
+        // ])
+
         turnOver = await accountModel.aggregate([
             {
-                $match:{
-                    user_id:req.currentUser._id
-                }
+              $match: {
+                user_id: req.currentUser._id
+              }
             },
             {
-                $group: {
-                    _id: null,
-                    totalAmount: { $sum: { $abs: "$creditDebitamount" } },
-                    Income : {$sum: '$creditDebitamount'},
-                }
+              $group: {
+                _id: null,
+                totalAmount: { $sum: { $abs: "$creditDebitamount" } },
+                Income: { $sum: '$creditDebitamount' },
+              }
+            },
+            {
+              $project: {
+                _id: 0, // Exclude the _id field
+                totalAmount: { $round: ["$totalAmount", 2] }, // Round totalAmount to 2 decimal places
+                Income: { $round: ["$Income", 2] }, // Round Income to 2 decimal places
+              }
             }
-        ])
+          ]);
+          
 
 
 
