@@ -139,6 +139,9 @@ e.preventDefault();
 const form = document.getElementById('Add-User');
 let data = new FormData(form) 
 const formDataObj = Object.fromEntries(data.entries());
+if(formDataObj.role == "select"){
+    alert('please select role of user')
+}
 console.log(formDataObj)
 
 if(formDataObj.whiteLabel == ""){

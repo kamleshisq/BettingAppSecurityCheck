@@ -7168,6 +7168,9 @@ $('#Add-User').submit(function (e) {
   var form = document.getElementById('Add-User');
   var data = new FormData(form);
   var formDataObj = Object.fromEntries(data.entries());
+  if (formDataObj.role == "select") {
+    alert('please select role of user');
+  }
   console.log(formDataObj);
   if (formDataObj.whiteLabel == "") {
     formDataObj.whiteLabel = document.getElementById("whiteLabel").value;
