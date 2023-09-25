@@ -1,0 +1,104 @@
+<%- include("../header") %>
+<!--Container Main start-->
+<div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
+    <div class="container-fluid">
+      <div class="new-head">
+        <h3>Event Management</h3>
+      </div>
+    </div>
+  </section>
+  <div class="bredcum-container">
+    <ul>
+        <li><a href="/admin/catalogcontrol">Sport</a></li>
+        <%if(breadcumArr.length !== 0){%>
+          <li><a href="/admin/catalogcontrol/compitations?sportId=<%=breadcumArr[0].id%>"><%=breadcumArr[0].name%></a></li>
+          <li class="active"><a href="/admin/catalogcontrol/compitations/events?compId=<%=breadcumArr[1].id%>&sportId=<%=breadcumArr[1].sportId%>"><%=breadcumArr[1].name%></a></li>
+        <%}%>
+    </ul>
+  </div>
+
+  <section class="eventController">
+    <div class="container-fluid">
+      <div class="table-data-section">
+        <div class="data-table">
+          <table>
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Enabled</th>
+                <th>Date</th>
+                <th>Team</th>
+                <th>Open Bet</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody class="new-body">
+              <% for(let i = 0; i < data.length; i++){%>
+              <%if((i%2)==0){%>
+              <tr>
+                <%}else{%>
+                <tr>
+                  <%}%>
+                  <td><%=i + 1%></td>
+                  <td>
+                    <%if(data[i].status){%>
+                    <div class="on-off-btn-section">
+                      <span class="on-off">OFF &nbsp; <label class="switch">
+                      <input class="checkbox status_check" name="autoSattled" type="checkbox" data-id="<%=data[i].eventId%>" checked>
+                      <span class="slider round"></span>
+                      </label>&nbsp; ON</span>
+                    </div>
+                    <%}else{%>
+                    <div class="on-off-btn-section">
+                      <span class="on-off">OFF &nbsp; <label class="switch">
+                      <input class="checkbox status_check" name="autoSattled" type="checkbox" data-id="<%=data[i].eventId%>">
+                      <span class="slider round"></span>
+                      </label>&nbsp; ON</span>
+                    </div>
+                    <%}%>
+                  </td>
+                  <%
+                    var timestamp = data[i].created_on * 1000 
+                    var date = new Date(timestamp);
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
+                  %>
+                 
+                  <td><%=formattedTime %></td>
+                  <td><%=data[i].name%></td>
+                  <td><%=data[i].count%></td>
+                  <td>
+                    <div class="btn-group">
+                      <a class="btn" href="/admin/riskAnalysis?id=<%=data[i].eventId%>">View Details</a>
+                    </div>
+                  </td>
+                  <%}%>
+                </tr>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="pageId" data-pageid="1"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+<script type="text/javascript" src="../../../js/bundle.js"></script>
+
+
+</body>
+</html> 

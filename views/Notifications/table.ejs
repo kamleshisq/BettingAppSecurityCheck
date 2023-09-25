@@ -1,0 +1,40 @@
+<table>
+    <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Event</th>
+          <th class="message" >Message </th>
+          <th >Actions</th>
+        </tr>
+    </thead>
+    <tbody class="new-body">
+        <%for(let i = 0; i < notifications.length; i++){%>
+            <%if((i%2)==0){%>
+                <tr>
+            <%}else{%>
+                <tr>
+            <%}%>    
+            <td><%=i + 1%></td>
+            <td><%=notifications[i].title%></td>
+            <td class="message"><%=notifications[i].message%></td>
+            <%if(notifications[i].status){%>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn update" id="<%=notifications[i]._id%>">Enable</button>
+                        <button class="btn delete" id="<%=notifications[i]._id%>1">Delete</button>
+                    </div>
+                </td>
+            <%}else{%>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn update" id="<%=notifications[i]._id%>">Disable</button>
+                        <button class="btn delete" id="<%=notifications[i]._id%>1">Delete</button>
+                    </div>
+                </td>
+            <%}%>
+          </tr>
+        <%}%>
+      
+     
+    </tbody>
+  </table>

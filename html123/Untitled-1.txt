@@ -1,0 +1,62 @@
+data: {
+  title: 'Bangladesh Women v India Women',
+  eventId: '32491524',
+  odds: '1.98',
+  secId: '4.385198454-OE',
+  market: '4.385198454-OE',
+  stake: '100.00',
+  spoetId: '4'
+}
+
+(data.data.secId === "odd_Eve"){
+  console.log(marketList)
+}
+
+{
+  id: 2538003,
+  sid: 4,
+  eid: 32491524,
+  marketId: '4.1090654685-OE',
+  title: '1st Ing 40 Over Odd Run Bhav (BAN-W VS IND-W) Adv',
+  info: ' ',
+  game_over: 0,
+  result: ' ',
+  bet_allowed: 1,
+  suspended: 1,
+  ball_running: 1,
+  created_on: '2023-07-18 08:35:50',
+  updated_on: '2023-07-19 03:07:05',
+  status: 1,
+  displayId: 0,
+  mid: '4.1090654685-OE',
+  min_stack: 50,
+  max_stack: 50000,
+  max_profit_limit: 300000,
+  max_odd_limit: 0,
+  bet_delay: 1,
+  max_run_diff: 0,
+  min_run_diff: 0
+}
+
+
+{
+  _id: ObjectId("64b77e591193bd5e0ccc5e4e"),
+  userId: '649575081109042453f3cf31',
+  userName: 'new_test_User5',
+  transactionId: 'new_test_User5x8Gdx',
+  gameId: '4',
+  betType: 'Cricket',
+  date: ISODate("2023-07-19T06:10:33.481Z"),
+  event: 'Womens One Day Internationals',
+  selectionName: '1st Ing 40 Over Odd Run Bhav (BAN-W VS IND-W) Adv',
+  oddValue: 1.98,
+  Stake: 100,
+  status: 'OPEN',
+  returns: -100,
+  role_type: 5,
+  match: 'Bangladesh Women v India Women',
+  marketName: '1st Ing 40 Over Odd Run Bhav (BAN-W VS IND-W) Adv',
+  marketId: '4.1090654685-OE',
+  secId: 'odd_Eve',
+  __v: 0
+}

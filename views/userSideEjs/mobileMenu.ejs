@@ -1,0 +1,105 @@
+<section class="mbl-botm-mnu-sec">
+    <div class="container mbl-botm-mnu-sec-contnr">
+      <div class="mbl-botm-mnu-sec-wrp">
+        <span>
+          <a href="/exchange/inPlay">
+            <img class="img-fluid" src="/assets/img/home/mbl_botom_mnu_icon01.svg" alt="">
+            <h6>In-Play</h6>
+          </a>
+        </span>
+        <span>
+          <%if(user){%>
+            <a href="/premium_sports">
+              <img class="img-fluid" src="/assets/img/home/mbl_botom_mnu_icon02.svg" alt="">
+              <h6>Sports</h6>
+            </a>
+            <%}else{%>
+              <a data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+                <img class="img-fluid" src="/assets/img/home/mbl_botom_mnu_icon02.svg" alt="">
+                <h6>Sports</h6>
+              </a>
+            <%}%>
+        </span>
+        <span>
+          <a href="#">
+            <img id="botommainmnubtnn" class="img-fluid mzin-mnu-botom" src="/assets/img/home/main-menu-botom.svg" alt="" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+          </a>
+        </span>
+        <span>
+          <a href="/Royal_casino">
+            <img class="img-fluid" src="/assets/img/home/mbl_botom_mnu_icon03.svg" alt="">
+            <h6>Casino</h6>
+          </a>
+        </span>
+        <span>
+          <%if(user){%>
+            <a href="/myProfile">
+              <img class="img-fluid" src="/assets/img/home/mbl_botom_mnu_icon04.svg" alt="">
+              <h6>Profile</h6>
+            </a>
+            <%}else{%>
+              <a data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+                <img class="img-fluid" src="/assets/img/home/mbl_botom_mnu_icon04.svg" alt="">
+                <h6>Profile</h6>
+              </a>
+            <%}%>
+        </span>
+      </div>
+
+      
+
+      <div class="offcanvas offcanvas-bottom my-off-canvas-botm-mnu" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+        <!-- <div class="offcanvas-header my-offcanvas-head">
+          <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div> -->
+        <div class="offcanvas-body small my-offcanvas-body">
+          <div id="botommnuwrp" class="mbl-botm-mnu-wrp-dv">
+            <div class="mbl-botm-mnu-wrp-dv-inn">
+              <div class="mbl-botm-mnu-wrp-dv-txt">
+                  <ul>
+                    <%if(check == "Home"){%>
+                        <li>
+                            <a class="botom-mnu-active" href="/">Home</a>
+                        </li>
+                    <%}else{%>
+                        <li>
+                            <a  href="/">Home</a>
+                        </li>
+                    <%}%>
+                    <%for(let i = 0; i < verticalMenus.length; i++){%>
+                        <%if(verticalMenus[i].status){%>
+                            <%if(check == verticalMenus[i].menuName){%>
+                                <li>
+                                    <a class="botom-mnu-active" href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%></a>
+                                </li>
+                            <%} else{%>
+                              <%if(verticalMenus[i].menuName == "Sportsbook"){%>
+                                <%if(user){%>
+                                  <li>
+                                    <a  href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%></a>
+                                  </li>
+                                <%}else{%>
+                                  <li>
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalToggle"><%=verticalMenus[i].menuName%> </a>
+                                </li>
+                                <%}%>
+                              <%}else{%>
+                              <li>
+                                  <a  href="<%=verticalMenus[i].url%>"><%=verticalMenus[i].menuName%></a>
+                              </li>
+                              <%}%>
+                              <%}%>
+                            <%}%>
+                        <%}%>
+                  
+                  
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>

@@ -1,0 +1,75 @@
+<%for(let i = 0; i < sliders.length; i++){%>
+  <%if(sliders[i].status){%>
+    <section class="featured-sec">
+      <div class="container-fluid featured-sec-contnr">
+        <div class="featured-sec-coldv col-lg-11 col-md-12 col-12 w-100-md">
+          <div class="featured-sec-ro">
+            <div class="featured-sec-ro--titl">
+              <div class="featured-sec-ro--titl1">
+                <div class="featured-sec-ro--titl-txt">
+                  <span class="titl-bodr-lft-spn"></span>
+                  <h3 class="featured-sec-ro--titl-txt-tg"><%=sliders[i].name%></h3>
+                  <!-- <span class="titl-bhind-txt-spn">featured sports</span> -->
+                </div>
+              </div>
+              <div class="featured-sec-ro--titl2">
+                <div class="featured-sec-ro--titl-brows-all-btn-dv">
+                  <a class="featured-sec-ro--titl-brows-all-btn" href="<%=sliders[i].mainUrl%>">BROWSE ALL</a>
+                </div>
+              </div>
+              <div class="bg-elemnt-dv">
+                <h2 class="bg-elemnt-dv-titl"><%=sliders[i].name%></h2>
+                <img class="bg-elemnt-dv-img img-fluid" src="sliderBackgroundImages/<%=sliders[i].backGroundImage%>.png" alt="">
+              </div>
+            </div>
+
+            <div class="featured-sec-slide-ro hiroslide">
+
+              <%for(let j = 0; j < sliders[i].images.length; j++){%>
+                <div class="featured-sec-card-col-dv">
+                  <div class="featured-sec-card-col-inn">
+                    <div class="featured-sec-card-col-img-dv">
+                      <%if(sliders[i].name == " ROYAL GAMING" && !user){%>
+                        <a data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+                          <img class="img-fluid featured-sec-card-col-img-tg" src="sliderImages/<%=sliders[i].images[j].name%>.png" alt="">
+                        </a>
+                      <%}else{%>
+                        <a href="<%=sliders[i].images[j].url%>">
+                          <img class="img-fluid featured-sec-card-col-img-tg" src="sliderImages/<%=sliders[i].images[j].name%>.png" alt="">
+                        </a>
+                      <%}%>
+                    </div>
+                  </div>
+                </div>
+              <%}%>
+
+            </div>
+
+            <div class="mbl-featured-sec-slide-ro">
+              <%for(let j = 0; j < sliders[i].images.length; j++){%>
+                <%if(j < 4){%>
+                  <div class="mbl-featured-sec-card-col-dv col-6 pad-r-5 mb-2">
+                    <div class="mbl-featured-sec-card-col-dv-inn">
+                      <%if(sliders[i].name == " ROYAL GAMING" && !user){%>
+                        <a data-bs-toggle="modal" data-bs-target="#exampleModalToggle">
+                          <img class="img-fluid featured-sec-card-col-img-tg" src="sliderImages/<%=sliders[i].images[j].name%>.png" alt="">
+                        </a>
+                      <%}else{%>
+                        <a href="<%=sliders[i].images[j].url%>">
+                          <img class="img-fluid featured-sec-card-col-img-tg" src="sliderImages/<%=sliders[i].images[j].name%>.png" alt="">
+                        </a>
+                      <%}%>
+                    </div>
+                  </div>
+                <%}%>
+              <%}%>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+<%}%>
+<%}%>
+
+  

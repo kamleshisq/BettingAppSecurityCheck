@@ -1,0 +1,72 @@
+<section>
+    <div class="container-fluid">
+        <div class="table-data-section">
+            <div class="table-heading">
+                <h3>Bet Limits</h3>
+            </div>
+            <div class="data-table">
+              <div class="rowId" data-rowid="1"></div>
+  <table class="bet-list-table">
+      <%if(seriesMatch.length > 0){%>
+        <thead>
+            <tr>
+                <th>Competition</th>
+                <th>Min Stake</th>
+                <th>Max Stake </th>
+                <th>Max Profit</th>
+                <th>Max Odd</th>
+                <th>Delay</th>
+                <th>Actions </th>
+                </tr>
+        </thead>
+        <tbody class="new-body">
+  
+  
+  
+  
+            <!-- CRICKET -->
+            <%for(let i = 0; i < seriesMatch.length; i++){%>
+              <%
+                console.log(seriesMatch[i].eventData.name)
+                let limitData = betLimit.find(item => item.type == seriesMatch[i].eventData.name)
+              %>
+                
+                  <%if(limitData){%>
+                    <tr id="<%=i + 1%>">
+                      <td id="<%=seriesMatch[i].eventData.name%>" class="btn-filter"><a href="/admin/betlimit/sports/match?match=<%=seriesMatch[i].eventData.name%>"><%=seriesMatch[i].eventData.name%></a></td>
+                      <td><input type="text" class="form-datas" value="<%=limitData.min_stake%>" readonly=""></td>
+                      <td><input type="text" class="form-datas" value="<%=limitData.max_stake%>" readonly=""></td>
+                      <td><input type="text" class="form-datas" value="<%=limitData.max_profit%>" readonly=""></td>
+                      <td><input type="text" class="form-datas" value="<%=limitData.max_odd%>" readonly=""></td>
+                      <td><input type="text" class="form-datas" value="00" readonly=""></td>
+                      <td>
+                        <div class="btn-group">
+                          <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2"class="btn update updateBetLimit">Update</button>
+                        </div>
+                      </td>
+                    </tr>
+                  <%}else{%>
+                    <tr id="<%=i + 1%>">
+                        <td id="<%=seriesMatch[i].eventData.name%>" class="btn-filter"><a href="/admin/betlimit/sports/match?match=<%=seriesMatch[i].eventData.name%>"><%=seriesMatch[i].eventData.name%></a></td>
+                        <td><input type="text" class="form-datas" value="100" readonly=""></td>
+                        <td><input type="text" class="form-datas" value="1000" readonly=""></td>
+                        <td><input type="text" class="form-datas" value="500" readonly=""></td>
+                        <td><input type="text" class="form-datas" value="100" readonly=""></td>
+                        <td><input type="text" class="form-datas" value="10" readonly=""></td>
+                        <td>
+                          <div class="btn-group">
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2"class="btn update updateBetLimit">Update</button>
+                          </div>
+                        </td>
+                      </tr>
+                  <%}%>
+            <%}%>
+        </tbody>
+    <%}else{%>
+        <tr class="empty_table"><td>No <%=gameName%> Series! </td></tr>
+    <%}%>
+  </table>
+            </div>
+        </div>
+    </div>
+  </section>

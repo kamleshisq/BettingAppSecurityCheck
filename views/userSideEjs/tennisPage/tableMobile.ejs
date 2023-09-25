@@ -1,0 +1,191 @@
+<%if(liveTennis.length > 0 || upcomintTennis.length > 0){%>
+  <div class="exch-mob-data-tbl-ro">
+    <div class="exch-mob-data-tbl-ro-titl">
+      <h6>Tennis</h6>
+    </div>
+  <%for(let i = 0; i < tennisSeries.length; i++){%>
+    <%if(tennisSeries[i].series != "1"){ %>
+      <%if(!catalog.some(item => item.name == tennisSeries[i].series)){ %>
+      <div class="series-wise-data">
+        <div class="series-title"><%=tennisSeries[i].series%></div>
+        <%for(let j = 0; j < tennisSeries[i].matchdata.length; j++){%>
+          <%if(!catalog.some(item => item.Id == tennisSeries[i].matchdata[j].eventData.eventId)){ %>
+          <%
+              
+          var timestamp = `${tennisSeries[i].matchdata[j].eventData.time}` * 1000; 
+          var date = new Date(timestamp);
+          var options = { 
+            day: '2-digit',
+            month: 'short',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true // This ensures the time is displayed in AM/PM format
+          };
+          var formattedTime = date.toLocaleString('en-US', options);
+            %>
+          <div class="exch-mob-data-tbl-card-wrp">
+            <a class="exch-mob-data-tbl-card-wrp-a" href="/exchange_inPlay/match?id=<%=tennisSeries[i].matchdata[j].eventData.eventId%>">
+              <div class="top-mobile-table-data">
+              <%if(tennisSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
+                <%
+                      if(tennisSeries[i].matchdata[j].marketList.score != null){
+                        let dataScore = tennisSeries[i].matchdata[j].marketList.score[0].data;
+                        const scoreMatches = dataScore.match(/class="set current">([^<]*)/g);
+                        const setScores = scoreMatches
+                          ? scoreMatches.map(score => score.replace(/class="set current">/g, '').trim())
+                          : [];
+
+                                                    
+                          console.log('Set Scores:', setScores);
+                    %>
+                    <div class="short-score">
+                      <div class="block left">
+                        <span>0</span>
+                        <span><%=setScores[1]%></span>
+                      </div>
+                      <div class="block right">
+                        <span>0</span>
+                        <span><%=setScores[3]%></span>
+                      </div>
+                    </div>
+                    <%}else{%>
+                      <div class="short-score">
+                        <div class="block left">
+                          <span>In Play</span>
+                        </div>
+                      </div>
+                    <% }%>
+                    <span class="flash-live-button">live</span></b>
+                    <div class="date"><%=formattedTime%></div>
+              <%}else{ %>
+                <div class="date"><%=formattedTime%></div>
+              <%} %>
+            </div>
+              <div class="exch-mob-data-tbl-card-ro">
+                <div class="exch-mob-data-tbl-card-dv">
+                  <p>
+                    <%if(tennisSeries[i].matchdata[j].eventData.type === "IN_PLAY"){%>
+                      
+                      <p>
+                        <b><%=tennisSeries[i].matchdata[j].eventData.name%></b> 
+                      </p>
+                    <%}else{%>
+                      
+                      <p>
+                         <b><%=tennisSeries[i].matchdata[j].eventData.name%></b>
+                    </p>
+                    <%} %>
+                  </p>
+                </div>
+                <div class="exch-mob-data-tbl-card-dv2">
+                  <%if(tennisSeries[i].matchdata[j].eventData.isTv){%>
+                    <span class="exch-mob-data-tbl-card-dv2-spns">
+                      <i class="fa-solid fa-tv c-activee"></i>
+                    </span>
+                  <%}%>
+
+                  <%if(tennisSeries[i].matchdata[j].marketList.match_odd != null){%>
+                    <span class="exch-mob-data-tbl-card-dv2-spns">
+                      <p> MO </p>
+                      <span>35</span>
+                    </span>
+                  <%} %>
+                  <%if(tennisSeries[i].matchdata[j].marketList.fancy != null || tennisSeries[i].matchdata[j].marketList.session!= null || tennisSeries[i].matchdata[j].marketList.odd_even!= null ){%>
+                    <span class="exch-mob-data-tbl-card-dv2-spns">
+                      <p> F </p>
+                      <span>1</span>
+                    </span>
+                  <%} %>
+                  <%if(tennisSeries[i].matchdata[j].marketList.bookmaker != null){%>
+                    <span class="exch-mob-data-tbl-card-dv2-spns">
+                      <p> B </p>
+                      <span>1</span>
+                    </span>
+                  <%}%>
+                  <span class="exch-mob-data-tbl-card-dv2-spns">
+                    <button href="multimarket.html"><img src="assets/img/exchange/Vector.png" alt=""/></button> 
+                  </span>
+                </div>
+              </div>
+            
+              <%if(tennisSeries[i].matchdata[j].marketList.match_odd != null){ %>
+              <% let runners = JSON.parse(tennisSeries[i].matchdata[j].marketList.match_odd.runners); %>
+              <% let runners1 = []; %>
+              <%let secIds = []; %>
+              <%runners.forEach(item => {%>
+                  <%runners1.push(item.runner);%>
+                  <%secIds.push(item.secId);%>
+              <%});%>
+              <%if(runners1.length === 2){%>
+                  <div class="exch-mob-data-tbl-card-ro2">
+                      <div class="exch-mob-data-tbl-card-ro2-dv">
+                        <span class=" 0B" id="<%=secIds[0]%>"> </span>
+                        <span class=" 0L" id="<%=secIds[0]%>"> </span>
+                      </div>
+                      <div class="exch-mob-data-tbl-card-ro2-dv">
+                          <span class="tbl-td-bg-blu-spn mylock-data">
+                              <i class="fa-solid fa-lock"></i>
+                            </span>
+                            <span class="tbl-td-bg-pich-spn mylock-data">
+                              <i class="fa-solid fa-lock"></i>
+                            </span>
+                      </div>
+                      <div class="exch-mob-data-tbl-card-ro2-dv">
+                        <span class=" 1B" id="<%=secIds[1]%>"> </span>
+                        <span class=" 1L" id="<%=secIds[1]%>"> </span>
+                      </div>
+                    </div>
+              <%}else{%>
+                  <div class="exch-mob-data-tbl-card-ro2">
+                    <div class="exch-mob-data-tbl-card-ro2-dv">
+                      <span class=" 0B" id="<%=secIds[0]%>"> </span>
+                      <span class=" 0L" id="<%=secIds[0]%>"> </span>
+                    </div>
+                    <div class="exch-mob-data-tbl-card-ro2-dv">
+                      <span class=" 2B" id="<%=secIds[2]%>"> </span>
+                      <span class=" 2L" id="<%=secIds[2]%>"> </span>
+                    </div>
+                    <div class="exch-mob-data-tbl-card-ro2-dv">
+                      <span class=" 1B" id="<%=secIds[1]%>"> </span>
+                      <span class=" 1L" id="<%=secIds[1]%>"> </span>
+                    </div>
+                  </div>
+              <%}%>
+              <%}else{ %>
+                <div class="exch-mob-data-tbl-card-ro2">
+                  <div class="exch-mob-data-tbl-card-ro2-dv">
+                    <span class="tbl-td-bg-blu-spn mylock-data">
+                      <i class="fa-solid fa-lock"></i>
+                    </span>
+                    <span class="tbl-td-bg-pich-spn mylock-data">
+                      <i class="fa-solid fa-lock"></i>
+                    </span>
+                  </div>
+                  <div class="exch-mob-data-tbl-card-ro2-dv">
+                      <span class="tbl-td-bg-blu-spn mylock-data">
+                          <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <span class="tbl-td-bg-pich-spn mylock-data">
+                          <i class="fa-solid fa-lock"></i>
+                        </span>
+                  </div>
+                  <div class="exch-mob-data-tbl-card-ro2-dv">
+                    <span class="tbl-td-bg-blu-spn mylock-data">
+                      <i class="fa-solid fa-lock"></i>
+                    </span>
+                    <span class="tbl-td-bg-pich-spn mylock-data">
+                      <i class="fa-solid fa-lock"></i>
+                    </span>
+                  </div>
+                </div>
+              <%} %>
+            </a>
+          </div>
+        <%}%>
+        <%}%>
+      </div>
+      <%} %>
+    <%}%>
+  <%}%>
+  </div>
+<%}%>

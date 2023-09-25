@@ -1,0 +1,149 @@
+<div class="mbl-exc-inn-tbl-datadv-wrp">
+    <div class="exchange-pg-inn-banner-col-titi">
+        <div class="exchange-pg-inn-banner-col-titi-txt">
+            <h6><span>Bookmaker</span><span class="game-info-popup-spn" data-bs-toggle="modal" data-bs-target="#gameroulspop"> 
+              <i class="fa-solid fa-circle-info"></i> 
+            </span></h6>
+        </div>
+        <div class="exchange-pg-inn-banner-col-titi-txt-tim">
+            <h6 class="market-limit" id="<%=match.marketList.bookmaker[0].marketId%>"><b>Min : <%=minBookMaker%>, Max : <%=maxBookMaker%></b></h6>
+        </div>
+    </div>
+
+    <div class="exc-inn-colaps-data-wrpdv">
+
+        <table class="acount-stat-tbl" id="<%=match.marketList.bookmaker[0].marketId%>">
+
+            <thead class="acount-stat-tbl-hed2">
+                <tr class="acount-stat-tbl-hed-tr2" >
+                    <th colspan="2" style="text-align: left;" class="bod-red-lft ">Market</th>
+                    <th style="text-align: center;" colspan="">Back</th>
+                    <th style="text-align: center;" colspan="" class="bod-red-rit">Lay</th>
+                </tr>
+            </thead>
+  
+            <tbody class="acount-stat-tbl-body">
+              <%
+                      let StringData = match.marketList.bookmaker[0].runners
+                      const cleanedString = StringData.replace(/'/g, '');
+                      const jsonData = JSON.parse(cleanedString);
+                  %>
+                  <%for(let i = 0; i < jsonData.length; i++){%>
+                    <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                        <td colspan="2" style=" text-align: left;">
+                          <%=jsonData[i].runner%>
+                        </td>
+                        
+                        <td class="tbl-td-with5">
+                            <span data-bs-toggle="collapse" href="#bt-slp-colps-bookmaker-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-bookmaker-<%=i%>" class="tbl-bg-blu-spn bookmaker_blue button" id="<%=jsonData[i].secId%>1">
+                                
+                                
+                            </span> 
+                        </td>
+                        <td class="tbl-td-with5 suspended">
+                            <span data-bs-toggle="collapse" href="#bt-slp-colps-bookmaker-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-bookmaker-<%=i%>" class="tbl-bg-pech-spn bookmaker_red button" id="<%=jsonData[i].secId%>2">
+                                
+                                
+                            </span> 
+                            <div class="match-status-message">
+                              Suspended
+                            </div>
+                        </td>
+                        
+                        
+                        
+                    </tr>
+                    <tr>
+                      <td colspan="8">
+                        <div class="my-exc-inn-colaps-txt-dv collapse" id="bt-slp-colps-bookmaker-<%=i%>" >
+                          <%-include("../betslip")%>
+                        </div>
+                      </td>
+                    </tr>
+                  <%} %>
+                
+                
+            </tbody>
+  
+          </table>
+
+      
+    </div>
+  </div>
+
+
+  <%if( match.marketList.bookmaker[1]){ %>
+    <div class="mbl-exc-inn-tbl-datadv-wrp">
+        <div class="exchange-pg-inn-banner-col-titi">
+            <div class="exchange-pg-inn-banner-col-titi-txt">
+                <h6><span>TOSS</span><span class="game-info-popup-spn" data-bs-toggle="modal" data-bs-target="#gameroulspop"> 
+                  <i class="fa-solid fa-circle-info"></i> 
+                </span></h6>
+            </div>
+            <div class="exchange-pg-inn-banner-col-titi-txt-tim">
+                <h6 class="market-limit" id="<%=match.marketList.bookmaker[1].marketId%>"><b>Min : <%=minBookMaker%>, Max : <%=maxBookMaker%></b></h6>
+            </div>
+        </div>
+    
+        <div class="exc-inn-colaps-data-wrpdv">
+    
+            <table class="acount-stat-tbl market" id="<%=match.marketList.bookmaker[1].marketId%>">
+  
+                <thead class="acount-stat-tbl-hed2">
+                    <tr class="acount-stat-tbl-hed-tr2" >
+                        <th colspan="2" style="text-align: left;" class="bod-red-lft ">Market</th>
+                        <th style="text-align: center;" colspan="">Back</th>
+                        <th style="text-align: center;" colspan="" class="bod-red-rit">Lay</th>
+                    </tr>
+                </thead>
+      
+                <tbody class="acount-stat-tbl-body">
+                  <%
+                          let StringData = match.marketList.bookmaker[1].runners
+                          const cleanedString = StringData.replace(/'/g, '');
+                          const jsonData = JSON.parse(cleanedString);
+                      %>
+                      <%for(let i = 0; i < jsonData.length; i++){%>
+                        <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                            <td colspan="2" style=" text-align: left;">
+                              <%=jsonData[i].runner%>
+                            </td>
+                            
+                            <td class="tbl-td-with5">
+                                <span data-bs-toggle="collapse" href="#bt-slp-colps-bookmaker-<%=i%>1" role="button" aria-expanded="false" aria-controls="bt-slp-colps-bookmaker-<%=i%>1" class="tbl-bg-blu-spn bookmaker_blue button" id="<%=jsonData[i].secId%>1">
+                                    
+                                    
+                                </span> 
+                            </td>
+                            <td class="tbl-td-with5 suspended">
+                                <span data-bs-toggle="collapse" href="#bt-slp-colps-bookmaker-<%=i%>1" role="button" aria-expanded="false" aria-controls="bt-slp-colps-bookmaker-<%=i%>1" class="tbl-bg-pech-spn bookmaker_red button" id="<%=jsonData[i].secId%>2">
+                                    
+                                    
+                                </span> 
+                                <div class="match-status-message">
+                                  Suspended
+                                </div>
+                            </td>
+                            
+                            
+                            
+                        </tr>
+                        <tr>
+                          <td colspan="8">
+                            <div class="my-exc-inn-colaps-txt-dv collapse" id="bt-slp-colps-bookmaker-<%=i%>1" >
+                              <%-include("../betslip")%>
+                            </div>
+                          </td>
+                        </tr>
+                      <%} %>
+                    
+                    
+                </tbody>
+      
+              </table>
+    
+          
+        </div>
+      </div>
+    
+  <%} %>

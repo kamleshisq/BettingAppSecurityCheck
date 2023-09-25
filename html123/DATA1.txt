@@ -1,0 +1,128 @@
+sudo timedatectl set-timezone Asia/Kolkata
+
+
+
+for Install NodeJs by cmd ubuntu
+
+sudo apt update
+sudo apt install nodejs
+
+
+
+
+for install MongoDb by cmd ubuntu
+
+https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/ (follow this link)
+
+
+
+for git install 
+https://www.youtube.com/watch?v=lzqV8bYjCP4&t=325s 
+https://thecodebeast.com/auto-deploy-git-on-digital-ocean-or-any-other-vps/ (follow this link)
+
+git config --global user.name "[some user-name]"
+
+git config --global user.email "[your github email]"
+
+sudo mkdir /var/www/.ssh
+
+sudo chown -R www-data:www-data /var/www/.ssh/
+
+sudo -Hu www-data ssh-keygen -t rsa
+
+sudo cat /var/www/.ssh/id_rsa.pub
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDN1i2cGWSA2zmCsV/dDK+6IcdrzBqJBbMYEBrxHPbK3lHZyGtpLZh0po/a2n/Z5MrtWr+4LMXQRjoN6VlYAzYV1eH+yzNwon/Qgxs5uueeYTFT/ud8UP9tc882R3z/wnh0V1PcYEN3u90F/qOoNVNROXAx8tujb4HZ5bXmucQnyPkD61z8YjWpyECTJC2RRJLUOj8jvXhFJ/ndhXJnmL9jMM2YPYRmO4oAn93nsyOsV90UCpkc79HpN9XiPwDZaJ9O7aYcShIWOpTySElW77DFXbUME5Wln9qZM1bypw+I6qfprlGolRBxN6CK1Dt4GMc37HrUP0csuZEiXLxWGp/LMSsW+6Q0gs7BD15wTw3kg/zsajAP6wGTXhzLVoG9IAU8XSxCczkl2/nC26mncOiCtu3AabeVhVeshEX8k55kSzMlLjbDky6QVRT1nei1toJ9F3P8wUW+KetTDmUIYWRfsgmxOYSooQLT+lPVQ6PgV73AO/kRfIx1SlOdPCu2ZXE= www-data@localhost
+
+now in repository go to settings => Deploy keys => add deploy key add ssh-rsa key 
+
+cd /var/www
+
+sudo chown -R www-data:www-data /var/www/[site_dir]
+
+sudo su -l www-data -s /bin/bash
+
+git clone git@github.com:[githubuser]/[gitrepo].git /var/www/[site_dir]
+- or for branch -
+git clone -b [branch_name] git@github.com:[githubuser]/[gitrepo].git /var/www/[site_dir]
+
+
+[
+  [
+    {
+      id: '1.217725071',
+      marketName: 'Match Odds',
+      match: 'Essex v Middlesex',
+      date: 2023-09-05T13:33:32.768Z,
+      secId: '31376',
+      count: 2,
+      stake: 1100,
+      beton: 'Essex',
+      eventId: '32596683'
+    },
+    {
+      id: '1.217725071',
+      marketName: 'Match Odds',
+      match: 'Essex v Middlesex',
+      date: 2023-09-05T08:09:08.886Z,
+      secId: '31378',
+      count: 1,
+      stake: 100,
+      beton: 'Middlesex',
+      eventId: '32596683'
+    }
+  ]
+]
+
+
+
+
+
+172.105.58.243
+eXhange@179!
+
+
+https://www.mirchiexch9.com/home
+zdemo0001 / Pa$$w0rd
+
+
+sudo lsof -i :80
+sudo kill <PID>
+
+
+https://dev-ha.hypexexch.com/admin/user_management
+
+mazaa / Abcd1234
+
+v2-admin.hypexexch.com Username: maxexp
+Password: Abcd1234$
+
+for networkerror
+
+sudo mongod --fork --logpath /var/lib/mongodb/mongodb.log --dbpath /var/lib/mongodb
+
+
+
+
+//for git ignore //
+*.css
+# Untrack all .css files
+git rm --cached "*.css"
+
+# Commit the untracking changes
+git commit -m "Untrack all .css files"
+
+git add .gitignore
+git commit -m "Update .gitignore to ignore .css files"
+
+
+
+
+
+
+for dump 
+
+mongodump --uri "mongodb://127.0.0.1:27017" --db transaction --out /var/www/html/
+
+
+mongorestore --uri "mongodb://127.0.0.1:27017" --nsInclude 'shree247.*' /var/www/html/

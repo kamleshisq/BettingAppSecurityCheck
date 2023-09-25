@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Risk Analysis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+  <%- include("../header") %>
+
+  <div class="dashboard-main-wraper">
+    <section class="dashboard-welcome-section">
+      <div class="container-fluid">
+        <div class="new-head"> 
+            <h3><%=match.eventData.name%></h3>
+        </div>
+      
+    </section>
+    <div class="analysis-data">
+      <div class="main-tab-btn">
+        <ul>
+            <li><button class="book-show active">Book</button></li>
+            <li><button class="open-bets-show">Open Bets</button></li>
+        </ul>
+    </div>
+        <div class="content-left">
+            <!-- Live match score -->
+            <%if(match.eventData.type != "UPCOMING"){ %>
+              <div class="live-score-banner">
+                  <div class="live-score">
+                      
+                  </div>
+              </div>
+            <%}%>
+            <!-- Match Odds -->
+            <%if(match.marketList.match_odd != null){%>
+              <div class="bets-table">
+                  <div class="title">
+                      <div class="text-left market" id="<%=match.marketList.match_odd.marketId%>"><strong>Match Odds</strong></div>
+                      <div class="text-right">
+                        <!-- <strong>Min : 100, Max : 1000</strong> -->
+                        <div class="btn-group" >
+                            <button class="min-max-modal userBook" data-bs-toggle="modal" data-bs-target="#matchodd-modal">User Book</button>
+                            <button class="min-max-modal tbl-data-href" data-href="/admin/matchBets?id=<%=match.marketList.match_odd.marketId%>">Bets</button>
+                        </div>
+                        </div>
+                        <!-- <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.match_odd.marketId%>">Bets</button></div> -->
+                  </div>
+                      <% let runners = JSON.parse(match.marketList.match_odd.runners); %>
+                    <% const runners1 = []; %>
+                    <%const secIds = []; %>
+                    <%runners.forEach(item => {%>
+                        <%runners1.push(item.runner);%>
+                        <%secIds.push(item.secId);%>
+                    <%});%>
+                  <table>
+                    <tr>
+                      <th>Market</th>
+                      <th>
+                        <div class="bets-option-btn">
+                          <div class="bets-btn-group">Back</div>
+                          <div class="bets-btn-group">Lay</div>
+                        </div>
+                      </th>
+                    </tr>
+                    <%for(let i = 0; i < runners1.length; i++){%>
+                      <tr>
+                        <td><%=runners1[i]%></td>
+                        <td>
+                          <div class="bets-option-btn">
+                            <div class="bets-btn-group">
+                                <div class="bets-btn match_odd_Blue" id="<%=secIds[i]%>3">
+                                    <strong>1.54</strong>
+                                    <span class="small">469</span>
+                                </div>                                    
+                                <div class="bets-btn match_odd_Blue" id="<%=secIds[i]%>2">
+                                    <strong>1.54</strong>
+                                    <span class="small">469</span>
+                                </div>                                    
+                                <div class="bets-btn match_odd_Blue" id="<%=secIds[i]%>1">
+                                    <strong>1.54</strong>
+                                    <span class="small">469</span>
+                                </div>
+                            </div>
+                            <div class="bets-btn-group pink">
+                                <div class="bets-btn match_odd_Red" id="<%=secIds[i]%>4">
+                                    <strong>1.54</strong>
+                                    <span class="small">469</span>
+                                </div>                                    
+                                <div class="bets-btn match_odd_Red" id="<%=secIds[i]%>5">
+                                    <strong>1.54</strong>
+                                    <span class="small">469</span>
+                                </div>                                    
+                                <div class="bets-btn match_odd_Red" id="<%=secIds[i]%>6">
+                                    <strong>1.54</strong>
+                                    <span class="small">469</span>
+                                </div>
+                            </div>
+                        </div>
+                        </td>
+                      </tr>
+                    <%}%>
+                  </table>
+              </div>
+            <%}%>
+            <!-- Bookmaker -->
+            <%if(match.marketList.bookmaker != null){%>
+              <div class="bets-table">
+                  <div class="title">
+                      <div class="text-left market" id="<%=match.marketList.bookmaker[0].marketId%>"><strong>Bookmaker</strong></div>
+                      <div class="text-right">
+                        <!-- <strong>Min : 100, Max : 10K</strong> -->
+                        <div class="btn-group" >
+                            <button class="min-max-modal userBook" data-bs-toggle="modal" data-bs-target="#matchodd-modal">User Book</button>
+                            <button class="min-max-modal tbl-data-href" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button>
+                        </div>
+                        <!-- <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button></div> -->
+                    </div>
+                  </div>
+                  <table>
+                      <tr>
+                          <th>Market</th>
+                          <th>
+                              <div class="bets-option-btn">
+                                  <div class="bets-btn-group">Back</div>
+                                  <div class="bets-btn-group">Lay</div>
+                              </div>
+                          </th>
+                      </tr>
+                      <%
+                        let StringData = match.marketList.bookmaker[0].runners
+                        const cleanedString = StringData.replace(/'/g, '');
+                        const jsonData = JSON.parse(cleanedString);
+                      %>
+                      <%for(let i = 0; i < jsonData.length; i++){%>
+                        <tr>
+                            <td><%=jsonData[i].runner%></td>
+                            <td>
+                                <div class="bets-option-btn">
+                                    <div class="bets-btn-group" >                                 
+                                        <div class="bets-btn bookmaker_blue" id="<%=jsonData[i].secId%>1">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                    <div class="bets-btn-group pink">                                  
+                                        <div class="bets-btn bookmaker_red" id="<%=jsonData[i].secId%>2">
+                                          <span class="tbl-td-bg-pich-spn mylock-data">
+                                            <i class="fa-solid fa-lock"></i>
+                                          </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                      <%}%>
+                  </table>
+              </div>
+            <%}%>
+            <!-- Toss -->
+            <!-- <div class="bets-table">
+                <div class="title">
+                    <div class="text-left"><strong>Toss</strong></div>
+                    <div class="text-right"><strong>Min : 100, Max : 10K</strong></div>
+                </div>
+                <table>
+                    <tr>
+                        <th>Market</th>
+                        <th>
+                            <div class="bets-option-btn">
+                                <div class="bets-btn-group">Back</div>
+                                <div class="bets-btn-group">Lay</div>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>England</td>
+                        <td>
+                            <div class="bets-option-btn">
+                                <div class="bets-btn-group">                                 
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>
+                                </div>
+                                <div class="bets-btn-group pink">                                  
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>England</td>
+                        <td>
+                            <div class="bets-option-btn">
+                                <div class="bets-btn-group">                                 
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>
+                                </div>
+                                <div class="bets-btn-group">                                  
+                                    <div class="bets-btn">
+                                        <strong>1.54</strong>
+                                        <span class="small">469</span>
+                                    </div>
+                                </div>
+                                <div class="match-status-message">Suspended</div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div> -->
+            <!-- Fancy -->
+            <%if(match.marketList.odd_even != null || match.marketList.session != null){%>
+            <div class="bets-table">
+              <div class="title">
+                  <div class="text-left"><strong>Fancy</strong></div>
+              </div>
+              <div class="tab-data-section">
+                <div class="tab">
+                    <button class="tablinks active" data-tag="all">All</button>
+                    <%if(match.marketList.session != null){%>
+                      <%let sessionData = match.marketList.session.filter(item => item.status == 1 && !item.title.startsWith("Only") && item.title.includes("Over"))%>
+                      <%if(sessionData.length > 0){ %>
+                      <button class="tablinks" data-tag="session">Session</button>
+                      <%} %>
+                      <% let dataSessionOnly = match.marketList.session.filter(item => item.status == 1 && item.title.startsWith("Only")) %>
+                          <%if(dataSessionOnly.length > 0){%>
+                      <button class="tablinks" data-tag="Only_over">Only Overt</button>
+                      <%} %>
+                      <% let dataNotOnly = match.marketList.session.filter(item => item.status == 1 && !item.title.includes("Over")) %>
+                      <%if(dataNotOnly.length > 0 ) {%>
+                      <button class="tablinks" data-tag="wp_market">W/P Market</button>
+                      <%} %>
+                      <%}%>
+                      <%if(match.marketList.odd_even != null){%>
+                      <button class="tablinks" data-tag="odd_even">Odd/Even</button>
+                      <%}%>
+                </div>
+                <%if(match.marketList.session != null){%>
+                    <%let sessionData = match.marketList.session.filter(item => item.status == 1 && !item.title.startsWith("Only") && item.title.includes("Over"))%>
+                    <%if(sessionData.length > 0){ %>
+                    <div class="tabcontent" id="session">
+                        <table>
+                            <tr>
+                                <th>Sessions</th>
+                                <th>
+                                    <div class="bets-option-btn">
+                                        <div class="bets-btn-group">Yes</div>
+                                        <div class="bets-btn-group">No</div>
+                                    </div>
+                                </th>
+                            </tr>
+                            <%for(let i = 0; i < sessionData.length; i++){%>
+                                <tr class="market" id="<%=sessionData[i].marketId%>">
+                                    <td ><%=sessionData[i].title%></td>
+                                    <td>    
+                                    <div class="bets-option-btn">
+                                        <div class="bets-btn-group">                                 
+                                            <div class="bets-btn only_over_blue" id="<%=sessionData[i].marketId%>1">
+                                                <strong>1.54</strong>
+                                                <span class="small">469</span>
+                                            </div>
+                                        </div>
+                                        <div class="bets-btn-group pink">                                  
+                                            <div class="bets-btn only_over_red" id="<%=sessionData[i].marketId%>2">
+                                                <strong>1.54</strong>
+                                                <span class="small">469</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </td>
+                                </tr>
+                            <%}%>
+                        </table>
+                    </div>
+                    <%} %>
+                    <% let dataSessionOnly = match.marketList.session.filter(item => item.status == 1 && item.title.startsWith("Only")) %>
+                    <%if(dataSessionOnly.length > 0){%>
+                    <div class="tabcontent" id="Only_over">
+                        <table>
+                            <tr>
+                                <th>Only Over</th>
+                                <th>
+                                    <div class="bets-option-btn">
+                                        <div class="bets-btn-group">Yes</div>
+                                        <div class="bets-btn-group">No</div>
+                                    </div>
+                                </th>
+                            </tr>
+                            <%for(let i = 0; i < dataSessionOnly.length; i++){%>
+                            <tr class="market" id="<%=sessionData[i].marketId%>">
+                                <td ><%=sessionData[i].title%></td>
+                                <td>    
+                                <div class="bets-option-btn">
+                                    <div class="bets-btn-group">                                 
+                                        <div class="bets-btn only_over_blue" id="<%=sessionData[i].marketId%>1">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                    <div class="bets-btn-group pink">                                  
+                                        <div class="bets-btn only_over_red" id="<%=sessionData[i].marketId%>2">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                            <%}%>
+                        </table>
+                    </div>
+                    <%} %>
+                    <% let dataNotOnly = match.marketList.session.filter(item => item.status == 1 && !item.title.includes("Over")) %>
+                    <%if(dataNotOnly.length > 0 ) {%>
+                    <div class="tabcontent" id="wp_market">
+                      <table>
+                          <tr>
+                              <th>W/P Market</th>
+                              <th>
+                                  <div class="bets-option-btn">
+                                      <div class="bets-btn-group">Yes</div>
+                                      <div class="bets-btn-group">No</div>
+                                  </div>
+                              </th>
+                          </tr>
+                          <%for(let i = 0; i < dataNotOnly.length; i++){%>
+                            <tr class="market" id="<%=dataNotOnly[i].marketId%>">
+                                <td><%=dataNotOnly[i].title%></td>
+                                <td>    
+                                <div class="bets-option-btn">
+                                    <div class="bets-btn-group">                                 
+                                        <div class="bets-btn only_over_blue" id="<%=dataNotOnly[i].marketId%>1">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                    <div class="bets-btn-group pink">                                  
+                                        <div class="bets-btn only_over_red" id="<%=dataNotOnly[i].marketId%>2">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                        <%}%>
+                      </table>
+                  </div>
+                  <%} %>
+                <%}%>
+                <%if(match.marketList.odd_even != null){%>
+                  <div class="tabcontent" id="odd_even">
+                      <table>
+                          <tr>
+                              <th>Odd/Even</th>
+                              <th>
+                                  <div class="bets-option-btn">
+                                      <div class="bets-btn-group">Yes</div>
+                                      <div class="bets-btn-group">No</div>
+                                  </div>
+                              </th>
+                          </tr>
+                          <%for(let i = 0; i < match.marketList.odd_even.length; i++){%>
+                            <tr class="market" id="<%=match.marketList.odd_even[i].marketId%>">
+                                <td><%=match.marketList.odd_even[i].title%></td>
+                                <td>    
+                                <div class="bets-option-btn">
+                                    <div class="bets-btn-group">                                 
+                                        <div class="bets-btn odd_even_blue" id="<%=match.marketList.odd_even[i].marketId%>1">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                    <div class="bets-btn-group pink">                                  
+                                        <div class="bets-btn odd_even_red" id="<%=match.marketList.odd_even[i].marketId%>2">
+                                            <strong>1.54</strong>
+                                            <span class="small">469</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                        <%}%>
+                      </table>
+                  </div>
+                  <%}%>
+              </div>
+          </div>
+          <%}%>
+        </div>
+
+        <div class="sidebar">
+          <%if(liveStream.data){%>
+            <div class="sidebar-block live-match">
+                <div class="sidebar-title">Live stream</div>
+                <div class="sidebar-content">
+                <iframe src="<%=src%>" ></iframe>
+                </div>
+            </div>
+            <%} %>
+            <div class="sidebar-block open-bets-table">
+              <div class="sidebar-title active">Open Bets</div>
+              <div class="sidebar-content" style="display: block;">
+                  <div class="data-table">
+                      <table id="betTable">
+                          <tr>
+                              <th>Username</th>
+                              <th>Place Date</th>
+                              <th>Market</th>
+                              <!-- <th>Bet Type</th> -->
+                              <th>Odds</th>
+                              <th>Stake</th>
+                              <th>Action</th>
+                          </tr>
+                          <%for(let i = 0; i < Bets.length; i++){%>
+                            <% let date = new Date(Bets[i].date)%>
+                            <tr>
+                                <td><%=Bets[i].userName%></td>
+                                <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+                                <td><%=Bets[i].marketName%></td>
+                                <!-- <td><%=Bets[i].userName%></td> -->
+                                <td><%=Bets[i].oddValue%></td>
+                                <td><%=Bets[i].Stake%></td>
+                                <td><div class="btn-group"><button class="btn alert-btn" id="<%=Bets[i].id%>">Alert</button></div></td>
+                            </tr>
+                          <%}%>
+                      </table>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+<div class="modal fade" id="matchodd-modal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+        </div>
+        <!-- <div class="modal-header">
+          <h4 class="modal-title">Match Odds</h4>
+        </div> -->
+        <div class="modal-body">
+          <div class="data-table">
+            <table id="match_odd">
+                
+              </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="bookmaker-modal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+        </div>
+        <div class="modal-header">
+          <h4 class="modal-title">Bookmaker</h4>
+        </div>
+        <div class="modal-body">
+            <div class="data-table">
+          <table id="bookmakerTable">
+            <tr>
+                <th>User name</th>
+                <th></th>
+                <th></th>
+            </tr>
+          </table>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/bundle.js"></script>
+
+<script>
+  $(document).ready(function(){
+    $('.bets-table .tab-data-section .tab .tablinks').click(function(){
+        $('.bets-table .tab-data-section .tab .tablinks').removeClass('active');
+        $(this).addClass('active');
+        var tagid = $(this).data('tag');
+        $('.bets-table .tab-data-section .tabcontent').removeClass('active').addClass('hide-tab');
+        $('#'+tagid).addClass('active').removeClass('hide-tab');
+    });
+    $('.bets-table .tab-data-section .tab .tablinks[data-tag="all"]').click(function(){
+        $('.bets-table .tab-data-section .tabcontent').removeClass('hide-tab')
+    });
+    $('.analysis-data .sidebar .sidebar-title').click(function(){
+        $(this).siblings('.sidebar-content').slideToggle();
+        $(this).toggleClass('active');
+    });
+    $('.analysis-data .main-tab-btn ul li button.open-bets-show').click(function(){
+        $(this).parents('.analysis-data').addClass('show-open-bets-data');
+        $('.analysis-data .main-tab-btn ul li button').removeClass('active');
+        $(this).addClass('active');
+    });
+    $('.analysis-data .main-tab-btn ul li button.book-show').click(function(){
+        $(this).parents('.analysis-data').removeClass('show-open-bets-data');
+        $('.analysis-data .main-tab-btn ul li button').removeClass('active');
+        $(this).addClass('active');
+    });
+});
+</script>
+
+<script>
+     var betsButtons = document.querySelectorAll('.tbl-data-href');
+
+betsButtons.forEach(function(button) {
+    button.addEventListener('click', function () {
+        var newURL = button.getAttribute('data-href');
+        window.location.href = newURL;
+    });
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+</html>

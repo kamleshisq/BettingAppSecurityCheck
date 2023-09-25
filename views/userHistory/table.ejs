@@ -1,0 +1,33 @@
+<table>
+    <thead>
+        <tr>
+          <th>S.No</th>
+          <th>User Name</th>
+          <th>Date & Time</th>
+          <th>IP</th>
+          <th>Audit Type</th>
+          
+        </tr>
+    </thead>
+    <tbody class="new-body">
+        <%for(let i = 0; i < Logs.length; i++){%>
+            <% let date = new Date(Logs[i].login_time)%>
+            <%if((i%2) == 0){%>
+                <tr>
+            <%}else{%>
+                <tr>
+            <%}%>
+            <td><%=i+1%></td>
+            <td><%=Logs[i].userName%></td>
+            <td class="date-time" ><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%>, <%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+            <td><%=Logs[i].ip_address%></td>
+            <%if(Logs[i].isOnline){%>
+                <td>Active</td>
+            <%}else{%>
+                <td>LogOut</td>    
+            <%}%>
+            </tr>
+        <%}%>
+     
+    </tbody>
+  </table>

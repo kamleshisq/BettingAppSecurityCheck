@@ -1,0 +1,23 @@
+<table>
+    <thead>
+        <tr>
+          <th>S.No</th>
+          <th>User Name</th>
+          <th>Action</th>
+        </tr>
+    </thead>
+    <tbody class="new-body">
+    <%for(let i =0; i< users.length; i++){%>
+        <tr>
+            <td><%=i+1%></td>
+            <td><%=users[i].userName%></td>
+            <td>
+                <div class="btn-group">
+                    <button type="button" id="<%=users[i]._id%>" class="btn logout">Logout</button>
+                </div>
+            </td>
+        </tr>
+    <%}%>
+     
+    </tbody>
+  </table>

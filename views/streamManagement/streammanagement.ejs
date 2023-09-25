@@ -1,0 +1,169 @@
+<%- include("../header") %>
+  <!--Container Main start-->
+  <div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
+    <div class="container-fluid">
+      <div class="new-head"> 
+          <h3 class="main-heading">Stream Management</h3>
+          <form action="">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
+          </form>
+      </div>
+    <%- include("../loginUserAdminsideDetails") %>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+        <div class="table-data-section">
+            <div class="table-heading">
+                <h3>Stream Management</h3>
+                <div class="table-heading-btn">
+                  <form action="" class="game-analysis-heading-from">
+                    <div class="input-group">
+                      <label>Select Event</label>
+                      <select name="" id="">
+                        <option value="">Cricket</option>
+                        <option value="">Cricket</option>
+                        <option value="">FOOTBALL</option>
+                        <option value="">TENNIS</option>
+                        <option value="">BASKETBALL</option>
+                        <option value="">BASEBALL</option>
+                        <option value="">Primium</option>
+                        <option value="">Sports Books</option>
+              
+                      </select>
+                    </div>  
+                    <div class="input-group">
+                      <label>Url</label>
+                      <input type="text" placeholder="Stream URL">
+                    </div> 
+                    </form>
+                    <button class="btn-filter"> Add Stream URL</button>
+                </div>
+            </div>
+            <div class="data-table">
+              <table>
+                <thead>
+                    <tr style="text-align: center;font-size: 11px;">
+                      <th>S.No</th>
+                      <th>Event</th>
+                      <th>Open Date </th>
+                      <th>Stream Link</th>
+                    </tr>
+                </thead>
+                <tbody class="new-body">
+                  <tr>
+                    <td>1</td>
+                    <td>Cricket </td>
+                    <td>22-12-2022, 03:05</td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Cricket </td>
+                    <td>22-12-2022, 03:05</td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Cricket </td>
+                    <td>22-12-2022, 03:05</td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Cricket </td>
+                    <td>22-12-2022, 03:05</td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Cricket </td>
+                    <td>22-12-2022, 03:05</td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Cricket </td>
+                    <td>22-12-2022, 03:05</td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Cricket </td>
+                    <td>22-12-2022, 03:05</td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Cricket </td>
+                    <td>22-12-2022, 03:05</td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Cricket </td>
+                    <td>22-12-2022, 03:05</td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Cricket </td>
+                    <td>22-12-2022, 03:05</td>
+                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+
+<div class="modal fade" id="myModaladduser" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header" style="text-align: center;">
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        <h4 class="modal-title" style="color: #fff;">Add HouseFunds</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-data">
+          <div class="row">
+            <div class="col">
+              <label for="">Amounts</label>
+              <input type="text" class="form-control ml0" placeholder="1000000" name="email">
+            </div>
+            <div class="col">
+
+            </div>
+          </div>
+                   <button type="button" class="btn-submit mt-3">AddFunds &nbsp; <img src="../images/sub.png" alt=""></button>
+        </form>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+    
+<script src="/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+<script type="text/javascript" src="../js/bundle.js"></script>
+
+
+</body>
+    </html>

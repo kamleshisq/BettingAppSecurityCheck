@@ -1,0 +1,45 @@
+body: {
+  betType: 'Casino',
+  debitAmount: 100,
+  gameId: '900004',
+  operatorId: 'sheldon',
+  reqId: '2b40cdf6-8698-4cbe-9999-617c3b689876',
+  roundId: '1688025620.7985542',
+  token: '752d7cdc-deba-4496-b232-b84255b64cd2',
+  transactionId: '7179ed24-ba68-48da-bde4-e268bc17ca5e',
+  userId: '649575081109042453f3cf31'
+}
+
+body: {
+  betType: 'Casino',
+  creditAmount: 198,
+  gameId: '900004',
+  operatorId: 'sheldon',
+  reqId: '3bba2743-567a-475c-bfa4-c6c2592c06f2',
+  roundId: '1688029190.220279',
+  token: 'dca5d03f-2574-4b51-a5ad-7a7cb7e01990',
+  transactionId: '244dc567-80e0-4962-9ec9-ea67b7004017',
+  userId: '649575081109042453f3cf31'
+}
+
+body: {
+  operatorId: 'sheldon',
+  token: '55806f43-e200-4ce4-bba4-b9c15eb6e19b',
+  userId: '649575081109042453f3cf31',
+  reqId: '472777ab-0731-4c60-bcc5-264ff7b4a7d3',
+  transactionId: '91938403-252a-4c4d-a833-14821998f616',
+  betType: 'BACK',
+  oddValue: 1.09,
+  eventId: 'sr:match:41420659',
+  marketId: '340',
+  debitAmount: 100,
+  sportId: 'sr:sport:21',
+  competitionId: 'sr:tournament:23945',
+  competitionName: 'International / ICC World Cup Qualifiers',
+  eventName: 'Zimbabwe vs. Oman',
+  marketName: 'Winner (incl. super over)',
+  selectionId: '4',
+  selectionName: 'Zimbabwe',
+  berfairEventId: '',
+  providerId: 'SportRadar'
+}

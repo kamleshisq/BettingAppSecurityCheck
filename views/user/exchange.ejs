@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.vertical-menu {
+  width: 200px;
+}
+
+.vertical-menu a {
+  background-color: #eee;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc;
+}
+
+.vertical-menu a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #ffffff;
+        }
+        
+        li {
+          float: left;
+        }
+        
+        li a {
+          display: block;
+          color: rgb(0, 0, 0);
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+        }
+        
+        li a:hover {
+          background-color: #ffffff;
+        }
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+</style>
+<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<body>
+    <ul>
+        <%if(user){%>
+            <li><button type="button"  class="logOut"><a>logOut</a></button></li>
+            <li><button class="edit"><a href="/edit">Edit</a></button></li>
+            <li><button class="account"><a href="/myAccountStatment">My Account Statement</a></button></li>
+            <li><button class="account"><a href="/changeUserPassword">change password</a></button></li>
+        <%}else{%>
+            <li><button class="account"><a href="/userlogin">Login</a></button></li>
+        <%}%>
+            <li><button class="account"><a href="/ALLGAMEFORTESTING">Casino</a></button></li>
+            <li><button class="account"><a href="/SPORT">Sport Radar</a></button></li>
+            <li><button class="account"><a href="/exchange_sports/inplay">Exchange</a></button></li>
+      </ul>
+
+<div class="vertical-menu">
+  <a href="/exchange_sports/inplay" class="active">In Play</a>
+  <a href="/exchange_sports/cricket">cricket</a>
+  <a href="/exchange_sports/tennis">Tennis</a>
+  <a href="/exchange_sports/football">Football</a>
+</div>
+
+<% if(LiveCricket.length != 0){%>
+  <table>
+    <thead style="text-align: center;font-size: 11px;">
+      <tr>
+        <th colspan="5">cricket</th>
+      </tr>
+    </thead>
+    <tbody class="new-body">
+      <tr>
+        <td>Schedule</td>
+        <td>Teams</td>
+        <td>1</td>
+        <td>X</td>
+        <td>2</td>
+        <td></td>
+      </tr>
+      <%for(let i = 0; i < LiveCricket.length; i++){%>
+          <tr>
+            <td><%= Date(LiveCricket[i].eventData.time)  %></td>
+            <% if(LiveCricket[i].marketList.match_odd != null){ %>
+                <td class="name1" id="<%=LiveCricket[i].marketList.match_odd.marketId%>"><%=LiveCricket[i].eventData.name%></td>
+                <% let runners = JSON.parse(LiveCricket[i].marketList.match_odd.runners); %>
+                <% const runners1 = []; %>
+                <%const secIds = []; %>
+                <%runners.forEach(item => {%>
+                  <%runners1.push(item.runner);%>
+                  <%secIds.push(item.secId);%>
+                <%});%>
+                <%for(let i = 0; i < runners1.length; i++){%>
+                      <td class="<%=i%>" id="<%=secIds[i]%>"  ></td>
+              <%}%>
+              <%}else{%>
+                <td><%=LiveCricket[i].eventData.name%></td>
+                <td colspan="3">null</td>
+            <%}%>
+            <td><button class="click" id="<%=LiveCricket[i].eventData.eventId%>"</button> <i class="arrow right"></button></td>
+          </tr>
+      <%}%>
+    </tbody>
+  </table>
+<%}%>
+<br><br><br>
+
+<% if(liveTennis.length != 0){%>
+  <table>
+    <thead style="text-align: center;font-size: 11px;">
+      <tr>
+        <th colspan="5">Tennis</th>
+      </tr>
+    </thead>
+    <tbody class="new-body">
+      <tr>
+        <td>Schedule</td>
+        <td>Teams</td>
+        <td>1</td>
+        <td>X</td>
+        <td>2</td>
+        <td></td>
+      </tr>
+      <%for(let i = 0; i < liveTennis.length; i++){%>
+          <tr>
+            <td><%= Date(liveTennis[i].eventData.time)  %></td>
+            <% if(liveTennis[i].marketList.match_odd != null){ %>
+                <td class="name1" id="<%=liveTennis[i].marketList.match_odd.marketId%>"><%=liveTennis[i].eventData.name%></td>
+                <% let runners = JSON.parse(liveTennis[i].marketList.match_odd.runners); %>
+                <% const runners1 = []; %>
+                <%const secIds = []; %>
+                <%runners.forEach(item => {%>
+                  <%runners1.push(item.runner);%>
+                  <%secIds.push(item.secId);%>
+                <%});%>
+                <%for(let i = 0; i < runners1.length; i++){%>
+                      <td class="<%=i%>" id="<%=secIds[i]%>"  ></td>
+              <%}%>
+              <%}else{%>
+                <td><%=liveTennis[i].eventData.name%></td>
+                <td colspan="3">null</td>
+            <%}%>
+          </tr>
+      <%}%>
+    </tbody>
+  </table>
+<%}%>
+
+<br><br><br>
+<%if(liveFootBall.length != 0){%>
+  <table>
+    <thead style="text-align: center;font-size: 11px;">
+      <tr>
+        <th colspan="5">Football</th>
+      </tr>
+    </thead>
+    <tbody class="new-body">
+      <tr>
+        <td>Schedule</td>
+        <td>Teams</td>
+        <td>1</td>
+        <td>2</td>
+        <td>X</td>
+        <td></td>
+      </tr>
+      <%for(let i = 0; i < liveFootBall.length; i++){%>
+        <tr>
+          <td><%= Date(liveFootBall[i].eventData.time)  %></td>
+          <% if(liveFootBall[i].marketList.match_odd != null){ %>
+              <td class="name1" id="<%=liveFootBall[i].marketList.match_odd.marketId%>"><%=liveFootBall[i].eventData.name%></td>
+              <% let runners = JSON.parse(liveFootBall[i].marketList.match_odd.runners); %>
+              <% const runners1 = []; %>
+              <%const secIds = []; %>
+              <%runners.forEach(item => {%>
+                <%runners1.push(item.runner);%>
+                <%secIds.push(item.secId);%>
+              <%});%>
+              <%for(let i = 0; i < runners1.length; i++){%>
+                    <td class="<%=i%>" id="<%=secIds[i]%>"  ></td>
+            <%}%>
+            <%}else{%>
+              <td><%=liveFootBall[i].eventData.name%></td>
+              <td colspan="3">null</td>
+          <%}%>
+          <td><button class="click" id="<%=liveFootBall[i].eventData.eventId%>"</button> <i class="arrow right"></button></td>
+        </tr>
+    <%}%>
+    </tbody>
+  </table>
+<%}%>
+
+<script src="../userJs/logOut.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/webSocket.js"></script>
+</body>
+</html>

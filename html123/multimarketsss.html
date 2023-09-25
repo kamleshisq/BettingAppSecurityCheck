@@ -1,0 +1,157 @@
+<div class="exchange-pg-inn-banner-col2">
+      <div class="exchange-pg-inn-banner-col-titi-wrpp">
+        <div class="exchange-pg-inn-banner-col-titi">
+          <div class="exchange-pg-inn-banner-col-titi-txt">
+              <h6><span><%=result.eventData.name%> || Match Odds</span><span class="game-info-popup-spn" data-bs-toggle="modal" data-bs-target="#gameroulspop"> 
+                <i class="fa-solid fa-circle-info"></i> 
+              </span></h6>
+          </div>
+          <div class="exchange-pg-inn-banner-col-titi-txt-tim">
+              <h6><b>Min : 100, Max : 1000</b></h6>
+          </div>
+        </div>
+        <div class="star-hedtitl-dv multi_market" id="<%=result.marketList.match_odd.marketId%>">  
+          <a><img src="/assets/img/exchange/Vector2.svg" alt=""></a> 
+        </div>
+      </div>
+        
+      
+        <div class="exchange-pg-inn-tbl">
+            <table class="acount-stat-tbl market"  id="<%=result.marketList.match_odd.marketId%>">
+      
+                <thead class="acount-stat-tbl-hed2">
+                    <tr class="acount-stat-tbl-hed-tr2" >
+                        <th colspan="2" style="text-align: left;" class="bod-red-lft ">Market</th>
+                        <th style="text-align: center;" colspan="3">Back</th>
+                        <th style="text-align: center;" colspan="3" class="bod-red-rit">Lay</th>
+                    </tr>
+                </thead>
+                <% let runners = JSON.parse(result.marketList.match_odd.runners); %>
+                      <% const runners1 = []; %>
+                      <%const secIds = []; %>
+                      <%runners.forEach(item => {%>
+                          <%runners1.push(item.runner);%>
+                          <%secIds.push(item.secId);%>
+                      <%});%>
+                <tbody class="acount-stat-tbl-body">
+                  <%for(let j = 0; j < runners1.length; j++){%>
+                    <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href='#'>
+                        <td colspan="2" style=" text-align: left;">
+                          <%=runners1[j]%>
+                        </td>
+                        
+                        <td class="tbl-td-with5" >
+                          <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-<%=j%><%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="<%=secIds[j]%>1" >
+                                      
+                          </span>
+                        </td>
+                        <td class="tbl-td-with5" >
+                          <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-<%=j%><%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="<%=secIds[j]%>2">
+                                      
+                          </span> 
+                        </td>
+      
+                        
+      
+                        <td class="tbl-td-with5" >
+                          <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-<%=j%><%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="<%=secIds[j]%>3">
+                                      
+                          </span>
+                        </td>
+                        <td class="tbl-td-with5" >
+                          <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-<%=j%><%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="<%=secIds[j]%>4">
+                                      
+                          </span>  
+                        </td>
+                        <td class="tbl-td-with5" >
+                          <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-<%=j%><%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="<%=secIds[j]%>5">
+                                      
+                          </span>
+                        </td>
+                        <td class="tbl-td-with5" >
+                          <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-<%=j%><%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="<%=secIds[j]%>6">
+                                      
+                          </span>  
+                        </td>
+                        
+                        
+                        
+                    </tr>
+                    <tr>
+                      <td colspan="8">
+                        <div class="my-exc-inn-colaps-txt-dv collapse" id="bt-slp-colps-match-odds-<%=j%><%=i%>" >
+                          <div class="card card-body my-exc-inn-colaps-txt-body">
+                            <div class="nww-bet-slip-wrp">
+                              <div class="nww-bet-slip-wrp-col3">
+                                <div class="nww-bet-slip-wrp-col3-txt1">
+                                    <p class="name" id=""><%=result.eventData.name%></p>
+                                </div>
+                              </div>
+                              <div class="nww-bet-slip-wrp-col3">
+                                <div class="nww-bet-slip-wrp-col3-txt1">
+                                  <p class="beton">
+                                    
+                                  </p>
+                                </div>
+                              </div>
+                              <div class="nww-bet-slip-wrp-col1">
+                                <div class="nww-bet-slip-wrp-col1-txt">
+                                    <span>Profit <b class="c-gren" id="<%=result.eventData.sportId%>"></b></span>
+                                </div>
+                        
+                                <div class="nww-bet-slip-wrp-col1-txt">
+                                  <span class="nww-bet-slip-wrp-col1-txt-icons">
+                                    <i class="fa-solid fa-plus"></i>
+                                  </span>
+                                  <span class="nww-bet-slip-wrp-col1-txt-num">1.75</span>
+                                  <span class="nww-bet-slip-wrp-col1-txt-icons">
+                                    <i class="fa-solid fa-minus"></i>
+                                  </span>
+                                </div>
+                        
+                                <div class="nww-bet-slip-wrp-col1-txt">
+                                  <div class="nww-bet-slip-wrp-col1-txt-inn input-group-sm">
+                                    <input type="number" class="form-control set-stake-form-input2" placeholder="Custom" aria-label="Last name">
+                                  </div>
+                                </div>
+                              </div>
+                        
+                              <div class="nww-bet-slip-wrp-col2">
+                                <div class="nww-bet-slip-wrp-col2-inn">
+                                  <%for(let i = 0; i < stakeLabledata.stakeArray.length; i++){%>
+                                    <span id="<%=stakeLabledata.stakeArray[i].value%>"><%=stakeLabledata.stakeArray[i].key%></span>
+                                  <%}%>
+                                </div>
+                              </div>
+                        
+                              <div class="nww-bet-slip-wrp-col3">
+                                <div class="nww-bet-slip-wrp-col3-txt1">
+                                  <p>
+                                    Please select a Stake Amount. Enter a custom amount by clicking on the custom box.
+                                  </p>
+                                </div>
+                        
+                                <div class="nww-bet-slip-wrp-col3-txt1">
+                                  <%if(user){ %>
+                                      <a class="eventId" id="<%=result.eventData.eventId%>"> Place Bet </a>
+                                  <%}else{ %>
+                                    <a class="liv-casino-games-cards-txt2-btn" data-bs-toggle="modal" data-bs-target="#exampleModalToggle">LOGIN TO CONTINUE</a>
+                                  <%}%>
+                                </div>
+                        
+                              </div>
+                        
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  <%}%>
+                </tbody>
+      
+              </table>
+        </div>
+      
+       
+      
+      </div>

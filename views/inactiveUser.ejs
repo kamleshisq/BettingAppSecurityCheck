@@ -1,0 +1,118 @@
+<!-- <!DOCTYPE html> -->
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<style>
+table, th, td {
+  border:1px solid black;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Create a column layout with Flexbox */
+.row {
+  display: flex;
+}
+
+/* Left column (menu) */
+.left {
+  flex: 35%;
+  padding: 15px 0;
+}
+
+.left h2 {
+  padding-left: 8px;
+}
+
+/* Right column (page content) */
+.right {
+  flex: 65%;
+  padding: 15px;
+}
+
+/* Style the search box */
+#mySearch {
+  width: 100%;
+  font-size: 18px;
+  padding: 11px;
+  border: 1px solid #ddd;
+}
+
+/* Style the navigation menu inside the left column */
+#myMenu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myMenu li a {
+  padding: 12px;
+  text-decoration: none;
+  color: black;
+  display: block
+}
+
+#myMenu li a:hover {
+  background-color: #eee;
+}
+</style>
+<body>
+
+<h2><%= title %></h2>
+<!-- //<button class="logOut">logout</button> -->
+<%if(currentUser.role.authorization.includes('createDeleteUser')){%>
+  <button><a href="/createUSer">Create User</a></button>
+<%}%>
+<%if(currentUser.role.authorization.includes('roleController')){%>
+  <button><a href="/createRole">Create Role</a></button>
+  <button><a href="/updateRole">Update Role</a></button>
+<%}%>
+<%if(currentUser.role.authorization.includes('dashboard')){%>
+  <button><a href="/dashboard">Dashboard</a></button>
+<%}%>
+<%if(currentUser.role.authorization.includes('userStatus')){%>
+  <button><a href="/inactiveUser">inactive users</a></button>
+<%}%>
+<!-- <button type="button" id="back" data-me='<%=JSON.stringify(currentUser)%>'>Back</button> -->
+<button><a href="/changeCurrentUserPass">change password</a></button>
+<button><a href="/userManagement"> Back </a></button>
+<!-- <div class="Search-box">
+  Search:<input type="text" placeholder="search user" id="searchUser">
+  <ul id="myMenu" class="dropdown-content">
+  </ul>
+</div> -->
+<div id="table1_Inactive">
+
+  <table style="width:100%">
+    <tr>
+      <th>S.No</th>
+      <th>User Name</th>
+      <th>White lable</th>
+      <th>Action</th>
+    </tr>
+    <%for(let i = 0 ; i < users.length; i++){%>
+      <tr>
+        <td><%= i + 1 %></td>
+        <td><%= users[i].userName%></td>
+        <td><%= users[i].whiteLabel%></td>
+        <td>
+          <button class="userStatusActive" type="userStatusActive" id="userStatusActive" data-id="<%= users[i]._id%>">User status Active</button>
+          <button class="Delete" type="Delete" id="Delete" data-id="<%= users[i]._id%>">Delete</button>
+        </td>
+      </tr>
+    <%}%>
+  </table>
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="js/webSocket.js"></script>
+<script type="text/javascript" src="js/bundle.js"></script>
+</script>
+</body>
+</html>

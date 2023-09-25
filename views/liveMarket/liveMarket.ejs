@@ -1,0 +1,88 @@
+<%- include("../header") %>
+<!--Container Main start-->
+<div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
+    <div class="container-fluid">
+      <div class="new-head"> 
+        <h3>Market Risk Analysis</h3>
+      </div>
+    </div>
+  </section>
+    
+  <!-- seling section -->
+  <section class="liveMarket__risk">
+    <div class="container-fluid">
+      <div class="tab-data-section">
+      <div class="tab end" >
+        <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'Cricket')"><img src="../images/cball.png" alt=""> &nbsp; Cricket  </button>
+        <button class="tablinks"  onclick="openCity(event, 'FOOTBALL')"><img src="../images/fball.png" alt=""> &nbsp; FOOTBALL</button>
+        <button class="tablinks" onclick="openCity(event, 'TENNIS')"><img src="../images/tball.png" alt=""> &nbsp; TENNIS</button>
+        <button class="tablinks" onclick="openCity(event, 'BASEBALL')"><img src="../images/bball.png" alt=""> &nbsp; BASEBALL  </button>
+        <button class="tablinks" onclick="openCity(event, 'BASKETBALL')"><img src="../images/bbball.png" alt=""> &nbsp; BASKETBALL</button>
+        <button class="tablinks" onclick="openCity(event, 'HORSE RACING')"><img src="../images/htrade.png" alt=""> &nbsp; HORSE RACING</button>
+        <button class="tablinks" onclick="openCity(event, 'Greyhound')"><img src="../images/gray.png" alt=""> &nbsp; Greyhound</button>
+      </div>
+
+      <%- include("./cricket") %>
+            
+      <%- include("./football") %>
+
+      <%- include("./tennis") %>
+
+      <div id="BASEBALL" class="tabcontent">
+        <div class="row">
+          No data to display
+        </div>
+      </div>
+
+      <div id="BASKETBALL" class="tabcontent">
+        <div class="row">
+          No data to display
+        </div>
+      </div>
+
+      <div id="HORSE RACING" class="tabcontent">
+        <div class="row">
+          No data to display
+        </div>
+      </div>
+
+      <div id="Greyhound" class="tabcontent">
+        <div class="row">
+          No data to display
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </section>
+ 
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+<script type="text/javascript" src="../js/bundle.js"></script>
+
+
+
+  <script>
+        function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+    
+  }
+  document.getElementById("defaultOpen").click();
+  </script>
+
+</body>
+</html>

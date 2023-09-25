@@ -1,0 +1,42 @@
+<div class="modal fade my-model-regestermodl" id="gameroulspop" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content regestermodl-content">
+        <!-- <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modal 2</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div> -->
+        <div class="modal-body regestermodl-body">
+          <div class="gam-rul-pop-data-wrp">
+            <div class="gam-rul-pop-data-wrp-titl">
+              <h6>Game Rules</h6>
+            </div>
+            <div class="gam-rul-pop-data-acc-sv">
+              <div class="accordion accordion-flush gam-rul-pop-data-btnnh2-item" id="accordionFlushExample">
+                <%for(let i = 0; i < rules.length; i++){ %>
+                  <div class="accordion-item ">
+                    <h2 class="accordion-header  gam-rul-pop-data-btnnh2" id="flush-headingOne">
+                      <button class="accordion-button gam-rul-pop-data-btnn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#gamrulpop<%=i%>" aria-expanded="false" aria-controls="gamrulpop<%=i%>">
+                        <%=rules[i].name%>
+                      </button>
+                    </h2>
+                    <div id="gamrulpop<%=i%>" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">
+                        <div class="gam-rul-pop-data-txt-dv">
+                          <%-rules[i].description%>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <%}%>
+               
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer regestermodl-fotr">
+          <button type="button" class="myloginmodl-fotr-closbtn" data-bs-dismiss="modal" aria-label="Close">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
