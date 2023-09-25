@@ -139,7 +139,13 @@ e.preventDefault();
 const form = document.getElementById('Add-User');
 let data = new FormData(form) 
 const formDataObj = Object.fromEntries(data.entries());
+<<<<<<< HEAD
 console.log(formDataObj)
+=======
+if(formDataObj.role == "select"){
+    alert('please select role of user')
+}
+>>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
 
 if(formDataObj.whiteLabel == ""){
     formDataObj.whiteLabel = document.getElementById("whiteLabel").value
@@ -153,6 +159,10 @@ if(formDataObj.role == "650bccdbb3fdc8c922c34bbe"){
     }
 }
 formDataObj.OperatorAuthorization = checkedValues
+<<<<<<< HEAD
+=======
+console.log(formDataObj, "+==> data")
+>>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
 // console.log(checkedValues);
 createUser(formDataObj)
 });
@@ -236,7 +246,11 @@ $(document).on('submit','.Settlement-form',async function(e) {
     // formDataObj.id = id
     // console.log(formDataObj)
     // let rowId = $('.rowId').attr('data-rowid')
+<<<<<<< HEAD
     creditDebitSettle(formDataObj)
+=======
+     creditDebitSettle(formDataObj)
+>>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
     // const user = await creditDebitSettle(formDataObj)
     // var trElements = document.querySelectorAll('tr.trtable');
     // // console.log(trElements)

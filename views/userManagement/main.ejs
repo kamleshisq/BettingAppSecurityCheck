@@ -473,6 +473,10 @@
               <div class="col">
                 <label for="">User Role</label>
                 <select name="role" id="roleSelect" class="form-control ml0"  required>
+<<<<<<< HEAD
+=======
+                  <option value="select" selected></option>
+>>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
                   <%if(currentUser.roleName === "Admin"){%>
                     <option value="6492fe4fd09db28e00761695">Super-Duper-Admin</option>
                     <option value="650bccdbb3fdc8c922c34bbe">Operator</option>
@@ -584,6 +588,7 @@
             <div class="row mt-2" id="shareVisibleActual">
               <div class="col">
                 <label for="">Share</label>
+<<<<<<< HEAD
                 <input type="text" id="Share" class="form-control ml0" placeholder="0" name="share" required>
               </div>
               <div class="col">
@@ -593,6 +598,17 @@
               <div class="col">
                 <label for="">Actual</label>
                 <input type="text" class="form-control ml0" placeholder="0" name="Actual" required>
+=======
+                <input type="text" id="Share" class="form-control ml0" placeholder="0" name="share" >
+              </div>
+              <div class="col">
+                <label for="">Visible</label>
+                <input type="text" id="myShare" class="form-control ml0" placeholder="0" name="Visible" >
+              </div>
+              <div class="col">
+                <label for="">Actual</label>
+                <input type="text" class="form-control ml0" placeholder="0" name="Actual" readonly value="0">
+>>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
               </div>
             </div>
             <div class="row mt-2">

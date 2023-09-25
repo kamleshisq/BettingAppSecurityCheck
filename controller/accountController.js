@@ -12,9 +12,15 @@ exports.deposit = catchAsync(async(req, res, next) => {
     if(childUser.transferLock){
         return next(new AppError("User Account is Locked", 404))
     }
+<<<<<<< HEAD
     if((childUser.creditReference + req.body.amount) > childUser.maxCreditReference){
         return next(new AppError("User Account is Locked", 404))
     }
+=======
+    // if((childUser.creditReference + req.body.amount) > childUser.maxCreditReference){
+    //     return next(new AppError("User Account is Locked", 404))
+    // }
+>>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
     const parentUser = await User.findById(childUser.parent_id);
     req.body.amount = parseFloat(req.body.amount)
     // // console.log(req.body)
@@ -166,7 +172,11 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
 
 exports.withdrawSettle = catchAsync(async(req, res, next) => {
     // const user = await User.findById(req.body.userId)
+<<<<<<< HEAD
     console.log(req.body)
+=======
+    console.log(req.body, '==> DATA')
+>>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
     req.body.amount = parseFloat(req.body.amount)
     req.body.clintPL = parseFloat(req.body.clintPL)
 
@@ -181,7 +191,11 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
         return next(new AppError('withdrow amount must less than available balance',404))
     }
     await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.clintPL,downlineBalance:-req.body.clintPL,myPL:req.body.amount}})
+<<<<<<< HEAD
     const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL},uplinePL:0,myPL:-req.body.amount,pointsWL:0},{
+=======
+    const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL},uplinePL:0,myPL:0,pointsWL:0},{
+>>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
         new:true
     })
     
@@ -230,7 +244,11 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
 });
 
 exports.depositSettle = catchAsync(async(req, res, next) => {
+<<<<<<< HEAD
     console.log(req.body)
+=======
+    console.log(req.body, 123)
+>>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
     const childUser = await User.findById(req.body.id);
     if(childUser.transferLock){
         return next(new AppError("User Account is Locked", 404))
@@ -252,7 +270,11 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     }
 
   
+<<<<<<< HEAD
     const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL,uplinePL:0,pointsWL:0,myPL:req.body.amount}})
+=======
+    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL}, uplinePL:0,pointsWL:0,myPL:0})
+>>>>>>> 7cb199dc8522867cf6abd49a98e58cb96d898fa0
     await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL,myPL:-req.body.amount}});
     // // await User.findByIdAndUpdate(parentUser.id,{$inc:{lifeTimeDeposit:-req.body.amount}})
     let childAccStatement = {}
