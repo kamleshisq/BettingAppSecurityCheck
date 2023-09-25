@@ -53,12 +53,29 @@
                 <thead>
                     <tr style="text-align: center;font-size: 11px;">
                       <th>S.No</th>
+                      <th>Open Date</th>
+                      <th>Sport</th>
                       <th>Event</th>
-                      <th>Open Date </th>
                       <th>Stream Link</th>
+                      <th>Action</th>
                     </tr>
                 </thead>
                 <tbody class="new-body">
+                  <%for(let i = 0;i<streams.length;i++){%>
+                    <%
+                    var date = streams[i].date
+                    %>
+                    <tr>
+                    <td><%= i + 1%></td>
+                    <td class="date-time"><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + " "+ date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+                    <td><%=streams[i].sportName%></td>
+                    <td><%=streams[i].eventName%></td>
+                    <td><%=streams[i].url%></td>
+                    <td>
+                      <div class="btn-group"><button class="btn delete">Delete </button></div>
+                    </td>
+                  </tr>
+                  <%}%>
                   <tr>
                     <td>1</td>
                     <td>Cricket </td>

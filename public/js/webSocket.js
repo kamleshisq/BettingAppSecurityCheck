@@ -11387,8 +11387,7 @@ socket.on('connect', () => {
 
         socket.on('addnewStream',async(data)=>{
             if(data.status == 'success'){
-
-                console.log('streame added successfully')
+                alert('streame added successfully')
             }
         })
         
