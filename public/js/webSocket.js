@@ -11380,6 +11380,7 @@ socket.on('connect', () => {
             data.sportName = $('.sportId').text()
             data.eventName = $('.eventId').text()
             data.date = new Date()
+            console.log(data)
 
         })
 
