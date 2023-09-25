@@ -12,9 +12,9 @@ exports.deposit = catchAsync(async(req, res, next) => {
     if(childUser.transferLock){
         return next(new AppError("User Account is Locked", 404))
     }
-    if((childUser.creditReference + req.body.amount) > childUser.maxCreditReference){
-        return next(new AppError("User Account is Locked", 404))
-    }
+    // if((childUser.creditReference + req.body.amount) > childUser.maxCreditReference){
+    //     return next(new AppError("User Account is Locked", 404))
+    // }
     const parentUser = await User.findById(childUser.parent_id);
     req.body.amount = parseFloat(req.body.amount)
     // // console.log(req.body)
