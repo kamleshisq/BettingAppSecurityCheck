@@ -11383,13 +11383,13 @@ socket.on('connect', () => {
 
         })
 
-        $('#.sportId').change(function() {
+        $('.sportId').change(function() {
             let Sport = $(this).val()
             console.log(Sport)
             if(['1','2','4'].includes(Sport)){
                 socket.emit('getEvetnsOfSport',{sport:Sport})
             }else{
-                $('#eventId').html(`<option value="All" selected> Select Event </option>`)
+                $('.eventId').html(`<option value="All" selected> Select Event </option>`)
             }
         })
 
@@ -11400,7 +11400,7 @@ socket.on('connect', () => {
             for(let i = 0;i<data.eventList.length;i++){
                 html += `<option value="${data.eventList[i].eventData.eventId}">${data.eventList[i].eventData.name}</option>`
             }
-            $('#eventId').html(html)
+            $('.eventId').html(html)
         })
     }
 
