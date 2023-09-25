@@ -12,6 +12,7 @@ const horizontalMenuModel = require("./model/horizontalMenuModel");
 const AccModel  = require("./model/accountStatementByUserModel");
 const pagesModel = require("./model/pageModel");
 const Promotion = require("./model/promotion")
+const Stream = require('./model/streammanagement')
 const userController = require("./websocketController/userController");
 const accountControl = require("./controller/accountController");
 const getmarketDetails = require("./utils/getmarketsbymarketId");
@@ -3770,6 +3771,15 @@ io.on('connection', (socket) => {
             let limit = 10
             let houseData = await houseFundModel.find({userId:data.LOGINDATA.LOGINUSER._id}).sort({date:-1}).skip(page * limit).limit(limit)
             socket.emit('HouseFundData', houseData)
+        }catch(err){
+            console.log(err)
+        }
+    })
+
+    socket.on('addnewStream',async(data)=>{
+        try{
+            await Stream.create(data)
+            socket.emit('addnewStream',{status:'success'})
         }catch(err){
             console.log(err)
         }

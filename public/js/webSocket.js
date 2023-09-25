@@ -11380,9 +11380,18 @@ socket.on('connect', () => {
             data.sportName = $('.sportId option:selected').text().trim()
             data.eventName = $('.eventId option:selected').text().trim()
             data.date = new Date()
-            console.log(data)
+            socket.emit('addnewStream',data)
+
 
         })
+
+        socket.on('addnewStream',async(data)=>{
+            if(data.status == 'success'){
+
+                console.log('streame added successfully')
+            }
+        })
+        
 
         $('.sportId').change(function() {
             let Sport = $(this).val()
