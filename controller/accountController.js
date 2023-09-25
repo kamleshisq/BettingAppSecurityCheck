@@ -167,66 +167,66 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
 exports.withdrawSettle = catchAsync(async(req, res, next) => {
     // const user = await User.findById(req.body.userId)
     console.log(req.body, '==> DATA')
-    // req.body.amount = parseFloat(req.body.amount)
-    // req.body.clintPL = parseFloat(req.body.clintPL)
+    req.body.amount = parseFloat(req.body.amount)
+    req.body.clintPL = parseFloat(req.body.clintPL)
 
-    // const childUser = await User.findById(req.body.id);
-    // const parentUser = await User.findById(childUser.parent_id);
-    // // // console.log(user)
-    // if(childUser.role.role_level < parentUser.role.role_level){
-    //     return next(new AppError("you do not have permission to perform this action", 404))
-    // }
+    const childUser = await User.findById(req.body.id);
+    const parentUser = await User.findById(childUser.parent_id);
+    // // console.log(user)
+    if(childUser.role.role_level < parentUser.role.role_level){
+        return next(new AppError("you do not have permission to perform this action", 404))
+    }
 
-    // if(childUser.availableBalance < req.body.amount){
-    //     return next(new AppError('withdrow amount must less than available balance',404))
-    // }
-    // await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.clintPL,downlineBalance:-req.body.clintPL,myPL:req.body.amount}})
-    // const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL},uplinePL:0,myPL:-req.body.amount,pointsWL:0},{
-    //     new:true
-    // })
+    if(childUser.availableBalance < req.body.amount){
+        return next(new AppError('withdrow amount must less than available balance',404))
+    }
+    await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.clintPL,downlineBalance:-req.body.clintPL,myPL:req.body.amount}})
+    const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL},uplinePL:0,myPL:-req.body.amount,pointsWL:0},{
+        new:true
+    })
     
-    // let childAccStatement = {}
-    // let ParentAccStatement = {}
-    // let date = Date.now()
+    let childAccStatement = {}
+    let ParentAccStatement = {}
+    let date = Date.now()
 
-    // // //for child User//
-    // childAccStatement.child_id = childUser.id;
-    // childAccStatement.user_id = childUser.id;
-    // childAccStatement.parent_id = parentUser.id;
-    // childAccStatement.description = 'Settlement(withdraw) ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
-    // childAccStatement.creditDebitamount = -parseFloat(req.body.amount);
-    // childAccStatement.balance = (parseFloat(childUser.availableBalance)  - parseFloat(req.body.amount));
-    // childAccStatement.date = date
-    // childAccStatement.userName = childUser.userName
-    // childAccStatement.role_type = childUser.role_type
-    // childAccStatement.Remark = req.body.remark
+    // //for child User//
+    childAccStatement.child_id = childUser.id;
+    childAccStatement.user_id = childUser.id;
+    childAccStatement.parent_id = parentUser.id;
+    childAccStatement.description = 'Settlement(withdraw) ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
+    childAccStatement.creditDebitamount = -parseFloat(req.body.amount);
+    childAccStatement.balance = (parseFloat(childUser.availableBalance)  - parseFloat(req.body.amount));
+    childAccStatement.date = date
+    childAccStatement.userName = childUser.userName
+    childAccStatement.role_type = childUser.role_type
+    childAccStatement.Remark = req.body.remark
 
-    // const accStatementChild = await accountStatement.create(childAccStatement)
-    // if(!accStatementChild){
-    //     return next(new AppError("Ops, Something went wrong Please try again later", 500))
-    // }
-    // // // console.log(childAccStatement)
-    // // // for parent user // 
-    // ParentAccStatement.child_id = childUser.id;
-    // ParentAccStatement.user_id = parentUser.id;
-    // ParentAccStatement.parent_id = parentUser.id;
-    // ParentAccStatement.description = 'Settlement(withdraw) ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
-    // ParentAccStatement.creditDebitamount = parseFloat(req.body.amount);
-    // ParentAccStatement.balance = (parseFloat(parentUser.availableBalance) + parseFloat(req.body.amount));
-    // ParentAccStatement.date = date
-    // ParentAccStatement.userName = parentUser.userName;
-    // ParentAccStatement.role_type = parentUser.role_type
-    // ParentAccStatement.Remark = req.body.remark
+    const accStatementChild = await accountStatement.create(childAccStatement)
+    if(!accStatementChild){
+        return next(new AppError("Ops, Something went wrong Please try again later", 500))
+    }
+    // // console.log(childAccStatement)
+    // // for parent user // 
+    ParentAccStatement.child_id = childUser.id;
+    ParentAccStatement.user_id = parentUser.id;
+    ParentAccStatement.parent_id = parentUser.id;
+    ParentAccStatement.description = 'Settlement(withdraw) ' + childUser.name + '(' + childUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
+    ParentAccStatement.creditDebitamount = parseFloat(req.body.amount);
+    ParentAccStatement.balance = (parseFloat(parentUser.availableBalance) + parseFloat(req.body.amount));
+    ParentAccStatement.date = date
+    ParentAccStatement.userName = parentUser.userName;
+    ParentAccStatement.role_type = parentUser.role_type
+    ParentAccStatement.Remark = req.body.remark
 
-    // // // console.log(ParentAccStatement)
-    // const accStatementparent = await accountStatement.create(ParentAccStatement)
-    // if(!accStatementparent){
-    //     return next(new AppError("Ops, Something went wrong Please try again later", 500))
-    // }
-    // res.status(200).json({
-    //     status:"success",
-    //     user
-    // })
+    // // console.log(ParentAccStatement)
+    const accStatementparent = await accountStatement.create(ParentAccStatement)
+    if(!accStatementparent){
+        return next(new AppError("Ops, Something went wrong Please try again later", 500))
+    }
+    res.status(200).json({
+        status:"success",
+        user
+    })
 });
 
 exports.depositSettle = catchAsync(async(req, res, next) => {
