@@ -36,7 +36,9 @@
                     <div class="input-group">
                       <label>Select Event</label>
                       <select name="eventId" class="eventId">
-                        
+                      <%for(let i = 0;i<sportList.eventList.length;i++){%>
+                        <option value="<%=sportList.eventList[i].eventData.eventId%>"><%=sportList.eventList[i].eventData.name%></option>
+                      <%}%>
                     </div>  
                     <div class="input-group">
                       <label>Url</label>

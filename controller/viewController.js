@@ -1344,10 +1344,15 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
 
 exports.getStreamManagementPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
+    const sportData = await getCrkAndAllData()
+    let sportList;
+    sportList = sportData[0].gameList[0]
+  
     res.status(200).render("./streamManagement/streammanagement",{
         title:"Stream Management",
         me,
-        currentUser:me
+        currentUser:me,
+        sportList
     })
 })
 
