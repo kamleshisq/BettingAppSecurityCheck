@@ -5,6 +5,33 @@
     <div class="container-fluid">
       <div class="new-head"> 
           <h3 class="main-heading">Stream Management</h3>
+          <div class="form">
+            <form class="game-analysis-heading-from game-analysis-heading-from">
+              <div class="input-group">
+                <label>Select Sport</label>
+                <select name="sportId" class="sportId">
+                  <option value="4" selected>Cricket</option>
+                  <option value="1">Football</option>
+                  <option value="2">Tennis</option>              
+                </select>
+              </div>  
+              <div class="input-group">
+                <label>Select Event</label>
+                <select name="eventId" class="eventId" required>
+                <%for(let i = 0;i<sportList.eventList.length;i++){%>
+                  <option value="<%=sportList.eventList[i].eventData.eventId%>"><%=sportList.eventList[i].eventData.name%></option>
+                <%}%>
+                </select>
+              </div>  
+              <div class="input-group">
+                <label>Url</label>
+                <input type="text" placeholder="Stream URL" name="url" required>
+              </div> 
+              <div class="input-group">
+              <button type="submit" class="btn-filter addstream"> Add Stream URL</button>
+              </div>
+            </form>
+          </div>
       </div>
   </section>
 
@@ -15,28 +42,7 @@
                 <h3>Stream Management</h3>
                 <div class="rowId" data-rowid="1"></div>
                 <div class="table-heading-btn">
-                  <form class="game-analysis-heading-from">
-                    <div class="input-group">
-                      <label>Select Sport</label>
-                      <select name="sportId" class="sportId">
-                        <option value="4" selected>Cricket</option>
-                        <option value="1">Football</option>
-                        <option value="2">Tennis</option>              
-                      </select>
-                    </div>  
-                    <div class="input-group">
-                      <label>Select Event</label>
-                      <select name="eventId" class="eventId" required>
-                      <%for(let i = 0;i<sportList.eventList.length;i++){%>
-                        <option value="<%=sportList.eventList[i].eventData.eventId%>"><%=sportList.eventList[i].eventData.name%></option>
-                      <%}%>
-                    </div>  
-                    <div class="input-group">
-                      <label>Url</label>
-                      <input type="text" placeholder="Stream URL" name="url" required>
-                    </div> 
-                    <button type="submit" class="btn-filter addstream"> Add Stream URL</button>
-                    </form>
+                  
                 </div>
             </div>
             <div class="data-table">
