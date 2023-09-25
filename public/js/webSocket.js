@@ -11406,6 +11406,13 @@ socket.on('connect', () => {
             }
             $('.eventId').html(html)
         })
+
+        $(document).on('click','.delete',function(e){
+            let id = $(this).closest('tr').attr('data-id')
+            let rowId = $(this).closest('tr').attr('id')
+            $('.rowId').attr('data-rowid',rowId)
+            console.log(id)
+        })
     }
 
 })
