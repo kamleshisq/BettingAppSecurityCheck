@@ -47,6 +47,12 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     console.log(req.body.parentUsers, '+==> parentsUser')
 
     // console.log(req.body)
+    if(req.body.share){
+        req.body.Share = req.body.share
+    }
+    if(req.body.Visible){
+        req.body.myShare = req.body.Visible
+    }
     const newUser = await User.create(req.body);
     if(req.body.roleName === "Admin" || req.body.roleName === "Super-Duper-Admin"){
        await settlementModel.create({userId:newUser.id})

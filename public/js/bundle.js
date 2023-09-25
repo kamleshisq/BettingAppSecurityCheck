@@ -7182,11 +7182,10 @@ $('#Add-User').submit(function (e) {
     }
   }
   formDataObj.OperatorAuthorization = checkedValues;
-  console.log(formDataObj, "+==> dat");
+  console.log(formDataObj, "+==> data");
   // console.log(checkedValues);
-  // createUser(formDataObj)
+  (0, _createUser.createUser)(formDataObj);
 });
-
 $(document).on('submit', '.passReset-form', function (e) {
   e.preventDefault();
   var form = $(this)[0];
