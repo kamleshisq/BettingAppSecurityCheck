@@ -11377,8 +11377,8 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
-            data.sportName = $('.sportId').text().trim()
-            data.eventName = $('.eventId').text().trim()
+            data.sportName = $('.sportId option:selected').text().trim()
+            data.eventName = $('.eventId option:selected').text().trim()
             data.date = new Date()
             console.log(data)
 
