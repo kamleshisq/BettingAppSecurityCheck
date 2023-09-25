@@ -11371,5 +11371,38 @@ socket.on('connect', () => {
 
     }
 
+    if(pathname == '/admin/streammanagement'){
+        $('.game-analysis-heading-from').submit(function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            data.sportName = $('.sportId').text()
+            data.eventName = $('.eventId').text()
+            data.date = new Date()
+
+        })
+
+        $('#.sportId').change(function() {
+            let Sport = $(this).val()
+            console.log(Sport)
+            if(['1','2','4'].includes(Sport)){
+                socket.emit('getEvetnsOfSport',{sport:Sport})
+            }else{
+                $('#eventId').html(`<option value="All" selected> Select Event </option>`)
+            }
+        })
+
+        socket.on('getEvetnsOfSport',async(data)=>{
+            console.log(data)
+            let html =''
+            html += `<option value="All" selected> Select Event </option>`
+            for(let i = 0;i<data.eventList.length;i++){
+                html += `<option value="${data.eventList[i].eventData.eventId}">${data.eventList[i].eventData.name}</option>`
+            }
+            $('#eventId').html(html)
+        })
+    }
+
 })
 })

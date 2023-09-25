@@ -24,27 +24,26 @@
             <div class="table-heading">
                 <h3>Stream Management</h3>
                 <div class="table-heading-btn">
-                  <form action="" class="game-analysis-heading-from">
+                  <form method="post" class="game-analysis-heading-from">
                     <div class="input-group">
-                      <label>Select Event</label>
-                      <select name="" id="">
-                        <option value="">Cricket</option>
-                        <option value="">Cricket</option>
-                        <option value="">FOOTBALL</option>
-                        <option value="">TENNIS</option>
-                        <option value="">BASKETBALL</option>
-                        <option value="">BASEBALL</option>
-                        <option value="">Primium</option>
-                        <option value="">Sports Books</option>
-              
+                      <label>Select Sport</label>
+                      <select name="sportId" class="sportId">
+                        <option value="4">Cricket</option>
+                        <option value="1">Football</option>
+                        <option value="2">Tennis</option>              
                       </select>
                     </div>  
                     <div class="input-group">
+                      <label>Select Event</label>
+                      <select name="eventId" class="eventId">
+                        
+                    </div>  
+                    <div class="input-group">
                       <label>Url</label>
-                      <input type="text" placeholder="Stream URL">
+                      <input type="text" placeholder="Stream URL" name="url">
                     </div> 
                     </form>
-                    <button class="btn-filter"> Add Stream URL</button>
+                    <button type="submit" class="btn-filter addstream"> Add Stream URL</button>
                 </div>
             </div>
             <div class="data-table">
