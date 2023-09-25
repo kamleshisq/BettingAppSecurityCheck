@@ -31,7 +31,7 @@ async function voidBET(data){
                 let VoidAmount = allBetWithMarketId[bets].returns.toFixed(2) - allBetWithMarketId[bets].Stake.toFixed(2)
                 // console.log(VoidAmount, "VOidBetAMOUNT")
                 await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"CANCEL", returns:0, remark:data.data.remark, calcelUser:data.LOGINDATA.LOGINUSER.userName})
-                let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: -VoidAmount, myPL: -VoidAmount}})
+                let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: -VoidAmount, myPL: -VoidAmount, uplinePL: VoidAmount, pointsWL:-VoidAmount}})
                 let description = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/CANCEL`
                 // let description2 = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/user = ${user.userName}/CANCEL `
                 let userAcc = {
@@ -46,7 +46,7 @@ async function voidBET(data){
                     "stake": allBetWithMarketId[bets].Stake,
                     "transactionId":`${allBetWithMarketId[bets].transactionId}`
                 }
-                let debitAmountForP = -VoidAmount
+                let debitAmountForP = VoidAmount
                 for(let i = user.parentUsers.length - 1; i >= 1; i--){
                     let parentUser1 = await User.findById(user.parentUsers[i])
                     let parentUser2 = await User.findById(user.parentUsers[i - 1])
@@ -87,7 +87,7 @@ async function voidBET(data){
             }else{
                 let VoidAmount = allBetWithMarketId[bets].Stake.toFixed(2)
                 await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"CANCEL", returns:0, remark:data.data.remark, calcelUser:data.LOGINDATA.LOGINUSER.userName})
-                let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: VoidAmount, myPL: VoidAmount}})
+                let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: VoidAmount, pointsWL: VoidAmount, myPL: VoidAmount, uplinePL: -VoidAmount}})
                 let description = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/CANCEL`
                 let userAcc = {
                     "user_id":user._id,
@@ -130,10 +130,10 @@ async function voidBET(data){
                   if (i === 1) {
                       await User.findByIdAndUpdate(user.parentUsers[i - 1], {
                           $inc: {
-                              downlineBalance: -VoidAmount,
-                              myPL: parentUser2Amount,
-                              lifetimePL: parentUser2Amount,
-                              pointsWL: -VoidAmount
+                              downlineBalance: VoidAmount,
+                              myPL: -parentUser2Amount,
+                              lifetimePL: -parentUser2Amount,
+                              pointsWL: VoidAmount
                           }
                       });
                   }
