@@ -97,6 +97,9 @@
                         <%if(currentUser.OperatorAuthorization.includes('gameAnalysis')){%>
                           <div class="menu-item"><a class="nav_link" href="/admin/gameanalysis">Game  Analysis</a></div>
                         <%}%>
+                        <%if(currentUser.OperatorAuthorization.includes('streamManagement')){%>
+                          <div class="menu-item"><a class="nav_link" href="/admin/gameanalysis">Game  Analysis</a></div>
+                        <%}%>
                         <%if(currentUser.OperatorAuthorization.includes('notification')){%>
                           <div class="menu-item"><a class="nav_link" href="/admin/Notification">Notification</a></div>
                         <%}%>
@@ -142,6 +145,7 @@
                       <%if(currentUser.role.operationAuthorization.includes('gameAnalysis')){%>
                         <div class="menu-item"><a class="nav_link" href="/admin/gameanalysis">Game  Analysis</a></div>
                       <%}%>
+                        <div class="menu-item"><a class="nav_link" href="/admin/streammanagement">Stream Management</a></div>
                       <%if(currentUser.role.operationAuthorization.includes('notification')){%>
                         <div class="menu-item"><a class="nav_link" href="/admin/Notification">Notification</a></div>
                       <%}%>
