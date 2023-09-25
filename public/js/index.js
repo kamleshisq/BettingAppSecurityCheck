@@ -142,7 +142,6 @@ const formDataObj = Object.fromEntries(data.entries());
 if(formDataObj.role == "select"){
     alert('please select role of user')
 }
-console.log(formDataObj)
 
 if(formDataObj.whiteLabel == ""){
     formDataObj.whiteLabel = document.getElementById("whiteLabel").value
@@ -156,8 +155,9 @@ if(formDataObj.role == "650bccdbb3fdc8c922c34bbe"){
     }
 }
 formDataObj.OperatorAuthorization = checkedValues
+console.log(formDataObj, "+==> data")
 // console.log(checkedValues);
-createUser(formDataObj)
+// createUser(formDataObj)
 });
 
 

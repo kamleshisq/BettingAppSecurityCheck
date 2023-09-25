@@ -7171,7 +7171,6 @@ $('#Add-User').submit(function (e) {
   if (formDataObj.role == "select") {
     alert('please select role of user');
   }
-  console.log(formDataObj);
   if (formDataObj.whiteLabel == "") {
     formDataObj.whiteLabel = document.getElementById("whiteLabel").value;
   }
@@ -7183,9 +7182,11 @@ $('#Add-User').submit(function (e) {
     }
   }
   formDataObj.OperatorAuthorization = checkedValues;
+  console.log(formDataObj, "+==> dat");
   // console.log(checkedValues);
-  (0, _createUser.createUser)(formDataObj);
+  // createUser(formDataObj)
 });
+
 $(document).on('submit', '.passReset-form', function (e) {
   e.preventDefault();
   var form = $(this)[0];
