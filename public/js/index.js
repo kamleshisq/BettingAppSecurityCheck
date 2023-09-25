@@ -239,7 +239,7 @@ $(document).on('submit','.Settlement-form',async function(e) {
     // formDataObj.id = id
     // console.log(formDataObj)
     // let rowId = $('.rowId').attr('data-rowid')
-    creditDebitSettle(formDataObj)
+     creditDebitSettle(formDataObj)
     // const user = await creditDebitSettle(formDataObj)
     // var trElements = document.querySelectorAll('tr.trtable');
     // // console.log(trElements)
