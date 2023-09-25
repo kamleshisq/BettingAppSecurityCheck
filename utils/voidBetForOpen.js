@@ -29,7 +29,7 @@ async function voidbetBeforePlace(data){
                     for(const bet in bets){
                         // console.log(bets[bet].id, 12)
                         await Bet.findByIdAndUpdate(bets[bet].id, {status:"CANCEL", return:0 ,remark:data.data.remark, calcelUser:data.LOGINDATA.LOGINUSER.userName});
-                        let user = await User.findByIdAndUpdate(bets[bet].userId, {$inc:{balance: bets[bet].Stake, availableBalance: bets[bet].Stake, myPL: bets[bet].Stake, exposure:-bets[bet].Stake}})
+                        let user = await User.findByIdAndUpdate(bets[bet].userId, {$inc:{availableBalance: bets[bet].Stake, myPL: bets[bet].Stake, exposure:-bets[bet].Stake, pointsWL: bets[bet].Stake, uplinePL: -bets[bet].Stake}})
                         let description = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/CANCEL`
                         // let description2 = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/user = ${user.userName}/CANCEL `
                         let userAcc = {
