@@ -31,7 +31,7 @@ async function voidBET(data){
                 let VoidAmount = allBetWithMarketId[bets].returns.toFixed(2) - allBetWithMarketId[bets].Stake.toFixed(2)
                 // console.log(VoidAmount, "VOidBetAMOUNT")
                 await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"CANCEL", returns:0, remark:data.data.remark, calcelUser:data.LOGINDATA.LOGINUSER.userName})
-                let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{balance: -VoidAmount, availableBalance: -VoidAmount, myPL: -VoidAmount}})
+                let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: -VoidAmount, myPL: -VoidAmount}})
                 let description = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/CANCEL`
                 // let description2 = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/user = ${user.userName}/CANCEL `
                 let userAcc = {
@@ -87,7 +87,7 @@ async function voidBET(data){
             }else{
                 let VoidAmount = allBetWithMarketId[bets].Stake.toFixed(2)
                 await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"CANCEL", returns:0, remark:data.data.remark, calcelUser:data.LOGINDATA.LOGINUSER.userName})
-                let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{balance: VoidAmount, availableBalance: VoidAmount, myPL: VoidAmount}})
+                let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: VoidAmount, myPL: VoidAmount}})
                 let description = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/CANCEL`
                 let userAcc = {
                     "user_id":user._id,
