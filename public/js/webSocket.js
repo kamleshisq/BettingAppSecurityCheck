@@ -11380,9 +11380,17 @@ socket.on('connect', () => {
             data.sportName = $('.sportId option:selected').text().trim()
             data.eventName = $('.eventId option:selected').text().trim()
             data.date = new Date()
-            console.log(data)
+            socket.emit('addnewStream',data)
+
 
         })
+
+        socket.on('addnewStream',async(data)=>{
+            if(data.status == 'success'){
+                alert('streame added successfully')
+            }
+        })
+        
 
         $('.sportId').change(function() {
             let Sport = $(this).val()
@@ -11397,6 +11405,21 @@ socket.on('connect', () => {
                 html += `<option value="${data.eventList[i].eventData.eventId}">${data.eventList[i].eventData.name}</option>`
             }
             $('.eventId').html(html)
+        })
+
+        $(document).on('click','.delete',function(e){
+            let id = $(this).closest('tr').attr('data-id')
+            let rowId = $(this).closest('tr').attr('id')
+            $('.rowId').attr('data-rowid',rowId)
+            if(confirm('do you want to delete this stream')){
+                socket.emit('delteStreame',id)
+            }
+        })
+
+        socket.on('delteStreame',async(data)=>{
+            if(data.status == 'success'){
+                alert('stream deleted successfully')
+            }
         })
     }
 

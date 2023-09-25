@@ -4,6 +4,7 @@ const User = require('../model/userModel');
 const loginLogs = require("../model/loginLogs");
 const Role = require('../model/roleModel');
 const betModel = require("../model/betmodel");
+const Stream = require('./../model/streammanagement')
 const promotionModel = require("../model/promotion");
 const roleAuth = require('../model/authorizationModel');
 const gameModel = require('../model/gameModel');
@@ -1347,12 +1348,13 @@ exports.getStreamManagementPage = catchAsync(async(req, res, next) => {
     const sportData = await getCrkAndAllData()
     let sportList;
     sportList = sportData[0].gameList[0]
-  
+    const streams = await Stream.find()
     res.status(200).render("./streamManagement/streammanagement",{
         title:"Stream Management",
         me,
         currentUser:me,
-        sportList
+        sportList,
+        streams
     })
 })
 
