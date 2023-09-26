@@ -1394,7 +1394,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
                 if(stream){
                     status = stream.status
                     if(stream.url != ''){
-                        ulr = stream.url
+                        url = stream.url
                     }else{
                         const src_regex = /src='([^']+)'/;
                         let match1
