@@ -10477,18 +10477,25 @@ socket.on('connect', () => {
                     let sumOfTeamB = 0
                     let sumOfTeamC = 0
                     for(let i = 0; i < data.length; i++){
+                        console.log(data[i], "+==> in Loop DAta")
                         let team1data = 0 
                         let team2data = 0
-                        console.log(data[i].selections[0].selectionName.toLowerCase(), team1.toLowerCase)
+                        // console.log(data[i].selections[0].selectionName.toLowerCase(), team1.toLowerCase)
                         if(data[i].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
                             team1data = data[i].selections[0].totalAmount
                             sumOfTeamA += team1data
                             if(data[i].selections[1]){
                                 team2data = data[i].selections[1].totalAmount
                                 sumOfTeamB += team2data
+                            }else{
+                                team2data = -data[i].selections[0].Stake
+                                sumOfTeamB += team2data
                             }
                         }else{
                             if(data[i].selections[1]){
+                                team1data = data[i].selections[0].Stake
+                                sumOfTeamA += team1data
+                            }else{
                                 team1data = data[i].selections[1].totalAmount
                                 sumOfTeamA += team1data
                             }
@@ -10497,18 +10504,35 @@ socket.on('connect', () => {
                         }
                         html += `
                         <tr>
-                            <td>${data[i].userName}</td>
-                            <td>${team1data.toFixed(2)}</td>
-                            <td>${team2data.toFixed(2)}</td>
-                        </tr>
-
-                        `
+                            <td>${data[i].userName}</td>`
+                        if(team1data.toFixed(2) > 0){
+                            html += `<td class="red"> -${team1data.toFixed(2)}</td>`
+                        }else{
+                            html += `<td class="green"> ${team1data.toFixed(2) * -1}</td>`
+                        }
+                        
+                        if(team2data.toFixed(2) > 0){
+                            html += `<td class="red">-${team2data.toFixed(2)}</td></tr>`
+                        }else{
+                            html += `<td class="green">${team2data.toFixed(2) * -1}</td></tr>`
+                        }
                     }
                     html += `<tr>
-                    <td>Total</td>
-                    <td>${sumOfTeamA.toFixed(2)}</td>
-                    <td>${sumOfTeamB.toFixed(2)}</td>
-                </tr>`
+                    <td>Total</td>`
+                    if(sumOfTeamA.toFixed(2) > 0){
+                        html += `<td class="red"> -${sumOfTeamA.toFixed(2)}</td>`
+                    }else{
+                        html += `<td class="green"> ${sumOfTeamA.toFixed(2) * -1}</td>`
+                    }
+                    
+                    if(sumOfTeamB.toFixed(2) > 0){
+                        html += `<td class="red">-${sumOfTeamB.toFixed(2)}</td></tr>`
+                    }else{
+                        html += `<td class="green">${sumOfTeamB.toFixed(2) * -1}</td></tr>`
+                    }
+                //     `<td>${sumOfTeamA.toFixed(2)}</td>
+                //     <td>${sumOfTeamB.toFixed(2)}</td>
+                // </tr>`
                     document.getElementById('match_odd').innerHTML = html
                 }else{
                     document.getElementById('match_odd').innerHTML = "There is no bets in this market"
