@@ -11452,7 +11452,6 @@ socket.on('connect', () => {
 
         $(document).on('click','.editStrem',function(e){
             let data = JSON.parse($(this).closest('tr').attr('data-id'))
-            console.log(data)
             let form = $('.editStreamForm');
             form.find('input[name="url"]').val(data.url)
             form.find('input[name="eventId"]').val((data.eventId).toString())
@@ -11480,6 +11479,7 @@ socket.on('connect', () => {
                 data.status = false
             }
             data.date = new Date()
+            console.log(data)
             socket.emit('editStream',data)
         })
 
