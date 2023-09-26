@@ -2212,19 +2212,6 @@ socket.on('connect', () => {
 
                 if(data.page == 0){
                     count1 = 1;
-
-                        $('table').html(`<tr >+
-                        "<th>S.No</th>" +
-                        "<th>Date</th>" +
-                        "<th>Time</th>" +
-                        "<th>Stake</th>" +
-                        "<th>Credit</th>"+
-                        "<th>Debit</th>"+
-                        "<th>From / To</th>"+
-                        "<th>Closing</th>"+
-                        "<th>Description</th>"+
-                        "<th>Remarks</th>"+
-                      "</tr> `)
                 }
                 let html = "";
                 for(let i = 0; i < data.json.userAcc.length; i++){
@@ -2286,8 +2273,12 @@ socket.on('connect', () => {
                             }
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>
-                        <td>${data.json.userAcc[i].Remark}</td>`
+                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>`
+                        if(data.json.userAcc[i].Remark){
+                            html += `<td>${data.json.userAcc[i].Remark}</td>`
+                        }else{
+                            html += `<td>-</td>`
+                        }
                     }else{
                         html += `<tr style="text-align: center;" >
                         <td>${count1 + i}</td>
@@ -2355,12 +2346,15 @@ socket.on('connect', () => {
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
                         $('#load-more').hide()
                     }
+                    $('tbody').html(html)
+
                 }else {
                     if(data.json.userAcc.length == 0){
                         $('#load-more').hide()
                     }
+                    $('tbody').append(html)
+
                 }
-                $('table').append(html)
             }
          })
 
