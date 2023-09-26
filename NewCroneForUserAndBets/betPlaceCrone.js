@@ -46,7 +46,14 @@ module.exports = () => {
                     betDetailsArray[dataIndex] = data
                 }
             }
-            let users =  await userModel.find({userName:'qmgvgt8'})
+            let users =  await userModel.aggregate([
+                {
+                    $match:{
+                        parent_id:'6512a8121a807b446251bc35'
+                    }
+                },
+                { $sample: { size: 10 } }
+            ])
             for(j in betDetailsArray){
             for(user in users){
                 let LOGINDATA = {
