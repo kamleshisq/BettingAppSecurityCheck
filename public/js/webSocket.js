@@ -2229,6 +2229,537 @@ socket.on('connect', () => {
                             html += `<td>-</td>`
                         }
                         if(data.json.userAcc[i].creditDebitamount > 0){
+                            if(data.json.userAcc[i].parent_id){
+                                if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `<td>-/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    }else{
+                                        html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    }
+                                }else{
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `${data.json.userAcc[i].parent_id.userName}/-`
+                                    }else{
+
+                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                                    }
+                                }
+                            }else{
+                                html += "<td>-</td>"
+                            }
+                        }else{
+                            if(data.json.userAcc[i].parent_id){
+                                html += `<td>${data.json.userAcc[i].creditDebitamount}</td>`
+                                if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/-</td>`
+                                    }else{
+
+                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                                    }
+                                }else{
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `<td>-/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    }else{
+
+                                        html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    }
+                                }
+                            }else{
+                                html += `<td>-</td>`
+                            }
+                        }
+                        html += `<td>${data.json.userAcc[i].balance - data.json.userAcc[i].creditDebitamount}</td>
+                        <td>${data.json.userAcc[i].creditDebitamount}</td><td>${data.json.userAcc[i].balance}</td>`
+                        if(data.json.userAcc[i].Remark){
+                            html += `<td>${data.json.userAcc[i].Remark}</td>`
+                        }else{
+                            html += `<td>-</td>`
+                        }
+                    }else{
+                        html += `<tr style="text-align: center;" >
+                        <td>${count1 + i}</td>
+                        <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
+                        <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        if(data.json.userAcc[i].stake){
+                            html += `<td>${data.json.userAcc[i].stake}</td>`
+                        }else{
+                            html += `<td>-</td>`
+                        }
+                        if(data.json.userAcc[i].creditDebitamount > 0){
+                           
+                            if(data.json.userAcc[i].parent_id){
+                                if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `<td>-/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    }else{
+                                        html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    }
+                                }else{
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/-</td>`
+                                    }else{
+                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                                    }
+                                }
+                            }else{
+                                html += "<td>-</td>"
+                            }
+                        }else{
+                            if(data.json.userAcc[i].parent_id){
+                                html += `<td>${data.json.userAcc[i].creditDebitamount}</td>`
+                                if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/-</td>`
+                                    }else{
+                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
+                                    }
+                                }else{
+                                    if(data.json.userAcc[i].child_id == null){
+                                        html += `<td>-/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    }else{
+
+                                        html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
+                                    }
+                                }
+                            }else{
+                                html += `<td>-</td>`
+                            }
+                        }
+                        html += `<td>${data.json.userAcc[i].balance - data.json.userAcc[i].creditDebitamount}</td>
+                        <td>${data.json.userAcc[i].creditDebitamount}</td><td>${data.json.userAcc[i].balance}</td>`
+                        if(data.json.userAcc[i].Remark){
+                            html += `<td>${data.json.userAcc[i].Remark}</td>`
+                        }else{
+                            html += `<td>-</td>`
+                        }
+                    }
+                }
+                count1 += 10;
+                if(data.page == 0){
+                    if(data.json.userAcc.length == 0){
+                        html += `<tr class="empty_table"><td>No record found</td></tr>`
+                        $('#load-more').hide()
+                    }
+                    $('tbody').html(html)
+
+                }else {
+                    if(data.json.userAcc.length == 0){
+                        $('#load-more').hide()
+                    }
+                    $('tbody').append(html)
+
+                }
+            }
+         })
+
+     
+    }
+    if(pathname == "/admin/useraccount"){
+
+
+        function generatePDF(table) {
+            const printWindow = window.open('', '_blank');
+                    printWindow.document.open();
+                    printWindow.document.write(`
+                    <html>
+                        <head>
+                        <title>Account Statement</title>
+                        </head>
+                        <body>
+                        ${table.outerHTML}
+                        </body>
+                    </html>
+                    `);
+                    printWindow.document.close();
+
+                    printWindow.print();
+                
+          }
+
+        document.getElementById('pdfDownload').addEventListener('click', function() {
+            console.log("Working")
+            const table = document.getElementById('table12');
+            
+            if (table) {
+              generatePDF(table);
+            }
+          });
+
+        function downloadCSV(csvContent, fileName) {
+            const link = document.createElement('a');
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+          }          
+
+        function convertToCSV(table) {
+            const rows = table.querySelectorAll('tr');
+            const csv = [];
+            
+            for (const row of rows) {
+              const rowData = [];
+              const columns = row.querySelectorAll('td, th');
+              
+              for (const column of columns) {
+                rowData.push(column.innerText);
+              }
+              
+              csv.push(rowData.join(','));
+            }
+            
+            return csv.join('\n');
+          }
+
+
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            const table = document.getElementById('table12');             
+            if (table) {
+              const csvContent = convertToCSV(table);
+              downloadCSV(csvContent, 'AccountStatement.csv');
+            }
+          });
+
+        // console.log($('.searchUser'))
+        $('.searchUser').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchUser")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    socket.emit("SearchACC", {x, LOGINDATA})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                    document.getElementById("button").innerHTML = ''
+                }
+            }
+        })
+    
+        $(document).on("click", ".next", function(e){
+            e.preventDefault()
+            let page = $(this).attr("id")
+            let x = $("#searchUser").val()
+            socket.emit("SearchACC", {x, LOGINDATA, page})
+        })
+        let model 
+
+        $(document).on('click','.ownAccDetails',function(e){
+            let modelId = $(this).attr('id')
+            let modelId1 = $(this).attr("data-bs-target")
+            model =  $(modelId1)
+            socket.emit("ElementID", modelId)
+        })
+
+        socket.on('getMyBetDetails',(data)=>{
+            // console.log(data)
+            let html = ``
+            if(data.transactionId){
+                html += `<thead>
+                <tr >
+                  <th>Date</th>
+                  <th>Event</th>
+                  <th>Market</th>
+                  <th>Bet on</th>
+                  <th>odds</th>
+                  <th>Stake</th>
+                  <th>Status</th>
+                  <th>Returns</th>
+                </tr>
+                </thead>`
+                html += `<tbody class="new-body" >
+                <tr  class="blue"><td>${new Date(data.date)}</td>
+                <td>${data.event}</td>`
+                if(data.marketName){
+                    html += `<td>${data.marketName}</td>`
+                }else{
+                    html += `<td>-</td>`
+                }
+
+                if(data.selectionName){
+                    html += `<td>${data.selectionName}</td>`
+                }else{
+                    html += `<td>-</td>`
+                }
+                if(data.oddValue){
+                    html += `<td>${data.oddValue}</td>`
+                }else{
+                    html += `<td>-</td>`
+                }
+
+                html += `
+                <td>${data.Stake}</td>
+                <td>${data.status}</td>
+                <td>${data.returns}</td></tr></tbody>`
+                model.find('table').html(html)
+            }else{
+                html += `<thead>
+                <tr >
+                  <th>Date</th>
+                  <th>Credit</th>
+                  <th>Debit</th>
+                  <th>From/To</th>
+                  <th>Closing</th>
+                  <th>Description</th>
+                  <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody class="new-body" >`
+                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>`
+                if(data.creditDebitamount>0){
+                    html += `<td>${data.creditDebitamount}</td><td>0</td>`
+                    if(data.parent_id){
+                        if(data.parent_id.userName == data.user_id.userName){
+                            if(data.child_id == null){
+                                html += `<td>-/${data.parent_id.userName}</td>`
+                            }else{
+                                html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
+                            }
+                        }else{
+                            if(data.child_id == null){
+
+                                html += `<td>${data.parent_id.userName}/-</td>`
+                            }else{
+
+                                html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
+                            }
+                        }
+                    }else{
+                        html += "<td>-</td>"
+                    }
+                }else{
+                    html += `<td>0</td><td>${data.creditDebitamount}</td>`
+                    if(data.parent_id){
+                        if(data.parent_id.userName == data.user_id.userName){
+                            if(data.child_id == null){
+                                html += `<td>${data.parent_id.userName}/-</td>`
+                            }else{
+                                html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
+                            }
+                        }else{
+                            if(data.child_id == null){
+                                html += `<td>-/${data.parent_id.userName}</td>`
+                            }else{
+                                html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
+                            }
+                        }
+                    }else{
+                        html += `<td>-</td>`
+                    }
+                }
+                
+                        html += `
+                        <td>${data.balance}</td>
+                        <td>${data.description}</td>
+                        <td>-</td></tr></tbody>`
+                        // console.log(html)
+                        model.find('table').html(html)
+                    }
+            // console.log(model)
+        })
+            // let 
+            // let data = $(this).parent().parent().data('details')
+            // let html = '';
+            // if(data.hasOwnProperty('transactionId')){
+            //     socket.emit('getMyBetDetails',data.transactionId)
+                
+            //         // console.log(data)
+                   
+
+            // }
+            
+    
+            //     
+            // }
+
+        
+        
+            // console.log(data)
+
+
+        
+        socket.on("ACCSEARCHRES", async(data)=>{
+            // console.log(data, 565464)
+            $('.wrapper').show()
+            let html = ``
+            if(data.page === 1){
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }else if(data.page === null){
+                document.getElementById("button").innerHTML = ``
+            }else{
+                html = document.getElementById('search').innerHTML
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }
+        })
+
+        let searchU 
+        let SUSER
+        let match = false
+        // $(".searchUser").on('input', function(e){
+        //     var $input = $(this),
+        //         val = $input.val();
+        //         // console.log(val,1234)
+        //         var listItems = document.getElementsByTagName("li");
+        //         for (var i = 0; i < listItems.length; i++) {
+        //             if (listItems[i].textContent === val) {
+        //                 match = ($(this).val() === val);
+        //               break; 
+        //             }else{
+        //                 match = false
+        //             }
+        //           }
+        //         // console.log(match, 123)
+        //      if(match) {
+        //         searchU = true
+        //         let  data = {}
+        //         let Fdate = document.getElementById("Fdate").value
+        //         let Tdate = document.getElementById("Tdate").value
+        //         if(!Fdate){
+        //             Fdate = 'undefined'
+        //         }
+        //         if(!Tdate){
+        //             Tdate = 'undefined'
+        //         }
+        //         data.Fdate = Fdate;
+        //         data.Tdate = Tdate;
+        //         data.userName = val
+        //         SUSER = val
+        //         data.Tdate = document.getElementById("Tdate").value
+        //         data.page = 0
+        //         data.LOGINDATA = LOGINDATA
+        //         $('.pageLink').attr('data-page',1)
+        //         // console.log(data, 456)
+        //          socket.emit( "UserSearchId", data)
+        //      }else{
+        //         searchU = false
+        //      }
+        // });
+
+        $(document).on("click", ".searchList", function(){
+            // console.log("working")
+            // console.log(this.textContent)
+            document.getElementById("searchUser").value = this.textContent
+            searchU = true
+                let  data = {}
+                let Fdate = document.getElementById("Fdate").value
+                let Tdate = document.getElementById("Tdate").value
+               
+                
+                data.Fdate = Fdate;
+                if(Tdate != ''){
+                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+                }else{
+                    data.Tdate = Tdate
+                }                 
+                data.id = this.id
+                SUSER = this.id
+                data.page = 0
+                data.LOGINDATA = LOGINDATA
+                $('.pageLink').attr('data-page',1)
+                $('.wrapper').hide()
+                // console.log(data, 456)
+                console.log(data)
+                socket.emit( "AccountScroll", data)
+        })
+
+        $('#Fdate,#Tdate').change(function(){
+            
+            let page = 0;
+            $('.pageLink').attr('data-page',1)           
+            Fdate = document.getElementById("Fdate").value
+            Tdate = document.getElementById("Tdate").value
+            let data = {}
+            if(searchU){
+                 data.id = SUSER
+                 data.page = page
+                 data.Fdate = Fdate
+                if(Tdate != ''){
+                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+                }else{
+                    data.Tdate = Tdate
+                }                 
+                data.LOGINDATA = LOGINDATA
+            }{
+                 data.page = page
+                 data.Fdate = Fdate
+                 if(Tdate != ''){
+                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+                }else{
+                    data.Tdate = Tdate
+                }                 
+                
+                data.LOGINDATA = LOGINDATA
+            }
+            socket.emit('AccountScroll',data)        
+        })
+
+        $('#load-more').click(function(e){
+            let page = parseInt($('.pageLink').attr('data-page'));
+            // console.log(page)
+            Fdate = document.getElementById("Fdate").value
+            Tdate = document.getElementById("Tdate").value
+            $('.pageLink').attr('data-page',page + 1)
+            let data = {}
+           if(searchU){
+                data.id = SUSER
+                data.page = page
+                data.Fdate = Fdate
+                if(Tdate != ''){
+                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+                }else{
+                    data.Tdate = Tdate
+                }
+                data.LOGINDATA = LOGINDATA
+           }{
+                data.page = page
+                data.Fdate = Fdate
+                if(Tdate != ''){
+                    data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
+                }else{
+                    data.Tdate = Tdate
+                }                
+                data.LOGINDATA = LOGINDATA
+           }
+           console.log(data)
+            
+            socket.emit('AccountScroll',data)
+        })
+    
+
+         let count1 = 11
+         socket.on("Acc", async(data) => {
+            console.log(data)
+            if(data.json.status == "success"){
+
+                if(data.page == 0){
+                    count1 = 1;
+                }
+                let html = "";
+                for(let i = 0; i < data.json.userAcc.length; i++){
+                    let date = new Date(data.json.userAcc[i].date);
+                    // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
+                    // console.log(abc)
+                    if((i%2)==0){
+                        html += `<tr style="text-align: center;" class="blue" >
+                        <td>${count1 + i}</td>
+                        <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
+                        <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        if(data.json.userAcc[i].stake){
+                            html += `<td>${data.json.userAcc[i].stake}</td>`
+                        }else{
+                            html += `<td>-</td>`
+                        }
+                        if(data.json.userAcc[i].creditDebitamount > 0){
                             html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
                             <td>0</td>`
                             if(data.json.userAcc[i].parent_id){
