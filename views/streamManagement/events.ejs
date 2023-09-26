@@ -1,0 +1,36 @@
+<table>
+    <thead>
+        <tr style="text-align: center;font-size: 11px;">
+          <th>S.No</th>
+          <th>Open Date</th>
+          <th>Sport</th>
+          <th>Event</th>
+          <th>Stream Link</th>
+          <th>Action</th>
+        </tr>
+    </thead>
+    <tbody class="new-body">
+      <%if(streams.length > 0){%>
+      <%for(let i = 0;i<streams.length;i++){%>
+        <%
+        var date = streams[i].date
+        %>
+        <tr data-id="<%=streams[i]._id%>" id="row-<%= i + 1%>">
+        <td><%= i + 1%></td>
+        <td class="date-time"><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + " "+ date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+        <td><%=streams[i].sportName%></td>
+        <td><%=streams[i].eventName%></td>
+        <td><%=streams[i].url%></td>
+        <td>
+          <div class="btn-group">
+            <!-- <button class="btn edit">Edit </button> -->
+            <button class="btn delete">Delete </button>
+          </div>
+        </td>
+      </tr>
+      <%}%>
+      <%}else{%>
+        <tr class="empty_table"><td>No record found</td></tr>
+      <%}%>
+    </tbody>
+  </table>

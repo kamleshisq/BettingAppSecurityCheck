@@ -1346,16 +1346,99 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
 exports.getStreamManagementPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     const sportData = await getCrkAndAllData()
-    let sportList;
-    sportList = sportData[0].gameList[0]
+    let cricketList;
+    cricketList = sportData[0].gameList[0]
+    const sportList =[
+        {sport_name:"Cricket",sportId:4}	,
+        {sport_name:"Football",sportId:1}	,
+        {sport_name:"Tennis",sportId:2}
+    ]
+   
     const streams = await Stream.find()
     res.status(200).render("./streamManagement/streammanagement",{
         title:"Stream Management",
         me,
         currentUser:me,
-        sportList,
-        streams
+        cricketList,
+        streams,
+        sportList
     })
+})
+
+exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
+    const sportData = await getCrkAndAllData()
+    const sportId = req.query.sportId;
+    let cricketEvents;
+    let footballEvents;
+    let tennisEvents;
+    let sportList;
+    let eventList = [];
+   
+    let data = {};
+
+    if(sportId == '4'){
+        sportList = sportListData[0].gameList[0]
+    }else{
+        sportList = sportListData[1].gameList.find(item => item.sportId == parseInt(sportId))
+    }
+
+    if(sportList){
+
+        let newSportList = sportList.eventList.map(async(item) => {
+            if(item.eventData.type == 'IN_PLAY'){
+                let stream = await Stream.findOne({sportId:sportId,eventId:item.eventData.eventId})
+                let liveStream = await liveStreameData(item.eventData.channelId)
+                let status;
+                let url;
+                if(stream){
+                    status = stream.status
+                    if(stream.url != ''){
+                        ulr = stream.url
+                    }else{
+                        const src_regex = /src='([^']+)'/;
+                        let match1
+                        if(liveStream.data){
+                            match1 = liveStream.data.match(src_regex);
+                            if (match1) {
+                                url = match1[1];
+                            } else {
+                                console.log("No 'src' attribute found in the iframe tag.");
+                            }
+                            // console.log(src, 123)
+                        }
+                    }
+                    eventList.push({eventId:item.eventData.eventId,created_on:item.eventData.time,eventName:item.eventData.name,status,url})
+                }else{
+                    const src_regex = /src='([^']+)'/;
+                    let match1
+                    if(liveStream.data){
+                        match1 = liveStream.data.match(src_regex);
+                        if (match1) {
+                            url = match1[1];
+                        } else {
+                            console.log("No 'src' attribute found in the iframe tag.");
+                        }
+                        // console.log(src, 123)
+                    }
+                    eventList.push({eventId:item.eventData.eventId,created_on:item.eventData.time,eventName:item.eventData.name,status:true,url})
+
+                }
+            }
+        })
+
+        Promise.all(newSportList).then(()=>{
+            console.log(eventList)
+            res.status(200).render("./streamManagement/events",{
+                title:"Stream Management",
+                me,
+                currentUser:me,
+                eventList
+            })
+        })
+
+    }
+
+
 })
 
 exports.getNotificationsPage = catchAsync(async(req, res, next) => {
@@ -3324,8 +3407,6 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
 
 exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    // const sportListData = await getCrkAndAllData()
-    // const sportList = sportListData[1].gameList
     const sportList =[
         {sport_name:"baseball",sportId:30},
         {sport_name:"basketball",sportId:10}	,
@@ -3335,24 +3416,14 @@ exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
         {sport_name:"Football",sportId:1}	,
         {sport_name:"Tennis",sportId:2}
     ]
-    console.log(sportList)
-    // const cricket = sportListData[0].gameList[0].eventList
-    // let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
-    // const footBall = sportListData[1].gameList.find(item => item.sport_name === "Football");
-    // const Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis");
-    // let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
-    // let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
-    // console.log(liveTennis.length != 0)
-    console.log("liveFootBall")
+   
     res.status(200).render("./catalogController/catalogcontroller", {
         title:"Catalog Controller",
         data:sportList,
         me: user,
         currentUser: user
     })
-    // res.status(200).json({
-    //     data:sportList
-    // })
+    
 })
 
 exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) => {
@@ -3449,7 +3520,7 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
 
     if(series){
         nameArr.push(series.sport_name)
-        let = eventListPromis = series.eventList.map(async(item) => {
+        let eventListPromis = series.eventList.map(async(item) => {
             if(item.eventData.compId == compId){
                 if(!nameArr.includes(item.eventData.league)){
                     breadcumArr.push({id:compId,name:item.eventData.league,sportId:sportId})
