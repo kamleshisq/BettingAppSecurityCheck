@@ -47,11 +47,11 @@ module.exports = () => {
                 }
             }
             let users =  await userModel.find({userName:'qmgvgt8'})
+            for(j in betDetailsArray){
             for(user in users){
                 let LOGINDATA = {
                     LOGINUSER : users[user]
                 }
-                for(j in betDetailsArray){
                     let data = {
                         data : betDetailsArray[j],
                         LOGINDATA
