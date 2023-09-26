@@ -9,7 +9,7 @@ const commissionMarketModel = require("../model/CommissionMarketsModel");
 const User = require('../model/userModel');
 
 
-exports.create1000User = () => {
+module.exports = () => {
     crone.schedule('*/5 * * * *', async() => {
             const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         
