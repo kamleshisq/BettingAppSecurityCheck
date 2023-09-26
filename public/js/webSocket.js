@@ -11455,14 +11455,23 @@ socket.on('connect', () => {
             console.log(data)
             let form = $('.editStreamForm');
             form.find('input[name="url"]').val(data.url)
+            form.find('input[name="eventId"]').val(data.eventId)
             if(data.status){
-                form.find('input[name = "check"]').attr("checked", "checked");
-                form.find('input[name = "check"]').parent('.switch').addClass('on');
+                form.find('input[name = "status"]').attr("checked", "checked");
+                form.find('input[name = "status"]').parent('.switch').addClass('on');
             }else{
-                form.find('input[name = "check"]').attr("checked", "");
-                form.find('input[name = "check"]').parent('.switch').removeClass('on');
+                form.find('input[name = "status"]').attr("checked", "");
+                form.find('input[name = "status"]').parent('.switch').removeClass('on');
             }
 
+        })
+
+        $(document).on('submit','.editStreamForm',function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            console.log(data)
         })
     }
 
