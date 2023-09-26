@@ -438,31 +438,35 @@ io.on('connection', (socket) => {
             let Logs = await AccModel.aggregate([
                 {
                     $match:{
-                        user_id: "6493e047c3e2ff53a3b431fb"
+                        user_id: new mongoose.Types.ObjectId(data.id)
                     }
                 },
-                // {
-                //     $lookup:{
-                //         from:'betmodels',
-                //         localField:'transactionId',
-                //         foreignField:'transactionId',
-                //         as:'betDetails'
-                //     }
-                // },
+                {
+                    $lookup:{
+                        from:'betmodels',
+                        localField:'transactionId',
+                        foreignField:'transactionId',
+                        as:'betDetails'
+                    }
+                },
+                {
+                    $unwind:"$betDetails"
+                },
                 {
                     $limit:10
                 }
             ])
-            console.log(Logs)
+            json.userAcc = Logs
 
-            socket.emit('Acc2', {json,page:data.page,Logs,data})
             // account  = await AccModel.find({user_id:data.id})
             
             // fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement1?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
         }else{
             json.userAcc = [] 
-
+            
         }
+        json.status = 'success'
+        socket.emit('Acc2', {json,page:data.page})
 
     })
 
