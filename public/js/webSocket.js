@@ -11483,7 +11483,8 @@ socket.on('connect', () => {
             socket.emit('editStream',data)
         })
 
-        socket.on('editStream',data =>{
+        socket.on('editStream',async(data) =>{
+            console.log(data)
             if(data.status == 'success'){
                 alert('stream updated successfully')
                 location.reload(true)
