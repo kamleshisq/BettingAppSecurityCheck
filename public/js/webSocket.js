@@ -1824,7 +1824,7 @@ socket.on('connect', () => {
 
 
 
-    if(pathname == "/admin/useracount"){
+    if(pathname == "/admin/myaccount"){
 
 
         function generatePDF(table) {
