@@ -53,7 +53,7 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             }else{
                 return res.status(404).json({
                     status:"error",
-                    message:"please provide a valide user name"
+                    message:"please provide a valide user nameeeee"
                 })
             }
         }
