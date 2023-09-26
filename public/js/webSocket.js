@@ -2593,45 +2593,7 @@ socket.on('connect', () => {
         let searchU 
         let SUSER
         let match = false
-        // $(".searchUser").on('input', function(e){
-        //     var $input = $(this),
-        //         val = $input.val();
-        //         // console.log(val,1234)
-        //         var listItems = document.getElementsByTagName("li");
-        //         for (var i = 0; i < listItems.length; i++) {
-        //             if (listItems[i].textContent === val) {
-        //                 match = ($(this).val() === val);
-        //               break; 
-        //             }else{
-        //                 match = false
-        //             }
-        //           }
-        //         // console.log(match, 123)
-        //      if(match) {
-        //         searchU = true
-        //         let  data = {}
-        //         let Fdate = document.getElementById("Fdate").value
-        //         let Tdate = document.getElementById("Tdate").value
-        //         if(!Fdate){
-        //             Fdate = 'undefined'
-        //         }
-        //         if(!Tdate){
-        //             Tdate = 'undefined'
-        //         }
-        //         data.Fdate = Fdate;
-        //         data.Tdate = Tdate;
-        //         data.userName = val
-        //         SUSER = val
-        //         data.Tdate = document.getElementById("Tdate").value
-        //         data.page = 0
-        //         data.LOGINDATA = LOGINDATA
-        //         $('.pageLink').attr('data-page',1)
-        //         // console.log(data, 456)
-        //          socket.emit( "UserSearchId", data)
-        //      }else{
-        //         searchU = false
-        //      }
-        // });
+       
 
         $(document).on("click", ".searchList", function(){
             // console.log("working")
@@ -2657,7 +2619,7 @@ socket.on('connect', () => {
                 $('.wrapper').hide()
                 // console.log(data, 456)
                 console.log(data)
-                socket.emit( "AccountScroll", data)
+                socket.emit( "AccountScroll2", data)
         })
 
         $('#Fdate,#Tdate').change(function(){
@@ -2688,7 +2650,7 @@ socket.on('connect', () => {
                 
                 data.LOGINDATA = LOGINDATA
             }
-            socket.emit('AccountScroll',data)        
+            socket.emit('AccountScroll2',data)        
         })
 
         $('#load-more').click(function(e){
@@ -2720,12 +2682,12 @@ socket.on('connect', () => {
            }
            console.log(data)
             
-            socket.emit('AccountScroll',data)
+            socket.emit('AccountScroll2',data)
         })
     
 
          let count1 = 11
-         socket.on("Acc", async(data) => {
+         socket.on("Acc2", async(data) => {
             console.log(data)
             if(data.json.status == "success"){
 
@@ -2742,54 +2704,8 @@ socket.on('connect', () => {
                         <td>${count1 + i}</td>
                         <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
                         <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
-                        if(data.json.userAcc[i].stake){
-                            html += `<td>${data.json.userAcc[i].stake}</td>`
-                        }else{
-                            html += `<td>-</td>`
-                        }
-                        if(data.json.userAcc[i].creditDebitamount > 0){
-                            html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
-                            <td>0</td>`
-                            if(data.json.userAcc[i].parent_id){
-                                if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
-                                    if(data.json.userAcc[i].child_id == null){
-                                        html += `<td>-/${data.json.userAcc[i].parent_id.userName}</td>`
-                                    }else{
-                                        html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
-                                    }
-                                }else{
-                                    if(data.json.userAcc[i].child_id == null){
-                                        html += `${data.json.userAcc[i].parent_id.userName}/-`
-                                    }else{
-
-                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
-                                    }
-                                }
-                            }else{
-                                html += "<td>-</td>"
-                            }
-                        }else{
-                            html += `<td>0</td>`
-                            if(data.json.userAcc[i].parent_id){
-                                html += `<td>${data.json.userAcc[i].creditDebitamount}</td>`
-                                if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
-                                    if(data.json.userAcc[i].child_id == null){
-                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/-</td>`
-                                    }else{
-
-                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
-                                    }
-                                }else{
-                                    if(data.json.userAcc[i].child_id == null){
-                                        html += `<td>-/${data.json.userAcc[i].parent_id.userName}</td>`
-                                    }else{
-
-                                        html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
-                                    }
-                                }
-                            }else{
-                                html += `<td>${data.json.userAcc[i].creditDebitamount}</td><td>-</td>`
-                            }
+                        if(data.json.userAcc[i].transactionId){
+                            html += `<td>${data.json.userAcc[i].balance}</td>`
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
                         <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>`
@@ -2803,11 +2719,6 @@ socket.on('connect', () => {
                         <td>${count1 + i}</td>
                         <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
                         <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
-                        if(data.json.userAcc[i].stake){
-                            html += `<td>${data.json.userAcc[i].stake}</td>`
-                        }else{
-                            html += `<td>-</td>`
-                        }
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
                             <td>0</td>`
@@ -3278,14 +3189,7 @@ socket.on('connect', () => {
                         <td>${count1 + i}</td>
                         <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
                         <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
-                        if(data.json.userAcc[i].stake){
-                            html += `<td>${data.json.userAcc[i].stake}</td>`
-                        }else{
-                            html += `<td>-</td>`
-                        }
                         if(data.json.userAcc[i].creditDebitamount > 0){
-                            html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
-                            <td>0</td>`
                             if(data.json.userAcc[i].parent_id){
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
                                     if(data.json.userAcc[i].child_id == null){
@@ -3305,9 +3209,7 @@ socket.on('connect', () => {
                                 html += "<td>-</td>"
                             }
                         }else{
-                            html += `<td>0</td>`
                             if(data.json.userAcc[i].parent_id){
-                                html += `<td>${data.json.userAcc[i].creditDebitamount}</td>`
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
                                     if(data.json.userAcc[i].child_id == null){
                                         html += `<td>${data.json.userAcc[i].parent_id.userName}/-</td>`
@@ -3324,11 +3226,11 @@ socket.on('connect', () => {
                                     }
                                 }
                             }else{
-                                html += `<td>${data.json.userAcc[i].creditDebitamount}</td><td>-</td>`
+                                html += `<td>-</td>`
                             }
                         }
-                        html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>`
+                        html += `<td>${data.json.userAcc[i].balance - data.json.userAcc[i].creditDebitamount}</td>
+                        <td>${data.json.userAcc[i].creditDebitamount}</td><td>${data.json.userAcc[i].balance}</td>`
                         if(data.json.userAcc[i].Remark){
                             html += `<td>${data.json.userAcc[i].Remark}</td>`
                         }else{
@@ -3339,14 +3241,8 @@ socket.on('connect', () => {
                         <td>${count1 + i}</td>
                         <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
                         <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
-                        if(data.json.userAcc[i].stake){
-                            html += `<td>${data.json.userAcc[i].stake}</td>`
-                        }else{
-                            html += `<td>-</td>`
-                        }
                         if(data.json.userAcc[i].creditDebitamount > 0){
-                            html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
-                            <td>0</td>`
+                           
                             if(data.json.userAcc[i].parent_id){
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
                                     if(data.json.userAcc[i].child_id == null){
@@ -3365,9 +3261,7 @@ socket.on('connect', () => {
                                 html += "<td>-</td>"
                             }
                         }else{
-                            html += `<td>0</td>`
                             if(data.json.userAcc[i].parent_id){
-                                html += `<td>${data.json.userAcc[i].creditDebitamount}</td>`
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
                                     if(data.json.userAcc[i].child_id == null){
                                         html += `<td>${data.json.userAcc[i].parent_id.userName}/-</td>`
@@ -3383,11 +3277,11 @@ socket.on('connect', () => {
                                     }
                                 }
                             }else{
-                                html += `<td>${data.json.userAcc[i].creditDebitamount}</td><td>-</td>`
+                                html += `<td>-</td>`
                             }
                         }
-                        html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}"  data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>`
+                        html += `<td>${data.json.userAcc[i].balance - data.json.userAcc[i].creditDebitamount}</td>
+                        <td>${data.json.userAcc[i].creditDebitamount}</td><td>${data.json.userAcc[i].balance}</td>`
                         if(data.json.userAcc[i].Remark){
                             html += `<td>${data.json.userAcc[i].Remark}</td>`
                         }else{
@@ -3433,305 +3327,305 @@ socket.on('connect', () => {
     //     })
 
 
-        if(pathname == "/admin/reports"){
-            function downloadCSV(csvContent, fileName) {
-                const link = document.createElement('a');
-                const blob = new Blob([csvContent], { type: 'text/csv' });
+    if(pathname == "/admin/reports"){
+        function downloadCSV(csvContent, fileName) {
+            const link = document.createElement('a');
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+            }          
+
+        function convertToCSV(table) {
+            const rows = table.querySelectorAll('tr');
+            const csv = [];
+            
+            for (const row of rows) {
+                const rowData = [];
+                const columns = row.querySelectorAll('td, th');
                 
-                link.href = URL.createObjectURL(blob);
-                link.download = fileName;
-                link.click();
-              }          
-    
-            function convertToCSV(table) {
-                const rows = table.querySelectorAll('tr');
-                const csv = [];
-                
-                for (const row of rows) {
-                  const rowData = [];
-                  const columns = row.querySelectorAll('td, th');
-                  
-                  for (const column of columns) {
-                    rowData.push(column.innerText);
-                  }
-                  
-                  csv.push(rowData.join(','));
+                for (const column of columns) {
+                rowData.push(column.innerText);
                 }
                 
-                return csv.join('\n');
-              }
-    
-    
-            document.getElementById('downloadBtn').addEventListener('click', function() {
-                const table = document.getElementById('table12');             
-                if (table) {
-                  const csvContent = convertToCSV(table);
-                  downloadCSV(csvContent, 'report.csv');
-                }
-              });
-    
+                csv.push(rowData.join(','));
+            }
+            
+            return csv.join('\n');
+            }
 
-            $('.searchUser').keyup(function(){
-                // console.log('working')
-                if($(this).hasClass("searchUser")){
 
-                    // console.log($(this).val())
-                    if($(this).val().length >= 3 ){
-                        let x = $(this).val(); 
-                        // console.log(x)
-                        socket.emit("SearchACC", {x, LOGINDATA})
-                    }else{
-                        document.getElementById('search').innerHTML = ``
-                        document.getElementById("button").innerHTML = ''
-                    }
-                }
-            })
-        
-            $(document).on("click", ".next", function(e){
-                e.preventDefault()
-                let page = $(this).attr("id")
-                let x = $("#searchUser").val()
-                socket.emit("SearchACC", {x, LOGINDATA, page})
-            })
-    
-    
-            socket.on("ACCSEARCHRES", async(data)=>{
-                $('.wrapper').show()
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            const table = document.getElementById('table12');             
+            if (table) {
+                const csvContent = convertToCSV(table);
+                downloadCSV(csvContent, 'report.csv');
+            }
+            });
 
-                // console.log(data, 565464)
-                let html = ``
-                if(data.page === 1){
-                    for(let i = 0; i < data.user.length; i++){
-                        html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
-                    }
-                    document.getElementById('search').innerHTML = html
-                    document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-                }else if(data.page === null){
-                    document.getElementById("button").innerHTML = ``
+
+        $('.searchUser').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchUser")){
+
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    socket.emit("SearchACC", {x, LOGINDATA})
                 }else{
-                    html = document.getElementById('search').innerHTML
-                    for(let i = 0; i < data.user.length; i++){
-                        html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
-                    }
-                    document.getElementById('search').innerHTML = html
-                    document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+                    document.getElementById('search').innerHTML = ``
+                    document.getElementById("button").innerHTML = ''
                 }
-            })
+            }
+        })
     
-            let searchU 
-            let SUSER
-            let fromDate
-            let toDate
-            let fGame
-            let fBets
-            let filterData = {}
-            // $(".searchUser").on('input', function(e){
-            //     var $input = $(this),
-            //         val = $input.val();
-            //         var listItems = document.getElementsByTagName("li");
-            //     for (var i = 0; i < listItems.length; i++) {
-            //         if (listItems[i].textContent === val) {
-            //             match = ($(this).val() === val);
-            //           break; 
-            //         }else{
-            //             match = false
-            //         }
-            //       }
-    
-            //         if(match){
-            //             // console.log(match.text())
-            //             filterData = {}
-            //             filterData.userName = val
-            //             $('.pageId').attr('data-pageid','1')
-            //             socket.emit('userBetDetail',{filterData,LOGINDATA,page:0})
-            //         }
-            // })
-    
-    
-            $('#fGame,#fBets,#fromDate,#toDate').change(function(){
-                let userName = $('.searchUser').val()
-                fromDate = $('#fromDate').val()
-                toDate = $('#toDate').val()
-                fGame = $('#fGame').val()
-                fBets = $('#fBets').val()
-                data.page = 0;
-                // let fromDate 
-                // let toDate
-                if(fromDate != ''  && toDate != '' ){
-                    // filterData.date = {$gte : new Date(fromDate), $lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+        $(document).on("click", ".next", function(e){
+            e.preventDefault()
+            let page = $(this).attr("id")
+            let x = $("#searchUser").val()
+            socket.emit("SearchACC", {x, LOGINDATA, page})
+        })
+
+
+        socket.on("ACCSEARCHRES", async(data)=>{
+            $('.wrapper').show()
+
+            // console.log(data, 565464)
+            let html = ``
+            if(data.page === 1){
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }else if(data.page === null){
+                document.getElementById("button").innerHTML = ``
+            }else{
+                html = document.getElementById('search').innerHTML
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }
+        })
+
+        let searchU 
+        let SUSER
+        let fromDate
+        let toDate
+        let fGame
+        let fBets
+        let filterData = {}
+        // $(".searchUser").on('input', function(e){
+        //     var $input = $(this),
+        //         val = $input.val();
+        //         var listItems = document.getElementsByTagName("li");
+        //     for (var i = 0; i < listItems.length; i++) {
+        //         if (listItems[i].textContent === val) {
+        //             match = ($(this).val() === val);
+        //           break; 
+        //         }else{
+        //             match = false
+        //         }
+        //       }
+
+        //         if(match){
+        //             // console.log(match.text())
+        //             filterData = {}
+        //             filterData.userName = val
+        //             $('.pageId').attr('data-pageid','1')
+        //             socket.emit('userBetDetail',{filterData,LOGINDATA,page:0})
+        //         }
+        // })
+
+
+        $('#fGame,#fBets,#fromDate,#toDate').change(function(){
+            let userName = $('.searchUser').val()
+            fromDate = $('#fromDate').val()
+            toDate = $('#toDate').val()
+            fGame = $('#fGame').val()
+            fBets = $('#fBets').val()
+            data.page = 0;
+            // let fromDate 
+            // let toDate
+            if(fromDate != ''  && toDate != '' ){
+                // filterData.date = {$gte : new Date(fromDate), $lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                fromDate = new Date(fromDate)
+                toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+
+            }else{
+                if(fromDate != '' ){
+                    // filterData.date = {$gte : new Date(fromDate)}
                     fromDate = new Date(fromDate)
+                }
+                if(toDate != '' ){
+                    // filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
                     toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
-
-                }else{
-                    if(fromDate != '' ){
-                        // filterData.date = {$gte : new Date(fromDate)}
-                        fromDate = new Date(fromDate)
-                    }
-                    if(toDate != '' ){
-                        // filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
-                        toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
-                    }
                 }
-                if(userName != ''){
-                    filterData.userName = userName
-                }else{
-                    // filterData.userName = LOGINDATA.LOGINUSER.userName
-                }
-                filterData.betType = fGame
-                filterData.status = fBets
-                data.filterData = filterData
-                data.LOGINDATA = LOGINDATA
-                data.fromDate = fromDate
-                data.toDate = toDate
-                // console.log(data)
-                socket.emit('userBetDetail',data)
-    
-            })
+            }
+            if(userName != ''){
+                filterData.userName = userName
+            }else{
+                // filterData.userName = LOGINDATA.LOGINUSER.userName
+            }
+            filterData.betType = fGame
+            filterData.status = fBets
+            data.filterData = filterData
+            data.LOGINDATA = LOGINDATA
+            data.fromDate = fromDate
+            data.toDate = toDate
+            // console.log(data)
+            socket.emit('userBetDetail',data)
 
-            $(document).on("click", ".searchList", function(){
-                // console.log("working")
-                // console.log(this.textContent)
+        })
 
-                document.getElementById("searchUser").value = this.textContent
-                filterData = {}
-                filterData.userName = this.textContent
-                fromDate = $('#fromDate').val()
-                toDate = $('#toDate').val()
-                fGame = $('#fGame').val()
-                fBets = $('#fBets').val()
-                data.page = 0;
-                if(fromDate != ''  && toDate != '' ){
-                    // filterData.date = {$gte : new Date(fromDate), $lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+        $(document).on("click", ".searchList", function(){
+            // console.log("working")
+            // console.log(this.textContent)
+
+            document.getElementById("searchUser").value = this.textContent
+            filterData = {}
+            filterData.userName = this.textContent
+            fromDate = $('#fromDate').val()
+            toDate = $('#toDate').val()
+            fGame = $('#fGame').val()
+            fBets = $('#fBets').val()
+            data.page = 0;
+            if(fromDate != ''  && toDate != '' ){
+                // filterData.date = {$gte : new Date(fromDate), $lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                fromDate = new Date(fromDate)
+                toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+
+            }else{
+                if(fromDate != '' ){
+                    // filterData.date = {$gte : new Date(fromDate)}
                     fromDate = new Date(fromDate)
+                }
+                if(toDate != '' ){
+                    // filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
                     toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
-
-                }else{
-                    if(fromDate != '' ){
-                        // filterData.date = {$gte : new Date(fromDate)}
-                        fromDate = new Date(fromDate)
-                    }
-                    if(toDate != '' ){
-                        // filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
-                        toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
-                    }
                 }
-                filterData.betType = fGame
-                filterData.status = fBets
-                data.filterData = filterData
-                data.LOGINDATA = LOGINDATA
-                data.fromDate = fromDate
-                data.toDate = toDate
+            }
+            filterData.betType = fGame
+            filterData.status = fBets
+            data.filterData = filterData
+            data.LOGINDATA = LOGINDATA
+            data.fromDate = fromDate
+            data.toDate = toDate
 
-                $('.wrapper').hide()
-                socket.emit('userBetDetail',data)
-                
-            })
+            $('.wrapper').hide()
+            socket.emit('userBetDetail',data)
+            
+        })
 
-            $('#load-more').click(function(e){
-                fromDate = $('#fromDate').val()
-                toDate = $('#toDate').val()
-                fGame = $('#fGame').val()
-                fBets = $('#fBets').val()
-                let page = parseInt($('.rowId').attr('data-rowid'));
-                $('.rowId').attr('data-rowid',page + 1)
-                let data = {}
-                let userName = $('.searchUser').val()
-                if(userName == ''){
-                    // filterData.userName = LOGINDATA.LOGINUSER.userName
-                }else{
-                    filterData.userName = userName
-                }
-                if(fromDate != ''  && toDate != '' ){
-                    // filterData.date = {$gte : new Date(fromDate), $lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+        $('#load-more').click(function(e){
+            fromDate = $('#fromDate').val()
+            toDate = $('#toDate').val()
+            fGame = $('#fGame').val()
+            fBets = $('#fBets').val()
+            let page = parseInt($('.rowId').attr('data-rowid'));
+            $('.rowId').attr('data-rowid',page + 1)
+            let data = {}
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                // filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
+            }
+            if(fromDate != ''  && toDate != '' ){
+                // filterData.date = {$gte : new Date(fromDate), $lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
+                fromDate = new Date(fromDate)
+                toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+
+            }else{
+                if(fromDate != '' ){
+                    // filterData.date = {$gte : new Date(fromDate)}
                     fromDate = new Date(fromDate)
+                }
+                if(toDate != '' ){
+                    // filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
                     toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
-
-                }else{
-                    if(fromDate != '' ){
-                        // filterData.date = {$gte : new Date(fromDate)}
-                        fromDate = new Date(fromDate)
-                    }
-                    if(toDate != '' ){
-                        // filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
-                        toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
-                    }
                 }
-                filterData.betType = fGame
-                filterData.status = fBets
-                data.filterData = filterData;
-                data.page = page
-                data.LOGINDATA = LOGINDATA
-                data.fromDate = fromDate
-                data.toDate = toDate
-                console.log(data)
-                socket.emit('userBetDetail',data)
-            })
+            }
+            filterData.betType = fGame
+            filterData.status = fBets
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            data.fromDate = fromDate
+            data.toDate = toDate
+            console.log(data)
+            socket.emit('userBetDetail',data)
+        })
+
     
-      
-             
+            
 
-            let count = 11
-            socket.on('userBetDetail',(data) => {
-                if(data.page === 0){
-                    count = 1
-                }
-                let page = data.page
-                let bets = data.ubDetails;
-                let html = '';
-                 for(let i = 0; i < bets.length; i++){
-                     let date = new Date(bets[i].date)
-                    if((i%2)==0){
-                        html += `<tr style="text-align: center;" class="blue">`
-                    }else{
-                        html += `<tr style="text-align: center;" >`
-                    }
-                    html += `<td>${i + count}</td>
-                    <td>${bets[i].userName}</td>
-                    <td>${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}</td>
-                    <td>${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>`
-                    if(bets[i].match){
-                        html += `<td>-</td>
-                        <td>${bets[i].match}</td>
-                        <td>${bets[i].marketName}</td>
-                        <td>${bets[i].selectionName}</td>
-                        <td>${bets[i].oddValue}</td>`
-                    }else{
-                        html += `<td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>`
-                    }
-                    html += `
-                    <td>${bets[i].status}</td>
-                    <td>${bets[i].Stake}</td>
-                    <td>${bets[i].returns}</td>
-                    <td>${bets[i].transactionId}</td>
-                    <td>${bets[i].event}</td></tr>`
-                }
-                count += 10
-                if(data.page == 0){
-
-                    if(bets.length == 0){
-                        $('#load-more').hide()
-                        html = `<tr class="empty_table"><td>No record found</td></tr>`
-                    }
-                    $('.new-body').html(html)
-                    if(!(bets.length < 10)){
-                        document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
-                    }
+        let count = 11
+        socket.on('userBetDetail',(data) => {
+            if(data.page === 0){
+                count = 1
+            }
+            let page = data.page
+            let bets = data.ubDetails;
+            let html = '';
+                for(let i = 0; i < bets.length; i++){
+                    let date = new Date(bets[i].date)
+                if((i%2)==0){
+                    html += `<tr style="text-align: center;" class="blue">`
                 }else{
-                    if(bets.length == 0){
-                        $('#load-more').hide()
-                    }      
-                    $('.new-body').append(html)   
-                    if((bets.length < 10)){
-                        document.getElementById('load-more').innerHTML = ""
-                    }
+                    html += `<tr style="text-align: center;" >`
                 }
-            })
-    
-        }
+                html += `<td>${i + count}</td>
+                <td>${bets[i].userName}</td>
+                <td>${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}</td>
+                <td>${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>`
+                if(bets[i].match){
+                    html += `<td>-</td>
+                    <td>${bets[i].match}</td>
+                    <td>${bets[i].marketName}</td>
+                    <td>${bets[i].selectionName}</td>
+                    <td>${bets[i].oddValue}</td>`
+                }else{
+                    html += `<td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>`
+                }
+                html += `
+                <td>${bets[i].status}</td>
+                <td>${bets[i].Stake}</td>
+                <td>${bets[i].returns}</td>
+                <td>${bets[i].transactionId}</td>
+                <td>${bets[i].event}</td></tr>`
+            }
+            count += 10
+            if(data.page == 0){
+
+                if(bets.length == 0){
+                    $('#load-more').hide()
+                    html = `<tr class="empty_table"><td>No record found</td></tr>`
+                }
+                $('.new-body').html(html)
+                if(!(bets.length < 10)){
+                    document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
+                }
+            }else{
+                if(bets.length == 0){
+                    $('#load-more').hide()
+                }      
+                $('.new-body').append(html)   
+                if((bets.length < 10)){
+                    document.getElementById('load-more').innerHTML = ""
+                }
+            }
+        })
+
+    }
 
         
     // }
