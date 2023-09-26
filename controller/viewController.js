@@ -872,22 +872,12 @@ exports.adminaccount = catchAsync(async(req, res, next) => {
 })
 exports.useracount = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
-    // console.log(currentUser)
-    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement?id=' + currentUser._id 
-    fetch(fullUrl, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ` + req.token }
-    }).then(res => res.json())
-    .then(json =>{ 
-        // console.log(json)
-        const data = json.userAcc
-        res.status(200).render('./userAccountStatement/userAccountStatment',{
+    res.status(200).render('./userAccountStatement/userAccountStatment',{
         title:"User Account Statement",
         me:currentUser,
-        data,
+        data:[],
         currentUser
     })
-});
 
     
 })
