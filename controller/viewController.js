@@ -1389,6 +1389,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
             if(item.eventData.type == 'IN_PLAY'){
                 let stream = await Stream.findOne({sportId:sportId,eventId:item.eventData.eventId})
                 let liveStream = await liveStreameData(item.eventData.channelId)
+                console.log(liveStream,'liveStrem')
                 let status;
                 let url;
                 if(stream){
@@ -1405,7 +1406,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
                             } else {
                                 console.log("No 'src' attribute found in the iframe tag.");
                             }
-                            // console.log(src, 123)
+                            console.log(url, 123)
                         }
                     }
                     eventList.push({eventId:item.eventData.eventId,created_on:item.eventData.time,eventName:item.eventData.name,status,url})
