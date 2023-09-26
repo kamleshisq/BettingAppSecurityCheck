@@ -1696,7 +1696,7 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
     })
     .then(res =>res.json())
     .then(result => {
-        console.log(result)
+        console.log(result, "+==> RESULT")
         res.status(200).json({
             result
         })
