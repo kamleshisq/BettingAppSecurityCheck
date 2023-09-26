@@ -79,7 +79,7 @@ module.exports = () => {
                 childAccStatement.userName = newUser.userName
                 childAccStatement.role_type = newUser.role_type
                 // childAccStatement.Remark = req.body.remark
-                const accStatementChild = await accountStatement.create(childAccStatement)
+                const accStatementChild = await accModel.create(childAccStatement)
                 if(!accStatementChild){
                     // return next(new AppError("Ops, Something went wrong While Fund Debit Please try again later", 500))
                     console.log('Not Working')
@@ -96,7 +96,7 @@ module.exports = () => {
                 ParentAccStatement.userName = parentUser.userName;
                 ParentAccStatement.role_type = parentUser.role_type
                 // ParentAccStatement.Remark = req.body.remark
-                const accStatementparent = await accountStatement.create(ParentAccStatement)
+                const accStatementparent = await accModel.create(ParentAccStatement)
                 if(!accStatementparent){
                     console.log('Not Working')
                     break;
