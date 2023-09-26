@@ -10482,6 +10482,7 @@ socket.on('connect', () => {
                         let team2data = 0
                         // console.log(data[i].selections[0].selectionName.toLowerCase(), team1.toLowerCase)
                         if(data[i].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
+                            console.log("2121222122121")
                             team1data = data[i].selections[0].totalAmount
                             sumOfTeamA += team1data
                             if(data[i].selections[1]){
