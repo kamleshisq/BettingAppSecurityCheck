@@ -11395,7 +11395,7 @@ socket.on('connect', () => {
 
     }
 
-    if(pathname == '/admin/streammanagement'){
+    if(pathname == '/admin/streammanagement' || pathname.startsWith('/admin/streammanagement/event')){
         $('.game-analysis-heading-from').submit(function(e){
             e.preventDefault()
             let form = $(this)[0];
