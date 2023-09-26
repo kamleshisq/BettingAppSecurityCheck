@@ -13,6 +13,7 @@ const sportData = require('../utils/getSportAndCricketList');
 module.exports = () => {
     cron.schedule('*/10 * * * * *', async() => { 
         try{
+            let MarketIds = []
             console.log('betCrone')
             let sportData1 = await sportData()
             const cricket = sportData1[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
@@ -20,10 +21,11 @@ module.exports = () => {
             // console.log(LiveCricket)
             for(gameList in cricket){
                 if(cricket[gameList].marketList.match_odd != null){
-                    console.log(cricket[gameList].marketList.match_odd)
+                    // console.log(cricket[gameList].marketList.match_odd)
+                    MarketIds.push(cricket[gameList].marketList.match_odd.marketId)
                 }
             }
-
+            console.log(MarketIds)
         }catch(err){
             console.log(err)
         }
