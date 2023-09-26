@@ -39,14 +39,14 @@
                     <%
                     var date = new Date(eventList[i].created_on)
                     %>
-                    <tr data-id="<%=eventList[i].eventId%>" id="row-<%= i + 1%>">
+                    <tr data-id="<%=JSON.parse(eventList[i])%>" id="row-<%= i + 1%>">
                     <td><%= i + 1%></td>
                     <td class="date-time"><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + " "+ date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
                     <td><%=eventList[i].eventName%></td>
                     <td><%=eventList[i].url%></td>
                     <td>
                         <div class="btn-group">
-                        <button class="btn delete">Edit </button>
+                            <button class="btn-filter editStrem" data-bs-toggle="modal" data-bs-target="#myModaladduser">Edit Stream</button>
                         </div>
                     </td>
                     </tr>
@@ -76,11 +76,20 @@
         <h4 class="modal-title" style="color: #fff;">Edit Stream</h4>
       </div>
       <div class="modal-body">
-        <form class="form-data">
+        <form class="form-data editStreamForm">
           <div class="row">
             <div class="col">
-              <label for="">Amounts</label>
-              <input type="text" class="form-control ml0" placeholder="1000000" name="email">
+              <label for="">Stream Link</label>
+              <input type="text" class="form-control ml0" placeholder="Stream Link" name="url">
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col on-off-btn-section">
+              <label for="check">Status</label>
+              <span class="on-off">OFF<label class="switch">
+                <input type="checkbox"  name="status">
+                <span class="slider round"></span>
+                </label>&nbsp; ON</span>
             </div>
           </div>
           <button type="button" class="btn-submit mt-3">AddFunds &nbsp; <img src="../images/sub.png" alt=""></button>
