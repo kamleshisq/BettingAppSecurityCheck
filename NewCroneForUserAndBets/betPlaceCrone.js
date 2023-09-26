@@ -20,7 +20,6 @@ module.exports = () => {
             let sportData1 = await sportData()
             const cricket = sportData1[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
             // let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
-            // console.log(LiveCricket)
             for(gameList in cricket){
                 if(cricket[gameList].marketList.match_odd != null){
                     let data = {
@@ -36,9 +35,6 @@ module.exports = () => {
                 }
             }
             const result = await marketDetailsBymarketID(MarketIds)
-            // console.log(betDetailsArray)
-            console.log(result.data.items)
-            console.log(result.data.items[0])
             for(i in result.data.items){
                 let data = betDetailsArray.find(items => items.market == result.data.items[i].market_id)
                 const dataIndex = betDetailsArray.findIndex((item) => item.market === result.data.items[i].market_id);
@@ -49,8 +45,20 @@ module.exports = () => {
                     betDetailsArray[dataIndex] = data
                 }
             }
-            let user =  await userModel.find({userName:'qMGvgT8'})
-            console.log(user, "USER")
+            let users =  await userModel.find({userName:'qMGvgT8'})
+            for(user in users){
+                let LOGINDATA = {
+                    LOGINUSER : users[user]
+                }
+                for(j in betDetailsArray){
+                    let data = {
+                        data : betDetailsArray[j],
+                        LOGINDATA
+                    }
+
+                    console.log(data)
+                }
+            }
             
         }catch(err){
             console.log(err)
