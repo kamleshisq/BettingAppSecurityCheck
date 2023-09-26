@@ -11450,7 +11450,7 @@ socket.on('connect', () => {
         })
 
         $(document).on('click','.editStrem',function(e){
-            let data = $(this).closest('tr').attr('data-id')
+            let data = JSON.parse($(this).closest('tr').attr('data-id'))
             console.log(data)
             let form = $('.editStreamForm');
             form.find('input[name="url"]').val(data.url)
