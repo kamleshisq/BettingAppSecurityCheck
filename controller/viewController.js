@@ -826,7 +826,7 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
     // })
 })
 
-exports.useracount = catchAsync(async(req, res, next) => {
+exports.myaccount = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
     // console.log(currentUser)
     var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement?id=' + currentUser._id 
@@ -838,6 +838,45 @@ exports.useracount = catchAsync(async(req, res, next) => {
         // console.log(json)
         const data = json.userAcc
         res.status(200).render('./userAccountStatement/useracount',{
+        title:"User Account Statement",
+        me:currentUser,
+        data,
+        currentUser
+    })
+});
+
+    
+})
+exports.adminaccount = catchAsync(async(req, res, next) => {
+    const currentUser = req.currentUser
+    // console.log(currentUser)
+    let childUsersArr = []
+    const childUsers = await User.find({parentUsers:req.currentUser._id,roleName: {$ne:'user'}})
+    childUsers.map(ele => {
+        childUsersArr.push(ele._id)
+    })
+    const data = await accountStatement.find({user_id:{$in:childUsersArr}})
+    res.status(200).render('./userAccountStatement/adminAccountStatment',{
+        title:"User Account Statement",
+        me:currentUser,
+        data,
+        currentUser
+    })
+
+    
+})
+exports.useracount = catchAsync(async(req, res, next) => {
+    const currentUser = req.currentUser
+    // console.log(currentUser)
+    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement?id=' + currentUser._id 
+    fetch(fullUrl, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ` + req.token }
+    }).then(res => res.json())
+    .then(json =>{ 
+        // console.log(json)
+        const data = json.userAcc
+        res.status(200).render('./userAccountStatement/userAccountStatment',{
         title:"User Account Statement",
         me:currentUser,
         data,
