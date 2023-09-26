@@ -1,4 +1,5 @@
 const app = require('./app');
+const mongoose = require('mongoose')
 const util = require('util');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
@@ -437,7 +438,7 @@ io.on('connection', (socket) => {
             let Logs = await AccModel.aggregate([
                 {
                     $match:{
-                        user_id:"64e5c3002ceb9abbb4e4d341"
+                        user_id:data.id
                     }
                 },
                 // {
