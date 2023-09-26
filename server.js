@@ -450,6 +450,9 @@ io.on('connection', (socket) => {
                     }
                 },
                 {
+                    $unwind:"$betDetails"
+                },
+                {
                     $limit:10
                 }
             ])
