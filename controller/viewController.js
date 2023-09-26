@@ -1368,6 +1368,7 @@ exports.getStreamManagementPage = catchAsync(async(req, res, next) => {
 exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
     const sportData = await getCrkAndAllData()
     const sportId = req.query.sportId;
+    const me = req.currentUser
     let cricketEvents;
     let footballEvents;
     let tennisEvents;
