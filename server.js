@@ -438,7 +438,7 @@ io.on('connection', (socket) => {
             let Logs = await AccModel.aggregate([
                 {
                     $match:{
-                        user_id: { $eq: { $toObjectId: data.id } } 
+                        user_id: { $eq: { $toObjectId: "65111b3265008722e27a7bc2" } } 
                     }
                 },
                 // {
