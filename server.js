@@ -456,16 +456,17 @@ io.on('connection', (socket) => {
                     $limit:10
                 }
             ])
-            console.log(Logs)
+            json.userAcc = Logs
 
-            socket.emit('Acc2', {json,page:data.page,Logs,data})
             // account  = await AccModel.find({user_id:data.id})
             
             // fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement1?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
         }else{
             json.userAcc = [] 
-
+            
         }
+        json.status = 'success'
+        socket.emit('Acc2', {json,page:data.page})
 
     })
 
