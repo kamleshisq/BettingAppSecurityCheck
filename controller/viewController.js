@@ -1438,6 +1438,13 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
             })
         })
 
+    }else{
+        res.status(200).render("./streamManagement/events",{
+            title:"Stream Management",
+            me,
+            currentUser:me,
+            eventList
+        })
     }
 
 
