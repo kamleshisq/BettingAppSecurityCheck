@@ -428,7 +428,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("AccountScroll2", async(data)=>{
-        // console.log(data)
+        console.log(data)
         let fullUrl
         let account;
         let json  = {}
@@ -440,14 +440,14 @@ io.on('connection', (socket) => {
                         user_id:data.id
                     }
                 },
-                {
-                    $lookup:{
-                        from:'betmodels',
-                        localField:'transactionId',
-                        foreignField:'transactionId',
-                        as:'betDetails'
-                    }
-                },
+                // {
+                //     $lookup:{
+                //         from:'betmodels',
+                //         localField:'transactionId',
+                //         foreignField:'transactionId',
+                //         as:'betDetails'
+                //     }
+                // },
                 {
                     $limit:10
                 }
