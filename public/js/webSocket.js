@@ -11458,7 +11458,7 @@ socket.on('connect', () => {
             form.find('input[name="sportId"]').val(data.sportId)
             form.find('input[name="eventName"]').val(data.eventName)
             form.find('input[name="sportName"]').val(data.sportName)
-            if(data.status){
+            if(data.status == true){
                 form.find('input[name = "status"]').attr("checked", "checked");
                 form.find('input[name = "status"]').parent('.switch').addClass('on');
             }else{
