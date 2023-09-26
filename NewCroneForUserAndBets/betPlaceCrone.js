@@ -37,7 +37,7 @@ module.exports = () => {
             }
             const result = await marketDetailsBymarketID(MarketIds)
             // console.log(betDetailsArray)
-            console.log(result)
+            console.log(result.data)
             
         }catch(err){
             console.log(err)
