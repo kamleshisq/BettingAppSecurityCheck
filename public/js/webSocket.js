@@ -11455,7 +11455,7 @@ socket.on('connect', () => {
             console.log(data)
             let form = $('.editStreamForm');
             form.find('input[name="url"]').val(data.url)
-            form.find('input[name="eventId"]').val(data.eventId)
+            form.find('input[name="eventId"]').val((data.eventId).toString())
             form.find('input[name="sportId"]').val(data.sportId)
             form.find('input[name="eventName"]').val(data.eventName)
             form.find('input[name="sportName"]').val(data.sportName)
