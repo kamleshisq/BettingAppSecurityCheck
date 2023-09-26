@@ -38,6 +38,14 @@ module.exports = () => {
             const result = await marketDetailsBymarketID(MarketIds)
             // console.log(betDetailsArray)
             console.log(result.data.items)
+            console.log(result.data.items[0])
+            // for(i in result.data.items){
+            //     let data = betDetailsArray.find(items => items.market == result.data.items[i].market_id)
+            //     const dataIndex = betDetailsArray.findIndex((item) => item.market === result.data.items[i].market_id);
+            //     if(data){
+            //         data.odds = 
+            //     }
+            // }
             
         }catch(err){
             console.log(err)
