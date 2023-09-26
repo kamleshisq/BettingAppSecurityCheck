@@ -11395,7 +11395,7 @@ socket.on('connect', () => {
 
     }
 
-    if(pathname == '/admin/streammanagement'){
+    if(pathname == '/admin/streammanagement' || pathname.startsWith('/admin/streammanagement/event')){
         $('.game-analysis-heading-from').submit(function(e){
             e.preventDefault()
             let form = $(this)[0];
@@ -11450,7 +11450,8 @@ socket.on('connect', () => {
         })
 
         $(document).on('click','.editStrem',function(e){
-            let data = $(this).closest('tr').attr('data-id')
+            let data = JSON.parse($(this).closest('tr').attr('data-id'))
+            console.log(data)
             let form = $('.editStreamForm');
             form.find('input[name="url"]').val(data.url)
             if(data.status){
