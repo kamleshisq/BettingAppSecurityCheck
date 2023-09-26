@@ -39,7 +39,9 @@ router.get("/changeCurrentUserPass", authController.isProtected, viewController.
 router.get("/changeUserPassword", authController.isProtected, viewController.updateUserPass);
 router.get("/admin/reports", authController.isProtected, authController.isAdmin,viewController.ReportPage)
 router.get("/admin/gamereport", authController.isProtected, authController.isAdmin,viewController.gameReportPage)
-router.get("/admin/useracount", authController.isProtected, authController.isAdmin,viewController.useracount)
+router.get("/admin/myaccount", authController.isProtected, authController.isAdmin,viewController.myaccount)
+router.get("/admin/adminaccount", authController.isProtected, authController.isAdmin,viewController.adminaccount)
+router.get("/admin/useraccount", authController.isProtected, authController.isAdmin,viewController.useracount)
 router.get("/admin/userhistoryreport", authController.isProtected, authController.isAdmin,viewController.userhistoryreport)
 router.get("/admin/plreport", authController.isProtected, authController.isAdmin,viewController.plreport)
 router.get("/admin/roleManagement", authController.isProtected, authController.isAdmin,viewController.roleManagement)
