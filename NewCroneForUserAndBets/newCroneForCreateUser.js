@@ -98,6 +98,8 @@ exports.create1000User = () => {
                     console.log('Not Working')
                     break;
                 }
+
+                console.log(newUser, "+==> NewUser")
             }
     })
 }
