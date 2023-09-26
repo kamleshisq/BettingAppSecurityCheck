@@ -3235,6 +3235,15 @@ io.on('connection', (socket) => {
                         }
                     },
                 },
+                // {
+                //     $unwind: "$selections"
+                // },
+                {
+                    $sort: {
+                        "userName": 1, 
+                        // "selections.selectionName": 1 
+                    }
+                }
             ]);
             
             console.log(Bets);
