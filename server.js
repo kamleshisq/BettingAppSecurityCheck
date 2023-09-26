@@ -3179,7 +3179,7 @@ io.on('connection', (socket) => {
                                 $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
                             }
                         },
-                        Stake: { $sum: "$Stake" } 
+                        Stake: { $sum: "$Stake" }
                     },
                 },
                 {
@@ -3190,7 +3190,7 @@ io.on('connection', (socket) => {
                                 selectionName: "$_id.selectionName",
                                 totalAmount: "$totalAmount",
                                 matchName: "$_id.matchName",
-                                Stake: "$Stake" 
+                                Stake: "$Stake"
                             },
                         },
                     },
@@ -3199,14 +3199,40 @@ io.on('connection', (socket) => {
                     $project: {
                         _id: 0,
                         userName: "$_id",
-                        selections: 1,
+                        selections: {
+                            $map: {
+                                input: "$selections",
+                                as: "selection",
+                                in: {
+                                    selectionName: "$$selection.selectionName",
+                                    totalAmount: {
+                                        $subtract: ["$$selection.totalAmount", {
+                                            $sum: {
+                                                $filter: {
+                                                    input: "$selections",
+                                                    as: "subSelection",
+                                                    cond: {
+                                                        $ne: ["$$subSelection.selectionName", "$$selection.selectionName"]
+                                                    }
+                                                }
+                                            }
+                                        }]
+                                    },
+                                    matchName: "$$selection.matchName",
+                                    Stake: "$$selection.Stake"
+                                }
+                            }
+                        }
                     },
                 },
             ]);
+            
+            console.log(Bets);
+            
 
-            for (bet in Bets){
-                console.log(bet)
-            }
+            // for (bet in Bets){
+            //     for(selcet in Bets[bet].selections){}
+            // }
             
             
             
