@@ -2650,6 +2650,8 @@ socket.on('connect', () => {
                 
                 data.LOGINDATA = LOGINDATA
             }
+
+            console.log(data)
             socket.emit('AccountScroll2',data)        
         })
 
@@ -2706,7 +2708,13 @@ socket.on('connect', () => {
                         <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
                         if(data.json.userAcc[i].transactionId){
                             html += `<td>${data.json.userAcc[i].betDetails.event}</td>`
-                            html += `<td>${data.json.userAcc[i].betDetails.marketName}</td>`
+                            if(data.json.userAcc[i].betDetails.marketName){
+
+                                html += `<td>${data.json.userAcc[i].betDetails.marketName}</td>`
+                            }else{
+
+                                html += `<td>-</td>`
+                            }
                         }else{
                             html += `<td>-</td><td>-</td>`
 
@@ -2731,7 +2739,13 @@ socket.on('connect', () => {
                         <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
                         if(data.json.userAcc[i].transactionId){
                             html += `<td>${data.json.userAcc[i].betDetails.event}</td>`
-                            html += `<td>${data.json.userAcc[i].betDetails.marketName}</td>`
+                            if(data.json.userAcc[i].betDetails.marketName){
+
+                                html += `<td>${data.json.userAcc[i].betDetails.marketName}</td>`
+                            }else{
+
+                                html += `<td>-</td>`
+                            }
                         }else{
                             html += `<td>-</td><td>-</td>`
 
@@ -2756,7 +2770,9 @@ socket.on('connect', () => {
                 if(data.page == 0){
                     if(data.json.userAcc.length == 0){
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
-                        $('#load-more').hide()
+                    }else{
+                        $('#load-more').show()
+
                     }
                     $('tbody').html(html)
 
