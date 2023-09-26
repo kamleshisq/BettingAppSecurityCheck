@@ -11456,6 +11456,9 @@ socket.on('connect', () => {
             let form = $('.editStreamForm');
             form.find('input[name="url"]').val(data.url)
             form.find('input[name="eventId"]').val(data.eventId)
+            form.find('input[name="sportId"]').val(data.sportId)
+            form.find('input[name="eventName"]').val(data.eventName)
+            form.find('input[name="sportName"]').val(data.sportName)
             if(data.status){
                 form.find('input[name = "status"]').attr("checked", "checked");
                 form.find('input[name = "status"]').parent('.switch').addClass('on');
@@ -11471,7 +11474,20 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
-            console.log(data)
+            if(data.status){
+                data.status = true
+            }else{
+                data.status = false
+            }
+            data.date = new Date()
+            socket.emit('editStream',data)
+        })
+
+        socket.on('editStream',data =>{
+            if(data.status == 'success'){
+                alert('stream updated successfully')
+                location.reload(true)
+            }
         })
     }
 

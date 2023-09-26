@@ -3862,6 +3862,19 @@ io.on('connection', (socket) => {
             console.log(err)
         }
     })
+    socket.on('editStream',async(id) =>{
+        try{
+            let stream = await Stream.findOne({eventId:data.eventId})
+            if(stream){
+                await Stream.findOneAndUpdate({eventId:data.eventId},{url:data.url,status:data.status})
+            }else{
+                await Stream.create(data)
+            }
+            socket.emit('editStream',{status:'success'})
+        }catch(err){
+            console.log(err)
+        }
+    })
     
 })
 
