@@ -2435,7 +2435,7 @@ socket.on('connect', () => {
                 if($(this).val().length >= 3 ){
                     let x = $(this).val(); 
                     // console.log(x)
-                    socket.emit("SearchACC", {x, LOGINDATA})
+                    socket.emit("SearchACC1", {x, LOGINDATA})
                 }else{
                     document.getElementById('search').innerHTML = ``
                     document.getElementById("button").innerHTML = ''
@@ -2585,7 +2585,7 @@ socket.on('connect', () => {
 
 
         
-        socket.on("ACCSEARCHRES", async(data)=>{
+        socket.on("ACCSEARCHRES1", async(data)=>{
             // console.log(data, 565464)
             $('.wrapper').show()
             let html = ``
