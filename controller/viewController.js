@@ -1374,6 +1374,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
     let tennisEvents;
     let sportList;
     let eventList = [];
+    let sportName;
    
     let data = {};
 
@@ -1382,8 +1383,9 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
     }else{
         sportList = sportData[1].gameList.find(item => item.sportId == parseInt(sportId))
     }
-
+    
     if(sportList){
+        sportName = sportList.sport_name;
         let newSportList = sportList.eventList.map(async(item) => {
             if(item.eventData.type == 'IN_PLAY' && item.eventData.isTv == 1){
                 let stream = await Stream.findOne({sportId:sportId,eventId:item.eventData.eventId})
@@ -1409,7 +1411,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
                         }
                     
                     }
-                    eventList.push({eventId:item.eventData.eventId,created_on:item.eventData.created_on,eventName:item.eventData.name,status,url})
+                    eventList.push({eventId:item.eventData.eventId,sportId,created_on:item.eventData.created_on,eventName:item.eventData.name,sportName:sportName,status,url})
                 }else{
                     const src_regex = /src='([^']+)'/;
                     let match1
@@ -1422,7 +1424,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
                         }
                         // console.log(src, 123)
                     }
-                    eventList.push({eventId:item.eventData.eventId,created_on:item.eventData.created_on,eventName:item.eventData.name,status:true,url})
+                    eventList.push({eventId:item.eventData.eventId,sportId,created_on:item.eventData.created_on,eventName:item.eventData.name,sportName:sportName,status:true,url})
 
                 }
             }

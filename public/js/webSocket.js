@@ -11452,15 +11452,17 @@ socket.on('connect', () => {
 
         $(document).on('click','.editStrem',function(e){
             let data = JSON.parse($(this).closest('tr').attr('data-id'))
-            console.log(data)
             let form = $('.editStreamForm');
             form.find('input[name="url"]').val(data.url)
-            form.find('input[name="eventId"]').val(data.eventId)
-            if(data.status){
-                form.find('input[name = "status"]').attr("checked", "checked");
+            form.find('input[name="eventId"]').val((data.eventId).toString())
+            form.find('input[name="sportId"]').val(data.sportId)
+            form.find('input[name="eventName"]').val(data.eventName)
+            form.find('input[name="sportName"]').val(data.sportName)
+            if(data.status == true){
+                form.find('input[name = "status"]').prop('checked', true);
                 form.find('input[name = "status"]').parent('.switch').addClass('on');
             }else{
-                form.find('input[name = "status"]').attr("checked", "");
+                form.find('input[name = "status"]').prop('checked', false);
                 form.find('input[name = "status"]').parent('.switch').removeClass('on');
             }
 
@@ -11471,7 +11473,22 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
+            if(data.status){
+                data.status = true
+            }else{
+                data.status = false
+            }
+            data.date = new Date()
             console.log(data)
+            socket.emit('editStream',data)
+        })
+
+        socket.on('editStream',async(data) =>{
+            console.log(data)
+            if(data.status == 'success'){
+                alert('stream updated successfully')
+                location.reload(true)
+            }
         })
     }
 
