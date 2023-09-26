@@ -436,11 +436,11 @@ io.on('connection', (socket) => {
         if(data.id){
             // console.log()
             let Logs = await AccModel.aggregate([
-                {
-                    $match:{
-                        user_id: "65111b3265008722e27a7bc2"
-                    }
-                },
+                // {
+                //     $match:{
+                //         user_id: "65111b3265008722e27a7bc2"
+                //     }
+                // },
                 // {
                 //     $lookup:{
                 //         from:'betmodels',
