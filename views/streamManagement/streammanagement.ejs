@@ -18,8 +18,8 @@
               <div class="input-group">
                 <label>Select Event</label>
                 <select name="eventId" class="eventId" required>
-                <%for(let i = 0;i<sportList.eventList.length;i++){%>
-                  <option value="<%=sportList.eventList[i].eventData.eventId%>"><%=sportList.eventList[i].eventData.name%></option>
+                <%for(let i = 0;i<cricketList.eventList.length;i++){%>
+                  <option value="<%=cricketList.eventList[i].eventData.eventId%>"><%=cricketList.eventList[i].eventData.name%></option>
                 <%}%>
                 </select>
               </div>  
@@ -48,40 +48,32 @@
             <div class="data-table">
               <table>
                 <thead>
-                    <tr style="text-align: center;font-size: 11px;">
-                      <th>S.No</th>
-                      <th>Open Date</th>
-                      <th>Sport</th>
-                      <th>Event</th>
-                      <th>Stream Link</th>
-                      <th>Action</th>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Sport</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody class="new-body">
-                  <%if(streams.length > 0){%>
-                  <%for(let i = 0;i<streams.length;i++){%>
-                    <%
-                    var date = streams[i].date
-                    %>
-                    <tr data-id="<%=streams[i]._id%>" id="row-<%= i + 1%>">
-                    <td><%= i + 1%></td>
-                    <td class="date-time"><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + " "+ date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
-                    <td><%=streams[i].sportName%></td>
-                    <td><%=streams[i].eventName%></td>
-                    <td><%=streams[i].url%></td>
-                    <td>
-                      <div class="btn-group">
-                        <!-- <button class="btn edit">Edit </button> -->
-                        <button class="btn delete">Delete </button>
-                      </div>
-                    </td>
-                  </tr>
-                  <%}%>
-                  <%}else{%>
-                    <tr class="empty_table"><td>No record found</td></tr>
-                  <%}%>
+                    <% for(let i = 0; i < sportList.length; i++){%>
+                    <%if((i%2)==0){%>
+                    <tr>
+                        <%}else{%>
+                        <tr>
+                            <%}%>
+                            <td><%=i + 1%></td>
+                            <td><%=sportList[i].sport_name%></td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="series_list"> <a href="/admin/streammanagement/event?sportId=<%=sportList[i].sportId%>">Event List</a></button>
+                                </div>
+                            </td>
+                            <%}%>
+                        </tr>
+                    </tr>
                 </tbody>
-              </table>
+            </table>
+             
             </div>
         </div>
     </div>

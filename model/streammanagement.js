@@ -14,7 +14,8 @@ const streamemSchema = mongoose.Schema({
         type:String
     },
     date:Date,
-    url:String
+    url:String,
+    status:Boolean
 })
 
 const Stream = mongoose.model('Streammanagement',streamemSchema)

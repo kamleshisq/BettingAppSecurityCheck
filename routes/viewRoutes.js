@@ -52,6 +52,7 @@ router.get("/admin/commissionReport", authController.isProtected, authController
 router.get("/admin/whiteLableAnalysis", authController.isProtected, authController.isAdmin, authController.restrictToOperator("whiteLabelAnalysis"),viewController.WhiteLabelAnalysis);
 router.get("/admin/gameanalysis", authController.isProtected, authController.isAdmin, authController.restrictToOperator("gameAnalysis"),viewController.gameAnalysis);
 router.get("/admin/streammanagement", authController.isProtected, authController.isAdmin,viewController.getStreamManagementPage);
+router.get("/admin/streammanagement/event", authController.isProtected, authController.isAdmin,viewController.getStreamEventListPage);
 router.get("/admin/Notification", authController.isProtected, authController.isAdmin,  authController.restrictToOperator("notification"),viewController.getNotificationsPage);
 router.get("/admin/casinocontrol", authController.isProtected, authController.isAdmin,viewController.getCasinoControllerPage);
 router.get("/pp", viewController.promotion);
