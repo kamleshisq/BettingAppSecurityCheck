@@ -39,7 +39,7 @@
                     <%
                     var date = new Date(eventList[i].created_on)
                     %>
-                    <tr data-id="<%=JSON.parse(eventList[i])%>" id="row-<%= i + 1%>">
+                    <tr data-id="<%=JSON.stringify(eventList[i])%>" id="row-<%= i + 1%>">
                     <td><%= i + 1%></td>
                     <td class="date-time"><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + " "+ date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
                     <td><%=eventList[i].eventName%></td>
