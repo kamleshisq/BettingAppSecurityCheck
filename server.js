@@ -1295,8 +1295,8 @@ io.on('connection', (socket) => {
             data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
         }
-        // console.log(data.data)
-        let result = await placeBet(data)
+        console.log(data ,'++++++==>DATA')
+        // let result = await placeBet(data)
         let openBet = []
         if(data.pathname === "/exchange/multimarkets"){
             openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})
