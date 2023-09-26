@@ -39,13 +39,17 @@ module.exports = () => {
             // console.log(betDetailsArray)
             console.log(result.data.items)
             console.log(result.data.items[0])
-            // for(i in result.data.items){
-            //     let data = betDetailsArray.find(items => items.market == result.data.items[i].market_id)
-            //     const dataIndex = betDetailsArray.findIndex((item) => item.market === result.data.items[i].market_id);
-            //     if(data){
-            //         data.odds = 
-            //     }
-            // }
+            for(i in result.data.items){
+                let data = betDetailsArray.find(items => items.market == result.data.items[i].market_id)
+                const dataIndex = betDetailsArray.findIndex((item) => item.market === result.data.items[i].market_id);
+                if(data){
+                    data.odds = result.data.items[i].odds[0].backPrice1
+                    data.secId = result.data.items[i].odds[0].selectionId
+                    data.bettype2 = 'BACK'
+                    betDetailsArray[dataIndex] = data
+                }
+            }
+            console.log(betDetailsArray, "===++>>>betDetailsArray")
             
         }catch(err){
             console.log(err)
