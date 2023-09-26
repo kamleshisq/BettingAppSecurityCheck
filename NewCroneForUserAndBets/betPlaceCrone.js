@@ -49,7 +49,8 @@ module.exports = () => {
                     betDetailsArray[dataIndex] = data
                 }
             }
-            console.log(betDetailsArray, "===++>>>betDetailsArray")
+            let user =  await userModel.find({userName:'qMGvgT8'})
+            console.log(user, "USER")
             
         }catch(err){
             console.log(err)
