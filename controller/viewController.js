@@ -1384,7 +1384,6 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
     }
 
     if(sportList){
-
         let newSportList = sportList.eventList.map(async(item) => {
             if(item.eventData.type == 'IN_PLAY' && item.eventData.isTv == 1){
                 let stream = await Stream.findOne({sportId:sportId,eventId:item.eventData.eventId})
