@@ -6,6 +6,7 @@ const commissionRepportModel = require("../model/commissionReport");
 const netCommission = require("../model/netCommissionModel");
 const commissionModel = require("../model/CommissionModel");
 const commissionMarketModel = require("../model/CommissionMarketsModel");
+const User = require('../model/userModel');
 
 
 exports.create1000User = () => {
@@ -31,20 +32,72 @@ exports.create1000User = () => {
                 let x = generateString(7)
                 // console.log(x)
                 let data = {
-                    userName : x,
                     name : x,
+                    userName : x,
+                    role : "6492fe4fd09db28e00761694",
+                    whiteLabel : "TESTING",
+                    email: 'cronetestingUser@gmail.com',
+                    contact: '987654321',
                     password : "123456789",
                     passwordConfirm : "123456789",
-                    role : "648193c3cb86f71eede0b1fd",
-                    whiteLabel : "betbhaiTest",
+                    exposureLimit:1000,
                     role_type : 5,
                     roleName : "user",
-                    parent_id : "648193f1cb86f71eede0b201",
-                    parent_user_type_id : 1,
+                    parent_id : "65112c6806674741fbdd1172",
                     parentUsers : array
                 }
                 
-                await User.create(data)
+                let newUser = await User.create(data)
+                let parentUser = await User.findById("65112c6806674741fbdd1172")
+                newUser.balance = parseFloat(10000);
+                newUser.availableBalance = parseFloat(10000);
+                newUser.creditReference = parseFloat(10000);
+                parentUser.availableBalance = parseFloat(parentUser.availableBalance - 10000);
+                parentUser.downlineBalance = parseFloat(parentUser.downlineBalance) + parseFloat(10000);
+                const updatedChild = await User.findByIdAndUpdate(newUser.id, newUser,{
+                    new:true
+                });
+
+                const updatedparent =  await User.findByIdAndUpdate(parentUser.id, parentUser);
+                if(!updatedChild || !updatedparent){
+                    console.log("NOtworking")
+                    break;
+                }
+                let childAccStatement = {}
+                let ParentAccStatement = {}
+                let date = Date.now()
+                childAccStatement.child_id = newUser.id;
+                childAccStatement.user_id = newUser.id;
+                childAccStatement.parent_id = parentUser.id;
+                childAccStatement.description = 'Chips credited to ' + newUser.name + '(' + newUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
+                childAccStatement.creditDebitamount = parseFloat(10000);
+                childAccStatement.balance = newUser.availableBalance;
+                childAccStatement.date = date
+                childAccStatement.userName = newUser.userName
+                childAccStatement.role_type = newUser.role_type
+                // childAccStatement.Remark = req.body.remark
+                const accStatementChild = await accountStatement.create(childAccStatement)
+                if(!accStatementChild){
+                    // return next(new AppError("Ops, Something went wrong While Fund Debit Please try again later", 500))
+                    console.log('Not Working')
+                    break;
+                }
+
+                ParentAccStatement.child_id = newUser.id;
+                ParentAccStatement.user_id = parentUser.id;
+                ParentAccStatement.parent_id = parentUser.id;
+                ParentAccStatement.description = 'Chips credited to ' + newUser.name + '(' + newUser.userName + ') from parent user ' + parentUser.name + "(" + parentUser.userName + ")";
+                ParentAccStatement.creditDebitamount = -parseFloat(10000);
+                ParentAccStatement.balance = parentUser.availableBalance;
+                ParentAccStatement.date = date
+                ParentAccStatement.userName = parentUser.userName;
+                ParentAccStatement.role_type = parentUser.role_type
+                // ParentAccStatement.Remark = req.body.remark
+                const accStatementparent = await accountStatement.create(ParentAccStatement)
+                if(!accStatementparent){
+                    console.log('Not Working')
+                    break;
+                }
             }
     })
 }
