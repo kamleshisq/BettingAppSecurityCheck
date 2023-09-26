@@ -859,7 +859,7 @@ exports.adminaccount = catchAsync(async(req, res, next) => {
     .then(json =>{ 
         // console.log(json)
         const data = json.userAcc
-        res.status(200).render('./userAccountStatement/useracount',{
+        res.status(200).render('./userAccountStatement/adminAccountStatment',{
         title:"User Account Statement",
         me:currentUser,
         data,
