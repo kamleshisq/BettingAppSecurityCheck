@@ -10497,12 +10497,18 @@ socket.on('connect', () => {
                         }
                         html += `
                         <tr>
-                            <td>${data[i].userName}</td>
-                            <td>${team1data.toFixed(2)}</td>
-                            <td>${team2data.toFixed(2)}</td>
-                        </tr>
-
-                        `
+                            <td>${data[i].userName}</td>`
+                        if(team1data.toFixed(2) > 0){
+                            html += `<td class="red"> -${team1data.toFixed(2)}</td>`
+                        }else{
+                            html += `<td class="green"> ${team1data.toFixed(2) * -1}</td>`
+                        }
+                        
+                        if(team2data.toFixed(2) > 0){
+                            html += `<td class="red">-${team2data.toFixed(2)}</td></tr>`
+                        }else{
+                            html += `<td class="green">${team2data.toFixed(2) * -1}</td></tr>`
+                        }
                     }
                     html += `<tr>
                     <td>Total</td>
