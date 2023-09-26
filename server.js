@@ -761,6 +761,63 @@ io.on('connection', (socket) => {
         }
         socket.emit("ACCSEARCHRES", {user, page})
     })
+    socket.on("SearchACC1", async(data) => {
+        let page = data.page
+        if(!page){
+            page = 0
+        }
+        limit = 10
+        // console.log(data)
+        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        // console.log(roles)
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        // console.log(role_type, 123)
+        
+        var regexp = new RegExp(data.x);
+
+        let user = await User.aggregate([
+            {
+                $match:{
+                    userName:regexp,
+                    parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}},
+                    roleName:{$ne:'user'}
+                }
+            },
+            {
+                $sort:{
+                    userName:-1,
+                    _id:-1
+                }
+            },
+            {
+                $skip:(page*limit)
+            },{
+                $limit:limit
+            }
+        ])
+
+        // if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
+        //         user = await User.find({userName:regexp}).skip(page * limit).limit(limit)
+        // }else{
+        //         // let role_Type = {
+        //         //     $in:role_type
+        //         // }
+        //         // let xfiletr  = {}
+        //         // xfiletr.role_Type = role_Type
+        //         // xfiletr.userName = regexp
+        //         // console.log(data.filterData)
+        //         // console.log(xfiletr)
+        //         user = await User.find({ role_type:{$in: role_type}, userName: regexp, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}} }).skip(page * limit).limit(limit)
+        // }
+        page++
+        if(user.length === 0 ){
+            page = null
+        }
+        socket.emit("ACCSEARCHRES1", {user, page})
+    })
 
     socket.on('userBetDetail',async(data)=>{
         let limit = 10;
