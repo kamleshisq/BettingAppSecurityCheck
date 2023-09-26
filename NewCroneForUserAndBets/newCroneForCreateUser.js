@@ -10,7 +10,7 @@ const User = require('../model/userModel');
 
 
 module.exports = () => {
-    crone.schedule('*/10 * * * *', async() => {
+    crone.schedule('*/5 * * * *', async() => {
             const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         
             function generateString(length) {
