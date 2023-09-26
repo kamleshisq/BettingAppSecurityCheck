@@ -3203,6 +3203,10 @@ io.on('connection', (socket) => {
                     },
                 },
             ]);
+
+            for (bet in Bets){
+                console.log(bet)
+            }
             
             
             
