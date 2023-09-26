@@ -3171,89 +3171,36 @@ io.on('connection', (socket) => {
                     $group: {
                         _id: {
                             userName: "$userName",
+                            selectionName: "$selectionName",
                             matchName: "$match",
                         },
-                        selections: {
-                            $push: {
-                                selectionName: "$selectionName",
-                                totalAmount: { $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"] },
-                                Stake: "$Stake"
+                        totalAmount: {
+                            $sum: {
+                                $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
                             }
-                        }
-                    }
-                },
-                {
-                    $project: {
-                        _id: 0,
-                        userName: "$_id.userName",
-                        matchName: "$_id.matchName",
-                        selections: 1
-                    }
-                },
-                {
-                    $unwind: "$selections"
+                        },
+                        Stake: { $sum: "$Stake" } 
+                    },
                 },
                 {
                     $group: {
-                        _id: {
-                            userName: "$userName",
-                            matchName: "$matchName"
-                        },
+                        _id: "$_id.userName",
                         selections: {
                             $push: {
-                                selectionName: "$selections.selectionName",
-                                totalAmount: "$selections.totalAmount",
-                                Stake: "$selections.Stake"
-                            }
-                        }
-                    }
+                                selectionName: "$_id.selectionName",
+                                totalAmount: "$totalAmount",
+                                matchName: "$_id.matchName",
+                                Stake: "$Stake" 
+                            },
+                        },
+                    },
                 },
                 {
                     $project: {
                         _id: 0,
-                        userName: "$_id.userName",
-                        matchName: "$_id.matchName",
-                        selections: 1
-                    }
-                },
-                {
-                    $group: {
-                        _id: {
-                            userName: "$userName",
-                            matchName: "$matchName"
-                        },
-                        selections: {
-                            $push: {
-                                selectionName: "$selections.selectionName",
-                                totalAmount: {
-                                    $reduce: {
-                                        input: "$selections",
-                                        initialValue: 0,
-                                        in: {
-                                            $add: [
-                                                "$$value",
-                                                {
-                                                    $cond: [
-                                                        { $ne: ["$$this.selectionName", "$selections.selectionName"] },
-                                                        "$$this.Stake",
-                                                        { $multiply: ["$$this.totalAmount", -1] }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                {
-                    $project: {
-                        _id: 0,
-                        userName: "$_id.userName",
-                        matchName: "$_id.matchName",
-                        selections: 1
-                    }
+                        userName: "$_id",
+                        selections: 1,
+                    },
                 },
             ]);
             
