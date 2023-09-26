@@ -12,5 +12,5 @@ const sportData = require('../utils/getSportAndCricketList');
 
 module.exports = () => {
     cron.schedule('*/5 * * * * *', async() => { 
-
+        console.log(betCrone)
     })}
