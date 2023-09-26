@@ -2705,7 +2705,17 @@ socket.on('connect', () => {
                         <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
                         <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
                         if(data.json.userAcc[i].transactionId){
-                            html += `<td>${data.json.userAcc[i].balance}</td>`
+                            html += `<td>${data.json.userAcc[i].betDetails.event}</td>`
+                            html += `<td>${data.json.userAcc[i].betDetails.marketName}</td>`
+                        }else{
+                            html += `<td>-</td><td>-</td>`
+
+                        }
+                        if(data.json.userAcc[i].creditDebitamount > 0){
+                            html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
+                            <td>0</td>`
+                        }else{
+                            html += `<td>0</td><td>${data.json.userAcc[i].creditDebitamount}</td>`
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
                         <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}" style="background-color: transparent;" data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>`
@@ -2719,48 +2729,20 @@ socket.on('connect', () => {
                         <td>${count1 + i}</td>
                         <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
                         <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
+                        if(data.json.userAcc[i].transactionId){
+                            html += `<td>${data.json.userAcc[i].betDetails.event}</td>`
+                            html += `<td>${data.json.userAcc[i].betDetails.marketName}</td>`
+                        }else{
+                            html += `<td>-</td><td>-</td>`
+
+                        }
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             html += `<td>${data.json.userAcc[i].creditDebitamount}</td>
                             <td>0</td>`
-                            if(data.json.userAcc[i].parent_id){
-                                if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
-                                    if(data.json.userAcc[i].child_id == null){
-                                        html += `<td>-/${data.json.userAcc[i].parent_id.userName}</td>`
-                                    }else{
-                                        html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
-                                    }
-                                }else{
-                                    if(data.json.userAcc[i].child_id == null){
-                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/-</td>`
-                                    }else{
-                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
-                                    }
-                                }
-                            }else{
-                                html += "<td>-</td>"
-                            }
                         }else{
-                            html += `<td>0</td>`
-                            if(data.json.userAcc[i].parent_id){
-                                html += `<td>${data.json.userAcc[i].creditDebitamount}</td>`
-                                if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
-                                    if(data.json.userAcc[i].child_id == null){
-                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/-</td>`
-                                    }else{
-                                        html += `<td>${data.json.userAcc[i].parent_id.userName}/${data.json.userAcc[i].child_id.userName}</td>`
-                                    }
-                                }else{
-                                    if(data.json.userAcc[i].child_id == null){
-                                        html += `<td>-/${data.json.userAcc[i].parent_id.userName}</td>`
-                                    }else{
-
-                                        html += `<td>${data.json.userAcc[i].child_id.userName}/${data.json.userAcc[i].parent_id.userName}</td>`
-                                    }
-                                }
-                            }else{
-                                html += `<td>${data.json.userAcc[i].creditDebitamount}</td><td>-</td>`
-                            }
+                            html += `<td>0</td><td>${data.json.userAcc[i].creditDebitamount}</td>`
                         }
+                       
                         html += `<td>${data.json.userAcc[i].balance}</td>
                         <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}"  data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>`
                         if(data.json.userAcc[i].Remark){
