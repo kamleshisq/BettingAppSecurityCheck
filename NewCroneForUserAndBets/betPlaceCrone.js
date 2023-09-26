@@ -28,6 +28,7 @@ module.exports = () => {
             }
             const result = await marketDetailsBymarketID(MarketIds)
             console.log(result.data.items)
+            console.log(result.data.items[0].odds)
         }catch(err){
             console.log(err)
         }
