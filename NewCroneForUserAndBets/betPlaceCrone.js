@@ -6,6 +6,7 @@ const commissionRepportModel = require("../model/commissionReport");
 const netCommission = require("../model/netCommissionModel");
 const commissionModel = require("../model/CommissionModel");
 const commissionMarketModel = require("../model/CommissionMarketsModel");
+const marketDetailsBymarketID = require("../utils/getmarketsbymarketId");
 const Decimal = require('decimal.js');
 const sportData = require('../utils/getSportAndCricketList');
 
@@ -25,7 +26,8 @@ module.exports = () => {
                     MarketIds.push(cricket[gameList].marketList.match_odd.marketId)
                 }
             }
-            console.log(MarketIds)
+            const result = await marketDetailsBymarketID(MarketIds)
+            console.log(result)
         }catch(err){
             console.log(err)
         }
