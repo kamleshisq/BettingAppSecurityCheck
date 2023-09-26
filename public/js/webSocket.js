@@ -2244,7 +2244,6 @@ socket.on('connect', () => {
                             }
                         }else{
                             if(data.json.userAcc[i].parent_id){
-                                html += `<td>${data.json.userAcc[i].creditDebitamount}</td>`
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
                                     if(data.json.userAcc[i].child_id == null){
                                         html += `<td>${data.json.userAcc[i].parent_id.userName}/-</td>`
@@ -2297,7 +2296,6 @@ socket.on('connect', () => {
                             }
                         }else{
                             if(data.json.userAcc[i].parent_id){
-                                html += `<td>${data.json.userAcc[i].creditDebitamount}</td>`
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
                                     if(data.json.userAcc[i].child_id == null){
                                         html += `<td>${data.json.userAcc[i].parent_id.userName}/-</td>`
