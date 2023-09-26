@@ -433,13 +433,23 @@ io.on('connection', (socket) => {
         let fullUrl
         let account;
         let json  = {}
+        let filter = {};
+        let limit = 10
+        if(data.Fdate != '' && data.Tdate != ''){
+            filter.date = {$lte:data.Fdate,$gte:data.Tdate}
+        }else if(data.Fdate != '' && data.Tdate == ''){
+            filter.date = {$lte:data.Fdate}
+
+        }else if(data.Fdata == '' && data.Tdate != ''){
+            filter.date = {$gte:data.Tdate}
+        }
+        filter.user_id = new mongoose.Types.ObjectId(data.id)
+
         if(data.id){
             // console.log()
             let Logs = await AccModel.aggregate([
                 {
-                    $match:{
-                        user_id: new mongoose.Types.ObjectId(data.id)
-                    }
+                    $match:filter
                 },
                 {
                     $lookup:{
@@ -453,7 +463,13 @@ io.on('connection', (socket) => {
                     $unwind:"$betDetails"
                 },
                 {
-                    $limit:10
+                    $sort:{"date":-1}
+                },
+                {
+                    $skip:limit * data.page
+                },
+                {
+                    $limit:limit
                 }
             ])
             json.userAcc = Logs
@@ -466,7 +482,7 @@ io.on('connection', (socket) => {
             
         }
         json.status = 'success'
-        socket.emit('Acc2', {json,page:data.page})
+        socket.emit('Acc2', {json,page:data.page,filter})
 
     })
 
