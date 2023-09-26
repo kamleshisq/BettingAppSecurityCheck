@@ -10493,10 +10493,10 @@ socket.on('connect', () => {
                             }
                         }else{
                             if(data[i].selections[1]){
-                                team1data = data[i].selections[0].Stake
+                                team1data = data[i].selections[1].totalAmount
                                 sumOfTeamA += team1data
                             }else{
-                                team1data = data[i].selections[1].totalAmount
+                                team1data = data[i].selections[0].Stake
                                 sumOfTeamA += team1data
                             }
                             team2data = data[i].selections[0].totalAmount
