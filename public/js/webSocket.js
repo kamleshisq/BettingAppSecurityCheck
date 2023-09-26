@@ -11459,10 +11459,10 @@ socket.on('connect', () => {
             form.find('input[name="eventName"]').val(data.eventName)
             form.find('input[name="sportName"]').val(data.sportName)
             if(data.status == true){
-                form.find('input[name = "status"]').attr("checked", "checked");
+                form.find('input[name = "status"]').prop('checked', true);
                 form.find('input[name = "status"]').parent('.switch').addClass('on');
             }else{
-                form.find('input[name = "status"]').attr("checked", "");
+                form.find('input[name = "status"]').prop('checked', false);
                 form.find('input[name = "status"]').parent('.switch').removeClass('on');
             }
 
