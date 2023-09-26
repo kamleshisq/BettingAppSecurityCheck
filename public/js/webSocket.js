@@ -10511,10 +10511,21 @@ socket.on('connect', () => {
                         }
                     }
                     html += `<tr>
-                    <td>Total</td>
-                    <td>${sumOfTeamA.toFixed(2)}</td>
-                    <td>${sumOfTeamB.toFixed(2)}</td>
-                </tr>`
+                    <td>Total</td>`
+                    if(sumOfTeamA.toFixed(2) > 0){
+                        html += `<td class="red"> -${sumOfTeamA.toFixed(2)}</td>`
+                    }else{
+                        html += `<td class="green"> ${sumOfTeamA.toFixed(2) * -1}</td>`
+                    }
+                    
+                    if(sumOfTeamB.toFixed(2) > 0){
+                        html += `<td class="red">-${sumOfTeamB.toFixed(2)}</td></tr>`
+                    }else{
+                        html += `<td class="green">${sumOfTeamB.toFixed(2) * -1}</td></tr>`
+                    }
+                //     `<td>${sumOfTeamA.toFixed(2)}</td>
+                //     <td>${sumOfTeamB.toFixed(2)}</td>
+                // </tr>`
                     document.getElementById('match_odd').innerHTML = html
                 }else{
                     document.getElementById('match_odd').innerHTML = "There is no bets in this market"
