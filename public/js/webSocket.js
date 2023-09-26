@@ -2212,19 +2212,6 @@ socket.on('connect', () => {
 
                 if(data.page == 0){
                     count1 = 1;
-
-                        $('table').html(`<tr >+
-                        "<th>S.No</th>" +
-                        "<th>Date</th>" +
-                        "<th>Time</th>" +
-                        "<th>Stake</th>" +
-                        "<th>Credit</th>"+
-                        "<th>Debit</th>"+
-                        "<th>From / To</th>"+
-                        "<th>Closing</th>"+
-                        "<th>Description</th>"+
-                        "<th>Remarks</th>"+
-                      "</tr> `)
                 }
                 let html = "";
                 for(let i = 0; i < data.json.userAcc.length; i++){
@@ -2359,12 +2346,15 @@ socket.on('connect', () => {
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
                         $('#load-more').hide()
                     }
+                    $('tbody').html(html)
+
                 }else {
                     if(data.json.userAcc.length == 0){
                         $('#load-more').hide()
                     }
+                    $('tbody').append(html)
+
                 }
-                $('table').append(html)
             }
          })
 
