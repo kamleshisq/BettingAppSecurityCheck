@@ -19,6 +19,7 @@ router.post("/withdrawl", authController.checkPass ,accountController.withdrawl)
 router.post("/withdrawlSettle", authController.checkPass ,accountController.withdrawSettle);
 router.post("/depositSettle", authController.checkPass ,accountController.depositSettle);
 router.post("/getUserAccStatement", accountController.getUserAccountStatement);
+router.post("/getUserAccStatement1", accountController.getUserAccountStatement1);
 
 
 
