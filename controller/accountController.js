@@ -335,16 +335,22 @@ exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
     let page = req.query.page
     let filter = {}
     let childUsersArr = []
+    let childUser;
     if(!page){
         page = 0
     }
     limit = 10
     
     if(req.query.id){
-        const childUsers = await User.find({parentUsers:req.query.id,roleName: {$ne:'user'}})
-        childUsers.map(ele => {
-            childUsersArr.push(ele._id)
-        })
+        const idUser = await User.findById(req.query.id)
+        if(idUser.userName == req.currentUser.userName){
+            childUsersArr.push(req.currentUser._id)
+        }else{
+            let childUsers = await User.find({parentUsers:req.query.id,roleName: {$ne:'user'}})
+            childUsers.map(ele => {
+                childUsersArr.push(ele._id)
+            })
+        }
         if(req.query.from && req.query.to){
             userAcc = await accountStatement.find({user_id:{$in:childUsersArr},date:{$gte:req.query.from,$lte:req.query.to}}).sort({date: -1}).skip(page * limit).limit(limit);
         }else if(req.query.from && !req.query.to){
