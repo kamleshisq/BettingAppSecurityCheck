@@ -42,6 +42,7 @@ const catalogController = require("./model/catalogControllModel");
 const commissionMarketModel = require("./model/CommissionMarketsModel");
 const netCommissionModel = require('./model/netCommissionModel');
 const commissionRepportModel = require('./model/commissionReport');
+
 const { error } = require('console');
 const checkPass = require("./websocketController/checkPassUser");
 const { type } = require('os');
@@ -395,6 +396,7 @@ io.on('connection', (socket) => {
             // data})
         });
     })
+
     socket.on("AccountScroll1", async(data)=>{
         // console.log(data)
         let fullUrl
@@ -423,6 +425,44 @@ io.on('connection', (socket) => {
             // me:currentUser,
             // data})
         });
+    })
+
+    socket.on("AccountScroll2", async(data)=>{
+        // console.log(data)
+        let fullUrl
+        let account;
+        let json  = {}
+        if(data.id){
+            // console.log()
+            let Logs = await AccModel.aggregate([
+                {
+                    $match:{
+                        user_id:data.id
+                    }
+                },
+                {
+                    $lookup:{
+                        from:'betmodels',
+                        localField:'transactionId',
+                        foreignField:'transactionId',
+                        as:'betDetails'
+                    }
+                },
+                {
+                    $limit:10
+                }
+            ])
+        
+            // account  = await AccModel.find({user_id:data.id})
+            
+            // fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement1?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
+        }else{
+            json.userAcc = [] 
+
+        }
+        console.log(Logs)
+        socket.emit('Acc2', {json,page:data.page})
+
     })
 
     // socket.on("SearchACC", async(data) => {
@@ -595,7 +635,7 @@ io.on('connection', (socket) => {
             if(!bet){
                 const result = acc.transactionId.replace(/Parent$/, '');
                 bet = await Bet.findOne({transactionId:result})
-        }
+            }
         }else{
             bet = acc
         }
