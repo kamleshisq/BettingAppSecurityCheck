@@ -3174,7 +3174,7 @@ io.on('connection', (socket) => {
                         selectionName: "$selectionName",
                         matchName: "$match",
                     },
-                    totalAmount: { $sum: { $multiply: ["$oddValue", "$Stake"] } },
+                    totalAmount: { $sum: {$subtract : [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]} },
                     },
                 },
                 {
