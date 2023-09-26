@@ -1409,7 +1409,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
                         }
                     
                     }
-                    eventList.push({eventId:item.eventData.eventId,created_on:item.eventData.time,eventName:item.eventData.name,status,url})
+                    eventList.push({eventId:item.eventData.eventId,created_on:item.eventData.created_on,eventName:item.eventData.name,status,url})
                 }else{
                     const src_regex = /src='([^']+)'/;
                     let match1
@@ -1422,7 +1422,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
                         }
                         // console.log(src, 123)
                     }
-                    eventList.push({eventId:item.eventData.eventId,created_on:item.eventData.time,eventName:item.eventData.name,status:true,url})
+                    eventList.push({eventId:item.eventData.eventId,created_on:item.eventData.created_on,eventName:item.eventData.name,status:true,url})
 
                 }
             }
