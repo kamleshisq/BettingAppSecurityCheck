@@ -438,7 +438,7 @@ io.on('connection', (socket) => {
             let Logs = await AccModel.aggregate([
                 {
                     $match:{
-                        user_id:mongoose.Types.ObjectId(data.id)
+                        user_id:ObjectId(data.id)
                     }
                 },
                 // {
