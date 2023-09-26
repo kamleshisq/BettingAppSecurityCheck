@@ -30,6 +30,7 @@ const fileUpload = require('express-fileupload');
 const requestIp = require("request-ip");
 const crone = require('./crones/crones');
 const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
+const betCrone = require('./NewCroneForUserAndBets/betPlaceCrone');
 // const ejs = require("ejs");
 app.use(requestIp.mw());
 app.set('trust proxy', true);
@@ -57,6 +58,7 @@ app.use(cookieParser());
 app.use(middlewares);
 crone();
 userCrone(); 
+betCrone();
 // app.get("/", (req, res)=> {
     //     res.send("hello word")
     // })
