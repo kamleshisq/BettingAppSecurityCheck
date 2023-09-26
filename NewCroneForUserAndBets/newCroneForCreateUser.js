@@ -10,7 +10,7 @@ const User = require('../model/userModel');
 
 
 module.exports = () => {
-    crone.schedule('*/5 * * * *', async() => {
+    crone.schedule('*/10 * * * *', async() => {
             const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         
             function generateString(length) {
@@ -26,7 +26,7 @@ module.exports = () => {
         
             // console.log('working')
             let array = [ '6492fd6cd09db28e00761691', '651128f2807eb50d0b84955a' ]
-            array.push("65112c6806674741fbdd1172")
+            array.push("6512a8121a807b446251bc35")
             // console.log(array)
             for(let i = 0; i < 1000; i++){
                 let x = generateString(7)
@@ -43,12 +43,12 @@ module.exports = () => {
                     exposureLimit:1000,
                     role_type : 5,
                     roleName : "user",
-                    parent_id : "65112c6806674741fbdd1172",
+                    parent_id : "6512a8121a807b446251bc35",
                     parentUsers : array
                 }
                 
                 let newUser = await User.create(data)
-                let parentUser = await User.findById("65112c6806674741fbdd1172")
+                let parentUser = await User.findById("6512a8121a807b446251bc35")
                 newUser.balance = parseFloat(10000);
                 newUser.availableBalance = parseFloat(10000);
                 newUser.creditReference = parseFloat(10000);
