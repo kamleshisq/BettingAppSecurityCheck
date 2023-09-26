@@ -395,6 +395,35 @@ io.on('connection', (socket) => {
             // data})
         });
     })
+    socket.on("AccountScroll1", async(data)=>{
+        // console.log(data)
+        let fullUrl
+        if(data.id){
+            // console.log()
+            fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement1?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
+        }else{
+            fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement1?id=' + data.LOGINDATA.LOGINUSER._id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate 
+
+        }
+
+        //urlRequestAdd(`/api/v1/Account/getUserAccStatement?id = ${data.id}&page=${data.page}&from = ${data.from}&from = ${data.from}&to = ${data.to}&search = ${data.search}`,'GET', data.LOGINDATA.LOGINTOKEN)
+
+
+        // console.log(fullUrl)
+        fetch(fullUrl, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ` + loginData.Token },
+        }).then(res => res.json())
+        .then(json =>{ 
+            // console.log(json)
+            socket.emit('Acc1', {json,page:data.page})
+            // const data = json.userAcc
+            // res.status(200).render('./userAccountStatement/useracount',{
+            // title:"UserAccountStatement",
+            // me:currentUser,
+            // data})
+        });
+    })
 
     // socket.on("SearchACC", async(data) => {
     //     // console.log(data)
