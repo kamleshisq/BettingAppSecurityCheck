@@ -11448,6 +11448,20 @@ socket.on('connect', () => {
                 window.location.reload(true)
             }
         })
+
+        $(document).on('click','.editStrem',function(e){
+            let data = $(this).closest('tr').attr('data-id')
+            let form = $('.editStreamForm');
+            form.find('input[name="url"]').val(data.url)
+            if(data.status){
+                form.find('input[name = "check"]').attr("checked", "checked");
+                form.find('input[name = "check"]').parent('.switch').addClass('on');
+            }else{
+                form.find('input[name = "check"]').attr("checked", "");
+                form.find('input[name = "check"]').parent('.switch').removeClass('on');
+            }
+
+        })
     }
 
 })
