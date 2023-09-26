@@ -3235,13 +3235,13 @@ io.on('connection', (socket) => {
                         }
                     },
                 },
-                {
-                    $unwind: "$selections"
-                },
+                // {
+                //     $unwind: "$selections"
+                // },
                 {
                     $sort: {
                         "userName": 1, 
-                        "selections.selectionName": 1 
+                        // "selections.selectionName": 1 
                     }
                 }
             ]);
