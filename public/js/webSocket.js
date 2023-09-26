@@ -2223,11 +2223,6 @@ socket.on('connect', () => {
                         <td>${count1 + i}</td>
                         <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
                         <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
-                        if(data.json.userAcc[i].stake){
-                            html += `<td>${data.json.userAcc[i].stake}</td>`
-                        }else{
-                            html += `<td>-</td>`
-                        }
                         if(data.json.userAcc[i].creditDebitamount > 0){
                             if(data.json.userAcc[i].parent_id){
                                 if(data.json.userAcc[i].parent_id.userName == data.json.userAcc[i].user_id.userName){
@@ -2281,11 +2276,6 @@ socket.on('connect', () => {
                         <td>${count1 + i}</td>
                         <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
                         <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
-                        if(data.json.userAcc[i].stake){
-                            html += `<td>${data.json.userAcc[i].stake}</td>`
-                        }else{
-                            html += `<td>-</td>`
-                        }
                         if(data.json.userAcc[i].creditDebitamount > 0){
                            
                             if(data.json.userAcc[i].parent_id){
