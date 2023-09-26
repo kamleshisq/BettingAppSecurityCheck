@@ -2650,6 +2650,8 @@ socket.on('connect', () => {
                 
                 data.LOGINDATA = LOGINDATA
             }
+
+            console.log(data)
             socket.emit('AccountScroll2',data)        
         })
 
@@ -2688,7 +2690,7 @@ socket.on('connect', () => {
 
          let count1 = 11
          socket.on("Acc2", async(data) => {
-            console.log(data)
+            // console.log(data)
             if(data.json.status == "success"){
 
                 if(data.page == 0){
