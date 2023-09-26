@@ -70,7 +70,8 @@ exports.createUser = catchAsync(async(req, res, next)=>{
         const updatedChild = await User.findByIdAndUpdate(newUser.id, newUser,{
             new:true
         });
-        const updatedparent =  await User.findByIdAndUpdate(req.currentUser.id, req.currentUser);
+        const updatedparent =  await User.findByIdAndUpdate(req.currentUser.id, {availableBalance:req.currentUser.availableBalance, downlineBalance:req.currentUser.downlineBalance});
+        // const updatedparent =  await User.findByIdAndUpdate(req.currentUser.id, req.currentUser);
         if(!updatedChild || !updatedparent){
             return next(new AppError("Ops, Something went wrong While Fund Debit Please try again later", 500))
         }
