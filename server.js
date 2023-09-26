@@ -3197,24 +3197,57 @@ io.on('connection', (socket) => {
                     $group: {
                         _id: {
                             userName: "$userName",
-                            matchName: "$matchName",
-                            selectionName: "$selections.selectionName"
+                            matchName: "$matchName"
                         },
-                        totalAmount: { $sum: "$selections.totalAmount" },
-                        Stake: { $first: "$selections.Stake" }
+                        selections: {
+                            $push: {
+                                selectionName: "$selections.selectionName",
+                                totalAmount: "$selections.totalAmount",
+                                Stake: "$selections.Stake"
+                            }
+                        }
                     }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        userName: "$_id.userName",
+                        matchName: "$_id.matchName",
+                        selections: 1
+                    }
+                },
+                {
+                    $unwind: "$selections"
                 },
                 {
                     $group: {
                         _id: {
-                            userName: "$_id.userName",
-                            matchName: "$_id.matchName"
+                            userName: "$userName",
+                            matchName: "$matchName"
                         },
                         selections: {
                             $push: {
-                                selectionName: "$_id.selectionName",
-                                totalAmount: "$totalAmount",
-                                Stake: "$Stake"
+                                selectionName: "$selections.selectionName",
+                                totalAmount: {
+                                    $subtract: [
+                                        "$selections.totalAmount",
+                                        {
+                                            $sum: {
+                                                $map: {
+                                                    input: "$selections",
+                                                    as: "sel",
+                                                    in: {
+                                                        $cond: [
+                                                            { $ne: ["$$sel.selectionName", "$selections.selectionName"] },
+                                                            "$$sel.Stake",
+                                                            0
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
                             }
                         }
                     }
@@ -3228,6 +3261,7 @@ io.on('connection', (socket) => {
                     }
                 },
             ]);
+            
             
             
            console.log(Bets, "==> WORKING")
