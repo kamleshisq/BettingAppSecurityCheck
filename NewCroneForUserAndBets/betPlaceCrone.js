@@ -16,7 +16,8 @@ module.exports = () => {
             console.log('betCrone')
             let sportData1 = await sportData()
             const cricket = sportData1[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-            console.log(cricket)
+            let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
+            console.log(LiveCricket)
 
         }catch(err){
             console.log(err)
