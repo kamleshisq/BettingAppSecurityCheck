@@ -1384,7 +1384,6 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
     }
 
     if(sportList){
-
         let newSportList = sportList.eventList.map(async(item) => {
             if(item.eventData.type == 'IN_PLAY' && item.eventData.isTv == 1){
                 let stream = await Stream.findOne({sportId:sportId,eventId:item.eventData.eventId})
@@ -1410,7 +1409,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
                         }
                     
                     }
-                    eventList.push({eventId:item.eventData.eventId,created_on:item.eventData.time,eventName:item.eventData.name,status,url})
+                    eventList.push({eventId:item.eventData.eventId,created_on:item.eventData.created_on,eventName:item.eventData.name,status,url})
                 }else{
                     const src_regex = /src='([^']+)'/;
                     let match1
@@ -1423,7 +1422,7 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
                         }
                         // console.log(src, 123)
                     }
-                    eventList.push({eventId:item.eventData.eventId,created_on:item.eventData.time,eventName:item.eventData.name,status:true,url})
+                    eventList.push({eventId:item.eventData.eventId,created_on:item.eventData.created_on,eventName:item.eventData.name,status:true,url})
 
                 }
             }
@@ -1439,6 +1438,13 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
             })
         })
 
+    }else{
+        res.status(200).render("./streamManagement/events",{
+            title:"Stream Management",
+            me,
+            currentUser:me,
+            eventList
+        })
     }
 
 
