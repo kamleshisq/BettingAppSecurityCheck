@@ -850,18 +850,23 @@ exports.myaccount = catchAsync(async(req, res, next) => {
 exports.adminaccount = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
     // console.log(currentUser)
-    let childUsersArr = []
-    const childUsers = await User.find({parentUsers:req.currentUser._id,roleName: {$ne:'user'}})
-    childUsers.map(ele => {
-        childUsersArr.push(ele._id)
-    })
-    const data = await accountStatement.find({user_id:{$in:childUsersArr}}).sort({date: -1})
-    res.status(200).render('./userAccountStatement/adminAccountStatment',{
+   
+    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement1?id=' + currentUser._id 
+    fetch(fullUrl, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ` + req.token }
+    }).then(res => res.json())
+    .then(json =>{ 
+        // console.log(json)
+        const data = json.userAcc
+        res.status(200).render('./userAccountStatement/adminAccountStatment',{
         title:"User Account Statement",
         me:currentUser,
         data,
         currentUser
     })
+
+})
 
     
 })

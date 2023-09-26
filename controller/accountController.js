@@ -329,6 +329,39 @@ exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
         userAcc
     })
 });
+exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
+    // console.log(req.query)
+    let userAcc
+    let page = req.query.page
+    let filter = {}
+    let childUsersArr = []
+    if(!page){
+        page = 0
+    }
+    limit = 10
+    
+    if(req.query.id){
+        const childUsers = await User.find({parentUsers:req.query.id,roleName: {$ne:'user'}})
+        childUsers.map(ele => {
+            childUsersArr.push(ele._id)
+        })
+        if(req.query.from && req.query.to){
+            userAcc = await accountStatement.find({user_id:{$in:childUsersArr},date:{$gte:req.query.from,$lte:req.query.to}}).sort({date: -1}).skip(page * limit).limit(limit);
+        }else if(req.query.from && !req.query.to){
+            userAcc = await accountStatement.find({user_id:{$in:childUsersArr},date:{$gte:req.query.from}}).sort({date: -1}).skip(page * limit).limit(limit);
+        }else if(!req.query.from && req.query.to){
+            userAcc = await accountStatement.find({user_id:{$in:childUsersArr},date:{$lte:req.query.to}}).sort({date: -1}).skip(page * limit).limit(limit);
+        }else{
+            userAcc = await accountStatement.find({user_id:{$in:childUsersArr}}).sort({date: -1}).skip(page * limit).limit(limit);
+
+        }
+    }
+    // console.log(userAcc.length)
+    res.status(200).json({
+        status:"success",
+        userAcc
+    })
+});
 
 
 
