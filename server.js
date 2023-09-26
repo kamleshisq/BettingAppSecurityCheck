@@ -3217,9 +3217,6 @@ io.on('connection', (socket) => {
                     }
                 },
                 {
-                    $unwind: "$selections"
-                },
-                {
                     $group: {
                         _id: {
                             userName: "$userName",
@@ -3229,24 +3226,22 @@ io.on('connection', (socket) => {
                             $push: {
                                 selectionName: "$selections.selectionName",
                                 totalAmount: {
-                                    $subtract: [
-                                        "$selections.totalAmount",
-                                        {
-                                            $sum: {
-                                                $map: {
-                                                    input: "$selections",
-                                                    as: "sel",
-                                                    in: {
-                                                        $cond: [
-                                                            { $ne: ["$$sel.selectionName", "$selections.selectionName"] },
-                                                            "$$sel.Stake",
-                                                            0
-                                                        ]
-                                                    }
+                                    $reduce: {
+                                        input: "$selections",
+                                        initialValue: 0,
+                                        in: {
+                                            $add: [
+                                                "$$value",
+                                                {
+                                                    $cond: [
+                                                        { $ne: ["$$this.selectionName", "$selections.selectionName"] },
+                                                        "$$this.Stake",
+                                                        { $multiply: ["$$this.totalAmount", -1] }
+                                                    ]
                                                 }
-                                            }
+                                            ]
                                         }
-                                    ]
+                                    }
                                 }
                             }
                         }
@@ -3261,6 +3256,7 @@ io.on('connection', (socket) => {
                     }
                 },
             ]);
+            
             
             
             
