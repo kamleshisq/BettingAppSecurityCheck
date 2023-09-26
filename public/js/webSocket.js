@@ -2707,10 +2707,10 @@ socket.on('connect', () => {
                         <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
                         <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
                         if(data.json.userAcc[i].transactionId){
-                            html += `<td>${data.json.userAcc[i].betDetails.event}</td>`
-                            if(data.json.userAcc[i].betDetails.marketName){
+                            html += `<td>${data.json.userAcc[i].betDetails[0].event}</td>`
+                            if(data.json.userAcc[i].betDetails[0].marketName){
 
-                                html += `<td>${data.json.userAcc[i].betDetails.marketName}</td>`
+                                html += `<td>${data.json.userAcc[i].betDetails[0].marketName}</td>`
                             }else{
 
                                 html += `<td>-</td>`
@@ -2738,10 +2738,10 @@ socket.on('connect', () => {
                         <td class="text-nowrap" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()}</td>
                         <td class="text-nowrap" >${date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>`
                         if(data.json.userAcc[i].transactionId){
-                            html += `<td>${data.json.userAcc[i].betDetails.event}</td>`
-                            if(data.json.userAcc[i].betDetails.marketName){
+                            html += `<td>${data.json.userAcc[i].betDetails[0].event}</td>`
+                            if(data.json.userAcc[i].betDetails[0].marketName){
 
-                                html += `<td>${data.json.userAcc[i].betDetails.marketName}</td>`
+                                html += `<td>${data.json.userAcc[i].betDetails[0].marketName}</td>`
                             }else{
 
                                 html += `<td>-</td>`
