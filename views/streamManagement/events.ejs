@@ -27,7 +27,6 @@
                 <thead>
                     <tr style="text-align: center;font-size: 11px;">
                         <th>S.No</th>
-                        <th>Open Date</th>
                         <th>Event</th>
                         <th>Stream Link</th>
                         <th>Action</th>
@@ -36,12 +35,9 @@
                 <tbody class="new-body">
                     <%if(eventList.length > 0){%>
                     <%for(let i = 0;i<eventList.length;i++){%>
-                    <%
-                    var date = eventList[i].created_on
-                    %>
+                   
                     <tr data-id="<%=eventList[i].eventId%>" id="row-<%= i + 1%>">
                     <td><%= i + 1%></td>
-                    <td class="date-time"><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + " "+ date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
                     <td><%=eventList[i].eventName%></td>
                     <td><%=eventList[i].url%></td>
                     <td>
