@@ -43,8 +43,8 @@ module.exports = () => {
                 let data = betDetailsArray.find(items => items.market == result.data.items[i].market_id)
                 const dataIndex = betDetailsArray.findIndex((item) => item.market === result.data.items[i].market_id);
                 if(data){
-                    data.odds = result.data.items[0].odds[0].backPrice1
-                    data.secId = result.data.items[0].odds[0].selectionId
+                    data.odds = result.data.items[i].odds[0].backPrice1
+                    data.secId = result.data.items[i].odds[0].selectionId
                     data.bettype2 = 'BACK'
                     betDetailsArray[dataIndex] = data
                 }
