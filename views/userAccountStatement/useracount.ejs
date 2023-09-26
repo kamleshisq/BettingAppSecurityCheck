@@ -120,7 +120,11 @@
                 <%}%>
                 <td><%=data[i].balance%></td>
                 <td><a class="ownAccDetails" id="<%=data[i]._id%>" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=data[i].description%>&nbsp;</a></td>
-                <td><%=data[i].Remark%></td>
+                <%if(data[i].Remark){%>
+                  <td><%=data[i].Remark%></td>
+                <%}else{%>
+                  <td>-</td>
+                <%}%>
               </tr>
               <%}else{%>
               <tr>
@@ -175,7 +179,11 @@
                 <%}%>
                 <td><%=data[i].balance%></td>
                 <td><a class="ownAccDetails" id="<%=data[i]._id%>" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=data[i].description%> &nbsp;</a></td>
-                <td><%=data[i].Remark%></td>
+                <%if(data[i].Remark){%>
+                  <td><%=data[i].Remark%></td>
+                <%}else{%>
+                  <td>-</td>
+                <%}%>
               </tr>
               <%}%>
               <%}%>

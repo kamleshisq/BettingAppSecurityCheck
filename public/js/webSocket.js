@@ -2341,8 +2341,12 @@ socket.on('connect', () => {
                             }
                         }
                         html += `<td>${data.json.userAcc[i].balance}</td>
-                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}"  data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>
-                        <td>${data.json.userAcc[i].Remark}</td>`
+                        <td><a class="ownAccDetails" id="${data.json.userAcc[i]._id}"  data-bs-toggle="modal" data-bs-target="#myModal5"> ${data.json.userAcc[i].description}&nbsp;</a></td>`
+                        if(data.json.userAcc[i].Remark){
+                            html += `<td>${data.json.userAcc[i].Remark}</td>`
+                        }else{
+                            html += `<td>-</td>`
+                        }
                     }
                 }
                 count1 += 10;
