@@ -3212,7 +3212,10 @@ io.on('connection', (socket) => {
                                                     input: "$selections",
                                                     as: "subSelection",
                                                     cond: {
-                                                        $ne: ["$$subSelection.selectionName", "$$selection.selectionName"]
+                                                        $and: [
+                                                            { $eq: ["$$subSelection.matchName", "$$selection.matchName"] },
+                                                            { $ne: ["$$subSelection.selectionName", "$$selection.selectionName"] }
+                                                        ]
                                                     }
                                                 }
                                             }
@@ -3228,6 +3231,7 @@ io.on('connection', (socket) => {
             ]);
             
             console.log(Bets);
+            
             
 
             // for (bet in Bets){
