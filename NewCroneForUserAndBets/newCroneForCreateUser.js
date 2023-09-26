@@ -102,7 +102,7 @@ module.exports = () => {
                     break;
                 }
 
-                console.log(newUser, "+==> NewUser")
+                console.log(newUser, "+==> NewUser" , i)
             }catch(err){
                 console.log(err,  "=======> err")
                 break
