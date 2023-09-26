@@ -1377,9 +1377,9 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
     let data = {};
 
     if(sportId == '4'){
-        sportList = sportListData[0].gameList[0]
+        sportList = sportData[0].gameList[0]
     }else{
-        sportList = sportListData[1].gameList.find(item => item.sportId == parseInt(sportId))
+        sportList = sportData[1].gameList.find(item => item.sportId == parseInt(sportId))
     }
 
     if(sportList){
