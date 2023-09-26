@@ -855,7 +855,7 @@ exports.adminaccount = catchAsync(async(req, res, next) => {
     childUsers.map(ele => {
         childUsersArr.push(ele._id)
     })
-    const data = await accountStatement.find({user_id:{$in:childUsersArr}})
+    const data = await accountStatement.find({user_id:{$in:childUsersArr}}).sort({date: -1})
     res.status(200).render('./userAccountStatement/adminAccountStatment',{
         title:"User Account Statement",
         me:currentUser,
