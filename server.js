@@ -3206,20 +3206,27 @@ io.on('connection', (socket) => {
                                 in: {
                                     selectionName: "$$selection.selectionName",
                                     totalAmount: {
-                                        $subtract: ["$$selection.totalAmount", {
-                                            $sum: {
-                                                $filter: {
+                                        $subtract: [
+                                            "$$selection.totalAmount",
+                                            {
+                                                $reduce: {
                                                     input: "$selections",
-                                                    as: "subSelection",
-                                                    cond: {
-                                                        $and: [
-                                                            { $eq: ["$$subSelection.matchName", "$$selection.matchName"] },
-                                                            { $ne: ["$$subSelection.selectionName", "$$selection.selectionName"] }
-                                                        ]
+                                                    initialValue: 0,
+                                                    in: {
+                                                        $cond: {
+                                                            if: {
+                                                                $and: [
+                                                                    { $eq: ["$$this.matchName", "$$selection.matchName"] },
+                                                                    { $ne: ["$$this.selectionName", "$$selection.selectionName"] }
+                                                                ]
+                                                            },
+                                                            then: { $add: ["$$value", "$$this.Stake"] },
+                                                            else: "$$value"
+                                                        }
                                                     }
                                                 }
                                             }
-                                        }]
+                                        ]
                                     },
                                     matchName: "$$selection.matchName",
                                     Stake: "$$selection.Stake"
@@ -3231,6 +3238,7 @@ io.on('connection', (socket) => {
             ]);
             
             console.log(Bets);
+            
             
             
 
