@@ -10477,9 +10477,10 @@ socket.on('connect', () => {
                     let sumOfTeamB = 0
                     let sumOfTeamC = 0
                     for(let i = 0; i < data.length; i++){
+                        console.log(data[i], "+==> in Loop DAta")
                         let team1data = 0 
                         let team2data = 0
-                        console.log(data[i].selections[0].selectionName.toLowerCase(), team1.toLowerCase)
+                        // console.log(data[i].selections[0].selectionName.toLowerCase(), team1.toLowerCase)
                         if(data[i].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
                             team1data = data[i].selections[0].totalAmount
                             sumOfTeamA += team1data
