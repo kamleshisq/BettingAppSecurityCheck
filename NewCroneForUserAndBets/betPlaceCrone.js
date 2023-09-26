@@ -15,6 +15,7 @@ module.exports = () => {
     cron.schedule('*/10 * * * * *', async() => { 
         try{
             let MarketIds = []
+            let betDetailsArray = []
             console.log('betCrone')
             let sportData1 = await sportData()
             const cricket = sportData1[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
@@ -22,13 +23,21 @@ module.exports = () => {
             // console.log(LiveCricket)
             for(gameList in cricket){
                 if(cricket[gameList].marketList.match_odd != null){
+                    let data = {
+                        title : cricket[gameList].eventData.name,
+                        eventId : cricket[gameList].eventData.eventId,
+                        market : cricket[gameList].marketList.match_odd.marketId,
+                        stake : '1000',
+                        spoetId : '4'
+                    }
+                    betDetailsArray.push(data)
                     // console.log(cricket[gameList].marketList.match_odd)
                     MarketIds.push(cricket[gameList].marketList.match_odd.marketId)
                 }
             }
             const result = await marketDetailsBymarketID(MarketIds)
-            console.log(result.data.items)
-            console.log(result.data.items[0].odds)
+            console.log(data)
+            
         }catch(err){
             console.log(err)
         }
