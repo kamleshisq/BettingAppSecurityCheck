@@ -63,6 +63,9 @@ module.exports = () => {
                     console.log("NOtworking")
                     break;
                 }
+                try{
+
+                
                 let childAccStatement = {}
                 let ParentAccStatement = {}
                 let date = Date.now()
@@ -100,6 +103,10 @@ module.exports = () => {
                 }
 
                 console.log(newUser, "+==> NewUser")
+            }catch(err){
+                console.log(err,  "=======> err")
+                break
+            }
             }
     })
 }
