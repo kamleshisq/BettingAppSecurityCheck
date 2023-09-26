@@ -12,8 +12,13 @@ const sportData = require('../utils/getSportAndCricketList');
 
 module.exports = () => {
     cron.schedule('*/5 * * * * *', async() => { 
-        console.log('betCrone')
-        let sportData = await sportData()
-        const cricket = sportData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-        console.log(cricket)
+        try{
+            console.log('betCrone')
+            let sportData = await sportData()
+            const cricket = sportData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
+            console.log(cricket)
+
+        }catch(err){
+            console.log(err)
+        }
     })}
