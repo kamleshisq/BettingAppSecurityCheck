@@ -11387,7 +11387,9 @@ socket.on('connect', () => {
 
         socket.on('addnewStream',async(data)=>{
             if(data.status == 'success'){
-                alert('streame added successfully')
+                alert(data.msg)
+                window.location.reload(true)
+
             }
         })
         
@@ -11419,6 +11421,7 @@ socket.on('connect', () => {
         socket.on('delteStreame',async(data)=>{
             if(data.status == 'success'){
                 alert('stream deleted successfully')
+                window.location.reload(true)
             }
         })
     }

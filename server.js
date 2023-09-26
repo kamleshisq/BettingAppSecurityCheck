@@ -3778,8 +3778,14 @@ io.on('connection', (socket) => {
 
     socket.on('addnewStream',async(data)=>{
         try{
-            await Stream.create(data)
-            socket.emit('addnewStream',{status:'success'})
+            if(!await Stream.findOne({eventId:data.eventId})){
+
+                await Stream.create(data)
+                socket.emit('addnewStream',{status:'success',msg:'stream created successfully'})
+            }else{
+                socket.emit('addnewStream',{status:'success',msg:'stream already addedd'})
+
+            }
         }catch(err){
             console.log(err)
         }
