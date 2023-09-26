@@ -45,7 +45,7 @@ module.exports = () => {
                     betDetailsArray[dataIndex] = data
                 }
             }
-            let users =  await userModel.find({userName:'qMGvgT8'})
+            let users =  await userModel.find({userName:'qmgvgt8'})
             for(user in users){
                 let LOGINDATA = {
                     LOGINUSER : users[user]
