@@ -437,7 +437,7 @@ io.on('connection', (socket) => {
             let Logs = await AccModel.aggregate([
                 {
                     $match:{
-                        user_id:data.id
+                        user_id:"64e5c3002ceb9abbb4e4d341"
                     }
                 },
                 // {
@@ -454,7 +454,7 @@ io.on('connection', (socket) => {
             ])
             console.log(Logs)
 
-            socket.emit('Acc2', {json,page:data.page,Logs})
+            socket.emit('Acc2', {json,page:data.page,Logs,data})
             // account  = await AccModel.find({user_id:data.id})
             
             // fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement1?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
