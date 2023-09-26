@@ -9,6 +9,7 @@ const commissionMarketModel = require("../model/CommissionMarketsModel");
 const marketDetailsBymarketID = require("../utils/getmarketsbymarketId");
 const Decimal = require('decimal.js');
 const sportData = require('../utils/getSportAndCricketList');
+const betplace = require('../utils/betPlace')
 
 
 module.exports = () => {
@@ -57,6 +58,11 @@ module.exports = () => {
                     }
 
                     console.log(data)
+                    let result = await betplace(data)
+                    if(result != 'Bet placed successfully'){
+                        break;
+                    }
+
                 }
             }
             
