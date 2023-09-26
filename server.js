@@ -3171,38 +3171,64 @@ io.on('connection', (socket) => {
                     $group: {
                         _id: {
                             userName: "$userName",
-                            selectionName: "$selectionName",
                             matchName: "$match",
                         },
-                        totalAmount: {
-                            $sum: {
-                                $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
-                            }
-                        },
-                        Stake: { $sum: "$Stake" } // Include Stake sum in this group
-                    },
-                },
-                {
-                    $group: {
-                        _id: "$_id.userName",
                         selections: {
                             $push: {
-                                selectionName: "$_id.selectionName",
-                                totalAmount: "$totalAmount",
-                                matchName: "$_id.matchName",
-                                Stake: "$Stake" // Include Stake in the output
-                            },
-                        },
-                    },
+                                selectionName: "$selectionName",
+                                totalAmount: { $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"] },
+                                Stake: "$Stake"
+                            }
+                        }
+                    }
                 },
                 {
                     $project: {
                         _id: 0,
-                        userName: "$_id",
-                        selections: 1,
-                    },
+                        userName: "$_id.userName",
+                        matchName: "$_id.matchName",
+                        selections: 1
+                    }
+                },
+                {
+                    $unwind: "$selections"
+                },
+                {
+                    $group: {
+                        _id: {
+                            userName: "$userName",
+                            matchName: "$matchName",
+                            selectionName: "$selections.selectionName"
+                        },
+                        totalAmount: { $sum: "$selections.totalAmount" },
+                        Stake: { $first: "$selections.Stake" }
+                    }
+                },
+                {
+                    $group: {
+                        _id: {
+                            userName: "$_id.userName",
+                            matchName: "$_id.matchName"
+                        },
+                        selections: {
+                            $push: {
+                                selectionName: "$_id.selectionName",
+                                totalAmount: "$totalAmount",
+                                Stake: "$Stake"
+                            }
+                        }
+                    }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        userName: "$_id.userName",
+                        matchName: "$_id.matchName",
+                        selections: 1
+                    }
                 },
             ]);
+            
             
            console.log(Bets, "==> WORKING")
            console.log('UerBook', Bets[0].selections)
