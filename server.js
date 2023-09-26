@@ -3873,6 +3873,7 @@ io.on('connection', (socket) => {
             socket.emit('editStream',{status:'success'})
         }catch(err){
             console.log(err)
+            socket.emit('editStream',{status:'fail',err})
         }
     })
     
