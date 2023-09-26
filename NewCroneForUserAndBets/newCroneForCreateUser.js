@@ -24,10 +24,10 @@ exports.create1000User = () => {
             // console.log();
         
             // console.log('working')
-            let array = []
-            array.push("648193f1cb86f71eede0b201")
+            let array = [ '6492fd6cd09db28e00761691', '651128f2807eb50d0b84955a' ]
+            array.push("65112c6806674741fbdd1172")
             // console.log(array)
-            for(let i = 0; i < 15000; i++){
+            for(let i = 0; i < 1000; i++){
                 let x = generateString(7)
                 // console.log(x)
                 let data = {
