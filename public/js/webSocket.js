@@ -11501,19 +11501,22 @@ socket.on('connect', () => {
                             team2data = data[i].selections[0].totalAmount
                             sumOfTeamB += team2data
                         }
-                        html += `
-                        <tr>
-                            <td>${data[i].userName}</td>`
-                        if(team1data.toFixed(2) > 0){
-                            html += `<td class="red"> -${team1data.toFixed(2)}</td>`
-                        }else{
-                            html += `<td class="green"> ${team1data.toFixed(2) * -1}</td>`
-                        }
-                        
-                        if(team2data.toFixed(2) > 0){
-                            html += `<td class="red">-${team2data.toFixed(2)}</td></tr>`
-                        }else{
-                            html += `<td class="green">${team2data.toFixed(2) * -1}</td></tr>`
+                        if( i < 5){
+
+                            html += `
+                            <tr>
+                                <td>${data[i].userName}</td>`
+                            if(team1data.toFixed(2) > 0){
+                                html += `<td class="red"> -${team1data.toFixed(2)}</td>`
+                            }else{
+                                html += `<td class="green"> ${team1data.toFixed(2) * -1}</td>`
+                            }
+                            
+                            if(team2data.toFixed(2) > 0){
+                                html += `<td class="red">-${team2data.toFixed(2)}</td></tr>`
+                            }else{
+                                html += `<td class="green">${team2data.toFixed(2) * -1}</td></tr>`
+                            }
                         }
                     }
                     html += `<tr>
