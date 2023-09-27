@@ -11452,10 +11452,12 @@ socket.on('connect', () => {
 
             $(document).ready(function () {
                 $('.userBook').click(function () {
+                    let id = LOGINDATA.LOGINUSER._id
                     var closestMarket = $(this).parents('.bets-table').find('.market');
                     if (closestMarket.length > 0) {
                         var marketId = closestMarket.attr('id');
-                        socket.emit('UerBook', {marketId, LOGINDATA})
+                        let type = 'data5'
+                        socket.emit('UerBook', {marketId, LOGINDATA,id,type})
                     } else {
                         console.log('Market not found.');
                     }
@@ -11506,22 +11508,41 @@ socket.on('connect', () => {
                 socket.emit("SearchACC", {x, LOGINDATA, page})
             })
 
+            // $('.userBook').click(function () {
+                // var closestMarket = $(this).parents('.bets-table').find('.market');
+                // if (closestMarket.length > 0) {
+                //     var marketId = closestMarket.attr('id');
+                //     socket.emit('UerBook', {marketId, LOGINDATA})
+                // } else {
+                //     console.log('Market not found.');
+                // }
+            // });
             $(document).on("click", ".searchList", function(){
                 // console.log("working")
                 // console.log(this.textContent)
-                document.getElementById("searchUser").value = this.textContent
-              
-                $('.pageLink').attr('data-page',1)
-                $('.wrapper').hide()
-                // console.log(data, 456)
-                console.log(data)
-                socket.emit( "AccountScroll", data)
+                let data = {}
+                var closestMarket =  $('.userBook').parents('.bets-table').find('.market');
+                if (closestMarket.length > 0) {
+                    var marketId = closestMarket.attr('id');
+                    document.getElementById("searchUser").value = this.textContent
+                    data.id = this.id
+                    data.LOGINDATA = LOGINDATA
+                    data.marketId
+                    data.type = 'data1'
+                    $('.wrapper').hide()
+                    console.log(data)
+                    socket.emit('UerBook', data)
+
+                } else {
+                    console.log('Market not found.');
+                }
+               
             })
     
             socket.on('UerBook', data => {
                 // console.log(data)
-                if(data.length > 0){
-                    let match = data[0].selections[0].matchName
+                if(data.Bets.length > 0){
+                    let match = data.Bets[0].selections[0].matchName
                     let team1 = match.split('v')[0]
                     let team2 = match.split('v')[1]
                     let html = `<tr><th>User name</th>
@@ -11530,38 +11551,38 @@ socket.on('connect', () => {
                     let sumOfTeamA = 0
                     let sumOfTeamB = 0
                     let sumOfTeamC = 0
-                    for(let i = 0; i < data.length; i++){
+                    for(let i = 0; i < data.Bets.length; i++){
                         // console.log(data[i], "+==> in Loop DAta")
                         let team1data = 0 
                         let team2data = 0
                         // console.log(data[i].selections[0].selectionName.toLowerCase(), team1.toLowerCase)
-                        if(data[i].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
+                        if(data.Bets[i].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
                             // console.log("2121222122121")
-                            team1data = data[i].selections[0].totalAmount
+                            team1data = data.Bets[i].selections[0].totalAmount
                             sumOfTeamA += team1data
-                            if(data[i].selections[1]){
-                                team2data = data[i].selections[1].totalAmount
+                            if(data.Bets[i].selections[1]){
+                                team2data = data.Bets[i].selections[1].totalAmount
                                 sumOfTeamB += team2data
                             }else{
-                                team2data = -data[i].selections[0].Stake
+                                team2data = -data.Bets[i].selections[0].Stake
                                 sumOfTeamB += team2data
                             }
                         }else{
-                            if(data[i].selections[1]){
-                                team1data = data[i].selections[1].totalAmount
+                            if(data.Bets[i].selections[1]){
+                                team1data = data.Bets[i].selections[1].totalAmount
                                 sumOfTeamA += team1data
                             }else{
-                                team1data = -data[i].selections[0].Stake
+                                team1data = -data.Bets[i].selections[0].Stake
                                 sumOfTeamA += team1data
                             }
-                            team2data = data[i].selections[0].totalAmount
+                            team2data = data.Bets[i].selections[0].totalAmount
                             sumOfTeamB += team2data
                         }
                         if( i < 5){
 
                             html += `
                             <tr>
-                                <td>${data[i].userName}</td>`
+                                <td>${data.Bets[i].userName}</td>`
                             if(team1data.toFixed(2) > 0){
                                 html += `<td class="red"> -${team1data.toFixed(2)}</td>`
                             }else{

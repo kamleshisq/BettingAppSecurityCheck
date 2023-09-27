@@ -3309,11 +3309,16 @@ io.on('connection', (socket) => {
 
     socket.on('UerBook', async(data) => {
         console.log(data)
+        let user = await User.findById(data.id)
         let childrenUsername = []
-        let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        if(user.userName == data.LOGINDATA.LOGINUSER.userName){
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }else{
+            childrenUsername.push(user.userName)
+        }
         try{
             let Bets = await Bet.aggregate([
                 {
@@ -3417,7 +3422,7 @@ io.on('connection', (socket) => {
            console.log(Bets, "==> WORKING")
            console.log('UerBook', Bets[0].selections)
         //    console.log(Bets[0].selections)
-           socket.emit('UerBook', Bets);
+           socket.emit('UerBook', {Bets,type:data.type});
         //    socket.emit();
         }catch(err){
 
