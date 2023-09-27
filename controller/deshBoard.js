@@ -112,6 +112,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             {
                 $match: {
                     status: { $ne: "OPEN" },
+                    date: { $gte: sevenDaysAgo },
                     userName:{$in:childrenUsername}
                 }
             },
