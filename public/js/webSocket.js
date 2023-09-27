@@ -2492,18 +2492,19 @@ socket.on('connect', () => {
                   <th>Amount</th>
                   <th>Remarks</th>
                 </tr>
-            </thead>
-            <tbody class="new-body" >`
-                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>`
-                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.balance - data.creditDebitamount)}</td>`
-                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.balance)}</td>`
-                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.creditDebitamount)}</td>`
+                </thead>
+                <tbody class="new-body" >`
+                html += `<tr>`
+                html += `<td>${new Date(data.date)}</td>`
+                html += `<td>${new Date(data.balance - data.creditDebitamount)}</td>`
+                html += `<td>${new Date(data.balance)}</td>`
+                html += `<td>${new Date(data.creditDebitamount)}</td>`
                 if(data.Remark){
-                    html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.Remark)}</td>`
+                    html += `<td>${new Date(data.Remark)}</td>`
                 }else{
-                    html += `<tr style="text-align: center;" class="blue"><td>-</td>`
+                    html += `<td>-</td>`
                 }
-                
+                html += `</tr></tbody>`
                 model.find('table').html(html)
             }
             // console.log(model)
