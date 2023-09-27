@@ -11657,7 +11657,7 @@ socket.on('connect', () => {
                             }
                         }
                         console.log(html)
-                        console.log($('.tabelBodyTr'),"==>tabelbodyprint")
+                        $('.tabelBodyTr').replaceWith(html)
                     }
                 }else{
                     document.getElementById('match_odd').innerHTML = "There is no bets in this market"
