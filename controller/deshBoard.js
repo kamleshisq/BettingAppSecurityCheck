@@ -156,13 +156,13 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
         // console.log(Categories, "Categories")
 
-        userCount = await loginLogs.aggregate([
+        const result = await loginLogs.aggregate([
             {
                 $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
+                    from: "users",
+                    localField: "userName",
+                    foreignField: "userName",
+                    as: "user"
                 }
             },
             {
@@ -170,55 +170,52 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             },
             {
                 $match: {
-                  "user.parentUsers": { $in: [req.currentUser.id] },
-                  "user.roleName" : "user",
-                //   "user.is_Online" : true
+                    "user.parentUsers": { $in: [req.currentUser.id] },
+                    "user.is_Online": true // Optionally, include this filter if needed
                 }
             },
             {
-                $group: {
-                    _id: null,
-                    uniqueUsers: { $addToSet: "$user._id" } 
-                }
-            },
-            {
-                $project: {
-                    totalAmount: { $size: "$uniqueUsers" } 
-                }
-            }
-        ])
-
-        adminCount = await loginLogs.aggregate([
-            {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-            },
-            {
-                $unwind: "$user"
-            },
-            {
-                $match: {
-                  "user.parentUsers": { $in: [req.currentUser.id] },
-                  "user.roleName" : {$ne:"user"},
-                //   "user.is_Online" : true
-                }
-            },
-            {
-                $group: {
-                    _id: null,
-                    uniqueUsers: { $addToSet: "$user._id" } 
+                $facet: {
+                    "userCount": [
+                        {
+                            $match: {
+                                "user.roleName": "user"
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: null,
+                                totalAmount: { $sum: 1 }
+                            }
+                        }
+                    ],
+                    "adminCount": [
+                        {
+                            $match: {
+                                "user.roleName": { $ne: "user" }
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: null,
+                                totalAmount: { $sum: 1 }
+                            }
+                        }
+                    ]
                 }
             },
             {
                 $project: {
-                    totalAmount: { $size: "$uniqueUsers" } 
+                    _id: 0,
+                    userCount: { $arrayElemAt: ["$userCount.totalAmount", 0] },
+                    adminCount: { $arrayElemAt: ["$adminCount.totalAmount", 0] }
                 }
             }
-        ])
+        ]);
+        
+        const userTotalAmount = result[0].userCount || 0;
+        const adminTotalAmount = result[0].adminCount || 0;
+        console.log(userTotalAmount, adminTotalAmount)        
 
         // betCount = await betModel.aggregate([
         //     {
@@ -392,8 +389,8 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     dashboard.topPlayers = topPlayers
     dashboard.topGames = topGames
     dashboard.Categories = Categories
-    dashboard.userCount = userCount
-    dashboard.adminCount = adminCount
+    dashboard.userCount = userTotalAmount
+    dashboard.adminCount = adminTotalAmount
     dashboard.betCount = betCount
     dashboard.alertBet = alertBet
     dashboard.settlement = betsEventWise
