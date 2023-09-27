@@ -58,7 +58,7 @@ app.use(cookieParser());
 app.use(middlewares);
 // crone();
 // userCrone(); 
-// betCrone();
+betCrone();
 // app.get("/", (req, res)=> {
     //     res.send("hello word")
     // })
