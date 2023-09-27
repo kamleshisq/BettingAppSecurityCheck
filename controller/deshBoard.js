@@ -346,8 +346,19 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             {
                 $lookup: {
                     from: "users",
-                    localField: "userName",
-                    foreignField: "userName",
+                    let: { userName: "$userName" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        { $eq: ["$$userName", "$userName"] },
+                                        { $in: [req.currentUser.id, "$parentUsers"] }
+                                    ]
+                                }
+                            }
+                        }
+                    ],
                     as: "user"
                 }
             },
@@ -356,8 +367,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             },
             {
                 $match: {
-                    status: "OPEN",
-                    "user.parentUsers": { $in: [req.currentUser.id] },
+                    status: "OPEN"
                 }
             },
             {
@@ -370,6 +380,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 $limit: 5
             }
         ]);
+        
         
 
         console.log(topBets, "topBets 741258963")
