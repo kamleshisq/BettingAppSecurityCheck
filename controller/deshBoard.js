@@ -112,25 +112,9 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             {
                 $match: {
                     status: { $ne: "OPEN" },
-                    date: { $gte: sevenDaysAgo }
+                    userName:{$in:childrenUsername}
                 }
             },
-            {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-              },
-              {
-                $unwind: "$user"
-              },
-              {
-                $match: {
-                  "user.parentUsers": { $in: [req.currentUser.id] }
-                }
-              },
             {
                 $group: {
                     _id: "$betType",
