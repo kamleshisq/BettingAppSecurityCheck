@@ -116,7 +116,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 $limit: 5
             }
         ]);
-
+        console.log(topGames , "topGames")
         Categories = await betModel.aggregate([
             {
                 $match: {
@@ -215,7 +215,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         
         const userTotalAmount = result[0].userCount || 0;
         const adminTotalAmount = result[0].adminCount || 0;
-        console.log(userTotalAmount, adminTotalAmount)        
 
         betCount = await betModel.aggregate([
             {
