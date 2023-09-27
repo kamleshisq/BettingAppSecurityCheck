@@ -2565,18 +2565,12 @@ socket.on('connect', () => {
                 let Tdate = document.getElementById("Tdate").value
                
                 
+                data.Fdate = Fdate;
                 if(Tdate != ''){
                     data.Tdate = new Date(new Date(Tdate).getTime() + (1000 * 60 * 60 * 24) - 1)
                 }else{
                     data.Tdate = Tdate
-                }   
-                
-                if(Fdate != ''){
-                    data.Fdate = new Date(Fdate)
-                }else{
-                    data.Fdate = Fdate
-                }
-                
+                }  
                 data.id = this.id
                 SUSER = this.id
                 data.page = 0
