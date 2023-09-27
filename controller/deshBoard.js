@@ -112,7 +112,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             }
         ]);
         
-        
+        console.log(topGames, "TOPGAMES 122121212")
 
         Categories = await betModel.aggregate([
             {
