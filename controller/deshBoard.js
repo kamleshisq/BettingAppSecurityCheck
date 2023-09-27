@@ -341,6 +341,15 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
         let topBets = await betModel.aggregate([
             {
+                $sort: {
+                    Stake: -1,
+                    oddValue: -1,
+                }
+            },
+            {
+                $limit: 5
+            },
+            {
                 $lookup: {
                     from: "users",
                     let: { userName: "$userName" },
@@ -367,20 +376,11 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                     status: "OPEN"
                 }
             },
-            {
-                $sort: {
-                    Stake: -1,
-                    oddValue: -1,
-                }
-            },
-            {
-                $limit: 5
-            }
         ]);
         
         
 
-        console.log(topBets, "topBets 741258963")
+        // console.log(topBets, "topBets 741258963")
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }, parentUsers : { $in: [req.currentUser.id] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
