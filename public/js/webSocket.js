@@ -11539,8 +11539,8 @@ socket.on('connect', () => {
                
             })
     
-            socket.on('UerBook', data => {
-                // console.log(data)
+            socket.on('UerBook', async(data) => {
+                console.log(data)
                 if(data.Bets.length > 0){
                     if(data.type == 'data5'){
                         let match = data.Bets[0].selections[0].matchName
