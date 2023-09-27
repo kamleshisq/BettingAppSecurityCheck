@@ -3420,7 +3420,6 @@ io.on('connection', (socket) => {
             
             
            console.log(Bets, "==> WORKING")
-           console.log('UerBook', Bets[0].selections)
         //    console.log(Bets[0].selections)
            socket.emit('UerBook', {Bets,type:data.type});
         //    socket.emit();
