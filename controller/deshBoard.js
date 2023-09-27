@@ -117,42 +117,42 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         ])
         
 
-        // Categories = await betModel.aggregate([
-        //     {
-        //         $match: {
-        //             status: { $ne: "OPEN" }
-        //         }
-        //     },
-        //     {
-        //         $lookup: {
-        //           from: "users",
-        //           localField: "userName",
-        //           foreignField: "userName",
-        //           as: "user"
-        //         }
-        //       },
-        //       {
-        //         $unwind: "$user"
-        //       },
-        //       {
-        //         $match: {
-        //           "user.parentUsers": { $in: [req.currentUser.id] }
-        //         }
-        //       },
-        //     {
-        //         $group: {
-        //             _id: "$betType",
-        //             totalBets: { $sum: 1 },
-        //             totalReturns: { $sum: "$Stake" },
-        //             uniqueEvent: { $addToSet: "$event" }
-        //         }
-        //     },
-        //     {
-        //         $sort: {
-        //             totalBets: -1
-        //         }
-        //     }
-        // ])
+        Categories = await betModel.aggregate([
+            {
+                $match: {
+                    status: { $ne: "OPEN" }
+                }
+            },
+            {
+                $lookup: {
+                  from: "users",
+                  localField: "userName",
+                  foreignField: "userName",
+                  as: "user"
+                }
+              },
+              {
+                $unwind: "$user"
+              },
+              {
+                $match: {
+                  "user.parentUsers": { $in: [req.currentUser.id] }
+                }
+              },
+            {
+                $group: {
+                    _id: "$betType",
+                    totalBets: { $sum: 1 },
+                    totalReturns: { $sum: "$Stake" },
+                    uniqueEvent: { $addToSet: "$event" }
+                }
+            },
+            {
+                $sort: {
+                    totalBets: -1
+                }
+            }
+        ])
 
 
         // userCount = await loginLogs.aggregate([
