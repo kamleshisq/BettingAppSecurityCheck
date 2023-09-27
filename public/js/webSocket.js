@@ -11401,9 +11401,9 @@ socket.on('connect', () => {
                 }
                 if(data.type == 'loop'){
 
-                    document.getElementById('betTable').innerHTML = html
+                    document.getElementById('betTableBody').innerHTML = html
                 }else{
-                   $('#betTable').append(html)
+                   $('#betTableBody').append(html)
 
                 }
 
