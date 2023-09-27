@@ -3831,6 +3831,7 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
 
 exports.RiskAnalysis = catchAsync(async(req, res, next) => {
     let ip = req.ip
+    let limit = 10;
     let ipv4
     if (ip.indexOf('::ffff:') === 0) {
         // Extract the IPv4 portion from the IPv6 address
@@ -3920,6 +3921,12 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
                     $match: {
                       "user.parentUsers": { $in: [req.currentUser.id] }
                     }
+                  },
+                  {
+                    $sort:{"date":-1}
+                  },
+                  {
+                    $limit:limit
                   }
             ])
         }else{
@@ -3949,7 +3956,9 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
 
 exports.marketBets = catchAsync(async(req, res, next) => {
     console.log(req.query.id)
-    let bets = await betModel.find({marketId:req.query.id, status: 'OPEN'})
+    let limit = 10;
+    let page = 0;
+    let bets = await betModel.find({marketId:req.query.id, status: 'OPEN'}).skip(limit * page).limit(limit)
     console.log(bets)
         res.status(200).render("./riskMarketsBets/main",{
             title:"Risk Analysis",

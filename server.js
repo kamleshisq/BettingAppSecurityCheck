@@ -3257,6 +3257,8 @@ io.on('connection', (socket) => {
 
     socket.on('BETONEVENT', async(data) => {
         try{
+            let page = 0;
+            let limit = 10;
             let Bets = await Bet.aggregate([
                 {
                     $match: {
@@ -3279,6 +3281,15 @@ io.on('connection', (socket) => {
                     $match: {
                       "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
                     }
+                  },
+                  {
+                    $sort:{"date":-1}
+                  },
+                  {
+                    $skip:limit * page
+                  },
+                  {
+                    $limit:limit
                   }
             ])
             socket.emit('BETONEVENT', {data:Bets, status:'success'})
