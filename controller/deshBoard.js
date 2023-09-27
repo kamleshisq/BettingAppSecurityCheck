@@ -242,6 +242,11 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         //       }
         //   ])
           alertBet = await betModel.aggregate([
+              {
+                  $match: {
+                      "status": "Alert"
+                  }
+              },
             {
                 $lookup: {
                     from: "users",
@@ -259,11 +264,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 }
             },
             {
-                $match: {
-                    "status": "Alert"
-                }
-            },
-            {
                 $sort: {
                     Stake: -1
                 }
@@ -272,7 +272,8 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 $limit: 5
             }
         ]);
-    
+        
+        console.log('alertBet', alertBet)
         betsEventWise = await betModel.aggregate([
             {
                 $match: {
