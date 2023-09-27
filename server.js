@@ -3425,7 +3425,7 @@ io.on('connection', (socket) => {
            socket.emit('UerBook', {Bets,type:data.type});
         //    socket.emit();
         }catch(err){
-
+            console.log(err)
             socket.emit('UerBook', {message:"err", status:"error"})
         }
     })
