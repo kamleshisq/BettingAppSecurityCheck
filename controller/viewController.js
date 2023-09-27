@@ -162,10 +162,10 @@ exports.login = catchAsync(async(req, res, next) => {
     console.log(req.currentUser)
     if(req.currentUser){
         if(req.currentUser.role_type < 5){
-           res.redirect('/admin/dashboard')
+           return res.redirect('/admin/dashboard')
         }
     }
-    res.status(200).render('loginPage', {
+    return res.status(200).render('loginPage', {
         title:"Login form"
     })
 });
