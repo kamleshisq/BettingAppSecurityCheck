@@ -354,58 +354,41 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
     let bets
     let betsDetails
     if(userDetails.roleName != "user"){
+        let childrenUsername = []
+        let children = await User.find({parentUsers:req.query.id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
         bets = await betModel.aggregate([
             {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-              },
-              {
-                $unwind: "$user"
-              },
-              {
                 $match: {
-                  "user.parentUsers": { $in: [req.query.id] }
+                    userName: { $in: childrenUsername }
                 }
-              },
-              {
-            $sort: {
-                date: -1
+            },
+            {
+                $sort: {
+                    date: -1
+                }
+            },
+            {
+                $limit: limit
             }
-        },
-        {
-            $limit: limit
-        }
-            ])
+        ])
 
-            betsDetails = await betModel.aggregate([
-                {
-                    $lookup: {
-                      from: "users",
-                      localField: "userName",
-                      foreignField: "userName",
-                      as: "user"
-                    }
-                  },
-                  {
-                    $unwind: "$user"
-                  },
-                  {
-                    $match: {
-                      "user.parentUsers": { $in: [req.query.id] }
-                    }
-                  },
-                  {
-                    $group: {
-                      _id: null,
-                      totalReturns: { $sum: '$returns' },
-                      totalCount: { $sum: 1 }
-                    }
-                  }
-                ])
+        betsDetails = await betModel.aggregate([
+            {
+                $match: {
+                    userName: { $in: childrenUsername }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalReturns: { $sum: '$returns' },
+                    totalCount: { $sum: 1 }
+                }
+            }
+        ])
         
     }else{
         bets = await betModel.find({userId:req.query.id}).sort({date:-1}).limit(limit)
