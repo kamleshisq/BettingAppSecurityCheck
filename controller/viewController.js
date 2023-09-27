@@ -3900,11 +3900,18 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
                 stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
             }
             Bets = await betModel.aggregate([
+               
                 {
                     $match: {
                         status: "OPEN" ,
                         eventId: req.query.id
                     }
+                },
+                {
+                    $sort:{"date":-1}
+                },
+                {
+                     $limit:limit
                 },
                 {
                     $lookup: {
@@ -3921,13 +3928,8 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
                     $match: {
                       "user.parentUsers": { $in: [req.currentUser.id] }
                     }
-                  },
-                  {
-                    $sort:{"date":-1}
-                  },
-                  {
-                    $limit:limit
                   }
+                 
             ])
         }else{
             stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
