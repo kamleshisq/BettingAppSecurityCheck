@@ -58,11 +58,19 @@
                         <tbody>
                           <tr class="flex-justify blue">
                             <td>Active Players</td>
+                            <%if(data.dashboard.userCount.length > 0){%>
                             <td class="text-purple" id="userCount"><%=data.dashboard.userCount[0].totalAmount%></td>
+                            <%}else{%>
+                            <td class="text-purple" id="userCount">00</td>
+                            <%}%>
                           </tr>
                           <tr class="flex-justify">
                             <td>Active Admins</td>
+                            <%if(data.dashboard.adminCount.length > 0){%>
                               <td class="text-purple" id="adminCount"><%=data.dashboard.adminCount[0].totalAmount%></td>
+                              <%}else{%>
+                              <td class="text-purple" id="adminCount">00</td>
+                            <%}%>
                           </tr>
                           <tr class="flex-justify blue">
                             <td>Turn Over</td>
