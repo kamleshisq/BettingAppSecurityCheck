@@ -11546,7 +11546,7 @@ socket.on('connect', () => {
                         let match = data.Bets[0].selections[0].matchName
                         let team1 = match.split('v')[0]
                         let team2 = match.split('v')[1]
-                        let html = `<tr><th>User name</th>
+                        let html = `<tr class="headDetail"><th>User name</th>
                         <th>${team1}</th>
                         <th>${team2}</th></tr>`
                         let sumOfTeamA = 0
@@ -11582,7 +11582,7 @@ socket.on('connect', () => {
                             if( i < 5){
     
                                 html += `
-                                <tr>
+                                <tr class="tabelBodyTr">
                                     <td>${data.Bets[i].userName}</td>`
                                 if(team1data.toFixed(2) > 0){
                                     html += `<td class="red"> -${team1data.toFixed(2)}</td>`
@@ -11659,8 +11659,8 @@ socket.on('connect', () => {
                                 }
                             }
                         }
-                    
-                        console.log($('#match_odd .tabelBodyTr'),"==>tabelbodyprint")
+                        console.log(html)
+                        console.log($('.tabelBodyTr'),"==>tabelbodyprint")
                     }
                 }else{
                     document.getElementById('match_odd').innerHTML = "There is no bets in this market"
