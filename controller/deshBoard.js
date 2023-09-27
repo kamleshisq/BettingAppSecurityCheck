@@ -389,8 +389,8 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     dashboard.topPlayers = topPlayers
     dashboard.topGames = topGames
     dashboard.Categories = Categories
-    dashboard.userCount = userCount
-    dashboard.adminCount = adminCount
+    dashboard.userCount = userTotalAmount
+    dashboard.adminCount = adminTotalAmount
     dashboard.betCount = betCount
     dashboard.alertBet = alertBet
     dashboard.settlement = betsEventWise
