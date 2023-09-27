@@ -1088,30 +1088,16 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     const currentDate = new Date(); // Current date
     const fiveDaysAgo = new Date(currentDate);
     fiveDaysAgo.setDate(currentDate.getDate() - 5);
-
+    let childrenUsername = []
+    let children = await User.find({parentUsers:req.currentUser._id})
+    children.map(ele => {
+        childrenUsername.push(ele.userName) 
+    })
     let betsEventWise = await betModel.aggregate([
         {
           $match: {
-            eventDate: {
-                $gte: fiveDaysAgo, 
-                // $lte: currentDate, 
-              }
-          }
-        },
-        {
-          $lookup: {
-            from: "users",
-            localField: "userName",
-            foreignField: "userName",
-            as: "user"
-          }
-        },
-        {
-          $unwind: "$user"
-        },
-        {
-          $match: {
-            "user.parentUsers": { $in: [req.currentUser.id] }
+            eventDate: {$gte: fiveDaysAgo},
+            userName:{$in:childrenUsername}
           }
         },
         {
@@ -1154,86 +1140,6 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
           }
         }
       ]);
-      
-      // Now betsEventWise will contain an array of objects grouped by betType
-      // Each object contains the betType (id) and an array of objects with matchName and count
-      
-    //   console.log(betsEventWise, "NEWDATA")
-    //   console.log(betsEventWise[0].data, "NEWDATA")
-      // Now betsEventWise will contain an array of objects grouped by betType
-      
-    // let betsEventWise = await betModel.aggregate([
-    //     {
-    //         $match: {
-    //             status:"OPEN" 
-    //         }
-    //     },
-    //     {
-    //         $lookup: {
-    //           from: "users",
-    //           localField: "userName",
-    //           foreignField: "userName",
-    //           as: "user"
-    //         }
-    //       },
-    //       {
-    //         $unwind: "$user"
-    //       },
-    //       {
-    //         $match: {
-    //           "user.parentUsers": { $in: [req.currentUser.id] }
-    //         }
-    //       },
-    //     //   {
-    //     //     $group: {
-    //     //       _id: "$match",
-    //     //       count: { $sum: 1 }
-    //     //     }
-    //     //   },
-    //     //   {
-    //     //     $project: {
-    //     //       _id: 0,
-    //     //       eventname: "$_id",
-    //     //       count: 1
-    //     //     }
-    //     //   }
-    //     {
-    //         $group: {
-    //           _id: "$match",
-    //           count: { $sum: 1 },
-    //           eventdate: { $first: "$eventDate" }, 
-    //           eventid: { $first: "$eventId" },
-    //           series: {$first: "$event"} 
-    //         }
-    //       },
-    //       {
-    //         $project: {
-    //           _id: 0,
-    //           matchName: "$_id",
-    //           eventdate: 1,
-    //           eventid: 1,
-    //           series:1,
-    //           count: 1
-    //         }
-    //       },
-    //       {
-    //           $sort:{
-    //             eventdate: -1
-    //           }
-    //       }
-    // ])
-    // let users = await User.find({roleName:"Super-Duper-Admin"})
-    // for(let i = 0; i < users.length; i++){
-    //     await commissionModel.create({userId:users[i].id})
-    //     // let settlement = await sattlementModel.findOne({userId:users[i].id})
-    //     // if(settlement === null){
-    //     //     await sattlementModel.create({userId:users[i].id})
-    //     // }
-
-    // }
-    // let sportData = await getCrkAndAllData()
-    // const cricket1 = sportData[0].gameList[0].eventList
-    // console.log(cricket1)
     console.log(betsEventWise[0].data, '==>DATA')
     res.status(200).render("./sattelment/setalment",{
         title:"Settlements",
