@@ -240,37 +240,37 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         //         $count: "totalBets"
         //       }
         //   ])
-        //   alertBet = await betModel.aggregate([
-        //     {
-        //         $lookup: {
-        //             from: "users",
-        //             localField: "userName",
-        //             foreignField: "userName",
-        //             as: "user"
-        //         }
-        //     },
-        //     {
-        //         $unwind: "$user"
-        //     },
-        //     {
-        //         $match: {
-        //             "user.parentUsers": { $in: [req.currentUser.id] }
-        //         }
-        //     },
-        //     {
-        //         $match: {
-        //             "status": "Alert"
-        //         }
-        //     },
-        //     {
-        //         $sort: {
-        //             Stake: -1
-        //         }
-        //     },
-        //     {
-        //         $limit: 5
-        //     }
-        // ]);
+          alertBet = await betModel.aggregate([
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "userName",
+                    foreignField: "userName",
+                    as: "user"
+                }
+            },
+            {
+                $unwind: "$user"
+            },
+            {
+                $match: {
+                    "user.parentUsers": { $in: [req.currentUser.id] }
+                }
+            },
+            {
+                $match: {
+                    "status": "Alert"
+                }
+            },
+            {
+                $sort: {
+                    Stake: -1
+                }
+            },
+            {
+                $limit: 5
+            }
+        ]);
     
     
         // betsEventWise = await betModel.aggregate([
