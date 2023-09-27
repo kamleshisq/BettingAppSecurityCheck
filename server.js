@@ -430,6 +430,7 @@ io.on('connection', (socket) => {
 
     socket.on("AccountScroll2", async(data)=>{
         console.log(data)
+        const user = await User.findById(data.id)
         let fullUrl
         let account;
         let json  = {}
@@ -482,7 +483,7 @@ io.on('connection', (socket) => {
             
         }
         json.status = 'success'
-        socket.emit('Acc2', {json,page:data.page,filter,data})
+        socket.emit('Acc2', {json,page:data.page,user})
 
     })
 
