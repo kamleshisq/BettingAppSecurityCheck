@@ -839,7 +839,7 @@ exports.myaccount = catchAsync(async(req, res, next) => {
         // console.log(json)
         const data = json.userAcc
         res.status(200).render('./userAccountStatement/useracount',{
-        title:"User Account Statement",
+        title:"My Account Statement",
         me:currentUser,
         data,
         currentUser
@@ -861,7 +861,7 @@ exports.adminaccount = catchAsync(async(req, res, next) => {
         // console.log(json)
         const data = json.userAcc
         res.status(200).render('./userAccountStatement/adminAccountStatment',{
-        title:"User Account Statement",
+        title:"Admin Account Statement",
         me:currentUser,
         data,
         currentUser
