@@ -75,7 +75,7 @@ $(document).ready(function(){
             $("a[href='"+'/admin/settlement'+"'").addClass('active')
             $("a[href='"+'/admin/settlement'+"'").parent().parent().siblings('a').addClass('active')
             $("a[href='"+'/admin/settlement'+"'").parent().parent().addClass('open')
-        }else if(pathname.startsWith('/streammanagement/event')){
+        }else if(pathname.startsWith('/admin/streammanagement/event')){
             $("a[href='"+'/admin/streammanagement'+"'").addClass('active')
             $("a[href='"+'/admin/streammanagement'+"'").parent().parent().siblings('a').addClass('active')
             $("a[href='"+'/admin/streammanagement'+"'").parent().parent().addClass('open')
