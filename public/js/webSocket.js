@@ -4468,37 +4468,38 @@ socket.on('connect', () => {
             filterData.userName = this.textContent
             $('.pageId').attr('data-pageid','1')
             $('.wrapper').hide()
-            socket.emit('OnlineUser',{filterData,LOGINDATA,page:0})
+            let data = {};
+            data.filterData = filterData;
+            data.page = 0;
+            data.LOGINDATA = LOGINDATA
+            socket.emit('OnlineUser',data)
             
         })
 
+        let count = 10
         socket.on('OnlineUser', async(data) => {
             console.log(data)
-            if(data.page == 0){
-                let html = `<tr style="text-align: center;" class="blue">
-                <td>1</td>
+            let html = "";
+            for(let i = 0;i<data.onlineUsers.length;i++){
+                html += `<tr>
+                <td>${count + i + 1}</td>
                 <td>${data.onlineUsers[0].userName}</td>
                 <td>
     
                     <button type="button" id="${data.onlineUsers[0]._id}" class="logout">Logout</button>
                 </td>
             </tr>`
-            $('.new-body').html(html)
+            }
+            if(data.page == 0){
+                if(data.onlineUsers.length == 0){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    $('#load-more').hide()
+                }
+
+                $('.new-body').html(html)
             }else{
-                let html = ''
-                for(let i = 0; i < data.onlineUsers.length; i++){
-                    if(i%2 == 0){
-                        html += `<tr style="text-align: center;" class="blue">`
-                    }else{
-                        html += `<tr style="text-align: center;">`
-                    }
-                    html+= `<td>1</td>
-                    <td>${data.onlineUsers[i].userName}</td>
-                    <td>
-        
-                        <button type="button" id="${data.onlineUsers[i]._id}" class="logout">Logout</button>
-                    </td>
-                </tr>`
+                if(data.onlineUsers.length == 0){
+                    $('#load-more').hide()
                 }
                 $('.new-body').append(html)
             }
@@ -4513,41 +4514,38 @@ socket.on('connect', () => {
             socket.emit("SearchOnlineUser", {x, LOGINDATA, page})
         })
 
-
-        $(window).scroll(function() {
-            if($(document).height()-$(window).scrollTop() == window.innerHeight){
+        $('#load-more').click(function(e){
             let filterData = {}
             let page = parseInt($('.pageId').attr('data-pageid'));
-                $('.pageId').attr('data-pageid',page + 1)
-                let data = {}
-                let userName = $('.searchUser').val()
-                if(userName == ''){
-                    filterData.userName = LOGINDATA.LOGINUSER.userName
-                }else{
-                    filterData.userName = userName
-                    data.filterData = filterData;
-                }
-                // if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
-                //     filterData.date = {$gte : fromDate,$lte : toDate}
-                // }else{
-
-                //     if(fromDate != undefined && fromDate != '' ){
-                //         filterData.date = {$gte : fromDate}
-                //     }
-                //     if(toDate != undefined && toDate != '' ){
-                //         filterData.date = {$lte : toDate}
-                //     }
-                // }
-
-                data.page = page
-                data.LOGINDATA = LOGINDATA
-                // console.log(data)
-                socket.emit('OnlineUser',data)
-
-
-
+            $('.pageId').attr('data-pageid',page + 1)
+            let data = {}
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
             }
-            }); 
+            data.filterData = filterData;
+            // if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
+            //     filterData.date = {$gte : fromDate,$lte : toDate}
+            // }else{
+
+            //     if(fromDate != undefined && fromDate != '' ){
+            //         filterData.date = {$gte : fromDate}
+            //     }
+            //     if(toDate != undefined && toDate != '' ){
+            //         filterData.date = {$lte : toDate}
+            //     }
+            // }
+
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            // console.log(data)
+            socket.emit('OnlineUser',data)
+
+
+
+        }); 
 
 
 

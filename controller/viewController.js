@@ -321,6 +321,7 @@ exports.inactiveUser = catchAsync(async(req, res, next) => {
     })
 });
 exports.onlineUsers = catchAsync(async(req, res, next) => {
+    let limit = 10;
     // const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
     // let role_type =[]
     // for(let i = 0; i < roles.length; i++){
@@ -333,7 +334,7 @@ exports.onlineUsers = catchAsync(async(req, res, next) => {
     // }else{
     //     users = await User.find({role_type:{$in:role_type},is_Online:true , whiteLabel:req.currentUser.whiteLabel, parentUsers:{$elemMatch:{$eq:req.currentUser.id}}})
     // }
-    let users = await User.find({is_Online:true , parentUsers:{$in:[currentUser._id]}})
+    let users = await User.find({is_Online:true , parentUsers:{$in:[currentUser._id]}}).limit(limit)
     let me = req.currentUser
     res.status(200).render('./onlineUsers/onlineUsers',{
         title:"Online Users",
