@@ -11657,7 +11657,9 @@ socket.on('connect', () => {
                             }
                         }
                         console.log(html)
-                        $('.tabelBodyTr').replaceWith(html)
+                        $('.tabelBodyTr').remove()
+                        $('.headDetail').after(html)
+
                     }
                 }else{
                     document.getElementById('match_odd').innerHTML = "There is no bets in this market"
