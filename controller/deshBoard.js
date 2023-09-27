@@ -244,6 +244,14 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                       "status": "Alert"
                   }
               },
+              {
+                $sort: {
+                    Stake: -1
+                }
+            },
+            {
+                $limit: 5
+            },
             {
                 $lookup: {
                     from: "users",
@@ -260,14 +268,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                     "user.parentUsers": { $in: [req.currentUser.id] }
                 }
             },
-            {
-                $sort: {
-                    Stake: -1
-                }
-            },
-            {
-                $limit: 5
-            }
+            
         ]);
         
         console.log('alertBet', alertBet)
