@@ -3267,6 +3267,15 @@ io.on('connection', (socket) => {
                     }
                 },
                 {
+                    $sort:{"date":-1}
+                },
+                {
+                    $skip:limit * page
+                },
+                {
+                    $limit:limit
+                },
+                {
                     $lookup: {
                       from: "users",
                       localField: "userName",
@@ -3281,16 +3290,8 @@ io.on('connection', (socket) => {
                     $match: {
                       "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
                     }
-                  },
-                  {
-                    $sort:{"date":-1}
-                  },
-                  {
-                    $skip:limit * page
-                  },
-                  {
-                    $limit:limit
                   }
+                  
             ])
             socket.emit('BETONEVENT', {data:Bets, status:'success'})
         }catch(err){
