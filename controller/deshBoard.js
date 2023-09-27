@@ -36,186 +36,188 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         ]);
 
 
-        users = await User.aggregate([
-            {
-                $match:{
-                    parentUsers : { $in: [req.currentUser.id] }
-                }
-            },
-            {
-                $group:{
-                    _id:{
-                        whiteLabel:"$whiteLabel",
-                        roleType:"$roleName"
-                    },
-                    total:{$sum:1}
-                }
-            },
-            { $group : { 
-                _id :  "$_id.whiteLabel",
-                terms: { 
-                    $push: { 
-                        roleType:"$_id.roleType",
-                        total:"$total"
-                    }
-                }
-             }
-            },    { 
-                $sort:{
-                    _id:1
-                }
-            }
-        ]);
+        // users = await User.aggregate([
+        //     {
+        //         $match:{
+        //             parentUsers : { $in: [req.currentUser.id] }
+        //         }
+        //     },
+        //     {
+        //         $group:{
+        //             _id:{
+        //                 whiteLabel:"$whiteLabel",
+        //                 roleType:"$roleName"
+        //             },
+        //             total:{$sum:1}
+        //         }
+        //     },
+        //     { $group : { 
+        //         _id :  "$_id.whiteLabel",
+        //         terms: { 
+        //             $push: { 
+        //                 roleType:"$_id.roleType",
+        //                 total:"$total"
+        //             }
+        //         }
+        //      }
+        //     },    { 
+        //         $sort:{
+        //             _id:1
+        //         }
+        //     }
+        // ]);
 
-        topGames = await betModel.aggregate([
-            {
-                $match: {
-                    status: { $ne: "OPEN" }
-                }
-            },
-            {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-              },
-              {
-                $unwind: "$user"
-              },
-              {
-                $match: {
-                  "user.parentUsers": { $in: [req.currentUser.id] }
-                }
-              },
-            {
-                $group: {
-                    _id: "$event",
-                    totalCount: { $sum: 1 },
-                    uniqueUsers: { $addToSet: "$userId" },
-                    totalReturns: { $sum: "$Stake" }
-                }
-            },
-            {
-                $project: {
-                    _id: 0,
-                    event: "$_id",
-                    totalCount: 1,
-                    noOfUniqueUsers: { $size: "$uniqueUsers" },
-                    totalReturns: 1
-                }
-            },
-            {
-                $sort: {
-                    totalCount: -1
-                }
-            },
-            {
-                $limit: 5
-            }
-        ])
+        // topGames = await betModel.aggregate([
+        //     {
+        //         $match: {
+        //             status: { $ne: "OPEN" }
+        //         }
+        //     },
+        //     {
+        //         $lookup: {
+        //           from: "users",
+        //           localField: "userName",
+        //           foreignField: "userName",
+        //           as: "user"
+        //         }
+        //       },
+        //       {
+        //         $unwind: "$user"
+        //       },
+        //       {
+        //         $match: {
+        //           "user.parentUsers": { $in: [req.currentUser.id] }
+        //         }
+        //       },
+        //     {
+        //         $group: {
+        //             _id: "$event",
+        //             totalCount: { $sum: 1 },
+        //             uniqueUsers: { $addToSet: "$userId" },
+        //             totalReturns: { $sum: "$Stake" }
+        //         }
+        //     },
+        //     {
+        //         $project: {
+        //             _id: 0,
+        //             event: "$_id",
+        //             totalCount: 1,
+        //             noOfUniqueUsers: { $size: "$uniqueUsers" },
+        //             totalReturns: 1
+        //         }
+        //     },
+        //     {
+        //         $sort: {
+        //             totalCount: -1
+        //         }
+        //     },
+        //     {
+        //         $limit: 5
+        //     }
+        // ])
         
 
-        Categories = await betModel.aggregate([
-            {
-                $match: {
-                    status: { $ne: "OPEN" }
-                }
-            },
-            {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-              },
-              {
-                $unwind: "$user"
-              },
-              {
-                $match: {
-                  "user.parentUsers": { $in: [req.currentUser.id] }
-                }
-              },
-            {
-                $group: {
-                    _id: "$betType",
-                    totalBets: { $sum: 1 },
-                    totalReturns: { $sum: "$Stake" },
-                    uniqueEvent: { $addToSet: "$event" }
-                }
-            },
-            {
-                $sort: {
-                    totalBets: -1
-                }
-            }
-        ])
+        // Categories = await betModel.aggregate([
+        //     {
+        //         $match: {
+        //             status: { $ne: "OPEN" }
+        //         }
+        //     },
+        //     {
+        //         $lookup: {
+        //           from: "users",
+        //           localField: "userName",
+        //           foreignField: "userName",
+        //           as: "user"
+        //         }
+        //       },
+        //       {
+        //         $unwind: "$user"
+        //       },
+        //       {
+        //         $match: {
+        //           "user.parentUsers": { $in: [req.currentUser.id] }
+        //         }
+        //       },
+        //     {
+        //         $group: {
+        //             _id: "$betType",
+        //             totalBets: { $sum: 1 },
+        //             totalReturns: { $sum: "$Stake" },
+        //             uniqueEvent: { $addToSet: "$event" }
+        //         }
+        //     },
+        //     {
+        //         $sort: {
+        //             totalBets: -1
+        //         }
+        //     }
+        // ])
 
 
-        userCount = await loginLogs.aggregate([
-            {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-            },
-            {
-                $unwind: "$user"
-            },
-            {
-                $match: {
-                  "user.parentUsers": { $in: [req.currentUser.id] },
-                  "user.roleName" : "user",
-                }
-            },
-            {
-                $group: {
-                    _id: null,
-                    uniqueUsers: { $addToSet: "$user._id" } 
-                }
-            },
-            {
-                $project: {
-                    totalAmount: { $size: "$uniqueUsers" } 
-                }
-            }
-        ])
+        // userCount = await loginLogs.aggregate([
+        //     {
+        //         $lookup: {
+        //           from: "users",
+        //           localField: "userName",
+        //           foreignField: "userName",
+        //           as: "user"
+        //         }
+        //     },
+        //     {
+        //         $unwind: "$user"
+        //     },
+        //     {
+        //         $match: {
+        //           "user.parentUsers": { $in: [req.currentUser.id] },
+        //           "user.roleName" : "user",
+        //         //   "user.is_Online" : true
+        //         }
+        //     },
+        //     {
+        //         $group: {
+        //             _id: null,
+        //             uniqueUsers: { $addToSet: "$user._id" } 
+        //         }
+        //     },
+        //     {
+        //         $project: {
+        //             totalAmount: { $size: "$uniqueUsers" } 
+        //         }
+        //     }
+        // ])
 
-        adminCount = await loginLogs.aggregate([
-            {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-            },
-            {
-                $unwind: "$user"
-            },
-            {
-                $match: {
-                  "user.parentUsers": { $in: [req.currentUser.id] },
-                  "user.roleName" : {$ne:"user"},
-                }
-            },
-            {
-                $group: {
-                    _id: null,
-                    uniqueUsers: { $addToSet: "$user._id" } 
-                }
-            },
-            {
-                $project: {
-                    totalAmount: { $size: "$uniqueUsers" } 
-                }
-            }
-        ])
+        // adminCount = await loginLogs.aggregate([
+        //     {
+        //         $lookup: {
+        //           from: "users",
+        //           localField: "userName",
+        //           foreignField: "userName",
+        //           as: "user"
+        //         }
+        //     },
+        //     {
+        //         $unwind: "$user"
+        //     },
+        //     {
+        //         $match: {
+        //           "user.parentUsers": { $in: [req.currentUser.id] },
+        //           "user.roleName" : {$ne:"user"},
+        //         //   "user.is_Online" : true
+        //         }
+        //     },
+        //     {
+        //         $group: {
+        //             _id: null,
+        //             uniqueUsers: { $addToSet: "$user._id" } 
+        //         }
+        //     },
+        //     {
+        //         $project: {
+        //             totalAmount: { $size: "$uniqueUsers" } 
+        //         }
+        //     }
+        // ])
 
         // betCount = await betModel.aggregate([
         //     {
@@ -238,39 +240,37 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         //         $count: "totalBets"
         //       }
         //   ])
-        betCount = 0
-
-          alertBet = await betModel.aggregate([
-            {
-                $lookup: {
-                    from: "users",
-                    localField: "userName",
-                    foreignField: "userName",
-                    as: "user"
-                }
-            },
-            {
-                $unwind: "$user"
-            },
-            {
-                $match: {
-                    "user.parentUsers": { $in: [req.currentUser.id] }
-                }
-            },
-            {
-                $match: {
-                    "status": "Alert"
-                }
-            },
-            {
-                $sort: {
-                    Stake: -1
-                }
-            },
-            {
-                $limit: 5
-            }
-        ]);
+        //   alertBet = await betModel.aggregate([
+        //     {
+        //         $lookup: {
+        //             from: "users",
+        //             localField: "userName",
+        //             foreignField: "userName",
+        //             as: "user"
+        //         }
+        //     },
+        //     {
+        //         $unwind: "$user"
+        //     },
+        //     {
+        //         $match: {
+        //             "user.parentUsers": { $in: [req.currentUser.id] }
+        //         }
+        //     },
+        //     {
+        //         $match: {
+        //             "status": "Alert"
+        //         }
+        //     },
+        //     {
+        //         $sort: {
+        //             Stake: -1
+        //         }
+        //     },
+        //     {
+        //         $limit: 5
+        //     }
+        // ]);
     
     
         // betsEventWise = await betModel.aggregate([
@@ -338,8 +338,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         //     }
         // ])
 
-        turnOver = 0
-
 
 
         // let topBets = await betModel.aggregate([
@@ -373,7 +371,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         //         $limit:5
         //       }
         // ])
-        let topBets = []
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }, parentUsers : { $in: [req.currentUser.id] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
