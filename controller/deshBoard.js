@@ -16,6 +16,11 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     let alertBet
     let betsEventWise
     let turnOver
+    let childrenUsername = []
+    let children = await User.find({parentUsers:req.currentUser._id})
+    children.map(ele => {
+        childrenUsername.push(ele.userName) 
+    })
         roles = await User.aggregate([
             {
                 $match:{
@@ -71,25 +76,11 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             {
                 $match: {
                     status: { $ne: "OPEN" },
-                    date: { $gte: sevenDaysAgo }
+                    date: { $gte: sevenDaysAgo },
+                    userName:{$in:childrenUsername}
                 }
             },
-            {
-                $lookup: {
-                    from: "users",
-                    localField: "userName",
-                    foreignField: "userName",
-                    as: "user"
-                }
-            },
-            {
-                $unwind: "$user"
-            },
-            {
-                $match: {
-                    "user.parentUsers": { $in: [req.currentUser.id] }
-                }
-            },
+
             {
                 $group: {
                     _id: "$event",
@@ -240,7 +231,9 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
           alertBet = await betModel.aggregate([
               {
                   $match: {
-                      "status": "Alert"
+                      "status": "Alert",
+                      userName:{$in:childrenUsername}
+
                   }
               },
               {
@@ -250,47 +243,15 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             },
             {
                 $limit: 5
-            },
-            {
-                $lookup: {
-                    from: "users",
-                    localField: "userName",
-                    foreignField: "userName",
-                    as: "user"
-                }
-            },
-            {
-                $unwind: "$user"
-            },
-            {
-                $match: {
-                    "user.parentUsers": { $in: [req.currentUser.id] }
-                }
-            },
-            
+            }
         ]);
         
         betsEventWise = await betModel.aggregate([
             {
                 $match: {
                     status: "OPEN",
+                    userName: {$in:childrenUsername}
                 }
-            },
-            {
-                $lookup: {
-                    from: "users",
-                    localField: "userName",
-                    foreignField: "userName",
-                    as: "user"
-                }
-            },
-            {
-                $unwind: "$user"
-            },
-            {
-              $match:{
-                "user.parentUsers": { $in: [req.currentUser.id] }
-              }  
             },
             {
                 $group: {
@@ -339,44 +300,40 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
 
 
-        let topBets = await betModel.aggregate([
+        topBets = await betModel.aggregate([
+            {
+                $match: {
+                    status: { $ne: "OPEN" },
+                    userName: {$in:childrenUsername}
+
+                }
+            },
+            {
+                $group: {
+                    _id: "$event",
+                    totalCount: { $sum: 1 },
+                    uniqueUsers: { $addToSet: "$userId" },
+                    totalReturns: { $sum: "$Stake" }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    event: "$_id",
+                    totalCount: 1,
+                    noOfUniqueUsers: { $size: "$uniqueUsers" },
+                    totalReturns: 1
+                }
+            },
             {
                 $sort: {
-                    Stake: -1,
-                    oddValue: -1,
+                    totalCount: -1
                 }
             },
             {
                 $limit: 5
-            },
-            {
-                $lookup: {
-                    from: "users",
-                    let: { userName: "$userName" },
-                    pipeline: [
-                        {
-                            $match: {
-                                $expr: {
-                                    $and: [
-                                        { $eq: ["$$userName", "$userName"] },
-                                        { $in: [req.currentUser.id, "$parentUsers"] }
-                                    ]
-                                }
-                            }
-                        }
-                    ],
-                    as: "user"
-                }
-            },
-            {
-                $unwind: "$user"
-            },
-            {
-                $match: {
-                    status: "OPEN"
-                }
-            },
-        ]);
+            }
+        ])
         
         
 
