@@ -11462,6 +11462,55 @@ socket.on('connect', () => {
                 });
             });
 
+            $('.searchUser').keyup(function(){
+                // console.log('working')
+                if($(this).hasClass("searchUser")){
+                    // console.log($(this).val())
+                    if($(this).val().length >= 3 ){
+                        let x = $(this).val(); 
+                        // console.log(x)
+                        socket.emit("SearchACC", {x, LOGINDATA})
+                    }else{
+                        document.getElementById('search').innerHTML = ``
+                        document.getElementById("button").innerHTML = ''
+                    }
+                }
+            })
+
+            socket.on("ACCSEARCHRES", async(data)=>{
+                // console.log(data, 565464)
+                $('.wrapper').show()
+                let html = ``
+                if(data.page === 1){
+                    for(let i = 0; i < data.user.length; i++){
+                        html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                    }
+                    document.getElementById('search').innerHTML = html
+                    document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+                }else if(data.page === null){
+                    document.getElementById("button").innerHTML = ``
+                }else{
+                    html = document.getElementById('search').innerHTML
+                    for(let i = 0; i < data.user.length; i++){
+                        html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                    }
+                    document.getElementById('search').innerHTML = html
+                    document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+                }
+            })
+
+            $(document).on("click", ".searchList", function(){
+                // console.log("working")
+                // console.log(this.textContent)
+                document.getElementById("searchUser").value = this.textContent
+              
+                $('.pageLink').attr('data-page',1)
+                $('.wrapper').hide()
+                // console.log(data, 456)
+                console.log(data)
+                socket.emit( "AccountScroll", data)
+            })
+    
             socket.on('UerBook', data => {
                 // console.log(data)
                 if(data.length > 0){
