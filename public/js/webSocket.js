@@ -2496,11 +2496,11 @@ socket.on('connect', () => {
                 <tbody class="new-body" >`
                 html += `<tr>`
                 html += `<td>${new Date(data.date)}</td>`
-                html += `<td>${new Date(data.balance - data.creditDebitamount)}</td>`
-                html += `<td>${new Date(data.balance)}</td>`
-                html += `<td>${new Date(data.creditDebitamount)}</td>`
+                html += `<td>${(data.balance - data.creditDebitamount)}</td>`
+                html += `<td>${(data.balance)}</td>`
+                html += `<td>${(data.creditDebitamount)}</td>`
                 if(data.Remark){
-                    html += `<td>${new Date(data.Remark)}</td>`
+                    html += `<td>${(data.Remark)}</td>`
                 }else{
                     html += `<td>-</td>`
                 }
