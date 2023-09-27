@@ -112,25 +112,10 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             {
                 $match: {
                     status: { $ne: "OPEN" },
-                    date: { $gte: sevenDaysAgo }
+                    date: { $gte: sevenDaysAgo },
+                    userName:{$in:childrenUsername}
                 }
             },
-            {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-              },
-              {
-                $unwind: "$user"
-              },
-              {
-                $match: {
-                  "user.parentUsers": { $in: [req.currentUser.id] }
-                }
-              },
             {
                 $group: {
                     _id: "$betType",
@@ -207,27 +192,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         const userTotalAmount = result[0].userCount || 0;
         const adminTotalAmount = result[0].adminCount || 0;
 
-        // betCount = await betModel.aggregate([
-        //     {
-        //         $lookup: {
-        //           from: "users",
-        //           localField: "userName",
-        //           foreignField: "userName",
-        //           as: "user"
-        //         }
-        //       },
-        //       {
-        //         $unwind: "$user"
-        //       },
-        //       {
-        //         $match: {
-        //           "user.parentUsers": { $in: [req.currentUser.id] }
-        //         }
-        //       },
-        //     {
-        //         $count: "totalBets"
-        //       }
-        //   ])
+          betCount = await betModel.count({userName: {$in:childrenUsername}})
           alertBet = await betModel.aggregate([
               {
                   $match: {
@@ -309,7 +274,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             },
               {
                 $sort:{
-                    Stake: 1
+                    Stake: -1
                 }
               },
               {
