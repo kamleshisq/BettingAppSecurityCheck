@@ -2654,11 +2654,62 @@ socket.on('connect', () => {
          socket.on("Acc2", async(data) => {
             console.log(data)
             if(data.json.status == "success"){
-
+                let html = "";
+                let html1 = "";
+                
                 if(data.page == 0){
                     count1 = 1;
+                    html1 += `
+                    <div class="skin-data green">
+                        
+                        <h5>Credit Reference</h5>
+                        <h6> ${user.creditReference.toFixed(2)}</h6>
+                    </div>
+                    <!-- <div class="skin-data green">
+                      
+                      <h5>Balance</h5>
+                        <h6> ${user.balance.toFixed(2)}</h6>
+                    </div> -->
+                    <div class="skin-data green">
+                      
+                      <h5>Available Balance</h5>
+                        <h6> ${user.availableBalance.toFixed(2)}</h6>
+                    </div>
+                    <div class="skin-data green">
+                      
+                      <h5>Downline Balance</h5>
+                        <h6> ${user.downlineBalance.toFixed(2)}</h6>
+                    </div>
+                    <%if(me.myPL.toFixed(2) > 0){%>
+                    <div class="skin-data green">
+                      <%}else{%>
+                        <div class="skin-data red">
+                      <%}%>
+                        <h5>MY P/L</h5>
+                          <h6> ${user.myPL.toFixed(2)}</h6>
+                      </div>
+                      <%if(me.uplinePL.toFixed(2) > 0){%>
+                        <div class="skin-data green">
+                      <%}else{ %>
+                        <div class="skin-data red">
+                      <%} %>
+                      
+                      <h5>Upline P/L</h5>
+                        <h6> ${user.uplinePL.toFixed(2)}</h6>
+                    </div>
+                    <%if(me.lifetimePL.toFixed(2) > 0){%>
+                      <div class="skin-data green">
+                    <%}else{ %>
+                      <div class="skin-data red">
+                    <%} %>
+                      
+                      <h5>Lifetime P/L</h5>
+                        <h6> ${user.lifetimePL.toFixed(2)}</h6>
+                    </div>
+                  
+                  `
+                  $('.welcome-info-btn').html(html1)
                 }
-                let html = "";
                 for(let i = 0; i < data.json.userAcc.length; i++){
                     let date = new Date(data.json.userAcc[i].date);
                     // let abc =date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate()
