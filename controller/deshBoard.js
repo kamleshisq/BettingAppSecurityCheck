@@ -18,7 +18,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     let turnOver
     let childrenUsername = []
     let children = await User.find({parentUsers:req.currentUser._id})
-    childrenUsername = children.map(ele => {
+    children.map(ele => {
         childrenUsername.push(ele.userName) 
     })
         roles = await User.aggregate([
