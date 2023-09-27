@@ -80,6 +80,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                     userName:{$in:childrenUsername}
                 }
             },
+
             {
                 $group: {
                     _id: "$event",
@@ -299,40 +300,40 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
 
 
-        // topGames = await betModel.aggregate([
-        //     {
-        //         $match: {
-        //             status: { $ne: "OPEN" },
-        //             userName: {$in:childrenUsername}
+        topBets = await betModel.aggregate([
+            {
+                $match: {
+                    status: { $ne: "OPEN" },
+                    userName: {$in:childrenUsername}
 
-        //         }
-        //     },
-        //     {
-        //         $group: {
-        //             _id: "$event",
-        //             totalCount: { $sum: 1 },
-        //             uniqueUsers: { $addToSet: "$userId" },
-        //             totalReturns: { $sum: "$Stake" }
-        //         }
-        //     },
-        //     {
-        //         $project: {
-        //             _id: 0,
-        //             event: "$_id",
-        //             totalCount: 1,
-        //             noOfUniqueUsers: { $size: "$uniqueUsers" },
-        //             totalReturns: 1
-        //         }
-        //     },
-        //     {
-        //         $sort: {
-        //             totalCount: -1
-        //         }
-        //     },
-        //     {
-        //         $limit: 5
-        //     }
-        // ])
+                }
+            },
+            {
+                $group: {
+                    _id: "$event",
+                    totalCount: { $sum: 1 },
+                    uniqueUsers: { $addToSet: "$userId" },
+                    totalReturns: { $sum: "$Stake" }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    event: "$_id",
+                    totalCount: 1,
+                    noOfUniqueUsers: { $size: "$uniqueUsers" },
+                    totalReturns: 1
+                }
+            },
+            {
+                $sort: {
+                    totalCount: -1
+                }
+            },
+            {
+                $limit: 5
+            }
+        ])
         
         
 
