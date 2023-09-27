@@ -11403,7 +11403,7 @@ socket.on('connect', () => {
 
                     document.getElementById('betTable').innerHTML = html
                 }else{
-                    document.getElementById('betTable').appendChild(html)
+                   $('#betTable').append(html)
 
                 }
 
