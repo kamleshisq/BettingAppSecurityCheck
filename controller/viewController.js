@@ -1861,26 +1861,11 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     let openBet = topGames = await betModel.aggregate([
         {
             $match: {
-                status:"OPEN" 
+                status:"OPEN" ,
+                userName:{$in:childrenUsername}
             }
         },
         {
-            $lookup: {
-              from: "users",
-              localField: "userName",
-              foreignField: "userName",
-              as: "user"
-            }
-          },
-          {
-            $unwind: "$user"
-          },
-          {
-            $match: {
-              "user.parentUsers": { $in: [req.currentUser.id] }
-            }
-          },
-          {
             $addFields: {
                 shortMarketName: { $substrCP: [{ $toLower: "$marketName" }, 0, 3] }
             }
@@ -3694,6 +3679,11 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         //     let date = new Date(item.updated_on);
         //     return date < Date.now() - 1000 * 60 * 60;
         // });
+        let childrenUsername = []
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
         let SportLimits = betLimit.find(item => item.type === "Sport")
         let min 
         let max 
@@ -3725,7 +3715,8 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
                 {
                     $match: {
                         status: "OPEN" ,
-                        eventId: req.query.id
+                        eventId: req.query.id,
+                        userName:{$in:childrenUsername}
                     }
                 },
                 {
@@ -3733,23 +3724,7 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
                 },
                 {
                      $limit:limit
-                },
-                {
-                    $lookup: {
-                      from: "users",
-                      localField: "userName",
-                      foreignField: "userName",
-                      as: "user"
-                    }
-                  },
-                  {
-                    $unwind: "$user"
-                  },
-                  {
-                    $match: {
-                      "user.parentUsers": { $in: [req.currentUser.id] }
-                    }
-                  }
+                }
                  
             ])
         }else{

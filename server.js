@@ -3309,28 +3309,18 @@ io.on('connection', (socket) => {
 
     socket.on('UerBook', async(data) => {
         console.log(data)
+        let childrenUsername = []
+        let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
         try{
             let Bets = await Bet.aggregate([
                 {
                     $match: {
                         status: "OPEN",
-                        marketId: data.marketId
-                    }
-                },
-                {
-                    $lookup: {
-                        from: "users",
-                        localField: "userName",
-                        foreignField: "userName",
-                        as: "user"
-                    }
-                },
-                {
-                    $unwind: "$user"
-                },
-                {
-                    $match: {
-                        "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
+                        marketId: data.marketId,
+                        userName:{$in:childrenUsername}
                     }
                 },
                 {
