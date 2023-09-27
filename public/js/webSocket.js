@@ -2438,11 +2438,12 @@ socket.on('connect', () => {
             let modelId = $(this).attr('id')
             let modelId1 = $(this).attr("data-bs-target")
             model =  $(modelId1)
+            console.log('elementId',modelId)
             socket.emit("ElementID", modelId)
         })
 
         socket.on('getMyBetDetails',(data)=>{
-            // console.log(data)
+            console.log(data)
             let html = ``
             if(data.transactionId){
                 html += `<thead>
@@ -2491,18 +2492,19 @@ socket.on('connect', () => {
                   <th>Amount</th>
                   <th>Remarks</th>
                 </tr>
-            </thead>
-            <tbody class="new-body" >`
-                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>`
-                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.balance - data.creditDebitamount)}</td>`
-                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.balance)}</td>`
-                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.creditDebitamount)}</td>`
+                </thead>
+                <tbody class="new-body" >`
+                html += `<tr>`
+                html += `<td>${new Date(data.date)}</td>`
+                html += `<td>${(data.balance - data.creditDebitamount)}</td>`
+                html += `<td>${(data.balance)}</td>`
+                html += `<td>${(data.creditDebitamount)}</td>`
                 if(data.Remark){
-                    html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.Remark)}</td>`
+                    html += `<td>${(data.Remark)}</td>`
                 }else{
-                    html += `<tr style="text-align: center;" class="blue"><td>-</td>`
+                    html += `<td>-</td>`
                 }
-                
+                html += `</tr></tbody>`
                 model.find('table').html(html)
             }
             // console.log(model)
