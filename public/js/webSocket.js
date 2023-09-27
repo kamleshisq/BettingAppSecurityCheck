@@ -11375,6 +11375,7 @@ socket.on('connect', () => {
 
             function eventID(){
                 let type = 'loop'
+                let page = parseInt($('.rowId').attr('data-rowid'))
                 socket.emit("BETONEVENT", {id ,type,page, LOGINDATA})
                 setTimeout(()=>{
                     eventID()
@@ -11384,6 +11385,7 @@ socket.on('connect', () => {
             eventID()
 
             socket.on('BETONEVENT', async(data) => {
+                console.log(data,'betonevent')
                 let html = ``
                 for(let i = 0; i < data.data.length; i++){
                     let date = new Date(data.data[i].date)
