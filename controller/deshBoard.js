@@ -70,25 +70,21 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         topGames = await betModel.aggregate([
             {
                 $match: {
-                    status: { $ne: "OPEN" }
+                    status: { $ne: "OPEN" },
+                    "user.parentUsers": { $in: [req.currentUser.id] }
                 }
             },
             {
                 $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
+                    from: "users",
+                    localField: "userName",
+                    foreignField: "userName",
+                    as: "user"
                 }
-              },
-              {
+            },
+            {
                 $unwind: "$user"
-              },
-              {
-                $match: {
-                  "user.parentUsers": { $in: [req.currentUser.id] }
-                }
-              },
+            },
             {
                 $group: {
                     _id: "$event",
@@ -114,8 +110,9 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             {
                 $limit: 5
             }
-        ])
+        ]);
         
+        console.log(topGames, "TOPGAMES 122121212")
 
         Categories = await betModel.aggregate([
             {
