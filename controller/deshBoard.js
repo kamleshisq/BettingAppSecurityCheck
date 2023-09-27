@@ -309,7 +309,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             },
               {
                 $sort:{
-                    Stake: 1
+                    Stake: -1
                 }
               },
               {
