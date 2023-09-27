@@ -64,7 +64,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 }
             }
         ]);
-        console.log(users, 'users')
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
@@ -117,7 +116,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 $limit: 5
             }
         ]);
-
+        console.log(topGames , "topGames")
         Categories = await betModel.aggregate([
             {
                 $match: {
