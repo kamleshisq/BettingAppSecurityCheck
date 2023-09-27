@@ -11456,6 +11456,7 @@ socket.on('connect', () => {
                     var closestMarket = $(this).parents('.bets-table').find('.market');
                     if (closestMarket.length > 0) {
                         var marketId = closestMarket.attr('id');
+                        $("#searchUser").attr('data-marketid',marketId)
                         let type = 'data5'
                         socket.emit('UerBook', {marketId, LOGINDATA,id,type})
                     } else {
@@ -11521,21 +11522,17 @@ socket.on('connect', () => {
                 // console.log("working")
                 // console.log(this.textContent)
                 let data = {}
-                var closestMarket =  $('.userBook').parents('.bets-table').find('.market');
-                if (closestMarket.length > 0) {
-                    var marketId = closestMarket.attr('id');
-                    document.getElementById("searchUser").value = this.textContent
-                    data.id = this.id
-                    data.LOGINDATA = LOGINDATA
-                    data.marketId
-                    data.type = 'data1'
-                    $('.wrapper').hide()
-                    console.log(data)
-                    socket.emit('UerBook', data)
+                let marketId = $("#searchUser").attr('data-marketid')
+                document.getElementById("searchUser").value = this.textContent
+                data.id = this.id
+                data.LOGINDATA = LOGINDATA
+                data.marketId = marketId
+                data.type = 'data1'
+                $('.wrapper').hide()
+                console.log(data)
+                socket.emit('UerBook', data)
 
-                } else {
-                    console.log('Market not found.');
-                }
+             
                
             })
     
@@ -11546,7 +11543,7 @@ socket.on('connect', () => {
                         let match = data.Bets[0].selections[0].matchName
                         let team1 = match.split('v')[0]
                         let team2 = match.split('v')[1]
-                        let html = `<tr><th>User name</th>
+                        let html = `<tr class="headDetail"><th>User name</th>
                         <th>${team1}</th>
                         <th>${team2}</th></tr>`
                         let sumOfTeamA = 0
@@ -11582,7 +11579,7 @@ socket.on('connect', () => {
                             if( i < 5){
     
                                 html += `
-                                <tr>
+                                <tr class="tabelBodyTr">
                                     <td>${data.Bets[i].userName}</td>`
                                 if(team1data.toFixed(2) > 0){
                                     html += `<td class="red"> -${team1data.toFixed(2)}</td>`
@@ -11659,8 +11656,8 @@ socket.on('connect', () => {
                                 }
                             }
                         }
-                    
-                        console.log($('#match_odd .tabelBodyTr'),"==>tabelbodyprint")
+                        console.log(html)
+                        console.log($('.tabelBodyTr'),"==>tabelbodyprint")
                     }
                 }else{
                     document.getElementById('match_odd').innerHTML = "There is no bets in this market"
