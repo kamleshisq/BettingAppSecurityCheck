@@ -344,12 +344,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
         let topBets = await betModel.aggregate([
             {
-                $match: {
-                    status: "OPEN",
-                    "user.parentUsers": { $in: [req.currentUser.id] },
-                }
-            },
-            {
                 $lookup: {
                     from: "users",
                     localField: "userName",
@@ -359,6 +353,12 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             },
             {
                 $unwind: "$user"
+            },
+            {
+                $match: {
+                    status: "OPEN",
+                    "user.parentUsers": { $in: [req.currentUser.id] },
+                }
             },
             {
                 $sort: {
