@@ -13,6 +13,13 @@ const InprogressSchema = mongoose.Schema({
     length:{
         type:String
     },
+    marketName:{
+        type:String
+    },
+    settledBet:{
+        type:Number,
+        default:0
+    },
     betArray:[{
         Id:String
     }]
