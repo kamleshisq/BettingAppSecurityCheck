@@ -4480,6 +4480,9 @@ socket.on('connect', () => {
         socket.on('OnlineUser', async(data) => {
             console.log(data)
             let html = "";
+            if(data.page === 0){
+                count = 1
+            }
             for(let i = 0;i<data.onlineUsers.length;i++){
                 html += `<tr>
                 <td>${count + i + 1}</td>
