@@ -322,6 +322,8 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             }
         ]);
 
+        console.log(users,'users')
+
         topGames = await betModel.aggregate([
             {
                 $match: {

@@ -1181,21 +1181,20 @@ io.on('connection', (socket) => {
         let page
         let limit = 10
         page = data.page
-        if(!page){
-            page = 0
-        }
+        
         // const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
         // let role_type =[]
         // for(let i = 0; i < roles.length; i++){
         //     role_type.push(roles[i].role_type)
         // }
+        data.filterData.is_Online = true
+        data.filterData.parentUsers = data.LOGINDATA.LOGINUSER._id
         let onlineUsers
-        if(data.filterData && page == 0){
-                onlineUsers = await User.find({is_Online:true, userName:data.filterData.userName, parentUsers:{$in:[data.LOGINDATA.LOGINUSER._id]}})
-                page = 0
+        if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
+            delete data.filterData['userName']
+            onlineUsers = await User.find(data.filterData).skip(page * limit).limit(limit)
         }else{
-                onlineUsers = await User.find({is_Online:true, parentUsers:{$in:[data.LOGINDATA.LOGINUSER._id]}}).skip(page * limit).limit(limit)
-                page++
+            onlineUsers = await User.find(data.filterData).skip(page * limit).limit(limit)
         }
         // if(data.LOGINDATA.LOGINUSER.role_type === 1){
         // }else{
