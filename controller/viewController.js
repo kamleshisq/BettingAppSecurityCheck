@@ -3661,20 +3661,44 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
             message:"This match is no more live"
         })
     }
-    const liveStream = await liveStreameData(match.eventData.channelId, ipv4)
-    const src_regex = /src='([^']+)'/;
-    let match1
     let src
-    if(liveStream.data){
-
-        match1 = liveStream.data.match(src_regex);
-        if (match1) {
-            src = match1[1];
-        } else {
-            console.log("No 'src' attribute found in the iframe tag.");
+    let status = false
+    let liveStream
+    let StreamData = await streamModel.findOne({eventId:req.query.id})
+    if(StreamData){
+        if(StreamData.status){
+            src = StreamData.url
         }
-        // console.log(src, 123)
+    }else{
+        liveStream = await liveStreameData(match.eventData.channelId, ipv4)
+        const src_regex = /src='([^']+)'/;
+        let match1
+        // let src
+        if(liveStream.data){
+    
+            match1 = liveStream.data.match(src_regex);
+            if (match1) {
+                src = match1[1];
+                status = true
+            } else {
+                console.log("No 'src' attribute found in the iframe tag.");
+            }
+            // console.log(src, 123)
+        }
+
     }
+    // const src_regex = /src='([^']+)'/;
+    // let match1
+    // if(liveStream.data){
+
+    //     match1 = liveStream.data.match(src_regex);
+    //     if (match1) {
+    //         src = match1[1];
+    //     } else {
+    //         console.log("No 'src' attribute found in the iframe tag.");
+    //     }
+    //     // console.log(src, 123)
+    // }
     const betLimit = await betLimitModel.find()
     // console.log(match.marketList.goals)
     // let session = match.marketList.session.filter(item => {
