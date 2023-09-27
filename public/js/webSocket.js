@@ -11661,7 +11661,7 @@ socket.on('connect', () => {
                     }
                 }else{
                     $('.tabelBodyTr').remove()
-                    $('.headDetail').after(`<tr>"There is no bets in this market"</tr>`)
+                    $('.headDetail').after(`<tr><td>There is no bets in this market</td></tr>`)
                 }
             })
 
