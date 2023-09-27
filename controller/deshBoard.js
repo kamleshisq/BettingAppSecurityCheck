@@ -300,39 +300,21 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
 
 
-        topBets = await betModel.aggregate([
+        let topBets = await betModel.aggregate([
             {
                 $match: {
-                    status: { $ne: "OPEN" },
+                    status:"OPEN",
                     userName: {$in:childrenUsername}
-
                 }
             },
-            {
-                $group: {
-                    _id: "$event",
-                    totalCount: { $sum: 1 },
-                    uniqueUsers: { $addToSet: "$userId" },
-                    totalReturns: { $sum: "$Stake" }
+              {
+                $sort:{
+                    Stake: 1
                 }
-            },
-            {
-                $project: {
-                    _id: 0,
-                    event: "$_id",
-                    totalCount: 1,
-                    noOfUniqueUsers: { $size: "$uniqueUsers" },
-                    totalReturns: 1
-                }
-            },
-            {
-                $sort: {
-                    totalCount: -1
-                }
-            },
-            {
-                $limit: 5
-            }
+              },
+              {
+                $limit:5
+              }
         ])
         
         
