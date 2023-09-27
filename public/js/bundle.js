@@ -7086,8 +7086,8 @@ var _window$location = window.location,
   search = _window$location.search;
 $(document).ready(function () {
   var linkColor = document.querySelectorAll('.nav_link');
-  var operationPathnameArr = ['/admin/houseManagement', '/admin/whiteLableAnalysis', '/admin/commissionMarkets', '/admin/settlement', '/admin/settlementHistory', '/admin/commissionReport', '/admin/gameanalysis', '/admin/Notification', '/admin/betmoniter', '/admin/onlineUsers', '/admin/alertbet', '/admin/betlimit', '/admin/voidbet'];
-  var reportsPathnameArr = ['/admin/gamereport', '/admin/useracount', '/admin/reports', '/admin/userhistoryreport', '/admin/plreport'];
+  var operationPathnameArr = ['/admin/houseManagement', '/admin/streammanagement', '/admin/whiteLableAnalysis', '/admin/commissionMarkets', '/admin/settlement', '/admin/settlementHistory', '/admin/commissionReport', '/admin/gameanalysis', '/admin/Notification', '/admin/betmoniter', '/admin/onlineUsers', '/admin/alertbet', '/admin/betlimit', '/admin/voidbet'];
+  var reportsPathnameArr = ['/admin/gamereport', '/admin/myaccount', '/admin/adminaccount', '/admin/useraccount', '/admin/reports', '/admin/userhistoryreport', '/admin/plreport'];
   var cmsPathnameArr = ['/admin/cms', '/admin/pageManager', '/admin/gameRules'];
   function colorLink() {
     if (linkColor) {
@@ -7110,11 +7110,13 @@ $(document).ready(function () {
         $("a[href='" + '/admin/settlement' + "'").addClass('active');
         $("a[href='" + '/admin/settlement' + "'").parent().parent().siblings('a').addClass('active');
         $("a[href='" + '/admin/settlement' + "'").parent().parent().addClass('open');
+      } else if (pathname == '/streammanagement/event') {
+        $("a[href='" + '/admin/streammanagement' + "'").addClass('active');
+        $("a[href='" + '/admin/streammanagement' + "'").parent().parent().siblings('a').addClass('active');
+        $("a[href='" + '/admin/streammanagement' + "'").parent().parent().addClass('open');
       }
-      // this.classList.add('active')
     }
   }
-
   colorLink();
   $('input:checked').parents('.switch').addClass("on");
   $('input:checkbox').change(function () {
@@ -7722,7 +7724,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49856" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59202" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
