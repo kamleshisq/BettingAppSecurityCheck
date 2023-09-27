@@ -67,54 +67,54 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             }
         ]);
 
-        // topGames = await betModel.aggregate([
-        //     {
-        //         $match: {
-        //             status: { $ne: "OPEN" }
-        //         }
-        //     },
-        //     {
-        //         $lookup: {
-        //           from: "users",
-        //           localField: "userName",
-        //           foreignField: "userName",
-        //           as: "user"
-        //         }
-        //       },
-        //       {
-        //         $unwind: "$user"
-        //       },
-        //       {
-        //         $match: {
-        //           "user.parentUsers": { $in: [req.currentUser.id] }
-        //         }
-        //       },
-        //     {
-        //         $group: {
-        //             _id: "$event",
-        //             totalCount: { $sum: 1 },
-        //             uniqueUsers: { $addToSet: "$userId" },
-        //             totalReturns: { $sum: "$Stake" }
-        //         }
-        //     },
-        //     {
-        //         $project: {
-        //             _id: 0,
-        //             event: "$_id",
-        //             totalCount: 1,
-        //             noOfUniqueUsers: { $size: "$uniqueUsers" },
-        //             totalReturns: 1
-        //         }
-        //     },
-        //     {
-        //         $sort: {
-        //             totalCount: -1
-        //         }
-        //     },
-        //     {
-        //         $limit: 5
-        //     }
-        // ])
+        topGames = await betModel.aggregate([
+            {
+                $match: {
+                    status: { $ne: "OPEN" }
+                }
+            },
+            {
+                $lookup: {
+                  from: "users",
+                  localField: "userName",
+                  foreignField: "userName",
+                  as: "user"
+                }
+              },
+              {
+                $unwind: "$user"
+              },
+              {
+                $match: {
+                  "user.parentUsers": { $in: [req.currentUser.id] }
+                }
+              },
+            {
+                $group: {
+                    _id: "$event",
+                    totalCount: { $sum: 1 },
+                    uniqueUsers: { $addToSet: "$userId" },
+                    totalReturns: { $sum: "$Stake" }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    event: "$_id",
+                    totalCount: 1,
+                    noOfUniqueUsers: { $size: "$uniqueUsers" },
+                    totalReturns: 1
+                }
+            },
+            {
+                $sort: {
+                    totalCount: -1
+                }
+            },
+            {
+                $limit: 5
+            }
+        ])
         
 
         // Categories = await betModel.aggregate([
