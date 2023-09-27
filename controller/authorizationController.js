@@ -198,6 +198,7 @@ exports.checkPass = catchAsync(async(req, res, next) => {
 })
 
 exports.isProtected = catchAsync( async (req, res, next) => {
+    console.log('WORKING ADMIN')
     let token 
     // console.log(req.headers.authorization, 456)
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
