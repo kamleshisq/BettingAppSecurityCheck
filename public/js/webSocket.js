@@ -4483,13 +4483,14 @@ socket.on('connect', () => {
             for(let i = 0;i<data.onlineUsers.length;i++){
                 html += `<tr>
                 <td>${count + i + 1}</td>
-                <td>${data.onlineUsers[0].userName}</td>
+                <td>${data.onlineUsers[i].userName}</td>
                 <td>
     
-                    <button type="button" id="${data.onlineUsers[0]._id}" class="logout">Logout</button>
+                    <button type="button" id="${data.onlineUsers[i]._id}" class="logout">Logout</button>
                 </td>
             </tr>`
             }
+            count += 10
             if(data.page == 0){
                 if(data.onlineUsers.length == 0){
                     html += `<tr class="empty_table"><td>No record found</td></tr>`
