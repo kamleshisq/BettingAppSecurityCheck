@@ -342,39 +342,40 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
 
 
-        // let topBets = await betModel.aggregate([
-        //     {
-        //         $match: {
-        //             status:"OPEN" 
-        //         }
-        //     },
-        //     {
-        //         $lookup: {
-        //           from: "users",
-        //           localField: "userName",
-        //           foreignField: "userName",
-        //           as: "user"
-        //         }
-        //       },
-        //       {
-        //         $unwind: "$user"
-        //       },
-        //       {
-        //         $match: {
-        //           "user.parentUsers": { $in: [req.currentUser.id] }
-        //         }
-        //       },
-        //       {
-        //         $sort:{
-        //             Stake: 1
-        //         }
-        //       },
-        //       {
-        //         $limit:5
-        //       }
-        // ])
+        let topBets = await betModel.aggregate([
+            // {
+            //     $match: {
+            //         status:"OPEN" 
+            //     }
+            // },
+            {
+                $lookup: {
+                  from: "users",
+                  localField: "userName",
+                  foreignField: "userName",
+                  as: "user"
+                }
+              },
+              {
+                $unwind: "$user"
+              },
+              {
+                $match: {
+                  "user.parentUsers": { $in: [req.currentUser.id] },
+                    status:"OPEN" 
+                }
+              },
+              {
+                $sort:{
+                    Stake: 1
+                }
+              },
+              {
+                $limit:5
+              }
+        ])
 
-        let topBets = []
+        // let topBets = []
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }, parentUsers : { $in: [req.currentUser.id] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
