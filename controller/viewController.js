@@ -1944,6 +1944,13 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     let liveFootBall = footBall.eventList;
     let liveTennis = Tennis.eventList
     let currentUser =  req.currentUser
+    let childrenUsername = []
+    let children = await User.find({parentUsers:req.currentUser._id})
+    children.map(ele => {
+        childrenUsername.push(ele.userName) 
+    })
+
+    console.log(childrenUsername, "+====>> childrenUsername ")
     // console.log(req.currentUser)
     let openBet = topGames = await betModel.aggregate([
         {
@@ -1977,20 +1984,6 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
                 shortMarketName: { $in: ["mat", "boo", "tos"] }
             }
         },
-        //   {
-        //     $group: {
-        //         _id: "$betType",
-        //         details: {
-        //             $push: {
-        //                 id: "$marketId",
-        //                 marketName: "$marketName",
-        //                 match:"$match",
-        //                 date:'$date'
-        //                 // Add other fields you want here
-        //             }
-        //         }
-        //     }
-        // },
         {
             $group: {
                 _id: {
@@ -2041,86 +2034,8 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
                 bettype: "$_id",
                 details: 1
             }
-        },
-        // {
-        //     $unwind: "$details"
-        // },
-        // {
-        //     $match: {
-        //         "details.shortMarketName": {
-        //             $in: ["mat", "boo", "tos"]
-        //         }
-        //     }
-        // },
-        // {
-        //     $project: {
-        //         _id: 0,
-        //         bettype: "$_id",
-        //         details: 1
-        //     }
-        // }
-        // {
-        //     $group: {
-        //         _id: {
-        //             betType: "$_id.betType",
-        //             marketId: "$_id.marketId"
-        //         },
-        //         details: {
-        //             $push: {
-        //                 id: "$_id.marketId",
-        //                 marketName: "$marketName",
-        //                 match: "$match",
-        //                 date: "$date",
-        //                 stake: "$stake",
-        //                 beton: "$_id.beton"
-        //             }
-        //         }
-        //     }
-        // },
-        // {
-        //     $group: {
-        //         _id: "$_id.betType",
-        //         details: { $push: "$details" }
-        //     }
-        // },
-        // {
-        //     $project: {
-        //         _id: 0,
-        //         bettype: "$_id",
-        //         details: 1
-        //     }
-        // },
-        // {
-        //     $project: {
-        //         _id: 0,
-        //         bettype: "$_id",
-        //         details: 1
-        //     }
-        // }
-        // {
-        //     $project: {
-        //         _id: 0,
-        //         bettype: "$_id",
-        //         details: {
-        //             $filter: {
-        //                 input: "$details",
-        //                 as: "detail",
-        //                 cond: {
-        //                     $in: [
-        //                         { $substrCP: [{ $toLower: "$$detail.marketName" }, 0, 3] },
-        //                         ["mat", "boo", "tos"]
-        //                     ]
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        }
     ])
-    // console.log(openBet[0].details, "openBet")
-    // console.log(openBet[0].details[0][0], "openBet")
-    // console.log(liveFootBall)
-    // console.log(liveTennis)
-    // console.log(liveCricket)
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
         liveCricket,
