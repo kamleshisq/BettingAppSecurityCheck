@@ -56,9 +56,9 @@ app.use(cookieParser());
 //     saveUninitialized: true,
 // }));
 app.use(middlewares);
-crone();
+// crone();
 // userCrone(); 
-betCrone();
+// betCrone();
 // app.get("/", (req, res)=> {
     //     res.send("hello word")
     // })
