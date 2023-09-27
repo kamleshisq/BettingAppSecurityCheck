@@ -11374,7 +11374,8 @@ socket.on('connect', () => {
             })
 
             function eventID(){
-                socket.emit("BETONEVENT", {id , LOGINDATA})
+                let type = 'loop'
+                socket.emit("BETONEVENT", {id ,type,page, LOGINDATA})
                 setTimeout(()=>{
                     eventID()
                 }, 5000)
@@ -11383,15 +11384,7 @@ socket.on('connect', () => {
             eventID()
 
             socket.on('BETONEVENT', async(data) => {
-                let html = `<tr>
-                <th>Username</th>
-                <th>Place Date</th>
-                <th>Market</th>
-                <!-- <th>Bet Type</th> -->
-                <th>Odds</th>
-                <th>Stake</th>
-                <th>Action</th>
-                </tr>`
+                let html = ``
                 for(let i = 0; i < data.data.length; i++){
                     let date = new Date(data.data[i].date)
                     html += `<tr>
@@ -11404,9 +11397,28 @@ socket.on('connect', () => {
                     <td><div class="btn-group"><button class="btn alert-btn" id="${data.data[i]._id}">Alert</button></div></td>
                 </tr>`
                 }
+                if(data.type == 'loop'){
 
-                document.getElementById('betTable').innerHTML = html
+                    document.getElementById('betTable').innerHTML = html
+                }else{
+                    document.getElementById('betTable').appendChild(html)
+
+                }
+
+                if(data.data.length == 0){
+                    $('#load-more').hid()
+                }
             })
+
+            $('#load-more').click(function(e){
+                let page = parseInt($('.rowId').attr('data-rowid'))
+                let type = 'loadmore'
+                $('.rowId').attr('data-rowid',page + 1)
+                socket.emit("BETONEVENT", {id ,page,type, LOGINDATA})
+
+            })
+
+
 
             $(document).on("click", ".alert-btn", function(e){
                 e.preventDefault()
