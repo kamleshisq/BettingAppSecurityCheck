@@ -436,12 +436,12 @@ io.on('connection', (socket) => {
         let filter = {};
         let limit = 10
         if(data.Fdate != '' && data.Tdate != ''){
-            filter.date = {$lte:data.Fdate,$gte:data.Tdate}
+            filter.date = {$gte:data.Fdate,$lte:data.Tdate}
         }else if(data.Fdate != '' && data.Tdate == ''){
-            filter.date = {$lte:data.Fdate}
+            filter.date = {$gte:data.Fdate}
 
         }else if(data.Fdata == '' && data.Tdate != ''){
-            filter.date = {$gte:data.Tdate}
+            filter.date = {$lte:data.Tdate}
         }
         filter.user_id = new mongoose.Types.ObjectId(data.id)
 
