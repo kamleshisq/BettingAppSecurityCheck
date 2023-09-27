@@ -64,7 +64,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 }
             }
         ]);
-        console.log(users, "USERS")
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
@@ -117,7 +116,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 $limit: 5
             }
         ]);
-        console.log(topGames , "topGames 44444")
 
         Categories = await betModel.aggregate([
             {
@@ -156,6 +154,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             }
         ])
 
+        console.log(Categories, "Categories")
 
         // userCount = await loginLogs.aggregate([
         //     {
