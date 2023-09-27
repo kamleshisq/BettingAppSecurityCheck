@@ -11456,6 +11456,7 @@ socket.on('connect', () => {
                     var closestMarket = $(this).parents('.bets-table').find('.market');
                     if (closestMarket.length > 0) {
                         var marketId = closestMarket.attr('id');
+                        $("#searchUser").attr('data-marketid',marketId)
                         let type = 'data5'
                         socket.emit('UerBook', {marketId, LOGINDATA,id,type})
                     } else {
@@ -11521,21 +11522,17 @@ socket.on('connect', () => {
                 // console.log("working")
                 // console.log(this.textContent)
                 let data = {}
-                var closestMarket =  $('.userBook').parents('.bets-table').find('.market');
-                if (closestMarket.length > 0) {
-                    var marketId = closestMarket.attr('id');
-                    document.getElementById("searchUser").value = this.textContent
-                    data.id = this.id
-                    data.LOGINDATA = LOGINDATA
-                    data.marketId
-                    data.type = 'data1'
-                    $('.wrapper').hide()
-                    console.log(data)
-                    socket.emit('UerBook', data)
+                let marketId = $("#searchUser").attr('data-marketid')
+                document.getElementById("searchUser").value = this.textContent
+                data.id = this.id
+                data.LOGINDATA = LOGINDATA
+                data.marketId = marketId
+                data.type = 'data1'
+                $('.wrapper').hide()
+                console.log(data)
+                socket.emit('UerBook', data)
 
-                } else {
-                    console.log('Market not found.');
-                }
+             
                
             })
     
