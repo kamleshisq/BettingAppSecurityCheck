@@ -194,25 +194,16 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
         // betCount = await betModel.aggregate([
         //     {
-        //         $lookup: {
-        //           from: "users",
-        //           localField: "userName",
-        //           foreignField: "userName",
-        //           as: "user"
-        //         }
-        //       },
-        //       {
-        //         $unwind: "$user"
-        //       },
-        //       {
-        //         $match: {
-        //           "user.parentUsers": { $in: [req.currentUser.id] }
+        //         $match:{
+        //             userName: {$in:childrenUsername}
         //         }
         //       },
         //     {
         //         $count: "totalBets"
         //       }
         //   ])
+          betCount = await betModel.count({userName: {$in:childrenUsername}})
+          console.log(betCount)
           alertBet = await betModel.aggregate([
               {
                   $match: {
