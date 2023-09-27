@@ -2496,12 +2496,12 @@ socket.on('connect', () => {
                 html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>`
                 html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.balance - data.creditDebitamount)}</td>`
                 html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.balance)}</td>`
+                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.creditDebitamount)}</td>`
                 if(data.Remark){
-                    html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.creditDebitamount)}</td>`
+                    html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.Remark)}</td>`
                 }else{
                     html += `<tr style="text-align: center;" class="blue"><td>-</td>`
                 }
-                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.Remark)}</td>`
                 
                 model.find('table').html(html)
             }
