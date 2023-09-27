@@ -1071,30 +1071,16 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     const currentDate = new Date(); // Current date
     const fiveDaysAgo = new Date(currentDate);
     fiveDaysAgo.setDate(currentDate.getDate() - 5);
-
+    let childrenUsername = []
+    let children = await User.find({parentUsers:req.currentUser._id})
+    children.map(ele => {
+        childrenUsername.push(ele.userName) 
+    })
     let betsEventWise = await betModel.aggregate([
         {
           $match: {
-            eventDate: {
-                $gte: fiveDaysAgo, 
-                // $lte: currentDate, 
-              }
-          }
-        },
-        {
-          $lookup: {
-            from: "users",
-            localField: "userName",
-            foreignField: "userName",
-            as: "user"
-          }
-        },
-        {
-          $unwind: "$user"
-        },
-        {
-          $match: {
-            "user.parentUsers": { $in: [req.currentUser.id] }
+            eventDate: {$gte: fiveDaysAgo},
+            userName:{$in:childrenUsername}
           }
         },
         {
@@ -1137,86 +1123,6 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
           }
         }
       ]);
-      
-      // Now betsEventWise will contain an array of objects grouped by betType
-      // Each object contains the betType (id) and an array of objects with matchName and count
-      
-    //   console.log(betsEventWise, "NEWDATA")
-    //   console.log(betsEventWise[0].data, "NEWDATA")
-      // Now betsEventWise will contain an array of objects grouped by betType
-      
-    // let betsEventWise = await betModel.aggregate([
-    //     {
-    //         $match: {
-    //             status:"OPEN" 
-    //         }
-    //     },
-    //     {
-    //         $lookup: {
-    //           from: "users",
-    //           localField: "userName",
-    //           foreignField: "userName",
-    //           as: "user"
-    //         }
-    //       },
-    //       {
-    //         $unwind: "$user"
-    //       },
-    //       {
-    //         $match: {
-    //           "user.parentUsers": { $in: [req.currentUser.id] }
-    //         }
-    //       },
-    //     //   {
-    //     //     $group: {
-    //     //       _id: "$match",
-    //     //       count: { $sum: 1 }
-    //     //     }
-    //     //   },
-    //     //   {
-    //     //     $project: {
-    //     //       _id: 0,
-    //     //       eventname: "$_id",
-    //     //       count: 1
-    //     //     }
-    //     //   }
-    //     {
-    //         $group: {
-    //           _id: "$match",
-    //           count: { $sum: 1 },
-    //           eventdate: { $first: "$eventDate" }, 
-    //           eventid: { $first: "$eventId" },
-    //           series: {$first: "$event"} 
-    //         }
-    //       },
-    //       {
-    //         $project: {
-    //           _id: 0,
-    //           matchName: "$_id",
-    //           eventdate: 1,
-    //           eventid: 1,
-    //           series:1,
-    //           count: 1
-    //         }
-    //       },
-    //       {
-    //           $sort:{
-    //             eventdate: -1
-    //           }
-    //       }
-    // ])
-    // let users = await User.find({roleName:"Super-Duper-Admin"})
-    // for(let i = 0; i < users.length; i++){
-    //     await commissionModel.create({userId:users[i].id})
-    //     // let settlement = await sattlementModel.findOne({userId:users[i].id})
-    //     // if(settlement === null){
-    //     //     await sattlementModel.create({userId:users[i].id})
-    //     // }
-
-    // }
-    // let sportData = await getCrkAndAllData()
-    // const cricket1 = sportData[0].gameList[0].eventList
-    // console.log(cricket1)
     console.log(betsEventWise[0].data, '==>DATA')
     res.status(200).render("./sattelment/setalment",{
         title:"Settlements",
@@ -1775,7 +1681,7 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 // });
 
 exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
-    let body = JSON.stringify(["4.1566346274-F2", "4.965891179-OE", "4.1695114413-BM", '4.801038281-F2']);
+    let body = JSON.stringify(["1.218726263", "4.335835341-F2"]);
     // console.log(body)
     var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
     fetch(fullUrl, {
@@ -3070,6 +2976,11 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
 
 exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     let me = req.currentUser
+    // let childrenUsername = []
+    // let children = await User.find({parentUsers:req.currentUser._id})
+    // children.map(ele => {
+    //     childrenUsername.push(ele.userName) 
+    // })
     // console.log("working")
     // console.log(req.query.id)
     let betsEventWiseOpen = await betModel.aggregate([
