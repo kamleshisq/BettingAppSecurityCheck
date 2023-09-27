@@ -482,7 +482,7 @@ io.on('connection', (socket) => {
             
         }
         json.status = 'success'
-        socket.emit('Acc2', {json,page:data.page,filter})
+        socket.emit('Acc2', {json,page:data.page,filter,data})
 
     })
 
