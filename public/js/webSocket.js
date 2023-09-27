@@ -2442,7 +2442,7 @@ socket.on('connect', () => {
         })
 
         socket.on('getMyBetDetails',(data)=>{
-            // console.log(data)
+            console.log(data)
             let html = ``
             if(data.transactionId){
                 html += `<thead>
