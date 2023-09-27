@@ -11463,7 +11463,7 @@ socket.on('connect', () => {
             });
 
             socket.on('UerBook', data => {
-                console.log(data)
+                // console.log(data)
                 if(data.length > 0){
                     let match = data[0].selections[0].matchName
                     let team1 = match.split('v')[0]
@@ -11475,12 +11475,12 @@ socket.on('connect', () => {
                     let sumOfTeamB = 0
                     let sumOfTeamC = 0
                     for(let i = 0; i < data.length; i++){
-                        console.log(data[i], "+==> in Loop DAta")
+                        // console.log(data[i], "+==> in Loop DAta")
                         let team1data = 0 
                         let team2data = 0
                         // console.log(data[i].selections[0].selectionName.toLowerCase(), team1.toLowerCase)
                         if(data[i].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
-                            console.log("2121222122121")
+                            // console.log("2121222122121")
                             team1data = data[i].selections[0].totalAmount
                             sumOfTeamA += team1data
                             if(data[i].selections[1]){
