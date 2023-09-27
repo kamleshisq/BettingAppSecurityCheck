@@ -16,6 +16,11 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     let alertBet
     let betsEventWise
     let turnOver
+    let childrenUsername = []
+    let children = await User.find({parentUsers:req.currentUser._id})
+    childrenUsername = children.map(ele => {
+        childrenUsername.push(ele.userName) 
+    })
         roles = await User.aggregate([
             {
                 $match:{
@@ -274,23 +279,8 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             {
                 $match: {
                     status: "OPEN",
+                    userName: {$in:[childrenUsername]}
                 }
-            },
-            {
-                $lookup: {
-                    from: "users",
-                    localField: "userName",
-                    foreignField: "userName",
-                    as: "user"
-                }
-            },
-            {
-                $unwind: "$user"
-            },
-            {
-              $match:{
-                "user.parentUsers": { $in: [req.currentUser.id] }
-              }  
             },
             {
                 $group: {
