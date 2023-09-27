@@ -11499,6 +11499,13 @@ socket.on('connect', () => {
                 }
             })
 
+            $(document).on("click", ".next", function(e){
+                e.preventDefault()
+                let page = $(this).attr("id")
+                let x = $("#searchUser").val()
+                socket.emit("SearchACC", {x, LOGINDATA, page})
+            })
+
             $(document).on("click", ".searchList", function(){
                 // console.log("working")
                 // console.log(this.textContent)
