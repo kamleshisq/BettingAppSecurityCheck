@@ -3900,17 +3900,18 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
                 stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
             }
             Bets = await betModel.aggregate([
-                {
-                    $sort:{"date":-1}
-                },
-                {
-                     $limit:limit
-                },
+               
                 {
                     $match: {
                         status: "OPEN" ,
                         eventId: req.query.id
                     }
+                },
+                {
+                    $sort:{"date":-1}
+                },
+                {
+                     $limit:limit
                 },
                 {
                     $lookup: {
