@@ -34,7 +34,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 }
             }
         ]);
-        console.log(roles, "roles 455454")
         users = await User.aggregate([
             {
                 $match:{
@@ -65,6 +64,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 }
             }
         ]);
+        console.log(users, 'users')
         const sevenDaysAgo = new Date();
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
