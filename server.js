@@ -3257,7 +3257,7 @@ io.on('connection', (socket) => {
 
     socket.on('BETONEVENT', async(data) => {
         try{
-            let page = 0;
+            let page = data.page;
             let limit = 10;
             let Bets = await Bet.aggregate([
                 {
@@ -3293,7 +3293,7 @@ io.on('connection', (socket) => {
                   }
                   
             ])
-            socket.emit('BETONEVENT', {data:Bets, status:'success'})
+            socket.emit('BETONEVENT', {data:Bets,page,type:data.type, status:'success'})
         }catch(err){
             socket.emit('BETONEVENT', {message:"err", status:"error"})
         }
