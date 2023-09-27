@@ -2680,7 +2680,7 @@ socket.on('connect', () => {
                       <h5>Downline Balance</h5>
                         <h6> ${data.user.downlineBalance.toFixed(2)}</h6>
                     </div>`
-                    if(me.myPL.toFixed(2) > 0){
+                    if(data.user.myPL.toFixed(2) > 0){
                     html1 += `<div class="skin-data green">`
                       }else{
                         html1 += `<div class="skin-data red">`
@@ -2688,7 +2688,7 @@ socket.on('connect', () => {
                         html1 += `<h5>MY P/L</h5>
                           <h6> ${data.user.myPL.toFixed(2)}</h6>
                       </div>`
-                      if(me.uplinePL.toFixed(2) > 0){
+                      if(data.user.uplinePL.toFixed(2) > 0){
                         html1 += `<div class="skin-data green">`
                       }else{ 
                         html1 += `<div class="skin-data red">`
@@ -2697,7 +2697,7 @@ socket.on('connect', () => {
                       html1 += `<h5>Upline P/L</h5>
                         <h6> ${data.user.uplinePL.toFixed(2)}</h6>
                     </div>`
-                    if(me.lifetimePL.toFixed(2) > 0){
+                    if(data.user.lifetimePL.toFixed(2) > 0){
                       html1 += `<div class="skin-data green">`
                     }else{ 
                       html1 += `<div class="skin-data red">`
