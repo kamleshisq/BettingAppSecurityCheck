@@ -156,69 +156,69 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
         // console.log(Categories, "Categories")
 
-        // userCount = await loginLogs.aggregate([
-        //     {
-        //         $lookup: {
-        //           from: "users",
-        //           localField: "userName",
-        //           foreignField: "userName",
-        //           as: "user"
-        //         }
-        //     },
-        //     {
-        //         $unwind: "$user"
-        //     },
-        //     {
-        //         $match: {
-        //           "user.parentUsers": { $in: [req.currentUser.id] },
-        //           "user.roleName" : "user",
-        //         //   "user.is_Online" : true
-        //         }
-        //     },
-        //     {
-        //         $group: {
-        //             _id: null,
-        //             uniqueUsers: { $addToSet: "$user._id" } 
-        //         }
-        //     },
-        //     {
-        //         $project: {
-        //             totalAmount: { $size: "$uniqueUsers" } 
-        //         }
-        //     }
-        // ])
+        userCount = await loginLogs.aggregate([
+            {
+                $lookup: {
+                  from: "users",
+                  localField: "userName",
+                  foreignField: "userName",
+                  as: "user"
+                }
+            },
+            {
+                $unwind: "$user"
+            },
+            {
+                $match: {
+                  "user.parentUsers": { $in: [req.currentUser.id] },
+                  "user.roleName" : "user",
+                //   "user.is_Online" : true
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    uniqueUsers: { $addToSet: "$user._id" } 
+                }
+            },
+            {
+                $project: {
+                    totalAmount: { $size: "$uniqueUsers" } 
+                }
+            }
+        ])
 
-        // adminCount = await loginLogs.aggregate([
-        //     {
-        //         $lookup: {
-        //           from: "users",
-        //           localField: "userName",
-        //           foreignField: "userName",
-        //           as: "user"
-        //         }
-        //     },
-        //     {
-        //         $unwind: "$user"
-        //     },
-        //     {
-        //         $match: {
-        //           "user.parentUsers": { $in: [req.currentUser.id] },
-        //           "user.roleName" : {$ne:"user"},
-        //         //   "user.is_Online" : true
-        //         }
-        //     },
-        //     {
-        //         $group: {
-        //             _id: null,
-        //             uniqueUsers: { $addToSet: "$user._id" } 
-        //         }
-        //     },
-        //     {
-        //         $project: {
-        //             totalAmount: { $size: "$uniqueUsers" } 
-        //         }
-        //     }
-        // ])
+        adminCount = await loginLogs.aggregate([
+            {
+                $lookup: {
+                  from: "users",
+                  localField: "userName",
+                  foreignField: "userName",
+                  as: "user"
+                }
+            },
+            {
+                $unwind: "$user"
+            },
+            {
+                $match: {
+                  "user.parentUsers": { $in: [req.currentUser.id] },
+                  "user.roleName" : {$ne:"user"},
+                //   "user.is_Online" : true
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    uniqueUsers: { $addToSet: "$user._id" } 
+                }
+            },
+            {
+                $project: {
+                    totalAmount: { $size: "$uniqueUsers" } 
+                }
+            }
+        ])
 
         // betCount = await betModel.aggregate([
         //     {
