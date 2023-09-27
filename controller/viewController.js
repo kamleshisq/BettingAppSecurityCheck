@@ -1955,26 +1955,11 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     let openBet = topGames = await betModel.aggregate([
         {
             $match: {
-                status:"OPEN" 
+                status:"OPEN" ,
+                userName:{$in:childrenUsername}
             }
         },
         {
-            $lookup: {
-              from: "users",
-              localField: "userName",
-              foreignField: "userName",
-              as: "user"
-            }
-          },
-          {
-            $unwind: "$user"
-          },
-          {
-            $match: {
-              "user.parentUsers": { $in: [req.currentUser.id] }
-            }
-          },
-          {
             $addFields: {
                 shortMarketName: { $substrCP: [{ $toLower: "$marketName" }, 0, 3] }
             }
