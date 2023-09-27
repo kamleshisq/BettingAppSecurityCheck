@@ -154,7 +154,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             }
         ])
 
-        console.log(Categories, "Categories")
+        // console.log(Categories, "Categories")
 
         // userCount = await loginLogs.aggregate([
         //     {
@@ -273,7 +273,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             }
         ]);
     
-    
+    console.log(alertBet, "alertBet")
         betsEventWise = await betModel.aggregate([
             {
                 $match: {
