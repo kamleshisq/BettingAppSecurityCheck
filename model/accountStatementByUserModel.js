@@ -63,6 +63,26 @@ accountStatementByUser.pre(/^find/, function(next){
     next()
 })
 
+accountStatementByUser.post(/^find/, function (docs) {
+    // console.log(docs)
+    // if(docs){
+    if(docs != null){
+        if(Array.isArray(docs)){
+            for(const i in docs){
+                // console.log(docs[i], "MODEL")
+                docs[i].balance = roundToTwoDecimals(docs[i].balance);
+                docs[i].creditDebitamount = roundToTwoDecimals(docs[i].creditDebitamount);
+              
+            }
+        }else{
+            docs.balance = roundToTwoDecimals(docs.balance);
+            docs.creditDebitamount = roundToTwoDecimals(docs.creditDebitamount);
+           
+        }
+    }
+    // }
+});
+
 
 const accountStatement = mongoose.model('accountStatement', accountStatementByUser);
 
