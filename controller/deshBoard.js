@@ -34,6 +34,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 }
             }
         ]);
+        console.log(roles, "roles 455454")
         users = await User.aggregate([
             {
                 $match:{
@@ -215,7 +216,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         
         const userTotalAmount = result[0].userCount || 0;
         const adminTotalAmount = result[0].adminCount || 0;
-        console.log(userTotalAmount, adminTotalAmount)        
 
         betCount = await betModel.aggregate([
             {
