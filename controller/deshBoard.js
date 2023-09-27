@@ -217,27 +217,27 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         const adminTotalAmount = result[0].adminCount || 0;
         console.log(userTotalAmount, adminTotalAmount)        
 
-        // betCount = await betModel.aggregate([
-        //     {
-        //         $lookup: {
-        //           from: "users",
-        //           localField: "userName",
-        //           foreignField: "userName",
-        //           as: "user"
-        //         }
-        //       },
-        //       {
-        //         $unwind: "$user"
-        //       },
-        //       {
-        //         $match: {
-        //           "user.parentUsers": { $in: [req.currentUser.id] }
-        //         }
-        //       },
-        //     {
-        //         $count: "totalBets"
-        //       }
-        //   ])
+        betCount = await betModel.aggregate([
+            {
+                $lookup: {
+                  from: "users",
+                  localField: "userName",
+                  foreignField: "userName",
+                  as: "user"
+                }
+              },
+              {
+                $unwind: "$user"
+              },
+              {
+                $match: {
+                  "user.parentUsers": { $in: [req.currentUser.id] }
+                }
+              },
+            {
+                $count: "totalBets"
+              }
+          ])
           alertBet = await betModel.aggregate([
               {
                   $match: {
