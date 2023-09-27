@@ -5488,21 +5488,22 @@ var login = /*#__PURE__*/function () {
             sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
-            if (res.data.count) {
-              window.setTimeout(function () {
-                location.assign('/updatePassWord');
-              }, 100);
-            } else {
-              if (res.data.data.user.role.authorization.includes('dashboard')) {
-                window.setTimeout(function () {
-                  location.assign('/admin/dashboard');
-                }, 100);
-              } else {
-                window.setTimeout(function () {
-                  location.assign('/admin/userManagement');
-                }, 100);
-              }
-            }
+            // if(res.data.count){
+            //     window.setTimeout(()=>{
+            //         location.assign('/updatePassWord')
+            //     }, 100)
+            // }else{
+            //     if(res.data.data.user.role.authorization.includes('dashboard')){
+            //         window.setTimeout(()=>{
+            //             location.assign('/admin/dashboard')
+            //         }, 100)
+            //     }else{
+            //         window.setTimeout(()=>{
+            //             location.assign('/admin/userManagement')
+            //         }, 100)
+            //     }
+            // }
+            location.assign('/admin/dashboard');
           }
           _context.next = 11;
           break;
@@ -7722,11 +7723,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "59202" + '/');
-=======
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49856" + '/');
->>>>>>> 8cc6a465ee809480fbec1d6583c1879eeffa287a
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

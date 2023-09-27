@@ -17,21 +17,22 @@ export const login = async(userName, password)=>{
             sessionStorage.setItem('roles',JSON.stringify(res.data.data.roles))
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
-            if(res.data.count){
-                window.setTimeout(()=>{
-                    location.assign('/updatePassWord')
-                }, 100)
-            }else{
-                if(res.data.data.user.role.authorization.includes('dashboard')){
-                    window.setTimeout(()=>{
-                        location.assign('/admin/dashboard')
-                    }, 100)
-                }else{
-                    window.setTimeout(()=>{
-                        location.assign('/admin/userManagement')
-                    }, 100)
-                }
-            }
+            // if(res.data.count){
+            //     window.setTimeout(()=>{
+            //         location.assign('/updatePassWord')
+            //     }, 100)
+            // }else{
+            //     if(res.data.data.user.role.authorization.includes('dashboard')){
+            //         window.setTimeout(()=>{
+            //             location.assign('/admin/dashboard')
+            //         }, 100)
+            //     }else{
+            //         window.setTimeout(()=>{
+            //             location.assign('/admin/userManagement')
+            //         }, 100)
+            //     }
+            // }
+            location.assign('/admin/dashboard')
         }
 
     }catch(err){
