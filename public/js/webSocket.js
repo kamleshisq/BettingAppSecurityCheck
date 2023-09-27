@@ -11410,7 +11410,7 @@ socket.on('connect', () => {
                 }
 
                 if(data.data.length == 0){
-                    $('#load-more').hid()
+                    $('#load-more').hide()
                 }
             })
 
