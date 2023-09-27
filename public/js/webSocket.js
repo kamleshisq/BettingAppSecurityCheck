@@ -11615,9 +11615,7 @@ socket.on('connect', () => {
                         let match = data.Bets[0].selections[0].matchName
                         let team1 = match.split('v')[0]
                         let team2 = match.split('v')[1]
-                        let html = `<tr class="headDetail"><th>User name</th>
-                        <th>${team1}</th>
-                        <th>${team2}</th></tr>`
+                        let html;
                         for(let i = 0; i < data.Bets.length; i++){
                             // console.log(data[i], "+==> in Loop DAta")
                             let team1data = 0 
@@ -11657,10 +11655,13 @@ socket.on('connect', () => {
                             }
                         }
                         console.log(html)
-                        $('.tabelBodyTr').replaceWith(html)
+                        $('.tabelBodyTr').remove()
+                        $('.headDetail').after(html)
+
                     }
                 }else{
-                    document.getElementById('match_odd').innerHTML = "There is no bets in this market"
+                    $('.tabelBodyTr').remove()
+                    $('.headDetail').after(`<tr><td>There is no bets in this market</td></tr>`)
                 }
             })
 
