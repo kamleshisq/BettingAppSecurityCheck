@@ -10068,7 +10068,7 @@ socket.on('connect', () => {
             filterData.toDate = toDate
             filterData.type = type
             page = 0
-            $('.pageId').attr('data-pageid',1)
+            $('.pageIdACC').attr('data-pageid',1)
             let id = search.split("=")[1]
             socket.emit("ACCSTATEMENTADMINSIDE", {page, id, filterData})
           }
