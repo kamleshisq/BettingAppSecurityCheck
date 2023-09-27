@@ -11,7 +11,7 @@ const InprogressSchema = mongoose.Schema({
         required:true
     },
     length:{
-        type:String
+        type:Number
     },
     marketName:{
         type:String
