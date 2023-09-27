@@ -11660,7 +11660,8 @@ socket.on('connect', () => {
 
                     }
                 }else{
-                    document.getElementById('match_odd').innerHTML = "There is no bets in this market"
+                    $('.tabelBodyTr').remove()
+                    $('.headDetail').after(`<tr>"There is no bets in this market"</tr>`)
                 }
             })
 
