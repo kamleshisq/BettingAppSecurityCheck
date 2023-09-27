@@ -3831,6 +3831,7 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
 
 exports.RiskAnalysis = catchAsync(async(req, res, next) => {
     let ip = req.ip
+    let limit = 10;
     let ipv4
     if (ip.indexOf('::ffff:') === 0) {
         // Extract the IPv4 portion from the IPv6 address
@@ -3920,6 +3921,12 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
                     $match: {
                       "user.parentUsers": { $in: [req.currentUser.id] }
                     }
+                  },
+                  {
+                    $sort:{"date":-1}
+                  },
+                  {
+                    $limit:limit
                   }
             ])
         }else{
