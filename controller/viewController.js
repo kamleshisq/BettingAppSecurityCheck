@@ -1698,7 +1698,7 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 // });
 
 exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
-    let body = JSON.stringify(["4.1566346274-F2", "4.965891179-OE", "4.1695114413-BM", '4.801038281-F2']);
+    let body = JSON.stringify(["1.218726263"]);
     // console.log(body)
     var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
     fetch(fullUrl, {
@@ -2993,6 +2993,11 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
 
 exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     let me = req.currentUser
+    // let childrenUsername = []
+    // let children = await User.find({parentUsers:req.currentUser._id})
+    // children.map(ele => {
+    //     childrenUsername.push(ele.userName) 
+    // })
     // console.log("working")
     // console.log(req.query.id)
     let betsEventWiseOpen = await betModel.aggregate([
