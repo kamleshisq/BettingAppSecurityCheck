@@ -371,6 +371,8 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         //         $limit:5
         //       }
         // ])
+
+        let topBets = []
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }, parentUsers : { $in: [req.currentUser.id] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
