@@ -12,7 +12,7 @@ const Decimal = require('decimal.js');
 
 exports.mapbet = async(data) => {
   let childrenUsername = []
-  let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+  let children = await userModel.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
   children.map(ele => {
       childrenUsername.push(ele.userName) 
   })
