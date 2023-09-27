@@ -116,11 +116,12 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 $limit: 5
             }
         ]);
-        console.log(topGames , "topGames")
+
         Categories = await betModel.aggregate([
             {
                 $match: {
-                    status: { $ne: "OPEN" }
+                    status: { $ne: "OPEN" },
+                    date: { $gte: sevenDaysAgo }
                 }
             },
             {
