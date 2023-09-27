@@ -36,36 +36,36 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         ]);
 
 
-        // users = await User.aggregate([
-        //     {
-        //         $match:{
-        //             parentUsers : { $in: [req.currentUser.id] }
-        //         }
-        //     },
-        //     {
-        //         $group:{
-        //             _id:{
-        //                 whiteLabel:"$whiteLabel",
-        //                 roleType:"$roleName"
-        //             },
-        //             total:{$sum:1}
-        //         }
-        //     },
-        //     { $group : { 
-        //         _id :  "$_id.whiteLabel",
-        //         terms: { 
-        //             $push: { 
-        //                 roleType:"$_id.roleType",
-        //                 total:"$total"
-        //             }
-        //         }
-        //      }
-        //     },    { 
-        //         $sort:{
-        //             _id:1
-        //         }
-        //     }
-        // ]);
+        users = await User.aggregate([
+            {
+                $match:{
+                    parentUsers : { $in: [req.currentUser.id] }
+                }
+            },
+            {
+                $group:{
+                    _id:{
+                        whiteLabel:"$whiteLabel",
+                        roleType:"$roleName"
+                    },
+                    total:{$sum:1}
+                }
+            },
+            { $group : { 
+                _id :  "$_id.whiteLabel",
+                terms: { 
+                    $push: { 
+                        roleType:"$_id.roleType",
+                        total:"$total"
+                    }
+                }
+             }
+            },    { 
+                $sort:{
+                    _id:1
+                }
+            }
+        ]);
 
         // topGames = await betModel.aggregate([
         //     {
