@@ -3258,7 +3258,14 @@ io.on('connection', (socket) => {
     socket.on('BETONEVENT', async(data) => {
         try{
             let page = data.page;
+            let skip;
             let limit = 10;
+            if(data.type == 'loop'){
+                limit *= page
+                skip = 0
+            }else{
+                skip = limit * page
+            }
             let Bets = await Bet.aggregate([
                 {
                     $match: {
@@ -3270,7 +3277,7 @@ io.on('connection', (socket) => {
                     $sort:{"date":-1}
                 },
                 {
-                    $skip:limit * page
+                    $skip:skip
                 },
                 {
                     $limit:limit
