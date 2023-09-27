@@ -3723,7 +3723,7 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
           } else {
             max = SportLimits.max_stake.toString();
         }
-        console.log(SportLimits, min , max)
+        // console.log(SportLimits, min , max)
         let userLog
         let stakeLabledata
         let userMultimarkets
