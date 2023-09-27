@@ -10068,7 +10068,7 @@ socket.on('connect', () => {
             filterData.toDate = toDate
             filterData.type = type
             page = 0
-            $('.pageId').attr('data-pageid',1)
+            $('.pageIdACC').attr('data-pageid',1)
             let id = search.split("=")[1]
             socket.emit("ACCSTATEMENTADMINSIDE", {page, id, filterData})
           }
@@ -11462,6 +11462,62 @@ socket.on('connect', () => {
                 });
             });
 
+            $('.searchUser').keyup(function(){
+                // console.log('working')
+                if($(this).hasClass("searchUser")){
+                    // console.log($(this).val())
+                    if($(this).val().length >= 3 ){
+                        let x = $(this).val(); 
+                        // console.log(x)
+                        socket.emit("SearchACC", {x, LOGINDATA})
+                    }else{
+                        document.getElementById('search').innerHTML = ``
+                        document.getElementById("button").innerHTML = ''
+                    }
+                }
+            })
+
+            socket.on("ACCSEARCHRES", async(data)=>{
+                // console.log(data, 565464)
+                $('.wrapper').show()
+                let html = ``
+                if(data.page === 1){
+                    for(let i = 0; i < data.user.length; i++){
+                        html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                    }
+                    document.getElementById('search').innerHTML = html
+                    document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+                }else if(data.page === null){
+                    document.getElementById("button").innerHTML = ``
+                }else{
+                    html = document.getElementById('search').innerHTML
+                    for(let i = 0; i < data.user.length; i++){
+                        html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                    }
+                    document.getElementById('search').innerHTML = html
+                    document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+                }
+            })
+
+            $(document).on("click", ".next", function(e){
+                e.preventDefault()
+                let page = $(this).attr("id")
+                let x = $("#searchUser").val()
+                socket.emit("SearchACC", {x, LOGINDATA, page})
+            })
+
+            $(document).on("click", ".searchList", function(){
+                // console.log("working")
+                // console.log(this.textContent)
+                document.getElementById("searchUser").value = this.textContent
+              
+                $('.pageLink').attr('data-page',1)
+                $('.wrapper').hide()
+                // console.log(data, 456)
+                console.log(data)
+                socket.emit( "AccountScroll", data)
+            })
+    
             socket.on('UerBook', data => {
                 // console.log(data)
                 if(data.length > 0){
@@ -11501,19 +11557,22 @@ socket.on('connect', () => {
                             team2data = data[i].selections[0].totalAmount
                             sumOfTeamB += team2data
                         }
-                        html += `
-                        <tr>
-                            <td>${data[i].userName}</td>`
-                        if(team1data.toFixed(2) > 0){
-                            html += `<td class="red"> -${team1data.toFixed(2)}</td>`
-                        }else{
-                            html += `<td class="green"> ${team1data.toFixed(2) * -1}</td>`
-                        }
-                        
-                        if(team2data.toFixed(2) > 0){
-                            html += `<td class="red">-${team2data.toFixed(2)}</td></tr>`
-                        }else{
-                            html += `<td class="green">${team2data.toFixed(2) * -1}</td></tr>`
+                        if( i < 5){
+
+                            html += `
+                            <tr>
+                                <td>${data[i].userName}</td>`
+                            if(team1data.toFixed(2) > 0){
+                                html += `<td class="red"> -${team1data.toFixed(2)}</td>`
+                            }else{
+                                html += `<td class="green"> ${team1data.toFixed(2) * -1}</td>`
+                            }
+                            
+                            if(team2data.toFixed(2) > 0){
+                                html += `<td class="red">-${team2data.toFixed(2)}</td></tr>`
+                            }else{
+                                html += `<td class="green">${team2data.toFixed(2) * -1}</td></tr>`
+                            }
                         }
                     }
                     html += `<tr>
