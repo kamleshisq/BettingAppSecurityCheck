@@ -2263,7 +2263,7 @@ socket.on('connect', () => {
                                 html += `<td>-</td>`
                             }
                         }
-                        html += `<td>${data.json.userAcc[i].balance - data.json.userAcc[i].creditDebitamount}</td>
+                        html += `<td>${(data.json.userAcc[i].balance - data.json.userAcc[i].creditDebitamount).toFixed(2)}</td>
                         <td>${data.json.userAcc[i].creditDebitamount}</td><td>${data.json.userAcc[i].balance}</td>`
                         if(data.json.userAcc[i].Remark){
                             html += `<td>${data.json.userAcc[i].Remark}</td>`
@@ -2314,7 +2314,7 @@ socket.on('connect', () => {
                                 html += `<td>-</td>`
                             }
                         }
-                        html += `<td>${data.json.userAcc[i].balance - data.json.userAcc[i].creditDebitamount}</td>
+                        html += `<td>${(data.json.userAcc[i].balance - data.json.userAcc[i].creditDebitamount).toFixed(2)}</td>
                         <td>${data.json.userAcc[i].creditDebitamount}</td><td>${data.json.userAcc[i].balance}</td>`
                         if(data.json.userAcc[i].Remark){
                             html += `<td>${data.json.userAcc[i].Remark}</td>`
@@ -2496,7 +2496,7 @@ socket.on('connect', () => {
                 <tbody class="new-body" >`
                 html += `<tr>`
                 html += `<td>${new Date(data.date)}</td>`
-                html += `<td>${(data.balance - data.creditDebitamount)}</td>`
+                html += `<td>${((data.balance - data.creditDebitamount).toFixed(2))}</td>`
                 html += `<td>${(data.balance)}</td>`
                 html += `<td>${(data.creditDebitamount)}</td>`
                 if(data.Remark){
@@ -3262,7 +3262,7 @@ socket.on('connect', () => {
                                 html += `<td>-</td>`
                             }
                         }
-                        html += `<td>${data.json.userAcc[i].balance - data.json.userAcc[i].creditDebitamount}</td>
+                        html += `<td>${(data.json.userAcc[i].balance - data.json.userAcc[i].creditDebitamount).toFixed(2)}</td>
                         <td>${data.json.userAcc[i].creditDebitamount}</td><td>${data.json.userAcc[i].balance}</td>`
                         if(data.json.userAcc[i].Remark){
                             html += `<td>${data.json.userAcc[i].Remark}</td>`
@@ -3313,7 +3313,7 @@ socket.on('connect', () => {
                                 html += `<td>-</td>`
                             }
                         }
-                        html += `<td>${data.json.userAcc[i].balance - data.json.userAcc[i].creditDebitamount}</td>
+                        html += `<td>${(data.json.userAcc[i].balance - data.json.userAcc[i].creditDebitamount).toFixed(2)}</td>
                         <td>${data.json.userAcc[i].creditDebitamount}</td><td>${data.json.userAcc[i].balance}</td>`
                         if(data.json.userAcc[i].Remark){
                             html += `<td>${data.json.userAcc[i].Remark}</td>`

@@ -105,7 +105,7 @@
                 <td>-</td>  
                 <%}%>
                 <%}%>
-                <td><%=data[i].balance - data[i].creditDebitamount%></td>
+                <td><%=(data[i].balance - data[i].creditDebitamount).toFixed(2)%></td>
                 <td><%=data[i].creditDebitamount%></td>
                 <td><%=data[i].balance%></td>
                 <%if(data[i].Remark){%>
@@ -156,7 +156,7 @@
                 <td>-</td>  
                 <%}%>
                 <%}%>
-                <td><%=data[i].balance - data[i].creditDebitamount%></td>
+                <td><%=(data[i].balance - data[i].creditDebitamount).toFixed(2)%></td>
                 <td><%=data[i].creditDebitamount%></td>
                 <td><%=data[i].balance%></td>
                 <%if(data[i].Remark){%>
