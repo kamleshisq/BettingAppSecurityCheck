@@ -10128,6 +10128,8 @@ socket.on('connect', () => {
             }
             if(userAcc.length == 0){
                 $('.loadMorediveACC').hide()
+            }else{
+                $('.loadMorediveACC').show()
             }
         }else{
             if(data.page == 0){

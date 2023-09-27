@@ -10,31 +10,21 @@ const settlementHistory = require("../model/settelementHistory");
 const Decimal = require('decimal.js');
 
 exports.mapbet = async(data) => {
+  let childrenUsername = []
+  let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+  children.map(ele => {
+      childrenUsername.push(ele.userName) 
+  })
     console.log(data)
     // let bets = await betModel.find({marketId:`${data.id}`})
     let bets = await betModel.aggregate([
         {
             $match:{
                 marketId:`${data.id}`,
-                status:"MAP"
+                status:"MAP",
+                userName:{$in:childrenUsername}
             }
         },
-        {
-            $lookup: {
-              from: "users",
-              localField: "userName",
-              foreignField: "userName",
-              as: "user"
-            }
-          },
-          {
-            $unwind: "$user"
-          },
-          {
-            $match: {
-              "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
-            }
-          },
     ])
     console.log(bets[0], 456456456)
     let dataForHistory = {
