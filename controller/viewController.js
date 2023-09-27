@@ -2317,6 +2317,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     }
     let src
     let status = false
+    let liveStream
     let StreamData = await streamModel.findOne({eventId:req.query.id})
     if(StreamData){
         if(StreamData.status){
@@ -2324,7 +2325,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             status = true
         }
     }else{
-        const liveStream = await liveStreameData(match.eventData.channelId, ipv4)
+        liveStream = await liveStreameData(match.eventData.channelId, ipv4)
         const src_regex = /src='([^']+)'/;
         let match1
         // let src
