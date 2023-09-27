@@ -2486,65 +2486,25 @@ socket.on('connect', () => {
                 html += `<thead>
                 <tr >
                   <th>Date</th>
-                  <th>Credit</th>
-                  <th>Debit</th>
-                  <th>From/To</th>
-                  <th>Closing</th>
-                  <th>Description</th>
+                  <th>Balance Before</th>
+                  <th>Balance After</th>
+                  <th>Amount</th>
                   <th>Remarks</th>
                 </tr>
             </thead>
             <tbody class="new-body" >`
                 html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>`
-                if(data.creditDebitamount>0){
-                    html += `<td>${data.creditDebitamount}</td><td>0</td>`
-                    if(data.parent_id){
-                        if(data.parent_id.userName == data.user_id.userName){
-                            if(data.child_id == null){
-                                html += `<td>-/${data.parent_id.userName}</td>`
-                            }else{
-                                html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
-                            }
-                        }else{
-                            if(data.child_id == null){
-
-                                html += `<td>${data.parent_id.userName}/-</td>`
-                            }else{
-
-                                html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
-                            }
-                        }
-                    }else{
-                        html += "<td>-</td>"
-                    }
+                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.balance - data.creditDebitamount)}</td>`
+                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.balance)}</td>`
+                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.creditDebitamount)}</td>`
+                if(data.Remark){
+                    html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.Remark)}</td>`
                 }else{
-                    html += `<td>0</td><td>${data.creditDebitamount}</td>`
-                    if(data.parent_id){
-                        if(data.parent_id.userName == data.user_id.userName){
-                            if(data.child_id == null){
-                                html += `<td>${data.parent_id.userName}/-</td>`
-                            }else{
-                                html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
-                            }
-                        }else{
-                            if(data.child_id == null){
-                                html += `<td>-/${data.parent_id.userName}</td>`
-                            }else{
-                                html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
-                            }
-                        }
-                    }else{
-                        html += `<td>-</td>`
-                    }
+                    html += `<tr style="text-align: center;" class="blue"><td>-</td>`
                 }
                 
-                        html += `
-                        <td>${data.balance}</td>
-                        <td>${data.description}</td>
-                        <td>-</td></tr></tbody>`
-                        // console.log(html)
-                        model.find('table').html(html)
-                    }
+                model.find('table').html(html)
+            }
             // console.log(model)
         })
             // let 
