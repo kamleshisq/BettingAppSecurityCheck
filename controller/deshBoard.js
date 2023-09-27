@@ -215,7 +215,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
                 }
             }
         ]);
-        
+        console.log(result[0])
         const userTotalAmount = result[0].userCount || 0;
         const adminTotalAmount = result[0].adminCount || 0;
 
