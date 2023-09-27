@@ -67,8 +67,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             }
         ]);
 
-        console.log(users,'users')
-
         topGames = await betModel.aggregate([
             {
                 $match: {
@@ -278,50 +276,52 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
         betsEventWise = await betModel.aggregate([
             {
                 $match: {
-                    status: "OPEN",
-                    "user.parentUsers": { $in: [req.currentUser.id] }
+                    status:"OPEN" 
                 }
             },
             {
                 $lookup: {
-                    from: "users",
-                    localField: "userName",
-                    foreignField: "userName",
-                    as: "user"
+                  from: "users",
+                  localField: "userName",
+                  foreignField: "userName",
+                  as: "user"
                 }
-            },
-            {
+              },
+              {
                 $unwind: "$user"
-            },
+              },
+              {
+                $match: {
+                  "user.parentUsers": { $in: [req.currentUser.id] }
+                }
+              },
             {
                 $group: {
-                    _id: "$match",
-                    count: { $sum: 1 },
-                    eventdate: { $first: "$eventDate" },
-                    eventid: { $first: "$eventId" },
-                    series: { $first: "$event" },
-                    sport: { $first: "$betType" }
+                  _id: "$match",
+                  count: { $sum: 1 },
+                  eventdate: { $first: "$eventDate" }, 
+                  eventid: { $first: "$eventId" },
+                  series: {$first: "$event"},
+                  sport: {$first : "$betType"}
                 }
-            },
-            {
+              },
+              {
                 $project: {
-                    _id: 0,
-                    matchName: "$_id",
-                    eventdate: 1,
-                    eventid: 1,
-                    series: 1,
-                    count: 1,
-                    sport: 1
+                  _id: 0,
+                  matchName: "$_id",
+                  eventdate: 1,
+                  eventid: 1,
+                  series:1,
+                  count: 1,
+                  sport:1
                 }
-            },
-            {
-                $sort: { count: -1 }
-            },
-            {
-                $limit: 5
-            }
-        ]);
-        
+              },{
+                $sort:{count : -1}
+              },
+              {
+                $limit:5
+              }
+        ])
     
         turnOver = await accountModel.aggregate([
             {
