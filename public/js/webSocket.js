@@ -2438,6 +2438,7 @@ socket.on('connect', () => {
             let modelId = $(this).attr('id')
             let modelId1 = $(this).attr("data-bs-target")
             model =  $(modelId1)
+            console.log('elementId',modelId)
             socket.emit("ElementID", modelId)
         })
 
