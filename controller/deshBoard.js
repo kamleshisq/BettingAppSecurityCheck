@@ -343,39 +343,47 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
 
 
         let topBets = await betModel.aggregate([
-            // {
-            //     $match: {
-            //         status:"OPEN" 
-            //     }
-            // },
             {
                 $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
+                    from: "users",
+                    let: { userName: "$userName" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        { $eq: ["$$userName", "$userName"] },
+                                        { $in: [req.currentUser.id, "$parentUsers"] }
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    as: "user"
                 }
-              },
-              {
+            },
+            {
                 $unwind: "$user"
-              },
-              {
+            },
+            {
                 $match: {
-                  "user.parentUsers": { $in: [req.currentUser.id] },
-                    status:"OPEN" 
+                    status: "OPEN"
                 }
-              },
-              {
-                $sort:{
-                    Stake: 1
+            },
+            {
+                $sort: {
+                    Stake: -1,
+                    oddValue: -1,
                 }
-              },
-              {
-                $limit:5
-              }
-        ])
+            },
+            {
+                $limit: 5
+            }
+        ]);
+        
+        
 
-        // let topBets = []
+        console.log(topBets, "topBets 741258963")
     const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }, parentUsers : { $in: [req.currentUser.id] }}).limit(5).sort({Bets:-1})
     const dashboard = {};
     dashboard.roles = roles
