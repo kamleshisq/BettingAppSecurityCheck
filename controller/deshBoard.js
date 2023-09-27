@@ -277,7 +277,6 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             {
                 $match: {
                     status: "OPEN",
-                    "user.parentUsers": { $in: [req.currentUser.id] }
                 }
             },
             {
@@ -290,6 +289,11 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             },
             {
                 $unwind: "$user"
+            },
+            {
+              $match:{
+                "user.parentUsers": { $in: [req.currentUser.id] }
+              }  
             },
             {
                 $group: {
