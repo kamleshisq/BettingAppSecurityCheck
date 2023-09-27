@@ -4476,13 +4476,16 @@ socket.on('connect', () => {
             
         })
 
-        let count = 10
+        let count = 11
         socket.on('OnlineUser', async(data) => {
             console.log(data)
             let html = "";
+            if(data.page === 0){
+                count = 1
+            }
             for(let i = 0;i<data.onlineUsers.length;i++){
                 html += `<tr>
-                <td>${count + i + 1}</td>
+                <td>${count + i}</td>
                 <td>${data.onlineUsers[i].userName}</td>
                 <td>
     
