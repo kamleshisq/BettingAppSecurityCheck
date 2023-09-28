@@ -2990,13 +2990,12 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
 
 exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     let me = req.currentUser
-    // let childrenUsername = []
-    // let children = await User.find({parentUsers:req.currentUser._id})
-    // children.map(ele => {
-    //     childrenUsername.push(ele.userName) 
-    // })
-    // console.log("working")
-    // console.log(req.query.id)
+    let childrenUsername = []
+    let children = await User.find({parentUsers:req.currentUser._id})
+    children.map(ele => {
+        childrenUsername.push(ele.userName) 
+    })
+    console.log(childrenUsername, "childrenUsername ======>>><<<")
     let betsEventWiseOpen = await betModel.aggregate([
         {
             $match: {
