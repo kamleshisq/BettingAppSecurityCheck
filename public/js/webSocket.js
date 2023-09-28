@@ -10476,9 +10476,19 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/admin/settlementIn"){
-
         let inprogressTable = document.getElementById('InprogresDATA')
-        console.log(inprogressTable , "=++=>> inprogressTable")
+        if(inprogressTable){
+            function getinProgressData(){
+                $(document).ready(function() {
+                    socket.emit("getinProgressData", search.split('=')[1])
+                  });
+                  setTimeout(()=>{
+                    getinProgressData()
+                  }, 1000)
+            }
+            getinProgressData()
+            console.log(inprogressTable , "=++=>> inprogressTable")
+        }
 
 
         $(document).on('click', '.voidBet2', function(e){
