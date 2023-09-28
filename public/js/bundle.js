@@ -7102,7 +7102,7 @@ $(document).ready(function () {
       console.log(pathname);
       if (pathname == '/admin/catalogcontrol/compitations' || pathname == '/admin/catalogcontrol/compitations/events') {
         $("a[href='" + '/admin/catalogcontrol' + "'").addClass('active');
-      } else if (pathname == '/admin/riskAnalysis') {
+      } else if (pathname == '/admin/riskAnalysis' || pathname == '/admin/matchBets') {
         $("a[href='" + '/admin/liveMarket' + "'").addClass('active');
       } else if (pathname.startsWith('/admin/userdetails')) {
         $("a[href='" + '/admin/userManagement' + "'").addClass('active');
@@ -7724,7 +7724,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62477" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56584" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
