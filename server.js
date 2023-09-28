@@ -1079,7 +1079,7 @@ io.on('connection', (socket) => {
         data.filterData.status = 'OPEN'
         if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
             let childrenUsername = []
-            let children = await User.find({parentUsers:req.currentUser._id})
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
             children.map(ele => {
                 childrenUsername.push(ele.userName) 
             })
