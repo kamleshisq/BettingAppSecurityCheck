@@ -89,7 +89,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
         var isValid = mongoose.Types.ObjectId.isValid(id)
 
         if(!isValid){
-            return next(new AppError('id is not valid'))
+            return res.redirect('/admin/userManagement')
         }
         urls = [
             {
@@ -137,7 +137,10 @@ exports.userTable = catchAsync(async(req, res, next) => {
       });
     let roles1 = await Role.find({role_level:{$gt:req.currentUser.role.role_type}}).sort({role_level:1});
     const data = await Promise.all(requests);
-    // console.log(data)
+    if(data[0].status == 'Error'){
+        return res.redirect('/admin/userManagement')
+    }
+    console.log(data,"==>dataInUserManagement")
     const users = data[0].child;
     const roles = roles1;
     const currentUser = req.currentUser
