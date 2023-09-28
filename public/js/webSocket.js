@@ -746,7 +746,10 @@ socket.on('connect', () => {
 
         socket.on('editMyPassword',async(data)=>{
             alert(data.msg)
-            location.reload(true)
+            if(data.status == 'success'){
+
+                location.reload(true)
+            }
         })
 
 
