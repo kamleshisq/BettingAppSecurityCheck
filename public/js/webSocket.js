@@ -10561,8 +10561,8 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert("Please try again later")
             }else{ 
-                alert(data)
-                window.location.reload()
+                alert('RollBack Process Start')
+                // window.location.reload()
             }
         })
        

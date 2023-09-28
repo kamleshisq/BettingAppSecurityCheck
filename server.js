@@ -4000,8 +4000,8 @@ io.on('connection', (socket) => {
 
     socket.on('ROLLBACKDETAILS', async(data) => {
         try{
-            let resultDate = await rollBackBet(data)
-            socket.emit('ROLLBACKDETAILS', resultDate)
+            socket.emit('ROLLBACKDETAILS', "RollBackStart")
+            let resultDate = rollBackBet(data)
         }catch(err){
             console.log(err)
             socket.emit("ROLLBACKDETAILS",{message:"err", status:"error"})
