@@ -120,6 +120,17 @@ io.on('connection', (socket) => {
 
 
 
+//......................FOR user profile page .......................//
+
+    socket.on('editMyProfile',async(data)=>{
+        try{
+            await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,data.data)
+            socket.emit('editMyProfile',{status:'success',msg:'profile edited successfully'})
+        }catch(err){
+            console.log(err)
+            socket.emit('editMyProfile',{status:'success',msg:'something went wrong'})
+        }
+    })
 //......................FOR user management page .......................//
 
 
