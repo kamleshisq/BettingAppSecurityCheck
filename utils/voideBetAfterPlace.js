@@ -28,8 +28,8 @@ async function voidBET(data){
             console.log(err)
         }
     }
-    console.log(inprogressData, "<<<===== inprogressData")
-    console.log(allBetWithMarketId)
+    // console.log(inprogressData, "<<<===== inprogressData")
+    // console.log(allBetWithMarketId)
     let dataForHistory = {
         marketID:`${data.id}`,
         userId:`${data.LOGINDATA.LOGINUSER._id}`,
