@@ -11060,15 +11060,18 @@ socket.on('connect', () => {
           $(document).on("change", ".checkbox", function(e) {
               e.preventDefault()
               const isChecked = $(this).prop("checked");
+              if(isChecked){
+                $(this).parents('.switch').addClass("on");
+                }else{
+                    $(this).parents('.switch').removeClass("on");
+                }
               let parentNode = this.closest('tr')
               let marketId = parentNode.id
               socket.emit("commissionMarketbyId", {marketId, isChecked, LOGINDATA});
           })
       
           socket.on("commissionMarketbyId", data =>{
-              if(data == "err"){
-                  // alert("Opps, somthing went wrong please try again leter")
-              }
+                alert(data.msg)
           })
     }
 
