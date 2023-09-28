@@ -561,15 +561,14 @@ exports.getOwnChild = catchAsync(async(req, res, next) => {
     }
     if(req.query.id){
         me = await User.findById(req.query.id)
-        if(me){
-            if(me.role.role_level < req.currentUser.role.role_level){
-                return next(new AppError('You do not have permission to perform this action',400))
-            }
-            Rows = await User.count({parent_id: req.query.id})
-            child = await User.find({parent_id: req.query.id}).skip(page * limit).limit(limit);
-        }else{
-            res.redirect('/admin/userManagement')
+        if(!me){
+            return next(new AppError('user not found'))
         }
+        if(me.role.role_level < req.currentUser.role.role_level){
+            return next(new AppError('You do not have permission to perform this action',400))
+        }
+        Rows = await User.count({parent_id: req.query.id})
+        child = await User.find({parent_id: req.query.id}).skip(page * limit).limit(limit);
     }else{
         Rows = await User.count({parent_id: req.currentUser._id})
         child = await User.find({parent_id: req.currentUser._id}).skip(page * limit).limit(limit);
