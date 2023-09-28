@@ -74,6 +74,7 @@ router.get("/admin/cms", authController.isProtected, authController.isAdmin, vie
 router.get("/admin/pageManager", authController.isProtected, authController.isAdmin, viewController.getPageManagement);
 router.get("/admin/gameRules", authController.isProtected, authController.isAdmin, viewController.gameRulesPage);
 router.get("/admin/userdetails", authController.isProtected, authController.isAdmin, viewController.userDetailsAdminSide);
+router.get("/admin/profiledetail", authController.isProtected, authController.isAdmin, viewController.userDetailsAdminSide);
 router.get("/admin/catalogcontrol", authController.isProtected, authController.isAdmin,viewController.getCatalogControllerPage);
 router.get("/admin/commissionMarkets", authController.isProtected, authController.isAdmin, authController.restrictToOperator("commissionMarkets"),viewController.CommissionMarkets)
 router.get("/admin/catalogcontrol/compitations", authController.isProtected, authController.isAdmin,viewController.getCatalogCompetationControllerPage);

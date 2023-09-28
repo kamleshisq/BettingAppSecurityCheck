@@ -1,0 +1,150 @@
+<%- include("../header") %>
+  <!--Container Main start-->
+  <div class="dashboard-main-wraper">
+
+<!-- skin device sec -->
+
+  <section class="dashboard-welcome-section" >
+    <div class="container-fluid">
+      <div class="new-head"> 
+          <h3 >My Profile</h3>
+          <!-- <form action="">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
+              
+            </div>
+            <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
+          </form> -->
+      </div>
+    </div>
+    </section>
+    
+<!-- seling section -->
+
+<section>
+  <div class="container-fluid">
+      <div class="tab-data-section">
+        <div class="tab" >
+          <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'Cricket')"> Personal  </button>
+          <!-- <button class="tablinks" onclick="openCity(event, 'FOOTBALL')"> User Config</button> -->
+          <button class="tablinks" onclick="openCity(event, 'TENNIS')"> Security </button>
+      </div>
+      <div id="Cricket" class="tabcontent">
+                  <div class="row">
+                      <div class="container">
+                          <div class="form-container">
+                            <div class="form-column blue">
+                              <div class="tab-heading"> <h4>User Details</h4> </div>
+                              <form class="form-data userDetails" id="<%=userDetails._id%>">
+                                  <div class="row">
+                                      <div class="col form-group">
+                                          <label for="name">Name</label>
+                                          <input type="text" readonly  id="name" name="name" placeholder="<%=userDetails.name%>" value="<%=userDetails.name%>">
+                                      </div>
+                                      <div class="col form-group">
+                                          <label for="userName">User Name</label>
+                                          <input type="text" readonly id="userName" name="userName" placeholder="<%=userDetails.userName%>" value="<%=userDetails.userName%>">
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col form-group">
+                                          <label for="contact">Contact</label>
+                                          <input type="text" readonly id="contact" name="contact" placeholder="<%=userDetails.contact%>" value="<%=userDetails.contact%>">
+                                      </div>
+                                      <div class="col form-group">
+                                          <label for="email">Email</label>
+                                          <input type="email" readonly id="email" name="email" placeholder="<%=userDetails.email%>" value="<%=userDetails.email%>">
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col form-group">
+                                          <label for="userRole">User Role</label>
+                                          <input type="text" readonly id="userRole" name="userRole" placeholder="<%=userDetails.roleName%>" value="<%=userDetails.roleName%>">
+                                      </div>
+                                      <div class="col form-group">
+                                          <label for="Share">Share</label>
+                                          <input type="number" id="Share" name="Share" placeholder="<%=userDetails.Share%>" value="<%=userDetails.Share%>">
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col form-group">
+                                          <label for="myShare">My Share</label>
+                                          <input type="number" id="myShare" name="myShare" placeholder="<%=userDetails.myShare%>" value="<%=userDetails.myShare%>">
+                                      </div>
+                                      <div class="col form-group">
+                                          <label for="creditReference">Credit Reference</label>
+                                          <input type="number" readonly id="creditReference" name="creditReference" placeholder="<%=userDetails.creditReference%>" value="<%=userDetails.creditReference%>">
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="col form-group">
+                                          <button type="submit">Submit</button>
+                                      </div>
+                                  </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                  
+                  </div>
+              </div> 
+              <div id="TENNIS" class="tabcontent">
+                  <div class="row">
+                      <div class="container">
+                          <div class="form-container">
+                            <div class="form-column blue">
+                              <form class="Wallet" id="<%=currentUser._id%>">
+                                  <div class="row">
+                                      <div class="col form-group">
+                                          <label for="maxCreditReference">Password</label>
+                                          <input type="number" id="maxCreditReference" name="maxCreditReference" placeholder="<%=currentUser.maxCreditReference%>" value="<%=currentUser.maxCreditReference%>">
+                                      </div>
+                                  </div>
+                              </form>
+                              
+                            </div>
+                          </div>
+                        </div>
+                  </div>
+              </div>
+          
+      </div>
+  </div>
+</section>
+ 
+</div>
+
+
+
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+<script type="text/javascript" src="../js/bundle.js"></script>
+
+
+  <script>
+        function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+    
+  }
+  document.getElementById("defaultOpen").click();
+  </script>
+
+</body>
+    </html>
