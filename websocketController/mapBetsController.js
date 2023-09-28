@@ -16,7 +16,7 @@ exports.mapbet = async(data) => {
   children.map(ele => {
       childrenUsername.push(ele.userName) 
   })
-    console.log(data)
+    // console.log(data)
     // let bets = await betModel.find({marketId:`${data.id}`})
     let bets = await betModel.aggregate([
         {

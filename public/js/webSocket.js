@@ -10501,15 +10501,14 @@ socket.on('connect', () => {
         }
 
         socket.on('getinProgressData', data => {
+            let html= ''
             for(let i = 0; i < data.length; i++){
-                let html = `<td>${data[i].marketName}</td>
+                html = `<tr class="RAWCLASS" id="${data[i].marketId}"><td>${data[i].marketName}</td>
+                <td>${data[i].progressType}</td>
                 <td>${data[i].settledBet}</td>
-                <td>${data[i].length}</td>`
-                let tr = document.getElementById(`${data[i].marketId}`)
-                if(tr && tr.classList.contains('RAWCLASS')){
-                    tr.innerHTML = html
-                }
+                <td>${data[i].length}</td></tr>`
             }
+            document.getElementById('InprogresDATA').innerHTML = html
         })
 
         $(document).on('click', '.voidBet2', function(e){

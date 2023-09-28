@@ -2,6 +2,7 @@ let User = require('../model/userModel');
 let accountStatementModel = require('../model/accountStatementByUserModel');
 let Bet = require('../model/betmodel');
 let settlementHistory = require("../model/settelementHistory");
+const InprogressModel = require('../model/InprogressModel');
 let Decimal = require('decimal.js')
 
 
@@ -12,6 +13,22 @@ async function rollBack(data){
         return 'please provide a valid password'
     }else{ 
         let allBetWithMarketId = await Bet.find({marketId:data.id})
+        let InProgress = await InprogressModel.findOne({marketId : allBetWithMarketId[0].marketId, progressType:'RollBack'})
+        if(InProgress === null){
+            try{
+    
+                let inprogressData = {
+                  eventId : allBetWithMarketId[0].eventId,
+                  marketId: allBetWithMarketId[0].marketId,
+                  length: allBetWithMarketId.length,
+                  marketName: allBetWithMarketId[0].marketName,
+                  progressType:'RollBack'
+                }
+                InProgress = await InprogressModel.create(inprogressData)
+            }catch(err){
+                console.log(err)
+            }
+        }
         console.log(allBetWithMarketId)
         let dataForHistory = {
             marketID:`${data.id}`,
@@ -139,6 +156,12 @@ async function rollBack(data){
                     //     debitAmountForP = parentUser2Amount
                     // }
                     // await accountStatementModel.create(userAcc);
+                }
+
+                let checkDelete = await InprogressModel.findOneAndUpdate({marketId : allBetWithMarketId[bets].marketId, progressType:'RollBack'}, {$inc:{settledBet:1}})
+                console.log(checkDelete, '<======== checkDelete')
+                if((checkDelete.settledBet + 1) == checkDelete.length){
+                    await InprogressModel.findOneAndDelete({marketId : allBetWithMarketId[bets].marketId, progressType:'RollBack'})
                 }
             }
 
