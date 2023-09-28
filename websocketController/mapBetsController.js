@@ -542,7 +542,7 @@ exports.mapbet = async(data) => {
           let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bet.marketId}, {$inc:{settledBet:1}})
           console.log(checkDelete, '<======== checkDelete')
           if((checkDelete.settledBet + 1) == checkDelete.length){
-            await InprogressModel.findOneAndDelete({eventId : bet.marketId})
+            await InprogressModel.findOneAndDelete({marketId : bet.marketId})
           }
       });
 
