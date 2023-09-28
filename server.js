@@ -1084,9 +1084,9 @@ io.on('connection', (socket) => {
                 childrenUsername.push(ele.userName) 
             })
             data.filterData.userName = {$in:childrenUsername}
-            ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+            ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
         }else{
-            ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+            ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
         }
         socket.emit('matchBets',{ubDetails,page})
     })
