@@ -736,7 +736,23 @@ socket.on('connect', () => {
             location.reload(true)
         })
 
-        
+        $(document).on('submit','.editMyPassword',function(e){
+            e.preventDefault();
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            socket.emit('editMyPassword',{data,LOGINDATA})
+        })
+
+        socket.on('editMyPassword',async(data)=>{
+            alert(data.msg)
+            if(data.status == 'success'){
+
+                location.reload(true)
+            }
+        })
+
+
     }
 
 

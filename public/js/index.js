@@ -67,7 +67,8 @@ $(document).ready(function(){
 
         }else if(pathname == '/admin/riskAnalysis' || pathname == '/admin/matchBets'){
             $("a[href='"+'/admin/liveMarket'+"'").addClass('active')
-
+        }else if(pathname == '/admin/profiledetail'){
+            $("a[href='"+'/admin/userManagement'+"'").addClass('active')
         }else if(pathname.startsWith('/admin/userdetails')){
             $("a[href='"+'/admin/userManagement'+"'").addClass('active')
 
