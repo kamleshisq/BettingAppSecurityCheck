@@ -12,18 +12,51 @@
   <div class="dashboard-main-wraper">
     <section class="dashboard-welcome-section">
       <div class="container-fluid">
-        <%if(bets.length > 0){%>
-            <div class="new-head"> 
-                <h3><%=bets[0].match%> <span class="match-odd-text"><%=bets[0].marketName%></span> </h3><br>
+        <div class="new-head"> 
+          <%if(bets.length > 0){%>
+                  <h3><%=bets[0].match%> <span class="match-odd-text"><%=bets[0].marketName%></span> </h3><br>
+          <%}else{%>
+              <h3>There is no bets in this market</h3>
+          <%}%>
+          <form action="">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+              </div>
+              <input type="text" id="searchUser" list="text_editors" class="form-control searchUser" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
+              <div class="wrapper">
+                <ul id="search" class="users">
+              
+                </ul>
+                <ul id="button" class="button">
+                  
+                </ul>
+              </div>
+              
             </div>
-        <%}else{%>
-            <div class="new-head">There is no bets in this market</div>
-        <%}%>
+          </form>
+        </div>
+
     </section>
-    <%if(bets.length > 0){%>
     <section>
       <div class="container-fluid">
         <div class="table-data-section">
+          <div class="table-heading betmonitor-heading">
+            <div class="rowId" data-rowid="1"></div>
+            <div class="table-heading-btn">
+              <form action="" class="betmonitor-heading-from">
+                <div class="input-group">
+                  <label class="up-down-form">From Date</label>
+                  <input type="date" id="fromDate">
+                </div>
+                <div class="input-group">
+                  <label class="up-down-form">To Date</label>
+                  <input type="date" id="toDate">
+                </div>
+                </form>
+                <!-- <button class="btn-filter filter"><i class="fa-solid fa-filter"></i> &nbsp; Filter</button> -->
+            </div>
+        </div>
           <div class="data-table">
               <table id="betTable">
                   <tr>
@@ -35,6 +68,8 @@
                       <th>Stake</th>
                       <th>Action</th>
                   </tr>
+                  <%if(bets.length > 0){%>
+
                   <%for(let i = 0; i < bets.length; i++){%>
                     <% let date = new Date(bets[i].date)%>
                     <tr>
@@ -47,15 +82,22 @@
                         <td><div class="btn-group"><button class="btn alert-btn" id="<%=bets[i].id%>">Alert</button></div></td>
                     </tr>
                   <%}%>
+                  <%}esle{%>
+                    <tr class="empty_table"><td>There is no bets in this market</td></tr>
+                  <%}%>
+
               </table>
           </div>
       </div>
       </div>
       
     </section>
-    <%}%>
     </div>
-</body>
+    <%if(bets.length != 0){%>
+    <div id="load-more">
+      <button class="load-more">Load More</button>
+    </div>
+    <%}%>
 
 <div class="modal fade" id="matchodd-modal" role="dialog">
     <div class="modal-dialog">
@@ -97,6 +139,7 @@
     </div>
   </div>
 
+</body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript" src="../../js/bundle.js"></script>
