@@ -11788,7 +11788,6 @@ socket.on('connect', () => {
             // console.log("working")
             // console.log(this.textContent)
             document.getElementById("searchUser").value = this.textContent
-            filterData = {}
             filterData.userName = this.textContent
             $('.rowId').attr('data-rowid','1')
             $('.wrapper').hide()
