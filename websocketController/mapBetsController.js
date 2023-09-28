@@ -534,9 +534,9 @@ exports.mapbet = async(data) => {
               }
           }
           let checkDelete = await InprogressModel.findOneAndUpate({eventId : bet.marketId}, {$in:{settledBet:1}})
-          if((checkDelete.settledBet + 1) == checkDelete.length){
-            await InprogressModel.findOneAndDelete({eventId : bet.marketId})
-          }
+        //   if((checkDelete.settledBet + 1) == checkDelete.length){
+        //     await InprogressModel.findOneAndDelete({eventId : bet.marketId})
+        //   }
       });
 
       await Promise.all(betPromises);
