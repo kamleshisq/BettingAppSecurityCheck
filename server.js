@@ -4000,8 +4000,14 @@ io.on('connection', (socket) => {
 
     socket.on('ROLLBACKDETAILS', async(data) => {
         try{
-            socket.emit('ROLLBACKDETAILS', "RollBackStart")
-            let resultDate = rollBackBet(data)
+            
+            let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
+            if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
+                socket.emit('ROLLBACKDETAILS', 'please provide a valid password') 
+            }else{ 
+                socket.emit('ROLLBACKDETAILS', 'RollBack Process Start')
+                let resultDate = rollBackBet(data)
+            }
         }catch(err){
             console.log(err)
             socket.emit("ROLLBACKDETAILS",{message:"err", status:"error"})
