@@ -6570,17 +6570,17 @@ socket.on('connect', () => {
         // });
       
         // jQuery approach
-        // $(document).ready(function () {
-        //     $(".button").click(function () {
-        //       let odds = $(this).children("span:first-child").text();
-        //       let beton = $(this).closest("tr").find("td:first-child").text();
-        //       let secondPTag = $(this).closest("tr").next().find(".beton");
-        //       let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
-        //       let secId = this.id
-        //       secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
-        //       numSpan.text(odds);
-        //     });
-        //   });
+        $(document).ready(function () {
+            $(".button").click(function () {
+              let odds = $(this).children("span:first-child").text();
+              let beton = $(this).closest("tr").find("td:first-child").text();
+              let secondPTag = $(this).closest("tr").next().find(".beton");
+              let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
+              let secId = this.id
+              secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
+              numSpan.text(odds);
+            });
+          });
 
           $(document).ready(function () {
             $(".nww-bet-slip-wrp-col2-inn span").click(function () {
@@ -8587,7 +8587,7 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
-                        this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                        this.innerHTML = `<span data-id="${section.backPrice3}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                     }
                 }else if(this.id == `${section.selectionId}2`){
                     if( section.backPrice2 == "-" || section.backPrice2 == "1,000.00" || section.backPrice2 == "0"){
@@ -8595,7 +8595,7 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
-                        this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
+                        this.innerHTML = `<span data-id="${section.backPrice3}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                     }
                 }else if (this.id == `${section.selectionId}3`){
                     if( section.backPrice3 == "-" || section.backPrice3 == "1,000.00" || section.backPrice3 == "0"){
@@ -8603,7 +8603,7 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                     }else{
-                        this.innerHTML = `<span><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
+                        this.innerHTML = `<span data-id="${section.backPrice3}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                     }
                 }
             })
@@ -8625,7 +8625,7 @@ socket.on('connect', () => {
                       </span>`
                     }else{
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
-                        this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
+                        this.innerHTML = `<span data-id="${section.layPrice3}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                     }
                 }else if(this.id == `${section.selectionId}5`){
                     if( section.layPrice2 == "-" || section.layPrice2 == "1,000.00" || section.layPrice2 == "0"){
@@ -8634,7 +8634,7 @@ socket.on('connect', () => {
                       </span>`
                     }else{
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
-                        this.innerHTML = `<span><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
+                        this.innerHTML = `<span data-id="${section.layPrice3}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                     }
                 }else if (this.id == `${section.selectionId}6`){
                     if( section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0"){
@@ -8643,7 +8643,7 @@ socket.on('connect', () => {
                       </span>`
                     }else{
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
-                        this.innerHTML = `<span><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
+                        this.innerHTML = `<span data-id="${section.layPrice3}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                     }
                 }
             })
