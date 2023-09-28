@@ -10487,9 +10487,11 @@ socket.on('connect', () => {
                   }, 1000)
             }
             getinProgressData()
-            console.log(inprogressTable , "=++=>> inprogressTable")
         }
 
+        socket.on('getinProgressData', data => {
+            console.log(data, "<== DATA")
+        })
 
         $(document).on('click', '.voidBet2', function(e){
             e.preventDefault()
