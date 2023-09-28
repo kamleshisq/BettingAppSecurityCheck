@@ -539,11 +539,11 @@ exports.mapbet = async(data) => {
                 //   }
               }
           }
-          let checkDelete = await InprogressModel.findOneAndUpate({marketId : bet.marketId}, {$inc:{settledBet:1}})
+          let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bet.marketId}, {$inc:{settledBet:1}})
           console.log(checkDelete, '<======== checkDelete')
-        //   if((checkDelete.settledBet + 1) == checkDelete.length){
-        //     await InprogressModel.findOneAndDelete({eventId : bet.marketId})
-        //   }
+          if((checkDelete.settledBet + 1) == checkDelete.length){
+            await InprogressModel.findOneAndDelete({eventId : bet.marketId})
+          }
       });
 
       await Promise.all(betPromises);
