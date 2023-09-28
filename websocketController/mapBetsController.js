@@ -29,7 +29,7 @@ exports.mapbet = async(data) => {
     ])
     let InProgress = await InprogressModel.findOne({eventId : bets[0].marketId})
     console.log(InProgress, "1st =====>>>> InProgress")
-    if(InProgress != null){
+    if(InProgress === null){
         try{
 
             let inprogressData = {
