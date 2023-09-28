@@ -27,7 +27,7 @@ exports.mapbet = async(data) => {
             }
         },
     ])
-    let InProgress = await InprogressModel.findOne({marketId : bets[0].marketId})
+    let InProgress = await InprogressModel.findOne({marketId : bets[0].marketId, progressType:'SettleMent'})
     // console.log(InProgress, "1st =====>>>> InProgress")
     if(InProgress === null){
         try{
@@ -36,7 +36,8 @@ exports.mapbet = async(data) => {
               eventId : bets[0].eventId,
               marketId: bets[0].marketId,
               length: bets.length,
-              marketName: bets[0].marketName
+              marketName: bets[0].marketName,
+              progressType:'SettleMent'
             }
             InProgress = await InprogressModel.create(inprogressData)
         }catch(err){
@@ -539,10 +540,10 @@ exports.mapbet = async(data) => {
                 //   }
               }
           }
-          let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bet.marketId}, {$inc:{settledBet:1}})
+          let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bet.marketId, progressType:'SettleMent'}, {$inc:{settledBet:1}})
           console.log(checkDelete, '<======== checkDelete')
           if((checkDelete.settledBet + 1) == checkDelete.length){
-            await InprogressModel.findOneAndDelete({marketId : bet.marketId})
+            await InprogressModel.findOneAndDelete({marketId : bet.marketId, progressType:'SettleMent'})
           }
       });
 
