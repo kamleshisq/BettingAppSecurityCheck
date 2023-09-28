@@ -11845,7 +11845,7 @@ socket.on('connect', () => {
                 <td class="text-nowrap">${bets[i].Stake}</td>
                 <td>
                     <div class="btn-group">
-                    <button class="btn alert" id="${bets[i].id}">Alert</button>
+                    <button class="btn alert" id="${bets[i]._id}">Alert</button>
                     </div>
                 </td>
 
