@@ -2991,7 +2991,8 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
 
 exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     let me = req.currentUser
-    let inprogressData = await InprogreshModel.findOne({eventId:req.query.id})
+    let inprogressData = await InprogreshModel.find({eventId:req.query.id})
+    console.log(inprogressData, "<=== inprogressData")
     let childrenUsername = []
     let children = await User.find({parentUsers:req.currentUser._id})
     children.map(ele => {
