@@ -10476,9 +10476,18 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/admin/settlementIn"){
-
+        console.log(search, "asdfghjkl>>>>")
         let inprogressTable = document.getElementById('InprogresDATA')
         if(inprogressTable){
+            function getinProgressData(){
+                $(document).ready(function() {
+                    socket.emit("getinProgressData", "connected")
+                  });
+                  setTimeout(()=>{
+                    getinProgressData()
+                  }, 60000)
+            }
+            getinProgressData()
             console.log(inprogressTable , "=++=>> inprogressTable")
         }
 
