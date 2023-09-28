@@ -10495,7 +10495,7 @@ socket.on('connect', () => {
                   });
                   setTimeout(()=>{
                     getinProgressData()
-                  }, 1000)
+                  }, 500)
             }
             getinProgressData()
         // }
