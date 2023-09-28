@@ -6577,6 +6577,7 @@ socket.on('connect', () => {
               let secondPTag = $(this).closest("tr").next().find(".beton");
               let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
               let secId = this.id
+              console.log(secId,"==>sectionId")
               secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
               numSpan.text(odds);
             });
