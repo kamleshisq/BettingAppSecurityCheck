@@ -10508,19 +10508,21 @@ socket.on('connect', () => {
                 <td>${data[i].settledBet}</td>
                 <td>${data[i].length}</td></tr>`
             }
-            let inprogressTable = document.getElementById('InprogresDATA')
-            if(inprogressTable){
-                document.getElementById('InprogresDATA').innerHTML = html
-            }else{
-                let html2 = `<thead>
-                <tr>
-                  <th>Market Name</th>
-                  <th>Type</th>
-                  <th>Settled Bets</th>
-                  <th>Total Bets</th>
-                </tr>
-              </thead>`
-              document.getElementById('inprogress-market-table').innerHTML = html2 + html
+            if(data.length > 0){
+                let inprogressTable = document.getElementById('InprogresDATA')
+                if(inprogressTable){
+                    document.getElementById('InprogresDATA').innerHTML = html
+                }else{
+                    let html2 = `<thead>
+                    <tr>
+                      <th>Market Name</th>
+                      <th>Type</th>
+                      <th>Settled Bets</th>
+                      <th>Total Bets</th>
+                    </tr>
+                  </thead>`
+                  document.getElementById('inprogress-market-table').innerHTML = html2 + html
+                }
             }
 
         })
