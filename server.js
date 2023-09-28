@@ -52,6 +52,7 @@ const betLimitMatchWisemodel = require('./model/betLimitMatchWise');
 const voidbetAfterPlace = require('./utils/voideBetAfterPlace');
 const voidBetBeforePlace = require('./utils/voidBetForOpen');
 const rollBackBet = require('./utils/RollBackAfterPlace');
+const InprogreshModel = require('./model/InprogressModel');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -4051,7 +4052,8 @@ io.on('connection', (socket) => {
 
     socket.on('getinProgressData', async(data) => {
         try{
-            console.log(data, "==> DATA")
+            let inprogressData = await InprogreshModel.findOne({eventId:req.query.id})
+            socket.emit('getinProgressData', inprogressData)
         }catch(err){
             console.log(err)
         }
