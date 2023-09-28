@@ -65,7 +65,7 @@ $(document).ready(function(){
         if(pathname == '/admin/catalogcontrol/compitations' || pathname == '/admin/catalogcontrol/compitations/events'){
             $("a[href='"+'/admin/catalogcontrol'+"'").addClass('active')
 
-        }else if(pathname == '/admin/riskAnalysis'){
+        }else if(pathname == '/admin/riskAnalysis' || pathname == '/admin/matchBets'){
             $("a[href='"+'/admin/liveMarket'+"'").addClass('active')
 
         }else if(pathname.startsWith('/admin/userdetails')){
