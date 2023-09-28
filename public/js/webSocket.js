@@ -10505,7 +10505,10 @@ socket.on('connect', () => {
                 let html = `<td>${data[i].marketName}</td>
                 <td>${data[i].settledBet}</td>
                 <td>${data[i].length}</td>`
-                document.getElementById(`${data[i].marketId}`).innerHTML = html
+                let tr = document.getElementById(`${data[i].marketId}`)
+                if(tr && tr.classList.contains('RAWCLASS')){
+                    tr.innerHTML = html
+                }
             }
         })
 
