@@ -10926,23 +10926,23 @@ socket.on('connect', () => {
     
     
     if(pathname == "/admin/commissionMarkets"){
-        $(document).ready(function() {
-            $('#MarketMatch').on('input change', function() {
-              var inputValue = $(this).val();
-              if(inputValue.length > 3){
-                socket.emit("MarketMatch", {LOGINDATA, inputValue});
-                }else{
-                    socket.emit("MarketMatch", "LessTheN3");
-                }
-                // socket.emit("MarketMatch", {LOGINDATA, inputValue})
-            });
-          });
+        // $(document).ready(function() {
+        //     $('#MarketMatch').on('input change', function() {
+        //       var inputValue = $(this).val();
+        //       if(inputValue.length > 3){
+        //         socket.emit("MarketMatch", {LOGINDATA, inputValue});
+        //         }else{
+        //             socket.emit("MarketMatch", "LessTheN3");
+        //         }
+        //         // socket.emit("MarketMatch", {LOGINDATA, inputValue})
+        //     });
+        //   });
 
           $('.searchUser').keyup(function(){
             if($(this).hasClass("searchUser")){
                 if($(this).val().length >= 3 ){
                     let x = $(this).val(); 
-                    socket.emit("MarketMatch", {x, LOGINDATA})
+                    socket.emit("MarketMatch", {inputValue:x, LOGINDATA})
                 }else{
                     document.getElementById('search').innerHTML = ``
                 }
