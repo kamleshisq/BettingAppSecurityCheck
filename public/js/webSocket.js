@@ -6577,12 +6577,16 @@ socket.on('connect', () => {
               let secondPTag = $(this).closest("tr").next().find(".beton");
               let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
               let secId = this.id
+              let secId2;
               console.log(secId,"==>sectionId")
               if($(this).hasClass('match_odd_Blue')){
+                secId2 = secId.slice(0,-1) + '1'
                 console.log('in blue')
-              }else{
+                }else{
+                secId2 = secId.slice(0,-1) + '4'
                 console.log('in red')
-              }
+                }
+                console.log(secId2,"==>sectionId2")
               secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
               numSpan.text(odds);
             });
