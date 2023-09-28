@@ -89,7 +89,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
         var isValid = mongoose.Types.ObjectId.isValid(id)
 
         if(!isValid){
-            return next(new AppError('id is not valid'))
+            return res.redirect('/admin/userManagement')
         }
         urls = [
             {
