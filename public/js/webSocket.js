@@ -10543,7 +10543,7 @@ socket.on('connect', () => {
                 alert("Please try again later")
             }else{ 
                 alert(data)
-                Window.location.reload()
+                window.location.reload()
             }
         })
 
@@ -10563,7 +10563,7 @@ socket.on('connect', () => {
                 alert("Please try again later")
             }else{ 
                 alert(data)
-                Window.location.reload()
+                window.location.reload()
             }
         })
        
