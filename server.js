@@ -4071,7 +4071,7 @@ io.on('connection', (socket) => {
 
     socket.on('getinProgressData', async(data) => {
         try{
-            let inprogressData = await InprogreshModel.findOne({eventId:data})
+            let inprogressData = await InprogreshModel.find({eventId:data})
             socket.emit('getinProgressData', inprogressData)
         }catch(err){
             console.log(err)
