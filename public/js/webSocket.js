@@ -720,7 +720,24 @@ socket.on('connect', () => {
         }
     })
 
+    //..................FOR User Profile Page...........//
 
+    if(pathname == '/admin/profiledetail'){
+        $(document).on('submit','.editMyProfile',function(e){
+            e.preventDefault();
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            socket.emit('editMyProfile',{data,LOGINDATA})
+        })
+
+        socket.on('editMyProfile',async(data)=>{
+            alert(data.msg)
+            location.reload(true)
+        })
+
+        
+    }
 
 
     //..................FOR user management page...........//
