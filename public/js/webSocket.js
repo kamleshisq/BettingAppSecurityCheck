@@ -11889,12 +11889,8 @@ socket.on('connect', () => {
                 const table = row.parentNode;
                 const rowIndex = Array.from(table.rows).indexOf(row);
                 row.remove(); 
-                const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
-                rowsToUpdate.forEach((row, index) => {
-                    const srNoCell = row.cells[0]; 
-                    srNoCell.textContent = index + rowIndex + 1;
-                  });
-              }
+               
+            }
         }
     })
     }
