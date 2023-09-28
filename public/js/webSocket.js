@@ -10490,7 +10490,12 @@ socket.on('connect', () => {
         }
 
         socket.on('getinProgressData', data => {
-            console.log(data, "<== DATA")
+            for(let i = 0; i < data.length; i++){
+                let html = `<td>${data[i].marketName}</td>
+                <td>${data[i].settledBet}</td>
+                <td>${data[i].length}</td>`
+                document.getElementById(`${data[i].marketId}`).innerHTML = html
+            }
         })
 
         $(document).on('click', '.voidBet2', function(e){
