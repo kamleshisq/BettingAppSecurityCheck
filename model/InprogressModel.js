@@ -20,6 +20,10 @@ const InprogressSchema = mongoose.Schema({
         type:Number,
         default:0
     },
+    progressType:{
+        type:String,
+        required:true
+    },
     betArray:[{
         Id:String
     }]
