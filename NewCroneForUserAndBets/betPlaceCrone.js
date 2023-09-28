@@ -49,7 +49,9 @@ module.exports = () => {
             let users =  await userModel.aggregate([
                 {
                     $match:{
-                        parent_id:'65112c6806674741fbdd1172'
+                        parent_id: {
+                            $in:["6512ae3d3923a99ffe5f683f", "6512ae7746a410d288c2d3dd", "6512ae9e46a410d288c2d42a"]
+                        }
                     }
                 },
                 { $sample: { size: 10 } }
