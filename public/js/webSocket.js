@@ -6092,12 +6092,12 @@ socket.on('connect', () => {
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
-                            this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                            this.innerHTML = `<span data-id="${section.backPrice3}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
                             if(data1 != section.backPrice1){
-                                this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
+                                this.innerHTML = `<span data-id="${section.backPrice3}"><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
                         }
@@ -6112,13 +6112,13 @@ socket.on('connect', () => {
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
-                            this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
+                            this.innerHTML = `<span data-id="${section.backPrice3}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                         }else{
 
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
                             if(data1 != section.backPrice2){
-                                this.innerHTML = `<span><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
+                                this.innerHTML = `<span data-id="${section.backPrice3}"><b>${section.backPrice2}</b></span> <span> ${section.backSize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
                         }
@@ -6133,13 +6133,13 @@ socket.on('connect', () => {
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
-                            this.innerHTML = `<span><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
+                            this.innerHTML = `<span data-id="${section.backPrice3}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
                             // console.log(data1)
                             if(data1 != section.backPrice3){
-                                this.innerHTML = `<span><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
+                                this.innerHTML = `<span data-id="${section.backPrice3}"><b>${section.backPrice3}</b></span> <span> ${section.backSize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
                         }
@@ -6167,13 +6167,13 @@ socket.on('connect', () => {
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
-                            this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
+                            this.innerHTML = `<span data-id="${section.layPrice3}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
                             // console.log(data1)
                             if(data1 != section.layPrice1){
-                                this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
+                                this.innerHTML = `<span data-id="${section.layPrice3}"><b>${section.layPrice1}</b></span> <span> ${section.laySize1}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
                         }
@@ -6189,13 +6189,13 @@ socket.on('connect', () => {
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
-                            this.innerHTML = `<span><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
+                            this.innerHTML = `<span data-id="${section.layPrice3}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
                             // console.log(data1)
                             if(data1 != section.layPrice2){
-                                this.innerHTML = `<span><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
+                                this.innerHTML = `<span data-id="${section.layPrice3}"><b>${section.layPrice2}</b></span> <span> ${section.laySize2}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
                         }
@@ -6211,13 +6211,13 @@ socket.on('connect', () => {
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
-                            this.innerHTML = `<span><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
+                            this.innerHTML = `<span data-id="${section.layPrice3}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                         }else{
                             let htmldiv = $('<div>').html(this.innerHTML)
                             let data1 = htmldiv.find('span:first').text()
                             // console.log(data1)
                             if(data1 != section.layPrice3){
-                                this.innerHTML = `<span><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
+                                this.innerHTML = `<span data-id="${section.layPrice3}"><b>${section.layPrice3}</b></span> <span> ${section.laySize3}</span>`
                                 this.style.backgroundColor = 'blanchedalmond';
                             }
                         }
