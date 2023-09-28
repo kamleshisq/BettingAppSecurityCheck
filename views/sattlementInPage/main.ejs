@@ -95,7 +95,7 @@
         <div class="row">
           <div class="data-table">
             <table id="inprogress-market-table">
-              <%if(inprogressData){%>
+              <%if(inprogressData.length > 0){%>
                 <thead>
                   <tr>
                     <th>Market Name</th>
@@ -104,11 +104,13 @@
                   </tr>
                 </thead>
                 <tbody class="new-body" id="InprogresDATA" >
-                  <tr>
-                    <td><%=inprogressData.marketName%></td>
-                    <td><%=inprogressData.settledBet%></td>
-                    <td><%=inprogressData.length%></td>
-                  </tr>
+                  <%for(i = 0; i < inprogressData.length; i++){%>
+                    <tr class="RAWCLASS" id="<%=inprogressData[i].marketName%>">
+                      <td><%=inprogressData[i].marketName%></td>
+                      <td><%=inprogressData[i].settledBet%></td>
+                      <td><%=inprogressData[i].length%></td>
+                    </tr>
+                  <%}%>
                 </tbody>
               <%}else{%>
                 <tr class="empty_table"><td>No INPROGRESS Markets! </td></tr>
