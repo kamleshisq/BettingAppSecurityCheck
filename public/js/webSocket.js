@@ -11664,8 +11664,7 @@ socket.on('connect', () => {
                 }else{
                     if(data.newData == false){
                         $('.tabelBodyTr').remove()
-                        if($('.headDetail')){
-
+                        if($('.headDetail').length ){
                             $('.headDetail').after(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
                         }else{
                             $('tbody').html(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
@@ -11677,6 +11676,236 @@ socket.on('connect', () => {
                 }
             })
 
+    }
+
+    if(pathname == "/admin/matchBets"){
+
+        function getJSONDataFromQueryString(queryString) {
+            const urlParams = new URLSearchParams(queryString);
+            const jsonData = {};
+            for (const [key, value] of urlParams.entries()) {
+              jsonData[key] = value;
+            }
+            return jsonData;
+          }
+          let jsonData = getJSONDataFromQueryString(search);
+          console.log(jsonData)
+        $(document).on('keyup','.searchUser',function(){
+            // console.log('working')
+            // console.log($(this).val())
+            if($(this).val().length >= 3 ){
+                let x = $(this).val(); 
+                // console.log(x)
+                socket.emit("SearchACC", {x, LOGINDATA})
+            }else{
+                document.getElementById('search').innerHTML = ``
+                document.getElementById("button").innerHTML = ''
+            }
+        })
+
+        $(document).on("click", ".next", function(e){
+            e.preventDefault()
+            let page = $(this).attr("id")
+            let x = $("#searchUser").val()
+            socket.emit("SearchACC", {x, LOGINDATA, page})
+        })
+
+        socket.on("ACCSEARCHRES", async(data)=>{
+            let html = ``
+            $('.wrapper').show()
+
+            if(data.page === 1){
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }else if(data.page === null){
+                document.getElementById("button").innerHTML = ``
+            }else{
+                html = document.getElementById('search').innerHTML
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }
+        })
+
+
+        let toDate;
+        let fromDate;
+        let filterData = {}
+
+
+        $('#fromDate,#toDate').change(function(){
+            console.log("working")
+            let userName = $('.searchUser').val()
+            fromDate = $('#fromDate').val()
+            toDate = $('#toDate').val()
+            $('.rowId').attr('data-rowid','1')
+            data.page = 0;
+            if(fromDate != ''  && toDate != '' ){
+                filterData.date = {$gte : fromDate,$lte : new Date(new Date(toDate).getTime() + ((24 * 60*60*1000)-1))}
+            }else{
+
+                if(fromDate != '' ){
+                    filterData.date = {$gte : fromDate}
+                }
+                if(toDate != '' ){
+                    filterData.date = {$lte : new Date(new Date(toDate).getTime() + ((24 * 60*60*1000)-1))}
+                }
+            }
+            if(userName != ''){
+                filterData.userName = userName
+            }else{
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }
+            data.filterData = filterData
+            data.LOGINDATA = LOGINDATA
+            data.page = 0;
+            console.log(data)
+            socket.emit('matchBets',data)
+
+        })
+
+        $(document).on("click", ".searchList", function(){
+            // console.log("working")
+            // console.log(this.textContent)
+            document.getElementById("searchUser").value = this.textContent
+            filterData = {}
+            filterData.userName = this.textContent
+            $('.rowId').attr('data-rowid','1')
+            $('.wrapper').hide()
+            socket.emit('matchBets',{filterData,LOGINDATA,page:0})
+            
+        })
+
+
+        $('#load-more').click(function(e){
+            let page = parseInt($('.rowId').attr('data-rowid'));
+            $('.rowId').attr('data-rowid',page + 1)
+            let data = {}
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
+            }
+            if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
+                filterData.date = {$gte : fromDate,$lte : toDate}
+            }else{
+
+                if(fromDate != undefined && fromDate != '' ){
+                    filterData.date = {$gte : fromDate}
+                }
+                if(toDate != undefined && toDate != '' ){
+                    filterData.date = {$lte : toDate}
+                }
+            }
+
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            // console.log(data)
+            socket.emit('betMoniter',data)
+        })
+      
+            
+            let count = 11
+            socket.on('matchBets',(data) => {
+                console.log(data)
+                if(data.page === 0){
+                    count = 1
+                }
+                let bets = data.ubDetails;
+                let html = '';
+                for(let i = 0; i < bets.length; i++){
+                    let date = new Date(bets[i].date)
+                    if((i%2)==0){
+                        html += `<tr style="text-align: center;" class="blue">`
+                    }else{
+                        html += `<tr style="text-align: center;" >`
+                    }
+                    html += `<td>${i + count}</td>
+                    <td class="date-time">${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
+                    <td>${bets[i].userName}</td>
+                    <td class="text-nowrap">${bets[i].event}</td>
+                    `
+                    if(bets[i].match){
+                        html += `
+                        <td class="text-nowrap">${bets[i].marketName}</td>
+                        <td>${bets[i].oddValue}</td>
+                        <td class="text-nowrap">${bets[i].match}</td>
+                        <td>${bets[i].selectionName}</td>`
+                    }else{
+                        html += `<td>-</td>
+                        <td>-</td><td>-</td><td>-</td>`
+                    }
+                    html += `
+                    <td>${bets[i].Stake}</td>
+                    <td>${bets[i].transactionId}</td>
+                    <td>${bets[i].status}</td>
+                    <td>${bets[i].returns}</td>
+                    <td>
+                    <div class="btn-group">
+                    <button class="btn cancel" id="${bets[i]._id}">Cancel Bet</button>
+                    <button class="btn alert" id="${bets[i]._id}"> Alert Bet</button></div></td>
+                    </tr>`
+                }
+                
+                count += 10;
+                if(data.page == 0){
+                    if(bets.length == 0){
+                        $('#load-more').hide()
+                    }
+                    if(html == ''){
+                        html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    }
+                    $('.new-body').html(html)
+                }else{
+                    if(bets.length == 0){
+                        $('#load-more').hide()
+                    }
+                    $('.new-body').append(html)         
+                }
+            })
+
+    
+    $(document).on('click', '.cancel', async function(e){
+        e.preventDefault()
+        if(confirm('do you want to cancel this bet')){
+            socket.emit('voidBet', this.id)
+        }
+    })
+    
+
+    $(document).on("click", ".alert", function(e){
+        e.preventDefault()
+        if(confirm('do you want to alert this bet')){
+            socket.emit("alertBet", this.id)
+        }
+    })
+    socket.on("alertBet", async(data) => {
+        if(data.status === "error"){
+            alert("Please try again later")
+        }else{
+            console.log(data.bet._id)
+            const deleteButton = document.getElementById(data.bet._id);
+            console.log(deleteButton)
+            const row = deleteButton.closest('tr'); 
+            if (row) {
+                const table = row.parentNode;
+                const rowIndex = Array.from(table.rows).indexOf(row);
+                row.remove(); 
+                const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
+                rowsToUpdate.forEach((row, index) => {
+                    const srNoCell = row.cells[0]; 
+                    srNoCell.textContent = index + rowIndex + 1;
+                  });
+              }
+        }
+    })
     }
 
 
