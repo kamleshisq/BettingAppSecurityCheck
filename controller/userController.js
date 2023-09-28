@@ -318,7 +318,7 @@ exports.updateUserStatusBattingUnlock = catchAsync(async(req, res, next) => {
 exports.changePassword = catchAsync(async(req, res, next) => {
     // const user = await User.findById(req.body.id).select('+password')
     console.log(req.body)
-    
+
     let user = await User.findOne({_id:req.body.id, whiteLabel:req.currentUser.whiteLabel}).select('+password')
     // // console.log(req.body.password)
     if(!user){
@@ -561,14 +561,15 @@ exports.getOwnChild = catchAsync(async(req, res, next) => {
     }
     if(req.query.id){
         me = await User.findById(req.query.id)
-        if(!me){
-            return next(new AppError('user not find',400))
+        if(me){
+            if(me.role.role_level < req.currentUser.role.role_level){
+                return next(new AppError('You do not have permission to perform this action',400))
+            }
+            Rows = await User.count({parent_id: req.query.id})
+            child = await User.find({parent_id: req.query.id}).skip(page * limit).limit(limit);
+        }else{
+            res.redirect('/admin/userManagement')
         }
-        if(me.role.role_level < req.currentUser.role.role_level){
-            return next(new AppError('You do not have permission to perform this action',400))
-        }
-        Rows = await User.count({parent_id: req.query.id})
-        child = await User.find({parent_id: req.query.id}).skip(page * limit).limit(limit);
     }else{
         Rows = await User.count({parent_id: req.currentUser._id})
         child = await User.find({parent_id: req.currentUser._id}).skip(page * limit).limit(limit);
