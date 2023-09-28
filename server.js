@@ -2958,8 +2958,13 @@ io.on('connection', (socket) => {
 
     socket.on('VoidBetIn2', async(data) => {
         try{
-            let reultData = await voidbetAfterPlace(data)
-            socket.emit('VoidBetIn2', reultData)
+            let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password'); 
+            if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
+                socket.emit('VoidBetIn2', 'please provide a valid password') 
+            }else{
+                socket.emit('VoidBetIn2', 'Void Bet Process Start')
+                let reultData = await voidbetAfterPlace(data)
+            }
         }catch(err){
             console.log(err)
             socket.emit("VoidBetIn2",{message:"err", status:"error"})
