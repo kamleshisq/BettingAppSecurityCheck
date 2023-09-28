@@ -22,10 +22,10 @@ async function voidbetBeforePlace(data){
             try{
     
                 let inprogressData = {
-                  eventId : allBetWithMarketId[0].eventId,
-                  marketId: allBetWithMarketId[0].marketId,
-                  length: allBetWithMarketId.length,
-                  marketName: allBetWithMarketId[0].marketName,
+                  eventId : bets[0].eventId,
+                  marketId: bets[0].marketId,
+                  length: bets.length,
+                  marketName: bets[0].marketName,
                   progressType:'VoideBet'
                 }
                 InProgress = await InprogressModel.create(inprogressData)
