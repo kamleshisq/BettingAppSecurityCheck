@@ -11482,7 +11482,7 @@ socket.on('connect', () => {
             })
 
             socket.on("ACCSEARCHRES", async(data)=>{
-                // console.log(data, 565464)
+                console.log(data, 565464)
                 $('.wrapper').show()
                 let html = ``
                 if(data.page === 1){
