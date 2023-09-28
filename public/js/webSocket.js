@@ -11663,11 +11663,16 @@ socket.on('connect', () => {
                     }
                 }else{
                     if(data.newData == false){
-
                         $('.tabelBodyTr').remove()
-                        $('.headDetail').after(`<tr class="tabelBodyTr"><td>There is no bets in this market</td></tr>`)
+                        if($('.headDetail')){
+
+                            $('.headDetail').after(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
+                        }else{
+                            $('tbody').html(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
+
+                        }
                     }else{
-                        $('#match_odd').html(`<tr class="tabelBodyTr"><td>There is no bets in this market</td></tr>`)
+                        $('#match_odd').html(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
                     }
                 }
             })
