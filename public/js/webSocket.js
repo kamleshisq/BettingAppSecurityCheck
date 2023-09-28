@@ -11458,7 +11458,8 @@ socket.on('connect', () => {
                         var marketId = closestMarket.attr('id');
                         $("#searchUser").attr('data-marketid',marketId)
                         let type = 'data5'
-                        socket.emit('UerBook', {marketId, LOGINDATA,id,type})
+                        let newData = true
+                        socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData})
                     } else {
                         console.log('Market not found.');
                     }
@@ -11528,6 +11529,7 @@ socket.on('connect', () => {
                 data.LOGINDATA = LOGINDATA
                 data.marketId = marketId
                 data.type = 'data1'
+                data.newData = false
                 $('.wrapper').hide()
                 console.log(data)
                 socket.emit('UerBook', data)
@@ -11660,8 +11662,13 @@ socket.on('connect', () => {
 
                     }
                 }else{
-                    $('.tabelBodyTr').remove()
-                    $('.headDetail').after(`<tr><td>There is no bets in this market</td></tr>`)
+                    if(data.newData == false){
+
+                        $('.tabelBodyTr').remove()
+                        $('.headDetail').after(`<tr class="tabelBodyTr"><td>There is no bets in this market</td></tr>`)
+                    }else{
+                        $('#match_odd').html(`<tr class="tabelBodyTr"><td>There is no bets in this market</td></tr>`)
+                    }
                 }
             })
 

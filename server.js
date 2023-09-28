@@ -3421,7 +3421,7 @@ io.on('connection', (socket) => {
             
            console.log(Bets, "==> WORKING")
         //    console.log(Bets[0].selections)
-           socket.emit('UerBook', {Bets,type:data.type,childrenUsername});
+           socket.emit('UerBook', {Bets,type:data.type,newData:data.newData});
         //    socket.emit();
         }catch(err){
             console.log(err)
