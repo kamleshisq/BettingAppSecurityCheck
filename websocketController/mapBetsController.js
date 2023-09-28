@@ -27,15 +27,23 @@ exports.mapbet = async(data) => {
             }
         },
     ])
-    console.log(bets, 456456456)
-    let inprogressData = {
-      eventId : bets[0].eventId,
-      marketId: bets[0].marketId,
-      length: bets.length,
-      marketName: bets[0].marketName
+    let InProgress = await InprogressModel.findOne({eventId : bets[0].eventId})
+    if(InProgress){
+
+    }else{
+        console.log(bets, 456456456)
+        let inprogressData = {
+          eventId : bets[0].eventId,
+          marketId: bets[0].marketId,
+          length: bets.length,
+          marketName: bets[0].marketName
+        }
+        console.log(inprogressData, "inprogressData <<<====")
+        InProgress = await InprogressModel.create(inprogressData)
     }
-    console.log(inprogressData, "inprogressData <<<====")
-    // let InProgress = await InprogressModel.create(inprogressData)
+
+    console.log(InProgress, " =====>>>> InProgress")
+
     // let dataForHistory = {
     //   marketID:`${data.id}`,
     //   userId:`${data.LOGINDATA.LOGINUSER._id}`,
