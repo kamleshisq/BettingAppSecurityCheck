@@ -138,8 +138,8 @@ io.on('connection', (socket) => {
             if(user){
                 const passcheck = await user.correctPassword(data.data.oldpassword, user.password)
                 if(passcheck){
-                    user.password = req.body.password
-                    user.passwordConfirm = req.body.passwordConfirm
+                    user.password = data.data.password
+                    user.passwordConfirm = data.data.passwordConfirm
                     socket.emit('editMyPassword',{status:'success',msg:'Password Updated Successfully'})
                 }else{
                     socket.emit('editMyPassword',{status:'fail',msg:'Your old password is wrong'})
