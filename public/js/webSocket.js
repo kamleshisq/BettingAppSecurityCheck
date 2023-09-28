@@ -744,6 +744,11 @@ socket.on('connect', () => {
             socket.emit('editMyPassword',{data,LOGINDATA})
         })
 
+        socket.on('editMyPassword',async(data)=>{
+            alert(data.msg)
+            location.reload(true)
+        })
+
 
     }
 
