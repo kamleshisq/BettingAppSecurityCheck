@@ -138,7 +138,10 @@ io.on('connection', (socket) => {
             if(user){
                 const passcheck = await user.correctPassword(data.data.oldpassword, user.password)
                 if(passcheck){
-                    if(data.data.password == data.data.passwordConfirm){
+                    if(await user.correctPassword(data.data.password, user.password)){
+                        socket.emit('editMyPassword',{status:'fail',msg:'Please enter other password'})
+                    
+                    }else if(data.data.password == data.data.passwordConfirm){
                         user.password = data.data.password
                         user.passwordConfirm = data.data.passwordConfirm
                         user.save()
