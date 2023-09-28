@@ -10476,7 +10476,7 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/admin/settlementIn"){
-        console.log(search, "asdfghjkl>>>>")
+        console.log(search.split('=')[0], "asdfghjkl>>>>")
         let inprogressTable = document.getElementById('InprogresDATA')
         if(inprogressTable){
             function getinProgressData(){
