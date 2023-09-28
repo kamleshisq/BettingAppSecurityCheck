@@ -10709,7 +10709,7 @@ socket.on('connect', () => {
                 alert(data.message.toUpperCase())
             }else{
                 alert('Settleed Process start')
-                window.location.reload()
+                // window.location.reload()
             }
         })
 
