@@ -10975,9 +10975,11 @@ socket.on('connect', () => {
         })
 
           $(document).on("click", ".matchName", function(e){
+            document.getElementById("searchUser").value = this.textContent
             e.preventDefault()
             // console.log($(this).attr('id'))
             let id = $(this).attr('id')
+            $('.wrapper').hide()
             socket.emit("eventIdForMarketList", {LOGINDATA, id})
           })
 
