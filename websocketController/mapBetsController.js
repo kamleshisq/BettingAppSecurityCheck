@@ -34,7 +34,7 @@ exports.mapbet = async(data) => {
       length: bets.length,
       marketName: bets[0].marketName
     }
-    console.log(inprogressData)
+    console.log(inprogressData, "inprogressData <<<====")
     // let InProgress = await InprogressModel.create(inprogressData)
     // let dataForHistory = {
     //   marketID:`${data.id}`,
