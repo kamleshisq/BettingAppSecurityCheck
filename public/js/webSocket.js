@@ -11825,55 +11825,48 @@ socket.on('connect', () => {
         })
       
             
-            let count = 11
-            socket.on('matchBets',(data) => {
-                console.log(data)
-                if(data.page === 0){
-                    count = 1
-                }
-                let bets = data.ubDetails;
-                let html = '';
-                for(let i = 0; i < bets.length; i++){
-                    let date = new Date(bets[i].date)
-                    html += `<tr style="text-align: center;" >`
-                    html += `<td>${bets[i].userName}</td>
-                    <td class="date-time">${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
-                    <td>${bets[i].marketName}</td>
-                    <td class="text-nowrap">${bets[i].oddValue}</td>
-                    <td class="text-nowrap">${bets[i].Stake}</td>
-                    <td>
-                        <div class="btn-group">
-                        <button class="btn alert-btn" id="${bets[i].id}">Alert</button>
-                        </div>
-                    </td>
+        let count = 11
+        socket.on('matchBets',(data) => {
+            console.log(data)
+            if(data.page === 0){
+                count = 1
+            }
+            let bets = data.ubDetails;
+            let html = '';
+            for(let i = 0; i < bets.length; i++){
+                let date = new Date(bets[i].date)
+                html += `<tr style="text-align: center;" >`
+                html += `<td>${bets[i].userName}</td>
+                <td class="date-time">${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
+                <td>${bets[i].marketName}</td>
+                <td class="text-nowrap">${bets[i].oddValue}</td>
+                <td class="text-nowrap">${bets[i].Stake}</td>
+                <td>
+                    <div class="btn-group">
+                    <button class="btn alert" id="${bets[i].id}">Alert</button>
+                    </div>
+                </td>
 
-                    </tr>`
+                </tr>`
+            }
+            
+            count += 10;
+            if(data.page == 0){
+                if(bets.length == 0){
+                    $('#load-more').hide()
                 }
-                
-                count += 10;
-                if(data.page == 0){
-                    if(bets.length == 0){
-                        $('#load-more').hide()
-                    }
-                    if(html == ''){
-                        html += `<tr class="empty_table"><td>No record found</td></tr>`
-                    }
-                    $('.new-body').html(html)
-                }else{
-                    if(bets.length == 0){
-                        $('#load-more').hide()
-                    }
-                    $('.new-body').append(html)         
+                if(html == ''){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
                 }
-            })
+                $('.new-body').html(html)
+            }else{
+                if(bets.length == 0){
+                    $('#load-more').hide()
+                }
+                $('.new-body').append(html)         
+            }
+        })
 
-    
-    $(document).on('click', '.cancel', async function(e){
-        e.preventDefault()
-        if(confirm('do you want to cancel this bet')){
-            socket.emit('voidBet', this.id)
-        }
-    })
     
 
     $(document).on("click", ".alert", function(e){
