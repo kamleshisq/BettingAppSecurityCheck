@@ -16,7 +16,7 @@
           <%if(bets.length > 0){%>
                   <h3><%=bets[0].match%> <span class="match-odd-text"><%=bets[0].marketName%></span> </h3><br>
           <%}else{%>
-              <h3>There is no bets in this market</h3>
+              <h3>There is no bets in this market</h3><br>
           <%}%>
           <form action="">
             <div class="input-group">
@@ -76,13 +76,12 @@
                         <td><%=bets[i].userName%></td>
                         <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
                         <td><%=bets[i].marketName%></td>
-                        <!-- <td><%=bets[i].userName%></td> -->
                         <td><%=bets[i].oddValue%></td>
                         <td><%=bets[i].Stake%></td>
                         <td><div class="btn-group"><button class="btn alert-btn" id="<%=bets[i].id%>">Alert</button></div></td>
                     </tr>
                   <%}%>
-                  <%}esle{%>
+                  <%}else{%>
                     <tr class="empty_table"><td>There is no bets in this market</td></tr>
                   <%}%>
 
