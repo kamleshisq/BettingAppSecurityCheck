@@ -11773,6 +11773,8 @@ socket.on('connect', () => {
             }
             if(userName != ''){
                 filterData.userName = userName
+            }else{
+                filterData.userName = LOGINDATA.LOGINUSER.userName
             }
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
@@ -11802,6 +11804,8 @@ socket.on('connect', () => {
             let userName = $('.searchUser').val()
             if(userName != ''){
                 filterData.userName = userName
+            }else{
+                filterData.userName = LOGINDATA.LOGINUSER.userName
             }
             if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
                 filterData.date = {$gte : fromDate,$lte : toDate}
