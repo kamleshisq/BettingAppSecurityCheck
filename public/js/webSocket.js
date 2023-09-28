@@ -10520,8 +10520,8 @@ socket.on('connect', () => {
                       <th>Settled Bets</th>
                       <th>Total Bets</th>
                     </tr>
-                  </thead>`
-                  document.getElementById('inprogress-market-table').innerHTML = html2 + html
+                  </thead><tbody class="new-body" id="InprogresDATA" >`
+                  document.getElementById('inprogress-market-table').innerHTML = html2 + html + '</tbody>'
                 }
             }
 
