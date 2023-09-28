@@ -10487,8 +10487,8 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/admin/settlementIn"){
-        let inprogressTable = document.getElementById('InprogresDATA')
-        if(inprogressTable){
+        // let inprogressTable = document.getElementById('InprogresDATA')
+        // if(inprogressTable){
             function getinProgressData(){
                 $(document).ready(function() {
                     socket.emit("getinProgressData", search.split('=')[1])
@@ -10498,7 +10498,7 @@ socket.on('connect', () => {
                   }, 1000)
             }
             getinProgressData()
-        }
+        // }
 
         socket.on('getinProgressData', data => {
             let html= ''
@@ -10508,7 +10508,21 @@ socket.on('connect', () => {
                 <td>${data[i].settledBet}</td>
                 <td>${data[i].length}</td></tr>`
             }
-            document.getElementById('InprogresDATA').innerHTML = html
+            let inprogressTable = document.getElementById('InprogresDATA')
+            if(inprogressTable){
+                document.getElementById('InprogresDATA').innerHTML = html
+            }else{
+                let html2 = `<thead>
+                <tr>
+                  <th>Market Name</th>
+                  <th>Type</th>
+                  <th>Settled Bets</th>
+                  <th>Total Bets</th>
+                </tr>
+              </thead>`
+              document.getElementById('inprogress-market-table').innerHTML = html2 + html
+            }
+
         })
 
         $(document).on('click', '.voidBet2', function(e){
