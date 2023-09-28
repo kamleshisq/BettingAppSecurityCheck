@@ -131,6 +131,27 @@ io.on('connection', (socket) => {
             socket.emit('editMyProfile',{status:'success',msg:'something went wrong'})
         }
     })
+
+    socket.on('editMyPassword',async(data)=>{
+        try{
+            let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
+            if(user){
+                const passcheck = await user.correctPassword(data.data.oldpassword, user.password)
+                if(passcheck){
+                    user.password = req.body.password
+                    user.passwordConfirm = req.body.passwordConfirm
+                    socket.emit('editMyPassword',{status:'success',msg:'Password Updated Successfully'})
+                }else{
+                    socket.emit('editMyPassword',{status:'fail',msg:'Your old password is wrong'})
+                }
+            }else{
+                socket.emit('editMyPassword',{status:'fail',msg:'user not found'})
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit('editMyPassword',{status:'fail',msg:'something went wrong'})
+        }
+    })
 //......................FOR user management page .......................//
 
 
