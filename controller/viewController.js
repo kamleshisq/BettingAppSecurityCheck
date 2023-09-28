@@ -137,7 +137,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
       });
     let roles1 = await Role.find({role_level:{$gt:req.currentUser.role.role_type}}).sort({role_level:1});
     const data = await Promise.all(requests);
-    // console.log(data)
+    console.log(data,"==>dataInUserManagement")
     const users = data[0].child;
     const roles = roles1;
     const currentUser = req.currentUser
