@@ -2950,9 +2950,9 @@ io.on('connection', (socket) => {
 
     socket.on('Settle', async(data) => {
         try{
-            console.log(data)
-            let data1 = mapBet.mapbet(data)
+            // console.log(data)
             socket.emit("Settle", {message:"Settleed Process start", status:'success'})
+            let data1 = mapBet.mapbet(data)
             // socket.emit('Settle', {marketId:data.id, status:"success"})
         }catch(err){
             console.log(err)
@@ -4011,8 +4011,14 @@ io.on('connection', (socket) => {
 
     socket.on('ROLLBACKDETAILS', async(data) => {
         try{
-            let resultDate = await rollBackBet(data)
-            socket.emit('ROLLBACKDETAILS', resultDate)
+            
+            let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
+            if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
+                socket.emit('ROLLBACKDETAILS', 'please provide a valid password') 
+            }else{ 
+                socket.emit('ROLLBACKDETAILS', 'RollBack Process Start')
+                let resultDate = rollBackBet(data)
+            }
         }catch(err){
             console.log(err)
             socket.emit("ROLLBACKDETAILS",{message:"err", status:"error"})

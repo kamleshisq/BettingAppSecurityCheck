@@ -99,6 +99,7 @@
                 <thead>
                   <tr>
                     <th>Market Name</th>
+                    <th>Type</th>
                     <th>Settled Bets</th>
                     <th>Total Bets</th>
                   </tr>
@@ -107,6 +108,7 @@
                   <%for(i = 0; i < inprogressData.length; i++){%>
                     <tr class="RAWCLASS" id="<%=inprogressData[i].marketId%>">
                       <td><%=inprogressData[i].marketName%></td>
+                      <td><%=inprogressData[i].progressType%></td>
                       <td><%=inprogressData[i].settledBet%></td>
                       <td><%=inprogressData[i].length%></td>
                     </tr>

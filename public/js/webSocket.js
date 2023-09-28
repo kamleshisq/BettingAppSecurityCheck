@@ -10504,8 +10504,8 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/admin/settlementIn"){
-        let inprogressTable = document.getElementById('InprogresDATA')
-        if(inprogressTable){
+        // let inprogressTable = document.getElementById('InprogresDATA')
+        // if(inprogressTable){
             function getinProgressData(){
                 $(document).ready(function() {
                     socket.emit("getinProgressData", search.split('=')[1])
@@ -10515,18 +10515,35 @@ socket.on('connect', () => {
                   }, 1000)
             }
             getinProgressData()
-        }
+        // }
 
         socket.on('getinProgressData', data => {
+            let html= ''
             for(let i = 0; i < data.length; i++){
-                let html = `<td>${data[i].marketName}</td>
+                html = `<tr class="RAWCLASS" id="${data[i].marketId}"><td>${data[i].marketName}</td>
+                <td>${data[i].progressType}</td>
                 <td>${data[i].settledBet}</td>
-                <td>${data[i].length}</td>`
-                let tr = document.getElementById(`${data[i].marketId}`)
-                if(tr && tr.classList.contains('RAWCLASS')){
-                    tr.innerHTML = html
-                }
+                <td>${data[i].length}</td></tr>`
             }
+            if(data.length > 0){
+                let inprogressTable = document.getElementById('InprogresDATA')
+                if(inprogressTable){
+                    document.getElementById('InprogresDATA').innerHTML = html
+                }else{
+                    let html2 = `<thead>
+                    <tr>
+                      <th>Market Name</th>
+                      <th>Type</th>
+                      <th>Settled Bets</th>
+                      <th>Total Bets</th>
+                    </tr>
+                  </thead><tbody class="new-body" id="InprogresDATA" >`
+                  document.getElementById('inprogress-market-table').innerHTML = html2 + html + '</tbody>'
+                }
+            }else{
+                document.getElementById('inprogress-market-table').innerHTML = '<tr class="empty_table"><td>No INPROGRESS Markets! </td></tr>'
+            }
+
         })
 
         $(document).on('click', '.voidBet2', function(e){
@@ -10580,7 +10597,7 @@ socket.on('connect', () => {
                 alert("Please try again later")
             }else{ 
                 alert(data)
-                window.location.reload()
+                // window.location.reload()
             }
         })
        
@@ -10727,7 +10744,7 @@ socket.on('connect', () => {
                 alert(data.message.toUpperCase())
             }else{
                 alert('Settleed Process start')
-                window.location.reload()
+                // window.location.reload()
             }
         })
 
@@ -10794,27 +10811,27 @@ socket.on('connect', () => {
 
 
 
-        socket.on("Settle", async(data) => {
-            if(data.status === "error"){
-                alert(data.message.toUpperCase())
-            }else{
-                const deleteButton = document.getElementById(data.betdata.marketId);
-                // console.log(deleteButton)
-                const row = deleteButton.closest('tr'); 
-                if (row) {
-                    const table = row.parentNode;
-                    const rowIndex = Array.from(table.rows).indexOf(row);
-                    row.remove(); 
-                    const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
-                    rowsToUpdate.forEach((row, index) => {
-                        const srNoCell = row.cells[0]; 
-                        srNoCell.textContent = index + rowIndex + 1;
-                      });
-                  }
-                  let html = ``
-                alert('Bet Settled Successfully')
-            }
-        })
+        // socket.on("Settle", async(data) => {
+        //     if(data.status === "error"){
+        //         alert(data.message.toUpperCase())
+        //     }else{
+        //         const deleteButton = document.getElementById(data.betdata.marketId);
+        //         // console.log(deleteButton)
+        //         const row = deleteButton.closest('tr'); 
+        //         if (row) {
+        //             const table = row.parentNode;
+        //             const rowIndex = Array.from(table.rows).indexOf(row);
+        //             row.remove(); 
+        //             const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
+        //             rowsToUpdate.forEach((row, index) => {
+        //                 const srNoCell = row.cells[0]; 
+        //                 srNoCell.textContent = index + rowIndex + 1;
+        //               });
+        //           }
+        //           let html = ``
+        //         alert('Bet Settled Successfully')
+        //     }
+        // })
     }
 
     if(pathname == "/admin/catalogcontrol/compitations"){
