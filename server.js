@@ -4047,6 +4047,15 @@ io.on('connection', (socket) => {
             socket.emit('editStream',{status:'fail',err})
         }
     })
+
+
+    socket.on('getinProgressData', async(data) => {
+        try{
+            console.log(data, "==> DATA")
+        }catch(err){
+            console.log(err)
+        }
+    })
     
 })
 
