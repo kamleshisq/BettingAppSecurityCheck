@@ -10776,27 +10776,27 @@ socket.on('connect', () => {
 
 
 
-        socket.on("Settle", async(data) => {
-            if(data.status === "error"){
-                alert(data.message.toUpperCase())
-            }else{
-                const deleteButton = document.getElementById(data.betdata.marketId);
-                // console.log(deleteButton)
-                const row = deleteButton.closest('tr'); 
-                if (row) {
-                    const table = row.parentNode;
-                    const rowIndex = Array.from(table.rows).indexOf(row);
-                    row.remove(); 
-                    const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
-                    rowsToUpdate.forEach((row, index) => {
-                        const srNoCell = row.cells[0]; 
-                        srNoCell.textContent = index + rowIndex + 1;
-                      });
-                  }
-                  let html = ``
-                alert('Bet Settled Successfully')
-            }
-        })
+        // socket.on("Settle", async(data) => {
+        //     if(data.status === "error"){
+        //         alert(data.message.toUpperCase())
+        //     }else{
+        //         const deleteButton = document.getElementById(data.betdata.marketId);
+        //         // console.log(deleteButton)
+        //         const row = deleteButton.closest('tr'); 
+        //         if (row) {
+        //             const table = row.parentNode;
+        //             const rowIndex = Array.from(table.rows).indexOf(row);
+        //             row.remove(); 
+        //             const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
+        //             rowsToUpdate.forEach((row, index) => {
+        //                 const srNoCell = row.cells[0]; 
+        //                 srNoCell.textContent = index + rowIndex + 1;
+        //               });
+        //           }
+        //           let html = ``
+        //         alert('Bet Settled Successfully')
+        //     }
+        // })
     }
 
     if(pathname == "/admin/catalogcontrol/compitations"){
