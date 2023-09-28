@@ -2995,30 +2995,14 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     children.map(ele => {
         childrenUsername.push(ele.userName) 
     })
-    console.log(childrenUsername, "childrenUsername ======>>><<<")
     let betsEventWiseOpen = await betModel.aggregate([
         {
             $match: {
                 status:"OPEN",
-                eventId:req.query.id
+                eventId:req.query.id,
+                userName:{$in:childrenUsername}
             }
         },
-        {
-            $lookup: {
-              from: "users",
-              localField: "userName",
-              foreignField: "userName",
-              as: "user"
-            }
-          },
-          {
-            $unwind: "$user"
-          },
-          {
-            $match: {
-              "user.parentUsers": { $in: [req.currentUser.id] }
-            }
-          },
         {
             $group: {
               _id: "$marketName",
@@ -3044,25 +3028,10 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
         {
             $match: {
                 status:"MAP",
-                eventId:req.query.id
+                eventId:req.query.id,
+                userName:{$in:childrenUsername}
             }
         },
-        {
-            $lookup: {
-              from: "users",
-              localField: "userName",
-              foreignField: "userName",
-              as: "user"
-            }
-          },
-          {
-            $unwind: "$user"
-          },
-          {
-            $match: {
-              "user.parentUsers": { $in: [req.currentUser.id] }
-            }
-          },
         {
             $group: {
               _id: "$marketName",
@@ -3090,25 +3059,10 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
         {
             $match: {
                 status:"CANCEL",
-                eventId:req.query.id
+                eventId:req.query.id,
+                userName:{$in:childrenUsername}
             }
         },
-        {
-            $lookup: {
-              from: "users",
-              localField: "userName",
-              foreignField: "userName",
-              as: "user"
-            }
-          },
-          {
-            $unwind: "$user"
-          },
-          {
-            $match: {
-              "user.parentUsers": { $in: [req.currentUser.id] }
-            }
-          },
         {
             $group: {
               _id: "$marketName",
@@ -3134,25 +3088,10 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
         {
             $match: {
                 status:{$nin: ["OPEN", "CANCEL", "MAP"]},
-                eventId:req.query.id
+                eventId:req.query.id,
+                userName:{$in:childrenUsername}
             }
         },
-        {
-            $lookup: {
-              from: "users",
-              localField: "userName",
-              foreignField: "userName",
-              as: "user"
-            }
-          },
-          {
-            $unwind: "$user"
-          },
-          {
-            $match: {
-              "user.parentUsers": { $in: [req.currentUser.id] }
-            }
-          },
         {
             $group: {
               _id: "$marketName",
