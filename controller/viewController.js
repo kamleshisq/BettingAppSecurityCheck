@@ -140,7 +140,6 @@ exports.userTable = catchAsync(async(req, res, next) => {
     if(data[0].status == 'Error'){
         return res.redirect('/admin/userManagement')
     }
-    console.log(data,"==>dataInUserManagement")
     const users = data[0].child;
     const roles = roles1;
     const currentUser = req.currentUser

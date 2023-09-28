@@ -10926,33 +10926,53 @@ socket.on('connect', () => {
     
     
     if(pathname == "/admin/commissionMarkets"){
-        $(document).ready(function() {
-            $('#MarketMatch').on('input change', function() {
-              var inputValue = $(this).val();
-              if(inputValue.length > 3){
-                socket.emit("MarketMatch", {LOGINDATA, inputValue});
-                }else{
-                    socket.emit("MarketMatch", "LessTheN3");
-                }
-                // socket.emit("MarketMatch", {LOGINDATA, inputValue})
-            });
-          });
+        // $(document).ready(function() {
+        //     $('#MarketMatch').on('input change', function() {
+        //       var inputValue = $(this).val();
+        //       if(inputValue.length > 3){
+        //         socket.emit("MarketMatch", {LOGINDATA, inputValue});
+        //         }else{
+        //             socket.emit("MarketMatch", "LessTheN3");
+        //         }
+        //         // socket.emit("MarketMatch", {LOGINDATA, inputValue})
+        //     });
+        //   });
 
-          socket.on("MarketMatch", async(data) => {
-            console.log(data)
-            let html = ""
-            for(let i = 0; i < data.length; i++){
-                html += "<ul>"
-                html += `<li id="${data[i].eventData.eventId}" class="matchName">${data[i].eventData.name}</li>`
-                html += "</ul>"
+          $('.searchUser').keyup(function(){
+            if($(this).hasClass("searchUser")){
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    socket.emit("MarketMatch", {inputValue:x, LOGINDATA})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                }
             }
-            document.getElementById("myMarkets").innerHTML = html
-            $('#myMarkets').click(function(e){
-                $('#myMarkets').hide()
-                $('#MarketMatch').val('')
-            })
-            // document.getElementById("demonames1").innerHTML = html
-          })
+        })
+
+        //   socket.on("MarketMatch", async(data) => {
+        //     console.log(data)
+        //     let html = ""
+        //     for(let i = 0; i < data.length; i++){
+        //         html += "<ul>"
+        //         html += `<li id="${data[i].eventData.eventId}" class="matchName">${data[i].eventData.name}</li>`
+        //         html += "</ul>"
+        //     }
+        //     document.getElementById("myMarkets").innerHTML = html
+        //     $('#myMarkets').click(function(e){
+        //         $('#myMarkets').hide()
+        //         $('#MarketMatch').val('')
+        //     })
+        //     // document.getElementById("demonames1").innerHTML = html
+        //   })
+
+          socket.on("MarketMatch", async(data)=>{
+            $('.wrapper').show()
+            let html = ``
+            for(let i = 0; i < data.length; i++){
+                html += `<li id="${data[i].eventData.eventId}" class="matchName">${data[i].eventData.name}</li>`
+            }
+            document.getElementById('search').innerHTML = html
+        })
 
           $(document).on("click", ".matchName", function(e){
             e.preventDefault()
