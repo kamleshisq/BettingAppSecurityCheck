@@ -2992,7 +2992,6 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
 exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     let me = req.currentUser
     let inprogressData = await InprogreshModel.findOne({eventId:req.query.id})
-    console.log(inprogressData, '====> inprogressData')
     let childrenUsername = []
     let children = await User.find({parentUsers:req.currentUser._id})
     children.map(ele => {
@@ -3119,7 +3118,6 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     ])
 
     let data = await betModel.findOne({eventId:req.query.id})
-    console.log(betsEventWiseOpen, '==>OPENBETS')
     res.status(200).render("./sattlementInPage/main",{
         title:"Settlements",
         me,
@@ -3128,7 +3126,8 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
         data,
         betsEventWiseMap,
         betsEventWiseCancel,
-        betsEventWiseSettel
+        betsEventWiseSettel,
+        inprogressData
     })
 } )
 
