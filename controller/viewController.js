@@ -3722,7 +3722,12 @@ exports.marketBets = catchAsync(async(req, res, next) => {
     console.log(req.query.id)
     let limit = 10;
     let page = 0;
-    let bets = await betModel.find({marketId:req.query.id, status: 'OPEN'}).skip(limit * page).limit(limit)
+    let childrenUsername = []
+    let children = await User.find({parentUsers:req.currentUser._id})
+    children.map(ele => {
+        childrenUsername.push(ele.userName) 
+    })
+    let bets = await betModel.find({marketId:req.query.id,userName:{$in:childrenUsername} ,status: 'OPEN'}).skip(limit * page).limit(limit)
     console.log(bets)
         res.status(200).render("./riskMarketsBets/main",{
             title:"Risk Analysis",

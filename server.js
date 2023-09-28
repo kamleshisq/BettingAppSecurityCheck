@@ -1065,10 +1065,29 @@ io.on('connection', (socket) => {
 
     socket.on('matchBets',async(data)=>{
         console.log(data.filterData)
+        let ubDetails;
         let limit = 10;
         let page = data.page;
+        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        data.filterData.role_type = {
+            $in:role_type
+        }
         data.filterData.status = 'OPEN'
-        let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+        if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
+            let childrenUsername = []
+            let children = await User.find({parentUsers:req.currentUser._id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+            data.filterData.userName = {$in:childrenUsername}
+            ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+        }else{
+            ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+        }
         socket.emit('matchBets',{ubDetails,page})
     })
 
