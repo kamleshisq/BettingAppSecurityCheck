@@ -10477,6 +10477,9 @@ socket.on('connect', () => {
 
     if(pathname === "/admin/settlementIn"){
 
+        let inprogressTable = document.getElementById('InprogresDATA')
+        console.log(inprogressTable , "=++=>> inprogressTable")
+
 
         $(document).on('click', '.voidBet2', function(e){
             e.preventDefault()

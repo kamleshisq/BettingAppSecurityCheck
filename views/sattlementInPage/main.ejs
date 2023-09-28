@@ -95,7 +95,24 @@
         <div class="row">
           <div class="data-table">
             <table id="inprogress-market-table">
-              <tr class="empty_table"><td>No INPROGRESS Markets! </td></tr>
+              <%if(inprogressData){%>
+                <thead>
+                  <tr>
+                    <th>Market Name</th>
+                    <th>Settled Bets</th>
+                    <th>Unsettled Bets</th>
+                  </tr>
+                </thead>
+                <tbody class="new-body" id="InprogresDATA" >
+                  <tr>
+                    <td><%=inprogressData.marketName%></td>
+                    <td><%=inprogressData.settledBet%></td>
+                    <td><%=inprogressData.length%></td>
+                  </tr>
+                </tbody>
+              <%}else{%>
+                <tr class="empty_table"><td>No INPROGRESS Markets! </td></tr>
+              <%}%>
             </table>
           </div>
         </div>
