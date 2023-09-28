@@ -6572,7 +6572,7 @@ socket.on('connect', () => {
         // jQuery approach
         $(document).ready(function () {
             $(".button").click(function () {
-              let odds = $(this).children("span:first-child").text();
+              let odds = $(this).children("span:first-child").attr('data-id');
               let beton = $(this).closest("tr").find("td:first-child").text();
               let secondPTag = $(this).closest("tr").next().find(".beton");
               let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
