@@ -39,6 +39,7 @@ const catalogController = require("./../model/catalogControllModel");
 const commissionReportModel = require("../model/commissionReport");
 const betLimitMatchWisemodel = require('../model/betLimitMatchWise');
 const streamModel = require('../model/streammanagement');
+const InprogreshModel = require('../model/InprogressModel');
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -2990,6 +2991,8 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
 
 exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     let me = req.currentUser
+    let inprogressData = await InprogreshModel.findOne({eventId:req.query.id})
+    console.log(inprogressData, '====> inprogressData')
     let childrenUsername = []
     let children = await User.find({parentUsers:req.currentUser._id})
     children.map(ele => {
