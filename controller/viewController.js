@@ -427,6 +427,14 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
     })
 })
 
+exports.profile = catchAsync(async(req,res,next)=>{
+    res.status(200).render("./myProfile/myprofile",{
+        title:"User Details",
+        currentUser:req.currentUser
+
+    })
+})
+
 
 exports.updatePass = catchAsync(async(req, res, next) => {
     res.status(200).render('updatePassword')
