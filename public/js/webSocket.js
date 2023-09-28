@@ -11694,7 +11694,6 @@ socket.on('connect', () => {
             return jsonData;
           }
           let jsonData = getJSONDataFromQueryString(search);
-          console.log(jsonData)
         $(document).on('keyup','.searchUser',function(){
             // console.log('working')
             // console.log($(this).val())
@@ -11741,6 +11740,7 @@ socket.on('connect', () => {
         let toDate;
         let fromDate;
         let filterData = {}
+        filterData.marketId = jsonData.id
 
 
         $('#fromDate,#toDate').change(function(){
@@ -11763,8 +11763,6 @@ socket.on('connect', () => {
             }
             if(userName != ''){
                 filterData.userName = userName
-            }else{
-                filterData.userName = LOGINDATA.LOGINUSER.userName
             }
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
@@ -11792,9 +11790,7 @@ socket.on('connect', () => {
             $('.rowId').attr('data-rowid',page + 1)
             let data = {}
             let userName = $('.searchUser').val()
-            if(userName == ''){
-                filterData.userName = LOGINDATA.LOGINUSER.userName
-            }else{
+            if(userName != ''){
                 filterData.userName = userName
             }
             if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
@@ -11813,7 +11809,7 @@ socket.on('connect', () => {
             data.page = page
             data.LOGINDATA = LOGINDATA
             // console.log(data)
-            socket.emit('betMoniter',data)
+            socket.emit('matchBets',data)
         })
       
             
@@ -11827,35 +11823,18 @@ socket.on('connect', () => {
                 let html = '';
                 for(let i = 0; i < bets.length; i++){
                     let date = new Date(bets[i].date)
-                    if((i%2)==0){
-                        html += `<tr style="text-align: center;" class="blue">`
-                    }else{
-                        html += `<tr style="text-align: center;" >`
-                    }
-                    html += `<td>${i + count}</td>
+                    html += `<tr style="text-align: center;" >`
+                    html += `<td>${bets[i].userName}</td>
                     <td class="date-time">${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
-                    <td>${bets[i].userName}</td>
-                    <td class="text-nowrap">${bets[i].event}</td>
-                    `
-                    if(bets[i].match){
-                        html += `
-                        <td class="text-nowrap">${bets[i].marketName}</td>
-                        <td>${bets[i].oddValue}</td>
-                        <td class="text-nowrap">${bets[i].match}</td>
-                        <td>${bets[i].selectionName}</td>`
-                    }else{
-                        html += `<td>-</td>
-                        <td>-</td><td>-</td><td>-</td>`
-                    }
-                    html += `
-                    <td>${bets[i].Stake}</td>
-                    <td>${bets[i].transactionId}</td>
-                    <td>${bets[i].status}</td>
-                    <td>${bets[i].returns}</td>
+                    <td>${bets[i].marketName}</td>
+                    <td class="text-nowrap">${bets[i].oddValue}</td>
+                    <td class="text-nowrap">${bets[i].Stake}</td>
                     <td>
-                    <div class="btn-group">
-                    <button class="btn cancel" id="${bets[i]._id}">Cancel Bet</button>
-                    <button class="btn alert" id="${bets[i]._id}"> Alert Bet</button></div></td>
+                        <div class="btn-group">
+                        <button class="btn alert-btn" id="${bets[i].id}">Alert</button>
+                        </div>
+                    </td>
+
                     </tr>`
                 }
                 

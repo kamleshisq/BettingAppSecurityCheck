@@ -59,6 +59,8 @@
         </div>
           <div class="data-table">
               <table id="betTable">
+                <thead>
+
                   <tr>
                       <th>Username</th>
                       <th>Place Date</th>
@@ -68,6 +70,9 @@
                       <th>Stake</th>
                       <th>Action</th>
                   </tr>
+                </thead>
+                <tbody class="new-body">
+
                   <%if(bets.length > 0){%>
 
                   <%for(let i = 0; i < bets.length; i++){%>
@@ -84,6 +89,7 @@
                   <%}else{%>
                     <tr class="empty_table"><td>There is no bets in this market</td></tr>
                   <%}%>
+                </tbody>
 
               </table>
           </div>
