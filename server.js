@@ -2987,7 +2987,7 @@ io.on('connection', (socket) => {
         try{
             // console.log(data)
             socket.emit("Settle", {message:"Settleed Process start", status:'success', id:data.id})
-            // let data1 = mapBet.mapbet(data)
+            let data1 = mapBet.mapbet(data)
             // socket.emit('Settle', {marketId:data.id, status:"success"})
         }catch(err){
             console.log(err)
