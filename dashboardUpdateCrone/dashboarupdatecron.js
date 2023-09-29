@@ -20,55 +20,60 @@ const dashTopPlayer = require('../model/dashTopPlayer')
 
 module.exports = () => {
     cron.schedule('*/5 * * * * *', async() => {
+        try{
+            let topGames
+            let Categories
+            let alertBet
+            let betsEventWise
+            let childrenUsername = []
+            let children = await User.find({parentUsers:req.currentUser._id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+    
+            
+            topGames = await betModel.aggregate([
+                {
+                    $match: {
+                        status: { $ne: "OPEN" },
+                        date: { $gte: sevenDaysAgo },
+                        userName:{$in:childrenUsername}
+                    }
+                },
+    
+                {
+                    $group: {
+                        _id: "$event",
+                        totalCount: { $sum: 1 },
+                        uniqueUsers: { $addToSet: "$userId" },
+                        totalReturns: { $sum: "$Stake" }
+                    }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        event: "$_id",
+                        totalCount: 1,
+                        noOfUniqueUsers: { $size: "$uniqueUsers" },
+                        totalReturns: 1
+                    }
+                },
+                {
+                    $sort: {
+                        totalCount: -1
+                    }
+                },
+                {
+                    $limit: 5
+                }
+            ]);
+            
+            console.log(topGames, "topGames")
+
+        }catch(err){
+            console.log(err)
+        }
         console.log('Dashboarcrone started .....')
-        let topGames
-        let Categories
-        let alertBet
-        let betsEventWise
-        let childrenUsername = []
-        let children = await User.find({parentUsers:req.currentUser._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
-
-        
-        topGames = await betModel.aggregate([
-            {
-                $match: {
-                    status: { $ne: "OPEN" },
-                    date: { $gte: sevenDaysAgo },
-                    userName:{$in:childrenUsername}
-                }
-            },
-
-            {
-                $group: {
-                    _id: "$event",
-                    totalCount: { $sum: 1 },
-                    uniqueUsers: { $addToSet: "$userId" },
-                    totalReturns: { $sum: "$Stake" }
-                }
-            },
-            {
-                $project: {
-                    _id: 0,
-                    event: "$_id",
-                    totalCount: 1,
-                    noOfUniqueUsers: { $size: "$uniqueUsers" },
-                    totalReturns: 1
-                }
-            },
-            {
-                $sort: {
-                    totalCount: -1
-                }
-            },
-            {
-                $limit: 5
-            }
-        ]);
-        
-        console.log(topGames, "topGames")
 
         // for(let i = 0;i<topGames.length;i++){
         //     await dashTopGames.create({
