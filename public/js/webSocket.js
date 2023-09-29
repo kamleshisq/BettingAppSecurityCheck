@@ -10630,7 +10630,8 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert("Please try again later")
             }else{ 
-                alert(data)
+                console.log(data)
+                alert(data.message)
                 // window.location.reload()
             }
         })
