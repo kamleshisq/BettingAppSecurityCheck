@@ -15,16 +15,30 @@ socket.on('connect', () => {
     console.log("websocket Connected 45454545")
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
+        const {
+            host, hostname, href, origin, pathname, port, protocol, search
+          } = window.location
+
         console.log('WORKING45654', data)
-        LOGINDATA.LOGINUSER = data.loginData.User
-        LOGINDATA.LOGINTOKEN = data.loginData.Token
+        let loginData
+            if(pathname.startsWith('/admin')){
+  
+                loginData = JSON.parse($('body header').attr('data-logindata'))
+            }else{
+              loginData = JSON.parse($('body').attr('data-logindata'))
+  
+            }
+          console.log('loginData',loginData)
+          LOGINDATA.LOGINUSER = loginData.User
+          LOGINDATA.LOGINTOKEN = loginData.Token
+        if(!LOGINDATA.hasOwnProperty('LOGINUSER') && !LOGINDATA.hasOwnProperty('LOGINTOKEN')){
+            // window.location.reload(true)
+        }
+        
         // if(LOGINDATA.LOGINUSER == "" && c == 0){
         //     window.location.reload();
         //     c++
         // }
-        const {
-            host, hostname, href, origin, pathname, port, protocol, search
-          } = window.location
         //   console.log(pathname)
         //   console.log(host, hostname, href, origin ,port, protocol, search)
         //ollscores.com ollscores.com http://ollscores.com/admin/userManagement http://ollscores.com  http: 

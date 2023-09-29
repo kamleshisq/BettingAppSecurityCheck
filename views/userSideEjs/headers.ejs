@@ -86,7 +86,7 @@
     </style>
     <%} %>
   </head>
-  <body>
+  <body data-logindata="<%=JSON.stringify(loginData)%>">
     <%if(check != "ACCC" && check != "My Bets" && check != "My game"){%>
     <div class="popup" id="popup-1">
       <div class="overlay"></div>
