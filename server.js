@@ -3270,9 +3270,10 @@ io.on('connection', (socket) => {
             }else{
                 let data1 = await commissionMarketModel.findOneAndDelete({marketId:data.marketId})
             }
+            socket.emit("commissionMarketbyId", {status:'success',msg:'market status changed successfully'})
         }catch(err){
             console.log(err)
-            socket.emit("commissionMarketbyId", "err")
+            socket.emit("commissionMarketbyId", {status:'fail',msg:'somothing went wrong'})
         }
     })
 

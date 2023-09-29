@@ -40,6 +40,7 @@ const commissionReportModel = require("../model/commissionReport");
 const betLimitMatchWisemodel = require('../model/betLimitMatchWise');
 const streamModel = require('../model/streammanagement');
 const InprogreshModel = require('../model/InprogressModel');
+const commissionMarketModel = require('../model/CommissionMarketsModel')
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -2450,6 +2451,12 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             maxFancy = FENCY.max_stake
         }
 
+        const commissionmarket = await commissionMarketModel.find();
+        let commissionmarkerarr = [];
+        commissionmarket.map(ele=>{
+            commissionmarkerarr.push(ele.marketId)
+        })
+
         // console.log(betLimit)
         // console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 
@@ -2477,7 +2484,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             minMatchOdds,
             maxMatchOdds,
             minFancy,
-            maxFancy
+            maxFancy,
+            commissionmarkerarr
     })
 });
 
