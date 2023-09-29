@@ -31,9 +31,10 @@ socket.on('connect', () => {
           console.log('loginData',loginData)
           LOGINDATA.LOGINUSER = loginData.User
           LOGINDATA.LOGINTOKEN = loginData.Token
-        if(!LOGINDATA.hasOwnProperty('LOGINUSER') && !LOGINDATA.hasOwnProperty('LOGINTOKEN')){
-            // window.location.reload(true)
-        }
+          if(!loginData){
+            location.reload(true)
+          }
+       
         
         // if(LOGINDATA.LOGINUSER == "" && c == 0){
         //     window.location.reload();
