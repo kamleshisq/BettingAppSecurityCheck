@@ -21,16 +21,18 @@ socket.on('connect', () => {
 
         console.log('WORKING45654', data)
         let loginData
-          if(pathname.startsWith('/admin')){
-
-              loginData = JSON.parse($('body header').attr('data-logindata'))
-          }else{
-            loginData = JSON.parse($('body').attr('data-logindata'))
-
-          }
-        console.log('loginData',loginData)
-        LOGINDATA.LOGINUSER = loginData.User
-        LOGINDATA.LOGINTOKEN = loginData.Token
+        $(document).ready(function(){
+            if(pathname.startsWith('/admin')){
+  
+                loginData = JSON.parse($('body header').attr('data-logindata'))
+            }else{
+              loginData = JSON.parse($('body').attr('data-logindata'))
+  
+            }
+          console.log('loginData',loginData)
+          LOGINDATA.LOGINUSER = loginData.User
+          LOGINDATA.LOGINTOKEN = loginData.Token
+        })
         // if(LOGINDATA.LOGINUSER == "" && c == 0){
         //     window.location.reload();
         //     c++
