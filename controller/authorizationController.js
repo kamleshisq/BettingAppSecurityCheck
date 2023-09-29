@@ -199,6 +199,8 @@ exports.checkPass = catchAsync(async(req, res, next) => {
 
 exports.isProtected = catchAsync( async (req, res, next) => {
     let token 
+    let loginData = {}
+
     // console.log(req.headers.authorization, 456)
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         // console.log(req.headers.authorization.split(' ')[1].split("=")[1])
@@ -211,6 +213,17 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         }
     }else if(req.headers.cookie){
         token = parseCookies(req.headers.cookie).ADMIN_JWT;
+        // console.log(global)
+        if(req.headers.cookie){
+            loginData.Token = req.headers.cookie.split(';')[0]
+            if(!loginData.Token.startsWith("ADMIN_JWT")){
+                loginData.Token = req.headers.cookie.split(';')[1]
+            }
+        }else{
+            loginData.Token = ""
+        }
+        
+        
     }
     if(!token){
         return next(new AppError('Please log in to access', 404))
@@ -255,6 +268,8 @@ exports.isProtected = catchAsync( async (req, res, next) => {
             })
         }
     }
+    loginData.User = currentUser
+    res.locals.loginData = loginData
     req.currentUser = currentUser
     req.token = token
     next()
@@ -276,6 +291,14 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
     }else if(req.headers.cookie){
         token = parseCookies(req.headers.cookie).JWT;
         // console.log(token)
+        if(req.headers.cookie){
+            loginData.Token = req.headers.cookie.split(';')[0]
+            if(!loginData.Token.startsWith("ADMIN_JWT")){
+                loginData.Token = req.headers.cookie.split(';')[1]
+            }
+        }else{
+            loginData.Token = ""
+        }
     }
     if(!token){
         return next(new AppError('Please log in to access', 404))
@@ -320,6 +343,8 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
             })
         }
     }
+    loginData.User = currentUser
+    res.locals.loginData = loginData
     req.currentUser = currentUser
     req.token = token
     next()
