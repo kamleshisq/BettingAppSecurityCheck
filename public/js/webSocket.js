@@ -10786,8 +10786,14 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert(data.message.toUpperCase())
             }else{
-                alert('Settleed Process start')
-                // window.location.reload()
+                alert(data.message)
+                const deleteButton = document.getElementById(data.id);
+                const row = deleteButton.closest('tr'); 
+                if (row) {
+                    const table = row.parentNode;
+                    const rowIndex = Array.from(table.rows).indexOf(row);
+                    row.remove(); 
+                  }
             }
         })
 
