@@ -106,7 +106,7 @@ async function voidbetBeforePlace(data){
                         let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bets[bet].marketId, progressType:'VoideBet'}, {$inc:{settledBet:1}})
                         console.log(checkDelete, '<======== checkDelete')
                         if((checkDelete.settledBet + 1) == checkDelete.length){
-                            // await InprogressModel.findOneAndDelete({marketId : bets[bet].marketId, progressType:'VoideBet'})
+                            await InprogressModel.findOneAndDelete({marketId : bets[bet].marketId, progressType:'VoideBet'})
                         }
                     }
                     // socket.emit('VoidBetIn', {betdata:bets[0], count:bets.length ,status:"success"})
