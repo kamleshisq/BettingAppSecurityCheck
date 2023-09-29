@@ -232,7 +232,7 @@
                       <%} %>
                       <% let dataSessionOnly = match.marketList.session.filter(item => item.status == 1 && item.title.startsWith("Only")) %>
                           <%if(dataSessionOnly.length > 0){%>
-                      <button class="tablinks" data-tag="Only_over">Only Overt</button>
+                      <button class="tablinks" data-tag="Only_over">Only Over</button>
                       <%} %>
                       <% let dataNotOnly = match.marketList.session.filter(item => item.status == 1 && !item.title.includes("Over")) %>
                       <%if(dataNotOnly.length > 0 ) {%>
