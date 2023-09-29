@@ -725,8 +725,8 @@ io.on('connection', (socket) => {
         let page = data.page
         let limit = 10
         let dataM 
-        console.log(data.filterData)
-        console.log(data.LOGINDATA.LOGINUSER.userName)
+        // console.log(data.filterData)
+        // console.log(data.LOGINDATA.LOGINUSER.userName)
         
         User.aggregate([
             {
@@ -2947,7 +2947,7 @@ io.on('connection', (socket) => {
                 socket.emit("VoidBetIn",{message:"please provide a valid password", status:"error"})
             }else{
                 socket.emit('VoidBetIn', {message: 'Void Bet Process Start', id:data.id})
-                // let result = await voidBetBeforePlace(data)
+                let result = await voidBetBeforePlace(data)
             }
         }catch(err){
             console.log(err)
