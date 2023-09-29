@@ -19,7 +19,7 @@ const dashTopPlayer = require('../model/dashTopPlayer')
 
 
 module.exports = () => {
-    cron.schedule('*/15 * * * *', async() => {
+    cron.schedule('*/5 * * * *', async() => {
         let topGames
         let Categories
         let alertBet
@@ -30,6 +30,7 @@ module.exports = () => {
             childrenUsername.push(ele.userName) 
         })
 
+        console.log('Dashboarcrone started .....')
         
         topGames = await betModel.aggregate([
             {
@@ -77,7 +78,7 @@ module.exports = () => {
             })
         }
 
-
+        console.log('===>TopGame Done 1')
 
         Categories = await betModel.aggregate([
             {
@@ -111,6 +112,9 @@ module.exports = () => {
             })
         }
 
+        console.log('===>Category Done 2')
+
+
 
         alertBet = await betModel.aggregate([
             {
@@ -140,6 +144,9 @@ module.exports = () => {
                
             })
         }
+
+        console.log('===>alertBet  Done 3')
+
       
         betsEventWise = await betModel.aggregate([
             {
@@ -187,6 +194,8 @@ module.exports = () => {
             })
         }
 
+        console.log('===>Settlement Done 4')
+
         
         let topBets = await betModel.aggregate([
             {
@@ -215,6 +224,9 @@ module.exports = () => {
                 risk:(topBets[i].Stake * topBets[i].oddValue).toFixed(2),
             })
         }
+
+        console.log('===>Top Bets Done 5')
+
         
 
         // console.log(topBets, "topBets 741258963")
@@ -227,5 +239,11 @@ module.exports = () => {
                 point:topPlayers[i].Bets
             })
         }
+
+        console.log('===>Top Player Done 6')
+
+        console.log('dashboard Crone - Done')
+
+
     })
 }
