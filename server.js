@@ -3000,42 +3000,42 @@ io.on('connection', (socket) => {
         try{
              console.log(data, "BETDATA")
              if(data.result != ""){
-                let bets = await Bet.aggregate([
-                    {
-                      $match: {
-                        marketId: `${data.id}`,
-                        status: "OPEN",
-                      },
-                    },
-                    {
-                      $lookup: {
-                        from: "users",
-                        localField: "userName",
-                        foreignField: "userName",
-                        as: "user",
-                      },
-                    },
-                    {
-                      $unwind: "$user",
-                    },
-                    {
-                      $match: {
-                        "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] },
-                      },
-                    },
-                    {
-                      $group: {
-                        _id: null,
-                        betIds: { $push: { $toString: "$_id" } }, 
-                      },
-                    },
-                    {
-                      $project: {
-                        _id: 0, 
-                        betIds: 1, 
-                      },
-                    },
-                  ]);
+                // let bets = await Bet.aggregate([
+                //     {
+                //       $match: {
+                //         marketId: `${data.id}`,
+                //         status: "OPEN",
+                //       },
+                //     },
+                //     {
+                //       $lookup: {
+                //         from: "users",
+                //         localField: "userName",
+                //         foreignField: "userName",
+                //         as: "user",
+                //       },
+                //     },
+                //     {
+                //       $unwind: "$user",
+                //     },
+                //     {
+                //       $match: {
+                //         "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] },
+                //       },
+                //     },
+                //     {
+                //       $group: {
+                //         _id: null,
+                //         betIds: { $push: { $toString: "$_id" } }, 
+                //       },
+                //     },
+                //     {
+                //       $project: {
+                //         _id: 0, 
+                //         betIds: 1, 
+                //       },
+                //     },
+                //   ]);
                 // console.log(bets)
                 await Bet.updateMany({marketId:data.id, status:'OPEN'}, {$set:{result:data.result, status:'MAP'}})
                 let betdata = await Bet.findOne({marketId:data.id})
