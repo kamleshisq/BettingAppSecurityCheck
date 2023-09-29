@@ -4053,7 +4053,7 @@ io.on('connection', (socket) => {
                 socket.emit('ROLLBACKDETAILS', 'please provide a valid password') 
             }else{ 
                 socket.emit('ROLLBACKDETAILS', {message:'RollBack Process Start', id:data.id})
-                // let resultDate = rollBackBet(data)
+                let resultDate = rollBackBet(data)
             }
         }catch(err){
             console.log(err)
