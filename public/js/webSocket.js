@@ -16,6 +16,8 @@ socket.on('connect', () => {
     let LOGINDATA = {}
     socket.on('loginUser',(data) => {
         console.log('WORKING45654', data)
+        let loginData = JSON.parse($('body header').attr('data-logindata'))
+        console.log('loginData',loginData)
         LOGINDATA.LOGINUSER = data.loginData.User
         LOGINDATA.LOGINTOKEN = data.loginData.Token
         // if(LOGINDATA.LOGINUSER == "" && c == 0){
