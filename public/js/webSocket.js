@@ -8,7 +8,7 @@ socket.on('disconnect', () => {
     console.log("WebSocket Disconnected");
     // Refresh the page when the WebSocket connection is lost
     
-    window.location.reload();
+    // window.location.reload();
 });
 let c = 0
 socket.on('connect', () => {
@@ -57,6 +57,8 @@ socket.on('connect', () => {
     //     let id = grandParent.id
     //     document.getElementById(id).classList.remove("active");
     // })
+
+    console.log(document.cookie,"==>cookie")
 
 
     
