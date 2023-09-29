@@ -63,9 +63,7 @@
                           <tr class="acount-stat-tbl-body-tr odd_even" data-href='#'>
                             <td colspan="2" style="text-align: left;" class="market" id="<%=sessionData[i].marketId%>">
                               <%=sessionData[i].title%>
-                              <%if(commissionmarkerarr.includes(sessionData[i].marketId)){%>
-                                <span class="blink-commission-bookmaker">*</span>
-                              <%}%>
+                             
                             </td>
     
                             <td><span class="c-activee market-limit" id="<%=sessionData[i].marketId%>">Min : <%=minFancy%>, Max : <%=maxFancy%></span></td>
