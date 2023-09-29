@@ -58,6 +58,8 @@ socket.on('connect', () => {
     //     document.getElementById(id).classList.remove("active");
     // })
 
+    console.log(document.cookie,"==>cookie")
+
 
     
     let popupTimeout; 
