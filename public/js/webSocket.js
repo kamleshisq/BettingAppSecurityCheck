@@ -10549,7 +10549,7 @@ socket.on('connect', () => {
             }
             getinProgressData()
         // }
-
+        let status = false
         socket.on('getinProgressData', data => {
             let html= ''
             for(let i = 0; i < data.length; i++){
@@ -10559,6 +10559,7 @@ socket.on('connect', () => {
                 <td>${data[i].length}</td></tr>`
             }
             if(data.length > 0){
+                status = true
                 let inprogressTable = document.getElementById('InprogresDATA')
                 if(inprogressTable){
                     document.getElementById('InprogresDATA').innerHTML = html
@@ -10575,7 +10576,9 @@ socket.on('connect', () => {
                 }
             }else{
                 document.getElementById('inprogress-market-table').innerHTML = '<tr class="empty_table"><td>No INPROGRESS Markets! </td></tr>'
-                // window.location.reload()
+                if(status){
+                    window.location.reload()
+                }
             }
 
         })
