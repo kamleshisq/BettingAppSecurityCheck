@@ -10574,6 +10574,7 @@ socket.on('connect', () => {
                 }
             }else{
                 document.getElementById('inprogress-market-table').innerHTML = '<tr class="empty_table"><td>No INPROGRESS Markets! </td></tr>'
+                window.location.reload()
             }
 
         })
