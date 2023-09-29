@@ -20,6 +20,7 @@ const dashTopPlayer = require('../model/dashTopPlayer')
 
 module.exports = () => {
     cron.schedule('*/5 * * * * *', async() => {
+        console.log('Dashboarcrone started .....')
         let topGames
         let Categories
         let alertBet
@@ -30,7 +31,6 @@ module.exports = () => {
             childrenUsername.push(ele.userName) 
         })
 
-        console.log('Dashboarcrone started .....')
         
         topGames = await betModel.aggregate([
             {
