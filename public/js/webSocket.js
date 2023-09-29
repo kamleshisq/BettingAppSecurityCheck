@@ -10632,7 +10632,14 @@ socket.on('connect', () => {
             }else{ 
                 console.log(data, " <=== Data")
                 alert(data.message)
-                // window.location.reload()
+                const deleteButton = document.getElementById(data.id);
+                // console.log(deleteButton)
+                const row = deleteButton.closest('tr'); 
+                if (row) {
+                    const table = row.parentNode;
+                    const rowIndex = Array.from(table.rows).indexOf(row);
+                    row.remove();
+                  }
             }
         })
        
