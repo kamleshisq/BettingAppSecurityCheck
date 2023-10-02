@@ -38,7 +38,7 @@
                       <td><input type="text" class="form-datas" value="<%=limitData.delay%>" readonly=""></td>
                       <td>
                         <div class="btn-group">
-                          <button type="button" data-bs-toggle="modal" data-bs-target="#myModaNotification" class="btn update event-notification">Notification</button>
+                          <button type="button" id="<%=seriesMatch[i].eventData.eventId%>" data-bs-toggle="modal" data-bs-target="#myModaNotification" class="btn update event-notification">Notification</button>
                             <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2"class="btn update updateBetLimit">Update</button>
                         </div>
                       </td>
@@ -53,7 +53,7 @@
                         <td><input type="text" class="form-datas" value="0" readonly=""></td>
                         <td>
                           <div class="btn-group">
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#myModaNotification" class="btn update event-notification">Notification</button>
+                            <button type="button"  id="<%=seriesMatch[i].eventData.eventId%>" data-bs-toggle="modal" data-bs-target="#myModaNotification" class="btn update event-notification">Notification</button>
                             <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2"class="btn update updateBetLimit">Update</button>
                           </div>
                         </td>

@@ -12946,9 +12946,7 @@ socket.on('connect', () => {
 
         $(document).on('click', ".event-notification", function(e){
             e.preventDefault()
-            let firstTd = $(this).closest("tr").find("td:first");
-            var innerText = firstTd.attr('id');
-            console.log(innerText, "innerTextinnerTextinnerText")
+            console.log(this.id, "innerTextinnerTextinnerText")
         })
     }
     if(pathname == "/admin/betlimit/sports/match"){
