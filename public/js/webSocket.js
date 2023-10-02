@@ -5151,10 +5151,10 @@ socket.on('connect', () => {
                 let html = '';
                     for(let i = 0; i < bets.length; i++){
                         let date = new Date(bets[i].date)
-                    if(((i + count)%2)==0){
-                        html += `<tr style="text-align: center;" class="blue">`
+                    if(bets[i].bettype2 === 'BACK'){
+                        html += `<tr class="back">`
                     }else{
-                        html += `<tr style="text-align: center;" >`
+                        html += `<tr class="lay">`
                     }
                     html += `<td>${i + count + 1}</td>
                     <td class="date-time" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
@@ -9754,10 +9754,10 @@ socket.on('connect', () => {
                 let html = '';
                     for(let i = 0; i < bets.length; i++){
                         let date = new Date(bets[i].date)
-                    if((i%2)==0){
-                        html += `<tr style="text-align: center;" class="blue">`
+                    if(bets[i].bettype2 === 'BACK'){
+                        html += `<tr class="back">`
                     }else{
-                        html += `<tr style="text-align: center;" >`
+                        html += `<tr class="lay">`
                     }
                     html += `<td>${i + count}</td>
                     <td class="text-nowrap" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
