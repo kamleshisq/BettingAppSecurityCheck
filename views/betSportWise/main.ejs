@@ -5,6 +5,23 @@
     <div class="container-fluid">
       <div class="new-head"> 
           <h3><%=title%></h3>
+          <%
+          let SPORT
+            if(series[0].matchdata[0].eventData.sportId === 2){
+                SPORT = "tennis"
+            }else if (series[0].matchdata[0].eventData.sportId === 1){
+                SPORT = "football"
+            }else if (series[0].matchdata[0].eventData.sportId === 4){
+                SPORT = "cricket"
+            }
+          %>
+          <div class="bredcum-container">
+            <ul>
+                <li><a href="/admin/betlimit">Bet Limit</a></li>
+                <li><a href="/admin/betlimit/sport">Sport</a></li>
+                <li class="active" ><a href="/admin/betlimit/sports?game=<%=SPORT%>"><%=SPORT%></a></li>
+            </ul>
+          </div>
           <form action="">
             <div class="input-group">
               <div class="input-group-prepend">
@@ -22,23 +39,7 @@
       </div>
     <%- include("../loginUserAdminsideDetails") %>
   </section>
-  <%
-  let SPORT
-    if(series[0].matchdata[0].eventData.sportId === 2){
-        SPORT = "tennis"
-    }else if (series[0].matchdata[0].eventData.sportId === 1){
-        SPORT = "football"
-    }else if (series[0].matchdata[0].eventData.sportId === 4){
-        SPORT = "cricket"
-    }
-  %>
-  <div class="bredcum-container">
-    <ul>
-        <li><a href="/admin/betlimit">Bet Limit</a></li>
-        <li><a href="/admin/betlimit/sport">Sport</a></li>
-        <li class="active" ><a href="/admin/betlimit/sports?game=<%=SPORT%>"><%=SPORT%></a></li>
-    </ul>
-  </div>
+ 
   <%- include("./table.ejs") %>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
