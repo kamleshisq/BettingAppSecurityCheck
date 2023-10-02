@@ -12116,7 +12116,7 @@ socket.on('connect', () => {
         })
 
         $('#Event').change(function() {
-            // console.log("Working")
+            console.log("Working")
             let Sport = $(this).val()
             let market = $("#market").val()
             let to_date
