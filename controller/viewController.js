@@ -587,16 +587,36 @@ exports.APIcall = catchAsync(async(req, res, next) => {
 
 exports.ReportPage = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
-    let childrenUsername = []
-    let children = await User.find({parentUsers:req.currentUser._id})
-    children.map(ele => {
-        childrenUsername.push(ele.userName) 
-    })
+    // const role_type = []
+    // const roles = await Role.find({role_type: {$gt:currentUser.role_type}});
+    // // let role_type =[]
+    // for(let i = 0; i < roles.length; i++){
+    //     role_type.push(roles[i].role_type)
+    // }
+    // const bets = await betModel.find({role_type:{$in:role_type}, status:{$ne:"OPEN"}}).limit(10)
     let bets = await betModel.aggregate([
         {
             $match: {
-              status: {$ne:"OPEN"},
-              userName:{$in:childrenUsername}
+            //   userId: { $in: userIds },
+              status: {$ne:"OPEN"}
+            }
+        },
+        {
+            $lookup:{
+                from:'users',
+                localField:'userName',
+                foreignField:'userName',
+                as:'userDetails'
+            }
+        },
+        {
+            $unwind:'$userDetails'
+        },
+        {
+            $match:{
+                'userDetails.isActive':true,
+                'userDetails.roleName':{$ne:'Admin'},
+                'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
             }
         },
         {
