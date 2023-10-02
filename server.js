@@ -810,6 +810,9 @@ io.on('connection', (socket) => {
         })
 
     socket.on("searchEvents", async(data) => {
+        let cricketList;
+        let footballList;
+        let tennisList;
         let page = data.page
         if(!page){
             page = 0
@@ -818,13 +821,12 @@ io.on('connection', (socket) => {
         const sportData = await getCrkAndAllData()
         console.log(sportData)
         let sportList;
-        // if(data.sport == '4'){
-        //     sportList = sportData[0].gameList[0]
-        // }else{
-        //     sportList = sportData[1].gameList.find(item => item.sportId == parseInt(data.sport))
-        // }
         if(data.type == 'All'){
-            sportList = sportData
+            cricketList = sportData[0].gameList[0]
+            footballList = sportData[1].gameList.find(item => item.sportId == parseInt('1'))
+            tennisList = sportData[1].gameList.find(item => item.sportId == parseInt('2'))
+    
+            sportList = cricketList.concat(footballList,tennisList)
         }
         page++
         socket.emit("searchEvents", {sportList,type:data.type,page})
