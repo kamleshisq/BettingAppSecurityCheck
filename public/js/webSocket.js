@@ -12954,10 +12954,21 @@ socket.on('connect', () => {
         socket.on('eventNotification', data => {
             if(data.status === "noFound"){
                 let form = $('#myModaNotification').find('.add-event-notification')
+                form.attr('id', data.id)
                 // form.find('input[name = "status"]').
             }else{
-
+                let form = $('#myModaNotification').find('.add-event-notification')
+                form.attr('id', data.id)
             }
+        })
+
+
+        $(document).on('submit', '.add-event-notification', function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+
         })
     }
     if(pathname == "/admin/betlimit/sports/match"){

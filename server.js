@@ -4186,9 +4186,9 @@ io.on('connection', (socket) => {
         try{
             let eventNotificationSetting = await eventNotification.findOne({id:data.id})
             if(eventNotificationSetting){
-                socket.emit('eventNotification', eventNotificationSetting)
+                socket.emit('eventNotification', {eventNotificationSetting, id:data.id})
             }else{
-                socket.emit('eventNotification', {status:'noFound'})
+                socket.emit('eventNotification', {status:'noFound', id:data.id})
             }
 
         }catch(err){
