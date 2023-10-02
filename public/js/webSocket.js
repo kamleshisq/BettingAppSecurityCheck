@@ -12909,6 +12909,35 @@ socket.on('connect', () => {
             document.getElementById('search').innerHTML = html
         })
     }
+    if(pathname.startsWith("/admin/betlimit/sports/event")){
+        console.log(search,"==>Search")
+        $('.searchEvents').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchEvents")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    let type = 'seriesEvent'
+                    let eventSearch = search.split("=")[1]
+                    socket.emit("searchEvents", {x,type,LOGINDATA,search:eventSearch})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                }
+            }
+        })
+
+        socket.on("searchEvents", async(data)=>{
+            console.log(data, 565464)
+            $('.wrapper').show()
+            let html = ``
+            for(let i = 0; i < data.sportList.length; i++){
+                html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}">${data.sportList[i].eventData.name}</a></li>`
+
+            }
+            document.getElementById('search').innerHTML = html
+        })
+    }
     if(pathname == "/admin/betlimit/sports/match"){
 
     

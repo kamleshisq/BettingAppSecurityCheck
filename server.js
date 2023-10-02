@@ -839,6 +839,15 @@ io.on('connection', (socket) => {
     
                 }
             }
+        }else if(data.type == 'seriesEvent'){
+            cricketList = sportData[0].gameList[0].eventList
+            footballList = sportData[1].gameList.find(item => item.sportId == parseInt('1'))
+            footballList = footballList.eventList
+            tennisList = sportData[1].gameList.find(item => item.sportId == parseInt('2'))
+            tennisList = tennisList.eventList
+            let series = data.search
+            let allData = cricketList.concat(footballList,tennisList)
+            sportList = allData.filter(item => item.eventData.league == series)
         }
         socket.emit("searchEvents", {sportList,type:data.type})
     })
