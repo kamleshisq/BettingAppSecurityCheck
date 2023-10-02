@@ -1484,6 +1484,11 @@ exports.getBetAlertPage = catchAsync(async(req, res, next) => {
                 status: 'Alert'
               }
             },
+            {
+                $sort:{
+                    date: -1
+                }
+            },
             { $limit : 10 }
           ])
             .then((betResult) => {

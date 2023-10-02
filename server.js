@@ -2650,10 +2650,10 @@ io.on('connection', (socket) => {
         }
         else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
             delete data.filterData['userName']
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+            let ubDetails = await Bet.find(data.filterData).sort({date:-1}).skip(page * limit).limit(limit)
             socket.emit('AlertBet',{ubDetails,page})
         }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
+            let ubDetails = await Bet.find(data.filterData).sort({date:-1}).skip(page * limit).limit(limit)
             socket.emit('AlertBet',{ubDetails,page})
 
         }

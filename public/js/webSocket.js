@@ -3653,10 +3653,10 @@ socket.on('connect', () => {
             let html = '';
                 for(let i = 0; i < bets.length; i++){
                     let date = new Date(bets[i].date)
-                if((i%2)==0){
-                    html += `<tr style="text-align: center;" class="blue">`
+                if(bets[i].bettype2 === 'BACK'){
+                    html += `<tr class="back">`
                 }else{
-                    html += `<tr style="text-align: center;" >`
+                    html += `<tr class="lay">`
                 }
                 html += `<td>${i + count}</td>
                 <td>${bets[i].userName}</td>
@@ -7633,7 +7633,12 @@ socket.on('connect', () => {
                     hour12: true
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
-                html += `<tr class="acount-stat-tbl-body-tr">
+                if(bets[i].bettype2 === 'BACK'){
+                    html += '<tr class="back acount-stat-tbl-body-tr">'
+                }else{
+                    html += '<tr class="lay acount-stat-tbl-body-tr">'
+                }
+                html += `
                     <td title='Sr. No'>${i+count}</td>
                     <td title='Date & Time'>${formattedTime}</td>`
                 if(bets[i].betType === "Casino"){
