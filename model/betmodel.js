@@ -10,7 +10,7 @@ const betSchema = mongoose.Schema({
     },
     userId:{
         type:mongoose.Schema.ObjectId,
-        ref:'users',
+        ref:'User',
         required:true
     },
     userName:{
@@ -88,7 +88,7 @@ const betSchema = mongoose.Schema({
 
 betSchema.pre('aggregate', function(next){
     this.populate({
-        path:'users',
+        path:'userId',
         select:'whiteLabel'
     })
     next()
