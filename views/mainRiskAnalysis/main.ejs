@@ -425,7 +425,11 @@
                         <tbody id="betTableBody">
                           <%for(let i = 0; i < Bets.length; i++){%>
                             <% let date = new Date(Bets[i].date)%>
-                            <tr>
+                            <%if(Bets[i].bettype2 === "BACK"){%>
+                                <tr class="BACK" >
+                            <%}else{%>
+                                <tr class="LAY" >
+                            <%}%>
                                 <td><%=Bets[i].userName%></td>
                                 <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
                                 <td><%=Bets[i].marketName%></td>
