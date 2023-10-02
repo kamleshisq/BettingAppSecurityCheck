@@ -12944,7 +12944,7 @@ socket.on('connect', () => {
         })
 
 
-        document.on('click', ".event-notification", function(e){
+        $(document).on('click', ".event-notification", function(e){
             e.preventDefault()
             let firstTd = $(this).closest("tr").find("td:first");
             var innerText = firstTd.attr('id');
