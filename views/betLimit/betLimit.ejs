@@ -3,7 +3,12 @@
   <div class="dashboard-main-wraper">
   <section class="dashboard-welcome-section">
     <div class="container-fluid">
-      <div class="new-head"> 
+      <div class="new-head bet-limit-breadcrum">
+        <div class="bredcum-container">
+          <ul>
+              <li class="active" ><a >Bet Limit</a></li>
+          </ul>
+        </div> 
           <form action="">
             <div class="input-group">
               <div class="input-group-prepend">
@@ -81,11 +86,15 @@
               <label for="">Delay</label>
               <input type="text" class="form-control ml0" placeholder="0" name="delay">
             </div>
+            <div class="col">
+              <label for="">Max Bet</label>
+              <input type="text" class="form-control ml0" placeholder="0" name="max_bet">
+            </div>
           </div>
           <div class="row mt-2">
             <div class="col">
               <label for="">Transcation Password</label>
-              <input type="password" class="form-control ml0" placeholder="******" name="email">
+              <input type="password" class="form-control ml0" required name="password">
             </div>
           </div>
         <button type="submit" class="btn-submit mt-3 ">Submit</button>
