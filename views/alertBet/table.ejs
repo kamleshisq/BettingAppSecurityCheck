@@ -18,10 +18,10 @@
   <tbody class="new-body">
     <% for(let i = 0; i < bets.length; i++){%>
       <% let date = new Date(bets[i].date)%>
-      <%if((i%2)==0){%>
-          <tr>
+      <%if(bets[i].bettype2 === 'BACK'){%>
+          <tr class="back">
       <%}else{%>
-          <tr>
+          <tr class="lay">
       <%}%>
       <td><%=i + 1%></td>
       <td class="text-nowrap" ><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
