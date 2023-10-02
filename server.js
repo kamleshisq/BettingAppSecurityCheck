@@ -4032,13 +4032,13 @@ io.on('connection', (socket) => {
     socket.on('UpdateBetLimit', async(data) => {
         try{
             let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
-            if(!loginUser || !(await loginUser.correctPassword(data.password, loginUser.password))){
-                let check = await betLimit.findOne({type:data.type})
+            if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
+                let check = await betLimit.findOne({type:data.data.type})
                 if(check){
-                    await betLimit.findOneAndUpdate({type:data.type}, data)
+                    await betLimit.findOneAndUpdate({type:data.data.type}, data.data)
                     socket.emit('UpdateBetLimit', {status:'success'})
                 }else{
-                    await betLimit.create(data)
+                    await betLimit.create(data.data)
                     socket.emit('UpdateBetLimit', {status:'success'})
                 }
             }else{
