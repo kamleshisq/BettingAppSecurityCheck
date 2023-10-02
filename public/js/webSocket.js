@@ -12919,7 +12919,7 @@ socket.on('connect', () => {
         //     }
         //     document.getElementById('search').innerHTML = html
         //     document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-        // })
+        })
     }
     if(pathname == "/admin/betlimit/sports/match"){
 

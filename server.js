@@ -826,15 +826,18 @@ io.on('connection', (socket) => {
     
             sportList = cricketList.concat(footballList,tennisList)
         }else if(data.type == 'sportEvent'){
-            if(data.search == 'cricket'){
-                sportList = sportData[0].gameList[0].eventList
-            }else if(data.search == "football"){
-                sportList = sportData[1].gameList.find(item => item.sportId == parseInt('1'))
-                sportList = sportList.eventList
-            }else if(data.search == 'tennis'){
-                sportList = sportData[1].gameList.find(item => item.sportId == parseInt('2'))
-                sportList = sportList.eventList
+            if(data.search){
 
+                if(data.search == 'cricket'){
+                    sportList = sportData[0].gameList[0].eventList
+                }else if(data.search == "football"){
+                    sportList = sportData[1].gameList.find(item => item.sportId == parseInt('1'))
+                    sportList = sportList.eventList
+                }else if(data.search == 'tennis'){
+                    sportList = sportData[1].gameList.find(item => item.sportId == parseInt('2'))
+                    sportList = sportList.eventList
+    
+                }
             }
         }
         socket.emit("searchEvents", {sportList,type:data.type})
