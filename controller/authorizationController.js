@@ -226,7 +226,7 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         
     }
     if(!token){
-        return next(new AppError('Please log in to access', 404))
+        return res.render('/adminlogin')
     }
     // console.log(token, "token")
     const tokenId = await loginLogs.findOne({session_id:token})
@@ -268,12 +268,17 @@ exports.isProtected = catchAsync( async (req, res, next) => {
             })
         }
     }
+
+    console.log("WORKING121")
     loginData.User = currentUser
     res.locals.loginData = loginData
     req.currentUser = currentUser
     req.token = token
     next()
 });
+
+
+
 exports.isProtected_User = catchAsync( async (req, res, next) => {
     let token 
     // console.log(req.headers.authorization, 456)
