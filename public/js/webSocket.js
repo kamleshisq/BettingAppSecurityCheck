@@ -7637,7 +7637,12 @@ socket.on('connect', () => {
                     hour12: true
                 };
                 var formattedTime = date.toLocaleString('en-US', options);
-                html += `<tr class="acount-stat-tbl-body-tr">
+                if(bets[i].bettype2 === 'BACK'){
+                    html += '<tr class="back acount-stat-tbl-body-tr">'
+                }else{
+                    html += '<tr class="lay acount-stat-tbl-body-tr">'
+                }
+                html += `
                     <td title='Sr. No'>${i+count}</td>
                     <td title='Date & Time'>${formattedTime}</td>`
                 if(bets[i].betType === "Casino"){
