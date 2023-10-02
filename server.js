@@ -822,9 +822,11 @@ io.on('connection', (socket) => {
         console.log(sportData)
         let sportList;
         if(data.type == 'All'){
-            cricketList = sportData[0].gameList[0]
+            cricketList = sportData[0].gameList[0].eventList
             footballList = sportData[1].gameList.find(item => item.sportId == parseInt('1'))
+            footballList = footballList.eventList
             tennisList = sportData[1].gameList.find(item => item.sportId == parseInt('2'))
+            tennisList = tennisList.eventList
     
             sportList = cricketList.concat(footballList,tennisList)
         }
