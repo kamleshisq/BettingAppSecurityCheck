@@ -4031,14 +4031,22 @@ io.on('connection', (socket) => {
 
     socket.on('UpdateBetLimit', async(data) => {
         try{
-            let check = await betLimit.findOne({type:data.type})
-            if(check){
-                await betLimit.findOneAndUpdate({type:data.type}, data)
-                socket.emit('UpdateBetLimit', {status:'success'})
+            let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
+            if(!loginUser || !(await loginUser.correctPassword(data.password, loginUser.password))){
+                let check = await betLimit.findOne({type:data.type})
+                if(check){
+                    await betLimit.findOneAndUpdate({type:data.type}, data)
+                    socket.emit('UpdateBetLimit', {status:'success'})
+                }else{
+                    await betLimit.create(data)
+                    socket.emit('UpdateBetLimit', {status:'success'})
+                }
             }else{
-                await betLimit.create(data)
-                socket.emit('UpdateBetLimit', {status:'success'})
-            }
+                socket.emit('UpdateBetLimit', {message:"Please provide a valid password", status:"err"})
+            }   
+
+
+
         }catch(err){
             console.log(err)
             socket.emit('UpdateBetLimit', {message:"Please try again leter", status:"err"})
