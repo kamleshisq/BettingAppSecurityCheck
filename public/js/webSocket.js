@@ -17,25 +17,21 @@ socket.on('connect', () => {
     socket.on('loginUser',(data) => {
         const {
             host, hostname, href, origin, pathname, port, protocol, search
-          } = window.location
-
+        } = window.location
         console.log('WORKING45654', data)
         let loginData
-            if(pathname.startsWith('/admin')){
-  
-                loginData = JSON.parse($('body header').attr('data-logindata'))
-            }else{
-              loginData = JSON.parse($('body').attr('data-logindata'))
-  
-            }
-          console.log('loginData',loginData)
-          LOGINDATA.LOGINUSER = loginData.User
-          LOGINDATA.LOGINTOKEN = loginData.Token
-          if(!loginData){
-            location.reload(true)
-          }
-       
-        
+        if(pathname.startsWith('/admin')){
+            loginData = JSON.parse($('body header').attr('data-logindata'))
+        }else{
+            loginData = JSON.parse($('body').attr('data-logindata'))
+        }
+        console.log('loginData',loginData)
+        LOGINDATA.LOGINUSER = loginData.User
+        LOGINDATA.LOGINTOKEN = loginData.Token
+        if(!loginData){
+        location.reload(true)
+        }
+
         // if(LOGINDATA.LOGINUSER == "" && c == 0){
         //     window.location.reload();
         //     c++
@@ -12828,7 +12824,123 @@ socket.on('connect', () => {
     }
 
 
+    if(pathname == "/admin/betlimit"){
+        $('.searchEvents').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchEvents")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    let type = 'All'
+                    socket.emit("searchEvents", {x,type,LOGINDATA})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                }
+            }
+        })
+
+        socket.on("searchEvents", async(data)=>{
+            console.log(data, 565464)
+            $('.wrapper').show()
+            let html = ``
+            for(let i = 0; i < data.sportList.length; i++){
+                html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}">${data.sportList[i].eventData.name}</a></li>`
+
+            }
+            document.getElementById('search').innerHTML = html
+        })
+
+    }
+    if(pathname == "/admin/betlimit/sport"){
+        $('.searchEvents').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchEvents")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    let type = 'All'
+                    socket.emit("searchEvents", {x,type,LOGINDATA})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                }
+            }
+        })
+
+        socket.on("searchEvents", async(data)=>{
+            console.log(data, 565464)
+            $('.wrapper').show()
+            let html = ``
+            for(let i = 0; i < data.sportList.length; i++){
+                html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}">${data.sportList[i].eventData.name}</a></li>`
+
+            }
+            document.getElementById('search').innerHTML = html
+        })
+
+    }
+    if(pathname.startsWith("/admin/betlimit/sports")){
+        console.log(search,"==>Search")
+        $('.searchEvents').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchEvents")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    let type = 'sportEvent'
+                    let eventSearch = search.split("=")[1]
+                    socket.emit("searchEvents", {x,type,LOGINDATA,search:eventSearch})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                }
+            }
+        })
+
+        socket.on("searchEvents", async(data)=>{
+            console.log(data, 565464)
+            $('.wrapper').show()
+            let html = ``
+            for(let i = 0; i < data.sportList.length; i++){
+                html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}">${data.sportList[i].eventData.name}</a></li>`
+
+            }
+            document.getElementById('search').innerHTML = html
+        })
+    }
+    if(pathname.startsWith("/admin/betlimit/sports/event")){
+        console.log(search,"==>Search")
+        $('.searchEvents').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchEvents")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    let type = 'seriesEvent'
+                    let eventSearch = search.split("=")[1]
+                    socket.emit("searchEvents", {x,type,LOGINDATA,search:eventSearch})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                }
+            }
+        })
+
+        socket.on("searchEvents", async(data)=>{
+            console.log(data, 565464)
+            $('.wrapper').show()
+            let html = ``
+            for(let i = 0; i < data.sportList.length; i++){
+                html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}">${data.sportList[i].eventData.name}</a></li>`
+
+            }
+            document.getElementById('search').innerHTML = html
+        })
+    }
     if(pathname == "/admin/betlimit/sports/match"){
+
+    
         $(document).on('click','.updateBetLimitMATCH',function(e){
             let firstTd = $(this).closest("tr").find("td:first");
             var innerText = firstTd.text();
@@ -12837,6 +12949,7 @@ socket.on('connect', () => {
             socket.emit("updateBetLimitMATCH", {innerText, id})
          })
 
+   
 
          socket.on('updateBetLimitMATCH', data =>{
              if(data.status == "notFound"){
