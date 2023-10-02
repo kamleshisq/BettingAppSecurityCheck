@@ -9,8 +9,7 @@ const betSchema = mongoose.Schema({
         type:String,
     },
     userId:{
-        type:mongoose.Schema.ObjectId,
-        ref:'User',
+        type:String,
         required:true
     },
     userName:{
@@ -86,13 +85,13 @@ const betSchema = mongoose.Schema({
     }
 })
 
-betSchema.pre('aggregate', function(next){
-    this.populate({
-        path:'userId',
-        select:'whiteLabel'
-    })
-    next()
-})
+// betSchema.pre('aggregate', function(next){
+//     this.populate({
+//         path:'userId',
+//         select:'whiteLabel'
+//     })
+//     next()
+// })
 
 
 const betModel = mongoose.model("betModel", betSchema);
