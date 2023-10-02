@@ -12947,6 +12947,7 @@ socket.on('connect', () => {
         $(document).on('click', ".event-notification", function(e){
             e.preventDefault()
             console.log(this.id, "innerTextinnerTextinnerText")
+            socket.emit('eventNotification', {id:this.id})
         })
     }
     if(pathname == "/admin/betlimit/sports/match"){
