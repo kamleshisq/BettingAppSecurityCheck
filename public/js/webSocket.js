@@ -723,13 +723,13 @@ socket.on('connect', () => {
         let fd = new FormData(form);
         let data = Object.fromEntries(fd.entries());
         // console.log(data)
-        socket.emit('UpdateBetLimit', data)
+        socket.emit('UpdateBetLimit', {data, LOGINDATA})
     })
 
 
     socket.on('UpdateBetLimit', data => {
         if(data.status == "err"){
-            alert("please try again leter")
+            alert(data.message)
         }else{
             alert("updated!!")
             window.location.reload()
