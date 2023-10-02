@@ -38,9 +38,11 @@ const LoginLogs = catchAsync(async(req, res, next) => {
             })
         }
         const userLog = await loginLogs.find({user_id:id._id})
-        console.log(userLog,"==> Middleware userLogin")
-        await loginLogs.findOneAndUpdate({user_id:id._id},{isOnline:false})
-        await User.findOneAndUpdate({_id:id._id},{is_Online:false})
+        if(id.role.role_level != 1){
+
+            console.log(userLog,"==> Middleware userLogin")
+            await loginLogs.updateMany({user_id:id._id},{isOnline:false})
+        }
         global._count = userLog.length
         req._count = userLog.length
         global._admin = true
@@ -63,9 +65,10 @@ const LoginLogs = catchAsync(async(req, res, next) => {
         }
         if(req.body.data != "Demo"){
             const userLog = await loginLogs.find({user_id:id._id})
-            console.log(userLog,"==> Middleware userLogin")
-            await loginLogs.findOneAndUpdate({user_id:id._id},{isOnline:false})
-            await User.findOneAndUpdate({_id:id._id},{is_Online:false})
+            if(id.role.role_level != 1){
+                console.log(userLog,"==> Middleware userLogin")
+                await loginLogs.updateMany({user_id:id._id},{isOnline:false})
+            }            
             req._count = userLog.length
             global._admin = false
         }
