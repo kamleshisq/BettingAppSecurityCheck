@@ -7110,6 +7110,10 @@ $(document).ready(function () {
         $("a[href='" + '/admin/streammanagement' + "'").addClass('active');
         $("a[href='" + '/admin/streammanagement' + "'").parent().parent().siblings('a').addClass('active');
         $("a[href='" + '/admin/streammanagement' + "'").parent().parent().addClass('open');
+      } else if (pathname.startsWith('/admin/betlimit/sport') || pathname.startsWith('/admin/betlimit/sports') || pathname.startsWith('/admin/betlimit/sports/event') || pathname.startsWith('/admin/betlimit/sports/match')) {
+        $("a[href='" + '/admin/betlimit' + "'").addClass('active');
+        $("a[href='" + '/admin/betlimit' + "'").parent().parent().siblings('a').addClass('active');
+        $("a[href='" + '/admin/betlimit' + "'").parent().parent().addClass('open');
       }
     }
   }
@@ -7720,7 +7724,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50073" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52010" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

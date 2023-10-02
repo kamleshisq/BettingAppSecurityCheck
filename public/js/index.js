@@ -80,6 +80,10 @@ $(document).ready(function(){
             $("a[href='"+'/admin/streammanagement'+"'").addClass('active')
             $("a[href='"+'/admin/streammanagement'+"'").parent().parent().siblings('a').addClass('active')
             $("a[href='"+'/admin/streammanagement'+"'").parent().parent().addClass('open')
+        }else if(pathname.startsWith('/admin/betlimit/sport') || pathname.startsWith('/admin/betlimit/sports') ||  pathname.startsWith('/admin/betlimit/sports/event') || pathname.startsWith('/admin/betlimit/sports/match')){
+            $("a[href='"+'/admin/betlimit'+"'").addClass('active')
+            $("a[href='"+'/admin/betlimit'+"'").parent().parent().siblings('a').addClass('active')
+            $("a[href='"+'/admin/betlimit'+"'").parent().parent().addClass('open')
         }
         }
 	}
