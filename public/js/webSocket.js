@@ -12942,6 +12942,14 @@ socket.on('connect', () => {
             }
             document.getElementById('search').innerHTML = html
         })
+
+
+        document.on('click', ".event-notification", function(e){
+            e.preventDefault()
+            let firstTd = $(this).closest("tr").find("td:first");
+            var innerText = firstTd.attr('id');
+            console.log(innerText, "innerTextinnerTextinnerText")
+        })
     }
     if(pathname == "/admin/betlimit/sports/match"){
 
