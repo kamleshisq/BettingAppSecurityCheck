@@ -26,11 +26,11 @@ socket.on('connect', () => {
             loginData = JSON.parse($('body').attr('data-logindata'))
         }
         console.log('loginData',loginData)
-        LOGINDATA.LOGINUSER = loginData.User
-        LOGINDATA.LOGINTOKEN = loginData.Token
         if(!loginData){
         location.reload(true)
         }
+        LOGINDATA.LOGINUSER = loginData.User
+        LOGINDATA.LOGINTOKEN = loginData.Token
 
         // if(LOGINDATA.LOGINUSER == "" && c == 0){
         //     window.location.reload();
