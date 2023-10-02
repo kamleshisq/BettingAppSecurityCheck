@@ -12968,7 +12968,9 @@ socket.on('connect', () => {
             let form = $(this)[0];
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
-
+            let id = $(this).attr('id');
+            data.id = id
+            console.log(data)
         })
     }
     if(pathname == "/admin/betlimit/sports/match"){
