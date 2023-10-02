@@ -3563,6 +3563,7 @@ io.on('connection', (socket) => {
     socket.on('gameAnalysis', async(data) => {
         // console.log(data.Sport)
         let me = data.USER
+        let childrenUsername = []
         let page = data.page;
         let limit = 10
         const roles = await Role.find({role_level: {$gt:me.role.role_level}});
@@ -3571,6 +3572,11 @@ io.on('connection', (socket) => {
             role_type.push(roles[i].role_type)
         }
         // console.log(me)
+        let children = await User.find({parentUsers:me._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    
     
         let filter = {}
         if(data.from_date && data.to_date){
@@ -3592,35 +3598,17 @@ io.on('connection', (socket) => {
                 filter.marketName = { '$not': { '$regex': '^(match|bookma)', '$options': 'i' } }
             }
         }
+
+        filter.userName = {$in:childrenUsername}
         // console.log(filter)
         const gameAnalist = await Bet.aggregate([
             {
                 $match:filter
             },
             {
-                $lookup:{
-                    from:'users',
-                    localField:'userName',
-                    foreignField:'userName',
-                    as:'userDetails'
-                }
-            },
-            {
-                $unwind:'$userDetails'
-            },
-            {
-                $match:{
-                    'userDetails.isActive':true,
-                    'userDetails.roleName':{$ne:'Admin'},
-                    'userDetails.role_type':{$in:role_type},
-                    'userDetails.parentUsers':{$elemMatch:{$eq:me._id}}
-                }
-            },
-            {
                 $group:{
                     _id:{
                         userName:'$userName',
-                        whiteLabel:'$userDetails.whiteLabel'
                     },
                     betCount:{$sum:1},
                     loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
@@ -3633,7 +3621,7 @@ io.on('connection', (socket) => {
             },
             {
                 $group:{
-                    _id:'$_id.whiteLabel',
+                    _id:'$_id.userName',
                     Total_User:{$sum:1},
                     betcount:{$sum:'$betCount'},
                     loss:{$sum:'$loss'},
@@ -3663,25 +3651,6 @@ io.on('connection', (socket) => {
         const marketAnalist =  await Bet.aggregate([
             {
                 $match:filter
-            },
-            {
-                $lookup:{
-                    from:'users',
-                    localField:'userName',
-                    foreignField:'userName',
-                    as:'userDetails'
-                }
-            },
-            {
-                $unwind:'$userDetails'
-            },
-            {
-                $match:{
-                    'userDetails.isActive':true,
-                    'userDetails.roleName':{$ne:'Admin'},
-                    'userDetails.role_type':{$in:role_type},
-                    'userDetails.parentUsers':{$elemMatch:{$eq:me._id}}
-                }
             },
             {
                 $group:{

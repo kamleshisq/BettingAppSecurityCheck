@@ -212,7 +212,7 @@ userSchema.pre('save', async function(next){
     next();
 })
 
-userSchema.pre(/^find/, function(next){
+userSchema.pre('/^find/', function(next){
     this.populate({
         path:'role',
         select:'roleName authorization role_type role_level userAuthorization operationAuthorization AdminController'
