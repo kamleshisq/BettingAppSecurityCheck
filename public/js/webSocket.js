@@ -10549,7 +10549,7 @@ socket.on('connect', () => {
             }
             getinProgressData()
         // }
-
+        let status = false
         socket.on('getinProgressData', data => {
             let html= ''
             for(let i = 0; i < data.length; i++){
@@ -10559,6 +10559,7 @@ socket.on('connect', () => {
                 <td>${data[i].length}</td></tr>`
             }
             if(data.length > 0){
+                status = true
                 let inprogressTable = document.getElementById('InprogresDATA')
                 if(inprogressTable){
                     document.getElementById('InprogresDATA').innerHTML = html
@@ -10575,7 +10576,9 @@ socket.on('connect', () => {
                 }
             }else{
                 document.getElementById('inprogress-market-table').innerHTML = '<tr class="empty_table"><td>No INPROGRESS Markets! </td></tr>'
-                // window.location.reload()
+                if(status){
+                    window.location.reload()
+                }
             }
 
         })
@@ -10630,8 +10633,16 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert("Please try again later")
             }else{ 
-                alert(data)
-                // window.location.reload()
+                console.log(data, " <=== Data")
+                alert(data.message)
+                const deleteButton = document.getElementById(data.id);
+                // console.log(deleteButton)
+                const row = deleteButton.closest('tr'); 
+                if (row) {
+                    const table = row.parentNode;
+                    const rowIndex = Array.from(table.rows).indexOf(row);
+                    row.remove();
+                  }
             }
         })
        
@@ -10662,13 +10673,14 @@ socket.on('connect', () => {
                     alert("Please try again later")
                 }
             }else{
-                // const deleteButton = document.getElementById(data.betdata.marketId);
-                // const row = deleteButton.closest('tr'); 
-                // if (row) {
-                //     const table = row.parentNode;
-                //     const rowIndex = Array.from(table.rows).indexOf(row);
-                //     row.remove(); 
-                //   }
+                alert(data.message)
+                const deleteButton = document.getElementById(data.id);
+                const row = deleteButton.closest('tr'); 
+                if (row) {
+                    const table = row.parentNode;
+                    const rowIndex = Array.from(table.rows).indexOf(row);
+                    row.remove(); 
+                  }
                 //   let html = ``
                 //   console.log(document.getElementById('void-market-table').getElementsByClassName('empty_table'))
                 //   if(document.getElementById('void-market-table').getElementsByClassName('empty_table').length != 0){
@@ -10777,8 +10789,14 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert(data.message.toUpperCase())
             }else{
-                alert('Settleed Process start')
-                // window.location.reload()
+                alert(data.message)
+                const deleteButton = document.getElementById(data.id);
+                const row = deleteButton.closest('tr'); 
+                if (row) {
+                    const table = row.parentNode;
+                    const rowIndex = Array.from(table.rows).indexOf(row);
+                    row.remove(); 
+                  }
             }
         })
 

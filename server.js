@@ -725,8 +725,8 @@ io.on('connection', (socket) => {
         let page = data.page
         let limit = 10
         let dataM 
-        console.log(data.filterData)
-        console.log(data.LOGINDATA.LOGINUSER.userName)
+        // console.log(data.filterData)
+        // console.log(data.LOGINDATA.LOGINUSER.userName)
         
         User.aggregate([
             {
@@ -2946,7 +2946,7 @@ io.on('connection', (socket) => {
             if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
                 socket.emit("VoidBetIn",{message:"please provide a valid password", status:"error"})
             }else{
-                socket.emit('VoidBetIn', 'Void Bet Process Start')
+                socket.emit('VoidBetIn', {message: 'Void Bet Process Start', id:data.id})
                 let result = await voidBetBeforePlace(data)
             }
         }catch(err){
@@ -2986,7 +2986,7 @@ io.on('connection', (socket) => {
     socket.on('Settle', async(data) => {
         try{
             // console.log(data)
-            socket.emit("Settle", {message:"Settleed Process start", status:'success'})
+            socket.emit("Settle", {message:"Settleed Process start", status:'success', id:data.id})
             let data1 = mapBet.mapbet(data)
             // socket.emit('Settle', {marketId:data.id, status:"success"})
         }catch(err){
@@ -4052,7 +4052,7 @@ io.on('connection', (socket) => {
             if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
                 socket.emit('ROLLBACKDETAILS', 'please provide a valid password') 
             }else{ 
-                socket.emit('ROLLBACKDETAILS', 'RollBack Process Start')
+                socket.emit('ROLLBACKDETAILS', {message:'RollBack Process Start', id:data.id})
                 let resultDate = rollBackBet(data)
             }
         }catch(err){
