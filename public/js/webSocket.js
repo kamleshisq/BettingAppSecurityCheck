@@ -10340,6 +10340,7 @@ socket.on('connect', () => {
         });
 
         socket.on('settlement',async(data)=>{
+            console.log(data)
             if(data.betsEventWise.length !== 0){
                 let betsEventWiseData = data.betsEventWise.find(item => item.id == 'Cricket')
                 if(betsEventWiseData){

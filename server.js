@@ -2921,7 +2921,7 @@ io.on('connection', (socket) => {
                 }
               }
         ])
-        socket.emit('settlement',{betsEventWise})
+        socket.emit('settlement',{betsEventWise,dataobj,data})
 
     })
 
