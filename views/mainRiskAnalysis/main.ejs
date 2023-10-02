@@ -426,9 +426,9 @@
                           <%for(let i = 0; i < Bets.length; i++){%>
                             <% let date = new Date(Bets[i].date)%>
                             <%if(Bets[i].bettype2 === "BACK"){%>
-                                <tr class="BACK" >
+                                <tr class="back" >
                             <%}else{%>
-                                <tr class="LAY" >
+                                <tr class="lay" >
                             <%}%>
                                 <td><%=Bets[i].userName%></td>
                                 <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>

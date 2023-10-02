@@ -11538,9 +11538,9 @@ socket.on('connect', () => {
                     let date = new Date(data.data[i].date)
                     console.log(data.data[i].bettype2)
                     if(data.data[i].bettype2 === "BACK"){
-                        html += '<tr class="BACK" >'
+                        html += '<tr class="back" >'
                     }else{
-                        html += '<tr class="LAY" >'
+                        html += '<tr class="lay" >'
                     }
                     html += `
                     <td>${data.data[i].userName}</td>
