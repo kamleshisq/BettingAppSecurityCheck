@@ -4180,6 +4180,14 @@ io.on('connection', (socket) => {
             console.log(err)
         }
     })
+
+    socket.on('eventNotification', async(data) => {
+        try{
+            console.log(data)
+        }catch(err){
+            console.log(err)
+        }
+    })
     
 })
 
