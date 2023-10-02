@@ -12898,8 +12898,8 @@ socket.on('connect', () => {
                     let x = $(this).val(); 
                     // console.log(x)
                     let type = 'sportEvent'
-                    let search = search.split("=")[1]
-                    socket.emit("searchEvents", {x,type,LOGINDATA,search})
+                    let eventSearch = search.split("=")[1]
+                    socket.emit("searchEvents", {x,type,LOGINDATA,search:eventSearch})
                 }else{
                     document.getElementById('search').innerHTML = ``
                     document.getElementById("button").innerHTML = ''
