@@ -12845,35 +12845,21 @@ socket.on('connect', () => {
             console.log(data, 565464)
             $('.wrapper').show()
             let html = ``
-            if(data.page === 1){
-                if(data.type == 'All'){
-                    for(let i = 0; i < data.sportList.length; i++){
-                        html += `<li class="searchList" id="${data.sportList[i].eventData.id}">${data.sportList[i].eventData.name}</li>`
+            if(data.type == 'All'){
+                for(let i = 0; i < data.sportList.length; i++){
+                    html += `<li class="searchList" id="${data.sportList[i].eventData.id}">${data.sportList[i].eventData.name}</li>`
 
-                    }
                 }
-                    document.getElementById('search').innerHTML = html
-                    document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-            }else if(data.page === null){
-                document.getElementById("button").innerHTML = ``
-            }else{
-                if(data.type == 'All'){
-                    for(let i = 0; i < data.sportList.length; i++){
-                        html += `<li class="searchList" id="${data.sportList[i].eventData.id}">${data.sportList[i].eventData.name}</li>`
-
-                    }
-                }
-                document.getElementById('search').innerHTML = html
-                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
             }
+            document.getElementById('search').innerHTML = html
+            document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
         })
 
         $(document).on("click", ".next", function(e){
             e.preventDefault()
-            let page = $(this).attr("id")
             let x = $("#searchEvents").val()
-            socket.emit("searchEvents", {x, LOGINDATA, page})
+            type = 'All'
+            socket.emit("searchEvents", {x, LOGINDATA,type})
         })
 
     }

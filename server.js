@@ -813,10 +813,6 @@ io.on('connection', (socket) => {
         let cricketList;
         let footballList;
         let tennisList;
-        let page = data.page
-        if(!page){
-            page = 0
-        }
         console.log(data);
         const sportData = await getCrkAndAllData()
         console.log(sportData)
@@ -830,8 +826,7 @@ io.on('connection', (socket) => {
     
             sportList = cricketList.concat(footballList,tennisList)
         }
-        page++
-        socket.emit("searchEvents", {sportList,type:data.type,page})
+        socket.emit("searchEvents", {sportList,type:data.type})
     })
     socket.on("SearchACC", async(data) => {
         let page = data.page
