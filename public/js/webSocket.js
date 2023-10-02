@@ -12843,38 +12843,30 @@ socket.on('connect', () => {
 
         socket.on("searchEvents", async(data)=>{
             console.log(data, 565464)
-            // $('.wrapper').show()
-            // let html = ``
-            // if(data.page === 1){
-            //     if(data.type == 'All'){
-            //         for(let i = 0; i < data.sportList.length; i++){
-            //             for(let j = 0; j<data.sportList[i].gameList.length;j++){
-            //                 for(let k = 0; k<data.sportList[i].gameList[j].eventList.length;k++){
-            //                     html += `<li class="searchList" id="${data.sportList[i].gameList[j].eventList[k].eventData.id}">${data.sportList[i].gameList[j].eventList[k].eventData.name}</li>`
+            $('.wrapper').show()
+            let html = ``
+            if(data.page === 1){
+                if(data.type == 'All'){
+                    for(let i = 0; i < data.sportList.length; i++){
+                        html += `<li class="searchList" id="${data.sportList[i].eventData.id}">${data.sportList[i].eventData.name}</li>`
 
-            //                 }
-            //             }
-            //         }
-            //         document.getElementById('search').innerHTML = html
-            //         document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-            //     }
-            // }else if(data.page === null){
-            //     document.getElementById("button").innerHTML = ``
-            // }else{
-            //     if(data.type == 'All'){
-            //         for(let i = 0; i < data.sportList.length; i++){
-            //             for(let j = 0; j<data.sportList[i].gameList.length;j++){
-            //                 for(let k = 0; k<data.sportList[i].gameList[j].eventList.length;k++){
-            //                     html += `<li class="searchList" id="${data.sportList[i].gameList[j].eventList[k].eventData.id}">${data.sportList[i].gameList[j].eventList[k].eventData.name}</li>`
+                    }
+                }
+                    document.getElementById('search').innerHTML = html
+                    document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }else if(data.page === null){
+                document.getElementById("button").innerHTML = ``
+            }else{
+                if(data.type == 'All'){
+                    for(let i = 0; i < data.sportList.length; i++){
+                        html += `<li class="searchList" id="${data.sportList[i].eventData.id}">${data.sportList[i].eventData.name}</li>`
 
-            //                 }
-            //             }
-            //         }
-            //         document.getElementById('search').innerHTML = html
-            //         document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-            //     }
-            //     document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-            // }
+                    }
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }
         })
 
         $(document).on("click", ".next", function(e){
