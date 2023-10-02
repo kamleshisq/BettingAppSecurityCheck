@@ -11537,7 +11537,12 @@ socket.on('connect', () => {
                 for(let i = 0; i < data.data.length; i++){
                     let date = new Date(data.data[i].date)
                     console.log(data.data[i].bettype2)
-                    html += `<tr>
+                    if(data.data[i].bettype2 === "BACK"){
+                        html += '<tr class="BACK" >'
+                    }else{
+                        html += '<tr class="LAY" >'
+                    }
+                    html += `
                     <td>${data.data[i].userName}</td>
                     <td class="date-time" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
                     <td>${data.data[i].marketName}</td>
