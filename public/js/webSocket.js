@@ -3657,10 +3657,10 @@ socket.on('connect', () => {
             let html = '';
                 for(let i = 0; i < bets.length; i++){
                     let date = new Date(bets[i].date)
-                if((i%2)==0){
-                    html += `<tr style="text-align: center;" class="blue">`
+                if(bets[i].bettype2 === 'BACK'){
+                    html += `<tr class="back">`
                 }else{
-                    html += `<tr style="text-align: center;" >`
+                    html += `<tr class="lay">`
                 }
                 html += `<td>${i + count}</td>
                 <td>${bets[i].userName}</td>
