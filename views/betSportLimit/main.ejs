@@ -3,8 +3,15 @@
   <div class="dashboard-main-wraper">
   <section class="dashboard-welcome-section">
     <div class="container-fluid">
-      <div class="new-head"> 
-          <h3><%=title%></h3>   
+      <div class="new-head bet-limit-breadcrum"> 
+          <div class="bredcum-container">
+            <ul>
+                <li><a href="/admin/betlimit" class="active">Bet Limit</a></li>
+                
+                  <li class="active"><a href="/admin/betlimit/sport">Sport</a></li>
+                
+            </ul>
+          </div>
           <form action="">
             <div class="input-group">
               <div class="input-group-prepend">
@@ -22,14 +29,7 @@
       </div>
     <%- include("../loginUserAdminsideDetails") %>
   </section>
-  <div class="bredcum-container">
-    <ul>
-        <li><a href="/admin/betlimit" class="active">Bet Limit</a></li>
-        
-          <li class="active"><a href="/admin/betlimit/sport">Sport</a></li>
-        
-    </ul>
-  </div>
+ 
   <%- include("./table.ejs") %>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
