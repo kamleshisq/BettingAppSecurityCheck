@@ -33,6 +33,8 @@ const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
 const betCrone = require('./NewCroneForUserAndBets/betPlaceCrone');
 const dashCrone = require('./dashboardUpdateCrone/dashboarupdatecron')
 // const ejs = require("ejs");
+
+
 app.use(requestIp.mw());
 app.set('trust proxy', true);
 dotenv.config({path: './config.env'});
@@ -42,6 +44,7 @@ mongoose.connect(process.env.db1,{
 }).then(()=>{
     console.log("MongoDB connected")
 })
+console.log("WORKING 54545 ")
 global._blacklistToken=[];
 global._loggedInToken=[];
 app.set('view engine', "ejs");
@@ -56,6 +59,7 @@ app.use(cookieParser());
 //     resave: false,
 //     saveUninitialized: true,
 // }));
+console.log("WORKING 54545 ")
 app.use(middlewares);
 // crone();
 // userCrone(); 
