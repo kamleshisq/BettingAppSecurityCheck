@@ -12844,11 +12844,9 @@ socket.on('connect', () => {
             console.log(data, 565464)
             $('.wrapper').show()
             let html = ``
-            if(data.type == 'All'){
-                for(let i = 0; i < data.sportList.length; i++){
-                    html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}">${data.sportList[i].eventData.name}</a></li>`
+            for(let i = 0; i < data.sportList.length; i++){
+                html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}">${data.sportList[i].eventData.name}</a></li>`
 
-                }
             }
             document.getElementById('search').innerHTML = html
         })
@@ -12874,11 +12872,9 @@ socket.on('connect', () => {
             console.log(data, 565464)
             $('.wrapper').show()
             let html = ``
-            if(data.type == 'All'){
-                for(let i = 0; i < data.sportList.length; i++){
-                    html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}">${data.sportList[i].eventData.name}</a></li>`
+            for(let i = 0; i < data.sportList.length; i++){
+                html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}">${data.sportList[i].eventData.name}</a></li>`
 
-                }
             }
             document.getElementById('search').innerHTML = html
         })
@@ -12906,11 +12902,9 @@ socket.on('connect', () => {
             console.log(data, 565464)
             $('.wrapper').show()
             let html = ``
-            if(data.type == 'All'){
-                for(let i = 0; i < data.sportList.length; i++){
-                    html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}">${data.sportList[i].eventData.name}</a></li>`
+            for(let i = 0; i < data.sportList.length; i++){
+                html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}">${data.sportList[i].eventData.name}</a></li>`
 
-                }
             }
             document.getElementById('search').innerHTML = html
         })
