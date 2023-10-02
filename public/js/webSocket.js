@@ -4830,10 +4830,10 @@ socket.on('connect', () => {
                 let html = '';
                 for(let i = 0; i < bets.length; i++){
                     let date = new Date(bets[i].date)
-                    if((i%2)==0){
-                        html += `<tr style="text-align: center;" class="blue">`
+                    if(bets[i].bettype2 === 'BACK'){
+                        html += `<tr class="back">`
                     }else{
-                        html += `<tr style="text-align: center;" >`
+                        html += `<tr class="lay">`
                     }
                     html += `<td>${i + count}</td>
                     <td class="date-time">${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
@@ -11536,7 +11536,13 @@ socket.on('connect', () => {
                 let html = ``
                 for(let i = 0; i < data.data.length; i++){
                     let date = new Date(data.data[i].date)
-                    html += `<tr>
+                    console.log(data.data[i].bettype2)
+                    if(data.data[i].bettype2 === "BACK"){
+                        html += '<tr class="back" >'
+                    }else{
+                        html += '<tr class="lay" >'
+                    }
+                    html += `
                     <td>${data.data[i].userName}</td>
                     <td class="date-time" >${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
                     <td>${data.data[i].marketName}</td>
