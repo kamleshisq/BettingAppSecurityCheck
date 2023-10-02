@@ -3563,7 +3563,6 @@ io.on('connection', (socket) => {
     socket.on('gameAnalysis', async(data) => {
         // console.log(data.Sport)
         let me = data.USER
-        let childrenUsername = []
         let page = data.page;
         let limit = 10
         const roles = await Role.find({role_level: {$gt:me.role.role_level}});
@@ -3572,11 +3571,6 @@ io.on('connection', (socket) => {
             role_type.push(roles[i].role_type)
         }
         // console.log(me)
-        let children = await User.find({parentUsers:me._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
-    
     
         let filter = {}
         if(data.from_date && data.to_date){
@@ -3598,17 +3592,35 @@ io.on('connection', (socket) => {
                 filter.marketName = { '$not': { '$regex': '^(match|bookma)', '$options': 'i' } }
             }
         }
-
-        filter.userName = {$in:childrenUsername}
         // console.log(filter)
         const gameAnalist = await Bet.aggregate([
             {
                 $match:filter
             },
             {
+                $lookup:{
+                    from:'users',
+                    localField:'userName',
+                    foreignField:'userName',
+                    as:'userDetails'
+                }
+            },
+            {
+                $unwind:'$userDetails'
+            },
+            {
+                $match:{
+                    'userDetails.isActive':true,
+                    'userDetails.roleName':{$ne:'Admin'},
+                    'userDetails.role_type':{$in:role_type},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:me._id}}
+                }
+            },
+            {
                 $group:{
                     _id:{
                         userName:'$userName',
+                        whiteLabel:'$userDetails.whiteLabel'
                     },
                     betCount:{$sum:1},
                     loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
@@ -3621,7 +3633,7 @@ io.on('connection', (socket) => {
             },
             {
                 $group:{
-                    _id:'$_id.userName',
+                    _id:'$_id.whiteLabel',
                     Total_User:{$sum:1},
                     betcount:{$sum:'$betCount'},
                     loss:{$sum:'$loss'},
@@ -3651,6 +3663,25 @@ io.on('connection', (socket) => {
         const marketAnalist =  await Bet.aggregate([
             {
                 $match:filter
+            },
+            {
+                $lookup:{
+                    from:'users',
+                    localField:'userName',
+                    foreignField:'userName',
+                    as:'userDetails'
+                }
+            },
+            {
+                $unwind:'$userDetails'
+            },
+            {
+                $match:{
+                    'userDetails.isActive':true,
+                    'userDetails.roleName':{$ne:'Admin'},
+                    'userDetails.role_type':{$in:role_type},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:me._id}}
+                }
             },
             {
                 $group:{
@@ -3999,21 +4030,23 @@ io.on('connection', (socket) => {
 
 
     socket.on('UpdateBetLimit', async(data) => {
-        // console.log(data, "betLimitUpdate DATa")
         try{
             let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
-            if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
-                socket.emit('UpdateBetLimit', {message:"Please provide a valid password", status:"err"})
-            }else{
-                let check = await betLimit.findOne({type:data.data.type})
+            if(!loginUser || !(await loginUser.correctPassword(data.password, loginUser.password))){
+                let check = await betLimit.findOne({type:data.type})
                 if(check){
-                    await betLimit.findOneAndUpdate({type:data.data.type}, data.data)
+                    await betLimit.findOneAndUpdate({type:data.type}, data)
                     socket.emit('UpdateBetLimit', {status:'success'})
                 }else{
-                    await betLimit.create(data.data)
+                    await betLimit.create(data)
                     socket.emit('UpdateBetLimit', {status:'success'})
                 }
-            }  
+            }else{
+                socket.emit('UpdateBetLimit', {message:"Please provide a valid password", status:"err"})
+            }   
+
+
+
         }catch(err){
             console.log(err)
             socket.emit('UpdateBetLimit', {message:"Please try again leter", status:"err"})
