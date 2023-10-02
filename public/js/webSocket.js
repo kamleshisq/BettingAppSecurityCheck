@@ -12643,6 +12643,7 @@ socket.on('connect', () => {
 
 
         socket.on("gameAnalysis", data => {
+            console.log(data)
             if($('#FOOTBALL').find('.matchOddsBack')){
                 $('#FOOTBALL').find('.matchOddsBack').html('')
             }
