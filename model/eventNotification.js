@@ -8,6 +8,10 @@ const eventNotification = mongoose.Schema({
     message:{
         type:String,
         required:true
+    },
+    id:{
+        type:String,
+        required:true
     }
 })
 

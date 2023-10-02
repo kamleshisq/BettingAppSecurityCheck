@@ -12949,6 +12949,16 @@ socket.on('connect', () => {
             console.log(this.id, "innerTextinnerTextinnerText")
             socket.emit('eventNotification', {id:this.id})
         })
+
+
+        socket.on('eventNotification', data => {
+            if(data.status === "noFound"){
+                let form = $('#myModaNotification').find('.add-event-notification')
+                // form.find('input[name = "status"]').
+            }else{
+
+            }
+        })
     }
     if(pathname == "/admin/betlimit/sports/match"){
 

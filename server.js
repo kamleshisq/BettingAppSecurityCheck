@@ -53,6 +53,7 @@ const voidbetAfterPlace = require('./utils/voideBetAfterPlace');
 const voidBetBeforePlace = require('./utils/voidBetForOpen');
 const rollBackBet = require('./utils/RollBackAfterPlace');
 const InprogreshModel = require('./model/InprogressModel');
+const eventNotification = require('./model/eventNotification');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -4183,7 +4184,13 @@ io.on('connection', (socket) => {
 
     socket.on('eventNotification', async(data) => {
         try{
-            console.log(data)
+            let eventNotificationSetting = await eventNotification.findOne({id:data.id})
+            if(eventNotificationSetting){
+                socket.emit('eventNotification', eventNotificationSetting)
+            }else{
+                socket.emit('eventNotification', {status:'noFound'})
+            }
+
         }catch(err){
             console.log(err)
         }
