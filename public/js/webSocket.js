@@ -12847,7 +12847,7 @@ socket.on('connect', () => {
             let html = ``
             if(data.type == 'All'){
                 for(let i = 0; i < data.sportList.length; i++){
-                    html += `<li class="searchList" id="${data.sportList[i].eventData.id}">${data.sportList[i].eventData.name}</li>`
+                    html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}">${data.sportList[i].eventData.name}</a></li>`
 
                 }
             }
@@ -12855,19 +12855,71 @@ socket.on('connect', () => {
             document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
         })
 
-        $(document).on("click", ".next", function(e){
-            e.preventDefault()
-            let x = $("#searchEvents").val()
-            type = 'All'
-            socket.emit("searchEvents", {x, LOGINDATA,type})
+    }
+    if(pathname == "/admin/betlimit/sport"){
+        $('.searchEvents').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchEvents")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    let type = 'All'
+                    socket.emit("searchEvents", {x,type,LOGINDATA})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                    document.getElementById("button").innerHTML = ''
+                }
+            }
+        })
+
+        socket.on("searchEvents", async(data)=>{
+            console.log(data, 565464)
+            $('.wrapper').show()
+            let html = ``
+            if(data.type == 'All'){
+                for(let i = 0; i < data.sportList.length; i++){
+                    html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}">${data.sportList[i].eventData.name}</a></li>`
+
+                }
+            }
+            document.getElementById('search').innerHTML = html
+            document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
         })
 
     }
-    if(pathname == "/admin/betlimit/sport"){
-
-    }
     if(pathname.startsWith("/admin/betlimit/sports")){
+        console.log(search,"==>Search")
+        $('.searchEvents').keyup(function(){
+            // console.log('working')
+            if($(this).hasClass("searchEvents")){
+                // console.log($(this).val())
+                if($(this).val().length >= 3 ){
+                    let x = $(this).val(); 
+                    // console.log(x)
+                    let type = 'sportEvent'
+                    let search = 
+                    socket.emit("searchEvents", {x,type,LOGINDATA})
+                }else{
+                    document.getElementById('search').innerHTML = ``
+                    document.getElementById("button").innerHTML = ''
+                }
+            }
+        })
 
+        socket.on("searchEvents", async(data)=>{
+            console.log(data, 565464)
+            $('.wrapper').show()
+            let html = ``
+            if(data.type == 'All'){
+                for(let i = 0; i < data.sportList.length; i++){
+                    html += `<li class="searchList" id="${data.sportList[i].eventData.id}"><a href="/admin/betlimit/sports/match?match=${data.sportList[i].eventData.name}">${data.sportList[i].eventData.name}</a></li>`
+
+                }
+            }
+            document.getElementById('search').innerHTML = html
+            document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+        })
     }
     if(pathname == "/admin/betlimit/sports/match"){
 
