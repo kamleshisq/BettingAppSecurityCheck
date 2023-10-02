@@ -720,7 +720,8 @@ socket.on('connect', () => {
         let form = $(this)[0];
         let fd = new FormData(form);
         let data = Object.fromEntries(fd.entries());
-        socket.emit('UpdateBetLimit', data)
+        console.log(data)
+        // socket.emit('UpdateBetLimit', data)
     })
 
 
