@@ -33,6 +33,9 @@ const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
 const betCrone = require('./NewCroneForUserAndBets/betPlaceCrone');
 const dashCrone = require('./dashboardUpdateCrone/dashboarupdatecron')
 // const ejs = require("ejs");
+
+
+console.log("WORKING 54545 ")
 app.use(requestIp.mw());
 app.set('trust proxy', true);
 dotenv.config({path: './config.env'});
