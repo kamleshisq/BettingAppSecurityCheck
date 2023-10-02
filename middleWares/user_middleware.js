@@ -17,6 +17,7 @@ function parseCookies(cookieString) {
   }
 
 const LoginLogs = catchAsync(async(req, res, next) => {
+    console.log("USE LOGIN")
     // console.log(req.headers.cookie, 456)
     // if(req.headers.cookie){
     //     console.log(parseCookies(req.headers.cookie).JWT)
