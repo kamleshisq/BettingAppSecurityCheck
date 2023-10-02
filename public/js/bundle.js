@@ -5493,15 +5493,9 @@ var login = /*#__PURE__*/function () {
                 location.assign('/updatePassWord');
               }, 100);
             } else {
-              if (res.data.data.user.role.authorization.includes('dashboard')) {
-                window.setTimeout(function () {
-                  location.assign('/admin/dashboard');
-                }, 100);
-              } else {
-                window.setTimeout(function () {
-                  location.assign('/admin/userManagement');
-                }, 100);
-              }
+              window.setTimeout(function () {
+                location.assign('/admin/userManagement');
+              }, 100);
             }
           }
           _context.next = 11;
@@ -7726,7 +7720,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50073" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52010" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -22,15 +22,9 @@ export const login = async(userName, password)=>{
                     location.assign('/updatePassWord')
                 }, 100)
             }else{
-                if(res.data.data.user.role.authorization.includes('dashboard')){
-                    window.setTimeout(()=>{
-                        location.assign('/admin/dashboard')
-                    }, 100)
-                }else{
-                    window.setTimeout(()=>{
-                        location.assign('/admin/userManagement')
-                    }, 100)
-                }
+                window.setTimeout(()=>{
+                    location.assign('/admin/userManagement')
+                }, 100)
             }
         }
 
