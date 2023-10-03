@@ -1139,7 +1139,6 @@ io.on('connection', (socket) => {
         data.filterData.role_type = {
             $in:role_type
         }
-        data.filterData.status = 'OPEN';
         const user = await User.findOne({userName:data.filterData.userName})
         if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
             delete data.filterData['userName']
