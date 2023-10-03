@@ -823,7 +823,7 @@ io.on('connection', (socket) => {
         tennisList = sportData[1].gameList.find(item => item.sportId == parseInt('2'))
         tennisList = tennisList.eventList
         let sportList = cricketList.concat(footballList,tennisList)
-        sportList = sportList.filter(item => item.eventData.name.includes(data.x))
+        sportList = sportList.filter(item => item.eventData.name.toLowerCase().includes(data.x.toLowerCase()))
         console.log(sportList)
         socket.emit("searchEvents", {sportList,type:data.type})
     })
