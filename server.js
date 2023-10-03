@@ -4207,7 +4207,7 @@ io.on('connection', (socket) => {
             }
             socket.emit('eventNotification2', notificationData)
         }catch(err){
-            console.log(err)
+            // console.log(err)
             socket.emit('eventNotification2', {status:'err'})
         }
     })
