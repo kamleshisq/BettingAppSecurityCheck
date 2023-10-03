@@ -13110,10 +13110,11 @@ socket.on('connect', () => {
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
             let id = $(this).attr('id');
+            data.type = id
             // console.log(id)
             console.log(data)
             // data.id = id
-            // socket.emit('updateBetLimitMarket', data)
+            socket.emit('UpdateBetLimit', {data, LOGINDATA})
          })
 
          socket.on('updateBetLimitMarket', data => {
