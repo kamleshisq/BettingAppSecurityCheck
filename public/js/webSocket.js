@@ -13081,11 +13081,11 @@ socket.on('connect', () => {
              if(data.status == "notFound"){
                 // console.log('working')
             let form = $('#myModal2').find('.form-data')
-            form.find('input[name = "min_stake"]').val(100)
-            form.find('input[name = "max_stake"]').val(1000)
-            form.find('input[name = "max_profit"]').val(5000)
-            form.find('input[name = "max_odd"]').val(100)
-            form.find('input[name = "delay"]').val(5)
+            form.find('input[name = "min_stake"]').val(0)
+            form.find('input[name = "max_stake"]').val(0)
+            form.find('input[name = "max_profit"]').val(0)
+            form.find('input[name = "max_odd"]').val(0)
+            form.find('input[name = "delay"]').val(0)
             form.find('input[name = "type"]').val(data.data)
             form.attr('id', data.id)
             }else if (data.status == "errr"){
