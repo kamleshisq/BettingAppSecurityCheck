@@ -6121,7 +6121,7 @@ socket.on('connect', () => {
 
         let first = true
         socket.on("marketId", async(data) => {
-            console.log("working")
+            // console.log("working")
             $(".match_odd_Blue").each(function() {
                     
                 let id = this.id
@@ -6416,7 +6416,7 @@ socket.on('connect', () => {
                     }
                 })
                 let parentElement = this.parentNode
-                console.log(parentElement)
+                // console.log(parentElement)
                 if(this.id == `${section.secId}2` ){
                     if( section.layPrice == "-" || section.layPrice == "1,000.00" || section.layPrice == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
@@ -6559,7 +6559,7 @@ socket.on('connect', () => {
                     }
                 })
                 let parentElement = this.parentNode
-                console.log(section.ball_running)
+                // console.log(section.ball_running)
                 if(this.id == `${section.market_id}2` ){
                     if(section.ball_running){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
@@ -6956,7 +6956,7 @@ socket.on('connect', () => {
                 
             }
             let check = $(this).closest("tr").find("#changes").prop("checked");
-            console.log(data)
+            // console.log(data)
             if(specificSpan == data.odds){
                 if(data.stake === ""){
                     // alert("Please select stake")
@@ -7015,7 +7015,7 @@ socket.on('connect', () => {
 
         socket.on("betDetails" , (data) => {
             hideLoader()
-            console.log(data.result)
+            // console.log(data.result)
             // function togglePopup(idname, id){
             //     document.getElementById(idname).classList.toggle("active");
             //     document.getElementById(id).innerText  = data.result.toUpperCase()
