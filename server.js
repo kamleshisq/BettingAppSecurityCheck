@@ -3563,13 +3563,12 @@ io.on('connection', (socket) => {
         let me = data.USER
         let page = data.page;
         let limit = 10
-        const roles = await Role.find({role_level: {$gt:me.role.role_level}});
-        let role_type =[]
-        for(let i = 0; i < roles.length; i++){
-            role_type.push(roles[i].role_type)
-        }
-        // console.log(me)
-    
+        let childrenUsername = []
+        let children = await User.find({parentUsers:me._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+
         let filter = {}
         if(data.from_date && data.to_date){
             filter.date = {$gte:new Date(data.from_date),$lte:new Date(data.to_date)}
@@ -3590,11 +3589,13 @@ io.on('connection', (socket) => {
                 filter.marketName = { '$not': { '$regex': '^(match|bookma)', '$options': 'i' } }
             }
         }
+
+        filter.userName = {"$in":childrenUsername}
         // console.log(filter)
         const gameAnalist = await Bet.aggregate([
-            // {
-            //     $match:filter
-            // },
+            {
+                $match:filter
+            },
             // {
             //     $limit: limit 
             // },
@@ -3646,25 +3647,6 @@ io.on('connection', (socket) => {
                 $match:filter
             },
             {
-                $lookup:{
-                    from:'users',
-                    localField:'userName',
-                    foreignField:'userName',
-                    as:'userDetails'
-                }
-            },
-            {
-                $unwind:'$userDetails'
-            },
-            {
-                $match:{
-                    'userDetails.isActive':true,
-                    'userDetails.roleName':{$ne:'Admin'},
-                    'userDetails.role_type':{$in:role_type},
-                    'userDetails.parentUsers':{$elemMatch:{$eq:me._id}}
-                }
-            },
-            {
                 $group:{
                     _id:'$marketName',
                     betcount:{$sum:1},
@@ -3685,12 +3667,12 @@ io.on('connection', (socket) => {
                     Total_User:-1
                 }
             },
-            {
-                $skip: page * limit
-            },
-            {
-                $limit: limit 
-            }
+            // {
+            //     $skip: page * limit
+            // },
+            // {
+            //     $limit: limit 
+            // }
         ])
         // console.log(gameAnalist)
         socket.emit('gameAnalysis', {gameAnalist,marketAnalist, page,filter})
