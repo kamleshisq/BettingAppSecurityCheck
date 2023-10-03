@@ -6666,7 +6666,7 @@ socket.on('connect', () => {
             $(".button").click(function () {
                 console.log('WORKING')
                 console.log(this.classList)
-                console.log(this.classList.includes('match_odd_Blue'),this.classList.includes('match_odd_Red'))
+                console.log(this.classList.contains('match_odd_Blue'),this.classList.contains('match_odd_Red'))
               let odds = $(this).children("span:first-child").attr('data-id');
               let beton = $(this).closest("tr").find("td:first-child").text();
               let secondPTag = $(this).closest("tr").next().find(".beton");
