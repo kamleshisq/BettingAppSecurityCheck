@@ -2857,29 +2857,21 @@ io.on('connection', (socket) => {
             dataobj = {$lte:new Date(toDate)}
         }
         console.log(dataobj, "dateObj")
+        let childrenUsername = []
+        let children = await User.find({parentUsers:{ $in: [me._id] }})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    
+    
         let betsEventWise = await Bet.aggregate([
             {
                 $match: {
                     // status:"OPEN" ,
-                    eventDate: dataobj
+                    eventDate: dataobj,
+                    userName:{$in:childrenUsername}
                 }
             },
-            {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-              },
-              {
-                $unwind: "$user"
-              },
-              {
-                $match: {
-                  "user.parentUsers": { $in: [me._id] }
-                }
-              },
               {
                 $group: {
                   _id: {
