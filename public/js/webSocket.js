@@ -12981,7 +12981,15 @@ socket.on('connect', () => {
             let id = $(this).attr('id');
             data.id = id
             console.log(data)
-            // socket.emit('eventNotification2', data)
+            if(data.status){
+                if(data.status === 'on'){
+                    data.status = true
+                }else{
+                    data.status = false
+                }
+
+            }
+            socket.emit('eventNotification2', data)
         })
 
 
