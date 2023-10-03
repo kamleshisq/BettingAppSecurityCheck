@@ -6058,6 +6058,23 @@ socket.on('connect', () => {
 
     if(pathname === '/exchange_inPlay/match'){
 
+        // $(document).ready(function(){
+        //     $(".exchange-pg-inn-tbl .button").click(function(event){
+        //       $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').slideUp()
+        //       $('tr.tbl-data-href td .button').removeAttr("style");
+        //       $(this).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').slideDown();
+        //       $(this).parents('tr').find('.button').css({"pointer-events": "none"});
+        //       event.stopPropagation()
+        //     });
+        //     $("tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv").click(function(event){
+        //       event.stopPropagation()
+        //     });
+        //     $(".my-exc-inn-colaps-txt-dv .close-btn, body").click(function(){
+        //       $('tr.tbl-data-href td .button').removeAttr("style");
+        //       $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').slideUp()
+        //     });
+        //   });
+        
 
         function marketLimitId(){
             $(document).ready(function() {
@@ -6728,7 +6745,7 @@ socket.on('connect', () => {
 
 
           $(document).on('click','.tbl-td-with5',function(e){
-                console.log("WORKING")
+                // console.log("WORKING")
                 $(".minus").closest("tr").find('.set-stake-form-input2').val(0)
                 $(".minus")
                 .closest("tr")
@@ -8787,8 +8804,6 @@ socket.on('connect', () => {
           $(document).ready(function () {
 
             $(".button").click(function () {
-
-                console.log('WORKIN')
               let odds = $(this).children("span:first-child").attr('data-id');
               let beton = $(this).closest("tr").find("td:first-child").text();
               let secondPTag = $(this).closest("tr").next().find(".beton");
@@ -8878,7 +8893,7 @@ socket.on('connect', () => {
                     
                 }
                 let check = $(this).closest("tr").find("#changes").prop("checked");
-                console.log((data.odds != '\n                        \n                      '), 121212)
+                // console.log((data.odds != '\n                        \n                      '), 121212)
                 if(specificSpan == data.odds){
                     if(data.stake === ""){
                         // alert("Please select stake")
