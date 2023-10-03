@@ -1114,6 +1114,11 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
             id: "$_id", 
             data: 1
           }
+        },
+        {
+            $sort:{
+                'data.eventdate':-1
+            }
         }
       ]);
     console.log(betsEventWise[0].data, '==>DATA')

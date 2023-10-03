@@ -2907,17 +2907,18 @@ io.on('connection', (socket) => {
                 }
               },
               {
-                $sort:{
-                  'data.eventDate' : -1
-                }
-              },
-              {
                 $project: {
                   _id: 0,
                   id: "$_id", 
                   data: 1
                 }
-              }
+              },
+              {
+                $sort: {
+                    "data.eventdate": -1 
+                }
+            }
+        
         ])
         socket.emit('settlement',{betsEventWise,dataobj,data})
 
