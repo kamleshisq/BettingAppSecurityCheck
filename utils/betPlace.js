@@ -200,6 +200,8 @@ if(marketDetails.title.toLowerCase().startsWith('match')){
 
 if(data.data.bettype2 === 'BACK'){
     // console.log(betLimit)
+    console.log(betLimit, "betLimit")
+    console.log(data.data, "BET DATA")
     let OddChake = data.data.oldOdds + betLimit.max_odd 
     if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
         return 'Odds out of range back'
@@ -210,8 +212,7 @@ if(data.data.bettype2 === 'BACK'){
         return 'Odds out of range'
     }
 }
-console.log(betLimit, "betLimit")
-console.log(data.data, "BET DATA")
+
 
 // console.log(marketDetails, data.data, '+===>DATA')
 
