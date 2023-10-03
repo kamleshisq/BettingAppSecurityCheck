@@ -6078,6 +6078,16 @@ socket.on('connect', () => {
         //       $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').slideUp()
         //     });
         //   });
+
+        $(document).ready(function(){
+            $("table .button").click(function(){
+              $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
+              $(this).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').addClass('open');
+            });
+            $(".my-exc-inn-colaps-txt-dv .close-btn").click(function(){
+              $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
+            });
+          }); 
         
 
         function marketLimitId(){
@@ -6654,6 +6664,8 @@ socket.on('connect', () => {
         // jQuery approach
         $(document).ready(function () {
             $(".button").click(function () {
+                console.log('WORKING')
+                console.log(this.classList.includes('match_odd_Blue'),this.classList.includes('match_odd_Red'))
               let odds = $(this).children("span:first-child").attr('data-id');
               let beton = $(this).closest("tr").find("td:first-child").text();
               let secondPTag = $(this).closest("tr").next().find(".beton");
