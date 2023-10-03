@@ -12957,6 +12957,7 @@ socket.on('connect', () => {
                 form.attr('id', data.id)
                 form.find('input[name = "status"]').closest('div').addClass('hide')
                 // form.find('input[name = "status"]').
+                form.find('input[name = "message"]').val("")
             }else{
                 console.log(data.eventNotificationSetting, 454545545454545)
                 let form = $('#myModaNotification').find('.add-event-notification')
