@@ -724,7 +724,7 @@ socket.on('connect', () => {
         let fd = new FormData(form);
         let data = Object.fromEntries(fd.entries());
         console.log(data, "BETLIMIT")
-        // socket.emit('UpdateBetLimit', {data, LOGINDATA})
+        socket.emit('UpdateBetLimit', {data, LOGINDATA})
     })
 
 
