@@ -6045,23 +6045,24 @@ socket.on('connect', () => {
 
 
     if(pathname === '/exchange_inPlay/match'){
+
+        // $(document).ready(function(){
+        //     $(".exchange-pg-inn-tbl .button").click(function(event){
+        //       $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').slideUp()
+        //       $('tr.tbl-data-href td .button').removeAttr("style");
+        //       $(this).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').slideDown();
+        //       $(this).parents('tr').find('.button').css({"pointer-events": "none"});
+        //       event.stopPropagation()
+        //     });
+        //     $("tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv").click(function(event){
+        //       event.stopPropagation()
+        //     });
+        //     $(".my-exc-inn-colaps-txt-dv .close-btn, body").click(function(){
+        //       $('tr.tbl-data-href td .button').removeAttr("style");
+        //       $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').slideUp()
+        //     });
+        //   });
         
-        $(document).ready(function(){
-            $(".exchange-pg-inn-tbl .button").click(function(event){
-              $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').slideUp()
-              $('tr.tbl-data-href td .button').removeAttr("style");
-              $(this).parents('tr').next().find('.my-exc-inn-colaps-txt-dv').slideDown();
-              $(this).parents('tr').find('.button').css({"pointer-events": "none"});
-              event.stopPropagation()
-            });
-            $("tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv").click(function(event){
-              event.stopPropagation()
-            });
-            $(".my-exc-inn-colaps-txt-dv .close-btn, body").click(function(){
-              $('tr.tbl-data-href td .button').removeAttr("style");
-              $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').slideUp()
-            });
-          });
 
         function marketLimitId(){
             $(document).ready(function() {
