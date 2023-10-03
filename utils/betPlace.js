@@ -197,6 +197,13 @@ if(marketDetails.title.toLowerCase().startsWith('match')){
         return `Odds out of range`
     }
 }
+
+// if(data.data.bettype2 === 'BACK'){
+//     let OddChake = data.data.odds + max_odd
+//     // if(OddChake)
+// }else{
+
+// }
 console.log(betLimit, "betLimit")
 console.log(data.data, "BET DATA")
 
