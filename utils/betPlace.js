@@ -149,15 +149,15 @@ let filtertinMatch = {}
         // console.log(betLimit, "+==> BetLimit")
         // return;
 let thatMarketLimit = await betLimitModel.findOne({type:data.data.market})
-console.log(thatMarketLimit, 1212122)
+// console.log(thatMarketLimit, 1212122)
 if(thatMarketLimit){
     if(thatMarketLimit.min_stake > parseFloat(data.data.stake) ){
-        return `Invalide stake, Please play with atleast minimum stake (${thatMarketLimit.min_stake})`
+        return `Odds out of range`
     }else if(thatMarketLimit.max_stake < parseFloat(data.data.stake)){
-        return `Invalide stake, Please play with atmost maximum stake (${thatMarketLimit.max_stake})`
+        return `Odds out of range`
     }
 }
-    console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
+    // console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 // console.log(marketDetails, 454545454454454545544544444444444)
 if(marketDetails.title.toLowerCase().startsWith('match')){
     // console.log("MATCHODD", minMatchOdds)
@@ -168,9 +168,9 @@ if(marketDetails.title.toLowerCase().startsWith('match')){
         maxMatchOdds = MATCHODDDATA.max_stake
     }
     if(minMatchOdds > parseFloat(data.data.stake) ){
-        return `Invalide stake, Please play with atleast minimum stake (${minMatchOdds})`
+        return `Odds out of range`
     }else if(maxMatchOdds < parseFloat(data.data.stake)){
-        return `Invalide stake, Please play with atmost maximum stake (${maxMatchOdds})`
+        return `Odds out of range`
     }
 }else if(marketDetails.title.toLowerCase().startsWith('book')){
     // console.log("BOOKMAKER")
@@ -180,9 +180,9 @@ if(marketDetails.title.toLowerCase().startsWith('match')){
         maxBookMaker = BOOKMAKER.max_stake
     }
     if(minBookMaker > parseFloat(data.data.stake) ){
-        return `Invalide stake, Please play with atleast minimum stake (${minBookMaker})`
+        return `Odds out of range`
     }else if(maxBookMaker < parseFloat(data.data.stake)){
-        return `Invalide stake, Please play with atmost maximum stake (${maxBookMaker})`
+        return `Odds out of range`
     }
 }else {
     // console.log("FENCY")
@@ -192,14 +192,14 @@ if(marketDetails.title.toLowerCase().startsWith('match')){
         maxFancy = FENCY.max_stake
     }
     if(minFancy > parseFloat(data.data.stake) ){
-        return `Invalide stake, Please play with atleast minimum stake (${minFancy})`
+        return `Odds out of range`
     }else if(maxFancy < parseFloat(data.data.stake)){
-        return `Invalide stake, Please play with atmost maximum stake (${maxFancy})`
+        return `Odds out of range`
     }
 }
 
 
-console.log(marketDetails, data.data, '+===>DATA')
+// console.log(marketDetails, data.data, '+===>DATA')
 
 if(!marketDetails.runners){
     betPlaceData = {
