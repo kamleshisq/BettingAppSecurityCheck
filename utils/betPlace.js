@@ -152,9 +152,9 @@ let thatMarketLimit = await betLimitModel.findOne({type:data.data.market})
 // console.log(thatMarketLimit, 1212122)
 if(thatMarketLimit){
     if(thatMarketLimit.min_stake > parseFloat(data.data.stake) ){
-        return `Odds out of range`
+        return `Stake out of range`
     }else if(thatMarketLimit.max_stake < parseFloat(data.data.stake)){
-        return `Odds out of range`
+        return `Stake out of range`
     }
 }
     // console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
@@ -168,9 +168,9 @@ if(marketDetails.title.toLowerCase().startsWith('match')){
         maxMatchOdds = MATCHODDDATA.max_stake
     }
     if(minMatchOdds > parseFloat(data.data.stake) ){
-        return `Odds out of range`
+        return `Stake out of range`
     }else if(maxMatchOdds < parseFloat(data.data.stake)){
-        return `Odds out of range`
+        return `Stake out of range`
     }
 }else if(marketDetails.title.toLowerCase().startsWith('book')){
     // console.log("BOOKMAKER")
@@ -180,9 +180,9 @@ if(marketDetails.title.toLowerCase().startsWith('match')){
         maxBookMaker = BOOKMAKER.max_stake
     }
     if(minBookMaker > parseFloat(data.data.stake) ){
-        return `Odds out of range`
+        return `Stake out of range`
     }else if(maxBookMaker < parseFloat(data.data.stake)){
-        return `Odds out of range`
+        return `Stake out of range`
     }
 }else {
     // console.log("FENCY")
@@ -192,18 +192,23 @@ if(marketDetails.title.toLowerCase().startsWith('match')){
         maxFancy = FENCY.max_stake
     }
     if(minFancy > parseFloat(data.data.stake) ){
-        return `Odds out of range`
+        return `Stake out of range`
     }else if(maxFancy < parseFloat(data.data.stake)){
-        return `Odds out of range`
+        return `Stake out of range`
     }
 }
 
-// if(data.data.bettype2 === 'BACK'){
-//     let OddChake = data.data.odds + max_odd
-//     // if(OddChake)
-// }else{
-
-// }
+if(data.data.bettype2 === 'BACK'){
+    let OddChake = data.data.oldOdds + max_odd 
+    if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
+        return 'Odds out of range'
+    }
+}else{
+    let OddChake = data.data.oldOdds - max_odd  
+    if(OddChake >= data.data.odds || data.data.odds > data.data.oldOdds ){
+        return 'Odds out of range'
+    }
+}
 console.log(betLimit, "betLimit")
 console.log(data.data, "BET DATA")
 
