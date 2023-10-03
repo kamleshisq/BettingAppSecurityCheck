@@ -6666,19 +6666,30 @@ socket.on('connect', () => {
                 console.log('WORKING')
                 console.log(this.classList)
                 console.log(this.classList.contains('match_odd_Blue'),this.classList.contains('match_odd_Red'))
-              let odds = $(this).children("span:first-child").attr('data-id');
-              let beton = $(this).closest("tr").find("td:first-child").text();
-              let secondPTag = $(this).closest("tr").next().find(".beton");
-              let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
-              let secId = this.id
-              let secId2;
-              if($(this).hasClass('match_odd_Blue')){
-                secId2 = secId.slice(0,-1) + '1'
-                }else{
-                secId2 = secId.slice(0,-1) + '4'
-                }
-              secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId2}1`);;
-              numSpan.text(odds);
+
+            if(this.classList.contains('match_odd_Blue') || this.classList.contains('match_odd_Red')){
+                let odds = $(this).children("span:first-child").attr('data-id');
+                let beton = $(this).closest("tr").find("td:first-child").text();
+                let secondPTag = $(this).closest("tr").next().find(".beton");
+                let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
+                let secId = this.id
+                let secId2;
+                if($(this).hasClass('match_odd_Blue')){
+                  secId2 = secId.slice(0,-1) + '1'
+                  }else{
+                  secId2 = secId.slice(0,-1) + '4'
+                  }
+                secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId2}1`);;
+                numSpan.text(odds);
+            }else{
+                let odds = $(this).children("span:first-child").text();
+                let beton = $(this).closest("tr").find("td:first-child").text();
+                let secondPTag = $(this).closest("tr").next().find(".beton");
+                let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
+                let secId = this.id
+                secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
+                numSpan.text(odds);
+            }
             });
           });
 
@@ -12892,7 +12903,7 @@ socket.on('connect', () => {
         })
 
         socket.on("searchEvents", async(data)=>{
-            console.log(data, 565464)
+            // console.log(data, 565464)
             $('.wrapper').show()
             let html = ``
             for(let i = 0; i < data.sportList.length; i++){

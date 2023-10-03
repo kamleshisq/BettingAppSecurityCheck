@@ -24,7 +24,21 @@
                 <li class="active" ><a href="/admin/betlimit/sports/match?match=<%=seriesMatch[0].eventData.name%>"><%=seriesMatch[0].eventData.name%></a> </li>
                 
             </ul>
-          </div>       
+          </div>
+          <form action="">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+              </div>
+              <input type="text" id="searchEvents" list="text_editors" class="form-control searchEvents" placeholder="search event" aria-label="Event" aria-describedby="basic-addon1" autocomplete="off">
+              <div class="wrapper">
+                <ul id="search" class="users">
+              
+                </ul>
+              </div>
+              
+            </div>
+          </form>        
       </div>
     <%- include("../loginUserAdminsideDetails") %>
   </section>

@@ -817,40 +817,15 @@ io.on('connection', (socket) => {
         let tennisList;
         console.log(data);
         const sportData = await getCrkAndAllData()
-        console.log(sportData)
-        let sportList;
-        if(data.type == 'All'){
-            cricketList = sportData[0].gameList[0].eventList
-            footballList = sportData[1].gameList.find(item => item.sportId == parseInt('1'))
-            footballList = footballList.eventList
-            tennisList = sportData[1].gameList.find(item => item.sportId == parseInt('2'))
-            tennisList = tennisList.eventList
-    
-            sportList = cricketList.concat(footballList,tennisList)
-        }else if(data.type == 'sportEvent'){
-            if(data.search){
-
-                if(data.search == 'cricket'){
-                    sportList = sportData[0].gameList[0].eventList
-                }else if(data.search == "football"){
-                    sportList = sportData[1].gameList.find(item => item.sportId == parseInt('1'))
-                    sportList = sportList.eventList
-                }else if(data.search == 'tennis'){
-                    sportList = sportData[1].gameList.find(item => item.sportId == parseInt('2'))
-                    sportList = sportList.eventList
-    
-                }
-            }
-        }else if(data.type == 'seriesEvent'){
-            cricketList = sportData[0].gameList[0].eventList
-            footballList = sportData[1].gameList.find(item => item.sportId == parseInt('1'))
-            footballList = footballList.eventList
-            tennisList = sportData[1].gameList.find(item => item.sportId == parseInt('2'))
-            tennisList = tennisList.eventList
-            let series = data.search
-            let allData = cricketList.concat(footballList,tennisList)
-            sportList = allData.filter(item => item.eventData.league == series)
-        }
+        // console.log(sportData)
+        cricketList = sportData[0].gameList[0].eventList
+        footballList = sportData[1].gameList.find(item => item.sportId == parseInt('1'))
+        footballList = footballList.eventList
+        tennisList = sportData[1].gameList.find(item => item.sportId == parseInt('2'))
+        tennisList = tennisList.eventList
+        let sportList = cricketList.concat(footballList,tennisList)
+        sportList = sportList.filter(item => item.eventData.name.toLowerCase().includes(data.x.toLowerCase()))
+        console.log(sportList)
         socket.emit("searchEvents", {sportList,type:data.type})
     })
     socket.on("SearchACC", async(data) => {
