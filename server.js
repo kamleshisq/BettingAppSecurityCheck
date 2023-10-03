@@ -4203,7 +4203,7 @@ io.on('connection', (socket) => {
             if(notificationData){
                 notificationData = await eventNotification.findOneAndUpdate({id:data.id}, data)
             }else{
-                notificationData = await eventNotification.create(data)
+                notificationData = await eventNotification.create({id:data.id, message:data.message})
             }
             socket.emit('eventNotification2', notificationData)
         }catch(err){

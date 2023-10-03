@@ -12988,7 +12988,8 @@ socket.on('connect', () => {
                 }else{
                     data.status = false
                 }
-
+            }else{
+                data.status = false
             }
             socket.emit('eventNotification2', data)
         })
