@@ -34,14 +34,31 @@
                 <div class="table-heading-btn">
                   <form action="" class="betmonitor-heading-from">
                     <div class="input-group">
-                      <label>Select Sports</label>
+                      <label class="up-down-form">From Date</label>
+                      <input type = "date" id="fromDate">
+                    </div>
+                    <div class="input-group">
+                      <label class="up-down-form">To Date</label>
+                      <input type = "date" id="toDate">
+                    </div>
+                    <div class="input-group">
+                      <label>Select Sport</label>
                       <select name="Sport" id="Sport">
                         <option value="All">All</option>
-                        <option value="Cricket">CRICKET</option>
+                        <option value="Cricket" selected>CRICKET</option>
                         <option value="Football">FOOTBALL</option>
                         <option value="Tennis">TENNIS</option>
                         <option value="basketball">BASKETBALL</option>
                         <option value="baseball">BASEBALL</option>
+                      </select>
+                    </div>
+                    <div class="input-group">
+                      <label>Select Event</label>
+                      <select name="Event" id="Event">
+                        <option value="All">Select Event</option>
+                        <%for(let i = 0;i<events.length;i++){%>
+                          <option value="<%=events[i].eventData.eventId%>"><%=events[i].eventData.name></option>
+                        <%}%>
                       </select>
                     </div>
                     <div class="input-group">
@@ -54,13 +71,34 @@
                         <!-- <option value="">GoalMarket</option> -->
                       </select>
                     </div>
+                    <%if(currentUser.role_level == 1){%>
+                      <div class="input-group">
+                        <label>Whitelabels</label>
+                        <select name="whitLabel" id="whitLabel">
+                          <option value="All">All</option>
+                          <%for(let i = 0;i<whiteLabels.length;i++){%>
+                            <option value="<%=whiteLabels[i].whiteLabelName%>"><%=whiteLabels[i].whiteLabelName%></option>
+                          <%}%>
+                        </select>
+                      </div>
+                    <%}%>
+                    
                     <div class="input-group">
-                      <label class="up-down-form">From Date</label>
-                      <input type = "date" id="fromDate">
+                      <label>Select Result</label>
+                      <select name="result" id="result">
+                        <option value="All">All</option>
+                        <option value="WON">Won</option>
+                        <option value="LOSS">Lost</option>
+                        <option value="CANCEL">Void</option>
+                      </select>
                     </div>
                     <div class="input-group">
-                      <label class="up-down-form">To Date</label>
-                      <input type = "date" id="toDate">
+                      <label class="up-down-form">Stake</label>
+                      <input type = "number" id="stake">
+                    </div>
+                    <div class="input-group">
+                      <label class="up-down-form">IP</label>
+                      <input type = "text" id="IP">
                     </div>
                     </form>
                     <!-- <button class="btn-filter filter"><i class="fa-solid fa-filter"></i> &nbsp; Filter</button> -->
