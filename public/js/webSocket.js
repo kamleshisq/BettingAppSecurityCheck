@@ -5206,7 +5206,7 @@ socket.on('connect', () => {
                   ids.push(this.id);
                 });
                 // console.log(ids)
-                socket.emit("marketId", ids)
+                socket.emit("marketId", {ids})
               });
               setTimeout(()=>{
                 marketId()
@@ -5255,7 +5255,7 @@ socket.on('connect', () => {
                   ids.push(this.id);
                 });
           
-                socket.emit("marketId", ids)
+                socket.emit("marketId", {ids})
               });
               setTimeout(()=>{
                 marketId()
@@ -5482,7 +5482,7 @@ socket.on('connect', () => {
                   ids.push(this.id);
                 });
                 // console.log(ids)
-                socket.emit("marketId", ids)
+                socket.emit("marketId", {ids})
               });
               setTimeout(()=>{
                 marketId()
@@ -5532,7 +5532,7 @@ socket.on('connect', () => {
                   ids.push(this.id);
                 });
                 // console.log(ids)
-                socket.emit("marketId", ids)
+                socket.emit("marketId", {ids})
               });
               setTimeout(()=>{
                 marketId()
@@ -6034,7 +6034,7 @@ socket.on('connect', () => {
                     }
                 });
           
-                socket.emit("marketId", ids)
+                socket.emit("marketId", {ids})
               });
               setTimeout(()=>{
                 marketId()
@@ -7742,7 +7742,7 @@ socket.on('connect', () => {
                     }
                 });
           
-                socket.emit("marketId", ids)
+                socket.emit("marketId", {ids})
               });
               setTimeout(()=>{
                 marketId()
@@ -7927,7 +7927,7 @@ socket.on('connect', () => {
                     }
                 });
           
-                socket.emit("marketId", ids)
+                socket.emit("marketId", {ids})
               });
               setTimeout(()=>{
                 marketId()
@@ -8111,7 +8111,7 @@ socket.on('connect', () => {
                     }
                 });
           
-                socket.emit("marketId", ids)
+                socket.emit("marketId", {ids})
               });
               setTimeout(()=>{
                 marketId()
@@ -8296,7 +8296,7 @@ socket.on('connect', () => {
                     }
                 });
           
-                socket.emit("marketId", ids)
+                socket.emit("marketId", {ids})
               });
               setTimeout(()=>{
                 marketId()
@@ -8623,7 +8623,7 @@ socket.on('connect', () => {
                   ids.push(this.id);
                 });
                 // console.log(ids)
-                socket.emit("marketId", ids)
+                socket.emit("marketId", {ids})
               });
               setTimeout(()=>{
                 marketId()
@@ -11125,7 +11125,7 @@ socket.on('connect', () => {
                   ids.push(this.id);
                 });
                 // console.log(ids)
-                socket.emit("marketId", ids)
+                socket.emit("marketId", {ids})
               });
               setTimeout(()=>{
                 marketId()
