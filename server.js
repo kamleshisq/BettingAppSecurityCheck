@@ -61,7 +61,8 @@ io.on('connection', (socket) => {
     // console.log(loginData.Token)
     // console.log(global._token)
     socket.emit("loginUser", {
-        loginData:global.loginData
+        loginData:global.loginData,
+        socket:socket.request.connection.remoteAddress
     })
     const urlRequestAdd = async(url,method, Token, user) => {
         const login = await loginlogs.findOne({session_id:Token, isOnline:true})
@@ -1100,6 +1101,10 @@ io.on('connection', (socket) => {
 
         if(data.filterData.status == "All"){
             delete data.filterData.status
+        }
+
+        if(data.filterData.status){
+            data.filterData.stats = {$gte:data.filterData.status}
         }
 
         
