@@ -2872,6 +2872,11 @@ io.on('connection', (socket) => {
                     userName:{$in:childrenUsername}
                 }
             },
+            {
+              $sort:{
+                eventDate : -1
+              }
+            },
               {
                 $group: {
                   _id: {
