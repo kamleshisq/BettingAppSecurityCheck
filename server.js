@@ -1114,12 +1114,19 @@ io.on('connection', (socket) => {
         if(data.filterData.marketName == "All"){
             delete data.filterData.marketName
         }
+        
         if(data.filterData.marketName == "Fancy"){
             data.filterData.marketName = {$nin:["Match Odds", "Bookmaker 0%Comm"]}
         }
+
         if(data.filterData.betType == "All"){
             delete data.filterData.betType; 
         }
+
+        if(data.filterData.status == "All"){
+            delete data.filterData.status
+        }
+
         let limit = 10;
         let page = data.page;
         const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});

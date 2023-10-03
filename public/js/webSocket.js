@@ -4715,6 +4715,12 @@ socket.on('connect', () => {
 
         let toDate;
         let fromDate;
+        let sport;
+        let market;
+        let event;
+        let result;
+        let stack;
+        let IP;
         let filterData = {}
         $(document).on('input','.searchUser', function(e){
             var $input = $(this),
@@ -4738,13 +4744,17 @@ socket.on('connect', () => {
         })
 
 
-        $('#fromDate,#toDate,#Sport,#market').change(function(){
+        $('#fromDate,#toDate,#Sport,#market,#Event,#result').change(function(){
             console.log("working")
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
             sport = $('#Sport').val()
             market = $('#market').val()
+            event = $('#Event').val()
+            result = $('#result').val()
+            stack = $('#stake').val()
+            IP = $('#IP').val()
             $('.pageId').attr('data-pageid','1')
             data.page = 0;
             if(fromDate != ''  && toDate != '' ){
@@ -4769,6 +4779,9 @@ socket.on('connect', () => {
             // if(market != "All"){
                 filterData.marketName = market
             // }
+            filterData.status = result;
+            filterData.Stake = stack;
+
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             data.page = 0;
@@ -4781,7 +4794,6 @@ socket.on('connect', () => {
             // console.log("working")
             // console.log(this.textContent)
             document.getElementById("searchUser").value = this.textContent
-            filterData = {}
             filterData.userName = this.textContent
             $('.pageId').attr('data-pageid','1')
             $('.wrapper').hide()
