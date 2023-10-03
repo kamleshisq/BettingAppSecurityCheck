@@ -82,6 +82,9 @@ const betSchema = mongoose.Schema({
     },
     bettype2:{
         type:String
+    },
+    ip:{
+        type:String
     }
 })
 
