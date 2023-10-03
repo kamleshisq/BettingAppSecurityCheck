@@ -203,12 +203,14 @@ if(data.data.bettype2 === 'BACK'){
     console.log(betLimit, "betLimit")
     console.log(data.data, "BET DATA")
     let OddChake = data.data.oldOdds + betLimit.max_odd 
-    if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
+    console.log(OddChake)
+    console.log(OddChake <= data.data.odds, data.data.odds < data.data.oldOdds)
+    if(OddChake <= data.data.odds && data.data.odds < data.data.oldOdds){
         return 'Odds out of range back'
     }
 }else{
     let OddChake = data.data.oldOdds - betLimit.max_odd  
-    if(OddChake >= data.data.odds || data.data.odds > data.data.oldOdds ){
+    if(OddChake >= data.data.odds && data.data.odds > data.data.oldOdds ){
         return 'Odds out of range'
     }
 }
