@@ -6083,7 +6083,7 @@ socket.on('connect', () => {
             $(".my-exc-inn-colaps-txt-dv .close-btn").click(function(){
               $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
             });
-          });
+          }); 
         
 
         function marketLimitId(){
