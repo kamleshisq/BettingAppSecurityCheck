@@ -41,6 +41,7 @@ const betLimitMatchWisemodel = require('../model/betLimitMatchWise');
 const streamModel = require('../model/streammanagement');
 const InprogreshModel = require('../model/InprogressModel');
 const commissionMarketModel = require('../model/CommissionMarketsModel')
+let eventNotification = require('../model/eventNotification');
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -2452,7 +2453,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         // console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 
         const betLimitMarekt = await betLimitMatchWisemodel.findOne({matchTitle:match.eventData.name})
-        
+        let notification = await eventNotification.findOne({id:req.query.id})
+        console.log(notification)
         res.status(200).render("./userSideEjs/userMatchDetails/main",{
             title:match.eventData.name,
             user: req.currentUser,
@@ -2476,7 +2478,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             maxMatchOdds,
             minFancy,
             maxFancy,
-            commissionmarkerarr
+            commissionmarkerarr,
+            notification
     })
 });
 
