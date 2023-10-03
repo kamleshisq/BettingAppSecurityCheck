@@ -723,8 +723,8 @@ socket.on('connect', () => {
         let form = $(this)[0];
         let fd = new FormData(form);
         let data = Object.fromEntries(fd.entries());
-        console.log(data, "BETLIMIT")
-        // socket.emit('UpdateBetLimit', {data, LOGINDATA})
+        // console.log(data, "BETLIMIT")
+        socket.emit('UpdateBetLimit', {data, LOGINDATA})
     })
 
 
@@ -13111,8 +13111,9 @@ socket.on('connect', () => {
             let data = Object.fromEntries(fd.entries());
             let id = $(this).attr('id');
             // console.log(id)
-            data.id = id
-            socket.emit('updateBetLimitMarket', data)
+            console.log(data)
+            // data.id = id
+            // socket.emit('updateBetLimitMarket', data)
          })
 
          socket.on('updateBetLimitMarket', data => {
