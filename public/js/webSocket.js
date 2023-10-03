@@ -13112,7 +13112,7 @@ socket.on('connect', () => {
             let id = $(this).attr('id');
             data.type = id
             // console.log(id)
-            console.log(data)
+            // console.log(data)
             // data.id = id
             socket.emit('UpdateBetLimit', {data, LOGINDATA})
          })
