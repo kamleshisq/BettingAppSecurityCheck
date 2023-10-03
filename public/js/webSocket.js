@@ -12966,6 +12966,7 @@ socket.on('connect', () => {
                 if(data.eventNotificationSetting.status){
                     form.find('input[name = "status"]').prop('checked', true);
                 }else{
+                    console.log("WORKNIG")
                     form.find('input[name = "status"]').prop('checked', false);
                 }
                 form.find('input[name = "message"]').val(data.eventNotificationSetting.message)
