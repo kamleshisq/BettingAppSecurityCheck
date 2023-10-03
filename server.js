@@ -824,6 +824,7 @@ io.on('connection', (socket) => {
         tennisList = tennisList.eventList
         let sportList = cricketList.concat(footballList,tennisList)
         sportList = sportList.filter(item => item.eventData.name.includes(data.x))
+        console.log(sportList)
         socket.emit("searchEvents", {sportList,type:data.type})
     })
     socket.on("SearchACC", async(data) => {
