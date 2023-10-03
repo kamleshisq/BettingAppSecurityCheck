@@ -2300,7 +2300,6 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     let ip = req.ip
     let ipv4
     if (ip.indexOf('::ffff:') === 0) {
-        // Extract the IPv4 portion from the IPv6 address
         ipv4 = ip.split('::ffff:')[1];
     }else{
         ipv4 = ip
@@ -2342,28 +2341,8 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             } else {
                 console.log("No 'src' attribute found in the iframe tag.");
             }
-            // console.log(src, 123)
         }
     }
-    // console.log(match.marketList.goals)
-    // let session = match.marketList.session.filter(item => {
-        //     let date = new Date(item.updated_on);
-        //     return date < Date.now() - 1000 * 60 * 60;
-        // });
-        // let SportLimits = betLimit.find(item => item.type === "Sport")
-        // let min 
-        // let max 
-        // if (SportLimits.min_stake >= 1000) {
-        //     min = (SportLimits.min_stake / 1000) + 'K';
-        // } else {
-        //     min = SportLimits.min_stake.toString();
-        // }
-        // if (SportLimits.max_stake >= 1000) {
-        //     max = (SportLimits.max_stake / 1000) + 'K';
-        //   } else {
-        //     max = SportLimits.max_stake.toString();
-        // }
-        // console.log(SportLimits, min , max)
         let userLog
         let stakeLabledata
         let userMultimarkets
@@ -2454,7 +2433,7 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
 
         const betLimitMarekt = await betLimitMatchWisemodel.findOne({matchTitle:match.eventData.name})
         let notification = await eventNotification.findOne({id:req.query.id})
-        console.log(notification)
+        console.log(notification, "notification")
         res.status(200).render("./userSideEjs/userMatchDetails/main",{
             title:match.eventData.name,
             user: req.currentUser,
