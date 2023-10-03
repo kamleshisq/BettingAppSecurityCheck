@@ -4001,6 +4001,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('UpdateBetLimit', async(data) => {
+        console.log(data, "LimitData")
         try{
             let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
             if(!loginUser || !(await loginUser.correctPassword(data.password, loginUser.password))){
