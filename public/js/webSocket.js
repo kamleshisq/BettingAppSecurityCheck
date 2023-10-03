@@ -8773,7 +8773,10 @@ socket.on('connect', () => {
 
 
           $(document).ready(function () {
+
             $(".button").click(function () {
+
+                console.log('WORKING')
               let odds = $(this).children("span:first-child").attr('data-id');
               let beton = $(this).closest("tr").find("td:first-child").text();
               let secondPTag = $(this).closest("tr").next().find(".beton");
