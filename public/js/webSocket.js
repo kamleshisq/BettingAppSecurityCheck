@@ -723,7 +723,7 @@ socket.on('connect', () => {
         let form = $(this)[0];
         let fd = new FormData(form);
         let data = Object.fromEntries(fd.entries());
-        // console.log(data)
+        // console.log(data, "BETLIMIT")
         socket.emit('UpdateBetLimit', {data, LOGINDATA})
     })
 
@@ -6087,7 +6087,9 @@ socket.on('connect', () => {
             $(".my-exc-inn-colaps-txt-dv .close-btn").click(function(){
               $('tr:not(.tbl-data-href) .my-exc-inn-colaps-txt-dv').removeClass('open');
             });
-          }); 
+        });
+        
+        
         
 
         function marketLimitId(){
@@ -7028,6 +7030,7 @@ socket.on('connect', () => {
                 }
             }else{
                 if(check ){
+                    data.oldOdds = data.odds
                     data.odds = specificSpan
                     if(data.stake === ""){
                         // alert("Please select stake")
@@ -7041,7 +7044,7 @@ socket.on('connect', () => {
                         }
                     }
                 }else{
-                    togglePopupMain('popup-2', "redPopUP2", "Odds value changed, please try again ")
+                    togglePopupMain('popup-2', "redPopUP2", "Odds out of range")
                 }
             }
             });
@@ -12973,7 +12976,7 @@ socket.on('connect', () => {
         })
     }
     if(pathname.startsWith("/admin/betlimit/sports/event")){
-        console.log(search,"==>Search")
+        // console.log(search,"==>Search")
         $('.searchEvents').keyup(function(){
             // console.log('working')
             if($(this).hasClass("searchEvents")){
@@ -12991,7 +12994,7 @@ socket.on('connect', () => {
         })
 
         socket.on("searchEvents", async(data)=>{
-            console.log(data, 565464)
+            // console.log(data, 565464)
             $('.wrapper').show()
             let html = ``
             for(let i = 0; i < data.sportList.length; i++){
@@ -13004,7 +13007,7 @@ socket.on('connect', () => {
 
         $(document).on('click', ".event-notification", function(e){
             e.preventDefault()
-            console.log(this.id, "innerTextinnerTextinnerText")
+            // console.log(this.id, "innerTextinnerTextinnerText")
             socket.emit('eventNotification', {id:this.id})
         })
 
@@ -13039,7 +13042,7 @@ socket.on('connect', () => {
             let data = Object.fromEntries(fd.entries());
             let id = $(this).attr('id');
             data.id = id
-            console.log(data)
+            // console.log(data)
             if(data.status){
                 if(data.status === 'on'){
                     data.status = true
@@ -13078,11 +13081,11 @@ socket.on('connect', () => {
              if(data.status == "notFound"){
                 // console.log('working')
             let form = $('#myModal2').find('.form-data')
-            form.find('input[name = "min_stake"]').val(100)
-            form.find('input[name = "max_stake"]').val(1000)
-            form.find('input[name = "max_profit"]').val(5000)
-            form.find('input[name = "max_odd"]').val(100)
-            form.find('input[name = "delay"]').val(5)
+            form.find('input[name = "min_stake"]').val(0)
+            form.find('input[name = "max_stake"]').val(0)
+            form.find('input[name = "max_profit"]').val(0)
+            form.find('input[name = "max_odd"]').val(0)
+            form.find('input[name = "delay"]').val(0)
             form.find('input[name = "type"]').val(data.data)
             form.attr('id', data.id)
             }else if (data.status == "errr"){
@@ -13107,9 +13110,11 @@ socket.on('connect', () => {
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
             let id = $(this).attr('id');
+            data.type = id
             // console.log(id)
-            data.id = id
-            socket.emit('updateBetLimitMarket', data)
+            // console.log(data)
+            // data.id = id
+            socket.emit('UpdateBetLimit', {data, LOGINDATA})
          })
 
          socket.on('updateBetLimitMarket', data => {

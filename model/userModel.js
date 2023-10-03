@@ -301,6 +301,7 @@ userSchema.post(/^find/, function (docs) {
 
 
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
+    console.log(candidatePassword, userPassword)
     return await bycrypt.compare(candidatePassword, userPassword)
 };
 

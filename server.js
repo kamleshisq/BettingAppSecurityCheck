@@ -1403,6 +1403,7 @@ io.on('connection', (socket) => {
         // console.log(data)
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
         // console.log(marketDetails.data.items)
+        // data.data.oldData = data.data.odds
         data.LOGINDATA.IP = data.LOGINDATA.IP.replace('::ffff:','')
         let thatMarket = marketDetails.data.items[0]
         console.log(thatMarket, 11111)
@@ -4005,15 +4006,19 @@ io.on('connection', (socket) => {
 
 
     socket.on('UpdateBetLimit', async(data) => {
+        // console.log(data, "LimitData")
         try{
             let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
-            if(!loginUser || !(await loginUser.correctPassword(data.password, loginUser.password))){
-                let check = await betLimit.findOne({type:data.type})
+            // console.log(loginUser, "loginUser")
+            if(loginUser && (await loginUser.correctPassword(data.data.password, loginUser.password))){
+                let check = await betLimit.findOne({type:data.data.type})
+                // console.log(check)
                 if(check){
-                    await betLimit.findOneAndUpdate({type:data.type}, data)
+                    // console.log('WORKING')
+                    await betLimit.findOneAndUpdate({type:data.data.type}, data.data)
                     socket.emit('UpdateBetLimit', {status:'success'})
                 }else{
-                    await betLimit.create(data)
+                    await betLimit.create(data.data)
                     socket.emit('UpdateBetLimit', {status:'success'})
                 }
             }else{
@@ -4056,6 +4061,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('updateBetLimitMarket', async(data) => {
+        console.log('WORKING')
        let dbData = await betLimit.findOne({type:data.id})
        if(dbData){
         // console.log(dbData)
