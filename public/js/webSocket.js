@@ -12960,6 +12960,7 @@ socket.on('connect', () => {
             }else{
                 let form = $('#myModaNotification').find('.add-event-notification')
                 form.attr('id', data.id)
+                form.find('input[name = "status"]').closest('div').removeClass('hide')
             }
         })
 
