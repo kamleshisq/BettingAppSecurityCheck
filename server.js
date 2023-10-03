@@ -1114,7 +1114,7 @@ io.on('connection', (socket) => {
         if(data.filterData.marketName == "All"){
             delete data.filterData.marketName
         }
-        
+
         if(data.filterData.marketName == "Fancy"){
             data.filterData.marketName = {$nin:["Match Odds", "Bookmaker 0%Comm"]}
         }
@@ -1150,7 +1150,7 @@ io.on('connection', (socket) => {
             socket.emit('betMoniter',{ubDetails,page})
         }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
             let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('betMoniter',{ubDetails,page})
+            socket.emit('betMoniter',{ubDetails,page,filter:data.filterData})
 
         }
     })
