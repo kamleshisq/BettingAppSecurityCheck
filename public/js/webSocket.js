@@ -12981,7 +12981,7 @@ socket.on('connect', () => {
             let id = $(this).attr('id');
             data.id = id
             console.log(data)
-            socket.emit('eventNotification2', data)
+            // socket.emit('eventNotification2', data)
         })
 
 
