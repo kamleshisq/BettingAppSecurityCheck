@@ -6111,7 +6111,7 @@ socket.on('connect', () => {
                   ids.push(this.id);
                 });
                 // console.log(ids)
-                socket.emit("marketId", ids)
+                socket.emit("marketId", {ids, search})
               });
               setTimeout(()=>{
                 marketId()
