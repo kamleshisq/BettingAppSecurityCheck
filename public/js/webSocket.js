@@ -12973,6 +12973,16 @@ socket.on('connect', () => {
             let id = $(this).attr('id');
             data.id = id
             console.log(data)
+            // socket.emit('eventNotification', data)
+        })
+
+
+        socket.on('eventNotification', data => {
+            if(data.status === "err"){
+                alert('Please try again later')
+            }else{
+                alert('Notification Updated successfully!!!')
+            }
         })
     }
     if(pathname == "/admin/betlimit/sports/match"){

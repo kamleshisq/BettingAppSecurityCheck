@@ -4195,6 +4195,22 @@ io.on('connection', (socket) => {
             console.log(err)
         }
     })
+
+
+    socket.on('eventNotification', async(data) => {
+        try{
+            let notificationData = await eventNotification.findOne({id:data.id})
+            if(notificationData){
+                notificationData = await eventNotification.findOneAndUpdate({id:data.id}, data)
+            }else{
+                notificationData = await eventNotification.create(data)
+            }
+            socket.emit('eventNotification', notificationData)
+        }catch(err){
+            console.log(err)
+            socket.emit('eventNotification', {status:'err'})
+        }
+    })
     
 })
 
