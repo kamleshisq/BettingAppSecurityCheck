@@ -12957,11 +12957,19 @@ socket.on('connect', () => {
                 form.attr('id', data.id)
                 form.find('input[name = "status"]').closest('div').addClass('hide')
                 // form.find('input[name = "status"]').
+                form.find('input[name = "message"]').val("")
             }else{
-                console.log(data, 454545545454545)
+                console.log(data.eventNotificationSetting, 454545545454545)
                 let form = $('#myModaNotification').find('.add-event-notification')
                 form.attr('id', data.id)
                 form.find('input[name = "status"]').closest('div').removeClass('hide')
+                if(data.eventNotificationSetting.status){
+                    form.find('input[name = "status"]').prop('checked', true);
+                }else{
+                    console.log("WORKNIG")
+                    form.find('input[name = "status"]').prop('checked', false);
+                }
+                form.find('input[name = "message"]').val(data.eventNotificationSetting.message)
             }
         })
 
@@ -12974,6 +12982,15 @@ socket.on('connect', () => {
             let id = $(this).attr('id');
             data.id = id
             console.log(data)
+            if(data.status){
+                if(data.status === 'on'){
+                    data.status = true
+                }else{
+                    data.status = false
+                }
+            }else{
+                data.status = false
+            }
             socket.emit('eventNotification2', data)
         })
 

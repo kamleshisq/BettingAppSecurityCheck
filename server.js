@@ -2857,29 +2857,21 @@ io.on('connection', (socket) => {
             dataobj = {$lte:new Date(toDate)}
         }
         console.log(dataobj, "dateObj")
+        let childrenUsername = []
+        let children = await User.find({parentUsers:{ $in: [me._id] }})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    
+    
         let betsEventWise = await Bet.aggregate([
             {
                 $match: {
                     // status:"OPEN" ,
-                    eventDate: dataobj
+                    eventDate: dataobj,
+                    userName:{$in:childrenUsername}
                 }
             },
-            {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-              },
-              {
-                $unwind: "$user"
-              },
-              {
-                $match: {
-                  "user.parentUsers": { $in: [me._id] }
-                }
-              },
               {
                 $group: {
                   _id: {
@@ -2920,7 +2912,13 @@ io.on('connection', (socket) => {
                   id: "$_id", 
                   data: 1
                 }
-              }
+              },
+              {
+                $sort: {
+                    "data.eventdate": -1 
+                }
+            }
+        
         ])
         socket.emit('settlement',{betsEventWise,dataobj,data})
 
@@ -4206,11 +4204,11 @@ io.on('connection', (socket) => {
             if(notificationData){
                 notificationData = await eventNotification.findOneAndUpdate({id:data.id}, data)
             }else{
-                notificationData = await eventNotification.create(data)
+                notificationData = await eventNotification.create({id:data.id, message:data.message})
             }
             socket.emit('eventNotification2', notificationData)
         }catch(err){
-            console.log(err)
+            // console.log(err)
             socket.emit('eventNotification2', {status:'err'})
         }
     })
