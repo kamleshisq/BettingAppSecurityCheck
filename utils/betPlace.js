@@ -197,7 +197,8 @@ if(marketDetails.title.toLowerCase().startsWith('match')){
         return `Odds out of range`
     }
 }
-
+console.log(betLimit, "betLimit")
+console.log(data.data)
 
 // console.log(marketDetails, data.data, '+===>DATA')
 
