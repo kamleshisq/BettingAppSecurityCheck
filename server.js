@@ -1320,12 +1320,11 @@ io.on('connection', (socket) => {
     })
 
     socket.on("marketId", async(data) => {
-        console.log(data.eventId)
-        // const result = await marketDetailsBymarketID(data)
-        // let finalResult = result.data
-        // const betLimits = await betLimit.find({type:"Sport"})
-        // // console.log(finalResult)
-        // socket.emit("marketId", {finalResult,betLimits})
+        const result = await marketDetailsBymarketID(data.ids)
+        let finalResult = result.data
+        const betLimits = await betLimit.find({type:"Sport"})
+        // console.log(finalResult)
+        socket.emit("marketId", {finalResult,betLimits})
     })
 
     socket.on("SPORTDATA", async(data) => {
