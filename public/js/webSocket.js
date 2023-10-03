@@ -4782,6 +4782,11 @@ socket.on('connect', () => {
             filterData.status = result;
             filterData.Stake = stack;
 
+            Object.keys(filterData).map(ele => {
+                if(filterData[ele] == ""){
+                    delete filterData[ele]
+                }
+            })
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             data.page = 0;
@@ -4798,7 +4803,6 @@ socket.on('connect', () => {
             $('.pageId').attr('data-pageid','1')
             $('.wrapper').hide()
             socket.emit('betMoniter',{filterData,LOGINDATA,page:0})
-            
         })
 
         $('#load-more').click(function(e){
