@@ -24,5 +24,11 @@
     <div class="exchange-pg-inn-banner-tv score">
         
     </div>
-    
+    <%if(notification){%>
+        <%if(notification.status){%>
+            <div class="odd-scroll-text">
+                <marquee><%=notification.message%></marquee>
+            </div>
+        <%}%>
+    <%}%>
 </div>
