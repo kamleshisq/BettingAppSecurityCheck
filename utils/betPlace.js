@@ -222,7 +222,8 @@ if(!marketDetails.runners){
         selectionName : marketDetails.title,
         marketId : data.data.market,
         secId : data.data.secId,
-        bettype2: data.data.bettype2
+        bettype2: data.data.bettype2,
+        ip:data.LOGINDATA.socket
     }
 }else{
     let runnersData = JSON.parse(marketDetails.runners)
@@ -257,7 +258,9 @@ if(!marketDetails.runners){
             selectionName : betOn.runner,
             marketId : data.data.market,
             secId : data.data.secId,
-            bettype2: data.data.bettype2
+            bettype2: data.data.bettype2,
+            ip:data.LOGINDATA.socket
+
         }
 }
     let description = `Bet for ${data.data.title}/stake = ${data.data.stake}`
