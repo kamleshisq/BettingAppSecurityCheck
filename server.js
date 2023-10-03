@@ -4197,7 +4197,7 @@ io.on('connection', (socket) => {
     })
 
 
-    socket.on('eventNotification', async(data) => {
+    socket.on('eventNotification2', async(data) => {
         try{
             let notificationData = await eventNotification.findOne({id:data.id})
             if(notificationData){
@@ -4205,10 +4205,10 @@ io.on('connection', (socket) => {
             }else{
                 notificationData = await eventNotification.create(data)
             }
-            socket.emit('eventNotification', notificationData)
+            socket.emit('eventNotification2', notificationData)
         }catch(err){
             console.log(err)
-            socket.emit('eventNotification', {status:'err'})
+            socket.emit('eventNotification2', {status:'err'})
         }
     })
     

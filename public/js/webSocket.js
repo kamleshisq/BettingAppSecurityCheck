@@ -12973,11 +12973,11 @@ socket.on('connect', () => {
             let id = $(this).attr('id');
             data.id = id
             console.log(data)
-            // socket.emit('eventNotification', data)
+            socket.emit('eventNotification2', data)
         })
 
 
-        socket.on('eventNotification', data => {
+        socket.on('eventNotification2', data => {
             if(data.status === "err"){
                 alert('Please try again later')
             }else{
