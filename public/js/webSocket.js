@@ -12976,7 +12976,7 @@ socket.on('connect', () => {
         })
     }
     if(pathname.startsWith("/admin/betlimit/sports/event")){
-        console.log(search,"==>Search")
+        // console.log(search,"==>Search")
         $('.searchEvents').keyup(function(){
             // console.log('working')
             if($(this).hasClass("searchEvents")){
@@ -12994,7 +12994,7 @@ socket.on('connect', () => {
         })
 
         socket.on("searchEvents", async(data)=>{
-            console.log(data, 565464)
+            // console.log(data, 565464)
             $('.wrapper').show()
             let html = ``
             for(let i = 0; i < data.sportList.length; i++){
@@ -13007,7 +13007,7 @@ socket.on('connect', () => {
 
         $(document).on('click', ".event-notification", function(e){
             e.preventDefault()
-            console.log(this.id, "innerTextinnerTextinnerText")
+            // console.log(this.id, "innerTextinnerTextinnerText")
             socket.emit('eventNotification', {id:this.id})
         })
 
@@ -13042,7 +13042,7 @@ socket.on('connect', () => {
             let data = Object.fromEntries(fd.entries());
             let id = $(this).attr('id');
             data.id = id
-            console.log(data)
+            // console.log(data)
             if(data.status){
                 if(data.status === 'on'){
                     data.status = true
