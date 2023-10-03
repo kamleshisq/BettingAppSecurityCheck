@@ -2872,11 +2872,6 @@ io.on('connection', (socket) => {
                     userName:{$in:childrenUsername}
                 }
             },
-            {
-              $sort:{
-                eventDate : -1
-              }
-            },
               {
                 $group: {
                   _id: {
@@ -2909,6 +2904,11 @@ io.on('connection', (socket) => {
                       betType : '$betType'
                     }
                   }
+                }
+              },
+              {
+                $sort:{
+                  'data.eventDate' : -1
                 }
               },
               {
