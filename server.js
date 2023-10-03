@@ -4008,6 +4008,7 @@ io.on('connection', (socket) => {
             if(loginUser && (await loginUser.correctPassword(data.data.password, loginUser.password))){
                 let check = await betLimit.findOne({type:data.data.type})
                 if(check){
+                    console.log('WORKING')
                     await betLimit.findOneAndUpdate({type:data.data.type}, data.data)
                     socket.emit('UpdateBetLimit', {status:'success'})
                 }else{
