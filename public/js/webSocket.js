@@ -6110,7 +6110,7 @@ socket.on('connect', () => {
                 $(".market").each(function() {
                   ids.push(this.id);
                 });
-                // console.log(ids)
+                console.log(search)
                 socket.emit("marketId", {ids, search})
               });
               setTimeout(()=>{
