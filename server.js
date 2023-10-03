@@ -4001,15 +4001,15 @@ io.on('connection', (socket) => {
 
 
     socket.on('UpdateBetLimit', async(data) => {
-        console.log(data, "LimitData")
+        // console.log(data, "LimitData")
         try{
             let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
-            console.log(loginUser, "loginUser")
+            // console.log(loginUser, "loginUser")
             if(loginUser && (await loginUser.correctPassword(data.data.password, loginUser.password))){
                 let check = await betLimit.findOne({type:data.data.type})
-                console.log(check)
+                // console.log(check)
                 if(check){
-                    console.log('WORKING')
+                    // console.log('WORKING')
                     await betLimit.findOneAndUpdate({type:data.data.type}, data.data)
                     socket.emit('UpdateBetLimit', {status:'success'})
                 }else{
