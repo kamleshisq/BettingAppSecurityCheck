@@ -4,25 +4,82 @@
   <section class="dashboard-welcome-section">
     <div class="container-fluid">
       <div class="new-head bet-limit-breadcrum"> 
-          <form action="">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-              </div>
-              <input type="text" id="searchUser"  list=text_editors class="form-control searchUser" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
-              <div class="wrapper">
-                <ul id="search" class="users">
-              
-                </ul>
-                <ul id="button" class="button">
-                  
-                </ul>
-              </div>
-              
+        <form action="" class="betmonitor-heading-from">
+          <div class="input-group">
+            <label class="up-down-form">Select User</label>
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
             </div>
-          </form>
+            <input type="text" id="searchUser"  list=text_editors class="form-control searchUser" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
+            <div class="wrapper">
+              <ul id="search" class="users">
+            
+              </ul>
+              <ul id="button" class="button">
+                
+              </ul>
+            </div>
+            
+          </div>
+          <div class="input-group">
+            <label class="up-down-form">From Date</label>
+            <input type = "date" id="fromDate">
+          </div>
+          <div class="input-group">
+            <label class="up-down-form">To Date</label>
+            <input type = "date" id="toDate">
+          </div>
+          <div class="input-group">
+            <label>Select Sport</label>
+            <select name="Sport" id="Sport">
+              <option value="All">All</option>
+              <option value="Cricket" selected>CRICKET</option>
+              <option value="Football">FOOTBALL</option>
+              <option value="Tennis">TENNIS</option>
+              <option value="basketball">BASKETBALL</option>
+              <option value="baseball">BASEBALL</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Select Event</label>
+            <select name="Event" id="Event">
+              <option value="All">Select Event</option>
+              <%for(let i = 0;i<events.length;i++){%>
+                <option value="<%=events[i].eventData.eventId%>"><%=events[i].eventData.name%></option>
+              <%}%>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Select Market</label>
+            <select name="market" id="market">
+              <option value="All">All</option>
+              <option value="Match Odds">Match Odds</option>
+              <option value="Bookmaker 0%Comm">BookMaker</option>
+              <option value="Fancy">Fancy</option>
+              <!-- <option value="">GoalMarket</option> -->
+            </select>
+          </div>
+          
+          
+          <div class="input-group">
+            <label>Select Result</label>
+            <select name="result" id="result">
+              <option value="All">All</option>
+              <option value="WON">Won</option>
+              <option value="LOSS">Lost</option>
+              <option value="CANCEL">Void</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label class="up-down-form">Stake</label>
+            <input type = "number" id="stake">
+          </div>
+          <div class="input-group">
+            <label class="up-down-form">IP</label>
+            <input type = "text" id="IP">
+          </div>
+        </form>
       </div>
-    <%- include("../loginUserAdminsideDetails") %>
   </section>
 
   <section>
@@ -32,66 +89,7 @@
                 <h3>Bet Monitoring</h3>
                 <div class="rowId" data-rowid="1"></div>
                 <div class="table-heading-btn">
-                  <form action="" class="betmonitor-heading-from">
-                    <div class="input-group">
-                      <label class="up-down-form">From Date</label>
-                      <input type = "date" id="fromDate">
-                    </div>
-                    <div class="input-group">
-                      <label class="up-down-form">To Date</label>
-                      <input type = "date" id="toDate">
-                    </div>
-                    <div class="input-group">
-                      <label>Select Sport</label>
-                      <select name="Sport" id="Sport">
-                        <option value="All">All</option>
-                        <option value="Cricket" selected>CRICKET</option>
-                        <option value="Football">FOOTBALL</option>
-                        <option value="Tennis">TENNIS</option>
-                        <option value="basketball">BASKETBALL</option>
-                        <option value="baseball">BASEBALL</option>
-                      </select>
-                    </div>
-                    <div class="input-group">
-                      <label>Select Event</label>
-                      <select name="Event" id="Event">
-                        <option value="All">Select Event</option>
-                        <%for(let i = 0;i<events.length;i++){%>
-                          <option value="<%=events[i].eventData.eventId%>"><%=events[i].eventData.name%></option>
-                        <%}%>
-                      </select>
-                    </div>
-                    <div class="input-group">
-                      <label>Select Market</label>
-                      <select name="market" id="market">
-                        <option value="All">All</option>
-                        <option value="Match Odds">Match Odds</option>
-                        <option value="Bookmaker 0%Comm">BookMaker</option>
-                        <option value="Fancy">Fancy</option>
-                        <!-- <option value="">GoalMarket</option> -->
-                      </select>
-                    </div>
-                    
-                    
-                    <div class="input-group">
-                      <label>Select Result</label>
-                      <select name="result" id="result">
-                        <option value="All">All</option>
-                        <option value="WON">Won</option>
-                        <option value="LOSS">Lost</option>
-                        <option value="CANCEL">Void</option>
-                      </select>
-                    </div>
-                    <div class="input-group">
-                      <label class="up-down-form">Stake</label>
-                      <input type = "number" id="stake">
-                    </div>
-                    <div class="input-group">
-                      <label class="up-down-form">IP</label>
-                      <input type = "text" id="IP">
-                    </div>
-                    </form>
-                    <!-- <button class="btn-filter filter"><i class="fa-solid fa-filter"></i> &nbsp; Filter</button> -->
+                  
                 </div>
             </div>
             <div class="data-table">
