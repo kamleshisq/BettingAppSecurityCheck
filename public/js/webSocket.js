@@ -12942,6 +12942,48 @@ socket.on('connect', () => {
             }
             document.getElementById('search').innerHTML = html
         })
+
+
+        $(document).on('click', ".event-notification", function(e){
+            e.preventDefault()
+            console.log(this.id, "innerTextinnerTextinnerText")
+            socket.emit('eventNotification', {id:this.id})
+        })
+
+
+        socket.on('eventNotification', data => {
+            if(data.status === "noFound"){
+                let form = $('#myModaNotification').find('.add-event-notification')
+                form.attr('id', data.id)
+                form.find('input[name = "status"]').closest('div').addClass('hide')
+                // form.find('input[name = "status"]').
+            }else{
+                let form = $('#myModaNotification').find('.add-event-notification')
+                form.attr('id', data.id)
+                form.find('input[name = "status"]').closest('div').removeClass('hide')
+            }
+        })
+
+
+        $(document).on('submit', '.add-event-notification', function(e){
+            e.preventDefault()
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            let id = $(this).attr('id');
+            data.id = id
+            console.log(data)
+            socket.emit('eventNotification2', data)
+        })
+
+
+        socket.on('eventNotification2', data => {
+            if(data.status === "err"){
+                alert('Please try again later')
+            }else{
+                alert('Notification Updated successfully!!!')
+            }
+        })
     }
     if(pathname == "/admin/betlimit/sports/match"){
 

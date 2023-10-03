@@ -53,6 +53,7 @@ const voidbetAfterPlace = require('./utils/voideBetAfterPlace');
 const voidBetBeforePlace = require('./utils/voidBetForOpen');
 const rollBackBet = require('./utils/RollBackAfterPlace');
 const InprogreshModel = require('./model/InprogressModel');
+const eventNotification = require('./model/eventNotification');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -4178,6 +4179,36 @@ io.on('connection', (socket) => {
             socket.emit('getinProgressData', inprogressData)
         }catch(err){
             console.log(err)
+        }
+    })
+
+    socket.on('eventNotification', async(data) => {
+        try{
+            let eventNotificationSetting = await eventNotification.findOne({id:data.id})
+            if(eventNotificationSetting){
+                socket.emit('eventNotification', {eventNotificationSetting, id:data.id})
+            }else{
+                socket.emit('eventNotification', {status:'noFound', id:data.id})
+            }
+
+        }catch(err){
+            console.log(err)
+        }
+    })
+
+
+    socket.on('eventNotification2', async(data) => {
+        try{
+            let notificationData = await eventNotification.findOne({id:data.id})
+            if(notificationData){
+                notificationData = await eventNotification.findOneAndUpdate({id:data.id}, data)
+            }else{
+                notificationData = await eventNotification.create(data)
+            }
+            socket.emit('eventNotification2', notificationData)
+        }catch(err){
+            console.log(err)
+            socket.emit('eventNotification2', {status:'err'})
         }
     })
     

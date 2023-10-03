@@ -102,6 +102,43 @@
   </div>
 </div>
 
+
+<div class="modal fade" id="myModaNotification" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header" >
+        <!-- <button type="button" class="close" data-dismiss="modal"></button> -->
+        <h4 class="modal-title">Update Notification</h4>
+      </div>
+      <div class="modal-body">
+       <form class="add-event-notification">
+        <div class="row">
+          <div class="col on-off-btn-section">
+            <label for="check">Status</label>
+            <span class="on-off">OFF<label class="switch on">
+              <input type="checkbox" name="status">
+              <span class="slider round"></span>
+              </label>&nbsp; ON</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label for="">Message</label>
+            <input type="text" class="form-control ml0"  name="url">
+          </div>
+        </div>
+        <button type="submit" class="btn-submit mt-3 ">Submit</button>
+       </form> 
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   jQuery(document).ready(function($) {
       $(".tbl-data-href").click(function() {
