@@ -3590,7 +3590,7 @@ io.on('connection', (socket) => {
             }
         }
 
-        filter.userName = {"$in":childrenUsername}
+        filter.userName = {$in:childrenUsername}
         // console.log(filter)
         const gameAnalist = await Bet.aggregate([
             {
@@ -3615,7 +3615,7 @@ io.on('connection', (socket) => {
             },
             {
                 $group:{
-                    _id:'$_id.whiteLabel',
+                    _id:'$_id.userName',
                     Total_User:{$sum:1},
                     betcount:{$sum:'$betCount'},
                     loss:{$sum:'$loss'},
