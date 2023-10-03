@@ -3590,19 +3590,35 @@ io.on('connection', (socket) => {
             }
         }
 
-        filter.userName = {$in:childrenUsername}
         // console.log(filter)
         const gameAnalist = await Bet.aggregate([
             {
                 $match:filter
             },
-            // {
-            //     $limit: limit 
-            // },
+            {
+                $lookup:{
+                    from:'users',
+                    localField:'userName',
+                    foreignField:'userName',
+                    as:'userDetails'
+                }
+            },
+            {
+                $unwind:'$userDetails'
+            },
+            {
+                $match:{
+                    'userDetails.isActive':true,
+                    'userDetails.roleName':{$ne:'Admin'},
+                    'userDetails.role_type':{$in:role_type},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:me._id}}
+                }
+            },
             {
                 $group:{
                     _id:{
                         userName:'$userName',
+                        whiteLabel:'$userDetails.whiteLabel'
                     },
                     betCount:{$sum:1},
                     loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
@@ -3615,7 +3631,7 @@ io.on('connection', (socket) => {
             },
             {
                 $group:{
-                    _id:'$_id.userName',
+                    _id:'$_id.whiteLabel',
                     Total_User:{$sum:1},
                     betcount:{$sum:'$betCount'},
                     loss:{$sum:'$loss'},
@@ -3634,13 +3650,15 @@ io.on('connection', (socket) => {
                     Total_User:-1
                 }
             },
-            // {
-            //     $skip: page * limit
-            // },
-            // {
-            //     $limit: limit 
-            // }
+            {
+                $skip: page * limit
+            },
+            {
+                $limit: limit 
+            }
         ])
+
+        filter.userName = {$in:childrenUsername}
 
         const marketAnalist =  await Bet.aggregate([
             {
@@ -3667,12 +3685,12 @@ io.on('connection', (socket) => {
                     Total_User:-1
                 }
             },
-            // {
-            //     $skip: page * limit
-            // },
-            // {
-            //     $limit: limit 
-            // }
+            {
+                $skip: page * limit
+            },
+            {
+                $limit: limit 
+            }
         ])
         // console.log(gameAnalist)
         socket.emit('gameAnalysis', {gameAnalist,marketAnalist, page,filter})
