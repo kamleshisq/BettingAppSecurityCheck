@@ -3593,9 +3593,9 @@ io.on('connection', (socket) => {
         filter.userName = {$in:childrenUsername}
         // console.log(filter)
         const gameAnalist = await Bet.aggregate([
-            {
-                $match:filter
-            },
+            // {
+            //     $match:filter
+            // },
             // {
             //     $limit: limit 
             // },
