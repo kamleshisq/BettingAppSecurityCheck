@@ -7030,6 +7030,7 @@ socket.on('connect', () => {
                 }
             }else{
                 if(check ){
+                    data.oldOdds = data.odds
                     data.odds = specificSpan
                     if(data.stake === ""){
                         // alert("Please select stake")
@@ -7043,7 +7044,7 @@ socket.on('connect', () => {
                         }
                     }
                 }else{
-                    togglePopupMain('popup-2', "redPopUP2", "Odds value changed, please try again ")
+                    togglePopupMain('popup-2', "redPopUP2", "Odds out of range")
                 }
             }
             });
