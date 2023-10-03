@@ -1403,7 +1403,7 @@ io.on('connection', (socket) => {
         // console.log(data)
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
         // console.log(marketDetails.data.items)
-        data.LOGINDATA.socket = data.LOGINDATA.socket.replace('::ffff:','')
+        data.LOGINDATA.IP = data.LOGINDATA.IP.replace('::ffff:','')
         let thatMarket = marketDetails.data.items[0]
         console.log(thatMarket, 11111)
         if(data.data.secId.startsWith('odd_Even_')){
