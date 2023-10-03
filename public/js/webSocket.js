@@ -12967,6 +12967,7 @@ socket.on('connect', () => {
                 }else{
                     form.find('input[name = "status"]').prop('checked', false);
                 }
+                form.find('input[name = "message"]').val(data.eventNotificationSetting.message)
             }
         })
 
