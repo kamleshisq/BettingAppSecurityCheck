@@ -34,14 +34,23 @@
                 <div class="table-heading-btn">
                   <form action="" class="betmonitor-heading-from">
                     <div class="input-group">
-                      <label>Select Sports</label>
+                      <label>Select Sport</label>
                       <select name="Sport" id="Sport">
                         <option value="All">All</option>
-                        <option value="Cricket">CRICKET</option>
+                        <option value="Cricket" selected>CRICKET</option>
                         <option value="Football">FOOTBALL</option>
                         <option value="Tennis">TENNIS</option>
                         <option value="basketball">BASKETBALL</option>
                         <option value="baseball">BASEBALL</option>
+                      </select>
+                    </div>
+                    <div class="input-group">
+                      <label>Select Event</label>
+                      <select name="Event" id="Event">
+                        <option value="All">Select Event</option>
+                        <%for(let i = 0;i<events.length;i++){%>
+                          <option value="<%=events[i].eventData.eventId%>"><%=events[i].eventData.name></option>
+                        <%}%>
                       </select>
                     </div>
                     <div class="input-group">
@@ -52,6 +61,27 @@
                         <option value="Bookmaker 0%Comm">BookMaker</option>
                         <option value="Fancy">Fancy</option>
                         <!-- <option value="">GoalMarket</option> -->
+                      </select>
+                    </div>
+                    <%if(currentUser.role_level == 1){%>
+                      <div class="input-group">
+                        <label>Whitelabels</label>
+                        <select name="whitLabel" id="whitLabel">
+                          <option value="All">All</option>
+                          <%for(let i = 0;i<whiteLabels.length;i++){%>
+                            <option value="<%=whiteLabels[i].whiteLabelName%>"><%=whiteLabels[i].whiteLabelName%></option>
+                          <%}%>
+                        </select>
+                      </div>
+                    <%}%>
+                    
+                    <div class="input-group">
+                      <label>Select Result</label>
+                      <select name="result" id="result">
+                        <option value="All">All</option>
+                        <option value="WON">Won</option>
+                        <option value="LOSS">Lost</option>
+                        <option value="CANCEL">Void</option>
                       </select>
                     </div>
                     <div class="input-group">

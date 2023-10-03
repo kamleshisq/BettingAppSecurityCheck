@@ -1411,6 +1411,13 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
     //     bets = await betModel.find({role_type:{$in:role_type},status:'OPEN'}).limit(10)
     // }
     // console.log(bets)
+    const sportListData = await getCrkAndAllData()
+    let events = sportListData[0].gameList[0].eventList
+    let whiteLabels;
+    if(req.currentUser.role_level == 1){
+        whiteLabels = await whiteLabel.find()
+    }
+
     User.aggregate([
         {
           $match: {
@@ -1448,7 +1455,9 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
                     title:"Bet Moniter",
                     bets:betResult,
                     me,
-                    currentUser:me
+                    currentUser:me,
+                    events,
+                    whiteLabels
                 })
             })
             .catch((error) => {
