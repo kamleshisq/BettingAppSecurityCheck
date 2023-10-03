@@ -816,7 +816,7 @@ io.on('connection', (socket) => {
         let tennisList;
         console.log(data);
         const sportData = await getCrkAndAllData()
-        console.log(sportData)
+        // console.log(sportData)
         let sportList;
         if(data.type == 'All'){
             cricketList = sportData[0].gameList[0].eventList
