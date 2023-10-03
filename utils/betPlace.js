@@ -223,7 +223,7 @@ if(!marketDetails.runners){
         marketId : data.data.market,
         secId : data.data.secId,
         bettype2: data.data.bettype2,
-        ip:data.LOGINDATA.socket
+        ip:data.LOGINDATA.IP
     }
 }else{
     let runnersData = JSON.parse(marketDetails.runners)
@@ -259,7 +259,7 @@ if(!marketDetails.runners){
             marketId : data.data.market,
             secId : data.data.secId,
             bettype2: data.data.bettype2,
-            ip:data.LOGINDATA.socket
+            ip:data.LOGINDATA.IP
 
         }
 }
