@@ -6110,8 +6110,8 @@ socket.on('connect', () => {
                 $(".market").each(function() {
                   ids.push(this.id);
                 });
-                console.log(search)
-                socket.emit("marketId", {ids, search})
+                let eventId = search.split('=')[1]
+                socket.emit("marketId", {ids, eventId})
               });
               setTimeout(()=>{
                 marketId()
