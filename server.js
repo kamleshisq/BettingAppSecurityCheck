@@ -4005,7 +4005,7 @@ io.on('connection', (socket) => {
         try{
             let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
             console.log(loginUser, "loginUser")
-            if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
+            if(loginUser && (await loginUser.correctPassword(data.data.password, loginUser.password))){
                 let check = await betLimit.findOne({type:data.type})
                 if(check){
                     await betLimit.findOneAndUpdate({type:data.type}, data.data)
