@@ -1320,7 +1320,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("marketId", async(data) => {
-        console.log(data.search)
+        console.log(data.eventId)
         // const result = await marketDetailsBymarketID(data)
         // let finalResult = result.data
         // const betLimits = await betLimit.find({type:"Sport"})
