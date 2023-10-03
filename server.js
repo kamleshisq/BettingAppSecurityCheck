@@ -1142,12 +1142,12 @@ io.on('connection', (socket) => {
         if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
             delete data.filterData['userName']
             let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('betMoniter',{ubDetails,page})
+            socket.emit('betMoniter',{ubDetails,page,filter:data.filterData})
         }
         else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
             delete data.filterData['userName']
             let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('betMoniter',{ubDetails,page})
+            socket.emit('betMoniter',{ubDetails,page,filter:data.filterData})
         }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
             let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
             socket.emit('betMoniter',{ubDetails,page,filter:data.filterData})
