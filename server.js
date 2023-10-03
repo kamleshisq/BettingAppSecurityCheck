@@ -3590,7 +3590,7 @@ io.on('connection', (socket) => {
             }
         }
 
-        filter.userName = {$in:childrenUsername}
+        filter.userName = {"$in":childrenUsername}
         // console.log(filter)
         const gameAnalist = await Bet.aggregate([
             {
@@ -3667,12 +3667,12 @@ io.on('connection', (socket) => {
                     Total_User:-1
                 }
             },
-            {
-                $skip: page * limit
-            },
-            {
-                $limit: limit 
-            }
+            // {
+            //     $skip: page * limit
+            // },
+            // {
+            //     $limit: limit 
+            // }
         ])
         // console.log(gameAnalist)
         socket.emit('gameAnalysis', {gameAnalist,marketAnalist, page,filter})
