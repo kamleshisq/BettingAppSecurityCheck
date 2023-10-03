@@ -3595,8 +3595,11 @@ io.on('connection', (socket) => {
         }
         // console.log(filter)
         const gameAnalist = await Bet.aggregate([
+            // {
+            //     $match:filter
+            // },
             {
-                $match:filter
+                $limit: limit 
             },
             {
                 $lookup:{
@@ -3653,12 +3656,12 @@ io.on('connection', (socket) => {
                     Total_User:-1
                 }
             },
-            {
-                $skip: page * limit
-            },
-            {
-                $limit: limit 
-            }
+            // {
+            //     $skip: page * limit
+            // },
+            // {
+            //     $limit: limit 
+            // }
         ])
 
         const marketAnalist =  await Bet.aggregate([
