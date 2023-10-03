@@ -3714,7 +3714,7 @@ io.on('connection', (socket) => {
             }
         ])
         // console.log(gameAnalist)
-        socket.emit('gameAnalysis', {gameAnalist,marketAnalist, page})
+        socket.emit('gameAnalysis', {gameAnalist,marketAnalist, page,filter})
     })
 
     socket.on('matchOdds',async(data)=>{
