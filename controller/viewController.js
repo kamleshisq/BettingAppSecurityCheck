@@ -1423,7 +1423,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
     }
 
     let childrenUsername = []
-    let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+    let children = await User.find({parentUsers:req.currentUser._id})
     children.map(ele => {
         childrenUsername.push(ele.userName) 
     })
