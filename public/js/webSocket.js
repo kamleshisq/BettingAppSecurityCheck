@@ -4874,7 +4874,7 @@ socket.on('connect', () => {
                     if(bets[i].ip){
                         html += `<td>${bets[i].status}</td>`
                     }else{
-                        html += `-`
+                        html += `<td>-</td>`
                     }
                     html += `<td>
                     <div class="btn-group">
