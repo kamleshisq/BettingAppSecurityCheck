@@ -4852,6 +4852,31 @@ socket.on('connect', () => {
             // console.log(data)
             socket.emit('betMoniter',data)
         })
+
+        $('.refresh').click(function(e){
+            stack = $('#stake').val()
+            IP = $('#IP').val()
+            let page = parseInt($('.pageId').attr('data-pageid')) - 1;
+            let data = {}
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
+            }
+            filterData.ip = IP
+            filterData.Stake = stack
+            Object.keys(filterData).map(ele => {
+                if(filterData[ele] == ""){
+                    delete filterData[ele]
+                }
+            })
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            // console.log(data)
+            socket.emit('betMoniter',data)
+        })
       
             
             let count = 11
@@ -4872,16 +4897,15 @@ socket.on('connect', () => {
                     html += `<td>${i + count}</td>
                     <td class="date-time">${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
                     <td>${bets[i].userName}</td>
-                    <td class="text-nowrap">${bets[i].event}</td>
+                    <td class="text-nowrap">${bets[i].match}</td>
                     `
                     if(bets[i].match){
                         html += `
                         <td class="text-nowrap">${bets[i].marketName}</td>
                         <td>${bets[i].oddValue}</td>
-                        <td class="text-nowrap">${bets[i].match}</td>
                         <td>${bets[i].selectionName}</td>`
                     }else{
-                        html += `<td>-</td>
+                        html += `
                         <td>-</td><td>-</td><td>-</td>`
                     }
                     html += `
