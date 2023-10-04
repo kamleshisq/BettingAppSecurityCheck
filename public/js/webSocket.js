@@ -6953,7 +6953,7 @@ socket.on('connect', () => {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
                 console.log(buttonId, "buttonId")
                 let IdButton = $(`#${buttonId}`)
-                console.log(IdButton.classList, "IdButton")
+                console.log(IdButton.attr("class"), "IdButton")
                 console.log(IdButton, "IdButton")
             if($(this).closest('tr').hasClass('back-inplaymatch')){
                 var spanId = $(this).attr("id");
