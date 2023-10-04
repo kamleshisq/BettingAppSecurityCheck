@@ -1138,17 +1138,17 @@ io.on('connection', (socket) => {
         let limit = 10;
         let page = data.page;
         let childrenUsername = []
-        let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+        let userFilter = {};
+        userFilter.parentUsers = data.LOGINDATA.LOGINUSER._id
+        if(data.filterData.whiteLabel){
+            userFilter.whiteLabel = data.filterData.whiteLabel;
+            delete data.filterData.whiteLabel
+        }
+        let children = await User.find(userFilter)
         children.map(ele => {
             childrenUsername.push(ele.userName) 
         })
 
-        if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
-            delete data.filterData['userName']
-        }
-        else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
-            data.filterData.userName = {$in:childrenUsername}
-        }
         let events = await Bet.aggregate([
             {
                 $match: data.filterData
