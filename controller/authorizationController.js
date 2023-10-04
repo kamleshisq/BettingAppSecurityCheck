@@ -357,6 +357,7 @@ exports.isProtected_User = catchAsync( async (req, res, next) => {
 
 exports.isLogin_Admin = catchAsync( async (req, res, next) => {
     let token 
+    res.locals.loginData = undefined
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1].split("=")[1];
     }else if(req.headers.cookie){
@@ -406,7 +407,11 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
     
     req.currentUser = currentUser
     req.token = token
-    // res.locals.loginData = undefined
+    let loginData = {
+        Token : token,
+        User : currentUser
+    }
+    res.locals.loginData = loginData
     next()
 });
 exports.isLogin = catchAsync( async (req, res, next) => {
@@ -458,8 +463,12 @@ exports.isLogin = catchAsync( async (req, res, next) => {
             return next()
         }
     }
-    
+    let loginData = {
+        Token : token,
+        User : currentUser
+    }
     req.currentUser = currentUser
+    res.locals.loginData = loginData
     req.token = token
     next()
 });
