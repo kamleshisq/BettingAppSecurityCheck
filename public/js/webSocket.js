@@ -4782,6 +4782,9 @@ socket.on('connect', () => {
             // }
             filterData.status = result;
             filterData.Stake = stack;
+            if(IP != ""){
+                filterData.ip = IP
+            }
 
             Object.keys(filterData).map(ele => {
                 if(filterData[ele] == ""){
@@ -4815,17 +4818,6 @@ socket.on('connect', () => {
                 filterData.userName = LOGINDATA.LOGINUSER.userName
             }else{
                 filterData.userName = userName
-            }
-            if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
-                filterData.date = {$gte : fromDate,$lte : toDate}
-            }else{
-
-                if(fromDate != undefined && fromDate != '' ){
-                    filterData.date = {$gte : fromDate}
-                }
-                if(toDate != undefined && toDate != '' ){
-                    filterData.date = {$lte : toDate}
-                }
             }
 
             data.filterData = filterData;

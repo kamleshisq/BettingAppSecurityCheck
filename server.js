@@ -1103,8 +1103,8 @@ io.on('connection', (socket) => {
             delete data.filterData.status
         }
 
-        if(data.filterData.status){
-            data.filterData.stats = {$gte:data.filterData.status}
+        if(data.filterData.Stake){
+            data.filterData.Stake = {$gte:data.filterData.status}
         }
 
         
