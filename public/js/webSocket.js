@@ -6804,7 +6804,12 @@ socket.on('connect', () => {
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
                 let NewStake = spanId - 100;
-                let result = (NewStake * Odds) - NewStake;
+                let result
+                if($(this).closest('tr').hasClass('back-inplaymatch')){
+                    result = (NewStake * Odds) - NewStake;
+                }else{
+                    result = (NewStake * 2) - NewStake;
+                }
                 if(!spanId){
                     $(this).closest("tr").find('.set-stake-form-input2').val(0)
                     $(this)
