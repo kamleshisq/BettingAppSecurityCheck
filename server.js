@@ -1117,6 +1117,16 @@ io.on('connection', (socket) => {
             data.filterData.Stake = {$gte:data.filterData.Stake}
         }
 
+        if(data.filterData.fromDate != ''  && data.filterData.toDate != '' ){
+            filterData.date = {$gte : data.filterData.fromDate,$lte : new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))}
+        }else{
+            if(data.filterData.fromDate != '' ){
+                filterData.date = {$gte : data.filterData.fromDate}
+            }
+            if(data.filterData.toDate != '' ){
+                filterData.date = {$lte : new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))}
+            }
+        }
         
 
         let limit = 10;
