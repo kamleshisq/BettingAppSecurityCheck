@@ -1453,7 +1453,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
         {
             $group:{
                 _id:'$match',
-                eventId:'$eventId'
+                eventId:{$first:'$eventId'}
             }
         }
     ])
