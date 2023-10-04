@@ -6656,9 +6656,10 @@ socket.on('connect', () => {
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;
+                let sectionData 
                 data.finalResult.items.some(item => {
                     if(item){
-
+                        sectionData = item
                         if(item.runners){
                             let section1 = item.runners.find(item2 => item2.secId == id)
                             if(section1){
@@ -6677,7 +6678,7 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
-                    }else if(data.finalResult.items.win_result != 'undefined' && data.finalResult.items.win_result != " " && data.finalResult.items.win_result != ""){
+                    }else if(sectionData.win_result != 'undefined' && sectionData.win_result != " " && sectionData.win_result != ""){
                         this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text('Result Declared')
