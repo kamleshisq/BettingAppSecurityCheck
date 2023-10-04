@@ -95,7 +95,7 @@ module.exports = () => {
                     return
                 }
                 let betsWithMarketId = await betModel.find({status:"OPEN", marketId : marketresult.mid});
-                // console.log(betsWithMarketId.length, "betsWithMarketIdbetsWithMarketId")
+                console.log(betsWithMarketId.length, "betsWithMarketIdbetsWithMarketId")
                 betsWithMarketId.forEach(async(entry) => { 
                     if((entry.selectionName ==  marketresult.result && entry.bettype2 == 'BACK') || (entry.selectionName != marketresult.result && entry.bettype2 == "LAY")){
                         let bet
