@@ -1414,6 +1414,9 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
     let limit = 10;
     const sportListData = await getCrkAndAllData()
     let events = sportListData[0].gameList[0].eventList
+    sportListData[1].gameList.map(ele => {
+        events = events.concat(ele.eventList)
+    })
     let whiteLabels;
     if(req.currentUser.role_level == 1){
         whiteLabels = await whiteLabel.find()
