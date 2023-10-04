@@ -1141,7 +1141,7 @@ io.on('connection', (socket) => {
         let userFilter = {};
         userFilter.parentUsers = data.LOGINDATA.LOGINUSER._id
         if(data.filterData.whiteLabel){
-            userFilter.whiteLabel = data.filterData.whiteLabel;
+            userFilter.whiteLabel = data.filterData.whiteLabel
             delete data.filterData.whiteLabel
         }
         let children = await User.find(userFilter)
@@ -1149,6 +1149,7 @@ io.on('connection', (socket) => {
             childrenUsername.push(ele.userName) 
         })
 
+        data.filterData.userName = {$in:childrenUsername}
         let events = await Bet.aggregate([
             {
                 $match: data.filterData
