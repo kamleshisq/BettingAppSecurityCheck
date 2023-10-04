@@ -1117,14 +1117,20 @@ io.on('connection', (socket) => {
             data.filterData.Stake = {$gte:data.filterData.Stake}
         }
 
-        if(data.filterData.fromDate != ''  && data.filterData.toDate != '' ){
+        if(data.filterData.fromDate && data.filterData.toDate){
             data.filterData.date = {$gte : data.filterData.fromDate,$lte : new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))}
+            delete data.filterData.fromDate;
+            delete data.filterData.toDate;
         }else{
-            if(data.filterData.fromDate != '' ){
+            if(data.filterData.fromDate){
                 data.filterData.date = {$gte : data.filterData.fromDate}
+                delete data.filterData.fromDate;
+
             }
-            if(data.filterData.toDate != '' ){
+            if(data.filterData.toDate){
                 data.filterData.date = {$lte : new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))}
+                delete data.filterData.toDate;
+
             }
         }
         
