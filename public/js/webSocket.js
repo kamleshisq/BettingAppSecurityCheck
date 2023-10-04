@@ -6637,7 +6637,7 @@ socket.on('connect', () => {
                     }
                 })
                 if(this.id == `${section.secId}1` ){
-                    if( section.backPrice == "-" || section.backPrice == "1,000.00" || section.backPrice == "0"){
+                    if( section.back == "-" || section.back == "1,000.00" || section.back == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -6645,7 +6645,7 @@ socket.on('connect', () => {
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         // this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.backSize1}</span>`
-                        this.innerHTML = `<span><b>${section.backPrice}</b></span> <span> ${section.backSize}</span>`
+                        this.innerHTML = `<span><b>${section.back}</b></span> <span> ${section.backSize}</span>`
                         // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
                     }
                 }
@@ -6670,7 +6670,7 @@ socket.on('connect', () => {
                 let parentElement = this.parentNode
                 // console.log(parentElement)
                 if(this.id == `${section.secId}2` ){
-                    if( section.layPrice == "-" || section.layPrice == "1,000.00" || section.layPrice == "0"){
+                    if( section.lay == "-" || section.lay == "1,000.00" || section.lay == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -6686,7 +6686,7 @@ socket.on('connect', () => {
                         parentElement.classList.remove("suspended")
                         $(this).parent().find(".match-status-message").text("")
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
-                        this.innerHTML = `<span><b>${section.layPrice}</b></span> <span> ${section.laySize}</span>`
+                        this.innerHTML = `<span><b>${section.lay}</b></span> <span> ${section.laySize}</span>`
                         // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
                         // this.innerHTML = `<b>${section.layPrice}</b> <br> ${section.laySize}`
                     }
