@@ -4852,6 +4852,31 @@ socket.on('connect', () => {
             // console.log(data)
             socket.emit('betMoniter',data)
         })
+
+        $('.refresh').click(function(e){
+            stack = $('#stake').val()
+            IP = $('#IP').val()
+            let page = parseInt($('.pageId').attr('data-pageid'));
+            let data = {}
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
+            }
+            filterData.ip = IP
+            filterData.Stake = stack
+            Object.keys(filterData).map(ele => {
+                if(filterData[ele] == ""){
+                    delete filterData[ele]
+                }
+            })
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            // console.log(data)
+            socket.emit('betMoniter',data)
+        })
       
             
             let count = 11
