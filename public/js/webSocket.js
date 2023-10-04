@@ -4782,6 +4782,7 @@ socket.on('connect', () => {
             // }
             filterData.status = result;
             filterData.Stake = stack;
+            filterData.eventId = event
             filterData.ip = IP
 
             Object.keys(filterData).map(ele => {
@@ -4862,7 +4863,7 @@ socket.on('connect', () => {
                     <td>${bets[i].status}</td>
                     <td>${bets[i].returns.toFixed(2)}</td>`
                     if(bets[i].ip){
-                        html += `<td>${bets[i].status}</td>`
+                        html += `<td>${bets[i].ip}</td>`
                     }else{
                         html += `<td>-</td>`
                     }
