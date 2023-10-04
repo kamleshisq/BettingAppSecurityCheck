@@ -6681,11 +6681,11 @@ socket.on('connect', () => {
                 secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId2}1`);;
                 numSpan.text(odds);
 
-                // if($(this).hasClass('tbl-bg-blu-spn')){
-                //     $(this).closest("tr").next().addClass('tbl-bg-blu-spn')
-                // }else{
-                //     $(this).closest("tr").next().addClass('tbl-bg-pech-spn')
-                // }
+                if($(this).hasClass('tbl-bg-blu-spn')){
+                    $(this).closest("tr").next().addClass('back-inplaymatch')
+                }else{
+                    $(this).closest("tr").next().addClass('lay-inplaymatch')
+                }
 
             }else{
                 let odds = $(this).children("span:first-child").text();
@@ -6695,6 +6695,12 @@ socket.on('connect', () => {
                 let secId = this.id
                 secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
                 numSpan.text(odds);
+
+                if($(this).hasClass('tbl-bg-blu-spn')){
+                    $(this).closest("tr").next().addClass('back-inplaymatch')
+                }else{
+                    $(this).closest("tr").next().addClass('lay-inplaymatch')
+                }
             }
             });
           });
