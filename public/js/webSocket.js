@@ -6774,8 +6774,8 @@ socket.on('connect', () => {
           });
 
           $(document).ready(function () {
-            if($(this).closest('tr').hasClass('back-inplaymatch')){
-                $(".set-stake-form-input2").change(function () {
+            $(".set-stake-form-input2").change(function () {
+                if($(this).closest('tr').hasClass('back-inplaymatch')){
                     var spanId = $(this).val()
                     var betValue = parseFloat(
                         $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
@@ -6785,9 +6785,7 @@ socket.on('connect', () => {
                       .closest("tr")
                       .find(".c-gren")
                       .text(result.toFixed(2));
-                })
-            }else{
-                $(".set-stake-form-input2").change(function () {
+                }else{
                     var spanId = $(this).val()
                     var betValue = parseFloat(
                         $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
@@ -6797,8 +6795,8 @@ socket.on('connect', () => {
                       .closest("tr")
                       .find(".c-gren")
                       .text(result.toFixed(2));
-                })
-            }
+                }
+            })
           })
         
           $(document).ready(function(){
