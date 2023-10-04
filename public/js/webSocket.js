@@ -4680,11 +4680,11 @@ socket.on('connect', () => {
         var today = new Date();
         var todayFormatted = formatDate(today);
         var tomorrow = new Date();
-        tomorrow.setDate(today.getDate() + 1);
+        tomorrow.setDate(today.getDate() - 1);
         var tomorrowFormatted = formatDate(tomorrow);
 
-        $('#fromDate').val(todayFormatted)
-        $('#toDate').val(tomorrowFormatted)
+        $('#fromDate').val(tomorrowFormatted)
+        $('#toDate').val(todayFormatted)
         function formatDate(date) {
             var year = date.getFullYear();
             var month = (date.getMonth() + 1).toString().padStart(2, '0');
