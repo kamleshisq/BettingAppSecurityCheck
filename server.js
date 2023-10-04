@@ -1104,7 +1104,7 @@ io.on('connection', (socket) => {
         }
 
         if(data.filterData.Stake){
-            data.filterData.Stake = {$gte:data.filterData.status}
+            data.filterData.Stake = {$gte:data.filterData.Stake}
         }
 
         
