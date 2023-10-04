@@ -6985,11 +6985,11 @@ socket.on('connect', () => {
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
-                    var result = (parseFloat(betValue));
+                    var result = ((parseFloat(spanId) * betValue) / 100).toFixed(2);
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
-                      let result2 = (parseFloat(betValue))
+                      let result2 = ((parseFloat(spanId) * betValue) / 100).toFixed(2)
                       $(this)
                           .closest("tr")
                           .find(".c-gren")
