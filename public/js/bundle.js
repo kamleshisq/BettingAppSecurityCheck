@@ -5485,6 +5485,7 @@ var login = /*#__PURE__*/function () {
               status: "success"
             });
             sessionStorage.setItem('loginUserDetails', JSON.stringify(res.data.data.user));
+            sessionStorage.setItem('token', JSON.stringify(res.data.token));
             sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
