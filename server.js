@@ -1136,26 +1136,13 @@ io.on('connection', (socket) => {
             $in:role_type
         }
 
-        events = await betModel.aggregate([
-            {
-                $match: data.filterData
-            },
-            {
-                $group:{
-                    _id:'$match',
-                    eventId:{$first:'$eventId'}
-                }
-            }
-        ])
-        
-        const user = await User.findOne({userName:data.filterData.userName})
         if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
             delete data.filterData['userName']
         }
         else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
             data.filterData.userName = {$in:childrenUsername}
         }
-        events = await betModel.aggregate([
+        events = await Bet.aggregate([
             {
                 $match: data.filterData
             },
