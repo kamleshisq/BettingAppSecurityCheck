@@ -73,6 +73,7 @@ module.exports = () => {
         console.log(openBets, 454545)
 
         const marketIds = [...new Set(openBets.map(item => item.marketId))];
+        console.log(marketIds, "MARKETID")
         const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
         let result;
         await fetch(fullUrl, {
