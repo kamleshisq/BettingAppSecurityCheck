@@ -34,9 +34,11 @@ socket.on('connect', () => {
         // if(!loginData){
         // location.reload(true)
         // }
-        LOGINDATA.LOGINUSER = loginData.User
-        LOGINDATA.LOGINTOKEN = loginData.Token
-        LOGINDATA.IP = data.socket
+        if(loginData){
+            LOGINDATA.LOGINUSER = loginData.User
+            LOGINDATA.LOGINTOKEN = loginData.Token
+            LOGINDATA.IP = data.socket
+        }
 
         // if(LOGINDATA.LOGINUSER == "" && c == 0){
         //     window.location.reload();
