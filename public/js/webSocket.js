@@ -7033,7 +7033,34 @@ socket.on('connect', () => {
                           .text(result.toFixed(2));
                     }
                 }else{
-                    console.log("WORKING")
+                    var spanId = $(this).attr("id");
+                    let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
+                    let newStake
+                  //   console.log(OldStake)
+                    if(OldStake == ""){
+                      newStake = parseFloat(spanId)
+                    }else{
+                      newStake = parseFloat(spanId) + parseFloat(OldStake)
+                    }
+                    var betValue = parseFloat(
+                      $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                    );
+                    var result = (parseFloat(newStake) * 2) - parseFloat(newStake);
+                  //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
+                    if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                      $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
+                      let result2 = (parseFloat(spanId) * 2) - parseFloat(spanId)
+                      $(this)
+                          .closest("tr")
+                          .find(".c-gren")
+                          .text(result2.toFixed(2));
+                    }else{
+                        $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
+                        $(this)
+                          .closest("tr")
+                          .find(".c-gren")
+                          .text(result.toFixed(2));
+                    }
                 }
             }
             });
