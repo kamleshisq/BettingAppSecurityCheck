@@ -1116,7 +1116,7 @@ io.on('connection', (socket) => {
         let limit = 10;
         let page = data.page;
         let childrenUsername = []
-        let children = await User.find({parentUsers:req.currentUser._id})
+        let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
         children.map(ele => {
             childrenUsername.push(ele.userName) 
         })
