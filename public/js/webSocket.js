@@ -4870,8 +4870,13 @@ socket.on('connect', () => {
                     <td>${bets[i].Stake}</td>
                     <td>${bets[i].transactionId}</td>
                     <td>${bets[i].status}</td>
-                    <td>${bets[i].returns.toFixed(2)}</td>
-                    <td>
+                    <td>${bets[i].returns.toFixed(2)}</td>`
+                    if(bets[i].ip){
+                        html += `<td>${bets[i].status}</td>`
+                    }else{
+                        html += `-`
+                    }
+                    html += `<td>
                     <div class="btn-group">
                     <button class="btn alert" id="${bets[i]._id}"> Alert Bet</button></div></td>
                     </tr>`
