@@ -103,6 +103,10 @@ module.exports = () => {
                         let debitCreditAmount 
                         let exposure 
                         if(entry.bettype2 == 'BACK'){
+                            // if(entry.marketName.toLowerCase().startsWith('Match')){
+                            // }else{
+                            //     debitCreditAmount = 
+                            // }
                             debitCreditAmount = parseFloat(entry.Stake * entry.oddValue).toFixed(2)
                             exposure = parseFloat(entry.Stake)
                             bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:debitCreditAmount, result:marketresult.result})

@@ -7054,12 +7054,19 @@ socket.on('connect', () => {
 
           $(document).ready(function () {
             $(".set-stake-form-input2").change(function () {
+                let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
+                let IdButton = $(`#${buttonId}`)
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
                     var spanId = $(this).val()
                     var betValue = parseFloat(
                         $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                       );
-                      var result = (parseFloat(spanId) * betValue) - parseFloat(spanId);
+                      var result 
+                      if(IdButton.hasClass('match_odd_Blue')){
+                        result = (parseFloat(spanId) * betValue) - parseFloat(spanId);
+                      }else{
+                        result = (parseFloat(spanId) * betValue) / 100
+                      }
                       $(this)
                       .closest("tr")
                       .find(".c-gren")
@@ -7080,12 +7087,18 @@ socket.on('connect', () => {
         
           $(document).ready(function(){
             $(".minus").click(function () {
+                let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
+                let IdButton = $(`#${buttonId}`)
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
                 let NewStake = spanId - 100;
                 let result
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
-                    result = (NewStake * Odds) - NewStake;
+                    if(IdButton.hasClass('match_odd_Blue')){
+                        result = (NewStake * Odds) - NewStake;
+                    }else{
+                        result = (NewStake * Odds) / 100
+                    }
                 }else{
                     result = (NewStake * 2) - NewStake;
                 }
@@ -7127,6 +7140,8 @@ socket.on('connect', () => {
           
           $(document).ready(function(){
             $(".plus").click(function () {
+                let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
+                let IdButton = $(`#${buttonId}`)
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
                 // let NewStake = parseFloat(spanId) + 100;
@@ -7138,7 +7153,11 @@ socket.on('connect', () => {
                 }
                 let result
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
-                     result = (NewStake * Odds) - NewStake;
+                    if(IdButton.hasClass('match_odd_Blue')){
+                        result = (NewStake * Odds) - NewStake;
+                    }else{
+                        result = (NewStake * Odds) / 100
+                    }
                 }else{
                     result = (NewStake * 2) - NewStake;
                 }
