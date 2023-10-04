@@ -406,10 +406,12 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
     
     req.currentUser = currentUser
     req.token = token
+    // res.locals.loginData = undefined
     next()
 });
 exports.isLogin = catchAsync( async (req, res, next) => {
     let token 
+    res.locals.loginData = undefined
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token = req.headers.authorization.split(' ')[1].split("=")[1];
     }else if(req.headers.cookie){
