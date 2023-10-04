@@ -284,16 +284,16 @@ if(!marketDetails.runners){
     let description2 = `Bet for ${data.data.title}/stake = ${data.data.stake}/user = ${data.LOGINDATA.LOGINUSER.userName} `
     let creditDebitamount
     if(data.data.bettype2 === "BACK"){
-        creditDebitamount = parseFloat(data.data.stake)
+        creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
     }else{
-        creditDebitamount = parseFloat(data.data.stake * data.data.odds) - parseFloat(data.data.stake)
+        creditDebitamount = (parseFloat(data.data.stake * data.data.odds) - parseFloat(data.data.stake)).toFixed(2)
     }
 
     console.log(creditDebitamount , "creditDebitamount")
     // let Acc = {
     //     "user_id":data.LOGINDATA.LOGINUSER._id,
     //     "description": description,
-    //     "creditDebitamount" : -parseFloat(data.data.stake),
+    //     "creditDebitamount" : -creditDebitamount,
     //     "balance" : check.availableBalance - parseFloat(data.data.stake),
     //     "date" : Date.now(),
     //     "userName" : data.LOGINDATA.LOGINUSER.userName,
