@@ -6938,6 +6938,8 @@ socket.on('connect', () => {
 
           $(document).ready(function () {
             $(".nww-bet-slip-wrp-col2-inn span").click(function () {
+                let buttonId = $(this).closest("tr").find(".beton").attr("id");
+                console.log('buttonId')
             if($(this).closest('tr').hasClass('back-inplaymatch')){
                 var spanId = $(this).attr("id");
                 let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
