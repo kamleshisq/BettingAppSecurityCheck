@@ -3586,15 +3586,34 @@ io.on('connection', (socket) => {
         }
 
         // console.log(filter)
-        filter.userName = {$in:childrenUsername}
         const gameAnalist = await Bet.aggregate([
             {
                 $match:filter
             },
             {
+                $lookup:{
+                    from:'users',
+                    localField:'userName',
+                    foreignField:'userName',
+                    as:'userDetails'
+                }
+            },
+            {
+                $unwind:'$userDetails'
+            },
+            {
+                $match:{
+                    'userDetails.isActive':true,
+                    'userDetails.roleName':{$ne:'Admin'},
+                    'userDetails.role_type':{$in:role_type},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:me._id}}
+                }
+            },
+            {
                 $group:{
                     _id:{
                         userName:'$userName',
+                        whiteLabel:'$userDetails.whiteLabel'
                     },
                     betCount:{$sum:1},
                     loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
@@ -3607,7 +3626,7 @@ io.on('connection', (socket) => {
             },
             {
                 $group:{
-                    _id:'$_id.userName',
+                    _id:'$_id.whiteLabel',
                     Total_User:{$sum:1},
                     betcount:{$sum:'$betCount'},
                     loss:{$sum:'$loss'},
@@ -3634,13 +3653,7 @@ io.on('connection', (socket) => {
             }
         ])
 
-        let newgameAnalist = gameAnalist.map(async(ele) => {
-            let user = await User.findOne({userName:ele._id})
-            ele._id = user.whiteLabel
-        })
-         
-        let gamefinal = await Promise.all(newgameAnalist)
-        // filter.userName = {$in:childrenUsername}
+        filter.userName = {$in:childrenUsername}
 
         const marketAnalist =  await Bet.aggregate([
             {
@@ -3675,7 +3688,7 @@ io.on('connection', (socket) => {
             }
         ])
         // console.log(gameAnalist)
-        socket.emit('gameAnalysis', {gameAnalist:gamefinal,marketAnalist, page,filter})
+        socket.emit('gameAnalysis', {gameAnalist,marketAnalist, page,filter})
     })
 
     socket.on('matchOdds',async(data)=>{
@@ -3831,40 +3844,30 @@ io.on('connection', (socket) => {
             for(let i = 0; i < roles.length; i++){
                 role_type.push(roles[i].role_type)
             }
+            let childrenUsername = []
+           
             if(ele.role_type == 2){
-                userfilter = {
-                    'userDetails.isActive':true,
-                    'userDetails.roleName':{$ne:'Admin'},
-                    'userDetails.role_type':{$in:role_type},
-                    'userDetails.parentUsers':{$elemMatch:{$eq:(ele._id).toString()}}
-                }
+                let children = await User.find({parentUsers:ele._id,isActive:true,role_type:{$in:role_type}})
+                children.map(ele => {
+                    childrenUsername.push(ele.userName) 
+                })
             }
             else if(ele.role_type == 5){
                 userfilter = {
                     'userDetails.isActive':true,
                     'userDetails.userName':ele.userName
                 }
+                let children = await User.find({userName:ele.userName,isActive:true})
+                children.map(ele => {
+                    childrenUsername.push(ele.userName) 
+                })
             }
 
             
-
+            filter.userName = {$in:childrenUsername}
             let betDetails = await Bet.aggregate([
                 {
                     $match:filter
-                },
-                {
-                    $lookup:{
-                        from:'users',
-                        localField:'userName',
-                        foreignField:'userName',
-                        as:'userDetails'
-                    }
-                },
-                {
-                    $unwind:'$userDetails'
-                },
-                {
-                    $match:userfilter
                 },
                 {
                     $group:{
