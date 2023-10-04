@@ -215,7 +215,7 @@ if(data.data.bettype2 === 'BACK'){
     }
 }
 
-
+console.log(data.data)
 // console.log(marketDetails, data.data, '+===>DATA')
 
 // if(!marketDetails.runners){
