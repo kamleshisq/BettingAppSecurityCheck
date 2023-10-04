@@ -4766,25 +4766,6 @@ socket.on('connect', () => {
                 }
         })
 
-        $('#Sport').change(function() {
-            let Sport = $(this).val()
-            console.log(Sport)
-            if(['1','2','4'].includes(Sport)){
-                socket.emit('getEvetnsOfSport',{sport:Sport})
-            }else{
-                $('#Event').html(`<option value="All" selected> Select Event </option>`)
-            }
-        })
-
-        socket.on('getEvetnsOfSport',async(data)=>{
-            console.log(data,"getEvetnsOfSport")
-            let html =''
-            html += `<option value="All" selected> Select Event </option>`
-            for(let i = 0;i<data.eventList.length;i++){
-                html += `<option value="${data.eventList[i].eventData.eventId}">${data.eventList[i].eventData.name}</option>`
-            }
-            $('#Event').html(html)
-        })
         fromDate = $('#fromDate').val()
         toDate = $('#toDate').val()
         if(fromDate != ''  && toDate != '' ){
@@ -4914,6 +4895,12 @@ socket.on('connect', () => {
                 }
                 let bets = data.ubDetails;
                 let html = '';
+                let html2 = '';
+                html2 += `<option value="All" selected> Select Event </option>`
+                for(let i = 0;i<data.events.length;i++){
+                    html2 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
+                }
+                $('#Event').html(html2)
                 for(let i = 0; i < bets.length; i++){
                     let date = new Date(bets[i].date)
                     if(bets[i].bettype2 === 'BACK'){
