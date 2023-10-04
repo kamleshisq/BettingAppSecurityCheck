@@ -4782,9 +4782,7 @@ socket.on('connect', () => {
             // }
             filterData.status = result;
             filterData.Stake = stack;
-            if(IP != ""){
-                filterData.ip = IP
-            }
+            filterData.ip = IP
 
             Object.keys(filterData).map(ele => {
                 if(filterData[ele] == ""){
