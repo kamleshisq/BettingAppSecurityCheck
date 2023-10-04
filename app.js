@@ -61,7 +61,7 @@ app.use(cookieParser());
 // }));
 console.log("WORKING 54545 ")
 app.use(middlewares);
-// crone();
+crone();
 // userCrone(); 
 // betCrone();
 // dashCrone();
