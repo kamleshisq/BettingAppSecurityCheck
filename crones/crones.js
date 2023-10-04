@@ -69,7 +69,8 @@ module.exports = () => {
           }
         ])
 
-        console.log(openBets)
+        console.log(openBets, 454545)
+        
         const marketIds = [...new Set(openBets.map(item => item.marketId))];
         const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
         let result;
