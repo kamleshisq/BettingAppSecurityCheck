@@ -6677,7 +6677,7 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
-                    }else if(section.win_result != 'undefined' && section.win_result != " " && section.win_result != ""){
+                    }else if(item.win_result != 'undefined' && item.win_result != " " && item.win_result != ""){
                         this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text('Result Declared')
