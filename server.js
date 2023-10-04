@@ -1143,14 +1143,6 @@ io.on('connection', (socket) => {
         children.map(ele => {
             childrenUsername.push(ele.userName) 
         })
-        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
-        let role_type =[]
-        for(let i = 0; i < roles.length; i++){
-            role_type.push(roles[i].role_type)
-        }
-        data.filterData.role_type = {
-            $in:role_type
-        }
 
         if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
             delete data.filterData['userName']
