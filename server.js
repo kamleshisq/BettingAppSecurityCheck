@@ -1122,6 +1122,7 @@ io.on('connection', (socket) => {
         let limit = 10;
         let page = data.page;
         let childrenUsername = []
+        let events;
         let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
         children.map(ele => {
             childrenUsername.push(ele.userName) 
@@ -1134,22 +1135,40 @@ io.on('connection', (socket) => {
         data.filterData.role_type = {
             $in:role_type
         }
+
+        events = await betModel.aggregate([
+            {
+                $match: data.filterData
+            },
+            {
+                $group:{
+                    _id:'$match',
+                    eventId:{$first:'$eventId'}
+                }
+            }
+        ])
         
         const user = await User.findOne({userName:data.filterData.userName})
         if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
             delete data.filterData['userName']
-            let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
-            socket.emit('betMoniter',{ubDetails,page,filter:data.filterData})
         }
         else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
             data.filterData.userName = {$in:childrenUsername}
-            let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
-            socket.emit('betMoniter',{ubDetails,page,filter:data.filterData})
-        }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
-            let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
-            socket.emit('betMoniter',{ubDetails,page,filter:data.filterData})
-
         }
+        events = await betModel.aggregate([
+            {
+                $match: data.filterData
+            },
+            {
+                $group:{
+                    _id:'$match',
+                    eventId:{$first:'$eventId'}
+                }
+            }
+        ])
+        let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
+        socket.emit('betMoniter',{ubDetails,page,events,filter:data.filterData})
+
     })
 
     socket.on('matchBets',async(data)=>{
