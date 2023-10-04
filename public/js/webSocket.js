@@ -6183,7 +6183,7 @@ socket.on('connect', () => {
               });
               setTimeout(()=>{
                 marketId()
-              }, 1000)
+              }, 60000)
         }
         marketId()
 
