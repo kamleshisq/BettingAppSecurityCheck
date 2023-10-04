@@ -4768,17 +4768,9 @@ socket.on('connect', () => {
 
         fromDate = $('#fromDate').val()
         toDate = $('#toDate').val()
-        if(fromDate != ''  && toDate != '' ){
-            filterData.date = {$gte : fromDate,$lte : new Date(new Date(toDate).getTime() + ((24 * 60*60*1000)-1))}
-        }else{
+        filterData.toDate = toDate;
+        filterData.fromDate = fromDate
 
-            if(fromDate != '' ){
-                filterData.date = {$gte : fromDate}
-            }
-            if(toDate != '' ){
-                filterData.date = {$lte : new Date(new Date(toDate).getTime() + ((24 * 60*60*1000)-1))}
-            }
-        }
 
         $('#fromDate,#toDate,#Sport,#market,#Event,#result').change(function(){
             console.log("working")
@@ -4793,17 +4785,7 @@ socket.on('connect', () => {
             IP = $('#IP').val()
             $('.pageId').attr('data-pageid','1')
             data.page = 0;
-            if(fromDate != ''  && toDate != '' ){
-                filterData.date = {$gte : fromDate,$lte : new Date(new Date(toDate).getTime() + ((24 * 60*60*1000)-1))}
-            }else{
-
-                if(fromDate != '' ){
-                    filterData.date = {$gte : fromDate}
-                }
-                if(toDate != '' ){
-                    filterData.date = {$lte : new Date(new Date(toDate).getTime() + ((24 * 60*60*1000)-1))}
-                }
-            }
+            
             if(userName != ''){
                 filterData.userName = userName
             }else{
@@ -4819,6 +4801,8 @@ socket.on('connect', () => {
             filterData.Stake = stack;
             filterData.eventId = event
             filterData.ip = IP
+            filterData.toDate = toDate;
+            filterData.fromDate = fromDate
 
             Object.keys(filterData).map(ele => {
                 if(filterData[ele] == ""){
