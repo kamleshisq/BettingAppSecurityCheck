@@ -6950,7 +6950,7 @@ socket.on('connect', () => {
 
           $(document).ready(function () {
             $(".nww-bet-slip-wrp-col2-inn span").click(function () {
-                let buttonId = $(this).closest("tr").find(".beton").attr("id");
+                let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
                 let IdButton = $(`#${buttonId}`)
                 console.log(IdButton.classList, "IdButton")
             if($(this).closest('tr').hasClass('back-inplaymatch')){
