@@ -6857,7 +6857,12 @@ socket.on('connect', () => {
                 }else{
                     NewStake = 100
                 }
-                let result = (NewStake * Odds) - NewStake;
+                let result
+                if($(this).closest('tr').hasClass('back-inplaymatch')){
+                     result = (NewStake * Odds) - NewStake;
+                }else{
+                    result = (NewStake * 2) - NewStake;
+                }
                 // console.log(result)
                 if(!spanId){
                     $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
