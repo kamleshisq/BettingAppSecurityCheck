@@ -1118,7 +1118,7 @@ io.on('connection', (socket) => {
         }
 
         if(data.filterData.fromDate && data.filterData.toDate){
-            data.filterData.date = {$gte : data.filterData.fromDate,$lte : new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))}
+            data.filterData.date = {$gte : new Date(data.filterData.fromDate),$lte : new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))}
             delete data.filterData.fromDate;
             delete data.filterData.toDate;
         }else{
@@ -1138,19 +1138,10 @@ io.on('connection', (socket) => {
         let limit = 10;
         let page = data.page;
         let childrenUsername = []
-        let events;
         let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
         children.map(ele => {
             childrenUsername.push(ele.userName) 
         })
-        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
-        let role_type =[]
-        for(let i = 0; i < roles.length; i++){
-            role_type.push(roles[i].role_type)
-        }
-        data.filterData.role_type = {
-            $in:role_type
-        }
 
         if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
             delete data.filterData['userName']
@@ -1158,7 +1149,7 @@ io.on('connection', (socket) => {
         else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
             data.filterData.userName = {$in:childrenUsername}
         }
-        events = await Bet.aggregate([
+        let events = await Bet.aggregate([
             {
                 $match: data.filterData
             },
