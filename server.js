@@ -3801,11 +3801,6 @@ io.on('connection', (socket) => {
         let roles;
         let role_type =[]
         let filter = {}
-        let childrenUsername = []
-        let children = await User.find({parentUsers:me._id})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
         if(data.from_date && data.to_date){
             filter.date = {$gte:new Date(data.from_date),$lte:new Date(data.to_date)}
         }else if(data.from_date && !data.to_date){
