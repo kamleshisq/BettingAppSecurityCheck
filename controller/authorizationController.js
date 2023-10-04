@@ -459,6 +459,7 @@ exports.isLogin = catchAsync( async (req, res, next) => {
     
     req.currentUser = currentUser
     req.token = token
+    res.locals.loginData = undefined
     next()
 });
 
