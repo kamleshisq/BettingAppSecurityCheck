@@ -1423,7 +1423,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
     }
 
     let childrenUsername = []
-    let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+    let children = await User.find({parentUsers:req.currentUser._id})
     children.map(ele => {
         childrenUsername.push(ele.userName) 
     })
@@ -1431,9 +1431,9 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
     let betResult = await betModel.aggregate([
         {
           $match: {
-            userId: { $in: userIds },
+            userName: { $in: childrenUsername },
             date:{$gte:new Date("2023-10-03"),$lte:new Date(new Date("2023-10-04").getTime() + ((24 * 60*60*1000)-1))}          
-        }
+            }
         },
         {
             $sort:{
@@ -1445,9 +1445,15 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
 
     let events = await betModel.aggregate([
         {
+            $match: {
+              userName: { $in: childrenUsername },
+              date:{$gte:new Date("2023-10-03"),$lte:new Date(new Date("2023-10-04").getTime() + ((24 * 60*60*1000)-1))}          
+              }
+        },
+        {
             $group:{
                 _id:'$match',
-                eventId:'$eventId'
+                eventId:{$first:'$eventId'}
             }
         }
     ])
