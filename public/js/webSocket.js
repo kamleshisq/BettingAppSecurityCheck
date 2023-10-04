@@ -6493,7 +6493,7 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
-                    }else if(section.win_result != 'undefined' && section.win_result != " "){
+                    }else if(section.win_result != 'undefined' && section.win_result != " " && section.win_result != ""){
                         this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text('Result Declared')
@@ -6557,7 +6557,7 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Ball Running")
-                    }else if(section.win_result != 'undefined' && section.win_result != " "){
+                    }else if(section.win_result != 'undefined' && section.win_result != " " && section.win_result != ""){
                         this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text('Result Declared')
@@ -6636,7 +6636,7 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Ball Running")
-                    }else if(section.win_result != 'undefined' && section.win_result != " "){
+                    }else if(section.win_result != 'undefined' && section.win_result != " " && section.win_result != ""){
                         this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text('Result Declared')
