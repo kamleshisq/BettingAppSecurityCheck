@@ -6956,7 +6956,7 @@ socket.on('connect', () => {
                 // console.log(IdButton.attr("class"), "IdButton")
                 // console.log(IdButton, "IdButton")
             if($(this).closest('tr').hasClass('back-inplaymatch')){
-                if(IdButton.classList.contains('match_odd_Blue')){
+                if(IdButton.hasClass('match_odd_Blue')){
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
                     let newStake
@@ -6989,7 +6989,7 @@ socket.on('connect', () => {
                     console.log("WORKING")
                 }
             }else{
-                if(IdButton.classList.contains('match_odd_Red')){
+                if(IdButton.hasClass('match_odd_Red')){
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
                     let newStake
