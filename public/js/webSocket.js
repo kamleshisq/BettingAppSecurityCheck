@@ -6998,11 +6998,11 @@ socket.on('connect', () => {
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
-                    var result = (parseFloat(newStake) * betValue);
+                    var result = (parseFloat(betValue));
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
-                      let result2 = (parseFloat(spanId) * betValue)
+                      let result2 = (parseFloat(betValue))
                       $(this)
                           .closest("tr")
                           .find(".c-gren")
