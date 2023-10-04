@@ -1097,6 +1097,12 @@ io.on('connection', (socket) => {
 
         if(data.filterData.betType == "All"){
             delete data.filterData.betType; 
+        }else if(data.filterData.betType == "4"){
+            data.filterData.betType = 'Cricket'
+        }else if(data.filterData.betType == "1"){
+            data.filterData.betType = "Football"
+        }else if(data.filterData.betType == "2"){
+            data.filterData.betType = "Tennis"
         }
 
         if(data.filterData.status == "All"){

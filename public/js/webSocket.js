@@ -4751,6 +4751,26 @@ socket.on('connect', () => {
                 }
         })
 
+        $('#Sport').change(function() {
+            let Sport = $(this).val()
+            console.log(Sport)
+            if(['1','2','4'].includes(Sport)){
+                socket.emit('getEvetnsOfSport',{sport:Sport})
+            }else{
+                $('#Event').html(`<option value="All" selected> Select Event </option>`)
+            }
+        })
+
+        socket.on('getEvetnsOfSport',async(data)=>{
+            console.log(data,"getEvetnsOfSport")
+            let html =''
+            html += `<option value="All" selected> Select Event </option>`
+            for(let i = 0;i<data.eventList.length;i++){
+                html += `<option value="${data.eventList[i].eventData.eventId}">${data.eventList[i].eventData.name}</option>`
+            }
+            $('#Event').html(html)
+        })
+
 
         $('#fromDate,#toDate,#Sport,#market,#Event,#result').change(function(){
             console.log("working")
