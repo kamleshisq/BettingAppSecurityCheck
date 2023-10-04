@@ -95,7 +95,7 @@ module.exports = () => {
                     return
                 }
                 let betsWithMarketId = await betModel.find({status:"OPEN", marketId : marketresult.mid});
-                
+                console.log(betsWithMarketId.length, "betsWithMarketIdbetsWithMarketId")
                 
             });
             
