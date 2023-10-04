@@ -1412,71 +1412,57 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
     // }
     // console.log(bets)
     let limit = 10;
-    const sportListData = await getCrkAndAllData()
-    let events = sportListData[0].gameList[0].eventList
-    sportListData[1].gameList.map(ele => {
-        events = events.concat(ele.eventList)
-    })
+    // const sportListData = await getCrkAndAllData()
+    // let events = sportListData[0].gameList[0].eventList
+    // sportListData[1].gameList.map(ele => {
+    //     events = events.concat(ele.eventList)
+    // })
     let whiteLabels;
     if(req.currentUser.role.role_level == 1){
         whiteLabels = await whiteLabel.find()
     }
 
-    User.aggregate([
+    let childrenUsername = []
+    let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+    children.map(ele => {
+        childrenUsername.push(ele.userName) 
+    })
+
+    let betResult = await betModel.aggregate([
         {
           $match: {
-            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
-          }
+            userId: { $in: userIds },
+            date:{$gte:new Date("2023-10-03"),$lte:new Date(new Date("2023-10-04").getTime() + ((24 * 60*60*1000)-1))}          
+        }
         },
         {
-          $group: {
-            _id: null,
-            userIds: { $push: '$_id' } 
-          }
-        }
-      ])
-        .then((userResult) => {
-          const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-      
-          betModel.aggregate([
-            {
-              $match: {
-                userId: { $in: userIds },
-                date:{$gte:new Date("2023-10-03"),$lte:new Date(new Date("2023-10-04").getTime() + ((24 * 60*60*1000)-1))}          
+            $sort:{
+                date:-1
             }
-            },
-            {
-                $sort:{
-                    date:-1
-                }
-            },
-            { $limit : limit }
-          ])
-            .then((betResult) => {
-            //   socket.emit("aggreat", betResult)
-              let me = req.currentUser
-                res.status(200).render("./betMonitering/betmoniter",{
-                    title:"Bet Moniter",
-                    bets:betResult,
-                    me,
-                    currentUser:me,
-                    events,
-                    whiteLabels
-                })
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    // const me = global._User
-    // res.status(200).render("./betMonitering/betmoniter",{
-    //     title:"Betmoniter",
-    //     bets,
-    //     me
-    // })
+        },
+        { $limit : limit }
+    ])
+
+    let events = await betModel.aggregate([
+        {
+            $group:{
+                _id:'$match',
+                eventId:'$eventId'
+            }
+        }
+    ])
+
+   
+    let me = req.currentUser
+    res.status(200).render("./betMonitering/betmoniter",{
+        title:"Bet Moniter",
+        bets:betResult,
+        me,
+        currentUser:me,
+        events,
+        whiteLabels
+    })
+           
 })
 
 exports.getBetAlertPage = catchAsync(async(req, res, next) => {
