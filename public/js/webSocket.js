@@ -4882,7 +4882,7 @@ socket.on('connect', () => {
                 let html2 = '';
                 html2 += `<option value="All" selected> Select Event </option>`
                 for(let i = 0;i<data.events.length;i++){
-                    if(date.events[i]._id){
+                    if(data.events[i]._id){
                         html2 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
                     }
                 }
