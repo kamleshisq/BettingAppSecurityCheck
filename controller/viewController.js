@@ -1442,7 +1442,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
             {
               $match: {
                 userId: { $in: userIds },
-                date:{$gte:new Date("3-10-2023"),$lte:new Date("4-10-2023")}          
+                date:{$gte:new Date("2023-10-03"),$lte:new Date("2023-10-04")}          
             }
             },
             {
