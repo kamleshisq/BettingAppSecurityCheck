@@ -1418,7 +1418,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
         events = events.concat(ele.eventList)
     })
     let whiteLabels;
-    if(req.currentUser.role_level == 1){
+    if(req.currentUser.role.role_level == 1){
         whiteLabels = await whiteLabel.find()
     }
 
