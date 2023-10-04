@@ -21,17 +21,24 @@ socket.on('connect', () => {
         console.log('WORKING45654', data)
         let loginData
         if(pathname.startsWith('/admin')){
-            loginData = JSON.parse($('body header').attr('data-logindata'))
+            if($('body header').attr('data-logindata')){
+                loginData = JSON.parse($('body header').attr('data-logindata'))
+            }
         }else{
-            loginData = JSON.parse($('body').attr('data-logindata'))
+            if($('body').attr('data-logindata')){
+
+                loginData = JSON.parse($('body').attr('data-logindata')) 
+            }
         }
         console.log('loginData',loginData)
         // if(!loginData){
         // location.reload(true)
         // }
-        LOGINDATA.LOGINUSER = loginData.User
-        LOGINDATA.LOGINTOKEN = loginData.Token
-        LOGINDATA.IP = data.socket
+        if(loginData){
+            LOGINDATA.LOGINUSER = loginData.User
+            LOGINDATA.LOGINTOKEN = loginData.Token
+            LOGINDATA.IP = data.socket
+        }
 
         // if(LOGINDATA.LOGINUSER == "" && c == 0){
         //     window.location.reload();

@@ -270,7 +270,7 @@ io.on('connection', (socket) => {
         }else if(data.filterData.toDate && !data.filterData.fromDate){
             filter.login_time = {$lte:new Date(data.filterData.toDate)}
         }
-        console.log(filter)
+        // console.log(filter)
         let users = await loginlogs.aggregate([
             {
                 $match:filter
