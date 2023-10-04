@@ -6682,8 +6682,10 @@ socket.on('connect', () => {
                 numSpan.text(odds);
 
                 if($(this).hasClass('tbl-bg-blu-spn')){
+                    $(this).closest("tr").next().removeClass('lay-inplaymatch')
                     $(this).closest("tr").next().addClass('back-inplaymatch')
                 }else{
+                    $(this).closest("tr").next().removeClass('back-inplaymatch')
                     $(this).closest("tr").next().addClass('lay-inplaymatch')
                 }
 
@@ -6697,8 +6699,10 @@ socket.on('connect', () => {
                 numSpan.text(odds);
 
                 if($(this).hasClass('tbl-bg-blu-spn')){
+                    $(this).closest("tr").next().removeClass('lay-inplaymatch')
                     $(this).closest("tr").next().addClass('back-inplaymatch')
                 }else{
+                    $(this).closest("tr").next().removeClass('back-inplaymatch')
                     $(this).closest("tr").next().addClass('lay-inplaymatch')
                 }
             }
