@@ -6940,65 +6940,100 @@ socket.on('connect', () => {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
                 console.log(buttonId, "buttonId")
                 let IdButton = $(`#${buttonId}`)
-                console.log(IdButton.attr("class"), "IdButton")
-                console.log(IdButton, "IdButton")
+                // console.log(IdButton.attr("class"), "IdButton")
+                // console.log(IdButton, "IdButton")
             if($(this).closest('tr').hasClass('back-inplaymatch')){
-                var spanId = $(this).attr("id");
-                let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
-                let newStake
-              //   console.log(OldStake)
-                if(OldStake == ""){
-                  newStake = parseFloat(spanId)
+                if(IdButton.hasClass('match_odd_Blue')){
+                    var spanId = $(this).attr("id");
+                    let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
+                    let newStake
+                  //   console.log(OldStake)
+                    if(OldStake == ""){
+                      newStake = parseFloat(spanId)
+                    }else{
+                      newStake = parseFloat(spanId) + parseFloat(OldStake)
+                    }
+                    var betValue = parseFloat(
+                      $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                    );
+                    var result = (parseFloat(newStake) * betValue) - parseFloat(newStake);
+                  //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
+                    if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                      $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
+                      let result2 = (parseFloat(spanId) * betValue) - parseFloat(spanId)
+                      $(this)
+                          .closest("tr")
+                          .find(".c-gren")
+                          .text(result2.toFixed(2));
+                    }else{
+                        $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
+                        $(this)
+                          .closest("tr")
+                          .find(".c-gren")
+                          .text(result.toFixed(2));
+                    }
                 }else{
-                  newStake = parseFloat(spanId) + parseFloat(OldStake)
-                }
-                var betValue = parseFloat(
-                  $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
-                );
-                var result = (parseFloat(newStake) * betValue) - parseFloat(newStake);
-              //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
-                if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
-                  $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
-                  let result2 = (parseFloat(spanId) * betValue) - parseFloat(spanId)
-                  $(this)
-                      .closest("tr")
-                      .find(".c-gren")
-                      .text(result2.toFixed(2));
-                }else{
-                    $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
-                    $(this)
-                      .closest("tr")
-                      .find(".c-gren")
-                      .text(result.toFixed(2));
+                    var spanId = $(this).attr("id");
+                    let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
+                    let newStake
+                  //   console.log(OldStake)
+                    if(OldStake == ""){
+                      newStake = parseFloat(spanId)
+                    }else{
+                      newStake = parseFloat(spanId) + parseFloat(OldStake)
+                    }
+                    var betValue = parseFloat(
+                      $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                    );
+                    var result = (parseFloat(newStake) * betValue);
+                  //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
+                    if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                      $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
+                      let result2 = (parseFloat(spanId) * betValue)
+                      $(this)
+                          .closest("tr")
+                          .find(".c-gren")
+                          .text(result2.toFixed(2));
+                    }else{
+                        $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
+                        $(this)
+                          .closest("tr")
+                          .find(".c-gren")
+                          .text(result.toFixed(2));
+                    }
                 }
             }else{
-                var spanId = $(this).attr("id");
-                let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
-                let newStake
-              //   console.log(OldStake)
-                if(OldStake == ""){
-                  newStake = parseFloat(spanId)
+                if(IdButton.hasClass('match_odd_Red')){
+                    var spanId = $(this).attr("id");
+                    let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
+                    let newStake
+                  //   console.log(OldStake)
+                    if(OldStake == ""){
+                      newStake = parseFloat(spanId)
+                    }else{
+                      newStake = parseFloat(spanId) + parseFloat(OldStake)
+                    }
+                    var betValue = parseFloat(
+                      $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                    );
+                    var result = (parseFloat(newStake) * 2) - parseFloat(newStake);
+                  //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
+                    if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                      $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
+                      let result2 = (parseFloat(spanId) * 2) - parseFloat(spanId)
+                      $(this)
+                          .closest("tr")
+                          .find(".c-gren")
+                          .text(result2.toFixed(2));
+                    }else{
+                        $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
+                        $(this)
+                          .closest("tr")
+                          .find(".c-gren")
+                          .text(result.toFixed(2));
+                    }
                 }else{
-                  newStake = parseFloat(spanId) + parseFloat(OldStake)
-                }
-                var betValue = parseFloat(
-                  $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
-                );
-                var result = (parseFloat(newStake) * 2) - parseFloat(newStake);
-              //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
-                if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
-                  $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
-                  let result2 = (parseFloat(spanId) * 2) - parseFloat(spanId)
-                  $(this)
-                      .closest("tr")
-                      .find(".c-gren")
-                      .text(result2.toFixed(2));
-                }else{
-                    $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
-                    $(this)
-                      .closest("tr")
-                      .find(".c-gren")
-                      .text(result.toFixed(2));
+                    console.log("WORKING")
                 }
             }
             });
