@@ -4677,12 +4677,12 @@ socket.on('connect', () => {
     }
 
     if(pathname == "/admin/betmoniter"){
+        var today = new Date();
+        var todayFormatted = formatDate(today);
         var tomorrow = new Date();
         tomorrow.setDate(today.getDate() + 1);
         var tomorrowFormatted = formatDate(tomorrow);
 
-        var today = new Date();
-        var todayFormatted = formatDate(today);
         $('#fromDate').val(todayFormatted)
         $('#toDate').val(tomorrowFormatted)
         function formatDate(date) {
