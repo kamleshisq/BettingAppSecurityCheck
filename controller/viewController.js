@@ -1441,7 +1441,9 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
           betModel.aggregate([
             {
               $match: {
-                userId: { $in: userIds }              }
+                userId: { $in: userIds },
+                date:{$gte:new Date(new Date().getDay() - 1),$lte:new Date()}          
+            }
             },
             {
                 $sort:{
