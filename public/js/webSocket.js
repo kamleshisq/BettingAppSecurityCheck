@@ -12489,9 +12489,14 @@ socket.on('connect', () => {
                     html += `<td>${data.matchOdds[i].returns}</td>`
                     html += `<td>${data.matchOdds[i].returns}</td>`
                     html += `
-                    <td>${data.matchOdds[i].status}</td>
-                    <td>-</td>
-                    </tr>`
+                    <td>${data.matchOdds[i].status}</td>`
+                    if(data.matchOdds[i].ip){
+
+                        html += `<td>${data.matchOdds[i].ip}</td>`
+                    }else{
+                        html += `<td>-</td>`
+                    }
+                    html += `</tr>`
                 }
                 if(data.page == 0){
                     html += `</tbody>`
@@ -12756,9 +12761,14 @@ socket.on('connect', () => {
                     html += `<td>${data.matchOdds[i].returns}</td>`
                     html += `<td>${data.matchOdds[i].returns}</td>`
                     html += `
-                    <td>${data.matchOdds[i].status}</td>
-                    <td>-</td>
-                    </tr>`
+                    <td>${data.matchOdds[i].status}</td>`
+                    if(data.matchOdds[i].ip){
+
+                        html += `<td>${data.matchOdds[i].ip}</td>`
+                    }else{
+                        html += `<td>-</td>`
+                    }
+                    html += `</tr>`
                 }
                 $('.matchOddsBack').addClass('active')
                 $('.matchOddsBack').html('<i class="fa-solid fa-angle-left"></i> Match Odds')
