@@ -4677,6 +4677,21 @@ socket.on('connect', () => {
     }
 
     if(pathname == "/admin/betmoniter"){
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() + 1);
+        var tomorrowFormatted = formatDate(tomorrow);
+
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        $('#fromDate').val(todayFormatted)
+        $('#toDate').val(tomorrowFormatted)
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
+
         $(document).on('keyup','.searchUser',function(){
             // console.log('working')
             // console.log($(this).val())
