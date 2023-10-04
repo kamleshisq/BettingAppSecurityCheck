@@ -91,9 +91,13 @@
           </div>
         </div>
       </div>
-      <div class="odd-scroll-text">
-        <marquee>WELCOME TO THE PAGE</marquee>
-    </div>
+      <%if(notification){%>
+        <%if(notification.status){%>
+            <div class="odd-scroll-text">
+                <marquee><%=notification.message%></marquee>
+            </div>
+        <%}%>
+    <%}%>
     </div>
 
     <div class="mbl-exc-inn-tbl-datadv">
