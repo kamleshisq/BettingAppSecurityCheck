@@ -1138,7 +1138,6 @@ io.on('connection', (socket) => {
         let limit = 10;
         let page = data.page;
         let childrenUsername = []
-        let events;
         let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
         children.map(ele => {
             childrenUsername.push(ele.userName) 
@@ -1150,10 +1149,8 @@ io.on('connection', (socket) => {
         else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
             data.filterData.userName = {$in:childrenUsername}
         }
-        events = await Bet.aggregate([
-            {
-                $match: data.filterData
-            },
+        let events = await Bet.aggregate([
+           
             {
                 $group:{
                     _id:'$match',
