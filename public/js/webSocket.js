@@ -12534,6 +12534,37 @@ socket.on('connect', () => {
             let o = 0;
             let pl = 0;
             limit = 10 * data.page
+            if(data.page == 0){
+                if(data.type == 'user'){
+
+                    html += `<thead>
+                    <tr >
+                      <th>S.No</th>
+                      <th>User Name</th>
+                      <th>Total Bets</th>
+                      <th>Won</th>
+                      <th>Lost</th>
+                      <th>Void </th>
+                      <th>Open </th>
+                      <th>P/L</th>
+                    </tr>
+                </thead><tbody class="new-body">`
+                }else{
+                    html += `<thead>
+                    <tr >
+                      <th>S.No</th>
+                      <th>Market</th>
+                      <th>Total Bets</th>
+                      <th>Won</th>
+                      <th>Lost</th>
+                      <th>Void </th>
+                      <th>Open </th>
+                      <th>P/L</th>
+                      <th>Result</th>
+                    </tr>
+                </thead><tbody class="new-body">`
+                }
+            }
             $('#Cricket').find('.dashboard-welcome-section').html('')
             for(let i = 0; i < data.result.length; i++){
                 if(data.result[i].betDetails){
@@ -12543,37 +12574,7 @@ socket.on('connect', () => {
                     v += data.result[i].betDetails.void
                     o += data.result[i].betDetails.open
                     pl += data.result[i].betDetails.returns
-                    if(data.page == 0){
-                        if(data.type == 'user'){
-
-                            html += `<thead>
-                            <tr >
-                              <th>S.No</th>
-                              <th>User Name</th>
-                              <th>Total Bets</th>
-                              <th>Won</th>
-                              <th>Lost</th>
-                              <th>Void </th>
-                              <th>Open </th>
-                              <th>P/L</th>
-                            </tr>
-                        </thead><tbody class="new-body">`
-                        }else{
-                            html += `<thead>
-                            <tr >
-                              <th>S.No</th>
-                              <th>Market</th>
-                              <th>Total Bets</th>
-                              <th>Won</th>
-                              <th>Lost</th>
-                              <th>Void </th>
-                              <th>Open </th>
-                              <th>P/L</th>
-                              <th>Result</th>
-                            </tr>
-                        </thead><tbody class="new-body">`
-                        }
-                    }
+             
                     html += `<tr>
                     <td>${i + 1 + limit}</td>`
                     if(data.type == 'user'){
