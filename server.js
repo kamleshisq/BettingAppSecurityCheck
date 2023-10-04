@@ -1115,6 +1115,11 @@ io.on('connection', (socket) => {
 
         let limit = 10;
         let page = data.page;
+        let childrenUsername = []
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
         const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
         let role_type =[]
         for(let i = 0; i < roles.length; i++){
@@ -1123,6 +1128,7 @@ io.on('connection', (socket) => {
         data.filterData.role_type = {
             $in:role_type
         }
+        
         const user = await User.findOne({userName:data.filterData.userName})
         if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
             delete data.filterData['userName']
@@ -1130,7 +1136,7 @@ io.on('connection', (socket) => {
             socket.emit('betMoniter',{ubDetails,page,filter:data.filterData})
         }
         else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
-            delete data.filterData['userName']
+            data.filterData.userName = {$in:childrenUsername}
             let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
             socket.emit('betMoniter',{ubDetails,page,filter:data.filterData})
         }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
