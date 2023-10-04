@@ -12807,163 +12807,163 @@ socket.on('connect', () => {
             let o = 0;
             let pl = 0;
             limit = 10 * data.page
-            // for(let i = 0; i < data.gameAnalist.length; i++){
-            //     tb += data.gameAnalist[i].betcount
-            //     w += data.gameAnalist[i].won
-            //     l += data.gameAnalist[i].loss
-            //     v += data.gameAnalist[i].void
-            //     o += data.gameAnalist[i].open
-            //     pl += data.gameAnalist[i].returns
-            //     html += `<tr>
-            //     <td>${i + 1 + limit}</td>
-            //     <td class="childgameAnalist cursor-pointer" data-roleType="1" data-parent="${data.gameAnalist[i]._id}">${data.gameAnalist[i]._id}</td>
-            //     <td>${data.gameAnalist[i].Total_User}</td>
-            //     <td>${data.gameAnalist[i].betcount}</td>
-            //     <td> ${data.gameAnalist[i].won} </td>
-            //     <td>${data.gameAnalist[i].loss}</td>
-            //     <td>${data.gameAnalist[i].void}</td>
-            //     <td>${data.gameAnalist[i].open}</td>`
-            //     if(data.gameAnalist[i].returns > 0){
-            //         html += `<td class="green">+${data.gameAnalist[i].returns.toFixed(2)}</td></tr>`
-            //     }else{
-            //         html += `<td class="red">${data.gameAnalist[i].returns.toFixed(2)}</td></tr>`
-            //     }
-            // } 
-            // for(let i = 0; i < data.marketAnalist.length; i++){
-            //     html2 += `<tr>
-            //     <td>${i + 1 + limit}</td>
-            //     <td class="matchOdds cursor-pointer">${data.marketAnalist[i]._id}</td>
-            //     <td>${data.marketAnalist[i].betcount}</td>
-            //     <td> ${data.marketAnalist[i].won} </td>
-            //     <td>${data.marketAnalist[i].loss}</td>
-            //     <td>${data.marketAnalist[i].void}</td>
-            //     <td>${data.marketAnalist[i].open}</td>`
-            //     if(data.marketAnalist[i].returns > 0){
-            //         html2 += `<td class="green">+${data.marketAnalist[i].returns.toFixed(2)}</td>`
-            //     }else{
-            //         html2 += `<td class="red">${data.marketAnalist[i].returns.toFixed(2)}</td>`
-            //     }
-            //     html2 += `<td>-</td></tr>`
-            // } 
-            // if(data.page == 0){
-            //     if(!(data.gameAnalist.length < 10)){
-            //         document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
-            //     }
-            //     if(data.gameAnalist.length == 0){
-            //         html += `<tr class="empty_table"><td>No record found</td></tr>`
-            //     }
-            //     if(!(data.marketAnalist.length < 10)){
-            //         document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
-            //     }
-            //     if(data.marketAnalist.length == 0){
-            //         html2 += `<tr class="empty_table"><td>No record found</td></tr>`
-            //     }
+            for(let i = 0; i < data.gameAnalist.length; i++){
+                tb += data.gameAnalist[i].betcount
+                w += data.gameAnalist[i].won
+                l += data.gameAnalist[i].loss
+                v += data.gameAnalist[i].void
+                o += data.gameAnalist[i].open
+                pl += data.gameAnalist[i].returns
+                html += `<tr>
+                <td>${i + 1 + limit}</td>
+                <td class="childgameAnalist cursor-pointer" data-roleType="1" data-parent="${data.gameAnalist[i]._id}">${data.gameAnalist[i]._id}</td>
+                <td>${data.gameAnalist[i].Total_User}</td>
+                <td>${data.gameAnalist[i].betcount}</td>
+                <td> ${data.gameAnalist[i].won} </td>
+                <td>${data.gameAnalist[i].loss}</td>
+                <td>${data.gameAnalist[i].void}</td>
+                <td>${data.gameAnalist[i].open}</td>`
+                if(data.gameAnalist[i].returns > 0){
+                    html += `<td class="green">+${data.gameAnalist[i].returns.toFixed(2)}</td></tr>`
+                }else{
+                    html += `<td class="red">${data.gameAnalist[i].returns.toFixed(2)}</td></tr>`
+                }
+            } 
+            for(let i = 0; i < data.marketAnalist.length; i++){
+                html2 += `<tr>
+                <td>${i + 1 + limit}</td>
+                <td class="matchOdds cursor-pointer">${data.marketAnalist[i]._id}</td>
+                <td>${data.marketAnalist[i].betcount}</td>
+                <td> ${data.marketAnalist[i].won} </td>
+                <td>${data.marketAnalist[i].loss}</td>
+                <td>${data.marketAnalist[i].void}</td>
+                <td>${data.marketAnalist[i].open}</td>`
+                if(data.marketAnalist[i].returns > 0){
+                    html2 += `<td class="green">+${data.marketAnalist[i].returns.toFixed(2)}</td>`
+                }else{
+                    html2 += `<td class="red">${data.marketAnalist[i].returns.toFixed(2)}</td>`
+                }
+                html2 += `<td>-</td></tr>`
+            } 
+            if(data.page == 0){
+                if(!(data.gameAnalist.length < 10)){
+                    document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
+                }
+                if(data.gameAnalist.length == 0){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                }
+                if(!(data.marketAnalist.length < 10)){
+                    document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
+                }
+                if(data.marketAnalist.length == 0){
+                    html2 += `<tr class="empty_table"><td>No record found</td></tr>`
+                }
 
-            //     if(tb > 0){
-            //         html3 += ` <div class="skin-data green">
-            //                 <h5>Total Bets</h5>
-            //                 <h6>${tb}</h6>
-            //                 </div>`
-            //     }else{
-            //         html3 += ` <div class="skin-data red">
-            //                 <h5>Total Bets</h5>
-            //                 <h6>${tb}</h6>
-            //                 </div>`
-            //     }
+                if(tb > 0){
+                    html3 += ` <div class="skin-data green">
+                            <h5>Total Bets</h5>
+                            <h6>${tb}</h6>
+                            </div>`
+                }else{
+                    html3 += ` <div class="skin-data red">
+                            <h5>Total Bets</h5>
+                            <h6>${tb}</h6>
+                            </div>`
+                }
                
-            //     if(w > 0){
+                if(w > 0){
 
-            //         html3 += `<div class="skin-data green">
-            //             <h5>Won</h5>
-            //             <h6>${w}</h6>
-            //         </div>`
-            //     }else{
-            //         html3 = `<div class="skin-data red">
-            //             <h5>Won</h5>
-            //             <h6>${w}</h6>
-            //             </div>`
+                    html3 += `<div class="skin-data green">
+                        <h5>Won</h5>
+                        <h6>${w}</h6>
+                    </div>`
+                }else{
+                    html3 = `<div class="skin-data red">
+                        <h5>Won</h5>
+                        <h6>${w}</h6>
+                        </div>`
 
-            //     }
+                }
 
-            //     if(l > 0){
+                if(l > 0){
 
-            //         html3 += `<div class="skin-data green">
-            //             <h5>Lost</h5>
-            //             <h6>${l}</h6>
-            //             </div>`
-            //     }else{
-            //         html3 += `<div class="skin-data red">
-            //             <h5>Lost</h5>
-            //             <h6>${l}</h6>
-            //             </div>`
+                    html3 += `<div class="skin-data green">
+                        <h5>Lost</h5>
+                        <h6>${l}</h6>
+                        </div>`
+                }else{
+                    html3 += `<div class="skin-data red">
+                        <h5>Lost</h5>
+                        <h6>${l}</h6>
+                        </div>`
 
-            //     }
+                }
 
-            //     if(v > 0){
+                if(v > 0){
                     
-            //         html3 += `<div class="skin-data green">
-            //             <h5>Void</h5>
-            //             <h6>${v}</h6>
-            //         </div>`
-            //     }else{
-            //         html3 += `<div class="skin-data red">
-            //             <h5>Void</h5>
-            //             <h6>${v}</h6>
-            //         </div>`
+                    html3 += `<div class="skin-data green">
+                        <h5>Void</h5>
+                        <h6>${v}</h6>
+                    </div>`
+                }else{
+                    html3 += `<div class="skin-data red">
+                        <h5>Void</h5>
+                        <h6>${v}</h6>
+                    </div>`
 
-            //     }
+                }
                 
-            //     if(o > 0){
+                if(o > 0){
 
-            //         html3 += `<div class="skin-data green">
-            //             <h5>Open</h5>
-            //             <h6>${o}</h6>
-            //         </div>`
-            //     }else{
-            //         html3 += `<div class="skin-data red">
-            //             <h5>Open</h5>
-            //             <h6>${o}</h6>
-            //         </div>`
+                    html3 += `<div class="skin-data green">
+                        <h5>Open</h5>
+                        <h6>${o}</h6>
+                    </div>`
+                }else{
+                    html3 += `<div class="skin-data red">
+                        <h5>Open</h5>
+                        <h6>${o}</h6>
+                    </div>`
 
-            //     }
+                }
 
-            //     if(pl > 0){
+                if(pl > 0){
 
-            //         html3 += `<div class="skin-data green">
-            //             <h5>P&L</h5>
-            //             <h6>${pl.toFixed(2)}</h6>
-            //         </div></div>`
-            //     }else{
-            //         html3 += `<div class="skin-data red">
-            //             <h5>P&L</h5>
-            //             <h6>${pl.toFixed(2)}</h6>
-            //         </div></div>`
+                    html3 += `<div class="skin-data green">
+                        <h5>P&L</h5>
+                        <h6>${pl.toFixed(2)}</h6>
+                    </div></div>`
+                }else{
+                    html3 += `<div class="skin-data red">
+                        <h5>P&L</h5>
+                        <h6>${pl.toFixed(2)}</h6>
+                    </div></div>`
 
-            //     }
+                }
 
-            //     html3 = '<div class="welcome-info-btn">' + html3
+                html3 = '<div class="welcome-info-btn">' + html3
 
-            //     if(data.gameAnalist.length > 0){
+                if(data.gameAnalist.length > 0){
 
-            //         $('#Cricket').find('.dashboard-welcome-section').html(html3)
-            //     }
-            //     if(data.marketAnalist.length > 0){
+                    $('#Cricket').find('.dashboard-welcome-section').html(html3)
+                }
+                if(data.marketAnalist.length > 0){
 
-            //         $('#FOOTBALL').find('.dashboard-welcome-section').html(html3)
-            //     }
-            //     $('#Cricket').find('tbody').html(html)
-            //     $('#FOOTBALL').find('tbody').html(html2)
+                    $('#FOOTBALL').find('.dashboard-welcome-section').html(html3)
+                }
+                $('#Cricket').find('tbody').html(html)
+                $('#FOOTBALL').find('tbody').html(html2)
 
-            // }else{
-            //     $('#Cricket').find('tbody').append(html)
-            //     $('#FOOTBALL').find('tbody').append(html2)
-            //     if((data.gameAnalist.length < 10)){
-            //         document.getElementById('load-more').innerHTML = ""
-            //     }
-            //     if((data.marketAnalist.length < 10)){
-            //         document.getElementById('load-more').innerHTML = ""
-            //     }
-            // }
+            }else{
+                $('#Cricket').find('tbody').append(html)
+                $('#FOOTBALL').find('tbody').append(html2)
+                if((data.gameAnalist.length < 10)){
+                    document.getElementById('load-more').innerHTML = ""
+                }
+                if((data.marketAnalist.length < 10)){
+                    document.getElementById('load-more').innerHTML = ""
+                }
+            }
         })
 
 
