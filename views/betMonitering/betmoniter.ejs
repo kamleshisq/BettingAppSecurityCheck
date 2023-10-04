@@ -57,9 +57,19 @@
               <option value="Match Odds">Match Odds</option>
               <option value="Bookmaker 0%Comm">BookMaker</option>
               <option value="Fancy">Fancy</option>
-              <!-- <option value="">GoalMarket</option> -->
             </select>
           </div>
+          <%if(currentUser.role_level == 1){%>
+            <div class="input-group">
+              <label>Select Whitelabels</label>
+              <select name="market" id="market">
+                <option value="All" selected>All</option>
+                <%for(let i = 0;i<whiteLabels.length;i++){%>
+                  <option value="<%=whiteLabels[i].whiteLabelName%>"><%=whiteLabels[i].whiteLabelName%></option>
+                <%}%>
+              </select>
+            </div>
+          <%}%>
           
           
           <div class="input-group">
