@@ -1431,7 +1431,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
     let betResult = await betModel.aggregate([
         {
           $match: {
-            userId: { $in: userIds },
+            userName: { $in: childrenUsername },
             date:{$gte:new Date("2023-10-03"),$lte:new Date(new Date("2023-10-04").getTime() + ((24 * 60*60*1000)-1))}          
             }
         },
@@ -1446,7 +1446,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
     let events = await betModel.aggregate([
         {
             $match: {
-              userId: { $in: userIds },
+              userName: { $in: childrenUsername },
               date:{$gte:new Date("2023-10-03"),$lte:new Date(new Date("2023-10-04").getTime() + ((24 * 60*60*1000)-1))}          
               }
         },
