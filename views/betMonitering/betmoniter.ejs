@@ -46,7 +46,7 @@
             <select name="Event" id="Event">
               <option value="All">Select Event</option>
               <%for(let i = 0;i<events.length;i++){%>
-                <option value="<%=events[i].eventData.eventId%>"><%=events[i].eventData.name%></option>
+                <option value="<%=events[i].eventId%>"><%=events[i]._id%></option>
               <%}%>
             </select>
           </div>
