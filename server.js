@@ -1118,7 +1118,7 @@ io.on('connection', (socket) => {
         }
 
         if(data.filterData.fromDate && data.filterData.toDate){
-            data.filterData.date = {$gte : data.filterData.fromDate,$lte : new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))}
+            data.filterData.date = {$gte : new Date(data.filterData.fromDate),$lte : new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))}
             delete data.filterData.fromDate;
             delete data.filterData.toDate;
         }else{
@@ -1150,7 +1150,9 @@ io.on('connection', (socket) => {
             data.filterData.userName = {$in:childrenUsername}
         }
         let events = await Bet.aggregate([
-           
+            {
+                $match: data.filterData
+            },
             {
                 $group:{
                     _id:'$match',
