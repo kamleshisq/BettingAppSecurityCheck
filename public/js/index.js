@@ -637,7 +637,7 @@ $(document).on('submit', ".editImageSportForm", function(e){
     fd.append('id', id)
     editSliderInImage(fd)
 })
-
+ 
 $(document).on('submit', ".slider-form", function(e){
     e.preventDefault()
     let id = $(this).attr("id")

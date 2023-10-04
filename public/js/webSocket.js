@@ -6671,10 +6671,6 @@ socket.on('connect', () => {
         // jQuery approach
         $(document).ready(function () {
             $(".button").click(function () {
-                console.log('WORKING')
-                console.log(this.classList)
-                console.log(this.classList.contains('match_odd_Blue'),this.classList.contains('match_odd_Red'))
-
             if(this.classList.contains('match_odd_Blue') || this.classList.contains('match_odd_Red')){
                 let odds = $(this).children("span:first-child").attr('data-id');
                 let beton = $(this).closest("tr").find("td:first-child").text();
@@ -6689,6 +6685,15 @@ socket.on('connect', () => {
                   }
                 secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId2}1`);;
                 numSpan.text(odds);
+
+                if($(this).hasClass('tbl-bg-blu-spn')){
+                    $(this).closest("tr").next().removeClass('lay-inplaymatch')
+                    $(this).closest("tr").next().addClass('back-inplaymatch')
+                }else{
+                    $(this).closest("tr").next().removeClass('back-inplaymatch')
+                    $(this).closest("tr").next().addClass('lay-inplaymatch')
+                }
+
             }else{
                 let odds = $(this).children("span:first-child").text();
                 let beton = $(this).closest("tr").find("td:first-child").text();
@@ -6697,54 +6702,105 @@ socket.on('connect', () => {
                 let secId = this.id
                 secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
                 numSpan.text(odds);
+
+                if($(this).hasClass('tbl-bg-blu-spn')){
+                    $(this).closest("tr").next().removeClass('lay-inplaymatch')
+                    $(this).closest("tr").next().addClass('back-inplaymatch')
+                }else{
+                    $(this).closest("tr").next().removeClass('back-inplaymatch')
+                    $(this).closest("tr").next().addClass('lay-inplaymatch')
+                }
             }
             });
           });
 
           $(document).ready(function () {
             $(".nww-bet-slip-wrp-col2-inn span").click(function () {
-              var spanId = $(this).attr("id");
-              let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
-              let newStake
-            //   console.log(OldStake)
-              if(OldStake == ""){
-                newStake = parseFloat(spanId)
-              }else{
-                newStake = parseFloat(spanId) + parseFloat(OldStake)
-              }
-              var betValue = parseFloat(
-                $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
-              );
-              var result = (parseFloat(newStake) * betValue) - parseFloat(newStake);
-            //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
-              if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
-                $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
-                let result2 = (parseFloat(spanId) * betValue) - parseFloat(spanId)
-                $(this)
-                    .closest("tr")
-                    .find(".c-gren")
-                    .text(result2.toFixed(2));
-              }else{
-                  $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
+            if($(this).closest('tr').hasClass('back-inplaymatch')){
+                var spanId = $(this).attr("id");
+                let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
+                let newStake
+              //   console.log(OldStake)
+                if(OldStake == ""){
+                  newStake = parseFloat(spanId)
+                }else{
+                  newStake = parseFloat(spanId) + parseFloat(OldStake)
+                }
+                var betValue = parseFloat(
+                  $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                );
+                var result = (parseFloat(newStake) * betValue) - parseFloat(newStake);
+              //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
+                if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                  $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
+                  let result2 = (parseFloat(spanId) * betValue) - parseFloat(spanId)
                   $(this)
-                    .closest("tr")
-                    .find(".c-gren")
-                    .text(result.toFixed(2));
-              }
+                      .closest("tr")
+                      .find(".c-gren")
+                      .text(result2.toFixed(2));
+                }else{
+                    $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
+                    $(this)
+                      .closest("tr")
+                      .find(".c-gren")
+                      .text(result.toFixed(2));
+                }
+            }else{
+                var spanId = $(this).attr("id");
+                let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
+                let newStake
+              //   console.log(OldStake)
+                if(OldStake == ""){
+                  newStake = parseFloat(spanId)
+                }else{
+                  newStake = parseFloat(spanId) + parseFloat(OldStake)
+                }
+                var betValue = parseFloat(
+                  $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                );
+                var result = (parseFloat(newStake) * 2) - parseFloat(newStake);
+              //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
+                if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
+                  $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
+                  let result2 = (parseFloat(spanId) * 2) - parseFloat(spanId)
+                  $(this)
+                      .closest("tr")
+                      .find(".c-gren")
+                      .text(result2.toFixed(2));
+                }else{
+                    $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(newStake))
+                    $(this)
+                      .closest("tr")
+                      .find(".c-gren")
+                      .text(result.toFixed(2));
+                }
+            }
             });
           });
 
           $(document).ready(function () {
             $(".set-stake-form-input2").change(function () {
-                var spanId = $(this).val()
-                var betValue = parseFloat(
-                    $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
-                  );
-                  var result = (parseFloat(spanId) * betValue) - parseFloat(spanId);
-                  $(this)
-                  .closest("tr")
-                  .find(".c-gren")
-                  .text(result.toFixed(2));
+                if($(this).closest('tr').hasClass('back-inplaymatch')){
+                    var spanId = $(this).val()
+                    var betValue = parseFloat(
+                        $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                      );
+                      var result = (parseFloat(spanId) * betValue) - parseFloat(spanId);
+                      $(this)
+                      .closest("tr")
+                      .find(".c-gren")
+                      .text(result.toFixed(2));
+                }else{
+                    var spanId = $(this).val()
+                    var betValue = parseFloat(
+                        $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
+                      );
+                      var result = (parseFloat(spanId) * 2) - parseFloat(spanId);
+                      $(this)
+                      .closest("tr")
+                      .find(".c-gren")
+                      .text(result.toFixed(2));
+                }
             })
           })
         
@@ -6753,7 +6809,12 @@ socket.on('connect', () => {
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
                 let NewStake = spanId - 100;
-                let result = (NewStake * Odds) - NewStake;
+                let result
+                if($(this).closest('tr').hasClass('back-inplaymatch')){
+                    result = (NewStake * Odds) - NewStake;
+                }else{
+                    result = (NewStake * 2) - NewStake;
+                }
                 if(!spanId){
                     $(this).closest("tr").find('.set-stake-form-input2').val(0)
                     $(this)
@@ -6801,7 +6862,12 @@ socket.on('connect', () => {
                 }else{
                     NewStake = 100
                 }
-                let result = (NewStake * Odds) - NewStake;
+                let result
+                if($(this).closest('tr').hasClass('back-inplaymatch')){
+                     result = (NewStake * Odds) - NewStake;
+                }else{
+                    result = (NewStake * 2) - NewStake;
+                }
                 // console.log(result)
                 if(!spanId){
                     $(this).closest("tr").find('.set-stake-form-input2').val(NewStake)
@@ -7109,8 +7175,13 @@ socket.on('connect', () => {
                   </tr>
                 </thead>
                 <tbody id="tableBET">
-                  <tr>
-                    <td>${ data.openBet[0].selectionName}</td>
+                  `
+                if(data.openBet[0].bettype2 === "BACK"){
+                    html2 += `<tr class="back-inplaymatch">`
+                }else{
+                    html2 += `<tr class="lay-inplaymatch">`
+                }
+                  html2 += `<td>${ data.openBet[0].selectionName}</td>
                     <td>${ data.openBet[0].oddValue }</td>
                     <td>${ data.openBet[0].Stake }</td>
                   </tr>
@@ -7120,8 +7191,12 @@ socket.on('connect', () => {
               document.getElementById('length2').innerHTML = html2
             }else{
                 for(let i = 0; i < data.openBet.length; i++){
-                    html2 += `<tr>
-                    <td>${ data.openBet[i].selectionName}</td>
+                    if(data.openBet[i].bettype2 === "BACK"){
+                        html2 += `<tr class="back-inplaymatch">`
+                    }else{
+                        html2 += `<tr class="lay-inplaymatch">`
+                    }
+                    html2 = `<td>${ data.openBet[i].selectionName}</td>
                     <td>${ data.openBet[i].oddValue }</td>
                     <td>${ data.openBet[i].Stake }</td>
                   </tr>`
