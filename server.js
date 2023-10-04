@@ -3586,34 +3586,15 @@ io.on('connection', (socket) => {
         }
 
         // console.log(filter)
+        filter.userName = {$in:childrenUsername}
         const gameAnalist = await Bet.aggregate([
             {
                 $match:filter
             },
             {
-                $lookup:{
-                    from:'users',
-                    localField:'userName',
-                    foreignField:'userName',
-                    as:'userDetails'
-                }
-            },
-            {
-                $unwind:'$userDetails'
-            },
-            {
-                $match:{
-                    'userDetails.isActive':true,
-                    'userDetails.roleName':{$ne:'Admin'},
-                    'userDetails.role_type':{$in:role_type},
-                    'userDetails.parentUsers':{$elemMatch:{$eq:me._id}}
-                }
-            },
-            {
                 $group:{
                     _id:{
                         userName:'$userName',
-                        whiteLabel:'$userDetails.whiteLabel'
                     },
                     betCount:{$sum:1},
                     loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
@@ -3626,7 +3607,7 @@ io.on('connection', (socket) => {
             },
             {
                 $group:{
-                    _id:'$_id.whiteLabel',
+                    _id:'$_id.userName',
                     Total_User:{$sum:1},
                     betcount:{$sum:'$betCount'},
                     loss:{$sum:'$loss'},
@@ -3653,7 +3634,13 @@ io.on('connection', (socket) => {
             }
         ])
 
-        filter.userName = {$in:childrenUsername}
+        let newgameAnalist = gameAnalist.map(async(ele) => {
+            let user = await User.findOne({userName:ele._id})
+            ele._id = user.whiteLabel
+        })
+         
+        let gamefinal = await Promise.all(newgameAnalist)
+        // filter.userName = {$in:childrenUsername}
 
         const marketAnalist =  await Bet.aggregate([
             {
@@ -3688,7 +3675,7 @@ io.on('connection', (socket) => {
             }
         ])
         // console.log(gameAnalist)
-        socket.emit('gameAnalysis', {gameAnalist,marketAnalist, page,filter})
+        socket.emit('gameAnalysis', {gameAnalist:gamefinal,marketAnalist, page,filter})
     })
 
     socket.on('matchOdds',async(data)=>{
@@ -3837,7 +3824,6 @@ io.on('connection', (socket) => {
             breadcum = [parentName.whiteLabel,parentName.userName,users[0].userName]
         }
 
-        console.log(users)
         let newUsers = users.map(async(ele) => {
             let userfilter;
             role_type = []
