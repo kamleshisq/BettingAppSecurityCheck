@@ -7259,10 +7259,7 @@ socket.on('connect', () => {
             $(".plus").click(function () {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
                 let IdButton = $(`#${buttonId}`)
-                if(IdButton.length === 0){
-                    IdButton = $(this).closest('tr').prev().find(`#${buttonId}`)
-                }
-                console.log(IdButton)
+                console.log(IdButton, "IdButton")
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
                 // let NewStake = parseFloat(spanId) + 100;
