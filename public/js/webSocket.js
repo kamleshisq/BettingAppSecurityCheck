@@ -4783,7 +4783,7 @@ socket.on('connect', () => {
             stack = $('#stake').val()
             IP = $('#IP').val()
             let type;
-            if($(this).hasClass('Event')){
+            if($(this).id == 'Event'){
                 type = 'changeevent'
             }
             $('.pageId').attr('data-pageid','1')
