@@ -7277,11 +7277,7 @@ socket.on('connect', () => {
                         result = (NewStake * Odds) / 100
                     }
                 }else{
-                    if(secId.charAt(secId.length - 2) == 1){
-                        result = (NewStake * odds) - NewStake
-                    }else{
                         result = (NewStake * 2) - NewStake;
-                    }
                 }
                 // console.log(result)
                 if(!spanId){
