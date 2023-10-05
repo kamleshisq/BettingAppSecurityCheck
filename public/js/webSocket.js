@@ -4806,9 +4806,12 @@ socket.on('connect', () => {
             let value = $(this)
             if(!isValidTimeString(value)){
                 if(!$(this).siblings('span').hasClass('active')){
+                    console.log('in add class')
                     $(this).siblings('span').addClass('active')
                 }
+                console.log('already added class')
             }else{
+                console.log('corrent class')
                 $(this).siblings('span').removeClass('active')
             }
         })
