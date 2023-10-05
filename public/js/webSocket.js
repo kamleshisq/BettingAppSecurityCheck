@@ -7487,7 +7487,7 @@ socket.on('connect', () => {
             }
             let specificSpan 
             if(data.secId.startsWith('odd_Even_')){
-                specificSpan = $(`#${secforFency}`).children("span:first-child").text();
+                specificSpan = $(`#${secforFency}`).children("span").eq(1).text();
                 // console.log(`#${secforFency}`)
             }else{
                 specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
