@@ -7277,7 +7277,11 @@ socket.on('connect', () => {
                         result = (NewStake * Odds) / 100
                     }
                 }else{
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
                         result = (NewStake * 2) - NewStake;
+                    }else{
+                        result = (NewStake * Odds) / 100
+                    }
                 }
                 // console.log(result)
                 if(!spanId){
