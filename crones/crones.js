@@ -297,6 +297,54 @@ module.exports = () => {
                           "stake": bet.Stake,
                           "transactionId":`${bet.transactionId}`
                         })
+                    }else if ((entry.selectionName.split('@')[1] ==  marketresult.result && entry.bettype2 == 'BACK') || (entry.selectionName.split('@')[1] != marketresult.result && entry.bettype2 == "LAY")){
+                        let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue), result:marketresult.result})
+                        let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{availableBalance: parseFloat(entry.Stake * entry.oddValue), myPL: parseFloat(entry.Stake * entry.oddValue), Won:1, exposure:-parseFloat(entry.Stake), uplinePL:-parseFloat(entry.Stake * entry.oddValue), pointsWL:parseFloat(entry.Stake * entry.oddValue)}})
+                        let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
+
+                        let debitAmountForP = parseFloat(entry.Stake * entry.oddValue)
+                        for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                            let parentUser1 = await userModel.findById(user.parentUsers[i])
+                            let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
+                            let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                            let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                            parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                            parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                            await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                                $inc: {
+                                    downlineBalance: (entry.Stake * entry.oddValue),
+                                    myPL: -parentUser1Amount,
+                                    uplinePL: -parentUser2Amount,
+                                    lifetimePL: -parentUser1Amount,
+                                    pointsWL: (entry.Stake * entry.oddValue)
+                                }
+                            });
+                        
+                            if (i === 1) {
+                                await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                                    $inc: {
+                                        downlineBalance: (entry.Stake * entry.oddValue),
+                                        myPL: -parentUser2Amount,
+                                        lifetimePL: -parentUser2Amount,
+                                        pointsWL: (entry.Stake * entry.oddValue)
+                                    }
+                                });
+                            }
+                            debitAmountForP = parentUser2Amount
+                        }
+                        
+                        await accModel.create({
+                          "user_id":user._id,
+                          "description": description,
+                          "creditDebitamount" : (entry.Stake * entry.oddValue),
+                          "balance" : user.availableBalance + (entry.Stake * entry.oddValue),
+                          "date" : Date.now(),
+                          "userName" : user.userName,
+                          "role_type" : user.role_type,
+                          "Remark":"-",
+                          "stake": bet.Stake,
+                          "transactionId":`${bet.transactionId}`
+                        })
                     }else{
 
 
@@ -395,7 +443,7 @@ module.exports = () => {
 
 //NET LOOSSING COMMISSION
 
-                        
+
 
 
                     }
