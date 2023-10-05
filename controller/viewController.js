@@ -2281,6 +2281,7 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
         featureEventId.push(ele.Id)
     })
     let liveTennis = Tennis.filter(item => featureEventId.includes(item.eventData.eventId))
+    console.log(featureEventId)
     let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
     let userLog
@@ -2312,8 +2313,7 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
         notifications:req.notifications,
         userMultimarkets,
         tennisSeries,
-        catalog,
-        featureStatusArr
+        catalog
     })
 })
 
