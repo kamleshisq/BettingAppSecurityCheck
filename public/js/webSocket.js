@@ -6964,7 +6964,7 @@ socket.on('connect', () => {
                     $(this).closest("tr").next().addClass('lay-inplaymatch')
                 }
 
-            }else{
+            }else if(this.classList.contains('bookmaker_blue') || this.classList.contains('bookmaker_red')){
                 let odds = $(this).children("span:first-child").text();
                 let beton = $(this).closest("tr").find("td:first-child").text();
                 let secondPTag = $(this).closest("tr").next().find(".beton");
@@ -6980,6 +6980,8 @@ socket.on('connect', () => {
                     $(this).closest("tr").next().removeClass('back-inplaymatch')
                     $(this).closest("tr").next().addClass('lay-inplaymatch')
                 }
+            }else{
+                
             }
             });
           });
