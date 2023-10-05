@@ -196,7 +196,7 @@ module.exports = () => {
                                     userId : user.id,
                                     eventId : betsWithMarketId.eventId,
                                     sportId : betsWithMarketId.gameId,
-                                    seriesName : betsWithMarketId.compId,
+                                    seriesName : betsWithMarketId.event,
                                     marketId : marketDetails.marketId,
                                     eventDate : new Date(betsWithMarketId.eventDate),
                                     eventName : betsWithMarketId.match,
@@ -221,21 +221,22 @@ module.exports = () => {
                                         commissionPer = commissionChild[0].matchOdd.percentage
                                     }
                                     let commissionCoin = ((commissionPer * betsWithMarketId.Stake)/100).toFixed(4)
-                                    console.log(commissionCoin)
                                     if(commissionPer > 0){
-                                        let user1 = await userModel.findByIdAndUpdate(childUser.id, {$inc:{commissionChild:commissionCoin}})
-                                        console.log(user1.userName)
-                                        let commissionReportData = {
-                                            userId:childUser.id,
-                                            market:betsWithMarketId.marketName,
-                                            commType:'Win Commission',
-                                            percentage:commissionPer,
-                                            commPoints:commissionCoin,
-                                            event:betsWithMarketId.event,
-                                            match:betsWithMarketId.match,
-                                            Sport:betsWithMarketId.gameId
+                                        let commissiondata = {
+                                            userName : childUser.userName,
+                                            userId : childUser.id,
+                                            eventId : betsWithMarketId.eventId,
+                                            sportId : betsWithMarketId.gameId,
+                                            seriesName : betsWithMarketId.event,
+                                            marketId : marketDetails.marketId,
+                                            eventDate : new Date(betsWithMarketId.eventDate),
+                                            eventName : betsWithMarketId.match,
+                                            commission : commissionCoin,
+                                            upline : 100,
+                                            commissionType: 'Win Commission',
+                                            commissionPercentage:commissionPer
                                         }
-                                        let commisssioReport = await commissionRepportModel.create(commissionReportData)
+                                        let commissionData = await newCommissionModel.create(commissiondata)
                                     }
                                 }
                             }catch(err){
