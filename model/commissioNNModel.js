@@ -19,7 +19,7 @@ const commissionNew = mongoose.Schema({
     },
     ComId:{
         type:String,
-        required:true
+        // required:true
     },
     marketId:{
         type:String,
