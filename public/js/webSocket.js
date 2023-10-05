@@ -6627,9 +6627,9 @@ socket.on('connect', () => {
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
-                    //   this.removeAttribute("data-bs-toggle");
-                      parentElement.classList.add("suspended");
-                      $(this).parent().find(".match-status-message").text("Suspended")
+                      this.removeAttribute("data-bs-toggle");
+                    //   parentElement.classList.add("suspended");
+                    //   $(this).parent().find(".match-status-message").text("Suspended")
                     }else if(sectionData.win_result != 'undefined' && sectionData.win_result != " " && sectionData.win_result != ""){
                         this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
