@@ -8642,7 +8642,7 @@ socket.on('connect', () => {
                 marketId1()
               }, 60000)
         }
-        // marketId1()
+        marketId1()
 
         socket.on('liveData', async(data) => {
             let html = ``
