@@ -12188,9 +12188,10 @@ socket.on('connect', () => {
                 $('.userBook').click(function () {
                     let id = LOGINDATA.LOGINUSER._id
                     var closestMarket = $(this).parents('.bets-table').find('.market');
+                    console.log(closestMarket)
                     if (closestMarket.length > 0) {
                         var marketId = closestMarket.attr('id');
-                        $("#searchUser").attr('data-marketid',marketId)
+                        $("#match_odd").attr('data-marketid',marketId)
                         let type = 'data5'
                         let newData = true
                         socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData})
@@ -12271,6 +12272,21 @@ socket.on('connect', () => {
              
                
             })
+
+            $(document).on('click','.children',function(e){
+                let userName = $(this).attr('data-username')
+                var closestMarket = $(this).parents('.bets-table').find('.market');
+                if (closestMarket.length > 0) {
+                    var marketId = closestMarket.attr('id');
+                    $("#searchUser").attr('data-marketid',marketId)
+                    let type = 'data5'
+                    let newData = true
+                    socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData})
+                } else {
+                    console.log('Market not found.');
+                }
+
+            })
     
             socket.on('UerBook', async(data) => {
                 console.log(data)
@@ -12314,7 +12330,7 @@ socket.on('connect', () => {
 
                         html += `
                         <tr class="tabelBodyTr">
-                            <td>${data.Bets[i].ele.userName}</td>`
+                            <td class="children" data-usename="${data.Bets[i].ele.userName}">${data.Bets[i].ele.userName}</td>`
                         if(team1data.toFixed(2) > 0){
                             html += `<td class="red"> -${team1data.toFixed(2)}</td>`
                         }else{
