@@ -1465,7 +1465,9 @@ io.on('connection', (socket) => {
                 let odds = (parseFloat(thatMarket.odd * 100) - 100).toFixed(2)
                 data.data.selectionName = thatMarket.title + "@" + thatMarket.odds
                 if(!odds){
+                    console.log(thatMarket.yes_rate, "thatMarket.yes_rate")
                     odds = thatMarket.yes_rate
+                    console.log(odds, "odds")
                     data.data.selectionName = thatMarket.title + "@" + thatMarket.yes
                 }
                 data.data.odds = odds
