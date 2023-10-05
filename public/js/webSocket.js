@@ -4693,7 +4693,7 @@ socket.on('connect', () => {
             // console.log($(this).val())
             if($(this).val().length >= 3 ){
                 let x = $(this).val(); 
-                // console.log(x)
+                console.log(x)
                 socket.emit("SearchACC", {x, LOGINDATA})
             }else{
                 document.getElementById('search').innerHTML = ``
@@ -4710,6 +4710,7 @@ socket.on('connect', () => {
 
 
         socket.on("ACCSEARCHRES", async(data)=>{
+            console.log(data,'==>resporst of search')
             let html = ``
             $('.wrapper').show()
 
