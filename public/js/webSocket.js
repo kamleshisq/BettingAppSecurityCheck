@@ -4783,6 +4783,7 @@ socket.on('connect', () => {
             stack = $('#stake').val()
             IP = $('#IP').val()
             let type;
+            console.log($(this).id)
             if($(this).id == 'Event'){
                 type = 'changeevent'
             }
