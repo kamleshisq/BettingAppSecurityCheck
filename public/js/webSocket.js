@@ -5058,6 +5058,7 @@ socket.on('connect', () => {
         let from_date;
         let sport;
         let event;
+        let market;
         let filterData = {}
         from_date = $('#Fdate').val()
         to_date = $('#Tdate').val()
@@ -5071,7 +5072,7 @@ socket.on('connect', () => {
             let userName = $('.searchUser').val()
             sport = $("#Sport").val()
             market = $("#market").val()
-            from_date = $(this).val() 
+            from_date = $('#Fdate').val() 
             to_date = $('#Tdate').val()
             event = $('#Event').val()
             let type;           
