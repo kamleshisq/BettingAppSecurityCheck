@@ -5165,13 +5165,12 @@ socket.on('connect', () => {
                     html += `<td>${i + count + 1}</td>
                     <td class="date-time" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
                     <td>${bets[i].userName}</td>
-                    <td class="text-nowrap" >${bets[i].event}</td>
                     `
                     if(bets[i].match){
                     html += `
+                    <td class="text-nowrap" >${bets[i].match}</td>
                     <td class="text-nowrap" >${bets[i].marketName}</td>
                     <td>${bets[i].oddValue}</td>
-                    <td class="text-nowrap" >${bets[i].match}</td>
                     <td class="text-nowrap" >${bets[i].selectionName}</td>`
                     }else{
                     html += `<td>-</td>
