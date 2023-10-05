@@ -6570,7 +6570,7 @@ socket.on('connect', () => {
             //         }
             //     }
             // })
-
+            let BOOKMAKERstatus = true
             $(".bookmaker_blue").each(function() {
                     
                 let id = this.id
@@ -6595,6 +6595,7 @@ socket.on('connect', () => {
                       </span>`
                       this.removeAttribute("data-bs-toggle");
                     }else{
+                        BOOKMAKERstatus = false
                         this.setAttribute("data-bs-toggle", "collapse");
                         // this.innerHTML = `<span><b>${section.layPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.innerHTML = `<span><b>${section.back}</b></span> <span> ${section.backSize}</span>`
@@ -6628,20 +6629,27 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
-                      parentElement.classList.add("suspended");
-                      $(this).parent().find(".match-status-message").text("Suspended")
+                      console.log(BOOKMAKERstatus)
+                      if(BOOKMAKERstatus){
+                          parentElement.classList.add("suspended");
+                          $(this).parent().find(".match-status-message").text("Suspended")
+                      }
                     }else if(sectionData.win_result != 'undefined' && sectionData.win_result != " " && sectionData.win_result != ""){
                         this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text('Result Declared')
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
-                        parentElement.classList.remove("suspended")
-                        $(this).parent().find(".match-status-message").text("")
+                            parentElement.classList.remove("suspended")
+                            $(this).parent().find(".match-status-message").text("")
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.innerHTML = `<span><b>${section.lay}</b></span> <span> ${section.laySize}</span>`
                         // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
                         // this.innerHTML = `<b>${section.layPrice}</b> <br> ${section.laySize}`
+                    }
+                    if(!BOOKMAKERstatus){
+                        parentElement.classList.remove("suspended")
+                        $(this).parent().find(".match-status-message").text("")
                     }
                 }
             })
