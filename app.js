@@ -60,7 +60,7 @@ app.use(cookieParser());
 //     saveUninitialized: true,
 // }));
 // console.log("WORKING 54545 ")
-console.log(1014545)
+// console.log(1014545)
 app.use(middlewares);
 crone();
 // userCrone(); 
@@ -69,7 +69,7 @@ crone();
 // app.get("/", (req, res)=> {
     //     res.send("hello word")
     // })
-console.log(445454545)
+// console.log(445454545)
 app.use(morgan('dev'));
 // app.use((req, res, next) => {
 //     console.log('Request URL:', req.url); // Logs the URL path
