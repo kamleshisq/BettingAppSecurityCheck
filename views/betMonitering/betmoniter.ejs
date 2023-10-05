@@ -44,7 +44,7 @@
           <div class="input-group">
             <label>Select Event</label>
             <select name="Event" id="Event">
-              <option value="All">Select Event</option>
+              <option value="All" selected>Select Event</option>
               <%for(let i = 0;i<events.length;i++){%>
                 <option value="<%=events[i].eventId%>"><%=events[i]._id%></option>
               <%}%>
@@ -53,7 +53,7 @@
           <div class="input-group">
             <label>Select Market</label>
             <select name="market" id="market">
-              <option value="All">All</option>
+              <option value="All" selected>All</option>
               <option value="Match Odds">Match Odds</option>
               <option value="Bookmaker 0%Comm">BookMaker</option>
               <option value="Fancy">Fancy</option>

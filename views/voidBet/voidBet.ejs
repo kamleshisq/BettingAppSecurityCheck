@@ -31,24 +31,32 @@
         <div class="table-data-section">
             <div class="table-heading voidbet-heading-btn">
                 <h3>Void Bets</h3>
-
                 <div class="table-heading-btn">
                   <form action="">
                     <div class="input-group">
-                      <label>Select Sports</label>
+                      <label>Select Sport</label>
                       <select name="Sport" id="Sport">
-                        <option value="All" selected> All </option>
-                        <option value="Cricket">Cricket</option>
-                        <option value="Football">FOOTBALL</option>
-                        <option value="Tennis">TENNIS</option>
-                        <option value="Basketball">BASKETBALL</option>
-                        <option value="Baseball">BASEBALL</option>
+                        <option value="All" selected>All</option>
+                        <option value="4">CRICKET</option>
+                        <option value="1">FOOTBALL</option>
+                        <option value="2">TENNIS</option>
+                        <option value="10">BASKETBALL</option>
+                        <option value="20">BASEBALL</option>
                       </select>
-                    </div> 
+                    </div>
+                    <div class="input-group">
+                      <label>Select Event</label>
+                      <select name="Event" id="Event">
+                        <option value="All" selected>Select Event</option>
+                        <%for(let i = 0;i<events.length;i++){%>
+                          <option value="<%=events[i].eventId%>"><%=events[i]._id%></option>
+                        <%}%>
+                      </select>
+                    </div>
                     <div class="input-group">
                       <label>Select Market</label>
                       <select name="market" id="market">
-                        <option value="All">All</option>
+                        <option value="All" selected>All</option>
                         <option value="Match Odds">Match Odds</option>
                         <option value="Bookmaker 0%Comm">BookMaker</option>
                         <option value="Fancy">Fancy</option>
