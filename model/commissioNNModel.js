@@ -53,6 +53,10 @@ const commissionNew = mongoose.Schema({
     commissionPercentage:{
         type:Number,
         required:true
+    },
+    date:{
+        type:Date,
+        required:true
     }
 })
 

@@ -182,24 +182,24 @@ module.exports = () => {
 
 //FOR MATCH ODDS COMMISSION
                         let commissionMarket = await commissionMarketModel.find()
-                        if(commissionMarket.some(item => item.marketId == betsWithMarketId.marketId)){
+                        if(commissionMarket.some(item => item.marketId == bet.marketId)){
                         try{
                             let commission = await commissionModel.find({userId:user.id})
                             let commissionPer = 0
-                            if (betsWithMarketId.marketName.toLowerCase().startsWith('match') && commission[0].matchOdd.status){
+                            if (bet.marketName.toLowerCase().startsWith('match') && commission[0].matchOdd.status){
                                 commissionPer = commission[0].matchOdd.percentage
                             }
-                            let commissionCoin = ((commissionPer * betsWithMarketId.Stake)/100).toFixed(4)
+                            let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
                             if(commissionPer > 0){
                                 let commissiondata = {
                                     userName : user.userName,
                                     userId : user.id,
-                                    eventId : betsWithMarketId.eventId,
-                                    sportId : betsWithMarketId.gameId,
-                                    seriesName : betsWithMarketId.event,
-                                    marketId : marketDetails.marketId,
-                                    eventDate : new Date(betsWithMarketId.eventDate),
-                                    eventName : betsWithMarketId.match,
+                                    eventId : bet.eventId,
+                                    sportId : bet.gameId,
+                                    seriesName : bet.event,
+                                    marketId : bet.marketId,
+                                    eventDate : new Date(bet.eventDate),
+                                    eventName : bet.match,
                                     commission : commissionCoin,
                                     upline : 100,
                                     commissionType: 'Win Commission',
@@ -217,20 +217,20 @@ module.exports = () => {
                                     let parentUser = await userModel.findById(user.parentUsers[i - 1])
                                     let commissionChild = await commissionModel.find({userId:childUser.id})
                                     let commissionPer = 0
-                                    if (betsWithMarketId.marketName == "Match Odds" && commissionChild[0].matchOdd.status){
+                                    if (bet.marketName.toLowerCase().startsWith('match') && commissionChild[0].matchOdd.status){
                                         commissionPer = commissionChild[0].matchOdd.percentage
                                     }
-                                    let commissionCoin = ((commissionPer * betsWithMarketId.Stake)/100).toFixed(4)
+                                    let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
                                     if(commissionPer > 0){
                                         let commissiondata = {
                                             userName : childUser.userName,
                                             userId : childUser.id,
-                                            eventId : betsWithMarketId.eventId,
-                                            sportId : betsWithMarketId.gameId,
-                                            seriesName : betsWithMarketId.event,
-                                            marketId : marketDetails.marketId,
-                                            eventDate : new Date(betsWithMarketId.eventDate),
-                                            eventName : betsWithMarketId.match,
+                                            eventId : bet.eventId,
+                                            sportId : bet.gameId,
+                                            seriesName : bet.event,
+                                            marketId : bet.marketId,
+                                            eventDate : new Date(bet.eventDate),
+                                            eventName : bet.match,
                                             commission : commissionCoin,
                                             upline : 100,
                                             commissionType: 'Win Commission',
@@ -298,16 +298,106 @@ module.exports = () => {
                           "transactionId":`${bet.transactionId}`
                         })
                     }else{
+
+
                         let bet = await betModel.findByIdAndUpdate(entry._id,{status:"LOSS"})
                         let user 
                         let exposure
                         if(entry.bettype2 == 'BACK'){
-                            exposure = parseFloat(entry.Stake)
+                            if(entry.marketName.toLowerCase().startsWith('match')){
+                                exposure = parseFloat(entry.Stake)
+                            }else{
+                                exposure = parseFloat(entry.Stake)
+                            }
                             user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{Loss:1, exposure:-exposure, result:marketresult.result}})
                         }else{
+
+
+                            if(entry.marketName.toLowerCase().startsWith('match')){
+                                exposure = (parseFloat(entry.Stake * entry.oddValue) - parseFloat(entry.Stake)).toFixed(2)
+                            }else{
+                                exposure = parseFloat(entry.Stake * entry.oddValue/100).toFixed(2)
+                            }
                             exposure = (parseFloat(entry.Stake * entry.oddValue) - parseFloat(entry.Stake)).toFixed(2)
                             user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{Loss:1, exposure:-exposure, result:marketresult.result}})
                         }
+
+
+
+//COMMISSION FOR ENTRY WISE LOOSING BETS
+                        let commissionMarket = await commissionMarketModel.find()
+                        if(commissionMarket.some(item => item.marketId == bet.marketId)){
+                            try{
+                                let commission = await commissionModel.find({userId:user.id})
+                                let commissionPer = 0
+                                if ((bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY_LOSS_" && commission[0].Bookmaker.status){
+                                    commissionPer = commission[0].Bookmaker.percentage
+                                }
+                                let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
+                                if(commissionPer > 0){
+                                    let commissiondata = {
+                                        userName : user.userName,
+                                        userId : user.id,
+                                        eventId : bet.eventId,
+                                        sportId : bet.gameId,
+                                        seriesName : bet.event,
+                                        marketId : bet.marketId,
+                                        eventDate : new Date(bet.eventDate),
+                                        eventName : bet.match,
+                                        commission : commissionCoin,
+                                        upline : 100,
+                                        commissionType: 'Entry Loss Wise Commission',
+                                        commissionPercentage:commissionPer,
+                                        date:Date.now()
+                                    }
+                                    let commissionData = await newCommissionModel.create(commissiondata)
+                                }
+                                }catch(err){
+                                    console.log(err)
+                                } 
+                                try{
+                                    for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                                        let childUser = await userModel.findById(user.parentUsers[i])
+                                        let parentUser = await userModel.findById(user.parentUsers[i - 1])
+                                        let commissionChild = await commissionModel.find({userId:childUser.id})
+                                        let commissionPer = 0
+                                        if ((bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY_LOSS_" && commissionChild[0].Bookmaker.status){
+                                        commissionPer = commissionChild[0].Bookmaker.percentage
+                                        }
+                                        let commissionCoin = ((commissionPer * bet.Stake)/100).toFixed(4)
+                                        if(commissionPer > 0){
+                                            let commissiondata = {
+                                                userName : childUser.userName,
+                                                userId : childUser.id,
+                                                eventId : bet.eventId,
+                                                sportId : bet.gameId,
+                                                seriesName : bet.event,
+                                                marketId : bet.marketId,
+                                                eventDate : new Date(bet.eventDate),
+                                                eventName : bet.match,
+                                                commission : commissionCoin,
+                                                upline : 100,
+                                                commissionType: 'Entry Loss Wise Commission',
+                                                commissionPercentage:commissionPer,
+                                                date:Date.now()
+                                            }
+                                            let commissionData = await newCommissionModel.create(commissiondata)
+                                        }
+                                    }
+                                }catch(err){
+                                    console.log(err)
+                                }
+                        }
+
+
+
+
+
+//NET LOOSSING COMMISSION
+
+                        
+
+
                     }
                 })
                 
