@@ -1133,6 +1133,10 @@ io.on('connection', (socket) => {
 
             }
         }
+        if(data.filterData.whiteLabel == 'All'){
+            delete data.filterData.whiteLabel
+        }
+
         
 
         let limit = 10;
@@ -1142,27 +1146,42 @@ io.on('connection', (socket) => {
         userFilter.parentUsers = data.LOGINDATA.LOGINUSER._id
         if(data.filterData.whiteLabel){
             userFilter.whiteLabel = data.filterData.whiteLabel
-            delete data.filterData.whiteLabel
+        }
+        if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
+            userFilter.userName = data.filterData.userName
         }
         let children = await User.find(userFilter)
         children.map(ele => {
             childrenUsername.push(ele.userName) 
         })
 
-        data.filterData.userName = {$in:childrenUsername}
-        let events = await Bet.aggregate([
-            {
-                $match: data.filterData
-            },
-            {
-                $group:{
-                    _id:'$match',
-                    eventId:{$first:'$eventId'}
-                }
+        if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
+            data.filterData.userName = {$in:childrenUsername}
+        }else{
+            if(data.filterData.whiteLabel){
+                data.filterData.userName = {$in:childrenUsername}
+                
             }
-        ])
+        }
+        delete data.filterData.whiteLabel
+        let events;
+        if(data.type){
+
+        }else{
+            events = await Bet.aggregate([
+                {
+                    $match: data.filterData
+                },
+                {
+                    $group:{
+                        _id:'$match',
+                        eventId:{$first:'$eventId'}
+                    }
+                }
+            ])
+        }
         let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
-        socket.emit('betMoniter',{ubDetails,page,events,filter:data.filterData})
+        socket.emit('betMoniter',{ubDetails,page,events})
 
     })
 
@@ -1198,78 +1217,82 @@ io.on('connection', (socket) => {
 
 
     socket.on('voidBET', async(data)=>{
-        console.log(data)
+        data.filterData.status = 'CANCEL'
+        if(data.filterData.marketName == "All"){
+            delete data.filterData.marketName
+        }
+
+        if(data.filterData.marketName == "Fancy"){
+            data.filterData.marketName = {$nin:["Match Odds", "Bookmaker 0%Comm"]}
+        }
+
+        if(data.filterData.betType == "All"){
+            delete data.filterData.betType; 
+        }else if(data.filterData.betType == "4"){
+            data.filterData.betType = 'Cricket'
+        }else if(data.filterData.betType == "1"){
+            data.filterData.betType = "Football"
+        }else if(data.filterData.betType == "2"){
+            data.filterData.betType = "Tennis"
+        }
+
+
+        if(data.filterData.eventId == "All"){
+            delete data.filterData.eventId
+        }
+
+
+        if(data.filterData.from_date && data.filterData.to_date){
+            data.filterData.date = {$gte : new Date(data.filterData.from_date),$lte : new Date(new Date(data.filterData.to_date).getTime() + ((24 * 60*60*1000)-1))}
+            delete data.filterData.from_date;
+            delete data.filterData.to_date;
+        }else{
+            if(data.filterData.from_date){
+                data.filterData.date = {$gte : data.filterData.from_date}
+                delete data.filterData.from_date;
+
+            }
+            if(data.filterData.to_date){
+                data.filterData.date = {$lte : new Date(new Date(data.filterData.to_date).getTime() + ((24 * 60*60*1000)-1))}
+                delete data.filterData.to_date;
+
+            }
+        }
         let limit = 10;
         let page = data.page;
-        console.log(data.filterData)
-        let filter = {
-            status: "CANCEL"
+        let childrenUsername = []
+        let userFilter = {};
+        userFilter.parentUsers = data.LOGINDATA.LOGINUSER._id
+        if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
+            userFilter.userName = data.filterData.userName
         }
-        if(data.filterData.userName && data.filterData.userName != data.LOGINDATA.LOGINUSER.userName ){
-            filter.userName = data.filterData.userName
-        }
-        if(data.filterData.from_date && data.filterData.to_date){
-            filter.date = {$gte:new Date(data.filterData.from_date),$lte:new Date(data.filterData.to_date)}
-        }else if(data.filterData.from_date && !data.filterData.to_date){
-            filter.date = {$gte:new Date(data.filterData.from_date)}
-        }else if(data.filterData.to_date && !data.filterData.from_date){
-            filter.date = {$lte:new Date(data.filterData.to_date)}
-        }
-        // if(data.filterData.Sport != "All"){
-        //     filter.betType = data.filterData.Sport
-        // }
-        if(data.filterData.Sport != "All"){
-            filter.betType = data.filterData.Sport
-        }
-        // if(data.filterData.market != All){
+        let children = await User.find(userFilter)
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
 
-        // }
-        if(data.filterData.market != "All"){
-            if(data.filterData.market === "Match Odds"){
-                filter.marketName = { '$regex': '^Match', '$options': 'i' }
-            }else if (data.filterData.market === "Bookmaker 0%Comm"){
-                filter.marketName = { '$regex': '^Bookma', '$options': 'i' }
-            }else if (data.filterData.market === "Fancy"){
-                filter.marketName = { '$not': { '$regex': '^(match|bookma)', '$options': 'i' } }
-            }
+        if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
+            data.filterData.userName = {$in:childrenUsername}
         }
-        console.log(filter)
-        let betResult = await Bet.aggregate([
-            {
-                $match:filter
-            },
-            {
-                $lookup:{
-                    from:'users',
-                    localField:'userName',
-                    foreignField:'userName',
-                    as:'userDetails'
+        let events;
+        if(data.type){
+
+        }else{
+            events = await Bet.aggregate([
+                {
+                    $match: data.filterData
+                },
+                {
+                    $group:{
+                        _id:'$match',
+                        eventId:{$first:'$eventId'}
+                    }
                 }
-            },
-            {
-                $unwind:'$userDetails'
-            },
-            {
-                $match:{
-                    'userDetails.isActive':true,
-                    'userDetails.roleName':{$ne:'Admin'},
-                    'userDetails.parentUsers':{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}},
-                }
-            },
-            {
-                $sort:{
-                    date:-1
-                }
-            },
-            {
-                $skip:(10 * page)
-            },
-            {
-                $limit:10
-            }
-        ])
-        // console.log(betResult)
-        socket.emit("voidBET", {betResult, page})
+            ])
+        }
+        let betResult = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
+
+        socket.emit("voidBET", {betResult,events,page,filter:data.filterData})
 
     })
 
