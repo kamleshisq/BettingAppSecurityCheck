@@ -1462,8 +1462,11 @@ io.on('connection', (socket) => {
         let thatMarket = marketDetails.data.items[0]
         if(data.data.secId.startsWith('odd_Even_')){
             if(data.data.secId == "odd_Even_Yes"){
-                let odds = ((thatMarket.odd * 100) - 100).toFixed(2)
-                if(!odds){
+                let odds
+                if(thatMarket.odd){
+                    odds = (parseFloat(thatMarket.odd * 100) - 100).toFixed(2)
+                    data.data.selectionName = thatMarket.title + "@" + odds
+                }else{
                     odds = thatMarket.yes_rate
                     data.data.selectionName = thatMarket.title + "@" + thatMarket.yes
                 }
@@ -1471,10 +1474,15 @@ io.on('connection', (socket) => {
                 data.data.bettype2 = 'BACK'
                 
             }else{
-                let odds = ((thatMarket.even * 100) - 100).toFixed(2)
-                if(!odds){
+                let odds
+                if(thatMarket.even){
+                    odds = (parseFloat(thatMarket.even * 100) - 100).toFixed(2)
+                    data.data.selectionName = thatMarket.title + "@" + odds
+
+                }else{
                     odds = thatMarket.no_rate
                     data.data.selectionName = thatMarket.title + "@" + thatMarket.no
+
                 }
                 data.data.odds = odds
                 data.data.bettype2 = 'LAY'
@@ -1491,8 +1499,8 @@ io.on('connection', (socket) => {
                 name = `backPrice${data.data.secId.slice(-1)}`
                 data.data.bettype2 = 'BACK'
             }
-            let odds = realodd[name];
-            data.data.odds = odds
+            // let odds = realodd[name];
+            // data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
         }else if(thatMarket.title == "Bookmaker 0%Comm" || thatMarket.title == "TOSS" || thatMarket.title != 'BOOKMAKER 0% COMM'){
             // console.log(thatMarket, 4545454)
@@ -1512,12 +1520,12 @@ io.on('connection', (socket) => {
             // console.log(name)
             // console.log(name)
             // console.log(realodd[name], realodd, "realodds")
-            let odds = realodd[name];
-            data.data.odds = odds
+            // let odds = realodd[name];
+            // data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
         }
         console.log(data ,'++++++==>DATA')
-        // let result = await placeBet(data)
+        let result = await placeBet(data)
         let openBet = []
         if(data.pathname === "/exchange/multimarkets"){
             openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})

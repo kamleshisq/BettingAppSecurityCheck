@@ -188,6 +188,7 @@ let betPlaceData = {}
 
 
 // FOR ODDS LIMIT
+if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
     if(data.data.bettype2 === 'BACK'){
         let OddChake = (data.data.oldOdds * 1) + (betLimit.max_odd * 1) 
         if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
@@ -199,6 +200,7 @@ let betPlaceData = {}
             return 'Odds out of range'
         }
     }
+}
 
 
 
