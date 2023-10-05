@@ -4816,13 +4816,17 @@ socket.on('connect', () => {
                 $(this).siblings('span').removeClass('active')
                 let page = 0;
                 let data = {}
+                fromTime = $('#fromTime').val()
+                toTime = $('#toTime').val()
                 let userName = $('.searchUser').val()
                 if(userName == ''){
                     filterData.userName = LOGINDATA.LOGINUSER.userName
                 }else{
                     filterData.userName = userName
                 }
-    
+                filterData.fromDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate1
+                filterData.toDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate2
+        
                 data.filterData = filterData;
                 data.page = page
                 data.LOGINDATA = LOGINDATA
@@ -5183,13 +5187,16 @@ socket.on('connect', () => {
                 $(this).siblings('span').removeClass('active')
                 let page = 0;
                 let data = {}
+                fromTime = $('#fromTime').val()
+                toTime = $('#toTime').val()
                 let userName = $('.searchUser').val()
                 if(userName == ''){
                     filterData.userName = LOGINDATA.LOGINUSER.userName
                 }else{
                     filterData.userName = userName
                 }
-    
+                filterData.from_date = combinedatetime(from_date,fromTime,to_date,toTime).combinedDate1
+                filterData.to_date = combinedatetime(from_date,fromTime,to_date,toTime).combinedDate2
                 data.filterData = filterData;
                 data.page = page
                 data.LOGINDATA = LOGINDATA
