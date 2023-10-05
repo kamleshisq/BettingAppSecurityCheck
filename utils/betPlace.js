@@ -210,10 +210,14 @@ let betPlaceData = {}
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
         }else if (marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
+        }else{
+            creditDebitamount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }
     }else{
         if(marketDetails.title.toLowerCase().startsWith('match')){
             creditDebitamount = (parseFloat(data.data.stake * data.data.odds) - parseFloat(data.data.stake)).toFixed(2)
+        }else if (marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
+            creditDebitamount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }else{
             creditDebitamount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }

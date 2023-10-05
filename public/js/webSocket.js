@@ -7016,7 +7016,21 @@ socket.on('connect', () => {
                     $(this).closest("tr").next().addClass('lay-inplaymatch')
                 }
             }else{
-                
+                let odds = $(this).children("span").eq(1).text();
+                let beton = $(this).closest("tr").find("td:first-child").text();
+                let secondPTag = $(this).closest("tr").next().find(".beton");
+                let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
+                let secId = this.id
+                secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId}1`);;
+                numSpan.text(odds);
+
+                if($(this).hasClass('tbl-bg-blu-spn')){
+                    $(this).closest("tr").next().removeClass('lay-inplaymatch')
+                    $(this).closest("tr").next().addClass('back-inplaymatch')
+                }else{
+                    $(this).closest("tr").next().removeClass('back-inplaymatch')
+                    $(this).closest("tr").next().addClass('lay-inplaymatch')
+                }
             }
             });
           });
@@ -7059,6 +7073,7 @@ socket.on('connect', () => {
                           .text(result.toFixed(2));
                     }
                 }else{
+                    console.log(IdButton)
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
                     let newStake
@@ -7071,7 +7086,7 @@ socket.on('connect', () => {
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
-                    var result = ((parseFloat(spanId) * betValue) / 100);
+                    var result = ((parseFloat(newStake) * betValue) / 100);
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
@@ -7472,7 +7487,7 @@ socket.on('connect', () => {
             }
             let specificSpan 
             if(data.secId.startsWith('odd_Even_')){
-                specificSpan = $(`#${secforFency}`).children("span:first-child").text();
+                specificSpan = $(`#${secforFency}`).children("span").eq(1).text();
                 // console.log(`#${secforFency}`)
             }else{
                 specificSpan = $(`#${secId.slice(0,-1)}`).children("span:first-child").text();
@@ -7481,7 +7496,7 @@ socket.on('connect', () => {
             let check = $(this).closest("tr").find("#changes").prop("checked");
             // console.log(data)
             if(specificSpan == data.odds){
-                if(data.stake === ""){
+                if(data.stake === "" || data.stake == 0){
                     // alert("Please select stake")
                     togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                 }else{
