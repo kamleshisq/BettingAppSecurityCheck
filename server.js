@@ -1129,7 +1129,7 @@ io.on('connection', (socket) => {
 
             }
             if(data.filterData.toDate){
-                data.filterData.date = {$lte : new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))}
+                data.filterData.date = {$lte : new Date(new Date(data.filterData.toDate))}
                 delete data.filterData.toDate;
 
             }
@@ -1244,7 +1244,7 @@ io.on('connection', (socket) => {
 
 
         if(data.filterData.from_date && data.filterData.to_date){
-            data.filterData.date = {$gte : new Date(data.filterData.from_date),$lte : new Date(new Date(data.filterData.to_date).getTime() + ((24 * 60*60*1000)-1))}
+            data.filterData.date = {$gte : new Date(data.filterData.from_date),$lte : new Date(new Date(data.filterData.to_date))}
             delete data.filterData.from_date;
             delete data.filterData.to_date;
         }else{
@@ -1254,7 +1254,7 @@ io.on('connection', (socket) => {
 
             }
             if(data.filterData.to_date){
-                data.filterData.date = {$lte : new Date(new Date(data.filterData.to_date).getTime() + ((24 * 60*60*1000)-1))}
+                data.filterData.date = {$lte : new Date(new Date(data.filterData.to_date))}
                 delete data.filterData.to_date;
 
             }
