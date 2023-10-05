@@ -7260,6 +7260,9 @@ socket.on('connect', () => {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
                 console.log(buttonId, "buttonIdbuttonId")
                 let IdButton = $(`#${buttonId}`)
+                if(IdButton.length === 0){
+                    IdButton = $(`span.${IdButton}#tbl-bg-pech-spn`)
+                }
                 console.log(IdButton, "IdButton")
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
