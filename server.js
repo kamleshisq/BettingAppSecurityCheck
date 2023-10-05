@@ -1463,6 +1463,7 @@ io.on('connection', (socket) => {
         if(data.data.secId.startsWith('odd_Even_')){
             if(data.data.secId == "odd_Even_Yes"){
                 let odds = (parseFloat(thatMarket.odd * 100) - 100).toFixed(2)
+                data.data.selectionName = thatMarket.title + "@" + thatMarket.odds
                 if(!odds){
                     odds = thatMarket.yes_rate
                     data.data.selectionName = thatMarket.title + "@" + thatMarket.yes
@@ -1472,6 +1473,7 @@ io.on('connection', (socket) => {
                 
             }else{
                 let odds = (parseFloat(thatMarket.even * 100) - 100).toFixed(2)
+                data.data.selectionName = thatMarket.title + "@" + thatMarket.odds
                 if(!odds){
                     odds = thatMarket.no_rate
                     data.data.selectionName = thatMarket.title + "@" + thatMarket.no
@@ -1516,8 +1518,8 @@ io.on('connection', (socket) => {
             // data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
         }
-        // console.log(data ,'++++++==>DATA')
-        let result = await placeBet(data)
+        console.log(data ,'++++++==>DATA')
+        // let result = await placeBet(data)
         let openBet = []
         if(data.pathname === "/exchange/multimarkets"){
             openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})
