@@ -18,27 +18,27 @@
                         </section>
                         <section class="exchange-pg-tranding-maches-nav-sec">
                           <div class="exchange-pg-tranding-maches-nav-sec-wrp" id="liveMatch_data">
-                            <%for(let i = 0; i < LiveCricket.length; i++){%>
-                              <%if(LiveCricket[i].marketList.match_odd != null){%>
-                                <a href= "/exchange_inPlay/match?id=<%=LiveCricket[i].eventData.eventId%>">
+                            <%for(let i = 0; i < LiveCricket1.length; i++){%>
+                              <%if(LiveCricket1[i].marketList.match_odd != null){%>
+                                <a href= "/exchange_inPlay/match?id=<%=LiveCricket1[i].eventData.eventId%>">
                                     <img src="/assets/img/home/side-menuimg02.svg" alt="">
-                                    <%=LiveCricket[i].eventData.name%>
+                                    <%=LiveCricket1[i].eventData.name%>
                                 </a>
                               <%}%>
                             <%}%>
-                            <%for(let i = 0; i < liveFootBall.length; i++){%>
-                              <%if(liveFootBall[i].marketList.match_odd != null){%>
-                                <a href="/exchange_inPlay/match?id=<%=liveFootBall[i].eventData.eventId%>">
+                            <%for(let i = 0; i < liveFootBall1.length; i++){%>
+                              <%if(liveFootBall1[i].marketList.match_odd != null){%>
+                                <a href="/exchange_inPlay/match?id=<%=liveFootBall1[i].eventData.eventId%>">
                                     <img src="/assets/img/home/side-menuimg03.svg" alt="">
-                                    <%=liveFootBall[i].eventData.name%>
+                                    <%=liveFootBall1[i].eventData.name%>
                                 </a>
                               <%}%> 
                             <%}%> 
-                            <%for(let i = 0; i < liveTennis.length; i++){%>
-                              <%if(liveTennis[i].marketList.match_odd != null){%>
-                                <a href="/exchange_inPlay/match?id=<%=liveTennis[i].eventData.eventId%>">
+                            <%for(let i = 0; i < liveTennis1.length; i++){%>
+                              <%if(liveTennis1[i].marketList.match_odd != null){%>
+                                <a href="/exchange_inPlay/match?id=<%=liveTennis1[i].eventData.eventId%>">
                                     <img src="/assets/img/home/side-menuimg04.svg" alt="">
-                                    <%=liveTennis[i].eventData.name%>
+                                    <%=liveTennis1[i].eventData.name%>
                                 </a>
                               <%}%>
                             <%}%>
