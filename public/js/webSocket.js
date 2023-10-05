@@ -4802,7 +4802,7 @@ socket.on('connect', () => {
         filterData.fromDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate2
         
 
-        $('#toTime,#fromTime').change(function(e){
+        $('#toTime,#fromTime').keyup(function(e){
             let value = $(this)
             if(!isValidTimeString(value)){
                 if(!$(this).siblings('span').hasClass('active')){
