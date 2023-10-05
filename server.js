@@ -1149,7 +1149,9 @@ io.on('connection', (socket) => {
             childrenUsername.push(ele.userName) 
         })
 
-        data.filterData.userName = {$in:childrenUsername}
+        if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
+            data.filterData.userName = {$in:childrenUsername}
+        }
         let events = await Bet.aggregate([
             {
                 $match: data.filterData
