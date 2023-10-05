@@ -7497,7 +7497,7 @@ socket.on('connect', () => {
             // console.log(data)
             if(specificSpan == data.odds){
                 console.log(data.stake)
-                if(data.stake === ""){
+                if(data.stake === "" || data.stake === 0){
                     // alert("Please select stake")
                     togglePopupMain('popup-2', "redPopUP2", "Please select stake")
                 }else{
