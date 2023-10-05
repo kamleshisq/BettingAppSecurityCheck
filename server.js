@@ -3545,7 +3545,7 @@ io.on('connection', (socket) => {
         console.log(data)
         let user = await User.findById(data.id)
         let childrenUsername = []
-        if(user.userName == data.LOGINDATA.LOGINUSER.userName){
+        if(user.userName == data.LOGINDATA.LOGINUSER.userName){ta
             let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
             children.map(ele => {
                 childrenUsername.push(ele.userName) 
