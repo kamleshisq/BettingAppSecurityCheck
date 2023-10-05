@@ -7276,6 +7276,7 @@ socket.on('connect', () => {
                         result = (NewStake * Odds) / 100
                     }
                 }else{
+                    console.log(IdButton)
                     if(IdButton.hasClass('only_over_red') || IdButton.hasClass('odd_even_red')){
                         result = (NewStake * odds) - NewStake
                     }else{
