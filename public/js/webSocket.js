@@ -6645,8 +6645,8 @@ socket.on('connect', () => {
                         // this.innerHTML = `<b>${section.layPrice}</b> <br> ${section.laySize}`
                     }
                     if( !(section.back == "-" || section.back == "1,000.00" || section.back == "0")){
-                        parentElement.classList.add("suspended");
-                        $(this).parent().find(".match-status-message").text("Suspended")
+                        parentElement.classList.remove("suspended")
+                        $(this).parent().find(".match-status-message").text("")
                     }
                    
                 }
