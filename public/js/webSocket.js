@@ -4803,7 +4803,7 @@ socket.on('connect', () => {
         
 
         $('#toTime,#fromTime').keyup(function(e){
-            let value = $(this)
+            let value = $(this).val()
             if(!isValidTimeString(value)){
                 if(!$(this).siblings('span').hasClass('active')){
                     console.log('in add class')
