@@ -2278,7 +2278,7 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
     let featureEventId = []
     let featureStatusArr = await FeatureventModel.find();
     featureStatusArr.map(ele => {
-        featureEventId.push(ele.Id)
+        featureEventId.push(parseInt(ele.Id))
     })
     let liveTennis = Tennis.filter(item => featureEventId.includes(item.eventData.eventId))
     console.log(featureEventId)
