@@ -7217,7 +7217,11 @@ socket.on('connect', () => {
                         result = (NewStake * Odds) / 100
                     }
                 }else{
-                    result = (NewStake * 2) - NewStake;
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                        result = (NewStake * 2) - NewStake;
+                    }else{
+                        result = (NewStake * Odds) / 100
+                    }
                 }
                 if(!spanId){
                     $(this).closest("tr").find('.set-stake-form-input2').val(0)
