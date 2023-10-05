@@ -4681,8 +4681,8 @@ socket.on('connect', () => {
 
         $('#fromDate').val(tomorrowFormatted)
         $('#toDate').val(todayFormatted)
-        $('#toTime').val("00:00:00")
-        $('#fromTime').val("23:59:59")
+        $('#toTime').val("23:59:59")
+        $('#fromTime').val("00:00:00")
         function formatDate(date) {
             var year = date.getFullYear();
             var month = (date.getMonth() + 1).toString().padStart(2, '0');
