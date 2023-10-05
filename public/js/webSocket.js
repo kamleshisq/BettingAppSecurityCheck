@@ -7258,6 +7258,7 @@ socket.on('connect', () => {
           $(document).ready(function(){
             $(".plus").click(function () {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
+                console.log(buttonId, "buttonIdbuttonId")
                 let IdButton = $(`#${buttonId}`)
                 console.log(IdButton, "IdButton")
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
