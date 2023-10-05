@@ -3662,32 +3662,34 @@ io.on('connection', (socket) => {
                         }
                     }
                 ]);
-                let team1data = 0;
-                let team2data = 0;
-                if(Bets.length !== 0){
-                    for(let i = 0;i<Bets.length;i++){
-                        if(Bets[i].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
-                            // console.log("2121222122121")
-                            team1data += Bets[i].selections[0].totalAmount
-                            if(Bets[i].selections[1]){
-                                team2data += Bets[i].selections[1].totalAmount
-                            }else{
-                                team2data += -Bets[i].selections[0].Stake
-                            }
-                        }else{
-                            if(Bets[i].selections[1]){
-                                team1data += Bets[i].selections[1].totalAmount
-                            }else{
-                                team1data += -Bets[i].selections[0].Stake
-                            }
-                            team2data += Bets[i].selections[0].totalAmount
-                        }
-                    }
+                // let team1data = 0;
+                // let team2data = 0;
+                // if(Bets.length !== 0){
+                //     for(let i = 0;i<Bets.length;i++){
+                //         if(Bets[i].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
+                //             // console.log("2121222122121")
+                //             team1data += Bets[i].selections[0].totalAmount
+                //             if(Bets[i].selections[1]){
+                //                 team2data += Bets[i].selections[1].totalAmount
+                //             }else{
+                //                 team2data += -Bets[i].selections[0].Stake
+                //             }
+                //         }else{
+                //             if(Bets[i].selections[1]){
+                //                 team1data += Bets[i].selections[1].totalAmount
+                //             }else{
+                //                 team1data += -Bets[i].selections[0].Stake
+                //             }
+                //             team2data += Bets[i].selections[0].totalAmount
+                //         }
+                //     }
                     
+                // }
+                // Bets[0].selections[0].totalAmount = team2data
+                // Bets[0].selections[0].Stake = team1data
+                if(Bets.length != 0){
+                    return ({ele,Bets:Bets[0]})
                 }
-                Bets[0].selections[0].totalAmount = team2data
-                Bets[0].selections[0].Stake = team1data
-                return ({ele,Bets:Bets[0]})
             })
             let resultPromise = await Promise.all(newUser)
             let result = []
