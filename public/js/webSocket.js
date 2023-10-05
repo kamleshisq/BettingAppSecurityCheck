@@ -5187,7 +5187,7 @@ socket.on('connect', () => {
                 }
                 count += 10;
                 if(data.page == 0){
-                    if(!(data.betResult.length == 0)){
+                    if((data.betResult.length == 0)){
                         $('#load-more').hide()
                     }else{
                         $('#load-more').show()
