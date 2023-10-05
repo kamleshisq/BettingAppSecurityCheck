@@ -4798,8 +4798,8 @@ socket.on('connect', () => {
             
         }
 
-        filterData.toDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate1
-        filterData.fromDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate2
+        filterData.fromDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate1
+        filterData.toDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate2
         
 
         $('#toTime,#fromTime').keyup(function(e){
@@ -4860,8 +4860,9 @@ socket.on('connect', () => {
             filterData.Stake = stack;
             filterData.eventId = event
             filterData.ip = IP
-            filterData.toDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate1
-            filterData.fromDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate2
+            filterData.fromDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate1
+            filterData.toDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate2
+        
             filterData.whiteLabel = whiteLabel
 
             Object.keys(filterData).map(ele => {
