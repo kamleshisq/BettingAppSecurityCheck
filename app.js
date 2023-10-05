@@ -44,7 +44,7 @@ mongoose.connect(process.env.db1,{
 }).then(()=>{
     console.log("MongoDB connected")
 })
-console.log("WORKING 54545 ")
+// console.log("WORKING 54545 ")
 global._blacklistToken=[];
 global._loggedInToken=[];
 app.set('view engine', "ejs");
@@ -59,7 +59,7 @@ app.use(cookieParser());
 //     resave: false,
 //     saveUninitialized: true,
 // }));
-console.log("WORKING 54545 ")
+// console.log("WORKING 54545 ")
 app.use(middlewares);
 crone();
 // userCrone(); 
@@ -68,7 +68,7 @@ crone();
 // app.get("/", (req, res)=> {
     //     res.send("hello word")
     // })
-
+console.log(445454545)
 app.use(morgan('dev'));
 // app.use((req, res, next) => {
 //     console.log('Request URL:', req.url); // Logs the URL path
