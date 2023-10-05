@@ -298,11 +298,12 @@ module.exports = () => {
                           "transactionId":`${bet.transactionId}`
                         })
                     }else if ((entry.selectionName.split('@')[1] ==  marketresult.result && entry.bettype2 == 'BACK') || (entry.selectionName.split('@')[1] != marketresult.result && entry.bettype2 == "LAY")){
-                        let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * entry.oddValue), result:marketresult.result})
-                        let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{availableBalance: parseFloat(entry.Stake * entry.oddValue), myPL: parseFloat(entry.Stake * entry.oddValue), Won:1, exposure:-parseFloat(entry.Stake), uplinePL:-parseFloat(entry.Stake * entry.oddValue), pointsWL:parseFloat(entry.Stake * entry.oddValue)}})
+                        let creditDebitamount = ((entry.Stake * entry.oddValue)/100 * 2).toFixed(2)
+                        let bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:creditDebitamount, result:marketresult.result})
+                        let user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{availableBalance: creditDebitamount, myPL: creditDebitamount, Won:1, exposure:-parseFloat(entry.Stake), uplinePL:-creditDebitamount, pointsWL:creditDebitamount}})
                         let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
 
-                        let debitAmountForP = parseFloat(entry.Stake * entry.oddValue)
+                        let debitAmountForP = creditDebitamount
                         for(let i = user.parentUsers.length - 1; i >= 1; i--){
                             let parentUser1 = await userModel.findById(user.parentUsers[i])
                             let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
@@ -312,21 +313,21 @@ module.exports = () => {
                             parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
                             await userModel.findByIdAndUpdate(user.parentUsers[i], {
                                 $inc: {
-                                    downlineBalance: (entry.Stake * entry.oddValue),
+                                    downlineBalance: creditDebitamount,
                                     myPL: -parentUser1Amount,
                                     uplinePL: -parentUser2Amount,
                                     lifetimePL: -parentUser1Amount,
-                                    pointsWL: (entry.Stake * entry.oddValue)
+                                    pointsWL: creditDebitamount
                                 }
                             });
                         
                             if (i === 1) {
                                 await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
                                     $inc: {
-                                        downlineBalance: (entry.Stake * entry.oddValue),
+                                        downlineBalance: creditDebitamount,
                                         myPL: -parentUser2Amount,
                                         lifetimePL: -parentUser2Amount,
-                                        pointsWL: (entry.Stake * entry.oddValue)
+                                        pointsWL: creditDebitamount
                                     }
                                 });
                             }
@@ -336,8 +337,8 @@ module.exports = () => {
                         await accModel.create({
                           "user_id":user._id,
                           "description": description,
-                          "creditDebitamount" : (entry.Stake * entry.oddValue),
-                          "balance" : user.availableBalance + (entry.Stake * entry.oddValue),
+                          "creditDebitamount" : creditDebitamount,
+                          "balance" : user.availableBalance + creditDebitamount,
                           "date" : Date.now(),
                           "userName" : user.userName,
                           "role_type" : user.role_type,
@@ -346,8 +347,6 @@ module.exports = () => {
                           "transactionId":`${bet.transactionId}`
                         })
                     }else{
-
-
                         let bet = await betModel.findByIdAndUpdate(entry._id,{status:"LOSS"})
                         let user 
                         let exposure
