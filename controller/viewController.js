@@ -3404,7 +3404,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
 
     let newcricketEvents = cricketList.eventList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.eventData.eventId})
-         let featureStatus = await FeatureventModel.findById(item.eventData.eventId)
+         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
          count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
          if(!status){
             item.eventData.status = true
@@ -3422,7 +3422,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     })
     let newfootballEvents =  footballList.eventList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.eventData.eventId})
-         let featureStatus = await FeatureventModel.findById(item.eventData.eventId)
+         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
 
          count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
          if(!status){
@@ -3441,7 +3441,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     })
     let newtennisEvents = tennisList.eventList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.eventData.eventId})
-         let featureStatus = await FeatureventModel.findById(item.eventData.eventId)
+         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
          count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
          if(!status){
             item.eventData.status = true
