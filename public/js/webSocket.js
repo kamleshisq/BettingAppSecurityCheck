@@ -5060,6 +5060,8 @@ socket.on('connect', () => {
 
         $('#Fdate').val(tomorrowFormatted)
         $('#Tdate').val(todayFormatted)
+        $('#toTime').val("23:59:59")
+        $('#fromTime').val("00:00:00")
         function formatDate(date) {
             var year = date.getFullYear();
             var month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -5117,21 +5119,72 @@ socket.on('connect', () => {
         let sport;
         let event;
         let market;
+        let toTime;
+        let fromTime;
         let filterData = {}
         from_date = $('#Fdate').val()
+        fromTime = $('#fromTime').val()
         to_date = $('#Tdate').val()
-        filterData.to_date = to_date;
-        filterData.from_date = from_date
+        toTime = $('#toTime').val()
 
+        function combinedatetime(fromDate,fromTime,toDate,toTime){
+            const dateComponents1 = fromDate.split('-').map(Number); 
+            const timeComponents1 = fromTime.split(':').map(Number);  
+    
+            const dateComponents2 = toDate.split('-').map(Number); 
+            const timeComponents2 = toTime.split(':').map(Number);  
+    
+            const combinedDate1 = new Date(dateComponents1[0], dateComponents1[1] - 1, dateComponents1[2]);
+            const combinedDate2 = new Date(dateComponents2[0], dateComponents2[1] - 1, dateComponents2[2]);
+    
+            combinedDate1.setHours(timeComponents1[0]);
+            combinedDate1.setMinutes(timeComponents1[1]);
+            combinedDate1.setSeconds(timeComponents1[2]);
+    
+            combinedDate2.setHours(timeComponents2[0]);
+            combinedDate2.setMinutes(timeComponents2[1]);
+            combinedDate2.setSeconds(timeComponents2[2]);
+    
+            return {
+                combinedDate1,
+                combinedDate2
+            }
+            
+        }
 
-       
+        filterData.from_date = combinedatetime(from_date,fromTime,to_date,toTime).combinedDate1
+        filterData.to_date = combinedatetime(from_date,fromTime,to_date,toTime).combinedDate2
+
+        $('#toTime,#fromTime').keyup(function(e){
+            let value = $(this).val()
+            if(!isValidTimeString(value)){
+                if(!$(this).siblings('span').hasClass('active')){
+                    console.log('in add class')
+                    $(this).siblings('span').addClass('active')
+                }
+                console.log('already added class')
+            }else{
+                console.log('corrent class')
+                $(this).siblings('span').removeClass('active')
+            }
+        })
+
+        function isValidTimeString(timeString) {
+            // Define a regular expression pattern for a valid time string in HH:MM:SS format
+            const timeRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
+          
+            // Test the timeString against the regex pattern
+            return timeRegex.test(timeString);
+          }
         $('#Fdate,#Tdate,#Sport,#market,#Event').change(function(){
             console.log("working")
             let userName = $('.searchUser').val()
             sport = $("#Sport").val()
             market = $("#market").val()
             from_date = $('#Fdate').val() 
+            fromTime = $('#fromTime').val()
             to_date = $('#Tdate').val()
+            toTime = $('#toTime').val()
             event = $('#Event').val()
             let type;           
             if($(this).attr('id') == 'Event'){
@@ -5152,9 +5205,9 @@ socket.on('connect', () => {
                 filterData.marketName = market
             // }
             filterData.eventId = event
-            filterData.to_date = to_date;
-            filterData.from_date = from_date
-
+            filterData.from_date = combinedatetime(from_date,fromTime,to_date,toTime).combinedDate1
+            filterData.to_date = combinedatetime(from_date,fromTime,to_date,toTime).combinedDate2
+    
             Object.keys(filterData).map(ele => {
                 if(filterData[ele] == ""){
                     delete filterData[ele]
