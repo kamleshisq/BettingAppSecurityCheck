@@ -59,17 +59,17 @@
                     <td><%=data.tennisEvents[i].eventData.name%></td>
                     <td><%=data.tennisEvents[i].eventData.count%></td>
                     <td> 
-                      <%if(data.cricketEvents[i].eventData.featureStatus){%>
+                      <%if(data.tennisEvents[i].eventData.featureStatus){%>
                         <div class="on-off-btn-section">
                           <span class="on-off">OFF &nbsp; <label class="switch on">
-                          <input class="checkbox status_check_feature" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].eventData.eventId%>" checked>
+                          <input class="checkbox status_check_feature" name="autoSattled" type="checkbox" data-id="<%=data.tennisEvents[i].eventData.eventId%>" checked>
                           <span class="slider round"></span>
                           </label>&nbsp; ON</span>
                         </div>
                         <%}else{%>
                         <div class="on-off-btn-section">
                           <span class="on-off">OFF &nbsp; <label class="switch">
-                          <input class="checkbox status_check_feature" name="autoSattled" type="checkbox" data-id="<%=data.cricketEvents[i].eventData.eventId%>">
+                          <input class="checkbox status_check_feature" name="autoSattled" type="checkbox" data-id="<%=data.tennisEvents[i].eventData.eventId%>">
                           <span class="slider round"></span>
                           </label>&nbsp; ON</span>
                         </div>
