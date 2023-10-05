@@ -475,6 +475,7 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
     }
+    let featureStatusArr = await FeatureventModel.find();
     res.status(200).render("./userSideEjs/home/homePage",{
         title:'Home',
         user,
@@ -488,7 +489,8 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         LiveCricket,
         liveFootBall,
         liveTennis,
-        notifications:req.notifications
+        notifications:req.notifications,
+        featureStatusArr
     })
 })
 
@@ -2047,6 +2049,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
     let catalog = await catalogController.find()
+    let featureStatusArr = await FeatureventModel.find();
     res.status(200).render('./userSideEjs/exchangePage/main',{
         title:"Exchange Page",
         user,
@@ -2065,7 +2068,8 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         cricketSeries,
         footbalSeries,
         tennisSeries,
-        catalog
+        catalog,
+        featureStatusArr
         
     })
 })
@@ -2118,6 +2122,8 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
         }
     });
     let catalog = await catalogController.find()
+    let featureStatusArr = await FeatureventModel.find();
+
     res.status(200).render('./userSideEjs/inplayPage/main',{
         title:'In Play',
         user,
@@ -2133,7 +2139,8 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
         cricketSeries,
         footbalSeries,
         tennisSeries,
-        catalog
+        catalog,
+        featureStatusArr
     })
 })
 
@@ -2142,7 +2149,12 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
     let user = req.currentUser
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-    let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
+    let featureEventId = []
+    let featureStatusArr = await FeatureventModel.find();
+    featureStatusArr.map(ele => {
+        featureEventId.push(ele.Id)
+    })
+    let LiveCricket = cricket.filter(item => featureEventId.includes(item.eventData.eventId))
     let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
@@ -2162,6 +2174,8 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
         }
     });
     let catalog = await catalogController.find()
+  
+
     res.status(200).render("./userSideEjs/cricketPage/main", {
         title:'Cricket',
         user,
@@ -2175,7 +2189,7 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
         userMultimarkets,
         cricketSeries,
         catalog
-    })
+        })
 })
 
 
@@ -2213,7 +2227,12 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
     const sportListData = await getCrkAndAllData()
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
     footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-    let liveFootBall = footBall.filter(item => item.eventData.type === "IN_PLAY");
+    let featureEventId = []
+    let featureStatusArr = await FeatureventModel.find();
+    featureStatusArr.map(ele => {
+        featureEventId.push(ele.Id)
+    })
+    let liveFootBall = footBall.filter(item => featureEventId.includes(item.eventData.eventId));
     let upcomintFootball = footBall.filter(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
     let userLog
@@ -2232,6 +2251,7 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
         }
     });
     let catalog = await catalogController.find()
+
     res.status(200).render('.//userSideEjs/footballPage/main',{
         title:'Football',
         user,
@@ -2244,7 +2264,8 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
         notifications:req.notifications,
         userMultimarkets,
         footbalSeries,
-        catalog
+        catalog,
+        featureStatusArr
     })
 })
 
@@ -2254,7 +2275,12 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
     const sportListData = await getCrkAndAllData()
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
     Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-    let liveTennis = Tennis.filter(item => item.eventData.type === "IN_PLAY")
+    let featureEventId = []
+    let featureStatusArr = await FeatureventModel.find();
+    featureStatusArr.map(ele => {
+        featureEventId.push(ele.Id)
+    })
+    let liveTennis = Tennis.filter(item => featureEventId.includes(item.eventData.eventId))
     let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
     let userLog
@@ -2273,6 +2299,7 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
         }
     });
     let catalog = await catalogController.find()
+
     res.status(200).render('.//userSideEjs/tennisPage/main',{
         title:'Tennis',
         user,
@@ -2285,7 +2312,8 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
         notifications:req.notifications,
         userMultimarkets,
         tennisSeries,
-        catalog
+        catalog,
+        featureStatusArr
     })
 })
 
