@@ -359,6 +359,7 @@ let betPlaceData = {}
           commissionPer = commission[0].fency.percentage
         }
         let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
+        // console.log(commissionCoin, commissionPer)
         if(commissionPer > 0){
             let commissiondata = {
                 userName : user.userName,
