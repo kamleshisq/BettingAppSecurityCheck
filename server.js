@@ -1462,23 +1462,27 @@ io.on('connection', (socket) => {
         let thatMarket = marketDetails.data.items[0]
         if(data.data.secId.startsWith('odd_Even_')){
             if(data.data.secId == "odd_Even_Yes"){
-                let odds = (parseFloat(thatMarket.odd * 100) - 100).toFixed(2)
-                data.data.selectionName = thatMarket.title + "@" + thatMarket.odds
-                if(!odds){
-                    console.log(thatMarket.yes_rate, "thatMarket.yes_rate")
+                let odds
+                if(thatMarket.odd){
+                    odds = (parseFloat(thatMarket.odd * 100) - 100).toFixed(2)
+                    data.data.selectionName = thatMarket.title + "@" + thatMarket.odds
+                }else{
                     odds = thatMarket.yes_rate
-                    console.log(odds, "odds")
                     data.data.selectionName = thatMarket.title + "@" + thatMarket.yes
                 }
                 data.data.odds = odds
                 data.data.bettype2 = 'BACK'
                 
             }else{
-                let odds = (parseFloat(thatMarket.even * 100) - 100).toFixed(2)
-                data.data.selectionName = thatMarket.title + "@" + thatMarket.odds
-                if(!odds){
+                let odds
+                if(thatMarket.even){
+                    odds = (parseFloat(thatMarket.even * 100) - 100).toFixed(2)
+                    data.data.selectionName = thatMarket.title + "@" + thatMarket.odds
+
+                }else{
                     odds = thatMarket.no_rate
                     data.data.selectionName = thatMarket.title + "@" + thatMarket.no
+
                 }
                 data.data.odds = odds
                 data.data.bettype2 = 'LAY'
