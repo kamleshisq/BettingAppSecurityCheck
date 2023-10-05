@@ -6629,6 +6629,7 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
+                      console.log(BOOKMAKERstatus)
                       if(BOOKMAKERstatus){
                           parentElement.classList.add("suspended");
                           $(this).parent().find(".match-status-message").text("Suspended")
