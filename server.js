@@ -3545,104 +3545,127 @@ io.on('connection', (socket) => {
     socket.on('UerBook', async(data) => {
         console.log(data)
         let user = await User.findById(data.id)
-        let childrenUsername = []
-        if(user.userName == data.LOGINDATA.LOGINUSER.userName){ta
-            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-            children.map(ele => {
-                childrenUsername.push(ele.userName) 
-            })
-        }else{
-            childrenUsername.push(user.userName)
-        }
+        let users = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id,role_type:2})
+       
         try{
-            let Bets = await Bet.aggregate([
-                {
-                    $match: {
-                        status: "OPEN",
-                        marketId: data.marketId,
-                        userName:{$in:childrenUsername}
-                    }
-                },
-                {
-                    $group: {
-                        _id: {
-                            userName: "$userName",
-                            selectionName: "$selectionName",
-                            matchName: "$match",
-                        },
-                        totalAmount: {
-                            $sum: {
-                                $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
-                            }
-                        },
-                        Stake: { $sum: "$Stake" }
+            let newUser = users.map(async(ele)=>{
+                let userfilter;
+                role_type = []
+                roles = await Role.find({role_level: {$gt:ele.role.role_level}});
+                for(let i = 0; i < roles.length; i++){
+                    role_type.push(roles[i].role_type)
+                }
+                let childrenUsername = []
+               
+                if(ele.role_type == 2){
+                    let children = await User.find({parentUsers:ele._id,isActive:true,role_type:{$in:role_type}})
+                    children.map(ele => {
+                        childrenUsername.push(ele.userName) 
+                    })
+                }
+                else if(ele.role_type == 5){
+                    let children = await User.find({userName:ele.userName,isActive:true})
+                    children.map(ele => {
+                        childrenUsername.push(ele.userName) 
+                    })
+                }
+                let Bets = await Bet.aggregate([
+                    {
+                        $match: {
+                            status: "OPEN",
+                            marketId: data.marketId,
+                            userName:{$in:childrenUsername}
+                        }
                     },
-                },
-                {
-                    $group: {
-                        _id: "$_id.userName",
-                        selections: {
-                            $push: {
-                                selectionName: "$_id.selectionName",
-                                totalAmount: "$totalAmount",
-                                matchName: "$_id.matchName",
-                                Stake: "$Stake"
+                    {
+                        $group: {
+                            _id: {
+                                userName: "$userName",
+                                selectionName: "$selectionName",
+                                matchName: "$match",
+                            },
+                            totalAmount: {
+                                $sum: {
+                                    $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                                }
+                            },
+                            Stake: { $sum: "$Stake" }
+                        },
+                    },
+                    {
+                        $group: {
+                            _id: "$_id.userName",
+                            selections: {
+                                $push: {
+                                    selectionName: "$_id.selectionName",
+                                    totalAmount: "$totalAmount",
+                                    matchName: "$_id.matchName",
+                                    Stake: "$Stake"
+                                },
                             },
                         },
                     },
-                },
-                {
-                    $project: {
-                        _id: 0,
-                        userName: "$_id",
-                        selections: {
-                            $map: {
-                                input: "$selections",
-                                as: "selection",
-                                in: {
-                                    selectionName: "$$selection.selectionName",
-                                    totalAmount: {
-                                        $subtract: [
-                                            "$$selection.totalAmount",
-                                            {
-                                                $reduce: {
-                                                    input: "$selections",
-                                                    initialValue: 0,
-                                                    in: {
-                                                        $cond: {
-                                                            if: {
-                                                                $and: [
-                                                                    { $eq: ["$$this.matchName", "$$selection.matchName"] },
-                                                                    { $ne: ["$$this.selectionName", "$$selection.selectionName"] }
-                                                                ]
-                                                            },
-                                                            then: { $add: ["$$value", "$$this.Stake"] },
-                                                            else: "$$value"
+                    {
+                        $project: {
+                            _id: 0,
+                            userName: "$_id",
+                            selections: {
+                                $map: {
+                                    input: "$selections",
+                                    as: "selection",
+                                    in: {
+                                        selectionName: "$$selection.selectionName",
+                                        totalAmount: {
+                                            $subtract: [
+                                                "$$selection.totalAmount",
+                                                {
+                                                    $reduce: {
+                                                        input: "$selections",
+                                                        initialValue: 0,
+                                                        in: {
+                                                            $cond: {
+                                                                if: {
+                                                                    $and: [
+                                                                        { $eq: ["$$this.matchName", "$$selection.matchName"] },
+                                                                        { $ne: ["$$this.selectionName", "$$selection.selectionName"] }
+                                                                    ]
+                                                                },
+                                                                then: { $add: ["$$value", "$$this.Stake"] },
+                                                                else: "$$value"
+                                                            }
                                                         }
                                                     }
                                                 }
-                                            }
-                                        ]
-                                    },
-                                    matchName: "$$selection.matchName",
-                                    Stake: "$$selection.Stake"
+                                            ]
+                                        },
+                                        matchName: "$$selection.matchName",
+                                        Stake: "$$selection.Stake"
+                                    }
                                 }
                             }
-                        }
+                        },
                     },
-                },
-                // {
-                //     $unwind: "$selections"
-                // },
-                {
-                    $sort: {
-                        "userName": 1, 
-                        // "selections.selectionName": 1 
+                    // {
+                    //     $unwind: "$selections"
+                    // },
+                    {
+                        $sort: {
+                            "userName": 1, 
+                            // "selections.selectionName": 1 
+                        }
                     }
+                ]);
+                if(Bets.length !== 0){
+                    return ({ele,Bets:Bets[0]})
                 }
-            ]);
-            
-            console.log(Bets);
+            })
+            let resultPromise = await Promise.all(newUser)
+            let result = []
+            for(let i = 0;i<resultPromise.length;i++){
+                if(resultPromise[i]){
+                    result.push(resultPromise[i])
+                }
+            }
             
             
             
@@ -3654,9 +3677,9 @@ io.on('connection', (socket) => {
             
             
             
-           console.log(Bets, "==> WORKING")
+           console.log(result, "==> WORKING")
         //    console.log(Bets[0].selections)
-           socket.emit('UerBook', {Bets,type:data.type,newData:data.newData});
+           socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData});
         //    socket.emit();
         }catch(err){
             console.log(err)
@@ -3980,10 +4003,6 @@ io.on('connection', (socket) => {
                 })
             }
             else if(ele.role_type == 5){
-                userfilter = {
-                    'userDetails.isActive':true,
-                    'userDetails.userName':ele.userName
-                }
                 let children = await User.find({userName:ele.userName,isActive:true})
                 children.map(ele => {
                     childrenUsername.push(ele.userName) 
