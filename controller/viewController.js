@@ -1427,12 +1427,23 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
     children.map(ele => {
         childrenUsername.push(ele.userName) 
     })
+    var today = new Date();
+    var todayFormatted = formatDate(today);
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate() - 1);
+    var tomorrowFormatted = formatDate(tomorrow);
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
 
     let betResult = await betModel.aggregate([
         {
           $match: {
             userName: { $in: childrenUsername },
-            date:{$gte:new Date(new Date().getDate() - 1),$lte:new Date(new Date().getTime() + ((24 * 60*60*1000)-1))}          
+            date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
             }
         },
         {
