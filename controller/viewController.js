@@ -1432,7 +1432,7 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
         {
           $match: {
             userName: { $in: childrenUsername },
-            date:{$gte:new Date("2023-10-03"),$lte:new Date(new Date("2023-10-04").getTime() + ((24 * 60*60*1000)-1))}          
+            date:{$gte:new Date(new Date().getDate() - 1),$lte:new Date(new Date().getTime() + ((24 * 60*60*1000)-1))}          
             }
         },
         {
