@@ -4681,6 +4681,8 @@ socket.on('connect', () => {
 
         $('#fromDate').val(tomorrowFormatted)
         $('#toDate').val(todayFormatted)
+        $('#toTime').val("00:00:00")
+        $('#fromTime').val("00:00:00")
         function formatDate(date) {
             var year = date.getFullYear();
             var month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -4742,6 +4744,8 @@ socket.on('connect', () => {
         let stack;
         let whiteLabel;
         let IP;
+        let toTime;
+        let fromTime;
         let filterData = {}
         $(document).on('input','.searchUser', function(e){
             var $input = $(this),
@@ -4769,12 +4773,27 @@ socket.on('connect', () => {
         filterData.toDate = toDate;
         filterData.fromDate = fromDate
 
+        $('#toTime,#fromTime').change(function(e){
+            let value = $(this)
+            if(!isValidTimeString(value)){
+                
+            }
+        })
 
+        function isValidTimeString(timeString) {
+            // Define a regular expression pattern for a valid time string in HH:MM:SS format
+            const timeRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
+          
+            // Test the timeString against the regex pattern
+            return timeRegex.test(timeString);
+          }
         $('#fromDate,#toDate,#Sport,#market,#Event,#result,#whiteLabel').change(function(){
             console.log("working")
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
+            fromTime = $('#fromDate').val()
             toDate = $('#toDate').val()
+            toTime = $('#toDate').val()
             sport = $('#Sport').val()
             whiteLabel = $('#whiteLabel').val()
             market = $('#market').val()
