@@ -7258,11 +7258,9 @@ socket.on('connect', () => {
           $(document).ready(function(){
             $(".plus").click(function () {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
-                console.log(buttonId)
-                let IdButton = $(`span#${buttonId}`)
-                if(IdButton.length = 0){
-                    let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -2);
-                    IdButton = $(`#${buttonId}`)
+                let IdButton = $(`#${buttonId}`)
+                if(IdButton.length === 0){
+                    IdButton = $(this).closest('tr').prev().find(`#${buttonId}`)
                 }
                 console.log(IdButton)
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
@@ -7282,7 +7280,7 @@ socket.on('connect', () => {
                         result = (NewStake * Odds) / 100
                     }
                 }else{
-                    if(IdButton.hasClass('only_over_red') || IdButton.hasClass('odd_even_red')){
+                    if(secId.charAt(secId.length - 2) == 1){
                         result = (NewStake * odds) - NewStake
                     }else{
                         result = (NewStake * 2) - NewStake;
@@ -12285,10 +12283,17 @@ socket.on('connect', () => {
 
             $(document).on('click','.children',function(e){
                 let userName = $(this).attr('data-username')
-                var marketId = closestMarket.attr('id');
-                $("#match_odd").attr('data-marketid')
-             
-                socket.emit('UerBook1', {marketId, LOGINDATA,userName})
+                var closestMarket = $(this).parents('.bets-table').find('.market');
+                if (closestMarket.length > 0) {
+                    var marketId = closestMarket.attr('id');
+                    $("#searchUser").attr('data-marketid',marketId)
+                    let type = 'data5'
+                    let newData = true
+                    socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData})
+                } else {
+                    console.log('Market not found.');
+                }
+
             })
     
             socket.on('UerBook', async(data) => {
