@@ -3659,7 +3659,7 @@ io.on('connection', (socket) => {
                     return ({ele,Bets:Bets[0]})
                 }
             })
-            let resultPromise = await Promise.all(newUsers)
+            let resultPromise = await Promise.all(newUser)
             let result = []
             for(let i = 0;i<resultPromise.length;i++){
                 if(resultPromise[i]){
