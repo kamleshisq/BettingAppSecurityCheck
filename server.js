@@ -1292,7 +1292,7 @@ io.on('connection', (socket) => {
         }
         let betResult = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
 
-        socket.emit("voidBET", {betResult,events,page})
+        socket.emit("voidBET", {betResult,events,page,filter:data.filterData})
 
     })
 
