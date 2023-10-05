@@ -373,7 +373,8 @@ let betPlaceData = {}
                 commission : commissionCoin,
                 upline : 100,
                 commissionType: 'Entry Wise Commission',
-                commissionPercentage:commissionPer
+                commissionPercentage:commissionPer,
+                date:Date.now()
             }
             let commissionData = await newCommissionModel.create(commissiondata)
         }
@@ -404,7 +405,8 @@ let betPlaceData = {}
                         commission : commissionCoin,
                         upline : 100,
                         commissionType: 'Entry Wise Commission',
-                        commissionPercentage:commissionPer
+                        commissionPercentage:commissionPer,
+                        date:Date.now()
                     }
                     let commissionData = await newCommissionModel.create(commissiondata)
                 }
