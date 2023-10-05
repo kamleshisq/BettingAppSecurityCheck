@@ -1143,6 +1143,9 @@ io.on('connection', (socket) => {
         if(data.filterData.whiteLabel){
             userFilter.whiteLabel = data.filterData.whiteLabel
         }
+        if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
+            userFilter.userName = data.filterData.userName
+        }
         let children = await User.find(userFilter)
         children.map(ele => {
             childrenUsername.push(ele.userName) 
