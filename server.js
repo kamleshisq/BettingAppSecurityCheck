@@ -3544,12 +3544,10 @@ io.on('connection', (socket) => {
 
     socket.on('UerBook', async(data) => {
         console.log(data)
-        let user = await User.findById(data.id)
         let users = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id,role_type:2})
        
         try{
             let newUser = users.map(async(ele)=>{
-                let userfilter;
                 role_type = []
                 roles = await Role.find({role_level: {$gt:ele.role.role_level}});
                 for(let i = 0; i < roles.length; i++){
