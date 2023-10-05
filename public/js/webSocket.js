@@ -4769,14 +4769,47 @@ socket.on('connect', () => {
         })
 
         fromDate = $('#fromDate').val()
+        fromTime = $('#fromTime').val()
         toDate = $('#toDate').val()
-        filterData.toDate = toDate;
-        filterData.fromDate = fromDate
+        toTime = $('#toTime').val()
+
+        function combinedatetime(fromDate,fromTime,toDate,toTime){
+            const dateComponents1 = fromDate.split('-').map(Number); 
+            const timeComponents1 = fromTime.split(':').map(Number);  
+    
+            const dateComponents2 = toDate.split('-').map(Number); 
+            const timeComponents2 = toTime.split(':').map(Number);  
+    
+            const combinedDate1 = new Date(dateComponents1[0], dateComponents1[1] - 1, dateComponents1[2]);
+            const combinedDate2 = new Date(dateComponents2[0], dateComponents2[1] - 1, dateComponents2[2]);
+    
+            combinedDate1.setHours(timeComponents1[0]);
+            combinedDate1.setMinutes(timeComponents1[1]);
+            combinedDate1.setSeconds(timeComponents1[2]);
+    
+            combinedDate2.setHours(timeComponents2[0]);
+            combinedDate2.setMinutes(timeComponents2[1]);
+            combinedDate2.setSeconds(timeComponents2[2]);
+    
+            return {
+                combinedDate1,
+                combinedDate2
+            }
+            
+        }
+
+        filterData.toDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate1
+        filterData.fromDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate2
+        
 
         $('#toTime,#fromTime').change(function(e){
             let value = $(this)
             if(!isValidTimeString(value)){
-                
+                if(!$(this).siblings('span').hasClass('active')){
+                    $(this).siblings('span').addClass('active')
+                }
+            }else{
+                $(this).siblings('span').removeClass('active')
             }
         })
 
@@ -4824,8 +4857,8 @@ socket.on('connect', () => {
             filterData.Stake = stack;
             filterData.eventId = event
             filterData.ip = IP
-            filterData.toDate = toDate;
-            filterData.fromDate = fromDate
+            filterData.toDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate1
+            filterData.fromDate = combinedatetime(fromDate,fromTime,toDate,toTime).combinedDate2
             filterData.whiteLabel = whiteLabel
 
             Object.keys(filterData).map(ele => {
