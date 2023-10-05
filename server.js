@@ -1464,7 +1464,8 @@ io.on('connection', (socket) => {
             if(data.data.secId == "odd_Even_Yes"){
                 let odds = thatMarket.odd
                 if(!odds){
-                    odds = thatMarket.yes
+                    odds = thatMarket.yes_rate
+                    data.data.selectionName = thatMarket.title + "@" + thatMarket.yes
                 }
                 data.data.odds = odds
                 data.data.bettype2 = 'BACK'
@@ -1472,7 +1473,8 @@ io.on('connection', (socket) => {
             }else{
                 let odds = thatMarket.even
                 if(!odds){
-                    odds = thatMarket.no
+                    odds = thatMarket.no_rate
+                    data.data.selectionName = thatMarket.title + "@" + thatMarket.no
                 }
                 data.data.odds = odds
                 data.data.bettype2 = 'LAY'

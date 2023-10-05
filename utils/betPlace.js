@@ -244,7 +244,7 @@ let betPlaceData = {}
             eventId: liveBetGame.eventData.eventId,
             eventDate : new Date(liveBetGame.eventData.time * 1000),
             marketName : marketDetails.title,
-            selectionName : marketDetails.title,
+            selectionName : data.data.selectionName,
             marketId : data.data.market,
             secId : data.data.secId,
             bettype2: data.data.bettype2,
