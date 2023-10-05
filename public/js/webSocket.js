@@ -4774,6 +4774,10 @@ socket.on('connect', () => {
         toTime = $('#toTime').val()
 
         function combinedatetime(fromDate,fromTime,toDate,toTime){
+            if(!isValidTimeString(fromTime) && !isValidTimeString(toTime)){
+                fromTime = "00:00:00"
+                toTime = "23:59:59"
+            }
             const dateComponents1 = fromDate.split('-').map(Number); 
             const timeComponents1 = fromTime.split(':').map(Number);  
     
@@ -4806,13 +4810,24 @@ socket.on('connect', () => {
             let value = $(this).val()
             if(!isValidTimeString(value)){
                 if(!$(this).siblings('span').hasClass('active')){
-                    console.log('in add class')
                     $(this).siblings('span').addClass('active')
                 }
-                console.log('already added class')
             }else{
-                console.log('corrent class')
                 $(this).siblings('span').removeClass('active')
+                let page = 0;
+                let data = {}
+                let userName = $('.searchUser').val()
+                if(userName == ''){
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                }
+    
+                data.filterData = filterData;
+                data.page = page
+                data.LOGINDATA = LOGINDATA
+                // console.log(data)
+                socket.emit('betMoniter',data)
             }
         })
 
@@ -5128,6 +5143,10 @@ socket.on('connect', () => {
         toTime = $('#toTime').val()
 
         function combinedatetime(fromDate,fromTime,toDate,toTime){
+            if(!isValidTimeString(fromTime) && !isValidTimeString(toTime)){
+                fromTime = "00:00:00"
+                toTime = "23:59:59"
+            }
             const dateComponents1 = fromDate.split('-').map(Number); 
             const timeComponents1 = fromTime.split(':').map(Number);  
     
@@ -5151,7 +5170,6 @@ socket.on('connect', () => {
             }
             
         }
-
         filterData.from_date = combinedatetime(from_date,fromTime,to_date,toTime).combinedDate1
         filterData.to_date = combinedatetime(from_date,fromTime,to_date,toTime).combinedDate2
 
@@ -5159,13 +5177,23 @@ socket.on('connect', () => {
             let value = $(this).val()
             if(!isValidTimeString(value)){
                 if(!$(this).siblings('span').hasClass('active')){
-                    console.log('in add class')
                     $(this).siblings('span').addClass('active')
                 }
-                console.log('already added class')
             }else{
-                console.log('corrent class')
                 $(this).siblings('span').removeClass('active')
+                let page = 0;
+                let data = {}
+                let userName = $('.searchUser').val()
+                if(userName == ''){
+                    filterData.userName = LOGINDATA.LOGINUSER.userName
+                }else{
+                    filterData.userName = userName
+                }
+    
+                data.filterData = filterData;
+                data.page = page
+                data.LOGINDATA = LOGINDATA
+                socket.emit('voidBET',data)
             }
         })
 
