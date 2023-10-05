@@ -17,7 +17,7 @@ const commissionNew = mongoose.Schema({
         type:String,
         required:true
     },
-    ComId:{
+    seriesName:{
         type:String,
         required:true
     },
