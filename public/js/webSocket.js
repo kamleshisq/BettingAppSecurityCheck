@@ -7261,7 +7261,7 @@ socket.on('connect', () => {
                 console.log(buttonId, "buttonIdbuttonId")
                 let IdButton = $(`#${buttonId}`)
                 if(IdButton.length === 0){
-                    IdButton = $(`span.${IdButton}#tbl-bg-pech-spn`)
+                    IdButton = $(`span.${buttonId}#tbl-bg-pech-spn`)
                 }
                 console.log(IdButton, "IdButton")
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
