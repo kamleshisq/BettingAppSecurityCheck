@@ -7259,6 +7259,7 @@ socket.on('connect', () => {
             $(".plus").click(function () {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
                 let IdButton = $(`#${buttonId}`)
+                console.log(IdButton.length)
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
                 // let NewStake = parseFloat(spanId) + 100;
@@ -7276,7 +7277,6 @@ socket.on('connect', () => {
                         result = (NewStake * Odds) / 100
                     }
                 }else{
-                    console.log(IdButton)
                     if(IdButton.hasClass('only_over_red') || IdButton.hasClass('odd_even_red')){
                         result = (NewStake * odds) - NewStake
                     }else{
