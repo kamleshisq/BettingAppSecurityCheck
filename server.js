@@ -1465,7 +1465,7 @@ io.on('connection', (socket) => {
                 let odds
                 if(thatMarket.odd){
                     odds = (parseFloat(thatMarket.odd * 100) - 100).toFixed(2)
-                    data.data.selectionName = thatMarket.title + "@" + thatMarket.odds
+                    data.data.selectionName = thatMarket.title + "@" + odds
                 }else{
                     odds = thatMarket.yes_rate
                     data.data.selectionName = thatMarket.title + "@" + thatMarket.yes
@@ -1477,7 +1477,7 @@ io.on('connection', (socket) => {
                 let odds
                 if(thatMarket.even){
                     odds = (parseFloat(thatMarket.even * 100) - 100).toFixed(2)
-                    data.data.selectionName = thatMarket.title + "@" + thatMarket.odds
+                    data.data.selectionName = thatMarket.title + "@" + odds
 
                 }else{
                     odds = thatMarket.no_rate
