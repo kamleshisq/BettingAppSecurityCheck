@@ -1,8 +1,4 @@
 
-
-
-
-
 const socket = io();
 socket.on('disconnect', () => {
     console.log("WebSocket Disconnected");
@@ -4743,6 +4739,7 @@ socket.on('connect', () => {
         let event;
         let result;
         let stack;
+        let whiteLabel;
         let IP;
         let filterData = {}
         $(document).on('input','.searchUser', function(e){
@@ -4772,12 +4769,13 @@ socket.on('connect', () => {
         filterData.fromDate = fromDate
 
 
-        $('#fromDate,#toDate,#Sport,#market,#Event,#result').change(function(){
+        $('#fromDate,#toDate,#Sport,#market,#Event,#result,#whiteLabel').change(function(){
             console.log("working")
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
             sport = $('#Sport').val()
+            whiteLabel = $('#whiteLabel').val()
             market = $('#market').val()
             event = $('#Event').val()
             result = $('#result').val()
@@ -4803,6 +4801,7 @@ socket.on('connect', () => {
             filterData.ip = IP
             filterData.toDate = toDate;
             filterData.fromDate = fromDate
+            filterData.whiteLabel = whiteLabel
 
             Object.keys(filterData).map(ele => {
                 if(filterData[ele] == ""){
@@ -4882,7 +4881,9 @@ socket.on('connect', () => {
                 let html2 = '';
                 html2 += `<option value="All" selected> Select Event </option>`
                 for(let i = 0;i<data.events.length;i++){
-                    html2 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
+                    if(data.events[i]._id){
+                        html2 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
+                    }
                 }
                 $('#Event').html(html2)
                 for(let i = 0; i < bets.length; i++){
@@ -4895,16 +4896,16 @@ socket.on('connect', () => {
                     html += `<td>${i + count}</td>
                     <td class="date-time">${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
                     <td>${bets[i].userName}</td>
-                    <td class="text-nowrap">${bets[i].match}</td>
                     `
                     if(bets[i].match){
                         html += `
+                        <td class="text-nowrap">${bets[i].match}</td>
                         <td class="text-nowrap">${bets[i].marketName}</td>
                         <td>${bets[i].oddValue}</td>
                         <td>${bets[i].selectionName}</td>`
                     }else{
                         html += `
-                        <td>-</td><td>-</td><td>-</td>`
+                        <td>-</td><td>-</td><td>-</td><td>-</td>`
                     }
                     html += `
                     <td>${bets[i].Stake}</td>

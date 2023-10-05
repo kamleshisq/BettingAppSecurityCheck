@@ -62,7 +62,7 @@
           <%if(currentUser.role.role_level == 1){%>
             <div class="input-group">
               <label>Select Whitelabels</label>
-              <select name="market" id="market">
+              <select name="whiteLabel" id="whiteLabel">
                 <option value="All" selected>All</option>
                 <%for(let i = 0;i<whiteLabels.length;i++){%>
                   <option value="<%=whiteLabels[i].whiteLabelName%>"><%=whiteLabels[i].whiteLabelName%></option>
