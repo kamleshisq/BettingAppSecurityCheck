@@ -1361,13 +1361,13 @@ io.on('connection', (socket) => {
         socket.emit("OnlineUser",{onlineUsers, page})
     })
 
-    // socket.on("marketId", async(data) => {
-    //     const result = await marketDetailsBymarketID(data.ids)
-    //     let finalResult = result.data
-    //     const betLimits = await betLimit.find({type:"Sport"})
-    //     // console.log(finalResult)
-    //     socket.emit("marketId", {finalResult,betLimits})
-    // })
+    socket.on("marketId", async(data) => {
+        const result = await marketDetailsBymarketID(data.ids)
+        let finalResult = result.data
+        const betLimits = await betLimit.find({type:"Sport"})
+        // console.log(finalResult)
+        socket.emit("marketId", {finalResult,betLimits})
+    })
 
     socket.on("SPORTDATA", async(data) => {
         if(data === "cricket"){
