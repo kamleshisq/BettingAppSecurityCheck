@@ -1133,6 +1133,10 @@ io.on('connection', (socket) => {
 
             }
         }
+        if(data.filterData.whiteLabel == 'All'){
+            delete data.filterData.whiteLabel
+        }
+
         
 
         let limit = 10;
