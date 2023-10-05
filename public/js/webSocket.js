@@ -6639,7 +6639,7 @@ socket.on('connect', () => {
                       $(this).parent().find(".match-status-message").text('Result Declared')
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
-                        if(BOOKMAKERstatus){
+                        if(!BOOKMAKERstatus){
                             parentElement.classList.remove("suspended")
                             $(this).parent().find(".match-status-message").text("")
                         }
