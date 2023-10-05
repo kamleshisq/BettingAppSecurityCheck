@@ -4936,6 +4936,8 @@ socket.on('connect', () => {
                 if(data.page == 0){
                     if(bets.length == 0){
                         $('#load-more').hide()
+                    }else{
+                        $('#load-more').show()
                     }
                     if(html == ''){
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
@@ -5162,7 +5164,7 @@ socket.on('connect', () => {
                     }else{
                     html += `<tr class="lay">`
                     }
-                    html += `<td>${i + count + 1}</td>
+                    html += `<td>${i + count}</td>
                     <td class="date-time" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
                     <td>${bets[i].userName}</td>
                     `
@@ -5185,8 +5187,10 @@ socket.on('connect', () => {
                 }
                 count += 10;
                 if(data.page == 0){
-                    if(!(data.betResult.length == 10)){
+                    if(!(data.betResult.length == 0)){
                         $('#load-more').hide()
+                    }else{
+                        $('#load-more').show()
                     }
                     if(html == ''){
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
@@ -5195,7 +5199,7 @@ socket.on('connect', () => {
 
                 }else{
                     $('.new-body').append(html)         
-                    if((data.betResult.length == 10)){
+                    if((data.betResult.length == 0)){
                         $('#load-more').hide()
                     }
                 }
