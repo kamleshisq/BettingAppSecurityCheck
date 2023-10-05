@@ -7496,6 +7496,7 @@ socket.on('connect', () => {
             let check = $(this).closest("tr").find("#changes").prop("checked");
             // console.log(data)
             if(specificSpan == data.odds){
+                console.log(data.stake)
                 if(data.stake === ""){
                     // alert("Please select stake")
                     togglePopupMain('popup-2', "redPopUP2", "Please select stake")
