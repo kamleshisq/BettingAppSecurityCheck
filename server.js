@@ -1498,10 +1498,11 @@ io.on('connection', (socket) => {
             // console.log(thatMarket, 4545454)
             let realodd = thatMarket.runners.find(item => item.secId == data.data.secId.slice(0,-1))
             let name
-            console.log(data)
+            // console.log(data)
             if(data.data.secId.slice(-1) == 2){
                 name = `layPrice${data.data.secId.slice(-1) - 3}`
                 name =  name.slice(0, -2)
+
                 data.data.bettype2 = 'LAY'
             }else{
                 name = `backPrice${data.data.secId.slice(-1)}`
@@ -1515,8 +1516,8 @@ io.on('connection', (socket) => {
             data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
         }
-        // console.log(data ,'++++++==>DATA')
-        let result = await placeBet(data)
+        console.log(data ,'++++++==>DATA')
+        // let result = await placeBet(data)
         let openBet = []
         if(data.pathname === "/exchange/multimarkets"){
             openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})

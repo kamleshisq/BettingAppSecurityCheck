@@ -7504,6 +7504,7 @@ socket.on('connect', () => {
                 }else{
                     if(data.odds != '\n                        \n                      '){
                         socket.emit("betDetails", {data, LOGINDATA})
+                        // console.log(data)
                         showLoader();
                     }else{
                         togglePopupMain("popup-2", "redPopUP2", "Bet Not Allowed In this market")
