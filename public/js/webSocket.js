@@ -6817,7 +6817,8 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
-                        this.innerHTML = `<span><b>${section.odd}</b></span>` 
+                        let x = ((section.odd * 100) - 100).toFixed(2)
+                        this.innerHTML = `<span><b>1</b></span> <span> ${x}</span>` 
                     }
                 }
             })
@@ -6865,7 +6866,8 @@ socket.on('connect', () => {
                         this.setAttribute("data-bs-toggle", "collapse");
                         $(this).parent().find(".match-status-message").text("")
                         parentElement.classList.remove("suspended")
-                        this.innerHTML = `<span><b>${section.even}</b></span>` 
+                        let x = ((section.even * 100) - 100).toFixed(2)
+                        this.innerHTML = `<span><b>1</b></span> <span> ${x}</span>` 
                     }
                 }
             });
