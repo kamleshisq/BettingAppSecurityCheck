@@ -1164,17 +1164,22 @@ io.on('connection', (socket) => {
             }
         }
         delete data.filterData.whiteLabel
-        let events = await Bet.aggregate([
-            {
-                $match: data.filterData
-            },
-            {
-                $group:{
-                    _id:'$match',
-                    eventId:{$first:'$eventId'}
+        let events;
+        if(data.type){
+
+        }else{
+            events = await Bet.aggregate([
+                {
+                    $match: data.filterData
+                },
+                {
+                    $group:{
+                        _id:'$match',
+                        eventId:{$first:'$eventId'}
+                    }
                 }
-            }
-        ])
+            ])
+        }
         let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
         socket.emit('betMoniter',{ubDetails,page,events,filter:data.filterData})
 

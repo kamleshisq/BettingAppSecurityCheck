@@ -4782,6 +4782,10 @@ socket.on('connect', () => {
             result = $('#result').val()
             stack = $('#stake').val()
             IP = $('#IP').val()
+            let type;
+            if($(this).hasClass('Event')){
+                type = 'changeevent'
+            }
             $('.pageId').attr('data-pageid','1')
             data.page = 0;
             
@@ -4812,6 +4816,7 @@ socket.on('connect', () => {
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             data.page = 0;
+            data.type = type
             console.log(data)
             socket.emit('betMoniter',data)
 
@@ -4880,13 +4885,15 @@ socket.on('connect', () => {
                 let bets = data.ubDetails;
                 let html = '';
                 let html2 = '';
-                html2 += `<option value="All" selected> Select Event </option>`
-                for(let i = 0;i<data.events.length;i++){
-                    if(data.events[i]._id){
-                        html2 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
+                if(data.events){
+                    html2 += `<option value="All" selected> Select Event </option>`
+                    for(let i = 0;i<data.events.length;i++){
+                        if(data.events[i]._id){
+                            html2 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
+                        }
                     }
+                    $('#Event').html(html2)
                 }
-                $('#Event').html(html2)
                 for(let i = 0; i < bets.length; i++){
                     let date = new Date(bets[i].date)
                     if(bets[i].bettype2 === 'BACK'){
