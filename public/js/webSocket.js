@@ -6627,8 +6627,10 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
+                      if( section.back == "-" || section.back == "1,000.00" || section.back == "0"){
                           parentElement.classList.add("suspended");
                           $(this).parent().find(".match-status-message").text("Suspended")
+                      }
                     }else if(sectionData.win_result != 'undefined' && sectionData.win_result != " " && sectionData.win_result != ""){
                         this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
@@ -6641,6 +6643,10 @@ socket.on('connect', () => {
                         this.innerHTML = `<span><b>${section.lay}</b></span> <span> ${section.laySize}</span>`
                         // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
                         // this.innerHTML = `<b>${section.layPrice}</b> <br> ${section.laySize}`
+                    }
+                    if( !(section.back == "-" || section.back == "1,000.00" || section.back == "0")){
+                        parentElement.classList.remove("suspended")
+                        $(this).parent().find(".match-status-message").text("")
                     }
                    
                 }
