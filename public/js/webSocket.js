@@ -7259,7 +7259,7 @@ socket.on('connect', () => {
             $(".plus").click(function () {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
                 console.log(buttonId)
-                let IdButton = $(`#${buttonId}`)
+                let IdButton = $(`span#${buttonId}`)
                 if(IdButton.length = 0){
                     let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -2);
                     IdButton = $(`#${buttonId}`)
