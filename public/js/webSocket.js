@@ -4929,7 +4929,6 @@ socket.on('connect', () => {
         function refreshBetMonitorPage(){
             stack = $('#stake').val()
             IP = $('#IP').val()
-            let page = parseInt($('.pageId').attr('data-pageid')) - 1;
             let data = {}
             let userName = $('.searchUser').val()
             if(userName == ''){
@@ -4945,7 +4944,7 @@ socket.on('connect', () => {
                 }
             })
             data.filterData = filterData;
-            data.page = page
+            data.page = 0
             data.LOGINDATA = LOGINDATA
             // console.log(data)
             socket.emit('betMoniter',data)
