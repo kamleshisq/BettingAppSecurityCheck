@@ -12299,16 +12299,14 @@ socket.on('connect', () => {
 
             $(document).on('click','.children',function(e){
                 let userName = $(this).attr('data-usename')
-                let marketId = parseInt($("#match_odd").attr('data-marketid'))
-                if(userName !== "" && marketId !== ""){
-
-                    socket.emit('UerBook1', {marketId,LOGINDATA,userName})
-                }
+                let marketId = $("#match_odd").attr('data-marketid')
+                console.log({marketId,LOGINDATA,userName})
+                socket.emit('UerBook1', {marketId,LOGINDATA,userName})
 
             })
 
-            socket.on('UserBook1',async(data)=>{
-                console.log(data)
+            socket.on('UerBook1',async(data)=>{
+                console.log(data,"==>UserBook1 Response")
             })
     
             socket.on('UerBook', async(data) => {
