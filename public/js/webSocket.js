@@ -12314,89 +12314,89 @@ socket.on('connect', () => {
     
             socket.on('UerBook', async(data) => {
                 console.log(data)
-                // if(data.Bets.length > 0){
-                //     let match = data.Bets[0].Bets.selections[0].matchName
-                //     let team1 = match.split('v')[0]
-                //     let team2 = match.split('v')[1]
-                //     let html = `<tr class="headDetail"><th>User name</th>
-                //     <th>${team1}</th>
-                //     <th>${team2}</th></tr>`
-                //     let sumOfTeamA = 0
-                //     let sumOfTeamB = 0
-                //     let sumOfTeamC = 0
-                //     for(let i = 0; i < data.Bets.length; i++){
-                //         // console.log(data[i], "+==> in Loop DAta")
-                //         let team1data = 0 
-                //         let team2data = 0
-                //         // console.log(data[i].selections[0].selectionName.toLowerCase(), team1.toLowerCase)
-                //         if(data.Bets[i].Bets.selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
-                //             // console.log("2121222122121")
-                //             team1data = data.Bets[i].Bets.selections[0].totalAmount
-                //             sumOfTeamA += team1data
-                //             if(data.Bets[i].Bets.selections[1]){
-                //                 team2data = data.Bets[i].Bets.selections[1].totalAmount
-                //                 sumOfTeamB += team2data
-                //             }else{
-                //                 team2data = -data.Bets[i].Bets.selections[0].Stake
-                //                 sumOfTeamB += team2data
-                //             }
-                //         }else{
-                //             if(data.Bets[i].Bets.selections[1]){
-                //                 team1data = data.Bets[i].Bets.selections[1].totalAmount
-                //                 sumOfTeamA += team1data
-                //             }else{
-                //                 team1data = -data.Bets[i].Bets.selections[0].Stake
-                //                 sumOfTeamA += team1data
-                //             }
-                //             team2data = data.Bets[i].Bets.selections[0].totalAmount
-                //             sumOfTeamB += team2data
-                //         }
+                if(data.Bets.length > 0){
+                    let match = data.Bets[0].Bets.selections[0].matchName
+                    let team1 = match.split('v')[0]
+                    let team2 = match.split('v')[1]
+                    let html = `<tr class="headDetail"><th>User name</th>
+                    <th>${team1}</th>
+                    <th>${team2}</th></tr>`
+                    let sumOfTeamA = 0
+                    let sumOfTeamB = 0
+                    let sumOfTeamC = 0
+                    for(let i = 0; i < data.Bets.length; i++){
+                        // console.log(data[i], "+==> in Loop DAta")
+                        let team1data = 0 
+                        let team2data = 0
+                        // console.log(data[i].selections[0].selectionName.toLowerCase(), team1.toLowerCase)
+                        if(data.Bets[i].Bets.selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
+                            // console.log("2121222122121")
+                            team1data = data.Bets[i].Bets.selections[0].totalAmount
+                            sumOfTeamA += team1data
+                            if(data.Bets[i].Bets.selections[1]){
+                                team2data = data.Bets[i].Bets.selections[1].totalAmount
+                                sumOfTeamB += team2data
+                            }else{
+                                team2data = -data.Bets[i].Bets.selections[0].Stake
+                                sumOfTeamB += team2data
+                            }
+                        }else{
+                            if(data.Bets[i].Bets.selections[1]){
+                                team1data = data.Bets[i].Bets.selections[1].totalAmount
+                                sumOfTeamA += team1data
+                            }else{
+                                team1data = -data.Bets[i].Bets.selections[0].Stake
+                                sumOfTeamA += team1data
+                            }
+                            team2data = data.Bets[i].Bets.selections[0].totalAmount
+                            sumOfTeamB += team2data
+                        }
 
-                //         html += `
-                //         <tr class="tabelBodyTr">
-                //             <td class="children" data-usename="${data.Bets[i].ele.userName}">${data.Bets[i].ele.userName}</td>`
-                //         if(team1data.toFixed(2) > 0){
-                //             html += `<td class="red"> -${team1data.toFixed(2)}</td>`
-                //         }else{
-                //             html += `<td class="green"> ${team1data.toFixed(2) * -1}</td>`
-                //         }
+                        html += `
+                        <tr class="tabelBodyTr">
+                            <td class="children" data-usename="${data.Bets[i].ele.userName}">${data.Bets[i].ele.userName}</td>`
+                        if(team1data.toFixed(2) > 0){
+                            html += `<td class="red"> -${team1data.toFixed(2)}</td>`
+                        }else{
+                            html += `<td class="green"> ${team1data.toFixed(2) * -1}</td>`
+                        }
                         
-                //         if(team2data.toFixed(2) > 0){
-                //             html += `<td class="red">-${team2data.toFixed(2)}</td></tr>`
-                //         }else{
-                //             html += `<td class="green">${team2data.toFixed(2) * -1}</td></tr>`
-                //         }
-                //     }
-                //     html += `<tr class="totleCount">
-                //     <td>Total</td>`
-                //     if(sumOfTeamA.toFixed(2) > 0){
-                //         html += `<td class="red"> -${sumOfTeamA.toFixed(2)}</td>`
-                //     }else{
-                //         html += `<td class="green"> ${sumOfTeamA.toFixed(2) * -1}</td>`
-                //     }
+                        if(team2data.toFixed(2) > 0){
+                            html += `<td class="red">-${team2data.toFixed(2)}</td></tr>`
+                        }else{
+                            html += `<td class="green">${team2data.toFixed(2) * -1}</td></tr>`
+                        }
+                    }
+                    html += `<tr class="totleCount">
+                    <td>Total</td>`
+                    if(sumOfTeamA.toFixed(2) > 0){
+                        html += `<td class="red"> -${sumOfTeamA.toFixed(2)}</td>`
+                    }else{
+                        html += `<td class="green"> ${sumOfTeamA.toFixed(2) * -1}</td>`
+                    }
                     
-                //     if(sumOfTeamB.toFixed(2) > 0){
-                //         html += `<td class="red">-${sumOfTeamB.toFixed(2)}</td></tr>`
-                //     }else{
-                //         html += `<td class="green">${sumOfTeamB.toFixed(2) * -1}</td></tr>`
-                //     }
-                // //     `<td>${sumOfTeamA.toFixed(2)}</td>
-                // //     <td>${sumOfTeamB.toFixed(2)}</td>
-                // // </tr>`
-                //     document.getElementById('match_odd').innerHTML = html
-                // }else{
-                //     if(data.newData == false){
-                //         $('.tabelBodyTr').remove()
-                //         if($('.headDetail').length ){
-                //             $('.headDetail').after(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
-                //         }else{
-                //             $('tbody').html(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
+                    if(sumOfTeamB.toFixed(2) > 0){
+                        html += `<td class="red">-${sumOfTeamB.toFixed(2)}</td></tr>`
+                    }else{
+                        html += `<td class="green">${sumOfTeamB.toFixed(2) * -1}</td></tr>`
+                    }
+                //     `<td>${sumOfTeamA.toFixed(2)}</td>
+                //     <td>${sumOfTeamB.toFixed(2)}</td>
+                // </tr>`
+                    document.getElementById('match_odd').innerHTML = html
+                }else{
+                    if(data.newData == false){
+                        $('.tabelBodyTr').remove()
+                        if($('.headDetail').length ){
+                            $('.headDetail').after(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
+                        }else{
+                            $('tbody').html(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
 
-                //         }
-                //     }else{
-                //         $('#match_odd').html(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
-                //     }
-                // }
+                        }
+                    }else{
+                        $('#match_odd').html(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
+                    }
+                }
             })
 
     }
