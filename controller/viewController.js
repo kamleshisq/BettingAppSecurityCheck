@@ -4062,8 +4062,8 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
 exports.getcommissionUser = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     let user = req.query.User
-    console.log(req.body.event)
-    if(req.body.event){
+    // console.log(req.query.event)
+    if(req.query.event){
         let eventData = await commissionNewModel.aggregate([
             {
                 $match:{
@@ -4071,7 +4071,7 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
                         $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
                     },
                     userName:user,
-                    eventName:req.body.event
+                    eventName:req.query.event
                 }
             }
         ])
@@ -4080,7 +4080,7 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
             me,
             currentUser:me,
             user,
-            eventName:req.body.event,
+            eventName:req.query.event,
             eventData
         })
     }else{
