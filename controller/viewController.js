@@ -4062,7 +4062,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
 exports.getcommissionUser = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     let user = req.query.User
-
+    console.log(req.body.event)
     if(req.body.event){
         let eventData = await commissionNewModel.aggregate([
             {
