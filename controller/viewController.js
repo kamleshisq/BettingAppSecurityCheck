@@ -3716,11 +3716,11 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
     console.log(sportId)
-    let data =  await commissionReportModel.aggregate([
+    let data =  await commissionNewModel.aggregate([
         {
             $match:{
                 userId: req.currentUser.id,
-                match:sportId
+                eventName:sportId
             }
         }
     ])
