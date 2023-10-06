@@ -3716,7 +3716,7 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
-    console.log(sportId, "SPORTID")
+    // console.log(sportId, "SPORTID")
     let data =  await commissionNewModel.aggregate([
         {
             $match:{
@@ -3725,7 +3725,7 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
             }
         }
     ])
-    console.log(data)
+    // console.log(data)
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportMatch/main", {
         title:"Commission Report",
