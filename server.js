@@ -2683,7 +2683,7 @@ io.on('connection', (socket) => {
 
     socket.on("alertBet", async(data) => {
         try{
-            let bet = await Bet.findByIdAndUpdate(data, {status:"Alert"});
+            let bet = await Bet.findByIdAndUpdate(data, {status:"Alert",alertStatus:"ALERT"});
             socket.emit('alertBet', {bet, status:"success"})
 
         }catch(err){
