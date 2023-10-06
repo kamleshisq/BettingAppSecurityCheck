@@ -4926,7 +4926,7 @@ socket.on('connect', () => {
             socket.emit('betMoniter',data)
         })
 
-        $('.refresh').click(function(e){
+        function refreshBetMonitorPage(){
             stack = $('#stake').val()
             IP = $('#IP').val()
             let page = parseInt($('.pageId').attr('data-pageid')) - 1;
@@ -4949,104 +4949,107 @@ socket.on('connect', () => {
             data.LOGINDATA = LOGINDATA
             // console.log(data)
             socket.emit('betMoniter',data)
+        }
+        $('.refresh').click(function(e){
+           refreshBetMonitorPage()
         })
       
             
-            let count = 11
-            socket.on('betMoniter',(data) => {
-                console.log(data)
-                if(data.page === 0){
-                    count = 1
+        let count = 11
+        socket.on('betMoniter',(data) => {
+            console.log(data)
+            if(data.page === 0){
+                count = 1
+            }
+            let bets = data.ubDetails;
+            let html = '';
+            let html2 = '';
+            if(data.events){
+                html2 += `<option value="All" selected> Select Event </option>`
+                for(let i = 0;i<data.events.length;i++){
+                    if(data.events[i]._id){
+                        html2 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
+                    }
                 }
-                let bets = data.ubDetails;
-                let html = '';
-                let html2 = '';
-                if(data.events){
-                    html2 += `<option value="All" selected> Select Event </option>`
-                    for(let i = 0;i<data.events.length;i++){
-                        if(data.events[i]._id){
-                            html2 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
-                        }
-                    }
-                    $('#Event').html(html2)
-                }
-                for(let i = 0; i < bets.length; i++){
-                    let date = new Date(bets[i].date)
-                    if(bets[i].bettype2 === 'BACK'){
-                        html += `<tr class="back">`
-                    }else{
-                        html += `<tr class="lay">`
-                    }
-                    html += `<td>${i + count}</td>
-                    <td class="date-time">${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
-                    <td>${bets[i].userName}</td>
-                    `
-                    if(bets[i].match){
-                        html += `
-                        <td class="text-nowrap">${bets[i].match}</td>
-                        <td class="text-nowrap">${bets[i].marketName}</td>
-                        <td>${bets[i].oddValue}</td>
-                        <td>${bets[i].selectionName}</td>`
-                    }else{
-                        html += `
-                        <td>-</td><td>-</td><td>-</td><td>-</td>`
-                    }
-                    html += `
-                    <td>${bets[i].Stake}</td>
-                    <td>${bets[i].transactionId}</td>
-                    <td>${bets[i].status}</td>
-                    <td>${bets[i].returns.toFixed(2)}</td>`
-                    if(bets[i].ip){
-                        html += `<td>${bets[i].ip}</td>`
-                    }else{
-                        html += `<td>-</td>`
-                    }
-                    html += `<td>
-                    <div class="btn-group">`
-                    if(bets[i].status == 'Alert'){
-                        html +=`<button class="btn alert flag-button" id="${bets[i]._id}"><svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                        viewBox="0 0 447.514 447.514" xml:space="preserve">
-                     <path d="M389.183,10.118c-3.536-2.215-7.963-2.455-11.718-0.634l-50.653,24.559c-35.906,17.409-77.917,16.884-113.377-1.418
-                       c-38.094-19.662-83.542-18.72-120.789,2.487V20c0-11.046-8.954-20-20-20s-20,8.954-20,20v407.514c0,11.046,8.954,20,20,20
-                       s20-8.954,20-20V220.861c37.246-21.207,82.694-22.148,120.789-2.487c35.46,18.302,77.47,18.827,113.377,1.418l56.059-27.18
-                       c7.336-3.557,11.995-10.993,11.995-19.146V20.385C394.866,16.212,392.719,12.333,389.183,10.118z"/>
-                     </svg></button></div></td>`
-                    }else{
-                        html +=`<button class="btn alert flag-button" id="${bets[i]._id}"><svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                        viewBox="0 0 489 489" xml:space="preserve">
-                     <g>
-                       <g>
-                         <path d="M454.3,31.6c-28.5-15.3-59.1-23.4-93.7-23.4c-40.7,0-81.5,11.2-120.2,21.4S166,50,130.4,50c-23.8,0-45.3-4.6-65.2-13.7
-                           V20.4C65.2,9.2,56,0,44.8,0S24.4,9.2,24.4,20.4v448.2c0,11.2,9.2,20.4,20.4,20.4s20.4-9.2,20.4-20.4v-148
-                           c20,6.9,41.2,10.5,64.2,10.5c40.7,0,81.5-11.2,120.2-20.4c38.7-10.2,74.4-20.4,110-20.4c27.5,0,52,6.1,74.4,18.3
-                           c12.7,8.7,30.6-2.1,30.6-17.3V49.9C464.4,41.8,460.4,35.7,454.3,31.6z M423.7,258.8c-20.4-7.1-41.8-10.2-64.2-10.2
-                           c-40.7,0-81.5,11.2-120.2,21.4s-74.4,20.4-110,20.4c-23.4,0-44.8-4.1-64.2-13.2V79.5c20.4,7.1,41.8,10.2,64.2,10.2
-                           c40.7,0,81.5-11.2,120.2-21.4s74.4-20.4,110-20.4c23.4,0,44.8,4.1,64.2,13.2V258.8z"/>
-                       </g>
-                     </g>
-                     </svg></button></div></td>`
-                    }
-                    html += `</tr>`
-                }
-                
-                count += 10;
-                if(data.page == 0){
-                    if(bets.length == 0){
-                        $('#load-more').hide()
-                    }else{
-                        $('#load-more').show()
-                    }
-                    if(html == ''){
-                        html += `<tr class="empty_table"><td>No record found</td></tr>`
-                    }
-                    $('.new-body').html(html)
+                $('#Event').html(html2)
+            }
+            for(let i = 0; i < bets.length; i++){
+                let date = new Date(bets[i].date)
+                if(bets[i].bettype2 === 'BACK'){
+                    html += `<tr class="back">`
                 }else{
-                    if(bets.length == 0){
-                        $('#load-more').hide()
-                    }
-                    $('.new-body').append(html)         
+                    html += `<tr class="lay">`
                 }
-            })
+                html += `<td>${i + count}</td>
+                <td class="date-time">${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
+                <td>${bets[i].userName}</td>
+                `
+                if(bets[i].match){
+                    html += `
+                    <td class="text-nowrap">${bets[i].match}</td>
+                    <td class="text-nowrap">${bets[i].marketName}</td>
+                    <td>${bets[i].oddValue}</td>
+                    <td>${bets[i].selectionName}</td>`
+                }else{
+                    html += `
+                    <td>-</td><td>-</td><td>-</td><td>-</td>`
+                }
+                html += `
+                <td>${bets[i].Stake}</td>
+                <td>${bets[i].transactionId}</td>
+                <td>${bets[i].status}</td>
+                <td>${bets[i].returns.toFixed(2)}</td>`
+                if(bets[i].ip){
+                    html += `<td>${bets[i].ip}</td>`
+                }else{
+                    html += `<td>-</td>`
+                }
+                html += `<td>
+                <div class="btn-group">`
+                if(bets[i].status == 'Alert'){
+                    html +=`<button class="btn alert flag-button" id="${bets[i]._id}"><svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                    viewBox="0 0 447.514 447.514" xml:space="preserve">
+                    <path d="M389.183,10.118c-3.536-2.215-7.963-2.455-11.718-0.634l-50.653,24.559c-35.906,17.409-77.917,16.884-113.377-1.418
+                    c-38.094-19.662-83.542-18.72-120.789,2.487V20c0-11.046-8.954-20-20-20s-20,8.954-20,20v407.514c0,11.046,8.954,20,20,20
+                    s20-8.954,20-20V220.861c37.246-21.207,82.694-22.148,120.789-2.487c35.46,18.302,77.47,18.827,113.377,1.418l56.059-27.18
+                    c7.336-3.557,11.995-10.993,11.995-19.146V20.385C394.866,16.212,392.719,12.333,389.183,10.118z"/>
+                    </svg></button></div></td>`
+                }else{
+                    html +=`<button class="btn alert flag-button" id="${bets[i]._id}"><svg fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                    viewBox="0 0 489 489" xml:space="preserve">
+                    <g>
+                    <g>
+                        <path d="M454.3,31.6c-28.5-15.3-59.1-23.4-93.7-23.4c-40.7,0-81.5,11.2-120.2,21.4S166,50,130.4,50c-23.8,0-45.3-4.6-65.2-13.7
+                        V20.4C65.2,9.2,56,0,44.8,0S24.4,9.2,24.4,20.4v448.2c0,11.2,9.2,20.4,20.4,20.4s20.4-9.2,20.4-20.4v-148
+                        c20,6.9,41.2,10.5,64.2,10.5c40.7,0,81.5-11.2,120.2-20.4c38.7-10.2,74.4-20.4,110-20.4c27.5,0,52,6.1,74.4,18.3
+                        c12.7,8.7,30.6-2.1,30.6-17.3V49.9C464.4,41.8,460.4,35.7,454.3,31.6z M423.7,258.8c-20.4-7.1-41.8-10.2-64.2-10.2
+                        c-40.7,0-81.5,11.2-120.2,21.4s-74.4,20.4-110,20.4c-23.4,0-44.8-4.1-64.2-13.2V79.5c20.4,7.1,41.8,10.2,64.2,10.2
+                        c40.7,0,81.5-11.2,120.2-21.4s74.4-20.4,110-20.4c23.4,0,44.8,4.1,64.2,13.2V258.8z"/>
+                    </g>
+                    </g>
+                    </svg></button></div></td>`
+                }
+                html += `</tr>`
+            }
+            
+            count += 10;
+            if(data.page == 0){
+                if(bets.length == 0){
+                    $('#load-more').hide()
+                }else{
+                    $('#load-more').show()
+                }
+                if(html == ''){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                }
+                $('.new-body').html(html)
+            }else{
+                if(bets.length == 0){
+                    $('#load-more').hide()
+                }
+                $('.new-body').append(html)         
+            }
+        })
 
     
     $(document).on('click', '.cancel', async function(e){
@@ -5067,20 +5070,7 @@ socket.on('connect', () => {
         if(data.status === "error"){
             alert("Please try again later")
         }else{
-            console.log(data.bet._id)
-            const deleteButton = document.getElementById(data.bet._id);
-            console.log(deleteButton)
-            const row = deleteButton.closest('tr'); 
-            if (row) {
-                const table = row.parentNode;
-                const rowIndex = Array.from(table.rows).indexOf(row);
-                row.remove(); 
-                const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
-                rowsToUpdate.forEach((row, index) => {
-                    const srNoCell = row.cells[0]; 
-                    srNoCell.textContent = index + rowIndex + 1;
-                  });
-              }
+            refreshBetMonitorPage()
         }
     })
             
