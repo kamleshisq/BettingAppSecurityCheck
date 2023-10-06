@@ -10165,6 +10165,23 @@ socket.on('connect', () => {
 
 
     if(pathname === "/admin/alertbet"){
+
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+
+        $('#fromDate').val(tomorrowFormatted)
+        $('#toDate').val(todayFormatted)
+        $('#toTime').val("23:59:59")
+        $('#fromTime').val("00:00:00")
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
         $('.searchUser').keyup(function(){
             if($(this).hasClass("searchUser")){
                 if($(this).val().length >= 3 ){
@@ -10208,26 +10225,7 @@ socket.on('connect', () => {
         let toDate;
         let fromDate;
         let filterData = {}
-        // $(".searchUser").on('input', function(e){
-        //     var $input = $(this),
-        //             val = $input.val();
-        //             var listItems = document.getElementsByTagName("li");
-        //         for (var i = 0; i < listItems.length; i++) {
-        //             if (listItems[i].textContent === val) {
-        //                 match = ($(this).val() === val);
-        //               break; 
-        //             }else{
-        //                 match = false
-        //             }
-        //           }
-    
-        //         if(match){
-        //             filterData = {}
-        //             filterData.userName = val
-        //             $('.pageId').attr('data-pageid','1')
-        //             socket.emit('AlertBet',{filterData,LOGINDATA,page:0})
-        //         }
-        // })
+
         $('#Sport,#market,#fromDate,#toDate').change(function(){
             console.log("working")
             let userName = $('.searchUser').val()
