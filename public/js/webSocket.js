@@ -12216,7 +12216,24 @@ socket.on('connect', () => {
                     if (closestMarket.length > 0) {
                         var marketId = closestMarket.attr('id');
                         $("#match_odd").attr('data-marketid',marketId)
-                        let type = 'data5'
+                        let type = 'userBook'
+                        let newData = true
+                        socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData})
+                    } else {
+                        console.log('Market not found.');
+                    }
+                });
+            });
+
+            $(document).ready(function () {
+                $('.BookList').click(function () {
+                    let id = LOGINDATA.LOGINUSER._id
+                    var closestMarket = $(this).parents('.bets-table').find('.market');
+                    console.log(closestMarket)
+                    if (closestMarket.length > 0) {
+                        var marketId = closestMarket.attr('id');
+                        $("#match_odd_Book").attr('data-marketid',marketId)
+                        let type = 'bookList'
                         let newData = true
                         socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData})
                     } else {
@@ -12297,13 +12314,37 @@ socket.on('connect', () => {
                
             })
 
-            $(document).on('click','.userBookParent',function(e){
-                $('#match_odd').find('tr.active').removeClass('active')
-                $(this).parent('tr').addClass('active')
-                let userName = $(this).attr('data-usename')
-                let marketId = $("#match_odd").attr('data-marketid')
-                console.log({marketId,LOGINDATA,userName})
-                socket.emit('UerBook1', {marketId,LOGINDATA,userName})
+            $(document).on('click','#match_odd .userBookParent',function(e){
+                if(!$(this).parent('tr').hasClass('active')){
+                    $('#match_odd').find('tr.active').removeClass('active')
+                    $(this).parent('tr').addClass('active')
+                    $('#match_odd').find('tr.children').remove()
+                    let userName = $(this).attr('data-usename')
+                    let marketId = $("#match_odd").attr('data-marketid')
+                    let type = 'userBook'
+
+                    socket.emit('UerBook1', {marketId,LOGINDATA,userName,type})
+                }else{
+                    $(this).parent('tr').removeClass('active')
+                    $('#match_odd').find('tr.children').remove()
+
+                }
+
+            })
+            $(document).on('click','#match_odd_Book .userBookParent',function(e){
+                if(!$(this).parent('tr').hasClass('active')){
+                    $('#match_odd_Book').find('tr.active').removeClass('active')
+                    $(this).parent('tr').addClass('active')
+                    $('#match_odd_Book').find('tr.children').remove()
+                    let userName = $(this).attr('data-usename')
+                    let marketId = $("#match_odd_Book").attr('data-marketid')
+                    let type = 'bookList'
+                    socket.emit('UerBook1', {marketId,LOGINDATA,userName,type})
+                }else{
+                    $(this).parent('tr').removeClass('active')
+                    $('#match_odd_Book').find('tr.children').remove()
+
+                }
 
             })
 
@@ -12335,24 +12376,44 @@ socket.on('connect', () => {
                             }
                            
                         }
+                        if(data.type == 'bookList'){
+                            html += `
+                            <tr class="tabelBodyTr children">
+                                <td data-usename="${data.Bets[i].userName}">${data.Bets[i].userName}</td>`
+                            if(team1data.toFixed(2) > 0){
+                                html += `<td class="red"> ${team1data.toFixed(2) * -1}</td>`
+                            }else{
+                                html += `<td class="green"> ${team1data.toFixed(2) * -1}</td>`
+                            }
+                            
+                            if(team2data.toFixed(2) > 0){
+                                html += `<td class="red">${team2data.toFixed(2) * -1}</td></tr>`
+                            }else{
+                                html += `<td class="green">${team2data.toFixed(2) * -1}</td></tr>`
+                            }
+                        }else{
 
-                        html += `
-                        <tr class="tabelBodyTr children">
-                            <td data-usename="${data.Bets[i].userName}">${data.Bets[i].userName}</td>`
-                        if(team1data.toFixed(2) > 0){
-                            html += `<td class="green"> ${team1data.toFixed(2)}</td>`
-                        }else{
-                            html += `<td class="red"> ${team1data.toFixed(2) * 1}</td>`
-                        }
-                        
-                        if(team2data.toFixed(2) > 0){
-                            html += `<td class="green">${team2data.toFixed(2)}</td></tr>`
-                        }else{
-                            html += `<td class="red">${team2data.toFixed(2) * 1}</td></tr>`
+                            html += `
+                            <tr class="tabelBodyTr children">
+                                <td data-usename="${data.Bets[i].userName}">${data.Bets[i].userName}</td>`
+                            if(team1data.toFixed(2) > 0){
+                                html += `<td class="green"> ${team1data.toFixed(2)}</td>`
+                            }else{
+                                html += `<td class="red"> ${team1data.toFixed(2) * 1}</td>`
+                            }
+                            
+                            if(team2data.toFixed(2) > 0){
+                                html += `<td class="green">${team2data.toFixed(2)}</td></tr>`
+                            }else{
+                                html += `<td class="red">${team2data.toFixed(2) * 1}</td></tr>`
+                            }
                         }
                     }
-                    
-                    $('#match_odd').find('tr.active').after(html)
+                    if(data.type == 'bookList'){
+                        $('#match_odd_Book').find('tr.active').after(html)
+                    }else{
+                        $('#match_odd').find('tr.active').after(html)
+                    }
                 }else{
                   
                 }
@@ -12372,39 +12433,81 @@ socket.on('connect', () => {
                         html += `
                         <tr class="tabelBodyTr userBookParentTr">
                             <td class="userBookParent" data-usename="${data.Bets[i].ele.userName}">${data.Bets[i].ele.userName}</td>`
-                        if(data.Bets[i].Bets.teama.toFixed(2) > 0){
-                            html += `<td class="green">${data.Bets[i].Bets.teama.toFixed(2)}</td>`
+                            if(data.type == 'bookList'){
+                                if(data.Bets[i].Bets.teama.toFixed(2) > 0){
+                                html += `<td class="red">${data.Bets[i].Bets.teama.toFixed(2) * -1}</td>`
+                            }else{
+                                html += `<td class="green">${data.Bets[i].Bets.teama.toFixed(2) * -1}</td>`
+                            }
+                            
+                            if(data.Bets[i].Bets.teamb.toFixed(2) > 0){
+                                html += `<td class="red">${data.Bets[i].Bets.teamb.toFixed(2) * -1}</td></tr>`
+                            }else{
+                                html += `<td class="green">${data.Bets[i].Bets.teamb.toFixed(2) * -1}</td></tr>`
+                            }
                         }else{
-                            html += `<td class="red">${data.Bets[i].Bets.teama.toFixed(2) * 1}</td>`
-                        }
-                        
-                        if(data.Bets[i].Bets.teamb.toFixed(2) > 0){
-                            html += `<td class="green">${data.Bets[i].Bets.teamb.toFixed(2)}</td></tr>`
-                        }else{
-                            html += `<td class="red">${data.Bets[i].Bets.teamb.toFixed(2) * 1}</td></tr>`
+
+                            if(data.Bets[i].Bets.teama.toFixed(2) > 0){
+                                html += `<td class="green">${data.Bets[i].Bets.teama.toFixed(2)}</td>`
+                            }else{
+                                html += `<td class="red">${data.Bets[i].Bets.teama.toFixed(2) * 1}</td>`
+                            }
+                            
+                            if(data.Bets[i].Bets.teamb.toFixed(2) > 0){
+                                html += `<td class="green">${data.Bets[i].Bets.teamb.toFixed(2)}</td></tr>`
+                            }else{
+                                html += `<td class="red">${data.Bets[i].Bets.teamb.toFixed(2) * 1}</td></tr>`
+                            }
                         }
                         sumOfTeamA += data.Bets[i].Bets.teama
                         sumOfTeamB += data.Bets[i].Bets.teamb
                     }
-                    html += `<tr class="totleCount">
-                    <td>Total</td>`
-                    if(sumOfTeamA.toFixed(2) > 0){
-                        html += `<td class="green"> ${sumOfTeamA.toFixed(2)}</td>`
+                    if(data.type == 'bookList'){
+                        html += `<tr class="totleCount">
+                        <td>Total</td>`
+                        if(sumOfTeamA.toFixed(2) > 0){
+                            html += `<td class="red"> ${sumOfTeamA.toFixed(2) * -1}</td>`
+                        }else{
+                            html += `<td class="green">${sumOfTeamA.toFixed(2) * -1}</td>`
+                        }
+                        
+                        if(sumOfTeamB.toFixed(2) > 0){
+                            html += `<td class="red">${sumOfTeamB.toFixed(2) * -1}</td></tr>`
+                        }else{
+                            html += `<td class="green">${sumOfTeamB.toFixed(2) * -1}</td></tr>`
+                        }
                     }else{
-                        html += `<td class="red">${sumOfTeamA.toFixed(2) * 1}</td>`
+                        html += `<tr class="totleCount">
+                        <td>Total</td>`
+                        if(sumOfTeamA.toFixed(2) > 0){
+                            html += `<td class="green"> ${sumOfTeamA.toFixed(2)}</td>`
+                        }else{
+                            html += `<td class="red">${sumOfTeamA.toFixed(2) * 1}</td>`
+                        }
+                        
+                        if(sumOfTeamB.toFixed(2) > 0){
+                            html += `<td class="green">${sumOfTeamB.toFixed(2)}</td></tr>`
+                        }else{
+                            html += `<td class="red">${sumOfTeamB.toFixed(2) * 1}</td></tr>`
+                        }
                     }
-                    
-                    if(sumOfTeamB.toFixed(2) > 0){
-                        html += `<td class="green">${sumOfTeamB.toFixed(2)}</td></tr>`
-                    }else{
-                        html += `<td class="red">${sumOfTeamB.toFixed(2) * 1}</td></tr>`
-                    }
+                 
                 //     `<td>${sumOfTeamA.toFixed(2)}</td>
                 //     <td>${sumOfTeamB.toFixed(2)}</td>
                 // </tr>`
-                    document.getElementById('match_odd').innerHTML = html
+                if(data.type == 'bookList'){
+                    document.getElementById('match_odd_Book').innerHTML = html
+
                 }else{
-                    $('tbody').html(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
+                    document.getElementById('match_odd').innerHTML = html
+
+                }
+                }else{
+                    if(data.type == 'bookList'){
+                        $('#match_odd_Book').html(`<tbody><tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr></tbody>`)
+                    }else{
+                        $('#match_odd').html(`<tbody><tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr></tbody>`)
+                    }
                 }
             })
 

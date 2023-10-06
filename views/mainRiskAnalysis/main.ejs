@@ -43,6 +43,7 @@
                         <!-- <strong>Min : 100, Max : 1000</strong> -->
                         <div class="btn-group" >
                             <button class="min-max-modal userBook" data-bs-toggle="modal" data-bs-target="#matchodd-modal">User Book</button>
+                            <button class="min-max-modal BookList" data-bs-toggle="modal" data-bs-target="#bookmaker-modal">Book</button>
                             <button class="min-max-modal tbl-data-href" data-href="/admin/matchBets?id=<%=match.marketList.match_odd.marketId%>">Bets</button>
                         </div>
                         </div>
@@ -114,6 +115,7 @@
                         <!-- <strong>Min : 100, Max : 10K</strong> -->
                         <div class="btn-group" >
                             <button class="min-max-modal userBook" data-bs-toggle="modal" data-bs-target="#matchodd-modal">User Book</button>
+                            <button class="min-max-modal BookList" data-bs-toggle="modal" data-bs-target="#bookmaker-modal">Book</button>
                             <button class="min-max-modal tbl-data-href" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button>
                         </div>
                         <!-- <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button></div> -->
@@ -461,9 +463,9 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
         </div>
-        <!-- <div class="modal-header">
-          <h4 class="modal-title">Match Odds</h4>
-        </div> -->
+        <div class="modal-header">
+          <h4 class="modal-title">User Book List</h4>
+        </div>
         <div class="modal-body">
             <div class="data-table">
                 <table id="match_odd" data-marketid="">
@@ -475,29 +477,26 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="bookmaker-modal" role="dialog">
+  <div class="modal user-book-popup fade" id="bookmaker-modal" role="dialog">
     <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
-        </div>
-        <div class="modal-header">
-          <h4 class="modal-title">Bookmaker</h4>
-        </div>
-        <div class="modal-body">
-            <div class="data-table">
-          <table id="bookmakerTable">
-            <tr>
-                <th>User name</th>
-                <th></th>
-                <th></th>
-            </tr>
-          </table>
-        </div>
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+          </div>
+          <div class="modal-header">
+            <h4 class="modal-title">Book List</h4>
+          </div>
+          <div class="modal-body">
+              <div class="data-table">
+                  <table id="match_odd_Book" data-marketid="">
+                      
+                  </table>
+              </div>
+           
+          </div>
         </div>
       </div>
-    </div>
   </div>
 
 
