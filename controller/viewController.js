@@ -3986,7 +3986,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
     children.map(ele => {
         childrenUsername.push(ele.userName) 
     })
-    let eventWiseData = await commissionNewModel.aggregate([
+    let marketWiseData = await commissionNewModel.aggregate([
         {
             $match: {
               eventDate: {
@@ -3997,7 +3997,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
           },
           {
             $group: {
-              _id: "$eventName",
+              _id: "$marketName",
               totalCommission: { $sum: "$commission" },
               eventDate: { $first: "$eventDate" }
             }
@@ -4007,5 +4007,6 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
         title:"Commission Report",
         me,
         currentUser:me,
+        marketWiseData
     })
 })
