@@ -4028,6 +4028,33 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
             match,
             marketName
         })
+    }else if (req.query.User){
+        let marketWiseData = await commissionNewModel.aggregate([
+            {
+                $match: {
+                eventDate: {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                },
+                userName:req.query.User,
+                // eventName:match
+                }
+            },
+            {
+                $group: {
+                _id: "$marketName",
+                totalCommission: { $sum: "$commission" },
+                eventDate: { $first: "$eventDate" }
+                }
+            }
+        ])
+        console.log(marketWiseData, "marketWiseData")
+        res.status(200).render('./commissionMarketWise/commissionMarketWise1/commissionMarketWise1.ejs', {
+            title:"Commission Report",
+            me,
+            currentUser:me,
+            marketWiseData,
+            match,
+        })
     }else{
         let marketWiseData = await commissionNewModel.aggregate([
             {
