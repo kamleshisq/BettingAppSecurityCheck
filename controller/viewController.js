@@ -3593,7 +3593,8 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
     let commissionData = await commissionNewModel.aggregate([
         {
             $match:{
-                userId: req.currentUser.id
+                userId: req.currentUser.id,
+                commissionStatus: 'Unclaimed'
             }
         },
         {
@@ -3613,7 +3614,8 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
         userLog,
         notifications:req.notifications,
         // data,
-        commissionData
+        commissionData,
+        unclaimCommission:sumData[0].totalCommission
     })
 })
 
