@@ -12332,23 +12332,26 @@ socket.on('connect', () => {
                         if(data.Bets[i].Bets.selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
                             // console.log("2121222122121")
                             team1data = data.Bets[i].Bets.selections[0].totalAmount
-                            sumOfTeamA += team1data
                             if(data.Bets[i].Bets.selections[1]){
-                                team2data = data.Bets[i].Bets.selections[1].totalAmount
-                                sumOfTeamB += team2data
+                                team2data = data.Bets[i].Bets.selections[1].totalAmount - data.Bets[i].Bets.selections[0].Stake
+
+                                team1data -= data.Bets[i].Bets.selections[1].Stake
                             }else{
                                 team2data = -data.Bets[i].Bets.selections[0].Stake
-                                sumOfTeamB += team2data
                             }
+                            sumOfTeamB += team2data
+                            sumOfTeamA += team1data
+
                         }else{
+                            team2data = data.Bets[i].Bets.selections[0].totalAmount
                             if(data.Bets[i].Bets.selections[1]){
-                                team1data = data.Bets[i].Bets.selections[1].totalAmount
-                                sumOfTeamA += team1data
+                                team2data -= data.Bets[i].Bets.selections[0].Stake
+                                team1data = data.Bets[i].Bets.selections[1].totalAmount - data.Bets[i].Bets.selections[0].Stake
                             }else{
                                 team1data = -data.Bets[i].Bets.selections[0].Stake
-                                sumOfTeamA += team1data
                             }
-                            team2data = data.Bets[i].Bets.selections[0].totalAmount
+                            
+                            sumOfTeamA += team1data
                             sumOfTeamB += team2data
                         }
 

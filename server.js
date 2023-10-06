@@ -3612,83 +3612,98 @@ io.on('connection', (socket) => {
                             },
                         },
                     },
-                    // {
-                    //     $project: {
-                    //         _id: 0,
-                    //         userName: "$_id",
-                    //         selections: {
-                    //             $map: {
-                    //                 input: "$selections",
-                    //                 as: "selection",
-                    //                 in: {
-                    //                     selectionName: "$$selection.selectionName",
-                    //                     totalAmount: {
-                    //                         $subtract: [
-                    //                             "$$selection.totalAmount",
-                    //                             {
-                    //                                 $reduce: {
-                    //                                     input: "$selections",
-                    //                                     initialValue: 0,
-                    //                                     in: {
-                    //                                         $cond: {
-                    //                                             if: {
-                    //                                                 $and: [
-                    //                                                     { $eq: ["$$this.matchName", "$$selection.matchName"] },
-                    //                                                     { $ne: ["$$this.selectionName", "$$selection.selectionName"] }
-                    //                                                 ]
-                    //                                             },
-                    //                                             then: { $add: ["$$value", "$$this.Stake"] },
-                    //                                             else: "$$value"
-                    //                                         }
-                    //                                     }
-                    //                                 }
-                    //                             }
-                    //                         ]
-                    //                     },
-                    //                     matchName: "$$selection.matchName",
-                    //                     Stake: "$$selection.Stake"
-                    //                 }
-                    //             }
-                    //         }
-                    //     },
-                    // },
-                    // // {
-                    // //     $unwind: "$selections"
-                    // // },
-                    // {
-                    //     $sort: {
-                    //         "userName": 1, 
-                    //         // "selections.selectionName": 1 
-                    //     }
-                    // }
+                    {
+                        $project: {
+                            _id: 0,
+                            userName: "$_id",
+                            selections: {
+                                $map: {
+                                    input: "$selections",
+                                    as: "selection",
+                                    in: {
+                                        selectionName: "$$selection.selectionName",
+                                        totalAmount: {
+                                            $subtract: [
+                                                "$$selection.totalAmount",
+                                                {
+                                                    $reduce: {
+                                                        input: "$selections",
+                                                        initialValue: 0,
+                                                        in: {
+                                                            $cond: {
+                                                                if: {
+                                                                    $and: [
+                                                                        { $eq: ["$$this.matchName", "$$selection.matchName"] },
+                                                                        { $ne: ["$$this.selectionName", "$$selection.selectionName"] }
+                                                                    ]
+                                                                },
+                                                                then: { $add: ["$$value", "$$this.Stake"] },
+                                                                else: "$$value"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        matchName: "$$selection.matchName",
+                                        Stake: "$$selection.Stake"
+                                    }
+                                }
+                            }
+                        },
+                    },
+                    {
+                        $sort: {
+                            "userName": 1, 
+                            // "selections.selectionName": 1 
+                        }
+                    }
                 ]);
-                // let team1data = 0;
-                // let team2data = 0;
-                // if(Bets.length !== 0){
-                //     for(let i = 0;i<Bets.length;i++){
-                //         if(Bets[i].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
-                //             // console.log("2121222122121")
-                //             team1data += Bets[i].selections[0].totalAmount
-                //             if(Bets[i].selections[1]){
-                //                 team2data += Bets[i].selections[1].totalAmount
-                //             }else{
-                //                 team2data += -Bets[i].selections[0].Stake
-                //             }
+                // for(let i = 0; i < data.Bets.length; i++){
+                //     // console.log(data[i], "+==> in Loop DAta")
+                //     let team1data = 0 
+                //     let team2data = 0
+                //     // console.log(data[i].selections[0].selectionName.toLowerCase(), team1.toLowerCase)
+                //     if(data.Bets[i].Bets.selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
+                //         // console.log("2121222122121")
+                //         team1data = data.Bets[i].Bets.selections[0].totalAmount
+                //         if(data.Bets[i].Bets.selections[1]){
+                //             team2data = data.Bets[i].Bets.selections[1].totalAmount - data.Bets[i].Bets.selections[0].Stake
+
+                //             team1data -= data.Bets[i].Bets.selections[1].Stake
                 //         }else{
-                //             if(Bets[i].selections[1]){
-                //                 team1data += Bets[i].selections[1].totalAmount
-                //             }else{
-                //                 team1data += -Bets[i].selections[0].Stake
-                //             }
-                //             team2data += Bets[i].selections[0].totalAmount
+                //             team2data = -data.Bets[i].Bets.selections[0].Stake
                 //         }
+                //         sumOfTeamB += team2data
+                //         sumOfTeamA += team1data
+
+                //     }else{
+                //         team2data = data.Bets[i].Bets.selections[0].totalAmount
+                //         if(data.Bets[i].Bets.selections[1]){
+                //             team2data -= data.Bets[i].Bets.selections[0].Stake
+                //             team1data = data.Bets[i].Bets.selections[1].totalAmount - data.Bets[i].Bets.selections[0].Stake
+                //         }else{
+                //             team1data = -data.Bets[i].Bets.selections[0].Stake
+                //         }
+                        
+                //         sumOfTeamA += team1data
+                //         sumOfTeamB += team2data
+                //     }
+
+                //     html += `
+                //     <tr class="tabelBodyTr">
+                //         <td class="children" data-usename="${data.Bets[i].ele.userName}">${data.Bets[i].ele.userName}</td>`
+                //     if(team1data.toFixed(2) > 0){
+                //         html += `<td class="green">${team1data.toFixed(2)}</td>`
+                //     }else{
+                //         html += `<td class="red">${team1data.toFixed(2) * 1}</td>`
                 //     }
                     
-                // }
-                // Bets[0].selections[0].totalAmount = team2data
-                // Bets[0].selections[0].Stake = team1data
-                // if(Bets.length != 0){
-                //     return ({ele,Bets:Bets[0]})
+                //     if(team2data.toFixed(2) > 0){
+                //         html += `<td class="green">${team2data.toFixed(2)}</td></tr>`
+                //     }else{
+                //         html += `<td class="red">${team2data.toFixed(2) * 1}</td></tr>`
+                //     }
                 // }
                 if(Bets.length != 0){
                     return ({ele,Bets:Bets[0]})
