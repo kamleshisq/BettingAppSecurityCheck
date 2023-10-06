@@ -3674,20 +3674,20 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
     console.log(sportId, "sportIdsportId")
-    let data = await commissionReportModel.aggregate([
+    let data = await commissionNewModel.aggregate([
         {
           $match: {
             userId: req.currentUser.id,
-            event: sportId,
+            eventName: sportId,
           },
         },
         {
           $group: {
             _id: {
-              sportId: '$Sport', // Group by sportId
-              match: '$match',
+              sportId: '$sportId', // Group by sportId
+              match: '$eventName',
             },
-            totalCommissionPoints: { $sum: '$commPoints' },
+            totalCommissionPoints: { $sum: '$commission' },
           },
         },
       ]);
