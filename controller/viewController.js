@@ -3645,7 +3645,7 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
         },
         {
             $group: {
-              _id: '$eventName',
+              _id: '$seriesName',
               totalCommissionPoints: { $sum: '$commission' }
             }
         }
