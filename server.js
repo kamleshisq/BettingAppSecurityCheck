@@ -2731,13 +2731,13 @@ io.on('connection', (socket) => {
         const user = await User.findOne({userName:data.filterData.userName})
         if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
             delete data.filterData['userName']
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('AlertBet',{ubDetails,page})
+            let ubDetails = await Bet.find(data.filterData).sort({date:-1}).skip(page * limit).limit(limit)
+            socket.emit('AlertBet',{ubDetails,page,filter:data.filterData})
         }
         else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
             delete data.filterData['userName']
             let ubDetails = await Bet.find(data.filterData).sort({date:-1}).skip(page * limit).limit(limit)
-            socket.emit('AlertBet',{ubDetails,page})
+            socket.emit('AlertBet',{ubDetails,page,filter:data.filterData})
         }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
             let ubDetails = await Bet.find(data.filterData).sort({date:-1}).skip(page * limit).limit(limit)
             socket.emit('AlertBet',{ubDetails,page})
