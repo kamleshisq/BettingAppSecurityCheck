@@ -12319,7 +12319,7 @@ socket.on('connect', () => {
                         let team2data = 0
                         console.log(data.Bets[i].selections[0].selectionName.toLowerCase() , team1.toLowerCase())
                         console.log(data.Bets[i].selections[0].selectionName.toLowerCase().trim() == team1.toLowerCase().trim())
-                        if(data.Bets[i].selections[0].selectionName.toLowerCase() == team1.toLowerCase()){
+                        if(data.Bets[i].selections[0].selectionName.toLowerCase().trim() == team1.toLowerCase().trim()){
                             team1data = data.Bets[i].selections[0].totalAmount
                             if(data.Bets[i].selections[1]){
                                 team2data = data.Bets[i].selections[1].totalAmount
