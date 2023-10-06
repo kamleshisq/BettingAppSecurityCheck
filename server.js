@@ -3697,7 +3697,7 @@ io.on('connection', (socket) => {
                         }
 
                     }
-                    return ({ele,Bets:{teama:sumOfTeamB,teamb:sumOfTeamA,teamA,teamB}})
+                    return ({ele,Bets:{teama:sumOfTeamB,teamb:sumOfTeamA,teamA,teamB,type:data.type}})
                 }
             })
             let resultPromise = await Promise.all(newUser)
@@ -3837,7 +3837,7 @@ io.on('connection', (socket) => {
             
            console.log(Bets, "==> WORKING")
         //    console.log(Bets[0].selections)
-           socket.emit('UerBook1', {Bets});
+           socket.emit('UerBook1', {Bets,type:data.type});
         //    socket.emit();
         }catch(err){
             console.log(err)
