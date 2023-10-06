@@ -39,38 +39,7 @@
                 </div>
             </div>
             <div class="data-table">
-              <table>
-                <thead>
-                    <tr>
-                      <th>S.No</th>
-                      <th>Date</th>
-                      <th>Time</th>
-                      <th>Credit</th>
-                      <th>Debit</th>
-                      <th>Closing</th>
-                      <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody class="new-body table-body">
-                 <%for(let i = 0; i < data.length; i++){ %>
-                  <% let date = new Date(data[i].date)%>
-                  <tr>
-                      <td><%= i + 1%></td>
-                      <td class="text-nowrap" ><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
-                      <td class="text-nowrap" ><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
-                      <%if(data[i].creditDebitamount > 0){%>
-                          <td><%=data[i].creditDebitamount%></td>
-                          <td>-</td>
-                      <%}else{ %>
-                          <td>-</td>
-                          <td><%=data[i].creditDebitamount%></td>
-                      <%} %>
-                      <td><%=data[i].balance%></td>
-                      <td><%=data[i].description%></td>
-                  </tr>
-                  <%}%>
-                </tbody>
-              </table>
+              
             </div>
         </div>
     </div>
