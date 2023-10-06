@@ -3632,7 +3632,7 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
         notifications:req.notifications,
         // data,
         commissionData,
-        unclaimCommission:sumData[0].totalCommission
+        unclaimCommission:sum
     })
 })
 
