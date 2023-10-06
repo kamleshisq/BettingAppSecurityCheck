@@ -12314,7 +12314,7 @@ socket.on('connect', () => {
                
             })
 
-            $(document).on('click','.userBookParent',function(e){
+            $(document).on('click','#match_odd .userBookParent',function(e){
                 if(!$(this).parent('tr').hasClass('active')){
                     $('#match_odd').find('tr.active').removeClass('active')
                     $(this).parent('tr').addClass('active')
