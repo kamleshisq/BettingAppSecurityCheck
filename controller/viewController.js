@@ -3301,8 +3301,8 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
             }
           }
     ])
-    console.log(eventWiseData)
-    console.log(userWiseData)
+    // console.log(eventWiseData)
+    // console.log(userWiseData)
 
     res.status(200).render("./commissionPage/commissionPage",{
         title:"Commission Report",
@@ -4003,6 +4003,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
             }
           }
     ])
+    console.log(marketWiseData, "marketWiseData")
     res.status(200).render('./commissionMarketWise/commissionMarketWise1/commissionMarketWise1.ejs', {
         title:"Commission Report",
         me,
