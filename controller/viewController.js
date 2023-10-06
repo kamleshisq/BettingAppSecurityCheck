@@ -3986,7 +3986,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
     children.map(ele => {
         childrenUsername.push(ele.userName) 
     })
-    console.log(req.query.market)
+    console.log(req.originalUrl, "URL")
     if(req.query.market){
         let market 
         let marketName 
@@ -4057,4 +4057,5 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
         })
     }
 });
+
 
