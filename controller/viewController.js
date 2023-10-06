@@ -4063,29 +4063,51 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
     const me = req.currentUser
     let user = req.query.User
 
-
-    let Userdata = await commissionNewModel.aggregate([
+    if(req.body.event){
+        let eventData = await commissionNewModel.aggregate([
             {
-                $match: {
-                  eventDate: {
-                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                  },
-                  userName:user
+                $match:{
+                    eventDate: {
+                        $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                    },
+                    userName:user,
+                    eventName:req.body.event
                 }
-              },
-              {
-                $group: {
-                  _id: "$eventName",
-                  totalCommission: { $sum: "$commission" },
-                  eventDate: { $first: "$eventDate" }
+            }
+        ])
+        res.status(200).render('./commissionUser/commissionUser2.ejs', {
+            title:"Commission Report",
+            me,
+            currentUser:me,
+            user,
+            eventName:req.body.event,
+            eventData
+        })
+    }else{
+
+        let Userdata = await commissionNewModel.aggregate([
+                {
+                    $match: {
+                    eventDate: {
+                        $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                    },
+                    userName:user
+                    }
+                },
+                {
+                    $group: {
+                    _id: "$eventName",
+                    totalCommission: { $sum: "$commission" },
+                    eventDate: { $first: "$eventDate" }
+                    }
                 }
-              }
-    ])
-    res.status(200).render('./commissionUser/commissionUser.ejs', {
-        title:"Commission Report",
-        me,
-        currentUser:me,
-        user,
-        Userdata
-    })
+        ])
+        res.status(200).render('./commissionUser/commissionUser.ejs', {
+            title:"Commission Report",
+            me,
+            currentUser:me,
+            user,
+            Userdata
+        })
+    }
 })
