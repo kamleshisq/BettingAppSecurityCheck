@@ -12407,7 +12407,7 @@ socket.on('connect', () => {
                 // </tr>`
                     document.getElementById('match_odd').innerHTML = html
                 }else{
-                    $('tbody').html(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
+                    $('#match_odd').find('tbody').html(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
                 }
             })
 
