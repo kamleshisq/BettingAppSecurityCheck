@@ -12314,11 +12314,11 @@ socket.on('connect', () => {
                     let match = data.Bets[0].selections[0].matchName
                     let team1 = match.split('v')[0]
                     let team2 = match.split('v')[1]
-                    console.log(team1,team2)
                     for(let i = 0; i < data.Bets.length; i++){
                         let team1data = 0 
                         let team2data = 0
-                        console.log(data.Bets[i].selections[0].selectionName.toLowerCase() == team1.toLowerCase())
+                        console.log(data.Bets[i].selections[0].selectionName.toLowerCase() , team1.toLowerCase())
+                        console.log(data.Bets[i].selections[0].selectionName.toLowerCase().trim() == team1.toLowerCase()).trim()
                         if(data.Bets[i].selections[0].selectionName.toLowerCase() == team1.toLowerCase()){
                             team1data = data.Bets[i].selections[0].totalAmount
                             if(data.Bets[i].selections[1]){
