@@ -3591,7 +3591,8 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
     let sumData = await commissionNewModel.aggregate([
         {
             $match:{
-                userId: req.currentUser.id
+                userId: req.currentUser.id,
+                commissionStatus: 'Unclaimed'
             }
         },
         {
@@ -3601,12 +3602,11 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
             }
           }
     ])
-    console.log(sumData, "sumData")
+    // console.log(sumData, "sumData")
     let commissionData = await commissionNewModel.aggregate([
         {
             $match:{
-                userId: req.currentUser.id,
-                commissionStatus: 'Unclaimed'
+                userId: req.currentUser.id
             }
         },
         {
@@ -3638,6 +3638,20 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
+    let sumData = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id,
+                commissionStatus: 'Unclaimed'
+            }
+        },
+        {
+            $group: {
+              _id: null, 
+              totalCommission: { $sum: "$commission" } 
+            }
+          }
+    ])
     // let data =  await commissionReportModel.aggregate([
     //     {
     //         $match:{
@@ -3677,7 +3691,8 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
         userLog,
         notifications:req.notifications,
         data,
-        sport
+        sport,
+        unclaimCommission:sumData[0].totalCommission
     })
 })
 
