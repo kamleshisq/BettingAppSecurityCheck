@@ -9,7 +9,7 @@
       </thead>
       <tbody class="new-body" id="cricket-tbody">
         <%for(let i = 0; i < userWiseData.length; i++){%>
-            <tr>
+            <tr class="tbl-data-href" data-href="/admin/commissionReportUser?User=<%=userWiseData[i]._id%>">
                 <td><%=userWiseData[i]._id%></td>
                 <td><%=userWiseData[i].totalCommission%></td>
                 <td><%=userWiseData[i].totalUPline%></td>
