@@ -1,0 +1,20 @@
+<div class="data-table">
+    <table>
+      <thead>
+          <tr>
+            <th>User</th>
+            <th>Commission</th>
+            <th>Upline</th>
+          </tr>
+      </thead>
+      <tbody class="new-body" id="cricket-tbody">
+        <%for(let i = 0; i < userWiseData.length; i++){%>
+            <tr>
+                <td><%=userWiseData[i]._id%></td>
+                <td><%=userWiseData[i].totalCommission%></td>
+                <td><%=userWiseData[i].totalUPline%></td>
+            </tr>
+        <%}%>
+      </tbody>
+    </table>
+  </div>
