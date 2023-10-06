@@ -10348,8 +10348,10 @@ socket.on('connect', () => {
                 if(bets.length == 0){
                     html += `<tr class="empty_table"><td>No record found</td></tr>`
                     $('#load-more').hide()
+                }else{
+
+                    $('#load-more').show()
                 }
-                $('#load-more').show()
 
                 $('.new-body').html(html)
             }else{
