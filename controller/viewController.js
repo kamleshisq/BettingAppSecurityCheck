@@ -4082,7 +4082,7 @@ exports.getcommissionUser = catchAsync(async(req, res, next) => {
               }
     ])
     res.status(200).render('./commissionUser/commissionUser.ejs', {
-        itle:"Commission Report",
+        title:"Commission Report",
         me,
         currentUser:me,
         user,
