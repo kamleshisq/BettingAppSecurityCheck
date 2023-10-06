@@ -28,8 +28,8 @@
         <%for(let i = 0; i < thatMarketData.length; i++){%>
             <tr>
                 <td><%=thatMarketData[i]._id%></td>
-                <td><%=marketWiseData[i]._id%></td>
-                <td><%=marketWiseData[i].totalCommission%></td>
+                <td><%=thatMarketData[i].totalCommission%></td>
+                <td><%=thatMarketData[i].netupline%></td>
             </tr>
         <%}%>
     </tbody>
