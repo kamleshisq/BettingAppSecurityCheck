@@ -3590,7 +3590,8 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
     let sumData = await commissionNewModel.aggregate([
         {
             $match:{
-                userId: req.currentUser.id
+                userId: req.currentUser.id,
+                commissionStatus: 'Unclaimed'
             }
         },
         {
@@ -3600,7 +3601,7 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
             }
           }
     ])
-    console.log(sumData, "sumData")
+    // console.log(sumData, "sumData")
     let commissionData = await commissionNewModel.aggregate([
         {
             $match:{
@@ -3624,7 +3625,8 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
         userLog,
         notifications:req.notifications,
         // data,
-        commissionData
+        commissionData,
+        unclaimCommission:sumData[0].totalCommission
     })
 })
 
@@ -3635,6 +3637,20 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
+    let sumData = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id,
+                commissionStatus: 'Unclaimed'
+            }
+        },
+        {
+            $group: {
+              _id: null, 
+              totalCommission: { $sum: "$commission" } 
+            }
+          }
+    ])
     // let data =  await commissionReportModel.aggregate([
     //     {
     //         $match:{
@@ -3674,7 +3690,8 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
         userLog,
         notifications:req.notifications,
         data,
-        sport
+        sport,
+        unclaimCommission:sumData[0].totalCommission
     })
 })
 
@@ -3686,7 +3703,21 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
-    console.log(sportId, "sportIdsportId")
+    // console.log(sportId, "sportIdsportId")
+    let sumData = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id,
+                commissionStatus: 'Unclaimed'
+            }
+        },
+        {
+            $group: {
+              _id: null, 
+              totalCommission: { $sum: "$commission" } 
+            }
+          }
+    ])
     let data = await commissionNewModel.aggregate([
         {
           $match: {
@@ -3704,7 +3735,7 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
           },
         },
       ]);
-    console.log(data)
+    // console.log(data)
     let sport = data[0]._id.sportId
     let event = sportId
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
@@ -3717,7 +3748,8 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
         notifications:req.notifications,
         data,
         sport,
-        event
+        event,
+        unclaimCommission:sumData[0].totalCommission
     })
 })
 
@@ -3737,6 +3769,21 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
             }
         }
     ])
+
+    let sumData = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id,
+                commissionStatus: 'Unclaimed'
+            }
+        },
+        {
+            $group: {
+              _id: null, 
+              totalCommission: { $sum: "$commission" } 
+            }
+          }
+    ])
     // console.log(data)
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportMatch/main", {
@@ -3746,7 +3793,8 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
         check:"Comm",
         userLog,
         notifications:req.notifications,
-        data
+        data,
+        unclaimCommission:sumData[0].totalCommission
     })
 })
 
