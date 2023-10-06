@@ -3976,3 +3976,13 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
         betLimitMatchWise
     })
 });
+
+
+exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
+    const me = req.currentUser
+    res.status(200).render('./commissionMarketWise/commissionMarketWise1/commissionMarketWise1.ejs', {
+        title:"Commission Report",
+        me,
+        currentUser:me,
+    })
+})
