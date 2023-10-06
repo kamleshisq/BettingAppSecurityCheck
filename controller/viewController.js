@@ -3987,30 +3987,74 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
         childrenUsername.push(ele.userName) 
     })
     console.log(req.query.market)
-    let marketWiseData = await commissionNewModel.aggregate([
-        {
-            $match: {
-              eventDate: {
-                $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-              },
-              userName:{$in:childrenUsername},
-              eventName:match
+    if(req.query.market){
+        let market 
+        let marketName 
+        if(req.query.market.toLowerCase().startsWith('book')){
+            market =  {
+                $regex: /^book /,
+                $options: "i" 
+              }
+              marketName = BOOKMAKER
+        }else{
+            market = req.query.market
+            marketName = req.query.market
+        }
+        console.log(market)
+        let thatMarketData = await commissionNewModel.aggregate([
+            {
+                $match: {
+                eventDate: {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                },
+                userName:{$in:childrenUsername},
+                eventName:match,
+                marketName:market
+                }
+            },
+            {
+                $group: {
+                _id: "$userName",
+                totalCommission: { $sum: "$commission" },
+                netupline: { $sum: "$upline" }
+                }
             }
-          },
-          {
-            $group: {
-              _id: "$marketName",
-              totalCommission: { $sum: "$commission" },
-              eventDate: { $first: "$eventDate" }
+        ])
+        console.log(thatMarketData, "thatMarketData")
+        res.status(200).render('./commissionMarketWise/commissionMarketWise1/commissionMarketWise2.ejs', {
+            title:"Commission Report",
+            me,
+            currentUser:me,
+            thatMarketData,
+            match,
+            marketName
+        })
+    }else{
+        let marketWiseData = await commissionNewModel.aggregate([
+            {
+                $match: {
+                eventDate: {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                },
+                userName:{$in:childrenUsername},
+                eventName:match
+                }
+            },
+            {
+                $group: {
+                _id: "$marketName",
+                totalCommission: { $sum: "$commission" },
+                eventDate: { $first: "$eventDate" }
+                }
             }
-          }
-    ])
-    console.log(marketWiseData, "marketWiseData")
-    res.status(200).render('./commissionMarketWise/commissionMarketWise1/commissionMarketWise1.ejs', {
-        title:"Commission Report",
-        me,
-        currentUser:me,
-        marketWiseData,
-        match
-    })
+        ])
+        console.log(marketWiseData, "marketWiseData")
+        res.status(200).render('./commissionMarketWise/commissionMarketWise1/commissionMarketWise1.ejs', {
+            title:"Commission Report",
+            me,
+            currentUser:me,
+            marketWiseData,
+            match,
+        })
+    }
 })
