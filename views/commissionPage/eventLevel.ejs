@@ -1,0 +1,34 @@
+<div class="data-table">
+    <table>
+      <thead>
+          <tr>
+            <th>Event Date</th>
+            <th>Event Name</th>
+            <th>Commission</th>
+          </tr>
+      </thead>
+      <tbody class="new-body" id="cricket-tbody">
+        <%for(let i = 0; i < eventWiseData.length; i++){%>
+            <%
+                var timestamp = eventWiseData[i].eventdate ; 
+                var date = new Date(timestamp);
+                var options = { 
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true
+              };
+              var formattedTime = date.toLocaleString('en-US', options);
+               
+            %>
+            <tr>
+                <td><%=formattedTime%></td>
+                <td><%=eventWiseData[i]._id%></td>
+                <td><%=eventWiseData[i].totalCommission%></td>
+            </tr>
+        <%}%>
+      </tbody>
+    </table>
+  </div>
