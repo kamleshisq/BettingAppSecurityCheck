@@ -12318,7 +12318,7 @@ socket.on('connect', () => {
                     for(let i = 0; i < data.Bets.length; i++){
                         let team1data = 0 
                         let team2data = 0
-                        console.log(data.Bets[0].selections[0].selectionName.toLowerCase(), team1.toLowerCase())
+                        console.log(data.Bets[i].selections[0].selectionName.toLowerCase() == team1.toLowerCase())
                         if(data.Bets[i].selections[0].selectionName.toLowerCase() == team1.toLowerCase()){
                             team1data = data.Bets[i].selections[0].totalAmount
                             if(data.Bets[i].selections[1]){
