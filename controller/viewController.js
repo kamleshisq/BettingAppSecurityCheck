@@ -3995,7 +3995,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
                 $regex: /^book /,
                 $options: "i" 
               }
-              marketName = BOOKMAKER
+              marketName = 'BOOKMAKER'
         }else{
             market = req.query.market
             marketName = req.query.market
