@@ -16,26 +16,7 @@
           </div>              
       </div>
   </section>
-  <%if(thatMarketData.length > 0){%>
-    <thead>
-        <tr>
-            <th>User Name</th>
-            <th>Total Commission</th>
-            <th>Net Upline</th>
-            </tr>
-    </thead>
-    <tbody class="new-body">
-        <%for(let i = 0; i < thatMarketData.length; i++){%>
-            <tr>
-                <td><%=thatMarketData[i]._id%></td>
-                <td><%=thatMarketData[i].totalCommission%></td>
-                <td><%=thatMarketData[i].netupline%></td>
-            </tr>
-        <%}%>
-    </tbody>
-<%}else{%>
-    <tr class="empty_table"><td>No data to show </td></tr>
-<%}%>
+  
 
   <section>
     <div class="container-fluid">
@@ -44,7 +25,26 @@
             <div class="data-table">
               <div class="rowId" data-rowid="1"></div>
   <table class="bet-list-table">
-    
+    <%if(thatMarketData.length > 0){%>
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Total Commission</th>
+                <th>Net Upline</th>
+                </tr>
+        </thead>
+        <tbody class="new-body">
+            <%for(let i = 0; i < thatMarketData.length; i++){%>
+                <tr>
+                    <td><%=thatMarketData[i]._id%></td>
+                    <td><%=thatMarketData[i].totalCommission%></td>
+                    <td><%=thatMarketData[i].netupline%></td>
+                </tr>
+            <%}%>
+        </tbody>
+    <%}else{%>
+        <tr class="empty_table"><td>No data to show </td></tr>
+    <%}%>
   </table>
             </div>
         </div>
