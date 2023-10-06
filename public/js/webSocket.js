@@ -12297,7 +12297,9 @@ socket.on('connect', () => {
                
             })
 
-            $(document).on('click','.children',function(e){
+            $(document).on('click','.userBookParent',function(e){
+                $('#match_odd').find('tr.active').removeClass('active')
+                $(this).parent('tr').addClass('active')
                 let userName = $(this).attr('data-usename')
                 let marketId = $("#match_odd").attr('data-marketid')
                 console.log({marketId,LOGINDATA,userName})
@@ -12307,6 +12309,51 @@ socket.on('connect', () => {
 
             socket.on('UerBook1',async(data)=>{
                 console.log(data,"==>UserBook1 Response")
+                if(data.Bets.length > 0){
+                    let html = '';
+                    let match = data.Bets[0].selections[0].matchName
+                    let team1 = match.split('v')[0]
+                    let team2 = match.split('v')[1]
+                    for(let i = 0; i < data.Bets.length; i++){
+                        let team1data = 0 
+                        let team2data = 0
+                        if(data.Bets[i].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
+                            team1data = data.Bets[i].selections[0].totalAmount
+                            if(data.Bets[i].selections[1]){
+                                team2data = data.Bets[i].selections[1].totalAmount
+                            }else{
+                                team2data = -data.Bets[i].selections[0].Stake
+                            }
+                        }else{
+                            team2data = data.Bets[i].selections[0].totalAmount
+                            if(data.Bets[i].selections[1]){
+                                team1data = data.Bets[i].selections[1].totalAmount
+                            }else{
+                                team1data = -data.Bets[i].selections[0].Stake
+                            }
+                           
+                        }
+
+                        html += `
+                        <tr class="tabelBodyTr children">
+                            <td data-usename="${data.Bets[i].userName}">${data.Bets[i].userName}</td>`
+                        if(team1data.toFixed(2) > 0){
+                            html += `<td class="red"> -${team1data.toFixed(2)}</td>`
+                        }else{
+                            html += `<td class="green"> ${team1data.toFixed(2) * -1}</td>`
+                        }
+                        
+                        if(team2data.toFixed(2) > 0){
+                            html += `<td class="red">-${team2data.toFixed(2)}</td></tr>`
+                        }else{
+                            html += `<td class="green">${team2data.toFixed(2) * -1}</td></tr>`
+                        }
+                    }
+                    
+                    $('#match_odd').find('tr.active').after(html)
+                }else{
+                  
+                }
             })
     
             socket.on('UerBook', async(data) => {
@@ -12321,8 +12368,8 @@ socket.on('connect', () => {
                     let sumOfTeamB = 0
                     for(let i = 0; i < data.Bets.length; i++){
                         html += `
-                        <tr class="tabelBodyTr">
-                            <td class="children" data-usename="${data.Bets[i].ele.userName}">${data.Bets[i].ele.userName}</td>`
+                        <tr class="tabelBodyTr userBookParentTr">
+                            <td class="userBookParent" data-usename="${data.Bets[i].ele.userName}">${data.Bets[i].ele.userName}</td>`
                         if(data.Bets[i].Bets.teama.toFixed(2) > 0){
                             html += `<td class="green">${data.Bets[i].Bets.teama.toFixed(2)}</td>`
                         }else{
@@ -12355,17 +12402,7 @@ socket.on('connect', () => {
                 // </tr>`
                     document.getElementById('match_odd').innerHTML = html
                 }else{
-                    if(data.newData == false){
-                        $('.tabelBodyTr').remove()
-                        if($('.headDetail').length ){
-                            $('.headDetail').after(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
-                        }else{
-                            $('tbody').html(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
-
-                        }
-                    }else{
-                        $('#match_odd').html(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
-                    }
+                    $('tbody').html(`<tr class="tabelBodyTr empty_table"><td>There is no bets in this market</td></tr>`)
                 }
             })
 
