@@ -57,6 +57,13 @@ const commissionNew = mongoose.Schema({
     date:{
         type:Date,
         required:true
+    },
+    marketName:{
+        type:String,
+        // required:true
+    },
+    claimeDate:{
+        type:Date
     }
 })
 
