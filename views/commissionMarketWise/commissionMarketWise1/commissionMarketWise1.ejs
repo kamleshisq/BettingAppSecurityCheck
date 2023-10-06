@@ -34,11 +34,7 @@
         </thead>
         <tbody class="new-body">
             <%for(let i = 0; i < marketWiseData.length; i++){%>
-                <%
-                let string = `/admin/commissionReportEvent?event=${match}&market=${marketWiseData[i]._id}`
-                let url = encodeURIComponent(string)
-                %>
-                <tr class="tbl-data-href" data-href="<%=url%>">
+                <tr class="tbl-data-href" data-href="/admin/commissionReportEvent?event=<%=match%>&market=<%=marketWiseData[i]._id%>">
                     <%
                         var timestamp = marketWiseData[i].eventDate ; 
                         var date = new Date(timestamp);
