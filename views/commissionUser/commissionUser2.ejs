@@ -10,7 +10,8 @@
           <div class="bredcum-container">
             <ul>
                 <li><a href="/admin/commissionReport"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></a></li>
-                <li class="active" ><%=user%></li>
+                <li> <a href="/admin/commissionReportUser?User=<%=user%>"><%=user%></a> </li>
+                <li class="active" >  <%=eventName%></li>
             </ul>
           </div>              
       </div>
@@ -24,19 +25,21 @@
             <div class="data-table">
               <div class="rowId" data-rowid="1"></div>
   <table class="bet-list-table">
-    <%if(Userdata.length > 0){%>
+    <%if(eventData.length > 0){%>
         <thead>
             <tr>
                 <th>Date</th>
-                <th>EVent Name</th>
-                <th>Total Commission</th>
-                </tr>
+                <th>Commission Type </th>
+                <th>Market Name</th>
+                <th>Commission</th>
+                <th>Commission Status</th>
+            </tr>
         </thead>
         <tbody class="new-body">
-            <%for(let i = 0; i < Userdata.length; i++){%>
-                <tr class="tbl-data-href" data-href="/admin/commissionReportUser?User=<%=user%>&event=<%=Userdata[i]._id%>">
+            <%for(let i = 0; i < eventData.length; i++){%>
+                <tr class="tbl-data-href" data-href="/admin/commissionReportUser?User=<%=user%>&event=<%=eventData[i]._id%>">
                     <%
-                        var timestamp = Userdata[i].eventDate ; 
+                        var timestamp = eventData[i].eventDate ; 
                         var date = new Date(timestamp);
                         var options = { 
                         year: 'numeric',
@@ -50,8 +53,10 @@
                     
                     %>
                     <td><%=formattedTime%></td>
-                    <td><%=Userdata[i]._id%></td>
-                    <td><%=Userdata[i].totalCommission%></td>
+                    <td><%=eventData[i].commissionType%></td>
+                    <td><%=eventData[i].marketName%></td>
+                    <td><%=eventData[i].commission%></td>
+                    <td><%=eventData[i].commissionStatus%></td>
                 </tr>
             <%}%>
         </tbody>
