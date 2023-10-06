@@ -12300,15 +12300,12 @@ socket.on('connect', () => {
             $(document).on('click','.children',function(e){
                 let userName = $(this).attr('data-usename')
                 let marketId = parseInt($("#match_odd").attr('data-marketid'))
-                if(userName !== "" && marketId !== ""){
-
-                    socket.emit('UerBook1', {marketId,LOGINDATA,userName})
-                }
+                socket.emit('UerBook1', {marketId,LOGINDATA,userName})
 
             })
 
             socket.on('UserBook1',async(data)=>{
-                console.log(data)
+                console.log(data,"==>UserBook1 Response")
             })
     
             socket.on('UerBook', async(data) => {
