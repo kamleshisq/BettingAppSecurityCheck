@@ -12356,29 +12356,29 @@ socket.on('connect', () => {
                         <tr class="tabelBodyTr">
                             <td class="children" data-usename="${data.Bets[i].ele.userName}">${data.Bets[i].ele.userName}</td>`
                         if(team1data.toFixed(2) > 0){
-                            html += `<td class="red"> -${team1data.toFixed(2)}</td>`
+                            html += `<td class="green"> ${team1data.toFixed(2)}</td>`
                         }else{
-                            html += `<td class="green"> ${team1data.toFixed(2) * -1}</td>`
+                            html += `<td class="red"> -${team1data.toFixed(2) * 1}</td>`
                         }
                         
                         if(team2data.toFixed(2) > 0){
-                            html += `<td class="red">-${team2data.toFixed(2)}</td></tr>`
+                            html += `<td class="green">-${team2data.toFixed(2)}</td></tr>`
                         }else{
-                            html += `<td class="green">${team2data.toFixed(2) * -1}</td></tr>`
+                            html += `<td class="red">${team2data.toFixed(2) * 1}</td></tr>`
                         }
                     }
                     html += `<tr class="totleCount">
                     <td>Total</td>`
                     if(sumOfTeamA.toFixed(2) > 0){
-                        html += `<td class="red"> -${sumOfTeamA.toFixed(2)}</td>`
+                        html += `<td class="green"> ${sumOfTeamA.toFixed(2)}</td>`
                     }else{
-                        html += `<td class="green"> ${sumOfTeamA.toFixed(2) * -1}</td>`
+                        html += `<td class="red"> -${sumOfTeamA.toFixed(2) * 1}</td>`
                     }
                     
                     if(sumOfTeamB.toFixed(2) > 0){
-                        html += `<td class="red">-${sumOfTeamB.toFixed(2)}</td></tr>`
+                        html += `<td class="green">${sumOfTeamB.toFixed(2)}</td></tr>`
                     }else{
-                        html += `<td class="green">${sumOfTeamB.toFixed(2) * -1}</td></tr>`
+                        html += `<td class="red">-${sumOfTeamB.toFixed(2) * 1}</td></tr>`
                     }
                 //     `<td>${sumOfTeamA.toFixed(2)}</td>
                 //     <td>${sumOfTeamB.toFixed(2)}</td>
