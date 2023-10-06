@@ -3575,19 +3575,19 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
-    let data =  await commissionReportModel.aggregate([
-        {
-            $match:{
-                userId: req.currentUser.id
-            }
-        },
-        {
-            $group: {
-              _id: '$Sport',
-              totalCommissionPoints: { $sum: '$commPoints' }
-            }
-        }
-    ])
+    // let data =  await commissionReportModel.aggregate([
+    //     {
+    //         $match:{
+    //             userId: req.currentUser.id
+    //         }
+    //     },
+    //     {
+    //         $group: {
+    //           _id: '$Sport',
+    //           totalCommissionPoints: { $sum: '$commPoints' }
+    //         }
+    //     }
+    // ])
     let commissionData = await commissionNewModel.aggregate([
         {
             $match:{
@@ -3601,7 +3601,7 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
             }
         }
     ])
-    console.log(commissionData, "commissionData")
+    // console.log(commissionData, "commissionData")
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReport/main", {
         title:"Commission Report",
@@ -3610,7 +3610,7 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
         check:"Comm",
         userLog,
         notifications:req.notifications,
-        data,
+        // data,
         commissionData
     })
 })
@@ -3636,7 +3636,21 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
             }
         }
     ])
-    // console.log(data)
+    let data2 = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id,
+                sportId:sportId
+            }
+        },
+        {
+            $group: {
+              _id: '$eventName',
+              totalCommissionPoints: { $sum: '$commission' }
+            }
+        }
+    ])
+    console.log(data2, "commission")
     let sport = sportId
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportsIn/main", {
