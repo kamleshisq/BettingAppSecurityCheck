@@ -10258,7 +10258,7 @@ socket.on('connect', () => {
             }
             filterData.betType = sport
             filterData.marketName = market
-            data.filterData.alertStatus = result
+            filterData.alertStatus = result
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             socket.emit('AlertBet',data)
