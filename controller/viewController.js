@@ -3992,7 +3992,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
         let marketName 
         if(req.query.market.toLowerCase().startsWith('book')){
             market =  {
-                $regex: /^book /i
+                $regex: /^book/i
               }
               marketName = 'BOOKMAKER'
         }else{
