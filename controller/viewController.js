@@ -3770,6 +3770,21 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
             }
         }
     ])
+
+    let sumData = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id,
+                commissionStatus: 'Unclaimed'
+            }
+        },
+        {
+            $group: {
+              _id: null, 
+              totalCommission: { $sum: "$commission" } 
+            }
+          }
+    ])
     // console.log(data)
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportMatch/main", {
@@ -3779,7 +3794,8 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
         check:"Comm",
         userLog,
         notifications:req.notifications,
-        data
+        data,
+        unclaimCommission:sumData[0].totalCommission
     })
 })
 
