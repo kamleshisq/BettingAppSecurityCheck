@@ -51,6 +51,7 @@ router.get("/admin/settlement", authController.isProtected, authController.isAdm
 router.get("/admin/settlementIn", authController.isProtected, authController.isAdmin, authController.restrictToOperator("settlements"),viewController.getSettlementPageIn);
 router.get("/admin/settlementHistory", authController.isProtected, authController.isAdmin, authController.restrictToOperator("settlements"),viewController.getSettlementHistoryPage);
 router.get("/admin/commissionReport", authController.isProtected, authController.isAdmin,viewController.getCommissionReport);
+router.get("/admin/commissionReportEvent", authController.isProtected, authController.isAdmin,viewController.getcommissionMarketWise1);
 router.get("/admin/whiteLableAnalysis", authController.isProtected, authController.isAdmin, authController.restrictToOperator("whiteLabelAnalysis"),viewController.WhiteLabelAnalysis);
 router.get("/admin/gameanalysis", authController.isProtected, authController.isAdmin, authController.restrictToOperator("gameAnalysis"),viewController.gameAnalysis);
 router.get("/admin/streammanagement", authController.isProtected, authController.isAdmin,viewController.getStreamManagementPage);

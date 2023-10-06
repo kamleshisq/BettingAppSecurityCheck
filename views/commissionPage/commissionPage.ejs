@@ -104,6 +104,13 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
 <script type="text/javascript" src="../js/bundle.js"></script>
 
+<script>
+  jQuery(document).ready(function($) {
+      $(".tbl-data-href").click(function() {
+          window.location = $(this).data("href");
+      });
+  });
+</script>
 
 
   <script>
