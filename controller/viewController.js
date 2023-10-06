@@ -3716,7 +3716,7 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
-    console.log(sportId)
+    console.log(sportId, "SPORTID")
     let data =  await commissionNewModel.aggregate([
         {
             $match:{
