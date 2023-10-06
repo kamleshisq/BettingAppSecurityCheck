@@ -3263,7 +3263,7 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
     let data = await accountStatement.find({user_id:me._id,description: { $regex: /^commission for/ } }).sort({date:-1}).limit(10)
     // console.log(data)
     res.status(200).render("./commissionPage/commissionPage",{
-        title:"Commission History",
+        title:"Commission Report",
         me,
         currentUser:me,
         data
