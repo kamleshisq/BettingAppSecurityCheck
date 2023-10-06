@@ -10242,6 +10242,8 @@ socket.on('connect', () => {
         }
 
         $('#Sport,#market,#fromDate,#toDate,#result').change(function(){
+            $('.pageId').attr('data-pageid','1')
+
             console.log("working")
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
@@ -10266,6 +10268,7 @@ socket.on('connect', () => {
         })
     
         $(document).on("click", ".searchList", function(){
+            $('.pageId').attr('data-pageid','1')
             
             document.getElementById("searchUser").value = this.textContent
          
@@ -10300,7 +10303,7 @@ socket.on('connect', () => {
         
         let count = 11
         socket.on('AlertBet',(data) => {
-            // console.log(data)
+            console.log(data)
             if(data.page === 0){
                 count = 1
             }
