@@ -12317,7 +12317,7 @@ socket.on('connect', () => {
                     for(let i = 0; i < data.Bets.length; i++){
                         let team1data = 0 
                         let team2data = 0
-                        if(data.Bets[i].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
+                        if(data.Bets[i].selections[0].selectionName.toLowerCase() == team1.toLowerCase()){
                             team1data = data.Bets[i].selections[0].totalAmount
                             if(data.Bets[i].selections[1]){
                                 team2data = data.Bets[i].selections[1].totalAmount
@@ -12338,15 +12338,15 @@ socket.on('connect', () => {
                         <tr class="tabelBodyTr children">
                             <td data-usename="${data.Bets[i].userName}">${data.Bets[i].userName}</td>`
                         if(team1data.toFixed(2) > 0){
-                            html += `<td class="red"> -${team1data.toFixed(2)}</td>`
+                            html += `<td class="green"> ${team1data.toFixed(2)}</td>`
                         }else{
-                            html += `<td class="green"> ${team1data.toFixed(2) * -1}</td>`
+                            html += `<td class="red"> ${team1data.toFixed(2) * 1}</td>`
                         }
                         
                         if(team2data.toFixed(2) > 0){
-                            html += `<td class="red">-${team2data.toFixed(2)}</td></tr>`
+                            html += `<td class="green">${team2data.toFixed(2)}</td></tr>`
                         }else{
-                            html += `<td class="green">${team2data.toFixed(2) * -1}</td></tr>`
+                            html += `<td class="red">${team2data.toFixed(2) * 1}</td></tr>`
                         }
                     }
                     
