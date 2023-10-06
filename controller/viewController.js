@@ -3317,7 +3317,7 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
     let accStatements = await accountStatement.aggregate([
         {
             $match:{
-                eventDate: {
+                date: {
                     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
                   },
                 // userName:req.currentUser.userName,
