@@ -3687,6 +3687,9 @@ io.on('connection', (socket) => {
                 // }
                 // Bets[0].selections[0].totalAmount = team2data
                 // Bets[0].selections[0].Stake = team1data
+                // if(Bets.length != 0){
+                //     return ({ele,Bets:Bets[0]})
+                // }
                 if(Bets.length != 0){
                     return ({ele,Bets:Bets[0]})
                 }
