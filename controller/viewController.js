@@ -3730,6 +3730,12 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
             }
           }
     ])
+    let sum 
+    if(sumData.length != 0){
+        sum = sumData[0].totalCommission
+    }else{
+        sum = 0
+    }
     let data = await commissionNewModel.aggregate([
         {
           $match: {
@@ -3761,7 +3767,7 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
         data,
         sport,
         event,
-        unclaimCommission:sumData[0].totalCommission
+        unclaimCommission:sum
     })
 })
 
