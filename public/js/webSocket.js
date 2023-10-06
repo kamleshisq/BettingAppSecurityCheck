@@ -12300,6 +12300,7 @@ socket.on('connect', () => {
             $(document).on('click','.children',function(e){
                 let userName = $(this).attr('data-usename')
                 let marketId = parseInt($("#match_odd").attr('data-marketid'))
+                console.log({marketId,LOGINDATA,userName})
                 socket.emit('UerBook1', {marketId,LOGINDATA,userName})
 
             })
