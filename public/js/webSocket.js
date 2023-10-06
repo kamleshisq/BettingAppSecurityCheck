@@ -12326,19 +12326,19 @@ socket.on('connect', () => {
                         html += `
                         <tr class="tabelBodyTr">
                             <td class="children" data-usename="${data.Bets[i].ele.userName}">${data.Bets[i].ele.userName}</td>`
-                        if(data.Bets[0].Bets.teama.toFixed(2) > 0){
-                            html += `<td class="green">${data.Bets[0].Bets.teama.toFixed(2)}</td>`
+                        if(data.Bets[i].Bets.teama.toFixed(2) > 0){
+                            html += `<td class="green">${data.Bets[i].Bets.teama.toFixed(2)}</td>`
                         }else{
-                            html += `<td class="red">${data.Bets[0].Bets.teama.toFixed(2) * 1}</td>`
+                            html += `<td class="red">${data.Bets[i].Bets.teama.toFixed(2) * 1}</td>`
                         }
                         
-                        if(data.Bets[0].Bets.teamb.toFixed(2) > 0){
-                            html += `<td class="green">${data.Bets[0].Bets.teamb.toFixed(2)}</td></tr>`
+                        if(data.Bets[i].Bets.teamb.toFixed(2) > 0){
+                            html += `<td class="green">${data.Bets[i].Bets.teamb.toFixed(2)}</td></tr>`
                         }else{
-                            html += `<td class="red">${data.Bets[0].Bets.teamb.toFixed(2) * 1}</td></tr>`
+                            html += `<td class="red">${data.Bets[i].Bets.teamb.toFixed(2) * 1}</td></tr>`
                         }
-                        sumOfTeamA += data.Bets[0].Bets.teama
-                        sumOfTeamB += data.Bets[0].Bets.teamb
+                        sumOfTeamA += data.Bets[i].Bets.teama
+                        sumOfTeamB += data.Bets[i].Bets.teamb
                     }
                     html += `<tr class="totleCount">
                     <td>Total</td>`
