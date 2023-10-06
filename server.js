@@ -3837,11 +3837,11 @@ io.on('connection', (socket) => {
             
            console.log(Bets, "==> WORKING")
         //    console.log(Bets[0].selections)
-           socket.emit('UerBook', {Bets,type:data.type,newData:data.newData});
+           socket.emit('UerBook1', {Bets});
         //    socket.emit();
         }catch(err){
             console.log(err)
-            socket.emit('UerBook', {message:"err", status:"error"})
+            socket.emit('UerBook1', {message:"err", status:"error"})
         }
     })
 

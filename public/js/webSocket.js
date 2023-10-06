@@ -12299,17 +12299,13 @@ socket.on('connect', () => {
 
             $(document).on('click','.children',function(e){
                 let userName = $(this).attr('data-username')
-                var closestMarket = $(this).parents('.bets-table').find('.market');
-                if (closestMarket.length > 0) {
-                    var marketId = closestMarket.attr('id');
-                    $("#searchUser").attr('data-marketid',marketId)
-                    let type = 'data5'
-                    let newData = true
-                    socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData})
-                } else {
-                    console.log('Market not found.');
-                }
+                let marketId = parseInt($("#match_odd").attr('data-marketid'))
+                socket.emit('UerBook1', {marketId,LOGINDATA,userName})
 
+            })
+
+            socket.on('UserBook1',async(data)=>{
+                console.log(data)
             })
     
             socket.on('UerBook', async(data) => {
