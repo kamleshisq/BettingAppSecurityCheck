@@ -3610,7 +3610,8 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
         check:"Comm",
         userLog,
         notifications:req.notifications,
-        data
+        data,
+        commissionData
     })
 })
 
