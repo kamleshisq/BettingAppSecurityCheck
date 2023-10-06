@@ -16,6 +16,53 @@
       </div>
   </section>
     
+
+  <section>
+    <div class="container-fluid">
+        <div class="table-data-section">
+            
+            <div class="data-table">
+              <div class="rowId" data-rowid="1"></div>
+  <table class="bet-list-table">
+    <%if(marketWiseData.length > 0){%>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Market</th>
+                <th>Total Commission</th>
+                </tr>
+        </thead>
+        <tbody class="new-body">
+            <%for(let i = 0; i < marketWiseData.length; i++){%>
+                <tr>
+                    <%
+                        var timestamp = marketWiseData[i].eventDate ; 
+                        var date = new Date(timestamp);
+                        var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
+                    
+                    %>
+                    <td><%=formattedTime%></td>
+                    <td><%=marketWiseData[i]._id%></td>
+                    <td><%=marketWiseData[i].totalCommission%></td>
+                </tr>
+            <%}%>
+        </tbody>
+    <%}else{%>
+        <tr class="empty_table"><td>No data to show </td></tr>
+    <%}%>
+  </table>
+            </div>
+        </div>
+    </div>
+  </section>
 <!-- seling section -->
 
 
