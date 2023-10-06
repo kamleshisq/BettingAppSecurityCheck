@@ -12300,7 +12300,10 @@ socket.on('connect', () => {
             $(document).on('click','.userBookParent',function(e){
                 $('#match_odd').find('tr.active').removeClass('active')
                 $(this).parent('tr').addClass('active')
-                $('#match_odd').find('tr.children').remove()
+                console.log($(this).parent('tr').hasClass('active'))
+                if(!$(this).parent('tr').hasClass('active')){
+                    $('#match_odd').find('tr.children').remove()
+                }
                 let userName = $(this).attr('data-usename')
                 let marketId = $("#match_odd").attr('data-marketid')
                 console.log({marketId,LOGINDATA,userName})
