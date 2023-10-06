@@ -3588,7 +3588,20 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
             }
         }
     ])
-    console.log(data)
+    let commissionData = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id
+            }
+        },
+        {
+            $group:{
+                _id:'$sportId',
+                totalCommissionPoints: { $sum: '$commission' }
+            }
+        }
+    ])
+    console.log(commissionData, "commissionData")
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReport/main", {
         title:"Commission Report",
@@ -3597,7 +3610,8 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
         check:"Comm",
         userLog,
         notifications:req.notifications,
-        data
+        data,
+        commissionData
     })
 })
 
