@@ -4021,7 +4021,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
             }
         ])
         console.log(thatMarketData, "thatMarketData")
-        res.status(200).render('./commissionMarketWise/commissionMarketWise1/commissionMarketWise2.ejs', {
+        res.status(200).render('./commissionMarketWise/commissionMarketWise2/commissionMarketWise2.ejs', {
             title:"Commission Report",
             me,
             currentUser:me,
