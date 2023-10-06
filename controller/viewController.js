@@ -3313,15 +3313,30 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
             }
           }
     ])
+
+    let accStatements = await accountStatement.aggregate([
+        {
+            $match:{
+                eventDate: {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                  },
+                userName:eq.currentUser.userName,
+                description:{
+                    $regex: /^Claim Commisiion/i
+                }
+            }
+        }
+    ])
     // console.log(eventWiseData)
     // console.log(userWiseData)
-
+    console.log(accStatements, "accStatements")
     res.status(200).render("./commissionPage/commissionPage",{
         title:"Commission Report",
         me,
         currentUser:me,
         eventWiseData,
-        userWiseData
+        userWiseData,
+        accStatements
     })
 } )
 
