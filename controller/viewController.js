@@ -3601,7 +3601,7 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
             }
           }
     ])
-    console.log(sumData, "sumData")
+    // console.log(sumData, "sumData")
     let commissionData = await commissionNewModel.aggregate([
         {
             $match:{
@@ -3615,6 +3615,12 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
             }
         }
     ])
+    let sum 
+    if(sumData.length != 0){
+        sum = sumData[0].totalCommission
+    }else{
+        sum = 0
+    }
     // console.log(commissionData, "commissionData")
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReport/main", {
@@ -3626,7 +3632,7 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
         notifications:req.notifications,
         // data,
         commissionData,
-        unclaimCommission:sumData[0].totalCommission
+        unclaimCommission:sum
     })
 })
 
@@ -3651,6 +3657,12 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
             }
           }
     ])
+    let sum 
+    if(sumData.length != 0){
+        sum = sumData[0].totalCommission
+    }else{
+        sum = 0
+    }
     // let data =  await commissionReportModel.aggregate([
     //     {
     //         $match:{
@@ -3691,7 +3703,7 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
         notifications:req.notifications,
         data,
         sport,
-        unclaimCommission:sumData[0].totalCommission
+        unclaimCommission:sum
     })
 })
 
@@ -3718,6 +3730,12 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
             }
           }
     ])
+    let sum 
+    if(sumData.length != 0){
+        sum = sumData[0].totalCommission
+    }else{
+        sum = 0
+    }
     let data = await commissionNewModel.aggregate([
         {
           $match: {
@@ -3749,7 +3767,7 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
         data,
         sport,
         event,
-        unclaimCommission:sumData[0].totalCommission
+        unclaimCommission:sum
     })
 })
 
@@ -3769,6 +3787,7 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
             }
         }
     ])
+    
 
     let sumData = await commissionNewModel.aggregate([
         {
@@ -3784,6 +3803,12 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
             }
           }
     ])
+    let sum 
+    if(sumData.length != 0){
+        sum = sumData[0].totalCommission
+    }else{
+        sum = 0
+    }
     // console.log(data)
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportMatch/main", {
@@ -3794,7 +3819,7 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
         userLog,
         notifications:req.notifications,
         data,
-        unclaimCommission:sumData[0].totalCommission
+        unclaimCommission:sum
     })
 })
 
