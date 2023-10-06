@@ -37,7 +37,7 @@
         </thead>
         <tbody class="new-body">
             <%for(let i = 0; i < eventData.length; i++){%>
-                <tr class="tbl-data-href" data-href="/admin/commissionReportUser?User=<%=user%>&event=<%=eventData[i]._id%>">
+                <tr>
                     <%
                         var timestamp = eventData[i].eventDate ; 
                         var date = new Date(timestamp);
