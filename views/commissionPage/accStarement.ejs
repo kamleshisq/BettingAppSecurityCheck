@@ -28,7 +28,7 @@
             <%
               let bal = accStatements[i].balance - accStatements[i].creditDebitamount
             %>
-            <tr class="tbl-data-href" data-href="/admin/commissionReportEvent?event=<%=accStatements[i]._id%>">
+            <tr >
                 <td><%=formattedTime%></td>
                 <td><%=accStatements[i].userName%></td>
                 <td><%=accStatements[i].creditDebitamount%></td>
