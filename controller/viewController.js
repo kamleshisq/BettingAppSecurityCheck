@@ -3588,19 +3588,20 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
-    // let data =  await commissionReportModel.aggregate([
-    //     {
-    //         $match:{
-    //             userId: req.currentUser.id
-    //         }
-    //     },
-    //     {
-    //         $group: {
-    //           _id: '$Sport',
-    //           totalCommissionPoints: { $sum: '$commPoints' }
-    //         }
-    //     }
-    // ])
+    let sumData = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id
+            }
+        },
+        {
+            $group: {
+              _id: null, 
+              totalCommission: { $sum: "$commission" } 
+            }
+          }
+    ])
+    console.log(sumData, "sumData")
     let commissionData = await commissionNewModel.aggregate([
         {
             $match:{
