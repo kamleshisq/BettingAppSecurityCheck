@@ -12304,7 +12304,7 @@ socket.on('connect', () => {
 
             })
 
-            socket.on('UserBook1',async(data)=>{
+            socket.on('UerBook1',async(data)=>{
                 console.log(data,"==>UserBook1 Response")
             })
     
