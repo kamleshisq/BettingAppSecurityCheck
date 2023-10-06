@@ -3662,30 +3662,30 @@ io.on('connection', (socket) => {
                 let sumOfTeamA = 0
                 let sumOfTeamB = 0
                 if(Bets.length != 0){
-                    let match = Bets[0].Bets.selections[0].matchName
+                    let match = Bets[0].selections[0].matchName
                     let team1 = match.split('v')[0]
                     let team2 = match.split('v')[1]
                     for(let i = 0; i < Bets.length; i++){
 
                         let team1data = 0 
                         let team2data = 0
-                        if(Bets[i].Bets.selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
+                        if(Bets[i].selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
                             // console.log("2121222122121")
-                            team1data = Bets[i].Bets.selections[0].totalAmount
-                            if(Bets[i].Bets.selections[1]){
-                                team2data = Bets[i].Bets.selections[1].totalAmount
+                            team1data = Bets[i].selections[0].totalAmount
+                            if(Bets[i].selections[1]){
+                                team2data = Bets[i].selections[1].totalAmount
                             }else{
-                                team2data = -Bets[i].Bets.selections[0].Stake
+                                team2data = -Bets[i].selections[0].Stake
                             }
                             sumOfTeamB += team2data
                             sumOfTeamA += team1data
 
                         }else{
-                            team2data = Bets[i].Bets.selections[0].totalAmount
-                            if(Bets[i].Bets.selections[1]){
-                                team1data = Bets[i].Bets.selections[1].totalAmount
+                            team2data = Bets[i].selections[0].totalAmount
+                            if(Bets[i].selections[1]){
+                                team1data = Bets[i].selections[1].totalAmount
                             }else{
-                                team1data = -Bets[i].Bets.selections[0].Stake
+                                team1data = -Bets[i].selections[0].Stake
                             }
                             
                             sumOfTeamA += team1data
