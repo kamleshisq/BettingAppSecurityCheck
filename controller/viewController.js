@@ -3601,7 +3601,7 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
             }
           }
     ])
-    // console.log(sumData, "sumData")
+    console.log(sumData, "sumData")
     let commissionData = await commissionNewModel.aggregate([
         {
             $match:{

@@ -55,6 +55,7 @@ const voidBetBeforePlace = require('./utils/voidBetForOpen');
 const rollBackBet = require('./utils/RollBackAfterPlace');
 const InprogreshModel = require('./model/InprogressModel');
 const eventNotification = require('./model/eventNotification');
+const newCommissionModel = require('./model/commissioNNModel'); 
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -3447,13 +3448,28 @@ io.on('connection', (socket) => {
     })
 
     socket.on("claimCommission", async(data) => {
-        console.log(data)
-        let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
+        // console.log(data)
+        let user = await User.findById(data.LOGINDATA.LOGINUSER._id) 
+        let commissionAmount = await newCommissionModel.aggregate([
+            {
+                $match:{
+                    userId: data.LOGINDATA.LOGINUSER._id,
+                    commissionStatus: 'Unclaimed'
+                }
+            },
+            {
+                $group: {
+                  _id: null, 
+                  totalCommission: { $sum: "$commission" } 
+                }
+              }
+        ])
         if(user){
-            if(user.commission > 0){
+            if(commissionAmount[0].totalCommission > 0){
                 try{
-                    await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:user.commission, commission:-user.commission}})
-                    let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{availableBalance: -user.commission}})
+                    let commission = commissionAmount[0].totalCommission
+                    await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:commission}})
+                    let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{availableBalance: -commission}})
                     let desc1 = `Claim Commisiion`
                     let desc2 = `Claim Commisiion of chiled user ${user.userName}`
                     let childdata = {
@@ -3476,7 +3492,7 @@ io.on('connection', (socket) => {
                     }
                     await AccModel.create(childdata)
                     await AccModel.create(perentData)
-                    await commissionRepportModel.updateMany({userId:data.LOGINDATA.LOGINUSER._id}, {status:'Deposit'})
+                    await newCommissionModel.updateMany({userId:data.LOGINDATA.LOGINUSER._id}, {commissionStatus:'Claimed'})
                     socket.emit("claimCommission", "Success")
                 }catch(err){
                     console.log(err)
