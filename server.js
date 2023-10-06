@@ -2712,7 +2712,7 @@ io.on('connection', (socket) => {
         if(data.filterData.marketName == "Fancy"){
             data.filterData.marketName = {$nin:["Match Odds", "Bookmaker 0%Comm"]}
         }
-        if(data.filterData.alertStatus == 'All'){
+        if(data.filterData.alertStatus == 'All' || !data.filterData.alertStatus){
             data.filterData.alertStatus = {$in:['ALERT','ACCEPT','CANCLE']}
         }
         if(data.filterData.betType == "All"){
