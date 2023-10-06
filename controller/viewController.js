@@ -3787,12 +3787,7 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
             }
         }
     ])
-    let sum 
-    if(sumData.length != 0){
-        sum = sumData[0].totalCommission
-    }else{
-        sum = 0
-    }
+    
 
     let sumData = await commissionNewModel.aggregate([
         {
@@ -3808,6 +3803,12 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
             }
           }
     ])
+    let sum 
+    if(sumData.length != 0){
+        sum = sumData[0].totalCommission
+    }else{
+        sum = 0
+    }
     // console.log(data)
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportMatch/main", {
