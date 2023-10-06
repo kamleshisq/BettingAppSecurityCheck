@@ -12325,17 +12325,13 @@ socket.on('connect', () => {
                     let sumOfTeamB = 0
                     let sumOfTeamC = 0
                     for(let i = 0; i < data.Bets.length; i++){
-                        // console.log(data[i], "+==> in Loop DAta")
                         let team1data = 0 
                         let team2data = 0
-                        // console.log(data[i].selections[0].selectionName.toLowerCase(), team1.toLowerCase)
                         if(data.Bets[i].Bets.selections[0].selectionName.toLowerCase().includes(team1.toLowerCase)){
                             // console.log("2121222122121")
                             team1data = data.Bets[i].Bets.selections[0].totalAmount
                             if(data.Bets[i].Bets.selections[1]){
-                                team2data = data.Bets[i].Bets.selections[1].totalAmount - data.Bets[i].Bets.selections[0].Stake
-
-                                team1data -= data.Bets[i].Bets.selections[1].Stake
+                                team2data = data.Bets[i].Bets.selections[1].totalAmount
                             }else{
                                 team2data = -data.Bets[i].Bets.selections[0].Stake
                             }
@@ -12345,8 +12341,7 @@ socket.on('connect', () => {
                         }else{
                             team2data = data.Bets[i].Bets.selections[0].totalAmount
                             if(data.Bets[i].Bets.selections[1]){
-                                team2data -= data.Bets[i].Bets.selections[0].Stake
-                                team1data = data.Bets[i].Bets.selections[1].totalAmount - data.Bets[i].Bets.selections[0].Stake
+                                team1data = data.Bets[i].Bets.selections[1].totalAmount
                             }else{
                                 team1data = -data.Bets[i].Bets.selections[0].Stake
                             }
