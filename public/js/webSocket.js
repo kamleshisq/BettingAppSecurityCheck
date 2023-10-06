@@ -12321,19 +12321,21 @@ socket.on('connect', () => {
                     $('#match_odd').find('tr.children').remove()
                     let userName = $(this).attr('data-usename')
                     let marketId = $("#match_odd").attr('data-marketid')
-                    console.log({marketId,LOGINDATA,userName})
-                    socket.emit('UerBook1', {marketId,LOGINDATA,userName})
+                    let type = 'userBook'
+
+                    socket.emit('UerBook1', {marketId,LOGINDATA,userName,type})
                 }
 
             })
-            $(document).on('click','.userBookParent',function(e){
+            $(document).on('click','#match_odd_Book .userBookParent',function(e){
                 if(!$(this).parent('tr').hasClass('active')){
-                    $('#match_odd').find('tr.active').removeClass('active')
+                    $('#match_odd_Book').find('tr.active').removeClass('active')
                     $(this).parent('tr').addClass('active')
-                    $('#match_odd').find('tr.children').remove()
+                    $('#match_odd_Book').find('tr.children').remove()
                     let userName = $(this).attr('data-usename')
-                    let marketId = $("#match_odd").attr('data-marketid')
-                    console.log({marketId,LOGINDATA,userName})
+                    let marketId = $("#match_odd_Book").attr('data-marketid')
+                    let type = 'bookList'
+                    console.log({marketId,LOGINDATA,userName,type})
                     socket.emit('UerBook1', {marketId,LOGINDATA,userName})
                 }
 
@@ -12367,7 +12369,7 @@ socket.on('connect', () => {
                             }
                            
                         }
-                        if(data.Bets[i].type == 'bookList'){
+                        if(data.type == 'bookList'){
                             html += `
                             <tr class="tabelBodyTr children">
                                 <td data-usename="${data.Bets[i].userName}">${data.Bets[i].userName}</td>`
@@ -12400,8 +12402,11 @@ socket.on('connect', () => {
                             }
                         }
                     }
-                    
-                    $('#match_odd').find('tr.active').after(html)
+                    if(data.type == 'bookList'){
+                        $('#match_odd_Book').find('tr.active').after(html)
+                    }else{
+                        $('#match_odd').find('tr.active').after(html)
+                    }
                 }else{
                   
                 }
