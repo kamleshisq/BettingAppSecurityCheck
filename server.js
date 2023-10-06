@@ -1539,7 +1539,7 @@ io.on('connection', (socket) => {
     socket.on('voidBet', async(data) => {
         try{
 
-            let bet = await Bet.findByIdAndUpdate(data, {status:"CANCEL"});
+            let bet = await Bet.findByIdAndUpdate(data, {status:"CANCEL",alertStatus:"CANCEL"});
             // console.log(bet);
             let user = await User.findByIdAndUpdate(bet.userId, {$inc:{balance: bet.Stake, availableBalance: bet.Stake, myPL: bet.Stake, exposure:-bet.Stake}})
             let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
@@ -2694,7 +2694,7 @@ io.on('connection', (socket) => {
 
     socket.on("acceptBet", async(data) => {
         try{
-            let bet = await Bet.findByIdAndUpdate(data, {status:"OPEN"});
+            let bet = await Bet.findByIdAndUpdate(data, {status:"OPEN",alertStatus:"ACCEPT"});
             socket.emit('acceptBet', {bet, status:"success"})
 
         }catch(err){
