@@ -43,6 +43,7 @@ const streamModel = require('../model/streammanagement');
 const InprogreshModel = require('../model/InprogressModel');
 const commissionMarketModel = require('../model/CommissionMarketsModel')
 let eventNotification = require('../model/eventNotification');
+const commissionNewModel = require('../model/commissioNNModel');
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -3260,10 +3261,52 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
 
 exports.getCommissionReport = catchAsync(async(req, res, next) => {
     let me = req.currentUser
+    let childrenUsername = []
+    let children = await User.find({parentUsers:req.currentUser._id})
+    children.map(ele => {
+        childrenUsername.push(ele.userName) 
+    })
+    let eventWiseData = await commissionNewModel.aggregate([
+        {
+            $match: {
+              eventDate: {
+                $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+              },
+              userName:{$in:childrenUsername}
+            }
+          },
+          {
+            $group: {
+              _id: "$eventName",
+              totalCommission: { $sum: "$commission" },
+              eventDate: { $first: "$eventDate" }
+            }
+          }
+    ])
+
+    let userWiseData = await commissionNewModel.aggregate([
+        {
+            $match: {
+              eventDate: {
+                $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+              },
+              userName:{$in:childrenUsername}
+            }
+          },
+          {
+            $group: {
+              _id: "$userName",
+              totalCommission: { $sum: "$commission" },
+              totalUPline: { $sum: "$upline" },
+            }
+          }
+    ])
     res.status(200).render("./commissionPage/commissionPage",{
         title:"Commission Report",
         me,
         currentUser:me,
+        eventWiseData,
+        userWiseData
     })
 } )
 
