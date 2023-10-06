@@ -3301,8 +3301,8 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
             }
           }
     ])
-    console.log(eventWiseData)
-    console.log(userWiseData)
+    // console.log(eventWiseData)
+    // console.log(userWiseData)
 
     res.status(200).render("./commissionPage/commissionPage",{
         title:"Commission Report",
@@ -3980,10 +3980,36 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
 
 exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
     const me = req.currentUser
-    console.log(req.query.event)
+    let match = req.query.event
+    let childrenUsername = []
+    let children = await User.find({parentUsers:req.currentUser._id})
+    children.map(ele => {
+        childrenUsername.push(ele.userName) 
+    })
+    let marketWiseData = await commissionNewModel.aggregate([
+        {
+            $match: {
+              eventDate: {
+                $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+              },
+              userName:{$in:childrenUsername},
+              eventName:match
+            }
+          },
+          {
+            $group: {
+              _id: "$marketName",
+              totalCommission: { $sum: "$commission" },
+              eventDate: { $first: "$eventDate" }
+            }
+          }
+    ])
+    console.log(marketWiseData, "marketWiseData")
     res.status(200).render('./commissionMarketWise/commissionMarketWise1/commissionMarketWise1.ejs', {
         title:"Commission Report",
         me,
         currentUser:me,
+        marketWiseData,
+        match
     })
 })

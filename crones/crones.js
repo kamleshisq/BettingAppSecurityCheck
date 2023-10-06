@@ -203,7 +203,8 @@ module.exports = () => {
                                     commission : commissionCoin,
                                     upline : 100,
                                     commissionType: 'Win Commission',
-                                    commissionPercentage:commissionPer
+                                    commissionPercentage:commissionPer,
+                                    marketName:bet.marketName
                                 }
                                 let commissionData = await newCommissionModel.create(commissiondata)
                             }
@@ -234,7 +235,8 @@ module.exports = () => {
                                             commission : commissionCoin,
                                             upline : 100,
                                             commissionType: 'Win Commission',
-                                            commissionPercentage:commissionPer
+                                            commissionPercentage:commissionPer,
+                                            marketName:bet.marketName
                                         }
                                         let commissionData = await newCommissionModel.create(commissiondata)
                                     }
@@ -395,7 +397,8 @@ module.exports = () => {
                                         upline : 100,
                                         commissionType: 'Entry Loss Wise Commission',
                                         commissionPercentage:commissionPer,
-                                        date:Date.now()
+                                        date:Date.now(),
+                                        marketName:bet.marketName
                                     }
                                     let commissionData = await newCommissionModel.create(commissiondata)
                                 }
@@ -426,7 +429,8 @@ module.exports = () => {
                                                 upline : 100,
                                                 commissionType: 'Entry Loss Wise Commission',
                                                 commissionPercentage:commissionPer,
-                                                date:Date.now()
+                                                date:Date.now(),
+                                                marketName:bet.marketName
                                             }
                                             let commissionData = await newCommissionModel.create(commissiondata)
                                         }

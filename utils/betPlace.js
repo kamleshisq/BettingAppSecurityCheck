@@ -380,7 +380,8 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
                 upline : 100,
                 commissionType: 'Entry Wise Commission',
                 commissionPercentage:commissionPer,
-                date:Date.now()
+                date:Date.now(),
+                marketName:marketDetails.title
             }
             let commissionData = await newCommissionModel.create(commissiondata)
         }
@@ -412,7 +413,8 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
                         upline : 100,
                         commissionType: 'Entry Wise Commission',
                         commissionPercentage:commissionPer,
-                        date:Date.now()
+                        date:Date.now(),
+                        marketName:marketDetails.title
                     }
                     let commissionData = await newCommissionModel.create(commissiondata)
                 }
