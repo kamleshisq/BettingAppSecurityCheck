@@ -1491,6 +1491,17 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
 })
 
 exports.getBetAlertPage = catchAsync(async(req, res, next) => {
+    var today = new Date();
+    var todayFormatted = formatDate(today);
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate() - 7);
+    var tomorrowFormatted = formatDate(tomorrow);
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
     User.aggregate([
         {
           $match: {
@@ -1512,7 +1523,8 @@ exports.getBetAlertPage = catchAsync(async(req, res, next) => {
               $match: {
                 userId: { $in: userIds },
                 status: 'Alert',
-                alertStatus:{$in:['ALERT','CANCLE','ACCEPT']}
+                alertStatus:{$in:['ALERT','CANCLE','ACCEPT']},
+                date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
               }
             },
             {
