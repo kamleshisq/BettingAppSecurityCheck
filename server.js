@@ -3661,10 +3661,14 @@ io.on('connection', (socket) => {
                 ]);
                 let sumOfTeamA = 0
                 let sumOfTeamB = 0
+                let teamA;
+                let teamB;
                 if(Bets.length != 0){
                     let match = Bets[0].selections[0].matchName
                     let team1 = match.split('v')[0]
                     let team2 = match.split('v')[1]
+                    teamA = match.split('v')[0]
+                    teamB = match.split('v')[1]
                     for(let i = 0; i < Bets.length; i++){
 
                         let team1data = 0 
@@ -3693,7 +3697,7 @@ io.on('connection', (socket) => {
                         }
 
                     }
-                    return ({ele,Bets:{teama:sumOfTeamA,teamb:sumOfTeamB}})
+                    return ({ele,Bets:{teama:sumOfTeamB,teamb:sumOfTeamA,teamA,teamB}})
                 }
             })
             let resultPromise = await Promise.all(newUser)
