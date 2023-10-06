@@ -4028,33 +4028,6 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
             match,
             marketName
         })
-    }else if (req.query.User){
-        let marketWiseData = await commissionNewModel.aggregate([
-            {
-                $match: {
-                eventDate: {
-                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                },
-                userName:req.query.User,
-                // eventName:match
-                }
-            },
-            {
-                $group: {
-                _id: "$marketName",
-                totalCommission: { $sum: "$commission" },
-                eventDate: { $first: "$eventDate" }
-                }
-            }
-        ])
-        console.log(marketWiseData, "marketWiseData")
-        res.status(200).render('./commissionMarketWise/commissionMarketWise1/commissionMarketWise1.ejs', {
-            title:"Commission Report",
-            me,
-            currentUser:me,
-            marketWiseData,
-            match,
-        })
     }else{
         let marketWiseData = await commissionNewModel.aggregate([
             {
@@ -4086,3 +4059,33 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
 });
 
 
+exports.getcommissionUser = catchAsync(async(req, res, next) => {
+    const me = req.currentUser
+    let user = req.query.User
+
+
+    let Userdata = await commissionNewModel.aggregate([
+            {
+                $match: {
+                  eventDate: {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                  },
+                  userName:user
+                }
+              },
+              {
+                $group: {
+                  _id: "$eventName",
+                  totalCommission: { $sum: "$commission" },
+                  eventDate: { $first: "$eventDate" }
+                }
+              }
+    ])
+    res.status(200).render('./commissionUser/commissionUser.ejs', {
+        itle:"Commission Report",
+        me,
+        currentUser:me,
+        user,
+        Userdata
+    })
+})
