@@ -3678,7 +3678,7 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
         {
           $match: {
             userId: req.currentUser.id,
-            eventName: sportId,
+            seriesName: sportId,
           },
         },
         {
