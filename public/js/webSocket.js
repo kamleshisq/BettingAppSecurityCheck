@@ -12324,6 +12324,10 @@ socket.on('connect', () => {
                     let type = 'userBook'
 
                     socket.emit('UerBook1', {marketId,LOGINDATA,userName,type})
+                }else{
+                    $(this).parent('tr').removeClass('active')
+                    $('#match_odd').find('tr.children').remove()
+
                 }
 
             })
@@ -12336,6 +12340,10 @@ socket.on('connect', () => {
                     let marketId = $("#match_odd_Book").attr('data-marketid')
                     let type = 'bookList'
                     socket.emit('UerBook1', {marketId,LOGINDATA,userName,type})
+                }else{
+                    $(this).parent('tr').removeClass('active')
+                    $('#match_odd_Book').find('tr.children').remove()
+
                 }
 
             })
