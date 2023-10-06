@@ -10241,7 +10241,7 @@ socket.on('connect', () => {
             }
         }
 
-        $('#Sport,#market,#fromDate,#toDate.#result').change(function(){
+        $('#Sport,#market,#fromDate,#toDate,#result').change(function(){
             console.log("working")
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
