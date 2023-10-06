@@ -3622,21 +3622,21 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
-    let data =  await commissionReportModel.aggregate([
-        {
-            $match:{
-                userId: req.currentUser.id,
-                Sport:sportId
-            }
-        },
-        {
-            $group: {
-              _id: '$event',
-              totalCommissionPoints: { $sum: '$commPoints' }
-            }
-        }
-    ])
-    let data2 = await commissionNewModel.aggregate([
+    // let data =  await commissionReportModel.aggregate([
+    //     {
+    //         $match:{
+    //             userId: req.currentUser.id,
+    //             Sport:sportId
+    //         }
+    //     },
+    //     {
+    //         $group: {
+    //           _id: '$event',
+    //           totalCommissionPoints: { $sum: '$commPoints' }
+    //         }
+    //     }
+    // ])
+    let data = await commissionNewModel.aggregate([
         {
             $match:{
                 userId: req.currentUser.id,
@@ -3650,7 +3650,7 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
             }
         }
     ])
-    console.log(data2, "commission")
+    // console.log(data2, "commission")
     let sport = sportId
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportsIn/main", {
@@ -3673,7 +3673,7 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
-    console.log(sportId)
+    console.log(sportId, "sportIdsportId")
     let data = await commissionReportModel.aggregate([
         {
           $match: {
