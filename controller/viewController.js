@@ -1511,7 +1511,8 @@ exports.getBetAlertPage = catchAsync(async(req, res, next) => {
             {
               $match: {
                 userId: { $in: userIds },
-                status: 'Alert'
+                status: 'Alert',
+                alertStatus:{$in:['ALERT','CANCLE','ACCEPT']}
               }
             },
             {
