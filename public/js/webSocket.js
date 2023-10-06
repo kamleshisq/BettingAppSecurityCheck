@@ -10335,12 +10335,17 @@ socket.on('connect', () => {
                 <td>${bets[i].Stake}</td>
                 <td>${bets[i].transactionId}</td>
                 <td>${bets[i].status}</td>
-                <td>
-                    <div class="btn-group">
+                <td>`
+                if(bets[i].status == 'Alert'){
+
+                    html += `<div class="btn-group">
                         <button class="btn cancel" id="${bets[i]._id}"> Cancel Bet</button>
                         <button class="btn accept" id="${bets[i]._id}"> accept Bet</button>
-                    </div>
-                </td>
+                    </div>`
+                }else{
+                    html += `-`
+                }
+                html += `</td>
                 </tr>`
             }
             count += 10;
@@ -10383,20 +10388,7 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert("Please try again later")
             }else{
-                // console.log(data.bet._id)
-                const deleteButton = document.getElementById(data.bet._id);
-                // console.log(deleteButton)
-                const row = deleteButton.closest('tr'); 
-                if (row) {
-                    const table = row.parentNode;
-                    const rowIndex = Array.from(table.rows).indexOf(row);
-                    row.remove(); 
-                    const rowsToUpdate = Array.from(table.rows).slice(rowIndex);
-                    rowsToUpdate.forEach((row, index) => {
-                        const srNoCell = row.cells[0]; 
-                        srNoCell.textContent = index + rowIndex + 1;
-                        });
-                    }
+               location.reload(true)
             }
         })
     
