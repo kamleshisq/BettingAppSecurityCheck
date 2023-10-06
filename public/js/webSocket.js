@@ -12335,8 +12335,7 @@ socket.on('connect', () => {
                     let userName = $(this).attr('data-usename')
                     let marketId = $("#match_odd_Book").attr('data-marketid')
                     let type = 'bookList'
-                    console.log({marketId,LOGINDATA,userName,type})
-                    socket.emit('UerBook1', {marketId,LOGINDATA,userName})
+                    socket.emit('UerBook1', {marketId,LOGINDATA,userName,type})
                 }
 
             })
