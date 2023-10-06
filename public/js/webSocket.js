@@ -7148,11 +7148,21 @@ socket.on('connect', () => {
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
-                    var result = (parseFloat(newStake) * 2) - parseFloat(newStake);
+                    let result
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                        result = (parseFloat(newStake) * 2) - parseFloat(newStake);
+                    }else{
+                        result = ((parseFloat(newStake) * betValue)/100)
+                    }
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
-                      let result2 = (parseFloat(spanId) * 2) - parseFloat(spanId)
+                      let result2 
+                      if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                        result2 = (parseFloat(spanId) * 2) - parseFloat(spanId)
+                      }else{
+                        result2 = ((parseFloat(spanId) * betValue)/100).toFixed(2)
+                      }
                       $(this)
                           .closest("tr")
                           .find(".c-gren")
@@ -7193,7 +7203,12 @@ socket.on('connect', () => {
                     var betValue = parseFloat(
                         $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                       );
-                      var result = (parseFloat(spanId) * 2) - parseFloat(spanId);
+                      let result
+                      if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                           result = (parseFloat(spanId) * 2) - parseFloat(spanId);
+                      }else{
+                            result = (parseFloat(spanId) * betValue) / 100
+                      }
                       $(this)
                       .closest("tr")
                       .find(".c-gren")
@@ -7217,7 +7232,11 @@ socket.on('connect', () => {
                         result = (NewStake * Odds) / 100
                     }
                 }else{
-                    result = (NewStake * 2) - NewStake;
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                        result = (NewStake * 2) - NewStake;
+                    }else{
+                        result = (NewStake * Odds) / 100
+                    }
                 }
                 if(!spanId){
                     $(this).closest("tr").find('.set-stake-form-input2').val(0)
@@ -7258,12 +7277,7 @@ socket.on('connect', () => {
           $(document).ready(function(){
             $(".plus").click(function () {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
-                console.log(buttonId)
-                let IdButton = $(`span#${buttonId}`)
-                if(IdButton.length = 0){
-                    let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -2);
-                    IdButton = $(`#${buttonId}`)
-                }
+                let IdButton = $(`#${buttonId}`)
                 console.log(IdButton)
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
@@ -7282,10 +7296,10 @@ socket.on('connect', () => {
                         result = (NewStake * Odds) / 100
                     }
                 }else{
-                    if(IdButton.hasClass('only_over_red') || IdButton.hasClass('odd_even_red')){
-                        result = (NewStake * odds) - NewStake
-                    }else{
+                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
                         result = (NewStake * 2) - NewStake;
+                    }else{
+                        result = (NewStake * Odds) / 100
                     }
                 }
                 // console.log(result)
@@ -12285,10 +12299,17 @@ socket.on('connect', () => {
 
             $(document).on('click','.children',function(e){
                 let userName = $(this).attr('data-username')
-                var marketId = closestMarket.attr('id');
-                $("#match_odd").attr('data-marketid')
-             
-                socket.emit('UerBook1', {marketId, LOGINDATA,userName})
+                var closestMarket = $(this).parents('.bets-table').find('.market');
+                if (closestMarket.length > 0) {
+                    var marketId = closestMarket.attr('id');
+                    $("#searchUser").attr('data-marketid',marketId)
+                    let type = 'data5'
+                    let newData = true
+                    socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData})
+                } else {
+                    console.log('Market not found.');
+                }
+
             })
     
             socket.on('UerBook', async(data) => {
