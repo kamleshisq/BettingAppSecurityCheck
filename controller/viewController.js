@@ -3657,6 +3657,12 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
             }
           }
     ])
+    let sum 
+    if(sumData.length != 0){
+        sum = sumData[0].totalCommission
+    }else{
+        sum = 0
+    }
     // let data =  await commissionReportModel.aggregate([
     //     {
     //         $match:{
@@ -3697,7 +3703,7 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
         notifications:req.notifications,
         data,
         sport,
-        unclaimCommission:sumData[0].totalCommission
+        unclaimCommission:sum
     })
 })
 
