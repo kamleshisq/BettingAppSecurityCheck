@@ -2711,6 +2711,9 @@ io.on('connection', (socket) => {
         if(data.filterData.marketName == "Fancy"){
             data.filterData.marketName = {$nin:["Match Odds", "Bookmaker 0%Comm"]}
         }
+        if(data.filterData.alertStatus == 'All'){
+            data.filterData.alertStatus = {$in:['ALERT','ACCEPT','CANCLE']}
+        }
         if(data.filterData.betType == "All"){
             delete data.filterData.betType; 
         }
@@ -2724,7 +2727,7 @@ io.on('connection', (socket) => {
         data.filterData.role_type = {
             $in:role_type
         }
-        data.filterData.status = 'Alert';
+        
         const user = await User.findOne({userName:data.filterData.userName})
         if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
             delete data.filterData['userName']
