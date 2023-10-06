@@ -3992,7 +3992,8 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
               eventDate: {
                 $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
               },
-              userName:{$in:childrenUsername}
+              userName:{$in:childrenUsername},
+              eventName:match
             }
           },
           {
@@ -4008,6 +4009,7 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
         title:"Commission Report",
         me,
         currentUser:me,
-        marketWiseData
+        marketWiseData,
+        match
     })
 })
