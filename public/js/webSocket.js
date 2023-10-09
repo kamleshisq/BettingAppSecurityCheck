@@ -10048,6 +10048,7 @@ socket.on('connect', () => {
 
         socket.on('commissionAccFilter', async(data) => {
             let html = "";
+            console.log(data)
             for(let i = 0; i < data.accStatements; i++){
                 var timestamp = data.accStatements[i].date ; 
                 var date = new Date(timestamp);
