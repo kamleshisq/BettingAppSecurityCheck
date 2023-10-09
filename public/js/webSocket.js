@@ -10177,6 +10177,20 @@ socket.on('connect', () => {
             }
         })
 
+
+        //USER LEVEL 
+        $(document).on('keyup change', "#FdateUserLevel,#TdateUserLevel", function(e){
+            e.preventDefault()
+            // console.log('Working')
+            let page = 0;
+            let data = {}
+            data.fromTime = $('#FdateUserLevel').val()
+            data.toTime = $('#TdateUserLevel').val()
+            $('.pageIdUser').attr('data-pageid','1')
+            socket.emit('commissionUserLevel', {data, LOGINDATA, page:0})
+        })
+
+
     }
     
 

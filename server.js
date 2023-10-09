@@ -4618,7 +4618,7 @@ io.on('connection', (socket) => {
             }
             let accStatements
             if(data.id){
-                console.log(data.id ,"data.id")
+                // console.log(data.id ,"data.id")
                 // let user = await User.findById(data.id)
                 // console.log(user, "WORKING")
                 accStatements = await AccModel.aggregate([
@@ -4680,6 +4680,11 @@ io.on('connection', (socket) => {
             console.log(err)
         }
 
+    })
+
+
+    socket.on('commissionUserLevel', async(data) => {
+        console.log(data.data)
     })
     
 })
