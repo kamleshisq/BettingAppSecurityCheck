@@ -56,6 +56,7 @@ const rollBackBet = require('./utils/RollBackAfterPlace');
 const InprogreshModel = require('./model/InprogressModel');
 const eventNotification = require('./model/eventNotification');
 const newCommissionModel = require('./model/commissioNNModel'); 
+const Decimal = require('decimal.js');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
