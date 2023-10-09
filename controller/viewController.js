@@ -803,7 +803,13 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
 exports.myaccount = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
     // console.log(currentUser)
-    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement?id=' + currentUser._id 
+    let operatorId;
+    if(req.currentUser.roleName == 'Operator'){
+        operatorId = req.currentUser.parent_id
+    }else{
+        operatorId = req.currentUser._id
+    }
+    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement?id=' + operatorId 
     fetch(fullUrl, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ` + req.token }
@@ -824,8 +830,13 @@ exports.myaccount = catchAsync(async(req, res, next) => {
 exports.adminaccount = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
     // console.log(currentUser)
-   
-    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement1?id=' + currentUser._id 
+    let operatorId;
+    if(req.currentUser.roleName == 'Operator'){
+        operatorId = req.currentUser.parent_id
+    }else{
+        operatorId = req.currentUser._id
+    }
+    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement1?id=' + operatorId 
     fetch(fullUrl, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ` + req.token }
