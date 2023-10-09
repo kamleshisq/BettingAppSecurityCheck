@@ -18,7 +18,9 @@
         <%}%>
       </tbody>
     </table>
-    <div class="loadMorediveUser">
+    <%if(userWiseData.length >= 10){%>
+      <div class="loadMorediveUser">
       <a id="loadMoreUser">Load More</a>
   </div>
+  <%}%>
   </div>
