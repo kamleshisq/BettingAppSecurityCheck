@@ -10209,7 +10209,7 @@ socket.on('connect', () => {
                 <td>${data.userWiseData[i]._id}</td>
                 <td>${data.userWiseData[i].totalCommission}</td>
                 <td>${data.userWiseData[i].totalUPline}</td>
-            </tr>`
+                </tr>`
             }
             console.log(html, "HTML")
             if(data.userWiseData.length != 0){
@@ -10229,7 +10229,11 @@ socket.on('connect', () => {
             console.log(data)
         })
 
-
+        jQuery(document).ready(function($) {
+            $(".tbl-data-href").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
     }
     
 
