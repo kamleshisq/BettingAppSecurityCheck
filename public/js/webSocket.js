@@ -10025,11 +10025,26 @@ socket.on('connect', () => {
               <td>${data.eventData[i].totalCommission}</td>
                 </tr>`
             }
-            if(data.page == 0){
-                $('#event-tbody').html(html)
+
+            if(data.eventData.length != 0){
+                if(data.page == 0){
+                    $('#event-tbody').html(html)
+                    document.getElementById('loadMorediveEvent').innerHTML = '<a id="loadMoreEvent">Load More</a>'
+                }else{
+                    $('#event-tbody').append(html); 
+                    document.getElementById('loadMorediveEvent').innerHTML = '<a id="loadMoreEvent">Load More</a>'
+                }
             }else{
-                $('#event-tbody').append(html); 
+                document.getElementById('loadMorediveEvent').innerHTML = ""
+                if(data.page == 0){
+                    $('#event-tbody').html("NO MORE DATA ")
+                }
             }
+            // if(data.page == 0){
+            //     $('#event-tbody').html(html)
+            // }else{
+            //     $('#event-tbody').append(html); 
+            // }
         })
 
 
@@ -10056,9 +10071,9 @@ socket.on('connect', () => {
             data.fromTime = $('#FdateAccCom').val()
             data.toTime = $('#TdateAccCom').val()
             // console.log(this.id, "ID")
-            let id = $('#searchUser').val()
-            $('.pageIdACCComm').attr('data-pageid','1')
             document.getElementById("searchUser").value = this.textContent
+            let id = this.textContent
+            $('.pageIdACCComm').attr('data-pageid','1')
             $('.wrapper').hide()
             socket.emit('commissionAccFilter', {data, LOGINDATA, page:0, id})
         })
@@ -10069,8 +10084,8 @@ socket.on('connect', () => {
             data.fromTime = $('#FdateAccCom').val()
             data.toTime = $('#TdateAccCom').val()
             // console.log(this.id, "ID")
-            let id = this.textContent
-            let page = parseInt($('.pageIdUser').attr('data-pageid'));
+            let id = $('#searchUser').val()
+            let page = parseInt($('.pageIdACCComm').attr('data-pageid'));
             $('.pageIdACCComm').attr('data-pageid',page + 1)
             socket.emit('commissionAccFilter', {data, LOGINDATA, page, id})
         })
@@ -10100,12 +10115,19 @@ socket.on('connect', () => {
               <td>${data.accStatements[i].balance.toFixed(2)}</td>
           </tr>`
             }
-            if(data.page == 0){
-                $('#AccountCom-tbody').html(html)
-                document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
+            if(data.accStatements.length != 0){
+                if(data.page == 0){
+                    $('#AccountCom-tbody').html(html)
+                    document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
+                }else{
+                    $('#AccountCom-tbody').append(html); 
+                    document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
+                }
             }else{
-                $('#AccountCom-tbody').append(html); 
-                document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
+                document.getElementById('loadMorediveAccCom').innerHTML = ""
+                if(data.page == 0){
+                    $('#AccountCom-tbody').html("NO MORE DATA ")
+                }
             }
         })
 
