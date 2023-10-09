@@ -33,11 +33,20 @@ async function voidbetBeforePlace(data){
                 console.log(err)
             }
         }
-
+        let operatorId;
+        let operatoruserName;
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            operatorId = data.LOGINDATA.LOGINUSER.parent_id
+            let parentUser = await User.findById(operatorId)
+            operatoruserName = parentUser.userName
+        }else{
+            operatorId = data.LOGINDATA.LOGINUSER._id
+            operatoruserName = data.LOGINDATA.LOGINUSER.userName
+        }
         // console.log(inprogressData , '<<+++=== inprogressData')
         let dataForHistory = {
             marketID:`${data.id}`,
-            userId:`${data.LOGINDATA.LOGINUSER._id}`,
+            userId:`${operatorId}`,
             eventName: `${bets[0].match}`,
             date:Date.now(),
             result:"Cancel Bet",
@@ -47,7 +56,7 @@ async function voidbetBeforePlace(data){
           await settlementHistoryModel.create(dataForHistory)
                     for(const bet in bets){
                         // console.log(bets[bet].id, 12)
-                        await Bet.findByIdAndUpdate(bets[bet].id, {status:"CANCEL", return:0 ,remark:data.data.remark, calcelUser:data.LOGINDATA.LOGINUSER.userName});
+                        await Bet.findByIdAndUpdate(bets[bet].id, {status:"CANCEL", return:0 ,remark:data.data.remark, calcelUser:operatoruserName});
                         let user = await User.findByIdAndUpdate(bets[bet].userId, {$inc:{availableBalance: bets[bet].Stake, myPL: bets[bet].Stake, exposure:-bets[bet].Stake, pointsWL: bets[bet].Stake, uplinePL: -bets[bet].Stake}})
                         let description = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/CANCEL`
                         // let description2 = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/user = ${user.userName}/CANCEL `
