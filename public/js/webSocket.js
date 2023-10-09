@@ -9988,13 +9988,13 @@ socket.on('connect', () => {
             let data = {}
             data.fromTime = $('#FdateEvent').val()
             data.toTime = $('#TdateEvent').val()
-            $('.pageId').attr('data-pageid','1')
+            $('.pageIdUser').attr('data-pageid','1')
             socket.emit('commissionReportFilter', {data, LOGINDATA, page:0})
         })
 
         $(document).on('click', "#loadMoreEvent", function(e){
-            let page = parseInt($('.pageId').attr('data-pageid'));
-            $('.pageId').attr('data-pageid', page + 1)
+            let page = parseInt($('.pageIdUser').attr('data-pageid'));
+            $('.pageIdUser').attr('data-pageid', page + 1)
             data.fromTime = $('#FdateEvent').val()
             data.toTime = $('#TdateEvent').val()
             socket.emit('commissionReportFilter', {data, LOGINDATA, page})
@@ -10026,6 +10026,21 @@ socket.on('connect', () => {
             }else{
                 $('#event-tbody').append(html); 
             }
+        })
+
+
+
+        //ACC STATEMENT
+
+        $(document).on('keyup change', "#FdateAccCom,#TdateAccCom", function(e){
+            e.preventDefault()
+            // console.log('Working')
+            let page = 0;
+            let data = {}
+            data.fromTime = $('#FdateAccCom').val()
+            data.toTime = $('#TdateAccCom').val()
+            $('.pageIdACCComm').attr('data-pageid','1')
+            socket.emit('commissionAccFilter', {data, LOGINDATA, page:0})
         })
 
     }
