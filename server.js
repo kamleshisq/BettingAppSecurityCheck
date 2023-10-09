@@ -4613,7 +4613,7 @@ io.on('connection', (socket) => {
             }
             let accStatements
             if(data.id){
-                let user = await User.findById(data.id)
+                // let user = await User.findById(data.id)
                 console.log(user, "WORKING")
                 accStatements = await AccModel.aggregate([
                     {
@@ -4623,7 +4623,7 @@ io.on('connection', (socket) => {
                             description:{
                                 $regex: /^Claim Commisiion/i
                             },
-                            userName:user.userName
+                            userName:data.id
                         }
                     },
                     {
