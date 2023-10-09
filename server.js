@@ -731,11 +731,16 @@ io.on('connection', (socket) => {
         let dataM 
         // console.log(data.filterData)
         // console.log(data.LOGINDATA.LOGINUSER.userName)
-        
+        let operatorId;
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            operatorId = data.LOGINDATA.LOGINUSER.parent_id
+        }else{
+            operatorId = data.LOGINDATA.LOGINUSER._id
+        }
         User.aggregate([
             {
               $match: {
-                parentUsers: { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
+                parentUsers: { $elemMatch: { $eq: operatorId } }
               }
             },
             {
