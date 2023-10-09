@@ -3019,7 +3019,7 @@ io.on('connection', (socket) => {
         let limit = 10
         let operationId;
         let operationroleName;
-        if(req.currentUser.roleName == 'Operator'){
+        if(me.roleName == 'Operator'){
             operationId = me.parent_id
             let parentUser = await User.findById(operationId)
             operationroleName = parentUser.roleName
