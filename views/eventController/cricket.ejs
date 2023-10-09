@@ -13,7 +13,9 @@
                   <th>Team</th>
                   <th>Open Bet</th>
                   <th>Feature</th>
+                  <%if(currentUser.roleName != 'Operator'){%>
                   <th>Action</th>
+                  <%}%>
                 </tr>
               </thead>
               <tbody class="new-body">
@@ -75,11 +77,13 @@
                         </div>
                         <%}%>
                     </td>
+                    <%if(currentUser.roleName != 'Operator'){%>
                     <td>
                       <div class="btn-group">
                         <a class="btn" href="/admin/riskAnalysis?id=<%=data.cricketEvents[i].eventData.eventId%>">View Details</a>
                       </div>
                     </td>
+                    <%}%>
                     <%}%>
                   </tr>
                 </tr>
