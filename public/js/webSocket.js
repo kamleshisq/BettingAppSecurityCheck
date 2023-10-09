@@ -4200,6 +4200,7 @@ socket.on('connect', () => {
 
         socket.on("ACCSEARCHRES", async(data)=>{
             // console.log(data, 565464)
+            $('.wrapper').show()
             let html = ``
         if(data.page === 1){
             for(let i = 0; i < data.user.length; i++){
@@ -4300,6 +4301,7 @@ socket.on('connect', () => {
             }
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
+            $('.wrapper').hide()
             // console.log(data)
             socket.emit('userHistory',data)
         })

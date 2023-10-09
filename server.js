@@ -1300,14 +1300,20 @@ io.on('connection', (socket) => {
     socket.on('userPLDetail',async(data)=>{
         let page = data.page;
         let limit = 10;
-        let user = await User.findOne({userName:`${data.filterData.userName}`, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}}})
-        if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName && !user){
-            let users = await User.find({parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}}}).skip(page * limit).limit(limit)
-            socket.emit('userPLDetail',{users,page})
+      
+        let users;
+        let operatorId;
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            operatorId = data.LOGINDATA.LOGINUSER.parent_id
         }else{
-            let users = await User.find({userName:`${data.filterData.userName}`, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}}}).skip(page * limit).limit(limit)
-            socket.emit('userPLDetail', {users, page})
+            operatorId = data.LOGINDATA.LOGINUSER._id
         }
+        if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
+            users = await User.find({parentUsers:{$elemMatch:{$eq:operatorId}}}).skip(page * limit).limit(limit)
+        }else{
+            users = await User.find({userName:`${data.filterData.userName}`, parentUsers:{$elemMatch:{$eq:operatorId}}}).skip(page * limit).limit(limit)
+        }
+        socket.emit('userPLDetail', {users, page})
     })
 
     socket.on("SearchOnlineUser", async(data) => {

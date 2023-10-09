@@ -964,18 +964,14 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
     })
 
 exports.plreport = catchAsync(async(req, res, next) => {
-    const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
-    let role_type =[]
-    for(let i = 0; i < roles.length; i++){
-        role_type.push(roles[i].role_type)
-    }
-    // console.log(role_type)
-    const currentUser = req.currentUser
-    let users
-    if(currentUser.role_type == 1){
-        users = await User.find({isActive:true}).limit(10)
+
+    let users;
+    if(req.currentUser.roleName == 'Operator'){
+        users = await User.find({parentUsers:req.currentUser.parent_id})
+       
     }else{
-        users = await User.find({role_type:{$in:role_type},isActive:true , parentUsers:{$elemMatch:{$eq:req.currentUser.id}}}).limit(10)
+        users = await User.find({parentUsers:req.currentUser._id})
+       
     }
         // console.log(users)
     res.status(200).render('./PL_Report/plreport',{
