@@ -3338,7 +3338,7 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
     ])
     // console.log(eventWiseData)
     // console.log(userWiseData)
-    console.log(accStatements, "accStatements")
+    // console.log(accStatements, "accStatements")
     res.status(200).render("./commissionPage/commissionPage",{
         title:"Commission Report",
         me,
