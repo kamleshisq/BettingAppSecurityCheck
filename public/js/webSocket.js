@@ -10100,12 +10100,16 @@ socket.on('connect', () => {
               <td>${data.accStatements[i].balance.toFixed(2)}</td>
           </tr>`
             }
-            if(data.page == 0){
-                $('#AccountCom-tbody').html(html)
-                document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
+            if(data.accStatements.length != 0){
+                if(data.page == 0){
+                    $('#AccountCom-tbody').html(html)
+                    document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
+                }else{
+                    $('#AccountCom-tbody').append(html); 
+                    document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
+                }
             }else{
-                $('#AccountCom-tbody').append(html); 
-                document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
+                document.getElementById('loadMorediveAccCom').innerHTML = ""
             }
         })
 
