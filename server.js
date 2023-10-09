@@ -4598,6 +4598,7 @@ io.on('connection', (socket) => {
                     $lte: new Date(data.data.toTime)
                 }
             }else{
+                console.log(new Date(), 7 * 24 * 60 * 60 * 1000)
                 dateFilter = {
                     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000)
                   }
