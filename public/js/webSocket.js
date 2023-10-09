@@ -1234,7 +1234,7 @@ socket.on('connect', () => {
         $(document).on('click','#myModalSE  .form-data  .deposite',function(e){
             let modleName = "#myModalSE"
             let form = $(modleName).find('.form-data')
-            let amount = parseInt(form.find('input[name="amount"]').val())
+            let amount = parseFloat(form.find('input[name="amount"]').val())
 
             let typeValue = form.find('input[name = "type"]').val()
             console.log(typeValue)
@@ -1246,8 +1246,8 @@ socket.on('connect', () => {
                 form.find('.withdraw').removeClass('active')
                 let fromUSer = form.find('input[name = "toUser"]').val()
                 let toUser = form.find('input[name = "fromUser"]').val()
-                let tuBalance = form.find('input[name = "fuBalance"]').val()
-                let fuBalance = form.find('input[name = "tuBalance"]').val()
+                let tuBalance = parseFloat(form.find('input[name = "fuBalance"]').val())
+                let fuBalance = parseFloat(form.find('input[name = "tuBalance"]').val())
                 
                 form.find('input[name = "type"]').val('deposit')
                 form.find('input[name = "toUser"]').attr('value',toUser)
@@ -1265,7 +1265,7 @@ socket.on('connect', () => {
         $(document).on('click','#myModalSE  .form-data  .withdraw',function(e){
             let modleName = "#myModalSE"
             let form = $(modleName).find('.form-data')
-            let amount = parseInt(form.find('input[name="amount"]').val())
+            let amount = parseFloat(form.find('input[name="amount"]').val())
             let typeValue = form.find('input[name = "type"]').val()
             console.log(typeValue)
             if(typeValue == 'deposit'){
@@ -1273,8 +1273,8 @@ socket.on('connect', () => {
                 form.find('.withdraw').addClass('active')
                 let fromUSer = form.find('input[name = "toUser"]').val()
                 let toUser = form.find('input[name = "fromUser"]').val()
-                let tuBalance = form.find('input[name = "fuBalance"]').val()
-                let fuBalance = form.find('input[name = "tuBalance"]').val()
+                let tuBalance = parseFloat(form.find('input[name = "fuBalance"]').val())
+                let fuBalance = parseFloat(form.find('input[name = "tuBalance"]').val())
 
                 form.find('input[name = "type"]').val('withdrawl')
                 form.find('input[name = "toUser"]').attr('value',toUser)
