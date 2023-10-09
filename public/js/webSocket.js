@@ -10079,7 +10079,8 @@ socket.on('connect', () => {
         })
 
 
-        $(document).on('keyup','.searchUser',function(){
+        $(document).on('keyup','.searchUser',function(e){
+            e.preventDefault()
             // console.log('working')
             // console.log($(this).val())
             if($(this).val().length >= 3 ){
