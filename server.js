@@ -4571,7 +4571,7 @@ io.on('connection', (socket) => {
                   }
             ])
 
-            socket.emit('commissionReportFilter', eventData)
+            socket.emit('commissionReportFilter', {eventData, page:data.page})
         }catch(err){
             console.log(err)
         }
