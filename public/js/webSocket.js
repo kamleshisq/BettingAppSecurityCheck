@@ -10070,7 +10070,7 @@ socket.on('connect', () => {
             data.toTime = $('#TdateAccCom').val()
             // console.log(this.id, "ID")
             let id = $('#searchUser').val()
-            let page = parseInt($('.pageIdUser').attr('data-pageid'));
+            let page = parseInt($('.pageIdACCComm').attr('data-pageid'));
             $('.pageIdACCComm').attr('data-pageid',page + 1)
             socket.emit('commissionAccFilter', {data, LOGINDATA, page, id})
         })
