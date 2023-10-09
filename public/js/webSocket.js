@@ -5438,6 +5438,10 @@ socket.on('connect', () => {
                 }
             })
 
+            $(document).on('click', ".cancel-timelyVoide", function(e){
+                let form = $("#myModal2").find('.form-data')
+                form.attr('id', this.id)
+            })
     }
 
 
