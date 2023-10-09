@@ -4475,6 +4475,7 @@ socket.on('connect', () => {
         })
 
         socket.on("ACCSEARCHRES", async(data)=>{
+            $('.wrapper').show()
             let html = ``
         if(data.page === 1){
             for(let i = 0; i < data.user.length; i++){
@@ -4557,6 +4558,7 @@ socket.on('connect', () => {
             filterData = {}
             filterData.userName = this.textContent
             $('.pageId').attr('data-pageid','1')
+            $('.wrapper').hide()
             socket.emit('gameReport',{filterData,LOGINDATA,page:0})
             
         })
