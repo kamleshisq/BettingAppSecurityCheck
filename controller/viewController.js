@@ -3288,12 +3288,19 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
             }
           },
           {
-            $group: {
-              _id: "$eventName",
+              $group: {
+                  _id: "$eventName",
               totalCommission: { $sum: "$commission" },
               eventDate: { $first: "$eventDate" }
             }
-          },
+        },
+        {
+          $sort:{
+              eventDate : -1,
+              totalCommission : 1,
+              _id : 1
+          }
+        },
           {
             $limit:10
           }
@@ -3309,12 +3316,19 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
             }
           },
           {
-            $group: {
-              _id: "$userName",
-              totalCommission: { $sum: "$commission" },
-              totalUPline: { $sum: "$upline" },
-            }
-          },
+              $group: {
+                  _id: "$userName",
+                  totalCommission: { $sum: "$commission" },
+                  totalUPline: { $sum: "$upline" },
+                }
+            },
+            {
+              $sort:{
+                _id : 1,
+                totalCommission : 1,
+                totalUPline : 1
+              }
+            },
           {
             $limit:10
           }
@@ -3333,12 +3347,15 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
             }
         },
         {
+            $sort:{
+                date : -1,
+                userName : 1
+            }
+        },
+        {
           $limit:10
         }
     ])
-    // console.log(eventWiseData)
-    // console.log(userWiseData)
-    // console.log(accStatements, "accStatements")
     res.status(200).render("./commissionPage/commissionPage",{
         title:"Commission Report",
         me,
