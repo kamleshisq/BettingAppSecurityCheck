@@ -10025,11 +10025,26 @@ socket.on('connect', () => {
               <td>${data.eventData[i].totalCommission}</td>
                 </tr>`
             }
-            if(data.page == 0){
-                $('#event-tbody').html(html)
+
+            if(data.eventData.length != 0){
+                if(data.page == 0){
+                    $('#event-tbody').html(html)
+                    document.getElementById('loadMorediveEvent').innerHTML = '<a id="loadMoreEvent">Load More</a>'
+                }else{
+                    $('#event-tbody').append(html); 
+                    document.getElementById('loadMorediveEvent').innerHTML = '<a id="loadMoreEvent">Load More</a>'
+                }
             }else{
-                $('#event-tbody').append(html); 
+                document.getElementById('loadMorediveEvent').innerHTML = ""
+                if(data.page == 0){
+                    $('#event-tbody').html("NO MORE DATA ")
+                }
             }
+            // if(data.page == 0){
+            //     $('#event-tbody').html(html)
+            // }else{
+            //     $('#event-tbody').append(html); 
+            // }
         })
 
 
