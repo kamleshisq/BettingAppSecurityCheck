@@ -3288,6 +3288,13 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
             }
           },
           {
+            $sort:{
+                eventDate : -1,
+                seriesName : 1,
+                eventName : 1
+            }
+          },
+          {
             $group: {
               _id: "$eventName",
               totalCommission: { $sum: "$commission" },
@@ -3306,6 +3313,13 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                 $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
               },
               userName:{$in:childrenUsername}
+            }
+          },
+          {
+            $sort:{
+                eventDate : -1,
+                seriesName : 1,
+                eventName : 1
             }
           },
           {
@@ -3330,6 +3344,12 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                 description:{
                     $regex: /^Claim Commisiion/i
                 }
+            }
+        },
+        {
+            $sort:{
+                date : -1,
+                userName : 1
             }
         },
         {
