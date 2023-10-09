@@ -1,4 +1,3 @@
-const { date } = require("joi");
 
 const socket = io();
 socket.on('disconnect', () => {
