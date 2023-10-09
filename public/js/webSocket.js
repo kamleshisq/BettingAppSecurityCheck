@@ -9978,8 +9978,8 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/admin/commissionReport"){
-
         //For EventLevel
+        console.log("WORKING")
         document.addEventListener('DOMContentLoaded', function() {
             var FdateEvent = document.getElementById('FdateEvent');
             var TdateEvent = document.getElementById('TdateEvent');
