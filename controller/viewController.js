@@ -679,90 +679,71 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
 
 exports.gameReportPage = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
-    let operatorId;
-    console.log(currentUser,"==>currentUser in gamereports")
+    let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
-        operatorId = req.currentUser.parent_id
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
     }else{
-        operatorId = req.currentUser._id
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
     }
 
-    User.aggregate([
-        {
-          $match: {
-            parentUsers: { $elemMatch: { $eq: operatorId } }
-          }
-        },
-        {
-          $group: {
-            _id: null,
-            userIds: { $push: '$userName' } 
-          }
+    let betResult = await betModel.aggregate([
+    {
+        $match: {
+        userName: { $in: childrenUsername },
+        status: {$ne:"OPEN"}
         }
-      ])
-        .then((userResult) => {
-          const userIds = userResult.length > 0 ? userResult[0].userIds : [];
-      
-          betModel.aggregate([
-            {
-              $match: {
-                userName: { $in: userIds },
-                status: {$ne:"OPEN"}
-              }
+    },
+    {
+        $group:{
+            _id:{
+                userName:'$userName',
+                gameId: '$event'
             },
-            {
-                $group:{
-                    _id:{
-                        userName:'$userName',
-                        gameId: '$event'
-                    },
-                    gameCount:{$sum:1},
-                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
-                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
-                    returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
-                    
-                }
-            },
-            {
-                $group:{
-                    _id:'$_id.userName',
-                    gameCount:{$sum:1},
-                    betCount:{$sum:'$gameCount'},
-                    loss:{$sum:'$loss'},
-                    won:{$sum:'$won'},
-                    returns:{$sum:'$returns'}
-    
-                }
-            },
-            {
-                $sort: {
-                  _id: 1,
-                  returns: 1
-                }
-            },
-            {
-                $skip:0
-            },
-            {
-                $limit:10
-            }
-          ])
-            .then((betResult) => {
-            //   socket.emit("aggreat", betResult)
-            res.status(200).render('./gamereports/gamereport',{
-                title:"Game Reports",
-                me:currentUser,
-                games:betResult,
-                currentUser
-            })
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        })
-        .catch((error) => {
-          console.error(error);
-        });    
+            gameCount:{$sum:1},
+            loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+            won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+            returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+            
+        }
+    },
+    {
+        $group:{
+            _id:'$_id.userName',
+            gameCount:{$sum:1},
+            betCount:{$sum:'$gameCount'},
+            loss:{$sum:'$loss'},
+            won:{$sum:'$won'},
+            returns:{$sum:'$returns'}
+
+        }
+    },
+    {
+        $sort: {
+            _id: 1,
+            returns: 1
+        }
+    },
+    {
+        $skip:0
+    },
+    {
+        $limit:10
+    }
+    ])
+
+    res.status(200).render('./gamereports/gamereport',{
+        title:"Game Reports",
+        me:currentUser,
+        games:betResult,
+        currentUser
+    })
+         
 
     // let roles
     // if(currentUser.role_type == 1){
