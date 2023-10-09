@@ -989,38 +989,24 @@ io.on('connection', (socket) => {
         }
         console.log(data.filterData)
 
-        let ubDetails = await Bet.aggregate([
-            {
-                $match: data.filterData
-            },
-            {
-                $lookup:{
-                    from:'users',
-                    localField:'userName',
-                    foreignField:'userName',
-                    as:'userDetails'
-                }
-            },
-            {
-                $unwind:'$userDetails'
-            },
-            {
-                $match:{
-                    'userDetails.isActive':true,
-                    'userDetails.roleName':{$ne:'Admin'},
-                    'userDetails.parentUsers':{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}},
-                }
-            },
-            {
-                $sort:{
-                    date:-1
-                }
-            },
-            {
-                $skip:(page * 10)
-            },
-            { $limit : 10 }
-        ])
+        let childrenUsername = []
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }else{
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }
+
+        if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
+            data.filterData.userName = {$in:childrenUsername}
+        }
+        let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
+
 
         socket.emit('userBetDetail',{ubDetails,page})
 
@@ -1145,14 +1131,10 @@ io.on('connection', (socket) => {
         let childrenUsername = []
         let userFilter = {};
         let operatorId;
-        let operatoruserName;
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
             operatorId = data.LOGINDATA.LOGINUSER.parent_id
-            let parentUser = await User.findById(operatorId)
-            operatoruserName = parentUser.userName
         }else{
             operatorId = data.LOGINDATA.LOGINUSER._id
-            operatoruserName = data.LOGINDATA.LOGINUSER.userName
         }
         userFilter.parentUsers = operatorId
         if(data.filterData.whiteLabel){

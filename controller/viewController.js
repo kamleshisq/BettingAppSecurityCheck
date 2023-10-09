@@ -597,10 +597,17 @@ exports.APIcall = catchAsync(async(req, res, next) => {
 exports.ReportPage = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
     let childrenUsername = []
-    let children = await User.find({parentUsers:req.currentUser._id})
-    children.map(ele => {
-        childrenUsername.push(ele.userName) 
-    })
+    if(req.currentUser.roleName == 'Operator'){
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }else{
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }
     let bets = await betModel.aggregate([
         {
             $match: {
