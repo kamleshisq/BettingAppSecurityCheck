@@ -3274,6 +3274,8 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
 exports.getCommissionReport = catchAsync(async(req, res, next) => {
     let me = req.currentUser
     let childrenUsername = []
+    // if()
+    console.log(req.currentUser)
     let children = await User.find({parentUsers:req.currentUser._id})
     children.map(ele => {
         childrenUsername.push(ele.userName) 
