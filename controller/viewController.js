@@ -3290,8 +3290,8 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
           {
             $sort:{
                 eventDate : -1,
-                seriesName : 1,
-                eventName : 1
+                // seriesName : 1,
+                // eventName : 1
             }
           },
           {
