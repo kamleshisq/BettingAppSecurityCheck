@@ -1039,7 +1039,20 @@ socket.on('connect', () => {
         })
 
         $(document).on('keyup','#myModal .form-data input[name="amount"]',function(e){
-            console.log($(this).val())
+            let amount = $(this).val()
+            let form = $("#myModal").find('.form-data')
+            let fromAmount = form.find('input[name="fuBalance"]').val()
+            let toAmount = form.find('input[name="tuBalance"]').val()
+            let type = form.find('input[name = "type"]').val()
+            if(type == "deposit"){
+                form.find('#fuBlanceAfter').text(fromAmount - amount)
+                form.find('#tuBalanceAfter').text(fromAmount + amount)
+            }else{
+                form.find('#fuBlanceAfter').text(fromAmount + amount)
+                form.find('#tuBalanceAfter').text(fromAmount - amount)
+            }
+
+
         })
 
         $(document).on('click','#myModal .acc-form .depositeWD',function(e){
