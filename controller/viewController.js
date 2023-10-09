@@ -75,19 +75,9 @@ const commissionNewModel = require('../model/commissioNNModel');
 // });
 
 exports.userTable = catchAsync(async(req, res, next) => {
-    // let AllUsers = await User.find()
-    // for(let i = 0; i < AllUsers.length; i++){
-    //     await commissionModel.create({userId:AllUsers[i].id})
-    // }
-    // console.log(global._loggedInToken)
-    // console.log(req.token, req.currentUser);
-    // let users
-    // let users = await User.find();
     var WhiteLabel = await whiteLabel.find()
-    // var roles = await Role.find({role_level:{$gt : req.currentUser.role.role_level}})
     let id = req.query.id;
     let page = req.query.page;
-    // console.log(req.query)
     let urls;
     if(id && id != req.currentUser.parent_id){
         var isValid = mongoose.Types.ObjectId.isValid(id)
@@ -158,6 +148,27 @@ exports.userTable = catchAsync(async(req, res, next) => {
     const rows = data[0].rows
     const me = data[0].me
     // console.log(currentUser)
+
+    let sumData = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id,
+                commissionStatus: 'Unclaimed'
+            }
+        },
+        {
+            $group: {
+              _id: null, 
+              totalCommission: { $sum: "$commission" } 
+            }
+          }
+    ])
+    let sum 
+    if(sumData.length != 0){
+        sum = sumData[0].totalCommission
+    }else{
+        sum = 0
+    }
     res.status(200).render('./userManagement/main',{
         title: "User Management",
         users,
@@ -165,7 +176,8 @@ exports.userTable = catchAsync(async(req, res, next) => {
         currentUser,
         me,
         WhiteLabel,
-        roles
+        roles,
+        unclaimCommission:sum
         // userLogin:global._loggedInToken
     })
 

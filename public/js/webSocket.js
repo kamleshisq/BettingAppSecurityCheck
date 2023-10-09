@@ -1698,6 +1698,7 @@ socket.on('connect', () => {
             alert("Please try again leter")
         }else{
             alert('commission claimed successfully')
+            $('.COMMISSIONADMIN').text('<i class="fa-solid fa-money-check-dollar"></i> &nbsp; Claim Commission (<%=unclaimCommission%>)')
         }
     })
 
@@ -10211,7 +10212,7 @@ socket.on('connect', () => {
                 <td>${data.userWiseData[i].totalUPline}</td>
                 </tr>`
             }
-            console.log(html, "HTML")
+            // console.log(html, "HTML")
             if(data.userWiseData.length != 0){
                 if(data.page == 0){
                     $('#userLevel-tbody').html(html)
@@ -10226,7 +10227,7 @@ socket.on('connect', () => {
                     $('#userLevel-tbody').html("NO MORE DATA ")
                 }
             }
-            console.log(data)
+            // console.log(data)
         })
 
         // jQuery(document).ready(function($) {

@@ -3495,7 +3495,7 @@ io.on('connection', (socket) => {
               }
         ])
         if(user){
-            if(commissionAmount[0].totalCommission > 0){
+            if(commissionAmount.length != 0 && commissionAmount[0].totalCommission > 0){
                 try{
                     console.log(commissionAmount[0].totalCommission, "COMMISSIONDATA")
                     let commission = commissionAmount[0].totalCommission
@@ -4290,20 +4290,36 @@ io.on('connection', (socket) => {
     })
 
     socket.on('claimCommissionAdmin', async(data) => {
-        console.log(data)
+        // console.log(data)
         let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
+        let commissionAmount = await newCommissionModel.aggregate([
+            {
+                $match:{
+                    userId: data.LOGINDATA.LOGINUSER._id,
+                    commissionStatus: 'Unclaimed'
+                }
+            },
+            {
+                $group: {
+                  _id: null, 
+                  totalCommission: { $sum: "$commission" } 
+                }
+              }
+        ])
+        console.log(commissionAmount)
         if(user){
-            if(user.commission > 0){
+            if(commissionAmount.length != 0 && commissionAmount[0].totalCommission > 0){
                 try{
-                    await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:user.commission, commission:-user.commission}})
-                    let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{availableBalance: -user.commission}})
-                    let desc1 = `Claim Commisiion`
-                    let desc2 = `Claim Commisiion of chiled user ${user.userName}`
+                    let commission = commissionAmount[0].totalCommission
+                    await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:commission}})
+                    let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{availableBalance: -commission}})
+                    let desc1 = `Claim Commisiion, ${user.userName}/${parenet.userName}`
+                    let desc2 = `Claim Commisiion of chiled user ${user.userName}, ${user.userName}/${parenet.userName}`
                     let childdata = {
                         user_id:data.LOGINDATA.LOGINUSER._id,
                         description : desc1,
-                        creditDebitamount : user.commission,
-                        balance : user.availableBalance + user.commission,
+                        creditDebitamount : commission,
+                        balance : user.availableBalance + commission,
                         date : Date.now(),
                         userName : user.userName,
                         role_type:user.role_type,
@@ -4311,20 +4327,22 @@ io.on('connection', (socket) => {
                     let perentData = {
                         user_id:data.LOGINDATA.LOGINUSER.parent_id,
                         description : desc2,
-                        creditDebitamount : parenet.commission,
-                        balance : parenet.availableBalance + user.commission,
+                        creditDebitamount : -commission,
+                        balance : parenet.availableBalance - commission,
                         date : Date.now(),
                         userName : parenet.userName,
                         role_type:parenet.role_type
                     }
                     await AccModel.create(childdata)
                     await AccModel.create(perentData)
-                    await commissionRepportModel.updateMany({userId:data.LOGINDATA.LOGINUSER._id}, {status:'Deposit'})
+                    await newCommissionModel.updateMany({userId:data.LOGINDATA.LOGINUSER._id}, {commissionStatus:'Claimed', claimeDate: Date.now()})
                     socket.emit("claimCommissionAdmin", "Success")
                 }catch(err){
                     console.log(err)
                     socket.emit("claimCommissionAdmin", "error")
                 }
+            }else{
+                socket.emit("claimCommissionAdmin", "Success")
             }
 
            
