@@ -9993,7 +9993,31 @@ socket.on('connect', () => {
         })
 
         socket.on('commissionReportFilter', async(data) => {
-            console.log(data)
+            let html = ''
+            for(let i = 0; i < data.eventData.length; i++){
+                var timestamp = data.eventData[i].eventDate ; 
+                var date = new Date(timestamp);
+                var options = { 
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true
+              };
+              var formattedTime = date.toLocaleString('en-US', options);
+
+              html += `<tr class="tbl-data-href" data-href="/admin/commissionReportEvent?event=${data.eventData[i]._id}">
+              <td>${formattedTime}</td>
+              <td>${data.eventData[i]._id}</td>
+              <td>${data.eventData[i].totalCommission}</td>
+                </tr>`
+            }
+            if(data.page == 0){
+                $('#event-tbody').html(html)
+            }else{
+                $('#event-tbody').append(html); 
+            }
         })
 
     }
