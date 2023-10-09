@@ -4612,7 +4612,36 @@ io.on('connection', (socket) => {
                     childrenUsername.push(ele.userName) 
                 })
             }
-            let accStatements = await AccModel.aggregate([
+            let accStatements
+            if(data.id){
+                let user = User.findById(data.id)
+                accStatements = await AccModel.aggregate([
+                    {
+                        $match:{
+                            date: dateFilter,
+                            // userName:req.currentUser.userName,
+                            description:{
+                                $regex: /^Claim Commisiion/i
+                            },
+                            userName:user.userName
+                        }
+                    },
+                    {
+                        $sort:{
+                            date : -1,
+                            userName : 1
+                        }
+                    },
+                    {
+                        $skip:(data.page * 10)
+                    },
+                    {
+                      $limit:10
+                    }
+                ])
+            }else{
+
+            accStatements = await AccModel.aggregate([
                 {
                     $match:{
                         date: dateFilter,
@@ -4636,6 +4665,8 @@ io.on('connection', (socket) => {
                   $limit:10
                 }
             ])
+        }
+
 
             console.log(accStatements,"accStatements")
             socket.emit("commissionAccFilter", {accStatements, page:data.page})
