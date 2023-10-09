@@ -3290,11 +3290,19 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
     let me = req.currentUser
     let childrenUsername = []
     // if()
-    console.log(req.currentUser)
-    let children = await User.find({parentUsers:req.currentUser._id})
-    children.map(ele => {
-        childrenUsername.push(ele.userName) 
-    })
+    // console.log(req.currentUser)
+    if(req.currentUser.roleName == 'Operator'){
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }else{
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }
+    
     let eventWiseData = await commissionNewModel.aggregate([
         {
             $match: {
