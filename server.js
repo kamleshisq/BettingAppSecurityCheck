@@ -4664,7 +4664,7 @@ io.on('connection', (socket) => {
                 }
             ])
 
-            // console.log(accStatements,"accStatements")
+            console.log(accStatements,"accStatements")
             socket.emit("commissionAccFilter", {accStatements, page:data.page})
         }catch(err){
             console.log(err)
