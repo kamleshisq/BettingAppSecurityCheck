@@ -2001,7 +2001,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
         }
     ])
 
-    console.log(openBet, "openBetopenBet")
+    console.log(openBet.details, "openBetopenBet")
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
         liveCricket,
