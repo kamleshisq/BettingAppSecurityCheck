@@ -5451,6 +5451,15 @@ socket.on('connect', () => {
                 socket.emit('timelyVoideBEt',{data,LOGINDATA})
                 // console.log(data, "DATA123")
             })
+
+
+            socket.on('timelyVoideBEt', async(data) => {
+                if(data.status === "err"){
+                    alert(data.message)
+                }else{
+                    alert('Bet Voided Successfully !!')
+                }
+            })
     }
 
 

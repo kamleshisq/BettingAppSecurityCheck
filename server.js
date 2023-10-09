@@ -4820,10 +4820,15 @@ io.on('connection', (socket) => {
         try{
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
             const passcheck = await user.correctPassword(data.data.password, user.password)
-            console.log(passcheck, "PASSWORD CHECK")
+            // console.log(passcheck, "PASSWORD CHECK")
+            if(passcheck){
+                
+            }else{
+                socket.emit('timelyVoideBEt', {status:'err', message:'Please Provide valide password'})
+            }
         }catch(err){
             console.log(err)
-            socket.emit('', {status:'err', message:'Please try again leter'})
+            socket.emit('timelyVoideBEt', {status:'err', message:'Please try again leter'})
         }
     })
     
