@@ -4817,6 +4817,14 @@ io.on('connection', (socket) => {
 
     socket.on('timelyVoideBEt', async(data) => {
         console.log(data)
+        try{
+            let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
+            const passcheck = await user.correctPassword(data.data.password, user.password).select('+password')
+            console.log(passcheck)
+        }catch(err){
+            console.log(err)
+            socket.emit('', {status:'err', message:'Please try again leter'})
+        }
     })
     
 })
