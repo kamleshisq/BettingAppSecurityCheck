@@ -9980,7 +9980,7 @@ socket.on('connect', () => {
     if(pathname === "/admin/commissionReport"){
 
         //For EventLevel
-        $(document).on('keyup', "#FdateEvent,#TdateEvent", function(e){
+        $(document).on('keyup change', "#FdateEvent,#TdateEvent", function(e){
             e.preventDefault()
             console.log('Working')
         })
