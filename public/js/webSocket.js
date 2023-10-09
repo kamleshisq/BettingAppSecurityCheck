@@ -10110,6 +10110,9 @@ socket.on('connect', () => {
                 }
             }else{
                 document.getElementById('loadMorediveAccCom').innerHTML = ""
+                if(data.page == 0){
+                    $('#AccountCom-tbody').html("NO MORE DATA ")
+                }
             }
         })
 
