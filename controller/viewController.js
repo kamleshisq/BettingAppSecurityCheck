@@ -1929,7 +1929,7 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
         childrenUsername.push(ele.userName) 
     })
 
-    console.log(childrenUsername, "+====>> childrenUsername ")
+    // console.log(childrenUsername, "+====>> childrenUsername ")
     // console.log(req.currentUser)
     let openBet = topGames = await betModel.aggregate([
         {
@@ -2000,6 +2000,8 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
             }
         }
     ])
+
+    console.log(openBet, "openBetopenBet")
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
         liveCricket,
