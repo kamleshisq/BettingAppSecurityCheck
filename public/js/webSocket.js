@@ -10424,17 +10424,9 @@ socket.on('connect', () => {
         let filterData = {}
         fromDate = $('#fromDate').val()
         toDate = $('#toDate').val()
-        if(fromDate != ''  && toDate != '' ){
-            filterData.date = {$gte : fromDate,$lte : new Date(new Date(toDate).getTime() + ((24 * 60 * 60 * 1000)-1))}
-        }else{
+        filterData.fromDate = fromDate;
+        filterData.toDate = toDate;
 
-            if(fromDate != '' ){
-                filterData.date = {$gte : fromDate}
-            }
-            if(toDate != '' ){
-                filterData.date = {$lte : new Date(new Date(toDate).getTime() + ((24 * 60 * 60 * 1000)-1))}
-            }
-        }
 
         $('#Sport,#market,#fromDate,#toDate,#result').change(function(){
             $('.pageId').attr('data-pageid','1')
@@ -10456,6 +10448,8 @@ socket.on('connect', () => {
             filterData.betType = sport
             filterData.marketName = market
             filterData.alertStatus = result
+            filterData.fromDate = fromDate;
+            filterData.toDate = toDate;    
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             socket.emit('AlertBet',data)
