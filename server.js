@@ -4823,6 +4823,7 @@ io.on('connection', (socket) => {
             // console.log(passcheck, "PASSWORD CHECK")
             if(passcheck){
             let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL"});
+            console.log(bet, "BETS")
             let DebitCreditAmount 
             if(bet.bettype2 === "Back"){
                 if(bet.marketName.toLowerCase().startsWith('match')){
