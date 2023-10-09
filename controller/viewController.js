@@ -877,24 +877,24 @@ exports.useracount = catchAsync(async(req, res, next) => {
 exports.userhistoryreport = catchAsync(async(req, res, next) => {
     // const currentUser = global._User
     const currentUser = req.currentUser
-   
+    let limit = 10;
+    let childrenUsername = []
+    if(req.currentUser.roleName == 'Operator'){
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }else{
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }
     let Logs = await loginLogs.aggregate([
-        {
-            $lookup:{
-                from:'users',
-                localField:'userName',
-                foreignField:'userName',
-                as:'userDetails'
-            }
-        },
-        {
-            $unwind:'$userDetails'
-        },
+      
         {
             $match:{
-                'userDetails.isActive':true,
-                'userDetails.roleName':{$ne:'Admin'},
-                'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
+               userName : {$in:childrenUsername}
             }
         },
         {
