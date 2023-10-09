@@ -10190,6 +10190,10 @@ socket.on('connect', () => {
             socket.emit('commissionUserLevel', {data, LOGINDATA, page:0})
         })
 
+        socket.on('commissionUserLevel', async(data) => {
+            console.log(data)
+        })
+
 
     }
     

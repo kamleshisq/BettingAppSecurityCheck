@@ -4684,7 +4684,70 @@ io.on('connection', (socket) => {
 
 
     socket.on('commissionUserLevel', async(data) => {
-        console.log(data.data)
+        // console.log(data.data)
+        try{
+            let dateFilter = {}
+            // let dateFilter
+            if(data.data.fromTime == '' && data.data.toTime != ''){
+                dateFilter = {$lte: new Date(data.data.toTime)}
+            }else if(data.data.toTime == '' && data.data.fromTime != ''){
+                dateFilter = {$gte: new Date(data.data.fromTime)}
+            }else if (data.data.toTime != '' && data.data.fromTime != ''){
+                dateFilter = {
+                    $gte: new Date(data.data.fromTime),
+                    $lte: new Date(data.data.toTime)
+                }
+            }else{
+                // console.log(new Date(), 7 * 24 * 60 * 60 * 1000)
+                dateFilter = {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000)
+                  }
+            }
+            let childrenUsername = []
+            if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+                children.map(ele => {
+                    childrenUsername.push(ele.userName) 
+                })
+            }else{
+                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+                children.map(ele => {
+                    childrenUsername.push(ele.userName) 
+                })
+            }
+            let userWiseData = await newCommissionModel.aggregate([
+                {
+                    $match: {
+                      eventDate: dateFilter,
+                      userName:{$in:childrenUsername}
+                    }
+                  },
+                  {
+                      $group: {
+                          _id: "$userName",
+                          totalCommission: { $sum: "$commission" },
+                          totalUPline: { $sum: "$upline" },
+                        }
+                    },
+                    {
+                      $sort:{
+                        _id : 1,
+                        totalCommission : 1,
+                        totalUPline : 1
+                      }
+                    },
+                    {
+                        $skip:(data.page * 10)
+                    },
+                  {
+                    $limit:10
+                  }
+            ])
+            console.log(userWiseData, "userWiseData")
+            socket.emit('commissionUserLevel', {userWiseData, page:data.page})
+        }catch(err){
+            console.log(err)
+        }
     })
     
 })
