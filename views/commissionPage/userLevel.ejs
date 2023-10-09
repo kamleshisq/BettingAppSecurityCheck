@@ -8,8 +8,9 @@
 
     <div class="input-group">
         <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="FdateUserLevel">
-        <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="TdateUserLevel">
-        
+    </div>
+    <div class="input-group" >
+      <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="TdateUserLevel">
     </div>
   </div>
   </form>
@@ -23,7 +24,7 @@
             <th>Upline</th>
           </tr>
       </thead>
-      <tbody class="new-body" id="cricket-tbody">
+      <tbody class="new-body" id="userLevel-tbody">
         <%for(let i = 0; i < userWiseData.length; i++){%>
             <tr class="tbl-data-href" data-href="/admin/commissionReportUser?User=<%=userWiseData[i]._id%>">
                 <td><%=userWiseData[i]._id%></td>
