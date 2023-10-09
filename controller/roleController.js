@@ -3,6 +3,7 @@ const roleAuth = require('../model/authorizationModel');
 const AppError = require('../utils/AppError');
 // const appError = require('../utils/AppError');   
 const catchAsync = require('./../utils/catchAsync');
+const User = require('./../model/userModel')
 
 
 exports.createRole = catchAsync(async(req, res, next) => {
