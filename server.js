@@ -4607,7 +4607,9 @@ io.on('connection', (socket) => {
             }else if(data.data.toTime == ''){
                 dateFilter = {$gte: new Date(data.data.fromTime)}
             }else if (data.data.toTime == '' && data.data.fromTime == ''){
-                dateFilter = {}
+                dateFilter = {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                  }
             }else{
                 dateFilter = {
                     $gte: new Date(data.data.fromTime),
