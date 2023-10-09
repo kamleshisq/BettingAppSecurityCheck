@@ -3365,7 +3365,7 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
         userWiseData,
         accStatements
     })
-} )
+})
 
 exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
