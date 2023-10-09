@@ -691,7 +691,7 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
     User.aggregate([
         {
           $match: {
-            parentUsers: { $elemMatch: { $eq: operatorId } }
+            parentUsers: { $elemMatch: { $eq: req.currentUser._id } }
           }
         },
         {
