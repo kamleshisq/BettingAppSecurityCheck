@@ -4599,7 +4599,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('commissionAccFilter', async(data) => {
-        // console.log(data)
+        console.log(data.data, data.id)
         try{
             let dateFilter
             if(data.data.fromTime == ''){
