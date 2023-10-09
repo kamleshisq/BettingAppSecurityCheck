@@ -837,7 +837,16 @@ io.on('connection', (socket) => {
         }
         limit = 10
         // console.log(data)
-        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        let roles;
+        let operatorId;
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            let parentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+            roles = await Role.find({role_level: {$gt:parentUser.role.role_level}});
+            operatorId = parentUser._id
+        }else{
+            roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+            operatorId = data.LOGINDATA.LOGINUSER._id
+        }
         // console.log(roles)
         let role_type =[]
         for(let i = 0; i < roles.length; i++){
@@ -851,7 +860,7 @@ io.on('connection', (socket) => {
             {
                 $match:{
                     userName:regexp,
-                    parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}}
+                    parentUsers:{$elemMatch:{$eq:operatorId}}
                 }
             },
             {
@@ -1145,7 +1154,17 @@ io.on('connection', (socket) => {
         let page = data.page;
         let childrenUsername = []
         let userFilter = {};
-        userFilter.parentUsers = data.LOGINDATA.LOGINUSER._id
+        let operatorId;
+        let operatoruserName;
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            operatorId = data.LOGINDATA.LOGINUSER.parent_id
+            let parentUser = await User.findById(operatorId)
+            operatoruserName = parentUser.userName
+        }else{
+            operatorId = data.LOGINDATA.LOGINUSER._id
+            operatoruserName = data.LOGINDATA.LOGINUSER.userName
+        }
+        userFilter.parentUsers = operatorId
         if(data.filterData.whiteLabel){
             userFilter.whiteLabel = data.filterData.whiteLabel
         }
