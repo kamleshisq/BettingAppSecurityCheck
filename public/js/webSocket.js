@@ -10061,6 +10061,17 @@ socket.on('connect', () => {
             socket.emit('commissionAccFilter', {data, LOGINDATA, page:0, id})
         })
 
+        $(document).on('click', "#loadMoreAccCom", function(e){
+            e.preventDefault()
+            let data = {}
+            data.fromTime = $('#FdateAccCom').val()
+            data.toTime = $('#TdateAccCom').val()
+            // console.log(this.id, "ID")
+            let id = this.textContent
+            let page = parseInt($('.pageIdUser').attr('data-pageid'));
+            $('.pageIdACCComm').attr('data-pageid',page + 1)
+            socket.emit('commissionAccFilter', {data, LOGINDATA, page, id})
+        })
 
         socket.on('commissionAccFilter', async(data) => {
             let html = "";
