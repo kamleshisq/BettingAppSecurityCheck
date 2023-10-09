@@ -9988,9 +9988,12 @@ socket.on('connect', () => {
             data.fromTime = $('#FdateEvent').val()
             data.toTime = $('#TdateEvent').val()
             $('.pageId').attr('data-pageid','1')
-            socket.emit('commissionReportFilter', {data, LOGINDATA})
+            socket.emit('commissionReportFilter', {data, LOGINDATA, page:0})
         })
 
+        socket.on('commissionReportFilter', async(data) => {
+            console.log(data)
+        })
 
     }
     
