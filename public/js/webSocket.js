@@ -10014,9 +10014,9 @@ socket.on('connect', () => {
                 </tr>`
             }
             if(data.page == 0){
-                $('#event-tbody').innerHTML = html
+                $('#event-tbody').html(html)
             }else{
-                $('#event-tbody').append = html
+                $('#event-tbody').append(html); 
             }
         })
 
