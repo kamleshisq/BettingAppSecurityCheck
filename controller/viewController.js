@@ -3316,19 +3316,19 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
             }
           },
           {
-            $sort:{
-                eventDate : -1,
-                seriesName : 1,
-                eventName : 1
-            }
-          },
-          {
-            $group: {
-              _id: "$userName",
-              totalCommission: { $sum: "$commission" },
-              totalUPline: { $sum: "$upline" },
-            }
-          },
+              $group: {
+                  _id: "$userName",
+                  totalCommission: { $sum: "$commission" },
+                  totalUPline: { $sum: "$upline" },
+                }
+            },
+            {
+              $sort:{
+                _id : 1,
+                totalCommission : 1,
+                totalUPline : 1
+              }
+            },
           {
             $limit:10
           }
