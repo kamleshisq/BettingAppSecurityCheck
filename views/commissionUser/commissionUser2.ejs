@@ -58,7 +58,7 @@
                     <td><%=eventData[i].marketName%></td>
                     <td><%=eventData[i].commission%></td>
                     <td><%=eventData[i].commissionStatus%></td>
-                    <%if(eventData.claimeDate){%>
+                    <%if(eventData[i].claimeDate){%>
                       <%
                           var timestamp = eventData[i].claimeDate ; 
                           var date = new Date(timestamp);
