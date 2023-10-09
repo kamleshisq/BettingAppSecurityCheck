@@ -10052,7 +10052,11 @@ socket.on('connect', () => {
             let data = {}
             data.fromTime = $('#FdateAccCom').val()
             data.toTime = $('#TdateAccCom').val()
-            console.log(this.id, "ID")
+            // console.log(this.id, "ID")
+            let id = this.id
+            $('.pageIdACCComm').attr('data-pageid','1')
+            socket.emit('commissionAccFilter', {data, LOGINDATA, page:0, id})
+
         })
 
 
