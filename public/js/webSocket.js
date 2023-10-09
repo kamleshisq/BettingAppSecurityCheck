@@ -10078,6 +10078,51 @@ socket.on('connect', () => {
             }
         })
 
+
+        $(document).on('keyup','.searchUser',function(){
+            // console.log('working')
+            // console.log($(this).val())
+            if($(this).val().length >= 3 ){
+                let x = $(this).val(); 
+                console.log(x)
+                socket.emit("SearchACC", {x, LOGINDATA})
+            }else{
+                document.getElementById('search').innerHTML = ``
+                document.getElementById("button").innerHTML = ''
+            }
+        })
+
+
+        $(document).on("click", ".next", function(e){
+            e.preventDefault()
+            let page = $(this).attr("id")
+            let x = $("#searchUser").val()
+            socket.emit("SearchACC", {x, LOGINDATA, page})
+        })
+
+        socket.on("ACCSEARCHRES", async(data)=>{
+            // console.log(data,'==>resporst of search')
+            let html = ``
+            $('.wrapper').show()
+    
+            if(data.page === 1){
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }else if(data.page === null){
+                document.getElementById("button").innerHTML = ``
+            }else{
+                html = document.getElementById('search').innerHTML
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }
+        })
+
     }
     
 
