@@ -1038,7 +1038,7 @@ socket.on('connect', () => {
             }
         })
 
-        $(document).on('change','#myModal .form-data input[name="amount"]',function(e){
+        $(document).on('keyup','#myModal .form-data input[name="amount"]',function(e){
             console.log($(this).val())
         })
 
