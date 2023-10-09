@@ -196,7 +196,7 @@ io.on('connection', (socket) => {
 
         if(Object.keys(data.filterData).length !== 0){
 
-            data.filterData.parentUsers = { $elemMatch: { $eq: operationId } }
+            data.filterData.parentUsers = operationId
             let role_type =[]
             for(let i = 0; i < roles.length; i++){
                 role_type.push(roles[i].role_type)
@@ -221,15 +221,15 @@ io.on('connection', (socket) => {
                 // console.log(data.filterData)
                 // console.log(data.filterData)
                 // user = await User.find({userName:new RegExp(data.filterData.userName,"i"), data.filterData})
-                    if(data.filterData.role_type){
-                    // console.log(parseInt(data.filterData.role_type))
-                    if(role_type.includes(parseInt(data.filterData.role_type))){
-                        user = await User.find(data.filterData).skip(page * limit).limit(limit)
-                    }else{
-                        socket.emit('searchErr',{
-                            message:'you not have permition'
-                        })
-                    }
+                if(data.filterData.role_type){
+                // console.log(parseInt(data.filterData.role_type))
+                if(role_type.includes(parseInt(data.filterData.role_type))){
+                    user = await User.find(data.filterData).skip(page * limit).limit(limit)
+                }else{
+                    socket.emit('searchErr',{
+                        message:'you not have permition'
+                    })
+                }
                 }else{
                     data.filterData.role_type = {
                         $ne : 1
