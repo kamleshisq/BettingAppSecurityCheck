@@ -1074,10 +1074,18 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     const fiveDaysAgo = new Date(currentDate);
     fiveDaysAgo.setDate(currentDate.getDate() - 5);
     let childrenUsername = []
-    let children = await User.find({parentUsers:req.currentUser._id})
-    children.map(ele => {
-        childrenUsername.push(ele.userName) 
-    })
+    if(req.currentUser.roleName == 'Operator'){
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }else{
+
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }
     let betsEventWise = await betModel.aggregate([
         {
           $match: {
@@ -3077,10 +3085,17 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     let inprogressData = await InprogreshModel.find({eventId:req.query.id})
     console.log(inprogressData, "<=== inprogressData")
     let childrenUsername = []
-    let children = await User.find({parentUsers:req.currentUser._id})
-    children.map(ele => {
-        childrenUsername.push(ele.userName) 
-    })
+    if(req.currentUser.roleName == 'Operator'){
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }else{
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }
     let betsEventWiseOpen = await betModel.aggregate([
         {
             $match: {

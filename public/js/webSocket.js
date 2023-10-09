@@ -1093,7 +1093,6 @@ socket.on('connect', () => {
         })
         $(document).on('click','#myModal .acc-form .withdrawWD',function(e){
             let modleName = "#myModal"
-            
             let form = $(modleName).find('.form-data')
             let amount = parseFloat(form.find('input[name = "amount"]').val())
             let type = form.find('input[name = "type"]').val()
@@ -1114,6 +1113,7 @@ socket.on('connect', () => {
                 form.find('#tuBalanceAfter').text((tuBalance + amount).toFixed(2))
 
             }else{
+
             }
 
         })

@@ -2922,10 +2922,18 @@ io.on('connection', (socket) => {
         }
         console.log(dataobj, "dateObj")
         let childrenUsername = []
-        let children = await User.find({parentUsers:{ $in: [me._id] }})
-        children.map(ele => {
-            childrenUsername.push(ele.userName) 
-        })
+        if(me.roleName == 'Operator'){
+            let children = await User.find({parentUsers:{ $in: [me.parent_id] }})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }else{
+            let children = await User.find({parentUsers:{ $in: [me._id] }})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+
+        }
     
     
         let betsEventWise = await Bet.aggregate([
