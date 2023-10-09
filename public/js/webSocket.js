@@ -1039,10 +1039,10 @@ socket.on('connect', () => {
         })
 
         $(document).on('keyup','#myModal .form-data input[name="amount"]',function(e){
-            let amount = $(this).val()
+            let amount = parseFloat($(this).val())
             let form = $("#myModal").find('.form-data')
-            let fromAmount = form.find('input[name="fuBalance"]').val()
-            let toAmount = form.find('input[name="tuBalance"]').val()
+            let fromAmount = parseFloat(form.find('input[name="fuBalance"]').val())
+            let toAmount = parseFloat(form.find('input[name="tuBalance"]').val())
             let type = form.find('input[name = "type"]').val()
             if(type == "deposit"){
                 form.find('#fuBlanceAfter').text(fromAmount - amount)
@@ -1059,7 +1059,7 @@ socket.on('connect', () => {
             let modleName = "#myModal"
             let form = $(modleName).find('.form-data')
             let type = form.find('input[name = "type"]').val()
-            let amount = $(this).val()
+            let amount = parseFloat($(this).val())
 
             if(type == 'deposit'){
 
@@ -1068,8 +1068,8 @@ socket.on('connect', () => {
                 form.find('.depositeWD').addClass('active')
                 let fromUSer = form.find('input[name = "toUser"]').val()
                 let toUser = form.find('input[name = "fromUser"]').val()
-                let tuBalance = form.find('input[name = "fuBalance"]').val()
-                let fuBalance = form.find('input[name = "tuBalance"]').val()
+                let tuBalance = parseFloat(form.find('input[name = "fuBalance"]').val())
+                let fuBalance = parseFloat(form.find('input[name = "tuBalance"]').val())
 
                 form.find('input[name = "type"]').val('deposit')
                 form.find('input[name = "toUser"]').attr('value',toUser)
@@ -1084,7 +1084,7 @@ socket.on('connect', () => {
         })
         $(document).on('click','#myModal .acc-form .withdrawWD',function(e){
             let modleName = "#myModal"
-            let amount = $(this).val()
+            let amount = parseFloat($(this).val())
 
             let form = $(modleName).find('.form-data')
             let type = form.find('input[name = "type"]').val()
@@ -1093,8 +1093,8 @@ socket.on('connect', () => {
                 form.find('.depositeWD').removeClass('active')
                 let fromUSer = form.find('input[name = "toUser"]').val()
                 let toUser = form.find('input[name = "fromUser"]').val()
-                let tuBalance = form.find('input[name = "fuBalance"]').val()
-                let fuBalance = form.find('input[name = "tuBalance"]').val()
+                let tuBalance = parseFloat(form.find('input[name = "fuBalance"]').val())
+                let fuBalance = parseFloat(form.find('input[name = "tuBalance"]').val())
 
                 form.find('input[name = "type"]').val('withdrawl')
                 form.find('input[name = "toUser"]').attr('value',toUser)
