@@ -1698,7 +1698,7 @@ socket.on('connect', () => {
             alert("Please try again leter")
         }else{
             alert('commission claimed successfully')
-            $('.COMMISSIONADMIN').text('Claim Commission (0555555555)')
+            $('.COMMISSIONADMIN').text('<i class="fa-solid fa-money-check-dollar"></i> &nbsp; Claim Commission (<%=unclaimCommission%>)')
         }
     })
 
