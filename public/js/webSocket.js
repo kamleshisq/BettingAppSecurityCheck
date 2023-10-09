@@ -1017,6 +1017,7 @@ socket.on('connect', () => {
             let form = $(modleName).find('.form-data')
             let userData = data.user
             let me = data.parent
+            let amount = parseFloat(form.find('input[name = "amount"]').val())
             let type = form.find('input[name = "type"]').val()
             if(type == "deposit"){
                 form.find('.depositeWD').addClass('active')
@@ -1025,7 +1026,9 @@ socket.on('connect', () => {
                 form.find('input[name = "tuBalance"]').attr('value',userData.availableBalance)
                 form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
                 form.find('input[name = "fromUser"]').attr('value',me.userName)
-                form.attr('id', userData._id);
+                form.attr('id', userData._id)
+                form.find('#fuBlanceAfter').text(me.availableBalance - amount)
+                form.find('#tuBalanceAfter').text(userData.availableBalance + amount)
             }else{
                 form.find('.withdrawWD').addClass('active')
                 form.find('input[name = "toUser"]').attr('value',me.userName)
@@ -1033,7 +1036,10 @@ socket.on('connect', () => {
                 form.find('input[name = "tuBalance"]').attr('value',me.availableBalance)
                 form.find('input[name = "clintPL"]').attr('value',me.clientPL)
                 form.find('input[name = "fromUser"]').attr('value',userData.userName)
-                form.attr('id', userData._id);
+                form.attr('id', userData._id)
+                form.find('#fuBlanceAfter').text(userData.availableBalance - amount)
+                form.find('#tuBalanceAfter').text(me.availableBalance + amount)
+
             }
             }
         })
@@ -1287,9 +1293,10 @@ socket.on('connect', () => {
             let modleName = "#myModalSE"
             let form = $(modleName).find('.form-data')
             let userData = data.user
-            console.log(userData)
             let me = data.parent
             let type = form.find('select[name = "type"]').val()
+            let amount = parseFloat(form.find('input[name = "amount"]').val())
+
             form.find('.deposite').removeClass('active')
             form.find('.withdraw').removeClass('active')
             if(userData.uplinePL >= 0){
@@ -1301,7 +1308,10 @@ socket.on('connect', () => {
                 form.find('input[name = "clintPL"]').attr('value',userData.pointsWL)
                 form.find('input[name = "fromUser"]').attr('value',me.userName)
                 form.find('input[name = "amount"]').attr('value',userData.uplinePL)
-                form.attr('id', userData._id);
+                form.attr('id', userData._id)
+                form.find('#fuBlanceAfter').text(me.availableBalance - amount)
+                form.find('#tuBalanceAfter').text(userData.availableBalance + amount)
+
             }else{
                 form.find('.withdraw').addClass('active')
                 form.find('input[name = "type"]').val("withdrawl")
@@ -1311,7 +1321,10 @@ socket.on('connect', () => {
                 form.find('input[name = "clintPL"]').attr('value',userData.pointsWL)
                 form.find('input[name = "fromUser"]').attr('value',userData.userName)
                 form.find('input[name = "amount"]').attr('value',Math.abs(userData.uplinePL))
-                form.attr('id', userData._id);
+                form.attr('id', userData._id)
+                form.find('#fuBlanceAfter').text(userData.availableBalance - amount)
+                form.find('#tuBalanceAfter').text(me.availableBalance + amount)
+
             }
             }
         })
