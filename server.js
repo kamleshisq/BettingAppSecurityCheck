@@ -4850,7 +4850,7 @@ io.on('connection', (socket) => {
                 "user_id":user._id,
                 "description": description,
                 "creditDebitamount" : DebitCreditAmount,
-                "balance" : user.availableBalance + DebitCreditAmount,
+                "balance" : user.availableBalance + parseFloat(DebitCreditAmount),
                 "date" : Date.now(),
                 "userName" : user.userName,
                 "role_type" : user.role_type,
