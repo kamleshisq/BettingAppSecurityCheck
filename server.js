@@ -4606,15 +4606,15 @@ io.on('connection', (socket) => {
                 dateFilter = {$lte: new Date(data.data.toTime)}
             }else if(data.data.toTime == ''){
                 dateFilter = {$gte: new Date(data.data.fromTime)}
-            }else if (data.data.toTime == '' && data.data.fromTime == ''){
-                dateFilter = {
-                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
-                  }
-            }else{
+            }else if (data.data.toTime != '' && data.data.fromTime != ''){
                 dateFilter = {
                     $gte: new Date(data.data.fromTime),
                     $lte: new Date(data.data.toTime)
                 }
+            }else{
+                dateFilter = {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                  }
             }
             let childrenUsername = []
             if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
