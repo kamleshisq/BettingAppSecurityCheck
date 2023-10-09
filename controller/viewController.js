@@ -3237,6 +3237,17 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
 exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
     let me = req.currentUser
     let limit = 10
+    let operationId;
+    let operationroleName;
+    if(req.currentUser.roleName == 'Operator'){
+        operationId = req.currentUser.parent_id
+        let parentUser = await User.findById(operationId)
+        operationroleName = parentUser.roleName
+    }else{
+        operationId = req.currentUser._id
+        operationroleName = req.currentUser.roleName
+
+    }
     // console.log(me)
     // let History
     // if(me.roleName === "Admin"){
@@ -3245,11 +3256,11 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
     //     History = await settlementHisory.find({userId:me._id}).sort({ date: -1 }).limit(limit)
     // }
     let filter = {}
-    if(me.roleName === "Admin"){
+    if(operationroleName == "Admin"){
         filter = {}
     }else{
         filter = {
-            userId:me._id
+            userId:operationId
         }
     }
 

@@ -3017,8 +3017,18 @@ io.on('connection', (socket) => {
         let me = data.USER
         let page = data.page;
         let limit = 10
+        let operationId;
+        let operationroleName;
+        if(req.currentUser.roleName == 'Operator'){
+            operationId = req.currentUser.parent_id
+            let parentUser = await User.findById(operationId)
+            operationroleName = parentUser.roleName
+        }else{
+            operationId = req.currentUser._id
+            operationroleName = req.currentUser.roleName
+    
+        }
         // console.log(me)
-        let History
         let filter = {}
         if(data.from_date && data.to_date){
             filter.date = {$gte:new Date(data.from_date),$lte:new Date(data.to_date)}
@@ -3028,15 +3038,10 @@ io.on('connection', (socket) => {
             filter.date = {$lte:new Date(data.to_date)}
         }
         console.log(filter)
-        if(me.roleName === "Admin"){
-            History = await settlementHistory.find(filter).sort({ date: -1 }).skip(page * limit).limit(limit)
+     
+        if(operationroleName === "Admin"){
         }else{
-            filter.userId = me._id
-            History = await settlementHistory.find(filter).sort({ date: -1 }).skip(page * limit).limit(limit)
-        }
-        if(me.roleName === "Admin"){
-        }else{
-            filter.userId = me._id
+            filter.userId = operationId
         }
         let History2 = await settlementHistory.aggregate([
             {
