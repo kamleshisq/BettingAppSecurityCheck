@@ -4,6 +4,7 @@
           <tr>
             <th>Date</th>
             <th>USer</th>
+            <th>Description</th>
             <th>Amount</th>
             <th>Bal. Before</th>
             <th>Bal. After</th>
@@ -31,6 +32,7 @@
             <tr >
                 <td><%=formattedTime%></td>
                 <td><%=accStatements[i].userName%></td>
+                <td><%=accStatements[i].description%></td>
                 <td><%=accStatements[i].creditDebitamount%></td>
                 <td><%=bal%></td>
                 <td><%=accStatements[i].balance.toFixed(2)%></td>
