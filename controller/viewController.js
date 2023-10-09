@@ -3343,7 +3343,8 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                 // userName:req.currentUser.userName,
                 description:{
                     $regex: /^Claim Commisiion/i
-                }
+                },
+                userName:{$in:childrenUsername}
             }
         },
         {
