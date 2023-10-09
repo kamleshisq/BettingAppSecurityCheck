@@ -10190,17 +10190,28 @@ socket.on('connect', () => {
             socket.emit('commissionUserLevel', {data, LOGINDATA, page:0})
         })
 
+
+        $(document).on('click', "#loadMoreUser", function(e){
+            e.preventDefault()
+            let page =  parseInt($('.pageIdUser').attr('data-pageid'));
+            let data = {}
+            data.fromTime = $('#FdateUserLevel').val()
+            data.toTime = $('#TdateUserLevel').val()
+            $('.pageIdUser').attr('data-pageid',page + 1)
+            socket.emit('commissionUserLevel', {data, LOGINDATA, page})
+        })
+
         socket.on('commissionUserLevel', async(data) => {
 
             let html = ''
-            for(let i = 0; i < data.userWiseData; i++){
+            for(let i = 0; i < data.userWiseData.length; i++){
                 html += `<tr class="tbl-data-href" data-href="/admin/commissionReportUser?User=${data.userWiseData[i]._id}">
                 <td>${data.userWiseData[i]._id}</td>
                 <td>${data.userWiseData[i].totalCommission}</td>
                 <td>${data.userWiseData[i].totalUPline}</td>
-            </tr>`
+                </tr>`
             }
-
+            console.log(html, "HTML")
             if(data.userWiseData.length != 0){
                 if(data.page == 0){
                     $('#userLevel-tbody').html(html)
@@ -10218,7 +10229,11 @@ socket.on('connect', () => {
             console.log(data)
         })
 
-
+        jQuery(document).ready(function($) {
+            $(".tbl-data-href").click(function() {
+                window.location = $(this).data("href");
+            });
+        });
     }
     
 
