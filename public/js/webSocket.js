@@ -10229,11 +10229,14 @@ socket.on('connect', () => {
             console.log(data)
         })
 
-        jQuery(document).ready(function($) {
-            $(".tbl-data-href").click(function() {
-                window.location = $(this).data("href");
-            });
-        });
+        // jQuery(document).ready(function($) {
+        //     $(".tbl-data-href").click(function() {
+        //         window.location = $(this).data("href");
+        //     });
+        // });
+        $(document).on('click', ".tbl-data-href", function(e){
+            window.location = $(this).data("href");
+        })
     }
     
 
