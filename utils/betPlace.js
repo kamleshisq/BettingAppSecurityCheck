@@ -89,7 +89,31 @@ async function placeBet(data){
       }}
 let betPlaceData = {}
 
+//FOR SPORT NAME 
+let sportName = ''
+if(data.data.spoetId == 1){
+    filtertinMatch = {
+        type : {
+            $in :['Home', "Football", 'Football/matchOdds', liveBetGame.eventData.league, liveBetGame.eventData.name]
+        }
+    }
 
+    sportName = 'Football'
+}else if (data.data.spoetId == 2){
+    filtertinMatch = {
+        type : {
+            $in :['Home', "Tennis", 'Tennis/matchOdds', liveBetGame.eventData.league, liveBetGame.eventData.name]
+        }
+    }
+    sportName = 'Tennis'
+}else if(data.data.spoetId == 4){
+    filtertinMatch = {
+        type : {
+            $in :['Home', "Cricket", 'Cricket/matchOdds', "Cricket/bookMaker", 'Cricket/fency', liveBetGame.eventData.league, liveBetGame.eventData.name]
+        }
+    }
+    sportName = 'Cricket'
+}
 //FOR BET LIMIT
     let betLimit = await betLimitModel.findOne({type:liveBetGame.eventData.name})
         if(!betLimit){
@@ -122,31 +146,7 @@ let betPlaceData = {}
         }
     }
 
-//FOR SPORT NAME 
-    let sportName = ''
-    if(data.data.spoetId == 1){
-        filtertinMatch = {
-            type : {
-                $in :['Home', "Football", 'Football/matchOdds', liveBetGame.eventData.league, liveBetGame.eventData.name]
-            }
-        }
 
-        sportName = 'Football'
-    }else if (data.data.spoetId == 2){
-        filtertinMatch = {
-            type : {
-                $in :['Home', "Tennis", 'Tennis/matchOdds', liveBetGame.eventData.league, liveBetGame.eventData.name]
-            }
-        }
-        sportName = 'Tennis'
-    }else if(data.data.spoetId == 4){
-        filtertinMatch = {
-            type : {
-                $in :['Home', "Cricket", 'Cricket/matchOdds', "Cricket/bookMaker", 'Cricket/fency', liveBetGame.eventData.league, liveBetGame.eventData.name]
-            }
-        }
-        sportName = 'Cricket'
-    }
 
 
 // FOR STAKE RANGE

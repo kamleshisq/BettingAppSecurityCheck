@@ -1,0 +1,43 @@
+<div class="data-table">
+    <table>
+      <thead>
+          <tr>
+            <th>Date</th>
+            <th>USer</th>
+            <th>Amount</th>
+            <th>Bal. Before</th>
+            <th>Bal. After</th>
+          </tr>
+      </thead>
+      <tbody class="new-body" id="cricket-tbody">
+        <%for(let i = 0; i < accStatements.length; i++){%>
+            <%
+                var timestamp = accStatements[i].date ; 
+                var date = new Date(timestamp);
+                var options = { 
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true
+              };
+              var formattedTime = date.toLocaleString('en-US', options);
+               
+            %>
+            <%
+              let bal = accStatements[i].balance - accStatements[i].creditDebitamount
+            %>
+            <tr >
+                <td><%=formattedTime%></td>
+                <td><%=accStatements[i].userName%></td>
+                <td><%=accStatements[i].creditDebitamount%></td>
+                <td><%=bal%></td>
+                <td><%=accStatements[i].balance%></td>
+            </tr>
+        <%}%>
+      </tbody>
+    </table>
+  </div>
+
+
