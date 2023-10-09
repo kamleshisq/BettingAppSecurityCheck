@@ -10056,7 +10056,7 @@ socket.on('connect', () => {
             data.fromTime = $('#FdateAccCom').val()
             data.toTime = $('#TdateAccCom').val()
             // console.log(this.id, "ID")
-            let id = this.textContent
+            let id = $('#searchUser').val()
             $('.pageIdACCComm').attr('data-pageid','1')
             document.getElementById("searchUser").value = this.textContent
             $('.wrapper').hide()
