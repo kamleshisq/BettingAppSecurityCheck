@@ -7249,14 +7249,17 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           formDataObj = Object.fromEntries(fd.entries());
           formDataObj.id = id;
           console.log(formDataObj);
+          if (formDataObj.amount == 0) {
+            alert('please enter amount greater than 0');
+          }
           // const url = window.location.href
           // const id = url.split("=")[1]
           // formDataObj.id = id
           // console.log(formDataObj)
           // let rowId = $('.rowId').attr('data-rowid')
-          _context2.next = 9;
+          _context2.next = 10;
           return (0, _debitCredit.debitCredit)(formDataObj);
-        case 9:
+        case 10:
           user = _context2.sent;
           trElements = document.querySelectorAll('tr.trtable'); // console.log(trElements)
           // console.log(user)
@@ -7269,7 +7272,7 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           // let currentUser = $('#currentUserDetails').data('currentuser')
           // updateRow(user,rowId,currentUser)
           // console.log(user)
-        case 12:
+        case 13:
         case "end":
           return _context2.stop();
       }
@@ -7291,6 +7294,9 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
           fd = new FormData(form);
           formDataObj = Object.fromEntries(fd.entries());
           formDataObj.id = id;
+          if (formDataObj.amount == 0) {
+            alert('please enter amount greater than 0');
+          }
           console.log(formDataObj);
           // const url = window.location.href
           // const id = url.split("=")[1]
@@ -7311,7 +7317,7 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
           // let currentUser = $('#currentUserDetails').data('currentuser')
           // updateRow(user,rowId,currentUser)
           // console.log(user)
-        case 8:
+        case 9:
         case "end":
           return _context3.stop();
       }
@@ -7725,7 +7731,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49935" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54887" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

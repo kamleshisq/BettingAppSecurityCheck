@@ -213,6 +213,9 @@ $(document).on('submit','.acc-form',async function(e) {
     let formDataObj = Object.fromEntries(fd.entries());
     formDataObj.id = id ;
     console.log(formDataObj)
+    if(formDataObj.amount == 0){
+        alert('please enter amount greater than 0')
+    }
     // const url = window.location.href
     // const id = url.split("=")[1]
     // formDataObj.id = id
@@ -240,6 +243,9 @@ $(document).on('submit','.Settlement-form',async function(e) {
     let fd = new FormData(form);
     let formDataObj = Object.fromEntries(fd.entries());
     formDataObj.id = id ;
+    if(formDataObj.amount == 0){
+        alert('please enter amount greater than 0')
+    }
     console.log(formDataObj)
     // const url = window.location.href
     // const id = url.split("=")[1]
