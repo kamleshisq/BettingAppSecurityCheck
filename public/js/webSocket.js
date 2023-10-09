@@ -1203,9 +1203,31 @@ socket.on('connect', () => {
             socket.emit("getUserDetaisl111", {id, dataId})
         })
 
+        $(document).on('keyup','#myModalSE .form-data input[name="amount"]',function(e){
+            let amount = parseFloat($(this).val())
+            if(amount == ''){
+                amount = 0
+            }
+            let form = $("#myModalSE").find('.form-data')
+            let fromAmount = parseFloat(form.find('input[name="fuBalance"]').val())
+            let toAmount = parseFloat(form.find('input[name="tuBalance"]').val())
+            let type = form.find('input[name = "type"]').val()
+            if(type == "deposit"){
+                form.find('#fuBlanceAfter').text(fromAmount - amount)
+                form.find('#tuBalanceAfter').text(toAmount + amount)
+            }else{
+                form.find('#fuBlanceAfter').text(fromAmount + amount)
+                form.find('#tuBalanceAfter').text(toAmount - amount)
+            }
+
+
+        })
+
         $(document).on('click','#myModalSE  .form-data  .deposite',function(e){
             let modleName = "#myModalSE"
             let form = $(modleName).find('.form-data')
+            let amount = parseInt(form.find('input[name="amount"]').val())
+
             let typeValue = form.find('input[name = "type"]').val()
             console.log(typeValue)
 
@@ -1224,11 +1246,18 @@ socket.on('connect', () => {
                 form.find('input[name = "fuBalance"]').attr('value',fuBalance)
                 form.find('input[name = "tuBalance"]').attr('value',tuBalance)
                 form.find('input[name = "fromUser"]').attr('value',fromUSer)
+                form.find('#fuBlanceAfter').text(fuBalance - amount)
+                form.find('#tuBalanceAfter').text(tuBalance + amount)
+
             }
         })
+
+        
+
         $(document).on('click','#myModalSE  .form-data  .withdraw',function(e){
             let modleName = "#myModalSE"
             let form = $(modleName).find('.form-data')
+            let amount = parseInt(form.find('input[name="amount"]').val())
             let typeValue = form.find('input[name = "type"]').val()
             console.log(typeValue)
             if(typeValue == 'deposit'){
@@ -1244,6 +1273,8 @@ socket.on('connect', () => {
                 form.find('input[name = "fuBalance"]').attr('value',fuBalance)
                 form.find('input[name = "tuBalance"]').attr('value',tuBalance)
                 form.find('input[name = "fromUser"]').attr('value',fromUSer)
+                form.find('#fuBlanceAfter').text(fuBalance - amount)
+                form.find('#tuBalanceAfter').text(tuBalance + amount)
             }else if(typeValue == 'withdrawl'){
                 
             }
