@@ -9980,7 +9980,9 @@ socket.on('connect', () => {
     if(pathname === "/admin/commissionReport"){
 
         //For EventLevel
-        
+        $('#FdateEvent,#TdateEvent').keyup(function(e){
+            console.log('WORKING')
+        })
         
 
 
