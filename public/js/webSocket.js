@@ -10117,16 +10117,16 @@ socket.on('connect', () => {
             }
             if(data.userWiseData.length != 0){
                 if(data.page == 0){
-                    $('#userLevel-tbody').html(html)
+                    $('#AccountCom-tbody').html(html)
                     document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
                 }else{
-                    $('#userLevel-tbody').append(html); 
+                    $('#AccountCom-tbody').append(html); 
                     document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
                 }
             }else{
                 document.getElementById('loadMorediveAccCom').innerHTML = ""
                 if(data.page == 0){
-                    $('#userLevel-tbody').html("NO MORE DATA ")
+                    $('#AccountCom-tbody').html("NO MORE DATA ")
                 }
             }
         })
@@ -10201,18 +10201,18 @@ socket.on('connect', () => {
             </tr>`
             }
 
-            if(data.accStatements.length != 0){
+            if(data.userWiseData.length != 0){
                 if(data.page == 0){
-                    $('#AccountCom-tbody').html(html)
-                    document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
+                    $('#userLevel-tbody').html(html)
+                    document.getElementById('loadMorediveUser').innerHTML = '<a id="loadMoreUser">Load More</a>'
                 }else{
-                    $('#AccountCom-tbody').append(html); 
-                    document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
+                    $('#userLevel-tbody').append(html); 
+                    document.getElementById('loadMorediveUser').innerHTML = '<a id="loadMoreUser">Load More</a>'
                 }
             }else{
-                document.getElementById('loadMorediveAccCom').innerHTML = ""
+                document.getElementById('loadMorediveUser').innerHTML = ""
                 if(data.page == 0){
-                    $('#AccountCom-tbody').html("NO MORE DATA ")
+                    $('#userLevel-tbody').html("NO MORE DATA ")
                 }
             }
         })
