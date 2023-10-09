@@ -181,10 +181,22 @@ io.on('connection', (socket) => {
         let user
         // const me = await User.findById(data.id)
         // console.log(data.LOGINDATA)
-        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        let roles ;
+        let operationId;
+        let operationUser;
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            operationUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+            operationId = parentUser._id
+            roles = await Role.find({role_level: {$gt:parentUser.role.role_level}});
+        }else{
+            operationUser = data.LOGINDATA.LOGINUSER
+            operationId = data.LOGINDATA.LOGINUSER._id
+            roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+        }
+
         if(Object.keys(data.filterData).length !== 0){
 
-            data.filterData.parentUsers = { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
+            data.filterData.parentUsers = { $elemMatch: { $eq: operationId } }
             let role_type =[]
             for(let i = 0; i < roles.length; i++){
                 role_type.push(roles[i].role_type)
@@ -205,7 +217,7 @@ io.on('connection', (socket) => {
                 }
                 delete data.filterData['status']
             }
-            if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
+            if(operationUser.role.role_level == 1){
                 // console.log(data.filterData)
                 // console.log(data.filterData)
                 // user = await User.find({userName:new RegExp(data.filterData.userName,"i"), data.filterData})
