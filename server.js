@@ -4610,6 +4610,66 @@ io.on('connection', (socket) => {
             console.log(err)
         }
     })
+
+
+
+    socket.on('commissionAccFilter', async(data) => {
+        // console.log(data)
+        try{
+            let dateFilter
+            if(data.data.fromTime == ''){
+                dateFilter = {$lte: new Date(data.data.toTime)}
+            }else if(data.data.toTime == ''){
+                dateFilter = {$gte: new Date(data.data.fromTime)}
+            }else{
+                dateFilter = {
+                    $gte: new Date(data.data.fromTime),
+                    $lte: new Date(data.data.toTime)
+                }
+            }
+            let childrenUsername = []
+            if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+                children.map(ele => {
+                    childrenUsername.push(ele.userName) 
+                })
+            }else{
+                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+                children.map(ele => {
+                    childrenUsername.push(ele.userName) 
+                })
+            }
+            let accStatements = await AccModel.aggregate([
+                {
+                    $match:{
+                        date: dateFilter,
+                        // userName:req.currentUser.userName,
+                        description:{
+                            $regex: /^Claim Commisiion/i
+                        },
+                        userName:{$in:childrenUsername}
+                    }
+                },
+                {
+                    $sort:{
+                        date : -1,
+                        userName : 1
+                    }
+                },
+                {
+                    $skip:(data.page * 10)
+                },
+                {
+                  $limit:10
+                }
+            ])
+
+            console.log(accStatements,"accStatements")
+        }catch(err){
+            console.log(err)
+        }
+
+    })
     
 })
 
