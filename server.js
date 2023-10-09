@@ -262,9 +262,7 @@ io.on('connection', (socket) => {
         let page = data.page;
         let limit = 10;
         let filter = {}
-        if(data.filterData.userName){
-            filter.userName = data.filterData.userName
-        }
+       
         if(data.filterData.fromDate && data.filterData.toDate){
             filter.login_time = {$gte:new Date(data.filterData.fromDate),$lte:new Date(data.filterData.toDate)}
         }else if(data.filterData.fromDate && !data.filterData.toDate){
@@ -273,27 +271,27 @@ io.on('connection', (socket) => {
             filter.login_time = {$lte:new Date(data.filterData.toDate)}
         }
         // console.log(filter)
+        let childrenUsername = []
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }else{
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }
+
+        if(data.filterData.userName){
+            filter.userName = data.filterData.userName
+        }else{
+            filter.userName = {$in:childrenUsername}
+        }
         let users = await loginlogs.aggregate([
             {
                 $match:filter
-            },
-            {
-                $lookup:{
-                    from:'users',
-                    localField:'userName',
-                    foreignField:'userName',
-                    as:'userDetails'
-                }
-            },
-            {
-                $unwind:'$userDetails'
-            },
-            {
-                $match:{
-                    'userDetails.isActive':true,
-                    'userDetails.roleName':{$ne:'Admin'},
-                    'userDetails.parentUsers':{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}},
-                }
             },
             {
                 $sort:{
