@@ -1046,10 +1046,10 @@ socket.on('connect', () => {
             let type = form.find('input[name = "type"]').val()
             if(type == "deposit"){
                 form.find('#fuBlanceAfter').text(fromAmount - amount)
-                form.find('#tuBalanceAfter').text(fromAmount + amount)
+                form.find('#tuBalanceAfter').text(toAmount + amount)
             }else{
                 form.find('#fuBlanceAfter').text(fromAmount + amount)
-                form.find('#tuBalanceAfter').text(fromAmount - amount)
+                form.find('#tuBalanceAfter').text(toAmount - amount)
             }
 
 
