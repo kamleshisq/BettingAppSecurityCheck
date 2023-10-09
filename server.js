@@ -4612,7 +4612,7 @@ io.on('connection', (socket) => {
             let accStatements
             if(data.id){
                 // let user = await User.findById(data.id)
-                console.log(user, "WORKING")
+                // console.log(user, "WORKING")
                 accStatements = await AccModel.aggregate([
                     {
                         $match:{
