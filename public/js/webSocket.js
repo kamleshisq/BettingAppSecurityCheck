@@ -1049,6 +1049,7 @@ socket.on('connect', () => {
             if($(this).val() == ""){
                 amount = 0
             }
+            console.log(amount)
             let form = $("#myModal").find('.form-data')
             let fromAmount = parseFloat(form.find('input[name="fuBalance"]').val())
             let toAmount = parseFloat(form.find('input[name="tuBalance"]').val())
