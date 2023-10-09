@@ -4599,7 +4599,7 @@ io.on('connection', (socket) => {
                 }
             }else{
                 dateFilter = {
-                    $gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) 
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000)
                   }
             }
             console.log(dateFilter)
