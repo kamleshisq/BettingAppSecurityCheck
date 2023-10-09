@@ -5450,7 +5450,7 @@ socket.on('connect', () => {
                 let fd = new FormData(form);
                 let data = Object.fromEntries(fd.entries());
                 // socket.emit('editMyPassword',{data,LOGINDATA})
-                console.log(data)
+                console.log(data, "DATA123")
             })
     }
 
