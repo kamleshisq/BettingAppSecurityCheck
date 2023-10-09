@@ -1283,7 +1283,17 @@ io.on('connection', (socket) => {
         let page = data.page;
         let childrenUsername = []
         let userFilter = {};
-        userFilter.parentUsers = data.LOGINDATA.LOGINUSER._id
+        let operatorId;
+        let operatoruserName;
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            operatorId = data.LOGINDATA.LOGINUSER.parent_id
+            let parentUser = await User.findById(operatorId)
+            operatoruserName = parentUser.userName
+        }else{
+            operatorId = data.LOGINDATA.LOGINUSER._id
+            operatoruserName = data.LOGINDATA.LOGINUSER.userName
+        }
+        userFilter.parentUsers = operatorId
         if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
             userFilter.userName = data.filterData.userName
         }
