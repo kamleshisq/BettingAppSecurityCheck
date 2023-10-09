@@ -3901,7 +3901,13 @@ io.on('connection', (socket) => {
             childrenUsername.push(ele.userName) 
         })
         let role_type = []
-        let roles = await Role.find({role_level: {$gt:me.role.role_level}});
+        let roles
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            let parentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+            roles = await Role.find({role_level: {$gt:parentUser.role.role_level}});
+        }else{
+            roles = await Role.find({role_level: {$gt:me.role.role_level}});
+        }
         for(let i = 0; i < roles.length; i++){
             role_type.push(roles[i].role_type)
         }
@@ -4034,14 +4040,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on('matchOdds',async(data)=>{
-        let me = data.USER
         let page = data.page;
         let limit = 10
-        const roles = await Role.find({role_level: {$gt:me.role.role_level}});
-        let role_type =[]
-        for(let i = 0; i < roles.length; i++){
-            role_type.push(roles[i].role_type)
-        }
         // console.log(me)
 
         let filter = {}
