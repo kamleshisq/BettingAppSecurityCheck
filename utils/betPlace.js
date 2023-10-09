@@ -83,12 +83,13 @@ async function placeBet(data){
                     if (marketData.marketId === data.data.market) {
                         marketDetails =  marketData;
                         break;
-                      }
+                    }
                 }
             }
-      }}
-let betPlaceData = {}
-
+        }}
+        let betPlaceData = {}
+        
+        let sportName = ''
 
 //FOR BET LIMIT
     let betLimit = await betLimitModel.findOne({type:liveBetGame.eventData.name})
@@ -123,7 +124,6 @@ let betPlaceData = {}
     }
 
 //FOR SPORT NAME 
-    let sportName = ''
     if(data.data.spoetId == 1){
         filtertinMatch = {
             type : {
