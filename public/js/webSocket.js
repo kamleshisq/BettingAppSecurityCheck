@@ -9980,12 +9980,20 @@ socket.on('connect', () => {
     if(pathname === "/admin/commissionReport"){
 
         //For EventLevel
-        $(document).ready(function(){
-            $('#FdateEvent, #TdateEvent').keyup(function(e){
-                e.preventDefault()
-                console.log('WORKING')
-            })
-        })
+        document.addEventListener('DOMContentLoaded', function() {
+            var FdateEvent = document.getElementById('FdateEvent');
+            var TdateEvent = document.getElementById('TdateEvent');
+        
+            FdateEvent.addEventListener('keyup', function(e) {
+                e.preventDefault();
+                console.log('WORKING');
+            });
+        
+            TdateEvent.addEventListener('keyup', function(e) {
+                e.preventDefault();
+                console.log('WORKING');
+            });
+        });
         
 
 
