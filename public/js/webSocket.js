@@ -10043,8 +10043,9 @@ socket.on('connect', () => {
             let data = {}
             data.fromTime = $('#FdateAccCom').val()
             data.toTime = $('#TdateAccCom').val()
+            let id = $('#searchUser').val()
             $('.pageIdACCComm').attr('data-pageid','1')
-            socket.emit('commissionAccFilter', {data, LOGINDATA, page:0})
+            socket.emit('commissionAccFilter', {data, LOGINDATA, page:0, id})
         });
 
 
@@ -10055,14 +10056,24 @@ socket.on('connect', () => {
             data.fromTime = $('#FdateAccCom').val()
             data.toTime = $('#TdateAccCom').val()
             // console.log(this.id, "ID")
-            let id = this.id
+            let id = this.textContent
             $('.pageIdACCComm').attr('data-pageid','1')
             document.getElementById("searchUser").value = this.textContent
             $('.wrapper').hide()
             socket.emit('commissionAccFilter', {data, LOGINDATA, page:0, id})
-
         })
 
+        $(document).on('click', "#loadMoreAccCom", function(e){
+            e.preventDefault()
+            let data = {}
+            data.fromTime = $('#FdateAccCom').val()
+            data.toTime = $('#TdateAccCom').val()
+            // console.log(this.id, "ID")
+            let id = this.textContent
+            let page = parseInt($('.pageIdUser').attr('data-pageid'));
+            $('.pageIdACCComm').attr('data-pageid',page + 1)
+            socket.emit('commissionAccFilter', {data, LOGINDATA, page, id})
+        })
 
         socket.on('commissionAccFilter', async(data) => {
             let html = "";
@@ -10091,8 +10102,10 @@ socket.on('connect', () => {
             }
             if(data.page == 0){
                 $('#AccountCom-tbody').html(html)
+                document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
             }else{
                 $('#AccountCom-tbody').append(html); 
+                document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
             }
         })
 
