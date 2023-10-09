@@ -1234,7 +1234,7 @@ socket.on('connect', () => {
         $(document).on('click','#myModalSE  .form-data  .deposite',function(e){
             let modleName = "#myModalSE"
             let form = $(modleName).find('.form-data')
-            let amount = parseInt(form.find('input[name="amount"]').val())
+            let amount = parseFloat(form.find('input[name="amount"]').val())
 
             let typeValue = form.find('input[name = "type"]').val()
             console.log(typeValue)
@@ -1265,7 +1265,7 @@ socket.on('connect', () => {
         $(document).on('click','#myModalSE  .form-data  .withdraw',function(e){
             let modleName = "#myModalSE"
             let form = $(modleName).find('.form-data')
-            let amount = parseInt(form.find('input[name="amount"]').val())
+            let amount = parseFloat(form.find('input[name="amount"]').val())
             let typeValue = form.find('input[name = "type"]').val()
             console.log(typeValue)
             if(typeValue == 'deposit'){
