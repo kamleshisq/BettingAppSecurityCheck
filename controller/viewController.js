@@ -79,7 +79,18 @@ exports.userTable = catchAsync(async(req, res, next) => {
     let id = req.query.id;
     let page = req.query.page;
     let urls;
-    if(id && id != req.currentUser.parent_id){
+    let roles1
+    let operationparentId;
+    if(req.currentUser.roleName == 'Operator'){
+        let parentUser = await User.findById(req.currentUser.parent_id)
+        roles1 = await Role.find({role_level:{$gt:parentUser.role.role_type}}).sort({role_level:1});
+        operationparentId = parentUser.parent_id
+    }else{
+        roles1 = await Role.find({role_level:{$gt:req.currentUser.role.role_type}}).sort({role_level:1});
+        operationparentId = req.currentUser.parent_id
+
+    }
+    if(id && id != operationparentId){
         var isValid = mongoose.Types.ObjectId.isValid(id)
 
         if(!isValid){
@@ -129,14 +140,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
           );
         });
     });
-    let roles1
-    if(req.currentUser.roleName == 'Operator'){
-        let parentUser = await User.findById(req.currentUser.parent_id)
-        roles1 = await Role.find({role_level:{$gt:parentUser.role.role_type}}).sort({role_level:1});
-    }else{
-        roles1 = await Role.find({role_level:{$gt:req.currentUser.role.role_type}}).sort({role_level:1});
-
-    }
+  
     const data = await Promise.all(requests);
     if(data[0].status == 'Error'){
         return res.redirect('/admin/userManagement')
