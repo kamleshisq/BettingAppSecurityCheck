@@ -964,7 +964,7 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
     })
 
 exports.plreport = catchAsync(async(req, res, next) => {
-
+    let currentUser = req.currentUser
     let users;
     if(req.currentUser.roleName == 'Operator'){
         users = await User.find({parentUsers:req.currentUser.parent_id})
