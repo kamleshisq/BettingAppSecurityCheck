@@ -1246,8 +1246,8 @@ socket.on('connect', () => {
                 form.find('.withdraw').removeClass('active')
                 let fromUSer = form.find('input[name = "toUser"]').val()
                 let toUser = form.find('input[name = "fromUser"]').val()
-                let tuBalance = form.find('input[name = "fuBalance"]').val()
-                let fuBalance = form.find('input[name = "tuBalance"]').val()
+                let tuBalance = parseFloat(form.find('input[name = "fuBalance"]').val())
+                let fuBalance = parseFloat(form.find('input[name = "tuBalance"]').val())
                 
                 form.find('input[name = "type"]').val('deposit')
                 form.find('input[name = "toUser"]').attr('value',toUser)
@@ -1273,8 +1273,8 @@ socket.on('connect', () => {
                 form.find('.withdraw').addClass('active')
                 let fromUSer = form.find('input[name = "toUser"]').val()
                 let toUser = form.find('input[name = "fromUser"]').val()
-                let tuBalance = form.find('input[name = "fuBalance"]').val()
-                let fuBalance = form.find('input[name = "tuBalance"]').val()
+                let tuBalance = parseFloat(form.find('input[name = "fuBalance"]').val())
+                let fuBalance = parseFloat(form.find('input[name = "tuBalance"]').val())
 
                 form.find('input[name = "type"]').val('withdrawl')
                 form.find('input[name = "toUser"]').attr('value',toUser)
