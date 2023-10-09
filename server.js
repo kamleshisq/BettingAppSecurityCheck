@@ -731,91 +731,64 @@ io.on('connection', (socket) => {
         let dataM 
         // console.log(data.filterData)
         // console.log(data.LOGINDATA.LOGINUSER.userName)
-        let operatorId;
+        let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-            operatorId = data.LOGINDATA.LOGINUSER.parent_id
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
         }else{
-            operatorId = data.LOGINDATA.LOGINUSER._id
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
         }
-        User.aggregate([
+        let games = await Bet.aggregate([
             {
-              $match: {
-                parentUsers: { $elemMatch: { $eq: operatorId } }
-              }
+                $match: {
+                userName: { $in: childrenUsername },
+                status: {$ne:"OPEN"}
+                }
             },
             {
-              $group: {
-                _id: null,
-                userIds: { $push: '$userName' } 
-              }
+                $group:{
+                    _id:{
+                        userName:'$userName',
+                        gameId: '$event'
+                    },
+                    gameCount:{$sum:1},
+                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:'$_id.userName',
+                    gameCount:{$sum:1},
+                    betCount:{$sum:'$gameCount'},
+                    loss:{$sum:'$loss'},
+                    won:{$sum:'$won'},
+                    returns:{$sum:'$returns'}
+    
+                }
+            },
+            {
+                $sort: {
+                  _id: 1,
+                  returns: 1
+                }
+            },
+            {
+                $skip:(page * limit)
+            },
+            {
+                $limit:limit
             }
           ])
-            .then((userResult) => {
-              const userIds = userResult.length > 0 ? userResult[0].userIds : [];
-                if(data.filterData.userName === data.LOGINDATA.LOGINUSER.userName){
-                    dataM = {
-                        status:{$ne:"OPEN"},
-                        userName: { $in: userIds }
-                    }
-                }else{
-                    dataM = {
-                        userName: data.filterData.userName,
-                        status: {$ne:"OPEN"}
-                    }
-                }
-              Bet.aggregate([
-                {
-                  $match:dataM
-                },
-                {
-                    $group:{
-                        _id:{
-                            userName:'$userName',
-                            gameId: '$event'
-                        },
-                        gameCount:{$sum:1},
-                        loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
-                        won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
-                        returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
-                        
-                    }
-                },
-                {
-                    $group:{
-                        _id:'$_id.userName',
-                        gameCount:{$sum:1},
-                        betCount:{$sum:'$gameCount'},
-                        loss:{$sum:'$loss'},
-                        won:{$sum:'$won'},
-                        returns:{$sum:'$returns'}
-        
-                    }
-                },
-                {
-                    $sort: {
-                      _id: 1,
-                      returns: 1
-                    }
-                },
-                {
-                    $skip:(page * limit)
-                },
-                {
-                    $limit:limit
-                }
-              ])
-                .then((betResult) => {
-                //   socket.emit("aggreat", betResult)
-                let games = betResult
-                socket.emit('gameReport',{games,page})
-                })
-                .catch((error) => {
-                  console.error(error);
-                });
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+
+        socket.emit('gameReport',{games,page})
         })
 
     socket.on("searchEvents", async(data) => {
