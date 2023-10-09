@@ -33,6 +33,7 @@
                 <th>Market Name</th>
                 <th>Commission</th>
                 <th>Commission Status</th>
+                <th>Claim Date</th>
             </tr>
         </thead>
         <tbody class="new-body">
@@ -57,6 +58,24 @@
                     <td><%=eventData[i].marketName%></td>
                     <td><%=eventData[i].commission%></td>
                     <td><%=eventData[i].commissionStatus%></td>
+                    <%if(eventData[i].claimeDate){%>
+                      <%
+                          var timestamp = eventData[i].claimeDate ; 
+                          var date = new Date(timestamp);
+                          var options = { 
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          hour12: true
+                      };
+                      var ClaimDate = date.toLocaleString('en-US', options);
+                      %>
+                      <td><%=ClaimDate%><td>
+                    <%}else{%>
+                      <td>-<td>
+                    <%}%>
                 </tr>
             <%}%>
         </tbody>
