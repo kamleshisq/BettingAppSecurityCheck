@@ -257,7 +257,7 @@ io.on('connection', (socket) => {
                 }
             }
         }else{
-            user = await User.find({parent_id:data.id}).skip(page * limit).limit(limit)
+            user = await User.find({parent_id:operationId}).skip(page * limit).limit(limit)
            }
         let currentUser = data.LOGINDATA.LOGINUSER
 
