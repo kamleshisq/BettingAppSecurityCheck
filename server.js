@@ -2724,7 +2724,7 @@ io.on('connection', (socket) => {
             delete data.filterData.betType; 
         }
         if(data.filterData.fromDate && data.filterData.toDate){
-            data.filterData.date = {$gte : new Date(data.filterData.fromDate),$lte : new Date(new Date(data.filterData.toDate))}
+            data.filterData.date = {$gte : new Date(data.filterData.fromDate),$lte : new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60 * 60 * 1000)-1))}
             delete data.filterData.fromDate;
             delete data.filterData.toDate;
         }else{

@@ -10115,18 +10115,18 @@ socket.on('connect', () => {
               <td>${data.accStatements[i].balance.toFixed(2)}</td>
           </tr>`
             }
-            if(data.userWiseData.length != 0){
+            if(data.accStatements.length != 0){
                 if(data.page == 0){
-                    $('#userLevel-tbody').html(html)
+                    $('#AccountCom-tbody').html(html)
                     document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
                 }else{
-                    $('#userLevel-tbody').append(html); 
+                    $('#AccountCom-tbody').append(html); 
                     document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
                 }
             }else{
                 document.getElementById('loadMorediveAccCom').innerHTML = ""
                 if(data.page == 0){
-                    $('#userLevel-tbody').html("NO MORE DATA ")
+                    $('#AccountCom-tbody').html("NO MORE DATA ")
                 }
             }
         })
@@ -10191,30 +10191,7 @@ socket.on('connect', () => {
         })
 
         socket.on('commissionUserLevel', async(data) => {
-            // console.log(data)
-            let html = ''
-            for(let i = 0; i < data.userWiseData; i++){
-                html += `<tr class="tbl-data-href" data-href="/admin/commissionReportUser?User=${data.userWiseData[i]._id}">
-                <td>${data.userWiseData[i]._id}</td>
-                <td>${data.userWiseData[i].totalCommission}</td>
-                <td>${data.userWiseData[i].totalUPline}</td>
-            </tr>`
-            }
-
-            if(data.accStatements.length != 0){
-                if(data.page == 0){
-                    $('#AccountCom-tbody').html(html)
-                    document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
-                }else{
-                    $('#AccountCom-tbody').append(html); 
-                    document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
-                }
-            }else{
-                document.getElementById('loadMorediveAccCom').innerHTML = ""
-                if(data.page == 0){
-                    $('#AccountCom-tbody').html("NO MORE DATA ")
-                }
-            }
+            console.log(data)
         })
 
 
@@ -10449,7 +10426,7 @@ socket.on('connect', () => {
         toDate = $('#toDate').val()
         filterData.fromDate = fromDate;
         filterData.toDate = toDate;
-
+      
 
         $('#Sport,#market,#fromDate,#toDate,#result').change(function(){
             $('.pageId').attr('data-pageid','1')
@@ -10471,8 +10448,6 @@ socket.on('connect', () => {
             filterData.betType = sport
             filterData.marketName = market
             filterData.alertStatus = result
-            filterData.fromDate = fromDate;
-            filterData.toDate = toDate;    
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             socket.emit('AlertBet',data)
