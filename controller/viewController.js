@@ -1519,54 +1519,42 @@ exports.getBetAlertPage = catchAsync(async(req, res, next) => {
         var day = date.getDate().toString().padStart(2, '0');
         return year + "-" + month + "-" + day;
     }
-    User.aggregate([
+    let childrenUsername = []
+    if(req.currentUser.roleName == "Operator"){
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }else{
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }
+    let betResult = await betModel.aggregate([
         {
           $match: {
-            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
+            userName: { $in: childrenUsername },
+            alertStatus:{$in:['ALERT','CANCLE','ACCEPT']},
+            date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
           }
         },
         {
-          $group: {
-            _id: null,
-            userIds: { $push: '$_id' } 
-          }
-        }
+            $sort:{
+                date: -1
+            }
+        },
+        { $limit : 10 }
       ])
-        .then((userResult) => {
-          const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-      
-          betModel.aggregate([
-            {
-              $match: {
-                userId: { $in: userIds },
-                alertStatus:{$in:['ALERT','CANCLE','ACCEPT']},
-                date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
-              }
-            },
-            {
-                $sort:{
-                    date: -1
-                }
-            },
-            { $limit : 10 }
-          ])
-            .then((betResult) => {
-            //   socket.emit("aggreat", betResult)
-              let me = req.currentUser
-              res.status(200).render("./alertBet/alertbet", {
-                title:"Alert Bet",
-                bets:betResult,
-                me,
-                currentUser:me
-            })
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        })
-        .catch((error) => {
-          console.error(error);
-        }); 
+    //   socket.emit("aggreat", betResult)
+    let me = req.currentUser
+        res.status(200).render("./alertBet/alertbet", {
+        title:"Alert Bet",
+        bets:betResult,
+        me,
+        currentUser:me
+    })
+          
 })
 
 exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
