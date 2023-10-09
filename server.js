@@ -4585,7 +4585,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('commissionAccFilter', async(data) => {
-        // console.log(data.data, data.id)
+        console.log(data.data, data.id)
         try{
             let dateFilter
             if(data.data.fromTime == '' && data.data.toTime != ''){
@@ -4602,7 +4602,7 @@ io.on('connection', (socket) => {
                     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
                   }
             }
-            // console.log(dateFilter)
+            console.log(dateFilter)
             let childrenUsername = []
             if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
                 let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
@@ -4672,7 +4672,7 @@ io.on('connection', (socket) => {
         }
 
 
-            // console.log(accStatements,"accStatements")
+            console.log(accStatements,"accStatements")
             socket.emit("commissionAccFilter", {accStatements, page:data.page})
         }catch(err){
             console.log(err)
