@@ -1,3 +1,4 @@
+const { date } = require("joi");
 
 const socket = io();
 socket.on('disconnect', () => {
@@ -5438,6 +5439,19 @@ socket.on('connect', () => {
                 }
             })
 
+            $(document).on('click', ".cancel-timelyVoide", function(e){
+                let form = $("#myModal2").find('.form-data')
+                form.attr('id', this.id)
+            })
+
+            $(document).on('submit', '.timely-voideBet', function(e){
+                e.preventDefault() 
+                let form = $(this)[0];
+                let fd = new FormData(form);
+                let data = Object.fromEntries(fd.entries());
+                // socket.emit('editMyPassword',{data,LOGINDATA})
+                console.log(data, "DATA123")
+            })
     }
 
 
