@@ -702,7 +702,7 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
       ])
         .then((userResult) => {
           const userIds = userResult.length > 0 ? userResult[0].userIds : [];
-      
+      console.log(userIds,"==>game report username")
           betModel.aggregate([
             {
               $match: {
