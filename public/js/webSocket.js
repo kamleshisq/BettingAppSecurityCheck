@@ -1017,7 +1017,7 @@ socket.on('connect', () => {
             let form = $(modleName).find('.form-data')
             let userData = data.user
             let me = data.parent
-            let amount = parseFloat(form.find('input[name = "amount"]').val()))
+            let amount = parseFloat(form.find('input[name = "amount"]').val())
             let type = form.find('input[name = "type"]').val()
             if(type == "deposit"){
                 form.find('.depositeWD').addClass('active')
@@ -1210,7 +1210,7 @@ socket.on('connect', () => {
         })
 
         $(document).on('keyup','#myModalSE .form-data input[name="amount"]',function(e){
-            let amount = parseFloat($(this).val()))
+            let amount = parseFloat($(this).val())
             console.log(amount,"==>amount")
             if($(this).val() == ""){
                 amount = 0
