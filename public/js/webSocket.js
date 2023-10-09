@@ -10193,7 +10193,7 @@ socket.on('connect', () => {
         socket.on('commissionUserLevel', async(data) => {
 
             let html = ''
-            for(let i = 0; i < data.userWiseData; i++){
+            for(let i = 0; i < data.userWiseData.length; i++){
                 html += `<tr class="tbl-data-href" data-href="/admin/commissionReportUser?User=${data.userWiseData[i]._id}">
                 <td>${data.userWiseData[i]._id}</td>
                 <td>${data.userWiseData[i].totalCommission}</td>
