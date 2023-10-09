@@ -1038,6 +1038,10 @@ socket.on('connect', () => {
             }
         })
 
+        $(document).on('change','#myModal .form-data input[name="amount"]',function(e){
+            console.log($(this).val())
+        })
+
         $(document).on('click','#myModal .acc-form .depositeWD',function(e){
             let modleName = "#myModal"
             let form = $(modleName).find('.form-data')
