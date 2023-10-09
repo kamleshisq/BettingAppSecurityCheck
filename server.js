@@ -3020,12 +3020,12 @@ io.on('connection', (socket) => {
         let operationId;
         let operationroleName;
         if(req.currentUser.roleName == 'Operator'){
-            operationId = req.currentUser.parent_id
+            operationId = me.parent_id
             let parentUser = await User.findById(operationId)
             operationroleName = parentUser.roleName
         }else{
-            operationId = req.currentUser._id
-            operationroleName = req.currentUser.roleName
+            operationId = me._id
+            operationroleName = me.roleName
     
         }
         // console.log(me)
