@@ -3495,7 +3495,7 @@ io.on('connection', (socket) => {
               }
         ])
         if(user){
-            if(commissionAmount[0].totalCommission > 0){
+            if(commissionAmount.length != 0 && commissionAmount[0].totalCommission > 0){
                 try{
                     console.log(commissionAmount[0].totalCommission, "COMMISSIONDATA")
                     let commission = commissionAmount[0].totalCommission
@@ -4308,7 +4308,7 @@ io.on('connection', (socket) => {
         ])
         console.log(commissionAmount)
         if(user){
-            if(commissionAmount && commissionAmount[0].totalCommission > 0){
+            if(commissionAmount.length != 0 && commissionAmount[0].totalCommission > 0){
                 try{
                     let commission = commissionAmount[0].totalCommission
                     await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:commission}})
