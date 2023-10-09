@@ -9978,23 +9978,12 @@ socket.on('connect', () => {
     }
 
     if(pathname === "/admin/commissionReport"){
+
         //For EventLevel
-        console.log("WORKING", 45454545455555555555555555)
-        document.addEventListener('DOMContentLoaded', function() {
-            var FdateEvent = document.getElementById('FdateEvent');
-            var TdateEvent = document.getElementById('TdateEvent');
-        
-            FdateEvent.addEventListener('keyup', function(e) {
-                e.preventDefault();
-                console.log('WORKING');
-            });
-        
-            TdateEvent.addEventListener('keyup', function(e) {
-                e.preventDefault();
-                console.log('WORKING');
-            });
-        });
-        
+        $(document).on('keyup', "#FdateEvent,#TdateEvent", function(e){
+            e.preventDefault()
+            console.log('Working')
+        })
 
 
     }
