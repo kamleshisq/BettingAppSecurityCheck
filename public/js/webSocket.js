@@ -1044,7 +1044,7 @@ socket.on('connect', () => {
             }
         })
 
-        $(document).on('change','#myModal .form-data input[name="amount"]',function(e){
+        $(document).on('change keyup','#myModal .form-data input[name="amount"]',function(e){
             let amount = parseFloat($(this).val())
             if($(this).val() == ""){
                 amount = 0
