@@ -3469,14 +3469,15 @@ io.on('connection', (socket) => {
                 try{
                     console.log(commissionAmount[0].totalCommission, "COMMISSIONDATA")
                     let commission = commissionAmount[0].totalCommission
-                    await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:commission}})
+                    user = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:commission}})
                     let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{availableBalance: -commission}})
+                    // console.log(user)
                     let desc1 = `Claim Commisiion`
                     let desc2 = `Claim Commisiion of chiled user ${user.userName}`
                     let childdata = {
                         user_id:data.LOGINDATA.LOGINUSER._id,
                         description : desc1,
-                        creditDebitamount : user.commission,
+                        creditDebitamount : commission,
                         balance : user.availableBalance + commission,
                         date : Date.now(),
                         userName : user.userName,
@@ -3485,7 +3486,7 @@ io.on('connection', (socket) => {
                     let perentData = {
                         user_id:data.LOGINDATA.LOGINUSER.parent_id,
                         description : desc2,
-                        creditDebitamount : parenet.commission,
+                        creditDebitamount : -commission,
                         balance : parenet.availableBalance - commission,
                         date : Date.now(),
                         userName : parenet.userName,
