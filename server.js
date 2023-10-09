@@ -4590,7 +4590,7 @@ io.on('connection', (socket) => {
             let dateFilter
             if(data.data.fromTime == '' && data.data.toTime != ''){
                 dateFilter = {$lte: new Date(data.data.toTime)}
-            }else if(data.data.toTime == '' && data.data.fromTime == ''){
+            }else if(data.data.toTime == '' && data.data.fromTime != ''){
                 dateFilter = {$gte: new Date(data.data.fromTime)}
             }else if (data.data.toTime != '' && data.data.fromTime != ''){
                 dateFilter = {
@@ -4598,7 +4598,7 @@ io.on('connection', (socket) => {
                     $lte: new Date(data.data.toTime)
                 }
             }else{
-                console.log(new Date(), 7 * 24 * 60 * 60 * 1000)
+                // console.log(new Date(), 7 * 24 * 60 * 60 * 1000)
                 dateFilter = {
                     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000)
                   }
