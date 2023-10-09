@@ -186,7 +186,7 @@ io.on('connection', (socket) => {
         let operationUser;
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
             operationUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
-            operationId = parentUser._id
+            operationId = operationUser._id
             roles = await Role.find({role_level: {$gt:parentUser.role.role_level}});
         }else{
             operationUser = data.LOGINDATA.LOGINUSER
