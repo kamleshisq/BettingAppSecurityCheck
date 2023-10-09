@@ -3603,7 +3603,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('UerBook', async(data) => {
-        console.log(data)
+        // console.log(data)
         let users = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id,role_type:2})
        
         try{
@@ -3710,6 +3710,8 @@ io.on('connection', (socket) => {
                         }
                     }
                 ]);
+
+                console.log(Bets, "Bets")
                 let sumOfTeamA = 0
                 let sumOfTeamB = 0
                 let teamA;
@@ -4341,9 +4343,10 @@ io.on('connection', (socket) => {
                     console.log(err)
                     socket.emit("claimCommissionAdmin", "error")
                 }
-            }else{
-                socket.emit("claimCommissionAdmin", "Success")
             }
+            // else{
+            //     socket.emit("claimCommissionAdmin", "Success")
+            // }
 
            
         }else{
