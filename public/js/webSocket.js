@@ -10115,7 +10115,7 @@ socket.on('connect', () => {
               <td>${data.accStatements[i].balance.toFixed(2)}</td>
           </tr>`
             }
-            if(data.userWiseData.length != 0){
+            if(data.accStatements.length != 0){
                 if(data.page == 0){
                     $('#AccountCom-tbody').html(html)
                     document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
@@ -10191,7 +10191,7 @@ socket.on('connect', () => {
         })
 
         socket.on('commissionUserLevel', async(data) => {
-            // console.log(data)
+
             let html = ''
             for(let i = 0; i < data.userWiseData; i++){
                 html += `<tr class="tbl-data-href" data-href="/admin/commissionReportUser?User=${data.userWiseData[i]._id}">
@@ -10215,6 +10215,7 @@ socket.on('connect', () => {
                     $('#userLevel-tbody').html("NO MORE DATA ")
                 }
             }
+            console.log(data)
         })
 
 
@@ -10447,17 +10448,9 @@ socket.on('connect', () => {
         let filterData = {}
         fromDate = $('#fromDate').val()
         toDate = $('#toDate').val()
-        if(fromDate != ''  && toDate != '' ){
-            filterData.date = {$gte : fromDate,$lte : new Date(new Date(toDate).getTime() + ((24 * 60 * 60 * 1000)-1))}
-        }else{
-
-            if(fromDate != '' ){
-                filterData.date = {$gte : fromDate}
-            }
-            if(toDate != '' ){
-                filterData.date = {$lte : new Date(new Date(toDate).getTime() + ((24 * 60 * 60 * 1000)-1))}
-            }
-        }
+        filterData.fromDate = fromDate;
+        filterData.toDate = toDate;
+      
 
         $('#Sport,#market,#fromDate,#toDate,#result').change(function(){
             $('.pageId').attr('data-pageid','1')
