@@ -1046,10 +1046,10 @@ socket.on('connect', () => {
             let type = form.find('input[name = "type"]').val()
             if(type == "deposit"){
                 form.find('#fuBlanceAfter').text(fromAmount - amount)
-                form.find('#tuBalanceAfter').text(fromAmount + amount)
+                form.find('#tuBalanceAfter').text(toAmount + amount)
             }else{
                 form.find('#fuBlanceAfter').text(fromAmount + amount)
-                form.find('#tuBalanceAfter').text(fromAmount - amount)
+                form.find('#tuBalanceAfter').text(toAmount - amount)
             }
 
 
@@ -1059,6 +1059,8 @@ socket.on('connect', () => {
             let modleName = "#myModal"
             let form = $(modleName).find('.form-data')
             let type = form.find('input[name = "type"]').val()
+            let amount = $(this).val()
+
             if(type == 'deposit'){
 
             }else{
@@ -1074,11 +1076,16 @@ socket.on('connect', () => {
                 form.find('input[name = "fuBalance"]').attr('value',fuBalance)
                 form.find('input[name = "tuBalance"]').attr('value',tuBalance)
                 form.find('input[name = "fromUser"]').attr('value',fromUSer)
+                form.find('#fuBlanceAfter').text(fuBalance - amount)
+                form.find('#tuBalanceAfter').text(tuBalance + amount)
+
             }
 
         })
         $(document).on('click','#myModal .acc-form .withdrawWD',function(e){
             let modleName = "#myModal"
+            let amount = $(this).val()
+
             let form = $(modleName).find('.form-data')
             let type = form.find('input[name = "type"]').val()
             if(type == 'deposit'){
@@ -1094,6 +1101,9 @@ socket.on('connect', () => {
                 form.find('input[name = "fuBalance"]').attr('value',fuBalance)
                 form.find('input[name = "tuBalance"]').attr('value',tuBalance)
                 form.find('input[name = "fromUser"]').attr('value',fromUSer)
+                form.find('#fuBlanceAfter').text(fuBalance - amount)
+                form.find('#tuBalanceAfter').text(tuBalance + amount)
+
             }else{
             }
 
