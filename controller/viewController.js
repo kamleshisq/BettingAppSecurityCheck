@@ -680,11 +680,12 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
 exports.gameReportPage = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
     let operatorId;
-    if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-        operatoruserName = parentUser.userName
+    if(req.currentUser.roleName == 'Operator'){
+        operatorId = req.currentUser.parent_id
     }else{
-        operatorId = data.LOGINDATA.LOGINUSER._id
+        operatorId = req.currentUser._id
     }
+
 
     User.aggregate([
         {
