@@ -10045,6 +10045,38 @@ socket.on('connect', () => {
             socket.emit('commissionAccFilter', {data, LOGINDATA, page:0})
         })
 
+
+        socket.on('commissionAccFilter', async(data) => {
+            let html = "";
+            for(let i = 0; i < data.accStatements; i++){
+                var timestamp = data.accStatements[i].date ; 
+                var date = new Date(timestamp);
+                var options = { 
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true
+              };
+              var formattedTime = date.toLocaleString('en-US', options);
+              let bal = (data.accStatements[i].balance - data.accStatements[i].creditDebitamount).toFixed(2)
+              html += `<tr >
+              <td>${formattedTime}</td>
+              <td>${data.accStatements[i].userName}</td>
+              <td>${data.accStatements[i].description}</td>
+              <td>${data.accStatements[i].creditDebitamount}</td>
+              <td>${bal}</td>
+              <td>${data.accStatements[i].balance.toFixed(2)}</td>
+          </tr>`
+            }
+            if(data.page == 0){
+                $('#AccountCom-tbody').html(html)
+            }else{
+                $('#AccountCom-tbody').append(html); 
+            }
+        })
+
     }
     
 
