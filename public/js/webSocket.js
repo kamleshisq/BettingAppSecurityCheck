@@ -10115,18 +10115,18 @@ socket.on('connect', () => {
               <td>${data.accStatements[i].balance.toFixed(2)}</td>
           </tr>`
             }
-            if(data.accStatements.length != 0){
+            if(data.userWiseData.length != 0){
                 if(data.page == 0){
-                    $('#AccountCom-tbody').html(html)
+                    $('#userLevel-tbody').html(html)
                     document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
                 }else{
-                    $('#AccountCom-tbody').append(html); 
+                    $('#userLevel-tbody').append(html); 
                     document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
                 }
             }else{
                 document.getElementById('loadMorediveAccCom').innerHTML = ""
                 if(data.page == 0){
-                    $('#AccountCom-tbody').html("NO MORE DATA ")
+                    $('#userLevel-tbody').html("NO MORE DATA ")
                 }
             }
         })
@@ -10191,7 +10191,30 @@ socket.on('connect', () => {
         })
 
         socket.on('commissionUserLevel', async(data) => {
-            console.log(data)
+            // console.log(data)
+            let html = ''
+            for(let i = 0; i < data.userWiseData; i++){
+                html += `<tr class="tbl-data-href" data-href="/admin/commissionReportUser?User=${data.userWiseData[i]._id}">
+                <td>${data.userWiseData[i]._id}</td>
+                <td>${data.userWiseData[i].totalCommission}</td>
+                <td>${data.userWiseData[i].totalUPline}</td>
+            </tr>`
+            }
+
+            if(data.accStatements.length != 0){
+                if(data.page == 0){
+                    $('#AccountCom-tbody').html(html)
+                    document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
+                }else{
+                    $('#AccountCom-tbody').append(html); 
+                    document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
+                }
+            }else{
+                document.getElementById('loadMorediveAccCom').innerHTML = ""
+                if(data.page == 0){
+                    $('#AccountCom-tbody').html("NO MORE DATA ")
+                }
+            }
         })
 
 
