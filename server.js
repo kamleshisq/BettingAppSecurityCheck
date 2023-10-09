@@ -4306,8 +4306,9 @@ io.on('connection', (socket) => {
                 }
               }
         ])
+        console.log(commissionAmount)
         if(user){
-            if(commissionAmount[0].totalCommission > 0){
+            if(commissionAmount && commissionAmount[0].totalCommission > 0){
                 try{
                     let commission = commissionAmount[0].totalCommission
                     await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:commission}})
