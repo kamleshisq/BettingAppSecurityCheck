@@ -13,10 +13,23 @@ const Decimal = require('decimal.js');
 exports.mapbet = async(data) => {
   //FOR CHILD OF LOGIN USER
       let childrenUsername = []
-      let children = await userModel.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
-      children.map(ele => {
-          childrenUsername.push(ele.userName) 
-      })
+      let operatorId;
+      if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+        let children = await userModel.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+        operatorId = data.LOGINDATA.LOGINUSER.parent_id
+
+      }else{
+        let children = await userModel.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+        operatorId = data.LOGINDATA.LOGINUSER._id
+
+      }
+     
 //FOR OPEN BETS 
       let bets = await betModel.aggregate([
         {
@@ -51,7 +64,7 @@ exports.mapbet = async(data) => {
 
     let dataForHistory = {
       marketID:`${data.id}`,
-      userId:`${data.LOGINDATA.LOGINUSER._id}`,
+      userId:`${operatorId}`,
       eventName: `${bets[0].match}`,
       date:Date.now(),
       result:data.result,

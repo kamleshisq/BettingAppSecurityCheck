@@ -30,9 +30,19 @@ async function rollBack(data){
             }
         }
         console.log(allBetWithMarketId)
+        let operatorId;
+        let operatoruserName;
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            operatorId = data.LOGINDATA.LOGINUSER.parent_id
+            let parentUser = await User.findById(operatorId)
+            operatoruserName = parentUser.userName
+        }else{
+            operatorId = data.LOGINDATA.LOGINUSER._id
+            operatoruserName = data.LOGINDATA.LOGINUSER.userName
+        }
         let dataForHistory = {
             marketID:`${data.id}`,
-            userId:`${data.LOGINDATA.LOGINUSER._id}`,
+            userId:`${operatorId}`,
             eventName: `${allBetWithMarketId[0].match}`,
             date:Date.now(),
             result:"ROLLBACK BET",
@@ -46,7 +56,7 @@ async function rollBack(data){
                 if(allBetWithMarketId[bets].status === 'WON'){
                     let VoidAmount = allBetWithMarketId[bets].returns.toFixed(2)
                     // console.log(VoidAmount, "VOidBetAMOUNT")
-                    await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"OPEN", returns:-allBetWithMarketId[bets].Stake.toFixed(2), remark:data.data.remark, calcelUser:data.LOGINDATA.LOGINUSER.userName})
+                    await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"OPEN", returns:-allBetWithMarketId[bets].Stake.toFixed(2), remark:data.data.remark, calcelUser:operatoruserName})
                     let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: -VoidAmount, myPL: -VoidAmount, pointsWL: -VoidAmount, uplinePL: VoidAmount, exposure: allBetWithMarketId[bets].Stake.toFixed(2)}})
                     let description = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/OPEN`
                     // let description2 = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/user = ${user.userName}/CANCEL `
@@ -102,7 +112,7 @@ async function rollBack(data){
                     await accountStatementModel.create(userAcc);
                 }else{
                     let VoidAmount = allBetWithMarketId[bets].Stake.toFixed(2)
-                    await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"OPEN", remark:data.data.remark, calcelUser:data.LOGINDATA.LOGINUSER.userName})
+                    await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"OPEN", remark:data.data.remark, calcelUser:operatoruserName})
                     let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{exposure:VoidAmount}})
                     // let description = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/OPEN`
                     // let userAcc = {
