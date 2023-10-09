@@ -1212,7 +1212,7 @@ socket.on('connect', () => {
         $(document).on('keyup','#myModalSE .form-data input[name="amount"]',function(e){
             let amount = parseFloat($(this).val())
             console.log(amount,"==>amount")
-            if(amount == ''){
+            if(amount == NaN){
                 amount = 0
             }
             let form = $("#myModalSE").find('.form-data')
