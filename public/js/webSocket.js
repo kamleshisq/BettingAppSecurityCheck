@@ -1022,23 +1022,23 @@ socket.on('connect', () => {
             if(type == "deposit"){
                 form.find('.depositeWD').addClass('active')
                 form.find('input[name = "toUser"]').attr('value',userData.userName)
-                form.find('input[name = "fuBalance"]').attr('value',me.availableBalance)
-                form.find('input[name = "tuBalance"]').attr('value',userData.availableBalance)
+                form.find('input[name = "fuBalance"]').attr('value',(me.availableBalance).toFixed(2))
+                form.find('input[name = "tuBalance"]').attr('value',(userData.availableBalance).toFixed(2))
                 form.find('input[name = "clintPL"]').attr('value',userData.clientPL)
                 form.find('input[name = "fromUser"]').attr('value',me.userName)
                 form.attr('id', userData._id)
-                form.find('#fuBlanceAfter').text(me.availableBalance - amount)
-                form.find('#tuBalanceAfter').text(userData.availableBalance + amount)
+                form.find('#fuBlanceAfter').text((me.availableBalance - amount).toFixed(2))
+                form.find('#tuBalanceAfter').text((userData.availableBalance + amount).toFixed(2))
             }else{
                 form.find('.withdrawWD').addClass('active')
                 form.find('input[name = "toUser"]').attr('value',me.userName)
-                form.find('input[name = "fuBalance"]').attr('value',userData.availableBalance)
-                form.find('input[name = "tuBalance"]').attr('value',me.availableBalance)
+                form.find('input[name = "fuBalance"]').attr('value',(userData.availableBalance).toFixed(2))
+                form.find('input[name = "tuBalance"]').attr('value',(me.availableBalance).toFixed(2))
                 form.find('input[name = "clintPL"]').attr('value',me.clientPL)
                 form.find('input[name = "fromUser"]').attr('value',userData.userName)
                 form.attr('id', userData._id)
-                form.find('#fuBlanceAfter').text(userData.availableBalance - amount)
-                form.find('#tuBalanceAfter').text(me.availableBalance + amount)
+                form.find('#fuBlanceAfter').text((userData.availableBalance - amount).toFixed(2))
+                form.find('#tuBalanceAfter').text((me.availableBalance + amount).toFixed(2))
 
             }
             }
@@ -1046,7 +1046,7 @@ socket.on('connect', () => {
 
         $(document).on('keyup','#myModal .form-data input[name="amount"]',function(e){
             let amount = parseFloat($(this).val())
-            if(amount == ''){
+            if($(this).val() == ""){
                 amount = 0
             }
             let form = $("#myModal").find('.form-data')
@@ -1054,11 +1054,11 @@ socket.on('connect', () => {
             let toAmount = parseFloat(form.find('input[name="tuBalance"]').val())
             let type = form.find('input[name = "type"]').val()
             if(type == "deposit"){
-                form.find('#fuBlanceAfter').text(fromAmount - amount)
-                form.find('#tuBalanceAfter').text(toAmount + amount)
+                form.find('#fuBlanceAfter').text((fromAmount - amount).toFixed(2))
+                form.find('#tuBalanceAfter').text((toAmount + amount).toFixed(2))
             }else{
-                form.find('#fuBlanceAfter').text(fromAmount + amount)
-                form.find('#tuBalanceAfter').text(toAmount - amount)
+                form.find('#fuBlanceAfter').text((fromAmount + amount).toFixed(2))
+                form.find('#tuBalanceAfter').text((toAmount - amount).toFixed(2))
             }
 
 
@@ -1085,8 +1085,8 @@ socket.on('connect', () => {
                 form.find('input[name = "fuBalance"]').attr('value',fuBalance)
                 form.find('input[name = "tuBalance"]').attr('value',tuBalance)
                 form.find('input[name = "fromUser"]').attr('value',fromUSer)
-                form.find('#fuBlanceAfter').text(fuBalance - amount)
-                form.find('#tuBalanceAfter').text(tuBalance + amount)
+                form.find('#fuBlanceAfter').text((fuBalance - amount).toFixed(2))
+                form.find('#tuBalanceAfter').text((tuBalance + amount).toFixed(2))
 
             }
 
@@ -1110,8 +1110,8 @@ socket.on('connect', () => {
                 form.find('input[name = "fuBalance"]').attr('value',fuBalance)
                 form.find('input[name = "tuBalance"]').attr('value',tuBalance)
                 form.find('input[name = "fromUser"]').attr('value',fromUSer)
-                form.find('#fuBlanceAfter').text(fuBalance - amount)
-                form.find('#tuBalanceAfter').text(tuBalance + amount)
+                form.find('#fuBlanceAfter').text((fuBalance - amount).toFixed(2))
+                form.find('#tuBalanceAfter').text((tuBalance + amount).toFixed(2))
 
             }else{
             }
@@ -1220,11 +1220,11 @@ socket.on('connect', () => {
             let toAmount = parseFloat(form.find('input[name="tuBalance"]').val())
             let type = form.find('input[name = "type"]').val()
             if(type == "deposit"){
-                form.find('#fuBlanceAfter').text(fromAmount - amount)
-                form.find('#tuBalanceAfter').text(toAmount + amount)
+                form.find('#fuBlanceAfter').text((fromAmount - amount).toFixed(2))
+                form.find('#tuBalanceAfter').text((toAmount + amount).toFixed(2))
             }else{
-                form.find('#fuBlanceAfter').text(fromAmount + amount)
-                form.find('#tuBalanceAfter').text(toAmount - amount)
+                form.find('#fuBlanceAfter').text((fromAmount + amount).toFixed(2))
+                form.find('#tuBalanceAfter').text((toAmount - amount).toFixed(2))
             }
 
 
@@ -1253,8 +1253,8 @@ socket.on('connect', () => {
                 form.find('input[name = "fuBalance"]').attr('value',fuBalance)
                 form.find('input[name = "tuBalance"]').attr('value',tuBalance)
                 form.find('input[name = "fromUser"]').attr('value',fromUSer)
-                form.find('#fuBlanceAfter').text(fuBalance - amount)
-                form.find('#tuBalanceAfter').text(tuBalance + amount)
+                form.find('#fuBlanceAfter').text((fuBalance - amount).toFixed(2))
+                form.find('#tuBalanceAfter').text((tuBalance + amount).toFixed(2))
 
             }
         })
@@ -1280,8 +1280,8 @@ socket.on('connect', () => {
                 form.find('input[name = "fuBalance"]').attr('value',fuBalance)
                 form.find('input[name = "tuBalance"]').attr('value',tuBalance)
                 form.find('input[name = "fromUser"]').attr('value',fromUSer)
-                form.find('#fuBlanceAfter').text(fuBalance - amount)
-                form.find('#tuBalanceAfter').text(tuBalance + amount)
+                form.find('#fuBlanceAfter').text((fuBalance - amount).toFixed(2))
+                form.find('#tuBalanceAfter').text((tuBalance + amount).toFixed(2))
             }else if(typeValue == 'withdrawl'){
                 
             }
@@ -1304,25 +1304,25 @@ socket.on('connect', () => {
                 form.find('.deposite').addClass('active')
                 form.find('input[name = "type"]').val("deposit")
                 form.find('input[name = "toUser"]').attr('value',userData.userName)
-                form.find('input[name = "fuBalance"]').attr('value',me.availableBalance)
-                form.find('input[name = "tuBalance"]').attr('value',userData.availableBalance)
+                form.find('input[name = "fuBalance"]').attr('value',(me.availableBalance).toFixed(2))
+                form.find('input[name = "tuBalance"]').attr('value',(userData.availableBalance).toFixed(2))
                 form.find('input[name = "clintPL"]').attr('value',userData.pointsWL)
                 form.find('input[name = "fromUser"]').attr('value',me.userName)
                 form.attr('id', userData._id)
-                form.find('#fuBlanceAfter').text(me.availableBalance - amount)
-                form.find('#tuBalanceAfter').text(userData.availableBalance + amount)
+                form.find('#fuBlanceAfter').text((me.availableBalance - amount).toFixed(2))
+                form.find('#tuBalanceAfter').text((userData.availableBalance + amount).toFixed(2))
 
             }else{
                 form.find('.withdraw').addClass('active')
                 form.find('input[name = "type"]').val("withdrawl")
                 form.find('input[name = "toUser"]').attr('value',me.userName)
-                form.find('input[name = "fuBalance"]').attr('value',userData.availableBalance)
-                form.find('input[name = "tuBalance"]').attr('value',me.availableBalance)
+                form.find('input[name = "fuBalance"]').attr('value',(userData.availableBalance).toFixed(2))
+                form.find('input[name = "tuBalance"]').attr('value',(me.availableBalance).toFixed(2))
                 form.find('input[name = "clintPL"]').attr('value',userData.pointsWL)
                 form.find('input[name = "fromUser"]').attr('value',userData.userName)
                 form.attr('id', userData._id)
-                form.find('#fuBlanceAfter').text(userData.availableBalance - amount)
-                form.find('#tuBalanceAfter').text(me.availableBalance + amount)
+                form.find('#fuBlanceAfter').text((userData.availableBalance - amount).toFixed(2))
+                form.find('#tuBalanceAfter').text((me.availableBalance + amount).toFixed(2))
 
             }
             }
