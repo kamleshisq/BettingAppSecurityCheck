@@ -10046,7 +10046,7 @@ socket.on('connect', () => {
         });
 
 
-        document.on('click', ".searchList", function(e){
+        $(document).on('click', ".searchList", function(e){
             e.preventDefault()
             let page = 0;
             let data = {}
