@@ -1059,7 +1059,7 @@ socket.on('connect', () => {
             let modleName = "#myModal"
             let form = $(modleName).find('.form-data')
             let type = form.find('input[name = "type"]').val()
-            let amount = parseFloat($(this).val())
+            let amount = parseFloat(form.find('input[name = "amount"]').val())
 
             if(type == 'deposit'){
 
@@ -1084,9 +1084,9 @@ socket.on('connect', () => {
         })
         $(document).on('click','#myModal .acc-form .withdrawWD',function(e){
             let modleName = "#myModal"
-            let amount = parseFloat($(this).val())
-
+            
             let form = $(modleName).find('.form-data')
+            let amount = parseFloat(form.find('input[name = "amount"]').val())
             let type = form.find('input[name = "type"]').val()
             if(type == 'deposit'){
                 form.find('.withdrawWD').addClass('active')
