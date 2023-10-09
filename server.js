@@ -4813,6 +4813,11 @@ io.on('connection', (socket) => {
             console.log(err)
         }
     })
+
+
+    socket.on('timelyVoideBEt', async(data) => {
+        console.log(data)
+    })
     
 })
 

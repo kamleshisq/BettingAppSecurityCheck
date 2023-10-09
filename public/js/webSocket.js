@@ -5448,8 +5448,8 @@ socket.on('connect', () => {
                 let form = $(this)[0];
                 let fd = new FormData(form);
                 let data = Object.fromEntries(fd.entries());
-                // socket.emit('editMyPassword',{data,LOGINDATA})
-                console.log(data, "DATA123")
+                socket.emit('timelyVoideBEt',{data,LOGINDATA})
+                // console.log(data, "DATA123")
             })
     }
 
