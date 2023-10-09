@@ -30,7 +30,9 @@
                 <th>Date</th>
                 <th>Team</th>
                 <th>Open Bet</th>
+                <%if(currentUser.roleName != 'Operator'){%>
                 <th>Action</th>
+                <%}%>
               </tr>
             </thead>
             <tbody class="new-body">
@@ -75,11 +77,13 @@
                   <td><%=formattedTime %></td>
                   <td><%=data[i].name%></td>
                   <td><%=data[i].count%></td>
+                  <%if(currentUser.roleName != 'Operator'){%>
                   <td>
                     <div class="btn-group">
                       <a class="btn" href="/admin/riskAnalysis?id=<%=data[i].eventId%>">View Details</a>
                     </div>
                   </td>
+                  <%}%>
                   <%}%>
                 </tr>
               </tr>
