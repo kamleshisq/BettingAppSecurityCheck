@@ -10043,6 +10043,16 @@ socket.on('connect', () => {
             data.toTime = $('#TdateAccCom').val()
             $('.pageIdACCComm').attr('data-pageid','1')
             socket.emit('commissionAccFilter', {data, LOGINDATA, page:0})
+        });
+
+
+        $(document).on('click', ".searchList", function(e){
+            e.preventDefault()
+            let page = 0;
+            let data = {}
+            data.fromTime = $('#FdateAccCom').val()
+            data.toTime = $('#TdateAccCom').val()
+            console.log(this.id, "ID")
         })
 
 
@@ -10079,7 +10089,8 @@ socket.on('connect', () => {
         })
 
 
-        $(document).on('keyup','.searchUser',function(){
+        $(document).on('keyup','.searchUser',function(e){
+            e.preventDefault()
             // console.log('working')
             // console.log($(this).val())
             if($(this).val().length >= 3 ){
