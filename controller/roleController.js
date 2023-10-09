@@ -130,7 +130,14 @@ exports.updateRoleLevel = catchAsync(async(req, res, next) => {
 
 exports.getAuthROle = catchAsync(async(req, res, next) => {
     // const r_Type = req.currentUser.role.role_level;
-    const roles = await Role.find({role_level:{$in:req.currentUser.role.userAuthorization}}).sort({role_level:1});
+    let operationUser;
+    if(req.currentUser.roleName == 'Operator'){
+        operationUser = await User.findById(req.currentUser.parent_id)
+    }else{
+        operationUser = req.currentUser
+
+    }
+    const roles = await Role.find({role_level:{$in:operationUser.role.userAuthorization}}).sort({role_level:1});
     // console.log(roles)
 
     res.status(200).json({

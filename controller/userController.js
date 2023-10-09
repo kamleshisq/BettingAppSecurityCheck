@@ -547,6 +547,12 @@ exports.getOwnChild = catchAsync(async(req, res, next) => {
     let Rows;
     let me;
     let page = req.query.page;
+    let operationId;
+    if(req.currentUser.roleName == 'Operator'){
+        operationId = req.currentUser.parent_id
+    }else{
+        operationId = req.currentUser._id
+    }
     if(!page){
         page = 0;
     }
@@ -570,8 +576,8 @@ exports.getOwnChild = catchAsync(async(req, res, next) => {
         Rows = await User.count({parent_id: req.query.id})
         child = await User.find({parent_id: req.query.id}).skip(page * limit).limit(limit);
     }else{
-        Rows = await User.count({parent_id: req.currentUser._id})
-        child = await User.find({parent_id: req.currentUser._id}).skip(page * limit).limit(limit);
+        Rows = await User.count({parent_id: operationId})
+        child = await User.find({parent_id: operationId}).skip(page * limit).limit(limit);
         me = await User.findById(req.currentUser._id)
     }
     res.status(200).json({

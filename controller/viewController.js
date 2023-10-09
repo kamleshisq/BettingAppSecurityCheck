@@ -128,8 +128,15 @@ exports.userTable = catchAsync(async(req, res, next) => {
             }
           );
         });
-      });
-    let roles1 = await Role.find({role_level:{$gt:req.currentUser.role.role_type}}).sort({role_level:1});
+    });
+    let roles1
+    if(req.currentUser.roleName == 'Operator'){
+        let parentUser = await User.findById(req.currentUser.parent_id)
+        roles1 = await Role.find({role_level:{$gt:parentUser.role.role_type}}).sort({role_level:1});
+    }else{
+        roles1 = await Role.find({role_level:{$gt:req.currentUser.role.role_type}}).sort({role_level:1});
+
+    }
     const data = await Promise.all(requests);
     if(data[0].status == 'Error'){
         return res.redirect('/admin/userManagement')
