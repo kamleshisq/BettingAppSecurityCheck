@@ -4845,6 +4845,7 @@ io.on('connection', (socket) => {
             }
             let user = await User.findByIdAndUpdate(bet.userId, {$inc:{availableBalance: DebitCreditAmount, myPL: DebitCreditAmount, exposure:-DebitCreditAmount}})
             let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
+            console.log(user.availableBalance, DebitCreditAmount, user.availableBalance + DebitCreditAmount)
             let userAcc = {
                 "user_id":user._id,
                 "description": description,
