@@ -3293,6 +3293,9 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
               totalCommission: { $sum: "$commission" },
               eventDate: { $first: "$eventDate" }
             }
+          },
+          {
+            $limit:10
           }
     ])
 
@@ -3311,6 +3314,9 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
               totalCommission: { $sum: "$commission" },
               totalUPline: { $sum: "$upline" },
             }
+          },
+          {
+            $limit:10
           }
     ])
 
@@ -3325,11 +3331,14 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                     $regex: /^Claim Commisiion/i
                 }
             }
+        },
+        {
+          $limit:10
         }
     ])
     // console.log(eventWiseData)
     // console.log(userWiseData)
-    console.log(accStatements, "accStatements")
+    // console.log(accStatements, "accStatements")
     res.status(200).render("./commissionPage/commissionPage",{
         title:"Commission Report",
         me,
