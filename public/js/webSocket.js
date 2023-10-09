@@ -1040,6 +1040,9 @@ socket.on('connect', () => {
 
         $(document).on('keyup','#myModal .form-data input[name="amount"]',function(e){
             let amount = parseFloat($(this).val())
+            if(amount == ''){
+                amount = 0
+            }
             let form = $("#myModal").find('.form-data')
             let fromAmount = parseFloat(form.find('input[name="fuBalance"]').val())
             let toAmount = parseFloat(form.find('input[name="tuBalance"]').val())
