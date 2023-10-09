@@ -1669,7 +1669,7 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
     let betResult = await betModel.aggregate([
         {
             $match:{
-                status: 'CANCEL',
+                status: 'OPEN',
                 userName:{$in:childrenUsername},
                 date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
             }
