@@ -10055,6 +10055,8 @@ socket.on('connect', () => {
             // console.log(this.id, "ID")
             let id = this.id
             $('.pageIdACCComm').attr('data-pageid','1')
+            document.getElementById("searchUser").value = this.textContent
+            $('.wrapper').hide()
             socket.emit('commissionAccFilter', {data, LOGINDATA, page:0, id})
 
         })

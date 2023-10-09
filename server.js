@@ -4582,9 +4582,9 @@ io.on('connection', (socket) => {
         console.log(data.data, data.id)
         try{
             let dateFilter
-            if(data.data.fromTime == ''){
+            if(data.data.fromTime == '' && data.data.toTime != ''){
                 dateFilter = {$lte: new Date(data.data.toTime)}
-            }else if(data.data.toTime == ''){
+            }else if(data.data.toTime == '' && data.data.fromTime == ''){
                 dateFilter = {$gte: new Date(data.data.fromTime)}
             }else if (data.data.toTime != '' && data.data.fromTime != ''){
                 dateFilter = {
