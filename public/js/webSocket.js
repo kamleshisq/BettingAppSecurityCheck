@@ -9983,7 +9983,13 @@ socket.on('connect', () => {
         //For EventLevel
         $(document).on('keyup change', "#FdateEvent,#TdateEvent", function(e){
             e.preventDefault()
-            console.log('Working')
+            // console.log('Working')
+            let page = 0;
+            let data = {}
+            data.fromTime = $('#FdateEvent').val()
+            data.toTime = $('#TdateEvent').val()
+            $('.pageId').attr('data-pageid','1')
+            socket.emit('commissionReportFilter', {data, LOGINDATA})
         })
 
 

@@ -4513,6 +4513,42 @@ io.on('connection', (socket) => {
             socket.emit('eventNotification2', {status:'err'})
         }
     })
+
+
+    socket.on('commissionReportFilter', async(data) => {
+        try{
+            console.log(data.data, "DATE")
+            // let eventData = await newCommissionModel.aggregate([
+            //     {
+            //         $match: {
+            //           eventDate: {
+            //             $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+            //           },
+            //           userName:{$in:childrenUsername}
+            //         }
+            //       },
+            //       {
+            //           $group: {
+            //               _id: "$eventName",
+            //           totalCommission: { $sum: "$commission" },
+            //           eventDate: { $first: "$eventDate" }
+            //         }
+            //     },
+            //     {
+            //       $sort:{
+            //           eventDate : -1,
+            //           totalCommission : 1,
+            //           _id : 1
+            //       }
+            //     },
+            //       {
+            //         $limit:10
+            //       }
+            // ])
+        }catch(err){
+            console.log(err)
+        }
+    })
     
 })
 
