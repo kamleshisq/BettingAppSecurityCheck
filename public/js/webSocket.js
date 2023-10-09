@@ -9992,6 +9992,14 @@ socket.on('connect', () => {
             socket.emit('commissionReportFilter', {data, LOGINDATA, page:0})
         })
 
+        $(document).on('click', "#loadMoreEvent", function(e){
+            let page = parseInt($('.pageId').attr('data-pageid'));
+            $('.pageId').attr('data-pageid', page + 1)
+            data.fromTime = $('#FdateEvent').val()
+            data.toTime = $('#TdateEvent').val()
+            socket.emit('commissionReportFilter', {data, LOGINDATA, page})
+        })
+
         socket.on('commissionReportFilter', async(data) => {
             let html = ''
             for(let i = 0; i < data.eventData.length; i++){
