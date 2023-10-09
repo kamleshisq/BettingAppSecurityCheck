@@ -10089,8 +10089,10 @@ socket.on('connect', () => {
             }
             if(data.page == 0){
                 $('#AccountCom-tbody').html(html)
+                document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
             }else{
                 $('#AccountCom-tbody').append(html); 
+                document.getElementById('loadMorediveAccCom').innerHTML = '<a id="loadMoreAccCom">Load More</a>'
             }
         })
 
