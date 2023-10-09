@@ -4340,6 +4340,8 @@ io.on('connection', (socket) => {
                     console.log(err)
                     socket.emit("claimCommissionAdmin", "error")
                 }
+            }else{
+                socket.emit("claimCommissionAdmin", "Success")
             }
 
            

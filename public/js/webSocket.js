@@ -1698,6 +1698,7 @@ socket.on('connect', () => {
             alert("Please try again leter")
         }else{
             alert('commission claimed successfully')
+            $('.COMMISSIONADMIN').text('Claim Commission (0555555555)')
         }
     })
 
