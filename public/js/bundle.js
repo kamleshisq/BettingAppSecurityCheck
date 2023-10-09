@@ -7249,17 +7249,17 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           formDataObj = Object.fromEntries(fd.entries());
           formDataObj.id = id;
           console.log(formDataObj);
-          if (formDataObj.amount == 0) {
-            alert('please enter amount greater than 0');
+          if (!(formDataObj.amount == 0)) {
+            _context2.next = 11;
+            break;
           }
-          // const url = window.location.href
-          // const id = url.split("=")[1]
-          // formDataObj.id = id
-          // console.log(formDataObj)
-          // let rowId = $('.rowId').attr('data-rowid')
-          _context2.next = 10;
+          alert('please enter amount greater than 0');
+          _context2.next = 16;
+          break;
+        case 11:
+          _context2.next = 13;
           return (0, _debitCredit.debitCredit)(formDataObj);
-        case 10:
+        case 13:
           user = _context2.sent;
           trElements = document.querySelectorAll('tr.trtable'); // console.log(trElements)
           // console.log(user)
@@ -7268,11 +7268,7 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
               console.log(trElement, 4545445454);
             }
           });
-          // console.log(rowId)
-          // let currentUser = $('#currentUserDetails').data('currentuser')
-          // updateRow(user,rowId,currentUser)
-          // console.log(user)
-        case 13:
+        case 16:
         case "end":
           return _context2.stop();
       }
@@ -7296,6 +7292,8 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
           formDataObj.id = id;
           if (formDataObj.amount == 0) {
             alert('please enter amount greater than 0');
+          } else {
+            (0, _creditDebitSettle.creditDebitSettle)(formDataObj);
           }
           console.log(formDataObj);
           // const url = window.location.href
@@ -7303,7 +7301,6 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
           // formDataObj.id = id
           // console.log(formDataObj)
           // let rowId = $('.rowId').attr('data-rowid')
-          (0, _creditDebitSettle.creditDebitSettle)(formDataObj);
           // const user = await creditDebitSettle(formDataObj)
           // var trElements = document.querySelectorAll('tr.trtable');
           // // console.log(trElements)
@@ -7317,7 +7314,7 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
           // let currentUser = $('#currentUserDetails').data('currentuser')
           // updateRow(user,rowId,currentUser)
           // console.log(user)
-        case 9:
+        case 8:
         case "end":
           return _context3.stop();
       }
