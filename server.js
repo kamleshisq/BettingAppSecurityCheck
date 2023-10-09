@@ -4616,6 +4616,7 @@ io.on('connection', (socket) => {
                     $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
                   }
             }
+            console.log(dateFilter)
             let childrenUsername = []
             if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
                 let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
