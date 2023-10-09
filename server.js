@@ -4628,7 +4628,7 @@ io.on('connection', (socket) => {
             }
             let accStatements
             if(data.id){
-                let user = User.findById(data.id)
+                let user = await User.findById(data.id)
                 console.log(user, "WORKING")
                 accStatements = await AccModel.aggregate([
                     {
