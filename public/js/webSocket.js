@@ -10200,7 +10200,7 @@ socket.on('connect', () => {
                 <td>${data.userWiseData[i].totalUPline}</td>
             </tr>`
             }
-
+            console.log(html, "HTML")
             if(data.userWiseData.length != 0){
                 if(data.page == 0){
                     $('#userLevel-tbody').html(html)
