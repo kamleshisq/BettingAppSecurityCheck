@@ -4923,7 +4923,7 @@ io.on('connection', (socket) => {
 
     socket.on('userLoginBalance', async(data) => {
         // console.log(data, "LOGINDATA")
-        if(data != {}){
+        if(data.LOGINDATA){
             let userData = await User.findById(data.LOGINDATA.LOGINUSER._id)
             socket.emit('userLoginBalance', userData)
         }
