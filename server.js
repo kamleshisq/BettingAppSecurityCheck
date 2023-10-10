@@ -1431,13 +1431,15 @@ io.on('connection', (socket) => {
         footBall = footBall.eventList
         Tennis = Tennis.eventList
         const resultSearch = cricket.concat(footBall, Tennis);
-        let event = resultSearch.find(item => item.eventData.eventId == data.eventId)
-        console.log(event,data.eventId,"==>Event")
         let status;
-        if(event.eventData.type == "IN_PLAY"){
-            status = true
-        }else{
-            status = false
+        if(data.eventId){
+            let event = resultSearch.find(item => item.eventData.eventId == data.eventId)
+            console.log(event,data.eventId,"==>Event")
+            if(event.eventData.type == "IN_PLAY"){
+                status = true
+            }else{
+                status = false
+            }
         }
 
         // console.log(resumeSuspendMarkets)
