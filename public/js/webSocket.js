@@ -12803,18 +12803,12 @@ socket.on('connect', () => {
 
             socket.on('suspendResume', async(data) => {
                 //{status: true, marketId: '1.219159205', status2: 'success'}
-                console.log(data)
                 if(data.status){
-                    console.log('On')
-                    let element = $(`.Suspend-Resume#${data.marketId}`)
-                    element.html('Suspend')
-                    console.log(element, "elementelementelement")
+                    var button = document.querySelector('.Suspend-Resume#' + data.marketId);
+                    button.textContent  = 'Suspend'
                 }else{
-                    console.log('off')
-                    let element = $(`.Suspend-Resume#${data.marketId}`)
-                    element.html('Resume')
-                    console.log(element, "elementelementelement")
-
+                    var button = document.querySelector('.Suspend-Resume#' + data.marketId);
+                    button.textContent  = 'Resume'
                 }
 
             })
