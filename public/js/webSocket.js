@@ -1912,7 +1912,24 @@ socket.on('connect', () => {
         })
 
         socket.on('getOperatorPermission',async(data)=>{
+            let modleName = "#myModal3"
+            let form = $(modleName).find('.form-data')
+            if(data.status == 'success'){
+                for(let i = 0; i < data.permissions
+                    .length; i++){
+                    form.find(`input[value = "${data.permissions
+                        [i]}"]`).attr("checked", "checked");
+                }
+            }
             console.log(data)
+        })
+
+        $('.editOperator').submit(function(e){
+            e.preventDefault();
+            let form = $(this)
+            let formData = new FormData(form[0])
+            let formDataObj = Object.fromEntries(formData.entries())
+            console.log(formDataObj)
         })
 
     }
