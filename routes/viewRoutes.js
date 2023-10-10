@@ -26,6 +26,7 @@ router.get("/getMarketResult", viewController.getMarketResult);
 // Admin Panal 
 
 router.get('/admin/userManagement', authController.isProtected, authController.isAdmin,authController.restrictTo("userName"), viewController.userTable);
+router.get('/admin/allOperators', authController.isProtected, authController.isAdmin,authController.restrictTo("userName"), viewController.allOperators);
 router.get("/createUSer", authController.isProtected, authController.restrictTo("createDeleteUser"), viewController.createUser);
 router.get("/accountStatement", authController.isProtected, authController.restrictTo('accountControl'), viewController.accountStatement);
 router.get("/updateUser", authController.isProtected, authController.restrictTo("createDeleteUser"),viewController.updateUser);
