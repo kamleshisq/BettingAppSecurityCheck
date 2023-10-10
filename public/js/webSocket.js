@@ -12807,10 +12807,14 @@ socket.on('connect', () => {
                 if(data.status){
                     console.log('On')
                     let element = $(`.Suspend-Resume#${data.marketId}`)
+                    element.text('Suspend')
                     console.log(element, "elementelementelement")
                 }else{
                     console.log('off')
-                    $(`.Suspend-Resume#${data.marketId}`).text('Resume')
+                    let element = $(`.Suspend-Resume#${data.marketId}`)
+                    element.text('Resume')
+                    console.log(element, "elementelementelement")
+
                 }
 
             })
