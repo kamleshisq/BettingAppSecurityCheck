@@ -12515,6 +12515,7 @@ socket.on('connect', () => {
 
             $(document).ready(function () {
                 $('.userBook').click(function () {
+                    console.log('USERBOOK')
                     let id = LOGINDATA.LOGINUSER._id
                     var closestMarket = $(this).parents('.bets-table').find('.market');
                     // console.log(closestMarket)
