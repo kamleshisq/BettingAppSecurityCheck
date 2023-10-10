@@ -1908,6 +1908,7 @@ socket.on('connect', () => {
         $(document).on('click','.editOperatorButton',function(e){
             let modleName = "#myModal2"
             let form = $(modleName).find('.form-data')
+            form.find('input:checkbox').removeAttr('checked');
             var row = this.closest("tr");
             var id = row.getAttribute("data-id");
             form.find('input[name="id"]').val(id)
@@ -1917,11 +1918,12 @@ socket.on('connect', () => {
         socket.on('getOperatorPermission',async(data)=>{
             let modleName = "#myModal2"
             let form = $(modleName).find('.form-data')
+
             if(data.status == 'success'){
                 for(let i = 0; i < data.permissions
                     .length; i++){
                     form.find(`input[value = "${data.permissions
-                        [i]}"]`).attr("checked", "checked");
+                    [i]}"]`).attr("checked", "checked");
                 }
             }
             console.log(data)
