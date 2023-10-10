@@ -3706,7 +3706,7 @@ io.on('connection', (socket) => {
                                             },
                                             else:{
                                                 $cond:{
-                                                    if: { $regexMatch: { input: "$marketName", regex: /^(book|toss)/i } },
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^(book|toss|match)/i } },
                                                     then:{
                                                         $sum: '$Stake'
                                                     },
