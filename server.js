@@ -3764,6 +3764,7 @@ io.on('connection', (socket) => {
 
                     if(Bets.length > 0){
                         console.log(Bets, 'BETS')
+                        console.log(Bets[0].selections, Bets[1].selections)
                     }
                 }
                 // role_type = []
