@@ -1929,6 +1929,14 @@ socket.on('connect', () => {
             let form = $(this)
             let formData = new FormData(form[0])
             let formDataObj = Object.fromEntries(formData.entries())
+            let OperatorAuthorization = []
+            let operator = document.querySelectorAll("input[name='operator']:checked");
+            for( let i = 0; i < operator.length; i++){
+                OperatorAuthorization.push(operator[i].value)
+            }
+            formDataObj.OperatorAuthorization = OperatorAuthorization
+            delete formDataObj['operator']
+
             console.log(formDataObj)
         })
 
