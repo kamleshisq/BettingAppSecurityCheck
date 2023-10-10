@@ -37,14 +37,15 @@
                   </td>
                   <td>
                     <%
-                    let permissionString = ""
-                    for(let i = 0;i<users.OperatorAuthorization.length;i++){
-                      if(i != 0){
-                        permissionString = permissionString + "," + users.OperatorAuthorization[i]
-                      }else{
-                        permissionString += users.OperatorAuthorization[i]
+                      let permissionString = ""
+                      for(let j = 0;i<users.OperatorAuthorization.length;j++){
+                        if(j != 0){
+                          permissionString = permissionString + "," + users.OperatorAuthorization[j]
+                        }else{
+                          permissionString += users.OperatorAuthorization[i]
+                        }
                       }
-                    }%>
+                    %>
                     <%=permissionString%>
                   </td>
                   <td>
