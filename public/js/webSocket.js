@@ -12803,16 +12803,19 @@ socket.on('connect', () => {
 
             socket.on('suspendResume', async(data) => {
                 console.log(data)
-                let selector = `.Suspend-Resume#${data.marketId}`;
+                let marketId = data.marketId;
+                let selector = `.Suspend-Resume#${marketId}`;
                 let element = document.querySelector(selector);
-                // let string = `.Suspend-Resume#${data.marketId}`
+
                 if (element) {
-                    if (data.stack) {
-                      element.innerText = 'Suspend';
-                    } else {
-                      element.innerText = 'Resume';
-                    }
-                  }
+                if (data.stack) {
+                    element.textContent = 'Suspend';
+                } else {
+                    element.textContent = 'Resume';
+                }
+                } else {
+                console.log('Element not found:', selector);
+                }
 
             })
     }
