@@ -12798,7 +12798,7 @@ socket.on('connect', () => {
             $(document).on('click', '.Suspend-Resume', function(e){
                 e.preventDefault()
                 // console.log("WORKING", this.id)
-                socket.emit('suspendResume', {id:this.id})
+                socket.emit('suspendResume', {id:this.id, LOGINDATA})
             })
 
             socket.on('suspendResume', async(data) => {
