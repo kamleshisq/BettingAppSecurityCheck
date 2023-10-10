@@ -7030,6 +7030,10 @@ socket.on('connect', () => {
                 // console.log(parentElement)
                 if(this.id == `${section.secId}2` ){
                     if(!data.status){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
                         parentElement.classList.add("suspended");
                         $(this).parent().find(".match-status-message").text("Suspended")
                     }
