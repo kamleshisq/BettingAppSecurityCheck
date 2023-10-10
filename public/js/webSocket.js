@@ -1942,12 +1942,15 @@ socket.on('connect', () => {
             delete formDataObj['operator']
 
             console.log(formDataObj)
-            socket.emit('editOperatorPermission',formDataObj)
+            let data = {}
+            data.data = formDataObj;
+            data.LOGINDATA = LOGINDATA
+            socket.emit('editOperatorPermission',data)
         })
 
         socket.on('editOperatorPermission',async(data)=>{
+            alert(data.msg)
             if(data.status == 'success'){
-                alert('permission updated successfully')
                 location.reload(true)
             }
         })
