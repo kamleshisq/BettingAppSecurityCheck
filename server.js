@@ -3747,6 +3747,19 @@ io.on('connection', (socket) => {
                                 }
                             },
                         },
+                        {
+                            $group: {
+                                _id: "$_id.userName",
+                                selections: {
+                                    $push: {
+                                        selectionName: "$_id.selectionName",
+                                        totalAmount: "$totalAmount",
+                                        matchName: "$_id.matchName",
+                                        Stake: "$Stake"
+                                    },
+                                },
+                            },
+                        },
                     ])
 
                     if(Bets.length > 0){
