@@ -7777,12 +7777,12 @@ socket.on('connect', () => {
                     }else{
                         html2 += `<tr class="lay-inplaymatch">`
                     }
-                    html2 = `<td>${ data.openBet[i].selectionName}</td>
+                    html2 += `<td>${ data.openBet[i].selectionName}</td>
                     <td>${ data.openBet[i].oddValue }</td>
                     <td>${ data.openBet[i].Stake }</td>
                   </tr>`
                 }
-                console.log(html2, "tableBETtableBET")
+                // console.log(html2, "tableBETtableBET")
                 document.getElementById('tableBET').innerHTML = html2
                 document.getElementById('tableBET1').innerHTML = html2
             }
