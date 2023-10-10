@@ -6553,6 +6553,7 @@ socket.on('connect', () => {
                     section = item.odds.find(odd => odd.selectionId == id);
                     return section !== undefined;
                 });
+                let parentElement = this.parentNode
                 if(this.id == `${section.selectionId}4` ){
                     if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
