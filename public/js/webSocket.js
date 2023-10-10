@@ -6370,6 +6370,9 @@ socket.on('connect', () => {
                 }
             })
             socket.emit("marketnotificationId", ids)
+            setTimeout(()=>{
+                marketNotificationId()
+              }, 5000)
         });
         }
         marketNotificationId()
@@ -6377,7 +6380,7 @@ socket.on('connect', () => {
 
 
 
-        
+
         socket.on('marketLimitId', data => {
             // console.log(data, 'returnData')
             $('.market-limit').each(function(){
