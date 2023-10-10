@@ -1434,7 +1434,7 @@ io.on('connection', (socket) => {
         let status;
         if(data.eventId){
             let event = resultSearch.find(item => item.eventData.eventId == data.eventId)
-            console.log(event,data.eventId,"==>Event")
+            // console.log(event,data.eventId,"==>Event")
             if(event.eventData.type == "IN_PLAY"){
                 status = true
             }else{
