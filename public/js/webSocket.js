@@ -152,11 +152,11 @@ socket.on('connect', () => {
     socket.on('userLoginBalance', async(data) => {
         // console.log(data, "USERDATA")
         let html = `<div class="bet-blns-nav-wrp-amount-num">
-        <span> <i class="fa-solid fa-wallet text-white"></i>  Bal : ${data.availableBalance}</span>
+        <span> <i class="fa-solid fa-wallet text-white"></i>  Bal : ${data.availableBalance.toFixed(2)}</span>
       </div>
       <div class="bet-blns-nav-wrp-txt">
-        <span class="">Bal : <span> &nbsp; ${data.availableBalance}</span></span>
-        <span class="">Exp : <span> &nbsp; ${data.exposure}</span></span>
+        <span class="">Bal : <span> &nbsp; ${data.availableBalance.toFixed(2)}</span></span>
+        <span class="">Exp : <span> &nbsp; ${data.exposure.toFixed(2)}</span></span>
       </div>`
       if(document.getElementById('userBalance')){
           document.getElementById('userBalance').innerHTML = html
