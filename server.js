@@ -3647,8 +3647,63 @@ io.on('connection', (socket) => {
                     childrenUsername1.push(ele1.userName) 
                 })
                 if(childrenUsername1.length > 0){
-                    console.log(childrenUsername1, "childrenUsername1")
+                    // console.log(childrenUsername1, "childrenUsername1")
+                    let Bets = await Bet.aggregate([
+                        {
+                            $match: {
+                                status: "OPEN",
+                                marketId: data.marketId,
+                                userName:{$in:childrenUsername1}
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: {
+                                    userName: "$userName",
+                                    selectionName: "$selectionName",
+                                    matchName: "$match",
+                                },
+                                totalAmount: {
+                                    $sum: {
+                                        $cond: { 
+                                            if : {$eq: ['$bettype2', "BACK"]},
+                                            then:{
+                                                $cond:{
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    then:{
+                                                        $sum: {
+                                                            $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                                                        }
+                                                    },
+                                                    else:{
+                                                        $sum: {
+                                                            $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            else:{
+                                                $cond:{
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^(book|toss)/i } },
+                                                    then:{
+                                                        $sum: '$Stake'
+                                                    },
+                                                    else:{
+                                                        $sum: { 
+                                                            $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                Stake: { $sum: "$Stake" }
+                            },
+                        },
+                    ])
 
+                    console.log(Bets, 'BETS')
                 }
                 // role_type = []
                 // roles = await Role.find({role_level: {$gt:ele.role.role_level}});
