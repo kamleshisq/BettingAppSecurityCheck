@@ -3763,7 +3763,8 @@ io.on('connection', (socket) => {
                     ])
 
                     if(Bets.length > 0){
-                        
+                        console.log(Bets)
+                        // console.log()
                     }
                 }
                 // role_type = []
