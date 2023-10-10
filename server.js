@@ -4912,6 +4912,12 @@ io.on('connection', (socket) => {
 
     socket.on('marketnotificationId', async(data) => {
         console.log(data, "dataId")
+        try{
+            let notifications = await timelyNotificationModel.find({marketId:{$in:data}})
+            socket.emit('marketnotificationId', notifications)
+        }catch(err){
+            console.log(err)
+        }
     })
     
 })

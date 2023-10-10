@@ -6377,6 +6377,11 @@ socket.on('connect', () => {
         }
         marketNotificationId()
 
+        socket.on('marketnotificationId', async(data) => {
+            data.forEach(item => {
+                console.log(item)
+            })
+        })
 
 
 
