@@ -1548,16 +1548,16 @@ io.on('connection', (socket) => {
             // data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
         }
-        console.log(data ,'++++++==>DATA')
-        // let result = await placeBet(data)
-        // let openBet = []
-        // if(data.pathname === "/exchange/multimarkets"){
-        //     openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})
-        // }else{
-        //     openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title})
-        // }
-        // let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
-        // socket.emit("betDetails", {result, openBet, user})
+        // console.log(data ,'++++++==>DATA')
+        let result = await placeBet(data)
+        let openBet = []
+        if(data.pathname === "/exchange/multimarkets"){
+            openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN"})
+        }else{
+            openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title})
+        }
+        let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
+        socket.emit("betDetails", {result, openBet, user})
     })
 
     socket.on('voidBet', async(data) => {

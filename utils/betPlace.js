@@ -213,7 +213,7 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
         }else if (marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
         }else{
-            creditDebitamount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
+            creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
         }
     }else{
         if(marketDetails.title.toLowerCase().startsWith('match')){
