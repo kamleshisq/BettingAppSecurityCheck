@@ -1432,6 +1432,7 @@ io.on('connection', (socket) => {
         Tennis = Tennis.eventList
         const resultSearch = cricket.concat(footBall, Tennis);
         let event = resultSearch.find(item => item.eventData.eventId == data.eventId)
+        console.log(event,data.eventId,"==>Event")
         let status;
         if(event.eventData.type == "IN_PLAY"){
             status = true
