@@ -9,7 +9,7 @@ export const reset = async(data) =>{
         });
         if(res.data.status === 'success'){
             alert("Password Changed Successfully!!!!!")
-            $(".popup_body").removeClass("popup_body_show");
+            $('#myModal3').modal('toggle')
             // window.setTimeout(()=>{
             //     location.assign('/userManagement')
             // }, 100)

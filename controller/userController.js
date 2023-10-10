@@ -319,7 +319,7 @@ exports.changePassword = catchAsync(async(req, res, next) => {
     // const user = await User.findById(req.body.id).select('+password')
     console.log(req.body)
 
-    let user = await User.findOne({_id:req.body.id, whiteLabel:req.currentUser.whiteLabel}).select('+password')
+    let user = await User.findOne({_id:req.body.id}).select('+password')
     // // console.log(req.body.password)
     if(!user){
         return next(new AppError("User not found", 404))

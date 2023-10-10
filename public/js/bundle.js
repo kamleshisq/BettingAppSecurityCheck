@@ -5646,7 +5646,7 @@ var reset = /*#__PURE__*/function () {
             break;
           }
           alert("Password Changed Successfully!!!!!");
-          $(".popup_body").removeClass("popup_body_show");
+          $('#myModal3').modal('toggle');
           // window.setTimeout(()=>{
           //     location.assign('/userManagement')
           // }, 100)
