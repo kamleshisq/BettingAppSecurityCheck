@@ -44,6 +44,7 @@ const InprogreshModel = require('../model/InprogressModel');
 const commissionMarketModel = require('../model/CommissionMarketsModel')
 let eventNotification = require('../model/eventNotification');
 const commissionNewModel = require('../model/commissioNNModel');
+const resumeSuspendModel = require('../model/resumeSuspendMarket');
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -4050,6 +4051,14 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         }else{
             stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
         }
+
+        let check = await resumeSuspendModel.aggregate([
+            {
+                $match:{
+                    status:false
+                }
+            }
+        ])
         res.status(200).render("./mainRiskAnalysis/main",{
             title:"Risk Analysis",
             user: req.currentUser,
@@ -4067,7 +4076,8 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
             userMultimarkets,
             min,
             max,
-            currentUser:req.currentUser
+            currentUser:req.currentUser,
+            suspend:check
     })
 });
 
