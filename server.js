@@ -282,6 +282,17 @@ io.on('connection', (socket) => {
         socket.emit('getOperatorPermission',{status:'success',permissions})
     })
 
+    socket.on('editOperatorPermission',async(data)=>{
+        try{
+
+            await User.findByIdAndUpdate(data.id,{OperatorAuthorization:data.OperatorAuthorization})
+            socket.emit('editOperatorPermission',{status:'success'})
+        }catch(err){
+            socket.emit('editOperatorPermission',{status:'fail'})
+
+        }
+    })
+
 
     socket.on('userHistory',async(data)=>{
         console.log(data.filterData)

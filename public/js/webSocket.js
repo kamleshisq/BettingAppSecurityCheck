@@ -1906,8 +1906,11 @@ socket.on('connect', () => {
         })
 
         $(document).on('click','.editOperatorButton',function(e){
+            let modleName = "#myModal2"
+            let form = $(modleName).find('.form-data')
             var row = this.closest("tr");
             var id = row.getAttribute("data-id");
+            form.find('input[name="id"]').val(id)
             socket.emit('getOperatorPermission',id)
         })
 
@@ -1922,6 +1925,7 @@ socket.on('connect', () => {
                 }
             }
             console.log(data)
+
         })
 
         $('.editOperator').submit(function(e){
@@ -1938,6 +1942,14 @@ socket.on('connect', () => {
             delete formDataObj['operator']
 
             console.log(formDataObj)
+            socket.emit('editOperatorPermission',formDataObj)
+        })
+
+        socket.on('editOperatorPermission',async(data)=>{
+            if(data.status == 'success'){
+                alert('permission updated successfully')
+                location.reload(true)
+            }
         })
 
     }
