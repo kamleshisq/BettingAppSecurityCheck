@@ -4934,6 +4934,10 @@ io.on('connection', (socket) => {
             socket.emit('userLoginBalance', userData)
         }
     })
+
+    socket.on('suspendResume', async(data) => {
+        console.log(data)
+    })
     
 })
 
