@@ -6553,6 +6553,8 @@ socket.on('connect', () => {
                     section = item.odds.find(odd => odd.selectionId == id);
                     return section !== undefined;
                 });
+                let marketId = this.closest('table').id
+                let check = resumeSuspendMarkets.some(item => item.marketId == marketId)
                 let parentElement = this.parentNode
                 if(this.id == `${section.selectionId}4` ){
                     if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0"){
@@ -6606,7 +6608,15 @@ socket.on('connect', () => {
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
-                    }else{
+                    }else if(check){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.add("suspended");
+                      $(this).parent().find(".match-status-message").text("Suspended")
+                    }
+                    else{
                         // this.innerHTML = `<span><b>${section.backPrice1}</b></span> <span> ${section.backSize1}</span>`
                         this.setAttribute("data-bs-toggle", "collapse");
                         parentElement.classList.remove("suspended")
