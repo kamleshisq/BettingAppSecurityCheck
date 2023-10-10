@@ -12792,6 +12792,11 @@ socket.on('connect', () => {
                 }
             })
 
+
+            $(document).on('click', '.Suspend-Resume', function(e){
+                e.preventDefault()
+                console.log("WORKING")
+            })
     }
 
     if(pathname == "/admin/matchBets"){
