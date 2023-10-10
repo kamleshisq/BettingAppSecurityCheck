@@ -5449,7 +5449,7 @@ socket.on('connect', () => {
                 let fd = new FormData(form);
                 let data = Object.fromEntries(fd.entries());
                 let id = this.id
-                console.log(id)
+                // console.log(id)
                 socket.emit('timelyVoideBEt',{data,LOGINDATA, id})
                 // console.log(data, "DATA123")
             })
