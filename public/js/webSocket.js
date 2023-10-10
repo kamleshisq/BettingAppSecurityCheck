@@ -12805,10 +12805,15 @@ socket.on('connect', () => {
                 console.log(data)
                 if(data.status){
                     var button = document.getElementsByClassName('Suspend-Resume');
-                    button.innerHTML  = 'Suspend'
+                    button.forEach(item => {
+                        item.innerHTML  = 'Suspend'
+                    })
                 }else{
                     var button = document.getElementsByClassName('Suspend-Resume');
-                    button.innerHTML  = 'Resume'
+                    // button.innerHTML  = 'Resume'
+                    button.forEach(item => {
+                        item.innerHTML  = 'Resume'
+                    })
                 }
 
             })
