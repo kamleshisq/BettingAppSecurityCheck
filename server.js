@@ -276,6 +276,12 @@ io.on('connection', (socket) => {
         socket.emit("getOwnChild", {status : 'success',response, currentUser,page,roles})
     })
 
+    socket.on('getOperatorPermission',async(id)=>{
+        let user = await User.findById(id)
+        let permissions = user.OperatorAuthorization
+        socket.emit('getOperatorPermission',{status:'success',permissions})
+    })
+
 
     socket.on('userHistory',async(data)=>{
         console.log(data.filterData)
