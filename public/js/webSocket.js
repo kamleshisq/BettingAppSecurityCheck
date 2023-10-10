@@ -12806,10 +12806,10 @@ socket.on('connect', () => {
                 // let string = '.Suspend-Resume#' + data.marketId
                 if(data.status){
                     var button = document.getElementsByClassName('Suspend-Resume');
-                    button.textContent  = 'Suspend'
+                    button.innerHTML  = 'Suspend'
                 }else{
                     var button = document.getElementsByClassName('Suspend-Resume');
-                    button.textContent  = 'Resume'
+                    button.innerHTML  = 'Resume'
                 }
 
             })
