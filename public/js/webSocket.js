@@ -7745,6 +7745,7 @@ socket.on('connect', () => {
             let html2 = ""
             document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${data.openBet.length})</h5>`
             document.getElementById("pills-profilebb-tab").innerHTML = `Open Bets (${data.openBet.length})`
+            console.log(data.openBet, "data.openBet.data.openBet.data.openBet.")
             if(data.openBet.length === 1){
                 html2 = `<table class="table-new-d">
                 <thead>
