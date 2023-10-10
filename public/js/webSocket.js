@@ -12803,18 +12803,10 @@ socket.on('connect', () => {
 
             socket.on('suspendResume', async(data) => {
                 console.log(data)
-                if(data.status){
-                    var button = document.getElementsByClassName('Suspend-Resume');
-                    console.log(button, "button")
-                    button.forEach(item => {
-                        item.innerHTML  = 'Suspend'
-                    })
+                if(data.stack){
+                    $(`#${data.marketId}.Suspend-Resume`).text('Suspend')
                 }else{
-                    var button = document.getElementsByClassName('Suspend-Resume');
-                    // button.innerHTML  = 'Resume'
-                    button.forEach(item => {
-                        item.innerHTML  = 'Resume'
-                    })
+                    $(`#${data.marketId}.Suspend-Resume`).text('Resume')
                 }
 
             })
