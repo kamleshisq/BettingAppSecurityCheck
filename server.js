@@ -1423,8 +1423,24 @@ io.on('connection', (socket) => {
                 }
             }
         ])
+
+        let allData =  await getCrkAndAllData()
+        const cricket = allData[0].gameList[0].eventList
+        let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
+        let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
+        footBall = footBall.eventList
+        Tennis = Tennis.eventList
+        const resultSearch = cricket.concat(footBall, Tennis);
+        let event = resultSearch.find(item => item.eventData.eventId == data.eventId)
+        let status;
+        if(event.eventData.type == "IN_PLAY"){
+            status = true
+        }else{
+            status = false
+        }
+
         // console.log(resumeSuspendMarkets)
-        socket.emit("marketId", {finalResult,betLimits, resumeSuspendMarkets})
+        socket.emit("marketId", {finalResult,betLimits, status,resumeSuspendMarkets})
     })
 
     socket.on("SPORTDATA", async(data) => {
