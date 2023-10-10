@@ -6485,7 +6485,7 @@ socket.on('connect', () => {
                         <i class="fa-solid fa-lock"></i>
                       </span>`
                       this.removeAttribute("data-bs-toggle");
-                      $(this).classList.addClass('lock-span')
+                      $(this).addClass('lock-span')
                     }else{
                         this.setAttribute("data-bs-toggle", "collapse");
                         if(first){
