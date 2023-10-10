@@ -1912,7 +1912,7 @@ socket.on('connect', () => {
         })
 
         socket.on('getOperatorPermission',async(data)=>{
-            let modleName = "#myModal3"
+            let modleName = "#myModal2"
             let form = $(modleName).find('.form-data')
             if(data.status == 'success'){
                 for(let i = 0; i < data.permissions
