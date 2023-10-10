@@ -40,7 +40,7 @@
                       let permissionString = ""
                       for(let j = 0;j<users[i].OperatorAuthorization.length;j++){
                         if(j != 0){
-                          permissionString = permissionString + "," + users[i].OperatorAuthorization[j]
+                          permissionString = permissionString + ", " + users[i].OperatorAuthorization[j]
                         }else{
                           permissionString += users[i].OperatorAuthorization[j]
                         }
@@ -53,7 +53,7 @@
                         <button data-bs-toggle="modal" data-bs-target="#myModal3"
                           class="PasswordChange" title="Change Password">P</button>
                         <button data-bs-toggle="modal" data-bs-target="#myModal2"
-                          class="PasswordChange" title="Change Password">P</button>
+                          class="editOperatorButton" title="Change Password">Edit</button>
                     </div>
                   </td>
               </tr>

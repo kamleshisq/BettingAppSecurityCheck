@@ -1892,7 +1892,67 @@ socket.on('connect', () => {
 
     }
 
+    if(pathname == "/admin/allOperators"){
+        $(document).on('click','.PasswordChange',function(){
+            var row = this.closest("tr");
+            var id = row.id;
+            var dataId = row.getAttribute("data-id");
+            socket.emit("getUserDetaislForPassChange", {id, dataId})
+        });
+        socket.on("getUserDetaislForPassChange", data => {
+            let modleName = "#myModal3"
+            let form = $(modleName).find('.form-data')
+            form.attr('id', data.user._id);
+        })
 
+        $(document).on('click','.editOperatorButton',function(e){
+            let modleName = "#myModal2"
+            let form = $(modleName).find('.form-data')
+            var row = this.closest("tr");
+            var id = row.getAttribute("data-id");
+            form.find('input[name="id"]').val(id)
+            socket.emit('getOperatorPermission',id)
+        })
+
+        socket.on('getOperatorPermission',async(data)=>{
+            let modleName = "#myModal2"
+            let form = $(modleName).find('.form-data')
+            if(data.status == 'success'){
+                for(let i = 0; i < data.permissions
+                    .length; i++){
+                    form.find(`input[value = "${data.permissions
+                        [i]}"]`).attr("checked", "checked");
+                }
+            }
+            console.log(data)
+
+        })
+
+        $('.editOperator').submit(function(e){
+            e.preventDefault();
+            let form = $(this)
+            let formData = new FormData(form[0])
+            let formDataObj = Object.fromEntries(formData.entries())
+            let OperatorAuthorization = []
+            let operator = document.querySelectorAll("input[name='operator']:checked");
+            for( let i = 0; i < operator.length; i++){
+                OperatorAuthorization.push(operator[i].value)
+            }
+            formDataObj.OperatorAuthorization = OperatorAuthorization
+            delete formDataObj['operator']
+
+            console.log(formDataObj)
+            socket.emit('editOperatorPermission',formDataObj)
+        })
+
+        socket.on('editOperatorPermission',async(data)=>{
+            if(data.status == 'success'){
+                alert('permission updated successfully')
+                location.reload(true)
+            }
+        })
+
+    }
 
 
     //for inactive users//
