@@ -3749,7 +3749,9 @@ io.on('connection', (socket) => {
                         },
                     ])
 
-                    console.log(Bets, 'BETS')
+                    if(Bets.length > 0){
+                        console.log(Bets, 'BETS')
+                    }
                 }
                 // role_type = []
                 // roles = await Role.find({role_level: {$gt:ele.role.role_level}});
