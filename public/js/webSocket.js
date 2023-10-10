@@ -12804,10 +12804,9 @@ socket.on('connect', () => {
             socket.on('suspendResume', async(data) => {
                 console.log(data)
                 if(data.stack){
-                    console.log($(`#${data.marketId}.Suspend-Resume`))
-                    $(`#${data.marketId}.Suspend-Resume`).html('Suspend')
+                   document.addEventListener(`.Suspend-Resume#${data.marketId}`).innerText = 'Suspend'     
                 }else{
-                    $(`#${data.marketId}.Suspend-Resume`).html('Resume')
+                    document.addEventListener(`.Suspend-Resume#${data.marketId}`).innerText = 'Resume'
                 }
 
             })
