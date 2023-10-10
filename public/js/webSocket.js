@@ -12802,8 +12802,7 @@ socket.on('connect', () => {
             })
 
             socket.on('suspendResume', async(data) => {
-                //{status: true, marketId: '1.219159205', status2: 'success'}
-                // let string = '.Suspend-Resume#' + data.marketId
+                console.log(data)
                 if(data.status){
                     var button = document.getElementsByClassName('Suspend-Resume');
                     button.innerHTML  = 'Suspend'
