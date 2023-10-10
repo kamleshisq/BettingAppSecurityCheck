@@ -7782,6 +7782,7 @@ socket.on('connect', () => {
                     <td>${ data.openBet[i].Stake }</td>
                   </tr>`
                 }
+                console.log(html2, "tableBETtableBET")
                 document.getElementById('tableBET').innerHTML = html2
                 document.getElementById('tableBET1').innerHTML = html2
             }
