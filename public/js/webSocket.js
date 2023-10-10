@@ -142,7 +142,13 @@ socket.on('connect', () => {
     //         localStorage.setItem("new-class", addedClass);
     //     });
     // });
-
+    function balance(){
+        socket.emit('userLoginBalance', LOGINDATA)
+        setTimeout(()=>{
+            balance()
+          }, 500)
+    }
+    balance()
 
 
 

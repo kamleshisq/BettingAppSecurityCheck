@@ -4920,6 +4920,10 @@ io.on('connection', (socket) => {
             console.log(err)
         }
     })
+
+    socket.on('userLoginBalance', async(data) => {
+        console.log(data, "LOGINDATA")
+    })
     
 })
 
