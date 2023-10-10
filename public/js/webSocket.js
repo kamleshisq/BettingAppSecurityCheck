@@ -12804,9 +12804,9 @@ socket.on('connect', () => {
             socket.on('suspendResume', async(data) => {
                 console.log(data)
                 if(data.stack){
-                    $(`#${data.marketId}.Suspend-Resume`).text('Suspend')
+                    $(`#${data.marketId}.Suspend-Resume`).html('Suspend')
                 }else{
-                    $(`#${data.marketId}.Suspend-Resume`).text('Resume')
+                    $(`#${data.marketId}.Suspend-Resume`).html('Resume')
                 }
 
             })
