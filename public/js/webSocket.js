@@ -150,13 +150,13 @@ socket.on('connect', () => {
     }
     balance()
     socket.on('userLoginBalance', async(data) => {
-        console.log(data, "USERDATA")
+        // console.log(data, "USERDATA")
         let html = `<div class="bet-blns-nav-wrp-amount-num">
-        <span> <i class="fa-solid fa-wallet text-white"></i>  Bal : <%=user.availableBalance%></span>
+        <span> <i class="fa-solid fa-wallet text-white"></i>  Bal : ${data.availableBalance}</span>
       </div>
       <div class="bet-blns-nav-wrp-txt">
-        <span class="">Bal : <span> &nbsp; <%=user.availableBalance%></span></span>
-        <span class="">Exp : <span> &nbsp; <%=user.exposure%></span></span>
+        <span class="">Bal : <span> &nbsp; ${data.availableBalance}</span></span>
+        <span class="">Exp : <span> &nbsp; ${data.exposure}</span></span>
       </div>`
     })
 
