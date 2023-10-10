@@ -12802,7 +12802,14 @@ socket.on('connect', () => {
             })
 
             socket.on('suspendResume', async(data) => {
-                console.log(data)
+                //{status: true, marketId: '1.219159205', status2: 'success'}
+                // console.log(data)
+                if(data.status){
+                    $(`.Suspend-Resume#${data.marketId}`).text('Suspend')
+                }else{
+                    $(`.Suspend-Resume#${data.marketId}`).text('Resume')
+                }
+
             })
     }
 
