@@ -6849,7 +6849,15 @@ socket.on('connect', () => {
                         
                     }
                 }else if (this.id == `${section.selectionId}6`){
-                    if( section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0"){
+                    if(!data.status){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.add("suspended");
+                      $(this).parent().find(".match-status-message").text("Suspended")
+                    }
+                    else if( section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -7021,7 +7029,17 @@ socket.on('connect', () => {
                 let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
                 // console.log(parentElement)
                 if(this.id == `${section.secId}2` ){
-                    if( section.lay == "-" || section.lay == "1,000.00" || section.lay == "0"){
+                    if(!data.status){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                      if( section.back == "-" || section.back == "1,000.00" || section.back == "0"){
+                          parentElement.classList.add("suspended");
+                          $(this).parent().find(".match-status-message").text("Suspended")
+                      }
+                    }
+                    else if( section.lay == "-" || section.lay == "1,000.00" || section.lay == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -7097,7 +7115,15 @@ socket.on('connect', () => {
                 })
                 let parentElement = this.parentNode
                 if(this.id == `${section.market_id}2` ){
-                    if(section.ball_running){
+                    if(!data.status){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.add("suspended");
+                      $(this).parent().find(".match-status-message").text("Suspended")
+                    }
+                    else if(section.ball_running){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
@@ -7177,7 +7203,15 @@ socket.on('connect', () => {
                 let parentElement = this.parentNode
                 // console.log(section.ball_running)
                 if(this.id == `${section.market_id}2` ){
-                    if(section.ball_running){
+                    if(!data.status){
+                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>`
+                      this.removeAttribute("data-bs-toggle");
+                      parentElement.classList.add("suspended");
+                      $(this).parent().find(".match-status-message").text("Suspended")
+                    }
+                    else if(section.ball_running){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
                       </span>`
