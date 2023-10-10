@@ -4825,12 +4825,7 @@ io.on('connection', (socket) => {
             // console.log(passcheck, "PASSWORD CHECK")
             if(passcheck){
             let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL"});
-            let timelyNotification = {
-                message : data.data.Remark,
-                userName : user.userName,
-                marketId : bet.marketId
-            }
-            let notification = await timelyNotificationModel.create(timelyNotification)
+          
             // console.log(bet, "BETS")
             let DebitCreditAmount 
             if(bet.bettype2 === "Back"){
@@ -4851,8 +4846,14 @@ io.on('connection', (socket) => {
                 }
             }
             let user = await User.findByIdAndUpdate(bet.userId, {$inc:{availableBalance: DebitCreditAmount, myPL: DebitCreditAmount, exposure:-DebitCreditAmount}})
+            let timelyNotification = {
+                message : data.data.Remark,
+                userName : user.userName,
+                marketId : bet.marketId
+            }
+            let notification = await timelyNotificationModel.create(timelyNotification)
             let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
-            console.log(user.availableBalance, DebitCreditAmount, user.availableBalance + DebitCreditAmount)
+            // console.log(user.availableBalance, DebitCreditAmount, user.availableBalance + DebitCreditAmount)
             let userAcc = {
                 "user_id":user._id,
                 "description": description,
