@@ -12041,7 +12041,7 @@ socket.on('connect', () => {
 
         let first = true
         socket.on("marketId", async(data) => {
-            console.log(data)
+            // console.log(data)
             $(".match_odd_Blue").each(function() {
                     
                 let id = this.id
@@ -12053,7 +12053,7 @@ socket.on('connect', () => {
                     return section !== undefined;
                 });
                 if(this.id == `${section.selectionId}1` ){
-                    console.log('Working')
+                    // console.log('Working')
                     if( section.backPrice1 == "-" || section.backPrice1 == "1,000.00" || section.backPrice1 == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-blu-spn mylock-data">
                         <i class="fa-solid fa-lock"></i>
@@ -12239,7 +12239,7 @@ socket.on('connect', () => {
                     }
                 })
                 let parentElement = this.parentNode
-                console.log(parentElement)
+                // console.log(parentElement)
                 if(this.id == `${section.secId}2` ){
                     if( section.layPrice == "-" || section.layPrice == "1,000.00" || section.layPrice == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
@@ -12298,7 +12298,7 @@ socket.on('connect', () => {
                     }
                 })
                 let parentElement = this.parentNode
-                console.log(section.ball_running)
+                // console.log(section.ball_running)
                 if(this.id == `${section.market_id}2` ){
                     if(section.ball_running){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
@@ -12422,11 +12422,11 @@ socket.on('connect', () => {
             eventID()
 
             socket.on('BETONEVENT', async(data) => {
-                console.log(data,'betonevent')
+                // console.log(data,'betonevent')
                 let html = ``
                 for(let i = 0; i < data.data.length; i++){
                     let date = new Date(data.data[i].date)
-                    console.log(data.data[i].bettype2)
+                    // console.log(data.data[i].bettype2)
                     if(data.data[i].bettype2 === "BACK"){
                         html += '<tr class="back" >'
                     }else{
@@ -12474,9 +12474,9 @@ socket.on('connect', () => {
                 if(data.status === "error"){
                     alert("Please try again later")
                 }else{
-                    console.log(data.bet._id)
+                    // console.log(data.bet._id)
                     const deleteButton = document.getElementById(data.bet._id);
-                    console.log(deleteButton)
+                    // console.log(deleteButton)
                     const row = deleteButton.closest('tr'); 
                     if (row) {
                         const table = row.parentNode;
@@ -12495,7 +12495,7 @@ socket.on('connect', () => {
                 $('.userBook').click(function () {
                     let id = LOGINDATA.LOGINUSER._id
                     var closestMarket = $(this).parents('.bets-table').find('.market');
-                    console.log(closestMarket)
+                    // console.log(closestMarket)
                     if (closestMarket.length > 0) {
                         var marketId = closestMarket.attr('id');
                         $("#match_odd").attr('data-marketid',marketId)
@@ -12512,7 +12512,7 @@ socket.on('connect', () => {
                 $('.BookList').click(function () {
                     let id = LOGINDATA.LOGINUSER._id
                     var closestMarket = $(this).parents('.bets-table').find('.market');
-                    console.log(closestMarket)
+                    // console.log(closestMarket)
                     if (closestMarket.length > 0) {
                         var marketId = closestMarket.attr('id');
                         $("#match_odd_Book").attr('data-marketid',marketId)
@@ -12541,7 +12541,7 @@ socket.on('connect', () => {
             })
 
             socket.on("ACCSEARCHRES", async(data)=>{
-                console.log(data, 565464)
+                // console.log(data, 565464)
                 $('.wrapper').show()
                 let html = ``
                 if(data.page === 1){
@@ -12590,7 +12590,7 @@ socket.on('connect', () => {
                 data.type = 'data1'
                 data.newData = false
                 $('.wrapper').hide()
-                console.log(data)
+                // console.log(data)
                 socket.emit('UerBook', data)
 
              
@@ -12632,7 +12632,7 @@ socket.on('connect', () => {
             })
 
             socket.on('UerBook1',async(data)=>{
-                console.log(data,"==>UserBook1 Response")
+                // console.log(data,"==>UserBook1 Response")
                 if(data.Bets.length > 0){
                     let html = '';
                     let match = data.Bets[0].selections[0].matchName
@@ -12641,8 +12641,8 @@ socket.on('connect', () => {
                     for(let i = 0; i < data.Bets.length; i++){
                         let team1data = 0 
                         let team2data = 0
-                        console.log(data.Bets[i].selections[0].selectionName.toLowerCase() , team1.toLowerCase())
-                        console.log(data.Bets[i].selections[0].selectionName.toLowerCase().trim() == team1.toLowerCase().trim())
+                        // console.log(data.Bets[i].selections[0].selectionName.toLowerCase() , team1.toLowerCase())
+                        // console.log(data.Bets[i].selections[0].selectionName.toLowerCase().trim() == team1.toLowerCase().trim())
                         if(data.Bets[i].selections[0].selectionName.toLowerCase().trim() == team1.toLowerCase().trim()){
                             team1data = data.Bets[i].selections[0].totalAmount
                             if(data.Bets[i].selections[1]){
@@ -12703,7 +12703,7 @@ socket.on('connect', () => {
             })
     
             socket.on('UerBook', async(data) => {
-                console.log(data)
+                // console.log(data)
                 if(data.Bets.length > 0){
                     let team1 = data.Bets[0].Bets.teamA
                     let team2 = data.Bets[0].Bets.teamB
@@ -12797,7 +12797,7 @@ socket.on('connect', () => {
 
             $(document).on('click', '.Suspend-Resume', function(e){
                 e.preventDefault()
-                console.log("WORKING")
+                console.log("WORKING", this.id)
             })
     }
 
