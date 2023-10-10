@@ -12805,6 +12805,7 @@ socket.on('connect', () => {
                 console.log(data)
                 if(data.status){
                     var button = document.getElementsByClassName('Suspend-Resume');
+                    console.log(button, "button")
                     button.forEach(item => {
                         item.innerHTML  = 'Suspend'
                     })
