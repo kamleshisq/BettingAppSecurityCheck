@@ -1391,7 +1391,17 @@ io.on('connection', (socket) => {
         const result = await marketDetailsBymarketID(data.ids)
         let finalResult = result.data
         const betLimits = await betLimit.find({type:"Sport"})
-        // console.log(finalResult)
+        let resumeSuspendMarkets = await resumeSuspendModel.aggregate([
+            {
+                $match:{
+                    marketId : {
+                        $in:data.ids
+                    },
+                    status:false
+                }
+            }
+        ])
+        console.log(resumeSuspendMarkets)
         socket.emit("marketId", {finalResult,betLimits})
     })
 
