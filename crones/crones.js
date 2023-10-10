@@ -167,8 +167,8 @@ module.exports = () => {
                         await accModel.create({
                             "user_id":user._id,
                             "description": description,
-                            "creditDebitamount" : debitCreditAmount,
-                            "balance" : user.availableBalance + debitCreditAmount,
+                            "creditDebitamount" : parseFloat(debitCreditAmount),
+                            "balance" : user.availableBalance + parseFloat(debitCreditAmount),
                             "date" : Date.now(),
                             "userName" : user.userName,
                             "role_type" : user.role_type,
