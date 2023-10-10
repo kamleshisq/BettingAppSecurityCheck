@@ -7030,14 +7030,8 @@ socket.on('connect', () => {
                 // console.log(parentElement)
                 if(this.id == `${section.secId}2` ){
                     if(!data.status){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
-                      this.removeAttribute("data-bs-toggle");
-                      if( section.back == "-" || section.back == "1,000.00" || section.back == "0"){
-                          parentElement.classList.add("suspended");
-                          $(this).parent().find(".match-status-message").text("Suspended")
-                      }
+                        parentElement.classList.add("suspended");
+                        $(this).parent().find(".match-status-message").text("Suspended")
                     }
                     else if( section.lay == "-" || section.lay == "1,000.00" || section.lay == "0"){
                         this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
