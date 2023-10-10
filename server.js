@@ -3736,12 +3736,51 @@ io.on('connection', (socket) => {
                                         }
                                     }
                                 },
-                                Stake: { $sum: "$Stake" }
+                                Stake: {
+                                    $sum: { 
+                                        $cond: { 
+                                            if : {$eq: ['$bettype2', "BACK"]},
+                                            then : {
+                                                $sum: '$Stake'
+                                            },
+                                            else : {
+                                                $cond:{
+                                                    if : {$regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    then : {
+                                                        $sum: {
+                                                            $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                                                        }
+                                                    },
+                                                    else : {
+                                                        $sum: { 
+                                                            $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                        },
+                        {
+                            $group: {
+                                _id: "$_id.userName",
+                                selections: {
+                                    $push: {
+                                        selectionName: "$_id.selectionName",
+                                        totalAmount: "$totalAmount",
+                                        matchName: "$_id.matchName",
+                                        Stake: -"$Stake"
+                                    },
+                                },
                             },
                         },
                     ])
 
-                    console.log(Bets, 'BETS')
+                    if(Bets.length > 0){
+                        
+                    }
                 }
                 // role_type = []
                 // roles = await Role.find({role_level: {$gt:ele.role.role_level}});
