@@ -3646,7 +3646,10 @@ io.on('connection', (socket) => {
                 children.map(ele1 => {
                     childrenUsername1.push(ele1.userName) 
                 })
-                console.log(childrenUsername1, "childrenUsername1")
+                if(childrenUsername1.length > 0){
+                    console.log(childrenUsername1, "childrenUsername1")
+
+                }
                 // role_type = []
                 // roles = await Role.find({role_level: {$gt:ele.role.role_level}});
                 // for(let i = 0; i < roles.length; i++){
