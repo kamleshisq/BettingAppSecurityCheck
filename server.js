@@ -3720,7 +3720,31 @@ io.on('connection', (socket) => {
                                         }
                                     }
                                 },
-                                Stake: { $sum: "$Stake" }
+                                Stake: {
+                                    $sum: { 
+                                        $cond: { 
+                                            if : {$eq: ['$bettype2', "BACK"]},
+                                            then : {
+                                                $sum: '$Stake'
+                                            },
+                                            else : {
+                                                $cond:{
+                                                    if : {$regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    then : {
+                                                        $sum: {
+                                                            $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                                                        }
+                                                    },
+                                                    else : {
+                                                        $sum: { 
+                                                            $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             },
                         },
                     ])
