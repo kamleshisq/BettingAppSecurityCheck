@@ -12806,7 +12806,8 @@ socket.on('connect', () => {
                 console.log(data)
                 if(data.status){
                     console.log('On')
-                    $(`.Suspend-Resume#${data.marketId}`).text('Suspend')
+                    let element = $(`.Suspend-Resume#${data.marketId}`)
+                    console.log(element, "elementelementelement")
                 }else{
                     console.log('off')
                     $(`.Suspend-Resume#${data.marketId}`).text('Resume')
