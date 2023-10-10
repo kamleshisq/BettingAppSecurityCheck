@@ -12805,8 +12805,10 @@ socket.on('connect', () => {
                 //{status: true, marketId: '1.219159205', status2: 'success'}
                 console.log(data)
                 if(data.status){
+                    console.log('On')
                     $(`.Suspend-Resume#${data.marketId}`).text('Suspend')
                 }else{
+                    console.log('off')
                     $(`.Suspend-Resume#${data.marketId}`).text('Resume')
                 }
 
