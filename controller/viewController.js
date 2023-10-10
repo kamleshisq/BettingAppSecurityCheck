@@ -192,7 +192,7 @@ exports.userTable = catchAsync(async(req, res, next) => {
 exports.allOperators = catchAsync(async(req, res, next)=>{
     const users = await User.find({roleName:"Operator",parent_id:req.currentUser._id})
 
-    res.status(200).render('/admin/allOperators/main',{
+    res.status(200).render('./allOperators/main',{
         title:'All Operators',
         users
     })
