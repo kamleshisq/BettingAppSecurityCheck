@@ -12805,10 +12805,10 @@ socket.on('connect', () => {
                 //{status: true, marketId: '1.219159205', status2: 'success'}
                 // let string = '.Suspend-Resume#' + data.marketId
                 if(data.status){
-                    var button = document.getElementsByClassName('Suspend-Resume').getElementById(`${data.marketId}`);
+                    var button = document.getElementsByClassName('Suspend-Resume');
                     button.textContent  = 'Suspend'
                 }else{
-                    var button = document.getElementsByClassName('Suspend-Resume').getElementById(`${data.marketId}`);
+                    var button = document.getElementsByClassName('Suspend-Resume');
                     button.textContent  = 'Resume'
                 }
 
