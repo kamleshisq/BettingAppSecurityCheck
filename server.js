@@ -3755,7 +3755,7 @@ io.on('connection', (socket) => {
                                         selectionName: "$_id.selectionName",
                                         totalAmount: "$totalAmount",
                                         matchName: "$_id.matchName",
-                                        Stake: "$Stake"
+                                        Stake: -"$Stake"
                                     },
                                 },
                             },
@@ -3763,8 +3763,7 @@ io.on('connection', (socket) => {
                     ])
 
                     if(Bets.length > 0){
-                        console.log(Bets, 'BETS')
-                        console.log(Bets[0].selections)
+                        
                     }
                 }
                 // role_type = []
