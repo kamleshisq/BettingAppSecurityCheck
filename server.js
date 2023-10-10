@@ -284,11 +284,16 @@ io.on('connection', (socket) => {
 
     socket.on('editOperatorPermission',async(data)=>{
         try{
-
-            await User.findByIdAndUpdate(data.id,{OperatorAuthorization:data.OperatorAuthorization})
-            socket.emit('editOperatorPermission',{status:'success'})
+            let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
+            if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
+                socket.emit("editOperatorPermission",{status:'fail',msg:"please provide a valid password"})
+            }else{
+                await User.findByIdAndUpdate(data.data.id,{OperatorAuthorization:data.data.OperatorAuthorization})
+                socket.emit('editOperatorPermission',{status:'success',msg:'permission updated successfully'})
+            }
+           
         }catch(err){
-            socket.emit('editOperatorPermission',{status:'fail'})
+            socket.emit('editOperatorPermission',{status:'fail',msg:'somethig went wrong'})
 
         }
     })
