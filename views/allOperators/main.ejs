@@ -1,508 +1,142 @@
 <%- include("../header") %>
-
   <!--Container Main start-->
-  <div class="dashboard-main-wraper">
+  <div class=dashboard-main-wraper">
 
   <section class="dashboard-welcome-section">
     <div class="container-fluid">
-  </div>
+      <div class="new-head"> 
+          <h3>House Management</h1>
+            <div class="rowId" data-rowid="1"></div>
+          <!-- <form action="">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+              </div>
+              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
+              
+            </div>
+            <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
+          </form> -->
+      </div>
+    <%- include("../loginUserAdminsideDetails") %>
   </section>
 
+  <section>
+    <div class="container-fluid">
+      <div class="table-data-section">
+        <div class="table-heading">
+          <h3><img src="../images/c-user.png" alt=""> House Management</h3>
+          <div class="table-heading-btn">
+            <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
+            <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i class="fa-solid fa-plus"></i> &nbsp; Add House Funds</button>
+            <button class="btn-green" style="cursor: text;">Amount  &nbsp; <%=currentUser.availableBalance%></button>
+          </div>
+        </div>
+        <div class="data-table">
+          <table id="table12">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>User Name</th>
+                <th>Permission</th>
+                <th colspan="2">Action</th>
+              </tr>
+            </thead>
+            <tbody class="new-body">
+              <%if(users.length > 0){%>
+              <%for(let i=0; i<users.length; i++){%>
+                <%if((i+1) % 2 !=0){%>
+                  <tr class="trtable" id="<%=i+1%>" data-id="<%=users[i]._id%>">
+                    <%}else{%>
+                  <tr class="trtable" id="<%=i+1%>" data-id="<%=users[i]._id%>">
+                    <%}%>
+                      <td>
+                        <%=i + 1%>
+                      </td>
+                      <td>
+                        <%=users[i].userName%>
+                      </td>
+                      <td>
+                        <%
+                        let permissionString = ""
+                        for(let i = 0;i<users.OperatorAuthorization.length;i++){
+                          if(i != 0){
+                            permissionString = permissionString + "," + users.OperatorAuthorization[i]
+                          }else{
+                            permissionString += users.OperatorAuthorization[i]
+                          }
+                        }%>
+                        <%=permissionString%>
+                      </td>
+                      <td>
+                        <div class="btn-group">
+                            <button data-bs-toggle="modal" data-bs-target="#myModal3"
+                              class="PasswordChange" title="Change Password">P</button>
+                            <button data-bs-toggle="modal" data-bs-target="#myModal2"
+                              class="PasswordChange" title="Change Password">P</button>
+                        </div>
+                      </td>
+                  </tr>
+                  <%}%>
+                  <%}else{%>
+                    <tr class="empty_table"><td>No record found</td></tr>
+                  <%}%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+        </section>
+      </div>
+        <div id="load-more" >
+          <%if(users.length >= 10){ %>
+            <button class="load-more">Load More</button>
+            <%}%>
+          </div>
+<!-- seling section -->
+
+<div class="modal fade" id="myModaladduser" role="dialog">
+  <div class="modal-dialog">
   
-<section>
-  <%- include("./table") %>
-</section>
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        <h4 class="modal-title">Add House Funds</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-data HouseFund">
+          <div class="row">
+            <div class="col">
+              <label for="">Amount</label>
+              <input type="number" class="form-control ml0" required placeholder="" name="amount">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="">Remarks</label>
+              <input type="text" class="form-control ml0" required name="Remark">
+            </div>
+          </div>
+          <button type="submit" class="btn-submit mt-3">Add Funds &nbsp; <img src="../images/sub.png" alt=""></button>
 
-
-
-  </div>
-  <%if(users.length !== 0){%>
-    <div id="load-more">
-      <button class="load-more">Load More</button>
-    </div>
-  <%}%>
-
-  <!-- models -->
-  <div class="modal fade deposit-withdraw-modal" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-header">
-          <h4 class="modal-title">Deposit/Withdraw</h4>
-        </div>
-        <div class="modal-body">
-          <form class="form-data acc-form">
-            <div class="row">
-              <div class="col">
-                <p class="depositeWD">Deposit</p>
-              </div>
-              <div class="col">
-                <p class="withdrawWD">Withdraw</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <input type="hidden" name="type" class="DepositW" value="deposit">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">From User</label>
-                <input type="text" class="form-control ml0" placeholder="Enter User Name" name="fromUser" readonly required>
-                <!-- <input type="hidden" name="id"> -->
-
-              </div>
-              <div class="col">
-                <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="Balance" name="fuBalance" readonly required>
-                <span class="below-input" id="fuBlanceAfter"></span>
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">To User</label>
-                <input type="text" class="form-control ml0" placeholder="Enter User Name" name="toUser" readonly required>
-              </div>
-              <div class="col">
-                <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="Balance" name="tuBalance" readonly required>
-                <span class="below-input" id="tuBalanceAfter"></span>
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Client P&L</label>
-                <input type="text" class="form-control ml0" placeholder="0.00" name="clintPL" readonly required>
-              </div>
-              <div class="col">
-                <label for="">Amount</label>
-                <input type="number" class="form-control ml0" placeholder="Add Funds" name="amount" value="0" required>
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Remarks</label>
-                <input type="text" class="form-control ml0" placeholder="" name="remark">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Password</label>
-                <input type="text" class="form-control ml0" placeholder="" name="Password" required>
-              </div>
-              <div class="col">
-                <button type="submit" class="btn-submit mt-3">Submit</button>
-              </div>
-            </div>
-          </form>
-        </div>
+        </form>
       </div>
     </div>
-  </div>
-
-
-  <div class="modal fade deposit-withdraw-modal" id="myModalSE" role="dialog">
-    <div class="modal-dialog">
     
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-header">
-          <h4 class="modal-title">Settelment</h4>
-        </div>
-        <div class="modal-body">
-          <form class="form-data Settlement-form">
-            <div class="row">
-              <div class="col">
-                <p class="deposite">Deposit</p>
-              </div>
-              <div class="col">
-                <p class="withdraw">Withdraw</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <input type="hidden" name="type" class="DepositW">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">From User</label>
-                <input type="text" class="form-control ml0" placeholder="Enter User Name" name="fromUser" readonly required>
-                <!-- <input type="hidden" name="id"> -->
-
-              </div>
-              <div class="col">
-                <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="Balance" name="fuBalance" readonly required>
-                <span class="below-input" id="fuBlanceAfter"></span>
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">To User</label>
-                <input type="text" class="form-control ml0" placeholder="Enter User Name" name="toUser" readonly required>
-              </div>
-              <div class="col">
-                <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="Balance" name="tuBalance" readonly required>
-                <span class="below-input" id="tuBalanceAfter"></span>
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Client P&L</label>
-                <input type="text" class="form-control ml0" placeholder="0.00" name="clintPL" readonly required>
-              </div>
-              <div class="col">
-                <label for="">Amount</label>
-                <input type="number" class="form-control ml0" placeholder="Add Funds" name="amount" value="0" required>
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Remarks</label>
-                <input type="text" class="form-control ml0" placeholder="" name="remark">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Password</label>
-                <input type="text" class="form-control ml0" placeholder="" name="Password" required>
-              </div>
-              <div class="col">
-                <button type="submit" class="btn-submit mt-3">Submit</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
   </div>
-
-
-  <div class="modal fade" id="myModal1" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-header" >
-          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-          <h4 class="modal-title" >Withdraw</h4>
-        </div>
-        <div class="modal-body">
-          <form class="form-data">
-            <div class="row">
-              <div class="col">
-                <label for="">From User</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
-              </div>
-              <div class="col">
-                <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="1000700.100" name="pswd">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">To User</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
-              </div>
-              <div class="col">
-                <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="1000700.100" name="pswd">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Client P&L</label>
-                <input type="text" class="form-control ml0" placeholder="0.00" name="email">
-              </div>
-              <div class="col">
-                <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="pswd">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Remarks</label>
-                <input type="text" class="form-control ml0" placeholder="Abitest" name="email">
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Transcation Code</label>
-                <input type="text" class="form-control ml0" placeholder="" name="email">
-              </div>
-              <div class="col">
-                <label for="">Balance</label>
-                <input type="text" class="form-control ml0" placeholder="Add Funds" name="pswd">
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade commision-popup" id="myModal2" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-header" >
-          <!-- <button type="button" class="close" data-dismiss="modal"></button> -->
-          <h4 class="modal-title" >Edit Operator</h4>
-        </div>
-        <div class="modal-body">
-          <form class="form-data editOperator">
-            <div class="row mt-2 createRole-form" id="operator-authorization">
-              <div class="option-group">
-                <div class="input_group">
-                  <label for="HouseManagement">HouseManagement</label>
-                  <input type="checkbox" name="operator" value="HouseManagement" id="HouseManagement" class="0">
-                </div>
-            
-                <div class="input_group">
-                  <label for="whiteLabelAnalysis">whiteLabelAnalysis</label>
-                  <input type="checkbox" name="operator" value="whiteLabelAnalysis" id="whiteLabelAnalysis" class="1">
-                </div>
-                
-                <div class="input_group">
-                  <label for="commissionMarkets">commissionMarkets</label>
-                  <input type="checkbox" name="operator" value="commissionMarkets" id="commissionMarkets" class="2">
-                </div>
-                
-                <div class="input_group">
-                  <label for="settlements">settlements</label>
-                  <input type="checkbox" name="operator" value="settlements" id="settlements" class="3">
-                </div>
-                
-                <div class="input_group">
-                  <label for="gameAnalysis">gameAnalysis</label>
-                  <input type="checkbox" name="operator" value="gameAnalysis" id="gameAnalysis" class="4">
-                </div>
-                
-                <div class="input_group">
-                  <label for="notification">notification</label>
-                  <input type="checkbox" name="operator" value="notification" id="notification" class="5">
-                </div>
-                
-                <div class="input_group">
-                  <label for="betsMonitaring">betsMonitaring</label>
-                  <input type="checkbox" name="operator" value="betsMonitaring" id="betsMonitaring" class="6">
-                </div>
-                
-                <div class="input_group">
-                  <label for="onlineUsers">onlineUsers</label>
-                  <input type="checkbox" name="operator" value="onlineUsers" id="onlineUsers" class="7">
-                </div>
-                
-                <div class="input_group">
-                  <label for="alertBets">alertBets</label>
-                  <input type="checkbox" name="operator" value="alertBets" id="alertBets" class="8">
-                </div>
-                
-                <div class="input_group">
-                  <label for="betLimits">betLimits</label>
-                  <input type="checkbox" name="operator" value="betLimits" id="betLimits" class="9">
-                </div>
-                
-                <div class="input_group">
-                  <label for="voidBets">voidBets</label>
-                  <input type="checkbox" name="operator" value="voidBets" id="voidBets" class="10">
-                </div>
-                
-              </div>
-            </div>
-            
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Your Password</label>
-                <input type="password" class="form-control ml0" placeholder="******" name="Password" required>
-              </div>
-            </div>
-          <button type="submit" class="btn-submit mt-3">Update</button>
-
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="myModal3" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-header" >
-          <h4 class="modal-title" >Reset User Password</h4>
-        </div>
-        <div class="modal-body">
-          <p >Reset Password For Abitest<br>User Will Be Forced To Changed The Password On Login</p>
-
-          <form class="form-data passReset-form">
-            <div class="row">
-              <div class="col">
-                <label for="">Enter New Password</label>
-                <input type="password" class="form-control ml0" placeholder="*****" name="password" required>
-              </div>
-              <div class="col">
-                <label for="">Confirm Password</label>
-                <input type="password" class="form-control ml0" placeholder="*****" name="passwordConfirm" required>
-              </div>
-            </div>
-            
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Your Password</label>
-                <input type="password" class="form-control ml0" placeholder="******" name="Password" required>
-              </div>
-            </div>
-          <button type="submit" class="btn-submit mt-3">Confirm</button>
-
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-   
-
-  <div class="modal fade" id="myModal4" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-header" >
-          <h4 class="modal-title" >Change status</h4>
-        </div>
-        <div class="modal-body">
-          <form class="form-data userStatus">
-            <div class="row">
-              <div class="col">
-                <label for="">Account status</label>
-                <select name="status" class="form-control ml0" required>
-                  <option value="active">Active</option>
-                  <option value="suspended">Suspended</option>
-                  <option value="betLock">Bet Locked</option>
-                </select>
-              </div>
-            </div>
-            
-            <div class="row mt-2">
-              <div class="col">
-                <label for="">Enter Your Password</label>
-                <input type="password" class="form-control ml0" placeholder="******" name="Password" required>
-              </div>
-            </div>
-          <button type="submit" class="btn-submit mt-3">Confirm</button>
-
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-   
-
-  <script>
-    const customOptionCheckbox = document.getElementById('customOptionCheckbox');
-    const newWhiteLabelInput = document.getElementById('newWhiteLabelInput');
-    const SElectWhiteLable = document.getElementById("whiteLabel")
+</div>
   
-    customOptionCheckbox.addEventListener('change', function () {
-      if (this.checked) {
-        newWhiteLabelInput.classList.remove('hide')
-        // Hide the select element
-        SElectWhiteLable.classList.add('hide')
-      } else {
-        newWhiteLabelInput.classList.add('hide')
-        SElectWhiteLable.classList.remove('hide')
-      }
-    });
-  </script>
-  <script>
   
-    document.getElementById('roleSelect').addEventListener('change', function () {
-      console.log("WORK")
-      if (document.getElementById('roleSelect').value === '6492fe4fd09db28e00761694') {  
-        document.getElementById('shareVisibleActual').classList.add("hide") 
-      } else {
-        document.getElementById('shareVisibleActual').classList.remove("hide") 
-      }
-
-      if (document.getElementById('roleSelect').value === '6492fe4fd09db28e00761694') {  
-        document.getElementById('ExposureLimits').classList.remove("hide") 
-      } else {
-        document.getElementById('ExposureLimits').classList.add("hide") 
-      }
-
-      if (document.getElementById('roleSelect').value === '650bccdbb3fdc8c922c34bbe') {  
-        document.getElementById('operator-authorization').classList.remove("hide") 
-      } else {
-        document.getElementById('operator-authorization').classList.add("hide") 
-      }
-    });
-  </script>
-  <script>
-    $(document).on("change", ".bookmakerType", function(e){
-      e.preventDefault()
-      console.log($(this).val())
-      let html=``
-      if($(this).val() == "NET_LOSS"){
-        html += ` <option value="0.25">0.25</option>
-                      <option value="0.5">0.5</option>
-                      <option value="0.75">0.75</option>
-                      <option value="1">1</option>
-                      <option value="1.25">1.25</option>
-                      <option value="1.5">1.5</option>
-                      <option value="1.75">1.75</option>
-                      <option value="2">2</option>
-                      <option value="2.25">2.25</option>
-                      <option value="2.50">2.50</option>
-                      <option value="2.75">2.75</option>
-                      <option value="3">3</option>`
-      }else if ($(this).val() == "ENTRY"){
-        html += `<option value="0.025">0.025</option>
-                      <option value="0.05">0.05</option>
-                      <option value="0.075">0.075</option>
-                      <option value="0.1">0.1</option>
-                      <option value="0.125">0.125</option>
-                      <option value="0.15">0.15</option>
-                      <option value="0.175">0.175</option>
-                      <option value="0.2">0.2</option>
-                      `
-      }else if ($(this).val() == "ENTRY_LOSS_"){
-        html += `<option value="0.25">0.25</option>
-                      <option value="0.5">0.5</option>
-                      <option value="0.75">0.75</option>
-                      <option value="1">1</option>`
-      }
-      document.getElementById("bookmakerPer").innerHTML = html
-    })
-  </script>
-
-    <script type="text/javascript" src="../js/bundle.js"></script>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+<script type="text/javascript" src="../js/bundle.js"></script>
 
-  </body>
+
+</body>
 </html>
