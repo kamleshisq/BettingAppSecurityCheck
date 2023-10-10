@@ -6602,9 +6602,9 @@ socket.on('connect', () => {
                     }
                 }else if (this.id == `${section.selectionId}6`){
                     if( section.layPrice3 == "-" || section.layPrice3 == "1,000.00" || section.layPrice3 == "0"){
-                        this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
-                        <i class="fa-solid fa-lock"></i>
-                      </span>`
+                    //     this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
+                    //     <i class="fa-solid fa-lock"></i>
+                    //   </span>`
                       this.removeAttribute("data-bs-toggle");
                       parentElement.classList.add("suspended");
                       $(this).parent().find(".match-status-message").text("Suspended")
