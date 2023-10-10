@@ -6372,7 +6372,7 @@ socket.on('connect', () => {
             socket.emit("marketnotificationId", marketIds)
             setTimeout(()=>{
                 marketNotificationId()
-              }, 5000)
+              }, 1000 * 60 * 60)
         });
         }
         marketNotificationId()
