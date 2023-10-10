@@ -4908,6 +4908,11 @@ io.on('connection', (socket) => {
             socket.emit('timelyVoideBEt', {status:'err', message:'Please try again leter'})
         }
     })
+
+
+    socket.on('marketnotificationId', async(data) => {
+        console.log(data, "dataId")
+    })
     
 })
 

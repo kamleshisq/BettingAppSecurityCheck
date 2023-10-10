@@ -6359,6 +6359,25 @@ socket.on('connect', () => {
         }
         marketLimitId()
 
+
+        function marketNotificationId(){
+            $(document).ready(function() {
+            var marketIds = [];
+
+            $('.marketNotification').each(function(){
+                if(!marketIds.includes(this.id)){
+                    marketIds.push(this.id)
+                }
+            })
+            socket.emit("marketnotificationId", ids)
+        });
+        }
+        marketNotificationId()
+
+
+
+
+        
         socket.on('marketLimitId', data => {
             // console.log(data, 'returnData')
             $('.market-limit').each(function(){
