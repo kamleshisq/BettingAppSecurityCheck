@@ -6379,7 +6379,11 @@ socket.on('connect', () => {
 
         socket.on('marketnotificationId', async(data) => {
             data.forEach(item => {
-                console.log(item)
+                $('.marketNotification').each(function(){
+                    if(this.id == item.marketId){
+                        this.html(`<marquee>${item.message}</marquee>`)
+                    }
+                })
             })
         })
 
