@@ -4847,12 +4847,18 @@ io.on('connection', (socket) => {
                 }
             }
             let user = await User.findByIdAndUpdate(bet.userId, {$inc:{availableBalance: DebitCreditAmount, myPL: DebitCreditAmount, exposure:-DebitCreditAmount}})
-            let timelyNotification = {
-                message : data.data.Remark,
-                userName : user.userName,
-                marketId : bet.marketId
+            let timelyVoideCheck = await timelyNotificationModel.findOne({marketId : bet.marketId})
+            let notification
+            if(timelyVoideCheck){
+                notification = await timelyNotificationModel.findOneAndUpdate({marketId : bet.marketId}, {message:data.data.Remark})
+            }else{
+                let timelyNotification = {
+                    message : data.data.Remark,
+                    userName : user.userName,
+                    marketId : bet.marketId
+                }
+                notification = await timelyNotificationModel.create(timelyNotification)
             }
-            let notification = await timelyNotificationModel.create(timelyNotification)
             let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
             // console.log(user.availableBalance, DebitCreditAmount, user.availableBalance + DebitCreditAmount)
             let userAcc = {
