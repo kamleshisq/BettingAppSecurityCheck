@@ -1401,8 +1401,8 @@ io.on('connection', (socket) => {
                 }
             }
         ])
-        console.log(resumeSuspendMarkets)
-        socket.emit("marketId", {finalResult,betLimits})
+        // console.log(resumeSuspendMarkets)
+        socket.emit("marketId", {finalResult,betLimits, resumeSuspendMarkets})
     })
 
     socket.on("SPORTDATA", async(data) => {
