@@ -7062,7 +7062,7 @@ socket.on('connect', () => {
                         // this.innerHTML = `<b>${section.backPrice}</b> <br> ${section.backSize}`
                         // this.innerHTML = `<b>${section.layPrice}</b> <br> ${section.laySize}`
                     }
-                    if( !(section.back == "-" || section.back == "1,000.00" || section.back == "0") && !data.status){
+                    if( !(section.back == "-" || section.back == "1,000.00" || section.back == "0") && data.status){
                         parentElement.classList.remove("suspended")
                         $(this).parent().find(".match-status-message").text("")
                     }
