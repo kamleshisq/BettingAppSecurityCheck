@@ -6554,7 +6554,7 @@ socket.on('connect', () => {
                     return section !== undefined;
                 });
                 let marketId = this.closest('table').id
-                let check = resumeSuspendMarkets.some(item => item.marketId == marketId)
+                let check = data.resumeSuspendMarkets.some(item => item.marketId == marketId)
                 let parentElement = this.parentNode
                 if(this.id == `${section.selectionId}4` ){
                     if( section.layPrice1 == "-" || section.layPrice1 == "1,000.00" || section.layPrice1 == "0"){
