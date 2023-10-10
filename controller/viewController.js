@@ -194,7 +194,8 @@ exports.allOperators = catchAsync(async(req, res, next)=>{
 
     res.status(200).render('./allOperators/main',{
         title:'All Operators',
-        users
+        users,
+        currentUser:req.currentUser
     })
 })
 
