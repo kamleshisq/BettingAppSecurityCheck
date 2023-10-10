@@ -12800,6 +12800,10 @@ socket.on('connect', () => {
                 // console.log("WORKING", this.id)
                 socket.emit('suspendResume', {id:this.id})
             })
+
+            socket.on('suspendResume', async(data) => {
+                console.log(data)
+            })
     }
 
     if(pathname == "/admin/matchBets"){

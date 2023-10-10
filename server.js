@@ -57,6 +57,7 @@ const InprogreshModel = require('./model/InprogressModel');
 const eventNotification = require('./model/eventNotification');
 const newCommissionModel = require('./model/commissioNNModel'); 
 const timelyNotificationModel = require('./model/timelyVoideNotification');
+const resumeSuspendModel = require('./model/resumeSuspendMarket');
 const Decimal = require('decimal.js');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
@@ -4937,6 +4938,20 @@ io.on('connection', (socket) => {
 
     socket.on('suspendResume', async(data) => {
         console.log(data)
+        try{
+            let check = await resumeSuspendModel.findOne({marketId:data.id})
+            let status 
+            if(check){
+                await resumeSuspendModel.findOneAndUpdate({marketId:data.id}, {userName:data.LOGINDATA.LOGINUSER.userName, status:!check.status})
+                status = !check.status
+            }else{
+                await resumeSuspendModel.create({marketId:data.id, userName:data.LOGINDATA.LOGINUSER.userName, status:false})
+                status = false
+            }
+            socket.emit('suspendResume', {status, marketId:data.id, status2:'success'})
+        }catch(err){
+            console.log(err)
+        }
     })
     
 })
