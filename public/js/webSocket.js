@@ -158,6 +158,7 @@ socket.on('connect', () => {
         <span class="">Bal : <span> &nbsp; ${data.availableBalance}</span></span>
         <span class="">Exp : <span> &nbsp; ${data.exposure}</span></span>
       </div>`
+      document.getElementById('userBalance').innerHTML = html
     })
 
 
