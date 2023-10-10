@@ -6382,7 +6382,7 @@ socket.on('connect', () => {
                 $('.marketNotification').each(function(){
                     if(this.id == item.marketId){
                         console.log("WORKING")
-                        this.html(`<marquee>${item.message}</marquee>`)
+                        $(this).html(`<marquee>${item.message}</marquee>`)
                     }
                 })
             })
