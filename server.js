@@ -3640,12 +3640,13 @@ io.on('connection', (socket) => {
        
         try{
             let newUser = users.map(async(ele)=>{
-                console.log(ele, "ELE")
-                // let childrenUsername1 = []
-                // let children = await User.find({parentUsers:req.currentUser._id})
-                // children.map(ele => {
-                //     childrenUsername1.push(ele.userName) 
-                // })
+                // console.log(ele, "ELE")
+                let childrenUsername1 = []
+                let children = await User.find({parentUsers:ele._id})
+                children.map(ele1 => {
+                    childrenUsername1.push(ele1.userName) 
+                })
+                console.log(childrenUsername1, "childrenUsername1")
                 // role_type = []
                 // roles = await Role.find({role_level: {$gt:ele.role.role_level}});
                 // for(let i = 0; i < roles.length; i++){
