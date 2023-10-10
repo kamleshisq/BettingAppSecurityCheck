@@ -12803,10 +12803,11 @@ socket.on('connect', () => {
 
             socket.on('suspendResume', async(data) => {
                 console.log(data)
+                let string = `.Suspend-Resume#${data.marketId}`
                 if(data.stack){
-                   document.addEventListener(`.Suspend-Resume#${data.marketId}`).innerText = 'Suspend'     
+                   document.addEventListener(string).innerText = 'Suspend'     
                 }else{
-                    document.addEventListener(`.Suspend-Resume#${data.marketId}`).innerText = 'Resume'
+                    document.addEventListener(string).innerText = 'Resume'
                 }
 
             })
