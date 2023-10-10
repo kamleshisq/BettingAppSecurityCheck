@@ -6369,7 +6369,7 @@ socket.on('connect', () => {
                     marketIds.push(this.id)
                 }
             })
-            socket.emit("marketnotificationId", ids)
+            socket.emit("marketnotificationId", marketIds)
             setTimeout(()=>{
                 marketNotificationId()
               }, 5000)
