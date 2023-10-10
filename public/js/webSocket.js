@@ -1898,14 +1898,6 @@ socket.on('connect', () => {
             var id = row.id;
             var dataId = row.getAttribute("data-id");
             socket.emit("getUserDetaislForPassChange", {id, dataId})
-            // let rowId = $(this).parent().parent().attr('id')
-            // // console.log(rowId)
-            // $('.rowId').attr('data-rowid',rowId)
-            // let modleName = $(this).data('bs-target')
-            // let form = $(modleName).find('.form-data')
-            // let userData = $(this).parent('td').siblings('.getOwnChild').data('bs-dismiss')
-            // let me = $('#meDatails').data('me')
-            // form.find('input[name = "id"]').attr('value',userData._id)
         });
         socket.on("getUserDetaislForPassChange", data => {
             let modleName = "#myModal3"
@@ -1914,9 +1906,8 @@ socket.on('connect', () => {
         })
 
         $(document).on('click','.editOperatorButton',function(e){
-            let modleName = "#myModal3"
-            let form = $(modleName).find('.form-data')
-            let id = form.id
+            var row = this.closest("tr");
+            var id = row.getAttribute("data-id");
             socket.emit('getOperatorPermission',id)
         })
 
