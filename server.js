@@ -4922,7 +4922,11 @@ io.on('connection', (socket) => {
     })
 
     socket.on('userLoginBalance', async(data) => {
-        console.log(data, "LOGINDATA")
+        // console.log(data, "LOGINDATA")
+        if(data != {}){
+            let userData = await User.findById(data.LOGINDATA.LOGINUSER._id)
+            socket.emit('userLoginBalance', userData)
+        }
     })
     
 })
