@@ -56,7 +56,33 @@ async function voidBET(data){
             // console.log(allBetWithMarketId[bets])
             // console.log(allBetWithMarketId[bets].id)
             if(allBetWithMarketId[bets].status === 'WON'){
-                let VoidAmount = allBetWithMarketId[bets].returns.toFixed(2) - allBetWithMarketId[bets].Stake.toFixed(2)
+                let VoidAmount 
+                // let VoidAmount 
+                // console.log(VoidAmount, "VOidBetAMOUNT")
+                let returns
+                if(allBetWithMarketId[bets].bettype2 === 'BACK'){
+                    if(allBetWithMarketId[bets].marketName.toLowerCase().startsWith('match')){
+                        VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2) - allBetWithMarketId[bets].Stake.toFixed(2)
+                        returns = allBetWithMarketId[bets].Stake.toFixed(2)
+                    }else if (allBetWithMarketId[bets].marketName.toLowerCase().startsWith('book') || allBetWithMarketId[bets].marketName.toLowerCase().startsWith('toss')){
+                        VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2) - allBetWithMarketId[bets].Stake.toFixed(2)
+                        returns = allBetWithMarketId[bets].Stake.toFixed(2)
+                    }else{
+                        VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2) - allBetWithMarketId[bets].Stake.toFixed(2)
+                        returns = allBetWithMarketId[bets].Stake.toFixed(2)
+                    }
+                }else{
+                    if(allBetWithMarketId[bets].marketName.toLowerCase().startsWith('match')){
+                        returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue) - (allBetWithMarketId[bets].Stake)).toFixed(2)
+                        VoidAmount =  (allBetWithMarketId[bets].returns.toFixed(2) - returns).toFixed(2)
+                    }else if (allBetWithMarketId[bets].marketName.toLowerCase().startsWith('book') || allBetWithMarketId[bets].marketName.toLowerCase().startsWith('toss')){
+                        returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue)/100).toFixed(2)
+                        VoidAmount =  (allBetWithMarketId[bets].returns - returns).toFixed(2)
+                    }else{
+                        returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue)/100).toFixed(2)
+                        VoidAmount =  (allBetWithMarketId[bets].returns - returns).toFixed(2)
+                    }
+                }
                 // console.log(VoidAmount, "VOidBetAMOUNT")
                 await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"CANCEL", returns:0, remark:data.data.remark, calcelUser:operatoruserName})
                 let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: -VoidAmount, myPL: -VoidAmount, uplinePL: VoidAmount, pointsWL:-VoidAmount}})
@@ -113,7 +139,32 @@ async function voidBET(data){
     
                 await accountStatementModel.create(userAcc);
             }else{
-                let VoidAmount = allBetWithMarketId[bets].Stake.toFixed(2)
+                let VoidAmount 
+                // let VoidAmount
+
+                    if(allBetWithMarketId[bets].bettype2 === 'BACK'){
+                        if(allBetWithMarketId[bets].marketName.toLowerCase().startsWith('match')){
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            // returns = allBetWithMarketId[bets].Stake.toFixed(2)
+                        }else if (allBetWithMarketId[bets].marketName.toLowerCase().startsWith('book') || allBetWithMarketId[bets].marketName.toLowerCase().startsWith('toss')){
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            // returns = allBetWithMarketId[bets].Stake.toFixed(2)
+                        }else{
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            // returns = allBetWithMarketId[bets].Stake.toFixed(2)
+                        }
+                    }else{
+                        if(allBetWithMarketId[bets].marketName.toLowerCase().startsWith('match')){
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue) - (allBetWithMarketId[bets].Stake)).toFixed(2)
+                        }else if (allBetWithMarketId[bets].marketName.toLowerCase().startsWith('book') || allBetWithMarketId[bets].marketName.toLowerCase().startsWith('toss')){
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            // returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue)/100).toFixed(2)
+                        }else{
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            // returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue)/100).toFixed(2)
+                        }
+                    }
                 await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"CANCEL", returns:0, remark:data.data.remark, calcelUser:operatoruserName})
                 let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: VoidAmount, pointsWL: VoidAmount, myPL: VoidAmount, uplinePL: -VoidAmount}})
                 let description = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/CANCEL`

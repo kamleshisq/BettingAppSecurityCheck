@@ -56,15 +56,34 @@ async function voidbetBeforePlace(data){
           await settlementHistoryModel.create(dataForHistory)
                     for(const bet in bets){
                         // console.log(bets[bet].id, 12)
+                        let creditDebitamount 
+                        if(bets[bet].bettype2 === 'BACK'){
+                            if(bets[bet].marketName.toLowerCase().startsWith('match')){
+                                creditDebitamount = bets[bet].Stake
+                            }else if (bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')){
+                                creditDebitamount = bets[bet].Stake
+                            }else{
+                                creditDebitamount = bets[bet].Stake
+                            }
+                        }else{
+                            if(bets[bet].marketName.toLowerCase().startsWith('match')){
+                                creditDebitamount = ((bets[bet].Stake * bets[bet].oddValue) - bets[bet].Stake).toFixed(2)
+                            }else if (bets[bet].marketName.toLowerCase().startsWith('book') || bets[bet].marketName.toLowerCase().startsWith('toss')){
+                                creditDebitamount = (bets[bet].Stake * bets[bet].oddValue / 100).toFixed(2)
+                            }else{
+                                creditDebitamount = (bets[bet].Stake * bets[bet].oddValue / 100).toFixed(2)
+                            }
+                        }
+
                         await Bet.findByIdAndUpdate(bets[bet].id, {status:"CANCEL", return:0 ,remark:data.data.remark, calcelUser:operatoruserName});
-                        let user = await User.findByIdAndUpdate(bets[bet].userId, {$inc:{availableBalance: bets[bet].Stake, myPL: bets[bet].Stake, exposure:-bets[bet].Stake, pointsWL: bets[bet].Stake, uplinePL: -bets[bet].Stake}})
+                        let user = await User.findByIdAndUpdate(bets[bet].userId, {$inc:{availableBalance: creditDebitamount, myPL: creditDebitamount, exposure:-creditDebitamount, pointsWL: creditDebitamount, uplinePL: -creditDebitamount}})
                         let description = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/CANCEL`
-                        // let description2 = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/user = ${user.userName}/CANCEL `
+                        // let description2 = `Bet for ${bets[bet].match}/stake = ${creditDebitamount}/user = ${user.userName}/CANCEL `
                         let userAcc = {
                             "user_id":user._id,
                             "description": description,
-                            "creditDebitamount" : bets[bet].Stake,
-                            "balance" : user.availableBalance + bets[bet].Stake,
+                            "creditDebitamount" : creditDebitamount,
+                            "balance" : user.availableBalance + creditDebitamount,
                             "date" : Date.now(),
                             "userName" : user.userName,
                             "role_type" : user.role_type,
@@ -73,7 +92,7 @@ async function voidbetBeforePlace(data){
                             "transactionId":`${bets[bet].transactionId}`
                         }
     
-                        let debitAmountForP = -bets[bet].Stake
+                        let debitAmountForP = -creditDebitamount
                     for(let i = user.parentUsers.length - 1; i >= 1; i--){
                         let parentUser1 = await User.findById(user.parentUsers[i])
                         let parentUser2 = await User.findById(user.parentUsers[i - 1])
@@ -89,21 +108,21 @@ async function voidbetBeforePlace(data){
                         // }
                         await User.findByIdAndUpdate(user.parentUsers[i], {
                           $inc: {
-                              downlineBalance:  bets[bet].Stake,
+                              downlineBalance:  creditDebitamount,
                               myPL: parentUser1Amount,
                               uplinePL: parentUser2Amount,
                               lifetimePL: parentUser1Amount,
-                              pointsWL:  bets[bet].Stake
+                              pointsWL:  creditDebitamount
                           }
                       });
                   
                       if (i === 1) {
                           await User.findByIdAndUpdate(user.parentUsers[i - 1], {
                               $inc: {
-                                  downlineBalance: bets[bet].Stake,
+                                  downlineBalance: creditDebitamount,
                                   myPL: parentUser2Amount,
                                   lifetimePL: parentUser2Amount,
-                                  pointsWL: bets[bet].Stake
+                                  pointsWL: creditDebitamount
                               }
                           });
                       }

@@ -54,10 +54,35 @@ async function rollBack(data){
         try{
             for(const bets in allBetWithMarketId){
                 if(allBetWithMarketId[bets].status === 'WON'){
-                    let VoidAmount = allBetWithMarketId[bets].returns.toFixed(2)
+                    let VoidAmount 
                     // console.log(VoidAmount, "VOidBetAMOUNT")
-                    await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"OPEN", returns:-allBetWithMarketId[bets].Stake.toFixed(2), remark:data.data.remark, calcelUser:operatoruserName})
-                    let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: -VoidAmount, myPL: -VoidAmount, pointsWL: -VoidAmount, uplinePL: VoidAmount, exposure: allBetWithMarketId[bets].Stake.toFixed(2)}})
+                    let returns
+                    if(allBetWithMarketId[bets].bettype2 === 'BACK'){
+                        if(allBetWithMarketId[bets].marketName.toLowerCase().startsWith('match')){
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            returns = allBetWithMarketId[bets].Stake.toFixed(2)
+                        }else if (allBetWithMarketId[bets].marketName.toLowerCase().startsWith('book') || allBetWithMarketId[bets].marketName.toLowerCase().startsWith('toss')){
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            returns = allBetWithMarketId[bets].Stake.toFixed(2)
+                        }else{
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            returns = allBetWithMarketId[bets].Stake.toFixed(2)
+                        }
+                    }else{
+                        if(allBetWithMarketId[bets].marketName.toLowerCase().startsWith('match')){
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue) - (allBetWithMarketId[bets].Stake)).toFixed(2)
+                        }else if (allBetWithMarketId[bets].marketName.toLowerCase().startsWith('book') || allBetWithMarketId[bets].marketName.toLowerCase().startsWith('toss')){
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue)/100).toFixed(2)
+                        }else{
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue)/100).toFixed(2)
+                        }
+                    }
+
+                    await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"OPEN", returns:-returns, remark:data.data.remark, calcelUser:operatoruserName})
+                    let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: -VoidAmount, myPL: -VoidAmount, pointsWL: -VoidAmount, uplinePL: VoidAmount, exposure: returns}})
                     let description = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/OPEN`
                     // let description2 = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/user = ${user.userName}/CANCEL `
                     let userAcc = {
@@ -111,7 +136,31 @@ async function rollBack(data){
         
                     await accountStatementModel.create(userAcc);
                 }else{
-                    let VoidAmount = allBetWithMarketId[bets].Stake.toFixed(2)
+                    let VoidAmount
+
+                    if(allBetWithMarketId[bets].bettype2 === 'BACK'){
+                        if(allBetWithMarketId[bets].marketName.toLowerCase().startsWith('match')){
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            // returns = allBetWithMarketId[bets].Stake.toFixed(2)
+                        }else if (allBetWithMarketId[bets].marketName.toLowerCase().startsWith('book') || allBetWithMarketId[bets].marketName.toLowerCase().startsWith('toss')){
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            // returns = allBetWithMarketId[bets].Stake.toFixed(2)
+                        }else{
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            // returns = allBetWithMarketId[bets].Stake.toFixed(2)
+                        }
+                    }else{
+                        if(allBetWithMarketId[bets].marketName.toLowerCase().startsWith('match')){
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue) - (allBetWithMarketId[bets].Stake)).toFixed(2)
+                        }else if (allBetWithMarketId[bets].marketName.toLowerCase().startsWith('book') || allBetWithMarketId[bets].marketName.toLowerCase().startsWith('toss')){
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            // returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue)/100).toFixed(2)
+                        }else{
+                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
+                            // returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue)/100).toFixed(2)
+                        }
+                    }
                     await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"OPEN", remark:data.data.remark, calcelUser:operatoruserName})
                     let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{exposure:VoidAmount}})
                     // let description = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/OPEN`
