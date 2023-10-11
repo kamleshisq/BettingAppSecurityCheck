@@ -2565,9 +2565,7 @@ io.on('connection', (socket) => {
         filter.role_Type = 5
         const userCount = await loginLogs.aggregate([
             {
-                $match:{
-                    filter
-                }
+                $match:filter
             },
             {
                 $group: {
@@ -2582,9 +2580,7 @@ io.on('connection', (socket) => {
         filter.role_Type = {$ne:5}
         const adminCount = await loginLogs.aggregate([
             {
-                $match:{
-                    filter
-                }
+                $match:filter
             },
             {
                 $group: {
