@@ -36,11 +36,11 @@
                             let dataF 
                             let matchodd = false
                             console.log(openBet[i].details[j][k].id, "IDDDDD")
-                            dataF = liveFootBall.find(item => (item.marketList.match_odd != null) &&(item.marketList.match_odd.marketId == openBet[i].details[j][k].id))
+                            dataF = liveFootBall.find(item => (item.marketList) && (item.marketList.match_odd != null) &&(item.marketList.match_odd.marketId == openBet[i].details[j][k].id))
                             <!-- console.log(dataF, "1212121212") -->
                             if(!dataF){
                               matchodd = true
-                              dataF = liveFootBall.find(item => (item.marketList.bookmaker != null) &&(item.marketList.bookmaker[0].marketId == openBet[i].details[j][k].id))
+                              dataF = liveFootBall.find(item => (item.marketList) && (item.marketList.bookmaker != null) &&(item.marketList.bookmaker[0].marketId == openBet[i].details[j][k].id))
                             }
                           %>
                           <%if(dataF){%>
