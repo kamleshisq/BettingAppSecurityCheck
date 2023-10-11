@@ -3845,8 +3845,8 @@ io.on('connection', (socket) => {
                         },
                         {
                             $unwind: "$selections"
-                        },
-                        {
+                          },
+                          {
                             $group: {
                               _id: "$_id",
                               selections: {
@@ -3854,11 +3854,10 @@ io.on('connection', (socket) => {
                                   selectionName: "$selections.selectionName",
                                   totalAmount: "$selections.totalAmount",
                                   matchName: "$selections.matchName",
-                                  Stake: "$selections.Stake"
+                                  Stake: "$selections.Stake",
+                                  totalAmountSum: 0,  // Initialize totalAmountSum to 0
                                 }
-                              },
-                              totalAmountSum: { $sum: "$selections.totalAmount" },
-                              StakeSum: { $sum: "$selections.Stake" }
+                              }
                             },
                           },
                           {
@@ -3873,8 +3872,19 @@ io.on('connection', (socket) => {
                                     totalAmount: "$$selection.totalAmount",
                                     matchName: "$$selection.matchName",
                                     Stake: "$$selection.Stake",
-                                    totalAmountSum: "$totalAmountSum",
-                                    StakeSum: "$StakeSum"
+                                    totalAmountSum: {
+                                      $reduce: {
+                                        input: "$selections",
+                                        initialValue: 0,
+                                        in: {
+                                          $cond: {
+                                            if: { $ne: ["$$this.selectionName", "$$selection.selectionName"] },
+                                            then: { $add: ["$$value", "$$this.Stake"] },
+                                            else: "$$value"
+                                          }
+                                        }
+                                      }
+                                    }
                                   }
                                 }
                               }
