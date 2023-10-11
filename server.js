@@ -3847,20 +3847,20 @@ io.on('connection', (socket) => {
                                 parentArray: { $first: "$parentArray" }
                             },
                         },
-                        // {
-                        //     $group: {
-                        //         _id: "$_id.userName",
-                        //         parentArray:"$parentArray",
-                        //         selections: {
-                        //             $push: {
-                        //                 selectionName: "$_id.selectionName",
-                        //                 totalAmount: "$totalAmount",
-                        //                 matchName: "$_id.matchName",
-                        //                 Stake: { $multiply: ["$Stake", -1] },
-                        //             },
-                        //         },
-                        //     },
-                        // },
+                        {
+                            $group: {
+                                _id: "$_id.userName",
+                                parentArray:"$parentArray",
+                                selections: {
+                                    $push: {
+                                        selectionName: "$_id.selectionName",
+                                        totalAmount: "$totalAmount",
+                                        matchName: "$_id.matchName",
+                                        Stake: { $multiply: ["$Stake", -1] },
+                                    },
+                                },
+                            },
+                        },
                         // {
                         //     $project: { 
                         //         _id:0,
