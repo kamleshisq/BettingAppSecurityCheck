@@ -230,7 +230,7 @@ parentArray = []
 for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
     let parenetUser = await userModel.findById(data.LOGINDATA.LOGINUSER.parentUsers[i])
     let object = {
-        id:parenetUser.id,
+        id:parenetUser._id,
         uplineShare:parenetUser.Share
     }
     parentArray.push(object)
