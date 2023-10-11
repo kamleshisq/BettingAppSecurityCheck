@@ -3799,11 +3799,13 @@ io.on('connection', (socket) => {
                                                 $cond:{
                                                     if: { $regexMatch: { input: "$marketName", regex: /^(book|toss|match)/i } },
                                                     then:{
-                                                        $sum: '$Stake'
+                                                        $sum: {
+                                                            $multiply : ['$Stake', -1]
+                                                        }
                                                     },
                                                     else:{
                                                         $sum: { 
-                                                            $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                                            $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
                                                         }
                                                     }
                                                 }
