@@ -21,267 +21,246 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     children.map(ele => {
         childrenUsername.push(ele.userName) 
     })
-        roles = await User.aggregate([
-            {
-                $match:{
-                    parentUsers : { $in: [req.currentUser.id] }
-                }
-            },
-            {
-                $group:{
-                    _id:"$roleName",
-                    total:{$sum:1}
-                }
-            },
-            { 
-                $sort:{
-                    total:1
+    roles = await User.aggregate([
+        {
+            $match:{
+                parentUsers : { $in: [req.currentUser.id] }
+            }
+        },
+        {
+            $group:{
+                _id:"$roleName",
+                total:{$sum:1}
+            }
+        },
+        { 
+            $sort:{
+                total:1
+            }
+        }
+    ]);
+    users = await User.aggregate([
+        {
+            $match:{
+                parentUsers : { $in: [req.currentUser.id] }
+            }
+        },
+        {
+            $group:{
+                _id:{
+                    whiteLabel:"$whiteLabel",
+                    roleType:"$roleName"
+                },
+                total:{$sum:1}
+            }
+        },
+        { $group : { 
+            _id :  "$_id.whiteLabel",
+            terms: { 
+                $push: { 
+                    roleType:"$_id.roleType",
+                    total:"$total"
                 }
             }
-        ]);
-        users = await User.aggregate([
-            {
-                $match:{
-                    parentUsers : { $in: [req.currentUser.id] }
-                }
-            },
-            {
-                $group:{
-                    _id:{
-                        whiteLabel:"$whiteLabel",
-                        roleType:"$roleName"
-                    },
-                    total:{$sum:1}
-                }
-            },
-            { $group : { 
-                _id :  "$_id.whiteLabel",
-                terms: { 
-                    $push: { 
-                        roleType:"$_id.roleType",
-                        total:"$total"
-                    }
-                }
-             }
-            },    { 
-                $sort:{
-                    _id:1
-                }
             }
-        ]);
-        const sevenDaysAgo = new Date();
-        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+        },    { 
+            $sort:{
+                _id:1
+            }
+        }
+    ]);
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-        topGames = await betModel.aggregate([
+    topGames = await betModel.aggregate([
+        {
+            $match: {
+                status: { $ne: "OPEN" },
+                date: { $gte: sevenDaysAgo },
+                userName:{$in:childrenUsername}
+            }
+        },
+
+        {
+            $group: {
+                _id: "$event",
+                totalCount: { $sum: 1 },
+                uniqueUsers: { $addToSet: "$userId" },
+                totalReturns: { $sum: "$Stake" }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                event: "$_id",
+                totalCount: 1,
+                noOfUniqueUsers: { $size: "$uniqueUsers" },
+                totalReturns: 1
+            }
+        },
+        {
+            $sort: {
+                totalCount: -1
+            }
+        },
+        {
+            $limit: 5
+        }
+    ]);
+
+    Categories = await betModel.aggregate([
+        {
+            $match: {
+                status: { $ne: "OPEN" },
+                date: { $gte: sevenDaysAgo },
+                userName:{$in:childrenUsername}
+            }
+        },
+        {
+            $group: {
+                _id: "$betType",
+                totalBets: { $sum: 1 },
+                totalReturns: { $sum: "$Stake" },
+                uniqueEvent: { $addToSet: "$event" }
+            }
+        },
+        {
+            $sort: {
+                totalBets: -1
+            }
+        }
+    ])
+
+    var today = new Date();
+    var todayFormatted = formatDate(today);
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
+    const result1 = await loginLogs.aggregate([
+        {
+            $match: {
+                $or:[{login_time: {$gte:todayFormatted,$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}},{logOut_time: {$exists:false}}],
+                userName:{$in:childrenUsername},
+                role_Type:5
+            }
+        },
+        {
+            $group:{
+                _id:'$userName',
+            }
+        }
+    ]);
+    const result2 = await loginLogs.aggregate([
+        {
+            $match: {
+                $or:[{login_time: {$gte:todayFormatted,$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}},{logOut_time: {$exists:false}}],
+                userName:{$in:childrenUsername},
+                role_Type:{$in:[1,2,3,4,6]}
+            }
+        },
+        {
+            $group:{
+                _id:'$userName',
+            }
+        }
+    ]);
+    
+    const userTotalAmount = result1[0].length > 0?result1[0].length : 0;
+    const adminTotalAmount = result2[0].length > 0?result2[0].length : 0;
+
+        betCount = await betModel.count({userName: {$in:childrenUsername}})
+        alertBet = await betModel.aggregate([
             {
                 $match: {
-                    status: { $ne: "OPEN" },
-                    date: { $gte: sevenDaysAgo },
+                    "status": "Alert",
                     userName:{$in:childrenUsername}
-                }
-            },
 
-            {
-                $group: {
-                    _id: "$event",
-                    totalCount: { $sum: 1 },
-                    uniqueUsers: { $addToSet: "$userId" },
-                    totalReturns: { $sum: "$Stake" }
                 }
             },
             {
-                $project: {
-                    _id: 0,
-                    event: "$_id",
-                    totalCount: 1,
-                    noOfUniqueUsers: { $size: "$uniqueUsers" },
-                    totalReturns: 1
-                }
-            },
-            {
-                $sort: {
-                    totalCount: -1
-                }
-            },
-            {
-                $limit: 5
+            $sort: {
+                Stake: -1
             }
-        ]);
-
-        Categories = await betModel.aggregate([
-            {
-                $match: {
-                    status: { $ne: "OPEN" },
-                    date: { $gte: sevenDaysAgo },
-                    userName:{$in:childrenUsername}
-                }
-            },
-            {
-                $group: {
-                    _id: "$betType",
-                    totalBets: { $sum: 1 },
-                    totalReturns: { $sum: "$Stake" },
-                    uniqueEvent: { $addToSet: "$event" }
-                }
-            },
-            {
-                $sort: {
-                    totalBets: -1
-                }
+        },
+        {
+            $limit: 5
+        }
+    ]);
+    
+    betsEventWise = await betModel.aggregate([
+        {
+            $match: {
+                status: "OPEN",
+                userName: {$in:childrenUsername}
             }
-        ])
-
-
-        const result = await loginLogs.aggregate([
-            {
-                $lookup: {
-                    from: "users",
-                    localField: "userName",
-                    foreignField: "userName",
-                    as: "user"
-                }
-            },
-            {
-                $unwind: "$user"
-            },
-            {
-                $match: {
-                    "user.parentUsers": { $in: [req.currentUser.id] },
-                    "user.is_Online": true // Optionally, include this filter if needed
-                }
-            },
-            {
-                $facet: {
-                    "userCount": [
-                        {
-                            $match: {
-                                "user.roleName": "user"
-                            }
-                        },
-                        {
-                            $group: {
-                                _id: null,
-                                totalAmount: { $sum: 1 }
-                            }
-                        }
-                    ],
-                    "adminCount": [
-                        {
-                            $match: {
-                                "user.roleName": { $ne: "user" }
-                            }
-                        },
-                        {
-                            $group: {
-                                _id: null,
-                                totalAmount: { $sum: 1 }
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                $project: {
-                    _id: 0,
-                    userCount: { $arrayElemAt: ["$userCount.totalAmount", 0] },
-                    adminCount: { $arrayElemAt: ["$adminCount.totalAmount", 0] }
-                }
+        },
+        {
+            $group: {
+                _id: "$match",
+                count: { $sum: 1 },
+                eventdate: { $first: "$eventDate" },
+                eventid: { $first: "$eventId" },
+                series: { $first: "$event" },
+                sport: { $first: "$betType" }
             }
-        ]);
-        
-        const userTotalAmount = result[0].userCount || 0;
-        const adminTotalAmount = result[0].adminCount || 0;
-
-          betCount = await betModel.count({userName: {$in:childrenUsername}})
-          alertBet = await betModel.aggregate([
-              {
-                  $match: {
-                      "status": "Alert",
-                      userName:{$in:childrenUsername}
-
-                  }
-              },
-              {
-                $sort: {
-                    Stake: -1
-                }
-            },
-            {
-                $limit: 5
+        },
+        {
+            $project: {
+                _id: 0,
+                matchName: "$_id",
+                eventdate: 1,
+                eventid: 1,
+                series: 1,
+                count: 1,
+                sport: 1
             }
-        ]);
-        
-        betsEventWise = await betModel.aggregate([
-            {
-                $match: {
-                    status: "OPEN",
-                    userName: {$in:childrenUsername}
-                }
-            },
-            {
-                $group: {
-                    _id: "$match",
-                    count: { $sum: 1 },
-                    eventdate: { $first: "$eventDate" },
-                    eventid: { $first: "$eventId" },
-                    series: { $first: "$event" },
-                    sport: { $first: "$betType" }
-                }
-            },
-            {
-                $project: {
-                    _id: 0,
-                    matchName: "$_id",
-                    eventdate: 1,
-                    eventid: 1,
-                    series: 1,
-                    count: 1,
-                    sport: 1
-                }
-            },
-            {
-                $sort: { count: -1 }
-            },
-            {
-                $limit: 5
+        },
+        {
+            $sort: { count: -1 }
+        },
+        {
+            $limit: 5
+        }
+    ]);
+    
+    console.log(betsEventWise, "betsEventWise")
+    
+    turnOver = await accountModel.aggregate([
+        {
+            $match:{
+                user_id:req.currentUser._id
             }
-        ]);
-        
-        console.log(betsEventWise, "betsEventWise")
-        
-        turnOver = await accountModel.aggregate([
-            {
-                $match:{
-                    user_id:req.currentUser._id
-                }
-            },
-            {
-                $group: {
-                    _id: null,
-                    totalAmount: { $sum: { $abs: "$creditDebitamount" } },
-                    Income : {$sum: '$creditDebitamount'},
-                }
+        },
+        {
+            $group: {
+                _id: null,
+                totalAmount: { $sum: { $abs: "$creditDebitamount" } },
+                Income : {$sum: '$creditDebitamount'},
             }
-        ])
+        }
+    ])
 
 
 
-        let topBets = await betModel.aggregate([
+    let topBets = await betModel.aggregate([
+        {
+            $match: {
+                status:"OPEN",
+                userName: {$in:childrenUsername}
+            }
+        },
             {
-                $match: {
-                    status:"OPEN",
-                    userName: {$in:childrenUsername}
-                }
+            $sort:{
+                Stake: -1
+            }
             },
-              {
-                $sort:{
-                    Stake: -1
-                }
-              },
-              {
-                $limit:5
-              }
-        ])
+            {
+            $limit:5
+            }
+    ])
         
         
 

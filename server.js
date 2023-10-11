@@ -2708,10 +2708,11 @@ io.on('connection', (socket) => {
                   }
               ])
         }
-          console.log(betCount)
-          if(betCount.length > 0){
-            result.betCount = betCount[0].totalBets
-          }
+        
+        console.log(betCount)
+        if(betCount.length > 0){
+        result.betCount = betCount[0].totalBets
+        }
         // console.log(turnOver)
         // console.log(turnOver.length)
 
