@@ -142,7 +142,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     const result1 = await loginLogs.aggregate([
         {
             $match: {
-                $or:[{login_time: {$gte:todayFormatted,$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}},{logOut_time: {$exists:false}}],
+               
                 userName:{$in:childrenUsername},
                 role_Type:5
             }
@@ -156,9 +156,8 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
     const result2 = await loginLogs.aggregate([
         {
             $match: {
-                $or:[{login_time: {$gte:todayFormatted,$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}},{logOut_time: {$exists:false}}],
                 userName:{$in:childrenUsername},
-                role_Type:{$in:[1,2,3,4,6]}
+                role_Type:{$ne:5}
             }
         },
         {
