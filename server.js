@@ -3814,26 +3814,29 @@ io.on('connection', (socket) => {
                                     }
                                 },
                                 Stake: {
-                                    $sum: { 
-                                        $cond: { 
-                                            if : {$eq: ['$bettype2', "BACK"]},
-                                            then : {
-                                                $sum: '$Stake' 
-                                            },
-                                            else : {
-                                                $cond:{
-                                                    if : {$regexMatch: { input: "$marketName", regex: /^match/i } },
-                                                    then : {
-                                                        $sum: "$Stake"
-                                                    },
-                                                    else : {
-                                                        $sum: { 
-                                                            $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
+                                    $sum: {
+                                        $sum:'$stake' 
+                                        // $cond: { 
+                                        //     if : {$eq: ['$bettype2', "BACK"]},
+                                        //     then : {
+                                        //         $sum: '$Stake' 
+                                        //     },
+                                        //     else : {
+                                        //         $cond:{
+                                        //             if : {$regexMatch: { input: "$marketName", regex: /^match/i } },
+                                        //             then : {
+                                        //                 $sum: {
+                                        //                     $add : ["$Stake", {$subtract:[ {$multiply:["$Stake", "$oddValue"]}, '$Stake']}]
+                                        //                 }
+                                        //             },
+                                        //             else : {
+                                        //                 $sum: { 
+                                        //                     $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                        //                 }
+                                        //             }
+                                        //         }
+                                        //     }
+                                        // }
                                     }
                                 }
                             },
