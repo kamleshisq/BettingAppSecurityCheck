@@ -1570,7 +1570,7 @@ exports.getBetAlertPage = catchAsync(async(req, res, next) => {
         {
           $match: {
             userName: { $in: childrenUsername },
-            alertStatus:{$in:['ALERT','CANCLE','ACCEPT']},
+            alertStatus:{$in:['ALERT','CANCEL','ACCEPT']},
             date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
           }
         },
