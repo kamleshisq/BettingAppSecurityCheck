@@ -3862,7 +3862,7 @@ io.on('connection', (socket) => {
                         },
                         {
                             $group: {
-                                _id:userName,
+                                _id:'$userName',
                                 parentArray: { $first: "$parentArray" },
                                 selections222:{$first: "$selections"}
                             }
