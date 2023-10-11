@@ -1625,7 +1625,7 @@ io.on('connection', (socket) => {
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
             const passcheck = await user.correctPassword(data.data.password, user.password)
             if(passcheck){
-                let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",alertStatus:"CANCEL",remark:data.Remark});
+                let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",alertStatus:"CANCEL",remark:data.data.Remark});
                 let DebitCreditAmount 
                 if(bet.bettype2 === "Back"){
                     if(bet.marketName.toLowerCase().startsWith('match')){
