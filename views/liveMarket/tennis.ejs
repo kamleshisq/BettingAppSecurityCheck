@@ -46,13 +46,13 @@
                         %>
                         <%if(!matchodd){%>
                           <% let runners = JSON.parse(dataT.marketList.match_odd.runners); %>
+                          <% console.log(runners, "runnersrunnersrunnersrunners")%>
                           <% const runners1 = []; %>
                           <%const secIds = []; %>
                           <%runners.forEach(item => {%>
                           <%runners1.push(item.runner);%>
                           <%secIds.push(item.secId);%>
                           <%});%>
-                          <%console.log(runners1, "runners1runners1runners1runners1runners1")%>
                           <%for(let j = 0; j < runners1.length; j++){%>
                             <tr>
                               <td><%=runners1[j]%></td>
