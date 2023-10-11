@@ -2551,6 +2551,7 @@ io.on('connection', (socket) => {
 
         } else if (data.value === "all") {
             filter = {
+                userName:{$in:childrenUsername}
             };
             filter2 = {}
 
@@ -2638,7 +2639,7 @@ io.on('connection', (socket) => {
               ])
         }
 
-        console.log(betCount,'betCount')
+        // console.log(betCount,'betCount')
 
         result.betCount = betCount.length
         // console.log(turnOver)
