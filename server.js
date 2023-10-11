@@ -1436,11 +1436,16 @@ io.on('connection', (socket) => {
         if(data.eventId){
             let event = resultSearch.find(item => item.eventData.eventId == data.eventId)
             // console.log(event,data.eventId,"==>Event")
-            if(event.eventData.type == "IN_PLAY"){
+            if(await InPlayEvent.findOne({Id:event.eventData.eventId})){
                 status = true
             }else{
-                status = false
+                if(event.eventData.type == "IN_PLAY"){
+                    status = true
+                }else{
+                    status = false
+                }
             }
+
         }
 
         // console.log(resumeSuspendMarkets)
