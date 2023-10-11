@@ -3826,17 +3826,20 @@ io.on('connection', (socket) => {
                                                 $sum: '$Stake' 
                                             },
                                             else : {
-                                                $cond:{
-                                                    if : {$regexMatch: { input: "$marketName", regex: /^match/i } },
-                                                    then : {
-                                                        $sum: "$Stake"
-                                                    },
-                                                    else : {
-                                                        $sum: { 
-                                                            $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
-                                                        }
-                                                    }
-                                                }
+                                                $multiply: ['$Stake', -1]
+                                                // $cond:{
+                                                //     if : {$regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                //     then : {
+                                                //         $sum: {
+                                                //             $add : ["$Stake", {$subtract:[ {$multiply:["$Stake", "$oddValue"]}, '$Stake']}]
+                                                //         }
+                                                //     },
+                                                //     else : {
+                                                //         $sum: { 
+                                                //             $add : ["$Stake", {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}]
+                                                //         }
+                                                //     }
+                                                // }
                                             }
                                         }
                                     }
@@ -3917,15 +3920,38 @@ io.on('connection', (socket) => {
                                     }
                                 }
                             }
-                        }
+                        },
+                        {
+                            $sort: {
+                                "userName": 1, 
+                            }
+                        },
+                        [
+                            
+                        ]
                     ])
+                    
 
+                    // console.log(Bets, "BETSBETSBETS")
                     if(Bets.length > 0){
-                        console.log(Bets, 'BetsBets')
-                        console.log(Bets[0].selections, "selections")
-                        // console.log()
+                        console.log(Bets, "BETSBETSBETS")
+                        console.log(Bets[0].selections, "selectionsselections")
+                        let childUser = await User.findOne({userName:Bets[0].userName})
+                        // console.log(childUser)
+                        for(let i = childUser.parentUsers.length - 1 ; i >= 1; i--){
+                            let parentUser1 = await User.findById(childUser.parentUsers[i])
+                            console.log(parentUser1.userName, "parentUser1.userNameparentUser1.userNameparentUser1.userName")
+                            if(parentUser1.userName == ele.userName){
+                                console.log(parentUser1.userName)
+                                console.log('WORKED'
+                                )
+                            }
+                        }
                     }
                 }
+
+
+
                 // role_type = []
                 // roles = await Role.find({role_level: {$gt:ele.role.role_level}});
                 // for(let i = 0; i < roles.length; i++){
