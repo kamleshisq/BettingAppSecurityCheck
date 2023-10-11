@@ -3855,7 +3855,7 @@ io.on('connection', (socket) => {
                                   totalAmount: "$selections.totalAmount",
                                   matchName: "$selections.matchName",
                                   Stake: "$selections.Stake",
-                                  totalAmountSum: 0,  // Initialize totalAmountSum to 0
+                                  totalAmountSum: "$selections.totalAmount",  // Initialize totalAmountSum to 0
                                 }
                               }
                             },
