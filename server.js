@@ -3838,15 +3838,67 @@ io.on('connection', (socket) => {
                                         selectionName: "$_id.selectionName",
                                         totalAmount: "$totalAmount",
                                         matchName: "$_id.matchName",
-                                        Stake: { $multiply: ["$Stake", -1] }
+                                        Stake: { $multiply: ["$Stake", -1] },
                                     },
                                 },
                             },
                         },
                         {
-                            $unwind: "$selections"
+                            $project: { 
+                                _id:0,
+                                userName: "$_id",
+                                selections: { 
+                                    $map: { 
+                                        input: "$selections",
+                                        as: "selection",
+                                        in: { 
+                                            selectionName: "$$selection.selectionName",
+                                            totalAmount: "$$selection.totalAmount",
+                                            matchName: "$$selection.matchName",
+                                            Stake: "$$selection.Stake",
+                                            winAmount: { 
+                                                $add : [
+                                                    "$$selection.totalAmount", 
+                                                    {
+                                                        $reduce: {
+                                                            input: "$selections",
+                                                            initialValue: 0,
+                                                            in: {
+                                                                $cond: {
+                                                                    if: {
+                                                                      $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                                    },
+                                                                    then: { $add: ["$$value", "$$this.Stake"] }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            lossAmount:{ 
+                                                $add : [
+                                                    "$$selection.Stake", 
+                                                    {
+                                                        $reduce: {
+                                                            input: "$selections",
+                                                            initialValue: 0,
+                                                            in: {
+                                                                $cond: {
+                                                                    if: {
+                                                                      $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                                    },
+                                                                    then: { $add: ["$$value", "$$this.totalAmount"] }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                        }
+                                    }
+                                }
+                            }
                         }
-                        
                     ])
 
                     if(Bets.length > 0){
