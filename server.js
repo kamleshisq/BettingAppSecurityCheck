@@ -1707,7 +1707,7 @@ io.on('connection', (socket) => {
                 await AccModel.create(userAcc);
                 socket.emit('voidBet', {bet, status:"success"})
             }else{
-                socket.emit('voidBet', {bet, status:"fail",msg:'Please provide valide password'})
+                socket.emit('voidBet', {status:"fail",msg:'Please provide valide password'})
             }
         }catch(err){
             console.log(err)
