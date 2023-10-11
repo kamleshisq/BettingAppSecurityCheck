@@ -31,7 +31,10 @@
                         </tr>
                       </thead>
                       <tbody id="<%=openBet[i].details[j].id%>" class="MarketIdsR">
+                        <%console.log(openBet[i].details[j])%>
                         <%for(let k = 0; k < openBet[i].details[j].length; k++){%>
+                          <%if(k < 1){%>
+
                           <%
                           <!-- if() -->
                           let dataT 
@@ -74,6 +77,7 @@
                                 <td id="<%=secIds[j]%>B">00</td>
                             </tr>
                           <%}%>
+                        <%}%>
                         <%}%>
                         <%}%>
                       </tbody>
