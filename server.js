@@ -2607,6 +2607,8 @@ io.on('connection', (socket) => {
                 }
             }
         ])
+
+        console.log(turnOver,'turnOver')
         if(turnOver.length > 0){
             result.turnOver = turnOver[0].totalAmount
             result.Income = turnOver[0].Income
@@ -2621,10 +2623,8 @@ io.on('connection', (socket) => {
                     $match:{
                         date:filter2
                     }
-                },
-                {
-                    $count: "totalBets"
-                  }
+                }
+               
               ])
         }else{
             betCount = await Bet.aggregate([
@@ -2633,17 +2633,14 @@ io.on('connection', (socket) => {
                         date:filter2,
                         userName : {$in:childrenUsername}
                     }
-                },
-                {
-                    $count: "totalBets"
-                  }
+                }
+            
               ])
         }
 
-        console.log(betCount)
-        if(betCount.length > 0){
-        result.betCount = betCount[0].totalBets
-        }
+        console.log(betCount,'betCount')
+
+        result.betCount = betCount.length
         // console.log(turnOver)
         // console.log(turnOver.length)
 
