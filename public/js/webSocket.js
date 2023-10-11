@@ -10864,6 +10864,7 @@ socket.on('connect', () => {
             }else{
                 alert('Bet Voided Successfully !!')
                 $('#myModal2').modal('toggle')
+                location.reload(true)
 
             }
         })
