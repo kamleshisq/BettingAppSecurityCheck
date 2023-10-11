@@ -3761,7 +3761,7 @@ io.on('connection', (socket) => {
                                         $cond: { 
                                             if : {$eq: ['$bettype2', "BACK"]},
                                             then : {
-                                                $sum: '$Stake'
+                                                $sum: '$Stake' 
                                             },
                                             else : {
                                                 $cond:{
@@ -3791,7 +3791,7 @@ io.on('connection', (socket) => {
                                         selectionName: "$_id.selectionName",
                                         totalAmount: "$totalAmount",
                                         matchName: "$_id.matchName",
-                                        Stake: -"$Stake"
+                                        Stake: { $multiply: ["$Stake", -1] }
                                     },
                                 },
                             },
@@ -3800,6 +3800,7 @@ io.on('connection', (socket) => {
 
                     if(Bets.length > 0){
                         console.log(Bets, 'BetsBets')
+                        console.log(Bets[0].selections, "selections")
                         // console.log()
                     }
                 }
