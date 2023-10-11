@@ -3804,12 +3804,14 @@ io.on('connection', (socket) => {
                                             }
                                         }
                                     }
-                                }
+                                },
+                                parentArray: { $first: "$parentArray" }
                             },
                         },
                         {
                             $group: {
                                 _id: "$_id.userName",
+                                parentArray: { $first: "$parentArray" },
                                 selections: {
                                     $push: {
                                         selectionName: "$_id.selectionName",
@@ -3824,6 +3826,7 @@ io.on('connection', (socket) => {
                             $project: { 
                                 _id:0,
                                 userName: "$_id",
+                                parentArray:"$parentArray",
                                 selections: { 
                                     $map: { 
                                         input: "$selections",
@@ -3886,28 +3889,13 @@ io.on('connection', (socket) => {
                             $sort: {
                                 "userName": 1, 
                             }
-                        },
-                        [
-                            
-                        ]
+                        }
                     ])
                     
 
-                    // console.log(Bets, "BETSBETSBETS")
                     if(Bets.length > 0){
                         console.log(Bets, "BETSBETSBETS")
                         console.log(Bets[0].selections, "selectionsselections")
-                        let childUser = await User.findOne({userName:Bets[0].userName})
-                        // console.log(childUser)
-                        for(let i = childUser.parentUsers.length - 1 ; i >= 1; i--){
-                            let parentUser1 = await User.findById(childUser.parentUsers[i])
-                            console.log(parentUser1.userName, "parentUser1.userNameparentUser1.userNameparentUser1.userName")
-                            if(parentUser1.userName == ele.userName){
-                                console.log(parentUser1.userName)
-                                console.log('WORKED'
-                                )
-                            }
-                        }
                     }
                 }
 
