@@ -2510,7 +2510,8 @@ io.on('connection', (socket) => {
     
 
     socket.on("FIlterDashBoard", async(data) => {
-        let filter = {}
+        let filter;
+        let filter2;
         let result = {}
 
         let childrenUsername = []
@@ -2539,20 +2540,27 @@ io.on('connection', (socket) => {
                 userName:{$in:childrenUsername}
                 
             };
+            filter2 = {$gte:new Date(todayFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
         } else if (data.value === "yesterday") {
             filter = {
                 $or:[{login_time: {$lte:new Date(new Date(tomorrowFormatted).getTime() + ((24 * 60*60*1000)-1))},logOut_time:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(tomorrowFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
                 userName:{$in:childrenUsername}
                 
             };
+            filter2 = {$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(tomorrowFormatted).getTime() + ((24 * 60*60*1000)-1))}
+
         } else if (data.value === "all") {
             filter = {
             };
+            filter2 = {}
+
         } else {
             filter = {
                 $or:[{login_time: {$lte:new Date(new Date(thirdDayFormatted).getTime() + ((24 * 60*60*1000)-1))},logOut_time:{$gte:new Date(thirdDayFormatted),$lte:new Date(new Date(thirdDayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
                 userName:{$in:childrenUsername}
             };
+            filter2 = {$gte:new Date(thirdDayFormatted),$lte:new Date(new Date(thirdDayFormatted).getTime() + ((24 * 60*60*1000)-1))}
+
         }
         filter.role_Type = 5
         const userCount = await loginLogs.aggregate([
@@ -2592,7 +2600,7 @@ io.on('connection', (socket) => {
             {
                 $match:{
                     userName:data.LOGINDATA.LOGINUSER.userName,
-                    date:filter
+                    date:filter2
                 }
             },
             {
@@ -2613,54 +2621,23 @@ io.on('connection', (socket) => {
 
         if(data.value === "all"){
             betCount = await Bet.aggregate([
-                // {
-                //     $match:{
-                //         date:filter
-                //     }
-                // },
                 {
-                    $lookup: {
-                      from: "users",
-                      localField: "userName",
-                      foreignField: "userName",
-                      as: "user"
+                    $match:{
+                        date:filter2
                     }
-                  },
-                  {
-                    $unwind: "$user"
-                  },
-                  {
-                    $match: {
-                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
-                    }
-                  },
+                },
                 {
                     $count: "totalBets"
                   }
               ])
         }else{
+            filter2.userName = {$in:childrenUsername}
             betCount = await Bet.aggregate([
                 {
                     $match:{
-                        date:filter
+                        date:filter2
                     }
                 },
-                {
-                    $lookup: {
-                      from: "users",
-                      localField: "userName",
-                      foreignField: "userName",
-                      as: "user"
-                    }
-                  },
-                  {
-                    $unwind: "$user"
-                  },
-                  {
-                    $match: {
-                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
-                    }
-                  },
                 {
                     $count: "totalBets"
                   }
