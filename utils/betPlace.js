@@ -225,6 +225,17 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
         }
     }
 
+//FOR BETPLACE PARENTSID ARRAY DATA
+parentArray = []
+for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
+    let parenetUser = await userModel.findById(data.LOGINDATA.LOGINUSER.parentUsers[i])
+    let object = {
+        id:parenetUser.id,
+        uplineShare:parenetUser.Share
+    }
+    parentArray.push(object)
+}
+
 
 //FOR BET PLACE DATA 
 
@@ -250,7 +261,8 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
             marketId : data.data.market,
             secId : data.data.secId,
             bettype2: data.data.bettype2,
-            ip:data.LOGINDATA.IP
+            ip:data.LOGINDATA.IP,
+            parentArray:parentArray
         }
     }else{
         let runnersData = JSON.parse(marketDetails.runners)
@@ -279,7 +291,8 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
                 marketId : data.data.market,
                 secId : data.data.secId,
                 bettype2: data.data.bettype2,
-                ip:data.LOGINDATA.IP
+                ip:data.LOGINDATA.IP,
+                parentArray:parentArray
 
             }
     }
