@@ -89,7 +89,13 @@ const betSchema = mongoose.Schema({
     },
     ip:{
         type:String
-    }
+    },
+    parentArray:[
+        {
+            Id:String,
+            uplineShare:Number
+        }
+    ]
 })
 
 // betSchema.pre(/^find/, function(next){
