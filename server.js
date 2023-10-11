@@ -2627,11 +2627,11 @@ io.on('connection', (socket) => {
                   }
               ])
         }else{
-            filter2.userName = {$in:childrenUsername}
             betCount = await Bet.aggregate([
                 {
                     $match:{
-                        date:filter2
+                        date:filter2,
+                        userName : {$in:childrenUsername}
                     }
                 },
                 {
