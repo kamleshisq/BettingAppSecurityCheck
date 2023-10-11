@@ -2800,12 +2800,20 @@ io.on('connection', (socket) => {
 
     socket.on("alertBet", async(data) => {
         try{
-            let bet = await Bet.findByIdAndUpdate(data, {status:"Alert",alertStatus:"ALERT"});
-            socket.emit('alertBet', {bet, status:"success"})
+            let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
+            const passcheck = await user.correctPassword(data.data.password, user.password)
+            if(passcheck){
+
+                let bet = await Bet.findByIdAndUpdate(data.id, {status:"Alert",alertStatus:"ALERT",remark:data.data.Remark});
+                socket.emit('alertBet', {bet, status:"success"})
+            }else{
+                socket.emit("alertBet",{msg:"Please Provide valide password", status:"fail"})
+
+            }
 
         }catch(err){
             console.log(err)
-            socket.emit("alertBet",{message:"err", status:"error"})
+            socket.emit("alertBet",{msg:"Please try again leter", status:"fail"})
         }
     })
 
@@ -2817,7 +2825,7 @@ io.on('connection', (socket) => {
 
         }catch(err){
             console.log(err)
-            socket.emit("acceptBet",{message:"err", status:"error"})
+            socket.emit("acceptBet",{msg:"Please try again leter", status:"fail"})
         }
     })
 
