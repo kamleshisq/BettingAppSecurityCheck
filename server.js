@@ -3845,8 +3845,8 @@ io.on('connection', (socket) => {
                         },
                         {
                             $unwind: "$selections"
-                          },
-                          {
+                        },
+                        {
                             $group: {
                               _id: {
                                 _id: "$_id",
@@ -3857,51 +3857,6 @@ io.on('connection', (socket) => {
                               StakeSum: { $sum: "$selections.Stake" }
                             }
                           },
-                          {
-                            $group: {
-                              _id: {
-                                _id: "$_id._id",
-                                selectionName: "$_id.selectionName",
-                                matchName: "$_id.matchName",
-                                totalAmount: "$_id.totalAmount"
-                              },
-                              selections: {
-                                $push: {
-                                  selectionName: "$_id.selectionName",
-                                  totalAmount: "$_id.totalAmount",
-                                  matchName: "$_id.matchName",
-                                  Stake: "$StakeSum",
-                                  totalAmountSum: 0
-                                }
-                              }
-                            }
-                          },
-                          {
-                            $project: {
-                              _id: "$_id._id",
-                              selections: {
-                                $map: {
-                                  input: "$selections",
-                                  as: "selection",
-                                  in: {
-                                    selectionName: "$$selection.selectionName",
-                                    totalAmount: "$$selection.totalAmount",
-                                    matchName: "$$selection.matchName",
-                                    Stake: "$$selection.Stake",
-                                    totalAmountSum: {
-                                      $reduce: {
-                                        input: "$selections",
-                                        initialValue: 0,
-                                        in: {
-                                          $add: ["$$value", "$$this.Stake"]
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
                     ])
 
                     if(Bets.length > 0){
