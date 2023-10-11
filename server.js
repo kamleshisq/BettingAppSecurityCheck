@@ -3843,32 +3843,32 @@ io.on('connection', (socket) => {
                                 },
                             },
                         },
-                        // {
-                        //     $project: {
-                        //       _id: 1,
-                        //       selections: {
-                        //         $map: {
-                        //           input: "$selections",
-                        //           as: "selection",
-                        //           in: {
-                        //             selectionName: "$$selection.selectionName",
-                        //             totalAmount: {
-                        //               $sum: "$$selection.totalAmount"
-                        //             },
-                        //             matchName: "$$selection.matchName",
-                        //             Stake: {
-                        //               $sum: "$$selection.Stake"
-                        //             }
-                        //           }
-                        //         }
-                        //       }
-                        //     }
-                        //   }
+                        {
+                            $project: {
+                              _id: 1,
+                              selections: {
+                                $map: {
+                                  input: "$selections",
+                                  as: "selection",
+                                  in: {
+                                    selectionName: "$$selection.selectionName",
+                                    totalAmount: {
+                                      $sum: "$$selection.totalAmount"
+                                    },
+                                    matchName: "$$selection.matchName",
+                                    Stake: {
+                                      $sum: "$$selection.Stake"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
                     ])
 
                     if(Bets.length > 0){
                         console.log(Bets, 'BetsBets')
-                        console.log(Bets[0].selections, "selections")
+                        // console.log(Bets[0].selections, "selections")
                         // console.log()
                     }
                 }
