@@ -3744,7 +3744,7 @@ io.on('connection', (socket) => {
                                         $cond: { 
                                             if : {$eq: ['$bettype2', "BACK"]},
                                             then : {
-                                                $sum: '$Stake'
+                                                $sum: '$Stake' 
                                             },
                                             else : {
                                                 $cond:{
