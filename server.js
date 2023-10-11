@@ -3879,7 +3879,7 @@ io.on('connection', (socket) => {
                                                     initialValue: 0,
                                                     in : {
                                                         $cond:{
-                                                            if : { $ne : ["$$this.userId",  ele._id] },
+                                                            if : { $ne : ["$$this.parentUSerId",  ele._id] },
                                                             then : {
                                                                 $cond:{
                                                                     if:{ $eq: ["$$value", 0] },
