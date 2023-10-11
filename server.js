@@ -3848,21 +3848,37 @@ io.on('connection', (socket) => {
                           },
                           {
                             $group: {
-                              _id: "$_id",
+                              _id: {
+                                _id: "$_id",
+                                selectionName: "$selections.selectionName",
+                                matchName: "$selections.matchName",
+                                totalAmount: "$selections.totalAmount"
+                              },
+                              StakeSum: { $sum: "$selections.Stake" }
+                            }
+                          },
+                          {
+                            $group: {
+                              _id: {
+                                _id: "$_id._id",
+                                selectionName: "$_id.selectionName",
+                                matchName: "$_id.matchName",
+                                totalAmount: "$_id.totalAmount"
+                              },
                               selections: {
                                 $push: {
-                                  selectionName: "$selections.selectionName",
-                                  totalAmount: "$selections.totalAmount",
-                                  matchName: "$selections.matchName",
-                                  Stake: "$selections.Stake",
+                                  selectionName: "$_id.selectionName",
+                                  totalAmount: "$_id.totalAmount",
+                                  matchName: "$_id.matchName",
+                                  Stake: "$StakeSum",
                                   totalAmountSum: 0
                                 }
                               }
-                            },
+                            }
                           },
                           {
                             $project: {
-                              _id: 1,
+                              _id: "$_id._id",
                               selections: {
                                 $map: {
                                   input: "$selections",
@@ -3877,11 +3893,7 @@ io.on('connection', (socket) => {
                                         input: "$selections",
                                         initialValue: 0,
                                         in: {
-                                          $cond: {
-                                            if: { $ne: ["$$this.selectionName", "$$selection.selectionName"] },
-                                            then: { $add: ["$$value", "$$this.Stake"] },
-                                            else: "$$value"
-                                          }
+                                          $add: ["$$value", "$$this.Stake"]
                                         }
                                       }
                                     }
