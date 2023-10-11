@@ -3868,7 +3868,10 @@ io.on('connection', (socket) => {
                                                                     if: {
                                                                       $ne: ["$$this.selectionName", "$$selection.selectionName"] 
                                                                     },
-                                                                    then: { $add: ["$$value", "$$this.Stake"] }
+                                                                    then: { $add: ["$$value", "$$this.Stake"] },
+                                                                    else: {
+                                                                        $add: ["$$value", 0] 
+                                                                    }
                                                                 }
                                                             }
                                                         }
@@ -3887,7 +3890,10 @@ io.on('connection', (socket) => {
                                                                     if: {
                                                                       $ne: ["$$this.selectionName", "$$selection.selectionName"] 
                                                                     },
-                                                                    then: { $add: ["$$value", "$$this.totalAmount"] }
+                                                                    then: { $add: ["$$value", "$$this.totalAmount"] },
+                                                                    else: {
+                                                                        $add: ["$$value", 0] 
+                                                                    }
                                                                 }
                                                             }
                                                         }
