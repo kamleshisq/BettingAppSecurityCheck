@@ -3774,7 +3774,7 @@ io.on('connection', (socket) => {
                                         selectionName: "$_id.selectionName",
                                         totalAmount: "$totalAmount",
                                         matchName: "$_id.matchName",
-                                        Stake: "$Stake"
+                                        Stake: { $multiply: ["$Stake", -1] }
                                     },
                                 },
                             },
