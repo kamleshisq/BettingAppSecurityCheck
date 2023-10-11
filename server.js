@@ -2553,7 +2553,7 @@ io.on('connection', (socket) => {
             filter = {
                 userName:{$in:childrenUsername}
             };
-            filter2 = {}
+            filter2 = {$exists:true}
 
         } else {
             filter = {
@@ -2596,8 +2596,8 @@ io.on('connection', (socket) => {
         let turnOver = await AccModel.aggregate([
             {
                 $match:{
-                    userName:data.LOGINDATA.LOGINUSER.userName
-                   
+                    userName:data.LOGINDATA.LOGINUSER.userName,
+                    date:filter2
                 }
             },
             {
