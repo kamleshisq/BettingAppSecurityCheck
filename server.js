@@ -2521,114 +2521,75 @@ io.on('connection', (socket) => {
         const threeDaysAgo = new Date(currentDate);
         threeDaysAgo.setDate(currentDate.getDate() - 3);
         const threeDaysAgoString = threeDaysAgo.toISOString().slice(0, 10);
+        
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 1);
+        var tomorrowFormatted = formatDate(tomorrow);
+        var thirdDay = new Date();
+        thirdDay.setDate(today.getDate() - 2);
+        var thirdDayFormatted = formatDate(thirdDay);
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
         if (data.value === "today") {
             filter = {
-                $gte: new Date(currentDateString),
-                $lt: new Date(new Date(currentDateString).getTime() + 24 * 60 * 60 * 1000) // Next day
+                $or:[{login_time: {$gte:new Date(todayFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}},{logOut_time: {$exists:false}}],
+                userName:{$in:childrenUsername}
+                
             };
         } else if (data.value === "yesterday") {
             filter = {
-                $gte: new Date(oneDayAgoString),
-                $lt: new Date(currentDateString)
+                $or:[{login_time: {$lte:new Date(new Date(tomorrowFormatted).getTime() + ((24 * 60*60*1000)-1))},logOut_time:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(tomorrowFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                userName:{$in:childrenUsername}
+                
             };
         } else if (data.value === "all") {
             filter = {
-                $lt : new Date(currentDateString)
             };
         } else {
             filter = {
-                $gte: new Date(threeDaysAgoString),
-                $lt: new Date(currentDateString)
+                $or:[{login_time: {$lte:new Date(new Date(thirdDayFormatted).getTime() + ((24 * 60*60*1000)-1))},logOut_time:{$gte:new Date(thirdDayFormatted),$lte:new Date(new Date(thirdDayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                userName:{$in:childrenUsername}
             };
         }
-
+        filter.role_Type = 5
         const userCount = await loginLogs.aggregate([
             {
                 $match:{
-                    // isOnline: true,
                     login_time:filter
                 }
             },
             {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-            },
-            {
-                $unwind: "$user"
-            },
-            {
-                $match: {
-                  "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] },
-                  "user.roleName" : "user",
-                //   "user.is_Online" : true
-                }
-            },
-            {
                 $group: {
-                    _id: null,
-                    uniqueUsers: { $addToSet: "$user._id" } 
-                }
-            },
-            {
-                $project: {
-                    totalAmount: { $size: "$uniqueUsers" } 
+                    _id: '$userName'
                 }
             }
         ])
 
-        if(userCount.length > 0){
-            result.userCount = userCount[0].totalAmount
-        }else{
-            result.userCount = 0
-        }
+       
+        result.userCount = userCount.length > 0?userCount.length : 0;
 
+        filter.role_Type = {$ne:5}
         const adminCount = await loginLogs.aggregate([
             {
                 $match:{
-                    // isOnline: true,
                     login_time:filter
                 }
             },
             {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-            },
-            {
-                $unwind: "$user"
-            },
-            {
-                $match: {
-                  "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] },
-                  "user.roleName" : {$ne:"user"},
-                //   "user.is_Online" : true
-                }
-            },
-            {
                 $group: {
-                    _id: null,
-                    uniqueUsers: { $addToSet: "$user._id" } 
-                }
-            },
-            {
-                $project: {
-                    totalAmount: { $size: "$uniqueUsers" } 
+                    _id: '$userName'
                 }
             }
         ])
 
-        if(adminCount.length > 0){
-            result.adminCount = adminCount[0].totalAmount
-        }else{
-            result.adminCount = 0
-        }
+      
+        result.adminCount = adminCount.length > 0?adminCount.length : 0;
 
         let turnOver = await AccModel.aggregate([
             {
@@ -2708,7 +2669,7 @@ io.on('connection', (socket) => {
                   }
               ])
         }
-        
+
         console.log(betCount)
         if(betCount.length > 0){
         result.betCount = betCount[0].totalBets
