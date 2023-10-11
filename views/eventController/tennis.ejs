@@ -13,6 +13,7 @@
                   <th>Team</th>
                   <th>Open Bet</th>
                   <th>Feature</th>
+                  <th>In Play</th>
                   <%if(currentUser.roleName != 'Operator'){%>
                   <th>Action</th>
                   <%}%>
@@ -72,6 +73,23 @@
                         <div class="on-off-btn-section">
                           <span class="on-off">OFF &nbsp; <label class="switch">
                           <input class="checkbox status_check_feature" name="autoSattled" type="checkbox" data-id="<%=data.tennisEvents[i].eventData.eventId%>">
+                          <span class="slider round"></span>
+                          </label>&nbsp; ON</span>
+                        </div>
+                        <%}%>
+                    </td>
+                    <td> 
+                      <%if(data.tennisEvents[i].eventData.inPlayStatus){%>
+                        <div class="on-off-btn-section">
+                          <span class="on-off">OFF &nbsp; <label class="switch on">
+                          <input class="checkbox status_check_inPlay" name="autoSattled" type="checkbox" data-id="<%=data.tennisEvents[i].eventData.eventId%>" checked>
+                          <span class="slider round"></span>
+                          </label>&nbsp; ON</span>
+                        </div>
+                        <%}else{%>
+                        <div class="on-off-btn-section">
+                          <span class="on-off">OFF &nbsp; <label class="switch">
+                          <input class="checkbox status_check_inPlay" name="autoSattled" type="checkbox" data-id="<%=data.tennisEvents[i].eventData.eventId%>">
                           <span class="slider round"></span>
                           </label>&nbsp; ON</span>
                         </div>

@@ -37,6 +37,7 @@ const commissionModel = require("../model/CommissionModel");
 const settlementHisory = require("../model/settelementHistory");
 const catalogController = require("./../model/catalogControllModel");
 const FeatureventModel = require('./../model/featureEventModel')
+const InPlayEvent = require('./../model/inPlayModel')
 const commissionReportModel = require("../model/commissionReport");
 const betLimitMatchWisemodel = require('../model/betLimitMatchWise');
 const streamModel = require('../model/streammanagement');
@@ -3621,6 +3622,7 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     let newcricketEvents = cricketList.eventList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.eventData.eventId})
          let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
          count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
          if(!status){
             item.eventData.status = true
@@ -3631,6 +3633,11 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
             item.eventData.featureStatus = false
         }else{
             item.eventData.featureStatus = true
+        }
+        if(!inPlayStatus){
+            item.eventData.inPlayStatus = false
+        }else{
+            item.eventData.inPlayStatus = true
         }
         item.eventData.count = count
 
@@ -3639,6 +3646,8 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     let newfootballEvents =  footballList.eventList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.eventData.eventId})
          let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+
 
          count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
          if(!status){
@@ -3650,6 +3659,11 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
             item.eventData.featureStatus = false
         }else{
             item.eventData.featureStatus = true
+        }
+        if(!inPlayStatus){
+            item.eventData.inPlayStatus = false
+        }else{
+            item.eventData.inPlayStatus = true
         }
         item.eventData.count = count
 
@@ -3658,6 +3672,8 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     let newtennisEvents = tennisList.eventList.map(async(item) => {
          let status = await catalogController.findOne({Id:item.eventData.eventId})
          let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+
          count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
          if(!status){
             item.eventData.status = true
@@ -3668,6 +3684,11 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
             item.eventData.featureStatus = false
         }else{
             item.eventData.featureStatus = true
+        }
+        if(!inPlayStatus){
+            item.eventData.inPlayStatus = false
+        }else{
+            item.eventData.inPlayStatus = true
         }
         item.eventData.count = count
 

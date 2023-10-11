@@ -11975,6 +11975,39 @@ socket.on('connect', () => {
                 console.log('somethig went wrong!!')
             }
         })
+        $(document).on('click','.status_check_inPlay',function(){
+            let status = $(this).prop('checked') ? true : false;
+            let id = $(this).data('id')
+            console.log(id)
+            if(id){
+                if(confirm('do you want to change status')){
+                    socket.emit('sportStatusChange4',{status,id})
+                }else{
+                    if(status){
+                        $(this).prop('checked','')
+                    }else{
+                        $(this).prop('checked','checked')
+                    }
+                }
+            }else if(id == 0) {
+                if(confirm('do you want to change status')){
+                    socket.emit('sportStatusChange4',{status,id})
+                }else{
+                    if(status){
+                        $(this).prop('checked','')
+                    }else{
+                        $(this).prop('checked','checked')
+                    }
+                }
+            }
+        })
+        socket.on('sportStatusChange4',async(data)=>{
+            if(data.status == 'success'){
+                console.log(data.msg)
+            }else{
+                console.log('somethig went wrong!!')
+            }
+        })
     }
     
     
