@@ -2805,7 +2805,7 @@ io.on('connection', (socket) => {
             if(passcheck){
                 let bet = await Bet.findOne({_id:data.id});
                 if(bet.alertStatus == 'CANCEL'){
-                    socket.emit('alertBet', {bet, status:"fail",msg:'bet can not alert'})
+                    socket.emit('alertBet', {bet, status:"fail",msg:'can not alert this bet'})
                 }else if(bet.alertStatus == 'ACCEPT'){
                     socket.emit('alertBet', {bet, status:"fail",msg:'bet alredy accepted'})
                 }else if(bet.status == 'Alert'){
