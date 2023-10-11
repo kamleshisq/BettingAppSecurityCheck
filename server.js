@@ -3844,6 +3844,24 @@ io.on('connection', (socket) => {
                             },
                         },
                         {
+                            $unwind: "$selections"
+                        },
+                        {
+                            $group: {
+                              _id: "$_id",
+                              selections: {
+                                $push: {
+                                  selectionName: "$selections.selectionName",
+                                  totalAmount: "$selections.totalAmount",
+                                  matchName: "$selections.matchName",
+                                  Stake: "$selections.Stake"
+                                }
+                              },
+                              totalAmountSum: { $sum: "$selections.totalAmount" },
+                              StakeSum: { $sum: "$selections.Stake" }
+                            },
+                          },
+                          {
                             $project: {
                               _id: 1,
                               selections: {
@@ -3852,13 +3870,11 @@ io.on('connection', (socket) => {
                                   as: "selection",
                                   in: {
                                     selectionName: "$$selection.selectionName",
-                                    totalAmount: {
-                                      $sum: "$$selection.totalAmount"
-                                    },
+                                    totalAmount: "$$selection.totalAmount",
                                     matchName: "$$selection.matchName",
-                                    Stake: {
-                                      $sum: "$$selection.Stake"
-                                    }
+                                    Stake: "$$selection.Stake",
+                                    totalAmountSum: "$totalAmountSum",
+                                    StakeSum: "$StakeSum"
                                   }
                                 }
                               }
