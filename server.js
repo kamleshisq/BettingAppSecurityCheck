@@ -3928,13 +3928,20 @@ io.on('connection', (socket) => {
                             $sort: {
                                 "userName": 1, 
                             }
+                        },
+                        {
+                            $group: {
+                                _id:userName,
+                                parentArray: { $first: "$parentArray" },
+                                selections222:{$first: "$selections"}
+                            }
                         }
                     ])
                     
 
                     if(Bets.length > 0){
                         console.log(Bets, "BETSBETSBETS")
-                        console.log(Bets[0].selections, "selectionsselections")
+                        console.log(Bets[0].selections222, "selectionsselections")
                     }
                 }
 
