@@ -3891,9 +3891,7 @@ io.on('connection', (socket) => {
                                                                     }
                                                                 }
                                                             },
-                                                            else : {
-                                                                else: "$$value"
-                                                            }
+                                                            else : "$$value"
                                                         }
                                                     }
                                                 }
