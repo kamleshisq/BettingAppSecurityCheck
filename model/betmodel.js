@@ -92,7 +92,7 @@ const betSchema = mongoose.Schema({
     },
     parentArray:[
         {
-            Id:String,
+            parentUSerId:String,
             uplineShare:Number
         }
     ]
