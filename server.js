@@ -2565,9 +2565,7 @@ io.on('connection', (socket) => {
         filter.role_Type = 5
         const userCount = await loginLogs.aggregate([
             {
-                $match:{
-                    filter
-                }
+                $match:filter
             },
             {
                 $group: {
@@ -2582,9 +2580,7 @@ io.on('connection', (socket) => {
         filter.role_Type = {$ne:5}
         const adminCount = await loginLogs.aggregate([
             {
-                $match:{
-                    filter
-                }
+                $match:filter
             },
             {
                 $group: {
@@ -2611,6 +2607,8 @@ io.on('connection', (socket) => {
                 }
             }
         ])
+
+        console.log(turnOver,'turnOver')
         if(turnOver.length > 0){
             result.turnOver = turnOver[0].totalAmount
             result.Income = turnOver[0].Income
@@ -2625,29 +2623,24 @@ io.on('connection', (socket) => {
                     $match:{
                         date:filter2
                     }
-                },
-                {
-                    $count: "totalBets"
-                  }
+                }
+               
               ])
         }else{
-            filter2.userName = {$in:childrenUsername}
             betCount = await Bet.aggregate([
                 {
                     $match:{
-                        date:filter2
+                        date:filter2,
+                        userName : {$in:childrenUsername}
                     }
-                },
-                {
-                    $count: "totalBets"
-                  }
+                }
+            
               ])
         }
 
-        console.log(betCount)
-        if(betCount.length > 0){
-        result.betCount = betCount[0].totalBets
-        }
+        console.log(betCount,'betCount')
+
+        result.betCount = betCount.length
         // console.log(turnOver)
         // console.log(turnOver.length)
 
