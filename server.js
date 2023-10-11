@@ -3843,20 +3843,7 @@ io.on('connection', (socket) => {
                                 },
                             },
                         },
-                        {
-                            $unwind: "$selections"
-                        },
-                        {
-                            $group: {
-                              _id: {
-                                _id: "$_id",
-                                selectionName: "$selections.selectionName",
-                                matchName: "$selections.matchName",
-                                totalAmount: "$selections.totalAmount"
-                              },
-                              StakeSum: { $sum: "$selections.Stake" }
-                            }
-                          },
+                        
                     ])
 
                     if(Bets.length > 0){
