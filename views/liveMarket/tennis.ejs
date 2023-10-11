@@ -31,50 +31,7 @@
                         </tr>
                       </thead>
                       <tbody id="<%=openBet[i].details[j].id%>" class="MarketIdsR">
-                        <%for(let k = 0; k < openBet[i].details[j].length; k++){%>
-                          <%
-                          let dataT 
-                          let matchodd = false
-                          console.log(openBet[i].details[j][k].id, "IDDDDD")
-                          dataT = liveTennis.find(item => (item.marketList.match_odd != null) &&(item.marketList.match_odd.marketId == openBet[i].details[j][k].id))
-                          <!-- console.log(dataT, "1212121212") -->
-                          if(!dataT){
-                            matchodd = true
-                            dataT = liveTennis.find(item => (item.marketList.bookmaker != null) &&(item.marketList.bookmaker[0].marketId == openBet[i].details[j][k].id))
-                          }
-                        %>
-                        <%if(!matchodd){%>
-                          <% let runners = JSON.parse(dataT.marketList.match_odd.runners); %>
-                          <% const runners1 = []; %>
-                          <%const secIds = []; %>
-                          <%runners.forEach(item => {%>
-                          <%runners1.push(item.runner);%>
-                          <%secIds.push(item.secId);%>
-                          <%});%>
-                          <%for(let j = 0; j < runners1.length; j++){%>
-                            <tr>
-                              <td><%=runners1[j]%></td>
-                                <td id="<%=secIds[j]%>">00</td>
-                                <td id="<%=secIds[j]%>B">00</td>
-                            </tr>
-                          <%}%>
-                        <%}else{%>
-                          <% let runners = JSON.parse(dataT.marketList.bookmaker[0].runners); %>
-                          <% const runners1 = []; %>
-                          <%const secIds = []; %>
-                          <%runners.forEach(item => {%>
-                          <%runners1.push(item.runner);%>
-                          <%secIds.push(item.secId);%>
-                          <%});%>
-                          <%for(let j = 0; j < runners1.length; j++){%>
-                            <tr>
-                              <td><%=runners1[j]%></td>
-                                <td id="<%=secIds[j]%>">00</td>
-                                <td id="<%=secIds[j]%>B">00</td>
-                            </tr>
-                          <%}%>
-                        <%}%>
-                        <%}%>
+                        
                       </tbody>
                     </table>
                   </div>
