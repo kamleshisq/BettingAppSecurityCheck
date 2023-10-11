@@ -3783,6 +3783,7 @@ io.on('connection', (socket) => {
 
                     if(Bets.length > 0){
                         console.log(Bets, 'BetsBets')
+                        console.log(Bets[0].selections, "selections")
                         // console.log()
                     }
                 }
