@@ -10800,19 +10800,45 @@ socket.on('connect', () => {
             }
         })
 
-        $(document).on('click', '.cancel', async function(e){
-            e.preventDefault()
-            if(confirm('do you want to cancel this bet')){
+        // $(document).on('click', '.cancel', async function(e){
+        //     e.preventDefault()
+        //     if(confirm('do you want to cancel this bet')){
 
-                socket.emit('voidBet', this.id)
-            }
+        //         socket.emit('voidBet', this.id)
+        //     }
+        // })
+        $(document).on('click', ".cancel", function(e){
+            let form = $("#myModal2").find('.form-data')
+            form.attr('id', this.id)
         })
+
+        $(document).on('submit', '.timely-voideBet', function(e){
+            e.preventDefault() 
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            let id = this.id
+            // console.log(id)
+            socket.emit('voidBet',{data,LOGINDATA, id})
+            // console.log(data, "DATA123")
+        })
+
+
+        // socket.on('voidBet', async(data) => {
+        //     if(data.status === "err"){
+        //         alert(data.message)
+        //     }else{
+        //         alert('Bet Voided Successfully !!')
+        //     }
+        // })
 
         $(document).on('click', '.accept', async function(e){
             e.preventDefault()
             if(confirm('do you want to accept this bet')){
-
-                socket.emit('acceptBet', this.id)
+                let data = {}
+                data.LOGINDATA.LOGINUSER;
+                data.id = this.id
+                socket.emit('acceptBet', data)
             }
         })
 

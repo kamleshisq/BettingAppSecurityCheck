@@ -44,8 +44,8 @@
       <td>
         <%if(bets[i].status == 'Alert'){%>
         <div class="btn-group">
-        <button class="btn cancel" id="<%=bets[i]._id%>"> Cancel Bet</button>
-        <button class="btn accept" id="<%=bets[i]._id%>"> accept Bet</button>
+          <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn cancel" id="<%=bets[i]._id%>">Cancle Bet</button>
+          <button class="btn accept" id="<%=bets[i]._id%>"> accept Bet</button>
         </div>
         <%}else{%>
           -
