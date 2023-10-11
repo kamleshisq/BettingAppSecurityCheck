@@ -3844,7 +3844,7 @@ io.on('connection', (socket) => {
                                         }
                                     }
                                 },
-                                parentArray:"$parentArray"
+                                ParentArray:"$parentArray"
                             },
                         },
                         // {
