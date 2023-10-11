@@ -3844,9 +3844,6 @@ io.on('connection', (socket) => {
                             },
                         },
                         {
-                            $unwind: "$selections"
-                          },
-                          {
                             $group: {
                               _id: "$_id",
                               selections: {
@@ -3855,7 +3852,7 @@ io.on('connection', (socket) => {
                                   totalAmount: "$selections.totalAmount",
                                   matchName: "$selections.matchName",
                                   Stake: "$selections.Stake",
-                                  totalAmountSum: "$selections.totalAmount",  // Initialize totalAmountSum to 0
+                                  totalAmountSum: 0
                                 }
                               }
                             },
