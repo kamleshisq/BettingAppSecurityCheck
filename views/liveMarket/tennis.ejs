@@ -31,6 +31,7 @@
                         </tr>
                       </thead>
                       <tbody id="<%=openBet[i].details[j].id%>" class="MarketIdsR">
+                        <%console.log(openBet[i].details[j])%>
                         <%for(let k = 0; k < openBet[i].details[j].length; k++){%>
                           <%
                           <!-- if() -->
@@ -46,7 +47,6 @@
                         %>
                         <%if(!matchodd){%>
                           <% let runners = JSON.parse(dataT.marketList.match_odd.runners); %>
-                          <% console.log(runners, "runnersrunnersrunnersrunners")%>
                           <% const runners1 = []; %>
                           <%const secIds = []; %>
                           <%runners.forEach(item => {%>
