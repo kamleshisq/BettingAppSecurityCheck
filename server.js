@@ -2596,8 +2596,8 @@ io.on('connection', (socket) => {
         let turnOver = await AccModel.aggregate([
             {
                 $match:{
-                    userName:data.LOGINDATA.LOGINUSER.userName,
-                    date:filter2
+                    userName:data.LOGINDATA.LOGINUSER.userName
+                   
                 }
             },
             {
