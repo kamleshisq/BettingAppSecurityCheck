@@ -13410,7 +13410,7 @@ socket.on('connect', () => {
                 to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
             }
             let Sport = $("#Event").val()
-            socket.emit('matchOdds',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market,own})
+            socket.emit('matchOddsOwn',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market,own})
         })
 
         $(document).on('click','.matchOdds',function(e){
