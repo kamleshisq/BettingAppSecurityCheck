@@ -10798,6 +10798,7 @@ socket.on('connect', () => {
                 <td>${bets[i].Stake}</td>
                 <td>${bets[i].transactionId}</td>
                 <td>${bets[i].status}</td>
+                <td>${bets[i].remark}</td>
                 <td>`
                 if(bets[i].status == 'Alert'){
                     html += `<div class="btn-group">
