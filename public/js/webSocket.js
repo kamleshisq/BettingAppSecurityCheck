@@ -13395,13 +13395,14 @@ socket.on('connect', () => {
             let Sport = $("#Event").val()
             socket.emit('matchOdds',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
         })
+        let own;
         $(document).on('click', ".load-more-cricket", function(e){
             let page = parseInt($('.rowId2').attr('data-rowid2'))
             let market = $("#market").val()
             $('.rowId2').attr('data-rowid2',page + 1)
             let to_date;
             let from_date
-            let own = $('.matchOddOwn').attr('data-parent')
+            // let own = $('.matchOddOwn').attr('data-parent')
             if($('#Fdate').val() != ''){
                 from_date = $('#Fdate').val()
             }
@@ -13438,7 +13439,7 @@ socket.on('connect', () => {
             <h5>Result</h5>
             <h6>${result}</h6>
             </div>`)
-            let own = $(this).attr('data-parent')
+            own = $(this).attr('data-parent')
             let page = 0
             let market = $("#market").val()
             let to_date;
