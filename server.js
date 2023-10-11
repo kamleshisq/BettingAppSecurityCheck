@@ -3932,12 +3932,13 @@ io.on('connection', (socket) => {
                     if(Bets.length > 0){
                         console.log(Bets, "BETSBETSBETS")
                         let childUser = await User.findOne({userName:Bets[0].userName})
-                        for(let i = childUser.parentUsers.length - 1; i >= 1; i--){
+                        for(let i = childUser.parentUsers.length ; i >= 1; i--){
                             let parentUser1 = await User.findById(childUser.parentUsers[i])
                             console.log(parentUser1.userName, "parentUser1.userNameparentUser1.userNameparentUser1.userName")
                             if(parentUser1.userName == ele.userName){
                                 console.log(parentUser1.userName)
-                                console.log('WORKED')
+                                console.log('WORKED'
+                                )
                             }
                         }
                     }
