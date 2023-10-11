@@ -5255,8 +5255,8 @@ socket.on('connect', () => {
 
 
     socket.on('alertBet', async(data) => {
-        if(data.status === "fail"){
-            alert(data.message)
+        if(data.status == "fail"){
+            alert(data.msg)
         }else{
             alert('Bet Voided Successfully !!')
             refreshBetMonitorPage()
