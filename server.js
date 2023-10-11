@@ -3920,7 +3920,7 @@ io.on('connection', (socket) => {
                         //     }
                         // }
                     ])
-
+                    console.log(Bets)
                     if(Bets.length > 0){
                         console.log(Bets, 'BetsBets')
                         console.log(Bets[0].selections, "selections")
