@@ -1622,63 +1622,96 @@ io.on('connection', (socket) => {
 
     socket.on('voidBet', async(data) => {
         try{
-
-            let bet = await Bet.findByIdAndUpdate(data, {status:"CANCEL",alertStatus:"CANCEL"});
-            // console.log(bet);
-            let user = await User.findByIdAndUpdate(bet.userId, {$inc:{balance: bet.Stake, availableBalance: bet.Stake, myPL: bet.Stake, exposure:-bet.Stake}})
-            let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
-            let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/CANCEL `
-            let userAcc = {
-                "user_id":user._id,
-                "description": description,
-                "creditDebitamount" : bet.Stake,
-                "balance" : user.availableBalance + bet.Stake,
-                "date" : Date.now(),
-                "userName" : user.userName,
-                "role_type" : user.role_type,
-                "Remark":"-",
-                "stake": bet.Stake,
-                "transactionId":`${bet.transactionId}`
-            }
-            let parentAcc
-            if(user.parentUsers.length < 2){
-                await User.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: bet.Stake, downlineBalance: bet.Stake}})
-                let parent = await User.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:-bet.Stake}})
-                parentAcc = {
-                    "user_id":parent._id,
-                    "description": description2,
-                    "creditDebitamount" : -bet.Stake,
-                    "balance" : parent.availableBalance - (bet.Stake * 1),
+            let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
+            const passcheck = await user.correctPassword(data.data.password, user.password)
+            if(passcheck){
+                let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",alertStatus:"CANCEL",remark:data.Remark});
+                let DebitCreditAmount 
+                if(bet.bettype2 === "Back"){
+                    if(bet.marketName.toLowerCase().startsWith('match')){
+                        DebitCreditAmount = bet.Stake
+                    }else if(bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('toss')){
+                        DebitCreditAmount = bet.Stake
+                    }else{
+                        DebitCreditAmount = bet.Stake
+                    }
+                }else{
+                    if(bet.marketName.toLowerCase().startsWith('match')){
+                        DebitCreditAmount = ((bet.Stake * bet.oddValue) - bet.Stake).toFixed(2)
+                    }else if(bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('toss')){
+                        DebitCreditAmount = ((bet.Stake * bet.oddValue)/100).toFixed(2)
+                    }else{
+                        DebitCreditAmount = ((bet.Stake * bet.oddValue)/100).toFixed(2)
+                    }
+                }
+                // console.log(bet);
+                let user = await User.findByIdAndUpdate(bet.userId, {$inc:{availableBalance: DebitCreditAmount, myPL: DebitCreditAmount, exposure:-DebitCreditAmount}})
+                let timelyVoideCheck = await timelyNotificationModel.findOne({marketId : bet.marketId})
+                let notification
+                if(timelyVoideCheck){
+                    notification = await timelyNotificationModel.findOneAndUpdate({marketId : bet.marketId}, {message:data.data.Remark})
+                }else{
+                    let timelyNotification = {
+                        message : data.data.Remark,
+                        userName : user.userName,
+                        marketId : bet.marketId
+                    }
+                    notification = await timelyNotificationModel.create(timelyNotification)
+                }
+                let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
+                // console.log(user.availableBalance, DebitCreditAmount, user.availableBalance + DebitCreditAmount)
+                let userAcc = {
+                    "user_id":user._id,
+                    "description": description,
+                    "creditDebitamount" : DebitCreditAmount,
+                    "balance" : user.availableBalance + parseFloat(DebitCreditAmount),
                     "date" : Date.now(),
-                    "userName" : parent.userName,
-                    "role_type" : parent.role_type,
+                    "userName" : user.userName,
+                    "role_type" : user.role_type,
                     "Remark":"-",
-                    "stake": bet.Stake,
-                    "transactionId":`${bet.transactionId}Parent`
+                    "stake": DebitCreditAmount,
+                    "transactionId":`${bet.transactionId}`
                 }
                 
+                let debitAmountForP = DebitCreditAmount
+                  for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                      let parentUser1 = await User.findById(user.parentUsers[i])
+                      let parentUser2 = await User.findById(user.parentUsers[i - 1])
+                      let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                      let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                      parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                      parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                      await User.findByIdAndUpdate(user.parentUsers[i], {
+                        $inc: {
+                            downlineBalance: DebitCreditAmount,
+                            myPL: -parentUser1Amount,
+                            uplinePL: -parentUser2Amount,
+                            lifetimePL: -parentUser1Amount,
+                            pointsWL: DebitCreditAmount
+                        }
+                    });
+                
+                    if (i === 1) {
+                        await User.findByIdAndUpdate(user.parentUsers[i - 1], {
+                            $inc: {
+                                downlineBalance: DebitCreditAmount,
+                                myPL: -parentUser2Amount,
+                                lifetimePL: -parentUser2Amount,
+                                pointsWL: DebitCreditAmount
+                            }
+                        });
+                    }
+                      debitAmountForP = parentUser2Amount
+                  }
+                
+                await AccModel.create(userAcc);
+                socket.emit('voidBet', {bet, status:"success"})
             }else{
-                await User.updateMany({ _id: { $in: user.parentUsers.slice(1) } }, {$inc:{balance: bet.Stake, downlineBalance: bet.Stake}})
-                let parent = await User.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-bet.Stake}})
-                parentAcc = {
-                    "user_id":parent._id,
-                    "description": description2,
-                    "creditDebitamount" : -bet.Stake,
-                    "balance" : parent.availableBalance - (bet.Stake * 1),
-                    "date" : Date.now(),
-                    "userName" : parent.userName,
-                    "role_type" : parent.role_type,
-                    "Remark":"-",
-                    "stake": bet.Stake,
-                    "transactionId":`${bet.transactionId}Parent`
-                }
+                socket.emit('voidBet', {bet, status:"fail",msg:'Please provide valide password'})
             }
-            await AccModel.create(userAcc);
-            await AccModel.create(parentAcc);
-            socket.emit('voidBet', {bet, status:"success"})
         }catch(err){
             console.log(err)
-            socket.emit("voidBet",{message:"err", status:"error"})
+            socket.emit("voidBet",{msg:"Please try again leter", status:"fail"})
         }
         })
 
@@ -2778,7 +2811,8 @@ io.on('connection', (socket) => {
 
     socket.on("acceptBet", async(data) => {
         try{
-            let bet = await Bet.findByIdAndUpdate(data, {status:"OPEN",alertStatus:"ACCEPT"});
+            let remark = `accept by ${data.LOGINDATA.LOGINUSER.userName}`
+            let bet = await Bet.findByIdAndUpdate(data.id, {status:"OPEN",alertStatus:"ACCEPT",remark});
             socket.emit('acceptBet', {bet, status:"success"})
 
         }catch(err){
@@ -5006,7 +5040,7 @@ io.on('connection', (socket) => {
             const passcheck = await user.correctPassword(data.data.password, user.password)
             // console.log(passcheck, "PASSWORD CHECK")
             if(passcheck){
-            let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL"});
+            let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",remark:data.Remark});
           
             // console.log(bet, "BETS")
             let DebitCreditAmount 
