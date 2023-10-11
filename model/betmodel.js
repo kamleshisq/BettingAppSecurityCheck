@@ -49,7 +49,7 @@ const betSchema = mongoose.Schema({
     },
     alertStatus:{
         type:String,
-        enum:['ALERT,CANCLE,ACCEPT']
+        enum:['ALERT,CANCEL,ACCEPT']
     },
     returns:{
         type:Number
