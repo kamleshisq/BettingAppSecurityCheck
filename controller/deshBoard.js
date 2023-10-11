@@ -167,7 +167,7 @@ exports.dashboardData = catchAsync(async(req, res, next) => {
             }
         }
     ]);
-    
+    console.log(result1,result2,'==>dashboard results')
     const userTotalAmount = result1[0].length > 0?result1[0].length : 0;
     const adminTotalAmount = result2[0].length > 0?result2[0].length : 0;
 
