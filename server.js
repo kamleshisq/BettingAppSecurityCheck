@@ -197,8 +197,9 @@ io.on('connection', (socket) => {
             operationId = operationUser._id
             roles = await Role.find({role_level: {$gt:operationUser.role.role_level}});
         }
-
+        
         if(Object.keys(data.filterData).length !== 0){
+            data.filterData.roleName = {$ne:'Operator'}
 
             data.filterData.parentUsers = operationId
             let role_type =[]
@@ -263,9 +264,9 @@ io.on('connection', (socket) => {
         }else{
             let parent = await User.findById(data.id)
             if(parent.roleName == 'Operator'){
-                user = await User.find({parent_id:parent.parent_id}).skip(page * limit).limit(limit)
+                user = await User.find({parent_id:parent.parent_id,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit)
             }else{
-                user = await User.find({parent_id:parent._id}).skip(page * limit).limit(limit)
+                user = await User.find({parent_id:parent._id,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit)
             }
            }
         let currentUser = data.LOGINDATA.LOGINUSER

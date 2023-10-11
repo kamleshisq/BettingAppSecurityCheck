@@ -574,10 +574,10 @@ exports.getOwnChild = catchAsync(async(req, res, next) => {
             return next(new AppError('You do not have permission to perform this action',400))
         }
         Rows = await User.count({parent_id: req.query.id})
-        child = await User.find({parent_id: req.query.id}).skip(page * limit).limit(limit);
+        child = await User.find({parent_id: req.query.id,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit);
     }else{
         Rows = await User.count({parent_id: operationId})
-        child = await User.find({parent_id: operationId}).skip(page * limit).limit(limit);
+        child = await User.find({parent_id: operationId,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit);
         me = await User.findById(req.currentUser._id)
     }
     res.status(200).json({
