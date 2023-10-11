@@ -2803,6 +2803,7 @@ io.on('connection', (socket) => {
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
             const passcheck = await user.correctPassword(data.data.password, user.password)
             if(passcheck){
+
                 let bet = await Bet.findByIdAndUpdate(data.id, {status:"Alert",alertStatus:"ALERT",remark:data.data.Remark});
                 socket.emit('alertBet', {bet, status:"success"})
             }else{
@@ -3843,6 +3844,9 @@ io.on('connection', (socket) => {
                             },
                         },
                         {
+                            $unwind: "$selections"
+                          },
+                          {
                             $group: {
                               _id: "$_id",
                               selections: {
