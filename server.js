@@ -2512,15 +2512,12 @@ io.on('connection', (socket) => {
     socket.on("FIlterDashBoard", async(data) => {
         let filter = {}
         let result = {}
-        const currentDate = new Date();
 
-        const currentDateString = currentDate.toISOString().slice(0, 10);
-        const oneDayAgo = new Date(currentDate);
-        oneDayAgo.setDate(currentDate.getDate() - 1);
-        const oneDayAgoString = oneDayAgo.toISOString().slice(0, 10);
-        const threeDaysAgo = new Date(currentDate);
-        threeDaysAgo.setDate(currentDate.getDate() - 3);
-        const threeDaysAgoString = threeDaysAgo.toISOString().slice(0, 10);
+        let childrenUsername = []
+        let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
         
         var today = new Date();
         var todayFormatted = formatDate(today);
