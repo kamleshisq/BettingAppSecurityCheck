@@ -3862,7 +3862,44 @@ io.on('connection', (socket) => {
                                 _id:0,
                                 userName: "$userName",
                                 parentArray:"$parentArray",
-                                selections222:'$selections'
+                                selections2:{ 
+                                    $map: { 
+                                        input: "$selections",
+                                        as: "selection",
+                                        in: { 
+                                            selectionName: "$$selection.selectionName",
+                                            totalAmount: "$$selection.totalAmount",
+                                            matchName: "$$selection.matchName",
+                                            Stake: "$$selection.Stake",
+                                            winAmount: {
+                                                $reduce:{
+                                                    input:'$parentArray',
+                                                    initialValue: 0,
+                                                    in : {
+                                                        $cond:{
+                                                            if : { $ne : ["$$this.userId",  ele._id] },
+                                                            then : {
+                                                                $cond:{
+                                                                    if:{ $eq: ["$$value", 0] },
+                                                                    then:{
+                                                                        $multiply: ["$$this.share", { $divide: ["$$selection.win", 100] }]
+                                                                    },
+                                                                    else:{
+                                                                        $multiply: ["$$this.share", { $divide: ["$$value", 100] }]
+                                                                    }
+                                                                }
+                                                            },
+                                                            else : {
+                                                                else: "$$value"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            lossAmount:"$$selection.lossAmount"
+                                        }
+                                    }
+                                }
                             }
                         }
                     ])
@@ -3870,7 +3907,7 @@ io.on('connection', (socket) => {
 
                     if(Bets.length > 0){
                         console.log(Bets, "BETSBETSBETS")
-                        console.log(Bets[0].selections222, "selectionsselections")
+                        console.log(Bets[0].selections2, "selectionsselections")
                     }
                 }
 
