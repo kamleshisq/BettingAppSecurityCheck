@@ -5257,6 +5257,7 @@ socket.on('connect', () => {
     socket.on('alertBet', async(data) => {
         if(data.status == "fail"){
             alert(data.msg)
+            $('#myModal2').modal('toggle')
         }else{
             alert('Bet alert Successfully !!')
             $('#myModal2').modal('toggle')

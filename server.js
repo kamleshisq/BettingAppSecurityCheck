@@ -2805,13 +2805,16 @@ io.on('connection', (socket) => {
             if(passcheck){
                 let bet = await Bet.findOne({_id:data.id});
                 if(bet.alertStatus == 'CANCEL'){
-                    socket.emit('alertBet', {bet, status:"fail",msg:'can not alert this bet'})
+                    socket.emit('alertBet', {bet, status:"fail",msg:'Cannot alert this bet'})
                 }else if(bet.alertStatus == 'ACCEPT'){
-                    socket.emit('alertBet', {bet, status:"fail",msg:'bet alredy accepted'})
+                    socket.emit('alertBet', {bet, status:"fail",msg:'Bet alredy accepted'})
                 }else if(bet.status == 'Alert'){
                     await Bet.findOneAndUpdate({_id:data.id}, {status:"OPEN",$unset:{'alertStatus':1},remark:data.data.Remark});
+                    socket.emit('alertBet', {bet, status:"fail",msg:'Removed alert successfully'})
                 }else if(bet.status == 'OPEN'){
                     await Bet.findOneAndUpdate({_id:data.id}, {status:"Alert",alertStatus:"ALERT",remark:data.data.Remark});
+                    socket.emit('alertBet', {status:"success"})
+
                 }
                 // let bet = await Bet.findOneAndUpdate({_id:data.id,status:'OPEN'}, {status:"Alert",alertStatus:"ALERT",remark:data.data.Remark});
             }else{
