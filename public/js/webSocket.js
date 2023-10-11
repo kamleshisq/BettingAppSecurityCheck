@@ -5258,7 +5258,8 @@ socket.on('connect', () => {
         if(data.status == "fail"){
             alert(data.msg)
         }else{
-            alert('Bet Voided Successfully !!')
+            alert('Bet alert Successfully !!')
+            $('#myModal2').modal('toggle')
             refreshBetMonitorPage()
         }
     })
@@ -10857,6 +10858,8 @@ socket.on('connect', () => {
                 alert(data.msg)
             }else{
                 alert('Bet Voided Successfully !!')
+                $('#myModal2').modal('toggle')
+
             }
         })
 
