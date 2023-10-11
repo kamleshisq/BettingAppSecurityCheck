@@ -2838,7 +2838,7 @@ io.on('connection', (socket) => {
             data.filterData.marketName = {$nin:["Match Odds", "Bookmaker 0%Comm"]}
         }
         if(data.filterData.alertStatus == 'All' || !data.filterData.alertStatus){
-            data.filterData.alertStatus = {$in:['ALERT','ACCEPT','CANCLE']}
+            data.filterData.alertStatus = {$in:['ALERT','ACCEPT','CANCEL']}
         }
         if(data.filterData.betType == "All"){
             delete data.filterData.betType; 
