@@ -13570,7 +13570,7 @@ socket.on('connect', () => {
                 if(data.page == 0){
                     html += `</tbody>`
                     if(!(data.matchOdds.length < 10)){
-                        document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
+                        document.getElementById('load-more-cricket-more').innerHTML = `<button class="load-more">Load More</button>`
                     }
                     if(data.matchOdds.length == 0){
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
