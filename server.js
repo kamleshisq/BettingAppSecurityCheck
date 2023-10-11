@@ -3928,7 +3928,10 @@ io.on('connection', (socket) => {
                     ])
                     
 
-                    console.log(Bets, "BETSBETSBETS")
+                    // console.log(Bets, "BETSBETSBETS")
+                    if(Bets.length > 0){
+                        console.log(Bets, "BETSBETSBETS")
+                    }
                 }
 
 
