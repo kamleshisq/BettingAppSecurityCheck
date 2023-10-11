@@ -3825,19 +3825,20 @@ io.on('connection', (socket) => {
                                                 $sum: '$Stake' 
                                             },
                                             else : {
-                                                $cond:{
-                                                    if : {$regexMatch: { input: "$marketName", regex: /^match/i } },
-                                                    then : {
-                                                        $sum: {
-                                                            $add : ["$Stake", {$subtract:[ {$multiply:["$Stake", "$oddValue"]}, '$Stake']}]
-                                                        }
-                                                    },
-                                                    else : {
-                                                        $sum: { 
-                                                            $add : ["$Stake", {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}]
-                                                        }
-                                                    }
-                                                }
+                                                $multiply: ['$Stake', -1]
+                                                // $cond:{
+                                                //     if : {$regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                //     then : {
+                                                //         $sum: {
+                                                //             $add : ["$Stake", {$subtract:[ {$multiply:["$Stake", "$oddValue"]}, '$Stake']}]
+                                                //         }
+                                                //     },
+                                                //     else : {
+                                                //         $sum: { 
+                                                //             $add : ["$Stake", {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}]
+                                                //         }
+                                                //     }
+                                                // }
                                             }
                                         }
                                     }
