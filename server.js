@@ -3919,15 +3919,20 @@ io.on('connection', (socket) => {
                                     }
                                 }
                             }
+                        },
+                        {
+                            $sort: {
+                                "userName": 1, 
+                            }
                         }
                     ])
-                    // console.log(Bets)
-                    if(Bets.length > 0){
-                        console.log(Bets, 'BetsBets')
-                        console.log(Bets[0].selections, "selections")
-                        // console.log()
-                    }
+                    
+
+                    console.log(Bets, "BETSBETSBETS")
                 }
+
+
+
                 // role_type = []
                 // roles = await Role.find({role_level: {$gt:ele.role.role_level}});
                 // for(let i = 0; i < roles.length; i++){
