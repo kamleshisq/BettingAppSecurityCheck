@@ -2803,9 +2803,17 @@ io.on('connection', (socket) => {
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
             const passcheck = await user.correctPassword(data.data.password, user.password)
             if(passcheck){
-
-                let bet = await Bet.findByIdAndUpdate(data.id, {status:"Alert",alertStatus:"ALERT",remark:data.data.Remark});
-                socket.emit('alertBet', {bet, status:"success"})
+                let bet = await Bet.findOne({_id:data.id});
+                if(bet.alertStatus == 'CANCEL'){
+                    socket.emit('alertBet', {bet, status:"fail",msg:'bet can not alert'})
+                }else if(bet.alertStatus == 'ACCEPT'){
+                    socket.emit('alertBet', {bet, status:"fail",msg:'bet alredy accepted'})
+                }else if(bet.status == 'Alert'){
+                    await Bet.findOneAndUpdate({_id:data.id}, {status:"OPEN",$unset:{'alertStatus':1},remark:data.data.Remark});
+                }else if(bet.status == 'OPEN'){
+                    await Bet.findOneAndUpdate({_id:data.id}, {status:"Alert",alertStatus:"ALERT",remark:data.data.Remark});
+                }
+                // let bet = await Bet.findOneAndUpdate({_id:data.id,status:'OPEN'}, {status:"Alert",alertStatus:"ALERT",remark:data.data.Remark});
             }else{
                 socket.emit("alertBet",{msg:"Please Provide valide password", status:"fail"})
 
