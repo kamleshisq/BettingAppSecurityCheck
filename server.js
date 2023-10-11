@@ -3884,10 +3884,10 @@ io.on('connection', (socket) => {
                                                                 $cond:{
                                                                     if:{ $eq: ["$$value", 0] },
                                                                     then:{
-                                                                        $multiply: ["$$selection.winAmount", { $divide: ["$$this.share", 100] }]
+                                                                        $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
                                                                     },
                                                                     else:{
-                                                                        $multiply: ["$$value", { $divide: ["$$this.share", 100] }]
+                                                                        $multiply: ["$$value", { $divide: ["$$this.uplineShare", 100] }]
                                                                     }
                                                                 }
                                                             },
