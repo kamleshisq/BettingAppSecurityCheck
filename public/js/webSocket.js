@@ -5212,24 +5212,50 @@ socket.on('connect', () => {
         })
 
     
-    $(document).on('click', '.cancel', async function(e){
-        e.preventDefault()
-        if(confirm('do you want to cancel this bet')){
-            socket.emit('voidBet', this.id)
-        }
-    })
+    // $(document).on('click', '.cancel', async function(e){
+    //     e.preventDefault()
+    //     if(confirm('do you want to cancel this bet')){
+    //         socket.emit('voidBet', this.id)
+    //     }
+    // })
     
 
-    $(document).on("click", ".alert", function(e){
-        e.preventDefault()
-        if(confirm('do you want to alert this bet')){
-            socket.emit("alertBet", this.id)
-        }
+    // $(document).on("click", ".alert", function(e){
+    //     e.preventDefault()
+    //     if(confirm('do you want to alert this bet')){
+    //         socket.emit("alertBet", this.id)
+    //     }
+    // })
+    // socket.on("alertBet", async(data) => {
+    //     if(data.status === "error"){
+    //         alert("Please try again later")
+    //     }else{
+    //         refreshBetMonitorPage()
+    //     }
+    // })
+
+    $(document).on('click', ".alert", function(e){
+        let form = $("#myModal2").find('.form-data')
+        form.attr('id', this.id)
     })
-    socket.on("alertBet", async(data) => {
-        if(data.status === "error"){
-            alert("Please try again later")
+
+    $(document).on('submit', '.alertbet-form', function(e){
+        e.preventDefault() 
+        let form = $(this)[0];
+        let fd = new FormData(form);
+        let data = Object.fromEntries(fd.entries());
+        let id = this.id
+        // console.log(id)
+        socket.emit('alertBet',{data,LOGINDATA, id})
+        // console.log(data, "DATA123")
+    })
+
+
+    socket.on('alertBet', async(data) => {
+        if(data.status === "fail"){
+            alert(data.message)
         }else{
+            alert('Bet Voided Successfully !!')
             refreshBetMonitorPage()
         }
     })
@@ -10824,13 +10850,13 @@ socket.on('connect', () => {
         })
 
 
-        // socket.on('voidBet', async(data) => {
-        //     if(data.status === "err"){
-        //         alert(data.message)
-        //     }else{
-        //         alert('Bet Voided Successfully !!')
-        //     }
-        // })
+        socket.on('voidBet', async(data) => {
+            if(data.status === "fail"){
+                alert(data.msg)
+            }else{
+                alert('Bet Voided Successfully !!')
+            }
+        })
 
         $(document).on('click', '.accept', async function(e){
             e.preventDefault()
@@ -10844,7 +10870,7 @@ socket.on('connect', () => {
 
         
         socket.on("acceptBet", (data)=>{
-            if(data.status === "error"){
+            if(data.status === "fail"){
                 alert("Please try again later")
             }else{
                location.reload(true)
