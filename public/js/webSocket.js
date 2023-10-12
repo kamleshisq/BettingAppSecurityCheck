@@ -13095,8 +13095,32 @@ socket.on('connect', () => {
                         let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
                         console.log(team1Data, team2Data)
                         if(team1Data){
-                            //  if 
+                             if (team1Data.winAmount > 0){
+                                html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
+                             }else{
+                                html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
+                             }
+                        }else{
+                            if (team2Data.lossAmount > 0){
+                                html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
+                             }else{
+                                html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
+                             }
                         }
+
+                        if(team2Data){
+                            if (team2Data.winAmount > 0){
+                               html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
+                            }else{
+                               html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
+                            }
+                       }else{
+                           if (team1Data.lossAmount > 0){
+                               html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
+                            }else{
+                               html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
+                            }
+                       }
                         // for(let j = 0; j < data.Bets[i].Bets[0].selections.length; j++ ){
                         //     if(data.Bets[i].Bets[0].selections[j].selectionName.toLowerCase().includes(team1)){
                         //         if(data.Bets[i].Bets[0].selections[j].winAmount < 0){
