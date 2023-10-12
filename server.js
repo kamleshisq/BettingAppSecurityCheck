@@ -3865,14 +3865,12 @@ io.on('connection', (socket) => {
        
         try{
             let newUser = users.map(async(ele)=>{
-                // console.log(ele, "ELE")
                 let childrenUsername1 = []
                 let children = await User.find({parentUsers:ele._id})
                 children.map(ele1 => {
                     childrenUsername1.push(ele1.userName) 
                 })
                 if(childrenUsername1.length > 0){
-                    // console.log(childrenUsername1, "childrenUsername1")
                     let Bets = await Bet.aggregate([
                         {
                             $match: {
@@ -3934,19 +3932,6 @@ io.on('connection', (socket) => {
                                             },
                                             else : {
                                                 $multiply: ['$Stake', -1]
-                                                // $cond:{
-                                                //     if : {$regexMatch: { input: "$marketName", regex: /^match/i } },
-                                                //     then : {
-                                                //         $sum: {
-                                                //             $add : ["$Stake", {$subtract:[ {$multiply:["$Stake", "$oddValue"]}, '$Stake']}]
-                                                //         }
-                                                //     },
-                                                //     else : {
-                                                //         $sum: { 
-                                                //             $add : ["$Stake", {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}]
-                                                //         }
-                                                //     }
-                                                // }
                                             }
                                         }
                                     }
@@ -4093,17 +4078,57 @@ io.on('connection', (socket) => {
                                 }
                             }
                         },
+                        {
+                            $unwind: "$selections2"
+                        },
+                        {
+                            $group: {
+                              _id: {
+                                elementUser: "$elementUser",
+                                selectionName: "$selections2.selectionName"
+                              },
+                              totalWinAmount: { $sum: "$selections2.winAmount2.value" }
+                            }
+                        },
+                        {
+                            $project: {
+                              _id: 0,
+                              elementUser: "$_id.elementUser",
+                              selection: {
+                                selectionName: "$_id.selectionName",
+                                totalWinAmount: "$totalWinAmount"
+                              }
+                            }
+                        },
+                        {
+                            $group: {
+                              _id: "$elementUser",
+                              selections: { $push: "$selection" }
+                            }
+                        },
+                        {
+                            $project: {
+                              _id: 0,
+                              elementUser: "$_id",
+                              selections: 1
+                            }
+                        }
                         // {
+                        //     $group:{
+                        //         _id:'$elementUser',
+                        //         selections:{
 
+                        //         }
+                        //     }
                         // }
                     ])
                     
 
                     if(Bets.length > 0){
                         console.log(Bets, "BETSBETSBETS")
-                        for(let i = 0; i < Bets.length; i++){
-                            console.log(Bets[i].selections2, "selectionsselections")
-                        }
+                        // for(let i = 0; i < Bets.length; i++){
+                        //     console.log(Bets[i].selections2, "selectionsselections")
+                        // }
 
                     }
                 }
