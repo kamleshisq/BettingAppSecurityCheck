@@ -2931,6 +2931,8 @@ io.on('connection', (socket) => {
                 }else if(bet.status == 'OPEN'){
                     await Bet.findOneAndUpdate({_id:data.id}, {status:"Alert",alertStatus:"ALERT",remark:data.data.Remark});
                     socket.emit('alertBet', {status:"success"})
+                }else if(['LOSS','WON'].includes(bet.status)){
+                    socket.emit('alertBet', {bet, status:"fail",msg:'Cannot alert this bet'})
 
                 }
                 // let bet = await Bet.findOneAndUpdate({_id:data.id,status:'OPEN'}, {status:"Alert",alertStatus:"ALERT",remark:data.data.Remark});
