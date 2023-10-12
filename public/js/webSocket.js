@@ -13089,11 +13089,9 @@ socket.on('connect', () => {
                     <th>${team2}</th></tr>`
 
                     for(let i = 0; i < data.Bets.length; i++){
-                        html += `<td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
-                        console.log(data.Bets[i].Bets[0])
+                        html += `<tr class="tabelBodyTr userBookParentTr"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                         let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                         let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                        console.log(team1Data, team2Data)
                         if(team1Data){
                              if (team1Data.winAmount > 0){
                                 html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
@@ -13121,24 +13119,8 @@ socket.on('connect', () => {
                                html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
                             }
                        }
-                        // for(let j = 0; j < data.Bets[i].Bets[0].selections.length; j++ ){
-                        //     if(data.Bets[i].Bets[0].selections[j].selectionName.toLowerCase().includes(team1)){
-                        //         if(data.Bets[i].Bets[0].selections[j].winAmount < 0){
-                        //             html += `<td class="red">${data.Bets[i].Bets[0].selections[j].winAmount}</td>`
-                        //         }else{
-                        //             html += `<td class="green">${data.Bets[i].Bets[0].selections[j].winAmount}</td>`
-                        //         }
-                        //     }
-                        // }
-                        // for(let j = 0; j < data.Bets[i].Bets[0].selections.length; j++ ){
-                        //     if(data.Bets[i].Bets[0].selections[j].selectionName.toLowerCase().includes(team2)){
-                        //         if(data.Bets[i].Bets[0].selections[j].winAmount < 0){
-                        //             html += `<td class="red">${data.Bets[i].Bets[0].selections[j].winAmount}</td>`
-                        //         }else{
-                        //             html += `<td class="green">${data.Bets[i].Bets[0].selections[j].winAmount}</td>`
-                        //         }
-                        //     }
-                        // }
+                       html += '</tr>'
+                      
                     }
                 //     let team1 = data.Bets[0].Bets.teamA
                 //     let team2 = data.Bets[0].Bets.teamB
