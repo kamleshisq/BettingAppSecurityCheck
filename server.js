@@ -1063,7 +1063,7 @@ io.on('connection', (socket) => {
         if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
             data.filterData.userName = {$in:childrenUsername}
         }
-        let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
+        let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
 
 
         socket.emit('userBetDetail',{ubDetails,page,refreshStatus:data.refreshStatus})
