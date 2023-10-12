@@ -4582,64 +4582,45 @@ socket.on('connect', () => {
         })
 
         let filterData = {}
-        $(window).scroll(function() {
-            if($(document).height()-$(window).scrollTop() == window.innerHeight){
-                let page = parseInt($('.pageId').attr('data-pageid'));
-                $('.pageId').attr('data-pageid',page + 1)
-                let data = {}
-                let userName = $('.searchUser').val()
-                if(userName == ''){
-                    filterData.userName = LOGINDATA.LOGINUSER.userName
-                }else{
-                    filterData.userName = userName
-                }
-                // if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
-                //     filterData.date = {$gte : fromDate,$lte : toDate}
-                // }else{
-
-                //     if(fromDate != undefined && fromDate != '' ){
-                //         filterData.date = {$gte : fromDate}
-                //     }
-                //     if(toDate != undefined && toDate != '' ){
-                //         filterData.date = {$lte : toDate}
-                //     }
-                // }    
-                data.filterData = filterData;
-                data.page = page
-                data.LOGINDATA = LOGINDATA
-                // console.log(data)
-                socket.emit('gameReport',data)
-
-
-
+        $('#load-more').click(function(e){
+            let page = parseInt($('.pageId').attr('data-pageid'));
+            $('.pageId').attr('data-pageid',page + 1)
+            let data = {}
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
             }
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            socket.emit('gameReport',data)
          }); 
 
-        $(".searchUser").on('input', function(e){
-            var $input = $(this),
-                val = $input.val();
-                var listItems = document.getElementsByTagName("li");
-                for (var i = 0; i < listItems.length; i++) {
-                    if (listItems[i].textContent === val) {
-                        match = ($(this).val() === val);
-                      break; 
-                    }else{
-                        match = false
-                    }
-                  }
+        // $(".searchUser").on('input', function(e){
+        //     var $input = $(this),
+        //         val = $input.val();
+        //         var listItems = document.getElementsByTagName("li");
+        //         for (var i = 0; i < listItems.length; i++) {
+        //             if (listItems[i].textContent === val) {
+        //                 match = ($(this).val() === val);
+        //               break; 
+        //             }else{
+        //                 match = false
+        //             }
+        //           }
 
-                if(match){
-                    // console.log(match.text())
-                    filterData = {}
-                    filterData.userName = val
-                    $('.pageId').attr('data-pageid','1')
-                    socket.emit('gameReport',{filterData,LOGINDATA,page:0})
-                }
-        })
+        //         if(match){
+        //             // console.log(match.text())
+        //             filterData = {}
+        //             filterData.userName = val
+        //             $('.pageId').attr('data-pageid','1')
+        //             socket.emit('gameReport',{filterData,LOGINDATA,page:0})
+        //         }
+        // })
 
         $(document).on("click", ".searchList", function(){
-            // console.log("working")
-            // console.log(this.textContent)
             document.getElementById("searchUser").value = this.textContent
             filterData = {}
             filterData.userName = this.textContent
@@ -4650,7 +4631,6 @@ socket.on('connect', () => {
         })
 
         socket.on('gameReport',(data)=>{
-            // console.log(data)
             let page = data.page;
             let games = data.games;
             let html = '';
@@ -4682,9 +4662,19 @@ socket.on('connect', () => {
             }
 
             if(data.page == 0){
-            $('.new-body').html(html)
+                if(games.length == 0){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    $('#load-more').hide()
+                }else{
+                    $('#load-more').show()
+                }
+
+                $('.new-body').html(html)
             }else{
-            $('.new-body').append(html)
+                if(games.length == 0){
+                    $('#load-more').hide()
+                }
+                $('.new-body').append(html)
             }
         })
     }

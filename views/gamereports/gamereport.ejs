@@ -75,6 +75,15 @@
   <div class="pageId" data-pageid="1"></div>
 
 </div>
+<%if(games.length != 0){%>
+<div id="load-more" style="display: none;">
+  <button class="load-more">Load More</button>
+</div>
+<%}else{%>
+  <div id="load-more">
+    <button class="load-more">Load More</button>
+  </div>
+<%}%>
 
   <script>
     function myFunction() {
