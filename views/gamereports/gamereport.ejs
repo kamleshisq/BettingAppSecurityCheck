@@ -53,6 +53,7 @@
                 <th>Bets</th>
                 <th>Won</th>
                 <th>Loss</th>
+                <th>Void</th>
                 <th>Profit/Loss</th>
               </tr>
             </thead>
@@ -69,6 +70,7 @@
                   <td><%=games[i].betCount%></td>
                   <td><%=games[i].won%></td>
                   <td><%=games[i].loss%></td>
+                  <td><%=games[i].void%></td>
                   <%if(games[i].returns >= 0){%>
                   <td class="green">+<%=games[i].returns%></td>
                   <%}else{%>

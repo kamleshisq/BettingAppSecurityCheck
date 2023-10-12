@@ -4713,7 +4713,8 @@ socket.on('connect', () => {
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].betCount}</td>
                   <td>${games[i].won}</td>
-                  <td>${games[i].loss}</td>`
+                  <td>${games[i].loss}</td>
+                  <td>${games[i].void}</td>`
                 if(games[i].returns >= 0){
                   html += `<td style="color: #46BCAA;">+${games[i].returns}</td>`
                 }else{
