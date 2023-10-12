@@ -4206,6 +4206,9 @@ io.on('connection', (socket) => {
                                 }
                             }
                         },
+                        {
+                            $unwind :'$selections'
+                        }
                         
                     ])
                     
@@ -4215,7 +4218,7 @@ io.on('connection', (socket) => {
             let resultPromise = await Promise.all(newUser)
             let result = []
             for(let i = 0;i<resultPromise.length;i++){
-                // console.log(resultPromise[i], 123)
+                console.log(resultPromise[i], 123)
                 if(resultPromise[i] && resultPromise[i].Bets.length > 0){
                     result.push(resultPromise[i])
                     console.log(resultPromise[i].Bets)
