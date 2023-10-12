@@ -3907,7 +3907,7 @@ io.on('connection', (socket) => {
             users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
 
         }
-       
+        console.log(users)
         try{
             let newUser = users.map(async(ele)=>{
                 let childrenUsername1 = []
