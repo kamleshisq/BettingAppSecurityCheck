@@ -308,6 +308,10 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('loginuserbalance',async(data)=>{
+        const user = await User.findById(data.LOGINUSER._id)
+        socket.emit('loginuserbalance',user)
+    })
 
     socket.on('userHistory',async(data)=>{
         console.log(data.filterData)
