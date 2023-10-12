@@ -3714,10 +3714,10 @@ socket.on('connect', () => {
             }
             filterData.betType = fGame
             filterData.status = fBets
+            filterData.fromDate = fromDate
+            filterData.toDate = toDate
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
-            data.fromDate = fromDate
-            data.toDate = toDate
             // console.log(data)
             socket.emit('userBetDetail',data)
 
@@ -3763,51 +3763,49 @@ socket.on('connect', () => {
         })
 
         $('#load-more').click(function(e){
-            fromDate = $('#fromDate').val()
-            toDate = $('#toDate').val()
-            fGame = $('#fGame').val()
-            fBets = $('#fBets').val()
             let page = parseInt($('.rowId').attr('data-rowid'));
             $('.rowId').attr('data-rowid',page + 1)
             let data = {}
             let userName = $('.searchUser').val()
             if(userName == ''){
-                // filterData.userName = LOGINDATA.LOGINUSER.userName
+                filterData.userName = LOGINDATA.LOGINUSER.userName
             }else{
                 filterData.userName = userName
             }
-            if(fromDate != ''  && toDate != '' ){
-                // filterData.date = {$gte : new Date(fromDate), $lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
-                fromDate = new Date(fromDate)
-                toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
-
-            }else{
-                if(fromDate != '' ){
-                    // filterData.date = {$gte : new Date(fromDate)}
-                    fromDate = new Date(fromDate)
-                }
-                if(toDate != '' ){
-                    // filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
-                    toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
-                }
-            }
-            filterData.betType = fGame
-            filterData.status = fBets
             data.filterData = filterData;
             data.page = page
             data.LOGINDATA = LOGINDATA
-            data.fromDate = fromDate
-            data.toDate = toDate
             console.log(data)
             socket.emit('userBetDetail',data)
         })
+
+        function refreshPage(){
+            let page = parseInt($('.rowId').attr('data-rowid')) - 1;
+            let data = {}
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
+            }
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            data.refreshStatus = true
+            console.log(data)
+            socket.emit('userBetDetail',data)
+        }
+
+        setInterval(()=>{
+            refreshPage()
+        },1000 * 60)
 
     
             
 
         let count = 11
         socket.on('userBetDetail',(data) => {
-            if(data.page === 0){
+            if(data.page === 0 || data.refreshStatus){
                 count = 1
             }
             let page = data.page
@@ -3844,25 +3842,20 @@ socket.on('connect', () => {
                 <td>${bets[i].transactionId}</td>
                 <td>${bets[i].event}</td></tr>`
             }
-            count += 10
-            if(data.page == 0){
-
+            count += bets.length
+            if(data.page == 0 || data.refreshStatus){
                 if(bets.length == 0){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
                     $('#load-more').hide()
-                    html = `<tr class="empty_table"><td>No record found</td></tr>`
+                }else{
+                    $('#load-more').show()
                 }
                 $('.new-body').html(html)
-                if(!(bets.length < 10)){
-                    document.getElementById('load-more').innerHTML = `<button class="load-more">Load More</button>`
-                }
             }else{
                 if(bets.length == 0){
                     $('#load-more').hide()
                 }      
                 $('.new-body').append(html)   
-                if((bets.length < 10)){
-                    document.getElementById('load-more').innerHTML = ""
-                }
             }
         })
 
