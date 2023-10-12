@@ -13395,13 +13395,14 @@ socket.on('connect', () => {
             let Sport = $("#Event").val()
             socket.emit('matchOdds',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
         })
+        let own;
         $(document).on('click', ".load-more-cricket", function(e){
             let page = parseInt($('.rowId2').attr('data-rowid2'))
             let market = $("#market").val()
             $('.rowId2').attr('data-rowid2',page + 1)
             let to_date;
             let from_date
-            let own = $('.matchOddOwn').attr('data-parent')
+            // let own = $('.matchOddOwn').attr('data-parent')
             if($('#Fdate').val() != ''){
                 from_date = $('#Fdate').val()
             }
@@ -13409,7 +13410,7 @@ socket.on('connect', () => {
                 to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
             }
             let Sport = $("#Event").val()
-            socket.emit('matchOdds',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market,own})
+            socket.emit('matchOddsOwn',{from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market,own})
         })
 
         $(document).on('click','.matchOdds',function(e){
@@ -13438,7 +13439,7 @@ socket.on('connect', () => {
             <h5>Result</h5>
             <h6>${result}</h6>
             </div>`)
-            let own = $(this).attr('data-parent')
+            own = $(this).attr('data-parent')
             let page = 0
             let market = $("#market").val()
             let to_date;
@@ -13569,9 +13570,6 @@ socket.on('connect', () => {
                 }
                 if(data.page == 0){
                     html += `</tbody>`
-                    if(!(data.matchOdds.length < 10)){
-                        document.getElementById('load-more-cricket-more').innerHTML = `<button class="load-more">Load More</button>`
-                    }
                     if(data.matchOdds.length == 0){
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
                     }
@@ -13581,7 +13579,7 @@ socket.on('connect', () => {
                     }
                 }else{
                     $('#Cricket').find('table').append(html)
-                    if(data.matchOdds.length <= 10){
+                    if(data.matchOdds.length < 10){
                         $('#Cricket').find('#load-more-cricket').hide()
                     }
                 }
@@ -13589,7 +13587,7 @@ socket.on('connect', () => {
 
             }else{
                 if(data.page > 0){
-                    if(data.matchOdds.length <= 10){
+                    if(data.matchOdds.length < 10){
                         $('#Cricket').find('#load-more-cricket').hide()
                     }
                 }
