@@ -3676,13 +3676,19 @@ socket.on('connect', () => {
             if(fromDate != ''  && toDate != '' ){
                 fromDate = new Date(fromDate)
                 toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+                filterData.fromDate = fromDate
+                filterData.toDate = toDate
 
             }else{
                 if(fromDate != '' ){
                     fromDate = new Date(fromDate)
+                    filterData.fromDate = fromDate
+
                 }
                 if(toDate != '' ){
                     toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+                    filterData.toDate = toDate
+
                 }
             }
             if(userName != ''){
@@ -3692,8 +3698,6 @@ socket.on('connect', () => {
             }
             filterData.betType = fGame
             filterData.status = fBets
-            filterData.fromDate = fromDate
-            filterData.toDate = toDate
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             // console.log(data)
@@ -4560,13 +4564,19 @@ socket.on('connect', () => {
             if(fromDate != ''  && toDate != '' ){
                 fromDate = new Date(fromDate)
                 toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
-
+                filterData.fromDate = fromDate
+                filterData.toDate = toDate
+    
             }else{
                 if(fromDate != '' ){
                     fromDate = new Date(fromDate)
+                    filterData.fromDate = fromDate
+
                 }
                 if(toDate != '' ){
                     toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+                    filterData.toDate = toDate
+
                 }
             }
             if(userName != ''){
@@ -4576,8 +4586,6 @@ socket.on('connect', () => {
             }
             filterData.betType = fGame
             filterData.status = fBets
-            filterData.fromDate = fromDate
-            filterData.toDate = toDate
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             // console.log(data)
@@ -4613,7 +4621,7 @@ socket.on('connect', () => {
         })
 
         function refreshPage(){
-            
+
             let page = parseInt($('.pageId').attr('data-pageid')) - 1;
             let data = {}
             let userName = $('.searchUser').val()
