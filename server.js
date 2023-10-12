@@ -3844,7 +3844,7 @@ io.on('connection', (socket) => {
     socket.on('UerBook', async(data) => {
         // console.log(data)
         // let users = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id,role_type:2})
-        let users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, role_type:2, isActive:true})
+        let users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
        
         try{
             let newUser = users.map(async(ele)=>{

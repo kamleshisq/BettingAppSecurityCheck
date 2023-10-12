@@ -12983,7 +12983,7 @@ socket.on('connect', () => {
                     let marketId = $("#match_odd").attr('data-marketid')
                     let type = 'userBook'
 
-                    socket.emit('UerBook1', {marketId,LOGINDATA,userName,type})
+                    socket.emit('UerBook', {marketId,LOGINDATA,userName,type})
                 }else{
                     $(this).parent('tr').removeClass('active')
                     $('#match_odd').find('tr.children').remove()
