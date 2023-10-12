@@ -13039,6 +13039,9 @@ socket.on('connect', () => {
                 }else{
                     $(this).parent('tr').removeClass('active')
                     $('#match_odd').find('tr.children').remove()
+                    let userName = $(this).attr('data-usename')
+                    let string = `tr.${userName}`
+                    $('#match_odd').find(string).remove()
 
                 }
 
