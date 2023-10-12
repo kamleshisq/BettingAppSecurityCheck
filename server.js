@@ -4527,7 +4527,7 @@ io.on('connection', (socket) => {
                 matchName = matchName2.match
             }
 
-            
+            console.log(Id, "IdIdIdIdIdIdId")
            socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName, Id});
         //    socket.emit();
         }catch(err){
