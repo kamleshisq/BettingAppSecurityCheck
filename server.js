@@ -3876,7 +3876,7 @@ io.on('connection', (socket) => {
                                             winAmount: {
                                                 $reduce:{
                                                     input:'$parentArray',
-                                                    initialValue: 0,
+                                                    initialValue: { value: 0, flag: true },
                                                     in : {
                                                         $cond:{
                                                             if : {
@@ -3886,16 +3886,19 @@ io.on('connection', (socket) => {
                                                                 ]
                                                               },
                                                             then : {
-                                                                flag: true,
-                                                                $cond:{
-                                                                    if:{ $eq: ["$$value.value", 0] },
-                                                                    then:{
-                                                                        $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
-                                                                    },
-                                                                    else:{
-                                                                        $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                value: { 
+                                                                    $cond:{
+                                                                        if:{ $eq: ["$$value.value", 0] },
+                                                                        then:{
+                                                                            $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        },
+                                                                        else:{
+                                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        }
                                                                     }
-                                                                }
+                                                                },
+                                                                flag: true,
+                                                                
                                                             },
                                                             else : {
                                                                 value: '$$value.value',
