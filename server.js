@@ -3920,6 +3920,7 @@ io.on('connection', (socket) => {
                 children.map(ele1 => {
                     childrenUsername1.push(ele1.userName) 
                 })
+                console.log(ele.id, "IDIDD")
                 console.log(childrenUsername1, "childrenUsername1childrenUsername1")
                 if(childrenUsername1.length > 0){
                     let Bets = await Bet.aggregate([
