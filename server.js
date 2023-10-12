@@ -3860,48 +3860,90 @@ io.on('connection', (socket) => {
                             }
                         },
                         {
-                            $project: { 
-                                _id:0,
-                                userName: "$userName",
-                                parentArray:"$parentArray",
-                                selections2:{ 
-                                    $map: { 
-                                        input: "$selections",
-                                        as: "selection",
-                                        in: { 
-                                            selectionName: "$$selection.selectionName",
-                                            totalAmount: "$$selection.totalAmount",
-                                            matchName: "$$selection.matchName",
-                                            Stake: "$$selection.Stake",
-                                            winAmount: {
-                                                $reduce:{
-                                                    input:'$parentArray',
-                                                    initialValue: 0,
-                                                    in : {
-                                                        $cond:{
-                                                            if : { $ne : ["$$this.parentUSerId",  ele._id] },
-                                                            then : {
-                                                                $cond:{
-                                                                    if:{ $eq: ["$$value", 0] },
-                                                                    then:{
-                                                                        $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
-                                                                    },
-                                                                    else:{
-                                                                        $multiply: ["$$value", { $divide: ["$$this.uplineShare", 100] }]
-                                                                    }
-                                                                }
-                                                            },
-                                                            else : "$$value"
-                                                        }
-                                                    }
+                            $project: {
+                              _id: 0, 
+                              winAmount: {
+                                $reduce: {
+                                  input: '$parentArray',
+                                  initialValue: 0,
+                                  in: {
+                                    $cond: {
+                                      if: {
+                                        $and: [
+                                          { $ne: ['$$this.parentUserId', ele._id] }, 
+                                          { $eq: ['$$value.flag', true] } 
+                                        ]
+                                      },
+                                      then: {
+                                        $cond: {
+                                          if: { $eq: ['$$value.flag', true] }, 
+                                          then: {
+                                            flag: true,
+                                            value: {
+                                              $cond: {
+                                                if: { $eq: ['$$value.value', 0] },
+                                                then: {
+                                                  $multiply: ['$$selection.winAmount', { $divide: ['$$this.uplineShare', 100] }]
+                                                },
+                                                else: {
+                                                  $multiply: ['$$value.value', { $divide: ['$$this.uplineShare', 100] }]
                                                 }
-                                            },
-                                            lossAmount:"$$selection.lossAmount"
+                                              }
+                                            }
+                                          },
+                                          else: '$$value' 
                                         }
+                                      },
+                                      else: { value: '$$value.value', flag: false } 
                                     }
+                                  }
                                 }
+                              }
                             }
-                        }
+                          }
+                        // {
+                        //     $project: { 
+                        //         _id:0,
+                        //         userName: "$userName",
+                        //         parentArray:"$parentArray",
+                        //         selections2:{ 
+                        //             $map: { 
+                        //                 input: "$selections",
+                        //                 as: "selection",
+                        //                 in: { 
+                        //                     selectionName: "$$selection.selectionName",
+                        //                     totalAmount: "$$selection.totalAmount",
+                        //                     matchName: "$$selection.matchName",
+                        //                     Stake: "$$selection.Stake",
+                        //                     winAmount: {
+                        //                         $reduce:{
+                        //                             input:'$parentArray',
+                        //                             initialValue: 0,
+                        //                             in : {
+                        //                                 $cond:{
+                        //                                     if : { $ne : ["$$this.parentUSerId",  ele._id] },
+                        //                                     then : {
+                        //                                         $cond:{
+                        //                                             if:{ $eq: ["$$value", 0] },
+                        //                                             then:{
+                        //                                                 $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
+                        //                                             },
+                        //                                             else:{
+                        //                                                 $multiply: ["$$value", { $divide: ["$$this.uplineShare", 100] }]
+                        //                                             }
+                        //                                         }
+                        //                                     },
+                        //                                     else : "$$value"
+                        //                                 }
+                        //                             }
+                        //                         }
+                        //                     },
+                        //                     lossAmount:"$$selection.lossAmount"
+                        //                 }
+                        //             }
+                        //         }
+                        //     }
+                        // }
                     ])
                     
 
