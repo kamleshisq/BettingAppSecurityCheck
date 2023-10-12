@@ -1369,7 +1369,6 @@ io.on('connection', (socket) => {
             },
             {
                 $sort: {
-                  _id: 1,
                   returns: 1
                 }
             },
