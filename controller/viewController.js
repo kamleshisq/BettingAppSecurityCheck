@@ -1001,20 +1001,53 @@ exports.userhistoryreport = catchAsync(async(req, res, next) => {
     })
 
 exports.plreport = catchAsync(async(req, res, next) => {
-    let currentUser = req.currentUser
-    let users;
+    const currentUser = req.currentUser
+    let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
-        users = await User.find({parentUsers:req.currentUser.parent_id}).limit(10)
-       
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
     }else{
-        users = await User.find({parentUsers:req.currentUser._id}).limit(10)
-       
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
     }
-        // console.log(users)
+
+    let betResult = await betModel.aggregate([
+    {
+        $match: {
+        userName: { $in: childrenUsername },
+        status: {$ne:"OPEN"}
+        }
+    },
+    {
+        $group:{
+            _id:'$userName',
+            gameCount:{$sum:1},
+            loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+            won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+            returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+            
+        }
+    },
+    {
+        $sort: {
+            returns: 1
+        }
+    },
+    {
+        $skip:0
+    },
+    {
+        $limit:10
+    }
+    ])
     res.status(200).render('./PL_Report/plreport',{
         title:"P/L Report",
         me:currentUser,
-        users:users,
+        games:betResult,
         currentUser
     })
     

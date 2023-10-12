@@ -2126,137 +2126,119 @@ socket.on('connect', () => {
         })
         let model 
 
-        $(document).on('click','.ownAccDetails',function(e){
-            let modelId = $(this).attr('id')
-            let modelId1 = $(this).attr("data-bs-target")
-            model =  $(modelId1)
-            socket.emit("ElementID", modelId)
-        })
+        // $(document).on('click','.ownAccDetails',function(e){
+        //     let modelId = $(this).attr('id')
+        //     let modelId1 = $(this).attr("data-bs-target")
+        //     model =  $(modelId1)
+        //     socket.emit("ElementID", modelId)
+        // })
 
-        socket.on('getMyBetDetails',(data)=>{
-            // console.log(data)
-            let html = ``
-            if(data.transactionId){
-                html += `<thead>
-                <tr >
-                  <th>Date</th>
-                  <th>Event</th>
-                  <th>Market</th>
-                  <th>Bet on</th>
-                  <th>odds</th>
-                  <th>Stake</th>
-                  <th>Status</th>
-                  <th>Returns</th>
-                </tr>
-                </thead>`
-                html += `<tbody class="new-body" >
-                <tr  class="blue"><td>${new Date(data.date)}</td>
-                <td>${data.event}</td>`
-                if(data.marketName){
-                    html += `<td>${data.marketName}</td>`
-                }else{
-                    html += `<td>-</td>`
-                }
+        // socket.on('getMyBetDetails',(data)=>{
+        //     // console.log(data)
+        //     let html = ``
+        //     if(data.transactionId){
+        //         html += `<thead>
+        //         <tr >
+        //           <th>Date</th>
+        //           <th>Event</th>
+        //           <th>Market</th>
+        //           <th>Bet on</th>
+        //           <th>odds</th>
+        //           <th>Stake</th>
+        //           <th>Status</th>
+        //           <th>Returns</th>
+        //         </tr>
+        //         </thead>`
+        //         html += `<tbody class="new-body" >
+        //         <tr  class="blue"><td>${new Date(data.date)}</td>
+        //         <td>${data.event}</td>`
+        //         if(data.marketName){
+        //             html += `<td>${data.marketName}</td>`
+        //         }else{
+        //             html += `<td>-</td>`
+        //         }
 
-                if(data.selectionName){
-                    html += `<td>${data.selectionName}</td>`
-                }else{
-                    html += `<td>-</td>`
-                }
-                if(data.oddValue){
-                    html += `<td>${data.oddValue}</td>`
-                }else{
-                    html += `<td>-</td>`
-                }
+        //         if(data.selectionName){
+        //             html += `<td>${data.selectionName}</td>`
+        //         }else{
+        //             html += `<td>-</td>`
+        //         }
+        //         if(data.oddValue){
+        //             html += `<td>${data.oddValue}</td>`
+        //         }else{
+        //             html += `<td>-</td>`
+        //         }
 
-                html += `
-                <td>${data.Stake}</td>
-                <td>${data.status}</td>
-                <td>${data.returns}</td></tr></tbody>`
-                model.find('table').html(html)
-            }else{
-                html += `<thead>
-                <tr >
-                  <th>Date</th>
-                  <th>Credit</th>
-                  <th>Debit</th>
-                  <th>From/To</th>
-                  <th>Closing</th>
-                  <th>Description</th>
-                  <th>Remarks</th>
-                </tr>
-            </thead>
-            <tbody class="new-body" >`
-                html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>`
-                if(data.creditDebitamount>0){
-                    html += `<td>${data.creditDebitamount}</td><td>0</td>`
-                    if(data.parent_id){
-                        if(data.parent_id.userName == data.user_id.userName){
-                            if(data.child_id == null){
-                                html += `<td>-/${data.parent_id.userName}</td>`
-                            }else{
-                                html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
-                            }
-                        }else{
-                            if(data.child_id == null){
+        //         html += `
+        //         <td>${data.Stake}</td>
+        //         <td>${data.status}</td>
+        //         <td>${data.returns}</td></tr></tbody>`
+        //         model.find('table').html(html)
+        //     }else{
+        //         html += `<thead>
+        //         <tr >
+        //           <th>Date</th>
+        //           <th>Credit</th>
+        //           <th>Debit</th>
+        //           <th>From/To</th>
+        //           <th>Closing</th>
+        //           <th>Description</th>
+        //           <th>Remarks</th>
+        //         </tr>
+        //     </thead>
+        //     <tbody class="new-body" >`
+        //         html += `<tr style="text-align: center;" class="blue"><td>${new Date(data.date)}</td>`
+        //         if(data.creditDebitamount>0){
+        //             html += `<td>${data.creditDebitamount}</td><td>0</td>`
+        //             if(data.parent_id){
+        //                 if(data.parent_id.userName == data.user_id.userName){
+        //                     if(data.child_id == null){
+        //                         html += `<td>-/${data.parent_id.userName}</td>`
+        //                     }else{
+        //                         html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
+        //                     }
+        //                 }else{
+        //                     if(data.child_id == null){
 
-                                html += `<td>${data.parent_id.userName}/-</td>`
-                            }else{
+        //                         html += `<td>${data.parent_id.userName}/-</td>`
+        //                     }else{
 
-                                html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
-                            }
-                        }
-                    }else{
-                        html += "<td>-</td>"
-                    }
-                }else{
-                    html += `<td>0</td><td>${data.creditDebitamount}</td>`
-                    if(data.parent_id){
-                        if(data.parent_id.userName == data.user_id.userName){
-                            if(data.child_id == null){
-                                html += `<td>${data.parent_id.userName}/-</td>`
-                            }else{
-                                html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
-                            }
-                        }else{
-                            if(data.child_id == null){
-                                html += `<td>-/${data.parent_id.userName}</td>`
-                            }else{
-                                html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
-                            }
-                        }
-                    }else{
-                        html += `<td>-</td>`
-                    }
-                }
+        //                         html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
+        //                     }
+        //                 }
+        //             }else{
+        //                 html += "<td>-</td>"
+        //             }
+        //         }else{
+        //             html += `<td>0</td><td>${data.creditDebitamount}</td>`
+        //             if(data.parent_id){
+        //                 if(data.parent_id.userName == data.user_id.userName){
+        //                     if(data.child_id == null){
+        //                         html += `<td>${data.parent_id.userName}/-</td>`
+        //                     }else{
+        //                         html += `<td>${data.parent_id.userName}/${data.child_id.userName}</td>`
+        //                     }
+        //                 }else{
+        //                     if(data.child_id == null){
+        //                         html += `<td>-/${data.parent_id.userName}</td>`
+        //                     }else{
+        //                         html += `<td>${data.child_id.userName}/${data.parent_id.userName}</td>`
+        //                     }
+        //                 }
+        //             }else{
+        //                 html += `<td>-</td>`
+        //             }
+        //         }
                 
-                        html += `
-                        <td>${data.balance}</td>
-                        <td>${data.description}</td>
-                        <td>-</td></tr></tbody>`
-                        // console.log(html)
-                        model.find('table').html(html)
-                    }
-            // console.log(model)
-        })
-            // let 
-            // let data = $(this).parent().parent().data('details')
-            // let html = '';
-            // if(data.hasOwnProperty('transactionId')){
-            //     socket.emit('getMyBetDetails',data.transactionId)
-                
-            //         // console.log(data)
-                   
-
-            // }
-            
-    
-            //     
-            // }
-
-        
-        
-            // console.log(data)
+        //                 html += `
+        //                 <td>${data.balance}</td>
+        //                 <td>${data.description}</td>
+        //                 <td>-</td></tr></tbody>`
+        //                 // console.log(html)
+        //                 model.find('table').html(html)
+        //             }
+        //     // console.log(model)
+        // })
 
 
         
@@ -2284,47 +2266,7 @@ socket.on('connect', () => {
 
         let searchU 
         let SUSER
-        let match = false
-        // $(".searchUser").on('input', function(e){
-        //     var $input = $(this),
-        //         val = $input.val();
-        //         // console.log(val,1234)
-        //         var listItems = document.getElementsByTagName("li");
-        //         for (var i = 0; i < listItems.length; i++) {
-        //             if (listItems[i].textContent === val) {
-        //                 match = ($(this).val() === val);
-        //               break; 
-        //             }else{
-        //                 match = false
-        //             }
-        //           }
-        //         // console.log(match, 123)
-        //      if(match) {
-        //         searchU = true
-        //         let  data = {}
-        //         let Fdate = document.getElementById("Fdate").value
-        //         let Tdate = document.getElementById("Tdate").value
-        //         if(!Fdate){
-        //             Fdate = 'undefined'
-        //         }
-        //         if(!Tdate){
-        //             Tdate = 'undefined'
-        //         }
-        //         data.Fdate = Fdate;
-        //         data.Tdate = Tdate;
-        //         data.userName = val
-        //         SUSER = val
-        //         data.Tdate = document.getElementById("Tdate").value
-        //         data.page = 0
-        //         data.LOGINDATA = LOGINDATA
-        //         $('.pageLink').attr('data-page',1)
-        //         // console.log(data, 456)
-        //          socket.emit( "UserSearchId", data)
-        //      }else{
-        //         searchU = false
-        //      }
-        // });
-
+       
         $(document).on("click", ".searchList", function(){
             // console.log("working")
             // console.log(this.textContent)
@@ -2414,6 +2356,8 @@ socket.on('connect', () => {
             
             socket.emit('AccountScroll',data)
         })
+
+
     
 
          let count1 = 11
@@ -4110,6 +4054,8 @@ socket.on('connect', () => {
             socket.emit("SearchACC", {x, LOGINDATA, page})
         })
         // let toDate
+         let fromDate
+        let toDate
         let filterData = {}
         
 
@@ -4133,7 +4079,42 @@ socket.on('connect', () => {
                 document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
             }
         })
+        $('#fromDate,#toDate').change(function(){
+            let userName = $('.searchUser').val()
+            fromDate = $('#fromDate').val()
+            toDate = $('#toDate').val()
+            data.page = 0;
+            if(fromDate != ''  && toDate != '' ){
+                fromDate = new Date(fromDate)
+                toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+                filterData.fromDate = fromDate
+                filterData.toDate = toDate
+    
+            }else{
+                if(fromDate != '' ){
+                    fromDate = new Date(fromDate)
+                    filterData.fromDate = fromDate
 
+                }
+                if(toDate != '' ){
+                    toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+                    filterData.toDate = toDate
+
+                }
+            }
+            if(userName != ''){
+                filterData.userName = userName
+            }else{
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }
+            filterData.betType = fGame
+            filterData.status = fBets
+            data.filterData = filterData
+            data.LOGINDATA = LOGINDATA
+            // console.log(data)
+            socket.emit('userPLDetail',data)
+
+        })
         $('#load-more').click(function(e){
             let page = parseInt($('.pageId').attr('data-pageid'));
             $('.pageId').attr('data-pageid',page + 1)
@@ -4144,83 +4125,81 @@ socket.on('connect', () => {
             }else{
                 filterData.userName = userName
             }
-            // if(fromDate != undefined  && toDate != undefined && fromDate != ''  && toDate != '' ){
-            //     filterData.date = {$gte : fromDate,$lte : toDate}
-            // }else{
-
-            //     if(fromDate != undefined && fromDate != '' ){
-            //         filterData.date = {$gte : fromDate}
-            //     }
-            //     if(toDate != undefined && toDate != '' ){
-            //         filterData.date = {$lte : toDate}
-            //     }
-            // }    
             data.filterData = filterData;
             data.page = page
             data.LOGINDATA = LOGINDATA
-            // console.log(data)
             socket.emit('userPLDetail',data)
-        })
- 
+         });
 
-        // $(".searchUser").on('input', function(e){
-        //     var $input = $(this),
-        //         val = $input.val();
-        //         var listItems = document.getElementsByTagName("li");
-        //         for (var i = 0; i < listItems.length; i++) {
-        //             if (listItems[i].textContent === val) {
-        //                 match = ($(this).val() === val);
-        //               break; 
-        //             }else{
-        //                 match = false
-        //             }
-        //           }
-
-        //         if(match){
-        //             // console.log(match.text())
-        //             filterData = {}
-        //             filterData.userName = val
-        //             $('.pageId').attr('data-pageid','1')
-        //             socket.emit('userPLDetail',{filterData,LOGINDATA,page:0})
-        //         }
-        // })
         $(document).on("click", ".searchList", function(){
-            // console.log("working")
-            // console.log(this.textContent)
             document.getElementById("searchUser").value = this.textContent
             filterData = {}
             filterData.userName = this.textContent
             $('.pageId').attr('data-pageid','1')
             $('.wrapper').hide()
             socket.emit('userPLDetail',{filterData,LOGINDATA,page:0})
-           
+            
         })
+        function refreshPage(){
+
+            let page = parseInt($('.pageId').attr('data-pageid')) - 1;
+            let data = {}
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
+            }
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            data.refreshStatus = true
+            console.log(data)
+            socket.emit('userPLDetail',data)
+        }
 
         socket.on('userPLDetail',(data)=>{
-            // console.log(data.page)
-            let users = data.users
             let page = data.page;
+            let games = data.games;
             let html = '';
-            for(let i = 0; i < users.length; i++){
-                if((i%2) == 0){
-                    html += `<tr style="text-align: center;" class="blue">`
-                }else{
-                    html += `<tr style="text-align: center;">`
-                }
-                html += `<td>${users[i].userName}</td>
-                <td>${users[i].Won}</td>
-                <td>${users[i].Loss}</td>
-                <td>${users[i].myPL.toFixed(2)}</td>
-                </tr>`
+            let count 
+            if(page != 0){
+                count = (10 * page) + 1
+            }else{
+                count = 1
             }
-            if(page == 0){
-                if(users.length == 0){
+            for(let i = 0;i<games.length;i++){
+                if(i % 2 == 0){
+                  html += `<tr style="text-align: center;">`
+                }else{
+                  html += `<tr style="text-align: center;" class="blue">`
+                }
+                  html += `<td>${count + i}</td>
+                  <td>${games[i]._id}</td>
+                  <td>${games[i].gameCount}</td>
+                  <td>${games[i].won}</td>
+                  <td>${games[i].loss}</td>
+                  `
+                if(games[i].returns >= 0){
+                  html += `<td style="color: #46BCAA;">+${games[i].returns}</td>`
+                }else{
+                  html += `<td style="color: #FE3030;">${games[i].returns}</td>`
+                }
+                html += `</tr>`
+                count++
+            }
+
+            if(data.page == 0){
+                if(games.length == 0){
                     html += `<tr class="empty_table"><td>No record found</td></tr>`
                     $('#load-more').hide()
+                }else{
+                    $('#load-more').show()
                 }
+
                 $('.new-body').html(html)
             }else{
-                if(users.length == 0){
+                if(games.length == 0){
                     $('#load-more').hide()
                 }
                 $('.new-body').append(html)
