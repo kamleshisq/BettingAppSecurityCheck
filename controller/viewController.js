@@ -1397,7 +1397,7 @@ exports.gameReportPageByMatch = catchAsync(async(req, res, next) => {
 })
 exports.gameReportPageByMatchByMarket = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
-    
+    console.log(req.query)
     var today = new Date(req.query.toDate);
     var todayFormatted = formatDate(today);
     var tomorrow = new Date(req.query.fromDate);
