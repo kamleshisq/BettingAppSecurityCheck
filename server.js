@@ -3873,7 +3873,8 @@ io.on('connection', (socket) => {
                                             totalAmount: "$$selection.totalAmount",
                                             matchName: "$$selection.matchName",
                                             Stake: "$$selection.Stake",
-                                            winAmount: {
+                                            winAmount :" $$selection.winAmount",
+                                            winAmount2: {
                                                 $reduce:{
                                                     input:'$parentArray',
                                                     initialValue: { value: 0, flag: true },
@@ -3920,6 +3921,7 @@ io.on('connection', (socket) => {
                     if(Bets.length > 0){
                         console.log(Bets, "BETSBETSBETS")
                         console.log(Bets[0].selections2, "selectionsselections")
+                        console.log(Bets[0].parentArray, "parentArray")
                     }
                 }
 
