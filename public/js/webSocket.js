@@ -13076,7 +13076,7 @@ socket.on('connect', () => {
                         let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
                         // console.log(team1Data, team2Data)
                         if(team1Data){
-                            
+                             
                         }
                         // for(let j = 0; j < data.Bets[i].Bets[0].selections.length; j++ ){
                         //     if(data.Bets[i].Bets[0].selections[j].selectionName.toLowerCase().includes(team1)){
