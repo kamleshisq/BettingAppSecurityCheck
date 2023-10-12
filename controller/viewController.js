@@ -1266,9 +1266,9 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
 exports.gameReportPageByMatch = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
     
-    var today = new Date(req.query.fromDate);
+    var today = new Date(req.query.toDate);
     var todayFormatted = formatDate(today);
-    var tomorrow = new Date(req.query.toDate);
+    var tomorrow = new Date(req.query.fromDate);
     var tomorrowFormatted = formatDate(tomorrow);
     function formatDate(date) {
         var year = date.getFullYear();
