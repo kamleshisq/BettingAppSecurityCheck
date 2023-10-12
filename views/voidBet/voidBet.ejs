@@ -3,7 +3,7 @@
   <div class="dashboard-main-wraper">
   <section class="dashboard-welcome-section">
     <div class="container-fluid">
-      <div class="new-head"> 
+      <div class="new-head bet-monitoring-heading"> 
           <h3><%=title%></h3>
           <form action="">
             <div class="input-group">
@@ -22,6 +22,24 @@
                 </ul>
               </div>
               
+            </div>
+            <div class="input-group">
+              <label class="up-down-form">From Date</label>
+              <input type = "date" id="Fdate">
+            </div> 
+            <div class="input-group">
+              <label class="up-down-form">From Time</label>
+              <input type = "text" id="fromTime">
+              <span id="fromTime_err" class="input_error">Please enter valid time</span>
+            </div>
+            <div class="input-group">
+              <label class="up-down-form">To Date</label>
+              <input type = "date" id="Tdate">
+            </div> 
+            <div class="input-group">
+              <label class="up-down-form">To Time</label>
+              <input type = "text" id="toTime">
+              <span id="toTime_err" class="input_error">Please enter valid time</span>
             </div>
             <div class="input-group">
               <label>Select Sport</label>
@@ -53,22 +71,7 @@
               </select>
             </div> 
             <div class="input-group">
-              <label class="up-down-form">From Date</label>
-              <input type = "date" id="Fdate">
-            </div> 
-            <div class="input-group">
-              <label class="up-down-form">From Time</label>
-              <input type = "text" id="fromTime">
-              <span id="fromTime_err" class="input_error">Please enter valid time</span>
-            </div>
-            <div class="input-group">
-              <label class="up-down-form">To Date</label>
-              <input type = "date" id="Tdate">
-            </div> 
-            <div class="input-group">
-              <label class="up-down-form">To Time</label>
-              <input type = "text" id="toTime">
-              <span id="toTime_err" class="input_error">Please enter valid time</span>
+              <button type="button" class="refresh btn-group">Refresh</button>
             </div>
             </form>
       </div>
