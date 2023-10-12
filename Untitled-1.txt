@@ -144,3 +144,30 @@
                                 }
                             }
                         }
+
+
+
+
+
+
+
+
+
+
+
+[
+  {
+    userName: 'com_user',
+    elementUser: 'com_sdm',
+    parentArray: [ [Object], [Object], [Object] ],
+    selections2: [ [Object], [Object] ]
+  }
+] BETSBETSBETS
+[
+  {
+    userName: 'new_test_user2',
+    elementUser: 'new_company1',
+    parentArray: [ [Object], [Object] ],
+    selections2: [ [Object] ]
+  }
+]
