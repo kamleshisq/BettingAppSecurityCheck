@@ -13028,14 +13028,24 @@ socket.on('connect', () => {
 
             $(document).on('click','#match_odd .userBookParent',function(e){
                 if(!$(this).parent('tr').hasClass('active')){
-                    $('#match_odd').find('tr.active').removeClass('active')
-                    $(this).parent('tr').addClass('active')
+                    let userName = $(this).attr('data-usename')
+                    let string = `tr.pr${userName}`
+                    if($('#match_odd').find(string).length != 0){
+                        $('#match_odd').find('tr.active').removeClass('active')
+                        $(this).parent('tr').addClass('active')
+                        $('#match_odd').find('tr.children').remove()
+                        let marketId = $("#match_odd").attr('data-marketid')
+                        let type = 'userBook'
+    
+                        socket.emit('UerBook', {marketId,LOGINDATA,userName,type})
+                    }else{
+                        $(this).parent('tr').removeClass('active')
                     $('#match_odd').find('tr.children').remove()
                     let userName = $(this).attr('data-usename')
-                    let marketId = $("#match_odd").attr('data-marketid')
-                    let type = 'userBook'
+                    let string = `tr.pr${userName}`
+                    $('#match_odd').find(string).remove()
 
-                    socket.emit('UerBook', {marketId,LOGINDATA,userName,type})
+                    }
                 }else{
                     $(this).parent('tr').removeClass('active')
                     $('#match_odd').find('tr.children').remove()
