@@ -3909,7 +3909,17 @@ io.on('connection', (socket) => {
     socket.on('UerBook', async(data) => {
         // console.log(data)
         // let users = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id,role_type:2})
-        let users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, role_type:2, isActive:true})
+        let users = []
+        if(data.userName){
+            let thatUSer = await User.findOne({userName:data.userName})
+            if(thatUSer){
+                users = await User.find({parent_id:thatUSer._id, isActive:true , roleName:{$ne:'Operator'}})
+            }
+            // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
+        }else{
+            users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
+
+        }
        
         try{
             let newUser = users.map(async(ele)=>{
@@ -4072,7 +4082,13 @@ io.on('connection', (socket) => {
                                                                 
                                                             },
                                                             else : {
-                                                                value: '$$value.value',
+                                                                value: {
+                                                                    $cond : {
+                                                                        if : { $eq : ["$$value.value" , 0]},
+                                                                        then : "$$selection.winAmount",
+                                                                        else : "$$value.value"
+                                                                    }
+                                                                },
                                                                 flag:false
                                                             }
                                                         }
@@ -4107,7 +4123,13 @@ io.on('connection', (socket) => {
                                                                 
                                                             },
                                                             else : {
-                                                                value: '$$value.value',
+                                                                value: {
+                                                                    $cond : {
+                                                                        if : { $eq : ["$$value.value" , 0]},
+                                                                        then : "$$selection.lossAmount",
+                                                                        else : "$$value.value"
+                                                                    }
+                                                                },
                                                                 flag:false
                                                             }
                                                         }
