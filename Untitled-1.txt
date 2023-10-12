@@ -171,3 +171,38 @@
     selections2: [ [Object] ]
   }
 ]
+
+
+[
+  {
+    selectionName: 'India',
+    totalAmount: 49,
+    matchName: 'India v Pakistan',
+    Stake: -100,
+    winAmount: -51,
+    winAmount2: { value: -5.1000000000000005, flag: false },
+    lossAmount: 100
+  },
+  {
+    selectionName: 'Pakistan',
+    totalAmount: 200,
+    matchName: 'India v Pakistan',
+    Stake: -100,
+    winAmount: 100,
+    winAmount2: { value: 10, flag: false },
+    lossAmount: -51
+  }
+] selectionsselections
+[
+  {
+    selectionName: 'India',
+    totalAmount: 49,
+    matchName: 'India v Pakistan',
+    Stake: -100,
+    winAmount: 49,
+    winAmount2: { value: 0, flag: false },
+    lossAmount: -100
+  }
+]
+
+

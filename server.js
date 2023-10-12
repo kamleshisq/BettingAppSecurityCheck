@@ -4098,9 +4098,9 @@ io.on('connection', (socket) => {
 
                     if(Bets.length > 0){
                         // console.log(Bets, "BETSBETSBETS")
-                        console.log(Bets[0].selections2, "selectionsselections")
-                        // console.log(Bets[0].parentArray, "parentArray")
-                        // console.log(ele.id, "ele._idele._idele._id")
+                        // console.log(Bets[0].selections2, "selectionsselections")
+                        console.log(Bets[0].parentArray, "parentArray")
+                        console.log(ele.id, "ele._idele._idele._id")
                     }
                 }
 
