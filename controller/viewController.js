@@ -1026,7 +1026,6 @@ exports.plreport = catchAsync(async(req, res, next) => {
         $group:{
             _id:{
                 userName:'$userName',
-                gameId: '$event'
             },
             gameCount:{$sum:1},
             loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
@@ -1036,19 +1035,8 @@ exports.plreport = catchAsync(async(req, res, next) => {
         }
     },
     {
-        $group:{
-            _id:'$_id.userName',
-            gameCount:{$sum:1},
-            betCount:{$sum:'$gameCount'},
-            loss:{$sum:'$loss'},
-            won:{$sum:'$won'},
-            returns:{$sum:'$returns'}
-
-        }
-    },
-    {
         $sort: {
-            _id: 1,
+            userName: 1,
             returns: 1
         }
     },

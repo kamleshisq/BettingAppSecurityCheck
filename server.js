@@ -1361,24 +1361,12 @@ io.on('connection', (socket) => {
                 $group:{
                     _id:{
                         userName:'$userName',
-                        gameId: '$event'
                     },
                     gameCount:{$sum:1},
                     loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
                     won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
                     returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
                     
-                }
-            },
-            {
-                $group:{
-                    _id:'$_id.userName',
-                    gameCount:{$sum:1},
-                    betCount:{$sum:'$gameCount'},
-                    loss:{$sum:'$loss'},
-                    won:{$sum:'$won'},
-                    returns:{$sum:'$returns'}
-    
                 }
             },
             {

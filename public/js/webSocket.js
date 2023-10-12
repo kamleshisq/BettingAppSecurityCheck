@@ -4177,7 +4177,6 @@ socket.on('connect', () => {
                   html += `<td>${count + i}</td>
                   <td>${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
-                  <td>${games[i].betCount}</td>
                   <td>${games[i].won}</td>
                   <td>${games[i].loss}</td>
                   `
