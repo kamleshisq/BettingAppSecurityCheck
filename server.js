@@ -4293,8 +4293,11 @@ io.on('connection', (socket) => {
                 }
             }
             
-            let matchName = await Bet.findOne({marketId: data.marketId})
-            matchName = matchName.match
+            let matchName2 = await Bet.findOne({marketId: data.marketId})
+            let matchName
+            if(matchName2){
+                matchName = matchName2.match
+            }
 
             
            socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName});
