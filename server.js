@@ -1028,10 +1028,14 @@ io.on('connection', (socket) => {
 
         if(data.filterData.fromDate && data.filterData.toDate){
             data.filterData.date = {$gte:new Date(data.filterData.fromDate),$lte:new Date(data.filterData.toDate)}
+            delete data.filterData.fromDate;
+            delete data.filterData.toDate;
         }else if(data.filterData.fromDate && !data.filterData.toDate){
             data.filterData.date = {$gte:new Date(data.filterData.fromDate)}
+            delete data.filterData.fromDate
         }else if(data.filterData.toDate && !data.filterData.fromDate){
             data.filterData.date = {$lte:new Date(data.filterData.toDate)}
+            delete data.filterData.toDate
         }
 
         if(data.filterData.betType === 'All'){
