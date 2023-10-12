@@ -4498,8 +4498,7 @@ io.on('connection', (socket) => {
 
                         ])
 
-                        console.log(Bets, "BetsBetsBets")
-                        console.log(Bets[0].selections, "selectionsselections")
+                        return({User:ele, Bets:Bets, status:'User'})
 
                     }
                 }
@@ -4510,8 +4509,8 @@ io.on('connection', (socket) => {
                 // console.log(resultPromise[i], 123)
                 if(resultPromise[i] && resultPromise[i].Bets.length > 0){
                     result.push(resultPromise[i])
-                    console.log(resultPromise[i].Bets)
-                    console.log(resultPromise[i].Bets[0].selections)
+                    // console.log(resultPromise[i].Bets)
+                    // console.log(resultPromise[i].Bets[0].selections)
                 }
             }
             
