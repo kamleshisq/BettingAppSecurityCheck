@@ -805,8 +805,6 @@ socket.on('connect', () => {
 
 
     if(pathname.startsWith('/admin/userManagement')){
-        console.log(LOGINDATA, 45654654)
-       
 
         let num1Input1 = document.getElementById('myShare');
         let num2Input1 = document.getElementById('Share');
@@ -1485,15 +1483,9 @@ socket.on('connect', () => {
         
         //     })
 
-        function getOwnChild(id,page,token) {
-            socket.emit(token,{
-                id,
-                page
-            })
-        
-        }
         let count = 11;
         socket.on('getOwnChild',(data) => {
+            console.log(data.refreshStatus)
             // console.log(data)
             // console.log('rows',data.result)
             // let headHight = document.getElementsByClassName('HeadRow').height()
@@ -1503,14 +1495,14 @@ socket.on('connect', () => {
             if(data.status === 'success')
             {
                 let html = ""
-                if(data.page == 0){
+                if(data.page == 0 || data.refreshStatus){
                     count = 1;
                     if(LOGINDATA.LOGINUSER.roleName == "Admin"){
                         html += `<thead><tr>`+
                         "<th>S.No</th>"+
                         "<th>User Name</th>"+
-                        "<th>White lable</th>"+
                         "<th>Type</th>"+
+                        "<th>White lable</th>"+
                         "<th>Credit Reference</th>"+
                         "<th>Available Balance</th>"+
                         "<th>Downlevel Balance</th>"+
@@ -1618,8 +1610,8 @@ socket.on('connect', () => {
                         html += `</div>
                         </td></td> </tr>`
                 }
-                count += 10;
-                if(data.page == 0){
+                count += response.length;
+                if(data.page == 0 || data.refreshStatus){
                     if(response.length == 0){
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
                     }
@@ -1704,6 +1696,14 @@ socket.on('connect', () => {
         // }
 
     })
+
+    setInterval(()=>{
+        let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
+        let page = parseInt($('.rowId').attr('data-rowid')) - 1;
+        let refreshStatus = true;
+        socket.emit("search", {filterData,page,id, LOGINDATA ,refreshStatus})
+
+    },1000 * 60)
     
     $(document).on('click', ".COMMISSIONADMIN", function(e){
         e.preventDefault()
@@ -10071,7 +10071,7 @@ socket.on('connect', () => {
 
     if(pathname === "/admin/dashboard" ){
         if(LOGINDATA.LOGINUSER != ""){
-            
+
             setInterval(()=>{
                 let value = $('.dropdown').attr('data-summary')
                 socket.emit('chartMain', LOGINDATA) 

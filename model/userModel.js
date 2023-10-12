@@ -286,6 +286,8 @@ userSchema.post(/^find/, function (docs) {
                 docs[i].uplinePL = roundToTwoDecimals(docs[i].uplinePL);
                 docs[i].lifetimePL = roundToTwoDecimals(docs[i].lifetimePL);
                 docs[i].pointsWL = roundToTwoDecimals(docs[i].pointsWL);
+                docs[i].availableBalance = roundToTwoDecimals(docs[i].availableBalance);
+                docs[i].downlineBalance = roundToTwoDecimals(docs[i].downlineBalance);
                 // console.log(docs[i].myPL, "MODEL")
             }
         }else{
@@ -293,6 +295,8 @@ userSchema.post(/^find/, function (docs) {
             docs.uplinePL = roundToTwoDecimals(docs.uplinePL);
             docs.lifetimePL = roundToTwoDecimals(docs.lifetimePL);
             docs.pointsWL = roundToTwoDecimals(docs.pointsWL);
+            docs.availableBalance = roundToTwoDecimals(docs.availableBalance);
+            docs.downlineBalance = roundToTwoDecimals(docs.downlineBalance);
         }
     }
     // }
