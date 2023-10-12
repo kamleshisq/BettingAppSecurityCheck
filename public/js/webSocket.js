@@ -13067,30 +13067,29 @@ socket.on('connect', () => {
                     let team2 = data.matchName.split(' v ')[1].toLowerCase()
                     let html = `<tr class="headDetail"><th>User name</th>
                     <th>${team1}</th>
-                    <th>${team2}</th>
-                    <th>The Drow</th></tr>`
+                    <th>${team2}</th></tr>`
 
                     for(let i = 0; i < data.Bets.length; i++){
                         html += `<td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                         console.log(data.Bets[i].Bets[0])
-                        for(let j = 0; j < data.Bets[i].Bets[0].selections.length; j++ ){
-                            if(data.Bets[i].Bets[0].selections[j].selectionName.toLowerCase().includes(team1)){
-                                if(data.Bets[i].Bets[0].selections[j].winAmount < 0){
-                                    html += `<td class="red">${data.Bets[i].Bets[0].selections[j].winAmount}</td>`
-                                }else{
-                                    html += `<td class="green">${data.Bets[i].Bets[0].selections[j].winAmount}</td>`
-                                }
-                            }
-                        }
-                        for(let j = 0; j < data.Bets[i].Bets[0].selections.length; j++ ){
-                            if(data.Bets[i].Bets[0].selections[j].selectionName.toLowerCase().includes(team2)){
-                                if(data.Bets[i].Bets[0].selections[j].winAmount < 0){
-                                    html += `<td class="red">${data.Bets[i].Bets[0].selections[j].winAmount}</td>`
-                                }else{
-                                    html += `<td class="green">${data.Bets[i].Bets[0].selections[j].winAmount}</td>`
-                                }
-                            }
-                        }
+                        // for(let j = 0; j < data.Bets[i].Bets[0].selections.length; j++ ){
+                        //     if(data.Bets[i].Bets[0].selections[j].selectionName.toLowerCase().includes(team1)){
+                        //         if(data.Bets[i].Bets[0].selections[j].winAmount < 0){
+                        //             html += `<td class="red">${data.Bets[i].Bets[0].selections[j].winAmount}</td>`
+                        //         }else{
+                        //             html += `<td class="green">${data.Bets[i].Bets[0].selections[j].winAmount}</td>`
+                        //         }
+                        //     }
+                        // }
+                        // for(let j = 0; j < data.Bets[i].Bets[0].selections.length; j++ ){
+                        //     if(data.Bets[i].Bets[0].selections[j].selectionName.toLowerCase().includes(team2)){
+                        //         if(data.Bets[i].Bets[0].selections[j].winAmount < 0){
+                        //             html += `<td class="red">${data.Bets[i].Bets[0].selections[j].winAmount}</td>`
+                        //         }else{
+                        //             html += `<td class="green">${data.Bets[i].Bets[0].selections[j].winAmount}</td>`
+                        //         }
+                        //     }
+                        // }
                     }
                 //     let team1 = data.Bets[0].Bets.teamA
                 //     let team2 = data.Bets[0].Bets.teamB
