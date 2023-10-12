@@ -206,3 +206,34 @@
 ]
 
 
+[
+  {
+    parentUSerId: '64e5c23e2ceb9abbb4e4d266',
+    uplineShare: 10,
+    _id: new ObjectId("6527813fe0873c3759acaa53")
+  },
+  {
+    parentUSerId: '64e5c1892ceb9abbb4e4d1b4',
+    uplineShare: 10,
+    _id: new ObjectId("6527813fe0873c3759acaa54")
+  },
+  {
+    parentUSerId: '6492fd6cd09db28e00761691',
+    uplineShare: 0,
+    _id: new ObjectId("6527813fe0873c3759acaa55")
+  }
+] parentArray
+64e5c1892ceb9abbb4e4d1b4 ele._idele._idele._id
+[
+  {
+    parentUSerId: '64956e701109042453f3c2ff',
+    uplineShare: 0,
+    _id: new ObjectId("65278995fc0b60863e2475ce")
+  },
+  {
+    parentUSerId: '6492fd6cd09db28e00761691',
+    uplineShare: 0,
+    _id: new ObjectId("65278995fc0b60863e2475cf")
+  }
+] parentArray
+64956e701109042453f3c2ff ele._idele._idele._id
