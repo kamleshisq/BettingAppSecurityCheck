@@ -13078,7 +13078,7 @@ socket.on('connect', () => {
 
                     for(let i = 0; i < data.Bets.length; i++){
                         html += `<td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
-                        console.log(data.Bets[i])
+                        console.log(data.Bets[i].Bets[0])
                         // for(let j = 0; j < data.Bets[i].Bets[0].selections.length; i++ ){
                         //     if(data.Bets[i].Bets[0].selections[j].selectionName.toLowerCase().includes(team1)){
                         //         if(data.Bets[i].Bets[0].selections[j].winAmount < 0){
