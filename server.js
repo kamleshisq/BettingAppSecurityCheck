@@ -4094,43 +4094,43 @@ io.on('connection', (socket) => {
                                 }
                             }
                         },
-                        {
-                            $unwind: "$selections2"
-                        },
-                        {
-                            $group: {
-                              _id: {
-                                elementUser: "$elementUser",
-                                selectionName: "$selections2.selectionName"
-                              },
-                              totalWinAmount: { $sum: "$selections2.winAmount2.value" }
-                            }
-                        },
-                        {
-                            $project: {
-                              _id: 0,
-                              elementUser: "$_id.elementUser",
-                              selection: {
-                                selectionName: "$_id.selectionName",
-                                totalWinAmount: {
-                                    $multiply:["$totalWinAmount", -1]
-                                }
-                              }
-                            }
-                        },
-                        {
-                            $group: {
-                              _id: "$elementUser",
-                              selections: { $push: "$selection" }
-                            }
-                        },
-                        {
-                            $project: {
-                              _id: 0,
-                              elementUser: "$_id",
-                              selections: 1
-                            }
-                        }
+                        // {
+                        //     $unwind: "$selections2"
+                        // },
+                        // {
+                        //     $group: {
+                        //       _id: {
+                        //         elementUser: "$elementUser",
+                        //         selectionName: "$selections2.selectionName"
+                        //       },
+                        //       totalWinAmount: { $sum: "$selections2.winAmount2.value" }
+                        //     }
+                        // },
+                        // {
+                        //     $project: {
+                        //       _id: 0,
+                        //       elementUser: "$_id.elementUser",
+                        //       selection: {
+                        //         selectionName: "$_id.selectionName",
+                        //         totalWinAmount: {
+                        //             $multiply:["$totalWinAmount", -1]
+                        //         }
+                        //       }
+                        //     }
+                        // },
+                        // {
+                        //     $group: {
+                        //       _id: "$elementUser",
+                        //       selections: { $push: "$selection" }
+                        //     }
+                        // },
+                        // {
+                        //     $project: {
+                        //       _id: 0,
+                        //       elementUser: "$_id",
+                        //       selections: 1
+                        //     }
+                        // }
                         // {
                         //     $group:{
                         //         _id:'$elementUser',
@@ -4144,10 +4144,10 @@ io.on('connection', (socket) => {
 
                     if(Bets.length > 0){
                         console.log(Bets, "BETSBETSBETS")
-                        console.log(Bets[0].selections)
-                        // for(let i = 0; i < Bets.length; i++){
-                        //     console.log(Bets[i].selections2, "selectionsselections")
-                        // }
+                        // console.log(Bets[0].selections)
+                        for(let i = 0; i < Bets.length; i++){
+                            console.log(Bets[i].selections2, "selectionsselections")
+                        }
 
                     }
                 }
