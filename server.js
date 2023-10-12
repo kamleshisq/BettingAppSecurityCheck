@@ -1014,40 +1014,24 @@ io.on('connection', (socket) => {
     })
 
     socket.on('userBetDetail',async(data)=>{
-        let limit = 10;
-        let page = data.page;
-        // console.log(data.filterData)
-        // const roles = await Role.find({role_type: {$gt:data.LOGINDATA.LOGINUSER.role.role_type}});
-        // let role_type =[]
-        // for(let i = 0; i < roles.length; i++){
-        //     role_type.push(roles[i].role_type)
-        // }
-        // data.filterData.role_type = {
-        //     $in:role_type
-        // }
-        // data.filterData.status = {
-        //     $ne:"OPEN"
-        // }
-        // const user = await User.findOne({userName:data.filterData.userName})
-        // if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
-        //     delete data.filterData['userName']
-        //     let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-        //     socket.emit('userBetDetail',{ubDetails,page})
-        // }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
-        //     let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-        //     socket.emit('userBetDetail',{ubDetails,page})
+        let page = data.page
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = page * limit
+        }
 
-        // }
-        // if(data.fromDate && data.toDate){
-        //     data.filterData.date = 
-        // }
 
-        if(data.fromDate && data.toDate){
-            data.filterData.date = {$gte:new Date(data.fromDate),$lte:new Date(data.toDate)}
-        }else if(data.fromDate && !data.toDate){
-            data.filterData.date = {$gte:new Date(data.fromDate)}
-        }else if(data.toDate && !data.fromDate){
-            data.filterData.date = {$lte:new Date(data.toDate)}
+        if(data.filterData.fromDate && data.filterData.toDate){
+            data.filterData.date = {$gte:new Date(data.filterData.fromDate),$lte:new Date(data.filterData.toDate)}
+        }else if(data.filterData.fromDate && !data.filterData.toDate){
+            data.filterData.date = {$gte:new Date(data.filterData.fromDate)}
+        }else if(data.filterData.toDate && !data.filterData.fromDate){
+            data.filterData.date = {$lte:new Date(data.filterData.toDate)}
         }
 
         if(data.filterData.betType === 'All'){
@@ -1078,67 +1062,8 @@ io.on('connection', (socket) => {
         let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
 
 
-        socket.emit('userBetDetail',{ubDetails,page})
+        socket.emit('userBetDetail',{ubDetails,page,refreshStatus:data.refreshStatus})
 
-        // User.aggregate([
-        //     {
-        //       $match: {
-        //         parentUsers: { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
-        //       }
-        //     },
-        //     {
-        //       $group: {
-        //         _id: null,
-        //         userIds: { $push: '$_id' } 
-        //       }
-        //     }
-        //   ])
-        //     .then((userResult) => {
-        //       const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-        //       data.filterData.userId = { $in: userIds }
-        //       if(data.filterData.userName === data.LOGINDATA.LOGINUSER.userName){
-        //           delete data.filterData['userName']
-        //       }
-
-        //       if(data.filterData.betType == "All"){
-        //         delete data.filterData['betType']
-        //       }
-              
-            //   if(data.filterData.status == 'All'){
-            //     data.filterData.status = {$nin: ["OPEN", "ALERT"]}
-            //   }
-        //       console.log(data.filterData)
-        //       Bet.aggregate([
-        //         {
-        //           $match: data.filterData
-        //         },
-        //         {
-        //             $sort:{
-        //                 date:-1
-        //             }
-        //         },
-        //         {
-        //             $skip:(page * limit)
-        //         },
-        //         {
-        //             $limit:limit
-        //         }
-        //       ])
-        //         .then((betResult) => {
-        //         //   socket.emit("aggreat", betResult)
-        //             let ubDetails = betResult
-        //             socket.emit('userBetDetail',{ubDetails,page})
-        //         })
-        //         .catch((error) => {
-        //           console.error(error);
-        //         });
-        //     })
-        //     .catch((error) => {
-        //       console.error(error);
-        //     });
-        
-        
-        // console.log(user)
     })
 
 
