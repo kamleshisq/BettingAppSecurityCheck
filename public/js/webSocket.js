@@ -10229,7 +10229,7 @@ socket.on('connect', () => {
                     // dashboard.settlement = betsEventWise
                     // dashboard.topBets = topBets
                     console.log(data,'==>dashboard refresh data')
-                    process.exit(0);
+                    // return;
                     let topPlayerHtml = ""
                     let topGamesHtml = ""
                     let CategoriesHtml = ""
