@@ -4402,6 +4402,8 @@ io.on('connection', (socket) => {
                         ])
 
                         console.log(Bets, "BetsBetsBets")
+                        console.log(Bets[0].selections, "selectionsselections")
+
                     }
                 }
             })
