@@ -733,12 +733,24 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
             childrenUsername.push(ele.userName) 
         })
     }
-
+    var today = new Date();
+    var todayFormatted = formatDate(today);
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate() - 7);
+    var tomorrowFormatted = formatDate(tomorrow);
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
     let betResult = await betModel.aggregate([
     {
         $match: {
         userName: { $in: childrenUsername },
-        status: {$ne:"OPEN"}
+        status: {$ne:"OPEN"},
+        date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
+            
         }
     },
     {

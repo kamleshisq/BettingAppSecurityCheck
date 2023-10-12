@@ -758,7 +758,7 @@ socket.on('connect', () => {
         }
     })
 
-    if(pathname.startsWith('/admin') && pathname != '/admin/gameanalysis' && pathname != '/admin/useraccount'){
+    if(pathname.startsWith('/admin') && pathname != '/admin/gameanalysis' && pathname != '/admin/useraccount' && !pathname.startsWith('/admin/userManagement') && pathname.startsWith('/admin/betlimit')){
         setInterval(()=>{
 
             socket.emit('loginuserbalance',LOGINDATA)
@@ -4546,6 +4546,20 @@ socket.on('connect', () => {
     }
 
     if(pathname == "/admin/gamereport"){
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 7);
+        var tomorrowFormatted = formatDate(tomorrow);
+
+        $('#fromDate').val(tomorrowFormatted)
+        $('#toDate').val(todayFormatted)
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
         $('.searchUser').keyup(function(){
             // console.log('working')
             if($(this).hasClass("searchUser")){
@@ -4592,34 +4606,30 @@ socket.on('connect', () => {
         let fromDate
         let toDate
         let filterData = {}
+        fromDate = $('#fromDate').val()
+        fromTime = $('#fromTime').val()
+        filterData.fromDate = fromDate;
+        if(toDate != ''){
+            filterData.toDate = new Date(new Date(toDate).getTime() + ((24 * 60 * 60 * 1000)-1))
+        }else{
+            filterData.toDate = toDate;
+        }
         $('#fromDate,#toDate').change(function(){
             let userName = $('.searchUser').val()
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
             data.page = 0;
-            if(fromDate != ''  && toDate != '' ){
-                fromDate = new Date(fromDate)
-                toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
-                filterData.fromDate = fromDate
-                filterData.toDate = toDate
-    
+            if(toDate != ''){
+                filterData.toDate = new Date(new Date(toDate).getTime() + ((24 * 60 * 60 * 1000)-1))
             }else{
-                if(fromDate != '' ){
-                    fromDate = new Date(fromDate)
-                    filterData.fromDate = fromDate
-
-                }
-                if(toDate != '' ){
-                    toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
-                    filterData.toDate = toDate
-
-                }
+                filterData.toDate = toDate;
             }
             if(userName != ''){
                 filterData.userName = userName
             }else{
                 filterData.userName = LOGINDATA.LOGINUSER.userName
             }
+            filterData.fromDate = fromDate;
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             // console.log(data)
@@ -4642,8 +4652,12 @@ socket.on('connect', () => {
             socket.emit('gameReport',data)
          }); 
 
-       
-
+         $(document).on('click','.getajaxdataclick',function(e){
+            fromDate = $('#fromDate').val()
+            toDate = $('#toDate').val()
+            let url = $(this).attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`
+            console.log(url)
+         })
         $(document).on("click", ".searchList", function(){
             document.getElementById("searchUser").value = this.textContent
             filterData = {}
