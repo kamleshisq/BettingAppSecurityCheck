@@ -3696,24 +3696,21 @@ socket.on('connect', () => {
             // let fromDate 
             // let toDate
             if(fromDate != ''  && toDate != '' ){
-                // filterData.date = {$gte : new Date(fromDate), $lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
                 fromDate = new Date(fromDate)
                 toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
 
             }else{
                 if(fromDate != '' ){
-                    // filterData.date = {$gte : new Date(fromDate)}
                     fromDate = new Date(fromDate)
                 }
                 if(toDate != '' ){
-                    // filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
                     toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
                 }
             }
             if(userName != ''){
                 filterData.userName = userName
             }else{
-                // filterData.userName = LOGINDATA.LOGINUSER.userName
+                filterData.userName = LOGINDATA.LOGINUSER.userName
             }
             filterData.betType = fGame
             filterData.status = fBets
@@ -4538,6 +4535,43 @@ socket.on('connect', () => {
     }
 
     if(pathname == "/admin/gamereport"){
+
+        function downloadCSV(csvContent, fileName) {
+            const link = document.createElement('a');
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+            }          
+
+        function convertToCSV(table) {
+            const rows = table.querySelectorAll('tr');
+            const csv = [];
+            
+            for (const row of rows) {
+                const rowData = [];
+                const columns = row.querySelectorAll('td, th');
+                
+                for (const column of columns) {
+                rowData.push(column.innerText);
+                }
+                
+                csv.push(rowData.join(','));
+            }
+            
+            return csv.join('\n');
+            }
+
+
+        document.getElementById('downloadBtn').addEventListener('click', function() {
+            const table = document.getElementById('table12');             
+            if (table) {
+                const csvContent = convertToCSV(table);
+                downloadCSV(csvContent, 'report.csv');
+            }
+        });
+
         $('.searchUser').keyup(function(){
             // console.log('working')
             if($(this).hasClass("searchUser")){
@@ -4563,25 +4597,56 @@ socket.on('connect', () => {
         socket.on("ACCSEARCHRES", async(data)=>{
             $('.wrapper').show()
             let html = ``
-        if(data.page === 1){
-            for(let i = 0; i < data.user.length; i++){
-                html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+            if(data.page === 1){
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
+            }else if(data.page === null){
+                document.getElementById("button").innerHTML = ``
+            }else{
+                html = document.getElementById('search').innerHTML
+                for(let i = 0; i < data.user.length; i++){
+                    html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
+                }
+                document.getElementById('search').innerHTML = html
+                document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
             }
-            document.getElementById('search').innerHTML = html
-            document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-        }else if(data.page === null){
-            document.getElementById("button").innerHTML = ``
-        }else{
-            html = document.getElementById('search').innerHTML
-            for(let i = 0; i < data.user.length; i++){
-                html += `<li class="searchList" id="${data.user[i]._id}">${data.user[i].userName}</li>`
-            }
-            document.getElementById('search').innerHTML = html
-            document.getElementById("button").innerHTML = `<button id="${data.page}" class="next">Show More</button>`
-        }
         })
 
+        let fromDate
+        let toDate
         let filterData = {}
+        $('#fromDate,#toDate').change(function(){
+            let userName = $('.searchUser').val()
+            fromDate = $('#fromDate').val()
+            toDate = $('#toDate').val()
+            data.page = 0;
+            if(fromDate != ''  && toDate != '' ){
+                fromDate = new Date(fromDate)
+                toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+
+            }else{
+                if(fromDate != '' ){
+                    fromDate = new Date(fromDate)
+                }
+                if(toDate != '' ){
+                    toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+                }
+            }
+            if(userName != ''){
+                filterData.userName = userName
+            }else{
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }
+            filterData.fromDate = fromDate
+            filterData.toDate = toDate
+            data.filterData = filterData
+            data.LOGINDATA = LOGINDATA
+            // console.log(data)
+            socket.emit('gameReport',data)
+        })
         $('#load-more').click(function(e){
             let page = parseInt($('.pageId').attr('data-pageid'));
             $('.pageId').attr('data-pageid',page + 1)
@@ -4596,29 +4661,27 @@ socket.on('connect', () => {
             data.page = page
             data.LOGINDATA = LOGINDATA
             socket.emit('gameReport',data)
-         }); 
+        }); 
 
-        // $(".searchUser").on('input', function(e){
-        //     var $input = $(this),
-        //         val = $input.val();
-        //         var listItems = document.getElementsByTagName("li");
-        //         for (var i = 0; i < listItems.length; i++) {
-        //             if (listItems[i].textContent === val) {
-        //                 match = ($(this).val() === val);
-        //               break; 
-        //             }else{
-        //                 match = false
-        //             }
-        //           }
+        function refreshPage(){
+            let page = parseInt($('.pageId').attr('data-pageid')) - 1;
+            let data = {}
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
+            }
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            data.refreshStatus = true
+            socket.emit('gameReport',data)
+        }
 
-        //         if(match){
-        //             // console.log(match.text())
-        //             filterData = {}
-        //             filterData.userName = val
-        //             $('.pageId').attr('data-pageid','1')
-        //             socket.emit('gameReport',{filterData,LOGINDATA,page:0})
-        //         }
-        // })
+        setInterval(()=>{
+            refreshPage()
+        },1000 * 60)
 
         $(document).on("click", ".searchList", function(){
             document.getElementById("searchUser").value = this.textContent
@@ -4630,14 +4693,12 @@ socket.on('connect', () => {
             
         })
 
+        let count = 11
         socket.on('gameReport',(data)=>{
             let page = data.page;
             let games = data.games;
             let html = '';
-            let count 
-            if(page != 0){
-                count = (10 * page) + 1
-            }else{
+            if(page == 0 || data.refreshStatus){
                 count = 1
             }
             for(let i = 0;i<games.length;i++){
@@ -4658,10 +4719,10 @@ socket.on('connect', () => {
                   html += `<td style="color: #FE3030;">${games[i].returns}</td>`
                 }
                 html += `</tr>`
-                count++
+                
             }
-
-            if(data.page == 0){
+            count += games.length
+            if(data.page == 0 || data.refreshStatus){
                 if(games.length == 0){
                     html += `<tr class="empty_table"><td>No record found</td></tr>`
                     $('#load-more').hide()
