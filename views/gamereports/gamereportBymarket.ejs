@@ -6,7 +6,8 @@
       <div class="new-head"> 
         <ul class="bredcum_gameReport">
             <li><a href="/admin/gamereport">Game Reports</a></li>
-            <li><%=userName%></li>
+            <li><a href="<%=oldurl%>"></a><%=userName%></li>
+            <li><%=matchName%></li>
         </ul>
       </div>
     <%- include("../loginUserAdminsideDetails") %>
@@ -24,9 +25,8 @@
             <thead>
               <tr>
                 <th>S.No</th>
-                <th>Match Date</th>
-                <th>Match Name</th>
-                <th>Markets Count</th>
+                <th>Settlement Date</th>
+                <th>Market</th>
                 <th>Bets</th>
                 <th>Won</th>
                 <th>Loss</th>
@@ -43,9 +43,8 @@
                 <tr>
                   <%}%>
                   <td><%=i + 1%></td>
-                  <td><%=games[i].eventDate%></td>
-                  <td class="clickableelement getajaxdataclick" data-href="<%=url%>&match=<%=games[i]._id%>" data-parent="<%=games[i]._id%>"><%=games[i]._id%></td>
-                  <td><%=games[i].gameCount%></td>
+                  <td><%=games[i].date%></td>
+                  <td class="clickableelement getajaxdataclick" data-href="<%=url%>&market=<%=games[i]._id%>" data-parent="<%=games[i]._id%>"><%=games[i]._id%></td>
                   <td><%=games[i].betCount%></td>
                   <td><%=games[i].won%></td>
                   <td><%=games[i].loss%></td>
