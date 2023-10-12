@@ -839,6 +839,7 @@ io.on('connection', (socket) => {
                     gameCount:{$sum:1},
                     loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
                     won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
                     returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
                     
                 }
@@ -850,6 +851,7 @@ io.on('connection', (socket) => {
                     betCount:{$sum:'$gameCount'},
                     loss:{$sum:'$loss'},
                     won:{$sum:'$won'},
+                    void:{$sum:'$void'},
                     returns:{$sum:'$returns'}
     
                 }
