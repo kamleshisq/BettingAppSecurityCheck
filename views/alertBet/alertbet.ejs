@@ -5,7 +5,7 @@
     <div class="container-fluid">
       <div class="new-head"> 
           <h3>Alert Bet</h3>
-          <form action="">
+          <form action="" class="betmonitor-heading-from">
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
@@ -21,7 +21,49 @@
               </div>
               
             </div>
+            <div class="input-group">
+              <label>Select Result</label>
+              <select name="result" id="result">
+                <option value="All" selected>All</option>
+                <option value="ALERT">Alert</option>
+                <option value="CANCEL">Voided</option>
+                <option value="ACCEPT">Valid</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label class="up-down-form">Select Sports</label>
+              <select name="Sport" id="Sport">
+                <option value="All" selected>All</option>
+                <option value="Cricket">Cricket</option>
+                <option value="Football">FOOTBALL</option>
+                <option value="Tennis">TENNIS</option>
+                <option value="BASKETBALL">BASKETBALL</option>
+                <option value="BASEBALL">BASEBALL</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label class="up-down-form">Select Market</label>
+              <select name="market" id="market">
+                <option value="All" selected>All</option>
+                <option value="Match Odds">Match Odds</option>
+                <option value="Bookmaker 0%Comm">BookMaker</option>
+                <option value="Fancy">Fancy</option>
+                <!-- <option value="">GoalMarket</option> -->
+              </select>
+            </div>
+            <div class="input-group">
+              <label class="up-down-form">From Date</label>
+              <input type="date" id="fromDate">
+            </div>
+            <div class="input-group">
+              <label class="up-down-form">To Date</label>
+              <input type="date" id="toDate">
+            </div>
+            <div class="input-group">
+              <button type="button" class="refresh btn-group">Refresh</button>
+            </div>
           </form>
+         
       </div>
   </section>
 
@@ -31,49 +73,7 @@
             <div class="table-heading">
                 <h3>Alert Bet</h3>
                 <div class="table-heading-btn">
-                  <form action="" class="settlement-heading-from">
-                    <div class="input-group">
-                      <label>Select Result</label>
-                      <select name="result" id="result">
-                        <option value="All" selected>All</option>
-                        <option value="ALERT">Alert</option>
-                        <option value="CANCEL">Voided</option>
-                        <option value="ACCEPT">Valid</option>
-                      </select>
-                    </div>
-                    <div class="input-group">
-                      <label class="up-down-form">Select Sports</label>
-                      <select name="Sport" id="Sport">
-                        <option value="All" selected>All</option>
-                        <option value="Cricket">Cricket</option>
-                        <option value="Football">FOOTBALL</option>
-                        <option value="Tennis">TENNIS</option>
-                        <option value="BASKETBALL">BASKETBALL</option>
-                        <option value="BASEBALL">BASEBALL</option>
-                      </select>
-                    </div>
-                    <div class="input-group">
-                      <label class="up-down-form">Select Market</label>
-                      <select name="market" id="market">
-                        <option value="All" selected>All</option>
-                        <option value="Match Odds">Match Odds</option>
-                        <option value="Bookmaker 0%Comm">BookMaker</option>
-                        <option value="Fancy">Fancy</option>
-                        <!-- <option value="">GoalMarket</option> -->
-                      </select>
-                    </div>
-                    <div class="input-group">
-                      <label class="up-down-form">From Date</label>
-                      <input type="date" id="fromDate">
-                    </div>
-                    <div class="input-group">
-                      <label class="up-down-form">To Date</label>
-                      <input type="date" id="toDate">
-                    </div>
-                    <div class="input-group">
-                      <button type="button" class="refresh btn-group">Refresh</button>
-                    </div>
-                  </form>
+                  
                 </div>
             </div>
             <div class="data-table">
