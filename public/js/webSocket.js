@@ -4695,6 +4695,7 @@ socket.on('connect', () => {
 
         let count = 11
         socket.on('gameReport',(data)=>{
+            console.log(data.refreshStatus)
             let page = data.page;
             let games = data.games;
             let html = '';
