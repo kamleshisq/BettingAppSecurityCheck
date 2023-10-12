@@ -40,6 +40,7 @@ router.get("/changeCurrentUserPass", authController.isProtected, viewController.
 router.get("/changeUserPassword", authController.isProtected, viewController.updateUserPass);
 router.get("/admin/reports", authController.isProtected, authController.isAdmin,viewController.ReportPage)
 router.get("/admin/gamereport", authController.isProtected, authController.isAdmin,viewController.gameReportPage)
+router.get("/admin/gamereport/match", authController.isProtected, authController.isAdmin,viewController.gameReportPage)
 router.get("/admin/myaccount", authController.isProtected, authController.isAdmin,viewController.myaccount)
 router.get("/admin/adminaccount", authController.isProtected, authController.isAdmin,viewController.adminaccount)
 router.get("/admin/useraccount", authController.isProtected, authController.isAdmin,viewController.useracount)
