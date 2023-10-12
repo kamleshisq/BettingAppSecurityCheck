@@ -29,7 +29,19 @@
     <div class="container-fluid">
       <div class="table-data-section">
         <div class="table-heading">
-          <h3>Game Reports</h3>
+          <div class="table-heading-btn">
+            <form action="" class="betlist-heading-from">
+              <div class="input-group">
+                <label>From Date</label>
+                <input type="date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="fromDate"> 
+              </div>
+              <div class="input-group">
+                <label>To Date</label>
+                <input type="date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="toDate"> 
+              </div>
+            </form>
+            <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Download CSV</button>
+          </div>
         </div>
         <div class="data-table">
           <table>

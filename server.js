@@ -789,10 +789,15 @@ io.on('connection', (socket) => {
 
     socket.on('gameReport',async(data)=>{
         let page = data.page
-        let limit = 10
-        let dataM 
-        // console.log(data.filterData)
-        // console.log(data.LOGINDATA.LOGINUSER.userName)
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = page * limit
+        }
         let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
             let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
@@ -805,11 +810,24 @@ io.on('connection', (socket) => {
                 childrenUsername.push(ele.userName) 
             })
         }
+        if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
+            childrenUsername = [data.filterData.userName]
+        }
+        if(data.filterData.fromDate && data.filterData.toDate){
+            data.filterData.date = {$gte:new Date(data.filterData.fromDate),$lte:new Date(data.filterData.toDate)}
+        }else if(data.filterData.fromDate && !data.filterData.toDate){
+            data.filterData.date = {$gte:new Date(data.filterData.fromDate)}
+        }else if(data.filterData.toDate && !data.filterData.fromDate){
+            data.filterData.date = {$lte:new Date(data.filterData.toDate)}
+        }else if(!data.filterData.toDate && !data.filterData.fromDate){
+            data.filterData.date = {$exists:true}
+        }
         let games = await Bet.aggregate([
             {
                 $match: {
                 userName: { $in: childrenUsername },
-                status: {$ne:"OPEN"}
+                status: {$ne:"OPEN"},
+                date:data.filterData.date
                 }
             },
             {
@@ -843,14 +861,14 @@ io.on('connection', (socket) => {
                 }
             },
             {
-                $skip:(page * limit)
+                $skip:skip
             },
             {
                 $limit:limit
             }
           ])
 
-        socket.emit('gameReport',{games,page})
+        socket.emit('gameReport',{games,page,refreshStatus:data.refreshStatus})
         })
 
     socket.on("searchEvents", async(data) => {
