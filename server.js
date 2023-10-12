@@ -4288,6 +4288,8 @@ io.on('connection', (socket) => {
                     }else{
                         return({User:ele, Bets:Bets})
                     }
+                }else{
+                    return({status:"User"})
                 }
             })
             let resultPromise = await Promise.all(newUser)
