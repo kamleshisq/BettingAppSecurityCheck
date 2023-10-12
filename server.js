@@ -3911,7 +3911,12 @@ io.on('connection', (socket) => {
         try{
             let newUser = users.map(async(ele)=>{
                 let childrenUsername1 = []
-                let children = await User.find({parentUsers:ele._id})
+                let children
+                if(falg){
+                    children = await User.find({parentUsers:ele.id})
+                }else{
+                    children = await User.find({parentUsers:ele._id})
+                }
                 children.map(ele1 => {
                     childrenUsername1.push(ele1.userName) 
                 })
