@@ -4171,7 +4171,7 @@ io.on('connection', (socket) => {
                                       [
                                         {
                                           selectionName: "the draw",
-                                          winAmount: {
+                                          totalWinAmount: {
                                             $sum: {
                                               $map: {
                                                 input: "$selections",
