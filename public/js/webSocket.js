@@ -4175,7 +4175,7 @@ socket.on('connect', () => {
                   html += `<tr style="text-align: center;" class="blue">`
                 }
                   html += `<td>${count + i}</td>
-                  <td>${games[i].userName}</td>
+                  <td>${games[i]._id}</td>
                   <td>${games[i].gameCount}</td>
                   <td>${games[i].won}</td>
                   <td>${games[i].loss}</td>

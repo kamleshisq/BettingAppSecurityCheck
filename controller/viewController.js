@@ -1024,9 +1024,7 @@ exports.plreport = catchAsync(async(req, res, next) => {
     },
     {
         $group:{
-            _id:{
-                userName:'$userName',
-            },
+            _id:'$userName',
             gameCount:{$sum:1},
             loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
             won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
