@@ -4656,7 +4656,7 @@ socket.on('connect', () => {
             fromDate = $('#fromDate').val()
             toDate = $('#toDate').val()
             let url = $(this).attr('data-href') + `&fromDate=${fromDate}&toDate=${toDate}`
-            console.log(url)
+            location.href = url
          })
         $(document).on("click", ".searchList", function(){
             document.getElementById("searchUser").value = this.textContent
