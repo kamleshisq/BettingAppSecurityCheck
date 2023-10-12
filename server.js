@@ -4206,9 +4206,6 @@ io.on('connection', (socket) => {
                                 }
                             }
                         },
-                        {
-                            $unwind :'$selections'
-                        }
                         
                     ])
                     
