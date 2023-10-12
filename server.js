@@ -3922,6 +3922,7 @@ io.on('connection', (socket) => {
                         console.log(Bets, "BETSBETSBETS")
                         console.log(Bets[0].selections2, "selectionsselections")
                         console.log(Bets[0].parentArray, "parentArray")
+                        console.log(ele._id, "ele._idele._idele._id")
                     }
                 }
 
