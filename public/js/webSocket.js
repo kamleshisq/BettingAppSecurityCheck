@@ -5091,6 +5091,7 @@ socket.on('connect', () => {
         function refreshBetMonitorPage(){
             stack = $('#stake').val()
             IP = $('#IP').val()
+            let page = parseInt($('.pageId').attr('data-pageid')) - 1;
             let data = {}
             let userName = $('.searchUser').val()
             if(userName == ''){
@@ -5106,8 +5107,10 @@ socket.on('connect', () => {
                 }
             })
             data.filterData = filterData;
-            data.page = 0
+            data.page = page
             data.LOGINDATA = LOGINDATA
+            let refreshStatus = true
+            data.refreshStatus = refreshStatus
             // console.log(data)
             socket.emit('betMoniter',data)
         }
@@ -5119,7 +5122,7 @@ socket.on('connect', () => {
         let count = 11
         socket.on('betMoniter',(data) => {
             console.log(data)
-            if(data.page === 0){
+            if(data.page === 0 || data.refreshStatus){
                 count = 1
             }
             let bets = data.ubDetails;
@@ -5196,8 +5199,8 @@ socket.on('connect', () => {
                 html += `</div></tr>`
             }
             
-            count += 10;
-            if(data.page == 0){
+            count += bets.length;
+            if(data.page == 0 || data.refreshStatus){
                 if(bets.length == 0){
                     html += `<tr class="empty_table"><td>No record found</td></tr>`
                     $('#load-more').hide()
