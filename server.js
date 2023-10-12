@@ -4218,22 +4218,15 @@ io.on('connection', (socket) => {
                 // console.log(resultPromise[i], 123)
                 if(resultPromise[i] && resultPromise[i].Bets.length > 0){
                     result.push(resultPromise[i])
+                    console.log(resultPromise[i].Bets)
+                    console.log(resultPromise[i].Bets[0].selections)
                 }
             }
             
             
             
 
-            // for (bet in Bets){
-            //     for(selcet in Bets[bet].selections){}
-            // }
             
-            
-            
-            
-        //    console.log(result, "==> WORKING")
-        //    console.log(Bets[0].selections)
-            console.log(data.type, data.newData)
            socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData});
         //    socket.emit();
         }catch(err){
