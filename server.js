@@ -4083,9 +4083,7 @@ io.on('connection', (socket) => {
                                                                         then : {
                                                                             $subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]
                                                                         },
-                                                                        else : {
-                                                                            $subtract : [ "$$value.value", {$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]
-                                                                        }
+                                                                        else : "$$value.value"
                                                                     }
                                                                 },
                                                                 flag:false
@@ -4128,9 +4126,7 @@ io.on('connection', (socket) => {
                                                                         then : {
                                                                             $subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]
                                                                         },
-                                                                        else : {
-                                                                            $subtract:["$$value.value", {$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]
-                                                                        }
+                                                                        else : "$$value.value"
                                                                     }
                                                                 },
                                                                 flag:false
