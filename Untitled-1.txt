@@ -237,3 +237,76 @@
   }
 ] parentArray
 64956e701109042453f3c2ff ele._idele._idele._id
+
+
+
+
+
+
+
+
+
+
+{
+                            $project: { 
+                                _id:0,
+                                userName: "$_id",
+                                parentArray:"$parentArray",
+                                selections: { 
+                                    $map: { 
+                                        input: "$selections",
+                                        as: "selection",
+                                        in: { 
+                                            selectionName: "$$selection.selectionName",
+                                            totalAmount: "$$selection.totalAmount",
+                                            matchName: "$$selection.matchName",
+                                            Stake: "$$selection.Stake",
+                                            winAmount: { 
+                                                $add : [
+                                                    "$$selection.totalAmount", 
+                                                    {
+                                                        $reduce: {
+                                                            input: "$selections",
+                                                            initialValue: 0,
+                                                            in: {
+                                                                $cond: {
+                                                                    if: {
+                                                                      $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                                    },
+                                                                    then: { $add: ["$$value", "$$this.Stake"] },
+                                                                    else: {
+                                                                        $add: ["$$value", 0] 
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            lossAmount:{ 
+                                                $add : [
+                                                    "$$selection.Stake", 
+                                                    {
+                                                        $reduce: {
+                                                            input: "$selections",
+                                                            initialValue: 0,
+                                                            in: {
+                                                                $cond: {
+                                                                    if: {
+                                                                      $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                                    },
+                                                                    then: { $add: ["$$value", "$$this.totalAmount"] },
+                                                                    else: {
+                                                                        $add: ["$$value", 0] 
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                        }
+                                    }
+                                }
+                            }
+                        },
