@@ -4107,8 +4107,6 @@ socket.on('connect', () => {
             }else{
                 filterData.userName = LOGINDATA.LOGINUSER.userName
             }
-            filterData.betType = fGame
-            filterData.status = fBets
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             // console.log(data)
@@ -4563,8 +4561,6 @@ socket.on('connect', () => {
             }else{
                 filterData.userName = LOGINDATA.LOGINUSER.userName
             }
-            filterData.betType = fGame
-            filterData.status = fBets
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             // console.log(data)
