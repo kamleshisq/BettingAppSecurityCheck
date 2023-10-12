@@ -4231,8 +4231,9 @@ io.on('connection', (socket) => {
             
             
             
-           console.log(result, "==> WORKING")
+        //    console.log(result, "==> WORKING")
         //    console.log(Bets[0].selections)
+            console.log(data.type, data.newData)
            socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData});
         //    socket.emit();
         }catch(err){
