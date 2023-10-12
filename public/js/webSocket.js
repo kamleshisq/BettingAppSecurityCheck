@@ -1703,7 +1703,7 @@ socket.on('connect', () => {
         let refreshStatus = true;
         socket.emit("search", {filterData,page,id, LOGINDATA ,refreshStatus})
 
-    },1000 * 60)
+    },5000)
     
     $(document).on('click', ".COMMISSIONADMIN", function(e){
         e.preventDefault()
