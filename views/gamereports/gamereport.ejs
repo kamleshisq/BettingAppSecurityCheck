@@ -72,9 +72,9 @@
                   <td><%=games[i].loss%></td>
                   <td><%=games[i].void%></td>
                   <%if(games[i].returns >= 0){%>
-                  <td class="green">+<%=games[i].returns%></td>
+                  <td class="green">+<%=(games[i].returns).toFixed(2)%></td>
                   <%}else{%>
-                  <td class="red"><%=games[i].returns%></td>
+                  <td class="red"><%=(games[i].returns).toFixed(2)%></td>
                   <%}%>
                 </tr>
                 <%}%>

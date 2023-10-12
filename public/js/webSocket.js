@@ -4179,9 +4179,9 @@ socket.on('connect', () => {
                   <td>${games[i].loss}</td>
                   `
                 if(games[i].returns >= 0){
-                  html += `<td style="color: #46BCAA;">+${games[i].returns}</td>`
+                  html += `<td style="color: #46BCAA;">+${(games[i].returns).toFixed(2)}</td>`
                 }else{
-                  html += `<td style="color: #FE3030;">${games[i].returns}</td>`
+                  html += `<td style="color: #FE3030;">${(games[i].returns).toFixed(2)}</td>`
                 }
                 html += `</tr>`
                 count++
@@ -4641,9 +4641,9 @@ socket.on('connect', () => {
                   <td>${games[i].loss}</td>
                   <td>${games[i].void}</td>`
                 if(games[i].returns >= 0){
-                  html += `<td style="color: #46BCAA;">+${games[i].returns}</td>`
+                  html += `<td style="color: #46BCAA;">+${(games[i].returns).toFixed(2)}</td>`
                 }else{
-                  html += `<td style="color: #FE3030;">${games[i].returns}</td>`
+                  html += `<td style="color: #FE3030;">${(games[i].returns).toFixed(2)}</td>`
                 }
                 html += `</tr>`
                 count++
