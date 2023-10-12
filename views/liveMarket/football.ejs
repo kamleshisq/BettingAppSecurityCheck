@@ -32,6 +32,7 @@
                         </thead>
                         <tbody id="<%=openBet[i].details[j].id%>" class="MarketIdsR">
                           <%for(let k = 0; k < openBet[i].details[j].length; k++){%>
+                            <%if(k < 1){%>
                             <%
                             let dataF 
                             let matchodd = false
@@ -75,6 +76,7 @@
                                 </tr>
                               <%}%>
                             <%}%>
+                          <%}%>
                           <%}%>
                           <%}%>
                         </tbody>
