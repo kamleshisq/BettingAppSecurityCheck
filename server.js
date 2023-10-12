@@ -2987,8 +2987,16 @@ io.on('connection', (socket) => {
 
             }
         }
-        let limit = 10;
+        let limit;
         let page = data.page;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 10
+        }else{
+            limit = 10
+            skip = limit * page
+        }
         let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
             let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
@@ -3007,8 +3015,8 @@ io.on('connection', (socket) => {
             data.filterData.userName = {$in:childrenUsername}
 
         }
-        let ubDetails = await Bet.find(data.filterData).sort({date:-1}).skip(page * limit).limit(limit)
-        socket.emit('AlertBet',{ubDetails,page})
+        let ubDetails = await Bet.find(data.filterData).sort({date:-1}).skip(skip).limit(limit)
+        socket.emit('AlertBet',{ubDetails,page,refreshStatus:data.refreshStatus})
     })
 
     socket.on("myShare", async(data) => {
