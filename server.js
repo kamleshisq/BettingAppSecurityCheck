@@ -4007,14 +4007,7 @@ io.on('connection', (socket) => {
                                                                 
                                                             },
                                                             else : {
-                                                                value: {
-                                                                    $cond:{ 
-                                                                        if : {$eq : ["$$value.value", 0]},
-                                                                        then:"$$selection.winAmount",
-                                                                        else :'$$value.value'
-                                                                        }
-                                                                    }
-                                                                },
+                                                                value: '$$value.value',
                                                                 flag:false
                                                             }
                                                         }
@@ -4049,13 +4042,7 @@ io.on('connection', (socket) => {
                                                                 
                                                             },
                                                             else : {
-                                                                value : {
-                                                                    $cond : {
-                                                                        if : {$eq : ["$$value.value", 0]},
-                                                                        then:"$$selection.lossAmount",
-                                                                        else: '$$value.value'
-                                                                    }
-                                                                },
+                                                                value: '$$value.value',
                                                                 flag:false
                                                             }
                                                         }
