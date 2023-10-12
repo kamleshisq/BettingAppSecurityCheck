@@ -3917,7 +3917,7 @@ io.on('connection', (socket) => {
                 }else{
                     children = await User.find({parentUsers:ele._id})
                 }
-                console.log(children)
+                console.log(children, "childrenchildrenchildren")
                 children.map(ele1 => {
                     childrenUsername1.push(ele1.userName) 
                 })
