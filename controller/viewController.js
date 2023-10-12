@@ -1328,7 +1328,7 @@ exports.gameReportPageByMatch = catchAsync(async(req, res, next) => {
     }
     ])
 
-    let url = `/admin/gamereport/match/market?userName=${req.query.userName}&fromDate=${req.query.fromDate}&${req.query.toDate}`
+    let url = `/admin/gamereport/match/market?userName=${req.query.userName}&fromDate=${req.query.fromDate}&toDate=${req.query.toDate}`
     
 
     res.status(200).render('./gamereports/matchwisegamereport',{
@@ -1443,8 +1443,8 @@ exports.gameReportPageByMatchByMarket = catchAsync(async(req, res, next) => {
     }
     ])
 
-    let url = `/admin/gamereport/match/market/report?userName=${req.query.userName}&fromDate=${req.query.fromDate}&${req.query.toDate}&match=${req.query.match}`
-    let oldurl = `/admin/gamereport/match/market/report?userName=${req.query.userName}&fromDate=${req.query.fromDate}&${req.query.toDate}`
+    let url = `/admin/gamereport/match/market/report?userName=${req.query.userName}&fromDate=${req.query.fromDate}&toDate=${req.query.toDate}&match=${req.query.match}`
+    let oldurl = `/admin/gamereport/match/market/report?userName=${req.query.userName}&fromDate=${req.query.fromDate}&toDate=${req.query.toDate}`
     
 
     res.status(200).render('./gamereports/gamereportBymarket',{
