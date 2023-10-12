@@ -4106,6 +4106,49 @@ io.on('connection', (socket) => {
                             }
                         },
                         {
+                            $project: {
+                              _id: 0,
+                              elementUser: 1,
+                              selections: {
+                                $cond: {
+                                  if: {
+                                    $in: [
+                                      "the draw",
+                                      {
+                                        $map: {
+                                          input: "$selections2",
+                                          as: "sel",
+                                          in: "$$sel.selectionName"
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  then: "$selections2", 
+                                  else: {
+                                    $concatArrays: [
+                                      "$selections2",
+                                      [
+                                        {
+                                          selectionName: "the draw",
+                                          winAmount: {
+                                            $sum: {
+                                              $map: {
+                                                input: "$selections2",
+                                                as: "sel",
+                                                in: "$$sel.lossAmount"
+                                              }
+                                            }
+                                          },
+                                          lossAmount : 0
+                                        }
+                                      ]
+                                    ]
+                                  }
+                                }
+                              }
+                            }
+                          },
+                        {
                             $unwind: "$selections2"
                         },
                         {
@@ -4206,48 +4249,7 @@ io.on('connection', (socket) => {
                                 }
                             }
                         },
-                        {
-                              $project: {
-                                _id: 0,
-                                elementUser: 1,
-                                selections: {
-                                  $cond: {
-                                    if: {
-                                      $in: [
-                                        "the draw",
-                                        {
-                                          $map: {
-                                            input: "$selections",
-                                            as: "sel",
-                                            in: "$$sel.selectionName"
-                                          }
-                                        }
-                                      ]
-                                    },
-                                    then: "$selections", 
-                                    else: {
-                                      $concatArrays: [
-                                        "$selections",
-                                        [
-                                          {
-                                            selectionName: "the draw",
-                                            winAmount: {
-                                              $sum: {
-                                                $map: {
-                                                  input: "$selections",
-                                                  as: "sel",
-                                                  in: "$$sel.lossAmount"
-                                                }
-                                              }
-                                            }
-                                          }
-                                        ]
-                                      ]
-                                    }
-                                  }
-                                }
-                              }
-                            }
+                        
                         
                     ])
                     
