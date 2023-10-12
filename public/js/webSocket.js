@@ -10283,10 +10283,10 @@ socket.on('connect', () => {
                         CategoriesHtml += `
                             <tr>
                             <td data-title="">${i + 1}</td>
-                            <td data-title="Category">${data.dashboard.Categories[i]._id}</td>
-                            <td data-title="No.of Matches">${data.dashboard.Categories[i].uniqueEvent.length}</td>
-                            <td data-title="No.of Bets">${data.dashboard.Categories[i].totalBets}</td>
-                            <td data-title="Amount" class="text-purple">${data.dashboard.Categories[i].totalReturns}</td>
+                            <td data-title="Category">${data.Categories[i]._id}</td>
+                            <td data-title="No.of Matches">${data.Categories[i].uniqueEvent.length}</td>
+                            <td data-title="No.of Bets">${data.Categories[i].totalBets}</td>
+                            <td data-title="Amount" class="text-purple">${data.Categories[i].totalReturns}</td>
                             </tr>`
                     }
                     if(data.Categories.length == 0){
