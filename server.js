@@ -3863,6 +3863,7 @@ io.on('connection', (socket) => {
                             $project: { 
                                 _id:0,
                                 userName: "$userName",
+                                elementUser : ele.userName,
                                 parentArray:"$parentArray",
                                 selections2:{ 
                                     $map: { 
