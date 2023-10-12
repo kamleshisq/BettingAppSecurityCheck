@@ -4040,6 +4040,7 @@ io.on('connection', (socket) => {
                             $project: { 
                                 _id:0,
                                 userName: "$userName",
+                                elementUser : ele.userName,
                                 parentArray:"$parentArray",
                                 selections2:{ 
                                     $map: { 
@@ -4050,25 +4051,38 @@ io.on('connection', (socket) => {
                                             totalAmount: "$$selection.totalAmount",
                                             matchName: "$$selection.matchName",
                                             Stake: "$$selection.Stake",
-                                            winAmount: {
+                                            winAmount :"$$selection.winAmount",
+                                            winAmount2: {
                                                 $reduce:{
                                                     input:'$parentArray',
-                                                    initialValue: 0,
+                                                    initialValue: { value: 0, flag: true },
                                                     in : {
                                                         $cond:{
-                                                            if : { $ne : ["$$this.parentUSerId",  ele._id] },
+                                                            if : {
+                                                                $and: [
+                                                                  { $ne: ['$$this.parentUSerId', ele.id] }, 
+                                                                  { $eq: ['$$value.flag', true] } 
+                                                                ]
+                                                              },
                                                             then : {
-                                                                $cond:{
-                                                                    if:{ $eq: ["$$value", 0] },
-                                                                    then:{
-                                                                        $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
-                                                                    },
-                                                                    else:{
-                                                                        $multiply: ["$$value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                value: { 
+                                                                    $cond:{
+                                                                        if:{ $eq: ["$$value.value", 0] },
+                                                                        then:{
+                                                                            $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        },
+                                                                        else:{
+                                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        }
                                                                     }
-                                                                }
+                                                                },
+                                                                flag: true,
+                                                                
                                                             },
-                                                            else : "$$value"
+                                                            else : {
+                                                                value: '$$value.value',
+                                                                flag:false
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -4085,6 +4099,8 @@ io.on('connection', (socket) => {
                     if(Bets.length > 0){
                         console.log(Bets, "BETSBETSBETS")
                         console.log(Bets[0].selections2, "selectionsselections")
+                        console.log(Bets[0].parentArray, "parentArray")
+                        console.log(ele.id, "ele._idele._idele._id")
                     }
                 }
 
