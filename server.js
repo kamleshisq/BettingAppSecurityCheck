@@ -181,7 +181,15 @@ io.on('connection', (socket) => {
         // console.log(data.LOGINDATA.LOGINTOKEN);
         // console.log(data);
         let page = data.page; 
-        let limit = 10
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = limit * page
+        }
         let user
         // const me = await User.findById(data.id)
         // console.log(data.LOGINDATA)
@@ -229,7 +237,7 @@ io.on('connection', (socket) => {
                 if(data.filterData.role_type){
                 // console.log(parseInt(data.filterData.role_type))
                 if(role_type.includes(parseInt(data.filterData.role_type))){
-                    user = await User.find(data.filterData).skip(page * limit).limit(limit)
+                    user = await User.find(data.filterData).skip(skip).limit(limit)
                 }else{
                     socket.emit('searchErr',{
                         message:'you not have permition'
@@ -239,13 +247,13 @@ io.on('connection', (socket) => {
                     data.filterData.role_type = {
                         $ne : 1
                     }
-                    user = await User.find(data.filterData).skip(page * limit).limit(limit)
+                    user = await User.find(data.filterData).skip(skip).limit(limit)
                 }            
             }else{
                 if(data.filterData.role_type){
                     if(role_type.includes((data.filterData.role_type) * 1)){
                         // console.log('here')
-                        user = await User.find(data.filterData).skip(page * limit).limit(limit)
+                        user = await User.find(data.filterData).skip(skip).limit(limit)
                     }else{
                         socket.on('searchErr',{
                             message:'you not have permition'
@@ -258,15 +266,15 @@ io.on('connection', (socket) => {
                     }
                     data.filterData.role_type = role_Type
                     console.log(data.filterData)
-                    user = await User.find(data.filterData).skip(page * limit).limit(limit)
+                    user = await User.find(data.filterData).skip(skip).limit(limit)
                 }
             }
         }else{
             let parent = await User.findById(data.id)
             if(parent.roleName == 'Operator'){
-                user = await User.find({parent_id:parent.parent_id,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit)
+                user = await User.find({parent_id:parent.parent_id,roleName:{$ne:'Operator'}}).skip(skip).limit(limit)
             }else{
-                user = await User.find({parent_id:parent._id,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit)
+                user = await User.find({parent_id:parent._id,roleName:{$ne:'Operator'}}).skip(skip).limit(limit)
             }
            }
         let currentUser = data.LOGINDATA.LOGINUSER
@@ -275,7 +283,7 @@ io.on('connection', (socket) => {
         // console.log(page)
         let response = user;
         //urlRequestAdd(`/api/v1/users/searchUser?username = ${data.filterData.userName}& role=${data.filterData.role}& whiteLable = ${data.filterData.whiteLabel}`,'GET', data.LOGINDATA.LOGINTOKEN)
-        socket.emit("getOwnChild", {status : 'success',response, currentUser,page,roles})
+        socket.emit("getOwnChild", {status : 'success',response, currentUser,page,roles,refreshStatus:data.refreshStatus})
     })
 
     socket.on('getOperatorPermission',async(id)=>{
