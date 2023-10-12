@@ -4112,7 +4112,9 @@ io.on('connection', (socket) => {
                               elementUser: "$_id.elementUser",
                               selection: {
                                 selectionName: "$_id.selectionName",
-                                totalWinAmount: "$totalWinAmount"
+                                totalWinAmount: {
+                                    $multiply:["$totalWinAmount", -1]
+                                }
                               }
                             }
                         },
