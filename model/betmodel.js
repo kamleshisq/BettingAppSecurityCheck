@@ -98,6 +98,33 @@ const betSchema = mongoose.Schema({
     ]
 })
 
+function roundToTwoDecimals(value) {
+    if (typeof value === 'number' && !isNaN(value)) {
+        return parseFloat(value.toFixed(2));
+    } else {
+        // Handle cases where value is not a number or is undefined
+        // You can return an error message or a default value here.
+        return NaN; // or any other appropriate handling
+    }
+}
+betSchema.post(/^find/, function (docs) {
+    // console.log(docs)
+    // if(docs){
+    if(docs != null){
+        if(Array.isArray(docs)){
+            for(const i in docs){
+                // console.log(docs[i], "MODEL")
+                docs[i].returns = roundToTwoDecimals(docs[i].returns);
+               
+                // console.log(docs[i].myPL, "MODEL")
+            }
+        }else{
+            docs.returns = roundToTwoDecimals(docs.returns);
+            
+        }
+    }
+    // }
+});
 // betSchema.pre(/^find/, function(next){
 //     this.populate({
 //         path:'users',
