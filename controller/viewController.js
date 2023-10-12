@@ -1303,7 +1303,7 @@ exports.gameReportPageByMatch = catchAsync(async(req, res, next) => {
     {
         $group:{
             _id:'$_id.match',
-            eventDate:'$eventDate',
+            eventDate:{$first:'$eventDate'},
             gameCount:{$sum:1},
             betCount:{$sum:'$gameCount'},
             loss:{$sum:'$loss'},
