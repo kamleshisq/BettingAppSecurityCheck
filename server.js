@@ -2992,7 +2992,7 @@ io.on('connection', (socket) => {
         let skip;
         if(data.refreshStatus){
             limit = (10 * page) + 10
-            skip = 10
+            skip = 0
         }else{
             limit = 10
             skip = limit * page
