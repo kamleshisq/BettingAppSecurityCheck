@@ -475,9 +475,9 @@ io.on('connection', (socket) => {
         }
         if(data.id){
             // console.log()
-            fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
+            fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  + "&refreshStatus=" + data.refreshStatus 
         }else{
-            fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement?id=' + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate 
+            fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement?id=' + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate + "&refreshStatus=" + data.refreshStatus 
 
         }
 
@@ -1315,22 +1315,87 @@ io.on('connection', (socket) => {
     })
 
     socket.on('userPLDetail',async(data)=>{
-        let page = data.page;
-        let limit = 10;
-      
-        let users;
-        let operatorId;
+        let page = data.page
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = page * limit
+        }
+        let childrenUsername = []
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-            operatorId = data.LOGINDATA.LOGINUSER.parent_id
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
         }else{
-            operatorId = data.LOGINDATA.LOGINUSER._id
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
         }
-        if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
-            users = await User.find({parentUsers:{$elemMatch:{$eq:operatorId}}}).skip(page * limit).limit(limit)
-        }else{
-            users = await User.find({userName:`${data.filterData.userName}`, parentUsers:{$elemMatch:{$eq:operatorId}}}).skip(page * limit).limit(limit)
+        if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
+            childrenUsername = [data.filterData.userName]
         }
-        socket.emit('userPLDetail', {users, page})
+        if(data.filterData.fromDate && data.filterData.toDate){
+            data.filterData.date = {$gte:new Date(data.filterData.fromDate),$lte:new Date(data.filterData.toDate)}
+        }else if(data.filterData.fromDate && !data.filterData.toDate){
+            data.filterData.date = {$gte:new Date(data.filterData.fromDate)}
+        }else if(data.filterData.toDate && !data.filterData.fromDate){
+            data.filterData.date = {$lte:new Date(data.filterData.toDate)}
+        }else if(!data.filterData.toDate && !data.filterData.fromDate){
+            data.filterData.date = {$exists:true}
+        }
+        let games = await Bet.aggregate([
+            {
+                $match: {
+                userName: { $in: childrenUsername },
+                status: {$ne:"OPEN"},
+                date:data.filterData.date
+                }
+            },
+            {
+                $group:{
+                    _id:{
+                        userName:'$userName',
+                        gameId: '$event'
+                    },
+                    gameCount:{$sum:1},
+                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:'$_id.userName',
+                    gameCount:{$sum:1},
+                    betCount:{$sum:'$gameCount'},
+                    loss:{$sum:'$loss'},
+                    won:{$sum:'$won'},
+                    returns:{$sum:'$returns'}
+    
+                }
+            },
+            {
+                $sort: {
+                  _id: 1,
+                  returns: 1
+                }
+            },
+            {
+                $skip:skip
+            },
+            {
+                $limit:limit
+            }
+          ])
+
+        socket.emit('userPLDetail',{games,page,refreshStatus:data.refreshStatus})
     })
 
     socket.on("SearchOnlineUser", async(data) => {
