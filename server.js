@@ -4192,14 +4192,7 @@ io.on('connection', (socket) => {
                     ])
                     
 
-                    if(Bets.length > 0){
-                        console.log(Bets, "BETSBETSBETS")
-                        console.log(Bets[0].selections)
-                        // for(let i = 0; i < Bets.length; i++){
-                        //     console.log(Bets[i].selections2, "selectionsselections")
-                        // }
-
-                    }
+                    return(ele, Bets)
                 }
 
 
@@ -4352,9 +4345,7 @@ io.on('connection', (socket) => {
             let resultPromise = await Promise.all(newUser)
             let result = []
             for(let i = 0;i<resultPromise.length;i++){
-                if(resultPromise[i]){
-                    result.push(resultPromise[i])
-                }
+                console.log(resultPromise, 123)
             }
             
             
