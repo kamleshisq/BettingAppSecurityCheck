@@ -13074,7 +13074,10 @@ socket.on('connect', () => {
                         console.log(data.Bets[i].Bets[0])
                         let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                         let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                        console.log(team1Data, team2Data)
+                        // console.log(team1Data, team2Data)
+                        if(team1Data){
+                            
+                        }
                         // for(let j = 0; j < data.Bets[i].Bets[0].selections.length; j++ ){
                         //     if(data.Bets[i].Bets[0].selections[j].selectionName.toLowerCase().includes(team1)){
                         //         if(data.Bets[i].Bets[0].selections[j].winAmount < 0){
