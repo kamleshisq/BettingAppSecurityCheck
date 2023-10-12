@@ -4263,7 +4263,7 @@ io.on('connection', (socket) => {
                 if(resultPromise[i] && resultPromise[i].Bets.length > 0){
                     result.push(resultPromise[i])
                     console.log(resultPromise[i].Bets)
-                    console.log(resultPromise[i].Bets[0].selections)
+                    console.log(resultPromise[i].Bets[0].selections2)
                 }
             }
             
