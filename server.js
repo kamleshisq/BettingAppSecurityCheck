@@ -3900,15 +3900,18 @@ io.on('connection', (socket) => {
         // let users = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id,role_type:2})
         let users = []
         let falg = false
+        let Id 
         if(data.userName){
             let thatUSer = await User.findOne({userName:data.userName})
             if(thatUSer){
+                Id = thatUSer.userName
                 falg = true
                 users = await User.find({parent_id:thatUSer._id, isActive:true , roleName:{$ne:'Operator'}})
             }
             // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
         }else{
             users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
+            Id = data.LOGINDATA.LOGINUSER.userName
 
         }
         try{
@@ -4525,7 +4528,7 @@ io.on('connection', (socket) => {
             }
 
             
-           socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName});
+           socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName, Id});
         //    socket.emit();
         }catch(err){
             console.log(err)
