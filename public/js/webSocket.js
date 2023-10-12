@@ -13114,10 +13114,11 @@ socket.on('connect', () => {
             })
     
             socket.on('UerBook', async(data) => {
-                // console.log(data)
+                console.log(data)
                 if(data.Bets.length > 0){
                     if(data.Bets.userName){
-                        $('#match_odd').find('tr.active').after("html")
+                        // $('#match_odd').find('tr.active').after("html")\
+                        console.log('ACTIVE')
                     }else{
                     let team1 = data.matchName.split(' v ')[0].toLowerCase()
                     let team2 = data.matchName.split(' v ')[1].toLowerCase()

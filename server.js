@@ -3911,14 +3911,22 @@ io.on('connection', (socket) => {
             users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
 
         }
-       
+        console.log(users)
         try{
             let newUser = users.map(async(ele)=>{
                 let childrenUsername1 = []
-                let children = await User.find({parentUsers:ele._id})
+                let children
+                if(falg){
+                    children = await User.find({parentUsers:ele.id})
+                }else{
+                    children = await User.find({parentUsers:ele._id})
+                }
+                console.log(children)
                 children.map(ele1 => {
                     childrenUsername1.push(ele1.userName) 
                 })
+                console.log(ele.id, "IDIDD")
+                console.log(childrenUsername1, "childrenUsername1childrenUsername1")
                 if(childrenUsername1.length > 0){
                     let Bets = await Bet.aggregate([
                         {
@@ -4297,8 +4305,11 @@ io.on('connection', (socket) => {
                 }
             }
             
-            let matchName = await Bet.findOne({marketId: data.marketId})
-            matchName = matchName.match
+            let matchName2 = await Bet.findOne({marketId: data.marketId})
+            let matchName
+            if(matchName2){
+                matchName = matchName2.match
+            }
 
             
            socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName});
