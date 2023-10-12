@@ -4007,7 +4007,13 @@ io.on('connection', (socket) => {
                                                                 
                                                             },
                                                             else : {
-                                                                value: '$$value.value',
+                                                                value: {
+                                                                    $cond : {
+                                                                        if : { $eq : ["$$value.value" , 0]},
+                                                                        then : "$$selection.winAmount",
+                                                                        else : "$$value.value"
+                                                                    }
+                                                                },
                                                                 flag:false
                                                             }
                                                         }
@@ -4042,7 +4048,13 @@ io.on('connection', (socket) => {
                                                                 
                                                             },
                                                             else : {
-                                                                value: '$$value.value',
+                                                                value: {
+                                                                    $cond : {
+                                                                        if : { $eq : ["$$value.value" , 0]},
+                                                                        then : "$$selection.lossAmount",
+                                                                        else : "$$value.value"
+                                                                    }
+                                                                },
                                                                 flag:false
                                                             }
                                                         }
