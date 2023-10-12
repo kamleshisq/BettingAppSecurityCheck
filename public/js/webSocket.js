@@ -13121,7 +13121,7 @@ socket.on('connect', () => {
                         let team2 = data.matchName.split(' v ')[1].toLowerCase()
                         let html = '';
                         for(let i = 0; i < data.Bets.length; i++){
-                            html += ` <tr class="tabelBodyTr children"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                            html += ` <tr class="tabelBodyTr userBookParentTr"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                             let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                         let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
                         if(team1Data){
