@@ -4411,30 +4411,30 @@ io.on('connection', (socket) => {
                                   totalLossAmount: { $sum: "$selections.lossAmount.value" }
                                 }
                             },
-                            {
-                                $project: {
-                                  _id: 0,
-                                  elementUser: "$_id.elementUser",
-                                  selection: {
-                                    selectionName: "$_id.selectionName",
-                                    totalWinAmount: "$totalWinAmount",
-                                    totalLossAmount: "$totalLossAmount"
-                                  }
-                                }
-                            },
-                            {
-                                $group: {
-                                  _id: "$elementUser",
-                                  selections: { $push: "$selection" }
-                                }
-                            },
-                            {
-                                $project: {
-                                  _id: 0,
-                                  elementUser: "$_id",
-                                  selections: 1
-                                }
-                            },
+                            // {
+                            //     $project: {
+                            //       _id: 0,
+                            //       elementUser: "$_id.elementUser",
+                            //       selection: {
+                            //         selectionName: "$_id.selectionName",
+                            //         totalWinAmount: "$totalWinAmount",
+                            //         totalLossAmount: "$totalLossAmount"
+                            //       }
+                            //     }
+                            // },
+                            // {
+                            //     $group: {
+                            //       _id: "$elementUser",
+                            //       selections: { $push: "$selection" }
+                            //     }
+                            // },
+                            // {
+                            //     $project: {
+                            //       _id: 0,
+                            //       elementUser: "$_id",
+                            //       selections: 1
+                            //     }
+                            // },
                             // {
                             //     $project: { 
                             //         _id:0,
@@ -4499,7 +4499,7 @@ io.on('connection', (socket) => {
                         ])
 
                         console.log(Bets, "BetsBetsBets")
-                        console.log(Bets[0].selections, "selectionsselections")
+                        // console.log(Bets[0].selections, "selectionsselections")
 
                     }
                 }
