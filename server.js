@@ -4206,8 +4206,7 @@ io.on('connection', (socket) => {
                                 }
                             }
                         },
-                        [
-                            {
+                        {
                               $project: {
                                 _id: 0,
                                 elementUser: 1,
@@ -4249,7 +4248,6 @@ io.on('connection', (socket) => {
                                 }
                               }
                             }
-                          ]
                         
                     ])
                     
