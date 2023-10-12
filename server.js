@@ -4407,8 +4407,8 @@ io.on('connection', (socket) => {
                                     elementUser: "$userName",
                                     selectionName: "$selections.selectionName"
                                   },
-                                  totalWinAmount: { $sum: "$selections.winAmount2.value" },
-                                  totalLossAmount: { $sum: "$selections.lossAmount2.value" }
+                                  totalWinAmount: { $sum: "$selections.winAmount.value" },
+                                  totalLossAmount: { $sum: "$selections.lossAmount.value" }
                                 }
                             },
                             {
