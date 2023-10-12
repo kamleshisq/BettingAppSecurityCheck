@@ -13009,23 +13009,27 @@ socket.on('connect', () => {
             })
 
             // $(document).on('click','#match_odd .userBookParent',function(e){
-            //     if(!$(this).parent('tr').hasClass('active')){
-            //         $('#match_odd').find('tr.active').removeClass('active')
-            //         $(this).parent('tr').addClass('active')
-            //         $('#match_odd').find('tr.children').remove()
-            //         let userName = $(this).attr('data-usename')
-            //         let marketId = $("#match_odd").attr('data-marketid')
-            //         let type = 'userBook'
-
-            //         socket.emit('UerBook', {marketId,LOGINDATA,userName,type})
-            //     }else{
-            //         $(this).parent('tr').removeClass('active')
-            //         $('#match_odd').find('tr.children').remove()
-
-            //     }
-
+            //     $()
             // })
-            
+
+            $(document).on('click','#match_odd .userBookParent',function(e){
+                if(!$(this).parent('tr').hasClass('active')){
+                    $('#match_odd').find('tr.active').removeClass('active')
+                    $(this).parent('tr').addClass('active')
+                    $('#match_odd').find('tr.children').remove()
+                    let userName = $(this).attr('data-usename')
+                    let marketId = $("#match_odd").attr('data-marketid')
+                    let type = 'userBook'
+
+                    socket.emit('UerBook', {marketId,LOGINDATA,userName,type})
+                }else{
+                    $(this).parent('tr').removeClass('active')
+                    $('#match_odd').find('tr.children').remove()
+
+                }
+
+            })
+
             $(document).on('click','#match_odd_Book .userBookParent',function(e){
                 if(!$(this).parent('tr').hasClass('active')){
                     $('#match_odd_Book').find('tr.active').removeClass('active')
