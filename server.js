@@ -4289,7 +4289,9 @@ io.on('connection', (socket) => {
                         return({User:ele, Bets:Bets})
                     }
                 }else{
-                    return({status:"User"})
+                    if(ele.roleName === "user"){
+                        return({status:'user'})
+                    }
                 }
             })
             let resultPromise = await Promise.all(newUser)
