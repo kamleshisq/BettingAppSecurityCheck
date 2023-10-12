@@ -4011,6 +4011,7 @@ io.on('connection', (socket) => {
                                             matchName: "$$selection.matchName",
                                             Stake: "$$selection.Stake",
                                             winAmount :"$$selection.winAmount",
+                                            lossAmount : "$$selection.lossAmount",
                                             winAmount2: {
                                                 $reduce:{
                                                     input:'$parentArray',
@@ -4046,7 +4047,41 @@ io.on('connection', (socket) => {
                                                     }
                                                 }
                                             },
-                                            lossAmount:"$$selection.lossAmount"
+                                            lossAmount2:{
+                                                $reduce:{
+                                                    input:'$parentArray',
+                                                    initialValue: { value: 0, flag: true },
+                                                    in : {
+                                                        $cond:{
+                                                            if : {
+                                                                $and: [
+                                                                  { $ne: ['$$this.parentUSerId', ele.id] }, 
+                                                                  { $eq: ['$$value.flag', true] } 
+                                                                ]
+                                                              },
+                                                            then : {
+                                                                value: { 
+                                                                    $cond:{
+                                                                        if:{ $eq: ["$$value.value", 0] },
+                                                                        then:{
+                                                                            $multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        },
+                                                                        else:{
+                                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        }
+                                                                    }
+                                                                },
+                                                                flag: true,
+                                                                
+                                                            },
+                                                            else : {
+                                                                value: '$$value.value',
+                                                                flag:false
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -4061,7 +4096,8 @@ io.on('connection', (socket) => {
                                 elementUser: "$elementUser",
                                 selectionName: "$selections2.selectionName"
                               },
-                              totalWinAmount: { $sum: "$selections2.winAmount2.value" }
+                              totalWinAmount: { $sum: "$selections2.winAmount2.value" },
+                              totalLossAmount: { $sum: "$selections2.lossAmount2.value" }
                             }
                         },
                         {
@@ -4072,6 +4108,9 @@ io.on('connection', (socket) => {
                                 selectionName: "$_id.selectionName",
                                 totalWinAmount: {
                                     $multiply:["$totalWinAmount", -1]
+                                },
+                                totalLossAmount:{
+                                    $multiply:["$totalLossAmount", -1]
                                 }
                               }
                             }
