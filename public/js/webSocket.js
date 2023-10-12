@@ -10073,7 +10073,11 @@ socket.on('connect', () => {
         console.log(LOGINDATA.LOGINUSER)
         if(LOGINDATA.LOGINUSER != ""){
             console.log("WORKING")
-            socket.emit('chartMain', LOGINDATA) 
+            setInterval(()=>{
+                let value = $('.dropdown').attr('data-summary')
+                socket.emit('chartMain', LOGINDATA) 
+                socket.emit("FIlterDashBoard", { LOGINDATA, value });
+            },1000 * 60)
             console.log(LOGINDATA)
             socket.on("chartMain", data => {
     
@@ -10185,7 +10189,7 @@ socket.on('connect', () => {
           
                   var chart = new ApexCharts(document.querySelector("#chart"), options);
                   chart.render();
-                })
+            })
 
                 // $(document).on("change", ".selected", function(e){
                 //     e.preventDefault()
@@ -10197,6 +10201,7 @@ socket.on('connect', () => {
                         e.preventDefault();
                         let value = $(this).attr("id");
                         $("#destination").text($(this).text());
+                        $('.dropdown').attr('data-summary',value)
                         socket.emit("FIlterDashBoard", { LOGINDATA, value });
                         // console.log(value)
                     });
