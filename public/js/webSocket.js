@@ -3808,10 +3808,10 @@ socket.on('connect', () => {
 
         let count = 11
         socket.on('userBetDetail',(data) => {
+            console.log(data.refreshStatus)
             if(data.page === 0 || data.refreshStatus){
                 count = 1
             }
-            let page = data.page
             let bets = data.ubDetails;
             let html = '';
                 for(let i = 0; i < bets.length; i++){
