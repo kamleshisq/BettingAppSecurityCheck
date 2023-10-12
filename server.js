@@ -4148,47 +4148,47 @@ io.on('connection', (socket) => {
                         //       }
                         //     }
                         //   },
-                        // {
-                        //     $unwind: "$selections2"
-                        // },
-                        // {
-                        //     $group: {
-                        //       _id: {
-                        //         elementUser: "$elementUser",
-                        //         selectionName: "$selections2.selectionName"
-                        //       },
-                        //       totalWinAmount: { $sum: "$selections2.winAmount2.value" },
-                        //       totalLossAmount: { $sum: "$selections2.lossAmount2.value" }
-                        //     }
-                        // },
-                        // {
-                        //     $project: {
-                        //       _id: 0,
-                        //       elementUser: "$_id.elementUser",
-                        //       selection: {
-                        //         selectionName: "$_id.selectionName",
-                        //         totalWinAmount: {
-                        //             $multiply:["$totalWinAmount", -1]
-                        //         },
-                        //         totalLossAmount:{
-                        //             $multiply:["$totalLossAmount", -1]
-                        //         }
-                        //       }
-                        //     }
-                        // },
-                        // {
-                        //     $group: {
-                        //       _id: "$elementUser",
-                        //       selections: { $push: "$selection" }
-                        //     }
-                        // },
-                        // {
-                        //     $project: {
-                        //       _id: 0,
-                        //       elementUser: "$_id",
-                        //       selections: 1
-                        //     }
-                        // },
+                        {
+                            $unwind: "$selections2"
+                        },
+                        {
+                            $group: {
+                              _id: {
+                                elementUser: "$elementUser",
+                                selectionName: "$selections2.selectionName"
+                              },
+                              totalWinAmount: { $sum: "$selections2.winAmount2.value" },
+                              totalLossAmount: { $sum: "$selections2.lossAmount2.value" }
+                            }
+                        },
+                        {
+                            $project: {
+                              _id: 0,
+                              elementUser: "$_id.elementUser",
+                              selection: {
+                                selectionName: "$_id.selectionName",
+                                totalWinAmount: {
+                                    $multiply:["$totalWinAmount", -1]
+                                },
+                                totalLossAmount:{
+                                    $multiply:["$totalLossAmount", -1]
+                                }
+                              }
+                            }
+                        },
+                        {
+                            $group: {
+                              _id: "$elementUser",
+                              selections: { $push: "$selection" }
+                            }
+                        },
+                        {
+                            $project: {
+                              _id: 0,
+                              elementUser: "$_id",
+                              selections: 1
+                            }
+                        },
                         // {
                         //     $project: { 
                         //         _id:0,
@@ -4263,7 +4263,7 @@ io.on('connection', (socket) => {
                 if(resultPromise[i] && resultPromise[i].Bets.length > 0){
                     result.push(resultPromise[i])
                     console.log(resultPromise[i].Bets)
-                    console.log(resultPromise[i].Bets[0].selections2)
+                    console.log(resultPromise[i].Bets[0].selections)
                 }
             }
             
