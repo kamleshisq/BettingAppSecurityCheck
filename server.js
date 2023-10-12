@@ -4080,7 +4080,9 @@ io.on('connection', (socket) => {
                                                                 value: {
                                                                     $cond : {
                                                                         if : { $eq : ["$$value.value" , 0]},
-                                                                        then : "$$selection.winAmount",
+                                                                        then : {
+                                                                            $subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                        },
                                                                         else : "$$value.value"
                                                                     }
                                                                 },
@@ -4121,7 +4123,9 @@ io.on('connection', (socket) => {
                                                                 value: {
                                                                     $cond : {
                                                                         if : { $eq : ["$$value.value" , 0]},
-                                                                        then : "$$selection.lossAmount",
+                                                                        then : {
+                                                                            $subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                        },
                                                                         else : "$$value.value"
                                                                     }
                                                                 },
