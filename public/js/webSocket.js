@@ -13074,7 +13074,8 @@ socket.on('connect', () => {
                     let team2 = data.matchName.split(' v ')[1].toLowerCase()
                     let html = `<tr class="headDetail"><th>User name</th>
                     <th>${team1}</th>
-                    <th>${team2}</th></tr>`
+                    <th>${team2}</th>
+                    <th>The Drow</th></tr>`
 
                     for(let i = 0; i < data.Bets.length; i++){
                         html += `<td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
