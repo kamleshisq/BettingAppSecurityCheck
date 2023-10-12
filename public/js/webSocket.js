@@ -13116,7 +13116,7 @@ socket.on('connect', () => {
             socket.on('UerBook', async(data) => {
                 console.log(data)
                 if(data.Bets.length > 0){
-                    if(data.Bets.userName){
+                    if(data.Bets[0].userName){
                         // $('#match_odd').find('tr.active').after("html")\
                         console.log('ACTIVE')
                     }else{

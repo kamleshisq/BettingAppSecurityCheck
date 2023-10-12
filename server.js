@@ -3911,7 +3911,6 @@ io.on('connection', (socket) => {
             users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
 
         }
-        console.log(users)
         try{
             let newUser = users.map(async(ele)=>{
                 let childrenUsername1 = []
@@ -3921,12 +3920,9 @@ io.on('connection', (socket) => {
                 }else{
                     children = await User.find({parentUsers:ele._id})
                 }
-                console.log(children, "childrenchildrenchildren")
                 children.map(ele1 => {
                     childrenUsername1.push(ele1.userName) 
                 })
-                console.log(ele.id, "IDIDD")
-                console.log(childrenUsername1, "childrenUsername1childrenUsername1")
                 if(childrenUsername1.length > 0){
                     let Bets = await Bet.aggregate([
                         {
