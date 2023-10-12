@@ -4201,7 +4201,7 @@ io.on('connection', (socket) => {
                         
                     ])
                     
-                    return(ele, {Bets, user:ele})
+                    return(ele, Bets)
                 }
             })
             let resultPromise = await Promise.all(newUser)
