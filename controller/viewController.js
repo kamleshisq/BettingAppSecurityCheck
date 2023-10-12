@@ -1156,7 +1156,7 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
     {
         $match: {
         userName: { $in: childrenUsername },
-        status: {$ne:"OPEN"},
+        status: {$in:["WON",'LOSS','CANCEL']},
         date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
             
         }
@@ -1268,7 +1268,7 @@ exports.gameReportPageByMatch = catchAsync(async(req, res, next) => {
     
     var today = new Date(req.query.fromDate);
     var todayFormatted = formatDate(today);
-    var tomorrow = new Date(toDate);
+    var tomorrow = new Date(req.query.toDate);
     var tomorrowFormatted = formatDate(tomorrow);
     function formatDate(date) {
         var year = date.getFullYear();
@@ -1291,6 +1291,7 @@ exports.gameReportPageByMatch = catchAsync(async(req, res, next) => {
                 match:'$match',
                 marketName: '$marketName'
             },
+            eventDate:{$first:'$eventDate'},
             gameCount:{$sum:1},
             loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
             won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
@@ -1302,12 +1303,14 @@ exports.gameReportPageByMatch = catchAsync(async(req, res, next) => {
     {
         $group:{
             _id:'$_id.match',
+            eventDate:'$eventDate',
             gameCount:{$sum:1},
             betCount:{$sum:'$gameCount'},
             loss:{$sum:'$loss'},
             won:{$sum:'$won'},
             void:{$sum:'$void'},
             returns:{$sum:'$returns'}
+
 
         }
     },
@@ -1325,11 +1328,16 @@ exports.gameReportPageByMatch = catchAsync(async(req, res, next) => {
     }
     ])
 
-    res.status(200).render('./gamereports/gamereport',{
+    let url = `/admin/gamereport/match/market?userName=${req.query.userName}&fromDate=${req.query.fromDate}&${req.query.toDate}`
+    
+
+    res.status(200).render('./gamereports/matchwisegamereport',{
         title:"Game Reports",
         me:currentUser,
         games:betResult,
-        currentUser
+        currentUser,
+        userName:req.query.userName,
+        url
     })
          
 

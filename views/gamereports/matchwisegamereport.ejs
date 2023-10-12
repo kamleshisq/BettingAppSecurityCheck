@@ -43,7 +43,8 @@
                 <tr>
                   <%}%>
                   <td><%=i + 1%></td>
-                  <td class="clickableelement getajaxdataclick" data-href="/admin/gamereport/match?userName=<%=games[i]._id%>" data-parent="<%=games[i]._id%>"><%=games[i]._id%></td>
+                  <td><%=games[i].eventDate%></td>
+                  <td class="clickableelement getajaxdataclick" data-href="<%=url%>&<%=games[i]._id%>" data-parent="<%=games[i]._id%>"><%=games[i]._id%></td>
                   <td><%=games[i].gameCount%></td>
                   <td><%=games[i].betCount%></td>
                   <td><%=games[i].won%></td>
@@ -54,6 +55,7 @@
                   <%}else{%>
                   <td class="red"><%=(games[i].returns).toFixed(2)%></td>
                   <%}%>
+                  <td>-</td>
                 </tr>
                 <%}%>
               </tr>
