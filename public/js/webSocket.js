@@ -3663,27 +3663,7 @@ socket.on('connect', () => {
         let fGame
         let fBets
         let filterData = {}
-        // $(".searchUser").on('input', function(e){
-        //     var $input = $(this),
-        //         val = $input.val();
-        //         var listItems = document.getElementsByTagName("li");
-        //     for (var i = 0; i < listItems.length; i++) {
-        //         if (listItems[i].textContent === val) {
-        //             match = ($(this).val() === val);
-        //           break; 
-        //         }else{
-        //             match = false
-        //         }
-        //       }
 
-        //         if(match){
-        //             // console.log(match.text())
-        //             filterData = {}
-        //             filterData.userName = val
-        //             $('.pageId').attr('data-pageid','1')
-        //             socket.emit('userBetDetail',{filterData,LOGINDATA,page:0})
-        //         }
-        // })
 
 
         $('#fGame,#fBets,#fromDate,#toDate').change(function(){
@@ -3693,27 +3673,22 @@ socket.on('connect', () => {
             fGame = $('#fGame').val()
             fBets = $('#fBets').val()
             data.page = 0;
-            // let fromDate 
-            // let toDate
             if(fromDate != ''  && toDate != '' ){
-                // filterData.date = {$gte : new Date(fromDate), $lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
                 fromDate = new Date(fromDate)
                 toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
 
             }else{
                 if(fromDate != '' ){
-                    // filterData.date = {$gte : new Date(fromDate)}
                     fromDate = new Date(fromDate)
                 }
                 if(toDate != '' ){
-                    // filterData.date = {$lte : new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))}
                     toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
                 }
             }
             if(userName != ''){
                 filterData.userName = userName
             }else{
-                // filterData.userName = LOGINDATA.LOGINUSER.userName
+                filterData.userName = LOGINDATA.LOGINUSER.userName
             }
             filterData.betType = fGame
             filterData.status = fBets
@@ -4574,7 +4549,41 @@ socket.on('connect', () => {
         }
         })
 
+        let fromDate
+        let toDate
         let filterData = {}
+        $('#fromDate,#toDate').change(function(){
+            let userName = $('.searchUser').val()
+            fromDate = $('#fromDate').val()
+            toDate = $('#toDate').val()
+            data.page = 0;
+            if(fromDate != ''  && toDate != '' ){
+                fromDate = new Date(fromDate)
+                toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+
+            }else{
+                if(fromDate != '' ){
+                    fromDate = new Date(fromDate)
+                }
+                if(toDate != '' ){
+                    toDate = new Date((new Date(toDate)).getTime() + ((24 * 60 * 60 * 1000) - 1))
+                }
+            }
+            if(userName != ''){
+                filterData.userName = userName
+            }else{
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }
+            filterData.betType = fGame
+            filterData.status = fBets
+            filterData.fromDate = fromDate
+            filterData.toDate = toDate
+            data.filterData = filterData
+            data.LOGINDATA = LOGINDATA
+            // console.log(data)
+            socket.emit('gameReport',data)
+
+        })
         $('#load-more').click(function(e){
             let page = parseInt($('.pageId').attr('data-pageid'));
             $('.pageId').attr('data-pageid',page + 1)
@@ -4591,27 +4600,7 @@ socket.on('connect', () => {
             socket.emit('gameReport',data)
          }); 
 
-        // $(".searchUser").on('input', function(e){
-        //     var $input = $(this),
-        //         val = $input.val();
-        //         var listItems = document.getElementsByTagName("li");
-        //         for (var i = 0; i < listItems.length; i++) {
-        //             if (listItems[i].textContent === val) {
-        //                 match = ($(this).val() === val);
-        //               break; 
-        //             }else{
-        //                 match = false
-        //             }
-        //           }
-
-        //         if(match){
-        //             // console.log(match.text())
-        //             filterData = {}
-        //             filterData.userName = val
-        //             $('.pageId').attr('data-pageid','1')
-        //             socket.emit('gameReport',{filterData,LOGINDATA,page:0})
-        //         }
-        // })
+       
 
         $(document).on("click", ".searchList", function(){
             document.getElementById("searchUser").value = this.textContent
@@ -4622,6 +4611,27 @@ socket.on('connect', () => {
             socket.emit('gameReport',{filterData,LOGINDATA,page:0})
             
         })
+
+        function refreshPage(){
+            let page = parseInt($('.pageId').attr('data-pageid')) - 1;
+            let data = {}
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
+            }
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            data.refreshStatus = true
+            console.log(data)
+            socket.emit('gameReport',data)
+        }
+
+        setInterval(()=>{
+            refreshPage()
+        },1000 * 60)
 
         socket.on('gameReport',(data)=>{
             let page = data.page;
