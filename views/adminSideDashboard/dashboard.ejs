@@ -196,7 +196,7 @@
               
             </tr>
         </thead>
-        <tbody>
+        <tbody id="topPlay_tbody">
           <%for(let i = 0; i < data.dashboard.topPlayers.length; i++){%>
             <%if((i%2)==0){%>
               <tr>
@@ -233,7 +233,7 @@
               <th>Amount</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="categories_tbody">
           <%for(let i = 0; i < data.dashboard.Categories.length; i++){ %>
             <%if((i%2)==0){%>
               <tr>
@@ -357,7 +357,7 @@
                 
               </tr>
           </thead>
-          <tbody>
+          <tbody id="alertBets_tbody">
             <%for(let i = 0; i <  data.dashboard.alertBet.length; i++){%>
               <%if(i%2 == 0){ %>
                 <tr class="blue">
@@ -397,7 +397,7 @@
               <th>Amount</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="topGames_tbody">
           <%for(let i = 0; i < data.dashboard.topGames.length; i++){%>
             <%if((i%2)==0){%>
               <tr>
@@ -437,7 +437,7 @@
               <th>Risk</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="toBets_tbody">
         <%for(let i = 0; i < data.dashboard.topBets.length; i++){%>
           <tr>
             <td data-title=""><%=i+1%></td>
@@ -476,7 +476,7 @@
                 
               </tr>
           </thead>
-          <tbody>
+          <tbody id="settlements_tbody">
           <%for(let i = 0; i < data.dashboard.settlement.length; i++){%>
             <%if((i%2)==0){%>
               <tr>

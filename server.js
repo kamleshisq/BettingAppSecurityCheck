@@ -2650,6 +2650,183 @@ io.on('connection', (socket) => {
 
     })
 
+    socket.on('dashboardrefresh',async(data)=>{
+        let roles
+        let users
+        let topGames
+        let Categories
+        let userCount = 0
+        let adminCount = 0
+        let betCount = 0
+        let alertBet
+        let betsEventWise
+        let turnOver
+        let childrenUsername = []
+        let children = await User.find({parentUsers:data.LOGINUSER._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+      
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    
+        topGames = await Bet.aggregate([
+            {
+                $match: {
+                    status: { $ne: "OPEN" },
+                    date: { $gte: sevenDaysAgo },
+                    userName:{$in:childrenUsername}
+                }
+            },
+    
+            {
+                $group: {
+                    _id: "$event",
+                    totalCount: { $sum: 1 },
+                    uniqueUsers: { $addToSet: "$userId" },
+                    totalReturns: { $sum: "$Stake" }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    event: "$_id",
+                    totalCount: 1,
+                    noOfUniqueUsers: { $size: "$uniqueUsers" },
+                    totalReturns: 1
+                }
+            },
+            {
+                $sort: {
+                    totalCount: -1
+                }
+            },
+            {
+                $limit: 5
+            }
+        ]);
+    
+        Categories = await Bet.aggregate([
+            {
+                $match: {
+                    status: { $ne: "OPEN" },
+                    date: { $gte: sevenDaysAgo },
+                    userName:{$in:childrenUsername}
+                }
+            },
+            {
+                $group: {
+                    _id: "$betType",
+                    totalBets: { $sum: 1 },
+                    totalReturns: { $sum: "$Stake" },
+                    uniqueEvent: { $addToSet: "$event" }
+                }
+            },
+            {
+                $sort: {
+                    totalBets: -1
+                }
+            }
+        ])
+    
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
+
+    
+        alertBet = await Bet.aggregate([
+            {
+                $match: {
+                    "status": "Alert",
+                    userName:{$in:childrenUsername}
+    
+                }
+            },
+            {
+                $sort: {
+                    Stake: -1
+                }
+            },
+            {
+                $limit: 5
+            }
+        ]);
+        
+        betsEventWise = await Bet.aggregate([
+            {
+                $match: {
+                    status: "OPEN",
+                    userName: {$in:childrenUsername}
+                }
+            },
+            {
+                $group: {
+                    _id: "$match",
+                    count: { $sum: 1 },
+                    eventdate: { $first: "$eventDate" },
+                    eventid: { $first: "$eventId" },
+                    series: { $first: "$event" },
+                    sport: { $first: "$betType" }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    matchName: "$_id",
+                    eventdate: 1,
+                    eventid: 1,
+                    series: 1,
+                    count: 1,
+                    sport: 1
+                }
+            },
+            {
+                $sort: { count: -1 }
+            },
+            {
+                $limit: 5
+            }
+        ]);
+        
+    
+    
+    
+        let topBets = await Bet.aggregate([
+            {
+                $match: {
+                    status:"OPEN",
+                    userName: {$in:childrenUsername}
+                }
+            },
+            {
+                $sort:{
+                    Stake: -1
+                }
+            },
+            {
+                $limit:5
+            }
+        ])
+            
+            
+    
+            // console.log(topBets, "topBets 741258963")
+        const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }, parentUsers : { $in: [data.LOGINUSER._id] }}).limit(5).sort({Bets:-1})
+        const dashboard = {};
+        dashboard.topPlayers = topPlayers
+        dashboard.topGames = topGames
+        dashboard.Categories = Categories
+        dashboard.alertBet = alertBet
+        dashboard.settlement = betsEventWise
+        dashboard.topBets = topBets
+        socket.emit('dashboardrefresh',dashboard)
+    })
+
     socket.on("getUserDetaisl", async(data) => {
         try{
             let user = await User.findById(data.dataId)

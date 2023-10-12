@@ -10219,6 +10219,114 @@ socket.on('connect', () => {
                     document.getElementById('adminCount').innerText = data.result.adminCount
                     document.getElementById('userCount').innerText = data.result.userCount
                 })
+
+                socket.emit('dashboardrefresh',LOGINDATA)
+                socket.on('dashboardrefresh',async(data)=>{
+                    // dashboard.topPlayers = topPlayers
+                    // dashboard.topGames = topGames
+                    // dashboard.Categories = Categories
+                    // dashboard.alertBet = alertBet
+                    // dashboard.settlement = betsEventWise
+                    // dashboard.topBets = topBets
+                    console.log(data,'==>dashboard refresh data')
+                    process.exit(0);
+                    let topPlayerHtml = ""
+                    let topGamesHtml = ""
+                    let CategoriesHtml = ""
+                    let alertBetHtml = ""
+                    let settlementHtml = ""
+                    let topBetsHtml = ""
+                    for(let i = 0;i<data.topPlayers.length;i++){
+                        topPlayerHtml += `
+                            <tr>
+                            <td data-title="">${i+1}</td>
+                            <td data-title="Player">${data.topPlayers[i].userName}</td>
+                            <td data-title="No.of Bets">${data.topPlayers[i].Bets}</td>
+                            <td data-title="Points">${data.topPlayers[i].Bets}</td>
+                            </tr>`
+                    }
+                    if(data.topPlayers.length == 0){
+                           topPlayerHtml +=  `<tr class="empty_table"><td>No record found</td></tr>`
+                    }
+                    $('#topPlay_tbody').html(topPlayerHtml)
+
+                    for(let i = 0;i<data.topGames.length;i++){
+                        topGamesHtml += `
+                            <tr>
+                            <td data-title="">${i + 1}</td>
+                            <td data-title="Game">${data.topGames[i].event}</td>
+                            <td data-title="No.of User">${data.topGames[i].noOfUniqueUsers}</td>
+                            <td data-title="No.of Bets">${data.topGames[i].totalCount}</td>
+                            <td data-title="Amount" class="text-purple">${data.topGames[i].totalReturns}</td>
+                            </tr>`
+                    }
+                    if(data.topGames.length == 0){
+                           topGamesHtml +=  `<tr class="empty_table"><td>No record found</td></tr>`
+                    }
+                    $('#topGames_tbody').html(topGamesHtml)
+            
+                    for(let i = 0;i<data.alertBet.length;i++){
+                        alertBetHtml += `
+                            <tr>
+                            <td data-title="">${i + 1}</td>
+                            <td data-title="Palyer">${data.alertBet[i].userName}</td>
+                            <td data-title="Event">${data.alertBet[i].betType}</td>
+                            <td data-title="Points" class="text-purple">${data.alertBet[i].Stake}</td>
+                            </tr>`
+                    }
+                    if(data.alertBet.length == 0){
+                        alertBetHtml +=  `<tr class="empty_table"><td>No record found</td></tr>`
+                    }
+                    $('#alertBets_tbody').html(alertBetHtml)
+
+                    for(let i = 0;i<data.Categories.length;i++){
+                        CategoriesHtml += `
+                            <tr>
+                            <td data-title="">${i + 1}</td>
+                            <td data-title="Category">${data.dashboard.Categories[i]._id}</td>
+                            <td data-title="No.of Matches">${data.dashboard.Categories[i].uniqueEvent.length}</td>
+                            <td data-title="No.of Bets">${data.dashboard.Categories[i].totalBets}</td>
+                            <td data-title="Amount" class="text-purple">${data.dashboard.Categories[i].totalReturns}</td>
+                            </tr>`
+                    }
+                    if(data.Categories.length == 0){
+                           CategoriesHtml +=  `<tr class="empty_table"><td>No record found</td></tr>`
+                    }
+                    $('#categories_tbody').html(CategoriesHtml)
+
+                    for(let i = 0;i<data.topBets.length;i++){
+                        topBetsHtml += `
+                            <tr>
+                            <td data-title="">${i + 1}</td>
+                            <td data-title="Name">${data.topBets[i].userName}</td>
+                            <td data-title="Event">${data.topBets[i].match}</td>
+                            <td data-title="Market">${data.topBets[i].marketName}</td>
+                            <td data-title="Odds">${data.topBets[i].oddValue}</td>
+                            <td data-title="Value">${data.topBets[i].Stake}</td>
+                            <td data-title="Risk">${(data.topBets[i].Stake * data.topBets[i].oddValue).toFixed(2)}</td>
+                            </tr>`
+                    }
+                    if(data.topBets.length == 0){
+                        topBetsHtml +=  `<tr class="empty_table"><td>No record found</td></tr>`
+                    }
+                    $('#toBets_tbody').html(topBetsHtml)
+
+                    for(let i = 0;i<data.settlement.length;i++){
+                        settlementHtml += `
+                            <tr>
+                            <td data-title="">${i + 1}</td>
+                            <td data-title="Sport">${data.settlement[i].sport}</td>
+                            <td data-title="Series">${data.settlement[i].series}</td>
+                            <td data-title="Event Name">${data.settlement[i].matchName}</td>
+                            <td data-title="Open Bets">${data.settlement[i].count}</td>
+                            </tr>`
+                    }
+                    if(data.settlement.length == 0){
+                        settlementHtml +=  `<tr class="empty_table"><td>No record found</td></tr>`
+                    }
+                    $('#settlements_tbody').html(settlementHtml)
+            
+                })
         }
     }
 
