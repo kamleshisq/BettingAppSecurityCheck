@@ -5488,97 +5488,112 @@ socket.on('connect', () => {
             socket.emit('voidBET',data)
         })
             
-      
-            let count = 11
-            socket.on('voidBET',(data) => {
-                console.log(data)
-                if(data.page === 0){
-                    count = 1
-                }                
-                let bets = data.betResult;
-                let html = '';
-                let html2 = '';
-                if(data.events){
-                    html2 += `<option value="All" selected> Select Event </option>`
-                    for(let i = 0;i<data.events.length;i++){
-                        if(data.events[i]._id){
-                            html2 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
-                        }
-                    }
-                    $('#Event').html(html2)
-                }
-                for(let i = 0; i < bets.length; i++){
-                    let date = new Date(bets[i].date)
-                    if(bets[i].bettype2 === 'BACK'){
-                    html += `<tr class="back">`
-                    }else{
-                    html += `<tr class="lay">`
-                    }
-                    html += `<td>${i + count}</td>
-                    <td class="date-time" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
-                    <td>${bets[i].userName}</td>
-                    `
-                    if(bets[i].match){
-                    html += `
-                    <td class="text-nowrap" >${bets[i].match}</td>
-                    <td class="text-nowrap" >${bets[i].marketName}</td>
-                    <td>${bets[i].oddValue}</td>
-                    <td class="text-nowrap" >${bets[i].selectionName}</td>`
-                    }else{
-                    html += `<td>-</td>
-                    <td>-</td><td>-</td><td>-</td>`
-                    }
-                    html += `
-                    <td>${bets[i].Stake}</td>
-                    <td>${bets[i].transactionId}</td>
-                    <td>${bets[i].status}</td>
-                    <td>${bets[i].returns}</td>
-                    </tr>`
-                }
-                count += 10;
-                if(data.page == 0){
-                    if((data.betResult.length == 0)){
-                        $('#load-more').hide()
-                    }else{
-                        $('#load-more').show()
-                    }
-                    if(html == ''){
-                        html += `<tr class="empty_table"><td>No record found</td></tr>`
-                    }
-                    $('.new-body').html(html)
+        $('.refresh').click(function(e){
+            let page = parseInt($('.pageId').attr('data-pageid')) - 1;
+            let data = {}
+            let userName = $('.searchUser').val()
+            if(userName == ''){
+                filterData.userName = LOGINDATA.LOGINUSER.userName
+            }else{
+                filterData.userName = userName
+            }
 
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            data.refreshStatus = true
+            socket.emit('voidBET',data)
+        })
+        let count = 11
+        socket.on('voidBET',(data) => {
+            console.log(data)
+            if(data.page === 0 || data.refreshStatus){
+                count = 1
+            }                
+            let bets = data.betResult;
+            let html = '';
+            let html2 = '';
+            if(data.events){
+                html2 += `<option value="All" selected> Select Event </option>`
+                for(let i = 0;i<data.events.length;i++){
+                    if(data.events[i]._id){
+                        html2 += `<option value="${data.events[i].eventId}">${data.events[i]._id}</option>`
+                    }
+                }
+                $('#Event').html(html2)
+            }
+            for(let i = 0; i < bets.length; i++){
+                let date = new Date(bets[i].date)
+                if(bets[i].bettype2 === 'BACK'){
+                html += `<tr class="back">`
                 }else{
-                    $('.new-body').append(html)         
-                    if((data.betResult.length == 0)){
-                        $('#load-more').hide()
-                    }
+                html += `<tr class="lay">`
                 }
-            })
-
-            $(document).on('click', ".cancel-timelyVoide", function(e){
-                let form = $("#myModal2").find('.form-data')
-                form.attr('id', this.id)
-            })
-
-            $(document).on('submit', '.timely-voideBet', function(e){
-                e.preventDefault() 
-                let form = $(this)[0];
-                let fd = new FormData(form);
-                let data = Object.fromEntries(fd.entries());
-                let id = this.id
-                // console.log(id)
-                socket.emit('timelyVoideBEt',{data,LOGINDATA, id})
-                // console.log(data, "DATA123")
-            })
-
-
-            socket.on('timelyVoideBEt', async(data) => {
-                if(data.status === "err"){
-                    alert(data.message)
+                html += `<td>${i + count}</td>
+                <td class="date-time" >${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}</td>
+                <td>${bets[i].userName}</td>
+                `
+                if(bets[i].match){
+                html += `
+                <td class="text-nowrap" >${bets[i].match}</td>
+                <td class="text-nowrap" >${bets[i].marketName}</td>
+                <td>${bets[i].oddValue}</td>
+                <td class="text-nowrap" >${bets[i].selectionName}</td>`
                 }else{
-                    alert('Bet Voided Successfully !!')
+                html += `<td>-</td>
+                <td>-</td><td>-</td><td>-</td>`
                 }
-            })
+                html += `
+                <td>${bets[i].Stake}</td>
+                <td>${bets[i].transactionId}</td>
+                <td>${bets[i].status}</td>
+                <td>${bets[i].returns}</td>
+                </tr>`
+            }
+            count += bets.length;
+            if(data.page == 0 || data.refreshStatus){
+                if((data.betResult.length == 0)){
+                    $('#load-more').hide()
+                }else{
+                    $('#load-more').show()
+                }
+                if(html == ''){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                }
+                $('.new-body').html(html)
+
+            }else{
+                $('.new-body').append(html)         
+                if((data.betResult.length == 0)){
+                    $('#load-more').hide()
+                }
+            }
+        })
+
+        $(document).on('click', ".cancel-timelyVoide", function(e){
+            let form = $("#myModal2").find('.form-data')
+            form.attr('id', this.id)
+        })
+
+        $(document).on('submit', '.timely-voideBet', function(e){
+            e.preventDefault() 
+            let form = $(this)[0];
+            let fd = new FormData(form);
+            let data = Object.fromEntries(fd.entries());
+            let id = this.id
+            // console.log(id)
+            socket.emit('timelyVoideBEt',{data,LOGINDATA, id})
+            // console.log(data, "DATA123")
+        })
+
+
+        socket.on('timelyVoideBEt', async(data) => {
+            if(data.status === "err"){
+                alert(data.message)
+            }else{
+                alert('Bet Voided Successfully !!')
+            }
+        })
     }
 
 

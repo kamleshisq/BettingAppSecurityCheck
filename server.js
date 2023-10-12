@@ -1309,8 +1309,16 @@ io.on('connection', (socket) => {
 
             }
         }
-        let limit = 10;
+        let limit;
         let page = data.page;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = limit * page
+        }
         let childrenUsername = []
         let userFilter = {};
         let operatorId;
@@ -1351,9 +1359,9 @@ io.on('connection', (socket) => {
                 }
             ])
         }
-        let betResult = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
+        let betResult = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
 
-        socket.emit("voidBET", {betResult,events,page,filter:data.filterData})
+        socket.emit("voidBET", {betResult,events,page,refreshStatus:data.refreshStatus})
 
     })
 
