@@ -4411,90 +4411,90 @@ io.on('connection', (socket) => {
                                   totalLossAmount: { $sum: "$selections.lossAmount" }
                                 }
                             },
-                            // {
-                            //     $project: {
-                            //       _id: 0,
-                            //       elementUser: "$_id.elementUser",
-                            //       selection: {
-                            //         selectionName: "$_id.selectionName",
-                            //         totalWinAmount: "$totalWinAmount",
-                            //         totalLossAmount: "$totalLossAmount"
-                            //       }
-                            //     }
-                            // },
-                            // {
-                            //     $group: {
-                            //       _id: "$elementUser",
-                            //       selections: { $push: "$selection" }
-                            //     }
-                            // },
-                            // {
-                            //     $project: {
-                            //       _id: 0,
-                            //       elementUser: "$_id",
-                            //       selections: 1
-                            //     }
-                            // },
-                            // {
-                            //     $project: { 
-                            //         _id:0,
-                            //         elementUser:"$elementUser",
-                            //         selections: { 
-                            //             $map: { 
-                            //                 input: "$selections",
-                            //                 as: "selection",
-                            //                 in: { 
-                            //                     selectionName: "$$selection.selectionName",
-                            //                     totalAmount: "$$selection.totalWinAmount",
-                            //                     winAmount: { 
-                            //                         $add : [
-                            //                             "$$selection.totalWinAmount", 
-                            //                             {
-                            //                                 $reduce: {
-                            //                                     input: "$selections",
-                            //                                     initialValue: 0,
-                            //                                     in: {
-                            //                                         $cond: {
-                            //                                             if: {
-                            //                                               $ne: ["$$this.selectionName", "$$selection.selectionName"] 
-                            //                                             },
-                            //                                             then: { $add: ["$$value", "$$this.totalLossAmount"] },
-                            //                                             else: {
-                            //                                                 $add: ["$$value", 0] 
-                            //                                             }
-                            //                                         }
-                            //                                     }
-                            //                                 }
-                            //                             }
-                            //                         ]
-                            //                     },
-                            //                     lossAmount:{ 
-                            //                         $add : [
-                            //                             "$$selection.totalLossAmount", 
-                            //                             {
-                            //                                 $reduce: {
-                            //                                     input: "$selections",
-                            //                                     initialValue: 0,
-                            //                                     in: {
-                            //                                         $cond: {
-                            //                                             if: {
-                            //                                               $ne: ["$$this.selectionName", "$$selection.selectionName"] 
-                            //                                             },
-                            //                                             then: { $add: ["$$value", "$$this.totalWinAmount"] },
-                            //                                             else: {
-                            //                                                 $add: ["$$value", 0] 
-                            //                                             }
-                            //                                         }
-                            //                                     }
-                            //                                 }
-                            //                             }
-                            //                         ]
-                            //                     },
-                            //                 }
-                            //             }
-                            //         }
-                            //     }
-                            // },
+                            {
+                                $project: {
+                                  _id: 0,
+                                  elementUser: "$_id.elementUser",
+                                  selection: {
+                                    selectionName: "$_id.selectionName",
+                                    totalWinAmount: "$totalWinAmount",
+                                    totalLossAmount: "$totalLossAmount"
+                                  }
+                                }
+                            },
+                            {
+                                $group: {
+                                  _id: "$elementUser",
+                                  selections: { $push: "$selection" }
+                                }
+                            },
+                            {
+                                $project: {
+                                  _id: 0,
+                                  elementUser: "$_id",
+                                  selections: 1
+                                }
+                            },
+                            {
+                                $project: { 
+                                    _id:0,
+                                    elementUser:"$elementUser",
+                                    selections: { 
+                                        $map: { 
+                                            input: "$selections",
+                                            as: "selection",
+                                            in: { 
+                                                selectionName: "$$selection.selectionName",
+                                                totalAmount: "$$selection.totalWinAmount",
+                                                winAmount: { 
+                                                    $add : [
+                                                        "$$selection.totalWinAmount", 
+                                                        {
+                                                            $reduce: {
+                                                                input: "$selections",
+                                                                initialValue: 0,
+                                                                in: {
+                                                                    $cond: {
+                                                                        if: {
+                                                                          $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                                        },
+                                                                        then: { $add: ["$$value", "$$this.totalLossAmount"] },
+                                                                        else: {
+                                                                            $add: ["$$value", 0] 
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                lossAmount:{ 
+                                                    $add : [
+                                                        "$$selection.totalLossAmount", 
+                                                        {
+                                                            $reduce: {
+                                                                input: "$selections",
+                                                                initialValue: 0,
+                                                                in: {
+                                                                    $cond: {
+                                                                        if: {
+                                                                          $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                                        },
+                                                                        then: { $add: ["$$value", "$$this.totalWinAmount"] },
+                                                                        else: {
+                                                                            $add: ["$$value", 0] 
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                            }
+                                        }
+                                    }
+                                }
+                            },
 
                         ])
 
