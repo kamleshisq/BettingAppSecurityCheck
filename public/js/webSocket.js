@@ -4613,6 +4613,7 @@ socket.on('connect', () => {
         })
 
         function refreshPage(){
+            
             let page = parseInt($('.pageId').attr('data-pageid')) - 1;
             let data = {}
             let userName = $('.searchUser').val()
