@@ -3845,9 +3845,11 @@ io.on('connection', (socket) => {
         // console.log(data)
         // let users = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id,role_type:2})
         let users = []
+        let falg = false
         if(data.userName){
             let thatUSer = await User.findOne({userName:data.userName})
             if(thatUSer){
+                falg = true
                 users = await User.find({parent_id:thatUSer._id, isActive:true , roleName:{$ne:'Operator'}})
             }
             // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
@@ -4223,8 +4225,11 @@ io.on('connection', (socket) => {
                         
                         
                     ])
-                    
-                    return({User:ele, Bets:Bets})
+                    if(falg){
+                        return({User:ele, Bets:Bets, userName:data.userName})
+                    }else{
+                        return({User:ele, Bets:Bets})
+                    }
                 }
             })
             let resultPromise = await Promise.all(newUser)
