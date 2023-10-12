@@ -1495,7 +1495,7 @@ socket.on('connect', () => {
             if(data.status === 'success')
             {
                 let html = ""
-                if(data.page == 0){
+                if(data.page == 0 || data.refreshStatus){
                     count = 1;
                     if(LOGINDATA.LOGINUSER.roleName == "Admin"){
                         html += `<thead><tr>`+
@@ -1611,7 +1611,7 @@ socket.on('connect', () => {
                         </td></td> </tr>`
                 }
                 count += response.length;
-                if(data.page == 0){
+                if(data.page == 0 || data.refreshStatus){
                     if(response.length == 0){
                         html += `<tr class="empty_table"><td>No record found</td></tr>`
                     }
