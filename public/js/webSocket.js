@@ -10802,7 +10802,11 @@ socket.on('connect', () => {
         fromDate = $('#fromDate').val()
         toDate = $('#toDate').val()
         filterData.fromDate = fromDate;
-        filterData.toDate = toDate;
+        if(toDate != ''){
+            filterData.toDate = new Date(new Date(toDate).getTime() + ((24 * 60 * 60 * 1000)-1))
+        }else{
+            filterData.toDate = toDate;
+        }
       
 
         $('#Sport,#market,#fromDate,#toDate,#result').change(function(){
@@ -10822,6 +10826,12 @@ socket.on('connect', () => {
             }else{
                 filterData.userName = LOGINDATA.LOGINUSER.userName
             }
+            if(toDate != ''){
+                filterData.toDate = new Date(new Date(toDate).getTime() + ((24 * 60 * 60 * 1000)-1))
+            }else{
+                filterData.toDate = toDate;
+            }
+            filterData.fromDate = fromDate;
             filterData.betType = sport
             filterData.marketName = market
             filterData.alertStatus = result
@@ -10885,7 +10895,7 @@ socket.on('connect', () => {
         
         let count = 11
         socket.on('AlertBet',(data) => {
-            console.log(data)
+            console.log(data.refreshStatus)
             if(data.page === 0 || data.refreshStatus){
                 count = 1
             }
