@@ -1034,7 +1034,7 @@ exports.plreport = catchAsync(async(req, res, next) => {
     },
     {
         $sort: {
-            returns: 1
+            returns: -1
         }
     },
     {
