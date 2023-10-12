@@ -13031,7 +13031,7 @@ socket.on('connect', () => {
                     let userName = $(this).attr('data-usename')
                     let string = `tr.pr${userName}`
                     console.log($('#match_odd').find(string).length)
-                    if($('#match_odd').find(string).length != 0){
+                    if($('#match_odd').find(string).length === 0){
                         $('#match_odd').find('tr.active').removeClass('active')
                         $(this).parent('tr').addClass('active')
                         $('#match_odd').find('tr.children').remove()
