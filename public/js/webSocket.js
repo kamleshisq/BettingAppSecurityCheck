@@ -13132,8 +13132,9 @@ socket.on('connect', () => {
                 // console.log(data)
                 if(data.Bets.length > 0){
                     console.log(data)
-                //     let team1 = data.Bets[0].Bets.teamA
-                //     let team2 = data.Bets[0].Bets.teamB
+                    let team1 = data.matchName.split(v)[0]
+                    let team2 = data.matchName.split(v)[1]
+                    console.log(team1, team2)
                 //     let html = `<tr class="headDetail"><th>User name</th>
                 //     <th>${team1}</th>
                 //     <th>${team2}</th></tr>`
