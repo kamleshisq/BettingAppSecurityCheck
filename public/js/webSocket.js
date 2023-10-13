@@ -13038,8 +13038,19 @@ socket.on('connect', () => {
             $(document).on('click','#match_odd .userBookParent',function(e){
                 if(!$(this).parent('tr').hasClass('active')){
                     let userName = $(this).attr('data-usename')
+                    let prclass 
+                    if (this.classList) {
+                        var classes = this.classList;
+                        for (var i = 0; i < classes.length; i++) {
+                          if (classes[i].startsWith("pr")) {
+                            console.log("Element has a class that starts with 'pr'");
+                            prclass = classes[i]
+                            break; 
+                          }
+                        }
+                      }
+                      console.log(prclass, "prclassprclassprclassprclass")
                     let string = `tr.pr${userName}`
-                    console.log($('#match_odd').find(string).length)
                     if($('#match_odd').find(string).length === 0){
                         $('#match_odd').find('tr.active').removeClass('active')
                         $(this).parent('tr').addClass('active')
