@@ -4523,12 +4523,14 @@ io.on('connection', (socket) => {
             
             let matchName2 = await Bet.findOne({marketId: data.marketId})
             let matchName
+            let sport
             if(matchName2){
                 matchName = matchName2.match
+                sport = matchName2.betType
             }
 
-            console.log(Id, "IdIdIdIdIdIdId")
-           socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName, Id});
+            // console.log(Id, "IdIdIdIdIdIdId")
+           socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport});
         //    socket.emit();
         }catch(err){
             console.log(err)
