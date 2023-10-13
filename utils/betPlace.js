@@ -369,7 +369,7 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
 // FOR COMMISSION REGARDIN THAT BET 
     // console.log(user)
     try{
-        
+        console.log("COMMISSION MARKET")
         let commissionMarket = await commissionMarketModel.find()
         if(commissionMarket.some(item => item.marketId == data.data.market)){
             let commission = await commissionModel.find({userId:user.id})
