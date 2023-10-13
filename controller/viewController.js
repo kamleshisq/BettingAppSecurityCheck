@@ -3698,13 +3698,13 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                 }},
             }
         },
-        {
-            $group: {
-                _id: "$_id.userName",
-                totalCommission: { $sum: "$totalCommission" },
-                totalUPline: { $sum:'$totalUPline'},
-            }
-        },
+        // {
+        //     $group: {
+        //         _id: "$_id.userName",
+        //         totalCommission: { $sum: "$totalCommission" },
+        //         totalUPline: { $sum:'$totalUPline'},
+        //     }
+        // },
         {
             $sort:{
             _id : 1,
