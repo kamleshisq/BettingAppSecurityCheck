@@ -3685,8 +3685,8 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                 totalCommission: { $sum: "$commission" },
                 totalUPline: { $sum: {$cond:{
                     if:{$eq:['$loginUserId','$userId']},
-                    then:0,
-                    else:'$commission'
+                    then:'$commission',
+                    else:0
                 }} },
             }
         },
