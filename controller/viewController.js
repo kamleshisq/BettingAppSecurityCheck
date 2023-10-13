@@ -3691,7 +3691,7 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                     $reduce:{
                         input:'$parentdata',
                         initialValue:0,
-                        in: { $add: ["$$value.commission", "$$this.commission"] }
+                        in: { $add: ["$$value", "$$this.commission"] }
                     }
                 }},
             }
