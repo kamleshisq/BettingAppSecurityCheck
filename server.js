@@ -993,6 +993,67 @@ io.on('connection', (socket) => {
 
         socket.emit('gameReportByMarket',{games,url,page,refreshStatus:data.refreshStatus})
     })
+    socket.on('gameReportFinal',async(data)=>{
+        let page = data.page
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = page * limit
+        }
+        let market;
+        if(data.filterData.market.toLowerCase().startsWith('book')){
+            market =  {
+                $regex: /^book/i
+              }
+        }else{
+            market = data.filterData.market
+        }
+        let games = await Bet.aggregate([
+            {
+                $match: {
+                    userName: { $in: [data.filterData.userName] },
+                    status: {$in:["WON",'LOSS','CANCEL']},
+                    date:{$gte:new Date(data.filterData.fromDate),$lte:new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))},
+                    match:data.filterData.match,
+                    marketName:market
+                }
+            },
+            {
+                $project:{
+                    date:1,
+                    selectionName:1,
+                    oddValue:1,
+                    ip:1,
+                    Stake:1,
+                    returns:{
+                        $cond:{
+                            if:{$eq:['$status','WON']},
+                            then:{$subtract:['$returns','$Stake']},
+                            else:'$returns'
+                        }
+                    }
+                }
+            },
+            {
+                $sort: {
+                    date: -1,
+                }
+            },
+            {
+                $skip:skip
+            },
+            {
+                $limit:limit
+            }
+            ])
+
+
+        socket.emit('gameReportFinal',{games,page,refreshStatus:data.refreshStatus})
+    })
 
 
 
