@@ -398,10 +398,7 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
                     commissionType: 'Entry Wise Commission',
                     commissionPercentage:commissionPer,
                     date:Date.now(),
-                    marketName:marketDetails.title,
-                    loginUserId:data.LOGINDATA.LOGINUSER._id,
-                    parentIdArray:data.LOGINDATA.LOGINUSER.parentUsers
-                    
+                    marketName:marketDetails.title                    
                 }
                 usercommissiondata = await newCommissionModel.create(commissiondata)
             }
@@ -437,8 +434,6 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
                             commissionPercentage:commissionPer,
                             date:Date.now(),
                             marketName:marketDetails.title,
-                            loginUserId:data.LOGINDATA.LOGINUSER._id,
-                            parentIdArray:childUser.parentUsers,
                             uniqueId:usercommissiondata._id
                         }
                         let commissionData = await newCommissionModel.create(commissiondata)

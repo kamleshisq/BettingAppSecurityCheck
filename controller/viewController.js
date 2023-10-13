@@ -3676,10 +3676,8 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                 pipeline: [
                     {
                       $match: {
-                        $expr: { $and: [{ $eq: [{ $toObjectId: "$uniqueId" }, "$$uniqueId"] }] },
-                        loginUserId:{$exists:true},
-                        parentIdArray:{$exists:true}
-                      }
+                        $expr: { $and: [{ $eq: [{ $toObjectId: "$uniqueId" }, "$$uniqueId"] }] }
+                        }
                     }
                   ],
                 as: "parentdata"
