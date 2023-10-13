@@ -3679,7 +3679,7 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
         {
             $group: {
                 _id: {
-                    userName:"$userName",
+                   
                     loginUserId:'$loginUserId'
                 },
                 totalCommission: { $sum: {$cond:{
