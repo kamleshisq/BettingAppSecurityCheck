@@ -64,6 +64,10 @@ const commissionNew = mongoose.Schema({
     },
     claimeDate:{
         type:Date
+    },
+    loginUserId:{
+        type:String,
+        required:true
     }
 })
 
