@@ -42,7 +42,7 @@ router.get("/admin/reports", authController.isProtected, authController.isAdmin,
 router.get("/admin/gamereport", authController.isProtected, authController.isAdmin,viewController.gameReportPage)
 router.get("/admin/gamereport/match", authController.isProtected, authController.isAdmin,viewController.gameReportPageByMatch)
 router.get("/admin/gamereport/match/market", authController.isProtected, authController.isAdmin,viewController.gameReportPageByMatchByMarket)
-router.get("/admin/gamereport/match/market/report", authController.isProtected, authController.isAdmin,viewController.gameReportPageByMatchByMarket)
+router.get("/admin/gamereport/match/market/report", authController.isProtected, authController.isAdmin,viewController.gameReportPageFinal)
 router.get("/admin/myaccount", authController.isProtected, authController.isAdmin,viewController.myaccount)
 router.get("/admin/adminaccount", authController.isProtected, authController.isAdmin,viewController.adminaccount)
 router.get("/admin/useraccount", authController.isProtected, authController.isAdmin,viewController.useracount)
