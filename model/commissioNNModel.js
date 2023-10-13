@@ -71,7 +71,8 @@ const commissionNew = mongoose.Schema({
     },
     parentIdArray:{
         type:[String]
-    }
+    },
+    uniqueId:String
 })
 
 
