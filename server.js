@@ -3664,6 +3664,7 @@ io.on('connection', (socket) => {
             }
             let newdata
             if(!await commissionModel.findOne({userId:data.data.id})){
+                newValues.userId = data.data.id
                 newdata = await commissionModel.create(newValues)
             }else{
 
