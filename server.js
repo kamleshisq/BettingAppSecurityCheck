@@ -875,7 +875,187 @@ io.on('connection', (socket) => {
           ])
 
         socket.emit('gameReport',{games,page,refreshStatus:data.refreshStatus})
-        })
+    })
+    socket.on('gameReportByMatch',async(data)=>{
+        let page = data.page
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = page * limit
+        }
+    
+        let games = await Bet.aggregate([
+            {
+                $match: {
+                userName: { $in: [data.filterData.userName] },
+                status: {$in:["WON",'LOSS','CANCEL']},
+                date:{$gte:new Date(data.filterData.fromDate),$lte:new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))}          
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:{
+                        match:'$match',
+                        marketName: '$marketName'
+                    },
+                    eventDate:{$first:'$eventDate'},
+                    gameCount:{$sum:1},
+                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','CANCEL']]},'$returns',{"$subtract": [ "$returns", "$Stake" ]}]}}
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:'$_id.match',
+                    eventDate:{$first:'$eventDate'},
+                    gameCount:{$sum:1},
+                    betCount:{$sum:'$gameCount'},
+                    loss:{$sum:'$loss'},
+                    won:{$sum:'$won'},
+                    void:{$sum:'$void'},
+                    returns:{$sum:'$returns'}
+        
+        
+                }
+            },
+            {
+                $sort: {
+                    _id: 1,
+                    returns: 1
+                }
+            },
+            {
+                $skip:skip
+            },
+            {
+                $limit:limit
+            }
+            ])
+            let url = `/admin/gamereport/match/market?userName=${data.filterData.userName}&fromDate=${data.filterData.fromDate}&toDate=${data.filterData.toDate}`
+
+        socket.emit('gameReportByMatch',{games,url,page,refreshStatus:data.refreshStatus})
+    })
+    socket.on('gameReportByMarket',async(data)=>{
+        let page = data.page
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = page * limit
+        }
+    
+        let games = await Bet.aggregate([
+            {
+                $match: {
+                    userName: { $in: [data.filterData.userName] },
+                    status: {$in:["WON",'LOSS','CANCEL']},
+                    date:{$gte:new Date(data.filterData.fromDate),$lte:new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))},
+                    match:data.filterData.match
+                }
+            },
+            {
+                $group:{
+                    _id:'$marketName',
+                    date:{$first:'$date'},
+                    gameCount:{$sum:1},
+                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','CANCEL']]},'$returns',{"$subtract": [ "$returns", "$Stake" ]}]}}
+                    
+                }
+            },
+            {
+                $sort: {
+                    _id: 1,
+                    returns: 1
+                }
+            },
+            {
+                $skip:skip
+            },
+            {
+                $limit:limit
+            }
+            ])
+            let url = `/admin/gamereport/match/market?userName=${data.filterData.userName}&fromDate=${data.filterData.fromDate}&toDate=${data.filterData.toDate}&match=${data.filterData.match}`
+
+        socket.emit('gameReportByMarket',{games,url,page,refreshStatus:data.refreshStatus})
+    })
+    socket.on('gameReportFinal',async(data)=>{
+        let page = data.page
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = page * limit
+        }
+        let market;
+        if(data.filterData.market.toLowerCase().startsWith('book')){
+            market =  {
+                $regex: /^book/i
+              }
+        }else{
+            market = data.filterData.market
+        }
+        let games = await Bet.aggregate([
+            {
+                $match: {
+                    userName: { $in: [data.filterData.userName] },
+                    status: {$in:["WON",'LOSS','CANCEL']},
+                    date:{$gte:new Date(data.filterData.fromDate),$lte:new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))},
+                    match:data.filterData.match,
+                    marketName:market
+                }
+            },
+            {
+                $project:{
+                    date:1,
+                    selectionName:1,
+                    oddValue:1,
+                    ip:1,
+                    Stake:1,
+                    returns:{
+                        $cond:{
+                            if:{$eq:['$status','WON']},
+                            then:{$subtract:['$returns','$Stake']},
+                            else:'$returns'
+                        }
+                    }
+                }
+            },
+            {
+                $sort: {
+                    date: -1,
+                }
+            },
+            {
+                $skip:skip
+            },
+            {
+                $limit:limit
+            }
+            ])
+
+
+        socket.emit('gameReportFinal',{games,page,refreshStatus:data.refreshStatus})
+    })
+
+
 
     socket.on("searchEvents", async(data) => {
         let cricketList;
@@ -1653,7 +1833,7 @@ io.on('connection', (socket) => {
             let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
             const passcheck = await user.correctPassword(data.data.password, user.password)
             if(passcheck){
-                let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",alertStatus:"CANCEL",remark:data.data.Remark});
+                let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",alertStatus:"CANCEL",remark:data.data.Remark,returns:0});
                 let DebitCreditAmount 
                 if(bet.bettype2 === "Back"){
                     if(bet.marketName.toLowerCase().startsWith('match')){
@@ -5562,7 +5742,7 @@ io.on('connection', (socket) => {
             const passcheck = await user.correctPassword(data.data.password, user.password)
             // console.log(passcheck, "PASSWORD CHECK")
             if(passcheck){
-            let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",remark:data.Remark});
+            let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",remark:data.Remark,alertStatus:'CANCEL',returns:0});
           
             // console.log(bet, "BETS")
             let DebitCreditAmount 
