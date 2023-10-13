@@ -3671,8 +3671,14 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
         {
             $lookup: {
                 from: "commissionnewmodels",
-                localField: "loginUserId",
-                foreignField: "loginUserId",
+                let: { loginId: "$loginUserId" },
+                pipeline: [
+                    {
+                      $match: {
+                        $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] }, { $eq: ["$category", "Electronics"] }] }
+                      }
+                    }
+                  ],
                 as: "parentdata"
             }
         },
