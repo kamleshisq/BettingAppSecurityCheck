@@ -3687,7 +3687,13 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
             $group: {
                 _id: "$userName",
                 totalCommission: { $sum: "$commission" },
-                totalUPline: { $sum:'$parentdata.commission'},
+                totalUPline: { $sum:{
+                    $reduce:{
+                        input:'$parentdata',
+                        initialValue:0,
+                        in: { $add: ["$$value.commission", "$$this.commission"] }
+                    }
+                }},
             }
         },
         // {
