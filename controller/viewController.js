@@ -3672,11 +3672,11 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
         {
             $lookup: {
                 from: "commissionnewmodels",
-                let: { loginId: "$loginUserId" ,parentArr:'$parentIdArray',uniqueId:'$_id'},
+                let: {uniqueId:'$_id'},
                 pipeline: [
                     {
                       $match: {
-                        $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$uniqueId"] }, { $in: ["$userId", "$$parentArr"] }] },
+                        $expr: { $and: [{ $eq: [{ $toObjectId: "$uniqueId" }, "$$uniqueId"] }] },
                         loginUserId:{$exists:true},
                         parentIdArray:{$exists:true}
                       }
