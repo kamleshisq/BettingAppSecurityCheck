@@ -3664,21 +3664,18 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
               eventDate: {
                 $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
               },
-              userName:{$in:childrenUsername},
-              loginUserId:{$exists:true},
-              parentIdArray:{$exists:true}
+              userName:{$in:childrenUsername}
             }
         },
         {
             $lookup: {
                 from: "commissionnewmodels",
-                let: {uniqueId:{$cond:{if:{$eq:['$uniqueId',null]},then:'$_id',else:{ $toObjectId: "$uniqueId" }}},loginId:'$loginUserId',parentArr:'$parentIdArray'},
+                let: {uniqueId:'$_id'},
                 pipeline: [
                     {
                       $match: {
-                        $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$uniqueId"] }, { $in: ["$userId", "$$parentArr"] }] },
-                        loginUserId:{$exists:true},
-                        parentIdArray:{$exists:true}
+                        $expr: { $and: [{ $eq: [{ $toObjectId: "$uniqueId" }, "$$uniqueId"] }] },
+                        
                       }
                     }
                   ],
