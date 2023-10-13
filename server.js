@@ -875,7 +875,76 @@ io.on('connection', (socket) => {
           ])
 
         socket.emit('gameReport',{games,page,refreshStatus:data.refreshStatus})
-        })
+    })
+    socket.on('gameReportByMatch',async(data)=>{
+        let page = data.page
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = page * limit
+        }
+    
+        let games = await betModel.aggregate([
+            {
+                $match: {
+                userName: { $in: [data.filterData.userName] },
+                status: {$in:["WON",'LOSS','CANCEL']},
+                date:{$gte:new Date(data.filterData.fromDate),$lte:new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))}          
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:{
+                        match:'$match',
+                        marketName: '$marketName'
+                    },
+                    eventDate:{$first:'$eventDate'},
+                    gameCount:{$sum:1},
+                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','CANCEL']]},'$returns',{"$subtract": [ "$returns", "$Stake" ]}]}}
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:'$_id.match',
+                    eventDate:{$first:'$eventDate'},
+                    gameCount:{$sum:1},
+                    betCount:{$sum:'$gameCount'},
+                    loss:{$sum:'$loss'},
+                    won:{$sum:'$won'},
+                    void:{$sum:'$void'},
+                    returns:{$sum:'$returns'}
+        
+        
+                }
+            },
+            {
+                $sort: {
+                    _id: 1,
+                    returns: 1
+                }
+            },
+            {
+                $skip:skip
+            },
+            {
+                $limit:limit
+            }
+            ])
+            let url = `/admin/gamereport/match/market?userName=${data.filterData.userName}&fromDate=${data.filterData.fromDate}&toDate=${data.filterData.toDate}`
+
+        socket.emit('gameReportByMatch',{games,url,page,refreshStatus:data.refreshStatus})
+    })
+
+
 
     socket.on("searchEvents", async(data) => {
         let cricketList;

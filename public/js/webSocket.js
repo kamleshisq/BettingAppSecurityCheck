@@ -4719,8 +4719,9 @@ socket.on('connect', () => {
                   html += `<td style="color: #FE3030;">${(games[i].returns).toFixed(2)}</td>`
                 }
                 html += `</tr>`
-                count++
+                
             }
+            count += games.length
 
             if(data.page == 0){
                 if(games.length == 0){
@@ -4767,6 +4768,58 @@ socket.on('connect', () => {
             data.LOGINDATA = LOGINDATA
             socket.emit('gameReportByMatch',data)
          }); 
+
+         socket.on('gameReportByMatch',async(data)=>{
+            let page = data.page;
+            let games = data.games;
+            let html = '';
+            let count 
+            if(page != 0){
+                count = (10 * page) + 1
+            }else{
+                count = 1
+            }
+            for(let i = 0;i<games.length;i++){
+                if(i % 2 == 0){
+                  html += `<tr style="text-align: center;">`
+                }else{
+                  html += `<tr style="text-align: center;" class="blue">`
+                }
+                  html += `<td>${count + i}</td>
+                  <td>${games[i].eventDate}</td>
+                  <td class="clickableelement getajaxdataclick" data-href="${data.url}&match=${games[i]._id}" data-parent="${games[i]._id}">${games[i]._id}</td>
+                  <td>${games[i].gameCount}</td>
+                  <td>${games[i].betCount}</td>
+                  <td>${games[i].won}</td>
+                  <td>${games[i].loss}</td>
+                  <td>${games[i].void}</td>`
+                if(games[i].returns >= 0){
+                  html += `<td style="color: #46BCAA;">+${(games[i].returns).toFixed(2)}</td>`
+                }else{
+                  html += `<td style="color: #FE3030;">${(games[i].returns).toFixed(2)}</td>`
+                }
+                html += `<td>-</td>`
+                html += `</tr>`
+                
+            }
+            count += games.length
+
+            if(data.page == 0){
+                if(games.length == 0){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    $('#load-more').hide()
+                }else{
+                    $('#load-more').show()
+                }
+
+                $('.new-body').html(html)
+            }else{
+                if(games.length == 0){
+                    $('#load-more').hide()
+                }
+                $('.new-body').append(html)
+            }
+         })
     }
     if(pathname.startsWith('/admin/gamereport/match/market')){
         $(document).on('click','.getajaxdataclick',function(e){
