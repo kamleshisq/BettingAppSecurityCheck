@@ -13044,12 +13044,13 @@ socket.on('connect', () => {
             $(document).on('click','#match_odd .userBookParent',function(e){
                 if(!$(this).parent('tr').hasClass('active')){
                     let userName = $(this).attr('data-usename')
+                    let parentTrClass = this.closest("tr").classList
+                    console.log(parentTrClass, "parentTrClassparentTrClass")
                     let prclass 
-                    if (this.classList) {
-                        var classes = this.classList;
+                    if (parentTrClass) {
+                        var classes = parentTrClass;
                         for (var i = 0; i < classes.length; i++) {
                           if (classes[i].startsWith("pr")) {
-                            console.log("Element has a class that starts with 'pr'");
                             prclass = classes[i]
                             break; 
                           }
