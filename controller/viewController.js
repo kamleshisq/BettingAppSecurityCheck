@@ -3676,20 +3676,20 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
         //         as: "parentdata"
         //     }
         // },
-        {
-            $group: {
-                _id: {
-                    userName:"$userName",
-                    loginUserId:'$loginUserId'
-                },
-                totalCommission: { $sum: "$commission" },
-                totalUPline: { $sum: {$cond:{
-                    if:{$eq:['$loginUserId','$userId']},
-                    then:'$commission',
-                    else:0
-                }} },
-            }
-        },
+        // {
+        //     $group: {
+        //         _id: {
+        //             userName:"$userName",
+        //             loginUserId:'$loginUserId'
+        //         },
+        //         totalCommission: { $sum: "$commission" },
+        //         totalUPline: { $sum: {$cond:{
+        //             if:{$eq:['$loginUserId','$userId']},
+        //             then:'$commission',
+        //             else:0
+        //         }} },
+        //     }
+        // },
         // {
         //     $group: {
         //         _id: "$_id.userName",
