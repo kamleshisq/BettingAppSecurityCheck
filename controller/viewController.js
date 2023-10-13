@@ -1514,6 +1514,111 @@ exports.gameReportPageByMatchByMarket = catchAsync(async(req, res, next) => {
     // })
 })
 
+exports.gameReportPageFinal = catchAsync(async(req, res, next) => {
+    const currentUser = req.currentUser
+    console.log(req.query)
+    var today = new Date(req.query.toDate);
+    var todayFormatted = formatDate(today);
+    var tomorrow = new Date(req.query.fromDate);
+    var tomorrowFormatted = formatDate(tomorrow);
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
+    let betResult = await betModel.aggregate([
+    {
+        $match: {
+            userName: { $in: [req.query.userName] },
+            status: {$in:["WON",'LOSS','CANCEL']},
+            date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},
+            match:req.query.match,
+            marketName:req.query.market
+        }
+    },
+    {
+        $sort: {
+            date: -1
+        }
+    },
+    {
+        $skip:0
+    },
+    {
+        $limit:10
+    }
+    ])
+
+    let oldurl = `/admin/gamereport/match/market/report?userName=${req.query.userName}&fromDate=${req.query.fromDate}&toDate=${req.query.toDate}`
+    
+
+    res.status(200).render('./gamereports/gamereportBymarket',{
+        title:"Game Reports",
+        me:currentUser,
+        games:betResult,
+        currentUser,
+        userName:req.query.userName,
+        matchName:req.query.match,
+        oldurl
+    })
+         
+
+    // let roles
+    // if(currentUser.role_type == 1){
+    //     roles = await Role.find();
+    // }else{
+    //     roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
+    // }
+    //     let role_type =[]
+    //     for(let i = 0; i < roles.length; i++){
+    //         role_type.push(roles[i].role_type)
+    //     }
+    // const games = await betModel.aggregate([
+    //     {
+    //         $match:{
+    //             role_type:{$in:role_type}
+    //         }
+    //     },
+    //     {
+    //         $group:{
+    //             _id:{
+    //                 userName:'$userName',
+    //                 gameId: '$event'
+    //             },
+    //             gameCount:{$sum:1},
+    //             loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+    //             won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+    //             returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+                
+    //         }
+    //     },
+    //     {
+    //         $group:{
+    //             _id:'$_id.userName',
+    //             gameCount:{$sum:1},
+    //             betCount:{$sum:'$gameCount'},
+    //             loss:{$sum:'$loss'},
+    //             won:{$sum:'$won'},
+    //             returns:{$sum:'$returns'}
+
+    //         }
+    //     },
+    //     {
+    //         $skip:0
+    //     },
+    //     {
+    //         $limit:10
+    //     }
+    // ])
+    // // console.log(games)
+    // res.status(200).render('./gamereports/gamereport',{
+    //     title:"gameReports",
+    //     me:currentUser,
+    //     games
+    // })
+})
+
 
 exports.myaccount = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser

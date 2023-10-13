@@ -26,13 +26,11 @@
               <tr>
                 <th>S.No</th>
                 <th>Settlement Date</th>
-                <th>Market</th>
-                <th>Bets</th>
-                <th>Won</th>
-                <th>Loss</th>
-                <th>Void</th>
+                <th>Bet On</th>
+                <th>Odds</th>
+                <th>Amount</th>
                 <th>Profit/Loss</th>
-                <th>Match Desc</th>
+                <th>IP</th>
               </tr>
             </thead>
             <tbody class="new-body">
@@ -44,11 +42,8 @@
                   <%}%>
                   <td><%=i + 1%></td>
                   <td><%=games[i].date%></td>
-                  <td class="clickableelement getajaxdataclick" data-href="<%=url%>&market=<%=games[i]._id%>" data-parent="<%=games[i]._id%>"><%=games[i]._id%></td>
-                  <td><%=games[i].gameCount%></td>
-                  <td><%=games[i].won%></td>
-                  <td><%=games[i].loss%></td>
-                  <td><%=games[i].void%></td>
+                  <td><%=games[i].selectionName%></td>
+                  <td><%=games[i].oddValue%></td>
                   <%if(games[i].returns >= 0){%>
                   <td class="green">+<%=(games[i].returns).toFixed(2)%></td>
                   <%}else{%>
