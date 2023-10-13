@@ -368,74 +368,79 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
 
 // FOR COMMISSION REGARDIN THAT BET 
     // console.log(user)
-    let commissionMarket = await commissionMarketModel.find()
-    if(commissionMarket.some(item => item.marketId == data.data.market)){
-        let commission = await commissionModel.find({userId:user.id})
-        // console.log(commission, 456)
-        let commissionPer = 0
-        if ((marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status){
-          commissionPer = commission[0].Bookmaker.percentage
-        }else if (commission[0].fency.type == "ENTRY" && !(marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss') || marketDetails.title.toLowerCase().startsWith('match')) && commission[0].fency.status){
-          commissionPer = commission[0].fency.percentage
-        }
-        let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
-        // console.log(commissionCoin, commissionPer)
-        if(commissionPer > 0){
-            let commissiondata = {
-                userName : user.userName,
-                userId : user.id,
-                eventId : liveBetGame.eventData.eventId,
-                sportId : liveBetGame.eventData.sportId,
-                seriesName : liveBetGame.eventData.league,
-                marketId : marketDetails.marketId,
-                eventDate : new Date(liveBetGame.eventData.time * 1000),
-                eventName : liveBetGame.eventData.name,
-                commission : commissionCoin,
-                upline : 100,
-                commissionType: 'Entry Wise Commission',
-                commissionPercentage:commissionPer,
-                date:Date.now(),
-                marketName:marketDetails.title
-            }
-            let commissionData = await newCommissionModel.create(commissiondata)
-        }
-    
-        try{
-            for(let i = user.parentUsers.length - 1; i >= 1; i--){
-                let childUser = await userModel.findById(user.parentUsers[i])
-                let parentUser = await userModel.findById(user.parentUsers[i - 1])
-                let commissionChild = await commissionModel.find({userId:childUser.id})
-                let commissionPer = 0
-                if ((marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY" && commissionChild[0].Bookmaker.status){
-                  commissionPer = commissionChild[0].Bookmaker.percentage
-                }else if (commissionChild[0].fency.type == "ENTRY" && !(marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss') || marketDetails.title.toLowerCase().startsWith('match')) && commissionChild[0].fency.status){
-                  commissionPer = commissionChild[0].fency.percentage
+    try{
 
-                }
-                let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
-                if(commissionPer > 0){
-                    let commissiondata = {
-                        userName : childUser.userName,
-                        userId : childUser.id,
-                        eventId : liveBetGame.eventData.eventId,
-                        sportId : liveBetGame.eventData.sportId,
-                        seriesName : liveBetGame.eventData.league,
-                        marketId : marketDetails.marketId,
-                        eventDate : new Date(liveBetGame.eventData.time * 1000),
-                        eventName : liveBetGame.eventData.name,
-                        commission : commissionCoin,
-                        upline : 100,
-                        commissionType: 'Entry Wise Commission',
-                        commissionPercentage:commissionPer,
-                        date:Date.now(),
-                        marketName:marketDetails.title
-                    }
-                    let commissionData = await newCommissionModel.create(commissiondata)
-                }
+        let commissionMarket = await commissionMarketModel.find()
+        if(commissionMarket.some(item => item.marketId == data.data.market)){
+            let commission = await commissionModel.find({userId:user.id})
+            // console.log(commission, 456)
+            let commissionPer = 0
+            if ((marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status){
+              commissionPer = commission[0].Bookmaker.percentage
+            }else if (commission[0].fency.type == "ENTRY" && !(marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss') || marketDetails.title.toLowerCase().startsWith('match')) && commission[0].fency.status){
+              commissionPer = commission[0].fency.percentage
             }
-        }catch(err){
-            console.log(err)
+            let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
+            // console.log(commissionCoin, commissionPer)
+            if(commissionPer > 0){
+                let commissiondata = {
+                    userName : user.userName,
+                    userId : user.id,
+                    eventId : liveBetGame.eventData.eventId,
+                    sportId : liveBetGame.eventData.sportId,
+                    seriesName : liveBetGame.eventData.league,
+                    marketId : marketDetails.marketId,
+                    eventDate : new Date(liveBetGame.eventData.time * 1000),
+                    eventName : liveBetGame.eventData.name,
+                    commission : commissionCoin,
+                    upline : 100,
+                    commissionType: 'Entry Wise Commission',
+                    commissionPercentage:commissionPer,
+                    date:Date.now(),
+                    marketName:marketDetails.title
+                }
+                let commissionData = await newCommissionModel.create(commissiondata)
+            }
+        
+            try{
+                for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                    let childUser = await userModel.findById(user.parentUsers[i])
+                    let parentUser = await userModel.findById(user.parentUsers[i - 1])
+                    let commissionChild = await commissionModel.find({userId:childUser.id})
+                    let commissionPer = 0
+                    if ((marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss')) && commissionChild[0].Bookmaker.type == "ENTRY" && commissionChild[0].Bookmaker.status){
+                      commissionPer = commissionChild[0].Bookmaker.percentage
+                    }else if (commissionChild[0].fency.type == "ENTRY" && !(marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss') || marketDetails.title.toLowerCase().startsWith('match')) && commissionChild[0].fency.status){
+                      commissionPer = commissionChild[0].fency.percentage
+    
+                    }
+                    let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
+                    if(commissionPer > 0){
+                        let commissiondata = {
+                            userName : childUser.userName,
+                            userId : childUser.id,
+                            eventId : liveBetGame.eventData.eventId,
+                            sportId : liveBetGame.eventData.sportId,
+                            seriesName : liveBetGame.eventData.league,
+                            marketId : marketDetails.marketId,
+                            eventDate : new Date(liveBetGame.eventData.time * 1000),
+                            eventName : liveBetGame.eventData.name,
+                            commission : commissionCoin,
+                            upline : 100,
+                            commissionType: 'Entry Wise Commission',
+                            commissionPercentage:commissionPer,
+                            date:Date.now(),
+                            marketName:marketDetails.title
+                        }
+                        let commissionData = await newCommissionModel.create(commissiondata)
+                    }
+                }
+            }catch(err){
+                console.log(err)
+            }
         }
+    }catch(err){
+        console.log(err)
     }
     return "Bet placed successfully"
 }
