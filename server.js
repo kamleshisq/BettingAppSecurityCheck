@@ -1641,7 +1641,7 @@ io.on('connection', (socket) => {
         Tennis = Tennis.eventList
         const resultSearch = cricket.concat(footBall, Tennis);
         let status;
-        console.log(data,"==>marketId eventId error")
+        // console.log(data,"==>marketId eventId error")
         if(data.eventId){
             let event = resultSearch.find(item => item.eventData.eventId == data.eventId)
             // console.log(event,data.eventId,"==>Event")
