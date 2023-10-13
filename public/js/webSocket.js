@@ -10862,8 +10862,8 @@ socket.on('connect', () => {
             for(let i = 0; i < data.userWiseData.length; i++){
                 html += `<tr class="tbl-data-href" data-href="/admin/commissionReportUser?User=${data.userWiseData[i]._id}">
                 <td>${data.userWiseData[i]._id}</td>
-                <td>${data.userWiseData[i].totalCommission}</td>
-                <td>${data.userWiseData[i].totalUPline}</td>
+                <td>${(data.userWiseData[i].totalCommission).toFixed(2)}</td>
+                <td>${(data.userWiseData[i].totalUPline).toFixed(2)}</td>
                 </tr>`
             }
             // console.log(html, "HTML")
