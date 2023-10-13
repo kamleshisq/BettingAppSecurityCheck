@@ -13047,7 +13047,7 @@ socket.on('connect', () => {
                     let prclass 
                     console.log(this.classList)
                     if (this.classList) {
-                        var classes = this.classList;
+                        var classes = this.parent('tr').classList;
                         console.log(classes, "classesclassesclasses")
                         for (var i = 0; i < classes.length; i++) {
                           if (classes[i].startsWith("pr")) {
