@@ -13422,7 +13422,14 @@ socket.on('connect', () => {
 
                 }else{
                    if(data.sport == "Football"){
+                    let team1 = data.matchName.split(' v ')[0].toLowerCase()
+                    let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                    let html = `<tr class="headDetail"><th>User name</th>
+                    <th>${team1}</th>
+                    <th>${team2}</th>
+                    <th>The Drow </th></tr>`
 
+                    document.getElementById('match_odd').innerHTML = html
                    }else{
                     let team1 = data.matchName.split(' v ')[0].toLowerCase()
                     let team2 = data.matchName.split(' v ')[1].toLowerCase()
