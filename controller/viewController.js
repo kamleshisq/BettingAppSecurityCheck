@@ -3666,24 +3666,32 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
               },
               userName:{$in:childrenUsername}
             }
-          },
-          {
-              $group: {
-                  _id: "$userName",
-                  totalCommission: { $sum: "$commission" },
-                  totalUPline: { $sum: "$upline" },
-                }
-            },
-            {
-              $sort:{
-                _id : 1,
-                totalCommission : 1,
-                totalUPline : 1
-              }
-            },
-          {
-            $limit:10
-          }
+        },
+        {
+            $lookup: {
+                from: "commissionnewmodels",
+                localField: "managerId",
+                foreignField: "_id",
+                as: "manager"
+            }
+        },
+        {
+            $group: {
+                _id: "$userName",
+                totalCommission: { $sum: "$commission" },
+                totalUPline: { $sum: "$upline" },
+            }
+        },
+        {
+            $sort:{
+            _id : 1,
+            totalCommission : 1,
+            totalUPline : 1
+            }
+        },
+        {
+        $limit:10
+        }
     ])
 
     let accStatements = await accountStatement.aggregate([
