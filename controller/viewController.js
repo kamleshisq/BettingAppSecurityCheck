@@ -1171,7 +1171,7 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
             loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
             won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
             void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
-            returns:{$sum:{$cond:[{$in:['$status','LOSS']},'$returns',{ $cond:[{$eq:['$status','']}] }]}}
+            returns:{$sum:{$cond:[{'$status':{$in:['CANCEL','LOSS']}},'$returns', {$subtract:['$returns','$Stake']}]
             
         }
     },
