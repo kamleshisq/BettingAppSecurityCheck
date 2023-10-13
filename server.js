@@ -888,7 +888,7 @@ io.on('connection', (socket) => {
             skip = page * limit
         }
     
-        let games = await betModel.aggregate([
+        let games = await Bet.aggregate([
             {
                 $match: {
                 userName: { $in: [data.filterData.userName] },
