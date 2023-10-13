@@ -4686,7 +4686,7 @@ io.on('connection', (socket) => {
 
                         ])
 
-                        return({User:ele, Bets:Bets, status:'User'})
+                        return({User:ele, Bets:Bets, status:'User', userName:data.userName})
 
                     }
                 }
