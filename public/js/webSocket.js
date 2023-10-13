@@ -4748,8 +4748,8 @@ socket.on('connect', () => {
     }
     if(pathname.startsWith('/admin/gamereport/match/market')){
         $(document).on('click','.getajaxdataclick',function(e){
-            
-            let url = encodeURIComponent($(this).attr('data-href'))
+        
+            let url = $(this).attr('data-href')
             console.log(url)
             location.href = url
          })
