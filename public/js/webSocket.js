@@ -4741,8 +4741,13 @@ socket.on('connect', () => {
     }
     if(pathname.startsWith('/admin/gamereport/match')){
         $(document).on('click','.getajaxdataclick',function(e){
-            fromDate = $('#fromDate').val()
-            toDate = $('#toDate').val()
+            let url = $(this).attr('data-href')
+            console.log(url)
+            location.href = url
+         })
+    }
+    if(pathname.startsWith('/admin/gamereport/match/market')){
+        $(document).on('click','.getajaxdataclick',function(e){
             let url = $(this).attr('data-href')
             console.log(url)
             location.href = url
