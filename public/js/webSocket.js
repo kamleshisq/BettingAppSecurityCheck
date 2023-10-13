@@ -13039,9 +13039,13 @@ socket.on('connect', () => {
 
             $(document).on('click','#match_odd .userBookParent',function(e){
                 if(!$(this).parent('tr').hasClass('active')){
-                    console.log('WORKING')
+                    $(this).parent('tr').addClass('active')
+                      
                 }else{
                     console.log('WORKING2')
+                    $(this).parent('tr').removeClass('active')
+                    
+
                 }
             })
 
