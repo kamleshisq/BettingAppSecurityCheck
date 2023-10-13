@@ -3665,7 +3665,8 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                 $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
               },
               userName:{$in:childrenUsername},
-              
+              loginUserId:{$exists:true},
+              parentIdArray:{$exists:true}
             }
         },
         {
@@ -3675,7 +3676,7 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                 pipeline: [
                     {
                       $match: {
-                        $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] }, { $in: ["$userId", "$$parentArr"] }] }
+                        $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] }, { $in: ["$userId", "$$parentArr"] },{$exists: ["$loginUserId", true]},{$exists: ["$parentIdArray", true]}] }
                       }
                     }
                   ],
