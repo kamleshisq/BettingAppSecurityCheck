@@ -3664,7 +3664,9 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
               eventDate: {
                 $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
               },
-              userName:{$in:childrenUsername}
+              userName:{$in:childrenUsername},
+              loginUserId:{$exists:true},
+              parentIdArray:{$exists:true}
             }
         },
         {
@@ -3674,8 +3676,10 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                 pipeline: [
                     {
                       $match: {
-                        $expr: { $and: [{ $eq: [{ $toObjectId: "$uniqueId" }, "$$uniqueId"] }] }
-                        }
+                        $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$uniqueId"] }, { $in: ["$userId", "$$parentArr"] }] },
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true}
+                      }
                     }
                   ],
                 as: "parentdata"
@@ -3692,6 +3696,13 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                         in: { $add: ["$$value", "$$this.commission"] }
                     }
                 }},
+            }
+        },
+        {
+            $group: {
+                _id: "$_id.userName",
+                totalCommission: { $sum: "$totalCommission" },
+                totalUPline: { $sum:'$totalUPline'},
             }
         },
         {

@@ -205,7 +205,9 @@ module.exports = () => {
                                     upline : 100,
                                     commissionType: 'Win Commission',
                                     commissionPercentage:commissionPer,
-                                    marketName:bet.marketName
+                                    marketName:bet.marketName,
+                                    loginUserId:user._id,
+                                    parentIdArray:user.parentUsers
                                 }
                                 usercommissiondata = await newCommissionModel.create(commissiondata)
                             }
@@ -238,7 +240,9 @@ module.exports = () => {
                                             commissionType: 'Win Commission',
                                             commissionPercentage:commissionPer,
                                             marketName:bet.marketName,
-                                            uniqueId:usercommissiondata._id
+                                            uniqueId:usercommissiondata._id,
+                                            loginUserId:usercommissiondata.userId,
+                                            parentIdArray:childUser.parentUsers,
                                         }
                                         let commissionData = await newCommissionModel.create(commissiondata)
                                     }
@@ -402,7 +406,9 @@ module.exports = () => {
                                         commissionType: 'Entry Loss Wise Commission',
                                         commissionPercentage:commissionPer,
                                         date:Date.now(),
-                                        marketName:bet.marketName
+                                        marketName:bet.marketName,
+                                        loginUserId:user._id,
+                                        parentIdArray:user.parentUsers
                                     }
                                     usercommissiondata2 = await newCommissionModel.create(commissiondata)
                                 }
@@ -435,7 +441,9 @@ module.exports = () => {
                                                 commissionPercentage:commissionPer,
                                                 date:Date.now(),
                                                 marketName:bet.marketName,
-                                                uniqueId:usercommissiondata2._id
+                                                uniqueId:usercommissiondata2._id,
+                                                loginUserId:usercommissiondata2.userId,
+                                                parentIdArray:childUser.parentUsers,
                                             }
                                             let commissionData = await newCommissionModel.create(commissiondata)
                                         }
