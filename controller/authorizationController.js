@@ -374,6 +374,9 @@ exports.isLogin_Admin = catchAsync( async (req, res, next) => {
     
     const tokenId = await loginLogs.findOne({session_id:token})
     // console.log(tokenId, "TOKENID")
+    if(!tokenId){
+        return next()
+    }
     if(!tokenId.isOnline){
         return next()
     }
