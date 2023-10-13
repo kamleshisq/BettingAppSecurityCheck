@@ -5708,12 +5708,32 @@ io.on('connection', (socket) => {
                     }
                   },
                   {
-                      $group: {
-                          _id: "$userName",
-                          totalCommission: { $sum: "$commission" },
-                          totalUPline: { $sum: "$upline" },
-                        }
-                    },
+                    $lookup: {
+                        from: "commissionnewmodels",
+                        let: {uniqueId:'$_id'},
+                        pipeline: [
+                            {
+                              $match: {
+                                $expr: { $and: [{ $eq: [{ $toObjectId: "$uniqueId" }, "$$uniqueId"] }] }
+                                }
+                            }
+                          ],
+                        as: "parentdata"
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$userName",
+                        totalCommission: { $sum: "$commission" },
+                        totalUPline: { $sum:{
+                            $reduce:{
+                                input:'$parentdata',
+                                initialValue:0,
+                                in: { $add: ["$$value", "$$this.commission"] }
+                            }
+                        }},
+                    }
+                },
                     {
                       $sort:{
                         _id : 1,
