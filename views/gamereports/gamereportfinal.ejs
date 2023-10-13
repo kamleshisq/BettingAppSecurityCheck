@@ -50,7 +50,7 @@
                   <%}else{%>
                   <td class="red"><%=(games[i].returns).toFixed(2)%></td>
                   <%}%>
-                  <%id(games[i].ip){%>
+                  <%if(games[i].ip){%>
                     <td><%=games[i].ip%></td>
                   <%}else{%>
                     <td>-</td>
