@@ -3665,17 +3665,18 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                 $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
               },
               userName:{$in:childrenUsername},
-              loginUserId:{$exists:true}
+              loginUserId:{$exists:true},
+              parentIdArray:{$exists:true}
             }
         },
         {
             $lookup: {
                 from: "commissionnewmodels",
-                let: { loginId: "$loginUserId" },
+                let: { loginId: "$loginUserId" ,parentArr:'$parentIdArray'},
                 pipeline: [
                     {
                       $match: {
-                        $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] }, { $eq: ["$category", "Electronics"] }] }
+                        $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] }, { $in: ["$userId", $$parentArr] }] }
                       }
                     }
                   ],
