@@ -13045,6 +13045,7 @@ socket.on('connect', () => {
                 if(!$(this).parent('tr').hasClass('active')){
                     let userName = $(this).attr('data-usename')
                     let prclass 
+                    console.log(this.classList)
                     if (this.classList) {
                         var classes = this.classList;
                         console.log(classes, "classesclassesclasses")
