@@ -13047,11 +13047,12 @@ socket.on('connect', () => {
                     let prclass 
                     if (this.classList) {
                         var classes = this.classList;
+                        console.log(classes, "classesclassesclasses")
                         for (var i = 0; i < classes.length; i++) {
                           if (classes[i].startsWith("pr")) {
                             console.log("Element has a class that starts with 'pr'");
-                            prclass = classes[i]
-                            break; 
+                            prclass = classes[i];
+                            break;
                           }
                         }
                       }
