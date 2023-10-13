@@ -4828,6 +4828,80 @@ socket.on('connect', () => {
             console.log(url)
             location.href = url
          })
+         $('#load-more').click(function(e){
+            let page = parseInt($('.pageId').attr('data-pageid'));
+            $('.pageId').attr('data-pageid',page + 1)
+            let data = {}
+            let filterData = {}
+            function getJSONDataFromQueryString(queryString) {
+                const urlParams = new URLSearchParams(queryString);
+                const jsonData = {};
+                for (const [key, value] of urlParams.entries()) {
+                  jsonData[key] = value;
+                }
+                return jsonData;
+            }
+            let jsonData = getJSONDataFromQueryString(search);
+            filterData.userName = jsonData.userName
+            filterData.fromDate = jsonData.fromDate
+            filterData.toDate = jsonData.toDate
+            filterData.match = jsonData.match
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            socket.emit('gameReportByMarket',data)
+         }); 
+
+         socket.on('gameReportByMarket',async(data)=>{
+            let page = data.page;
+            let games = data.games;
+            let html = '';
+            let count 
+            if(page != 0){
+                count = (10 * page) + 1
+            }else{
+                count = 1
+            }
+            for(let i = 0;i<games.length;i++){
+                if(i % 2 == 0){
+                  html += `<tr style="text-align: center;">`
+                }else{
+                  html += `<tr style="text-align: center;" class="blue">`
+                }
+                  html += `<td>${count + i}</td>
+                  <td>${games[i].date}</td>
+                  <td class="clickableelement getajaxdataclick" data-href="${data.url}&market=${games[i]._id}" data-parent="${games[i]._id}">${games[i]._id}</td>
+                  <td>${games[i].gameCount}</td>
+                  <td>${games[i].won}</td>
+                  <td>${games[i].loss}</td>
+                  <td>${games[i].void}</td>`
+                if(games[i].returns >= 0){
+                  html += `<td style="color: #46BCAA;">+${(games[i].returns).toFixed(2)}</td>`
+                }else{
+                  html += `<td style="color: #FE3030;">${(games[i].returns).toFixed(2)}</td>`
+                }
+                html += `<td>-</td>`
+                html += `</tr>`
+                
+            }
+            count += games.length
+
+            if(data.page == 0){
+                if(games.length == 0){
+                    html += `<tr class="empty_table"><td>No record found</td></tr>`
+                    $('#load-more').hide()
+                }else{
+                    $('#load-more').show()
+                }
+
+                $('.new-body').html(html)
+            }else{
+                if(games.length == 0){
+                    $('#load-more').hide()
+                }
+                $('.new-body').append(html)
+            }
+         })
     }
 
     if(pathname == "/admin/onlineUsers"){

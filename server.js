@@ -943,6 +943,56 @@ io.on('connection', (socket) => {
 
         socket.emit('gameReportByMatch',{games,url,page,refreshStatus:data.refreshStatus})
     })
+    socket.on('gameReportByMarket',async(data)=>{
+        let page = data.page
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = page * limit
+        }
+    
+        let games = await Bet.aggregate([
+            {
+                $match: {
+                    userName: { $in: [data.filterData.userName] },
+                    status: {$in:["WON",'LOSS','CANCEL']},
+                    date:{$gte:new Date(data.filterData.fromDate),$lte:new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))},
+                    match:data.filterData.match
+                }
+            },
+            {
+                $group:{
+                    _id:'$marketName',
+                    date:{$first:'$date'},
+                    gameCount:{$sum:1},
+                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','CANCEL']]},'$returns',{"$subtract": [ "$returns", "$Stake" ]}]}}
+                    
+                }
+            },
+            {
+                $sort: {
+                    _id: 1,
+                    returns: 1
+                }
+            },
+            {
+                $skip:skip
+            },
+            {
+                $limit:limit
+            }
+            ])
+            let url = `/admin/gamereport/match/market?userName=${data.filterData.userName}&fromDate=${data.filterData.fromDate}&toDate=${data.filterData.toDate}&match=${data.filterData.match}`
+
+        socket.emit('gameReportByMarket',{games,url,page,refreshStatus:data.refreshStatus})
+    })
 
 
 
