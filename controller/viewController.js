@@ -3681,32 +3681,34 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                     userName:"$userName",
                     loginUserId:'$loginUserId'
                 },
-                totalCommission: { $sum: "$commission" },
-                totalUPline: { $sum: {$cond:{
-                    if:{$ne:['$loginUserId','$userId']},
-                    then:'$commission',
-                    else:0
-                }} },
+                // totalCommission: { $sum: "$commission" },
+                // totalUPline: { $sum: {$cond:{
+                //     if:{$ne:['$loginUserId','$userId']},
+                //     then:'$commission',
+                //     else:0
+                // }} },
             }
         },
-        {
-            $group: {
-                _id: "$_id.userName",
-                totalCommission: { $sum: "$totalCommission" },
-                totalUPline: { $sum:'$totalUPline'},
-            }
-        },
-        {
-            $sort:{
-            _id : 1,
-            totalCommission : 1,
-            totalUPline : 1
-            }
-        },
-        {
-        $limit:10
-        }
+        // {
+        //     $group: {
+        //         _id: "$_id.userName",
+        //         totalCommission: { $sum: "$totalCommission" },
+        //         totalUPline: { $sum:'$totalUPline'},
+        //     }
+        // },
+        // {
+        //     $sort:{
+        //     _id : 1,
+        //     totalCommission : 1,
+        //     totalUPline : 1
+        //     }
+        // },
+        // {
+        // $limit:10
+        // }
     ])
+
+    console.log(userWiseData,'==>commiccion report check')
 
     let accStatements = await accountStatement.aggregate([
         {
@@ -3731,14 +3733,14 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
           $limit:10
         }
     ])
-    res.status(200).render("./commissionPage/commissionPage",{
-        title:"Commission Report",
-        me,
-        currentUser:me,
-        eventWiseData,
-        userWiseData,
-        accStatements
-    })
+    // res.status(200).render("./commissionPage/commissionPage",{
+    //     title:"Commission Report",
+    //     me,
+    //     currentUser:me,
+    //     eventWiseData,
+    //     userWiseData,
+    //     accStatements
+    // })
 })
 
 exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
