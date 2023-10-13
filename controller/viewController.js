@@ -3681,12 +3681,12 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                     userName:"$userName",
                     loginUserId:'$loginUserId'
                 },
-                // totalCommission: { $sum: "$commission" },
-                // totalUPline: { $sum: {$cond:{
-                //     if:{$ne:['$loginUserId','$userId']},
-                //     then:'$commission',
-                //     else:0
-                // }} },
+                totalCommission: { $sum: "$commission" },
+                totalUPline: { $sum: {$cond:{
+                    if:{$ne:['$loginUserId','$userId']},
+                    then:'$commission',
+                    else:0
+                }} },
             }
         },
         // {
