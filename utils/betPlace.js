@@ -381,7 +381,7 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
               commissionPer = commission[0].fency.percentage
             }
             let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
-            // console.log(commissionCoin, commissionPer)
+            console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
             if(commissionPer > 0){
                 let commissiondata = {
                     userName : user.userName,
@@ -414,7 +414,9 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
                       commissionPer = commissionChild[0].fency.percentage
     
                     }
+                    
                     let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
+                    console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
                     if(commissionPer > 0){
                         let commissiondata = {
                             userName : childUser.userName,
