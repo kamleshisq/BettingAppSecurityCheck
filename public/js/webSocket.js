@@ -13047,8 +13047,9 @@ socket.on('connect', () => {
                 }else{
                     console.log('WORKING2')
                     $(this).parent('tr').removeClass('active')
-                    
-
+                    let userName = $(this).attr('data-usename')
+                    let string = `tr.pr${userName}`
+                    $('#match_odd').find(string).remove()
                 }
             })
 
@@ -13225,7 +13226,10 @@ socket.on('connect', () => {
                        html += '</tr>'
                         }
 
-                        $('#match_odd').find('tr.active').after(html)
+                        let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
+                        // console.log(string)
+                        // console.log($('#match_odd').find(string))
+                        $('#match_odd').find(string).after(html)
 
                     }else if (data.Bets[0].status === 'User'){
                         let team1 = data.matchName.split(' v ')[0].toLowerCase()
@@ -13265,7 +13269,9 @@ socket.on('connect', () => {
                        html += '</tr>'
                         }
 
-                        $('#match_odd').find('tr.active').after(html)
+                        // $('#match_odd').find('tr.active').after(html)
+                        let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
+                        $('#match_odd').find(string).after(html)
                     }
                     else{
                     let team1 = data.matchName.split(' v ')[0].toLowerCase()
