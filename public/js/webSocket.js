@@ -13047,8 +13047,9 @@ socket.on('connect', () => {
                 }else{
                     console.log('WORKING2')
                     $(this).parent('tr').removeClass('active')
-                    
-
+                    let userName = $(this).attr('data-usename')
+                    let string = `tr.pr${userName}`
+                    $('#match_odd').find(string).remove()
                 }
             })
 
