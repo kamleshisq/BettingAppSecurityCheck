@@ -1527,6 +1527,14 @@ exports.gameReportPageFinal = catchAsync(async(req, res, next) => {
         var day = date.getDate().toString().padStart(2, '0');
         return year + "-" + month + "-" + day;
     }
+    let market;
+    if(req.query.market.toLowerCase().startsWith('book')){
+        market =  {
+            $regex: /^book/i
+          }
+    }else{
+        market = req.query.market
+    }
     let betResult = await betModel.aggregate([
     {
         $match: {
@@ -1534,7 +1542,7 @@ exports.gameReportPageFinal = catchAsync(async(req, res, next) => {
             status: {$in:["WON",'LOSS','CANCEL']},
             date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},
             match:req.query.match,
-            marketName:req.query.market
+            marketName:market
         }
     },
     {
