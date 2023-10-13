@@ -3655,7 +3655,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("updateCommission", async(data) => {
-        // console.log(data)
+        console.log(data)
         try{
             let newValues = {
                 matchOdd: { percentage: data.data.matchOdds, type: `${data.data.matchOddsType}` , status: data.data.matchOddsStatus},

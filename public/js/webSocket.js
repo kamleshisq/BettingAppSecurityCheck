@@ -989,7 +989,7 @@ socket.on('connect', () => {
             }else{
                 data.BookmakerStatus = false
             }
-            // console.log(data)
+            console.log(data)
             socket.emit("updateCommission", {LOGINDATA, data})
         })
 
