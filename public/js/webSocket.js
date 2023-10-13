@@ -13419,8 +13419,17 @@ socket.on('connect', () => {
     
             socket.on('UerBook', async(data) => {
                 if(data.Bets[0].userName){ 
-                    if(data.sport == "Football"){
-
+                    if(data.sport == "Football"){   
+                        let team1 = data.matchName.split(' v ')[0].toLowerCase()
+                        let team2 = data.matchName.split(' v ')[1].toLowerCase()
+                        let team3 = "The Drow"
+                        for(let i = 0; i < data.Bets.length; i++){
+                            html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                            
+                            html += '</tr>'
+                        }
+                        let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
+                        $('#match_odd').find(string).after(html)
                     }else{
                         let team1 = data.matchName.split(' v ')[0].toLowerCase()
                         let team2 = data.matchName.split(' v ')[1].toLowerCase()
