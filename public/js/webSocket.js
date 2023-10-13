@@ -13040,7 +13040,10 @@ socket.on('connect', () => {
             $(document).on('click','#match_odd .userBookParent',function(e){
                 if(!$(this).parent('tr').hasClass('active')){
                     $(this).parent('tr').addClass('active')
-                      
+                    let marketId = $("#match_odd").attr('data-marketid')
+                    let userName = $(this).attr('data-usename')
+                    let type = 'userBook'
+                    socket.emit('UerBook', {marketId,LOGINDATA,userName,type})
                 }else{
                     console.log('WORKING2')
                     $(this).parent('tr').removeClass('active')
