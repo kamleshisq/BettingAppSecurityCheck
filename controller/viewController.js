@@ -3668,32 +3668,27 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
               loginUserId:{$exists:true}
             }
         },
-        // {
-        //     $lookup: {
-        //         from: "commissionnewmodels",
-        //         localField: "loginUserId",
-        //         foreignField: "loginUserId",
-        //         as: "parentdata"
-        //     }
-        // },
         {
-            $group: {
-                _id: {
-                   
-                    loginUserId:'$loginUserId'
-                },
-                totalCommission: { $sum: {$cond:{
-                    if:{$eq:['$loginUserId','$userId']},
-                    then:'$commission',
-                    else:0
-                }} },
-                totalUPline: { $sum: {$cond:{
-                    if:{$eq:['$loginUserId','$userId']},
-                    then:0,
-                    else:'$commission'
-                }} },
+            $lookup: {
+                from: "commissionnewmodels",
+                localField: "loginUserId",
+                foreignField: "loginUserId",
+                as: "parentdata"
             }
         },
+        // {
+        //     $group: {
+        //         _id: {
+        //             userName:"$userName",
+        //         },
+        //         totalCommission: { $sum: "$commission" },
+        //         totalUPline: { $sum: {$cond:{
+        //             if:{$eq:['$loginUserId','$userId']},
+        //             then:'$commission',
+        //             else:0
+        //         }} },
+        //     }
+        // },
         // {
         //     $group: {
         //         _id: "$_id.userName",
