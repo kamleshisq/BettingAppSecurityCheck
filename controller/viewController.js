@@ -3664,9 +3664,7 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
               eventDate: {
                 $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
               },
-              userName:{$in:childrenUsername},
-              loginUserId:{$exists:true},
-              parentIdArray:{$exists:true}
+              userName:{$in:childrenUsername}
             }
         },
         {
