@@ -1459,59 +1459,7 @@ exports.gameReportPageByMatchByMarket = catchAsync(async(req, res, next) => {
     })
          
 
-    // let roles
-    // if(currentUser.role_type == 1){
-    //     roles = await Role.find();
-    // }else{
-    //     roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
-    // }
-    //     let role_type =[]
-    //     for(let i = 0; i < roles.length; i++){
-    //         role_type.push(roles[i].role_type)
-    //     }
-    // const games = await betModel.aggregate([
-    //     {
-    //         $match:{
-    //             role_type:{$in:role_type}
-    //         }
-    //     },
-    //     {
-    //         $group:{
-    //             _id:{
-    //                 userName:'$userName',
-    //                 gameId: '$event'
-    //             },
-    //             gameCount:{$sum:1},
-    //             loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
-    //             won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
-    //             returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
-                
-    //         }
-    //     },
-    //     {
-    //         $group:{
-    //             _id:'$_id.userName',
-    //             gameCount:{$sum:1},
-    //             betCount:{$sum:'$gameCount'},
-    //             loss:{$sum:'$loss'},
-    //             won:{$sum:'$won'},
-    //             returns:{$sum:'$returns'}
-
-    //         }
-    //     },
-    //     {
-    //         $skip:0
-    //     },
-    //     {
-    //         $limit:10
-    //     }
-    // ])
-    // // console.log(games)
-    // res.status(200).render('./gamereports/gamereport',{
-    //     title:"gameReports",
-    //     me:currentUser,
-    //     games
-    // })
+    
 })
 
 exports.gameReportPageFinal = catchAsync(async(req, res, next) => {
@@ -1546,6 +1494,22 @@ exports.gameReportPageFinal = catchAsync(async(req, res, next) => {
         }
     },
     {
+        $project:{
+            date:1,
+            selectionName:1,
+            oddValue:1,
+            ip:1,
+            Stake:1,
+            returns:{
+                $cond:{
+                    if:{$eq:['$status','WON']},
+                    then:{$subtract:['$returns','$Stake']},
+                    else:'$returns'
+                }
+            }
+        }
+    },
+    {
         $sort: {
             date: -1
         }
@@ -1575,59 +1539,7 @@ exports.gameReportPageFinal = catchAsync(async(req, res, next) => {
     })
          
 
-    // let roles
-    // if(currentUser.role_type == 1){
-    //     roles = await Role.find();
-    // }else{
-    //     roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
-    // }
-    //     let role_type =[]
-    //     for(let i = 0; i < roles.length; i++){
-    //         role_type.push(roles[i].role_type)
-    //     }
-    // const games = await betModel.aggregate([
-    //     {
-    //         $match:{
-    //             role_type:{$in:role_type}
-    //         }
-    //     },
-    //     {
-    //         $group:{
-    //             _id:{
-    //                 userName:'$userName',
-    //                 gameId: '$event'
-    //             },
-    //             gameCount:{$sum:1},
-    //             loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
-    //             won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
-    //             returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
-                
-    //         }
-    //     },
-    //     {
-    //         $group:{
-    //             _id:'$_id.userName',
-    //             gameCount:{$sum:1},
-    //             betCount:{$sum:'$gameCount'},
-    //             loss:{$sum:'$loss'},
-    //             won:{$sum:'$won'},
-    //             returns:{$sum:'$returns'}
-
-    //         }
-    //     },
-    //     {
-    //         $skip:0
-    //     },
-    //     {
-    //         $limit:10
-    //     }
-    // ])
-    // // console.log(games)
-    // res.status(200).render('./gamereports/gamereport',{
-    //     title:"gameReports",
-    //     me:currentUser,
-    //     games
-    // })
+   
 })
 
 
