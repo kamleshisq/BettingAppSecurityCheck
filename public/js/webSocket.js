@@ -888,81 +888,84 @@ socket.on('connect', () => {
 
         socket.on("commissionData", data => {
             console.log(data)
+            
             if(data.status === "error"){
                 alert("Please try again later")
             }else{
                 console.log(data)
-                let modleName = "#myModal2"
-                let form = $(modleName).find('.form-data')
-                console.log(data.commissionData[0].matchOdd.percentage)
-                form.attr('id', data.id);
-                form.find('input[name="matchOdds"]').attr('value', data.commissionData[0].matchOdd.percentage);
-                form.find('input[name="Bookmaker"]').attr('value', data.commissionData[0].Bookmaker.percentage);
-                form.find('input[name="fency"]').attr('value', data.commissionData[0].fency.percentage);
-                let html1 = `<option value="ENTRY" selected>Entry Wise Commission</option>
-                <option value="NET_LOSS">Net Losing Commission</option>
-                <option value="ENTRY_LOSS_">Entry Wise Losing Commission</option>`
-                let html2 = `<option value="ENTRY">Entry Wise Commission</option>
-                <option value="NET_LOSS" selected>Net Losing Commission</option>
-                <option value="ENTRY_LOSS_">Entry Wise Losing Commission</option>`
-                let html3 = `<option value="ENTRY">Entry Wise Commission</option>
-                <option value="NET_LOSS">Net Losing Commission</option>
-                <option value="ENTRY_LOSS_" selected>Entry Wise Losing Commission</option>`
+                if(data.commissionData.length != 0){
+                    let modleName = "#myModal2"
+                    let form = $(modleName).find('.form-data')
+                    console.log(data.commissionData[0].matchOdd.percentage)
+                    form.attr('id', data.id);
+                    form.find('input[name="matchOdds"]').attr('value', data.commissionData[0].matchOdd.percentage);
+                    form.find('input[name="Bookmaker"]').attr('value', data.commissionData[0].Bookmaker.percentage);
+                    form.find('input[name="fency"]').attr('value', data.commissionData[0].fency.percentage);
+                    let html1 = `<option value="ENTRY" selected>Entry Wise Commission</option>
+                    <option value="NET_LOSS">Net Losing Commission</option>
+                    <option value="ENTRY_LOSS_">Entry Wise Losing Commission</option>`
+                    let html2 = `<option value="ENTRY">Entry Wise Commission</option>
+                    <option value="NET_LOSS" selected>Net Losing Commission</option>
+                    <option value="ENTRY_LOSS_">Entry Wise Losing Commission</option>`
+                    let html3 = `<option value="ENTRY">Entry Wise Commission</option>
+                    <option value="NET_LOSS">Net Losing Commission</option>
+                    <option value="ENTRY_LOSS_" selected>Entry Wise Losing Commission</option>`
 
-               let optionhtml= ''
-                if(data.commissionData[0].Bookmaker.type == "ENTRY"){
-                    form.find('select[name="BookmakerType"]').html(html1)
-                    optionhtml += `<option value="0.025">0.025</option>
-                    <option value="0.05">0.05</option>
-                    <option value="0.075">0.075</option>
-                    <option value="0.1">0.1</option>
-                    <option value="0.125">0.125</option>
-                    <option value="0.15">0.15</option>
-                    <option value="0.175">0.175</option>
-                    <option value="0.2">0.2</option>
-                    `
-                }else if(data.commissionData[0].Bookmaker.type == "NET_LOSS") {
-                    form.find('select[name="BookmakerType"]').html(html2)
-                    optionhtml += ` <option value="0.25">0.25</option>
-                      <option value="0.5">0.5</option>
-                      <option value="0.75">0.75</option>
-                      <option value="1">1</option>
-                      <option value="1.25">1.25</option>
-                      <option value="1.5">1.5</option>
-                      <option value="1.75">1.75</option>
-                      <option value="2">2</option>
-                      <option value="2.25">2.25</option>
-                      <option value="2.50">2.50</option>
-                      <option value="2.75">2.75</option>
-                      <option value="3">3</option>`
-                }else if (data.commissionData[0].Bookmaker.type == "ENTRY_LOSS_"){
-                    form.find('select[name="BookmakerType"]').html(html3)
-                    optionhtml += `<option value="0.25">0.25</option>
-                    <option value="0.5">0.5</option>
-                    <option value="0.75">0.75</option>
-                    <option value="1">1</option>`
-                }
-                if(data.commissionData[0].Bookmaker.status){
-                    $('[name="BookmakerStatus"]').prop('checked', true);
-                }else{
-                    $('[name="BookmakerStatus"]').prop('checked', false);
-                }
+                let optionhtml= ''
+                    if(data.commissionData[0].Bookmaker.type == "ENTRY"){
+                        form.find('select[name="BookmakerType"]').html(html1)
+                        optionhtml += `<option value="0.025">0.025</option>
+                        <option value="0.05">0.05</option>
+                        <option value="0.075">0.075</option>
+                        <option value="0.1">0.1</option>
+                        <option value="0.125">0.125</option>
+                        <option value="0.15">0.15</option>
+                        <option value="0.175">0.175</option>
+                        <option value="0.2">0.2</option>
+                        `
+                    }else if(data.commissionData[0].Bookmaker.type == "NET_LOSS") {
+                        form.find('select[name="BookmakerType"]').html(html2)
+                        optionhtml += ` <option value="0.25">0.25</option>
+                        <option value="0.5">0.5</option>
+                        <option value="0.75">0.75</option>
+                        <option value="1">1</option>
+                        <option value="1.25">1.25</option>
+                        <option value="1.5">1.5</option>
+                        <option value="1.75">1.75</option>
+                        <option value="2">2</option>
+                        <option value="2.25">2.25</option>
+                        <option value="2.50">2.50</option>
+                        <option value="2.75">2.75</option>
+                        <option value="3">3</option>`
+                    }else if (data.commissionData[0].Bookmaker.type == "ENTRY_LOSS_"){
+                        form.find('select[name="BookmakerType"]').html(html3)
+                        optionhtml += `<option value="0.25">0.25</option>
+                        <option value="0.5">0.5</option>
+                        <option value="0.75">0.75</option>
+                        <option value="1">1</option>`
+                    }
+                    if(data.commissionData[0].Bookmaker.status){
+                        $('[name="BookmakerStatus"]').prop('checked', true);
+                    }else{
+                        $('[name="BookmakerStatus"]').prop('checked', false);
+                    }
 
-                if(data.commissionData[0].fency.status){
-                    $('[name="fencyStatus"]').prop('checked', true);
-                }else{
-                    $('[name="fencyStatus"]').prop('checked', false);
-                }
+                    if(data.commissionData[0].fency.status){
+                        $('[name="fencyStatus"]').prop('checked', true);
+                    }else{
+                        $('[name="fencyStatus"]').prop('checked', false);
+                    }
 
-                if(data.commissionData[0].matchOdd.status){
-                    $('[name="matchOddsStatus"]').prop('checked', true);
-                }else{
-                    $('[name="matchOddsStatus"]').prop('checked', false);
+                    if(data.commissionData[0].matchOdd.status){
+                        $('[name="matchOddsStatus"]').prop('checked', true);
+                    }else{
+                        $('[name="matchOddsStatus"]').prop('checked', false);
+                    }
+                    document.getElementById("bookmakerPer").innerHTML = optionhtml
+                    form.find('select[name="Bookmaker"]').val(`${data.commissionData[0].Bookmaker.percentage}`)
+                    form.find('select[name="fency"]').val(`${data.commissionData[0].fency.percentage}`)
+                    form.find('select[name="matchOdds"]').val(`${data.commissionData[0].matchOdd.percentage}`)
                 }
-                document.getElementById("bookmakerPer").innerHTML = optionhtml
-                form.find('select[name="Bookmaker"]').val(`${data.commissionData[0].Bookmaker.percentage}`)
-                form.find('select[name="fency"]').val(`${data.commissionData[0].fency.percentage}`)
-                form.find('select[name="matchOdds"]').val(`${data.commissionData[0].matchOdd.percentage}`)
             }
         })
 
