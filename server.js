@@ -5560,7 +5560,7 @@ io.on('connection', (socket) => {
             const passcheck = await user.correctPassword(data.data.password, user.password)
             // console.log(passcheck, "PASSWORD CHECK")
             if(passcheck){
-            let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",remark:data.Remark,returns:0});
+            let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",remark:data.Remark,alertStatus:'CANCEL',returns:0});
           
             // console.log(bet, "BETS")
             let DebitCreditAmount 

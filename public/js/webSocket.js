@@ -4744,7 +4744,29 @@ socket.on('connect', () => {
             let url = $(this).attr('data-href')
             console.log(url)
             location.href = url
-         })
+        })
+        $('#load-more').click(function(e){
+            let page = parseInt($('.pageId').attr('data-pageid'));
+            $('.pageId').attr('data-pageid',page + 1)
+            let data = {}
+            let filterData = {}
+            function getJSONDataFromQueryString(queryString) {
+                const urlParams = new URLSearchParams(queryString);
+                const jsonData = {};
+                for (const [key, value] of urlParams.entries()) {
+                  jsonData[key] = value;
+                }
+                return jsonData;
+            }
+            let jsonData = getJSONDataFromQueryString(search);
+            filterData.userName = jsonData.userName
+            filterData.fromDate = jsonData.fromDate
+            filterData.toDate = jsonData.toDate
+            data.filterData = filterData;
+            data.page = page
+            data.LOGINDATA = LOGINDATA
+            socket.emit('gameReportByMatch',data)
+         }); 
     }
     if(pathname.startsWith('/admin/gamereport/match/market')){
         $(document).on('click','.getajaxdataclick',function(e){
