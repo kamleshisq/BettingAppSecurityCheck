@@ -13428,7 +13428,40 @@ socket.on('connect', () => {
                     <th>${team1}</th>
                     <th>${team2}</th>
                     <th>The Drow </th></tr>`
+                    for(let i = 0; i < data.Bets.length; i++){
+                        html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                        let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
+                        let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
+                        if(team1Data){
+                            if (team1Data.winAmount > 0){
+                                html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
+                            }else{
+                                html += `<td class="red">${team1Data.winAmount.toFixed(2)}</td>`
+                            }
+                        }else{
+                            if (team2Data.lossAmount > 0){
+                                html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
+                            }else{
+                                html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
+                            }
+                        }
 
+                        if(team2Data){
+                            if (team2Data.winAmount > 0){
+                            html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
+                            }else{
+                            html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
+                            }
+                    }else{
+                        if (team1Data.lossAmount > 0){
+                            html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
+                            }else{
+                            html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
+                            }
+                    }
+                    html += '</tr>'
+                    
+                    }
                     document.getElementById('match_odd').innerHTML = html
                    }else{
                     let team1 = data.matchName.split(' v ')[0].toLowerCase()
@@ -13436,7 +13469,7 @@ socket.on('connect', () => {
                     let html = `<tr class="headDetail"><th>User name</th>
                     <th>${team1}</th>
                     <th>${team2}</th></tr>`
-
+                    
                     for(let i = 0; i < data.Bets.length; i++){
                         html += `<tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                         let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
