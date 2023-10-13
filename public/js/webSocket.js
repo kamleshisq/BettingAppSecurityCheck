@@ -13511,21 +13511,9 @@ socket.on('connect', () => {
                                 html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
                             }
                             } 
-                        }
+                        
 
-                        if(team2Data){
-                            if (team2Data.winAmount > 0){
-                            html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
-                            }else{
-                            html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
-                            }
-                    }else{
-                        if (team1Data.lossAmount > 0){
-                            html += `<td class="green">${team1Data.lossAmount.toFixed(2)}</td>`
-                            }else{
-                            html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
-                            }
-                    }
+                        
                     html += '</tr>'
                     
                     }
