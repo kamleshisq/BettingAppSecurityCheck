@@ -883,6 +883,9 @@ socket.on('connect', () => {
             e.preventDefault()
             var row = this.closest('tr');
             var dataId = row.getAttribute("data-id");
+            let modleName = "#myModal2"
+            let form = $(modleName).find('.form-data')
+            form.attr('id', dataId);
             socket.emit('commissionData', {LOGINDATA, dataId})
         })
 
