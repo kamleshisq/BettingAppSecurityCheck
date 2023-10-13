@@ -13225,10 +13225,10 @@ socket.on('connect', () => {
                        html += '</tr>'
                         }
 
-                        let string = `td[data-username='${data.Id}']`
-                        console.log(string, "stringstring")
-                        console.log($(string))
-                        // $('#match_odd').find(string).after(html)
+                        let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
+                        console.log(string)
+                        console.log($('#match_odd').find(string))
+                        $('#match_odd').find(string).after(html)
 
                     }else if (data.Bets[0].status === 'User'){
                         let team1 = data.matchName.split(' v ')[0].toLowerCase()
