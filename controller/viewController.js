@@ -1550,17 +1550,20 @@ exports.gameReportPageFinal = catchAsync(async(req, res, next) => {
     }
     ])
 
-    let oldurl = `/admin/gamereport/match/market/report?userName=${req.query.userName}&fromDate=${req.query.fromDate}&toDate=${req.query.toDate}`
+    let oldurl1 = `/admin/gamereport/match?userName=${req.query.userName}&fromDate=${req.query.fromDate}&toDate=${req.query.toDate}`
+    let oldurl = `/admin/gamereport/match/market?userName=${req.query.userName}&fromDate=${req.query.fromDate}&toDate=${req.query.toDate}&match=${req.query.match}`
     
 
-    res.status(200).render('./gamereports/gamereportBymarket',{
+    res.status(200).render('./gamereports/gamereportfinal',{
         title:"Game Reports",
         me:currentUser,
         games:betResult,
         currentUser,
         userName:req.query.userName,
         matchName:req.query.match,
-        oldurl
+        oldurl,
+        oldurl1,
+        marketName:req.query.market
     })
          
 

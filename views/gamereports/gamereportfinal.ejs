@@ -6,8 +6,9 @@
       <div class="new-head"> 
         <ul class="bredcum_gameReport">
             <li><a href="/admin/gamereport">Game Reports</a></li>
-            <li><a href="<%=oldurl%>"><%=userName%></a></li>
-            <li><%=matchName%></li>
+            <li><a href="<%=oldurl1%>"><%=userName%></a></li>
+            <li><a href="<%=oldurl%>"><%=matchName%></a></li>
+            <li><%=marketName%></li>
         </ul>
       </div>
     <%- include("../loginUserAdminsideDetails") %>
@@ -49,7 +50,11 @@
                   <%}else{%>
                   <td class="red"><%=(games[i].returns).toFixed(2)%></td>
                   <%}%>
-                  <td>-</td>
+                  <%id(games[i].ip){%>
+                    <td><%=games[i].ip%></td>
+                  <%}else{%>
+                    <td>-</td>
+                  <%}%>
                 </tr>
                 <%}%>
               </tr>
