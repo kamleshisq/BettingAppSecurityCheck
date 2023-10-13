@@ -13056,7 +13056,8 @@ socket.on('connect', () => {
                           }
                         }
                       }
-                      console.log(prclass, "prclassprclassprclassprclass")
+                      let removeString = `#match_odd tr:not(.${prclass})`
+                      $(removeString).remove();
                     let string = `tr.pr${userName}`
                     if($('#match_odd').find(string).length === 0){
                         $('#match_odd').find('tr.active').removeClass('active')
