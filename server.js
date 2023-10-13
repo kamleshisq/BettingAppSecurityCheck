@@ -3662,7 +3662,13 @@ io.on('connection', (socket) => {
                 Bookmaker: { percentage: data.data.Bookmaker, type:  `${data.data.BookmakerType}`, status: data.data.BookmakerStatus},
                 fency: { percentage: data.data.fency, type: `${data.data.fencyType}`, status: data.data.fencyStatus}
             }
-            let newdata = await commissionModel.findOneAndUpdate({userId:data.data.id}, newValues)
+            let newdata
+            if(!await commissionModel.findOne({userId:data.data.id})){
+                newdata = await commissionModel.create(newValues)
+            }else{
+
+                newdata = await commissionModel.findOneAndUpdate({userId:data.data.id}, newValues)
+            }
 
         socket.emit("updateCommission",{newdata, status:"success"})
         }catch(err){
