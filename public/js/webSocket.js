@@ -13227,7 +13227,7 @@ socket.on('connect', () => {
 
                         let string = `tr:has(td:first-child[data-username='${data.Id}'])`
                         console.log(string, "stringstring")
-                        console.log($('#match_odd').find(string))
+                        console.log($(string))
                         $('#match_odd').find(string).after(html)
 
                     }else if (data.Bets[0].status === 'User'){
