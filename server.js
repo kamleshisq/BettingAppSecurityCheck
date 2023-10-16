@@ -4095,10 +4095,12 @@ io.on('connection', (socket) => {
                 Id = thatUSer.userName
                 falg = true
                 users = await User.find({parent_id:thatUSer._id, isActive:true , roleName:{$ne:'Operator'}})
+                // parentIdOfClickedUser = thatUSer._id
             }
             // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
         }else{
             users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
+            // parentIdOfClickedUser = data.LOGINDATA.LOGINUSER._id
             Id = data.LOGINDATA.LOGINUSER.userName
 
         }
@@ -4282,7 +4284,7 @@ io.on('connection', (socket) => {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
                                                                             $cond:{
-                                                                                if : {$eq : ["$parentId", parentIdOfClickedUser]},
+                                                                                if : {$eq : ["$parentId", ele.id]},
                                                                                 then:"$$selection.winAmount",
                                                                                 else:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                                             }
@@ -4329,7 +4331,7 @@ io.on('connection', (socket) => {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
                                                                             $cond:{
-                                                                                if : {$eq : ["$parentId", parentIdOfClickedUser]},
+                                                                                if : {$eq : ["$parentId", ele.id]},
                                                                                 then:"$$selection.lossAmount",
                                                                                 else:{$subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                                             }
