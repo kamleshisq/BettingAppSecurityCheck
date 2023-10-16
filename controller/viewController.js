@@ -3707,9 +3707,9 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
         // },
         {
             $sort:{
-            _id : 1,
-            totalCommission : 1,
-            totalUPline : 1
+            date : -1,
+            // totalCommission : 1,
+            // totalUPline : 1
             }
         },
         {
