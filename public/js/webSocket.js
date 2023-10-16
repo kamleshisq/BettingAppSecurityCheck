@@ -13300,6 +13300,7 @@ socket.on('connect', () => {
                         ele.each(function(index){
                             if($(this).hasClass('userBookParentTr') && $(this).hasClass('active')){
                                 let userName = $(this).children().hasClass('userBookParent').attr('data-usename')
+                                console.log(userName)
                                 removeChild(userName)
 
                             }else{
