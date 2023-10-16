@@ -13288,7 +13288,29 @@ socket.on('connect', () => {
                     $(this).parent('tr').removeClass('active')
                     let userName = $(this).attr('data-usename')
                     let string = `tr.pr${userName}`
-                    $('#match_odd').find(string).remove()
+                    console.log()
+                    'userBookParentTr'
+                    let ele = $('#match_odd').find(string)
+                    let status = true;
+                    function removeChild(username){
+                        $('#match_odd').find(`tr.pr${userName}`).removeClass('active')
+                        let userName = $('#match_odd').find(`tr.pr${userName}`).attr('data-usename')
+                        let string = `tr.pr${userName}`
+                        $('#match_odd').find(string).remove()
+                    }
+                    function loopforchildclose(ele){
+                        for(let i = 0;i<ele.length;i++){
+                            if(ele[i].hasClass('userBookParentTr')){
+                                let userName = ele[i].children().hasClass('userBookParent').attr('data-usename')
+                                removeChild(userName)
+
+                            }else{
+                                ele[i].remove()
+                            }
+                        }
+                    }
+                   loopforchildclose(ele)
+                    
                 }
             })
 
@@ -13423,7 +13445,8 @@ socket.on('connect', () => {
                   
                 }
             })
-    
+            
+            let ubcC = 1;
             socket.on('UerBook', async(data) => {
                 if(data.Bets[0].userName){ 
                     if(data.sport == "Football"){   
