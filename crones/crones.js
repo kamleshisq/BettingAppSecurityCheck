@@ -458,8 +458,9 @@ module.exports = () => {
                 
 
                 //NET LOSING COMMISSION
+                let commissionMarket = await commissionMarketModel.find()
 
-                let filterUser = await User.find({"$Bookmaker.type":'NET_LOSS'})
+                let filterUser = await userModel.find({"$Bookmaker.type":'NET_LOSS'})
                 let newfilterUser = map(ele => {
                     return ele.userId
                 })
@@ -469,7 +470,8 @@ module.exports = () => {
                 let netLossingCommission = await betModel.aggregate([
                     {
                         $match:{
-                            status:'OPEN',
+                            market : { $regex: /^book/i},
+                            status:{$in:['WON','LOSS']},
                             marketId:marketresult.mid,
                             $or:[{
                                     $and:
@@ -485,9 +487,16 @@ module.exports = () => {
                                         {bettype2:'LAY'}
                                     ]
                                 }
-                            ]
+                            ],
+                            userId:{$in:newfilterUser}
                         }
+                    },
+                   {
+                    $group:{
+                        _id:'$userName',
+
                     }
+                   }
                 ])
                 
             });
