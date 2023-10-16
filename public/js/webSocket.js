@@ -13426,6 +13426,7 @@ socket.on('connect', () => {
     
             socket.on('UerBook', async(data) => {
                 if(data.Bets[0].userName){ 
+                    console.log(data, "datadata")
                     if(data.sport == "Football"){   
                         let team1 = data.matchName.split(' v ')[0].toLowerCase()
                         let team2 = data.matchName.split(' v ')[1].toLowerCase()
@@ -13437,8 +13438,8 @@ socket.on('connect', () => {
                             let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
                             let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("The Drow"))
                             html += '</tr>'
+                            console.log(team1Data, team2Data, team3Data)
                         }
-                        console.log(team1Data, team2Data, team3Data)
                         let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
                         $('#match_odd').find(string).after(html)
                     }else{
