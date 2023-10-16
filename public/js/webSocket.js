@@ -13169,23 +13169,23 @@ socket.on('connect', () => {
                 }
             })
 
-            // $(document).ready(function () {
-            //     $('.userBook').click(function () {
-            //         // console.log('USERBOOK')
-            //         let id = LOGINDATA.LOGINUSER._id
-            //         var closestMarket = $(this).parents('.bets-table').find('.market');
-            //         // console.log(closestMarket)
-            //         if (closestMarket.length > 0) {
-            //             var marketId = closestMarket.attr('id');
-            //             $("#match_odd").attr('data-marketid',marketId)
-            //             let type = 'userBook'
-            //             let newData = true
-            //             socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData})
-            //         } else {
-            //             console.log('Market not found.');
-            //         }
-            //     });
-            // });
+            $(document).ready(function () {
+                $('.userBook').click(function () {
+                    // console.log('USERBOOK')
+                    let id = LOGINDATA.LOGINUSER._id
+                    var closestMarket = $(this).parents('.bets-table').find('.market');
+                    // console.log(closestMarket)
+                    if (closestMarket.length > 0) {
+                        var marketId = closestMarket.attr('id');
+                        $("#match_odd").attr('data-marketid',marketId)
+                        let type = 'userBook'
+                        let newData = true
+                        socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData})
+                    } else {
+                        console.log('Market not found.');
+                    }
+                });
+            });
 
             $(document).ready(function () {
                 $('.BookList').click(function () {
