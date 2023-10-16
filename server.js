@@ -4455,8 +4455,6 @@ io.on('connection', (socket) => {
                         
                     ])
 
-                    console.log(Bets, "BetsBetsBetsBetsBetsBetsBetsBetsBetsBets")
-                    console.log(ele.id, "ele.idele.idele.id")
                     if(falg){
                         return({User:ele, Bets:Bets, userName:data.userName})
                     }else{
