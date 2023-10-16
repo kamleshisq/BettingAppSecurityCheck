@@ -7098,9 +7098,7 @@ $(document).ready(function () {
         $("a[href='" + '/admin/catalogcontrol' + "'").addClass('active');
       } else if (pathname == '/admin/riskAnalysis' || pathname == '/admin/matchBets') {
         $("a[href='" + '/admin/liveMarket' + "'").addClass('active');
-      } else if (pathname == '/admin/profiledetail') {
-        $("a[href='" + '/admin/userManagement' + "'").addClass('active');
-      } else if (pathname.startsWith('/admin/userdetails' || pathname == '/admin/allOperators')) {
+      } else if (pathname.startsWith('/admin/userdetails' || pathname == '/admin/allOperators' || pathname == '/admin/profiledetail')) {
         $("a[href='" + '/admin/userManagement' + "'").addClass('active');
       } else if (pathname == '/admin/settlementIn') {
         $("a[href='" + '/admin/settlement' + "'").addClass('active');
