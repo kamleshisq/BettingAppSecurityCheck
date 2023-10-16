@@ -4963,7 +4963,7 @@ io.on('connection', (socket) => {
                         // console.log(Bets[0].selections2, "BetsBetsBetsBets")
                         for(let i = 0; i < Bets.length; i++){
                             console.log(Bets[i].parentArray)
-                            console.log(Bets[i].selections)
+                            console.log(Bets[i].selections2)
                         }
 
                     }
