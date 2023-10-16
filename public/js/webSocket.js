@@ -13422,13 +13422,16 @@ socket.on('connect', () => {
                     if(data.sport == "Football"){   
                         let team1 = data.matchName.split(' v ')[0].toLowerCase()
                         let team2 = data.matchName.split(' v ')[1].toLowerCase()
-                        let team3 = "The Drow"
+                        // let team3 = 
                         let html = ''
                         for(let i = 0; i < data.Bets.length; i++){
                             html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
-                            
+                            let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
+                            let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
+                            let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("The Drow"))
                             html += '</tr>'
                         }
+                        console.log(team1Data, team2Data, team3Data)
                         let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
                         $('#match_odd').find(string).after(html)
                     }else{
