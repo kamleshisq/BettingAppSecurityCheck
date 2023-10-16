@@ -461,7 +461,7 @@ module.exports = () => {
                 let commissionMarket = await commissionMarketModel.find()
 
                 let filterUser = await commissionModel.find({"$Bookmaker.type":'NET_LOSS'})
-                let newfilterUser = map(ele => {
+                let newfilterUser = filterUser.map(ele => {
                     return ele.userId
                 })
 
