@@ -460,7 +460,7 @@ module.exports = () => {
                 //NET LOSING COMMISSION
                 let commissionMarket = await commissionMarketModel.find()
 
-                let filterUser = await userModel.find({"$Bookmaker.type":'NET_LOSS'})
+                let filterUser = await commissionModel.find({"$Bookmaker.type":'NET_LOSS'})
                 let newfilterUser = map(ele => {
                     return ele.userId
                 })
@@ -473,21 +473,6 @@ module.exports = () => {
                             market : { $regex: /^book/i},
                             status:{$in:['WON','LOSS']},
                             marketId:marketresult.mid,
-                            $or:[{
-                                    $and:
-                                    [
-                                        {selectionName:{$ne:marketresult.result}},
-                                        {bettype2:'BACK'}
-                                    ]
-                                },
-                                {
-                                    $and:
-                                    [
-                                        {selectionName:{$ne:marketresult.result}},
-                                        {bettype2:'LAY'}
-                                    ]
-                                }
-                            ],
                             userId:{$in:newfilterUser}
                         }
                     },
