@@ -477,3 +477,37 @@ module.exports = () => {
 
 
 }
+
+
+
+                // //NET LOSING COMMISSION
+                // let commissionMarket = await commissionMarketModel.find()
+                // if(commissionMarket.some(item => item.marketId == bet.marketId)){
+
+                // let filterUser = await commissionModel.find({"$Bookmaker.type":'NET_LOSS'})
+                // let newfilterUser = filterUser.map(ele => {
+                //     return ele.userId
+                // })
+
+                // console.log(newfilterUser,"==>newfilterUser")
+
+                // let netLossingCommission = await betModel.aggregate([
+                //     {
+                //         $match:{
+                //             market : { $regex: /^book/i},
+                //             status:{$in:['WON','LOSS']},
+                //             marketId:marketresult.mid,
+                //             userId:{$in:newfilterUser}
+                //         }
+                //     },
+                //     {
+                //         $group:{
+                //             _id:'$userName',
+                //             returns:{$sum:{$cond:[{$in:['$status',['LOSS']]},'$returns',{"$subtract": [ "$returns", "$Stake" ]}]}}
+                //         }
+                //     }
+                // ])
+
+                // console.log(netLossingCommission,'netlossingcommission test')
+                
+                // }
