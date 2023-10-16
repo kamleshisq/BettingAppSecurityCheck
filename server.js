@@ -4089,16 +4089,19 @@ io.on('connection', (socket) => {
         let users = []
         let falg = false
         let Id 
+        let parentIdOfClickedUser
         if(data.userName){
             let thatUSer = await User.findOne({userName:data.userName})
             if(thatUSer){
                 Id = thatUSer.userName
                 falg = true
                 users = await User.find({parent_id:thatUSer._id, isActive:true , roleName:{$ne:'Operator'}})
+                parentIdOfClickedUser = thatUSer._id
             }
             // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
         }else{
             users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
+            parentIdOfClickedUser = data.LOGINDATA.LOGINUSER._id
             Id = data.LOGINDATA.LOGINUSER.userName
 
         }
@@ -4106,13 +4109,13 @@ io.on('connection', (socket) => {
             let newUser = users.map(async(ele)=>{
                 let childrenUsername1 = []
                 let children
-                let parentIdOfClickedUser
+                
                 if(falg){
                     children = await User.find({parentUsers:ele.id})
-                    parentIdOfClickedUser = ele.id
+                    // parentIdOfClickedUser = ele.id
                 }else{
                     children = await User.find({parentUsers:ele._id})
-                    parentIdOfClickedUser = ele._id
+                    // parentIdOfClickedUser = ele._id
                 }
                 children.map(ele1 => {
                     childrenUsername1.push(ele1.userName) 
