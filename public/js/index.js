@@ -71,7 +71,6 @@ $(document).ready(function(){
             $("a[href='"+'/admin/userManagement'+"'").addClass('active')
         }else if(pathname.startsWith('/admin/userdetails' || pathname == '/admin/allOperators')){
             $("a[href='"+'/admin/userManagement'+"'").addClass('active')
-
         }else if(pathname == '/admin/settlementIn'){
             $("a[href='"+'/admin/settlement'+"'").addClass('active')
             $("a[href='"+'/admin/settlement'+"'").parent().parent().siblings('a').addClass('active')
