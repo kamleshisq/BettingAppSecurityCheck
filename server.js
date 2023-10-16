@@ -4916,7 +4916,7 @@ io.on('connection', (socket) => {
                                                         $cond:{
                                                             if : {
                                                                 $and: [
-                                                                  { $ne: ['$$this.parentUSerId', ele.id] }, 
+                                                                  { $ne: ['$$this.parentUSerId', loginId] }, 
                                                                   { $eq: ['$$value.flag', true] } 
                                                                 ]
                                                               },
