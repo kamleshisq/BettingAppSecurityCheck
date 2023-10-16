@@ -13169,23 +13169,23 @@ socket.on('connect', () => {
                 }
             })
 
-            $(document).ready(function () {
-                $('.userBook').click(function () {
-                    // console.log('USERBOOK')
-                    let id = LOGINDATA.LOGINUSER._id
-                    var closestMarket = $(this).parents('.bets-table').find('.market');
-                    // console.log(closestMarket)
-                    if (closestMarket.length > 0) {
-                        var marketId = closestMarket.attr('id');
-                        $("#match_odd").attr('data-marketid',marketId)
-                        let type = 'userBook'
-                        let newData = true
-                        socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData})
-                    } else {
-                        console.log('Market not found.');
-                    }
-                });
-            });
+            // $(document).ready(function () {
+            //     $('.userBook').click(function () {
+            //         // console.log('USERBOOK')
+            //         let id = LOGINDATA.LOGINUSER._id
+            //         var closestMarket = $(this).parents('.bets-table').find('.market');
+            //         // console.log(closestMarket)
+            //         if (closestMarket.length > 0) {
+            //             var marketId = closestMarket.attr('id');
+            //             $("#match_odd").attr('data-marketid',marketId)
+            //             let type = 'userBook'
+            //             let newData = true
+            //             socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData})
+            //         } else {
+            //             console.log('Market not found.');
+            //         }
+            //     });
+            // });
 
             $(document).ready(function () {
                 $('.BookList').click(function () {
@@ -13554,7 +13554,12 @@ socket.on('connect', () => {
                         let team2 = data.matchName.split(' v ')[1].toLowerCase()
                         let html = '';
                         for(let i = 0; i < data.Bets.length; i++){
-                            html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                            if(data.Bets[i].User.roleName == 'user'){
+                                html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                            }else{
+                                html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                            }
+                            // html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                             let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                         let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
                         if(team1Data){
