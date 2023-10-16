@@ -13293,6 +13293,7 @@ socket.on('connect', () => {
                     function removeChild(username){
                         $('#match_odd').find(`tr.pr${username}`).removeClass('active')
                         let userName = $('#match_odd').find(`tr.pr${username}`).attr('data-usename')
+                        console.log(userName)
                         let string = `tr.pr${userName}`
                         let ele = $('#match_odd').find(string)
                         loopforchildclose(ele)
