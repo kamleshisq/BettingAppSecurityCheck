@@ -4945,11 +4945,19 @@ io.on('connection', (socket) => {
                                                             else : {
                                                                 value: {
                                                                     $cond : {
-                                                                        if : { $eq : ["$$value.value" , 0]},
+                                                                        if : {$and: [{ $eq : ["$$value.value" , 0]},{ $eq: ['$$value.flag', true] }]},
                                                                         then : {
-                                                                            $subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                            $subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]
                                                                         },
-                                                                        else : "$$value.value"
+                                                                        else : {
+                                                                            $cond:{
+                                                                                if:{ $eq: ['$$value.flag', true] },
+                                                                                then:{
+                                                                                    $subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                                },
+                                                                                else:'$$value.value'
+                                                                            }
+                                                                        }
                                                                     }
                                                                 },
                                                                 flag:false
