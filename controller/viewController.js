@@ -3717,6 +3717,9 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
         }
     ])
     console.log(userWiseData,'==>commiccion report check')
+    res.status(200).json({
+        userWiseData
+    })
 
     let accStatements = await accountStatement.aggregate([
         {
