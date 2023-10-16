@@ -263,7 +263,8 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
             secId : data.data.secId,
             bettype2: data.data.bettype2,
             ip:data.LOGINDATA.IP,
-            parentArray:parentArray
+            parentArray:parentArray,
+            parentId:data.LOGINDATA.LOGINUSER.parent_id
         }
     }else{
         let runnersData = JSON.parse(marketDetails.runners)
@@ -293,7 +294,8 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
                 secId : data.data.secId,
                 bettype2: data.data.bettype2,
                 ip:data.LOGINDATA.IP,
-                parentArray:parentArray
+                parentArray:parentArray,
+                parentId:data.LOGINDATA.LOGINUSER.parent_id
 
             }
     }
