@@ -3672,11 +3672,11 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
         {
             $lookup: {
                 from: "commissionnewmodels",
-                let: {uniqueId:{$cond:{if:{$eq:['$uniqueId',null]},then:'$_id',else:{ $toObjectId: "$uniqueId" }}},loginId:'$loginUserId',parentArr:'$parentIdArray'},
+                let: {ud:{$cond:{if:{$ifNull: ["$uniqueId", false]},then:{ $toObjectId: "$uniqueId" },else:'$_id'}},loginId:'$loginUserId',parentArr:'$parentIdArray'},
                 pipeline: [
                     {
                       $match: {
-                        $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$uniqueId"] }, { $in: ["$userId", "$$parentArr"] }] },
+                        $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
                         loginUserId:{$exists:true},
                         parentIdArray:{$exists:true}
                       }
@@ -3685,31 +3685,24 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
                 as: "parentdata"
             }
         },
-        // {
-        //     $group: {
-        //         _id: "$userName",
-        //         totalCommission: { $sum: "$commission" },
-        //         totalUPline: { $sum:{
-        //             $reduce:{
-        //                 input:'$parentdata',
-        //                 initialValue:0,
-        //                 in: { $add: ["$$value", "$$this.commission"] }
-        //             }
-        //         }},
-        //     }
-        // },
-        // {
-        //     $group: {
-        //         _id: "$_id.userName",
-        //         totalCommission: { $sum: "$totalCommission" },
-        //         totalUPline: { $sum:'$totalUPline'},
-        //     }
-        // },
+        {
+            $group: {
+                _id: "$userName",
+                totalCommission: { $sum: "$commission" },
+                totalUPline: { $sum:{
+                    $reduce:{
+                        input:'$parentdata',
+                        initialValue:0,
+                        in: { $add: ["$$value", "$$this.commission"] }
+                    }
+                }},
+            }
+        },
         {
             $sort:{
-            date : -1,
-            // totalCommission : 1,
-            // totalUPline : 1
+            _id : -1,
+            totalCommission : 1,
+            totalUPline : 1
             }
         },
         {
@@ -3717,9 +3710,9 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
         }
     ])
     console.log(userWiseData,'==>commiccion report check')
-    res.status(200).json({
-        userWiseData
-    })
+    // res.status(200).json({
+    //     userWiseData
+    // })
 
     let accStatements = await accountStatement.aggregate([
         {
@@ -3744,14 +3737,14 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
           $limit:10
         }
     ])
-    // res.status(200).render("./commissionPage/commissionPage",{
-    //     title:"Commission Report",
-    //     me,
-    //     currentUser:me,
-    //     eventWiseData,
-    //     userWiseData,
-    //     accStatements
-    // })
+    res.status(200).render("./commissionPage/commissionPage",{
+        title:"Commission Report",
+        me,
+        currentUser:me,
+        eventWiseData,
+        userWiseData,
+        accStatements
+    })
 })
 
 exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {

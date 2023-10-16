@@ -204,6 +204,7 @@ async function processBets() {
               })
 
               let commissionMarket = await commissionMarketModel.find()
+              let usercommissiondata;
                         if(commissionMarket.some(item => item.marketId == bet.marketId)){
                         try{
                             let commission = await commissionModel.find({userId:user.id})
@@ -226,9 +227,11 @@ async function processBets() {
                                     upline : 100,
                                     commissionType: 'Win Commission',
                                     commissionPercentage:commissionPer,
-                                    marketName:bet.marketName
+                                    marketName:bet.marketName,
+                                    loginUserId:user._id,
+                                    parentIdArray:user.parentUsers
                                 }
-                                let commissionData = await newCommissionModel.create(commissiondata)
+                                usercommissiondata = await newCommissionModel.create(commissiondata)
                             }
                             }catch(err){
                                 console.log(err)
@@ -258,7 +261,10 @@ async function processBets() {
                                             upline : 100,
                                             commissionType: 'Win Commission',
                                             commissionPercentage:commissionPer,
-                                            marketName:bet.marketName
+                                            marketName:bet.marketName,
+                                            loginUserId:usercommissiondata.userId,
+                                            parentIdArray:childUser.parentUsers,
+                                            uniqueId:usercommissiondata._id
                                         }
                                         let commissionData = await newCommissionModel.create(commissiondata)
                                     }
@@ -288,6 +294,7 @@ async function processBets() {
               }
               
               let commissionMarket = await commissionMarketModel.find()
+              let usercommissiondata;
               if(commissionMarket.some(item => item.marketId == bet.marketId)){
                   try{
                       let commission = await commissionModel.find({userId:user.id})
@@ -311,9 +318,11 @@ async function processBets() {
                               commissionType: 'Entry Loss Wise Commission',
                               commissionPercentage:commissionPer,
                               date:Date.now(),
-                              marketName:bet.marketName
+                              marketName:bet.marketName,
+                              loginUserId:user._id,
+                              parentIdArray:user.parentUsers
                           }
-                          let commissionData = await newCommissionModel.create(commissiondata)
+                          usercommissiondata = await newCommissionModel.create(commissiondata)
                       }
                       }catch(err){
                           console.log(err)
@@ -343,7 +352,10 @@ async function processBets() {
                                       commissionType: 'Entry Loss Wise Commission',
                                       commissionPercentage:commissionPer,
                                       date:Date.now(),
-                                      marketName:bet.marketName
+                                      marketName:bet.marketName,
+                                      loginUserId:usercommissiondata.userId,
+                                      parentIdArray:childUser.parentUsers,
+                                      uniqueId:usercommissiondata._id
                                   }
                                   let commissionData = await newCommissionModel.create(commissiondata)
                               }
