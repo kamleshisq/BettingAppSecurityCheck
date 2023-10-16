@@ -4281,19 +4281,15 @@ io.on('connection', (socket) => {
                                                             else : {
                                                                 value: {
                                                                     $cond : {
-                                                                        if : {$and: [{ $eq : ["$$value.value" , 0]},{ $eq: ['$$value.flag', true] }]},
+                                                                        if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
-                                                                            $subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]
-                                                                        },
-                                                                        else : {
                                                                             $cond:{
-                                                                                if:{ $eq: ['$$value.flag', true] },
-                                                                                then:{
-                                                                                    $subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]
-                                                                                },
-                                                                                else:'$$value.value'
+                                                                                if : {$eq : ["$parentId", ele.id]},
+                                                                                then:"$$selection.winAmount",
+                                                                                else:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                                             }
-                                                                        }
+                                                                        },
+                                                                        else : "$$value.value"
                                                                     }
                                                                 },
                                                                 flag:false
@@ -4332,19 +4328,15 @@ io.on('connection', (socket) => {
                                                             else : {
                                                                 value: {
                                                                     $cond : {
-                                                                        if : {$and: [{ $eq : ["$$value.value" , 0]},{ $eq: ['$$value.flag', true] }]},
+                                                                        if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
-                                                                            $subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]
-                                                                        },
-                                                                        else : {
                                                                             $cond:{
-                                                                                if:{ $eq: ['$$value.flag', true] },
-                                                                                then:{
-                                                                                    $subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]
-                                                                                },
-                                                                                else:'$$value.value'
+                                                                                if : {$eq : ["$parentId", ele.id]},
+                                                                                then:"$$selection.lossAmount",
+                                                                                else:{$subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                                             }
-                                                                        }
+                                                                        },
+                                                                        else : "$$value.value"
                                                                     }
                                                                 },
                                                                 flag:false
@@ -4983,7 +4975,7 @@ io.on('connection', (socket) => {
 
 
                     if(Bets.length > 0){
-                        console.log(Bets, "BetsBetsBetsBets jkjkjkjkjkjkjkjkjkjkjk")
+                        console.log(Bets, "BetsBetsBetsBets ")
                         // console.log(Bets[0].selections2, "BetsBetsBetsBets")
                         for(let i = 0; i < Bets.length; i++){
                             console.log(Bets[i].parentArray)
