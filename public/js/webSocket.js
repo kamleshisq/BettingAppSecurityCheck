@@ -13575,7 +13575,33 @@ socket.on('connect', () => {
                                 html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
                                 html += `<td class="red">${team1Data.lossAmount.toFixed(2)}</td>`
                             }
-                        } 
+                        }else if (!team1Data && team2Data && !team3Data){
+                            if (team2Data.winAmount > 0){
+                                html += `<td class="green">${team2Data.winAmount.toFixed(2)}</td>`
+                            }else{
+                                html += `<td class="red">${team2Data.winAmount.toFixed(2)}</td>`
+                            }
+                            if(team2Data.lossAmount > 0){
+                                 html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
+                                 html += `<td class="green">${team2Data.lossAmount.toFixed(2)}</td>`
+                            }else{
+                                html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
+                                html += `<td class="red">${team2Data.lossAmount.toFixed(2)}</td>`
+                            }
+                        }else if (!team1Data && !team2Data && team3Data){
+                            if (team3Data.winAmount > 0){
+                                html += `<td class="green">${team3Data.winAmount.toFixed(2)}</td>`
+                            }else{
+                                html += `<td class="red">${team3Data.winAmount.toFixed(2)}</td>`
+                            }
+                            if(team3Data.lossAmount > 0){
+                                 html += `<td class="green">${team3Data.lossAmount.toFixed(2)}</td>`
+                                 html += `<td class="green">${team3Data.lossAmount.toFixed(2)}</td>`
+                            }else{
+                                html += `<td class="red">${team3Data.lossAmount.toFixed(2)}</td>`
+                                html += `<td class="red">${team3Data.lossAmount.toFixed(2)}</td>`
+                            }
+                        }
                         
 
                         
