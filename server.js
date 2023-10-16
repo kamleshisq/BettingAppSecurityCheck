@@ -4872,7 +4872,7 @@ io.on('connection', (socket) => {
                                                         $cond:{
                                                             if : {
                                                                 $and: [
-                                                                  { $ne: ['$$this.parentUSerId', loginId] }, 
+                                                                  { $ne: ['$$this.parentUSerId', ele.id] }, 
                                                                   { $eq: ['$$value.flag', true] } 
                                                                 ]
                                                               },
@@ -4894,19 +4894,11 @@ io.on('connection', (socket) => {
                                                             else : {
                                                                 value: {
                                                                     $cond : {
-                                                                        if : {$and: [{ $eq : ["$$value.value" , 0]},{ $eq: ['$$value.flag', true] }]},
+                                                                        if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
                                                                             $subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]
                                                                         },
-                                                                        else : {
-                                                                            $cond:{
-                                                                                if:{ $eq: ['$$value.flag', true] },
-                                                                                then:{
-                                                                                    $subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]
-                                                                                },
-                                                                                else:'$$value.value'
-                                                                            }
-                                                                        }
+                                                                        else : "$$value.value"
                                                                     }
                                                                 },
                                                                 flag:false
@@ -4923,7 +4915,7 @@ io.on('connection', (socket) => {
                                                         $cond:{
                                                             if : {
                                                                 $and: [
-                                                                  { $ne: ['$$this.parentUSerId', loginId] }, 
+                                                                  { $ne: ['$$this.parentUSerId', ele.id] }, 
                                                                   { $eq: ['$$value.flag', true] } 
                                                                 ]
                                                               },
@@ -4945,19 +4937,11 @@ io.on('connection', (socket) => {
                                                             else : {
                                                                 value: {
                                                                     $cond : {
-                                                                        if : {$and: [{ $eq : ["$$value.value" , 0]},{ $eq: ['$$value.flag', true] }]},
+                                                                        if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
-                                                                            $subtract : ["$$selection.lossAmount",{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                            $subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]
                                                                         },
-                                                                        else : {
-                                                                            $cond:{
-                                                                                if:{ $eq: ['$$value.flag', true] },
-                                                                                then:{
-                                                                                    $subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]
-                                                                                },
-                                                                                else:'$$value.value'
-                                                                            }
-                                                                        }
+                                                                        else : "$$value.value"
                                                                     }
                                                                 },
                                                                 flag:false
@@ -4971,26 +4955,349 @@ io.on('connection', (socket) => {
                                 }
                             }
                         },
+                        {
+                            $unwind: "$selections2"
+                        },
+                        {
+                            $group: {
+                              _id: {
+                                elementUser: "$elementUser",
+                                selectionName: "$selections2.selectionName"
+                              },
+                              totalWinAmount: { $sum: "$selections2.winAmount2.value" },
+                              totalLossAmount: { $sum: "$selections2.lossAmount2.value" }
+                            }
+                        },
+                        {
+                            $project: {
+                              _id: 0,
+                              elementUser: "$_id.elementUser",
+                              selection: {
+                                selectionName: "$_id.selectionName",
+                                totalWinAmount: {
+                                    $multiply:["$totalWinAmount", -1]
+                                },
+                                totalLossAmount:{
+                                    $multiply:["$totalLossAmount", -1]
+                                }
+                              }
+                            }
+                        },
+                        {
+                            $group: {
+                              _id: "$elementUser",
+                              selections: { $push: "$selection" }
+                            }
+                        },
+                        {
+                            $project: {
+                              _id: 0,
+                              elementUser: "$_id",
+                              selections: 1
+                            }
+                        },
+                        {
+                            $project: { 
+                                _id:0,
+                                elementUser:"$elementUser",
+                                selections: { 
+                                    $map: { 
+                                        input: "$selections",
+                                        as: "selection",
+                                        in: { 
+                                            selectionName: "$$selection.selectionName",
+                                            totalAmount: "$$selection.totalWinAmount",
+                                            winAmount: { 
+                                                $add : [
+                                                    "$$selection.totalWinAmount", 
+                                                    {
+                                                        $reduce: {
+                                                            input: "$selections",
+                                                            initialValue: 0,
+                                                            in: {
+                                                                $cond: {
+                                                                    if: {
+                                                                      $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                                    },
+                                                                    then: { $add: ["$$value", "$$this.totalLossAmount"] },
+                                                                    else: {
+                                                                        $add: ["$$value", 0] 
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            lossAmount:{ 
+                                                $add : [
+                                                    "$$selection.totalLossAmount", 
+                                                    {
+                                                        $reduce: {
+                                                            input: "$selections",
+                                                            initialValue: 0,
+                                                            in: {
+                                                                $cond: {
+                                                                    if: {
+                                                                      $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                                    },
+                                                                    then: { $add: ["$$value", "$$this.totalWinAmount"] },
+                                                                    else: {
+                                                                        $add: ["$$value", 0] 
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                        }
+                                    }
+                                }
+                            }
+                        },
                     ])
 
 
-                    if(Bets.length > 0){
-                        console.log(Bets, "BetsBetsBetsBets ")
-                        // console.log(Bets[0].selections2, "BetsBetsBetsBets")
-                        for(let i = 0; i < Bets.length; i++){
-                            console.log(Bets[i].parentArray)
-                            console.log(Bets[i].selections2)
-                        }
-
+                    if(falg){
+                        return({User:ele, Bets:Bets, userName:data.userName})
+                    }else{
+                        return({User:ele, Bets:Bets})
                     }
-                }else{
 
+                }else{
+                    if(ele.roleName === "user"){ 
+                        // let Bets = await Bet.aggregate([
+                        //     {
+                        //         $match: {
+                        //             status: "OPEN",
+                        //             marketId: data.marketId,
+                        //             userName:ele.userName
+                        //         }
+                        //     },
+                        //     {
+                        //         $group: {
+                        //             _id: {
+                        //                 userName: "$userName",
+                        //                 selectionName: "$selectionName",
+                        //                 matchName: "$match",
+                        //             },
+                        //             totalAmount: {
+                        //                 $sum: {
+                        //                     $cond: { 
+                        //                         if : {$eq: ['$bettype2', "BACK"]},
+                        //                         then:{
+                        //                             $cond:{
+                        //                                 if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                        //                                 then:{
+                        //                                     $sum: {
+                        //                                         $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                        //                                     }
+                        //                                 },
+                        //                                 else:{
+                        //                                     $sum: {
+                        //                                         $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                        //                                     }
+                        //                                 }
+                        //                             }
+                        //                         },
+                        //                         else:{
+                        //                             $cond:{
+                        //                                 if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                        //                                 then:{
+                        //                                     $sum: {
+                        //                                        $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                        //                                     }
+                        //                                 },
+                        //                                 else:{
+                        //                                     $sum: { 
+                        //                                         $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+                        //                                     }
+                        //                                 }
+                        //                             }
+                        //                         }
+                        //                     }
+                        //                 }
+                        //             },
+                        //             Stake: {
+                        //                 $sum: { 
+                        //                     $cond: { 
+                        //                         if : {$eq: ['$bettype2', "BACK"]},
+                        //                         then : {
+                        //                             $sum: '$Stake' 
+                        //                         },
+                        //                         else : {
+                        //                             $multiply: ['$Stake', -1]
+                        //                         }
+                        //                     }
+                        //                 }
+                        //             },
+                        //             parentArray: { $first: "$parentArray" }
+                        //         },
+                        //     },
+                        //     {
+                        //         $group: {
+                        //             _id: "$_id.userName",
+                        //             parentArray: { $first: "$parentArray" },
+                        //             selections: {
+                        //                 $push: {
+                        //                     selectionName: "$_id.selectionName",
+                        //                     totalAmount: "$totalAmount",
+                        //                     matchName: "$_id.matchName",
+                        //                     Stake: { $multiply: ["$Stake", -1] },
+                        //                 },
+                        //             },
+                        //         },
+                        //     },
+                        //     {
+                        //         $project: { 
+                        //             _id:0,
+                        //             userName: "$_id",
+                        //             parentArray:"$parentArray",
+                        //             selections: { 
+                        //                 $map: { 
+                        //                     input: "$selections",
+                        //                     as: "selection",
+                        //                     in: { 
+                        //                         selectionName: "$$selection.selectionName",
+                        //                         totalAmount: "$$selection.totalAmount",
+                        //                         matchName: "$$selection.matchName",
+                        //                         Stake: "$$selection.Stake",
+                        //                         winAmount: "$$selection.totalAmount",
+                        //                         lossAmount:"$$selection.Stake"
+                        //                     }
+                        //                 }
+                        //             }
+                        //         }
+                        //     },
+                        //     {
+                        //         $sort: {
+                        //             "userName": 1, 
+                        //         }
+                        //     },
+                        //     {
+                        //         $unwind: "$selections"
+                        //     },
+                        //     {
+                        //         $group: {
+                        //           _id: {
+                        //             elementUser: "$userName",
+                        //             selectionName: "$selections.selectionName"
+                        //           },
+                        //           totalWinAmount: { $sum: "$selections.winAmount" },
+                        //           totalLossAmount: { $sum: "$selections.lossAmount" }
+                        //         }
+                        //     },
+                        //     {
+                        //         $project: {
+                        //           _id: 0,
+                        //           elementUser: "$_id.elementUser",
+                        //           selection: {
+                        //             selectionName: "$_id.selectionName",
+                        //             totalWinAmount: "$totalWinAmount",
+                        //             totalLossAmount: "$totalLossAmount"
+                        //           }
+                        //         }
+                        //     },
+                        //     {
+                        //         $group: {
+                        //           _id: "$elementUser",
+                        //           selections: { $push: "$selection" }
+                        //         }
+                        //     },
+                        //     {
+                        //         $project: {
+                        //           _id: 0,
+                        //           elementUser: "$_id",
+                        //           selections: 1
+                        //         }
+                        //     },
+                        //     {
+                        //         $project: { 
+                        //             _id:0,
+                        //             elementUser:"$elementUser",
+                        //             selections: { 
+                        //                 $map: { 
+                        //                     input: "$selections",
+                        //                     as: "selection",
+                        //                     in: { 
+                        //                         selectionName: "$$selection.selectionName",
+                        //                         totalAmount: "$$selection.totalWinAmount",
+                        //                         winAmount: { 
+                        //                             $add : [
+                        //                                 "$$selection.totalWinAmount", 
+                        //                                 {
+                        //                                     $reduce: {
+                        //                                         input: "$selections",
+                        //                                         initialValue: 0,
+                        //                                         in: {
+                        //                                             $cond: {
+                        //                                                 if: {
+                        //                                                   $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                        //                                                 },
+                        //                                                 then: { $add: ["$$value", "$$this.totalLossAmount"] },
+                        //                                                 else: {
+                        //                                                     $add: ["$$value", 0] 
+                        //                                                 }
+                        //                                             }
+                        //                                         }
+                        //                                     }
+                        //                                 }
+                        //                             ]
+                        //                         },
+                        //                         lossAmount:{ 
+                        //                             $add : [
+                        //                                 "$$selection.totalLossAmount", 
+                        //                                 {
+                        //                                     $reduce: {
+                        //                                         input: "$selections",
+                        //                                         initialValue: 0,
+                        //                                         in: {
+                        //                                             $cond: {
+                        //                                                 if: {
+                        //                                                   $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                        //                                                 },
+                        //                                                 then: { $add: ["$$value", "$$this.totalWinAmount"] },
+                        //                                                 else: {
+                        //                                                     $add: ["$$value", 0] 
+                        //                                                 }
+                        //                                             }
+                        //                                         }
+                        //                                     }
+                        //                                 }
+                        //                             ]
+                        //                         },
+                        //                     }
+                        //                 }
+                        //             }
+                        //         }
+                        //     },
+
+                        // ])
+                    }
                 }
             })
 
+
+            let resultPromise = await Promise.all(newUser)
+            let result = []
+            for(let i = 0;i<resultPromise.length;i++){
+                if(resultPromise[i] && resultPromise[i].Bets.length > 0){
+                    result.push(resultPromise[i])
+                }
+            }
+            let matchName2 = await Bet.findOne({marketId: data.marketId})
+            let matchName
+            let sport
+            if(matchName2){
+                matchName = matchName2.match
+                sport = matchName2.betType
+            }
+
+           socket.emit('Book', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport});
         }catch(err){
             console.log(err)
-            socket.emit('UerBook', {message:"err", status:"error"})
+            socket.emit('Book', {message:"err", status:"error"})
         }
     })
 
