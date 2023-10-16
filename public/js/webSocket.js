@@ -13288,10 +13288,8 @@ socket.on('connect', () => {
                     $(this).parent('tr').removeClass('active')
                     let userName = $(this).attr('data-usename')
                     let string = `tr.pr${userName}`
-                    console.log()
-                    'userBookParentTr'
                     let ele = $('#match_odd').find(string)
-                    let status = true;
+                    console.log(ele,'==>elements')
                     function removeChild(username){
                         $('#match_odd').find(`tr.pr${userName}`).removeClass('active')
                         let userName = $('#match_odd').find(`tr.pr${userName}`).attr('data-usename')
