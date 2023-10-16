@@ -13303,6 +13303,8 @@ socket.on('connect', () => {
                                 let userName = $(this).find('.userBookParent').attr('data-usename')
                                 console.log(userName)
                                 removeChild(userName)
+                                $(this).remove()
+                               
 
                             }else{
                                 $(this).remove()
