@@ -4728,6 +4728,118 @@ io.on('connection', (socket) => {
     
     socket.on('Book', async(data) => {
         console.log(data, "datadatadatadata")
+        let users = []
+        let falg = false
+        let Id 
+        if(data.userName){
+            let thatUSer = await User.findOne({userName:data.userName})
+            if(thatUSer){
+                Id = thatUSer.userName
+                falg = true
+                users = await User.find({parent_id:thatUSer._id, isActive:true , roleName:{$ne:'Operator'}})
+            }
+            // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
+        }else{
+            users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
+            Id = data.LOGINDATA.LOGINUSER.userName
+
+        }
+
+        try{
+            let newUser = users.map(async(ele)=>{ 
+                let childrenUsername1 = []
+                let children
+                if(falg){
+                    children = await User.find({parentUsers:ele.id})
+                }else{
+                    children = await User.find({parentUsers:ele._id})
+                }
+                children.map(ele1 => {
+                    childrenUsername1.push(ele1.userName) 
+                })
+                if(childrenUsername1.length > 0){
+                    let Bets = await Bet.aggregate([
+                        {
+                            $match: {
+                                status: "OPEN",
+                                marketId: data.marketId,
+                                userName:{$in:childrenUsername1}
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: {
+                                    userName: "$userName",
+                                    selectionName: "$selectionName",
+                                    matchName: "$match",
+                                },
+                                totalAmount: {
+                                    $sum: {
+                                        $cond: { 
+                                            if : {$eq: ['$bettype2', "BACK"]},
+                                            then:{
+                                                $cond:{
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    then:{
+                                                        $sum: {
+                                                            $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                                                        }
+                                                    },
+                                                    else:{
+                                                        $sum: {
+                                                            $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            else:{
+                                                $cond:{
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    then:{
+                                                        $sum: {
+                                                           $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                                                        }
+                                                    },
+                                                    else:{
+                                                        $sum: { 
+                                                            $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                Stake: {
+                                    $sum: { 
+                                        $cond: { 
+                                            if : {$eq: ['$bettype2', "BACK"]},
+                                            then : {
+                                                $sum: '$Stake' 
+                                            },
+                                            else : {
+                                                $multiply: ['$Stake', -1]
+                                            }
+                                        }
+                                    }
+                                },
+                                parentArray: { $first: "$parentArray" },
+                                role_type : { $first: "$role_type" }
+                            },
+                        },
+                    ])
+
+
+                    console.log(Bets, "BetsBetsBetsBets")
+                }else{
+
+                }
+            })
+
+        }catch(err){
+            console.log(err)
+            socket.emit('UerBook', {message:"err", status:"error"})
+        }
     })
 
     socket.on("updateUserDetailssss", async(data) => {
