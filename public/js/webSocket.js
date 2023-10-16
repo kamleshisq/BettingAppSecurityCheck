@@ -13426,7 +13426,6 @@ socket.on('connect', () => {
     
             socket.on('UerBook', async(data) => {
                 if(data.Bets[0].userName){ 
-                    console.log(data, "datadata")
                     if(data.sport == "Football"){   
                         let team1 = data.matchName.split(' v ')[0].toLowerCase()
                         let team2 = data.matchName.split(' v ')[1].toLowerCase()
@@ -13485,6 +13484,8 @@ socket.on('connect', () => {
                     }
                 }else{
                    if(data.sport == "Football"){
+                    console.log(data, "datadata")
+
                     let team1 = data.matchName.split(' v ')[0].toLowerCase()
                     let team2 = data.matchName.split(' v ')[1].toLowerCase()
                     let html = `<tr class="headDetail"><th>User name</th>
@@ -13496,6 +13497,7 @@ socket.on('connect', () => {
                         let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                         let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
                         let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes('The Draw'))
+                        console.log(team1Data, team2Data, team3Data)
                         if(team1Data && team2Data && team3Data){
                             if (team1Data.winAmount > 0){
                                 html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
