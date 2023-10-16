@@ -13291,15 +13291,16 @@ socket.on('connect', () => {
                     let ele = $('#match_odd').find(string)
                     console.log(ele,'==>elements')
                     function removeChild(username){
-                        $('#match_odd').find(`tr.pr${userName}`).removeClass('active')
-                        let userName = $('#match_odd').find(`tr.pr${userName}`).attr('data-usename')
+                        $('#match_odd').find(`tr.pr${username}`).removeClass('active')
+                        let userName = $('#match_odd').find(`tr.pr${username}`).attr('data-usename')
                         let string = `tr.pr${userName}`
-                        $('#match_odd').find(string).remove()
+                        let ele = $('#match_odd').find(string)
+                        loopforchildclose(ele)
                     }
                     function loopforchildclose(ele){
                         ele.each(function(index){
                             if($(this).hasClass('userBookParentTr') && $(this).hasClass('active')){
-                                let userName = $(this).children().hasClass('userBookParent').attr('data-usename')
+                                let userName = $(this).find('.userBookParent').attr('data-usename')
                                 console.log(userName)
                                 removeChild(userName)
 
