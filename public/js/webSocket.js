@@ -13368,7 +13368,7 @@ socket.on('connect', () => {
                     let userName = $(this).attr('data-usename')
                     let marketId = $("#match_odd_Book").attr('data-marketid')
                     let type = 'bookList'
-                    socket.emit('UerBook1', {marketId,LOGINDATA,userName,type})
+                    socket.emit('Book', {marketId,LOGINDATA,userName,type})
                 }else{
                     $(this).parent('tr').removeClass('active')
                     let userName = $(this).attr('data-usename')
