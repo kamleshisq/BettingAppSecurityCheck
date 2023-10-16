@@ -4192,23 +4192,9 @@ io.on('connection', (socket) => {
                                 selections: {
                                     $push: {
                                         selectionName: "$_id.selectionName",
-                                        totalAmount: {
-                                            $cond:{
-                                                if : {$eq: ['$role_type', 5]},
-                                                then : {
-                                                    $multiply: ['$totalAmount', -1]
-                                                },
-                                                else:'$totalAmount'
-                                            }
-                                        },
+                                        totalAmount: '$totalAmount',
                                         matchName: "$_id.matchName",
-                                        Stake: {
-                                            $cond:{
-                                                if : {$eq: ['$role_type', 5]},
-                                                then : "$Stake",
-                                                else:{ $multiply: ["$Stake", -1] }
-                                            }
-                                        },
+                                        Stake: { $multiply: ["$Stake", -1] },
                                     },
                                 },
                             },
