@@ -4247,11 +4247,7 @@ io.on('connection', (socket) => {
                                                                     $cond : {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
-                                                                            $cond:{
-                                                                                if : {$eq : ["$parentId", ele.id]},
-                                                                                then:"$$selection.winAmount",
-                                                                                else:{$subtract : [{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]},{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
-                                                                            }
+                                                                            $subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]
                                                                         },
                                                                         else : "$$value.value"
                                                                     }
@@ -4294,11 +4290,7 @@ io.on('connection', (socket) => {
                                                                     $cond : {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
-                                                                            $cond:{
-                                                                                if : {$eq : ["$parentId", ele.id]},
-                                                                                then:'$$selection.lossAmount',
-                                                                                else:{$subtract:[{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}, {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
-                                                                            }
+                                                                            $subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]
                                                                         },
                                                                         else : "$$value.value"
                                                                     }
