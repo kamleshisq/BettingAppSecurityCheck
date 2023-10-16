@@ -4249,7 +4249,7 @@ io.on('connection', (socket) => {
                                                                         then : {
                                                                             $cond:{
                                                                                 if : {$eq : ["$parentId", ele.id]},
-                                                                                then:{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]},
+                                                                                then:"$$selection.winAmount",
                                                                                 else:{$subtract : [{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]},{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                                             }
                                                                         },
@@ -4296,7 +4296,7 @@ io.on('connection', (socket) => {
                                                                         then : {
                                                                             $cond:{
                                                                                 if : {$eq : ["$parentId", ele.id]},
-                                                                                then:{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]},
+                                                                                then:'$$selection.lossAmount',
                                                                                 else:{$subtract:[{$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}, {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
                                                                             }
                                                                         },
