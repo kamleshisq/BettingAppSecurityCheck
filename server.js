@@ -191,17 +191,17 @@ io.on('connection', (socket) => {
             skip = limit * page
         }
         let user
-        // const me = await User.findById(data.id)
+        const me = await User.findById(data.id)
         // console.log(data.LOGINDATA)
         let roles ;
         let operationId;
         let operationUser;
-        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
-            operationUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+        if(me.roleName == 'Operator'){
+            operationUser = await User.findById(me.parent_id)
             operationId = operationUser._id
             roles = await Role.find({role_level: {$gt:operationUser.role.role_level}});
         }else{
-            operationUser = data.LOGINDATA.LOGINUSER
+            operationUser = me
             operationId = operationUser._id
             roles = await Role.find({role_level: {$gt:operationUser.role.role_level}});
         }
