@@ -13483,14 +13483,26 @@ socket.on('connect', () => {
                             // let team3 = 
                             let html = ''
                             for(let i = 0; i < data.Bets.length; i++){
+                                let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
+                                let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
+                                let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("The Drow"))
                                 if(data.Bets[i].User.roleName == 'user'){
                                     html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                 }else{
                                     html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                    if(team1Data){
+                                        team1Data.winAmount = (team1Data.winAmount - (team1Data.winAmount * data.Bets[i].User.Share/100)) 
+                                        team1Data.lossAmount = (team1Data.lossAmount - (team1Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                    }
+                                    if(team2Data){
+                                        team2Data.winAmount = (team2Data.winAmount - (team2Data.winAmount * data.Bets[i].User.Share/100)) 
+                                        team2Data.lossAmount = (team2Data.lossAmount - (team2Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                    }
+                                    if(team3Data){
+                                        team3Data.winAmount = (team3Data.winAmount - (team3Data.winAmount * data.Bets[i].User.Share/100)) 
+                                        team3Data.lossAmount = (team3Data.lossAmount - (team3Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                    }
                                 }
-                                let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
-                                let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
-                                let team3Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes("The Drow"))
                                 if(team1Data && team2Data && team3Data){
                                     if (team1Data.winAmount > 0){
                                         html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
@@ -13605,14 +13617,22 @@ socket.on('connect', () => {
                             let team2 = data.matchName.split(' v ')[1].toLowerCase()
                             let html = '';
                             for(let i = 0; i < data.Bets.length; i++){
+                                let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
+                                let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
                                 if(data.Bets[i].User.roleName == 'user'){
                                     html += ` <tr class="tabelBodyTr children pr${data.Id}"><td data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
                                 }else{
                                     html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
+                                    if(team1Data){
+                                        team1Data.winAmount = (team1Data.winAmount - (team1Data.winAmount * data.Bets[i].User.Share/100)) 
+                                        team1Data.lossAmount = (team1Data.lossAmount - (team1Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                    }
+                                    if(team2Data){
+                                        team2Data.winAmount = (team2Data.winAmount - (team2Data.winAmount * data.Bets[i].User.Share/100)) 
+                                        team2Data.lossAmount = (team2Data.lossAmount - (team2Data.lossAmount * data.Bets[i].User.Share/100)) 
+                                    }
                                 }
                                 // html += ` <tr class="tabelBodyTr userBookParentTr pr${data.Id}"><td class="userBookParent" data-usename="${data.Bets[i].User.userName}">${data.Bets[i].User.userName}</td>`
-                                let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
-                            let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
                             if(team1Data){
                                 if (team1Data.winAmount > 0){
                                     html += `<td class="green">${team1Data.winAmount.toFixed(2)}</td>`
