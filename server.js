@@ -4959,8 +4959,11 @@ io.on('connection', (socket) => {
                     ])
 
 
-                    console.log(Bets, "BetsBetsBetsBets")
-                    console.log(Bets.selections2, "BetsBetsBetsBets")
+                    if(Bets.length > 0){
+                        console.log(Bets, "BetsBetsBetsBets")
+                        console.log(Bets[0].selections2, "BetsBetsBetsBets")
+
+                    }
                 }else{
 
                 }
