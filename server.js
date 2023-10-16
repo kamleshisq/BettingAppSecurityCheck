@@ -4853,6 +4853,10 @@ io.on('connection', (socket) => {
                     if(Bets.length > 0){
                         console.log(Bets, "BetsBetsBetsBets")
                         // console.log(Bets[0].selections2, "BetsBetsBetsBets")
+                        for(let i = 0; i < Bets.length; i++){
+                            console.log(Bets[i].parentArray)
+                            console.log(Bets[i].selections)
+                        }
 
                     }
                 }else{
