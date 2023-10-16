@@ -1756,7 +1756,7 @@ socket.on('connect', () => {
         // if(W || S || R){
                let page =  0;
                let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
-            //    console.log(filterData)
+               console.log(filterData,id)
                socket.emit("search", {filterData,page,id, LOGINDATA })
         // }
 
