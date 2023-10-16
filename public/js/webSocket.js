@@ -13539,7 +13539,7 @@ socket.on('connect', () => {
     
                             }
                             let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
-                            $('#match_odd').find(string).after(html)
+                            $('#match_odd_Book').find(string).after(html)
                         }else{
                             let team1 = data.matchName.split(' v ')[0].toLowerCase()
                             let team2 = data.matchName.split(' v ')[1].toLowerCase()
@@ -13592,7 +13592,7 @@ socket.on('connect', () => {
                             }
     
                             let string = `tr:has(td:first-child[data-usename='${data.Id}'])`
-                            $('#match_odd').find(string).after(html)
+                            $('#match_odd_Book').find(string).after(html)
                         }
                     }else{
                        if(data.sport == "Football"){
@@ -13718,7 +13718,7 @@ socket.on('connect', () => {
                         html += '</tr>'
                         
                         }
-                        document.getElementById('match_odd').innerHTML = html
+                        document.getElementById('match_odd_Book').innerHTML = html
                        }else{
                         let team1 = data.matchName.split(' v ')[0].toLowerCase()
                         let team2 = data.matchName.split(' v ')[1].toLowerCase()
@@ -13760,11 +13760,11 @@ socket.on('connect', () => {
                         html += '</tr>'
                         
                         }
-                        document.getElementById('match_odd').innerHTML = html
+                        document.getElementById('match_odd_Book').innerHTML = html
                        }
                     }
                 }else{
-                    document.getElementById('match_odd').innerHTML = '<tr class="empty_table">No record found</tr>'
+                    document.getElementById('match_odd_Book').innerHTML = '<tr class="empty_table">No record found</tr>'
                 }
             })
             
@@ -14131,7 +14131,7 @@ socket.on('connect', () => {
                        }
                     }
                 }else{
-                    document.getElementById('match_odd').innerHTML = ''
+                    // document.getElementById('match_odd').innerHTML = ''
                     document.getElementById('match_odd').innerHTML = '<tr class="empty_table">No record found</tr>'
                 }
             })
