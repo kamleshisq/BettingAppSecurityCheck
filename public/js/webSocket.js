@@ -1567,7 +1567,7 @@ socket.on('connect', () => {
                         "<th>S.No</th>"+
                         "<th>User Name</th>"+
                         "<th>Type</th>"+
-                        "<th>White lable</th>"+
+                        "<th>White Labels</th>"+
                         "<th>Credit Reference</th>"+
                         "<th>Available Balance</th>"+
                         "<th>Downlevel Balance</th>"+
