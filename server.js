@@ -5724,18 +5724,22 @@ io.on('connection', (socket) => {
                 {
                     $match: {
                       eventDate: dateFilter,
-                      userName:{$in:childrenUsername}
+                      userName:{$in:childrenUsername},
+                      loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true}
                     }
                   },
                   {
                     $lookup: {
                         from: "commissionnewmodels",
-                        let: {uniqueId:'$_id'},
+                        let: {ud:{$cond:{if:{$ifNull: ["$uniqueId", false]},then:{ $toObjectId: "$uniqueId" },else:'$_id'}},loginId:'$loginUserId',parentArr:'$parentIdArray'},
                         pipeline: [
                             {
                               $match: {
-                                $expr: { $and: [{ $eq: [{ $toObjectId: "$uniqueId" }, "$$uniqueId"] }] }
-                                }
+                                $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
+                                loginUserId:{$exists:true},
+                                parentIdArray:{$exists:true}
+                              }
                             }
                           ],
                         as: "parentdata"
