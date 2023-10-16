@@ -4287,11 +4287,11 @@ io.on('connection', (socket) => {
                                                                                 if : { $eq : ["$$value.value" , 0]},
                                                                                 then : {$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
                                                                                 else :{$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
-                                                                            }
-                                                                        },
-                                                                        flag:false
+                                                                            },
+                                                                            flag:false
                                                                         },
                                                                         else:'"$$value.value"'
+                                                                        },
                                                                     },
                                                                     
                                                             }
