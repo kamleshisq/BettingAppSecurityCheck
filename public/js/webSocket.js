@@ -13197,7 +13197,7 @@ socket.on('connect', () => {
                         $("#match_odd_Book").attr('data-marketid',marketId)
                         let type = 'bookList'
                         let newData = true
-                        socket.emit('UerBook', {marketId, LOGINDATA,id,type,newData})
+                        socket.emit('Book', {marketId, LOGINDATA,id,type,newData})
                     } else {
                         console.log('Market not found.');
                     }
