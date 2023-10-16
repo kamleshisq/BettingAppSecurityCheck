@@ -103,7 +103,6 @@ exports.getAllAccStatement = catchAsync(async(req, res, next) => {
 
 exports.withdrawl = catchAsync(async(req, res, next) => {
     // const user = await User.findById(req.body.userId)
-    console.log(req.body)
     req.body.amount = parseFloat(req.body.amount)
     const childUser = await User.findById(req.body.id);
     const parentUser = await User.findById(childUser.parent_id);
@@ -166,7 +165,6 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
 
 exports.withdrawSettle = catchAsync(async(req, res, next) => {
     // const user = await User.findById(req.body.userId)
-    console.log(req.body, '==> DATA')
     req.body.amount = parseFloat(req.body.amount)
     req.body.clintPL = parseFloat(req.body.clintPL)
 
@@ -230,7 +228,6 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
 });
 
 exports.depositSettle = catchAsync(async(req, res, next) => {
-    console.log(req.body, 123)
     const childUser = await User.findById(req.body.id);
     if(childUser.transferLock){
         return next(new AppError("User Account is Locked", 404))

@@ -46,7 +46,6 @@ const createSendToken = async (user, statuscode, res, req)=>{
     if(process.env.NODE_ENV === "production"){
         cookieOption.secure = true
         }
-    console.log(token)
     res.cookie('ADMIN_JWT', token, cookieOption)
     // console.log(res);
     user.password = undefined;
@@ -94,7 +93,6 @@ const user_createSendToken = async (user, statuscode, res, req)=>{
     if(process.env.NODE_ENV === "production"){
         cookieOption.secure = true
         }
-    console.log(token)
     res.cookie('JWT', token, cookieOption)
     // console.log(res);
     user.password = undefined;
@@ -142,7 +140,6 @@ exports.login = catchAsync (async(req, res, next) => {
         })
     }else{
         const user = await User.findOne({userName}).select('+password');
-        console.log(user)
         if(!user || !(await user.correctPassword(password, user.password))){
             res.status(404).json({
                 status:'error',
@@ -179,7 +176,6 @@ exports.login = catchAsync (async(req, res, next) => {
 
 
 exports.checkPass = catchAsync(async(req, res, next) => {
-    console.log(req.body)
     const user = await User.findOne({userName:req.currentUser.userName}).select('+password');
     if(!req.body.Password){
         res.status(404).json({
@@ -269,7 +265,6 @@ exports.isProtected = catchAsync( async (req, res, next) => {
         }
     }
 
-    console.log("WORKING121")
     loginData.User = currentUser
     res.locals.loginData = loginData
     req.currentUser = currentUser
@@ -522,7 +517,6 @@ exports.restrictToOperator = (...roles) => {
         }else{
 
             let j = 0;
-            console.log(req.currentUser)
             for(let i=0; i < req.currentUser.role.operationAuthorization.length; i++){
                 if(roles.includes(req.currentUser.role.operationAuthorization[i])){
                     j = j + 1;
@@ -700,8 +694,6 @@ exports.logOutSelectedUser = catchAsync(async(req,res,next) =>{
 
 
 exports.userLogin = catchAsync (async(req, res, next) => {
-    console.log(req.body)
-    console.log("Working")
     if(req.body.data != "Demo"){
 
         let {
@@ -724,7 +716,6 @@ exports.userLogin = catchAsync (async(req, res, next) => {
             })
         }else{
             const user = await User.findOne({userName}).select('+password');
-            console.log(user)
             if(!user || !(await user.correctPassword(password, user.password))){
                 // console.log()
                 res.status(404).json({

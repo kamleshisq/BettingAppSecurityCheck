@@ -159,7 +159,6 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             }
         }
 
-        console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
 
         const betLimitMarekt = await betLimitMatchWisemodel.findOne({matchTitle:match.eventData.name})
         

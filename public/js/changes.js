@@ -1,5 +1,4 @@
  socket.on('UerBook', async(data) => {
-        console.log(data)
         let user = await User.findById(data.id)
         let childrenUsername = []
         if(user.userName == data.LOGINDATA.LOGINUSER.userName){
@@ -98,7 +97,6 @@
                 }
             ]);
             
-            console.log(Bets);
             
             
             
@@ -110,7 +108,6 @@
             
             
             
-           console.log(Bets, "==> WORKING")
         //    console.log(Bets[0].selections)
            socket.emit('UerBook', {Bets,type:data.type,newData:data.newData});
         //    socket.emit();
@@ -141,7 +138,6 @@
 
 
             socket.on('UerBook', async(data) => {
-                console.log(data)
                 if(data.Bets.length > 0){
                     let match = data.Bets[0].Bets.selections[0].matchName
                     let team1 = match.split('v')[0]

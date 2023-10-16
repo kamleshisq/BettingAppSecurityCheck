@@ -75,7 +75,6 @@ if(pathname === '/exchange_inPlay/match'){
 
   let first = true
   socket.on("marketId", async(data) => {
-      console.log("working")
       $(".match_odd_Blue").each(function() {
               
           let id = this.id
@@ -370,7 +369,6 @@ if(pathname === '/exchange_inPlay/match'){
               }
           })
           let parentElement = this.parentNode
-          console.log(parentElement)
           if(this.id == `${section.secId}2` ){
               if( section.layPrice == "-" || section.layPrice == "1,000.00" || section.layPrice == "0"){
                   this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
@@ -513,7 +511,6 @@ if(pathname === '/exchange_inPlay/match'){
               }
           })
           let parentElement = this.parentNode
-          console.log(section.ball_running)
           if(this.id == `${section.market_id}2` ){
               if(section.ball_running){
                   this.innerHTML = `<span class="tbl-td-bg-pich-spn mylock-data">
@@ -664,7 +661,6 @@ if(pathname === '/exchange_inPlay/match'){
 
 
     $(document).on('click','.tbl-td-with5',function(e){
-          console.log("WORKING")
           $(".minus").closest("tr").find('.set-stake-form-input2').val(0)
           $(".minus")
           .closest("tr")
@@ -904,7 +900,6 @@ if(pathname === '/exchange_inPlay/match'){
           
       }
       let check = $(this).closest("tr").find("#changes").prop("checked");
-      console.log(data)
       if(specificSpan == data.odds){
           if(data.stake === ""){
               // alert("Please select stake")
@@ -963,7 +958,6 @@ if(pathname === '/exchange_inPlay/match'){
 
   socket.on("betDetails" , (data) => {
       hideLoader()
-      console.log(data.result)
       // function togglePopup(idname, id){
       //     document.getElementById(idname).classList.toggle("active");
       //     document.getElementById(id).innerText  = data.result.toUpperCase()

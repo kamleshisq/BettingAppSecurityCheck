@@ -23,7 +23,7 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
     }
 
 async function placeBet(data){
-    console.log(data, "data1")
+    // console.log(data, "data1")
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
     if(check.availableBalance < data.data.stake){
         return "You do not have sufficient balance for bet"
@@ -233,7 +233,7 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
         parentUSerId:parenetUser._id,
         uplineShare:parenetUser.Share
     }
-    console.log(object. object)
+    // console.log(object. object)
     parentArray.push(object)
 }
 
@@ -371,12 +371,12 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
 // FOR COMMISSION REGARDIN THAT BET 
     // console.log(user)
     try{
-        console.log("COMMISSION MARKET")
+        // console.log("COMMISSION MARKET")
         let usercommissiondata;
         let commissionMarket = await commissionMarketModel.find()
         if(commissionMarket.some(item => item.marketId == data.data.market)){
             let commission = await commissionModel.find({userId:user.id})
-            // console.log(commission, 456)
+            console.log(commission, 456)
             let commissionPer = 0
             if ((marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status){
               commissionPer = commission[0].Bookmaker.percentage

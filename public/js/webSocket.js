@@ -238,7 +238,7 @@ socket.on('connect', () => {
   })
 
   socket.on('CasinoFevorite', async(data) => {
-    console.log(data)
+    // console.log(data)
     let heart = document.querySelectorAll('.fevoriteHeart');
     if(data.remove){
         heart.forEach((heart) =>  {
@@ -343,7 +343,7 @@ socket.on('connect', () => {
    })
 
     socket.on("alertMessage", async(data) => {
-        console.log(data)
+        // console.log(data)
         alert(data)
     })
 
@@ -361,7 +361,7 @@ socket.on('connect', () => {
         const input2Values = Array.from(input2Elements)
         .map((element) => element.value)
         .filter((value) => value.trim() !== "");
-                console.log(input2Values)
+                // console.log(input2Values)
                 socket.emit("STAKELABEL", {input1Values, input2Values, LOGINDATA})
             })
 
@@ -428,7 +428,7 @@ socket.on('connect', () => {
                       </span>`
                     }else{
                         if($(this).find('.tbl-td-bg-pich-spn').text() != foundItem.odds[0].layPrice1){
-                            console.log(123)
+                            // console.log(123)
                             this.innerHTML = `<span class="tbl-td-bg-pich-spn" style="background-color: blanchedalmond;">${foundItem.odds[0].layPrice1}</span>`
                         }
                     }
@@ -707,13 +707,13 @@ socket.on('connect', () => {
     $(document).on('click','.updateBetLimit',function(e){
        let firstTd = $(this).closest("tr").find("td:first");
        var innerText = firstTd.attr('id');
-       console.log(innerText)
+    //    console.log(innerText)
        socket.emit('BetLimitDetails', innerText)
     })
 
 
     socket.on('BetLimitDetails', data => {
-        console.log(data)
+        // console.log(data)
         if(data.status == "notFound"){
             let form = $('#myModal2').find('.form-data')
             form.find('input[name = "min_stake"]').val(0)
@@ -764,7 +764,7 @@ socket.on('connect', () => {
             socket.emit('loginuserbalance',LOGINDATA)
         },1000 * 60)
         socket.on('loginuserbalance',async(data)=>{
-            console.log('refresh login data')
+            // console.log('refresh login data')
             html1 = `
             <div class="skin-data green">
                 
@@ -890,16 +890,16 @@ socket.on('connect', () => {
         })
 
         socket.on("commissionData", data => {
-            console.log(data)
+            // console.log(data)
             
             if(data.status === "error"){
                 alert("Please try again later")
             }else{
-                console.log(data)
+                // console.log(data)
                 if(data.commissionData.length != 0){
                     let modleName = "#myModal2"
                     let form = $(modleName).find('.form-data')
-                    console.log(data.commissionData[0].matchOdd.percentage)
+                    // console.log(data.commissionData[0].matchOdd.percentage)
                     form.attr('id', data.id);
                     form.find('input[name="matchOdds"]').attr('value', data.commissionData[0].matchOdd.percentage);
                     form.find('input[name="Bookmaker"]').attr('value', data.commissionData[0].Bookmaker.percentage);
@@ -979,7 +979,7 @@ socket.on('connect', () => {
             let fd = new FormData(form);
             let data = Object.fromEntries(fd.entries());
             data.id = this.id
-            console.log(data)
+            // console.log(data)
             if(data.matchOddsStatus){
                 data.matchOddsStatus = true
             }else{
@@ -995,7 +995,7 @@ socket.on('connect', () => {
             }else{
                 data.BookmakerStatus = false
             }
-            console.log(data)
+            // console.log(data)
             socket.emit("updateCommission", {LOGINDATA, data})
         })
 
@@ -1130,7 +1130,7 @@ socket.on('connect', () => {
             if($(this).val() == ""){
                 amount = 0
             }
-            console.log(amount)
+            // console.log(amount)
             let form = $("#myModal").find('.form-data')
             let fromAmount = parseFloat(form.find('input[name="fuBalance"]').val())
             let toAmount = parseFloat(form.find('input[name="tuBalance"]').val())
@@ -1293,7 +1293,7 @@ socket.on('connect', () => {
 
         $(document).on('change keyup','#myModalSE .form-data input[name="amount"]',function(e){
             let amount = parseFloat($(this).val())
-            console.log(amount,"==>amount")
+            // console.log(amount,"==>amount")
             if($(this).val() == ""){
                 amount = 0
             }
@@ -1318,7 +1318,7 @@ socket.on('connect', () => {
             let amount = parseFloat(form.find('input[name="amount"]').val())
 
             let typeValue = form.find('input[name = "type"]').val()
-            console.log(typeValue)
+            // console.log(typeValue)
 
             if(typeValue == 'deposit'){
 
@@ -1348,7 +1348,7 @@ socket.on('connect', () => {
             let form = $(modleName).find('.form-data')
             let amount = parseFloat(form.find('input[name="amount"]').val())
             let typeValue = form.find('input[name = "type"]').val()
-            console.log(typeValue)
+            // console.log(typeValue)
             if(typeValue == 'deposit'){
                 form.find('.deposite').removeClass('active')
                 form.find('.withdraw').addClass('active')
@@ -1411,7 +1411,7 @@ socket.on('connect', () => {
         })
 
         $(document).on('click','.StatusChange',function(){
-            console.log("working")
+            // console.log("working")
             var row = this.closest("tr");
             var id = row.id;
             var dataId = row.getAttribute("data-id");
@@ -1550,7 +1550,7 @@ socket.on('connect', () => {
 
         let count = 11;
         socket.on('getOwnChild',(data) => {
-            console.log(data.refreshStatus)
+            // console.log(data.refreshStatus)
             // console.log(data)
             // console.log('rows',data.result)
             // let headHight = document.getElementsByClassName('HeadRow').height()
@@ -1714,7 +1714,7 @@ socket.on('connect', () => {
         let US = false
         $(document).on('change keyup','#searchUser, #ROLEselect, #WhiteLabelSelect, #userStatusSelect',function(e){
             // console.log($(this).hasClass("searchUser"), 123)
-            console.log('check')
+            // console.log('check')
             if($(this).hasClass("WhiteLabelSelect")){
                     filterData.whiteLabel = $(this).val()
                     if(filterData.whiteLabel != "" && filterData.whiteLabel != undefined){
@@ -1756,7 +1756,7 @@ socket.on('connect', () => {
         // if(W || S || R){
                let page =  0;
                let id = JSON.parse(document.querySelector('#meDatails').getAttribute('data-me'))._id;
-               console.log(filterData)
+            //    console.log(filterData)
                socket.emit("search", {filterData,page,id, LOGINDATA })
         // }
 
@@ -1991,7 +1991,7 @@ socket.on('connect', () => {
                     [i]}"]`).attr("checked", "checked");
                 }
             }
-            console.log(data)
+            // console.log(data)
 
         })
 
@@ -2008,7 +2008,7 @@ socket.on('connect', () => {
             formDataObj.OperatorAuthorization = OperatorAuthorization
             delete formDataObj['operator']
 
-            console.log(formDataObj)
+            // console.log(formDataObj)
             let data = {}
             data.data = formDataObj;
             data.LOGINDATA = LOGINDATA
@@ -2355,7 +2355,7 @@ socket.on('connect', () => {
                 $('.pageLink').attr('data-page',1)
                 $('.wrapper').hide()
                 // console.log(data, 456)
-                console.log(data)
+                // console.log(data)
                 socket.emit( "AccountScroll", data)
         })
 
@@ -2417,7 +2417,7 @@ socket.on('connect', () => {
                 }                
                 data.LOGINDATA = LOGINDATA
            }
-           console.log(data)
+        //    console.log(data)
             
             socket.emit('AccountScroll',data)
         })
@@ -2427,7 +2427,7 @@ socket.on('connect', () => {
 
          let count1 = 11
          socket.on("Acc", async(data) => {
-            console.log(data)
+            // console.log(data)
             if(data.json.status == "success"){
 
                 if(data.page == 0){
@@ -2658,12 +2658,12 @@ socket.on('connect', () => {
             let modelId = $(this).attr('id')
             let modelId1 = $(this).attr("data-bs-target")
             model =  $(modelId1)
-            console.log('elementId',modelId)
+            // console.log('elementId',modelId)
             socket.emit("ElementID", modelId)
         })
 
         socket.on('getMyBetDetails',(data)=>{
-            console.log(data)
+            // console.log(data)
             let html = ``
             if(data.transactionId){
                 html += `<thead>
@@ -2800,7 +2800,7 @@ socket.on('connect', () => {
                 $('.pageLink').attr('data-page',1)
                 $('.wrapper').hide()
                 // console.log(data, 456)
-                console.log(data)
+                // console.log(data)
                 socket.emit( "AccountScroll2", data)
         })
 
@@ -2833,7 +2833,7 @@ socket.on('connect', () => {
                 data.LOGINDATA = LOGINDATA
             }
 
-            console.log(data)
+            // console.log(data)
             socket.emit('AccountScroll2',data)        
         })
 
@@ -2864,7 +2864,7 @@ socket.on('connect', () => {
                 }                
                 data.LOGINDATA = LOGINDATA
            }
-           console.log(data)
+        //    console.log(data)
             
             socket.emit('AccountScroll2',data)
         })
@@ -2872,7 +2872,7 @@ socket.on('connect', () => {
 
          let count1 = 11
          socket.on("Acc2", async(data) => {
-            console.log(data)
+            // console.log(data)
             if(data.json.status == "success"){
                 let html = "";
                 let html1 = "";
@@ -3356,7 +3356,7 @@ socket.on('connect', () => {
                 $('.pageLink').attr('data-page',1)
                 $('.wrapper').hide()
                 // console.log(data, 456)
-                console.log(data)
+                // console.log(data)
                 socket.emit( "AccountScroll1", data)
         })
 
@@ -3418,7 +3418,7 @@ socket.on('connect', () => {
                 }                
                 data.LOGINDATA = LOGINDATA
            }
-           console.log(data)
+        //    console.log(data)
             
             socket.emit('AccountScroll1',data)
         })
@@ -3426,7 +3426,7 @@ socket.on('connect', () => {
 
          let count1 = 11
          socket.on("Acc1", async(data) => {
-            console.log(data)
+            // console.log(data)
             if(data.json.status == "success"){
 
                 if(data.page == 0){
@@ -3766,7 +3766,7 @@ socket.on('connect', () => {
             data.filterData = filterData;
             data.page = page
             data.LOGINDATA = LOGINDATA
-            console.log(data)
+            // console.log(data)
             socket.emit('userBetDetail',data)
         })
 
@@ -3783,7 +3783,7 @@ socket.on('connect', () => {
             data.page = page
             data.LOGINDATA = LOGINDATA
             data.refreshStatus = true
-            console.log(data)
+            // console.log(data)
             socket.emit('userBetDetail',data)
         }
 
@@ -3796,7 +3796,7 @@ socket.on('connect', () => {
 
         let count = 11
         socket.on('userBetDetail',(data) => {
-            console.log(data.refreshStatus)
+            // console.log(data.refreshStatus)
             if(data.page === 0 || data.refreshStatus){
                 count = 1
             }
@@ -3863,14 +3863,14 @@ socket.on('connect', () => {
         let EG = false;
         $("#BACCARAT").click(function(){
             if(!BACCARAT){
-                console.log("1")
+                // console.log("1")
                 socket.emit('BACCARAT', "on")
                 BACCARAT = true
             }
         })
         $("#ANDARBAHAR").click(function(){
             if(!ANDARBAHAR){
-                console.log("1")
+                // console.log("1")
                 socket.emit('ANDARBAHAR', "on")
                 ANDARBAHAR = true
             }
@@ -3942,7 +3942,7 @@ socket.on('connect', () => {
 
 
         socket.on('baccarat1', (data) => {
-            console.log(data)
+            // console.log(data)
             let html = ""
             for(let i = 0 ; i < data.data.length; i++){
                 if(data.data[i].status){
@@ -3963,7 +3963,7 @@ socket.on('connect', () => {
                   </div>`
                 }
             }
-            console.log($('#'+data.id).parent().next())
+            // console.log($('#'+data.id).parent().next())
             $('#'+data.id).parent().next().children('.accordion-body').html(html)
         });
 
@@ -4217,7 +4217,7 @@ socket.on('connect', () => {
             data.page = page
             data.LOGINDATA = LOGINDATA
             data.refreshStatus = true
-            console.log(data)
+            // console.log(data)
             socket.emit('userPLDetail',data)
         }
 
@@ -4636,7 +4636,7 @@ socket.on('connect', () => {
         $(document).on('click','.getajaxdataclick',function(e){
         
             let url = $(this).attr('data-href')
-            console.log(url)
+            // console.log(url)
             location.href = url
          })
          $('#load-more').click(function(e){
@@ -4851,7 +4851,7 @@ socket.on('connect', () => {
             data.page = page
             data.LOGINDATA = LOGINDATA
             data.refreshStatus = true
-            console.log(data)
+            // console.log(data)
             socket.emit('gameReport',data)
         }
 
@@ -4912,7 +4912,7 @@ socket.on('connect', () => {
     else if(pathname.startsWith('/admin/gamereport/match')){
         $(document).on('click','.getajaxdataclick',function(e){
             let url = $(this).attr('data-href')
-            console.log(url)
+            // console.log(url)
             location.href = url
         })
         $('#load-more').click(function(e){
@@ -5009,7 +5009,7 @@ socket.on('connect', () => {
             }
         })
         socket.on("SearchOnlineUser", (data) =>{
-            console.log(data, 565464)
+            // console.log(data, 565464)
             let html = ``
             if(data.page === 1){
                 for(let i = 0; i < data.onlineUsers.length; i++){
@@ -5035,7 +5035,7 @@ socket.on('connect', () => {
         })
 
         socket.on("SelectLogoutUserId", (data) => {
-            console.log(data)
+            // console.log(data)
             alert("User Logout")
                 window.setTimeout(()=>{
                     window.location = '/admin/onlineUsers '
@@ -5060,7 +5060,7 @@ socket.on('connect', () => {
 
         let count = 11
         socket.on('OnlineUser', async(data) => {
-            console.log(data)
+            // console.log(data)
             let html = "";
             if(data.page === 0){
                 count = 1
@@ -5161,7 +5161,7 @@ socket.on('connect', () => {
             // console.log($(this).val())
             if($(this).val().length >= 3 ){
                 let x = $(this).val(); 
-                console.log(x)
+                // console.log(x)
                 socket.emit("SearchACC", {x, LOGINDATA})
             }else{
                 document.getElementById('search').innerHTML = ``
@@ -5178,7 +5178,7 @@ socket.on('connect', () => {
 
 
         socket.on("ACCSEARCHRES", async(data)=>{
-            console.log(data,'==>resporst of search')
+            // console.log(data,'==>resporst of search')
             let html = ``
             $('.wrapper').show()
 
@@ -5323,7 +5323,7 @@ socket.on('connect', () => {
             stack = $('#stake').val()
             IP = $('#IP').val()
             let type;
-            console.log($(this).attr('id'))
+            // console.log($(this).attr('id'))
             if($(this).attr('id') == 'Event'){
                 type = 'changeevent'
             }
@@ -5359,7 +5359,7 @@ socket.on('connect', () => {
             data.LOGINDATA = LOGINDATA
             data.page = 0;
             data.type = type
-            console.log(data)
+            // console.log(data)
             socket.emit('betMoniter',data)
 
         })
@@ -5425,7 +5425,7 @@ socket.on('connect', () => {
             
         let count = 11
         socket.on('betMoniter',(data) => {
-            console.log(data)
+            // console.log(data)
             if(data.page === 0 || data.refreshStatus){
                 count = 1
             }
@@ -5555,7 +5555,7 @@ socket.on('connect', () => {
         let fd = new FormData(form);
         let data = Object.fromEntries(fd.entries());
         let id = this.id
-        console.log(id)
+        // console.log(id)
         socket.emit('alertBet',{data,LOGINDATA, id})
         // console.log(data, "DATA123")
     })
@@ -5762,7 +5762,7 @@ socket.on('connect', () => {
             data.LOGINDATA = LOGINDATA
             data.page = 0;
             data.type = type
-            console.log(data)
+            // console.log(data)
             socket.emit('voidBET',data)
 
         })
@@ -5810,7 +5810,7 @@ socket.on('connect', () => {
         })
         let count = 11
         socket.on('voidBET',(data) => {
-            console.log(data)
+            // console.log(data)
             if(data.page === 0 || data.refreshStatus){
                 count = 1
             }                
@@ -6369,7 +6369,7 @@ socket.on('connect', () => {
         });
 
         socket.on("PromotionIdByData", async(data) => {
-                console.log(data)
+                // console.log(data)
                 let modleName = "#myModal5"
                 let form = $(modleName).find('.form-data1')
                 let PMD = data
@@ -6460,7 +6460,7 @@ socket.on('connect', () => {
         })
 
         socket.on("createVerticalMenu", async(data)=>{
-            console.log(data)
+            // console.log(data)
             if(data.status === "success"){
                 alert("Menu Added Successfully")
                     window.setTimeout(()=>{
@@ -7686,7 +7686,7 @@ socket.on('connect', () => {
           $(document).ready(function () {
             $(".nww-bet-slip-wrp-col2-inn span").click(function () {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
-                console.log(buttonId, "buttonId")
+                // console.log(buttonId, "buttonId")
                 let IdButton = $(`#${buttonId}`)
                 // console.log(IdButton.attr("class"), "IdButton")
                 // console.log(IdButton, "IdButton")
@@ -7721,7 +7721,7 @@ socket.on('connect', () => {
                           .text(result.toFixed(2));
                     }
                 }else{
-                    console.log(IdButton)
+                    // console.log(IdButton)
                     var spanId = $(this).attr("id");
                     let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
                     let newStake
@@ -7924,7 +7924,7 @@ socket.on('connect', () => {
             $(".plus").click(function () {
                 let buttonId = $(this).closest("tr").find(".beton").attr("id").slice(0, -1);
                 let IdButton = $(`#${buttonId}`)
-                console.log(IdButton)
+                // console.log(IdButton)
                 let spanId =  ($(this).closest("tr").find('.set-stake-form-input2').val())
                 let Odds = parseFloat($(this).closest('tr').find(".nww-bet-slip-wrp-col1-txt-num").text())
                 // let NewStake = parseFloat(spanId) + 100;
@@ -8246,7 +8246,7 @@ socket.on('connect', () => {
             let html2 = ""
             document.getElementById("betsTitleSide").innerHTML = `<h5>Open Bets (${data.openBet.length})</h5>`
             document.getElementById("pills-profilebb-tab").innerHTML = `Open Bets (${data.openBet.length})`
-            console.log(data.openBet, "data.openBet.data.openBet.data.openBet.")
+            // console.log(data.openBet, "data.openBet.data.openBet.data.openBet.")
             if(data.openBet.length === 1){
                 html2 = `<table class="table-new-d">
                 <thead>
@@ -8721,7 +8721,7 @@ socket.on('connect', () => {
         let count = 21
         socket.on("ACCSTATEMENTUSERSIDE", async(data) => {
             if(data.userAcc.length > 0){
-            console.log(data.page)
+            // console.log(data.page)
             if(data.page === 0){
                 count = 1
             }
@@ -8841,7 +8841,7 @@ socket.on('connect', () => {
         let count = 21
         socket.on("BETSFORUSER", async(data) => {
             if(data.MyBets.length > 0){
-            console.log(data.page)
+            // console.log(data.page)
             if(data.page === 0){
                 count = 1
             }
@@ -9706,7 +9706,7 @@ socket.on('connect', () => {
 
           let count = 21
         socket.on("GAMEREPORTUSER", async(data) => {
-            console.log(data)
+            // console.log(data)
             if(data.bets.length > 0){
 
             if(data.page === 0){
@@ -10019,7 +10019,7 @@ socket.on('connect', () => {
               var spanId = $(this).attr("id");
               let OldStake = $(this).closest("tr").find(".set-stake-form-input2").val()
               let newStake
-              console.log(OldStake)
+            //   console.log(OldStake)
               if(OldStake == ""){
                 newStake = parseFloat(spanId)
               }else{
@@ -10213,7 +10213,7 @@ socket.on('connect', () => {
     
             socket.on("betDetails" , (data) => {
                 hideLoader()
-                console.log(data.result)
+                // console.log(data.result)
                 // function togglePopup(idname, id){
                 //     document.getElementById(idname).classList.toggle("active");
                 //     document.getElementById(id).innerText  = data.result.toUpperCase()
@@ -10304,7 +10304,7 @@ socket.on('connect', () => {
         $(document).on("click", ".description", function(e){
             e.preventDefault()
             let id = this.id
-            console.log(id)
+            // console.log(id)
             socket.emit("getDetailsOfRUles", id)
         })
 
@@ -10313,7 +10313,7 @@ socket.on('connect', () => {
         socket.on('getDetailsOfRUles', async (data) => {
             // console.log(data)
           let form = $(`.updaterules`);
-          console.log(form)
+        //   console.log(form)
           form.find('input[name="name"]').attr('value', data.name);
           form.attr('id', data._id);
         
@@ -10529,7 +10529,7 @@ socket.on('connect', () => {
             });
 
             socket.on("FIlterDashBoard", data => {
-                console.log(data)
+                // console.log(data)
                 if(data.result.betCount){
                     document.getElementById('betCount').innerText = data.result.betCount
                 }else{
@@ -10753,7 +10753,7 @@ socket.on('connect', () => {
 
         socket.on('commissionAccFilter', async(data) => {
             let html = "";
-            console.log(data)
+            // console.log(data)
             for(let i = 0; i < data.accStatements.length; i++){
                 var timestamp = data.accStatements[i].date ; 
                 var date = new Date(timestamp);
@@ -10799,7 +10799,7 @@ socket.on('connect', () => {
             // console.log($(this).val())
             if($(this).val().length >= 3 ){
                 let x = $(this).val(); 
-                console.log(x)
+                // console.log(x)
                 socket.emit("SearchACC", {x, LOGINDATA})
             }else{
                 document.getElementById('search').innerHTML = ``
@@ -11221,7 +11221,7 @@ socket.on('connect', () => {
         
         let count = 11
         socket.on('AlertBet',(data) => {
-            console.log(data.refreshStatus)
+            // console.log(data.refreshStatus)
             if(data.page === 0 || data.refreshStatus){
                 count = 1
             }
@@ -11350,7 +11350,7 @@ socket.on('connect', () => {
         $(document).on("submit", ".userDetails", function(e){
             e.preventDefault()
             let form = $(this)[0];
-            console.log(form)
+            // console.log(form)
             let share = $(".userDetails").find('input[name="Share"]').val()
             let myShare = $(".userDetails").find('input[name="myShare"]').val()
             let id = this.id
@@ -11358,7 +11358,7 @@ socket.on('connect', () => {
         })
 
         socket.on("myShare", data => {
-            console.log(data)
+            // console.log(data)
             if(data.status === "error"){
                 alert(data.message)
             }else{
@@ -11435,7 +11435,7 @@ socket.on('connect', () => {
             page = 0
             $('.pageId').attr('data-pageid', 1)
             let id = search.split("=")[1]
-            console.log(filterData)
+            // console.log(filterData)
             socket.emit("BETSFORUSERAdminSide", {page, id, filterData})
           }
 
@@ -11645,7 +11645,7 @@ socket.on('connect', () => {
 
         let countAcc = 11
         socket.on("ACCSTATEMENTADMINSIDE", async(data) => {
-            console.log(data)
+            // console.log(data)
             let userAcc = data.userAcc;
             let page = data.page
             let html = '';
@@ -11764,7 +11764,7 @@ socket.on('connect', () => {
                     }
                     countHistory += 10
                 }
-                console.log(html)
+                // console.log(html)
                 if(data.page == 0){
 
                     $('.acount-stat-tbl-body111').html(html) 
@@ -11831,7 +11831,7 @@ socket.on('connect', () => {
                 todate = new Date(Date.parse($('#to_date').val()));
                 todate.setHours(0, 0, 0, 0); // Set the time to midnight
             }
-            console.log(fromdate, todate);
+            // console.log(fromdate, todate);
             socket.emit('settlement', { LOGINUSER: LOGINDATA.LOGINUSER, todate, fromdate });
         });
         
@@ -11842,12 +11842,12 @@ socket.on('connect', () => {
                 fromdate = new Date(Date.parse($('#from_date').val()));
                 fromdate.setHours(0, 0, 0, 0); // Set the time to midnight
             }
-            console.log(fromdate, todate);
+            // console.log(fromdate, todate);
             socket.emit('settlement', { LOGINUSER: LOGINDATA.LOGINUSER, todate, fromdate });
         });
 
         socket.on('settlement',async(data)=>{
-            console.log(data)
+            // console.log(data)
             if(data.betsEventWise.length !== 0){
                 let betsEventWiseData = data.betsEventWise.find(item => item.id == 'Cricket')
                 if(betsEventWiseData){
@@ -11979,7 +11979,7 @@ socket.on('connect', () => {
         })
         let limit = 10
         socket.on('settlementHistory',async(data)=>{
-            console.log(data)
+            // console.log(data)
             let html = ''
             limit = 10 * data.page
             for(let i = 0; i < data.History.length; i++){
@@ -12142,7 +12142,7 @@ socket.on('connect', () => {
             if(data.status === "error"){
                 alert("Please try again later")
             }else{ 
-                console.log(data, " <=== Data")
+                // console.log(data, " <=== Data")
                 alert(data.message)
                 const deleteButton = document.getElementById(data.id);
                 // console.log(deleteButton)
@@ -12236,7 +12236,7 @@ socket.on('connect', () => {
                     //   });
                   }
                   let html = ``
-                  console.log(document.getElementById('open-market-table').getElementsByClassName('empty_table'))
+                //   console.log(document.getElementById('open-market-table').getElementsByClassName('empty_table'))
                   if(document.getElementById('open-market-table').getElementsByClassName('empty_table').length != 0){
                     html += `
                     <thead>
@@ -12337,7 +12337,7 @@ socket.on('connect', () => {
                     //   });
                   }
                   let html = ``
-                  console.log(document.getElementById('mapped-market-table').getElementsByClassName('empty_table'))
+                //   console.log(document.getElementById('mapped-market-table').getElementsByClassName('empty_table'))
                   if(document.getElementById('mapped-market-table').getElementsByClassName('empty_table').length != 0){
                     html += `
                     <thead>
@@ -12399,7 +12399,7 @@ socket.on('connect', () => {
         $(document).on('click','.status_check',function(){
             let status = $(this).prop('checked') ? true : false;
             let id = $(this).data('id')
-            console.log(id)
+            // console.log(id)
             if(id){
                 if(confirm('do you want to change status')){
                     socket.emit('sportStatusChange',{status,id})
@@ -12437,7 +12437,7 @@ socket.on('connect', () => {
         $(document).on('click','.status_check',function(){
             let status = $(this).prop('checked') ? true : false;
             let id = $(this).data('id')
-            console.log(id)
+            // console.log(id)
             if(id){
                 if(confirm('do you want to change status')){
                     socket.emit('sportStatusChange2',{status,id})
@@ -12463,7 +12463,7 @@ socket.on('connect', () => {
         $(document).on('click','.status_check_feature',function(){
             let status = $(this).prop('checked') ? true : false;
             let id = $(this).data('id')
-            console.log(id)
+            // console.log(id)
             if(id){
                 if(confirm('do you want to change status')){
                     socket.emit('sportStatusChange3',{status,id})
@@ -12496,7 +12496,7 @@ socket.on('connect', () => {
         $(document).on('click','.status_check_inPlay',function(){
             let status = $(this).prop('checked') ? true : false;
             let id = $(this).data('id')
-            console.log(id)
+            // console.log(id)
             if(id){
                 if(confirm('do you want to change status')){
                     socket.emit('sportStatusChange4',{status,id})
@@ -12588,7 +12588,7 @@ socket.on('connect', () => {
           })
 
           socket.on("eventIdForMarketList", async(data) => {
-            console.log(data)
+            // console.log(data)
             let i = 0
             let html = ""
             for (var marketKey in data.result.marketList) {
@@ -12596,8 +12596,8 @@ socket.on('connect', () => {
                   var market = data.result.marketList[marketKey];
                   if (market !== null && typeof market === "object") {
                     i ++
-                    console.log("Market Key:", marketKey);
-                    console.log("Market Object:", market);
+                    // console.log("Market Key:", marketKey);
+                    // console.log("Market Object:", market);
                     if(Array.isArray(market)){
                         if(market.length !== 0){
                             for(let j = 0; j < market.length; j++){
@@ -12653,12 +12653,12 @@ socket.on('connect', () => {
                   }
                 }
               }
-              console.log(html)
-              console.log(html == "")
+            //   console.log(html)
+            //   console.log(html == "")
               if(html == ""){
                 html += `<tr class="empty_table"><td>No record found</td></tr>`
               }
-              console.log(html)
+            //   console.log(html)
               document.getElementById("markets").innerHTML = html
           })
           $(document).on("change", ".checkbox", function(e) {
@@ -13299,7 +13299,7 @@ socket.on('connect', () => {
                         ele.each(function(index){
                             if($(this).hasClass('userBookParentTr') && $(this).hasClass('active')){
                                 let userName = $(this).find('.userBookParent').attr('data-usename')
-                                console.log(userName)
+                                // console.log(userName)
                                 removeChild(userName)
                                 $(this).remove()
                                 
@@ -13384,7 +13384,7 @@ socket.on('connect', () => {
                         ele.each(function(index){
                             if($(this).hasClass('userBookParentTr') && $(this).hasClass('active')){
                                 let userName = $(this).find('.userBookParent').attr('data-usename')
-                                console.log(userName)
+                                // console.log(userName)
                                 removeChild(userName)
                                 $(this).remove()
                                 
@@ -13848,7 +13848,7 @@ socket.on('connect', () => {
             })
 
             socket.on('suspendResume', async(data) => {
-                console.log(data)
+                // console.log(data)
                 let result = ''
                 if(data.status){
                     result = 'Suspend'
@@ -13951,7 +13951,7 @@ socket.on('connect', () => {
             data.filterData = filterData
             data.LOGINDATA = LOGINDATA
             data.page = 0;
-            console.log(data)
+            // console.log(data)
             socket.emit('matchBets',data)
 
         })
@@ -14000,7 +14000,7 @@ socket.on('connect', () => {
             
         let count = 11
         socket.on('matchBets',(data) => {
-            console.log(data)
+            // console.log(data)
             if(data.page === 0){
                 count = 1
             }
@@ -14052,9 +14052,9 @@ socket.on('connect', () => {
         if(data.status === "error"){
             alert("Please try again later")
         }else{
-            console.log(data.bet._id)
+            // console.log(data.bet._id)
             const deleteButton = document.getElementById(data.bet._id);
-            console.log(deleteButton)
+            // console.log(deleteButton)
             const row = deleteButton.closest('tr'); 
             if (row) {
                 const table = row.parentNode;
@@ -14071,7 +14071,7 @@ socket.on('connect', () => {
         $(document).on("click", ".Detail", function(e){
             e.preventDefault()
             let form = $('#user-details-page')
-            console.log(form)
+            // console.log(form)
         })
 
         $(document).on('submit', "#user-details-page", function(e){
@@ -14128,7 +14128,7 @@ socket.on('connect', () => {
 
         $('#Sport').change(function() {
             let Sport = $(this).val()
-            console.log(Sport)
+            // console.log(Sport)
             if(['1','2','4'].includes(Sport)){
                 socket.emit('getEvetnsOfSport',{sport:Sport})
             }else{
@@ -14137,7 +14137,7 @@ socket.on('connect', () => {
         })
 
         socket.on('getEvetnsOfSport',async(data)=>{
-            console.log(data,"getEvetnsOfSport")
+            // console.log(data,"getEvetnsOfSport")
             let html =''
             html += `<option value="All" selected> Select Event </option>`
             for(let i = 0;i<data.eventList.length;i++){
@@ -14343,14 +14343,14 @@ socket.on('connect', () => {
                 to_date = new Date(new Date($('#Tdate').val()).getTime() + ((24 * 60 * 60 *1000)-1))
             }
             let Sport = $("#Event").val()
-            console.log(roleType,parent,from_date,to_date,page, Sport, market)
+            // console.log(roleType,parent,from_date,to_date,page, Sport, market)
             socket.emit('childGameAnalist',{roleType,parent,from_date,to_date,USER:LOGINDATA.LOGINUSER,page, Sport, market})
         })
 
         let limit;
 
         socket.on('matchOddsOwn',async(data)=>{
-            console.log(data)
+            // console.log(data)
             let html = ""            
             limit = 10 * data.page
             if(data.matchOdds.length !== 0){
@@ -14416,7 +14416,7 @@ socket.on('connect', () => {
         })
 
         socket.on('childGameAnalist',async(data)=>{
-            console.log(data)
+            // console.log(data)
             let html = ""
             let html2 = ""
             let html3 = ""
@@ -14617,7 +14617,7 @@ socket.on('connect', () => {
 
 
         socket.on('matchOdds',async(data)=>{
-            console.log(data)
+            // console.log(data)
             let html = ""
             limit = 10 * data.page
             if(data.matchOdds.length !== 0){
@@ -14686,7 +14686,7 @@ socket.on('connect', () => {
 
 
         socket.on("gameAnalysis", data => {
-            console.log(data)
+            // console.log(data)
             if($('#FOOTBALL').find('.matchOddsBack')){
                 $('#FOOTBALL').find('.matchOddsBack').html('')
             }
@@ -14914,7 +14914,7 @@ socket.on('connect', () => {
         })
 
         socket.on("searchEvents", async(data)=>{
-            console.log(data, 565464)
+            // console.log(data, 565464)
             $('.wrapper').show()
             let html = ``
             for(let i = 0; i < data.sportList.length; i++){
@@ -14926,7 +14926,7 @@ socket.on('connect', () => {
 
     }
     if(pathname.startsWith("/admin/betlimit/sports")){
-        console.log(search,"==>Search")
+        // console.log(search,"==>Search")
         $('.searchEvents').keyup(function(){
             // console.log('working')
             if($(this).hasClass("searchEvents")){
@@ -14944,7 +14944,7 @@ socket.on('connect', () => {
         })
 
         socket.on("searchEvents", async(data)=>{
-            console.log(data, 565464)
+            // console.log(data, 565464)
             $('.wrapper').show()
             let html = ``
             for(let i = 0; i < data.sportList.length; i++){
@@ -14999,7 +14999,7 @@ socket.on('connect', () => {
                 // form.find('input[name = "status"]').
                 form.find('input[name = "message"]').val("")
             }else{
-                console.log(data.eventNotificationSetting, 454545545454545)
+                // console.log(data.eventNotificationSetting, 454545545454545)
                 let form = $('#myModaNotification').find('.add-event-notification')
                 form.attr('id', data.id)
                 form.find('input[name = "status"]').closest('div').removeClass('hide')
@@ -15050,7 +15050,7 @@ socket.on('connect', () => {
             let firstTd = $(this).closest("tr").find("td:first");
             var innerText = firstTd.text();
             let id = firstTd.attr('id');
-            console.log(innerText, id)
+            // console.log(innerText, id)
             socket.emit("updateBetLimitMATCH", {innerText, id})
          })
 
@@ -15134,12 +15134,12 @@ socket.on('connect', () => {
 
         $('.sportId').change(function() {
             let Sport = $(this).val()
-            console.log(Sport)
+            // console.log(Sport)
             socket.emit('getEvetnsOfSport',{sport:Sport})
         })
 
         socket.on('getEvetnsOfSport',async(data)=>{
-            console.log(data)
+            // console.log(data)
             let html =''
             for(let i = 0;i<data.eventList.length;i++){
                 html += `<option value="${data.eventList[i].eventData.eventId}">${data.eventList[i].eventData.name}</option>`
@@ -15192,12 +15192,12 @@ socket.on('connect', () => {
                 data.status = false
             }
             data.date = new Date()
-            console.log(data)
+            // console.log(data)
             socket.emit('editStream',data)
         })
 
         socket.on('editStream',async(data) =>{
-            console.log(data)
+            // console.log(data)
             if(data.status == 'success'){
                 alert('stream updated successfully')
                 location.reload(true)

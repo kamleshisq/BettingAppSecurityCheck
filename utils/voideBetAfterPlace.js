@@ -6,7 +6,7 @@ const InprogressModel = require('../model/InprogressModel');
 const Decimal = require('decimal.js');
 
 async function voidBET(data){
- console.log(data, 444)  
+//  console.log(data, 444)  
  let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password'); 
  if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
     return 'please provide a valid password'

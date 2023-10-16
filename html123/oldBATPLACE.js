@@ -22,7 +22,6 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
     }
 
 async function placeBet(data){
-    console.log(data, "data1")
     // return;
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
     if(check.availableBalance < data.data.stake){
@@ -200,11 +199,7 @@ if(marketDetails.title.toLowerCase().startsWith('match')){
 
 if(data.data.bettype2 === 'BACK'){
     // console.log(betLimit)
-    console.log(betLimit, "betLimit")
-    console.log(data.data, "BET DATA")
     let OddChake = (data.data.oldOdds * 1) + (betLimit.max_odd * 1) 
-    console.log(OddChake)
-    console.log(OddChake <= data.data.odds, data.data.odds < data.data.oldOdds)
     if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
         return 'Odds out of range back'
     }
@@ -215,7 +210,6 @@ if(data.data.bettype2 === 'BACK'){
     }
 }
 
-console.log(data.data)
 // console.log(marketDetails, data.data, '+===>DATA')
 
 if(!marketDetails.runners){
@@ -244,14 +238,10 @@ if(!marketDetails.runners){
     }
 }else{
     let runnersData = JSON.parse(marketDetails.runners)
-    console.log(runnersData, 12121212121)
-    console.log(data.data.secId, "secId")
     let betOn = runnersData.find(item => item.secId == data.data.secId)
     if(!betOn){
         betOn = runnersData.find(item => item.secId == data.data.secId.slice(0,-1))
     }
-    console.log(betOn)
-    console.log(data.data)
     // console.log(betOn)
     // return 123
     //og(betOn, 456)
@@ -289,7 +279,6 @@ if(!marketDetails.runners){
         creditDebitamount = (parseFloat(data.data.stake * data.data.odds) - parseFloat(data.data.stake)).toFixed(2)
     }
 
-    console.log(creditDebitamount , "creditDebitamount")
     let Acc = {
         "user_id":data.LOGINDATA.LOGINUSER._id,
         "description": description,

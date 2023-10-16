@@ -26,7 +26,6 @@ exports.createBanner = catchAsync(async(req, res, next) => {
 
 
 exports.updateBanner = catchAsync(async(req, res, next) => {
-    console.log(req.body, "data")
     if(req.body.check){
         req.body.status = true
     }else{
@@ -44,7 +43,6 @@ exports.updateBanner = catchAsync(async(req, res, next) => {
             return next(new AppError("Please Provide Image", 400))
         }
     }
-        console.log(req.body, 456);
         const updatedBanner = await bannerModel.findByIdAndUpdate(req.body.id,req.body);
         res.status(200).json({
             status:"success",

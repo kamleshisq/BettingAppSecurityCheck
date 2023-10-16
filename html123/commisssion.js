@@ -37,10 +37,8 @@ let commissionMarket = await commissionMarketModel.find()
                                         commissionPer = commissionChild[0].matchOdd.percentage
                                       }
                                     let commissionCoin = ((commissionPer * betsWithMarketId.Stake)/100).toFixed(4)
-                                    console.log(commissionCoin)
                                     if(commissionPer > 0){
                                         let user1 = await userModel.findByIdAndUpdate(childUser.id, {$inc:{commissionChild:commissionCoin}})
-                                        console.log(user1.userName)
                                         let commissionReportData = {
                                             userId:childUser.id,
                                             market:betsWithMarketId.marketName,

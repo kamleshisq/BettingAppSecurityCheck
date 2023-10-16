@@ -7,10 +7,6 @@ const path = require('path');
 
 
 exports.uploadphoto = catchAsynch(async(req, res, next) => {
-    console.log(req.files)
-    console.log(req.body)
-    console.log("req.body")
-    console.log(req.currentUser)
     if(req.files != null){
         let data = {}
         if(req.files.file.mimetype.startsWith('application/pdf')){
