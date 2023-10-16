@@ -238,6 +238,13 @@
 ] parentArray
 64956e701109042453f3c2ff ele._idele._idele._id
 
+{
+                                            $cond:{
+                                                if : {$eq: ['$role_type', 5]},
+                                                then : "$Stake",
+                                                else:{ $multiply: ["$Stake", -1] }
+                                            }
+                                        },
 
 
 
