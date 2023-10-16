@@ -13297,13 +13297,13 @@ socket.on('connect', () => {
                         $('#match_odd').find(string).remove()
                     }
                     function loopforchildclose(ele){
-                        ele.each(function(ele,index){
-                            if($(ele).hasClass('userBookParentTr') && $(ele).hasClass('active')){
-                                let userName = $(ele).children().hasClass('userBookParent').attr('data-usename')
+                        ele.each(function(index){
+                            if($(this).hasClass('userBookParentTr') && $(this).hasClass('active')){
+                                let userName = $(this).children().hasClass('userBookParent').attr('data-usename')
                                 removeChild(userName)
 
                             }else{
-                                $(ele).remove()
+                                $(this).remove()
                             }
                         })
                         
