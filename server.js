@@ -4960,7 +4960,7 @@ io.on('connection', (socket) => {
 
 
                     console.log(Bets, "BetsBetsBetsBets")
-                    console.log(Bets[0].selections2, "BetsBetsBetsBets")
+                    console.log(Bets.selections2, "BetsBetsBetsBets")
                 }else{
 
                 }
