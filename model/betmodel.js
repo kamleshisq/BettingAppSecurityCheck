@@ -95,7 +95,10 @@ const betSchema = mongoose.Schema({
             parentUSerId:String,
             uplineShare:Number
         }
-    ]
+    ],
+    parentId:{
+        type:String
+    }
 })
 
 function roundToTwoDecimals(value) {
