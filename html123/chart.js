@@ -1,5 +1,4 @@
 socket.on("chartMain", async(data) => {
-        console.log(data)
         const currentDate = new Date();
         const tenDaysAgo = new Date();
         tenDaysAgo.setDate(currentDate.getDate() - 10);
@@ -67,7 +66,6 @@ socket.on("chartMain", async(data) => {
           
             currentDate1.setDate(currentDate1.getDate() + 1);
           }
-          console.log(newDataArray);
         const Income = newDataArray.map(item => item.totalIncome);
         const Revanue = newDataArray.map(item => item.totalIncome2);
         socket.emit("chartMain", {Income, Revanue})

@@ -29,7 +29,7 @@ async function rollBack(data){
                 console.log(err)
             }
         }
-        console.log(allBetWithMarketId)
+        // console.log(allBetWithMarketId)
         let operatorId;
         let operatoruserName;
         if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){

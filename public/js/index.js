@@ -61,7 +61,6 @@ $(document).ready(function(){
             $("a[href='"+pathname+"'").parent().parent().siblings('a').addClass('active')
             $("a[href='"+pathname+"'").parent().parent().addClass('open')
         }
-        console.log(pathname)
         if(pathname == '/admin/catalogcontrol/compitations' || pathname == '/admin/catalogcontrol/compitations/events'){
             $("a[href='"+'/admin/catalogcontrol'+"'").addClass('active')
 
@@ -118,7 +117,6 @@ $(document).on("submit", ".loginFormAdmin", function(e){
 })
 $(document).on('click', ".logOut", function(e){
     e.preventDefault()
-    console.log('Working')
     // console.log(this)
     logout()
 })
@@ -161,7 +159,7 @@ if(formDataObj.role == "650bccdbb3fdc8c922c34bbe"){
     }
 }
 formDataObj.OperatorAuthorization = checkedValues
-console.log(formDataObj, "+==> data")
+// console.log(formDataObj, "+==> data")
 // console.log(checkedValues);
 createUser(formDataObj)
 });
@@ -211,7 +209,7 @@ $(document).on('submit','.acc-form',async function(e) {
     let fd = new FormData(form);
     let formDataObj = Object.fromEntries(fd.entries());
     formDataObj.id = id ;
-    console.log(formDataObj)
+    // console.log(formDataObj)
     if(formDataObj.amount == 0){
         alert('please enter amount greater than 0')
     }else{
@@ -221,7 +219,6 @@ $(document).on('submit','.acc-form',async function(e) {
         // console.log(user)
         trElements.forEach(function(trElement) {
             if (trElement.getAttribute('data-id') === user.id) {
-                console.log(trElement, 4545445454)
             }
         })    
     }
@@ -249,7 +246,7 @@ $(document).on('submit','.Settlement-form',async function(e) {
     }else{
         creditDebitSettle(formDataObj)
     }
-    console.log(formDataObj)
+    // console.log(formDataObj)
     // const url = window.location.href
     // const id = url.split("=")[1]
     // formDataObj.id = id
@@ -462,17 +459,16 @@ $('.createRole-form1').submit(function(e) {
         roleName,
         name:roleName
     }
-    console.log(data)
+    // console.log(data)
     createRole(data)
 })
 
 
 
 $(document).on('click','.RoleDetails',function(){
-    console.log("Working") 
     let modleName = $(this).data('bs-target')
     let roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss')
-    console.log(roledata)
+    // console.log(roledata)
     let form = $(modleName).find('.UpdateRole-form')
     // let x = form.find('input[id="check"]').length
     // console.log(x)
@@ -595,7 +591,7 @@ $(document).on('submit', ".form-data23", function(e){
     let fd = new FormData(form);
     fd.append('id', id)
     let data = Object.fromEntries(fd.entries());
-    console.log(data)
+    // console.log(data)
     // form.append('image',document.getElementById('file').files[0])
     // console.log(form)
     updateHorizontalMenu(fd)

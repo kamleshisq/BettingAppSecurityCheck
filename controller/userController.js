@@ -317,7 +317,6 @@ exports.updateUserStatusBattingUnlock = catchAsync(async(req, res, next) => {
 
 exports.changePassword = catchAsync(async(req, res, next) => {
     // const user = await User.findById(req.body.id).select('+password')
-    console.log(req.body)
 
     let user = await User.findOne({_id:req.body.id}).select('+password')
     // // console.log(req.body.password)

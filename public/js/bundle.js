@@ -7094,7 +7094,6 @@ $(document).ready(function () {
         $("a[href='" + pathname + "'").parent().parent().siblings('a').addClass('active');
         $("a[href='" + pathname + "'").parent().parent().addClass('open');
       }
-      console.log(pathname);
       if (pathname == '/admin/catalogcontrol/compitations' || pathname == '/admin/catalogcontrol/compitations/events') {
         $("a[href='" + '/admin/catalogcontrol' + "'").addClass('active');
       } else if (pathname == '/admin/riskAnalysis' || pathname == '/admin/matchBets') {
@@ -7144,7 +7143,6 @@ $(document).on("submit", ".loginFormAdmin", function (e) {
 });
 $(document).on('click', ".logOut", function (e) {
   e.preventDefault();
-  console.log('Working');
   // console.log(this)
   (0, _logOut.logout)();
 });
@@ -7185,7 +7183,7 @@ $('#Add-User').submit(function (e) {
     }
   }
   formDataObj.OperatorAuthorization = checkedValues;
-  console.log(formDataObj, "+==> data");
+  // console.log(formDataObj, "+==> data")
   // console.log(checkedValues);
   (0, _createUser.createUser)(formDataObj);
 });
@@ -7248,27 +7246,25 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           fd = new FormData(form);
           formDataObj = Object.fromEntries(fd.entries());
           formDataObj.id = id;
-          console.log(formDataObj);
+          // console.log(formDataObj)
           if (!(formDataObj.amount == 0)) {
-            _context2.next = 11;
+            _context2.next = 10;
             break;
           }
           alert('please enter amount greater than 0');
-          _context2.next = 16;
+          _context2.next = 15;
           break;
-        case 11:
-          _context2.next = 13;
+        case 10:
+          _context2.next = 12;
           return (0, _debitCredit.debitCredit)(formDataObj);
-        case 13:
+        case 12:
           user = _context2.sent;
           trElements = document.querySelectorAll('tr.trtable'); // console.log(trElements)
           // console.log(user)
           trElements.forEach(function (trElement) {
-            if (trElement.getAttribute('data-id') === user.id) {
-              console.log(trElement, 4545445454);
-            }
+            if (trElement.getAttribute('data-id') === user.id) {}
           });
-        case 16:
+        case 15:
         case "end":
           return _context2.stop();
       }
@@ -7295,7 +7291,7 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
           } else {
             (0, _creditDebitSettle.creditDebitSettle)(formDataObj);
           }
-          console.log(formDataObj);
+          // console.log(formDataObj)
           // const url = window.location.href
           // const id = url.split("=")[1]
           // formDataObj.id = id
@@ -7314,7 +7310,7 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
           // let currentUser = $('#currentUserDetails').data('currentuser')
           // updateRow(user,rowId,currentUser)
           // console.log(user)
-        case 8:
+        case 7:
         case "end":
           return _context3.stop();
       }
@@ -7500,14 +7496,13 @@ $('.createRole-form1').submit(function (e) {
     roleName: roleName,
     name: roleName
   };
-  console.log(data);
+  // console.log(data)
   (0, _createRole.createRole)(data);
 });
 $(document).on('click', '.RoleDetails', function () {
-  console.log("Working");
   var modleName = $(this).data('bs-target');
   var roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
-  console.log(roledata);
+  // console.log(roledata)
   var form = $(modleName).find('.UpdateRole-form');
   // let x = form.find('input[id="check"]').length
   // console.log(x)
@@ -7625,7 +7620,7 @@ $(document).on('submit', ".form-data23", function (e) {
   var fd = new FormData(form);
   fd.append('id', id);
   var data = Object.fromEntries(fd.entries());
-  console.log(data);
+  // console.log(data)
   // form.append('image',document.getElementById('file').files[0])
   // console.log(form)
   (0, _updateHorizonatlMenu.updateHorizontalMenu)(fd);

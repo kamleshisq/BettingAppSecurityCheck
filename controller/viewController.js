@@ -150,7 +150,6 @@ exports.userTable = catchAsync(async(req, res, next) => {
     const users = data[0].child;
     const roles = roles1;
     const currentUser = req.currentUser
-    console.log(currentUser)
     const rows = data[0].rows
     const me = data[0].me
     // console.log(currentUser)
@@ -201,8 +200,6 @@ exports.allOperators = catchAsync(async(req, res, next)=>{
 })
 
 exports.login = catchAsync(async(req, res, next) => {
-    console.log("1")
-    console.log(req.currentUser)
     if(req.currentUser){
         if(req.currentUser.role_type < 5){
            return res.redirect('/admin/dashboard')
@@ -619,7 +616,6 @@ exports.APIcall = catchAsync(async(req, res, next) => {
     .then(res => res.json())
     .then(result => {
 
-        console.log(result)
         res.status(200).json({
             status:"success",
             result
@@ -657,7 +653,6 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
         },
         { $limit : 10 }
     ])
-    console.log(bets)
 
     res.status(200).render("./reports/reports",{
         title:"Bet List",
@@ -938,7 +933,6 @@ exports.gameReportPageByMatch = catchAsync(async(req, res, next) => {
 })
 exports.gameReportPageByMatchByMarket = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
-    console.log(req.query)
     var today = new Date(req.query.toDate);
     var todayFormatted = formatDate(today);
     var tomorrow = new Date(req.query.fromDate);
@@ -1005,7 +999,6 @@ exports.gameReportPageByMatchByMarket = catchAsync(async(req, res, next) => {
 
 exports.gameReportPageFinal = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
-    console.log(req.query)
     var today = new Date(req.query.toDate);
     var todayFormatted = formatDate(today);
     var tomorrow = new Date(req.query.fromDate);
@@ -1450,7 +1443,6 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
             }
         }
       ]);
-    console.log(betsEventWise[0].data, '==>DATA')
     res.status(200).render("./sattelment/setalment",{
         title:"Settlements",
         me,
@@ -1641,7 +1633,6 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
             if(item.eventData.type == 'IN_PLAY' && item.eventData.isTv == 1){
                 let stream = await Stream.findOne({sportId:sportId,eventId:item.eventData.eventId})
                 let liveStream = await liveStreameData(item.eventData.channelId)
-                console.log(liveStream,'liveStrem')
                 let status;
                 let url;
                 if(stream){
@@ -1658,7 +1649,6 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
                             } else {
                                 console.log("No 'src' attribute found in the iframe tag.");
                             }
-                            console.log(url, 123)
                         }
                     
                     }
@@ -1682,7 +1672,6 @@ exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
         })
 
         Promise.all(newSportList).then(()=>{
-            console.log(eventList)
             res.status(200).render("./streamManagement/events",{
                 title:"Stream Management",
                 me,
@@ -2075,7 +2064,6 @@ exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
     })
     .then(res =>res.json())
     .then(result => {
-        console.log(result)
         res.status(200).json({
             result
         })
@@ -2095,7 +2083,6 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
     })
     .then(res =>res.json())
     .then(result => {
-        console.log(result, "+==> RESULT")
         res.status(200).json({
             result
         })
@@ -2340,7 +2327,6 @@ exports.getPageManagement = catchAsync(async(req, res, next) => {
 
 exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    console.log(user, "USERSLOGIN")
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let featureEventId = []
@@ -2633,7 +2619,6 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
         featureEventId.push(parseInt(ele.Id))
     })
     let liveTennis = Tennis.filter(item => featureEventId.includes(item.eventData.eventId))
-    console.log(featureEventId)
     let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
     let userLog
@@ -2849,7 +2834,6 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
 
         const betLimitMarekt = await betLimitMatchWisemodel.findOne({matchTitle:match.eventData.name})
         let notification = await eventNotification.findOne({id:req.query.id})
-        console.log(notification, "notification")
         res.status(200).render("./userSideEjs/userMatchDetails/main",{
             title:match.eventData.name,
             user: req.currentUser,
@@ -2919,7 +2903,6 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     }else{
         stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
     }
-    console.log(multimarket)
     res.status(200).render("./userSideEjs/multimarkets/main",{
         title:'Multi Markets',
         user: req.currentUser,
@@ -3399,7 +3382,6 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
 exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     let me = req.currentUser
     let inprogressData = await InprogreshModel.find({eventId:req.query.id})
-    console.log(inprogressData, "<=== inprogressData")
     let childrenUsername = []
     if(req.currentUser.roleName == 'Operator'){
         let children = await User.find({parentUsers:req.currentUser.parent_id})
@@ -3602,7 +3584,6 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
             $limit:limit
         }
     ])
-    console.log(History2[0].user)
     res.status(200).render("./settlemetHistory/settlemetHistory",{
         title:"Settlements",
         me,
@@ -3709,7 +3690,6 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
         $limit:10
         }
     ])
-    console.log(userWiseData,'==>commiccion report check')
     // res.status(200).json({
     //     userWiseData
     // })
@@ -3887,7 +3867,6 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
             }
             
         })
-        console.log(seriesObjList)
         Promise.all(eventListPromis).then(()=>{
             return res.status(200).render("./catalogController/events", {
                 title:"Catalog Controller",
@@ -4002,7 +3981,6 @@ exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
     footballEvents = await Promise.all(newfootballEvents);
     tennisEvents = await Promise.all(newtennisEvents);
     data = {cricketEvents,footballEvents,tennisEvents}
-    console.log(cricketEvents)
 
     return res.status(200).render("./eventController/eventController", {
         title:"Event Controller",
@@ -4417,7 +4395,6 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
 
 
 exports.marketBets = catchAsync(async(req, res, next) => {
-    console.log(req.query.id)
     let limit = 10;
     let page = 0;
     let childrenUsername = []
@@ -4426,7 +4403,6 @@ exports.marketBets = catchAsync(async(req, res, next) => {
         childrenUsername.push(ele.userName) 
     })
     let bets = await betModel.find({marketId:req.query.id,userName:{$in:childrenUsername} ,status: 'OPEN'}).sort({'date':-1}).skip(limit * page).limit(limit)
-    console.log(bets)
         res.status(200).render("./riskMarketsBets/main",{
             title:"Risk Analysis",
             user: req.currentUser,
@@ -4443,7 +4419,6 @@ exports.getSportBetLimit = catchAsync(async(req, res, next) => {
     // let cricketList = sportListData[0].gameList[0]
     // let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
     // let tennisList = sportListData[1].gameList.find(item => item.sportId == 2) 
-    console.log(betLimit)
     res.status(200).render("./betSportLimit/main.ejs", {
         title:"Bet Limits",
         betLimit,
@@ -4456,7 +4431,6 @@ exports.getSportBetLimit = catchAsync(async(req, res, next) => {
 
 exports.getBetLimitSportWise = catchAsync(async(req, res, next) => {
     const me = req.currentUser
-    console.log(req.query.game)
     const betLimit = await betLimitModel.find();
     const sportListData = await getCrkAndAllData()
     let cricketList = sportListData[0].gameList[0]
@@ -4479,7 +4453,6 @@ exports.getBetLimitSportWise = catchAsync(async(req, res, next) => {
             series[seriesIndex].matchdata.push(match);
         }
     });
-    console.log(series)
     res.status(200).render("./betSportWise/main.ejs", {
         title:"Bet Limits",
         betLimit,
@@ -4551,7 +4524,6 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
     children.map(ele => {
         childrenUsername.push(ele.userName) 
     })
-    console.log(req.originalUrl, "URL")
     if(req.query.market){
         let market 
         let marketName 
@@ -4612,7 +4584,6 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
                 }
             }
         ])
-        console.log(marketWiseData, "marketWiseData")
         res.status(200).render('./commissionMarketWise/commissionMarketWise1/commissionMarketWise1.ejs', {
             title:"Commission Report",
             me,
