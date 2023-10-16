@@ -13545,6 +13545,7 @@ socket.on('connect', () => {
                             let team2 = data.matchName.split(' v ')[1].toLowerCase()
                             let html = '';
                             for(let i = 0; i < data.Bets.length; i++){
+                                console.log(data.Bets[i].Bets[0])
                                 let team1Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team1))
                                 let team2Data = data.Bets[i].Bets[0].selections.find(item => item.selectionName.toLowerCase().includes(team2))
                                 if(data.Bets[i].User.roleName == 'user'){
