@@ -4283,7 +4283,7 @@ io.on('connection', (socket) => {
                                                                     $cond : {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
-                                                                        else :"$$value.value"
+                                                                        else :{$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
                                                                     }
                                                                 },
                                                                 flag:false
@@ -4324,7 +4324,7 @@ io.on('connection', (socket) => {
                                                                     $cond : {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {$subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]},
-                                                                        else : "$$value.value"
+                                                                        else : {$subtract : ["$$value.value",{$multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]}]},
                                                                     }
                                                                 },
                                                                 flag:false
