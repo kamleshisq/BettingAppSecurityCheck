@@ -3670,18 +3670,38 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
         {
             $lookup: {
                 from: "commissionnewmodels",
-                localField: "managerId",
-                foreignField: "_id",
-                as: "manager"
+                let: {uniqueId:'$_id'},
+                pipeline: [
+                    {
+                      $match: {
+                        $expr: { $and: [{ $eq: [{ $toObjectId: "$uniqueId" }, "$$uniqueId"] }] },
+                        
+                      }
+                    }
+                  ],
+                as: "parentdata"
             }
         },
         {
             $group: {
                 _id: "$userName",
                 totalCommission: { $sum: "$commission" },
-                totalUPline: { $sum: "$upline" },
+                totalUPline: { $sum:{
+                    $reduce:{
+                        input:'$parentdata',
+                        initialValue:0,
+                        in: { $add: ["$$value", "$$this.commission"] }
+                    }
+                }},
             }
         },
+        // {
+        //     $group: {
+        //         _id: "$_id.userName",
+        //         totalCommission: { $sum: "$totalCommission" },
+        //         totalUPline: { $sum:'$totalUPline'},
+        //     }
+        // },
         {
             $sort:{
             _id : 1,
@@ -3693,6 +3713,8 @@ exports.getCommissionReport = catchAsync(async(req, res, next) => {
         $limit:10
         }
     ])
+
+    console.log(userWiseData,'==>commiccion report check')
 
     let accStatements = await accountStatement.aggregate([
         {

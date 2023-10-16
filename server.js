@@ -3655,14 +3655,21 @@ io.on('connection', (socket) => {
     })
 
     socket.on("updateCommission", async(data) => {
-        // console.log(data)
+        console.log(data)
         try{
             let newValues = {
                 matchOdd: { percentage: data.data.matchOdds, type: `${data.data.matchOddsType}` , status: data.data.matchOddsStatus},
                 Bookmaker: { percentage: data.data.Bookmaker, type:  `${data.data.BookmakerType}`, status: data.data.BookmakerStatus},
                 fency: { percentage: data.data.fency, type: `${data.data.fencyType}`, status: data.data.fencyStatus}
             }
-            let newdata = await commissionModel.findOneAndUpdate({userId:data.data.id}, newValues)
+            let newdata
+            if(!await commissionModel.findOne({userId:data.data.id})){
+                newValues.userId = data.data.id
+                newdata = await commissionModel.create(newValues)
+            }else{
+
+                newdata = await commissionModel.findOneAndUpdate({userId:data.data.id}, newValues)
+            }
 
         socket.emit("updateCommission",{newdata, status:"success"})
         }catch(err){
@@ -5708,12 +5715,32 @@ io.on('connection', (socket) => {
                     }
                   },
                   {
-                      $group: {
-                          _id: "$userName",
-                          totalCommission: { $sum: "$commission" },
-                          totalUPline: { $sum: "$upline" },
-                        }
-                    },
+                    $lookup: {
+                        from: "commissionnewmodels",
+                        let: {uniqueId:'$_id'},
+                        pipeline: [
+                            {
+                              $match: {
+                                $expr: { $and: [{ $eq: [{ $toObjectId: "$uniqueId" }, "$$uniqueId"] }] }
+                                }
+                            }
+                          ],
+                        as: "parentdata"
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$userName",
+                        totalCommission: { $sum: "$commission" },
+                        totalUPline: { $sum:{
+                            $reduce:{
+                                input:'$parentdata',
+                                initialValue:0,
+                                in: { $add: ["$$value", "$$this.commission"] }
+                            }
+                        }},
+                    }
+                },
                     {
                       $sort:{
                         _id : 1,

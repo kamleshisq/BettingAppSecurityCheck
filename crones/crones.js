@@ -181,6 +181,7 @@ module.exports = () => {
 
 
 //FOR MATCH ODDS COMMISSION
+                        let usercommissiondata;
                         let commissionMarket = await commissionMarketModel.find()
                         if(commissionMarket.some(item => item.marketId == bet.marketId)){
                         try{
@@ -204,9 +205,11 @@ module.exports = () => {
                                     upline : 100,
                                     commissionType: 'Win Commission',
                                     commissionPercentage:commissionPer,
-                                    marketName:bet.marketName
+                                    marketName:bet.marketName,
+                                    loginUserId:user._id,
+                                    parentIdArray:user.parentUsers
                                 }
-                                let commissionData = await newCommissionModel.create(commissiondata)
+                                usercommissiondata = await newCommissionModel.create(commissiondata)
                             }
                             }catch(err){
                                 console.log(err)
@@ -236,7 +239,10 @@ module.exports = () => {
                                             upline : 100,
                                             commissionType: 'Win Commission',
                                             commissionPercentage:commissionPer,
-                                            marketName:bet.marketName
+                                            marketName:bet.marketName,
+                                            uniqueId:usercommissiondata._id,
+                                            loginUserId:usercommissiondata.userId,
+                                            parentIdArray:childUser.parentUsers,
                                         }
                                         let commissionData = await newCommissionModel.create(commissiondata)
                                     }
@@ -376,6 +382,7 @@ module.exports = () => {
 
 //COMMISSION FOR ENTRY WISE LOOSING BETS
                         let commissionMarket = await commissionMarketModel.find()
+                        let usercommissiondata2
                         if(commissionMarket.some(item => item.marketId == bet.marketId)){
                             try{
                                 let commission = await commissionModel.find({userId:user.id})
@@ -399,9 +406,11 @@ module.exports = () => {
                                         commissionType: 'Entry Loss Wise Commission',
                                         commissionPercentage:commissionPer,
                                         date:Date.now(),
-                                        marketName:bet.marketName
+                                        marketName:bet.marketName,
+                                        loginUserId:user._id,
+                                        parentIdArray:user.parentUsers
                                     }
-                                    let commissionData = await newCommissionModel.create(commissiondata)
+                                    usercommissiondata2 = await newCommissionModel.create(commissiondata)
                                 }
                                 }catch(err){
                                     console.log(err)
@@ -431,7 +440,10 @@ module.exports = () => {
                                                 commissionType: 'Entry Loss Wise Commission',
                                                 commissionPercentage:commissionPer,
                                                 date:Date.now(),
-                                                marketName:bet.marketName
+                                                marketName:bet.marketName,
+                                                uniqueId:usercommissiondata2._id,
+                                                loginUserId:usercommissiondata2.userId,
+                                                parentIdArray:childUser.parentUsers,
                                             }
                                             let commissionData = await newCommissionModel.create(commissiondata)
                                         }

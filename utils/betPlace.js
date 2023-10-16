@@ -370,6 +370,7 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
     // console.log(user)
     try{
         console.log("COMMISSION MARKET")
+        let usercommissiondata;
         let commissionMarket = await commissionMarketModel.find()
         if(commissionMarket.some(item => item.marketId == data.data.market)){
             let commission = await commissionModel.find({userId:user.id})
@@ -398,10 +399,11 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
                     commissionPercentage:commissionPer,
                     date:Date.now(),
                     marketName:marketDetails.title,
-                    loginUserId:data.LOGINDATA.LOGINUSER._id
+                    loginUserId:data.LOGINDATA.LOGINUSER._id,
+                    parentIdArray:data.LOGINDATA.LOGINUSER.parentUsers
                     
                 }
-                let commissionData = await newCommissionModel.create(commissiondata)
+                usercommissiondata = await newCommissionModel.create(commissiondata)
             }
         
             try{
@@ -435,7 +437,9 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
                             commissionPercentage:commissionPer,
                             date:Date.now(),
                             marketName:marketDetails.title,
-                            loginUserId:data.LOGINDATA.LOGINUSER._id
+                            loginUserId:data.LOGINDATA.LOGINUSER._id,
+                            parentIdArray:childUser.parentUsers,
+                            uniqueId:usercommissiondata._id
                         }
                         let commissionData = await newCommissionModel.create(commissiondata)
                     }

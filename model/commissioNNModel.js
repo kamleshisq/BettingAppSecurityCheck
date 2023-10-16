@@ -68,7 +68,11 @@ const commissionNew = mongoose.Schema({
     loginUserId:{
         type:String,
         required:true
-    }
+    },
+    parentIdArray:{
+        type:[String]
+    },
+    uniqueId:String
 })
 
 
