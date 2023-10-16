@@ -4184,7 +4184,8 @@ io.on('connection', (socket) => {
                                     }
                                 },
                                 parentArray: { $first: "$parentArray" },
-                                role_type: { $first: "$role_type" }
+                                role_type: { $first: "$role_type" },
+                                parentId: { $first: "$parentId" },
                             },
                         },
                         {
@@ -4192,6 +4193,7 @@ io.on('connection', (socket) => {
                                 _id: "$_id.userName",
                                 parentArray: { $first: "$parentArray" },
                                 role_type: { $first: "$role_type" },
+                                parentId: { $first: "$parentId" },
                                 selections: {
                                     $push: {
                                         selectionName: "$_id.selectionName",
@@ -4207,6 +4209,7 @@ io.on('connection', (socket) => {
                                 _id:0,
                                 userName: "$_id",
                                 parentArray:"$parentArray",
+                                parentId: "$parentId",
                                 selections: { 
                                     $map: { 
                                         input: "$selections",
@@ -4234,6 +4237,7 @@ io.on('connection', (socket) => {
                                 userName: "$userName",
                                 elementUser : ele.userName,
                                 parentArray:"$parentArray",
+                                parentId: "$parentId",
                                 selections2:{ 
                                     $map: { 
                                         input: "$selections",
@@ -4277,7 +4281,11 @@ io.on('connection', (socket) => {
                                                                     $cond : {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
-                                                                            $subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                            $cond:{
+                                                                                if : {$eq : ["$parentId", ele.id]},
+                                                                                then:"$$selection.winAmount",
+                                                                                else:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                                            }
                                                                         },
                                                                         else : "$$value.value"
                                                                     }
@@ -4320,7 +4328,11 @@ io.on('connection', (socket) => {
                                                                     $cond : {
                                                                         if : { $eq : ["$$value.value" , 0]},
                                                                         then : {
-                                                                            $subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                            $cond:{
+                                                                                if : {$eq : ["$parentId", ele.id]},
+                                                                                then:"$$selection.lossAmount",
+                                                                                else:{$subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                                            }
                                                                         },
                                                                         else : "$$value.value"
                                                                     }
