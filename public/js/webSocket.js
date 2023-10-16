@@ -13298,12 +13298,12 @@ socket.on('connect', () => {
                     }
                     function loopforchildclose(ele){
                         ele.each(function(ele,index){
-                            if(ele.hasClass('userBookParentTr')){
-                                let userName = ele.children().hasClass('userBookParent').attr('data-usename')
+                            if($(ele).hasClass('userBookParentTr')){
+                                let userName = $(ele).children().hasClass('userBookParent').attr('data-usename')
                                 removeChild(userName)
 
                             }else{
-                                ele.remove()
+                                $(ele).remove()
                             }
                         })
                         
