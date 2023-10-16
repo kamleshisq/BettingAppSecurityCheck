@@ -255,7 +255,7 @@ io.on('connection', (socket) => {
                         // console.log('here')
                         user = await User.find(data.filterData).skip(skip).limit(limit)
                     }else{
-                        socket.on('searchErr',{
+                        socket.emit('searchErr',{
                             message:'you not have permition'
                         })
                     }
