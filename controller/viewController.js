@@ -174,6 +174,132 @@ exports.userTable = catchAsync(async(req, res, next) => {
     }else{
         sum = 0
     }
+
+    //net commission loss check
+
+     //FOR FIND OPEN BET THAT ARE ALLOWED TO SETTLE AUTOMETIC
+
+
+     const openBets = await betModel.aggregate([
+        {
+            $match: {
+                status: 'OPEN'
+            }
+        },
+        {
+            $addFields: {
+              userIdObjectId: { $toObjectId: '$userId' } 
+            }
+        },
+        {
+            $lookup: {
+              from: 'users',
+              localField: 'userIdObjectId',
+              foreignField: '_id',
+              as: 'user'
+            }
+        },
+        {
+            $unwind: '$user'
+        },
+        {
+            $lookup: {
+              from: 'statementmodels',
+              let: { parentUserIds: '$user.parentUsers' },
+              pipeline: [
+                {
+                  $match: {
+                    $expr: {
+                      $in: ['$userId', '$$parentUserIds'] 
+                    }
+                  }
+                }
+              ],
+              as: 'settlement'
+            }
+        },
+        {
+          $match: {
+              $expr: {
+                  $eq: [
+                      { $size: "$settlement" },
+                      {
+                          $size: {
+                              $filter: {
+                                  input: "$settlement",
+                                  as: "settlementStatus",
+                                  cond: { $eq: ["$$settlementStatus.status", true] } 
+                              }
+                          }
+                      }
+                  ]
+              }
+          }
+      }
+    ])
+
+// COMMEN MARKET ID FOR CALL API
+    const marketIds = [...new Set(openBets.map(item => item.marketId))];
+
+//CALL API FOR RESULTS
+    const fullUrl = 'https://admin-api.dreamexch9.com/api/dream/markets/result';
+    let result;
+    await fetch(fullUrl, {
+        method:'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'accept': 'application/json'
+            },
+        body:JSON.stringify(marketIds)
+    }).then(res =>res.json())
+    .then(data => {
+        result = data
+    })
+
+    //IF RESULT IS NOT EMPTY THAN PROCEED 
+    if(result.data.length != 0){
+        marketIds.forEach(async(marketIds) => {
+//FIND THE RESULT OF THAT PERTICULAR MARKET ID 
+            let marketresult = result.data.find(item => item.mid === marketIds)
+            if(marketresult === undefined){
+                return
+            }
+                //NET LOSING COMMISSION
+
+                let filterUser = await User.find({"$Bookmaker.type":'NET_LOSS'})
+                let newfilterUser = map(ele => {
+                    return ele.userId
+                })
+
+                console.log(newfilterUser,"==>newfilterUser")
+
+                let netLossingCommission = await betModel.aggregate([
+                    {
+                        $match:{
+                            status:'OPEN',
+                            marketId:marketresult.mid,
+                            $or:[{
+                                    $and:
+                                    [
+                                        {selectionName:{$ne:marketresult.result}},
+                                        {bettype2:'BACK'}
+                                    ]
+                                },
+                                {
+                                    $and:
+                                    [
+                                        {selectionName:{$ne:marketresult.result}},
+                                        {bettype2:'LAY'}
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ])
+        })
+    }
+
+
     res.status(200).render('./userManagement/main',{
         title: "User Management",
         users,

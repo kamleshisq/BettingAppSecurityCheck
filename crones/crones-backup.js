@@ -453,47 +453,24 @@ module.exports = () => {
                                 }
                         }
 
+
+
+
+
+
+
+
+
+
+
+
                     }
                 })
-                
-
-                //NET LOSING COMMISSION
-
-                let filterUser = await User.find({"$Bookmaker.type":'NET_LOSS'})
-                let newfilterUser = map(ele => {
-                    return ele.userId
-                })
-
-                console.log(newfilterUser,"==>newfilterUser")
-
-                let netLossingCommission = await betModel.aggregate([
-                    {
-                        $match:{
-                            status:'OPEN',
-                            marketId:marketresult.mid,
-                            $or:[{
-                                    $and:
-                                    [
-                                        {selectionName:{$ne:marketresult.result}},
-                                        {bettype2:'BACK'}
-                                    ]
-                                },
-                                {
-                                    $and:
-                                    [
-                                        {selectionName:{$ne:marketresult.result}},
-                                        {bettype2:'LAY'}
-                                    ]
-                                }
-                            ]
-                        }
-                    }
-                ])
                 
             });
             
-      
-
+          
+            
             
         }
     })
