@@ -78,156 +78,156 @@ console.log("WORKING +==>>", data)
 
 async function processBets() {
   const betPromises = bets.map(async (bet) => {
-      console.log(bet, data.result, "DATADATA123456")
-      let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bet.marketId, progressType:'SettleMent'}, {$inc:{settledBet:1}})
-      if((checkDelete.settledBet + 1) == checkDelete.length){
-        await InprogressModel.findOneAndDelete({marketId : bet.marketId, progressType:'SettleMent'})
-      }
+    console.log(bet, data.result, "DATADATA123456")
+    let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bet.marketId, progressType:'SettleMent'}, {$inc:{settledBet:1}})
+    if((checkDelete.settledBet + 1) == checkDelete.length){
+      await InprogressModel.findOneAndDelete({marketId : bet.marketId, progressType:'SettleMent'})
+    }
   });
-
-  await Promise.all(betPromises);
+  
+}
+  await Promise.all(processBets);
  //NET LOSING COMMISSION
 
- console.log('net losing commission start ....')
- let commissionMarket = await commissionMarketModel.find()
- let usercommissiondata3
-  if(commissionMarket.some(item => (item.marketId == bets[0].marketId) && (item.commisssionStatus == false))){
-    await commissionMarket.findOneAndUpdate({marketId:bets[0].marketId},{commisssionStatus:true})
+//  console.log('net losing commission start ....')
+//  let commissionMarket = await commissionMarketModel.find()
+//  let usercommissiondata3
+//   if(commissionMarket.some(item => (item.marketId == bets[0].marketId) && (item.commisssionStatus == false))){
+//     await commissionMarket.findOneAndUpdate({marketId:bets[0].marketId},{commisssionStatus:true})
 
-    let filterUser = await commissionModel.find({"$Bookmaker.type":'NET_LOSS'})
-    let newfilterUser = filterUser.map(ele => {
-        return ele.userId
-    })
+//     let filterUser = await commissionModel.find({"$Bookmaker.type":'NET_LOSS'})
+//     let newfilterUser = filterUser.map(ele => {
+//         return ele.userId
+//     })
    
   
-    let netLossingCommission = await betModel.aggregate([
-      {
-        $match:{
-            market : { $regex: /^book/i},
-            match: `${bets[0].match}`,
-            userId:{$in:newfilterUser},
-            marketId:`${bets[0].marketId}`,
-            status:{$in:['WON','LOSS']}
-        }
-      },
-      {
-        $group:{
-            _id:'$userName',
-            returns:{$sum:{$cond:[{$in:['$status',['LOSS']]},'$returns',{"$subtract": [ "$returns", "$Stake" ]}]}},
-            userId:{$first:'$userId'},
-            eventId:{$first:'$eventId'},
-            gameId:{$first:'$gameId'},
-            event:{$first:'$event'},
-            marketId:{$first:'$marketId'},
-            match:{$first:'$match'},
-            eventDate:{$first:'$eventDate'},
-            marketName:{$first:'$marketName'}
+//     let netLossingCommission = await betModel.aggregate([
+//       {
+//         $match:{
+//             market : { $regex: /^book/i},
+//             match: `${bets[0].match}`,
+//             userId:{$in:newfilterUser},
+//             marketId:`${bets[0].marketId}`,
+//             status:{$in:['WON','LOSS']}
+//         }
+//       },
+//       {
+//         $group:{
+//             _id:'$userName',
+//             returns:{$sum:{$cond:[{$in:['$status',['LOSS']]},'$returns',{"$subtract": [ "$returns", "$Stake" ]}]}},
+//             userId:{$first:'$userId'},
+//             eventId:{$first:'$eventId'},
+//             gameId:{$first:'$gameId'},
+//             event:{$first:'$event'},
+//             marketId:{$first:'$marketId'},
+//             match:{$first:'$match'},
+//             eventDate:{$first:'$eventDate'},
+//             marketName:{$first:'$marketName'}
   
   
-        }
-    },
-      {
-        $group: {
-          _id: {
-            userId: "$_id.userId",
-            match: "$_id.match"
-          },
-          markets: {
-            $push: {
-              market: "$_id.market",
-              totalReturn: "$totalReturn",
-              event: "$event",
-              percentage: "$percentage",
-              sport: "$sport" // Include sport field here as well
-            }
-          }
-        }
-      },
-      {
-        $project: {
-          _id: 0,
-          userId: "$_id.userId",
-          match: "$_id.match",
-          markets: 1
-        }
-      }
-    ]);
+//         }
+//     },
+//       {
+//         $group: {
+//           _id: {
+//             userId: "$_id.userId",
+//             match: "$_id.match"
+//           },
+//           markets: {
+//             $push: {
+//               market: "$_id.market",
+//               totalReturn: "$totalReturn",
+//               event: "$event",
+//               percentage: "$percentage",
+//               sport: "$sport" // Include sport field here as well
+//             }
+//           }
+//         }
+//       },
+//       {
+//         $project: {
+//           _id: 0,
+//           userId: "$_id.userId",
+//           match: "$_id.match",
+//           markets: 1
+//         }
+//       }
+//     ]);
     
   
-      console.log(netLossingCommission,'netlossingcommission test')
+//       console.log(netLossingCommission,'netlossingcommission test')
                       
-      for(let i = 0;i<netLossingCommission.length;i++) {
-        let user = await userModel.findById(netLossingCommission[i].userId)
-        try{
-                let commission = await commissionModel.find({userId:netLossingCommission[i].userId})
-                let commissionPer = 0
-                if (commission[0].Bookmaker.type == "NET_LOSS" && commission[0].Bookmaker.status){
-                    commissionPer = commission[0].Bookmaker.percentage
-                }
-                let commissionCoin = ((commissionPer * netLossingCommission[i].returns)/100).toFixed(4)
-                if(commissionPer > 0 && commissionCoin > 0){
-                    let commissiondata = {
-                        userName : user.userName,
-                        userId : user._id,
-                        eventId : netLossingCommission[i].eventId,
-                        sportId : netLossingCommission[i].gameId,
-                        seriesName : netLossingCommission[i].event,
-                        marketId : netLossingCommission[i].marketId,
-                        eventDate : new Date(netLossingCommission[i].eventDate),
-                        eventName : netLossingCommission[i].match,
-                        commission : commissionCoin,
-                        upline : 100,
-                        commissionType: 'Net Losing Commission',
-                        commissionPercentage:commissionPer,
-                        date:Date.now(),
-                        marketName:netLossingCommission[i].marketName,
-                        loginUserId:user._id,
-                        parentIdArray:user.parentUsers
-                    }
-                    usercommissiondata3 = await newCommissionModel.create(commissiondata)
-                }
-        }catch(err){
-            console.log(err)
-        }
+//       for(let i = 0;i<netLossingCommission.length;i++) {
+//         let user = await userModel.findById(netLossingCommission[i].userId)
+//         try{
+//                 let commission = await commissionModel.find({userId:netLossingCommission[i].userId})
+//                 let commissionPer = 0
+//                 if (commission[0].Bookmaker.type == "NET_LOSS" && commission[0].Bookmaker.status){
+//                     commissionPer = commission[0].Bookmaker.percentage
+//                 }
+//                 let commissionCoin = ((commissionPer * netLossingCommission[i].returns)/100).toFixed(4)
+//                 if(commissionPer > 0 && commissionCoin > 0){
+//                     let commissiondata = {
+//                         userName : user.userName,
+//                         userId : user._id,
+//                         eventId : netLossingCommission[i].eventId,
+//                         sportId : netLossingCommission[i].gameId,
+//                         seriesName : netLossingCommission[i].event,
+//                         marketId : netLossingCommission[i].marketId,
+//                         eventDate : new Date(netLossingCommission[i].eventDate),
+//                         eventName : netLossingCommission[i].match,
+//                         commission : commissionCoin,
+//                         upline : 100,
+//                         commissionType: 'Net Losing Commission',
+//                         commissionPercentage:commissionPer,
+//                         date:Date.now(),
+//                         marketName:netLossingCommission[i].marketName,
+//                         loginUserId:user._id,
+//                         parentIdArray:user.parentUsers
+//                     }
+//                     usercommissiondata3 = await newCommissionModel.create(commissiondata)
+//                 }
+//         }catch(err){
+//             console.log(err)
+//         }
   
-        try{
-            for(let i = user.parentUsers.length - 1; i >= 1; i--){
-                let childUser = await userModel.findById(user.parentUsers[i])
-                let parentUser = await userModel.findById(user.parentUsers[i - 1])
-                let commissionChild = await commissionModel.find({userId:childUser.id})
-                let commissionPer = 0
-                if (commissionChild[0].Bookmaker.type == "NET_LOSS" && commissionChild[0].Bookmaker.status){
-                    commissionPer = commissionChild[0].Bookmaker.percentage
-                }
-                let commissionCoin = ((commissionPer * netLossingCommission[i].returns)/100).toFixed(4)
-                if(commissionPer > 0 && commissionCoin > 0){
-                    let commissiondata = {
-                        userName : childUser.userName,
-                        userId : childUser.id,
-                        eventId : netLossingCommission[i].eventId,
-                        sportId : netLossingCommission[i].gameId,
-                        seriesName : netLossingCommission[i].event,
-                        marketId : netLossingCommission[i].marketId,
-                        eventDate : new Date(netLossingCommission[i].eventDate),
-                        eventName : netLossingCommission[i].match,
-                        commission : commissionCoin,
-                        upline : 100,
-                        commissionType: 'Net Losing Commission',
-                        commissionPercentage:commissionPer,
-                        date:Date.now(),
-                        marketName:netLossingCommission[i].marketName,
-                        uniqueId:usercommissiondata3._id,
-                        loginUserId:usercommissiondata3.userId,
-                        parentIdArray:childUser.parentUsers,
-                    }
-                    let commissionData = await newCommissionModel.create(commissiondata)
-                }
-            }
-        }catch(err){
-            console.log(err)
-        }
-      }
+//         try{
+//             for(let i = user.parentUsers.length - 1; i >= 1; i--){
+//                 let childUser = await userModel.findById(user.parentUsers[i])
+//                 let parentUser = await userModel.findById(user.parentUsers[i - 1])
+//                 let commissionChild = await commissionModel.find({userId:childUser.id})
+//                 let commissionPer = 0
+//                 if (commissionChild[0].Bookmaker.type == "NET_LOSS" && commissionChild[0].Bookmaker.status){
+//                     commissionPer = commissionChild[0].Bookmaker.percentage
+//                 }
+//                 let commissionCoin = ((commissionPer * netLossingCommission[i].returns)/100).toFixed(4)
+//                 if(commissionPer > 0 && commissionCoin > 0){
+//                     let commissiondata = {
+//                         userName : childUser.userName,
+//                         userId : childUser.id,
+//                         eventId : netLossingCommission[i].eventId,
+//                         sportId : netLossingCommission[i].gameId,
+//                         seriesName : netLossingCommission[i].event,
+//                         marketId : netLossingCommission[i].marketId,
+//                         eventDate : new Date(netLossingCommission[i].eventDate),
+//                         eventName : netLossingCommission[i].match,
+//                         commission : commissionCoin,
+//                         upline : 100,
+//                         commissionType: 'Net Losing Commission',
+//                         commissionPercentage:commissionPer,
+//                         date:Date.now(),
+//                         marketName:netLossingCommission[i].marketName,
+//                         uniqueId:usercommissiondata3._id,
+//                         loginUserId:usercommissiondata3.userId,
+//                         parentIdArray:childUser.parentUsers,
+//                     }
+//                     let commissionData = await newCommissionModel.create(commissiondata)
+//                 }
+//             }
+//         }catch(err){
+//             console.log(err)
+//         }
+//       }
 
-  }
-}
+//   }
 }
