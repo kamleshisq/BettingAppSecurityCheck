@@ -430,13 +430,13 @@ exports.mapbet = async(data) => {
    let commissionMarket = await commissionMarketModel.find()
    let usercommissiondata3
     if(commissionMarket.some(item => (item.marketId == bets[0].marketId) && (item.commisssionStatus == false))){
-  
+        console.log('in commission market')
       let filterUser = await commissionModel.find({"Bookmaker.type":'NET_LOSS'})
       let newfilterUser = filterUser.map(ele => {
           return ele.userId
       })
     
-   
+   console.log(newfilterUser,'newfilterUser')
       let netLossingCommission = await betModel.aggregate([
         {
           $match:{
@@ -541,6 +541,7 @@ exports.mapbet = async(data) => {
         }
   
         await commissionMarketModel.findOneAndUpdate({marketId:bets[0].marketId},{commisssionStatus:true})
+        console.log('net losing commission ended')
     }
 }
 processBets()
