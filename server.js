@@ -5325,49 +5325,6 @@ io.on('connection', (socket) => {
                                 }
                             },
                             {
-                                $project: {
-                                  _id: 0,
-                                  elementUser: 1,
-                                  selections: {
-                                    $cond: {
-                                      if: {
-                                        $in: [
-                                          "the draw",
-                                          {
-                                            $map: {
-                                              input: "$selections",
-                                              as: "sel",
-                                              in: "$$sel.selectionName"
-                                            }
-                                          }
-                                        ]
-                                      },
-                                      then: "$selections", 
-                                      else: {
-                                        $concatArrays: [
-                                          "$selections",
-                                          [
-                                            {
-                                              selectionName: "the draw",
-                                              totalWinAmount: {
-                                                $sum: {
-                                                  $map: {
-                                                    input: "$selections",
-                                                    as: "sel",
-                                                    in: "$$sel.totalLossAmount"
-                                                  }
-                                                }
-                                              },
-                                              totalLossAmount : 0
-                                            }
-                                          ]
-                                        ]
-                                      }
-                                    }
-                                  }
-                                }
-                              },
-                            {
                                 $project: { 
                                     _id:0,
                                     elementUser:"$elementUser",
