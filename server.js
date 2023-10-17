@@ -5380,6 +5380,7 @@ io.on('connection', (socket) => {
 
                         ])
                         console.log(Bets, "BETSBETS")
+                        console.log(Bets[0].selections, "selectionsselections")
                         // return({User:ele, Bets:Bets, status:'User', userName:data.userName})
                     }
                 }
