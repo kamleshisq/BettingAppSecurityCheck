@@ -5283,16 +5283,16 @@ io.on('connection', (socket) => {
                                     }
                                 }
                             },
-                            // {
-                            //     $group: {
-                            //       _id: {
-                            //         elementUser: "$elementUser",
-                            //         selectionName: "$selections2.selectionName"
-                            //       },
-                            //       totalWinAmount: { $sum: "$selections2.winAmount2.value" },
-                            //       totalLossAmount: { $sum: "$selections2.lossAmount2.value" }
-                            //     }
-                            // },
+                            {
+                                $group: {
+                                  _id: {
+                                    elementUser: "$elementUser",
+                                    selectionName: "$selections2.selectionName"
+                                  },
+                                  totalWinAmount: { $sum: "$selections2.winAmount2.value" },
+                                  totalLossAmount: { $sum: "$selections2.lossAmount2.value" }
+                                }
+                            },
                             // {
                             //     $project: {
                             //       _id: 0,
