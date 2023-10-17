@@ -122,13 +122,13 @@ module.exports = () => {
                             bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:debitCreditAmount, result:marketresult.result})
                             user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{availableBalance: debitCreditAmount, myPL: debitCreditAmount, Won:1, exposure:-parseFloat(entry.Stake), uplinePL:-debitCreditAmount, pointsWL:debitCreditAmount}})
                         }else{
-                            bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:(entry.Stake * 2), result:marketresult.result})
+                            bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:parseFloat(entry.Stake), result:marketresult.result})
                             if(entry.marketName.toLowerCase().startsWith('match')){
-                                debitCreditAmount = (parseFloat(entry.Stake) + (parseFloat(data.data.stake * data.data.odds) - parseFloat(data.data.stake))).toFixed(2) 
-                                exposure = (parseFloat(entry.Stake * entry.oddValue) - parseFloat(entry.Stake)).toFixed(2)
+                                debitCreditAmount = (parseFloat(entry.Stake)) 
+                                // exposure = (parseFloat(entry.Stake * entry.oddValue) - parseFloat(entry.Stake)).toFixed(2)
                             }else{
-                                debitCreditAmount = (parseFloat(entry.Stake) + parseFloat(data.data.stake * data.data.odds/100)).toFixed(2)
-                                exposure = (parseFloat(entry.Stake * entry.oddValue) / 100 ).toFixed(2)
+                                debitCreditAmount = parseFloat(entry.Stake) 
+                                // exposure = (parseFloat(entry.Stake * entry.oddValue) / 100 ).toFixed(2)
                             }
                             user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{availableBalance: debitCreditAmount, myPL: debitCreditAmount, Won:1, exposure:-exposure, uplinePL:-debitCreditAmount, pointsWL:debitCreditAmount}})
                         }
