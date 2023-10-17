@@ -1683,7 +1683,7 @@ socket.on('connect', () => {
                     html += `</tbody>`
                     $('#load-more').show()
 
-                    $('table').html(html)
+                    $('#table12').html(html)
                     if(response.length == 0){
                         $('#load-more').hide()
                     }
@@ -1691,7 +1691,7 @@ socket.on('connect', () => {
                     if(response.length == 0){
                         $('#load-more').hide()
                     }
-                    $('tbody').append(html)
+                    $('#table12 tbody').append(html)
 
                 }
             
@@ -13362,14 +13362,13 @@ socket.on('connect', () => {
 
             $(document).on('click','#match_odd_Book .userBookParent',function(e){
                 if(!$(this).parent('tr').hasClass('active')){
-                    $('#match_odd_Book').find('tr.active').removeClass('active')
                     $(this).parent('tr').addClass('active')
-                    $('#match_odd_Book').find('tr.children').remove()
-                    let userName = $(this).attr('data-usename')
                     let marketId = $("#match_odd_Book").attr('data-marketid')
+                    let userName = $(this).attr('data-usename')
                     let type = 'bookList'
                     socket.emit('Book', {marketId,LOGINDATA,userName,type})
                 }else{
+                    console.log('WORKING2')
                     $(this).parent('tr').removeClass('active')
                     let userName = $(this).attr('data-usename')
                     let string = `tr.pr${userName}`
