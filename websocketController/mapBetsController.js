@@ -125,32 +125,7 @@ exports.mapbet = async(data) => {
    
    
           }
-      },
-        {
-          $group: {
-            _id: {
-              userId: "$_id.userId",
-              match: "$_id.match"
-            },
-            markets: {
-              $push: {
-                market: "$_id.market",
-                totalReturn: "$totalReturn",
-                event: "$event",
-                percentage: "$percentage",
-                sport: "$sport" // Include sport field here as well
-              }
-            }
-          }
-        },
-        {
-          $project: {
-            _id: 0,
-            userId: "$_id.userId",
-            match: "$_id.match",
-            markets: 1
-          }
-        }
+      }
       ]);
      
    
