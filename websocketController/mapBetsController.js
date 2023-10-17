@@ -503,9 +503,9 @@ exports.mapbet = async(data) => {
           }
    
           try{
-              for(let i = user.parentUsers.length - 1; i >= 1; i--){
-                  let childUser = await userModel.findById(user.parentUsers[i])
-                  let parentUser = await userModel.findById(user.parentUsers[i - 1])
+              for(let j = user.parentUsers.length - 1; j >= 1; j--){
+                  let childUser = await userModel.findById(user.parentUsers[j])
+                  let parentUser = await userModel.findById(user.parentUsers[j - 1])
                   let commissionChild = await commissionModel.find({userId:childUser.id})
                   let commissionPer = 0
                   if (commissionChild[0].Bookmaker.type == "NET_LOSS" && commissionChild[0].Bookmaker.status){
