@@ -13362,14 +13362,6 @@ socket.on('connect', () => {
 
             $(document).on('click','#match_odd_Book .userBookParent',function(e){
                 if(!$(this).parent('tr').hasClass('active')){
-                    // $('#match_odd_Book').find('tr.active').removeClass('active')
-                    // $(this).parent('tr').addClass('active')
-                    // $('#match_odd_Book').find('tr.children').remove()
-                    // let userName = $(this).attr('data-usename')
-                    // let marketId = $("#match_odd_Book").attr('data-marketid')
-                    // let type = 'bookList'
-                    // socket.emit('Book', {marketId,LOGINDATA,userName,type})
-
                     $(this).parent('tr').addClass('active')
                     let marketId = $("#match_odd_Book").attr('data-marketid')
                     let userName = $(this).attr('data-usename')

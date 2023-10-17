@@ -461,9 +461,9 @@ module.exports = () => {
 
                 console.log('net losing commission start ....')
                 let commissionMarket = await commissionMarketModel.find()
-                let usercommissiondata3;
-                if(commissionMarket.some(item => item.marketId == bet.marketId)){
-
+                let usercommissiondata3
+                if(commissionMarket.some(item => (item.marketId == marketresult.mid) && (item.commisssionStatus == false))){
+                    await commissionMarket.findOneAndUpdate({marketId:marketresult.mid},{commisssionStatus:true})
                     let filterUser = await commissionModel.find({"$Bookmaker.type":'NET_LOSS'})
                     let newfilterUser = filterUser.map(ele => {
                         return ele.userId
