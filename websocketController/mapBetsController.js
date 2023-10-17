@@ -431,7 +431,7 @@ exports.mapbet = async(data) => {
    console.log('net losing commission start ....')
    let commissionMarket = await commissionMarketModel.find()
    let usercommissiondata3
-    if(commissionMarket.some(item => (item.marketId == bets[0].marketId) && (item.commisssionStatus == false))){
+    if(commissionMarket.some(item => (item.marketId == bets[0].marketId))){
         console.log('in commission market')
       let filterUser = await commissionModel.find({"Bookmaker.type":'NET_LOSS'})
       let newfilterUser = filterUser.map(ele => {
@@ -541,7 +541,7 @@ exports.mapbet = async(data) => {
           }
         }
   
-        await commissionMarketModel.findOneAndUpdate({marketId:bets[0].marketId},{commisssionStatus:true})
+        
         await betModel.updateMany({
             marketName : new RegExp('book','i'),
             match: `${bets[0].match}`,
