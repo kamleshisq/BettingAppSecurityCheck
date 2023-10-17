@@ -59,6 +59,8 @@ exports.mapbet = async(data) => {
         }
     }
 
+    console.log(bets[0],'==>bet[0]')
+
 
 //FOR SATTLEMENT HISTORY
 
@@ -440,7 +442,7 @@ exports.mapbet = async(data) => {
       let netLossingCommission = await betModel.aggregate([
         {
           $match:{
-              market : { $regex: /^book/i},
+              market : {$regex: /^book/i},
               match: `${bets[0].match}`,
               userId:{$in:newfilterUser},
               marketId:`${bets[0].marketId}`,
