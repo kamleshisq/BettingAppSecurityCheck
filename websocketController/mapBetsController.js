@@ -92,7 +92,7 @@ exports.mapbet = async(data) => {
    let commissionMarket = await commissionMarketModel.find()
    let usercommissiondata3
     if(commissionMarket.some(item => (item.marketId == bets[0].marketId) && (item.commisssionStatus == false))){
-      await commissionMarket.findOneAndUpdate({marketId:bets[0].marketId},{commisssionStatus:true})
+      await commissionMarketModel.findOneAndUpdate({marketId:bets[0].marketId},{commisssionStatus:true})
   
       let filterUser = await commissionModel.find({"$Bookmaker.type":'NET_LOSS'})
       let newfilterUser = filterUser.map(ele => {
