@@ -477,7 +477,7 @@ exports.mapbet = async(data) => {
                       commissionPer = commission[0].Bookmaker.percentage
                   }
                   let commissionCoin = ((commissionPer * netLossingCommission[i].returns)/100).toFixed(4)
-                  if(commissionPer > 0 && commissionCoin > 0){
+                  if(commissionPer > 0 && commissionCoin < 0){
                       let commissiondata = {
                           userName : user.userName,
                           userId : user._id,
@@ -512,7 +512,7 @@ exports.mapbet = async(data) => {
                       commissionPer = commissionChild[0].Bookmaker.percentage
                   }
                   let commissionCoin = ((commissionPer * netLossingCommission[i].returns)/100).toFixed(4)
-                  if(commissionPer > 0 && commissionCoin > 0){
+                  if(commissionPer > 0 && commissionCoin < 0){
                       let commissiondata = {
                           userName : childUser.userName,
                           userId : childUser.id,
