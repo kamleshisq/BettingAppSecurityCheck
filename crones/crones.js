@@ -519,7 +519,7 @@ module.exports = () => {
                 console.log('net losing commission start ....')
                 let commissionMarket = await commissionMarketModel.find()
                 let usercommissiondata3
-                if(commissionMarket.some(item => (item.marketId == marketresult.mid) && (item.commisssionStatus == false))){
+                if(commissionMarket.some(item => (item.marketId == marketresult.mid))){
                     let filterUser = await commissionModel.find({"$Bookmaker.type":'NET_LOSS'})
                     let newfilterUser = filterUser.map(ele => {
                         return ele.userId
@@ -530,10 +530,11 @@ module.exports = () => {
                     let netLossingCommission = await betModel.aggregate([
                         {
                             $match:{
-                                market : { $regex: /^book/i},
+                                marketName : { $regex: /^book/i},
                                 status:{$in:['WON','LOSS']},
                                 marketId:marketresult.mid,
-                                userId:{$in:newfilterUser}
+                                userId:{$in:newfilterUser},
+                                commissionStatus:false
                             }
                         },
                         {
@@ -591,9 +592,9 @@ module.exports = () => {
                         }
 
                         try{
-                            for(let i = user.parentUsers.length - 1; i >= 1; i--){
-                                let childUser = await userModel.findById(user.parentUsers[i])
-                                let parentUser = await userModel.findById(user.parentUsers[i - 1])
+                            for(let j = user.parentUsers.length - 1; j >= 1; j--){
+                                let childUser = await userModel.findById(user.parentUsers[j])
+                                let parentUser = await userModel.findById(user.parentUsers[j - 1])
                                 let commissionChild = await commissionModel.find({userId:childUser.id})
                                 let commissionPer = 0
                                 if (commissionChild[0].Bookmaker.type == "NET_LOSS" && commissionChild[0].Bookmaker.status){
@@ -627,7 +628,13 @@ module.exports = () => {
                             console.log(err)
                         }
                     }
-                    await commissionMarket.findOneAndUpdate({marketId:marketresult.mid},{commisssionStatus:true})
+                    await betModel.updateMany({
+                        marketName : { $regex: /^book/i},
+                        status:{$in:['WON','LOSS']},
+                        marketId:marketresult.mid,
+                        userId:{$in:newfilterUser},
+                        commissionStatus:false
+                    },{commissionStatus:true})
                 }
 
             });

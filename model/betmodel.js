@@ -101,6 +101,10 @@ const betSchema = mongoose.Schema({
     },
     exposure:{
         type:Number
+    },
+    commissionStatus:{
+        type:Boolean,
+        default:false
     }
 })
 

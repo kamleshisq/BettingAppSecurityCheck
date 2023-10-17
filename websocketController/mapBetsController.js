@@ -431,22 +431,23 @@ exports.mapbet = async(data) => {
    console.log('net losing commission start ....')
    let commissionMarket = await commissionMarketModel.find()
    let usercommissiondata3
-    if(commissionMarket.some(item => (item.marketId == bets[0].marketId) && (item.commisssionStatus == false))){
+    if(commissionMarket.some(item => (item.marketId == bets[0].marketId))){
         console.log('in commission market')
       let filterUser = await commissionModel.find({"Bookmaker.type":'NET_LOSS'})
       let newfilterUser = filterUser.map(ele => {
           return ele.userId
       })
     
-   console.log(newfilterUser,'newfilterUser')
+    console.log(newfilterUser,'newfilterUser')
       let netLossingCommission = await betModel.aggregate([
         {
           $match:{
-              market : new RegExp('book','i'),
+              marketName : new RegExp('book','i'),
               match: `${bets[0].match}`,
               userId:{$in:newfilterUser},
               marketId:`${bets[0].marketId}`,
-              status:{$in:['WON','LOSS']}
+              status:{$in:['WON','LOSS']},
+              commissionStatus:false
           }
         },
         {
@@ -461,8 +462,6 @@ exports.mapbet = async(data) => {
               match:{$first:'$match'},
               eventDate:{$first:'$eventDate'},
               marketName:{$first:'$marketName'}
-   
-   
           }
       }
       ]);
@@ -479,7 +478,7 @@ exports.mapbet = async(data) => {
                       commissionPer = commission[0].Bookmaker.percentage
                   }
                   let commissionCoin = ((commissionPer * netLossingCommission[i].returns)/100).toFixed(4)
-                  if(commissionPer > 0 && commissionCoin > 0){
+                  if(commissionPer > 0 && commissionCoin < 0){
                       let commissiondata = {
                           userName : user.userName,
                           userId : user._id,
@@ -489,7 +488,7 @@ exports.mapbet = async(data) => {
                           marketId : netLossingCommission[i].marketId,
                           eventDate : new Date(netLossingCommission[i].eventDate),
                           eventName : netLossingCommission[i].match,
-                          commission : commissionCoin,
+                          commission : commissionCoin * -1,
                           upline : 100,
                           commissionType: 'Net Losing Commission',
                           commissionPercentage:commissionPer,
@@ -505,16 +504,16 @@ exports.mapbet = async(data) => {
           }
    
           try{
-              for(let i = user.parentUsers.length - 1; i >= 1; i--){
-                  let childUser = await userModel.findById(user.parentUsers[i])
-                  let parentUser = await userModel.findById(user.parentUsers[i - 1])
+              for(let j = user.parentUsers.length - 1; j >= 1; j--){
+                  let childUser = await userModel.findById(user.parentUsers[j])
+                  let parentUser = await userModel.findById(user.parentUsers[j - 1])
                   let commissionChild = await commissionModel.find({userId:childUser.id})
                   let commissionPer = 0
                   if (commissionChild[0].Bookmaker.type == "NET_LOSS" && commissionChild[0].Bookmaker.status){
                       commissionPer = commissionChild[0].Bookmaker.percentage
                   }
                   let commissionCoin = ((commissionPer * netLossingCommission[i].returns)/100).toFixed(4)
-                  if(commissionPer > 0 && commissionCoin > 0){
+                  if(commissionPer > 0 && commissionCoin < 0){
                       let commissiondata = {
                           userName : childUser.userName,
                           userId : childUser.id,
@@ -524,7 +523,7 @@ exports.mapbet = async(data) => {
                           marketId : netLossingCommission[i].marketId,
                           eventDate : new Date(netLossingCommission[i].eventDate),
                           eventName : netLossingCommission[i].match,
-                          commission : commissionCoin,
+                          commission : commissionCoin * -1,
                           upline : 100,
                           commissionType: 'Net Losing Commission',
                           commissionPercentage:commissionPer,
@@ -542,7 +541,15 @@ exports.mapbet = async(data) => {
           }
         }
   
-        await commissionMarketModel.findOneAndUpdate({marketId:bets[0].marketId},{commisssionStatus:true})
+        
+        await betModel.updateMany({
+            marketName : new RegExp('book','i'),
+            match: `${bets[0].match}`,
+            userId:{$in:newfilterUser},
+            marketId:`${bets[0].marketId}`,
+            status:{$in:['WON','LOSS']},
+            commissionStatus:false
+        },{commissionStatus:true})
         console.log('net losing commission ended')
     }
 }
