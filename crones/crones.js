@@ -533,7 +533,8 @@ module.exports = () => {
                                 marketName : { $regex: /^book/i},
                                 status:{$in:['WON','LOSS']},
                                 marketId:marketresult.mid,
-                                userId:{$in:newfilterUser}
+                                userId:{$in:newfilterUser},
+                                commissionStatus:false
                             }
                         },
                         {
@@ -628,6 +629,13 @@ module.exports = () => {
                         }
                     }
                     await commissionMarket.findOneAndUpdate({marketId:marketresult.mid},{commisssionStatus:true})
+                    await betModel.updateMany({
+                        marketName : { $regex: /^book/i},
+                        status:{$in:['WON','LOSS']},
+                        marketId:marketresult.mid,
+                        userId:{$in:newfilterUser},
+                        commissionStatus:false
+                    },{commissionStatus:true})
                 }
 
             });

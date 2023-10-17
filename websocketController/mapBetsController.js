@@ -438,7 +438,7 @@ exports.mapbet = async(data) => {
           return ele.userId
       })
     
-   console.log(newfilterUser,'newfilterUser')
+    console.log(newfilterUser,'newfilterUser')
       let netLossingCommission = await betModel.aggregate([
         {
           $match:{
@@ -446,7 +446,8 @@ exports.mapbet = async(data) => {
               match: `${bets[0].match}`,
               userId:{$in:newfilterUser},
               marketId:`${bets[0].marketId}`,
-              status:{$in:['WON','LOSS']}
+              status:{$in:['WON','LOSS']},
+              commissionStatus:false
           }
         },
         {
@@ -541,6 +542,14 @@ exports.mapbet = async(data) => {
         }
   
         await commissionMarketModel.findOneAndUpdate({marketId:bets[0].marketId},{commisssionStatus:true})
+        await betModel.updateMany({
+            marketName : new RegExp('book','i'),
+            match: `${bets[0].match}`,
+            userId:{$in:newfilterUser},
+            marketId:`${bets[0].marketId}`,
+            status:{$in:['WON','LOSS']},
+            commissionStatus:false
+        },{commissionStatus:true})
         console.log('net losing commission ended')
     }
 }
