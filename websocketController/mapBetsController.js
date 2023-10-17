@@ -72,11 +72,11 @@ exports.mapbet = async(data) => {
     }
     await settlementHistory.create(dataForHistory)
 
-console.log("WORKING +==>>", data)
-
-//FUNCTION FOR PROCESS BET
-
-async function processBets() {
+    
+    //FUNCTION FOR PROCESS BET
+    
+    async function processBets() {
+  console.log("WORKING +==>>", data)
   const betPromises = bets.map(async (bet) => {
     console.log(bet, data.result, "DATADATA123456")
     let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bet.marketId, progressType:'SettleMent'}, {$inc:{settledBet:1}})
@@ -85,8 +85,8 @@ async function processBets() {
     }
   });
   
+  await Promise.all(betPromises);
 }
-  await Promise.all(processBets);
  //NET LOSING COMMISSION
 
 //  console.log('net losing commission start ....')
