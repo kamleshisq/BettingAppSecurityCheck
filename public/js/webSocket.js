@@ -1683,7 +1683,7 @@ socket.on('connect', () => {
                     html += `</tbody>`
                     $('#load-more').show()
 
-                    $('table').html(html)
+                    $('#table12').html(html)
                     if(response.length == 0){
                         $('#load-more').hide()
                     }
@@ -1691,7 +1691,7 @@ socket.on('connect', () => {
                     if(response.length == 0){
                         $('#load-more').hide()
                     }
-                    $('tbody').append(html)
+                    $('#table12 tbody').append(html)
 
                 }
             
