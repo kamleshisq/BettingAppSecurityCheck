@@ -5283,40 +5283,40 @@ io.on('connection', (socket) => {
                                     }
                                 }
                             },
-                            {
-                                $group: {
-                                  _id: {
-                                    elementUser: "$elementUser",
-                                    selectionName: "$selections2.selectionName"
-                                  },
-                                  totalWinAmount: { $sum: "$selections2.winAmount2.value" },
-                                  totalLossAmount: { $sum: "$selections2.lossAmount2.value" }
-                                }
-                            },
-                            {
-                                $project: {
-                                  _id: 0,
-                                  elementUser: "$_id.elementUser",
-                                  selection: {
-                                    selectionName: "$_id.selectionName",
-                                    totalWinAmount: "$totalWinAmount",
-                                    totalLossAmount:"$totalLossAmount"
-                                  }
-                                }
-                            },
-                            {
-                                $group: {
-                                  _id: "$elementUser",
-                                  selections: { $push: "$selection" }
-                                }
-                            },
-                            {
-                                $project: {
-                                  _id: 0,
-                                  elementUser: "$_id",
-                                  selections: 1
-                                }
-                            },
+                            // {
+                            //     $group: {
+                            //       _id: {
+                            //         elementUser: "$elementUser",
+                            //         selectionName: "$selections2.selectionName"
+                            //       },
+                            //       totalWinAmount: { $sum: "$selections2.winAmount2.value" },
+                            //       totalLossAmount: { $sum: "$selections2.lossAmount2.value" }
+                            //     }
+                            // },
+                            // {
+                            //     $project: {
+                            //       _id: 0,
+                            //       elementUser: "$_id.elementUser",
+                            //       selection: {
+                            //         selectionName: "$_id.selectionName",
+                            //         totalWinAmount: "$totalWinAmount",
+                            //         totalLossAmount:"$totalLossAmount"
+                            //       }
+                            //     }
+                            // },
+                            // {
+                            //     $group: {
+                            //       _id: "$elementUser",
+                            //       selections: { $push: "$selection" }
+                            //     }
+                            // },
+                            // {
+                            //     $project: {
+                            //       _id: 0,
+                            //       elementUser: "$_id",
+                            //       selections: 1
+                            //     }
+                            // },
                             // {
                             //     $project: { 
                             //         _id:0,
