@@ -59,6 +59,8 @@ exports.mapbet = async(data) => {
         }
     }
 
+    console.log(bets[0],'==>bet[0]')
+
 
 //FOR SATTLEMENT HISTORY
 
@@ -140,7 +142,7 @@ exports.mapbet = async(data) => {
           await accModel.create({
             "user_id":user._id,
             "description": description,
-            "creditDebitamount" : parseFloatdebitCreditAmount,
+            "creditDebitamount" : parseFloat(debitCreditAmount),
             "balance" : user.availableBalance + debitCreditAmount,
             "date" : Date.now(),
             "userName" : user.userName,
@@ -430,17 +432,17 @@ exports.mapbet = async(data) => {
    let commissionMarket = await commissionMarketModel.find()
    let usercommissiondata3
     if(commissionMarket.some(item => (item.marketId == bets[0].marketId) && (item.commisssionStatus == false))){
-  
+        console.log('in commission market')
       let filterUser = await commissionModel.find({"Bookmaker.type":'NET_LOSS'})
       let newfilterUser = filterUser.map(ele => {
           return ele.userId
       })
     
-   
+   console.log(newfilterUser,'newfilterUser')
       let netLossingCommission = await betModel.aggregate([
         {
           $match:{
-              market : { $regex: /^book/i},
+              market : new RegExp('book','i'),
               match: `${bets[0].match}`,
               userId:{$in:newfilterUser},
               marketId:`${bets[0].marketId}`,
@@ -541,6 +543,7 @@ exports.mapbet = async(data) => {
         }
   
         await commissionMarketModel.findOneAndUpdate({marketId:bets[0].marketId},{commisssionStatus:true})
+        console.log('net losing commission ended')
     }
 }
 processBets()
