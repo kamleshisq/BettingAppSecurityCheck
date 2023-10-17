@@ -98,6 +98,9 @@ const betSchema = mongoose.Schema({
     ],
     parentId:{
         type:String
+    },
+    exposure:{
+        type:Number
     }
 })
 

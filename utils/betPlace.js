@@ -264,7 +264,8 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
             bettype2: data.data.bettype2,
             ip:data.LOGINDATA.IP,
             parentArray:parentArray,
-            parentId:data.LOGINDATA.LOGINUSER.parent_id
+            parentId:data.LOGINDATA.LOGINUSER.parent_id,
+            exposure:creditDebitamount
         }
     }else{
         let runnersData = JSON.parse(marketDetails.runners)
@@ -295,32 +296,34 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
                 bettype2: data.data.bettype2,
                 ip:data.LOGINDATA.IP,
                 parentArray:parentArray,
-                parentId:data.LOGINDATA.LOGINUSER.parent_id
+                parentId:data.LOGINDATA.LOGINUSER.parent_id,
+                exposure:creditDebitamount
 
             }
     }
     let description = `Bet for ${data.data.title}/stake = ${data.data.stake}`
     
 // FOR ACC STATEMENTS DATA 
-    let Acc = {
-        "user_id":data.LOGINDATA.LOGINUSER._id,
-        "description": description,
-        "creditDebitamount" : -creditDebitamount,
-        "balance" : check.availableBalance - creditDebitamount,
-        "date" : Date.now(),
-        "userName" : data.LOGINDATA.LOGINUSER.userName,
-        "role_type" : data.LOGINDATA.LOGINUSER.role_type,
-        "Remark":"-",
-        "stake": parseFloat(data.data.stake),
-        "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`
-    }
+    // let Acc = {
+    //     "user_id":data.LOGINDATA.LOGINUSER._id,
+    //     "description": description,
+    //     "creditDebitamount" : -creditDebitamount,
+    //     "balance" : check.availableBalance - creditDebitamount,
+    //     "date" : Date.now(),
+    //     "userName" : data.LOGINDATA.LOGINUSER.userName,
+    //     "role_type" : data.LOGINDATA.LOGINUSER.role_type,
+    //     "Remark":"-",
+    //     "stake": parseFloat(data.data.stake),
+    //     "transactionId":`${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`
+    // }
     await betmodel.create(betPlaceData)
-    await accountStatementByUserModel.create(Acc)
+    // await accountStatementByUserModel.create(Acc)
 
 
 
 // FOR USER CHANGES 
-    let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{availableBalance: - creditDebitamount, myPL: - creditDebitamount, Bets : 1, exposure: creditDebitamount, uplinePL:creditDebitamount, pointsWL:-creditDebitamount}})
+    // let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{availableBalance: - creditDebitamount, myPL: - creditDebitamount, Bets : 1, exposure: creditDebitamount, uplinePL:creditDebitamount, pointsWL:-creditDebitamount}})
+    let user = await userModel.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id, {$inc:{Bets : 1, exposure: creditDebitamount}})
     if(!user){
         return "There is no user with that id"
     }
@@ -330,41 +333,41 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
 
 
 // FOR USER PARENTS CHANGES
-    let amount = creditDebitamount;
-    try{
-        for(let i = user.parentUsers.length - 1; i >= 1; i--){
-            let parentUser1 = await userModel.findById(user.parentUsers[i])
-            let parentUser2 = await userModel.findById(user.parentUsers[i-1])
-            let parentUser1Amount = new Decimal(parentUser1.myShare).times(amount).dividedBy(100)
-            let parentUser2Amount = new Decimal(parentUser1.Share).times(amount).dividedBy(100);
-            parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-            parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-            await userModel.findByIdAndUpdate(user.parentUsers[i], {
-                $inc: {
-                    downlineBalance: -creditDebitamount,
-                    myPL: parentUser1Amount,
-                    uplinePL: parentUser2Amount,
-                    lifetimePL: parentUser1Amount,
-                    pointsWL: -creditDebitamount
-                }
-            });
+    // let amount = creditDebitamount;
+    // try{
+    //     for(let i = user.parentUsers.length - 1; i >= 1; i--){
+    //         let parentUser1 = await userModel.findById(user.parentUsers[i])
+    //         let parentUser2 = await userModel.findById(user.parentUsers[i-1])
+    //         let parentUser1Amount = new Decimal(parentUser1.myShare).times(amount).dividedBy(100)
+    //         let parentUser2Amount = new Decimal(parentUser1.Share).times(amount).dividedBy(100);
+    //         parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+    //         parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+    //         await userModel.findByIdAndUpdate(user.parentUsers[i], {
+    //             $inc: {
+    //                 // downlineBalance: -creditDebitamount,
+    //                 myPL: parentUser1Amount,
+    //                 uplinePL: parentUser2Amount,
+    //                 lifetimePL: parentUser1Amount,
+    //                 pointsWL: -creditDebitamount
+    //             }
+    //         });
         
-            if (i === 1) {
-                await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
-                    $inc: {
-                        downlineBalance: -creditDebitamount,
-                        myPL: parentUser2Amount,
-                        lifetimePL: parentUser2Amount,
-                        pointsWL: -creditDebitamount
-                    }
-                });
-            }
-            amount = parentUser2Amount
-        }
-    }catch(err){
-        console.log(err)
-        return err
-    }
+    //         if (i === 1) {
+    //             await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+    //                 $inc: {
+    //                     // downlineBalance: -creditDebitamount,
+    //                     myPL: parentUser2Amount,
+    //                     lifetimePL: parentUser2Amount,
+    //                     pointsWL: -creditDebitamount
+    //                 }
+    //             });
+    //         }
+    //         amount = parentUser2Amount
+    //     }
+    // }catch(err){
+    //     console.log(err)
+    //     return err
+    // }
 
 
 
@@ -376,7 +379,7 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
         let commissionMarket = await commissionMarketModel.find()
         if(commissionMarket.some(item => item.marketId == data.data.market)){
             let commission = await commissionModel.find({userId:user.id})
-            console.log(commission, 456)
+            // console.log(commission, 456)
             let commissionPer = 0
             if ((marketDetails.title.toLowerCase().startsWith('book')|| marketDetails.title.toLowerCase().startsWith('toss')) && commission[0].Bookmaker.type == "ENTRY" && commission[0].Bookmaker.status){
               commissionPer = commission[0].Bookmaker.percentage
@@ -384,7 +387,7 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
               commissionPer = commission[0].fency.percentage
             }
             let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
-            console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
+            // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
             if(commissionPer > 0){
                 let commissiondata = {
                     userName : user.userName,
@@ -422,7 +425,7 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
                     }
                     
                     let commissionCoin = ((commissionPer * data.data.stake)/100).toFixed(4)
-                    console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
+                    // console.log(commissionCoin, commissionPer, "commissionPercommissionPercommissionPercommissionPer")
                     if(commissionPer > 0){
                         let commissiondata = {
                             userName : childUser.userName,

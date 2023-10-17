@@ -111,14 +111,14 @@ module.exports = () => {
                         let bet
                         let user
                         let debitCreditAmount 
-                        let exposure 
+                        let exposure = entry.exposure
                         if(entry.bettype2 == 'BACK'){
                             if(entry.marketName.toLowerCase().startsWith('match')){
-                                debitCreditAmount = parseFloat(entry.Stake * entry.oddValue).toFixed(2)
+                                debitCreditAmount = parseFloat(entry.Stake * entry.oddValue).toFixed(2) - parseFloat(entry.Stake)
                             }else{
-                                debitCreditAmount = (parseFloat(entry.Stake * entry.oddValue/100).toFixed(2)) + parseFloat(entry.Stake)
+                                debitCreditAmount = (parseFloat(entry.Stake * entry.oddValue/100).toFixed(2))
                             }
-                            exposure = parseFloat(entry.Stake)
+                            // exposure = parseFloat(entry.Stake)
                             bet = await betModel.findByIdAndUpdate(entry._id,{status:"WON", returns:debitCreditAmount, result:marketresult.result})
                             user = await userModel.findByIdAndUpdate(entry.userId,{$inc:{availableBalance: debitCreditAmount, myPL: debitCreditAmount, Won:1, exposure:-parseFloat(entry.Stake), uplinePL:-debitCreditAmount, pointsWL:debitCreditAmount}})
                         }else{
