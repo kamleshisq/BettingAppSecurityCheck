@@ -140,7 +140,7 @@ exports.mapbet = async(data) => {
           await accModel.create({
             "user_id":user._id,
             "description": description,
-            "creditDebitamount" : parseFloatdebitCreditAmount,
+            "creditDebitamount" : parseFloat(debitCreditAmount),
             "balance" : user.availableBalance + debitCreditAmount,
             "date" : Date.now(),
             "userName" : user.userName,
