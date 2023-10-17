@@ -72,7 +72,7 @@ exports.mapbet = async(data) => {
     }
     await settlementHistory.create(dataForHistory)
 
-
+console.log("WORKING +==>>", data)
 
 //FUNCTION FOR PROCESS BET
 
