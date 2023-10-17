@@ -442,7 +442,7 @@ exports.mapbet = async(data) => {
       let netLossingCommission = await betModel.aggregate([
         {
           $match:{
-              market : new RegExp('book','i'),
+              marketName : new RegExp('book','i'),
               match: `${bets[0].match}`,
               userId:{$in:newfilterUser},
               marketId:`${bets[0].marketId}`,
@@ -461,8 +461,6 @@ exports.mapbet = async(data) => {
               match:{$first:'$match'},
               eventDate:{$first:'$eventDate'},
               marketName:{$first:'$marketName'}
-   
-   
           }
       }
       ]);
