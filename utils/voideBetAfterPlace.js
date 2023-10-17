@@ -53,46 +53,16 @@ async function voidBET(data){
     // console.log(dataForHistory, 121212)
     try{
         for(const bets in allBetWithMarketId){
-            // console.log(allBetWithMarketId[bets])
-            // console.log(allBetWithMarketId[bets].id)
             if(allBetWithMarketId[bets].status === 'WON'){
-                let VoidAmount 
-                // let VoidAmount 
-                // console.log(VoidAmount, "VOidBetAMOUNT")
-                let returns
-                if(allBetWithMarketId[bets].bettype2 === 'BACK'){
-                    if(allBetWithMarketId[bets].marketName.toLowerCase().startsWith('match')){
-                        VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2) - allBetWithMarketId[bets].Stake.toFixed(2)
-                        returns = allBetWithMarketId[bets].Stake.toFixed(2)
-                    }else if (allBetWithMarketId[bets].marketName.toLowerCase().startsWith('book') || allBetWithMarketId[bets].marketName.toLowerCase().startsWith('toss')){
-                        VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2) - allBetWithMarketId[bets].Stake.toFixed(2)
-                        returns = allBetWithMarketId[bets].Stake.toFixed(2)
-                    }else{
-                        VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2) - allBetWithMarketId[bets].Stake.toFixed(2)
-                        returns = allBetWithMarketId[bets].Stake.toFixed(2)
-                    }
-                }else{
-                    if(allBetWithMarketId[bets].marketName.toLowerCase().startsWith('match')){
-                        returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue) - (allBetWithMarketId[bets].Stake)).toFixed(2)
-                        VoidAmount =  (allBetWithMarketId[bets].returns.toFixed(2) - returns).toFixed(2)
-                    }else if (allBetWithMarketId[bets].marketName.toLowerCase().startsWith('book') || allBetWithMarketId[bets].marketName.toLowerCase().startsWith('toss')){
-                        returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue)/100).toFixed(2)
-                        VoidAmount =  (allBetWithMarketId[bets].returns - returns).toFixed(2)
-                    }else{
-                        returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue)/100).toFixed(2)
-                        VoidAmount =  (allBetWithMarketId[bets].returns - returns).toFixed(2)
-                    }
-                }
-                // console.log(VoidAmount, "VOidBetAMOUNT")
+                let debitCreditAmount = allBetWithMarketId[bets].returns
+                let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: -debitCreditAmount, myPL: -debitCreditAmount, uplinePL: debitCreditAmount, pointsWL:-debitCreditAmount}})
+                let description = `Settled Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/CANCEL`
                 await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"CANCEL", returns:0, remark:data.data.remark, calcelUser:operatoruserName})
-                let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: -VoidAmount, myPL: -VoidAmount, uplinePL: VoidAmount, pointsWL:-VoidAmount}})
-                let description = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/CANCEL`
-                // let description2 = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/user = ${user.userName}/CANCEL `
                 let userAcc = {
                     "user_id":user._id,
                     "description": description,
-                    "creditDebitamount" : -VoidAmount,
-                    "balance" : user.availableBalance - VoidAmount,
+                    "creditDebitamount" : -debitCreditAmount,
+                    "balance" : user.availableBalance - debitCreditAmount,
                     "date" : Date.now(),
                     "userName" : user.userName,
                     "role_type" : user.role_type,
@@ -100,79 +70,54 @@ async function voidBET(data){
                     "stake": allBetWithMarketId[bets].Stake,
                     "transactionId":`${allBetWithMarketId[bets].transactionId}`
                 }
-                let debitAmountForP = VoidAmount
-                for(let i = user.parentUsers.length - 1; i >= 1; i--){
-                    let parentUser1 = await User.findById(user.parentUsers[i])
-                    let parentUser2 = await User.findById(user.parentUsers[i - 1])
-                    let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
-                    let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
-                    // parentUser1Amount = Math.round(parentUser1Amount * 10000) / 10000;
-                    // parentUser2Amount = Math.round(parentUser2Amount * 10000) / 10000;
-                    parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-                    parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                    // await User.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
-                    // if(i === 1){
-                    //     await User.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
-                    // }
-                    await User.findByIdAndUpdate(user.parentUsers[i], {
-                      $inc: {
-                          downlineBalance:  -VoidAmount,
-                          myPL: parentUser1Amount,
-                          uplinePL: parentUser2Amount,
-                          lifetimePL: parentUser1Amount,
-                          pointsWL:  -VoidAmount
-                      }
-                  });
-              
-                  if (i === 1) {
-                      await User.findByIdAndUpdate(user.parentUsers[i - 1], {
-                          $inc: {
-                              downlineBalance: -VoidAmount,
-                              myPL: parentUser2Amount,
-                              lifetimePL: parentUser2Amount,
-                              pointsWL: -VoidAmount
-                          }
-                      });
-                  }
-                    debitAmountForP = parentUser2Amount
-                }
-    
-                await accountStatementModel.create(userAcc);
+
+                let debitAmountForP = debitCreditAmount
+                    for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                        let parentUser1 = await User.findById(user.parentUsers[i])
+                        let parentUser2 = await User.findById(user.parentUsers[i - 1])
+                        let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                        let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                        // parentUser1Amount = Math.round(parentUser1Amount * 10000) / 10000;
+                        // parentUser2Amount = Math.round(parentUser2Amount * 10000) / 10000;
+                        parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                        parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                        // await User.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
+                        // if(i === 1){
+                        //     await User.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
+                        // }
+                        await User.findByIdAndUpdate(user.parentUsers[i], {
+                        $inc: {
+                            downlineBalance:  -debitCreditAmount,
+                            myPL: parentUser1Amount,
+                            uplinePL: parentUser2Amount,
+                            lifetimePL: parentUser1Amount,
+                            pointsWL:  -debitCreditAmount
+                        }
+                    });
+                
+                    if (i === 1) {
+                        await User.findByIdAndUpdate(user.parentUsers[i - 1], {
+                            $inc: {
+                                downlineBalance: -debitCreditAmount,
+                                myPL: parentUser2Amount,
+                                lifetimePL: parentUser2Amount,
+                                pointsWL: -debitCreditAmount
+                            }
+                        });
+                    }
+                        debitAmountForP = parentUser2Amount
+                    }
+                    await accountStatementModel.create(userAcc);                
             }else{
-                let VoidAmount 
-                // let VoidAmount
-
-                    if(allBetWithMarketId[bets].bettype2 === 'BACK'){
-                        if(allBetWithMarketId[bets].marketName.toLowerCase().startsWith('match')){
-                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
-                            // returns = allBetWithMarketId[bets].Stake.toFixed(2)
-                        }else if (allBetWithMarketId[bets].marketName.toLowerCase().startsWith('book') || allBetWithMarketId[bets].marketName.toLowerCase().startsWith('toss')){
-                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
-                            // returns = allBetWithMarketId[bets].Stake.toFixed(2)
-                        }else{
-                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
-                            // returns = allBetWithMarketId[bets].Stake.toFixed(2)
-                        }
-                    }else{
-                        if(allBetWithMarketId[bets].marketName.toLowerCase().startsWith('match')){
-                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
-                            returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue) - (allBetWithMarketId[bets].Stake)).toFixed(2)
-                        }else if (allBetWithMarketId[bets].marketName.toLowerCase().startsWith('book') || allBetWithMarketId[bets].marketName.toLowerCase().startsWith('toss')){
-                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
-                            // returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue)/100).toFixed(2)
-                        }else{
-                            VoidAmount =  allBetWithMarketId[bets].returns.toFixed(2)
-                            // returns = ((allBetWithMarketId[bets].Stake * allBetWithMarketId[bets].oddValue)/100).toFixed(2)
-                        }
-                    }
+                let debitCreditAmount = -(allBetWithMarketId[bets].returns)
+                let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: debitCreditAmount, myPL: debitCreditAmount, uplinePL: -debitCreditAmount, pointsWL:debitCreditAmount}})
+                let description = `Settled Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/CANCEL`
                 await Bet.findByIdAndUpdate(allBetWithMarketId[bets].id, {status:"CANCEL", returns:0, remark:data.data.remark, calcelUser:operatoruserName})
-                let user = await User.findByIdAndUpdate(allBetWithMarketId[bets].userId, {$inc:{availableBalance: VoidAmount, pointsWL: VoidAmount, myPL: VoidAmount, uplinePL: -VoidAmount}})
-                let description = `Bet for ${allBetWithMarketId[bets].match}/stake = ${allBetWithMarketId[bets].Stake}/CANCEL`
                 let userAcc = {
                     "user_id":user._id,
                     "description": description,
-                    "creditDebitamount" : VoidAmount,
-                    "balance" : user.availableBalance + VoidAmount,
+                    "creditDebitamount" : debitCreditAmount,
+                    "balance" : user.availableBalance + debitCreditAmount,
                     "date" : Date.now(),
                     "userName" : user.userName,
                     "role_type" : user.role_type,
@@ -181,44 +126,37 @@ async function voidBET(data){
                     "transactionId":`${allBetWithMarketId[bets].transactionId}`
                 }
 
-                let debitAmountForP = VoidAmount
-
-                for(let i = user.parentUsers.length - 1; i >= 1; i--){
-                    let parentUser1 = await User.findById(user.parentUsers[i])
-                    let parentUser2 = await User.findById(user.parentUsers[i - 1])
-                    let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
-                    let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
-                    // parentUser1Amount = Math.round(parentUser1Amount * 10000) / 10000;
-                    // parentUser2Amount = Math.round(parentUser2Amount * 10000) / 10000;
-                    parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
-                    parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
-                    // await User.findByIdAndUpdate(user.parentUsers[i],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser1Amount), uplinePL: -(parentUser2Amount), lifetimePL:-(parentUser1Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
-                    // if(i === 1){
-                    //     await User.findByIdAndUpdate(user.parentUsers[i - 1],{$inc:{downlineBalance:parseFloat(bet.Stake * bet.oddValue), myPL:-(parentUser2Amount), lifetimePL:-(parentUser2Amount), pointsWL:parseFloat(bet.Stake * bet.oddValue)}})
-                    // }
-                    await User.findByIdAndUpdate(user.parentUsers[i], {
-                      $inc: {
-                          downlineBalance:  VoidAmount,
-                          myPL: -parentUser1Amount,
-                          uplinePL: -parentUser2Amount,
-                          lifetimePL: -parentUser1Amount,
-                          pointsWL:  VoidAmount
-                      }
-                  });
-              
-                  if (i === 1) {
-                      await User.findByIdAndUpdate(user.parentUsers[i - 1], {
-                          $inc: {
-                              downlineBalance: VoidAmount,
-                              myPL: -parentUser2Amount,
-                              lifetimePL: -parentUser2Amount,
-                              pointsWL: VoidAmount
-                          }
-                      });
-                  }
-                    debitAmountForP = parentUser2Amount
-                }
-                await accountStatementModel.create(userAcc);
+                let debitAmountForP = debitCreditAmount
+                    for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                        let parentUser1 = await User.findById(user.parentUsers[i])
+                        let parentUser2 = await User.findById(user.parentUsers[i - 1])
+                        let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                        let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                        parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                        parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                        await User.findByIdAndUpdate(user.parentUsers[i], {
+                        $inc: {
+                            downlineBalance:  debitCreditAmount,
+                            myPL: -parentUser1Amount,
+                            uplinePL: -parentUser2Amount,
+                            lifetimePL: -parentUser1Amount,
+                            pointsWL:  debitCreditAmount
+                        }
+                    });
+                
+                    if (i === 1) {
+                        await User.findByIdAndUpdate(user.parentUsers[i - 1], {
+                            $inc: {
+                                downlineBalance: debitCreditAmount,
+                                myPL: -parentUser2Amount,
+                                lifetimePL: -parentUser2Amount,
+                                pointsWL: debitCreditAmount
+                            }
+                        });
+                    }
+                        debitAmountForP = parentUser2Amount
+                    }
+                    await accountStatementModel.create(userAcc);
             }
             let checkDelete = await InprogressModel.findOneAndUpdate({marketId : allBetWithMarketId[bets].marketId, progressType:'VoideBet'}, {$inc:{settledBet:1}})
             console.log(checkDelete, '<======== checkDelete')
