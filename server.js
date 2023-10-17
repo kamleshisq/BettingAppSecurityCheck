@@ -5175,9 +5175,7 @@ io.on('connection', (socket) => {
                                     "userName": 1, 
                                 }
                             },
-                            {
-                                $unwind: "$selections2"
-                            },
+                            
                             {
                                 $project: { 
                                     _id:0,
@@ -5285,6 +5283,9 @@ io.on('connection', (socket) => {
                                         }
                                     }
                                 }
+                            },
+                            {
+                                $unwind: "$selections2"
                             },
                             {
                                 $group: {
