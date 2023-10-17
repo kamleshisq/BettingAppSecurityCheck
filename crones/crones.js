@@ -458,6 +458,7 @@ module.exports = () => {
                 
 
                 //NET LOSING COMMISSION
+
                 console.log('net losing commission start ....')
                 let commissionMarket = await commissionMarketModel.find()
                 let usercommissiondata3;

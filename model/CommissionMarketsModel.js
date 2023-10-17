@@ -6,6 +6,10 @@ const commissionMarket = mongoose.Schema({
         type:String,
         required:true,
         unique:true
+    },
+    commisssionStatus:{
+        type:Boolean,
+        default:false
     }
 })
 

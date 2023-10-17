@@ -443,80 +443,140 @@ async function processBets() {
 
   await Promise.all(betPromises);
 
-  // let NetData = await netCommission.aggregate([
-  //   {
-  //     $match :{
-  //       market:`${bets[0].marketName}`,
-  //       match: `${bets[0].match}`
-  //     }
-  //   },
-  //   {
-  //     $group: {
-  //       _id: {
-  //         userId: "$userId",
-  //         match: "$match",
-  //         market: "$market"
-  //       },
-  //       totalReturn: { $sum: "$commPoints" },
-  //       event: { $first: "$event" },
-  //       percentage: { $first: "$percentage" },
-  //       sport: { $first: "$Sport" } 
-  //     }
-  //   },
-  //   {
-  //     $group: {
-  //       _id: {
-  //         userId: "$_id.userId",
-  //         match: "$_id.match"
-  //       },
-  //       markets: {
-  //         $push: {
-  //           market: "$_id.market",
-  //           totalReturn: "$totalReturn",
-  //           event: "$event",
-  //           percentage: "$percentage",
-  //           sport: "$sport" // Include sport field here as well
-  //         }
-  //       }
-  //     }
-  //   },
-  //   {
-  //     $project: {
-  //       _id: 0,
-  //       userId: "$_id.userId",
-  //       match: "$_id.match",
-  //       markets: 1
-  //     }
-  //   }
-  // ]);
+  let filterUser = await commissionModel.find({"$Bookmaker.type":'NET_LOSS'})
+  let newfilterUser = filterUser.map(ele => {
+      return ele.userId
+  })
+  // bet.selectionName.toLowerCase().includes(data.result.toLowerCase()) && bet.bettype2 == 'BACK' || !bet.selectionName.toLowerCase().includes(data.result.toLowerCase()) && bet.bettype2 == 'LAY'
+
+  // returns:{$sum:{$cond:
+    // [{$in:['$status',['LOSS']]},'$returns',{"$subtract": [ "$returns", "$Stake" ]}]}},
+  let netLossingCommission = await betModel.aggregate([
+    {
+      $match:{
+          market : { $regex: /^book/i},
+          match: `${bets[0].match}`,
+          userId:{$in:newfilterUser},
+          marketId:`${bets[0].marketId}`,
+          status:{$in:['WON','LOSS']}
+      }
+    },
+    {
+      $group:{
+          _id:'$userName',
+          returns:{$sum:{$cond:[{$in:['$status',['LOSS']]},'$returns',{"$subtract": [ "$returns", "$Stake" ]}]}},
+          userId:{$first:'$userId'},
+          eventId:{$first:'$eventId'},
+          gameId:{$first:'$gameId'},
+          event:{$first:'$event'},
+          marketId:{$first:'$marketId'},
+          match:{$first:'$match'},
+          eventDate:{$first:'$eventDate'},
+          marketName:{$first:'$marketName'}
+
+
+      }
+  },
+    {
+      $group: {
+        _id: {
+          userId: "$_id.userId",
+          match: "$_id.match"
+        },
+        markets: {
+          $push: {
+            market: "$_id.market",
+            totalReturn: "$totalReturn",
+            event: "$event",
+            percentage: "$percentage",
+            sport: "$sport" // Include sport field here as well
+          }
+        }
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        userId: "$_id.userId",
+        match: "$_id.match",
+        markets: 1
+      }
+    }
+  ]);
   
 
-  // console.log(NetData, "metDATA")
-  // try{
-  //   for(let i = 0; i < NetData.length; i++){
-  //     // console.log("forLoop2")
-  //     // console.log(NetData[i])
-  //     // console.log(NetData[i].markets)
-  //     for(let j = 0 ; j < NetData[i].markets.length; j++){
-  //       let coint = ((NetData[i].markets[j].totalReturn * NetData[i].markets[j].percentage)/100).toFixed(4)
-  //       let user = await userModel.findByIdAndUpdate(NetData[i].userId, {$inc:{netCommisssion: -coint, commission:coint  }})
-  //         console.log(user, "user")
-  //         let commissionReportData = {
-  //           userId:NetData[i].userId,
-  //           market:NetData[i].markets[j].market,
-  //           commType:'Net lossing Commission',
-  //           percentage:NetData[i].markets[j].percentage,
-  //           commPoints:coint,
-  //           event:NetData[i].markets[j].event,
-  //           match:NetData[i].match,
-  //           Sport:NetData[i].markets[j].sport
-  //       }
-  //       let commisiionReports = await commissionRepportModel.create(commissionReportData)
-  //     }
-  //     await netCommission.deleteMany({userId:NetData[i].userId, match:NetData[i].match})
-  //   }
-  // }catch(err){
-  //   console.log(err)
-  // }
+  console.log(netLossingCommission,'netlossingcommission test')
+                    
+  for(let i = 0;i<netLossingCommission.length;i++) {
+      let user = await userModel.findById(netLossingCommission[i].userId)
+      try{
+              let commission = await commissionModel.find({userId:netLossingCommission[i].userId})
+              let commissionPer = 0
+              if (commission[0].Bookmaker.type == "NET_LOSS" && commission[0].Bookmaker.status){
+                  commissionPer = commission[0].Bookmaker.percentage
+              }
+              let commissionCoin = ((commissionPer * netLossingCommission[i].returns)/100).toFixed(4)
+              if(commissionPer > 0 && commissionCoin > 0){
+                  let commissiondata = {
+                      userName : user.userName,
+                      userId : user._id,
+                      eventId : netLossingCommission[i].eventId,
+                      sportId : netLossingCommission[i].gameId,
+                      seriesName : netLossingCommission[i].event,
+                      marketId : netLossingCommission[i].marketId,
+                      eventDate : new Date(netLossingCommission[i].eventDate),
+                      eventName : netLossingCommission[i].match,
+                      commission : commissionCoin,
+                      upline : 100,
+                      commissionType: 'Net Losing Commission',
+                      commissionPercentage:commissionPer,
+                      date:Date.now(),
+                      marketName:netLossingCommission[i].marketName,
+                      loginUserId:user._id,
+                      parentIdArray:user.parentUsers
+                  }
+                  usercommissiondata3 = await newCommissionModel.create(commissiondata)
+              }
+      }catch(err){
+          console.log(err)
+      }
+
+      try{
+          for(let i = user.parentUsers.length - 1; i >= 1; i--){
+              let childUser = await userModel.findById(user.parentUsers[i])
+              let parentUser = await userModel.findById(user.parentUsers[i - 1])
+              let commissionChild = await commissionModel.find({userId:childUser.id})
+              let commissionPer = 0
+              if (commissionChild[0].Bookmaker.type == "NET_LOSS" && commissionChild[0].Bookmaker.status){
+                  commissionPer = commissionChild[0].Bookmaker.percentage
+              }
+              let commissionCoin = ((commissionPer * netLossingCommission[i].returns)/100).toFixed(4)
+              if(commissionPer > 0 && commissionCoin > 0){
+                  let commissiondata = {
+                      userName : childUser.userName,
+                      userId : childUser.id,
+                      eventId : netLossingCommission[i].eventId,
+                      sportId : netLossingCommission[i].gameId,
+                      seriesName : netLossingCommission[i].event,
+                      marketId : netLossingCommission[i].marketId,
+                      eventDate : new Date(netLossingCommission[i].eventDate),
+                      eventName : netLossingCommission[i].match,
+                      commission : commissionCoin,
+                      upline : 100,
+                      commissionType: 'Net Losing Commission',
+                      commissionPercentage:commissionPer,
+                      date:Date.now(),
+                      marketName:netLossingCommission[i].marketName,
+                      uniqueId:usercommissiondata3._id,
+                      loginUserId:usercommissiondata3.userId,
+                      parentIdArray:childUser.parentUsers,
+                  }
+                  let commissionData = await newCommissionModel.create(commissiondata)
+              }
+          }
+      }catch(err){
+          console.log(err)
+      }
+  }
 }
 }
