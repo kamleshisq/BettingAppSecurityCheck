@@ -87,6 +87,7 @@ exports.mapbet = async(data) => {
   
   await Promise.all(betPromises);
 }
+processBets()
  //NET LOSING COMMISSION
 
 //  console.log('net losing commission start ....')
