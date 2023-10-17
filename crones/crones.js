@@ -566,7 +566,7 @@ module.exports = () => {
                                     commissionPer = commission[0].Bookmaker.percentage
                                 }
                                 let commissionCoin = ((commissionPer * netLossingCommission[i].returns)/100).toFixed(4)
-                                if(commissionPer > 0 && commissionCoin > 0){
+                                if(commissionPer > 0 && commissionCoin < 0){
                                     let commissiondata = {
                                         userName : user.userName,
                                         userId : user._id,
@@ -576,7 +576,7 @@ module.exports = () => {
                                         marketId : netLossingCommission[i].marketId,
                                         eventDate : new Date(netLossingCommission[i].eventDate),
                                         eventName : netLossingCommission[i].match,
-                                        commission : commissionCoin,
+                                        commission : commissionCoin * -1,
                                         upline : 100,
                                         commissionType: 'Net Losing Commission',
                                         commissionPercentage:commissionPer,
@@ -601,7 +601,7 @@ module.exports = () => {
                                     commissionPer = commissionChild[0].Bookmaker.percentage
                                 }
                                 let commissionCoin = ((commissionPer * netLossingCommission[i].returns)/100).toFixed(4)
-                                if(commissionPer > 0 && commissionCoin > 0){
+                                if(commissionPer > 0 && commissionCoin < 0){
                                     let commissiondata = {
                                         userName : childUser.userName,
                                         userId : childUser.id,
@@ -611,7 +611,7 @@ module.exports = () => {
                                         marketId : netLossingCommission[i].marketId,
                                         eventDate : new Date(netLossingCommission[i].eventDate),
                                         eventName : netLossingCommission[i].match,
-                                        commission : commissionCoin,
+                                        commission : commissionCoin * -1,
                                         upline : 100,
                                         commissionType: 'Net Losing Commission',
                                         commissionPercentage:commissionPer,
