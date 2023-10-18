@@ -210,7 +210,7 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
 
     let creditDebitamount
     if(data.data.bettype2 === "BACK"){
-        if(marketDetails.title.toLowerCase().startsWith('match')){
+        if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.toLowerCase().startsWith('winne')){
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
         }else if (marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
@@ -218,7 +218,7 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
         }
     }else{
-        if(marketDetails.title.toLowerCase().startsWith('match')){
+        if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.toLowerCase().startsWith('winne')){
             creditDebitamount = (parseFloat(data.data.stake * data.data.odds) - parseFloat(data.data.stake)).toFixed(2)
         }else if (marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
             creditDebitamount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
