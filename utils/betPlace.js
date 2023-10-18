@@ -306,6 +306,7 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
     }
     let description = `Bet for ${data.data.title}/stake = ${data.data.stake}`
     
+    console.log(betPlaceData, data, marketDetails, "betPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceData")
 // // FOR ACC STATEMENTS DATA 
 //     // let Acc = {
 //     //     "user_id":data.LOGINDATA.LOGINUSER._id,
