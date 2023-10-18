@@ -23,7 +23,7 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
     }
 
 async function placeBet(data){
-    console.log(data, "data1")
+    // console.log(data, "data1")
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
     if((check.availableBalance - check.exposure) < data.data.stake){
         return "You do not have sufficient balance for bet"
@@ -188,45 +188,46 @@ if(data.data.spoetId == 1){
         }
     }
 
-console.log(data, marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
-// // FOR ODDS LIMIT
-// if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
-//     if(data.data.bettype2 === 'BACK'){
-//         let OddChake = (data.data.oldOdds * 1) + (betLimit.max_odd * 1) 
-//         if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
-//             return 'Odds out of range back'
-//         }
-//     }else{
-//         let OddChake = (data.data.oldOdds * 1) - (betLimit.max_odd * 1)  
-//         if(OddChake >= data.data.odds || data.data.odds > data.data.oldOdds ){
-//             return 'Odds out of range'
-//         }
-//     }
-// }
+// console.log(data, marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
+// FOR ODDS LIMIT
+if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss') || marketDetails.title.toLowerCase().startsWith('winne')){
+    if(data.data.bettype2 === 'BACK'){
+        let OddChake = (data.data.oldOdds * 1) + (betLimit.max_odd * 1) 
+        if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
+            return 'Odds out of range back'
+        }
+    }else{
+        let OddChake = (data.data.oldOdds * 1) - (betLimit.max_odd * 1)  
+        if(OddChake >= data.data.odds || data.data.odds > data.data.oldOdds ){
+            return 'Odds out of range'
+        }
+    }
+}
 
 
 
 // // FOR LAY BACK DIFF
 
-//     let creditDebitamount
-//     if(data.data.bettype2 === "BACK"){
-//         if(marketDetails.title.toLowerCase().startsWith('match')){
-//             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
-//         }else if (marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
-//             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
-//         }else{
-//             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
-//         }
-//     }else{
-//         if(marketDetails.title.toLowerCase().startsWith('match')){
-//             creditDebitamount = (parseFloat(data.data.stake * data.data.odds) - parseFloat(data.data.stake)).toFixed(2)
-//         }else if (marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
-//             creditDebitamount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
-//         }else{
-//             creditDebitamount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
-//         }
-//     }
+    let creditDebitamount
+    if(data.data.bettype2 === "BACK"){
+        if(marketDetails.title.toLowerCase().startsWith('match')){
+            creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
+        }else if (marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
+            creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
+        }else{
+            creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
+        }
+    }else{
+        if(marketDetails.title.toLowerCase().startsWith('match')){
+            creditDebitamount = (parseFloat(data.data.stake * data.data.odds) - parseFloat(data.data.stake)).toFixed(2)
+        }else if (marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
+            creditDebitamount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
+        }else{
+            creditDebitamount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
+        }
+    }
 
+    console.log(creditDebitamount, data, marketDetails, "creditDebitamountcreditDebitamountcreditDebitamountcreditDebitamount")
 // //FOR BETPLACE PARENTSID ARRAY DATA
 // parentArray = []
 // for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
