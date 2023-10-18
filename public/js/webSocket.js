@@ -172,6 +172,7 @@ socket.on('connect', () => {
     stakeLableForm()
 
     socket.on('socketStakeLABLEDATA', data => {
+        console.log(data)
         let html = ''
         if(data.status === "notFound"){
             html = `<form class="set-stake-form">
