@@ -352,7 +352,7 @@
                     <div class="tabcontent" id="wp_market">
                       <table>
                           <tr>
-                              <th>W/P Market <button class="min-max-modal" >Book</button></th>
+                              <th>W/P Market </th>
                               <th>
                                   <div class="bets-option-btn">
                                       <div class="bets-btn-group">Yes</div>
@@ -362,7 +362,7 @@
                           </tr>
                           <%for(let i = 0; i < dataNotOnly.length; i++){%>
                             <tr class="market" id="<%=dataNotOnly[i].marketId%>">
-                                <td><%=dataNotOnly[i].title%></td>
+                                <td><%=dataNotOnly[i].title%> <button class="min-max-modal" >Book</button> </td>
                                 <td>    
                                 <div class="bets-option-btn">
                                     <div class="bets-btn-group">                                 
