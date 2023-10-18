@@ -7663,6 +7663,28 @@ socket.on('connect', () => {
                     $(this).closest("tr").next().removeClass('back-inplaymatch')
                     $(this).closest("tr").next().addClass('lay-inplaymatch')
                 }
+            }else if(this.classList.contains('winner_Blue') || this.classList.contains('winner_Red')){
+                let odds = $(this).children("span:first-child").attr('data-id');
+                let beton = $(this).closest("tr").find("td:first-child").text();
+                let secondPTag = $(this).closest("tr").next().find(".beton");
+                let numSpan = $(this).closest("tr").next().find(".nww-bet-slip-wrp-col1-txt-num");
+                let secId = this.id
+                let secId2;
+                if($(this).hasClass('winner_Blue')){
+                  secId2 = secId.slice(0,-1) + '1'
+                  }else{
+                  secId2 = secId.slice(0,-1) + '4'
+                  }
+                secondPTag.text(`Bet on :${beton}@${odds}`).attr("id", `${secId2}1`);;
+                numSpan.text(odds);
+
+                if($(this).hasClass('tbl-bg-blu-spn')){
+                    $(this).closest("tr").next().removeClass('lay-inplaymatch')
+                    $(this).closest("tr").next().addClass('back-inplaymatch')
+                }else{
+                    $(this).closest("tr").next().removeClass('back-inplaymatch')
+                    $(this).closest("tr").next().addClass('lay-inplaymatch')
+                }
             }else{
                 let odds = $(this).children("span").eq(1).text();
                 let beton = $(this).closest("tr").find("td:first-child").text();
