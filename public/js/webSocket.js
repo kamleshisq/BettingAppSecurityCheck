@@ -7854,7 +7854,7 @@ socket.on('connect', () => {
                         $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                       );
                       var result 
-                      if(IdButton.hasClass('match_odd_Blue')){
+                      if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
                         result = (parseFloat(spanId) * betValue) - parseFloat(spanId);
                       }else{
                         result = (parseFloat(spanId) * betValue) / 100
@@ -7868,12 +7868,12 @@ socket.on('connect', () => {
                     var betValue = parseFloat(
                         $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                       );
-                      let result
-                      if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
-                           result = (parseFloat(spanId) * 2) - parseFloat(spanId);
-                      }else{
-                            result = (parseFloat(spanId) * betValue) / 100
-                      }
+                      let result = parseFloat(spanId)
+                    //   if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                    //        result = (parseFloat(spanId) * 2) - parseFloat(spanId);
+                    //   }else{
+                    //         result = (parseFloat(spanId) * betValue) / 100
+                    //   }
                       $(this)
                       .closest("tr")
                       .find(".c-gren")
@@ -7891,17 +7891,18 @@ socket.on('connect', () => {
                 let NewStake = spanId - 100;
                 let result
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
-                    if(IdButton.hasClass('match_odd_Blue')){
+                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
                         result = (NewStake * Odds) - NewStake;
                     }else{
                         result = (NewStake * Odds) / 100
                     }
                 }else{
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
-                        result = (NewStake * 2) - NewStake;
-                    }else{
-                        result = (NewStake * Odds) / 100
-                    }
+                    result = NewStake
+                    // if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                    //     result = (NewStake * 2) - NewStake;
+                    // }else{
+                    //     result = (NewStake * Odds) / 100
+                    // }
                 }
                 if(!spanId){
                     $(this).closest("tr").find('.set-stake-form-input2').val(0)
@@ -7955,17 +7956,18 @@ socket.on('connect', () => {
                 }
                 let result
                 if($(this).closest('tr').hasClass('back-inplaymatch')){
-                    if(IdButton.hasClass('match_odd_Blue')){
+                    if(IdButton.hasClass('match_odd_Blue') || IdButton.hasClass('winner_Blue')){
                         result = (NewStake * Odds) - NewStake;
                     }else{
                         result = (NewStake * Odds) / 100
                     }
                 }else{
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
-                        result = (NewStake * 2) - NewStake;
-                    }else{
-                        result = (NewStake * Odds) / 100
-                    }
+                    // if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                    //     result = (NewStake * 2) - NewStake;
+                    // }else{
+                    //     result = (NewStake * Odds) / 100
+                    // }
+                    result - NewStake
                 }
                 // console.log(result)
                 if(!spanId){
