@@ -7813,21 +7813,21 @@ socket.on('connect', () => {
                     var betValue = parseFloat(
                       $(this).closest("tr").find(".nww-bet-slip-wrp-col1-txt-num").text()
                     );
-                    let result
-                    if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
-                        result = (parseFloat(newStake) * 2) - parseFloat(newStake);
-                    }else{
-                        result = ((parseFloat(newStake) * betValue)/100)
-                    }
+                    let result = parseFloat(newStake)
+                    // if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                    //     result = (parseFloat(newStake) * 2) - parseFloat(newStake);
+                    // }else{
+                    //     result = ((parseFloat(newStake) * betValue)/100)
+                    // }
                   //   console.log(this.classList.contains("MAX"), this.classList.contains("ALLIN"))
                     if(this.classList.contains("MAX") || this.classList.contains("ALLIN")){
                       $(this).closest("tr").find(".set-stake-form-input2").val(parseFloat(spanId))
-                      let result2 
-                      if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
-                        result2 = (parseFloat(spanId) * 2) - parseFloat(spanId)
-                      }else{
-                        result2 = ((parseFloat(spanId) * betValue)/100).toFixed(2)
-                      }
+                      let result2 = parseFloat(spanId)
+                    //   if(IdButton.hasClass('match_odd_Red') || IdButton.hasClass('bookmaker_red')){
+                    //     result2 = (parseFloat(spanId) * 2) - parseFloat(spanId)
+                    //   }else{
+                    //     result2 = ((parseFloat(spanId) * betValue)/100).toFixed(2)
+                    //   }
                       $(this)
                           .closest("tr")
                           .find(".c-gren")
