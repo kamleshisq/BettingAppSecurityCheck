@@ -2495,7 +2495,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('socketStakeLABLEDATA', async(data) => {
-        let check = await stakeLabelModel.find({userId})
+        let check = await stakeLabelModel.find({userId:data.LOGINUSER._id})
         if(check.length > 0){
             socket.emit('socketStakeLABLEDATA', {status:"notFound"})
         }else{
