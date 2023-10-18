@@ -9977,7 +9977,7 @@ socket.on('connect', () => {
         marketId()
         let first = true
         socket.on("marketId", async(data) => {
-            console.log(data.status)
+            console.log(data)
             // console.log("working")
             $(".match_odd_Blue").each(function() {
                     
