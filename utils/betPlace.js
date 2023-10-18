@@ -24,70 +24,73 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
 
 async function placeBet(data){
     console.log(data, "data1")
-//     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
-//     if(check.availableBalance < data.data.stake){
-//         return "You do not have sufficient balance for bet"
-//     }else if(check.exposureLimit === check.exposure){
-//         return "Please try again later, Your exposure Limit is full"
-//     }
-//     let uniqueToken = generateString(5)
-//     const sportData = await cricketAndOtherSport()
-//     let gameList
-//     let bettype
+    let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
+    if((check.availableBalance - check.exposure) < data.data.stake){
+        return "You do not have sufficient balance for bet"
+    }else if(check.exposureLimit === check.exposure){
+        return "Please try again later, Your exposure Limit is full"
+    }
+    let uniqueToken = generateString(5)
+    const sportData = await cricketAndOtherSport()
+    let gameList
+    let bettype
 
-// //FOR SPORT TYPE
-//     if(data.data.spoetId == 4){
-//         gameList = sportData[0].gameList[0].eventList
-//         bettype = 'Cricket'
-//     }else if(data.data.spoetId == 1){
-//         let footballdata = sportData[1].gameList.find(item => item.sport_name === "Football")
-//         gameList = footballdata.eventList
-//         bettype = "Football"
-//     }else if (data.data.spoetId == 2){
-//         let tennisData = sportData[1].gameList.find(item => item.sport_name === "Tennis")
-//         gameList = tennisData.eventList
-//         bettype = "Tennis"
-//     }
+//FOR SPORT TYPE
+    if(data.data.spoetId == 4){
+        gameList = sportData[0].gameList[0].eventList
+        bettype = 'Cricket'
+    }else if(data.data.spoetId == 1){
+        let footballdata = sportData[1].gameList.find(item => item.sport_name === "Football")
+        gameList = footballdata.eventList
+        bettype = "Football"
+    }else if (data.data.spoetId == 2){
+        let tennisData = sportData[1].gameList.find(item => item.sport_name === "Tennis")
+        gameList = tennisData.eventList
+        bettype = "Tennis"
+    }
 
 
-// //FOR FIND THE MATCH
-//     let liveBetGame = gameList.find(item => item.eventData.eventId == data.data.eventId);
+//FOR FIND THE MATCH
+    let liveBetGame = gameList.find(item => item.eventData.eventId == data.data.eventId);
 
-// //FOR MARKET DETAILS
-//     let marketDetails
-//     let marketList = liveBetGame.marketList
-//     for (let key in marketList) {
-//         //FOR FENCT DATA(IF THAT MARKET IS FANCY)
-//         if (data.data.secId === "odd_Even_Yes" || data.data.secId === "odd_Even_No"){
-//             const oddEvenData = marketList.odd_even;
-//             marketDetails = oddEvenData.find(item => item.marketId === data.data.market)
-//             if(!marketDetails){
-//                 let oddEvenData = marketList.session
-//                 marketDetails = oddEvenData.find(item => item.marketId === data.data.market)
-//             }
-//             break;
-//         //FOR BOOK MAKER AND MATCHODDS DATA (IF MARKET IS MATCH ODDS OR BOOKMAKER)
-//         }else if(marketList.hasOwnProperty(key)) {
-//             const marketData = marketList[key];
-//             if(marketData != null){
+//FOR MARKET DETAILS
+    let marketDetails
+    let marketList = liveBetGame.marketList
+    for (let key in marketList) {
+        //FOR FENCT DATA(IF THAT MARKET IS FANCY)
+        if (data.data.secId === "odd_Even_Yes" || data.data.secId === "odd_Even_No"){
+            const oddEvenData = marketList.odd_even;
+            marketDetails = oddEvenData.find(item => item.marketId === data.data.market)
+            if(!marketDetails){
+                let oddEvenData = marketList.session
+                marketDetails = oddEvenData.find(item => item.marketId === data.data.market)
+            }
+            break;
+        //FOR BOOK MAKER AND MATCHODDS DATA (IF MARKET IS MATCH ODDS OR BOOKMAKER)
+        }else if(marketList.hasOwnProperty(key)) {
+            const marketData = marketList[key];
+            if(marketData != null){
 
-//                 //FOR BOOKMAKER MARKET
-//                 if(Array.isArray(marketData)){
-//                     let book = marketData.find(item => item.marketId == data.data.market)
-//                     if(book){
-//                         marketDetails = book
-//                         break;
-//                     }
-//                 }else{
-//                     //FOR MATCH OODS MARKET
-//                     if (marketData.marketId === data.data.market) {
-//                         marketDetails =  marketData;
-//                         break;
-//                       }
-//                 }
-//             }
-//       }}
-// let betPlaceData = {}
+                //FOR BOOKMAKER MARKET
+                if(Array.isArray(marketData)){
+                    let book = marketData.find(item => item.marketId == data.data.market)
+                    if(book){
+                        marketDetails = book
+                        break;
+                    }
+                }else{
+                    //FOR MATCH OODS MARKET
+                    if (marketData.marketId === data.data.market) {
+                        marketDetails =  marketData;
+                        break;
+                      }
+                }
+            }
+      }}
+
+
+console.log(marketDetails, "marketDetailsmarketDetailsmarketDetails")
+let betPlaceData = {}
 
 // //FOR SPORT NAME 
 // let sportName = ''
