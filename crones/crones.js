@@ -520,7 +520,7 @@ module.exports = () => {
                 let commissionMarket = await commissionMarketModel.find()
                 let usercommissiondata3
                 if(commissionMarket.some(item => (item.marketId == marketresult.mid))){
-                    let filterUser = await commissionModel.find({"$Bookmaker.type":'NET_LOSS'})
+                    let filterUser = await commissionModel.find({"Bookmaker.type":'NET_LOSS'})
                     let newfilterUser = filterUser.map(ele => {
                         return ele.userId
                     })
