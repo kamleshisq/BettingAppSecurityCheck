@@ -227,84 +227,84 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
         }
     }
 
-    console.log(creditDebitamount, data, marketDetails, "creditDebitamountcreditDebitamountcreditDebitamountcreditDebitamount")
-// //FOR BETPLACE PARENTSID ARRAY DATA
-// parentArray = []
-// for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
-//     let parenetUser = await userModel.findById(data.LOGINDATA.LOGINUSER.parentUsers[i])
-//     let object = {
-//         parentUSerId:parenetUser._id,
-//         uplineShare:parenetUser.Share
-//     }
-//     // console.log(object. object)
-//     parentArray.push(object)
-// }
+    // console.log(creditDebitamount, data, marketDetails, "creditDebitamountcreditDebitamountcreditDebitamountcreditDebitamount")
+//FOR BETPLACE PARENTSID ARRAY DATA
+parentArray = []
+for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
+    let parenetUser = await userModel.findById(data.LOGINDATA.LOGINUSER.parentUsers[i])
+    let object = {
+        parentUSerId:parenetUser._id,
+        uplineShare:parenetUser.Share
+    }
+    // console.log(object. object)
+    parentArray.push(object)
+}
 
 
-// //FOR BET PLACE DATA 
+//FOR BET PLACE DATA 
 
-//     if(!marketDetails.runners){
-//         betPlaceData = {
-//             userId : data.LOGINDATA.LOGINUSER._id,
-//             userName : data.LOGINDATA.LOGINUSER.userName,
-//             transactionId : `${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`,
-//             date : Date.now(),
-//             oddValue : parseFloat(data.data.odds),
-//             Stake : parseFloat(data.data.stake),
-//             status : "OPEN",
-//             returns : -creditDebitamount,
-//             role_type : data.LOGINDATA.LOGINUSER.role_type,
-//             match : data.data.title,
-//             betType : bettype,
-//             event : liveBetGame.eventData.league,
-//             gameId : liveBetGame.eventData.sportId,
-//             eventId: liveBetGame.eventData.eventId,
-//             eventDate : new Date(liveBetGame.eventData.time * 1000),
-//             marketName : marketDetails.title,
-//             selectionName : data.data.selectionName,
-//             marketId : data.data.market,
-//             secId : data.data.secId,
-//             bettype2: data.data.bettype2,
-//             ip:data.LOGINDATA.IP,
-//             parentArray:parentArray,
-//             parentId:data.LOGINDATA.LOGINUSER.parent_id,
-//             exposure:creditDebitamount
-//         }
-//     }else{
-//         let runnersData = JSON.parse(marketDetails.runners)
-//         let betOn = runnersData.find(item => item.secId == data.data.secId)
-//         if(!betOn){
-//             betOn = runnersData.find(item => item.secId == data.data.secId.slice(0,-1))
-//         }
-//             betPlaceData = {
-//                 userId : data.LOGINDATA.LOGINUSER._id,
-//                 userName : data.LOGINDATA.LOGINUSER.userName,
-//                 transactionId : `${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`,
-//                 date : Date.now(),
-//                 oddValue : parseFloat(data.data.odds),
-//                 Stake : parseFloat(data.data.stake),
-//                 status : "OPEN",
-//                 returns : -creditDebitamount,
-//                 role_type : data.LOGINDATA.LOGINUSER.role_type,
-//                 match : data.data.title,
-//                 betType : bettype,
-//                 event : liveBetGame.eventData.league,
-//                 gameId : liveBetGame.eventData.sportId,
-//                 eventId: liveBetGame.eventData.eventId,
-//                 eventDate : new Date(liveBetGame.eventData.time * 1000),
-//                 marketName : marketDetails.title,
-//                 selectionName : betOn.runner,
-//                 marketId : data.data.market,
-//                 secId : data.data.secId,
-//                 bettype2: data.data.bettype2,
-//                 ip:data.LOGINDATA.IP,
-//                 parentArray:parentArray,
-//                 parentId:data.LOGINDATA.LOGINUSER.parent_id,
-//                 exposure:creditDebitamount
+    if(!marketDetails.runners){
+        betPlaceData = {
+            userId : data.LOGINDATA.LOGINUSER._id,
+            userName : data.LOGINDATA.LOGINUSER.userName,
+            transactionId : `${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`,
+            date : Date.now(),
+            oddValue : parseFloat(data.data.odds),
+            Stake : parseFloat(data.data.stake),
+            status : "OPEN",
+            returns : -creditDebitamount,
+            role_type : data.LOGINDATA.LOGINUSER.role_type,
+            match : data.data.title,
+            betType : bettype,
+            event : liveBetGame.eventData.league,
+            gameId : liveBetGame.eventData.sportId,
+            eventId: liveBetGame.eventData.eventId,
+            eventDate : new Date(liveBetGame.eventData.time * 1000),
+            marketName : marketDetails.title,
+            selectionName : data.data.selectionName,
+            marketId : data.data.market,
+            secId : data.data.secId,
+            bettype2: data.data.bettype2,
+            ip:data.LOGINDATA.IP,
+            parentArray:parentArray,
+            parentId:data.LOGINDATA.LOGINUSER.parent_id,
+            exposure:creditDebitamount
+        }
+    }else{
+        let runnersData = JSON.parse(marketDetails.runners)
+        let betOn = runnersData.find(item => item.secId == data.data.secId)
+        if(!betOn){
+            betOn = runnersData.find(item => item.secId == data.data.secId.slice(0,-1))
+        }
+            betPlaceData = {
+                userId : data.LOGINDATA.LOGINUSER._id,
+                userName : data.LOGINDATA.LOGINUSER.userName,
+                transactionId : `${data.LOGINDATA.LOGINUSER.userName}${uniqueToken}`,
+                date : Date.now(),
+                oddValue : parseFloat(data.data.odds),
+                Stake : parseFloat(data.data.stake),
+                status : "OPEN",
+                returns : -creditDebitamount,
+                role_type : data.LOGINDATA.LOGINUSER.role_type,
+                match : data.data.title,
+                betType : bettype,
+                event : liveBetGame.eventData.league,
+                gameId : liveBetGame.eventData.sportId,
+                eventId: liveBetGame.eventData.eventId,
+                eventDate : new Date(liveBetGame.eventData.time * 1000),
+                marketName : marketDetails.title,
+                selectionName : betOn.runner,
+                marketId : data.data.market,
+                secId : data.data.secId,
+                bettype2: data.data.bettype2,
+                ip:data.LOGINDATA.IP,
+                parentArray:parentArray,
+                parentId:data.LOGINDATA.LOGINUSER.parent_id,
+                exposure:creditDebitamount
 
-//             }
-//     }
-//     let description = `Bet for ${data.data.title}/stake = ${data.data.stake}`
+            }
+    }
+    let description = `Bet for ${data.data.title}/stake = ${data.data.stake}`
     
 // // FOR ACC STATEMENTS DATA 
 //     // let Acc = {
