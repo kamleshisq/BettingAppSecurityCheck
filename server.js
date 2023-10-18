@@ -2496,9 +2496,9 @@ io.on('connection', (socket) => {
 
     socket.on('socketStakeLABLEDATA', async(data) => {
         console.log(data)
-        let Check = []
+        let check = []
         if(data.LOGINUSER){
-            Check = await stakeLabelModel.find({userId:data.LOGINUSER._id})
+            check = await stakeLabelModel.find({userId:data.LOGINUSER._id})
         }
         // console.log(check)
         if(check.length === 0){
