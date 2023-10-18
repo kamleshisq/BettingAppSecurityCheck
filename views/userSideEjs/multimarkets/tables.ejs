@@ -1,7 +1,6 @@
 
 <%
 let multiTrue = true;
-console.log(multimarket, "444444444444444444")
 for(let i = 0; i <  multimarket.marketIds.length; i++){
   let result
   let isBookmaker = false
@@ -15,32 +14,26 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
       let Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis")
       Tennis = Tennis.eventList
       result = Tennis.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == multimarket.marketIds[i])
-      console.log("WORKINGGGG0", result)
       if(!result){
         result = sportData[0].gameList[0].eventList.find(item => item.marketList.bookmaker != null && item.marketList.bookmaker[0] &&  item.marketList.bookmaker[0].marketId == multimarket.marketIds[i])
-        console.log("WORKINGGGG1", result)
               if(result){
                 isBookmaker = true
               }else{
 
                   result = sportData[0].gameList[0].eventList.find(item => item.marketList.bookmaker != null && item.marketList.bookmaker[1] &&  item.marketList.bookmaker[1].marketId == multimarket.marketIds[i])
-                  console.log("WORKINGGGG2", result)
                   if(result){
                     isToss = true
                   }
               }
-              console.log("WORKINGGGG3", result)
               if(!result){
                 
 
                 result = Tennis.find(item => item.marketList.bookmaker != null&&  item.marketList.bookmaker[0].marketId == multimarket.marketIds[i])
-                console.log("WORKINGGGG4", result)
               if(result){
                 isBookmaker = true
               }else{
 
                   result = Tennis.find(item => item.marketList.bookmaker != null && item.marketList.bookmaker[1] &&  item.marketList.bookmaker[1].marketId == multimarket.marketIds[i])
-                  console.log("WORKINGGGG4", result)
                   if(result){
                     isToss = true
                   }
@@ -178,12 +171,12 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
                               <div class="nww-bet-slip-wrp-col2 betSlip-price-placebutton">
                                 <div class="nww-bet-slip-wrp-col2-inn">
                                   <%for(let i = 0; i < stakeLabledata.stakeArray.length; i++){%>
-                                    <!-- <span id="<%=stakeLabledata.stakeArray[i].value%>">+<%=stakeLabledata.stakeArray[i].key%></span> -->
+                                    <span id="<%=stakeLabledata.stakeArray[i].value%>">+<%=stakeLabledata.stakeArray[i].key%></span>
                                   <%}%>
-                                  <span id="100">+100</span>
+                                  <!-- <span id="100">+100</span>
                                   <span id="1000">+1000</span>
                                   <span id="50000">+50000</span>
-                                  <span id="10000">+10000</span>
+                                  <span id="10000">+10000</span> -->
                                   <span id="1000" class="MAX">MAX</span>
                                   <%if(user){%>
                                   <span id="<%=user.availableBalance%>" class="ALLIN">ALL IN</span>
@@ -466,12 +459,12 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
                                 <div class="nww-bet-slip-wrp-col2 betSlip-price-placebutton">
                                   <div class="nww-bet-slip-wrp-col2-inn">
                                     <%for(let i = 0; i < stakeLabledata.stakeArray.length; i++){%>
-                                      <!-- <span id="<%=stakeLabledata.stakeArray[i].value%>">+<%=stakeLabledata.stakeArray[i].key%></span> -->
+                                      <span id="<%=stakeLabledata.stakeArray[i].value%>">+<%=stakeLabledata.stakeArray[i].key%></span>
                                     <%}%>
-                                    <span id="100">+100</span>
+                                    <!-- <span id="100">+100</span>
                                     <span id="1000">+1000</span>
                                     <span id="50000">+50000</span>
-                                    <span id="10000">+10000</span>
+                                    <span id="10000">+10000</span> -->
                                     <span id="1000" class="MAX">MAX</span>
                                     <%if(user){%>
                                     <span id="<%=user.availableBalance%>" class="ALLIN">ALL IN</span>
