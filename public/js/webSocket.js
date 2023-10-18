@@ -6843,7 +6843,7 @@ socket.on('connect', () => {
     }
 
 
-    if(pathname === '/exchange_inPlay/match'  || pathname.startsWith('/exchange/multimarkets')){
+    if(pathname === '/exchange_inPlay/match'  ){
 
         // $(document).ready(function(){
         //     $(".exchange-pg-inn-tbl .button").click(function(event){
