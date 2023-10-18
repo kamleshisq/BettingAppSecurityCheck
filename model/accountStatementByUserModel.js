@@ -46,6 +46,9 @@ const accountStatementByUser = mongoose.Schema({
     },
     stake:{
         type:String
+    },
+    type:{
+        type:String
     }
 })
 
