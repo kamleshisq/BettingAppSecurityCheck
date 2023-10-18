@@ -316,7 +316,7 @@ module.exports = () => {
                         console.log((entry.selectionName.split('@')[1]))
                         console.log((marketresult.result))
                         console.log((entry.bettype2 == 'BACK'))
-                        console.log((entry.selectionName.split('@')[1] >=  marketresult.result && entry.bettype2 == 'BACK'))
+                        console.log((entry.selectionName.split('@')[1] <=  marketresult.result && entry.bettype2 == 'BACK'))
                         let creditDebitamount 
                         let exposure = entry.exposure
                         if(entry.bettype2 == "BACK"){
