@@ -447,6 +447,8 @@ socket.on('connect', () => {
         const input1Elements = document.querySelectorAll('.set-stake-form-input1');
         const input2Elements = document.querySelectorAll('.set-stake-form-input2');
 
+        console.log(input1Elements, input2Elements, "input2Elementsinput2Elements")
+
         const input1Values = Array.from(input1Elements).map((element) => element.value);
         const input2Values = Array.from(input2Elements)
         .map((element) => element.value)
