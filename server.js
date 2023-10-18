@@ -2469,28 +2469,28 @@ io.on('connection', (socket) => {
             value: parseInt(data.input2Values[index].replace(/,/g, ''), 10)
           }));
           console.log(stakeArray)
-        // let userId = data.LOGINDATA.LOGINUSER._id
-        // let check = await stakeLabelModel.find({userId})
+        let userId = data.LOGINDATA.LOGINUSER._id
+        let check = await stakeLabelModel.find({userId})
         // console.log(check.length)
         // console.log(stakeArray, userId)
-        // if(check.length === 0){
-        //     console.log("WORKING")
-        //     try{
-        //         let data = await stakeLabelModel.create({stakeArray:stakeArray,userId:userId})
-        //         console.log(data)
-        //         socket.emit("STAKELABEL", "Updated")
-        //     }catch(err){
-        //         socket.emit("STAKELABEL", "Please try again later")
-        //     }
-        // }else{
-        //     try{
-        //         const data = await stakeLabelModel.findOneAndUpdate({userId:userId}, {stakeArray:stakeArray})
-        //         console.log(data)
-        //         socket.emit("STAKELABEL", "Updated")
-        //     }catch(err){
-        //         socket.emit("STAKELABEL", "Please try again later")
-        //     }
-        // }
+        if(check.length === 0){
+            console.log("WORKING")
+            try{
+                let data = await stakeLabelModel.create({stakeArray:stakeArray, userId:userId})
+                console.log(data)
+                socket.emit("STAKELABEL", "Updated")
+            }catch(err){
+                socket.emit("STAKELABEL", "Please try again later")
+            }
+        }else{
+            try{
+                const data = await stakeLabelModel.findOneAndUpdate({userId:userId}, {stakeArray:stakeArray})
+                console.log(data)
+                socket.emit("STAKELABEL", "Updated")
+            }catch(err){
+                socket.emit("STAKELABEL", "Please try again later")
+            }
+        }
     })
 
 
