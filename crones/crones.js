@@ -10,7 +10,7 @@ const newCommissionModel = require('../model/commissioNNModel');
 const Decimal = require('decimal.js');
 
 module.exports = () => {
-    cron.schedule('*/10 * * * *', async() => {
+    cron.schedule('*/5 * * * *', async() => {
       console.log("Working")
 
 
