@@ -113,7 +113,7 @@ module.exports = () => {
                         let debitCreditAmount 
                         let exposure = entry.exposure
                         if(entry.bettype2 == 'BACK'){
-                            if(entry.marketName.toLowerCase().startsWith('match')){
+                            if(entry.marketName.toLowerCase().startsWith('match') || entry.marketName.toLowerCase().startsWith('winne')){
                                 debitCreditAmount = parseFloat(entry.Stake * entry.oddValue).toFixed(2) - parseFloat(entry.Stake)
                             }else{
                                 debitCreditAmount = (parseFloat(entry.Stake * entry.oddValue/100).toFixed(2))
@@ -313,10 +313,10 @@ module.exports = () => {
                           "transactionId":`${bet.transactionId}`
                         })
                     }else if (((entry.selectionName.split('@')[1] <=  marketresult.result) && entry.bettype2 == 'BACK') || ((entry.selectionName.split('@')[1] >= marketresult.result) && entry.bettype2 == "LAY")){
-                        console.log((entry.selectionName.split('@')[1]))
-                        console.log((marketresult.result))
-                        console.log((entry.bettype2 == 'BACK'))
-                        console.log((entry.selectionName.split('@')[1] <=  marketresult.result && entry.bettype2 == 'BACK'))
+                        // console.log((entry.selectionName.split('@')[1]))
+                        // console.log((marketresult.result))
+                        // console.log((entry.bettype2 == 'BACK'))
+                        // console.log((entry.selectionName.split('@')[1] <=  marketresult.result && entry.bettype2 == 'BACK'))
                         let creditDebitamount 
                         let exposure = entry.exposure
                         if(entry.bettype2 == "BACK"){

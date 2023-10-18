@@ -88,7 +88,7 @@ exports.mapbet = async(data) => {
         let debitCreditAmount;
         let exposure = bet.exposure
         if(bet.bettype2 == 'BACK'){
-          if(bet.marketName.toLowerCase().startsWith('match')){
+          if(bet.marketName.toLowerCase().startsWith('match') || bet.marketName.toLowerCase().startsWith('winne')){
             debitCreditAmount = parseFloat((bet.Stake * bet.oddValue).toFixed(2)) - bet.Stake
           }else{
             debitCreditAmount = parseFloat(bet.Stake * bet.oddValue/100).toFixed(2)
