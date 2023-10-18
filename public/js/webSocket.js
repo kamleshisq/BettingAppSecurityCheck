@@ -163,7 +163,96 @@ socket.on('connect', () => {
       }
     })
 
+    function stakeLableForm(){
+        socket.emit('socketStakeLABLEDATA', LOGINDATA)
+        setTimeout(() => {
+            stakeLableForm()
+        }, 1000 * 60)
+    }
+    stakeLableForm()
 
+    socket.on('socketStakeLABLEDATA', data => {
+        let html = ''
+        if(data.status === "notFound"){
+            html = `<form class="set-stake-form">
+            <div class="row mb-2 set-stake-form-ro">
+              <div class="col set-stake-form-col">
+                <fieldset >
+                  <label for="exampleInputEmail1" class="form-label">Label Name</label>
+                  <input type="text" required class="form-control set-stake-form-input1" value="100"  >
+                </fieldset>
+              </div>
+              <div class="col set-stake-form-col">
+                <label for="exampleInputPassword1" class="form-label">Value</label>
+                <input type="text" required class="form-control set-stake-form-input2" value="100" aria-label="Last name">
+              </div>
+            </div>
+            <div class="row mb-2 set-stake-form-ro">
+              <div class="col set-stake-form-col">
+                <fieldset >
+                  <input type="text" required class="form-control set-stake-form-input1" value="500"  >
+                </fieldset>
+              </div>
+              <div class="col set-stake-form-col">
+                <input type="text" required class="form-control set-stake-form-input2" value="500" aria-label="Last name">
+              </div>
+            </div>
+            <div class="row mb-2 set-stake-form-ro">
+              <div class="col set-stake-form-col">
+                <fieldset >
+                  <input type="text" required class="form-control set-stake-form-input1" value="1000"  >
+                </fieldset>
+              </div>
+              <div class="col set-stake-form-col">
+                <input type="text" required class="form-control set-stake-form-input2" value="1000" aria-label="Last name">
+              </div>
+            </div>
+            <div class="row mb-2 set-stake-form-ro">
+              <div class="col set-stake-form-col">
+                <fieldset >
+                  <input type="text" required class="form-control set-stake-form-input1" value="5000"  >
+                </fieldset>
+              </div>
+              <div class="col set-stake-form-col">
+                <input type="text" required class="form-control set-stake-form-input2" value="5000" aria-label="Last name">
+              </div>
+            </div>
+           
+            
+            
+            <button type="submit" class="btn change-pass-model-form-submit-btn">SAVE</button>
+          </form>`
+        }else{
+            html = `<form class="set-stake-form">
+            <div class="row mb-2 set-stake-form-ro">
+              <div class="col set-stake-form-col">
+                <fieldset >
+                  <label for="exampleInputEmail1" class="form-label">Label Name</label>
+                  <input type="text" required class="form-control set-stake-form-input1" value="${data.stakeArray[0].key}"  >
+                </fieldset>
+              </div>
+              <div class="col set-stake-form-col">
+                <label for="exampleInputPassword1" class="form-label">Value</label>
+                <input type="text" required class="form-control set-stake-form-input2" value="${data.stakeArray[0].value}" aria-label="Last name">
+              </div>
+            </div>`
+            for(let i = 1; i < data.stakeArray.length; i++){
+                html += `<div class="row mb-2 set-stake-form-ro">
+                <div class="col set-stake-form-col">
+                  <fieldset >
+                    <input type="text" required class="form-control set-stake-form-input1" value="${data.stakeArray[i].key}"  >
+                  </fieldset>
+                </div>
+                <div class="col set-stake-form-col">
+                  <input type="text" required class="form-control set-stake-form-input2" value="${data.stakeArray[i].value}" aria-label="Last name">
+                </div>
+              </div>`
+            }
+
+            html += `<button type="submit" class="btn change-pass-model-form-submit-btn">SAVE</button></form>`
+        }
+        document.getElementById('stakeLableForm').innerHTML = html
+    })
 
    $(document).on('submit', ".change-pass-model-form1", function(e){
     e.preventDefault()
