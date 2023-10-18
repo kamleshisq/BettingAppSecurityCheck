@@ -78,9 +78,9 @@ exports.mapbet = async(data) => {
   //FUNCTION FOR PROCESS BET
     
   async function processBets() {
-  console.log("WORKING +==>>", data)
+//   console.log("WORKING +==>>", data)
   const betPromises = bets.map(async (bet) => {
-    console.log(bet, data.result, "DATADATA123456")
+    // console.log(bet, data.result, "DATADATA123456")
     if(data.result === "yes" || data.result === "no"){ 
 
     }else{
