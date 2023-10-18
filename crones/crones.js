@@ -312,7 +312,7 @@ module.exports = () => {
                           "stake": bet.Stake,
                           "transactionId":`${bet.transactionId}`
                         })
-                    }else if ((entry.selectionName.split('@')[1] >=  marketresult.result && entry.bettype2 == 'BACK') || (entry.selectionName.split('@')[1] <= marketresult.result && entry.bettype2 == "LAY")){
+                    }else if (((entry.selectionName.split('@')[1] <=  marketresult.result) && entry.bettype2 == 'BACK') || ((entry.selectionName.split('@')[1] >= marketresult.result) && entry.bettype2 == "LAY")){
                         console.log((entry.selectionName.split('@')[1]))
                         console.log((marketresult.result))
                         console.log((entry.bettype2 == 'BACK'))
