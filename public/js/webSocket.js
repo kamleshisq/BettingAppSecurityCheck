@@ -453,7 +453,7 @@ socket.on('connect', () => {
         const input2Values = Array.from(input2Elements)
         .map((element) => element.value)
         .filter((value) => value.trim() !== "");
-                // console.log(input2Values)
+                console.log(input2Values)
                 socket.emit("STAKELABEL", {input1Values, input2Values, LOGINDATA})
             })
 
