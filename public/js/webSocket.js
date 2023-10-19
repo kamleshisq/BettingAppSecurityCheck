@@ -14078,6 +14078,13 @@ socket.on('connect', () => {
                     <td>${data.data[i].Stake}</td>
                     <td><div class="btn-group"><button class="btn alert-btn" id="${data.data[i]._id}">Alert</button></div></td>
                 </tr>`
+                if(data.data[i].marketName.toLowerCase().startsWith('match') || data.data[i].marketName.toLowerCase().startsWith('book')  || data.data[i].marketName.toLowerCase().startsWith('winne')){
+                    let string = `.fancy#${data.data[i].marketId}`
+                    let thatButton = document.querySelector(string)
+                    if(thatButton.hasClass('disable')){
+                        thatButton.classList.remove('disable')
+                    }
+                }
                 }
                 if(data.type == 'loop'){
 
