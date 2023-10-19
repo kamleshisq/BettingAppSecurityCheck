@@ -5475,7 +5475,45 @@ io.on('connection', (socket) => {
                             }
                         }
                     }
-                }
+                },
+                {
+                    $group: {
+                      _id: null,
+                      data: {
+                        $push: {
+                          _id: "$_id",
+                          totalAmount: "$totalAmount",
+                          totalWinAmount: "$totalWinAmount"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    $project: {
+                      _id: 0,
+                      data: {
+                        $map: {
+                          input: "$data",
+                          as: "item",
+                          in: {
+                            _id: "$$item._id",
+                            totalAmount: "$$item.totalAmount",
+                            totalWinAmount: "$$item.totalWinAmount",
+                            totalWinAmount2: {
+                              $add: ["$$item.totalWinAmount", {
+                                $sum: {
+                                  $filter: {
+                                    input: "$data",
+                                    cond: { $ne: ["$$this._id", "$$item._id"] }
+                                  }
+                                }
+                              }]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
             ])
 
             console.log(betData, "betData")
