@@ -13046,7 +13046,12 @@ socket.on('connect', () => {
         socket.on('WINNERMARKET', data => {
             console.log(data, "WINNERMARKETWINNERMARKETWINNERMARKET")
             let runners = JSON.parse(data.runners)
-            console.log(runners, "runnersrunnersrunners")
+            // console.log(runners, "runnersrunnersrunners")
+            let html = ''
+            for(let i = 0; i < runners.length; i++){
+                html += `<option value="${runners[i].runner}">${runners[i].runner}</option>`
+            }
+            document.getElementById(data.marketId).innerHTML = html
         })
             function getinProgressData(){
                 $(document).ready(function() {
