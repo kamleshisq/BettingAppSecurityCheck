@@ -2871,6 +2871,7 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     const sportData = await getCrkAndAllData()
     
     const betLimit = await betLimitModel.find()
+    // let rules = await gamrRuleModel.find()
     // console.log(match.marketList.goals)
     // let session = match.marketList.session.filter(item => {
     //     let date = new Date(item.updated_on);
