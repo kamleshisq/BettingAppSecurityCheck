@@ -14091,9 +14091,9 @@ socket.on('connect', () => {
                 </tr>`
                 if(!data.data[i].marketName.toLowerCase().startsWith('match') || !data.data[i].marketName.toLowerCase().startsWith('book')  || !data.data[i].marketName.toLowerCase().startsWith('winne')){
                     let string = `.fancy.disable[data-id="${data.data[i].marketId}"]`;
-                    console.log(string, "STRING STRING")
+                    // console.log(string, "STRING STRING")
                     let thatButton = document.querySelector(string);
-                    console.log(thatButton, "THATBUTTONTHATBUTTONTHATBUTTON")
+                    // console.log(thatButton, "THATBUTTONTHATBUTTONTHATBUTTON")
                     if (thatButton && thatButton.classList.contains('disable')) {
                         thatButton.classList.remove('disable');
                     }       
