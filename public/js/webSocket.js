@@ -14079,7 +14079,7 @@ socket.on('connect', () => {
                     <td><div class="btn-group"><button class="btn alert-btn" id="${data.data[i]._id}">Alert</button></div></td>
                 </tr>`
                 if(data.data[i].marketName.toLowerCase().startsWith('match') || data.data[i].marketName.toLowerCase().startsWith('book')  || data.data[i].marketName.toLowerCase().startsWith('winne')){
-                    let string = `#${data.data[i].marketId.replace(/\./g, '\\.')}.fancy`;
+                    let string = `.fancy[data-id="${data.data[i].marketId}"]`;
                     let thatButton = document.querySelector(string);
                     
                     if (thatButton && thatButton.classList.contains('disable')) {
