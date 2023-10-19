@@ -5501,12 +5501,27 @@ io.on('connection', (socket) => {
                             totalWinAmount: "$$item.totalWinAmount",
                             totalWinAmount2: {
                               $add: ["$$item.totalWinAmount", {
-                                $sum: {
-                                  $filter: {
+                                $reduce: { 
                                     input: "$data",
-                                    cond: { $ne: ["$$this._id", "$$item._id"] }
-                                  }
+                                    initialValue: 0,
+                                    in: {
+                                        $cond: {
+                                            if: {
+                                                $ne: ["$$this._id", "$$item._id"] 
+                                            },
+                                            then: { $add: ["$$value", "$$this.totalAmount"] },
+                                            else: {
+                                                $add: ["$$value", 0] 
+                                            }
+                                        }
+                                    }
                                 }
+                            //     $sum: {
+                            //       $filter: {
+                            //         input: "$data",
+                            //         cond: { $ne: ["$$this._id", "$$item._id"] }
+                            //       }
+                            //     }
                               }]
                             }
                           }
