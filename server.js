@@ -5531,7 +5531,8 @@ io.on('connection', (socket) => {
                   }
             ])
 
-            console.log(betData[0].data, "betData")
+            // console.log(betData[0].data, "betData")
+            socket.emit('FANCYBOOK', {betData:betData[0].data, type:'ODD'})
         }else{
 
         }

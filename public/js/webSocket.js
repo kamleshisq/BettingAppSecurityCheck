@@ -14192,6 +14192,36 @@ socket.on('connect', () => {
                 })
             })
 
+            socket.on('FANCYBOOK', data => {
+                if(data.type === "ODD"){
+                    let html = ''
+                    html += `<table id="FANCYBOOK"
+                    <tbody>
+                    <tr class="headDetail"><th>Runner Name</th>
+                    <th>Profit/Loss</th></tr>`
+                    for(let i = 0; i < data.betData.length; i++){
+                        if(data.betData[i]._id === "odd_Even_No"){
+                            if(data.betData[i].totalWinAmount2 < 0){
+                                html += `<tr><td>Even Number</td><td class="red" >${data.betData[i].totalWinAmount2}</td></tr>`
+                            }else{
+                                html += `<tr><td>Even Number</td><td class="green" >${data.betData[i].totalWinAmount2}</td></tr>`
+                            }
+                        }else{
+                            if(data.betData[i].totalWinAmount2 < 0){
+                                html += `<tr><td>Odd Number</td><td class="green" >${data.betData[i].totalWinAmount2}</td></tr>`
+                            }else{
+                                html += `<tr><td>Odd Number</td><td class="green" >${data.betData[i].totalWinAmount2}</td></tr>`
+                            }
+                        }
+                    }
+                     html += `</tbody>
+                    </table>`
+                    document.getElementById('FENCY').innerHTML = html
+                }else{
+
+                }
+            })
+
             $('.searchUser').keyup(function(){
                 // console.log('working')
                 if($(this).hasClass("searchUser")){
