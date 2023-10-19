@@ -13042,7 +13042,7 @@ socket.on('connect', () => {
 
             socket.emit('WINNERMARKET', id)
         }
-
+        winnerMarketOPtion()
         socket.on('WINNERMARKET', data => {
             console.log(data, "WINNERMARKETWINNERMARKETWINNERMARKET")
         })
