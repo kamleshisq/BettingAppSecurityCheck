@@ -13045,6 +13045,8 @@ socket.on('connect', () => {
         winnerMarketOPtion()
         socket.on('WINNERMARKET', data => {
             console.log(data, "WINNERMARKETWINNERMARKETWINNERMARKET")
+            let runners = JSON.parse(data.runners)
+            console.log(runners, "runnersrunnersrunners")
         })
             function getinProgressData(){
                 $(document).ready(function() {
