@@ -1655,6 +1655,10 @@ io.on('connection', (socket) => {
                 }
             }
 
+        }else{
+            for(let i = 0; i < finalResult.item.length; i++){
+                
+            }
         }
 
         // console.log(resumeSuspendMarkets)
