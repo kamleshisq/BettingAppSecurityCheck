@@ -5441,7 +5441,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('FANCYBOOK', async(data) => {
-        console.log(data, FANCYDATA)
+        console.log(data, "FANCYDATA")
     })
 
     socket.on("updateUserDetailssss", async(data) => {
