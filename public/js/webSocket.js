@@ -13047,7 +13047,7 @@ socket.on('connect', () => {
             console.log(data, "WINNERMARKETWINNERMARKETWINNERMARKET")
             let runners = JSON.parse(data.runners)
             // console.log(runners, "runnersrunnersrunners")
-            let html = ''
+            let html = '<option value="" selected></option>'
             for(let i = 0; i < runners.length; i++){
                 html += `<option value="${runners[i].runner}">${runners[i].runner}</option>`
             }
