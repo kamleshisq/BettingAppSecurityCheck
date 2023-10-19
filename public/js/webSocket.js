@@ -252,7 +252,9 @@ socket.on('connect', () => {
 
             html += `<button type="submit" class="btn change-pass-model-form-submit-btn">SAVE</button></form>`
         }
-        document.getElementById('stakeLableForm').innerHTML = html
+        if(document.getElementById('stakeLableForm')){
+            document.getElementById('stakeLableForm').innerHTML = html
+        }
     })
 
    $(document).on('submit', ".change-pass-model-form1", function(e){
@@ -14084,7 +14086,7 @@ socket.on('connect', () => {
                     
                     if (thatButton && thatButton.classList.contains('disable')) {
                         thatButton.classList.remove('disable');
-                    }
+                    }       
                 }
                 }
                 if(data.type == 'loop'){
