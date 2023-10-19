@@ -9,6 +9,7 @@ const settlementHistory = require("../model/settelementHistory");
 const InprogressModel = require('../model/InprogressModel');
 const newCommissionModel = require('../model/commissioNNModel');
 const Decimal = require('decimal.js');
+const runnerDataModel = require("../model/runnersData");
 
 exports.mapbet = async(data) => {
   //FOR CHILD OF LOGIN USER
@@ -419,9 +420,11 @@ exports.mapbet = async(data) => {
         
       }
     }
+
     let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bet.marketId, progressType:'SettleMent'}, {$inc:{settledBet:1}})
     if((checkDelete.settledBet + 1) == checkDelete.length){
       await InprogressModel.findOneAndDelete({marketId : bet.marketId, progressType:'SettleMent'})
+      await runnerDataModel.findOneAndDelete({marketId:bet.marketId})
     }
   });
   

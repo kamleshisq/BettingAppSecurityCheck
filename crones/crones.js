@@ -8,6 +8,7 @@ const commissionModel = require("../model/CommissionModel");
 const commissionMarketModel = require("../model/CommissionMarketsModel");
 const newCommissionModel = require('../model/commissioNNModel');
 const Decimal = require('decimal.js');
+const runnerDataModel = require('../model/runnersData');
 
 module.exports = () => {
     cron.schedule('*/5 * * * *', async() => {
@@ -516,7 +517,8 @@ module.exports = () => {
 
                     }
                 })
-                
+                //for runnerDataDELETE
+                await runnerDataModel.findOneAndDelete({marketId:marketresult.mid})
 
                 //NET LOSING COMMISSION
 
