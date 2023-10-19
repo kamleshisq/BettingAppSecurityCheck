@@ -11199,11 +11199,11 @@ socket.on('connect', () => {
                     </thead>
                     <tbody id="tableBET">`
                     if(data.openBet[0].bettype2 === "BACK"){
-                       html +=  `<tr class="back-inplaymatch" >`
+                       html2 +=  `<tr class="back-inplaymatch" >`
                     }else{
-                        html +=  `<tr class="lay-inplaymatch" >`
+                        html2 +=  `<tr class="lay-inplaymatch" >`
                     }
-                       html += `<td>${ data.openBet[0].selectionName}</td>
+                       html2 += `<td>${ data.openBet[0].selectionName}</td>
                         <td>${ data.openBet[0].oddValue }</td>
                         <td>${ data.openBet[0].Stake }</td>
                       </tr>
@@ -11212,7 +11212,12 @@ socket.on('connect', () => {
                   document.getElementById('length1').innerHTML = html2
                 }else{
                     for(let i = 0; i < data.openBet.length; i++){
-                        html2 += `<tr>
+                        if(data.openBet[i].bettype2 === "BACK"){
+                            html2 +=  `<tr class="back-inplaymatch" >`
+                         }else{
+                             html2 +=  `<tr class="lay-inplaymatch" >`
+                         }
+                        html2 += `
                         <td>${ data.openBet[i].selectionName}</td>
                         <td>${ data.openBet[i].oddValue }</td>
                         <td>${ data.openBet[i].Stake }</td>
