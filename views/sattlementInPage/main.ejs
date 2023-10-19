@@ -60,7 +60,12 @@
                     </select>
                   </td>
                   <%}else if (betsEventWiseOpen[i].marketName == "Winner"){%>
-
+                    <td>
+                      <select class="selectOption winner" id="<%=betsEventWiseOpen[i].marketId%>">
+                        
+                        
+                      </select>
+                    </td>
                   <%}else {%>
                   <% 
                   let option = betsEventWiseOpen[i].match.split(" v ")

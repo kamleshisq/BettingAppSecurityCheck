@@ -13032,6 +13032,20 @@ socket.on('connect', () => {
     if(pathname === "/admin/settlementIn"){
         // let inprogressTable = document.getElementById('InprogresDATA')
         // if(inprogressTable){
+
+        function winnerMarketOPtion(){
+            let id 
+            $(".winner").each(function() {
+                // ids.push(this.id);
+                id = this.id
+              });
+
+            socket.emit('WINNERMARKET', id)
+        }
+
+        socket.on('WINNERMARKET', data => {
+            console.log(data, "WINNERMARKETWINNERMARKETWINNERMARKET")
+        })
             function getinProgressData(){
                 $(document).ready(function() {
                     socket.emit("getinProgressData", search.split('=')[1])

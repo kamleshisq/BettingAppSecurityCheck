@@ -60,6 +60,7 @@ const newCommissionModel = require('./model/commissioNNModel');
 const timelyNotificationModel = require('./model/timelyVoideNotification');
 const resumeSuspendModel = require('./model/resumeSuspendMarket');
 const Decimal = require('decimal.js');
+const runnerDataModel = require('./model/runnersData');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -6588,7 +6589,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on('suspendResume', async(data) => {
-        console.log(data)
         try{
             let check = await resumeSuspendModel.findOne({marketId:data.id})
             let status 
@@ -6600,6 +6600,18 @@ io.on('connection', (socket) => {
                 status = false
             }
             socket.emit('suspendResume', {status, marketId:data.id, status2:'success'})
+        }catch(err){
+            console.log(err)
+        }
+    })
+
+
+    socket.on('WINNERMARKET', async(data) => {
+        try{
+            if(data){
+                let runners = await runnerDataModel.findOne({marketId:data})
+                socket.emit('WINNERMARKET', runners)
+            }
         }catch(err){
             console.log(err)
         }
