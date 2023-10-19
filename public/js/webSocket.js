@@ -14081,7 +14081,7 @@ socket.on('connect', () => {
                     <td><div class="btn-group"><button class="btn alert-btn" id="${data.data[i]._id}">Alert</button></div></td>
                 </tr>`
                 if(data.data[i].marketName.toLowerCase().startsWith('match') || data.data[i].marketName.toLowerCase().startsWith('book')  || data.data[i].marketName.toLowerCase().startsWith('winne')){
-                    let string = `.fancy[data-id="${data.data[i].marketId}"]`;
+                    let string = `.fancy.disable[data-id="${data.data[i].marketId}"]`;
                     let thatButton = document.querySelector(string);
                     console.log(thatButton, "THATBUTTONTHATBUTTONTHATBUTTON")
                     if (thatButton && thatButton.classList.contains('disable')) {
