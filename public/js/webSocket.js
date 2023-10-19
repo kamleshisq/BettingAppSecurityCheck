@@ -7642,7 +7642,7 @@ socket.on('connect', () => {
 
 
             $(".only_over_red").each(function() {
-                    console.log(data.forFancy, "data.forFancydata.forFancydata.forFancy")
+                    // console.log(data.forFancy, "data.forFancydata.forFancydata.forFancy")
                 let id = this.id
                 id = id.slice(0, -1);
                 let section = null;

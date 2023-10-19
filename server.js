@@ -1635,6 +1635,7 @@ io.on('connection', (socket) => {
         ])
         let forFancy 
         if(finalResult.length > 0 ){
+            console.log(finalResult[1].event_id, "finalResult[1].event_idfinalResult[1].event_id")
             forFancy = await resumeSuspendModel.find({marketId:`${finalResult[1].event_id}/FANCY`, status:false})
         }
         let allData =  await getCrkAndAllData()
