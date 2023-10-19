@@ -1621,7 +1621,7 @@ io.on('connection', (socket) => {
     socket.on("marketId", async(data) => {
         const result = await marketDetailsBymarketID(data.ids)
         let finalResult = result.data
-        console.log(finalResult, "finalResultfinalResultfinalResult")
+        // console.log(finalResult, "finalResultfinalResultfinalResult")
         const betLimits = await betLimit.find({type:"Sport"})
         let resumeSuspendMarkets = await resumeSuspendModel.aggregate([
             {
