@@ -14208,7 +14208,7 @@ socket.on('connect', () => {
                             }
                         }else{
                             if(data.betData[i].totalWinAmount2 < 0){
-                                html += `<tr><td>Odd Number</td><td class="green" >${data.betData[i].totalWinAmount2}</td></tr>`
+                                html += `<tr><td>Odd Number</td><td class="red" >${data.betData[i].totalWinAmount2}</td></tr>`
                             }else{
                                 html += `<tr><td>Odd Number</td><td class="green" >${data.betData[i].totalWinAmount2}</td></tr>`
                             }
