@@ -14187,7 +14187,8 @@ socket.on('connect', () => {
                 $('.fancy').click(function(){
                     let id = LOGINDATA.LOGINUSER._id
                     let marketId = $(this).data('id');
-                    console.log(id, marketId, "marketIdmarketIdmarketIdmarketId")
+                    // console.log(id, marketId, "marketIdmarketIdmarketIdmarketId")
+                    socket.emit('FANCYBOOK', {marketId, id, LOGINDATA})
                 })
             })
 

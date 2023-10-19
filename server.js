@@ -5440,6 +5440,10 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('FANCYBOOK', async(data) => {
+        console.log(data, FANCYDATA)
+    })
+
     socket.on("updateUserDetailssss", async(data) => {
         try{
             let user = await User.findByIdAndUpdate(data.id, {contact:data.contact, email:data.email})
@@ -6498,7 +6502,7 @@ io.on('connection', (socket) => {
             console.log(err)
         }
     })
-    
+
 })
 
 http.listen(80,()=> {
