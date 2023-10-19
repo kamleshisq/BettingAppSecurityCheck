@@ -5441,7 +5441,38 @@ io.on('connection', (socket) => {
     })
 
     socket.on('FANCYBOOK', async(data) => {
-        console.log(data, "FANCYDATA")
+        // console.log(data, "FANCYDATA")
+        let childrenUsername1 = []
+        let children = await User.find({parentUsers:data.id, role_type: 5})
+        children.map(ele1 => {
+            childrenUsername1.push(ele1.userName) 
+        })
+        // let checkBET = await Bet.findOne({marketId:data.marketId})
+        if(data.marketId.slice(-2).startsWith('OE')){
+            let betData = await Bet.aggregate([
+                {
+                    $match: {
+                        status: "OPEN",
+                        marketId: data.marketId,
+                        userName:{$in:childrenUsername1}
+                    }
+                },
+                {
+                    $group: { 
+                        _id: "$secId",
+                        totalAmount: { 
+                            $sum: '$returns'
+                        }
+                    }
+                }
+            ])
+
+            console.log(betData, "betData")
+        }else{
+
+        }
+
+
     })
 
     socket.on("updateUserDetailssss", async(data) => {
