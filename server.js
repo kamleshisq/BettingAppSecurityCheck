@@ -1633,7 +1633,10 @@ io.on('connection', (socket) => {
                 }
             }
         ])
-        let forFancy = await resumeSuspendModel.find({marketId:``})
+        let forFancy 
+        if(finalResult.length > 0 ){
+            forFancy = await resumeSuspendModel.find({marketId:`${finalResult[1].event_id}/FANCY`, status:false})
+        }
         let allData =  await getCrkAndAllData()
         const cricket = allData[0].gameList[0].eventList
         let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
@@ -1663,7 +1666,7 @@ io.on('connection', (socket) => {
         }
 
         // console.log(resumeSuspendMarkets)
-        socket.emit("marketId", {finalResult,betLimits, status,resumeSuspendMarkets})
+        socket.emit("marketId", {finalResult,betLimits, status,resumeSuspendMarkets, forFancy})
     })
 
     socket.on("SPORTDATA", async(data) => {
