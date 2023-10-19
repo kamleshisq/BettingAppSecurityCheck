@@ -244,7 +244,7 @@
                     <!-- <strong>Min : 100, Max : 10K</strong> -->
                     <div class="btn-group" >
                         <%
-                        let suspendCheck = suspend.some(item => item.marketId == `${match.eventData.eventId}/FANCY`
+                        let suspendCheck = suspend.some(item => item.marketId == `${match.eventData.eventId}/FANCY`)
                     %>
                     <%if(suspendCheck){%>
                         <button class="min-max-modal Suspend-Resume" id="<%=match.eventData.eventId%>/FANCY" >Resume</button>
