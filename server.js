@@ -1638,6 +1638,7 @@ io.on('connection', (socket) => {
         if(finalResult.items.length > 0 ){
             forFancy = await resumeSuspendModel.find({marketId:`${finalResult.items[1].event_id}/FANCY`, status:false})
         }
+        console.log(forFancy)
         let allData =  await getCrkAndAllData()
         const cricket = allData[0].gameList[0].eventList
         let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
