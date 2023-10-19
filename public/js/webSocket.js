@@ -14080,7 +14080,7 @@ socket.on('connect', () => {
                     <td>${data.data[i].Stake}</td>
                     <td><div class="btn-group"><button class="btn alert-btn" id="${data.data[i]._id}">Alert</button></div></td>
                 </tr>`
-                if(data.data[i].marketName.toLowerCase().startsWith('match') || data.data[i].marketName.toLowerCase().startsWith('book')  || data.data[i].marketName.toLowerCase().startsWith('winne')){
+                if(!data.data[i].marketName.toLowerCase().startsWith('match') || !data.data[i].marketName.toLowerCase().startsWith('book')  || !data.data[i].marketName.toLowerCase().startsWith('winne')){
                     let string = `.fancy.disable[data-id="${data.data[i].marketId}"]`;
                     console.log(string, "STRING STRING")
                     let thatButton = document.querySelector(string);
