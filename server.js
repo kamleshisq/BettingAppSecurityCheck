@@ -5516,7 +5516,7 @@ io.on('connection', (socket) => {
                   }
             ])
 
-            console.log(betData, "betData")
+            console.log(betData[0].data, "betData")
         }else{
 
         }
