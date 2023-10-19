@@ -288,7 +288,7 @@
                             </tr>
                             <%for(let i = 0; i < sessionData.length; i++){%>
                                 <tr class="market" id="<%=sessionData[i].marketId%>">
-                                    <td ><%=sessionData[i].title%>  <button class="min-max-modal" >Book</button></td>
+                                    <td ><%=sessionData[i].title%>  <button class="min-max-modal fancy disable" >Book</button></td>
                                     <td>    
                                     <div class="bets-option-btn">
                                         <div class="bets-btn-group">                                 
@@ -325,7 +325,7 @@
                             </tr>
                             <%for(let i = 0; i < dataSessionOnly.length; i++){%>
                             <tr class="market" id="<%=sessionData[i].marketId%>">
-                                <td ><%=sessionData[i].title%> <button class="min-max-modal" >Book</button></td>
+                                <td ><%=sessionData[i].title%> <button class="min-max-modal fancy disable" >Book</button></td>
                                 <td>    
                                 <div class="bets-option-btn">
                                     <div class="bets-btn-group">                                 
@@ -362,7 +362,7 @@
                           </tr>
                           <%for(let i = 0; i < dataNotOnly.length; i++){%>
                             <tr class="market" id="<%=dataNotOnly[i].marketId%>">
-                                <td><%=dataNotOnly[i].title%> <button class="min-max-modal" >Book</button> </td>
+                                <td><%=dataNotOnly[i].title%> <button class="min-max-modal fancy disable" >Book</button> </td>
                                 <td>    
                                 <div class="bets-option-btn">
                                     <div class="bets-btn-group">                                 
@@ -399,7 +399,7 @@
                           </tr>
                           <%for(let i = 0; i < match.marketList.odd_even.length; i++){%>
                             <tr class="market" id="<%=match.marketList.odd_even[i].marketId%>">
-                                <td><%=match.marketList.odd_even[i].title%> <button class="min-max-modal" >Book</button></td>
+                                <td><%=match.marketList.odd_even[i].title%> <button class="min-max-modal fancy disable" >Book</button></td>
                                 <td>    
                                 <div class="bets-option-btn">
                                     <div class="bets-btn-group">                                 
