@@ -49,7 +49,11 @@
                             </thead>
                             <tbody id="tableBET">
                              <%for(let i = 0; i < betsOnthisMatch.length; i++){%>
-                              <tr>
+                              <%if(betsOnthisMatch[i]. bettype2 === "BACK"){%>
+                                <tr class="back-inplaymatch">
+                              <%}else{%>
+                                <tr class="lay-inplaymatch">
+                              <%}%>
                                 <td><%= betsOnthisMatch[i].selectionName%></td>
                                 <td><%= betsOnthisMatch[i].oddValue %></td>
                                 <td><%= betsOnthisMatch[i].Stake %></td>

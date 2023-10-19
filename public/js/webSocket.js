@@ -11197,9 +11197,13 @@ socket.on('connect', () => {
                         <th>Stake</th>
                       </tr>
                     </thead>
-                    <tbody id="tableBET">
-                      <tr>
-                        <td>${ data.openBet[0].selectionName}</td>
+                    <tbody id="tableBET">`
+                    if(data.openBet[0].bettype2 === "BACK"){
+                       html +=  `<tr class="back-inplaymatch" >`
+                    }else{
+                        html +=  `<tr class="lay-inplaymatch" >`
+                    }
+                       html += `<td>${ data.openBet[0].selectionName}</td>
                         <td>${ data.openBet[0].oddValue }</td>
                         <td>${ data.openBet[0].Stake }</td>
                       </tr>
