@@ -5465,11 +5465,11 @@ io.on('connection', (socket) => {
                         },
                         totalWinAmount:{
                             $sum: { 
-                                if : {$eq: ['$secId', "odd_Even_Yes"]},
+                                if : {$eq: ["$secId", "odd_Even_Yes"]},
                                 then:{
                                     $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
                                 },
-                                else:'$Stake'
+                                else:"$Stake"
                             }
                         }
                     }
