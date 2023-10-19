@@ -1634,9 +1634,9 @@ io.on('connection', (socket) => {
             }
         ])
         let forFancy 
-        console.log(finalResult, "finalResult[1].event_idfinalResult[1].event_id")
-        if(finalResult.length > 0 ){
-            forFancy = await resumeSuspendModel.find({marketId:`${finalResult[1].event_id}/FANCY`, status:false})
+        // console.log(finalResult, "finalResult[1].event_idfinalResult[1].event_id")
+        if(finalResult.items.length > 0 ){
+            forFancy = await resumeSuspendModel.find({marketId:`${finalResult.items[1].event_id}/FANCY`, status:false})
         }
         let allData =  await getCrkAndAllData()
         const cricket = allData[0].gameList[0].eventList
