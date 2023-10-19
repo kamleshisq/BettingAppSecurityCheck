@@ -14183,6 +14183,14 @@ socket.on('connect', () => {
                 });
             });
 
+            $(document).ready(function(){
+                $('.fancy').click(function(){
+                    let id = LOGINDATA.LOGINUSER._id
+                    let marketId = $(this).data('id');
+                    console.log(id, marketId, "marketIdmarketIdmarketIdmarketId")
+                })
+            })
+
             $('.searchUser').keyup(function(){
                 // console.log('working')
                 if($(this).hasClass("searchUser")){
