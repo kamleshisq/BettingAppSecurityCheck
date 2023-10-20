@@ -14237,43 +14237,43 @@ socket.on('connect', () => {
                     <th>Profit/Loss</th></tr>`
                     if(data.betData[0]._id === "odd_Even_No"){
                         if(data.betData[0].totalWinAmount2 < 0){
-                            html += `<tr><td>0.0 or Less</td><td class="red" >${data.betData[0].totalWinAmount2}</td></tr>`
+                            html += `<tr><td>0.0 or Less</td><td class="red" >${(data.betData[0].totalWinAmount2).toFixed(2)}</td></tr>`
                         }else{
-                            html += `<tr><td>0.0 or Less</td><td class="green" >${data.betData[0].totalWinAmount2}</td></tr>`
+                            html += `<tr><td>0.0 or Less</td><td class="green" >${(data.betData[0].totalWinAmount2).toFixed(2)}</td></tr>`
                         }
 
                         if(data.betData[1]){
                             if(data.betData[1].totalWinAmount2 < 0){
-                                html += `<tr><td>1.0 or More</td><td class="red" >${data.betData[1].totalWinAmount2}</td></tr>`
+                                html += `<tr><td>1.0 or More</td><td class="red" >${(data.betData[1].totalWinAmount2).toFixed(2)}</td></tr>`
                             }else{
-                                html += `<tr><td>1.0 or More</td><td class="green" >${data.betData[1].totalWinAmount2}</td></tr>`
+                                html += `<tr><td>1.0 or More</td><td class="green" >${(data.betData[1].totalWinAmount2).toFixed(2)}</td></tr>`
                             }
                         }else{
                             if(data.betData[0].totalAmount < 0){
-                                html += `<tr><td>1.0 or More</td><td class="red" >${data.betData[0].totalAmount}</td></tr>`
+                                html += `<tr><td>1.0 or More</td><td class="red" >${(data.betData[0].totalAmount).toFixed(2)}</td></tr>`
                             }else{
-                                html += `<tr><td>1.0 or More</td><td class="green" >${data.betData[0].totalAmount}</td></tr>`
+                                html += `<tr><td>1.0 or More</td><td class="green" >${(data.betData[0].totalAmount).toFixed(2)}</td></tr>`
                             }
                         }
 
                     }else if(data.betData[0]._id === "odd_Even_Yes") {
                         if(data.betData[0].totalWinAmount2 < 0){
-                            html += `<tr><td>1.0 or More</td><td class="red" >${data.betData[0].totalWinAmount2}</td></tr>`
+                            html += `<tr><td>1.0 or More</td><td class="red" >${(data.betData[0].totalWinAmount2).toFixed(2)}</td></tr>`
                         }else{
-                            html += `<tr><td>1.0 or More</td><td class="green" >${data.betData[0].totalWinAmount2}</td></tr>`
+                            html += `<tr><td>1.0 or More</td><td class="green" >${(data.betData[0].totalWinAmount2).toFixed(2)}</td></tr>`
                         }
 
                         if(data.betData[1]){
                             if(data.betData[1].totalWinAmount2 < 0){
-                                html += `<tr><td>0.0 or Less</td><td class="red" >${data.betData[1].totalWinAmount2}</td></tr>`
+                                html += `<tr><td>0.0 or Less</td><td class="red" >${(data.betData[1].totalWinAmount2).toFixed(2)}</td></tr>`
                             }else{
-                                html += `<tr><td>0.0 or Less</td><td class="green" >${data.betData[1].totalWinAmount2}</td></tr>`
+                                html += `<tr><td>0.0 or Less</td><td class="green" >${(data.betData[1].totalWinAmount2).toFixed(2)}</td></tr>`
                             }
                         }else{
                             if(data.betData[0].totalAmount < 0){
-                                html += `<tr><td>0.0 or Less</td><td class="red" >${data.betData[0].totalAmount}</td></tr>`
+                                html += `<tr><td>0.0 or Less</td><td class="red" >${(data.betData[0].totalAmount).toFixed(2)}</td></tr>`
                             }else{
-                                html += `<tr><td>0.0 or Less</td><td class="green" >${data.betData[0].totalAmount}</td></tr>`
+                                html += `<tr><td>0.0 or Less</td><td class="green" >${(data.betData[0].totalAmount).toFixed(2)}</td></tr>`
                             }
                         }
                     }
