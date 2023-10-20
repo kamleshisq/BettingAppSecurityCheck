@@ -13320,8 +13320,8 @@ socket.on('connect', () => {
             var newColumnCell = $(this).closest('tr').find('.selectOption');
             // console.log(newColumnCell.val())
             let result = newColumnCell.val()
-            console.log(result, "resultresultresultresultresultresult")
-            // socket.emit("VoidBetIn22", {LOGINDATA, id, result})
+            // console.log(result, "resultresultresultresultresultresult")
+            socket.emit("VoidBetIn22", {LOGINDATA, id, result})
             // console.log(id)
         })
 
