@@ -85,11 +85,111 @@ exports.mapbet = async(data) => {
     // console.log(bet, data.result, "DATADATA123456")
     if(!(bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('winn') || bet.marketName.toLowerCase().startsWith('match'))){ 
         if(bet.marketId.slice(-2).startsWith('OE')){
-            console.log(data, `<select class="selectOption" >
-            <option value="" selected></option>
-            <option value="LAY">LAY</option>
-            <option value="BACK">BACK</option>
-          </select>`)
+            if((bet.secId === "odd_Even_No" && data.result === "LAY") || (bet.secId === "odd_Even_Yes" && data.result === "BACK")) {
+                let debitCreditAmount 
+                let exposure = bet.exposure
+                if(bet.bettype2 == "BACK"){
+                    debitCreditAmount = (bet.Stake * bet.oddValue)/100
+                }else{
+                    debitCreditAmount = bet.Stake
+                }
+                let thatbet = await betModel.findByIdAndUpdate(bet._id,{status:"WON", returns:debitCreditAmount, result:data.result})
+                let user = await userModel.findByIdAndUpdate(bet.userId,{$inc:{availableBalance: debitCreditAmount, myPL: debitCreditAmount, Won:1, exposure:-parseFloat(exposure), uplinePL:-debitCreditAmount, pointsWL:debitCreditAmount}})
+                let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
+
+                let debitAmountForP = debitCreditAmount
+                for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                    let parentUser1 = await userModel.findById(user.parentUsers[i])
+                    let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
+                    let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                    let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                    parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                    parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                    await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                        $inc: {
+                            downlineBalance: debitCreditAmount,
+                            myPL: -parentUser1Amount,
+                            uplinePL: -parentUser2Amount,
+                            lifetimePL: -parentUser1Amount,
+                            pointsWL: debitCreditAmount
+                        }
+                    });
+                
+                    if (i === 1) {
+                        await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                            $inc: {
+                                downlineBalance: debitCreditAmount,
+                                myPL: -parentUser2Amount,
+                                lifetimePL: -parentUser2Amount,
+                                pointsWL: debitCreditAmount
+                            }
+                        });
+                    }
+                    debitAmountForP = parentUser2Amount
+                }
+                
+                await accModel.create({
+                  "user_id":user._id,
+                  "description": description,
+                  "creditDebitamount" : debitCreditAmount,
+                  "balance" : user.availableBalance + debitCreditAmount,
+                  "date" : Date.now(),
+                  "userName" : user.userName,
+                  "role_type" : user.role_type,
+                  "Remark":"-",
+                  "stake": bet.Stake,
+                  "transactionId":`${bet.transactionId}`
+                })
+            }else{
+                let thatbet = await betModel.findByIdAndUpdate(bet._id,{status:"LOSS", result:data.result})
+                        let user 
+                        let exposure = bet.exposure
+                        user = await userModel.findByIdAndUpdate(bet.userId, {$inc:{Loss:1, exposure:-exposure, availableBalance: -exposure, myPL:-exposure, uplinePL:exposure, pointsWL:-exposure}})
+                        let description = `Bet for ${bet.match}/stake = ${bet.Stake}/LOSS`
+
+                        let debitAmountForP = -exposure
+                        for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                            let parentUser1 = await userModel.findById(user.parentUsers[i])
+                            let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
+                            let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                            let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                            parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                            parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                            await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                                $inc: {
+                                    downlineBalance: -exposure,
+                                    myPL: parentUser1Amount,
+                                    uplinePL: parentUser2Amount,
+                                    lifetimePL: parentUser1Amount,
+                                    pointsWL: -exposure
+                                }
+                            });
+                        
+                            if (i === 1) {
+                                await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                                    $inc: {
+                                        downlineBalance: -exposure,
+                                        myPL: parentUser2Amount,
+                                        lifetimePL: parentUser2Amount,
+                                        pointsWL: -exposure
+                                    }
+                                });
+                            }
+                            debitAmountForP = parentUser2Amount
+                        }
+                        await accModel.create({
+                            "user_id":user._id,
+                            "description": description,
+                            "creditDebitamount" : exposure,
+                            "balance" : user.availableBalance + exposure,
+                            "date" : Date.now(),
+                            "userName" : user.userName,
+                            "role_type" : user.role_type,
+                            "Remark":"-",
+                            "stake": bet.Stake,
+                            "transactionId":`${bet.transactionId}`
+                          })
+            }
         }else{
             if(((bet.selectionName.split('@')[1] <=  data.result) && bet.bettype2 == 'BACK') || ((bet.selectionName.split('@')[1] >= data.result) && bet.bettype2 == "LAY")){
                 let creditDebitamount 
