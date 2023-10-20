@@ -5559,8 +5559,12 @@ socket.on('connect', () => {
                 html += `
                 <td>${bets[i].Stake}</td>
                 <td>${bets[i].transactionId}</td>
-                <td>${bets[i].status}</td>
-                <td>${bets[i].returns.toFixed(2)}</td>`
+                <td>${bets[i].status}</td>`
+                if(bets[i].status == 'OPEN' || bets[i].status == 'MAP'){
+                    html += `<td>${(0).toFixed(2)}</td>`
+                }else{
+                    html += `<td>${bets[i].returns.toFixed(2)}</td>`
+                }
                 if(bets[i].ip){
                     html += `<td>${bets[i].ip}</td>`
                 }else{
