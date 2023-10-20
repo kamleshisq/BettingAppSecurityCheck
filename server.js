@@ -5585,6 +5585,18 @@ io.on('connection', (socket) => {
                             }
                         }
                     }
+                },
+                {
+                    $project:{
+                        _id:"$secId",
+                        totalAmount:{
+                            $sum: '$totalAmount'
+                        },
+                        totalWinAmount:{
+                            $sum: '$totalWinAmount'
+                        },
+
+                    }
                 }
                 // {
                 //     $group: {
