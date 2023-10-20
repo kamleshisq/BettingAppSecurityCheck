@@ -4589,9 +4589,6 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
                 totalCommission : 1,
                 netupline : 1
                 }
-            },
-            {
-            $limit:limit
             }
         ])
         // console.log(thatMarketData, "thatMarketData")
