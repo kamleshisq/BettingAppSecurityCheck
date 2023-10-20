@@ -1517,72 +1517,72 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
     }else{
         fWhitlabel = req.currentUser.whiteLabel
     }
-    const gameAnalist = await betModel.aggregate([
-        {
-            $lookup:{
-                from:'users',
-                localField:'userName',
-                foreignField:'userName',
-                as:'userDetails'
-            }
-        },
-        {
-            $unwind:'$userDetails'
-        },
-        {
-            $match:{
-                'userDetails.isActive':true,
-                'userDetails.roleName':{$ne:'Admin'},
-                'userDetails.role_type':{$in:role_type},
-                'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}}
-            }
-        },
-        {
-            $group:{
-                _id:{
-                    userName:'$userName',
-                    whiteLabel:'$userDetails.whiteLabel'
-                },
-                betCount:{$sum:1},
-                loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
-                won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
-                open:{$sum:{$cond:[{$in:['$status',['MAP','OPEN']]},1,0]}},
-                void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
-                returns:{$sum:{$cond:[{$in:['$status',['LOSS','OPEN']]},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+    // const gameAnalist = await betModel.aggregate([
+    //     {
+    //         $lookup:{
+    //             from:'users',
+    //             localField:'userName',
+    //             foreignField:'userName',
+    //             as:'userDetails'
+    //         }
+    //     },
+    //     {
+    //         $unwind:'$userDetails'
+    //     },
+    //     {
+    //         $match:{
+    //             'userDetails.isActive':true,
+    //             'userDetails.roleName':{$ne:'Admin'},
+    //             'userDetails.role_type':{$in:role_type},
+    //             'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}}
+    //         }
+    //     },
+    //     {
+    //         $group:{
+    //             _id:{
+    //                 userName:'$userName',
+    //                 whiteLabel:'$userDetails.whiteLabel'
+    //             },
+    //             betCount:{$sum:1},
+    //             loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+    //             won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+    //             open:{$sum:{$cond:[{$in:['$status',['MAP','OPEN']]},1,0]}},
+    //             void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+    //             returns:{$sum:{$cond:[{$in:['$status',['LOSS','OPEN']]},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
                 
-            }
-        },
-        {
-            $group:{
-                _id:'$_id.whiteLabel',
-                Total_User:{$sum:1},
-                betcount:{$sum:'$betCount'},
-                loss:{$sum:'$loss'},
-                won:{$sum:'$won'},
-                open:{$sum:'$open'},
-                void:{$sum:'$void'},
-                returns:{$sum:'$returns'}
-            }
-        },
-        {
-            $sort: {
-                betcount: -1 ,
-                open : -1,
-                won : -1,
-                loss : -1,
-                Total_User:-1
-            }
-        },
-        {
-            $limit: 10 
-        }
-    ])
+    //         }
+    //     },
+    //     {
+    //         $group:{
+    //             _id:'$_id.whiteLabel',
+    //             Total_User:{$sum:1},
+    //             betcount:{$sum:'$betCount'},
+    //             loss:{$sum:'$loss'},
+    //             won:{$sum:'$won'},
+    //             open:{$sum:'$open'},
+    //             void:{$sum:'$void'},
+    //             returns:{$sum:'$returns'}
+    //         }
+    //     },
+    //     {
+    //         $sort: {
+    //             betcount: -1 ,
+    //             open : -1,
+    //             won : -1,
+    //             loss : -1,
+    //             Total_User:-1
+    //         }
+    //     },
+    //     {
+    //         $limit: 10 
+    //     }
+    // ])
     // console.log(gameAnalist)
 
     const me = req.currentUser
     res.status(200).render("./gameAnalysis/gameanalysis",{
         title:"Game Analysis",
-        gameAnalist,
+        // gameAnalist,
         me,
         currentUser:me
     })
