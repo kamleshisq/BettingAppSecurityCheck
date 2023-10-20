@@ -15763,7 +15763,7 @@ socket.on('connect', () => {
                     <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + " "+ date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
                     <td>${data.matchOdds[i].selectionName}</td>
                     <td>${data.matchOdds[i].oddValue}</td>`
-                    if(data.matchOdds[i].status == 'OPEN'){
+                    if(data.matchOdds[i].status == 'OPEN' || data.matchOdds[i].status == 'MAP'){
                         html += `<td>${0}</td>`
                         html += `<td>${0}</td>`
                     }else{
@@ -16037,7 +16037,7 @@ socket.on('connect', () => {
                     <td>${data.matchOdds[i].userName}</td>
                     <td>${data.matchOdds[i].selectionName}</td>
                     <td>${data.matchOdds[i].oddValue}</td>`
-                    if(data.matchOdds[i].status == 'OPEN'){
+                    if(data.matchOdds[i].status == 'OPEN' || data.matchOdds[i].status == 'MAP'){
                         html += `<td>${0}</td>`
                         html += `<td>${0}</td>`
                     }else{
