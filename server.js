@@ -5651,7 +5651,30 @@ io.on('connection', (socket) => {
                 // console.log(betData[0].data, "betData[0].databetData[0].databetData[0].data")
                 socket.emit('FANCYBOOK', {betData:betData[0].data, type:'ODD'})
             }else{
-    
+                console.log('WORKING123', data)
+                let betData = await Bet.aggregate([
+                    {
+                        $match: {
+                            status: "OPEN",
+                            marketId: data.marketId,
+                            userName:{$in:childrenUsername1}
+                        }
+                    },
+                    {
+                        $addFields: {
+                          runs: {
+                            $toInt: {
+                              $arrayElemAt: [
+                                { $split: ["$selectionName", "@"] },
+                                1 
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    
+                ])
+                console.log(betData, "betData")
             }
 
         }else{
