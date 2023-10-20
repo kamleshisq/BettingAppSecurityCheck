@@ -13257,10 +13257,10 @@ socket.on('connect', () => {
                     if(data.betdata.marketId.slice(-2).startsWith('OE')){
                         html += `<td>
                         <select class="selectOption" >
-                          <option value="" selected></option>
-                          <option value="yes">Yes</option>
-                          <option value="no">No</option>
-                        </select>
+                            <option value="" selected></option>
+                            <option value="LAY">LAY</option>
+                            <option value="BACK">BACK</option>
+                         </select>
                       </td>`
                     }else{
                         html += `<td><input type="number" class="selectOption" placeholder="0"></td>`

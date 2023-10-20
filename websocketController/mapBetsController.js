@@ -85,7 +85,11 @@ exports.mapbet = async(data) => {
     // console.log(bet, data.result, "DATADATA123456")
     if(!(bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('winn') || bet.marketName.toLowerCase().startsWith('match'))){ 
         if(bet.marketId.slice(-2).startsWith('OE')){
-
+            console.log(data, `<select class="selectOption" >
+            <option value="" selected></option>
+            <option value="LAY">LAY</option>
+            <option value="BACK">BACK</option>
+          </select>`)
         }else{
             if(((bet.selectionName.split('@')[1] <=  data.result) && bet.bettype2 == 'BACK') || ((bet.selectionName.split('@')[1] >= data.result) && bet.bettype2 == "LAY")){
                 let creditDebitamount 
