@@ -142,6 +142,55 @@ exports.mapbet = async(data) => {
                           "stake": bet.Stake,
                           "transactionId":`${bet.transactionId}`
                         })
+            }else{
+                let bet = await betModel.findByIdAndUpdate(bet._id,{status:"LOSS", result:marketresult.result})
+                        let user 
+                        let exposure = bet.exposure
+                        user = await userModel.findByIdAndUpdate(bet.userId, {$inc:{Loss:1, exposure:-exposure, availableBalance: -exposure, myPL:-exposure, uplinePL:exposure, pointsWL:-exposure}})
+                        let description = `Bet for ${bet.match}/stake = ${bet.Stake}/LOSS`
+
+                        let debitAmountForP = -exposure
+                        for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                            let parentUser1 = await userModel.findById(user.parentUsers[i])
+                            let parentUser2 = await userModel.findById(user.parentUsers[i - 1])
+                            let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                            let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                            parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                            parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                            await userModel.findByIdAndUpdate(user.parentUsers[i], {
+                                $inc: {
+                                    downlineBalance: -exposure,
+                                    myPL: parentUser1Amount,
+                                    uplinePL: parentUser2Amount,
+                                    lifetimePL: parentUser1Amount,
+                                    pointsWL: -exposure
+                                }
+                            });
+                        
+                            if (i === 1) {
+                                await userModel.findByIdAndUpdate(user.parentUsers[i - 1], {
+                                    $inc: {
+                                        downlineBalance: -exposure,
+                                        myPL: parentUser2Amount,
+                                        lifetimePL: parentUser2Amount,
+                                        pointsWL: -exposure
+                                    }
+                                });
+                            }
+                            debitAmountForP = parentUser2Amount
+                        }
+                        await accModel.create({
+                            "user_id":user._id,
+                            "description": description,
+                            "creditDebitamount" : exposure,
+                            "balance" : user.availableBalance + exposure,
+                            "date" : Date.now(),
+                            "userName" : user.userName,
+                            "role_type" : user.role_type,
+                            "Remark":"-",
+                            "stake": bet.Stake,
+                            "transactionId":`${bet.transactionId}`
+                          })
             }
         }
 
@@ -155,7 +204,7 @@ exports.mapbet = async(data) => {
           }else{
             debitCreditAmount = parseFloat(bet.Stake * bet.oddValue/100).toFixed(2)
           }
-          // exposure = parseFloat(entry.Stake)
+          // exposure = parseFloat(bet.Stake)
         }else{
           if(bet.marketName.toLowerCase().startsWith('match')){
             debitCreditAmount = parseFloat(bet.Stake).toFixed(2)
