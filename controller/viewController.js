@@ -48,6 +48,120 @@ const commissionNewModel = require('../model/commissioNNModel');
 const resumeSuspendModel = require('../model/resumeSuspendMarket');
 
 
+exports.userTable = catchAsync(async(req, res, next) => {
+    var WhiteLabel = await whiteLabel.find()
+    let id = req.query.id;
+    let page = req.query.page;
+    let urls;
+    let roles1
+    let operationparentId;
+    if(req.currentUser.roleName == 'Operator'){
+        let parentUser = await User.findById(req.currentUser.parent_id)
+        roles1 = await Role.find({role_level:{$gt:parentUser.role.role_type}}).sort({role_level:1});
+        operationparentId = parentUser.parent_id
+    }else{
+        roles1 = await Role.find({role_level:{$gt:req.currentUser.role.role_type}}).sort({role_level:1});
+        operationparentId = req.currentUser.parent_id
+
+    }
+    if(id && id != operationparentId){
+        var isValid = mongoose.Types.ObjectId.isValid(id)
+
+        if(!isValid){
+            return res.redirect('/admin/userManagement')
+        }
+        urls = [
+            {
+                url:`http://172.105.58.243/api/v1/users/getOwnChild?id=${id}`,
+                name:'user'
+            },
+            {
+                url:`http://172.105.58.243/api/v1/role/getAuthROle`,
+                name:'role'
+            }
+        ]
+    }
+    else{
+        urls = [
+            {
+                url:`http://172.105.58.243/api/v1/users/getOwnChild`,
+                name:'user'
+            },
+            {
+                url:`http://172.105.58.243/api/v1/role/getAuthROle`,
+                name:'role'
+            }
+        ]
+    }
+    // console.log(fullUrl)
+    let requests = urls.map((item) => {
+        return new Promise((resolve, reject) => {
+          request(
+            {
+              url: item.url,
+              headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${req.token}`,
+              },
+            },
+            (error, response, body) => {
+              if (error) {
+                reject(error);
+              } else {
+                resolve(JSON.parse(body));
+              }
+            }
+          );
+        });
+    });
+  
+    const data = await Promise.all(requests);
+    if(data[0].status == 'Error'){
+        return res.redirect('/admin/userManagement')
+    }
+    const users = data[0].child;
+    const roles = roles1;
+    const currentUser = req.currentUser
+    const rows = data[0].rows
+    const me = data[0].me
+    // console.log(currentUser)
+
+    let sumData = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id,
+                commissionStatus: 'Unclaimed'
+            }
+        },
+        {
+            $group: {
+              _id: null, 
+              totalCommission: { $sum: "$commission" } 
+            }
+          }
+    ])
+    let sum 
+    if(sumData.length != 0){
+        sum = sumData[0].totalCommission
+    }else{
+        sum = 0
+    }
+
+
+    res.status(200).render('./userManagement/main',{
+        title: "User Management",
+        users,
+        rows,
+        currentUser,
+        me,
+        WhiteLabel,
+        roles,
+        unclaimCommission:sum
+        // userLogin:global._loggedInToken
+    })
+
+   
+});
 
 exports.login = catchAsync(async(req, res, next) => {
     if(req.currentUser){
@@ -4368,7 +4482,6 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
 
 
 exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
-    let limit = 10
     const me = req.currentUser
     let match = req.query.event
     let childrenUsername = []
@@ -4397,49 +4510,15 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
                 },
                 userName:{$in:childrenUsername},
                 eventName:match,
-                marketName:market,
-                loginUserId:{$exists:true},
-                parentIdArray:{$exists:true}
-                }
-            },
-            {
-                $lookup: {
-                    from: "commissionnewmodels",
-                    let: {ud:{$cond:{if:{$ifNull: ["$uniqueId", false]},then:{ $toObjectId: "$uniqueId" },else:'$_id'}},loginId:'$loginUserId',parentArr:'$parentIdArray'},
-                    pipeline: [
-                        {
-                          $match: {
-                            $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
-                            loginUserId:{$exists:true},
-                            parentIdArray:{$exists:true}
-                          }
-                        }
-                      ],
-                    as: "parentdata"
+                marketName:market
                 }
             },
             {
                 $group: {
-                    _id: "$userName",
-                    totalCommission: { $sum: "$commission" },
-                    netupline: { $sum:{
-                        $reduce:{
-                            input:'$parentdata',
-                            initialValue:0,
-                            in: { $add: ["$$value", "$$this.commission"] }
-                        }
-                    }},
+                _id: "$userName",
+                totalCommission: { $sum: "$commission" },
+                netupline: { $sum: "$upline" }
                 }
-            },
-            {
-                $sort:{
-                _id : -1,
-                totalCommission : 1,
-                netupline : 1
-                }
-            },
-            {
-            $limit:limit
             }
         ])
         // console.log(thatMarketData, "thatMarketData")
