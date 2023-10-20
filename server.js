@@ -1542,7 +1542,7 @@ io.on('connection', (socket) => {
                     gameCount:{$sum:1},
                     loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
                     won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
-                    returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','WON']]},'$returns',0]}}
                     
                 }
             },
