@@ -51,13 +51,17 @@
                 <%for(let i = 0; i < betsEventWiseOpen.length; i++){ %>
                 <tr>
                   <td><%= betsEventWiseOpen[i].marketName%></td>
-                  <%if(betsEventWiseOpen[i].marketName != "Match Odds" && betsEventWiseOpen[i].marketName != "Bookmaker 0%Comm" && betsEventWiseOpen[i].marketName != "TOSS" && betsEventWiseOpen[i].marketName != "BOOKMAKER 0% COMM" && !betsEventWiseOpen[i].marketName == "Winner"){%>
-                  <td>
-                    <select class="selectOption" >
-                      <option value="" selected></option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
+                  <%if(betsEventWiseOpen[i].marketName != "Match Odds" && betsEventWiseOpen[i].marketName != "Bookmaker 0%Comm" && betsEventWiseOpen[i].marketName != "TOSS" && betsEventWiseOpen[i].marketName != "BOOKMAKER 0% COMM" && betsEventWiseOpen[i].marketName != "Winner"){%>
+                    <td>
+                    <%if(betsEventWiseOpen[i].marketId.slice(-2).startsWith('OE')){%>
+                      <select class="selectOption" >
+                        <option value="" selected></option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                      </select>
+                      <%}else{%>
+                        <input type="number" class="selectOption" placeholder="0">
+                    <%}%>
                   </td>
                   <%}else if (betsEventWiseOpen[i].marketName == "Winner"){%>
                     <td>

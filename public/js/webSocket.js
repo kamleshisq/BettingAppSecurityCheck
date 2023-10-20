@@ -13254,13 +13254,17 @@ socket.on('connect', () => {
                 html += ` <tbody class="new-body" id="openmarket"><tr>
                 <td>${data.betdata.marketName}</td>`
                 if(data.betdata.marketName != "Match Odds" && data.betdata.marketName != "Bookmaker 0%Comm" && data.betdata.marketName != "TOSS" && data.betdata.marketName != "BOOKMAKER 0% COMM"){
-                    html += `<td>
-                    <select class="selectOption" >
-                      <option value="" selected></option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </td>`
+                    if(data.betdata.marketId.slice(-2).startsWith('OE')){
+                        html += `<td>
+                        <select class="selectOption" >
+                          <option value="" selected></option>
+                          <option value="yes">Yes</option>
+                          <option value="no">No</option>
+                        </select>
+                      </td>`
+                    }else{
+                        html += `<td><input type="number" class="selectOption" placeholder="0"></td>`
+                    }
                 }else{
                     let option = data.betdata.match.split(" v ")
                     let option1 = option[0]
@@ -13320,6 +13324,7 @@ socket.on('connect', () => {
             var newColumnCell = $(this).closest('tr').find('.selectOption');
             // console.log(newColumnCell.val())
             let result = newColumnCell.val()
+            // console.log(result, "resultresultresultresultresultresult")
             socket.emit("VoidBetIn22", {LOGINDATA, id, result})
             // console.log(id)
         })
