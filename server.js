@@ -5671,7 +5671,32 @@ io.on('connection', (socket) => {
                             }
                           }
                         }
-                      }
+                    },
+                    {
+                        $group: { 
+                            _id: {
+                                "secId":"$secId",
+                                "userName":"$userName",
+                                "runs":"$runs"
+                            },
+                            parentArray: { $first: "$parentArray" },
+                            totalAmount: { 
+                                $sum: '$returns'
+                            },
+                            totalWinAmount:{
+                                $sum: { 
+                                    $cond : {
+                                        if : {$eq: ["$secId", "odd_Even_Yes"]},
+                                    then:{
+                                        $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                    },
+                                    else:"$Stake"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
                     
                 ])
                 console.log(betData, "betData")
