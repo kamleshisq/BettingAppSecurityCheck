@@ -5452,6 +5452,7 @@ io.on('connection', (socket) => {
     socket.on('FANCYBOOK', async(data) => {
         // console.log(data, "FANCYDATA")
         let childrenUsername1 = []
+        // let loginUser = await User.findById()
         let children = await User.find({parentUsers:data.id, role_type: 5})
         children.map(ele1 => {
             childrenUsername1.push(ele1.userName) 
@@ -5472,6 +5473,7 @@ io.on('connection', (socket) => {
                             "secId":"$secId",
                             "userName":"$userName"
                         },
+                        parentArray: { $first: "$parentArray" },
                         totalAmount: { 
                             $sum: '$returns'
                         },
@@ -5488,6 +5490,102 @@ io.on('connection', (socket) => {
                         }
                     }
                 },
+                {
+                    $project:{
+                        _id:0,
+                        userName: "$_id.userName",
+                        secId: "$_id.secId",
+                        parentArray: "$parentArray",
+                        totalAmount1: "$totalAmount",
+                        totalWinAmount1: "$totalWinAmount",
+                        totalAmount:{
+                            $reduce:{
+                                input:'$parentArray',
+                                initialValue: { value: 0, flag: true },
+                                in : { 
+                                    $cond:{
+                                        if : {
+                                            $and: [
+                                              { $ne: ['$$this.parentUSerId', data.id] }, 
+                                              { $eq: ['$$value.flag', true] } 
+                                            ]
+                                          },
+                                        then : {
+                                            value: { 
+                                                $cond:{
+                                                    if:{ $eq: ["$$value.value", 0] },
+                                                    then:{
+                                                        $multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                    },
+                                                    else:{
+                                                        $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                    }
+                                                }
+                                            },
+                                            flag: true,
+                                            
+                                        },
+                                        else : {
+                                            value: {
+                                                $cond : {
+                                                    if : { $eq : ["$$value.value" , 0]},
+                                                    then : {
+                                                        $subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                    },
+                                                    else : "$$value.value"
+                                                }
+                                            },
+                                            flag:false
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        totalWinAmount:{
+                            $reduce:{
+                                input:'$parentArray',
+                                initialValue: { value: 0, flag: true },
+                                in : { 
+                                    $cond:{
+                                        if : {
+                                            $and: [
+                                              { $ne: ['$$this.parentUSerId', data.id] }, 
+                                              { $eq: ['$$value.flag', true] } 
+                                            ]
+                                          },
+                                        then : {
+                                            value: { 
+                                                $cond:{
+                                                    if:{ $eq: ["$$value.value", 0] },
+                                                    then:{
+                                                        $multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                    },
+                                                    else:{
+                                                        $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                    }
+                                                }
+                                            },
+                                            flag: true,
+                                            
+                                        },
+                                        else : {
+                                            value: {
+                                                $cond : {
+                                                    if : { $eq : ["$$value.value" , 0]},
+                                                    then : {
+                                                        $subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                    },
+                                                    else : "$$value.value"
+                                                }
+                                            },
+                                            flag:false
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 // {
                 //     $group: {
                 //       _id: null,
