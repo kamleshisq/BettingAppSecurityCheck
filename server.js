@@ -5468,7 +5468,10 @@ io.on('connection', (socket) => {
                 },
                 {
                     $group: { 
-                        _id: "$secId",
+                        _id: {
+                            "secId":"$secId",
+                            "userName":"$userName"
+                        },
                         totalAmount: { 
                             $sum: '$returns'
                         },
@@ -5485,63 +5488,57 @@ io.on('connection', (socket) => {
                         }
                     }
                 },
-                {
-                    $group: {
-                      _id: null,
-                      data: {
-                        $push: {
-                          _id: "$_id",
-                          totalAmount: "$totalAmount",
-                          totalWinAmount: "$totalWinAmount"
-                        }
-                      }
-                    }
-                  },
-                  {
-                    $project: {
-                      _id: 0,
-                      data: {
-                        $map: {
-                          input: "$data",
-                          as: "item",
-                          in: {
-                            _id: "$$item._id",
-                            totalAmount: "$$item.totalAmount",
-                            totalWinAmount: "$$item.totalWinAmount",
-                            totalWinAmount2: {
-                              $add: ["$$item.totalWinAmount", {
-                                $reduce: { 
-                                    input: "$data",
-                                    initialValue: 0,
-                                    in: {
-                                        $cond: {
-                                            if: {
-                                                $ne: ["$$this._id", "$$item._id"] 
-                                            },
-                                            then: { $add: ["$$value", "$$this.totalAmount"] },
-                                            else: {
-                                                $add: ["$$value", 0] 
-                                            }
-                                        }
-                                    }
-                                }
-                            //     $sum: {
-                            //       $filter: {
-                            //         input: "$data",
-                            //         cond: { $ne: ["$$this._id", "$$item._id"] }
-                            //       }
-                            //     }
-                              }]
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
+                // {
+                //     $group: {
+                //       _id: null,
+                //       data: {
+                //         $push: {
+                //           _id: "$_id",
+                //           totalAmount: "$totalAmount",
+                //           totalWinAmount: "$totalWinAmount"
+                //         }
+                //       }
+                //     }
+                //   },
+                //   {
+                //     $project: {
+                //       _id: 0,
+                //       data: {
+                //         $map: {
+                //           input: "$data",
+                //           as: "item",
+                //           in: {
+                //             _id: "$$item._id",
+                //             totalAmount: "$$item.totalAmount",
+                //             totalWinAmount: "$$item.totalWinAmount",
+                //             totalWinAmount2: {
+                //               $add: ["$$item.totalWinAmount", {
+                //                 $reduce: { 
+                //                     input: "$data",
+                //                     initialValue: 0,
+                //                     in: {
+                //                         $cond: {
+                //                             if: {
+                //                                 $ne: ["$$this._id", "$$item._id"] 
+                //                             },
+                //                             then: { $add: ["$$value", "$$this.totalAmount"] },
+                //                             else: {
+                //                                 $add: ["$$value", 0] 
+                //                             }
+                //                         }
+                //                     }
+                //                 }
+                //               }]
+                //             }
+                //           }
+                //         }
+                //       }
+                //     }
+                //   }
             ])
 
-            // console.log(betData[0].data, "betData")
-            socket.emit('FANCYBOOK', {betData:betData[0].data, type:'ODD'})
+            console.log(betData, "betData")
+            // socket.emit('FANCYBOOK', {betData:betData[0].data, type:'ODD'})
         }else{
 
         }
