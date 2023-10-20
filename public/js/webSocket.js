@@ -14229,29 +14229,30 @@ socket.on('connect', () => {
 
             socket.on('FANCYBOOK', data => {
                 if(data.type === "ODD"){
-                    let html = ''
-                    html += `<table id="FANCYBOOK"
-                    <tbody>
-                    <tr class="headDetail"><th>Runner Name</th>
-                    <th>Profit/Loss</th></tr>`
-                    for(let i = 0; i < data.betData.length; i++){
-                        if(data.betData[i]._id === "odd_Even_No"){
-                            if(data.betData[i].totalWinAmount2 < 0){
-                                html += `<tr><td>0.0 or Less</td><td class="red" >${data.betData[i].totalWinAmount2}</td></tr>`
-                            }else{
-                                html += `<tr><td>0.0 or Less</td><td class="green" >${data.betData[i].totalWinAmount2}</td></tr>`
-                            }
-                        }else{
-                            if(data.betData[i].totalWinAmount2 < 0){
-                                html += `<tr><td>1.0 or More</td><td class="red" >${data.betData[i].totalWinAmount2}</td></tr>`
-                            }else{
-                                html += `<tr><td>1.0 or More</td><td class="green" >${data.betData[i].totalWinAmount2}</td></tr>`
-                            }
-                        }
-                    }
-                     html += `</tbody>
-                    </table>`
-                    document.getElementById('FENCY').innerHTML = html
+                    console.log(data.betData)
+                    // let html = ''
+                    // html += `<table id="FANCYBOOK"
+                    // <tbody>
+                    // <tr class="headDetail"><th>Runner Name</th>
+                    // <th>Profit/Loss</th></tr>`
+                    // for(let i = 0; i < data.betData.length; i++){
+                    //     if(data.betData[i]._id === "odd_Even_No"){
+                    //         if(data.betData[i].totalWinAmount2 < 0){
+                    //             html += `<tr><td>0.0 or Less</td><td class="red" >${data.betData[i].totalWinAmount2}</td></tr>`
+                    //         }else{
+                    //             html += `<tr><td>0.0 or Less</td><td class="green" >${data.betData[i].totalWinAmount2}</td></tr>`
+                    //         }
+                    //     }else{
+                    //         if(data.betData[i].totalWinAmount2 < 0){
+                    //             html += `<tr><td>1.0 or More</td><td class="red" >${data.betData[i].totalWinAmount2}</td></tr>`
+                    //         }else{
+                    //             html += `<tr><td>1.0 or More</td><td class="green" >${data.betData[i].totalWinAmount2}</td></tr>`
+                    //         }
+                    //     }
+                    // }
+                    //  html += `</tbody>
+                    // </table>`
+                    // document.getElementById('FENCY').innerHTML = html
                 }else{
 
                 }
