@@ -5945,7 +5945,6 @@ socket.on('connect', () => {
                 <td>${bets[i].Stake}</td>
                 <td>${bets[i].transactionId}</td>
                 <td>${bets[i].status}</td>
-                <td>${bets[i].returns}</td>
                 <td class="btn-group" >
                 <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn cancel-timelyVoide" id="${bets[i]._id}"> Voide Bet</button>
                 </td>
