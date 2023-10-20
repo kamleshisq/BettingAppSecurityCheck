@@ -5796,7 +5796,6 @@ io.on('connection', (socket) => {
                     {
                         $project:{
                             _id:0,
-                            userName: "$userName",
                             secId: "$secId",
                             runs: "$runs",
                             totalAmount:"$totalAmount.value",
