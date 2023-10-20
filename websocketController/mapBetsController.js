@@ -95,7 +95,7 @@ exports.mapbet = async(data) => {
                         }else{
                             creditDebitamount = bet.Stake
                         }
-                        let bet = await betModel.findByIdAndUpdate(bet._id,{status:"WON", returns:creditDebitamount, result:marketresult.result})
+                        let thatbet = await betModel.findByIdAndUpdate(bet._id,{status:"WON", returns:creditDebitamount, result:marketresult.result})
                         let user = await userModel.findByIdAndUpdate(bet.userId,{$inc:{availableBalance: creditDebitamount, myPL: creditDebitamount, Won:1, exposure:-parseFloat(exposure), uplinePL:-creditDebitamount, pointsWL:creditDebitamount}})
                         let description = `Bet for ${bet.match}/stake = ${bet.Stake}/WON`
 
@@ -143,7 +143,7 @@ exports.mapbet = async(data) => {
                           "transactionId":`${bet.transactionId}`
                         })
             }else{
-                let bet = await betModel.findByIdAndUpdate(bet._id,{status:"LOSS", result:marketresult.result})
+                let thatbet = await betModel.findByIdAndUpdate(bet._id,{status:"LOSS", result:marketresult.result})
                         let user 
                         let exposure = bet.exposure
                         user = await userModel.findByIdAndUpdate(bet.userId, {$inc:{Loss:1, exposure:-exposure, availableBalance: -exposure, myPL:-exposure, uplinePL:exposure, pointsWL:-exposure}})
