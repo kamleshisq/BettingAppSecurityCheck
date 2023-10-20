@@ -5590,10 +5590,10 @@ io.on('connection', (socket) => {
                     $project:{
                         _id:"$secId",
                         totalAmount:{
-                            $sum: '$totalAmount'
+                            $sum: '$totalAmount.value'
                         },
                         totalWinAmount:{
-                            $sum: '$totalWinAmount'
+                            $sum: '$totalWinAmount.value'
                         },
 
                     }
