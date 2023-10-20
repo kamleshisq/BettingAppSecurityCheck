@@ -5614,45 +5614,45 @@ io.on('connection', (socket) => {
                       }
                     }
                   },
-                  {
-                    $project: {
-                      _id: 0,
-                      data: {
-                        $map: {
-                          input: "$data",
-                          as: "item",
-                          in: {
-                            _id: "$$item._id",
-                            totalAmount: "$$item.totalAmount",
-                            totalWinAmount: "$$item.totalWinAmount",
-                            totalWinAmount2: {
-                              $add: ["$$item.totalWinAmount", {
-                                $reduce: { 
-                                    input: "$data",
-                                    initialValue: 0,
-                                    in: {
-                                        $cond: {
-                                            if: {
-                                                $ne: ["$$this._id", "$$item._id"] 
-                                            },
-                                            then: { $add: ["$$value", "$$this.totalAmount"] },
-                                            else: {
-                                                $add: ["$$value", 0] 
-                                            }
-                                        }
-                                    }
-                                }
-                              }]
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
+                //   {
+                //     $project: {
+                //       _id: 0,
+                //       data: {
+                //         $map: {
+                //           input: "$data",
+                //           as: "item",
+                //           in: {
+                //             _id: "$$item._id",
+                //             totalAmount: "$$item.totalAmount",
+                //             totalWinAmount: "$$item.totalWinAmount",
+                //             totalWinAmount2: {
+                //               $add: ["$$item.totalWinAmount", {
+                //                 $reduce: { 
+                //                     input: "$data",
+                //                     initialValue: 0,
+                //                     in: {
+                //                         $cond: {
+                //                             if: {
+                //                                 $ne: ["$$this._id", "$$item._id"] 
+                //                             },
+                //                             then: { $add: ["$$value", "$$this.totalAmount"] },
+                //                             else: {
+                //                                 $add: ["$$value", 0] 
+                //                             }
+                //                         }
+                //                     }
+                //                 }
+                //               }]
+                //             }
+                //           }
+                //         }
+                //       }
+                //     }
+                //   }
             ])
 
             console.log(betData, "betData")
-            console.log(betData[0].data, "betData[0].databetData[0].databetData[0].data")
+            // console.log(betData[0].data, "betData[0].databetData[0].databetData[0].data")
             // socket.emit('FANCYBOOK', {betData:betData[0].data, type:'ODD'})
         }else{
 
