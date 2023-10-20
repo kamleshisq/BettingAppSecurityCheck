@@ -761,7 +761,7 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
             loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
             won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
             void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
-            returns:{$sum:{$cond:[{$in:['$status',['LOSS','CANCEL']]},'$returns',{"$subtract": [ "$returns", "$Stake" ]}]}}
+            returns:{$sum:'$returns'}
             
         }
     },
@@ -886,7 +886,7 @@ exports.gameReportPageByMatch = catchAsync(async(req, res, next) => {
             loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
             won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
             void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
-            returns:{$sum:{$cond:[{$in:['$status',['LOSS','CANCEL']]},'$returns',{"$subtract": [ "$returns", "$Stake" ]}]}}
+            returns:{$sum:'$returns'}
             
         }
     },
@@ -962,7 +962,7 @@ exports.gameReportPageByMatchByMarket = catchAsync(async(req, res, next) => {
             loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
             won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
             void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
-            returns:{$sum:{$cond:[{$in:['$status',['LOSS','CANCEL']]},'$returns',{"$subtract": [ "$returns", "$Stake" ]}]}}
+            returns:{$sum:'$returns'}
             
         }
     },
@@ -1036,13 +1036,7 @@ exports.gameReportPageFinal = catchAsync(async(req, res, next) => {
             oddValue:1,
             ip:1,
             Stake:1,
-            returns:{
-                $cond:{
-                    if:{$eq:['$status','WON']},
-                    then:{$subtract:['$returns','$Stake']},
-                    else:'$returns'
-                }
-            }
+            returns:'$returns'
         }
     },
     {

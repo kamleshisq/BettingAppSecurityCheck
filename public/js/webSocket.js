@@ -16091,9 +16091,36 @@ socket.on('connect', () => {
             }
             $('.welcome-info-btn').remove()
             $('.matchOddsBack').removeClass('active')
-
-            let html = ""
-            let html2 = ""
+            let html = "";
+            let html2 = "";
+            if(data.page == 0){
+                html += `<thead>
+                    <tr>
+                    <th>S.No</th>
+                    <th>White Label</th>
+                    <th>Active Users</th>
+                    <th>Total Bets</th>
+                    <th>Won</th>
+                    <th>Lost</th>
+                    <th>Void </th>
+                    <th>Open </th>
+                    <th>P/L</th>
+                    </tr>
+                </thead><tbody class="new-body">`
+                html2 += `<thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Market</th>
+                    <th>Total Bets</th>
+                    <th>Won</th>
+                    <th>Lost</th>
+                    <th>Void </th>
+                    <th>Open </th>
+                    <th>P/L</th>
+                    <th>Result</th>
+                </tr>
+            </thead><tbody class="new-body">`
+            }
             let html3 = ""
             let tb = 0;
             let w = 0;
@@ -16237,7 +16264,8 @@ socket.on('connect', () => {
                 }
 
                 html3 = '<div class="welcome-info-btn">' + html3
-
+                html += '</tbody>'
+                html2 += '</tbody>'
                 if(data.gameAnalist.length > 0){
 
                     $('#Cricket').find('.dashboard-welcome-section').html(html3)
@@ -16246,8 +16274,9 @@ socket.on('connect', () => {
 
                     $('#FOOTBALL').find('.dashboard-welcome-section').html(html3)
                 }
-                $('#Cricket').find('tbody').html(html)
-                $('#FOOTBALL').find('tbody').html(html2)
+
+                $('#Cricket').find('table').html(html)
+                $('#FOOTBALL').find('table').html(html2)
 
             }else{
                 $('#Cricket').find('tbody').append(html)
