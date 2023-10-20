@@ -1248,7 +1248,7 @@ exports.plreport = catchAsync(async(req, res, next) => {
     {
         $match: {
         userName: { $in: childrenUsername },
-        status: {$ne:"OPEN"}
+        status: {$in:["LOSS","WON"]}
         }
     },
     {

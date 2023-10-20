@@ -1532,7 +1532,7 @@ io.on('connection', (socket) => {
             {
                 $match: {
                 userName: { $in: childrenUsername },
-                status: {$ne:"OPEN"},
+                status: {$in:["LOSS","WON"]},
                 date:data.filterData.date
                 }
             },
