@@ -5695,7 +5695,104 @@ io.on('connection', (socket) => {
                                 }
                             }
                         }
-                    }
+                    },
+                    {
+                        $project:{
+                            _id:0,
+                            userName: "$_id.userName",
+                            secId: "$_id.secId",
+                            runs: "$_id.runs",
+                            parentArray: "$parentArray",
+                            totalAmount1: "$totalAmount",
+                            totalWinAmount1: "$totalWinAmount",
+                            totalAmount:{
+                                $reduce:{
+                                    input:'$parentArray',
+                                    initialValue: { value: 0, flag: true },
+                                    in : { 
+                                        $cond:{
+                                            if : {
+                                                $and: [
+                                                  { $ne: ['$$this.parentUSerId', data.id] }, 
+                                                  { $eq: ['$$value.flag', true] } 
+                                                ]
+                                              },
+                                            then : {
+                                                value: { 
+                                                    $cond:{
+                                                        if:{ $eq: ["$$value.value", 0] },
+                                                        then:{
+                                                            $multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                        },
+                                                        else:{
+                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                        }
+                                                    }
+                                                },
+                                                flag: true,
+                                                
+                                            },
+                                            else : {
+                                                value: {
+                                                    $cond : {
+                                                        if : { $eq : ["$$value.value" , 0]},
+                                                        then : {
+                                                            $subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                        },
+                                                        else : "$$value.value"
+                                                    }
+                                                },
+                                                flag:false
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            totalWinAmount:{
+                                $reduce:{
+                                    input:'$parentArray',
+                                    initialValue: { value: 0, flag: true },
+                                    in : { 
+                                        $cond:{
+                                            if : {
+                                                $and: [
+                                                  { $ne: ['$$this.parentUSerId', data.id] }, 
+                                                  { $eq: ['$$value.flag', true] } 
+                                                ]
+                                              },
+                                            then : {
+                                                value: { 
+                                                    $cond:{
+                                                        if:{ $eq: ["$$value.value", 0] },
+                                                        then:{
+                                                            $multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                        },
+                                                        else:{
+                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                        }
+                                                    }
+                                                },
+                                                flag: true,
+                                                
+                                            },
+                                            else : {
+                                                value: {
+                                                    $cond : {
+                                                        if : { $eq : ["$$value.value" , 0]},
+                                                        then : {
+                                                            $subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                        },
+                                                        else : "$$value.value"
+                                                    }
+                                                },
+                                                flag:false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
                     
                     
                 ])
