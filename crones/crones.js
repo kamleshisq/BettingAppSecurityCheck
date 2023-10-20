@@ -8,9 +8,10 @@ const commissionModel = require("../model/CommissionModel");
 const commissionMarketModel = require("../model/CommissionMarketsModel");
 const newCommissionModel = require('../model/commissioNNModel');
 const Decimal = require('decimal.js');
+const runnerDataModel = require('../model/runnersData');
 
 module.exports = () => {
-    cron.schedule('*/10 * * * *', async() => {
+    cron.schedule('*/5 * * * *', async() => {
       console.log("Working")
 
 
@@ -113,7 +114,7 @@ module.exports = () => {
                         let debitCreditAmount 
                         let exposure = entry.exposure
                         if(entry.bettype2 == 'BACK'){
-                            if(entry.marketName.toLowerCase().startsWith('match')){
+                            if(entry.marketName.toLowerCase().startsWith('match') || entry.marketName.toLowerCase().startsWith('winne')){
                                 debitCreditAmount = parseFloat(entry.Stake * entry.oddValue).toFixed(2) - parseFloat(entry.Stake)
                             }else{
                                 debitCreditAmount = (parseFloat(entry.Stake * entry.oddValue/100).toFixed(2))
@@ -312,7 +313,11 @@ module.exports = () => {
                           "stake": bet.Stake,
                           "transactionId":`${bet.transactionId}`
                         })
-                    }else if ((entry.selectionName.split('@')[1] >=  marketresult.result && entry.bettype2 == 'BACK') || (entry.selectionName.split('@')[1] <= marketresult.result && entry.bettype2 == "LAY")){
+                    }else if (((entry.selectionName.split('@')[1] <=  marketresult.result) && entry.bettype2 == 'BACK') || ((entry.selectionName.split('@')[1] >= marketresult.result) && entry.bettype2 == "LAY")){
+                        // console.log((entry.selectionName.split('@')[1]))
+                        // console.log((marketresult.result))
+                        // console.log((entry.bettype2 == 'BACK'))
+                        // console.log((entry.selectionName.split('@')[1] <=  marketresult.result && entry.bettype2 == 'BACK'))
                         let creditDebitamount 
                         let exposure = entry.exposure
                         if(entry.bettype2 == "BACK"){
@@ -512,7 +517,8 @@ module.exports = () => {
 
                     }
                 })
-                
+                //for runnerDataDELETE
+                await runnerDataModel.findOneAndDelete({marketId:marketresult.mid})
 
                 //NET LOSING COMMISSION
 
@@ -525,7 +531,7 @@ module.exports = () => {
                         return ele.userId
                     })
 
-                    console.log(newfilterUser,"==>newfilterUser")
+                    // console.log(newfilterUser,"==>newfilterUser")
 
                     let netLossingCommission = await betModel.aggregate([
                         {

@@ -60,6 +60,7 @@ const newCommissionModel = require('./model/commissioNNModel');
 const timelyNotificationModel = require('./model/timelyVoideNotification');
 const resumeSuspendModel = require('./model/resumeSuspendMarket');
 const Decimal = require('decimal.js');
+const runnerDataModel = require('./model/runnersData');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
@@ -1621,6 +1622,7 @@ io.on('connection', (socket) => {
     socket.on("marketId", async(data) => {
         const result = await marketDetailsBymarketID(data.ids)
         let finalResult = result.data
+        // console.log(finalResult, "finalResultfinalResultfinalResult")
         const betLimits = await betLimit.find({type:"Sport"})
         let resumeSuspendMarkets = await resumeSuspendModel.aggregate([
             {
@@ -1632,7 +1634,14 @@ io.on('connection', (socket) => {
                 }
             }
         ])
-
+        let forFancy 
+        // console.log(finalResult, "finalResult[1].event_idfinalResult[1].event_id")
+        if(finalResult.items.length > 0 ){
+            if(finalResult.items[1]){
+                forFancy = await resumeSuspendModel.find({marketId:`${finalResult.items[1].event_id}/FANCY`, status:false})
+            }
+        }
+        // console.log(forFancy)
         let allData =  await getCrkAndAllData()
         const cricket = allData[0].gameList[0].eventList
         let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
@@ -1655,10 +1664,14 @@ io.on('connection', (socket) => {
                 }
             }
 
+        }else{
+            // for(let i = 0; i < finalResult.item.length; i++){
+                
+            // }
         }
 
         // console.log(resumeSuspendMarkets)
-        socket.emit("marketId", {finalResult,betLimits, status,resumeSuspendMarkets})
+        socket.emit("marketId", {finalResult,betLimits, status,resumeSuspendMarkets, forFancy})
     })
 
     socket.on("SPORTDATA", async(data) => {
@@ -1746,7 +1759,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('betDetails', async(data) => {
-        console.log(data)
+        // console.log(data, "DATA")
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
         // console.log(marketDetails.data.items)
         // data.data.oldData = data.data.odds
@@ -2463,19 +2476,21 @@ io.on('connection', (socket) => {
     })
 
     socket.on("STAKELABEL", async(data) => {
+        console.log(data)
         let stakeArray = data.input1Values.map((key, index) => ({
             key: parseInt(key.replace(/,/g, ''), 10),
             value: parseInt(data.input2Values[index].replace(/,/g, ''), 10)
           }));
+          console.log(stakeArray)
         let userId = data.LOGINDATA.LOGINUSER._id
         let check = await stakeLabelModel.find({userId})
-        console.log(check.length)
-        console.log(stakeArray, userId)
+        // console.log(check.length)
+        // console.log(stakeArray, userId)
         if(check.length === 0){
-            console.log("WORKING")
+            // console.log("WORKING")
             try{
-                let data = await stakeLabelModel.create({stakeArray:stakeArray,userId:userId})
-                console.log(data)
+                let data = await stakeLabelModel.create({stakeArray:stakeArray, userId:userId})
+                // console.log(data)
                 socket.emit("STAKELABEL", "Updated")
             }catch(err){
                 socket.emit("STAKELABEL", "Please try again later")
@@ -2483,11 +2498,26 @@ io.on('connection', (socket) => {
         }else{
             try{
                 const data = await stakeLabelModel.findOneAndUpdate({userId:userId}, {stakeArray:stakeArray})
-                console.log(data)
+                // console.log(data)
                 socket.emit("STAKELABEL", "Updated")
             }catch(err){
                 socket.emit("STAKELABEL", "Please try again later")
             }
+        }
+    })
+
+
+    socket.on('socketStakeLABLEDATA', async(data) => {
+        console.log(data)
+        let check = []
+        if(data.LOGINUSER){
+            check = await stakeLabelModel.find({userId:data.LOGINUSER._id})
+        }
+        // console.log(check)
+        if(check.length === 0){
+            socket.emit('socketStakeLABLEDATA', {status:"notFound"})
+        }else{
+            socket.emit('socketStakeLABLEDATA', check[0])
         }
     })
 
@@ -5419,6 +5449,106 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('FANCYBOOK', async(data) => {
+        // console.log(data, "FANCYDATA")
+        let childrenUsername1 = []
+        let children = await User.find({parentUsers:data.id, role_type: 5})
+        children.map(ele1 => {
+            childrenUsername1.push(ele1.userName) 
+        })
+        // let checkBET = await Bet.findOne({marketId:data.marketId})
+        if(data.marketId.slice(-2).startsWith('OE')){
+            let betData = await Bet.aggregate([
+                {
+                    $match: {
+                        status: "OPEN",
+                        marketId: data.marketId,
+                        userName:{$in:childrenUsername1}
+                    }
+                },
+                {
+                    $group: { 
+                        _id: "$secId",
+                        totalAmount: { 
+                            $sum: '$returns'
+                        },
+                        totalWinAmount:{
+                            $sum: { 
+                                $cond : {
+                                    if : {$eq: ["$secId", "odd_Even_Yes"]},
+                                then:{
+                                    $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                },
+                                else:"$Stake"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    $group: {
+                      _id: null,
+                      data: {
+                        $push: {
+                          _id: "$_id",
+                          totalAmount: "$totalAmount",
+                          totalWinAmount: "$totalWinAmount"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    $project: {
+                      _id: 0,
+                      data: {
+                        $map: {
+                          input: "$data",
+                          as: "item",
+                          in: {
+                            _id: "$$item._id",
+                            totalAmount: "$$item.totalAmount",
+                            totalWinAmount: "$$item.totalWinAmount",
+                            totalWinAmount2: {
+                              $add: ["$$item.totalWinAmount", {
+                                $reduce: { 
+                                    input: "$data",
+                                    initialValue: 0,
+                                    in: {
+                                        $cond: {
+                                            if: {
+                                                $ne: ["$$this._id", "$$item._id"] 
+                                            },
+                                            then: { $add: ["$$value", "$$this.totalAmount"] },
+                                            else: {
+                                                $add: ["$$value", 0] 
+                                            }
+                                        }
+                                    }
+                                }
+                            //     $sum: {
+                            //       $filter: {
+                            //         input: "$data",
+                            //         cond: { $ne: ["$$this._id", "$$item._id"] }
+                            //       }
+                            //     }
+                              }]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+            ])
+
+            // console.log(betData[0].data, "betData")
+            socket.emit('FANCYBOOK', {betData:betData[0].data, type:'ODD'})
+        }else{
+
+        }
+
+
+    })
+
     socket.on("updateUserDetailssss", async(data) => {
         try{
             let user = await User.findByIdAndUpdate(data.id, {contact:data.contact, email:data.email})
@@ -6461,7 +6591,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on('suspendResume', async(data) => {
-        console.log(data)
         try{
             let check = await resumeSuspendModel.findOne({marketId:data.id})
             let status 
@@ -6477,7 +6606,19 @@ io.on('connection', (socket) => {
             console.log(err)
         }
     })
-    
+
+
+    socket.on('WINNERMARKET', async(data) => {
+        try{
+            if(data){
+                let runners = await runnerDataModel.findOne({marketId:data})
+                socket.emit('WINNERMARKET', runners)
+            }
+        }catch(err){
+            console.log(err)
+        }
+    })
+
 })
 
 http.listen(80,()=> {

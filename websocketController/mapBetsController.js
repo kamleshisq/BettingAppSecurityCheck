@@ -9,6 +9,7 @@ const settlementHistory = require("../model/settelementHistory");
 const InprogressModel = require('../model/InprogressModel');
 const newCommissionModel = require('../model/commissioNNModel');
 const Decimal = require('decimal.js');
+const runnerDataModel = require("../model/runnersData");
 
 exports.mapbet = async(data) => {
   //FOR CHILD OF LOGIN USER
@@ -78,9 +79,9 @@ exports.mapbet = async(data) => {
   //FUNCTION FOR PROCESS BET
     
   async function processBets() {
-  console.log("WORKING +==>>", data)
+//   console.log("WORKING +==>>", data)
   const betPromises = bets.map(async (bet) => {
-    console.log(bet, data.result, "DATADATA123456")
+    // console.log(bet, data.result, "DATADATA123456")
     if(data.result === "yes" || data.result === "no"){ 
 
     }else{
@@ -88,7 +89,7 @@ exports.mapbet = async(data) => {
         let debitCreditAmount;
         let exposure = bet.exposure
         if(bet.bettype2 == 'BACK'){
-          if(bet.marketName.toLowerCase().startsWith('match')){
+          if(bet.marketName.toLowerCase().startsWith('match') || bet.marketName.toLowerCase().startsWith('winne')){
             debitCreditAmount = parseFloat((bet.Stake * bet.oddValue).toFixed(2)) - bet.Stake
           }else{
             debitCreditAmount = parseFloat(bet.Stake * bet.oddValue/100).toFixed(2)
@@ -419,9 +420,11 @@ exports.mapbet = async(data) => {
         
       }
     }
+
     let checkDelete = await InprogressModel.findOneAndUpdate({marketId : bet.marketId, progressType:'SettleMent'}, {$inc:{settledBet:1}})
     if((checkDelete.settledBet + 1) == checkDelete.length){
       await InprogressModel.findOneAndDelete({marketId : bet.marketId, progressType:'SettleMent'})
+      await runnerDataModel.findOneAndDelete({marketId:bet.marketId})
     }
   });
   

@@ -51,7 +51,7 @@
                 <%for(let i = 0; i < betsEventWiseOpen.length; i++){ %>
                 <tr>
                   <td><%= betsEventWiseOpen[i].marketName%></td>
-                  <%if(betsEventWiseOpen[i].marketName != "Match Odds" && betsEventWiseOpen[i].marketName != "Bookmaker 0%Comm" && betsEventWiseOpen[i].marketName != "TOSS" && betsEventWiseOpen[i].marketName != "BOOKMAKER 0% COMM"){%>
+                  <%if(betsEventWiseOpen[i].marketName != "Match Odds" && betsEventWiseOpen[i].marketName != "Bookmaker 0%Comm" && betsEventWiseOpen[i].marketName != "TOSS" && betsEventWiseOpen[i].marketName != "BOOKMAKER 0% COMM" && !betsEventWiseOpen[i].marketName == "Winner"){%>
                   <td>
                     <select class="selectOption" >
                       <option value="" selected></option>
@@ -59,6 +59,13 @@
                       <option value="no">No</option>
                     </select>
                   </td>
+                  <%}else if (betsEventWiseOpen[i].marketName == "Winner"){%>
+                    <td>
+                      <select class="selectOption winner" id="<%=betsEventWiseOpen[i].marketId%>">
+                        
+                        
+                      </select>
+                    </td>
                   <%}else {%>
                   <% 
                   let option = betsEventWiseOpen[i].match.split(" v ")

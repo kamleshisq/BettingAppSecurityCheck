@@ -1941,7 +1941,7 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
 
 
 exports.getMarketResult = catchAsync(async(req, res, next) => {
-    let body = JSON.stringify(["4.1697546532656-F2", "4.1697545007809-OE"]);
+    let body = JSON.stringify([ "4.1697461669317-F2"]);
     // console.log(body)
     let fullUrl = "https://admin-api.dreamexch9.com/api/dream/markets/result";
     fetch(fullUrl, {
@@ -2719,6 +2719,7 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     const sportData = await getCrkAndAllData()
     
     const betLimit = await betLimitModel.find()
+    // let rules = await gamrRuleModel.find()
     // console.log(match.marketList.goals)
     // let session = match.marketList.session.filter(item => {
     //     let date = new Date(item.updated_on);

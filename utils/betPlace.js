@@ -9,6 +9,7 @@ const commissionMarketModel = require("../model/CommissionMarketsModel");
 const betLimitMatchWisemodel = require('../model/betLimitMatchWise');
 const newCommissionModel =  require('../model/commissioNNModel');
 const Decimal = require('decimal.js');
+const runnerDataModel = require('../model/runnersData');
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -25,7 +26,7 @@ const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678
 async function placeBet(data){
     // console.log(data, "data1")
     let check = await userModel.findById(data.LOGINDATA.LOGINUSER._id)
-    if(check.availableBalance < data.data.stake){
+    if((check.availableBalance - check.exposure) < data.data.stake){
         return "You do not have sufficient balance for bet"
     }else if(check.exposureLimit === check.exposure){
         return "Please try again later, Your exposure Limit is full"
@@ -87,6 +88,8 @@ async function placeBet(data){
                 }
             }
       }}
+
+
 let betPlaceData = {}
 
 //FOR SPORT NAME 
@@ -186,9 +189,9 @@ if(data.data.spoetId == 1){
         }
     }
 
-
+// console.log(data, marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
 // FOR ODDS LIMIT
-if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
+if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss') || marketDetails.title.toLowerCase().startsWith('winne')){
     if(data.data.bettype2 === 'BACK'){
         let OddChake = (data.data.oldOdds * 1) + (betLimit.max_odd * 1) 
         if(OddChake <= data.data.odds || data.data.odds < data.data.oldOdds){
@@ -204,11 +207,11 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
 
 
 
-// FOR LAY BACK DIFF
+// // FOR LAY BACK DIFF
 
     let creditDebitamount
     if(data.data.bettype2 === "BACK"){
-        if(marketDetails.title.toLowerCase().startsWith('match')){
+        if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.toLowerCase().startsWith('winne')){
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
         }else if (marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
@@ -216,7 +219,7 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
         }
     }else{
-        if(marketDetails.title.toLowerCase().startsWith('match')){
+        if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.toLowerCase().startsWith('winne')){
             creditDebitamount = (parseFloat(data.data.stake * data.data.odds) - parseFloat(data.data.stake)).toFixed(2)
         }else if (marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
             creditDebitamount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
@@ -225,6 +228,7 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
         }
     }
 
+    // console.log(creditDebitamount, data, marketDetails, "creditDebitamountcreditDebitamountcreditDebitamountcreditDebitamount")
 //FOR BETPLACE PARENTSID ARRAY DATA
 parentArray = []
 for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
@@ -237,6 +241,17 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
     parentArray.push(object)
 }
 
+// console.log(marketDetails, "marketDetailsmarketDetailsmarketDetailsmarketDetails")
+if(marketDetails.title === "Winner"){
+    let check = await runnerDataModel.findOne({marketId:marketDetails.marketId})
+    if(!check){
+    let data = {
+        runners:marketDetails.runners,
+        eventId:marketDetails.eid,
+        marketId:marketDetails.marketId
+    }
+    await runnerDataModel.create(data)}
+}
 
 //FOR BET PLACE DATA 
 
@@ -303,6 +318,7 @@ for(let i = data.LOGINDATA.LOGINUSER.parentUsers.length - 1 ; i >= 0; i--){
     }
     let description = `Bet for ${data.data.title}/stake = ${data.data.stake}`
     
+    // console.log(betPlaceData, data, marketDetails, "betPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceDatabetPlaceData")
 // FOR ACC STATEMENTS DATA 
     // let Acc = {
     //     "user_id":data.LOGINDATA.LOGINUSER._id,

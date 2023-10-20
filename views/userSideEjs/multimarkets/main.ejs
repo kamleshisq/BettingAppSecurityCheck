@@ -4,11 +4,11 @@
       <!-- ----= EXCHANGE PAGE BANNER SECTION START =-----   -->
       
 
-      <section class="exchange-pg-main-sec mob-dis-no">
+      <section class="exchange-pg-main-sec mob-dis-no inplay-match">
         <div class="container-fluid exchange-pg-main-contnr">
           <div class="col-lg-11 col-md-11 col-12 exchange-pg-main-col">
             <div class="exchange-pg-main-col-ro">
-                <div class="exchange-pg-main-col-big col-lg-8 col-md-8 col-12">
+                <div class="exchange-pg-main-col-big col-sm-9 col-12">
                     <div class="exchange-pg-main-col-big-wrp">
                         <section class="exchange-pg-inn-banner-sec" id="container">
                          
@@ -30,7 +30,7 @@
                     </div>
                 </div>
 
-                <div class="exchange-pg-main-col-mini col-lg-4 col-md-4 col-12 mbl-exchange-pg-main-col-mini">
+                <div class="exchange-pg-main-col-mini col-lg-3 my-live-streacoldv col-md-3 col-12 mbl-exchange-pg-main-col-mini">
                   
                   <div class="exchange-pg-rit-ro mb-2">
                     <div class="exchange-pg-rit-ro-livetv-dv">
@@ -49,7 +49,11 @@
                             </thead>
                             <tbody id="tableBET">
                              <%for(let i = 0; i < betsOnthisMatch.length; i++){%>
-                              <tr>
+                              <%if(betsOnthisMatch[i]. bettype2 === "BACK"){%>
+                                <tr class="back-inplaymatch">
+                              <%}else{%>
+                                <tr class="lay-inplaymatch">
+                              <%}%>
                                 <td><%= betsOnthisMatch[i].selectionName%></td>
                                 <td><%= betsOnthisMatch[i].oddValue %></td>
                                 <td><%= betsOnthisMatch[i].Stake %></td>
@@ -390,6 +394,12 @@
 
     <!-- SLICK SLIDER CDN  -->
 
+    <script>
+      $(".my-exc-inn-colaps-txt-dv .close-btn").click(function(){
+    $(this).parents(".collapse").removeClass("show");
+  });
+    </script>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
@@ -397,9 +407,10 @@
     ></script>
     <!-- Add the Bootstrap CSS in the head section -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <!-- Add Bootstrap JS -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <script>
   // Function to handle the click event for the "tbl-bg-blu-spn" spans
   function handleSpanClick(event) {
