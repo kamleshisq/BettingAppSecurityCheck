@@ -52,12 +52,16 @@
                 <tr>
                   <td><%= betsEventWiseOpen[i].marketName%></td>
                   <%if(betsEventWiseOpen[i].marketName != "Match Odds" && betsEventWiseOpen[i].marketName != "Bookmaker 0%Comm" && betsEventWiseOpen[i].marketName != "TOSS" && betsEventWiseOpen[i].marketName != "BOOKMAKER 0% COMM" && betsEventWiseOpen[i].marketName != "Winner"){%>
-                  <td>
-                    <select class="selectOption" >
-                      <option value="" selected></option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
+                    <td>
+                    <%if(betsEventWiseOpen[i].marketId.slice(-2).startsWith('OE')){%>
+                      <input type="text" class="selectOption" placeholder="0">
+                    <%}else{%>
+                      <select class="selectOption" >
+                        <option value="" selected></option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                      </select>
+                    <%}%>
                   </td>
                   <%}else if (betsEventWiseOpen[i].marketName == "Winner"){%>
                     <td>
