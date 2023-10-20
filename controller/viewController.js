@@ -46,7 +46,35 @@ const commissionMarketModel = require('../model/CommissionMarketsModel')
 let eventNotification = require('../model/eventNotification');
 const commissionNewModel = require('../model/commissioNNModel');
 const resumeSuspendModel = require('../model/resumeSuspendMarket');
-
+// exports.userTable = catchAsync(async(req, res, next) => {
+//     // console.log(global._loggedInToken)
+//     // console.log(req.token, req.currentUser);
+//     // let users
+//     // let users = await User.find();
+//     var WhiteLabel = await whiteLabel.find()
+//     var roles = await Role.find()
+//     // console.log(roles)
+//     var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/users/getOwnChild'
+//     // console.log(fullUrl)
+//     fetch(fullUrl, {
+//         headers: {
+//             'Content-type': 'application/json',
+//             'Authorization': `Bearer ` + req.token, // notice the Bearer before your token
+//         }
+//     }).then(resp => resp.json()).then(result => {
+//         const currentUser = global._User
+//         const users = result.child
+//         const rows = result.rows
+//         res.status(200).render('userTable',{
+//             title: "User table",
+//             users,
+//             rows,
+//             currentUser,
+//             WhiteLabel,
+//             roles
+//         })
+//     })
+// });
 
 exports.userTable = catchAsync(async(req, res, next) => {
     var WhiteLabel = await whiteLabel.find()
@@ -162,6 +190,16 @@ exports.userTable = catchAsync(async(req, res, next) => {
 
    
 });
+
+exports.allOperators = catchAsync(async(req, res, next)=>{
+    const users = await User.find({roleName:"Operator",parent_id:req.currentUser._id})
+
+    res.status(200).render('./allOperators/main',{
+        title:'All Operators',
+        users,
+        currentUser:req.currentUser
+    })
+})
 
 exports.login = catchAsync(async(req, res, next) => {
     if(req.currentUser){
