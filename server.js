@@ -845,7 +845,7 @@ io.on('connection', (socket) => {
                     loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
                     won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
                     void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
-                    returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+                    returns:{$sum:'$returns'}
                     
                 }
             },
@@ -909,7 +909,7 @@ io.on('connection', (socket) => {
                     loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
                     won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
                     void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
-                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','CANCEL']]},'$returns',{"$subtract": [ "$returns", "$Stake" ]}]}}
+                    returns:{$sum:'$returns'}
                     
                 }
             },
@@ -973,7 +973,7 @@ io.on('connection', (socket) => {
                     loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
                     won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
                     void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
-                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','CANCEL']]},'$returns',{"$subtract": [ "$returns", "$Stake" ]}]}}
+                    returns:{$sum:'$returns'}
                     
                 }
             },
@@ -1030,13 +1030,7 @@ io.on('connection', (socket) => {
                     oddValue:1,
                     ip:1,
                     Stake:1,
-                    returns:{
-                        $cond:{
-                            if:{$eq:['$status','WON']},
-                            then:{$subtract:['$returns','$Stake']},
-                            else:'$returns'
-                        }
-                    }
+                    returns:'$returns'
                 }
             },
             {
