@@ -1746,7 +1746,7 @@ io.on('connection', (socket) => {
 
 
     socket.on('betDetails', async(data) => {
-        // console.log(data)
+        console.log(data)
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
         // console.log(marketDetails.data.items)
         // data.data.oldData = data.data.odds
