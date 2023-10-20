@@ -15763,8 +15763,13 @@ socket.on('connect', () => {
                     <td>${date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + " "+ date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()}</td>
                     <td>${data.matchOdds[i].selectionName}</td>
                     <td>${data.matchOdds[i].oddValue}</td>`
-                    html += `<td>${data.matchOdds[i].returns}</td>`
-                    html += `<td>${data.matchOdds[i].returns}</td>`
+                    if(data.matchOdds[i].status == 'OPEN'){
+                        html += `<td>${0}</td>`
+                        html += `<td>${0}</td>`
+                    }else{
+                        html += `<td>${data.matchOdds[i].returns}</td>`
+                        html += `<td>${data.matchOdds[i].returns}</td>`
+                    }
                     html += `
                     <td>${data.matchOdds[i].status}</td>`
                     if(data.matchOdds[i].ip){
@@ -16032,8 +16037,13 @@ socket.on('connect', () => {
                     <td>${data.matchOdds[i].userName}</td>
                     <td>${data.matchOdds[i].selectionName}</td>
                     <td>${data.matchOdds[i].oddValue}</td>`
-                    html += `<td>${data.matchOdds[i].returns}</td>`
-                    html += `<td>${data.matchOdds[i].returns}</td>`
+                    if(data.matchOdds[i].status == 'OPEN'){
+                        html += `<td>${0}</td>`
+                        html += `<td>${0}</td>`
+                    }else{
+                        html += `<td>${data.matchOdds[i].returns}</td>`
+                        html += `<td>${data.matchOdds[i].returns}</td>`
+                    }
                     html += `
                     <td>${data.matchOdds[i].status}</td>`
                     if(data.matchOdds[i].ip){
