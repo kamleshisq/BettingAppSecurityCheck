@@ -5793,6 +5793,16 @@ io.on('connection', (socket) => {
                             }
                         }
                     },
+                    {
+                        $project:{
+                            _id:0,
+                            userName: "$_id.userName",
+                            secId: "$_id.secId",
+                            runs: "$_id.runs",
+                            totalAmount:"$totalAmount.value",
+                            totalWinAmount:"$totalWinAmount.value"
+                        }
+                    }
                     
                     
                 ])
