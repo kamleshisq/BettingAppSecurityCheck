@@ -531,7 +531,7 @@ module.exports = () => {
                         return ele.userId
                     })
 
-                    console.log(newfilterUser,"==>newfilterUser")
+                    // console.log(newfilterUser,"==>newfilterUser")
 
                     let netLossingCommission = await betModel.aggregate([
                         {
