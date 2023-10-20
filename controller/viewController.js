@@ -4520,6 +4520,7 @@ exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
 
 
 exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
+    let limit = 10
     const me = req.currentUser
     let match = req.query.event
     let childrenUsername = []
@@ -4548,14 +4549,45 @@ exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
                 },
                 userName:{$in:childrenUsername},
                 eventName:match,
-                marketName:market
+                marketName:market,
+                loginUserId:{$exists:true},
+                parentIdArray:{$exists:true}
+                }
+            },
+            {
+                $lookup: {
+                    from: "commissionnewmodels",
+                    let: {ud:{$cond:{if:{$ifNull: ["$uniqueId", false]},then:{ $toObjectId: "$uniqueId" },else:'$_id'}},loginId:'$loginUserId',parentArr:'$parentIdArray'},
+                    pipeline: [
+                        {
+                          $match: {
+                            $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
+                            loginUserId:{$exists:true},
+                            parentIdArray:{$exists:true}
+                          }
+                        }
+                      ],
+                    as: "parentdata"
                 }
             },
             {
                 $group: {
-                _id: "$userName",
-                totalCommission: { $sum: "$commission" },
-                netupline: { $sum: "$upline" }
+                    _id: "$userName",
+                    totalCommission: { $sum: "$commission" },
+                    netupline: { $sum:{
+                        $reduce:{
+                            input:'$parentdata',
+                            initialValue:0,
+                            in: { $add: ["$$value", "$$this.commission"] }
+                        }
+                    }},
+                }
+            },
+            {
+                $sort:{
+                _id : -1,
+                totalCommission : 1,
+                netupline : 1
                 }
             }
         ])
