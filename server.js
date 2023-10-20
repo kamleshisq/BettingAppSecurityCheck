@@ -5664,8 +5664,8 @@ io.on('connection', (socket) => {
                         $addFields: {
                           runs: {
                             $toInt: {
-                              $selectionName: [
-                                { $split: ["$market", "@"] },
+                              $arrayElemAt: [
+                                { $split: ["$selectionName", "@"] },
                                 1 
                               ]
                             }
