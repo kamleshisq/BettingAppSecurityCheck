@@ -5598,22 +5598,22 @@ io.on('connection', (socket) => {
 
                     }
                 },
-                {
-                    $group: {
-                      _id: null,
-                      data: {
-                        $push: {
-                          _id: "$_id",
-                          totalAmount: {
-                            $multiply:["$totalAmount", -1]
-                          },
-                          totalWinAmount: {
-                            $multiply:["$totalWinAmount", -1]
-                          }
-                        }
-                      }
-                    }
-                  },
+                // {
+                //     $group: {
+                //       _id: null,
+                //       data: {
+                //         $push: {
+                //           _id: "$_id",
+                //           totalAmount: {
+                //             $multiply:["$totalAmount", -1]
+                //           },
+                //           totalWinAmount: {
+                //             $multiply:["$totalWinAmount", -1]
+                //           }
+                //         }
+                //       }
+                //     }
+                //   },
                 //   {
                 //     $project: {
                 //       _id: 0,
