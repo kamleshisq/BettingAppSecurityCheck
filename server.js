@@ -5817,11 +5817,8 @@ io.on('connection', (socket) => {
                         }
                     },
                     {
-                        $unwind: "$uniqueRuns" 
-                    },
-                    {
-                        $sort: {
-                          uniqueRuns: 1 
+                        $addFields: {
+                          uniqueRuns: { $sort: "$uniqueRuns" } 
                         }
                     },
                     {
