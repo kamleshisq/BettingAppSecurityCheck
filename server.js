@@ -5655,178 +5655,72 @@ io.on('connection', (socket) => {
                 let betData = await Bet.aggregate([
                     {
                         $match: {
-                            status: "OPEN",
-                            marketId: data.marketId,
-                            userName:{$in:childrenUsername1}
+                          status: "OPEN",
+                          marketId: data.marketId,
+                          userName: { $in: childrenUsername1 }
                         }
-                    },
-                    {
+                      },
+                      {
                         $addFields: {
                           runs: {
                             $toInt: {
                               $arrayElemAt: [
                                 { $split: ["$selectionName", "@"] },
-                                1 
+                                1
                               ]
                             }
                           }
                         }
-                    },
-                    {
-                        $group: { 
-                            _id: {
-                                "secId":"$secId",
-                                "userName":"$userName",
-                                "runs":"$runs"
-                            },
-                            uniqueRuns: { $addToSet: "$runs" },
-                            parentArray: { $first: "$parentArray" },
-                            totalAmount: { 
-                                $sum: '$returns'
-                            },
-                            totalWinAmount:{
-                                $sum: { 
-                                    $cond : {
-                                        if : {$eq: ["$secId", "odd_Even_Yes"]},
-                                    then:{
-                                        $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
-                                    },
-                                    else:"$Stake"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        $project:{
-                            _id:0,
-                            userName: "$_id.userName",
-                            secId: "$_id.secId",
-                            runs: "$_id.runs",
-                            parentArray: "$parentArray",
-                            totalAmount1: "$totalAmount",
-                            totalWinAmount1: "$totalWinAmount",
-                            uniqueRuns:"$uniqueRuns",
-                            totalAmount:{
-                                $reduce:{
-                                    input:'$parentArray',
-                                    initialValue: { value: 0, flag: true },
-                                    in : { 
-                                        $cond:{
-                                            if : {
-                                                $and: [
-                                                  { $ne: ['$$this.parentUSerId', data.id] }, 
-                                                  { $eq: ['$$value.flag', true] } 
-                                                ]
-                                              },
-                                            then : {
-                                                value: { 
-                                                    $cond:{
-                                                        if:{ $eq: ["$$value.value", 0] },
-                                                        then:{
-                                                            $multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]
-                                                        },
-                                                        else:{
-                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
-                                                        }
-                                                    }
-                                                },
-                                                flag: true,
-                                                
-                                            },
-                                            else : {
-                                                value: {
-                                                    $cond : {
-                                                        if : { $eq : ["$$value.value" , 0]},
-                                                        then : {
-                                                            $subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]
-                                                        },
-                                                        else : "$$value.value"
-                                                    }
-                                                },
-                                                flag:false
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            totalWinAmount:{
-                                $reduce:{
-                                    input:'$parentArray',
-                                    initialValue: { value: 0, flag: true },
-                                    in : { 
-                                        $cond:{
-                                            if : {
-                                                $and: [
-                                                  { $ne: ['$$this.parentUSerId', data.id] }, 
-                                                  { $eq: ['$$value.flag', true] } 
-                                                ]
-                                              },
-                                            then : {
-                                                value: { 
-                                                    $cond:{
-                                                        if:{ $eq: ["$$value.value", 0] },
-                                                        then:{
-                                                            $multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]
-                                                        },
-                                                        else:{
-                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
-                                                        }
-                                                    }
-                                                },
-                                                flag: true,
-                                                
-                                            },
-                                            else : {
-                                                value: {
-                                                    $cond : {
-                                                        if : { $eq : ["$$value.value" , 0]},
-                                                        then : {
-                                                            $subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]
-                                                        },
-                                                        else : "$$value.value"
-                                                    }
-                                                },
-                                                flag:false
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        $project:{
-                            _id:0,
+                      },
+                      {
+                        $group: {
+                          _id: {
                             secId: "$secId",
-                            runs: "$runs",
-                            totalAmount:"$totalAmount.value",
-                            totalWinAmount:"$totalWinAmount.value",
-                            uniqueRuns:"$uniqueRuns",
-                        }
-                    },
-                    {
-                        $addFields: {
-                          dataTOShow: {
-                            $cond: {
-                              if: { $eq: ["$secId", "odd_Even_Yes"] },
-                              then: { $concat: [ { $toString: "$runs" }, " or more" ] },
-                              else: { $concat: [ { $toString: "$runs" }, " less than" ] }
+                            userName: "$userName",
+                            runs: "$runs"
+                          },
+                          uniqueRuns: { $addToSet: "$runs" },
+                          parentArray: { $first: "$parentArray" },
+                          totalAmount: {
+                            $sum: "$returns"
+                          },
+                          totalWinAmount: {
+                            $sum: {
+                              $cond: {
+                                if: { $eq: ["$secId", "odd_Even_Yes"] },
+                                then: {
+                                  $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                },
+                                else: "$Stake"
+                              }
                             }
                           }
                         }
-                    },
-                    {
-                        $project:{
-                            _id:"$dataTOShow",
-                            secId: "$secId",
-                            runs: "$runs",
-                            totalAmount:"$totalAmount",
-                            totalWinAmount:"$totalWinAmount",
-                            uniqueRuns:"$uniqueRuns",
+                      },
+                      {
+                        $addFields: {
+                          uniqueRuns: {
+                            $reduce: {
+                              input: "$uniqueRuns",
+                              initialValue: [],
+                              in: { $concatArrays: ["$$value", ["$$this"]] }
+                            }
+                          }
                         }
-                    }
-                    
+                      },
+                      {
+                        $sort: { "uniqueRuns": 1 } // Sort uniqueRuns in ascending order
+                      },
+                      {
+                        $project: {
+                          _id: 0,
+                          secId: "$_id.secId",
+                          runs: "$_id.runs",
+                          totalAmount: "$totalAmount",
+                          totalWinAmount: "$totalWinAmount",
+                          uniqueRuns: "$uniqueRuns"
+                        }
+                      }
                     
                     
                 ])
