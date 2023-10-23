@@ -5817,15 +5817,6 @@ io.on('connection', (socket) => {
                         }
                     },
                     {
-                        $addFields: {
-                          uniqueRuns: {
-                            $each: {
-                              $sort: "$uniqueRuns"
-                            }
-                          }
-                        }
-                    },
-                    {
                         $project:{
                             _id:"$dataTOShow",
                             secId: "$secId",
