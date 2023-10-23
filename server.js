@@ -5825,7 +5825,19 @@ io.on('connection', (socket) => {
                             totalWinAmount:"$totalWinAmount",
                             uniqueRuns:"$uniqueRuns",
                         }
-                    }
+                    },
+                    {
+                        $project: {
+                          _id: "$dataTOShow",
+                          secId: "$secId",
+                          runs: "$runs",
+                          totalAmount: "$totalAmount",
+                          totalWinAmount: "$totalWinAmount",
+                          uniqueRuns: {
+                            $setUnion: ["$uniqueRuns"] 
+                          }
+                        }
+                      }
                     
                     
                     
