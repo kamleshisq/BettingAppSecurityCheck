@@ -5810,8 +5810,8 @@ io.on('connection', (socket) => {
                           dataTOShow: {
                             $cond: {
                               if: { $eq: ["$secId", "odd_Even_Yes"] },
-                              then: { $concat: ["$runs", " or more"] },
-                              else: { $concat: ["$runs", " less than"] }
+                              then: { $concat: [ { $toString: "$runs" }, " or more" ] },
+                              else: { $concat: [ { $toString: "$runs" }, " less than" ] }
                             }
                           }
                         }
