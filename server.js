@@ -5828,8 +5828,8 @@ io.on('connection', (socket) => {
                     },
                     {
                         $project: {
-                          _id: 0,
-                          dataTOShow:"$dataTOShow",
+                          _id: "$_id",
+                        //   dataTOShow:"$_id",
                           secId: "$secId",
                           runs: "$runs",
                           totalAmount: "$totalAmount",
