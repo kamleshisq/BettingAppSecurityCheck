@@ -1,0 +1,54 @@
+<form class="commision-filter">
+  <div class="table-top-from-data">
+
+    <div class="input-group">
+        <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="FdateEvent">
+        
+        
+    </div>
+    <div class="input-group"><input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="TdateEvent"></div>
+  </div>
+  </form>
+<div class="pageIdEvent" data-pageid="1"></div>
+
+<div class="data-table">
+    <table>
+      <thead>
+          <tr>
+            <th>Event Date</th>
+            <th>Event Name</th>
+            <th>Commission</th>
+          </tr>
+      </thead>
+      <tbody class="new-body" id="event-tbody">
+        <%for(let i = 0; i < eventWiseData.length; i++){%>
+            <%
+                var timestamp = eventWiseData[i].eventDate ; 
+                var date = new Date(timestamp);
+                var options = { 
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true
+              };
+              var formattedTime = date.toLocaleString('en-US', options);
+               
+            %>
+            <tr class="tbl-data-href" data-href="/admin/commissionReportEvent?event=<%=eventWiseData[i]._id%>">
+                <td><%=formattedTime%></td>
+                <td><%=eventWiseData[i]._id%></td>
+                <td><%=eventWiseData[i].totalCommission%></td>
+            </tr>
+        <%}%>
+      </tbody>
+    </table>
+    <div class="loadMorediveEvent" id="loadMorediveEvent">
+    <%if(eventWiseData.length >= 10){%>
+      <a id="loadMoreEvent">Load More</a>
+      <%}%>
+    </div>
+  </div>
+
+

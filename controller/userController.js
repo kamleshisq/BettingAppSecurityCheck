@@ -27,9 +27,9 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     if(user_type.role_level < req.currentUser.role.role_level){
         return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
     }
-    if(!req.currentUser.role.userAuthorization.includes(user_type.role_type)){
-        return next(new AppError("You do not have permission to perform this action", 404))
-    }
+    // if(!req.currentUser.role.userAuthorization.includes(user_type.role_type)){
+    //     return next(new AppError("You do not have permission to perform this action", 404))
+    // }
     if(!req.body.whiteLabel){
         return next(new AppError("please provide a white lable for user", 404))
     }
@@ -42,7 +42,17 @@ exports.createUser = catchAsync(async(req, res, next)=>{
     if(req.currentUser.parentUsers){
         req.body.parentUsers = req.currentUser.parentUsers
     }
+    // console.log(req.body.parentUsers, '+==> parentsUser')
     req.body.parentUsers.push(req.currentUser._id)
+    // console.log(req.body.parentUsers, '+==> parentsUser')
+
+    // console.log(req.body)
+    if(req.body.share){
+        req.body.Share = req.body.share
+    }
+    if(req.body.Visible){
+        req.body.myShare = req.body.Visible
+    }
     // console.log(req.body)
     const newUser = await User.create(req.body);
     if(req.body.roleName === "Admin" || req.body.roleName === "Super-Duper-Admin"){
@@ -60,7 +70,8 @@ exports.createUser = catchAsync(async(req, res, next)=>{
         const updatedChild = await User.findByIdAndUpdate(newUser.id, newUser,{
             new:true
         });
-        const updatedparent =  await User.findByIdAndUpdate(req.currentUser.id, req.currentUser);
+        const updatedparent =  await User.findByIdAndUpdate(req.currentUser.id, {availableBalance:req.currentUser.availableBalance, downlineBalance:req.currentUser.downlineBalance});
+        // const updatedparent =  await User.findByIdAndUpdate(req.currentUser.id, req.currentUser);
         if(!updatedChild || !updatedparent){
             return next(new AppError("Ops, Something went wrong While Fund Debit Please try again later", 500))
         }
@@ -173,38 +184,46 @@ exports.updateUserStatusCodeInactive = catchAsync(async(req, res, next) => {
 
 exports.updateUserStatusCodeActive = catchAsync(async(req, res, next)=>{
     // const userDetails = await User.findById(req.body.id);
-    let userDetails
-    if(req.currentUser.role.role_level == 1){
-        userDetails = await User.findById(req.body.id)
-    }else{
-        userDetails = await User.findOne({_id:req.body.id, whiteLabel:req.currentUser.whiteLabel})
-    }
+    let userDetails = await User.findById(req.body.id)
     if(!userDetails){
         return next(new AppError("There is no user with taht id", 404))
     }
 
-    if(req.currentUser.role.role_type > userDetails.role.role_type){
-        return next(new AppError("You do not have permission to perform this action because user role type is higher", 404))
-    }
-    if(userDetails.isActive){
-        res.status(200).json({
-            status:"success",
-            message:"User is already active"
-        })
-    }else{
-        const user = await User.findByIdAndUpdate(req.body.id, {isActive:true})
-        if(!user){
-            res.status(404).json({
-                status:'error',
-                message:"Ops, something went wrong please try again"
-            })
-        }else{
-            res.status(200).json({
-                status:"success",
-                user
-            })
+    // console.log(req.body, "Body")
+    try{
+        if(req.body.status === "suspended"){
+            await User.findByIdAndUpdate(req.body.id, {isActive:false, betLock:true})
+        }else if (req.body.status === "active"){
+            await User.findByIdAndUpdate(req.body.id, {isActive:true, betLock:false})
+        }else if (req.body.status === "betLock"){
+            await User.findByIdAndUpdate(req.body.id, {isActive:true, betLock:true})
         }
+        res.status(200).json({
+            status:"success"
+        })
+    }catch(err){
+        console.log(err)
+        return next(new AppError("Please try again leter", 404))
     }
+    // if(userDetails.isActive){
+    //     res.status(200).json({
+    //         status:"success",
+    //         message:"User is already active"
+    //     })
+    // }else{
+    //     const user = await User.findByIdAndUpdate(req.body.id, {isActive:true})
+    //     if(!user){
+    //         res.status(404).json({
+    //             status:'error',
+    //             message:"Ops, something went wrong please try again"
+    //         })
+    //     }else{
+    //         res.status(200).json({
+    //             status:"success",
+    //             user
+    //         })
+    //     }
+    // }
 })
 
 exports.getAllUser = catchAsync(async(req, res, next) => {
@@ -298,13 +317,8 @@ exports.updateUserStatusBattingUnlock = catchAsync(async(req, res, next) => {
 
 exports.changePassword = catchAsync(async(req, res, next) => {
     // const user = await User.findById(req.body.id).select('+password')
-    console.log(req.body)
-    let user
-    if(req.currentUser.role.role_level == 1){
-        user = await User.findById(req.body.id).select('+password')
-    }else{
-        user = await User.findOne({_id:req.body.id, whiteLabel:req.currentUser.whiteLabel}).select('+password')
-    }
+
+    let user = await User.findOne({_id:req.body.id}).select('+password')
     // // console.log(req.body.password)
     if(!user){
         return next(new AppError("User not found", 404))
@@ -532,6 +546,12 @@ exports.getOwnChild = catchAsync(async(req, res, next) => {
     let Rows;
     let me;
     let page = req.query.page;
+    let operationId;
+    if(req.currentUser.roleName == 'Operator'){
+        operationId = req.currentUser.parent_id
+    }else{
+        operationId = req.currentUser._id
+    }
     if(!page){
         page = 0;
     }
@@ -547,16 +567,16 @@ exports.getOwnChild = catchAsync(async(req, res, next) => {
     if(req.query.id){
         me = await User.findById(req.query.id)
         if(!me){
-            return next(new AppError('user not find',400))
+            return next(new AppError('user not found'))
         }
         if(me.role.role_level < req.currentUser.role.role_level){
             return next(new AppError('You do not have permission to perform this action',400))
         }
-        Rows = await User.count({parent_id: req.query.id,isActive:true})
-        child = await User.find({parent_id: req.query.id,isActive:true}).skip(page * limit).limit(limit);
+        Rows = await User.count({parent_id: req.query.id})
+        child = await User.find({parent_id: req.query.id,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit);
     }else{
-        Rows = await User.count({parent_id: req.currentUser._id,isActive:true})
-        child = await User.find({parent_id: req.currentUser._id,isActive:true}).skip(page * limit).limit(limit);
+        Rows = await User.count({parent_id: operationId})
+        child = await User.find({parent_id: operationId,roleName:{$ne:'Operator'}}).skip(page * limit).limit(limit);
         me = await User.findById(req.currentUser._id)
     }
     res.status(200).json({

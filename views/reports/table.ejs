@@ -1,4 +1,4 @@
-<table>
+<table id="table12">
   <thead>
     <tr>
       <th>S.No</th>
@@ -18,13 +18,14 @@
     </tr>
   </thead>
   <tbody class="new-body">
+    <%if(bets.length !== 0){%>
     <% for(let i = 0; i < bets.length; i++){%>
     <% let date = new Date(bets[i].date)%>
-    <%if((i%2)==0){%>
-    <tr>
-      <%}else{%>
-      <tr>
-        <%}%>
+    <%if(bets[i].bettype2 === 'BACK'){%>
+      <tr class="back">
+    <%}else{%>
+      <tr class="lay">
+    <%}%>
         <td><%=i + 1%></td>
         <td><%=bets[i].userName%></td>
         <td class="date-time"><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
@@ -50,5 +51,8 @@
       </tr>
       <%}%>
     </tr>
+    <%}else{%>
+      <tr class="empty_table"><td>No record found</td></tr>
+    <%}%>
   </tbody>
 </table>

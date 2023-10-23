@@ -1,0 +1,331 @@
+<section>
+    <div class="container-fluid">
+        <div class="table-data-section">
+            
+            <div class="data-table">
+              <div class="rowId" data-rowid="1"></div>
+  <table class="bet-list-table">
+  <thead>
+      <tr>
+        <th>Sport</th>
+        <th>Min Stake</th>
+        <th>Max Stake </th>
+        <th>Max Profit</th>
+        <th>Max Odd</th>
+        <th>Delay</th>
+        <th>Actions </th>
+        </tr>
+  </thead>
+  <tbody class="new-body">
+
+
+
+
+    <!-- CRICKET -->
+    <tr>
+      <td id="Cricket" ><div class="bet-list-dropdown"><span  dataId="home"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></span><a href="/admin/betlimit/sports?game=cricket">Cricket</a></div></td>
+      <%
+      let cricketLimit =  betLimit.find(item => item.type == "Cricket")
+      %>
+      <td><input type="text" class="form-datas" value="<%=cricketLimit.min_stake%>" readonly=""></td>
+      <td><input type="text" class="form-datas" value="<%=cricketLimit.max_stake%>" readonly=""></td>
+      <td><input type="text" class="form-datas" value="<%=cricketLimit.max_profit%>" readonly=""></td>
+      <td><input type="text" class="form-datas" value="<%=cricketLimit.max_odd%>" readonly=""></td>
+      <td><input type="text" class="form-datas" value="<%=cricketLimit.delay%>" readonly=""></td>
+      <td>
+        <div class="btn-group">
+          <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+        </div>
+      </td>
+    </tr>
+  
+    <tr class="hide-row">
+      <%
+      let cricketMatchOddLimit =  betLimit.find(item => item.type == "Cricket/matchOdds")
+      %>
+      <td id="Cricket/matchOdds" >MATCH ODDS</td>
+      <td><input type="text" class="form-datas" value="<%=cricketMatchOddLimit.min_stake%>" readonly=""></td>
+      <td><input type="text" class="form-datas" value="<%=cricketMatchOddLimit.max_stake%>" readonly=""></td>
+      <td><input type="text" class="form-datas" value="<%=cricketMatchOddLimit.max_profit%>" readonly=""></td>
+      <td><input type="text" class="form-datas" value="<%=cricketMatchOddLimit.max_odd%>" readonly=""></td>
+      <td><input type="text" class="form-datas" value="<%=cricketMatchOddLimit.delay%>" readonly=""></td>
+      <td data-details="{&quot;_id&quot;:&quot;6493e1c391bced57d36e6b49&quot;,&quot;type&quot;:&quot;Sport&quot;,&quot;min_stake&quot;:100,&quot;max_stake&quot;:10000,&quot;max_profit&quot;:500,&quot;max_odd&quot;:100,&quot;delay&quot;:10,&quot;__v&quot;:0}">
+        <div class="btn-group">
+          <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+        </div>
+      </td>
+    </tr>
+
+    <tr class="hide-row">
+      <%
+      let cricketMatchBookMakerLimit =  betLimit.find(item => item.type == "Cricket/bookMaker")
+      %>
+        <td id="Cricket/bookMaker">BOOK MAKER</td>
+        <td><input type="text" class="form-datas" value="<%=cricketMatchBookMakerLimit.min_stake%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=cricketMatchBookMakerLimit.max_stake%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=cricketMatchBookMakerLimit.max_profit%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=cricketMatchBookMakerLimit.max_odd%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=cricketMatchBookMakerLimit.delay%>" readonly=""></td>
+        <td data-details="{&quot;_id&quot;:&quot;6493e1c391bced57d36e6b49&quot;,&quot;type&quot;:&quot;Sport&quot;,&quot;min_stake&quot;:100,&quot;max_stake&quot;:10000,&quot;max_profit&quot;:500,&quot;max_odd&quot;:100,&quot;delay&quot;:10,&quot;__v&quot;:0}">
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+          </div>
+        </td>
+      </tr>
+
+
+      <tr class="hide-row">
+        <%
+      let cricketMatchFancyLimit =  betLimit.find(item => item.type == "Cricket/fency")
+      %>
+        <td id="Cricket/fency">FANCY</td>
+        <td><input type="text" class="form-datas" value="<%=cricketMatchFancyLimit.min_stake%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=cricketMatchFancyLimit.max_stake%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=cricketMatchFancyLimit.max_profit%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=cricketMatchFancyLimit.max_odd%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=cricketMatchFancyLimit.delay%>" readonly=""></td>
+        <td data-details="{&quot;_id&quot;:&quot;6493e1c391bced57d36e6b49&quot;,&quot;type&quot;:&quot;Sport&quot;,&quot;min_stake&quot;:100,&quot;max_stake&quot;:10000,&quot;max_profit&quot;:500,&quot;max_odd&quot;:100,&quot;delay&quot;:10,&quot;__v&quot;:0}">
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+          </div>
+        </td>
+      </tr>
+
+    <!-- Football -->
+
+
+    <tr>
+      <%
+      let footballData =  betLimit.find(item => item.type == "Football")
+      %>
+        <td id="Football"><div class="bet-list-dropdown"><span  dataId="home"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></span><a href="/admin/betlimit/sports?game=football">Football</a></div></td>
+        <td><input type="text" class="form-datas" value="<%=footballData.min_stake%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=footballData.max_stake%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=footballData.max_profit%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=footballData.max_odd%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=footballData.delay%>" readonly=""></td>
+        <td>
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="hide-row">
+        <%
+      let footballMatchData =  betLimit.find(item => item.type == "Football/matchOdds")
+      %>
+        <td id="Football/matchOdds">MATCH ODDS</td>
+        <td><input type="text" class="form-datas" value="<%=footballMatchData.min_stake%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=footballMatchData.max_stake%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=footballMatchData.max_profit%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=footballMatchData.max_odd%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=footballMatchData.delay%>" readonly=""></td>
+        <td data-details="{&quot;_id&quot;:&quot;6493e1c391bced57d36e6b49&quot;,&quot;type&quot;:&quot;Sport&quot;,&quot;min_stake&quot;:100,&quot;max_stake&quot;:10000,&quot;max_profit&quot;:500,&quot;max_odd&quot;:100,&quot;delay&quot;:10,&quot;__v&quot;:0}">
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+          </div>
+        </td>
+      </tr>
+
+      <!-- Tennis -->
+
+
+      <tr>
+        <%
+      let TennisDATA =  betLimit.find(item => item.type == "Tennis")
+      %>
+        <td id="Tennis" ><div class="bet-list-dropdown"><span  dataId="home"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></span><a href="/admin/betlimit/sports?game=tennis">Tennis</a></div></td>
+        <td><input type="text" class="form-datas" value="<%=TennisDATA.min_stake%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=TennisDATA.max_stake%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=TennisDATA.max_profit%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=TennisDATA.max_odd%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=TennisDATA.delay%>" readonly=""></td>
+        <td>
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="hide-row">
+        <%
+        let TennisMATCH =  betLimit.find(item => item.type == "Tennis/matchOdds")
+        %>
+        <td id="Tennis/matchOdds" >MATCH ODDS</td>
+        <td><input type="text" class="form-datas" value="<%=TennisMATCH.min_stake%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=TennisMATCH.max_stake%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=TennisMATCH.max_profit%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=TennisMATCH.max_odd%>" readonly=""></td>
+        <td><input type="text" class="form-datas" value="<%=TennisMATCH.delay%>" readonly=""></td>
+        <td data-details="{&quot;_id&quot;:&quot;6493e1c391bced57d36e6b49&quot;,&quot;type&quot;:&quot;Sport&quot;,&quot;min_stake&quot;:100,&quot;max_stake&quot;:10000,&quot;max_profit&quot;:500,&quot;max_odd&quot;:100,&quot;delay&quot;:10,&quot;__v&quot;:0}">
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+          </div>
+        </td>
+      </tr>
+
+
+      <!-- Horserace -->
+
+      <tr>
+        <td id="Horserace"><div class="bet-list-dropdown"><span  dataId="home"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></span>Horserace</div></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td>
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="hide-row">
+        <td id="Horserace/matchOdds" >MATCH ODDS</td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td data-details="{&quot;_id&quot;:&quot;6493e1c391bced57d36e6b49&quot;,&quot;type&quot;:&quot;Sport&quot;,&quot;min_stake&quot;:100,&quot;max_stake&quot;:10000,&quot;max_profit&quot;:500,&quot;max_odd&quot;:100,&quot;delay&quot;:10,&quot;__v&quot;:0}">
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+          </div>
+        </td>
+      </tr>
+
+
+      <!-- greyhound -->
+
+
+      <tr>
+        <td id="Greyhound"><div class="bet-list-dropdown"><span  dataId="home"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></span>Greyhound</div></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td>
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="hide-row">
+        <td id="Greyhound/matchOdds" >MATCH ODDS</td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td data-details="{&quot;_id&quot;:&quot;6493e1c391bced57d36e6b49&quot;,&quot;type&quot;:&quot;Sport&quot;,&quot;min_stake&quot;:100,&quot;max_stake&quot;:10000,&quot;max_profit&quot;:500,&quot;max_odd&quot;:100,&quot;delay&quot;:10,&quot;__v&quot;:0}">
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+          </div>
+        </td>
+      </tr>
+
+      <!-- Baseball -->
+
+
+      <tr>
+        <td id="Baseball"><div class="bet-list-dropdown"><span  dataId="home"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></span>Baseball</div></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td>
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="hide-row">
+        <td id="Baseball/matchOdds" >MATCH ODDS</td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td data-details="{&quot;_id&quot;:&quot;6493e1c391bced57d36e6b49&quot;,&quot;type&quot;:&quot;Sport&quot;,&quot;min_stake&quot;:100,&quot;max_stake&quot;:10000,&quot;max_profit&quot;:500,&quot;max_odd&quot;:100,&quot;delay&quot;:10,&quot;__v&quot;:0}">
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+          </div>
+        </td>
+      </tr>
+
+
+      <!-- basketBall -->
+
+
+      <tr>
+        <td id="basketball" ><div class="bet-list-dropdown"><span  dataId="home"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></span>basketball</div></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td>
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="hide-row">
+        <td id="basketball/matchOdds" >MATCH ODDS</td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td data-details="{&quot;_id&quot;:&quot;6493e1c391bced57d36e6b49&quot;,&quot;type&quot;:&quot;Sport&quot;,&quot;min_stake&quot;:100,&quot;max_stake&quot;:10000,&quot;max_profit&quot;:500,&quot;max_odd&quot;:100,&quot;delay&quot;:10,&quot;__v&quot;:0}">
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+          </div>
+        </td>
+      </tr>
+
+
+      <!-- kabaddi -->
+
+
+
+      <tr>
+        <td id="kabaddi" ><div class="bet-list-dropdown"><span  dataId="home"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></span>kabaddi</div></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td>
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+          </div>
+        </td>
+      </tr>
+    
+      <tr class="hide-row">
+        <td id="kabaddi/matchOdds" >MATCH ODDS</td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td><input type="text" class="form-datas" value="0" readonly=""></td>
+        <td data-details="{&quot;_id&quot;:&quot;6493e1c391bced57d36e6b49&quot;,&quot;type&quot;:&quot;Sport&quot;,&quot;min_stake&quot;:100,&quot;max_stake&quot;:10000,&quot;max_profit&quot;:500,&quot;max_odd&quot;:100,&quot;delay&quot;:10,&quot;__v&quot;:0}">
+          <div class="btn-group">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2" class="btn update updateBetLimit">Update</button>
+          </div>
+        </td>
+      </tr>
+  </tbody>
+  </table>
+            </div>
+        </div>
+    </div>
+  </section>

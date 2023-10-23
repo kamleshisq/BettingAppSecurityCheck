@@ -31,16 +31,20 @@
                         </tr>
                       </thead>
                       <tbody id="<%=openBet[i].details[j].id%>" class="MarketIdsR">
+                        <%console.log(openBet[i].details[j])%>
                         <%for(let k = 0; k < openBet[i].details[j].length; k++){%>
+                          <%if(k < 1){%>
+
                           <%
+                          <!-- if() -->
                           let dataT 
                           let matchodd = false
-                          console.log(openBet[i].details[j][k].id, "IDDDDD")
-                          dataT = liveTennis.find(item => (item.marketList.match_odd != null) &&(item.marketList.match_odd.marketId == openBet[i].details[j][k].id))
+                          <!-- console.log(openBet[i].details[j][k].id, "IDDDDD") -->
+                          dataT = liveTennis.find(item => (item.marketList) && (item.marketList.match_odd != null) &&(item.marketList.match_odd.marketId == openBet[i].details[j][k].id))
                           <!-- console.log(dataT, "1212121212") -->
                           if(!dataT){
                             matchodd = true
-                            dataT = liveTennis.find(item => (item.marketList.bookmaker != null) &&(item.marketList.bookmaker[0].marketId == openBet[i].details[j][k].id))
+                            dataT = liveTennis.find(item => (item.marketList) && (item.marketList.bookmaker != null) &&(item.marketList.bookmaker[0].marketId == openBet[i].details[j][k].id))
                           }
                         %>
                         <%if(!matchodd){%>
@@ -73,6 +77,7 @@
                                 <td id="<%=secIds[j]%>B">00</td>
                             </tr>
                           <%}%>
+                        <%}%>
                         <%}%>
                         <%}%>
                       </tbody>

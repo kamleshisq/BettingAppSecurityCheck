@@ -1,0 +1,103 @@
+<section>
+  <div class="container-fluid">
+      <div class="table-data-section">
+          
+          <div class="data-table">
+            <div class="rowId" data-rowid="1"></div>
+<table class="bet-list-table">
+    <%if(seriesMatch.length > 0){%>
+      <thead>
+          <tr>
+              <th>Market</th>
+              <th>Min Stake</th>
+              <th>Max Stake </th>
+              <th>Max Profit</th>
+              <th>Max Odd</th>
+              <th>Delay</th>
+              <th>Actions </th>
+              </tr>
+      </thead>
+      <tbody class="new-body">
+          <%for (var key in seriesMatch[0].marketList) {%>
+              <%if (seriesMatch[0].marketList.hasOwnProperty(key) && seriesMatch[0].marketList[key] != null ) {%>
+                <%if(Array.isArray(seriesMatch[0].marketList[key])){%>
+                  <%for(let i = 0; i< seriesMatch[0].marketList[key].length; i++){%>
+                    <%
+                      let data = betLimit.find(item => item.type == seriesMatch[0].marketList[key][i].marketId)
+                      if(data){
+                    %>
+                    <tr>
+                      <td id="<%=seriesMatch[0].marketList[key][i].marketId%>" class="btn-filter"><%=seriesMatch[0].marketList[key][i].title%></td>
+                      <td><input type="text" class="form-datas" value="<%=data.min_stake%>" readonly=""></td>
+                      <td><input type="text" class="form-datas" value="<%=data.max_stake%>" readonly=""></td>
+                      <td><input type="text" class="form-datas" value="<%=data.max_profit%>" readonly=""></td>
+                      <td><input type="text" class="form-datas" value="<%=data.max_odd%>" readonly=""></td>
+                      <td><input type="text" class="form-datas" value="<%=data.delay%>" readonly=""></td>
+                      <td>
+                        <div class="btn-group">
+                          <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2"class="btn update updateBetLimitMATCH">Update</button>
+                        </div>
+                      </td>
+                    </tr>
+                    <%}else{%>
+                    <tr>
+                      <td id="<%=seriesMatch[0].marketList[key][i].marketId%>" class="btn-filter"><%=seriesMatch[0].marketList[key][i].title%></td>
+                      <td><input type="text" class="form-datas" value="0" readonly=""></td>
+                      <td><input type="text" class="form-datas" value="0" readonly=""></td>
+                      <td><input type="text" class="form-datas" value="0" readonly=""></td>
+                      <td><input type="text" class="form-datas" value="0" readonly=""></td>
+                      <td><input type="text" class="form-datas" value="0" readonly=""></td>
+                      <td>
+                        <div class="btn-group">
+                          <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2"class="btn update updateBetLimitMATCH">Update</button>
+                        </div>
+                      </td>
+                    </tr>
+                    <%}%>
+                  <%}%>
+                <%}else{%>
+                  <%
+                  let data = betLimit.find(item => item.type == seriesMatch[0].marketList[key].marketId)
+                  console.log(data, "DATA123456789")
+                  if(data){
+                  %>
+                  <tr>
+                    <td id="<%=seriesMatch[0].marketList[key].marketId%>" class="btn-filter"><%=key%></td>
+                    <td><input type="text" class="form-datas" value="<%=data.min_stake%>" readonly=""></td>
+                    <td><input type="text" class="form-datas" value="<%=data.max_stake%>" readonly=""></td>
+                    <td><input type="text" class="form-datas" value="<%=data.max_profit%>" readonly=""></td>
+                    <td><input type="text" class="form-datas" value="<%=data.max_odd%>" readonly=""></td>
+                    <td><input type="text" class="form-datas" value="<%=data.delay%>" readonly=""></td>
+                    <td>
+                      <div class="btn-group">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2"class="btn update updateBetLimitMATCH">Update</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <%}else{%>
+                  <tr>
+                      <td id="<%=seriesMatch[0].marketList[key].marketId%>" class="btn-filter"><%=key%></td>
+                      <td><input type="text" class="form-datas" value="0" readonly=""></td>
+                      <td><input type="text" class="form-datas" value="0" readonly=""></td>
+                      <td><input type="text" class="form-datas" value="0" readonly=""></td>
+                      <td><input type="text" class="form-datas" value="0" readonly=""></td>
+                      <td><input type="text" class="form-datas" value="0" readonly=""></td>
+                      <td>
+                        <div class="btn-group">
+                          <button type="button" data-bs-toggle="modal" data-bs-target="#myModal2"class="btn update updateBetLimitMATCH">Update</button>
+                        </div>
+                      </td>
+                    </tr>
+                    <%}%>
+                <%}%>
+              <%}%>
+          <%}%>
+      </tbody>
+  <%}else{%>
+      <tr class="empty_table"><td>No <%=gameName%> Series! </td></tr>
+  <%}%>
+</table>
+          </div>
+      </div>
+  </div>
+</section>

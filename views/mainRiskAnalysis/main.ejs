@@ -3,6 +3,7 @@
 
 <head>
     <title>Risk Analysis</title>
+    <div class="rowId" data-rowid="1"></div>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -39,9 +40,18 @@
                   <div class="title">
                       <div class="text-left market" id="<%=match.marketList.match_odd.marketId%>"><strong>Match Odds</strong></div>
                       <div class="text-right">
-                        <!-- <strong>Min : <%=min%>, Max : <%=max%></strong> -->
+                        <!-- <strong>Min : 100, Max : 1000</strong> -->
                         <div class="btn-group" >
+                            <%
+                                let suspendCheck = suspend.some(item => item.marketId == match.marketList.match_odd.marketId)
+                            %>
+                            <%if(suspendCheck){%>
+                                <button class="min-max-modal Suspend-Resume" id="<%=match.marketList.match_odd.marketId%>" >Resume</button>
+                            <%}else{%>
+                                <button class="min-max-modal Suspend-Resume" id="<%=match.marketList.match_odd.marketId%>" >Suspend</button>
+                            <%}%>
                             <button class="min-max-modal userBook" data-bs-toggle="modal" data-bs-target="#matchodd-modal">User Book</button>
+                            <button class="min-max-modal BookList" data-bs-toggle="modal" data-bs-target="#bookmaker-modal">Book</button>
                             <button class="min-max-modal tbl-data-href" data-href="/admin/matchBets?id=<%=match.marketList.match_odd.marketId%>">Bets</button>
                         </div>
                         </div>
@@ -112,7 +122,17 @@
                       <div class="text-right">
                         <!-- <strong>Min : 100, Max : 10K</strong> -->
                         <div class="btn-group" >
+                            <%
+                                let suspendCheck = suspend.some(item => item.marketId == match.marketList.bookmaker[0].marketId)
+                            %>
+                            <%if(suspendCheck){%>
+                                <button class="min-max-modal Suspend-Resume" id="<%=match.marketList.bookmaker[0].marketId%>" >Resume</button>
+                            <%}else{%>
+                                <button class="min-max-modal Suspend-Resume" id="<%=match.marketList.bookmaker[0].marketId%>" >Suspend</button>
+                            <%}%>
+                            <!-- <button class="min-max-modal Suspend-Resume" id="<%=match.marketList.bookmaker[0].marketId%>" >Suspend</button> -->
                             <button class="min-max-modal userBook" data-bs-toggle="modal" data-bs-target="#matchodd-modal">User Book</button>
+                            <button class="min-max-modal BookList" data-bs-toggle="modal" data-bs-target="#bookmaker-modal">Book</button>
                             <button class="min-max-modal tbl-data-href" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button>
                         </div>
                         <!-- <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button></div> -->
@@ -216,9 +236,28 @@
                 </table>
             </div> -->
             <!-- Fancy -->
+            <%if(match.marketList.odd_even != null || match.marketList.session != null){%>
             <div class="bets-table">
               <div class="title">
                   <div class="text-left"><strong>Fancy</strong></div>
+                  <div class="text-right">
+                    <!-- <strong>Min : 100, Max : 10K</strong> -->
+                    <div class="btn-group" >
+                        <%
+                        let suspendCheck = suspend.some(item => item.marketId == `${match.eventData.eventId}/FANCY`)
+                    %>
+                    <%if(suspendCheck){%>
+                        <button class="min-max-modal Suspend-Resume" id="<%=match.eventData.eventId%>/FANCY" >Resume</button>
+                    <%}else{%>
+                        <button class="min-max-modal Suspend-Resume" id="<%=match.eventData.eventId%>/FANCY" >Suspend</button>
+                    <%}%>
+                        <!-- <button class="min-max-modal Suspend-Resume"  id="<%=match.eventData.eventId%>/FANCY">Suspend</button> -->
+                        <!-- <button class="min-max-modal userBook" data-bs-toggle="modal" data-bs-target="#matchodd-modal">User Book</button> -->
+                        <!-- <button class="min-max-modal BookList" data-bs-toggle="modal" data-bs-target="#bookmaker-modal">Book</button> -->
+                        <!-- <button class="min-max-modal tbl-data-href" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button> -->
+                    </div>
+                    <!-- <button class="min-max-modal" data-href="/admin/matchBets?id=<%=match.marketList.bookmaker[0].marketId%>">Bets</button></div> -->
+                </div>
               </div>
               <div class="tab-data-section">
                 <div class="tab">
@@ -230,7 +269,7 @@
                       <%} %>
                       <% let dataSessionOnly = match.marketList.session.filter(item => item.status == 1 && item.title.startsWith("Only")) %>
                           <%if(dataSessionOnly.length > 0){%>
-                      <button class="tablinks" data-tag="Only_over">Only Overt</button>
+                      <button class="tablinks" data-tag="Only_over">Only Over</button>
                       <%} %>
                       <% let dataNotOnly = match.marketList.session.filter(item => item.status == 1 && !item.title.includes("Over")) %>
                       <%if(dataNotOnly.length > 0 ) {%>
@@ -257,7 +296,7 @@
                             </tr>
                             <%for(let i = 0; i < sessionData.length; i++){%>
                                 <tr class="market" id="<%=sessionData[i].marketId%>">
-                                    <td ><%=sessionData[i].title%></td>
+                                    <td ><%=sessionData[i].title%>  <button class="min-max-modal fancy disable" data-bs-toggle="modal" data-bs-target="#Fancy-modal" data-id="<%=sessionData[i].marketId%>">Book</button></td>
                                     <td>    
                                     <div class="bets-option-btn">
                                         <div class="bets-btn-group">                                 
@@ -294,7 +333,7 @@
                             </tr>
                             <%for(let i = 0; i < dataSessionOnly.length; i++){%>
                             <tr class="market" id="<%=sessionData[i].marketId%>">
-                                <td ><%=sessionData[i].title%></td>
+                                <td ><%=sessionData[i].title%> <button class="min-max-modal fancy disable" data-bs-toggle="modal" data-bs-target="#Fancy-modal" data-id="<%=sessionData[i].marketId%>">Book</button></td>
                                 <td>    
                                 <div class="bets-option-btn">
                                     <div class="bets-btn-group">                                 
@@ -321,7 +360,7 @@
                     <div class="tabcontent" id="wp_market">
                       <table>
                           <tr>
-                              <th>W/P Market</th>
+                              <th>W/P Market </th>
                               <th>
                                   <div class="bets-option-btn">
                                       <div class="bets-btn-group">Yes</div>
@@ -331,7 +370,7 @@
                           </tr>
                           <%for(let i = 0; i < dataNotOnly.length; i++){%>
                             <tr class="market" id="<%=dataNotOnly[i].marketId%>">
-                                <td><%=dataNotOnly[i].title%></td>
+                                <td><%=dataNotOnly[i].title%> <button class="min-max-modal fancy disable" data-bs-toggle="modal" data-bs-target="#Fancy-modal" data-id="<%=dataNotOnly[i].marketId%>">Book</button> </td>
                                 <td>    
                                 <div class="bets-option-btn">
                                     <div class="bets-btn-group">                                 
@@ -368,7 +407,7 @@
                           </tr>
                           <%for(let i = 0; i < match.marketList.odd_even.length; i++){%>
                             <tr class="market" id="<%=match.marketList.odd_even[i].marketId%>">
-                                <td><%=match.marketList.odd_even[i].title%></td>
+                                <td><%=match.marketList.odd_even[i].title%> <button class="min-max-modal fancy disable" data-bs-toggle="modal" data-bs-target="#Fancy-modal" data-id="<%=match.marketList.odd_even[i].marketId%>">Book</button></td>
                                 <td>    
                                 <div class="bets-option-btn">
                                     <div class="bets-btn-group">                                 
@@ -392,10 +431,11 @@
                   <%}%>
               </div>
           </div>
+          <%}%>
         </div>
 
         <div class="sidebar">
-          <%if(liveStream.data){%>
+          <%if(src){%>
             <div class="sidebar-block live-match">
                 <div class="sidebar-title">Live stream</div>
                 <div class="sidebar-content">
@@ -408,18 +448,25 @@
               <div class="sidebar-content" style="display: block;">
                   <div class="data-table">
                       <table id="betTable">
-                          <tr>
-                              <th>Username</th>
-                              <th>Place Date</th>
-                              <th>Market</th>
-                              <!-- <th>Bet Type</th> -->
-                              <th>Odds</th>
-                              <th>Stake</th>
-                              <th>Action</th>
-                          </tr>
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Place Date</th>
+                                <th>Market</th>
+                                <!-- <th>Bet Type</th> -->
+                                <th>Odds</th>
+                                <th>Stake</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="betTableBody">
                           <%for(let i = 0; i < Bets.length; i++){%>
                             <% let date = new Date(Bets[i].date)%>
-                            <tr>
+                            <%if(Bets[i].bettype2 === "BACK"){%>
+                                <tr class="back" >
+                            <%}else{%>
+                                <tr class="lay" >
+                            <%}%>
                                 <td><%=Bets[i].userName%></td>
                                 <td><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
                                 <td><%=Bets[i].marketName%></td>
@@ -429,8 +476,14 @@
                                 <td><div class="btn-group"><button class="btn alert-btn" id="<%=Bets[i].id%>">Alert</button></div></td>
                             </tr>
                           <%}%>
+                        </tbody>
                       </table>
                   </div>
+                  <%if(Bets.length != 0){%>
+                  <div id="load-more">
+                    <button class="load-more">Load More</button>
+                  </div>
+                  <%}%>
               </div>
           </div>
         </div>
@@ -438,27 +491,7 @@
     </div>
 </body>
 
-<div class="modal fade" id="matchodd-modal" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
-        </div>
-        <!-- <div class="modal-header">
-          <h4 class="modal-title">Match Odds</h4>
-        </div> -->
-        <div class="modal-body">
-          <div class="data-table">
-            <table id="match_odd">
-                
-              </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="bookmaker-modal" role="dialog">
+<div class="modal fade align-top-popup user-book-popup" id="matchodd-modal" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">
@@ -466,18 +499,58 @@
           <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
         </div>
         <div class="modal-header">
-          <h4 class="modal-title">Bookmaker</h4>
+          <h4 class="modal-title">User Book List</h4>
         </div>
         <div class="modal-body">
             <div class="data-table">
-          <table id="bookmakerTable">
-            <tr>
-                <th>User name</th>
-                <th></th>
-                <th></th>
-            </tr>
-          </table>
+                <table id="match_odd" data-marketid="">
+                    
+                </table>
+            </div>
+         
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal user-book-popup fade" id="bookmaker-modal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+          </div>
+          <div class="modal-header">
+            <h4 class="modal-title">Book List</h4>
+          </div>
+          <div class="modal-body">
+              <div class="data-table">
+                  <table id="match_odd_Book" data-marketid="">
+                      
+                  </table>
+              </div>
+           
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="modal fade align-top-popup user-book-popup" id="Fancy-modal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+        </div>
+        <div class="modal-header">
+          <h4 class="modal-title">Book List</h4>
+        </div>
+        <div class="modal-body">
+            <div class="data-table">
+                <table id="FENCY" >
+                    
+                </table>
+            </div>
+         
         </div>
       </div>
     </div>

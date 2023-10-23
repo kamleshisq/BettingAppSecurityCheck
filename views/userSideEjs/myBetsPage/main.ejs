@@ -70,6 +70,7 @@
                                 <th>Match</th>
                                 <th>Market</th>
                                 <th>Bet On</th>
+                                <th>Bet Type</th>
                                 <th>Odds</th>
                                 <th>Status</th>
                                 <th>Stake</th>
@@ -94,7 +95,11 @@
                                     };
                                     var formattedTime = date.toLocaleString('en-US', options);
                                 %>
-                                    <tr class="acount-stat-tbl-body-tr">
+                                <%if(bets[i].bettype2 === 'BACK'){%>
+                                  <tr class="back acount-stat-tbl-body-tr">
+                                <%}else{%>
+                                  <tr class="lay acount-stat-tbl-body-tr">
+                                <%}%>
                                         <td title="Sr. No" ><%= i + 1%></td>
                                         <td title="Date & Time" ><%=formattedTime%></td>
                                         <%if(bets[i].betType === "Casino"){%>
@@ -115,9 +120,11 @@
                                         <%}%>
                                         <%if(bets[i].selectionName){%>
                                             <td title="Bet On" ><%=bets[i].selectionName%></td>
+                                            <td title="Bet Type" ><%=bets[i].bettype2%></td>
                                             <td title="Odds" ><%=bets[i].oddValue%></td>
                                         <%}else{%>
                                             <td title="Bet On" >-</td>
+                                            <td title="Bet Type" >-</td>
                                             <td title="Odds" >-</td>
                                         <%}%>
                                         <td title="Status" ><%=bets[i].status%></td>

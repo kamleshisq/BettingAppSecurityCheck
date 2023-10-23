@@ -24,6 +24,9 @@ const betLimitSchema = mongoose.Schema({
     delay:{
         type:Number,
         required:true
+    },
+    max_bet:{
+        type:Number
     }
 })
 

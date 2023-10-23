@@ -18,7 +18,7 @@
     </ul>
   </div>
 
-  <section>
+  <section class="eventController">
     <div class="container-fluid">
       <div class="table-data-section">
         <div class="data-table">
@@ -30,6 +30,9 @@
                 <th>Date</th>
                 <th>Team</th>
                 <th>Open Bet</th>
+                <%if(currentUser.roleName != 'Operator'){%>
+                <th>Action</th>
+                <%}%>
               </tr>
             </thead>
             <tbody class="new-body">
@@ -57,9 +60,30 @@
                     </div>
                     <%}%>
                   </td>
-                  <td><%=data[i].created_on%></td>
+                  <%
+                    var timestamp = data[i].created_on * 1000 
+                    var date = new Date(timestamp);
+                    var options = { 
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: true
+                    };
+                    var formattedTime = date.toLocaleString('en-US', options);
+                  %>
+                 
+                  <td><%=formattedTime %></td>
                   <td><%=data[i].name%></td>
                   <td><%=data[i].count%></td>
+                  <%if(currentUser.roleName != 'Operator'){%>
+                  <td>
+                    <div class="btn-group">
+                      <a class="btn" href="/admin/riskAnalysis?id=<%=data[i].eventId%>">View Details</a>
+                    </div>
+                  </td>
+                  <%}%>
                   <%}%>
                 </tr>
               </tr>

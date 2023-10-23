@@ -5485,6 +5485,7 @@ var login = /*#__PURE__*/function () {
               status: "success"
             });
             sessionStorage.setItem('loginUserDetails', JSON.stringify(res.data.data.user));
+            sessionStorage.setItem('token', JSON.stringify(res.data.token));
             sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
@@ -5493,15 +5494,9 @@ var login = /*#__PURE__*/function () {
                 location.assign('/updatePassWord');
               }, 100);
             } else {
-              if (res.data.data.user.role.authorization.includes('dashboard')) {
-                window.setTimeout(function () {
-                  location.assign('/admin/dashboard');
-                }, 100);
-              } else {
-                window.setTimeout(function () {
-                  location.assign('/admin/userManagement');
-                }, 100);
-              }
+              window.setTimeout(function () {
+                location.assign('/admin/userManagement');
+              }, 100);
             }
           }
           _context.next = 11;
@@ -5545,7 +5540,7 @@ var logout = /*#__PURE__*/function () {
           _context.next = 3;
           return (0, _axios.default)({
             method: 'GET',
-            url: '/api/v1/auth/logOut'
+            url: '/api/v1/auth/admin_logOut'
           });
         case 3:
           res = _context.sent;
@@ -5570,6 +5565,54 @@ var logout = /*#__PURE__*/function () {
   };
 }();
 exports.logout = logout;
+},{"axios":"../../node_modules/axios/index.js"}],"logOutUser.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.logoutUser = void 0;
+var _axios = _interopRequireDefault(require("axios"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator.return && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, catch: function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+var logoutUser = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+    var res;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          _context.prev = 0;
+          _context.next = 3;
+          return (0, _axios.default)({
+            method: 'GET',
+            url: '/api/v1/auth/logOut'
+          });
+        case 3:
+          res = _context.sent;
+          if (res.data.status === 'success') {
+            location.href = '/';
+          }
+          _context.next = 11;
+          break;
+        case 7:
+          _context.prev = 7;
+          _context.t0 = _context["catch"](0);
+          console.log(_context.t0);
+          alert('Error logging out! Try again.');
+        case 11:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee, null, [[0, 7]]);
+  }));
+  return function logoutUser() {
+    return _ref.apply(this, arguments);
+  };
+}();
+exports.logoutUser = logoutUser;
 },{"axios":"../../node_modules/axios/index.js"}],"resetPass.js":[function(require,module,exports) {
 "use strict";
 
@@ -5603,7 +5646,7 @@ var reset = /*#__PURE__*/function () {
             break;
           }
           alert("Password Changed Successfully!!!!!");
-          $(".popup_body").removeClass("popup_body_show");
+          $('#myModal3').modal('toggle');
           // window.setTimeout(()=>{
           //     location.assign('/userManagement')
           // }, 100)
@@ -6073,12 +6116,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.userStatus = void 0;
 var userStatus = function userStatus(data, rawId) {
-  var url = data.status === 'true' ? '/api/v1/users/updateUserStatusActive' : '/api/v1/users/updateUserStatusInactive';
+  // let url = data.status === 'true' ? '/api/v1/users/updateUserStatusActive' : '/api/v1/users/updateUserStatusInactive';
+  var url = '/api/v1/users/updateUserStatusActive';
   $.ajax({
     url: url,
     type: 'post',
     data: {
       id: data.id,
+      status: data.status,
       Password: data.Password
     },
     success: function success(data) {
@@ -6095,8 +6140,8 @@ var userStatus = function userStatus(data, rawId) {
       // console.log(data, 1212121)
     },
 
-    error: function error(_error) {
-      alert(_error.responseJSON.message);
+    error: function error(err) {
+      alert(err.response.data.message);
     }
   });
 };
@@ -6683,6 +6728,60 @@ var addImage = /*#__PURE__*/function () {
   };
 }();
 exports.addImage = addImage;
+},{"axios":"../../node_modules/axios/index.js"}],"editSliderInImage.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.editSliderInImage = void 0;
+var _axios = _interopRequireDefault(require("axios"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator.return && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, catch: function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+var editSliderInImage = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(data) {
+    var res;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          _context.prev = 0;
+          _context.next = 3;
+          return (0, _axios.default)({
+            method: 'POST',
+            url: '/api/v1/slider/editSliderInImage',
+            data: data
+          });
+        case 3:
+          res = _context.sent;
+          if (res.data.status === 'success') {
+            alert('Edited successfully!!!!');
+            // $(".popup_body").removeClass("popup_body_show");
+
+            window.setTimeout(function () {
+              location.assign('/admin/cms');
+            }, 200);
+          }
+          _context.next = 11;
+          break;
+        case 7:
+          _context.prev = 7;
+          _context.t0 = _context["catch"](0);
+          console.log(_context.t0);
+          setTimeout(alert(_context.t0.response.data.message), 1500);
+        case 11:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee, null, [[0, 7]]);
+  }));
+  return function editSliderInImage(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+exports.editSliderInImage = editSliderInImage;
 },{"axios":"../../node_modules/axios/index.js"}],"updateSlider.js":[function(require,module,exports) {
 "use strict";
 
@@ -6926,6 +7025,7 @@ exports.KYC = KYC;
 
 var _login = require("./login");
 var _logOut = require("./logOut");
+var _logOutUser = require("./logOutUser");
 var _resetPass = require("./resetPass");
 var _createUser = require("./createUser");
 var _debitCredit = require("./debitCredit");
@@ -6940,13 +7040,14 @@ var _updateRow = require("./updateRow");
 var _updatePromotion = require("./updatePromotion");
 var _createPromotion = require("./createPromotion");
 var _deletePormotion = require("./deletePormotion");
-var _betLimit2 = require("./betLimit");
+var _betLimit = require("./betLimit");
 var _createHorizontalMenu = require("./createHorizontalMenu");
 var _updateHorizonatlMenu = require("./updateHorizonatlMenu");
 var _createBanner = require("./createBanner");
 var _updateBanner = require("./updateBanner");
 var _createpage = require("./createpage");
 var _addImage = require("./addImage");
+var _editSliderInImage = require("./editSliderInImage");
 var _updateSlider = require("./updateSlider");
 var _addSlider = require("./addSlider");
 var _userLogin = require("./userLogin");
@@ -6980,8 +7081,8 @@ var _window$location = window.location,
   search = _window$location.search;
 $(document).ready(function () {
   var linkColor = document.querySelectorAll('.nav_link');
-  var operationPathnameArr = ['/admin/houseManagement', '/admin/whiteLableAnalysis', '/admin/commissionMarkets', '/admin/settlement', '/admin/settlementHistory', '/admin/commissionReport', '/admin/gameanalysis', '/admin/Notification', '/admin/betmoniter', '/admin/onlineUsers', '/admin/alertbet', '/admin/betlimit', '/admin/voidbet'];
-  var reportsPathnameArr = ['/admin/gamereport', '/admin/useracount', '/admin/reports', '/admin/userhistoryreport', '/admin/plreport'];
+  var operationPathnameArr = ['/admin/houseManagement', '/admin/streammanagement', '/admin/whiteLableAnalysis', '/admin/commissionMarkets', '/admin/settlement', '/admin/gameanalysis', '/admin/Notification', '/admin/betmoniter', '/admin/onlineUsers', '/admin/alertbet', '/admin/betlimit', '/admin/voidbet'];
+  var reportsPathnameArr = ['/admin/gamereport', '/admin/myaccount', '/admin/adminaccount', '/admin/useraccount', '/admin/settlementHistory', '/admin/reports', '/admin/userhistoryreport', '/admin/plreport', '/admin/commissionReport'];
   var cmsPathnameArr = ['/admin/cms', '/admin/pageManager', '/admin/gameRules'];
   function colorLink() {
     if (linkColor) {
@@ -6993,23 +7094,42 @@ $(document).ready(function () {
         $("a[href='" + pathname + "'").parent().parent().siblings('a').addClass('active');
         $("a[href='" + pathname + "'").parent().parent().addClass('open');
       }
-      console.log(pathname);
       if (pathname == '/admin/catalogcontrol/compitations' || pathname == '/admin/catalogcontrol/compitations/events') {
         $("a[href='" + '/admin/catalogcontrol' + "'").addClass('active');
-      } else if (pathname == '/admin/riskAnalysis') {
+      } else if (pathname == '/admin/riskAnalysis' || pathname == '/admin/matchBets') {
         $("a[href='" + '/admin/liveMarket' + "'").addClass('active');
-      } else if (pathname == '/admin/userdetails') {
+      } else if (pathname.startsWith('/admin/userdetails' || pathname == '/admin/allOperators' || pathname == '/admin/profiledetail')) {
         $("a[href='" + '/admin/userManagement' + "'").addClass('active');
       } else if (pathname == '/admin/settlementIn') {
         $("a[href='" + '/admin/settlement' + "'").addClass('active');
         $("a[href='" + '/admin/settlement' + "'").parent().parent().siblings('a').addClass('active');
         $("a[href='" + '/admin/settlement' + "'").parent().parent().addClass('open');
+      } else if (pathname.startsWith('/admin/streammanagement/event')) {
+        $("a[href='" + '/admin/streammanagement' + "'").addClass('active');
+        $("a[href='" + '/admin/streammanagement' + "'").parent().parent().siblings('a').addClass('active');
+        $("a[href='" + '/admin/streammanagement' + "'").parent().parent().addClass('open');
+      } else if (pathname.startsWith('/admin/betlimit/sport') || pathname.startsWith('/admin/betlimit/sports') || pathname.startsWith('/admin/betlimit/sports/event') || pathname.startsWith('/admin/betlimit/sports/match')) {
+        $("a[href='" + '/admin/betlimit' + "'").addClass('active');
+        $("a[href='" + '/admin/betlimit' + "'").parent().parent().siblings('a').addClass('active');
+        $("a[href='" + '/admin/betlimit' + "'").parent().parent().addClass('open');
       }
-      // this.classList.add('active')
     }
   }
-
   colorLink();
+  $('input:checked').parents('.switch').addClass("on");
+  $('input:checkbox').change(function () {
+    if ($(this).is(":checked")) {
+      $(this).parents('.switch').addClass("on");
+    } else {
+      $(this).parents('.switch').removeClass("on");
+    }
+  });
+  $('.searchUser').keypress(function (event) {
+    var keycode = event.keyCode ? event.keyCode : event.which;
+    if (keycode == '13') {
+      event.preventDefault();
+    }
+  });
 });
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
@@ -7021,9 +7141,14 @@ $(document).on("submit", ".loginFormAdmin", function (e) {
 });
 $(document).on('click', ".logOut", function (e) {
   e.preventDefault();
-  // console.log('Working')
   // console.log(this)
   (0, _logOut.logout)();
+});
+$(document).on('click', ".logOutUser", function (e) {
+  e.preventDefault();
+  // console.log('Working')
+  // console.log(this)
+  (0, _logOutUser.logoutUser)();
 });
 
 // if(document.querySelector("ResetFORM")){
@@ -7042,25 +7167,23 @@ $('#Add-User').submit(function (e) {
   var form = document.getElementById('Add-User');
   var data = new FormData(form);
   var formDataObj = Object.fromEntries(data.entries());
+  if (formDataObj.role == "select") {
+    alert('please select role of user');
+  }
   if (formDataObj.whiteLabel == "") {
     formDataObj.whiteLabel = document.getElementById("whiteLabel").value;
   }
-  // console.log(formDataObj)
+  var checkedValues = [];
+  if (formDataObj.role == "650bccdbb3fdc8c922c34bbe") {
+    var checkboxes = document.querySelectorAll("input[name='operator']:checked");
+    for (var i = 0; i < checkboxes.length; i++) {
+      checkedValues.push(checkboxes[i].value);
+    }
+  }
+  formDataObj.OperatorAuthorization = checkedValues;
+  // console.log(formDataObj, "+==> data")
+  // console.log(checkedValues);
   (0, _createUser.createUser)(formDataObj);
-});
-$(document).on('click', '.updateBetLimit', function (e) {
-  var rowId = $(this).parent().parent().parent().attr('id');
-  $('.rowId').attr('data-rowid', rowId);
-  var modleName = $(this).data('bs-target');
-  var form = $(modleName).find('.form-data');
-  var betLimit = $(this).parent().data('details');
-  form.find('input[name = "min_stake"]').val(betLimit.min_stake);
-  form.find('input[name = "max_stake"]').val(betLimit.max_stake);
-  form.find('input[name = "max_profit"]').val(betLimit.max_profit);
-  form.find('input[name = "max_odd"]').val(betLimit.max_odd);
-  form.find('input[name = "delay"]').val(betLimit.delay);
-  form.find('input[name = "type"]').val(betLimit.type);
-  form.find('input[name = "id"]').val(betLimit._id);
 });
 $(document).on('submit', '.passReset-form', function (e) {
   e.preventDefault();
@@ -7109,27 +7232,37 @@ $(document).on('submit', '#edit-form', /*#__PURE__*/function () {
 //     socket.emit('Login', data);
 //     })
 
-$(document).on('submit', '.form-betLimit', /*#__PURE__*/function () {
+$(document).on('submit', '.acc-form', /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
-    var form, fd, data, res, _betLimit, rowId;
+    var form, id, fd, formDataObj, user, trElements;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
           e.preventDefault();
           form = $(this)[0];
+          id = form.id;
           fd = new FormData(form);
-          data = Object.fromEntries(fd.entries()); // console.log(data)
-          _context2.next = 6;
-          return (0, _betLimit2.betLimit)(data);
-        case 6:
-          res = _context2.sent;
-          if (res) {
-            _betLimit = res;
-            rowId = $('.rowId').attr('data-rowid');
-            $('#' + rowId).html("\n            <td class=\"btn-filter\">".concat(_betLimit.type, "</td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.min_stake, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.max_stake, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.max_profit, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.max_odd, "'></td>\n            <td><input type=\"text\" class=\"form-datas\" value='").concat(_betLimit.delay, "'></td>\n            <td data-details='").concat(JSON.stringify(_betLimit), "'><button type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#myModal2\"class=\"updateBetLimit\">Update</button></td>"));
-            alert("updated SuccessFully");
+          formDataObj = Object.fromEntries(fd.entries());
+          formDataObj.id = id;
+          // console.log(formDataObj)
+          if (!(formDataObj.amount == 0)) {
+            _context2.next = 10;
+            break;
           }
-        case 8:
+          alert('please enter amount greater than 0');
+          _context2.next = 15;
+          break;
+        case 10:
+          _context2.next = 12;
+          return (0, _debitCredit.debitCredit)(formDataObj);
+        case 12:
+          user = _context2.sent;
+          trElements = document.querySelectorAll('tr.trtable'); // console.log(trElements)
+          // console.log(user)
+          trElements.forEach(function (trElement) {
+            if (trElement.getAttribute('data-id') === user.id) {}
+          });
+        case 15:
         case "end":
           return _context2.stop();
       }
@@ -7139,9 +7272,9 @@ $(document).on('submit', '.form-betLimit', /*#__PURE__*/function () {
     return _ref2.apply(this, arguments);
   };
 }());
-$(document).on('submit', '.acc-form', /*#__PURE__*/function () {
+$(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(e) {
-    var form, id, fd, formDataObj, user, trElements;
+    var form, id, fd, formDataObj;
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
@@ -7151,56 +7284,17 @@ $(document).on('submit', '.acc-form', /*#__PURE__*/function () {
           fd = new FormData(form);
           formDataObj = Object.fromEntries(fd.entries());
           formDataObj.id = id;
-          console.log(formDataObj);
+          if (formDataObj.amount == 0) {
+            alert('please enter amount greater than 0');
+          } else {
+            (0, _creditDebitSettle.creditDebitSettle)(formDataObj);
+          }
+          // console.log(formDataObj)
           // const url = window.location.href
           // const id = url.split("=")[1]
           // formDataObj.id = id
           // console.log(formDataObj)
           // let rowId = $('.rowId').attr('data-rowid')
-          _context3.next = 9;
-          return (0, _debitCredit.debitCredit)(formDataObj);
-        case 9:
-          user = _context3.sent;
-          trElements = document.querySelectorAll('tr.trtable'); // console.log(trElements)
-          // console.log(user)
-          trElements.forEach(function (trElement) {
-            if (trElement.getAttribute('data-id') === user.id) {
-              console.log(trElement, 4545445454);
-            }
-          });
-          // console.log(rowId)
-          // let currentUser = $('#currentUserDetails').data('currentuser')
-          // updateRow(user,rowId,currentUser)
-          // console.log(user)
-        case 12:
-        case "end":
-          return _context3.stop();
-      }
-    }, _callee3, this);
-  }));
-  return function (_x3) {
-    return _ref3.apply(this, arguments);
-  };
-}());
-$(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(e) {
-    var form, id, fd, formDataObj;
-    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
-      while (1) switch (_context4.prev = _context4.next) {
-        case 0:
-          e.preventDefault();
-          form = $(this)[0];
-          id = form.id;
-          fd = new FormData(form);
-          formDataObj = Object.fromEntries(fd.entries());
-          formDataObj.id = id;
-          console.log(formDataObj);
-          // const url = window.location.href
-          // const id = url.split("=")[1]
-          // formDataObj.id = id
-          // console.log(formDataObj)
-          // let rowId = $('.rowId').attr('data-rowid')
-          (0, _creditDebitSettle.creditDebitSettle)(formDataObj);
           // const user = await creditDebitSettle(formDataObj)
           // var trElements = document.querySelectorAll('tr.trtable');
           // // console.log(trElements)
@@ -7214,14 +7308,14 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
           // let currentUser = $('#currentUserDetails').data('currentuser')
           // updateRow(user,rowId,currentUser)
           // console.log(user)
-        case 8:
+        case 7:
         case "end":
-          return _context4.stop();
+          return _context3.stop();
       }
-    }, _callee4, this);
+    }, _callee3, this);
   }));
-  return function (_x4) {
-    return _ref4.apply(this, arguments);
+  return function (_x3) {
+    return _ref3.apply(this, arguments);
   };
 }());
 
@@ -7238,29 +7332,6 @@ $(document).on('submit', '.Settlement-form', /*#__PURE__*/function () {
 //     const data = $(this).data('myval')
 //     betLockStatus(data)
 // })
-
-$('.createRole-form1').submit(function (e) {
-  e.preventDefault();
-  var authorization = [];
-  var authCheck = document.querySelectorAll("input[name='authorization']:checked");
-  for (var i = 0; i < authCheck.length; i++) {
-    authorization.push(authCheck[i].value);
-  }
-  var roleAuthorization = [];
-  var checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-  for (var _i = 0; _i < checkboxes.length; _i++) {
-    roleAuthorization.push(checkboxes[_i].value);
-  }
-  var roleName = $('#roleName').val();
-  var data = {
-    authorization: authorization,
-    userAuthorization: roleAuthorization,
-    roleName: roleName,
-    name: roleName
-  };
-  console.log(data);
-  (0, _createRole.createRole)(data);
-});
 
 // $('#searchUser').keyup(function(){
 //     let data = $(this).val()
@@ -7352,10 +7423,10 @@ $(document).on('submit', '.userStatus', function (e) {
   var id = form.id;
   var formDataObj = Object.fromEntries(fd.entries());
   formDataObj.id = id;
-  // let rowId = $('.rowId').attr('data-rowid')
-  console.log(formDataObj);
-  var trElement = document.querySelector("tr[data-id=\"".concat(id, "\"]"));
-  var rowId = trElement.id;
+  var rowId = $('.rowId').attr('data-rowid');
+  // console.log(formDataObj, "WORKING1212121")
+  // var trElement = document.querySelector(`tr[data-id="${id}"]`);
+  // let rowId = trElement.id
   // console.log(rowId)
   // console.log(formDataObj)
   (0, _userStatus.userStatus)(formDataObj, rowId);
@@ -7404,11 +7475,32 @@ $(document).on('click', '.Withdraw', function () {
 //     $('.rowId').attr('data-rowid',rowId)
 // });
 
+$('.createRole-form1').submit(function (e) {
+  e.preventDefault();
+  var authorization = [];
+  var authCheck = document.querySelectorAll("input[name='operator']:checked");
+  for (var i = 0; i < authCheck.length; i++) {
+    authorization.push(authCheck[i].value);
+  }
+  var roleAuthorization = [];
+  var checkboxes = document.querySelectorAll("input[name='adminControll']:checked");
+  for (var _i = 0; _i < checkboxes.length; _i++) {
+    roleAuthorization.push(checkboxes[_i].value);
+  }
+  var roleName = $('#roleName').val();
+  var data = {
+    operationAuthorization: authorization,
+    AdminController: roleAuthorization,
+    roleName: roleName,
+    name: roleName
+  };
+  // console.log(data)
+  (0, _createRole.createRole)(data);
+});
 $(document).on('click', '.RoleDetails', function () {
-  console.log("Working");
   var modleName = $(this).data('bs-target');
   var roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss');
-  console.log(roledata);
+  // console.log(roledata)
   var form = $(modleName).find('.UpdateRole-form');
   // let x = form.find('input[id="check"]').length
   // console.log(x)
@@ -7426,6 +7518,12 @@ $(document).on('click', '.RoleDetails', function () {
   for (var _i2 = 0; _i2 < roledata.userAuthorization.length; _i2++) {
     form.find("input[value = \"".concat(roledata.userAuthorization[_i2], "\"]")).attr("checked", "checked");
   }
+  for (var _i3 = 0; _i3 < roledata.AdminController.length; _i3++) {
+    form.find("input[value = \"".concat(roledata.AdminController[_i3], "\"]")).attr("checked", "checked");
+  }
+  for (var _i4 = 0; _i4 < roledata.operationAuthorization.length; _i4++) {
+    form.find("input[value = \"".concat(roledata.operationAuthorization[_i4], "\"]")).attr("checked", "checked");
+  }
   // document.getElementById("role_controller").innerHTML = `
   //         <label for="level"> <h3>Role Level </h3></label><br>
   //         <input type="number" name="level" placeholder='${roledata.role_level}' id='role_level'>`
@@ -7436,22 +7534,34 @@ $(document).on("submit", ".UpdateRole-form", function (e) {
   var id = $(this).attr("id");
   var roleName = document.getElementById("mySelect").value;
   var authorization = [];
+  var AdminController = [];
   var roleAuthorization = [];
-  var authCheck = document.querySelectorAll("input[name='authorization']:checked");
-  for (var i = 0; i < authCheck.length; i++) {
-    roleAuthorization.push(authCheck[i].value);
+  var operationAuthorization = [];
+  // let authCheck = document.querySelectorAll("input[name='authorization']:checked");
+  // for (let i = 0 ; i < authCheck.length; i++) {
+  //     roleAuthorization.push(authCheck[i].value)
+  // }
+  // let checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
+  // for (let i = 0 ; i < checkboxes.length; i++) {
+  //     authorization.push(checkboxes[i].value)
+  // }
+  var operator = document.querySelectorAll("input[name='operator']:checked");
+  for (var i = 0; i < operator.length; i++) {
+    operationAuthorization.push(operator[i].value);
   }
-  var checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-  for (var _i3 = 0; _i3 < checkboxes.length; _i3++) {
-    authorization.push(checkboxes[_i3].value);
+  var adminAuth = document.querySelectorAll("input[name='adminControll']:checked");
+  for (var _i5 = 0; _i5 < adminAuth.length; _i5++) {
+    AdminController.push(adminAuth[_i5].value);
   }
   var data = {
     id: id,
-    authorization: authorization,
-    userAuthorization: roleAuthorization,
-    roleName: roleName
+    // authorization,
+    // userAuthorization:roleAuthorization,
+    roleName: roleName,
+    operationAuthorization: operationAuthorization,
+    AdminController: AdminController
   };
-  console.log(data);
+  // console.log(data)
   (0, _updateRoleByaxios.updateRole)(data);
 });
 $(document).on('click', '.deleteRole', function (e) {
@@ -7508,7 +7618,7 @@ $(document).on('submit', ".form-data23", function (e) {
   var fd = new FormData(form);
   fd.append('id', id);
   var data = Object.fromEntries(fd.entries());
-  console.log(data);
+  // console.log(data)
   // form.append('image',document.getElementById('file').files[0])
   // console.log(form)
   (0, _updateHorizonatlMenu.updateHorizontalMenu)(fd);
@@ -7541,6 +7651,14 @@ $(document).on('submit', ".form-data26", function (e) {
   var fd = new FormData(form);
   fd.append('id', id);
   (0, _addImage.addImage)(fd);
+});
+$(document).on('submit', ".editImageSportForm", function (e) {
+  e.preventDefault();
+  var id = $(this).attr('id');
+  var form = $(this)[0];
+  var fd = new FormData(form);
+  fd.append('id', id);
+  (0, _editSliderInImage.editSliderInImage)(fd);
 });
 $(document).on('submit', ".slider-form", function (e) {
   e.preventDefault();
@@ -7578,7 +7696,7 @@ $(document).on('submit', ".kycForm", function (e) {
   // console.log(data)
   (0, _kyc.KYC)(fd);
 });
-},{"./login":"login.js","./logOut":"logOut.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./creditDebitSettle":"creditDebitSettle.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./deleteRole":"deleteRole.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./updateRow":"updateRow.js","./updatePromotion":"updatePromotion.js","./createPromotion":"createPromotion.js","./deletePormotion":"deletePormotion.js","./betLimit":"betLimit.js","./createHorizontalMenu":"createHorizontalMenu.js","./updateHorizonatlMenu":"updateHorizonatlMenu.js","./createBanner":"createBanner.js","./updateBanner":"updateBanner.js","./createpage":"createpage.js","./addImage":"addImage.js","./updateSlider":"updateSlider.js","./addSlider":"addSlider.js","./userLogin":"userLogin.js","./kyc":"kyc.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./login":"login.js","./logOut":"logOut.js","./logOutUser":"logOutUser.js","./resetPass":"resetPass.js","./createUser":"createUser.js","./debitCredit":"debitCredit.js","./creditDebitSettle":"creditDebitSettle.js","./editUser":"editUser.js","./createRole":"createRole.js","./updateRoleByaxios":"updateRoleByaxios.js","./deleteRole":"deleteRole.js","./updatePASSWORD":"updatePASSWORD.js","./userStatus":"userStatus.js","./updateRow":"updateRow.js","./updatePromotion":"updatePromotion.js","./createPromotion":"createPromotion.js","./deletePormotion":"deletePormotion.js","./betLimit":"betLimit.js","./createHorizontalMenu":"createHorizontalMenu.js","./updateHorizonatlMenu":"updateHorizonatlMenu.js","./createBanner":"createBanner.js","./updateBanner":"updateBanner.js","./createpage":"createpage.js","./addImage":"addImage.js","./editSliderInImage":"editSliderInImage.js","./updateSlider":"updateSlider.js","./addSlider":"addSlider.js","./userLogin":"userLogin.js","./kyc":"kyc.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -7603,7 +7721,11 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+<<<<<<< HEAD
   var ws = new WebSocket(protocol + '://' + hostname + ':' + "52566" + '/');
+=======
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54978" + '/');
+>>>>>>> d9aa85a7b36faca6508f46e9635e7b2c31529dcc
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -12,9 +12,9 @@ exports.deposit = catchAsync(async(req, res, next) => {
     if(childUser.transferLock){
         return next(new AppError("User Account is Locked", 404))
     }
-    if((childUser.creditReference + req.body.amount) > childUser.maxCreditReference){
-        return next(new AppError("User Account is Locked", 404))
-    }
+    // if((childUser.creditReference + req.body.amount) > childUser.maxCreditReference){
+    //     return next(new AppError("User Account is Locked", 404))
+    // }
     const parentUser = await User.findById(childUser.parent_id);
     req.body.amount = parseFloat(req.body.amount)
     // // console.log(req.body)
@@ -103,7 +103,6 @@ exports.getAllAccStatement = catchAsync(async(req, res, next) => {
 
 exports.withdrawl = catchAsync(async(req, res, next) => {
     // const user = await User.findById(req.body.userId)
-    console.log(req.body)
     req.body.amount = parseFloat(req.body.amount)
     const childUser = await User.findById(req.body.id);
     const parentUser = await User.findById(childUser.parent_id);
@@ -166,8 +165,9 @@ exports.withdrawl = catchAsync(async(req, res, next) => {
 
 exports.withdrawSettle = catchAsync(async(req, res, next) => {
     // const user = await User.findById(req.body.userId)
-    console.log(req.body)
     req.body.amount = parseFloat(req.body.amount)
+    req.body.clintPL = parseFloat(req.body.clintPL)
+
     const childUser = await User.findById(req.body.id);
     const parentUser = await User.findById(childUser.parent_id);
     // // console.log(user)
@@ -178,8 +178,8 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
     if(childUser.availableBalance < req.body.amount){
         return next(new AppError('withdrow amount must less than available balance',404))
     }
-    await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.amount,}})
-    const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.amount},myPL:0,uplinePL:0},{
+    await User.findByIdAndUpdate({_id:parentUser.id},{$inc:{availableBalance:req.body.clintPL,downlineBalance:-req.body.clintPL,myPL:req.body.amount}})
+    const user = await User.findByIdAndUpdate({_id:childUser.id},{$inc:{availableBalance:-req.body.clintPL},uplinePL:0,myPL:0,pointsWL:0},{
         new:true
     })
     
@@ -228,16 +228,16 @@ exports.withdrawSettle = catchAsync(async(req, res, next) => {
 });
 
 exports.depositSettle = catchAsync(async(req, res, next) => {
-    // console.log(req.body)
     const childUser = await User.findById(req.body.id);
     if(childUser.transferLock){
         return next(new AppError("User Account is Locked", 404))
     }
-    if((childUser.creditReference + req.body.amount) > childUser.maxCreditReference){
-        return next(new AppError("User Account is Locked", 404))
-    }
+    // if((childUser.creditReference + req.body.amount) > childUser.maxCreditReference){
+    //     return next(new AppError("User Account is Locked", 404))
+    // }
     const parentUser = await User.findById(childUser.parent_id);
     req.body.amount = parseFloat(req.body.amount)
+    req.body.clintPL = parseFloat(req.body.clintPL) * -1
     // // console.log(req.body)
     // // console.log(childUser)
     if(childUser.role.role_level < parentUser.role.role_level){
@@ -249,8 +249,8 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     }
 
   
-    await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.amount},myPL:0,uplinePL:0})
-    await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.amount}});
+    const user = await User.findByIdAndUpdate(childUser.id, {$inc:{availableBalance:req.body.clintPL}, uplinePL:0,pointsWL:0,myPL:0})
+    await User.findByIdAndUpdate(parentUser.id, {$inc:{availableBalance:-req.body.clintPL,downlineBalance:req.body.clintPL,myPL:-req.body.amount}});
     // // await User.findByIdAndUpdate(parentUser.id,{$inc:{lifeTimeDeposit:-req.body.amount}})
     let childAccStatement = {}
     let ParentAccStatement = {}
@@ -292,7 +292,7 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
     }
     res.status(200).json({
         status:"success",
-        user:updatedChild
+        user
     })
 });
 
@@ -300,8 +300,10 @@ exports.depositSettle = catchAsync(async(req, res, next) => {
 
 
 exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
+    // console.log(req.query)
     let userAcc
     let page = req.query.page
+    let filter = {}
     if(!page){
         page = 0
     }
@@ -309,8 +311,52 @@ exports.getUserAccountStatement = catchAsync(async(req, res, next) => {
     if(req.query.id){
         if(req.query.from && req.query.to){
             userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:req.query.from,$lte:req.query.to}}).sort({date: -1}).skip(page * limit).limit(limit);
+        }else if(req.query.from && !req.query.to){
+            userAcc = await accountStatement.find({user_id:req.query.id,date:{$gte:req.query.from}}).sort({date: -1}).skip(page * limit).limit(limit);
+        }else if(!req.query.from && req.query.to){
+            userAcc = await accountStatement.find({user_id:req.query.id,date:{$lte:req.query.to}}).sort({date: -1}).skip(page * limit).limit(limit);
         }else{
             userAcc = await accountStatement.find({user_id:req.query.id}).sort({date: -1}).skip(page * limit).limit(limit);
+
+        }
+    }
+    // console.log(userAcc.length)
+    res.status(200).json({
+        status:"success",
+        userAcc
+    })
+});
+exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
+    // console.log(req.query)
+    let userAcc
+    let page = req.query.page
+    let filter = {}
+    let childUsersArr = []
+    let childUser;
+    if(!page){
+        page = 0
+    }
+    limit = 10
+    
+    if(req.query.id){
+        const idUser = await User.findById(req.query.id)
+        if(idUser.userName == req.currentUser.userName){
+            let childUsers = await User.find({parentUsers:req.query.id,roleName: {$ne:'user'}})
+            childUsers.map(ele => {
+                childUsersArr.push(ele._id)
+            })
+        }else{
+            childUsersArr.push(idUser._id)
+        }
+        if(req.query.from && req.query.to){
+            userAcc = await accountStatement.find({user_id:{$in:childUsersArr},date:{$gte:req.query.from,$lte:req.query.to}}).sort({date: -1}).skip(page * limit).limit(limit);
+        }else if(req.query.from && !req.query.to){
+            userAcc = await accountStatement.find({user_id:{$in:childUsersArr},date:{$gte:req.query.from}}).sort({date: -1}).skip(page * limit).limit(limit);
+        }else if(!req.query.from && req.query.to){
+            userAcc = await accountStatement.find({user_id:{$in:childUsersArr},date:{$lte:req.query.to}}).sort({date: -1}).skip(page * limit).limit(limit);
+        }else{
+            userAcc = await accountStatement.find({user_id:{$in:childUsersArr}}).sort({date: -1}).skip(page * limit).limit(limit);
+
         }
     }
     // console.log(userAcc.length)

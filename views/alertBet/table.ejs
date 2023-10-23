@@ -12,16 +12,17 @@
         <th>Stake</th>
         <th>Txn ID </th>
         <th>Status</th>
+        <th>Remark</th>
         <th>Actions</th>                      
       </tr>
   </thead>
   <tbody class="new-body">
     <% for(let i = 0; i < bets.length; i++){%>
       <% let date = new Date(bets[i].date)%>
-      <%if((i%2)==0){%>
-          <tr>
+      <%if(bets[i].bettype2 === 'BACK'){%>
+          <tr class="back">
       <%}else{%>
-          <tr>
+          <tr class="lay">
       <%}%>
       <td><%=i + 1%></td>
       <td class="text-nowrap" ><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
@@ -41,11 +42,20 @@
       <td><%=bets[i].Stake%></td>
       <td><%=bets[i].transactionId%></td>
       <td><%=bets[i].status%></td>
+      <%if(bets[i].remark){%>
+      <td><%=bets[i].remark%></td>
+      <%}else{%>
+        <td>-</td>
+      <%}%>
       <td>
+        <%if(bets[i].status == 'Alert'){%>
         <div class="btn-group">
-        <button class="btn cancel" id="<%=bets[i]._id%>"> Cancel Bet</button>
-        <button class="btn accept" id="<%=bets[i]._id%>"> accept Bet</button>
+          <button data-bs-toggle="modal" data-bs-target="#myModal2" class="btn cancel" id="<%=bets[i]._id%>">Cancle Bet</button>
+          <button class="btn accept" id="<%=bets[i]._id%>">accept Bet</button>
         </div>
+        <%}else{%>
+          -
+        <%}%>
       </td>
   </tr>
   <%}%>

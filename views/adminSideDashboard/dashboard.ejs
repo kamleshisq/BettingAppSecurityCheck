@@ -44,7 +44,7 @@
                             <svg class="arrow" id="drp-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="transition-all ml-auto rotate-180">
                               <path d="M7 14.5l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
-                            <ul class="dropdown">
+                            <ul class="dropdown" data-summary="all">
                               <li class="item" id="all">All</li>
                               <li class="item" id="today">Today</li>
                               <li class="item" id="yesterday">Yesterday</li>
@@ -58,20 +58,11 @@
                         <tbody>
                           <tr class="flex-justify blue">
                             <td>Active Players</td>
-                            <%if(data.dashboard.userCount.length > 0){%>
-                            <td class="text-purple" id="userCount"><%=data.dashboard.userCount[0].totalAmount%></td>
-                            <%}else{%>
-                            <td class="text-purple" id="userCount">00</td>
-                            <%}%>
+                            <td class="text-purple" id="userCount"><%=data.dashboard.userCount%></td>
                           </tr>
                           <tr class="flex-justify">
                             <td>Active Admins</td>
-                            <%console.log(data.dashboard.adminCount, 45454545454, data.dashboard.adminCount[0].totalAmount)%>
-                            <%if(data.dashboard.adminCount.length > 0){%>
-                              <td class="text-purple" id="adminCount"><%=data.dashboard.adminCount[0].totalAmount%></td>
-                              <%}else{%>
-                              <td class="text-purple" id="adminCount">00</td>
-                            <%}%>
+                              <td class="text-purple" id="adminCount"><%=data.dashboard.adminCount%></td>
                           </tr>
                           <tr class="flex-justify blue">
                             <td>Turn Over</td>
@@ -83,11 +74,7 @@
                           </tr> 
                           <tr class="flex-justify blue">
                             <td>Total Bets</td>
-                            <%if(data.dashboard.betCount.length > 0){ %>
-                              <td class="text-purple" id="betCount"><%=data.dashboard.betCount[0].totalBets%></td>
-                            <%}else{ %>
-                              <td class="text-purple" id="betCount">0</td>
-                            <%} %>
+                              <td class="text-purple" id="betCount"><%=data.dashboard.betCount%></td>
                           </tr>
                         </tbody>
                       </table>
@@ -209,7 +196,7 @@
               
             </tr>
         </thead>
-        <tbody>
+        <tbody id="topPlay_tbody">
           <%for(let i = 0; i < data.dashboard.topPlayers.length; i++){%>
             <%if((i%2)==0){%>
               <tr>
@@ -221,6 +208,9 @@
             <td data-title="No.of Bets"><%=data.dashboard.topPlayers[i].Bets%></td>
             <td data-title="Points"><%=data.dashboard.topPlayers[i].Bets%></td>
               </tr>
+          <%}%>
+          <%if(!data.dashboard.topPlayers.length > 0){%>
+            <tr class="empty_table"><td>No record found</td></tr>
           <%}%>
         </tbody>
       </table>
@@ -243,7 +233,7 @@
               <th>Amount</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="categories_tbody">
           <%for(let i = 0; i < data.dashboard.Categories.length; i++){ %>
             <%if((i%2)==0){%>
               <tr>
@@ -257,7 +247,9 @@
             <td data-title="Amount" class="text-purple"><%=data.dashboard.Categories[i].totalReturns %></td>
           </tr>
           <%} %>
-          
+          <%if(!data.dashboard.Categories.length > 0){%>
+            <tr class="empty_table"><td>No record found</td></tr>
+          <%}%>
         </tbody>
       </table>
 </div>
@@ -365,7 +357,7 @@
                 
               </tr>
           </thead>
-          <tbody>
+          <tbody id="alertBets_tbody">
             <%for(let i = 0; i <  data.dashboard.alertBet.length; i++){%>
               <%if(i%2 == 0){ %>
                 <tr class="blue">
@@ -378,7 +370,9 @@
               <td data-title="Points" class="text-purple"><%= data.dashboard.alertBet[i].Stake%></td>
             </tr>
               <%}%>
-            
+              <%if(!data.dashboard.alertBet.length > 0){%>
+                <tr class="empty_table"><td>No record found</td></tr>
+              <%}%>
           </tbody>
         </table>
   </div>
@@ -403,7 +397,7 @@
               <th>Amount</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="topGames_tbody">
           <%for(let i = 0; i < data.dashboard.topGames.length; i++){%>
             <%if((i%2)==0){%>
               <tr>
@@ -417,6 +411,9 @@
               <td data-title="Amount" class="text-purple"><%=data.dashboard.topGames[i].totalReturns%></td>
             </tr>
           <%} %>
+          <%if(!data.dashboard.topGames.length > 0){%>
+            <tr class="empty_table"><td>No record found</td></tr>
+          <%}%>
         </tbody>
       </table>
     </div>
@@ -424,38 +421,81 @@
       <div class="hed-data">
         <h3 class="fix-h3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M18 0.5H2C0.9 0.5 0 1.4 0 2.5V16.5C0 17.6 0.9 18.5 2 18.5H18C19.1 18.5 20 17.6 20 16.5V2.5C20 1.4 19.1 0.5 18 0.5ZM7 14.5H4C3.45 14.5 3 14.05 3 13.5C3 12.95 3.45 12.5 4 12.5H7C7.55 12.5 8 12.95 8 13.5C8 14.05 7.55 14.5 7 14.5ZM7 10.5H4C3.45 10.5 3 10.05 3 9.5C3 8.95 3.45 8.5 4 8.5H7C7.55 8.5 8 8.95 8 9.5C8 10.05 7.55 10.5 7 10.5ZM7 6.5H4C3.45 6.5 3 6.05 3 5.5C3 4.95 3.45 4.5 4 4.5H7C7.55 4.5 8 4.95 8 5.5C8 6.05 7.55 6.5 7 6.5ZM16.7 8.62L13.53 11.79C13.14 12.18 12.5 12.18 12.11 11.79L10.7 10.37C10.6074 10.2774 10.534 10.1675 10.4839 10.0465C10.4338 9.92558 10.408 9.79593 10.408 9.665C10.408 9.53407 10.4338 9.40442 10.4839 9.28346C10.534 9.16249 10.6074 9.05258 10.7 8.96C10.7926 8.86742 10.9025 8.79398 11.0235 8.74387C11.1444 8.69377 11.2741 8.66798 11.405 8.66798C11.5359 8.66798 11.6656 8.69377 11.7865 8.74387C11.9075 8.79398 12.0174 8.86742 12.11 8.96L12.82 9.67L15.29 7.2C15.3825 7.1073 15.4924 7.03375 15.6134 6.98357C15.7344 6.93339 15.864 6.90756 15.995 6.90756C16.126 6.90756 16.2557 6.93339 16.3766 6.98357C16.4976 7.03375 16.6075 7.1073 16.7 7.2L16.71 7.21C17.09 7.6 17.09 8.24 16.7 8.62Z" fill="#6359CA"/>
-          </svg> Settlements</h3>
-        <a class="fix-h2" href="/admin/settlement">View Details</a>
+          </svg>Top Bets</h3>
+        <a class="fix-h2" href="/admin/betmoniter">View Details</a>
         
     </div>
       <table>
         <thead>
             <tr>
               <th></th>
-              <th>Sport</th>
-              <th>Series</th>
-              <th>Event Name</th>
-              <th>Open Bets</th>
-              
+              <th>Name</th>
+              <th>Event</th>
+              <th>Market</th>
+              <th>Odds</th>
+              <th>Value</th>
+              <th>Risk</th>
             </tr>
         </thead>
-        <tbody>
-        <%for(let i = 0; i < data.dashboard.settlement.length; i++){%>
-          <%if((i%2)==0){%>
-            <tr>
-          <%}else{%>
-            <tr>
-          <%}%>
-          <td data-title=""><%=i+1%></td>
-          <td data-title="Sport"><%=data.dashboard.settlement[i].sport %></td>
-          <td data-title="Series"><%=data.dashboard.settlement[i].series %></td>
-          <td data-title="Event Name"><%=data.dashboard.settlement[i].matchName %></td>
-          <td data-title="Open Bets"><%=data.dashboard.settlement[i].count %></td>
-        </tr>
-        <%} %>
+        <tbody id="toBets_tbody">
+        <%for(let i = 0; i < data.dashboard.topBets.length; i++){%>
+          <tr>
+            <td data-title=""><%=i+1%></td>
+            <td data-title="Name"><%=data.dashboard.topBets[i].userName%></td>
+            <td data-title="Event"><%=data.dashboard.topBets[i].match%></td>
+            <td data-title="Market"><%=data.dashboard.topBets[i].marketName%></td>
+            <td data-title="Odds"><%=data.dashboard.topBets[i].oddValue%></td>
+            <td data-title="Value"><%=data.dashboard.topBets[i].Stake%></td>
+            <td data-title="Risk"><%=(data.dashboard.topBets[i].Stake * data.dashboard.topBets[i].oddValue).toFixed(2)%></td>
+          </tr>
+        <%}%>
+        <%if(!data.dashboard.topBets.length > 0){%>
+          <tr class="empty_table"><td>No record found</td></tr>
+        <%}%>
       </tbody>
       </table>
       </div>
+
+
+      <div class="inner-box-grid settlements">
+        <div class="hed-data">
+          <h3 class="fix-h3"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="19" viewBox="0 0 20 19" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M18 0.5H2C0.9 0.5 0 1.4 0 2.5V16.5C0 17.6 0.9 18.5 2 18.5H18C19.1 18.5 20 17.6 20 16.5V2.5C20 1.4 19.1 0.5 18 0.5ZM7 14.5H4C3.45 14.5 3 14.05 3 13.5C3 12.95 3.45 12.5 4 12.5H7C7.55 12.5 8 12.95 8 13.5C8 14.05 7.55 14.5 7 14.5ZM7 10.5H4C3.45 10.5 3 10.05 3 9.5C3 8.95 3.45 8.5 4 8.5H7C7.55 8.5 8 8.95 8 9.5C8 10.05 7.55 10.5 7 10.5ZM7 6.5H4C3.45 6.5 3 6.05 3 5.5C3 4.95 3.45 4.5 4 4.5H7C7.55 4.5 8 4.95 8 5.5C8 6.05 7.55 6.5 7 6.5ZM16.7 8.62L13.53 11.79C13.14 12.18 12.5 12.18 12.11 11.79L10.7 10.37C10.6074 10.2774 10.534 10.1675 10.4839 10.0465C10.4338 9.92558 10.408 9.79593 10.408 9.665C10.408 9.53407 10.4338 9.40442 10.4839 9.28346C10.534 9.16249 10.6074 9.05258 10.7 8.96C10.7926 8.86742 10.9025 8.79398 11.0235 8.74387C11.1444 8.69377 11.2741 8.66798 11.405 8.66798C11.5359 8.66798 11.6656 8.69377 11.7865 8.74387C11.9075 8.79398 12.0174 8.86742 12.11 8.96L12.82 9.67L15.29 7.2C15.3825 7.1073 15.4924 7.03375 15.6134 6.98357C15.7344 6.93339 15.864 6.90756 15.995 6.90756C16.126 6.90756 16.2557 6.93339 16.3766 6.98357C16.4976 7.03375 16.6075 7.1073 16.7 7.2L16.71 7.21C17.09 7.6 17.09 8.24 16.7 8.62Z" fill="#6359CA"/>
+            </svg> Settlements</h3>
+          <a class="fix-h2" href="/admin/settlement">View Details</a>
+          
+      </div>
+        <table>
+          <thead>
+              <tr>
+                <th></th>
+                <th>Sport</th>
+                <th>Series</th>
+                <th>Event Name</th>
+                <th>Open Bets</th>
+                
+              </tr>
+          </thead>
+          <tbody id="settlements_tbody">
+          <%for(let i = 0; i < data.dashboard.settlement.length; i++){%>
+            <%if((i%2)==0){%>
+              <tr>
+            <%}else{%>
+              <tr>
+            <%}%>
+            <td data-title=""><%=i+1%></td>
+            <td data-title="Sport"><%=data.dashboard.settlement[i].sport %></td>
+            <td data-title="Series"><%=data.dashboard.settlement[i].series %></td>
+            <td data-title="Event Name"><%=data.dashboard.settlement[i].matchName %></td>
+            <td data-title="Open Bets"><%=data.dashboard.settlement[i].count %></td>
+          </tr>
+          <%} %>
+          <%if(!data.dashboard.settlement.length > 0){%>
+            <tr class="empty_table"><td>No record found</td></tr>
+          <%}%>
+        </tbody>
+        </table>
+        </div>
       
     </div>
 
@@ -468,6 +508,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+<script src="../js/bundle.js"></script>
 <script>
   const selectedAll = document.querySelectorAll(".wrapper-dropdown");
 

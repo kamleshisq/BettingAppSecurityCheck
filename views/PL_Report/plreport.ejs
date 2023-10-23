@@ -1,6 +1,6 @@
 <%- include("../header") %>
+  <!--Container Main start-->
 <div class="dashboard-main-wraper">
-
   <section class="dashboard-welcome-section">
     <div class="container-fluid">
       <div class="new-head"> 
@@ -10,25 +10,73 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
             </div>
-            <input type="text" id="searchUser" onkeyup="myFunction()" list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
+            <input type="text" id="searchUser" onkeyup="myFunction()" list=text_editors class="form-control searchUser" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
             <div class="wrapper">
               <ul id="search" class="users">
+
               </ul>
               <ul id="button" class="button">
+
               </ul>
             </div>
           </div>
         </form>
       </div>
-      <%- include("../loginUserAdminsideDetails") %>
-    </div>
+    <%- include("../loginUserAdminsideDetails") %>
   </section>
 
   <section>
     <div class="container-fluid">
       <div class="table-data-section">
+        <div class="table-heading">
+          <div class="table-heading-btn">
+            <form action="" class="betlist-heading-from">
+              <div class="input-group">
+                <label>From Date</label>
+                <input type="date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="fromDate"> 
+              </div>
+              <div class="input-group">
+                <label>To Date</label>
+                <input type="date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="toDate"> 
+              </div>
+            </form>
+            <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Download CSV</button>
+          </div>
+        </div>
         <div class="data-table">
-          <%- include("./table") %>
+          <table id="table12">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>User Name</th>
+                <th>Bets</th>
+                <th>Won</th>
+                <th>Loss</th>
+                <th>Profit/Loss</th>
+              </tr>
+            </thead>
+            <tbody class="new-body">
+              <%for(let i = 0;i<games.length;i++){%>
+              <%if(i % 2 == 0){%>
+              <tr>
+                <%}else{%>
+                <tr>
+                  <%}%>
+                  <td><%=i + 1%></td>
+                  <td><%=games[i]._id%></td>
+                  <td><%=games[i].gameCount%></td>
+                  <td><%=games[i].won%></td>
+                  <td><%=games[i].loss%></td>
+                  <%if(games[i].returns >= 0){%>
+                  <td class="green">+<%=(games[i].returns).toFixed(2)%></td>
+                  <%}else{%>
+                  <td class="red"><%=(games[i].returns).toFixed(2)%></td>
+                  <%}%>
+                </tr>
+                <%}%>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -37,19 +85,28 @@
   <div class="pageId" data-pageid="1"></div>
 
 </div>
+<%if(games.length != 0){%>
+<div id="load-more" >
+  <button class="load-more">Load More</button>
+</div>
+<%}else{%>
+  <div id="load-more" style="display: none;">
+    <button class="load-more">Load More</button>
+  </div>
+<%}%>
 
-<script>
-  function myFunction() {
-    var input, filter, ul, li, a, i, txtValue;
-    input = document.getElementById("searchUser");
-    filter = input.value.toUpperCase();
-    ul = document.getElementById("search");
-    li = ul.getElementsByTagName("li");
-    for (i = 0; i < li.length; i++) {
-        txtValue = li.textContent || li.innerText;
-    }
+  <script>
+    function myFunction() {
+      var input, filter, ul, li, a, i, txtValue;
+      input = document.getElementById("searchUser");
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("search");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) {
+          txtValue = li.textContent || li.innerText;
+      }
   }
-</script>
+  </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
@@ -57,4 +114,4 @@
 
 
 </body>
-</html> 
+    </html> 

@@ -14,6 +14,7 @@ export const login = async(userName, password)=>{
         if(res.data.status === 'success'){
             notificationsss({message:'Logged in successfully!!!!', status:"success"});
             sessionStorage.setItem('loginUserDetails',JSON.stringify(res.data.data.user));
+            sessionStorage.setItem('token',JSON.stringify(res.data.token));
             sessionStorage.setItem('roles',JSON.stringify(res.data.data.roles))
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
@@ -22,15 +23,9 @@ export const login = async(userName, password)=>{
                     location.assign('/updatePassWord')
                 }, 100)
             }else{
-                if(res.data.data.user.role.authorization.includes('dashboard')){
-                    window.setTimeout(()=>{
-                        location.assign('/admin/dashboard')
-                    }, 100)
-                }else{
-                    window.setTimeout(()=>{
-                        location.assign('/admin/userManagement')
-                    }, 100)
-                }
+                window.setTimeout(()=>{
+                    location.assign('/admin/userManagement')
+                }, 100)
             }
         }
 

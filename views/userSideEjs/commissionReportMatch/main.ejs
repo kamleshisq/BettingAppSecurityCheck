@@ -33,7 +33,7 @@
                       </div> -->
                       
                       
-                      <button class="commission btn acount-stat-ro-titl-form-btnn load"><i class="fa-solid fa-money-check-dollar"></i> Claim Commission (<%=user.commission%>)</button>
+                      <button class="commission btn acount-stat-ro-titl-form-btnn load"><i class="fa-solid fa-money-check-dollar"></i> Claim Commission (<%=unclaimCommission%>)</button>
                       <!-- <button  id="pdfDownload" class="btn acount-stat-ro-titl-form-btnn load">Download PDF</button> -->
                     </form>
               </div>
@@ -43,17 +43,17 @@
       <div class="dragon-click" >
         <%
                   sport1 = ""
-                  if(data[0].Sport == 1){
+                  if(data[0].sportId == 1){
                     sport1 = "Football"
-                }else if (data[0].Sport == 4 ){
+                }else if (data[0].sportId == 4 ){
                     sport1 = "Cricket"
-                }else if (data[0].Sport == 2){
+                }else if (data[0].sportId == 2){
                     sport1 = "Tennis"
                 }
                   %>
-                  <a href="/myCommissionReportsIn?id=<%=data[0].Sport%>"><%=sport1%></a>
-                  <a href="/myCommissionReportsInEvent?id=<%=data[0].event%>"><%=data[0].event%></a>
-                  <a class="active" href="/myCommissionReportsMatch?id=<%=data[0].match%>"><%=data[0].match%></a>
+                  <a href="/myCommissionReportsIn?id=<%=data[0].sportId%>"><%=sport1%></a>
+                  <a href="/myCommissionReportsInEvent?id=<%=data[0].seriesName%>"><%=data[0].seriesName%></a>
+                  <a class="active" href="/myCommissionReportsMatch?id=<%=data[0].eventName%>"><%=data[0].eventName%></a>
       </div>
       <div class="acount-stat-ro2">
           <div class="acount-stat-tbl-txt-wrp userSide-Table">
@@ -73,11 +73,11 @@
                     <%for(let i = 0; i < data.length; i++){%>
                         <tr>
                             <td title="SR No." ><%=i+1%></td>
-                            <td title="Market" ><%=data[i].market%></td>
-                            <td title="Commission Type" ><%=data[i].commType%></td>
-                            <td title="Percentage" ><%=data[i].percentage%></td>
-                            <td title="Commission Points" ><%=data[i].commPoints%></td>
-                            <td title="Status" ><%=data[i].status%></td>
+                            <td title="Market" ><%=data[i].marketName%></td>
+                            <td title="Commission Type" ><%=data[i].commissionType%></td>
+                            <td title="Percentage" ><%=data[i].commissionPercentage%></td>
+                            <td title="Commission Points" ><%=data[i].commission%></td>
+                            <td title="Status" ><%=data[i].commissionStatus%></td>
                         </tr>
                     <%}%>
                 </tbody>

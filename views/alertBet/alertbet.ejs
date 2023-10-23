@@ -3,14 +3,15 @@
   <div class="dashboard-main-wraper">
   <section class="dashboard-welcome-section">
     <div class="container-fluid">
-      <div class="new-head"> 
+      <div class="new-head bet-monitoring-heading"> 
           <h3>Alert Bet</h3>
-          <form action="">
+          <form action="" class="betmonitor-heading-from">
             <div class="input-group">
+              <label class="up-down-form">Select User</label>
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
               </div>
-              <input type="text" id="searchUser"  list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
+              <input type="text" id="searchUser" list="text_editors" class="form-control searchUser" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
               <div class="wrapper">
                 <ul id="search" class="users">
               
@@ -21,9 +22,51 @@
               </div>
               
             </div>
+            <div class="input-group">
+              <label class="up-down-form">From Date</label>
+              <input type="date" id="fromDate">
+            </div>
+            <div class="input-group">
+              <label class="up-down-form">To Date</label>
+              <input type="date" id="toDate">
+            </div>
+            <div class="input-group">
+              <label>Select Result</label>
+              <select name="result" id="result">
+                <option value="All" selected>All</option>
+                <option value="ALERT">Alert</option>
+                <option value="CANCEL">Voided</option>
+                <option value="ACCEPT">Valid</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label class="up-down-form">Select Sports</label>
+              <select name="Sport" id="Sport">
+                <option value="All" selected>All</option>
+                <option value="Cricket">Cricket</option>
+                <option value="Football">FOOTBALL</option>
+                <option value="Tennis">TENNIS</option>
+                <option value="BASKETBALL">BASKETBALL</option>
+                <option value="BASEBALL">BASEBALL</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label class="up-down-form">Select Market</label>
+              <select name="market" id="market">
+                <option value="All" selected>All</option>
+                <option value="Match Odds">Match Odds</option>
+                <option value="Bookmaker 0%Comm">BookMaker</option>
+                <option value="Fancy">Fancy</option>
+                <!-- <option value="">GoalMarket</option> -->
+              </select>
+            </div>
+            
+            <div class="input-group">
+              <button type="button" class="refresh btn-group">Refresh</button>
+            </div>
           </form>
+         
       </div>
-    <%- include("../loginUserAdminsideDetails") %>
   </section>
 
   <section>
@@ -32,38 +75,7 @@
             <div class="table-heading">
                 <h3>Alert Bet</h3>
                 <div class="table-heading-btn">
-                  <form action="" class="settlement-heading-from">
-                    <div class="input-group">
-                      <label class="up-down-form">Select Sports</label>
-                      <select name="Sport" id="Sport">
-                        <option value="All">All</option>
-                        <option value="Cricket">Cricket</option>
-                        <option value="Football">FOOTBALL</option>
-                        <option value="Tennis">TENNIS</option>
-                        <option value="BASKETBALL">BASKETBALL</option>
-                        <option value="BASEBALL">BASEBALL</option>
-                      </select>
-                    </div>
-                    <div class="input-group">
-                      <label class="up-down-form">Select Market</label>
-                      <select name="market" id="market">
-                        <option value="All">All</option>
-                        <option value="Match Odds">Match Odds</option>
-                        <option value="Bookmaker 0%Comm">BookMaker</option>
-                        <option value="Fancy">Fancy</option>
-                        <!-- <option value="">GoalMarket</option> -->
-                      </select>
-                    </div>
-                    <div class="input-group">
-                      <label class="up-down-form">From Date</label>
-                      <input type="date" id="fromDate">
-                    </div>
-                    <div class="input-group">
-                      <label class="up-down-form">To Date</label>
-                      <input type="date" id="toDate">
-                    </div>
-                  </form>
-                  <button class="btn-filter filter"><i class="fa-solid fa-filter"></i> Filter</button>
+                  
                 </div>
             </div>
             <div class="data-table">
@@ -75,6 +87,15 @@
 <div class="pageId" data-pageid="1"></div>
 </div>
 
+<%if(bets.length != 0){%>
+  <div id="load-more">
+    <button class="load-more">Load More</button>
+  </div>
+<%}else{%>
+  <div id="load-more" style="display: none;">
+    <button class="load-more">Load More</button>
+  </div>
+<%}%>
 
 <div class="modal fade" id="myModaladduser" role="dialog">
   <div class="modal-dialog">
@@ -103,6 +124,39 @@
       </div>
     </div>
     
+  </div>
+</div>
+
+<div class="modal fade " id="myModal2" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+      </div>
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal"></button> -->
+        <h4 class="modal-title">Voide Bets</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-data timely-voideBet">
+          <div class="row">
+              <div class="col">
+                <label for="">password</label>
+                <input type="password" class="form-control ml0" name="password">
+              </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label >Remark</label>
+              <input type="text" class="form-control ml0"  name="Remark">
+            </div>
+          </div>
+        <button type="submit" class="btn-submit mt-3 ">Submit</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
   

@@ -15,10 +15,17 @@
   <%- include("./table") %>
 </section>
 
-<!-- end gallary -->
+
 
   </div>
-  <div class="modal fade" id="myModal" role="dialog">
+  <%if(users.length !== 0){%>
+    <div id="load-more">
+      <button class="load-more">Load More</button>
+    </div>
+  <%}%>
+
+  <!-- models -->
+  <div class="modal fade deposit-withdraw-modal" id="myModal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -27,17 +34,21 @@
           <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
         </div>
         <div class="modal-header">
-          <!-- <h4 class="modal-title" style="color: #fff;">Deposit</h4> -->
+          <h4 class="modal-title">Deposit/Withdraw</h4>
         </div>
         <div class="modal-body">
           <form class="form-data acc-form">
             <div class="row">
               <div class="col">
-                <label for="">Choose Option</label>
-                <select name="type" class="DepositW"  required>
-                  <option value="deposit">Deposit</option>
-                  <option value="withdrawl">Withdraw</option>
-                </select>
+                <p class="depositeWD">Deposit</p>
+              </div>
+              <div class="col">
+                <p class="withdrawWD">Withdraw</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <input type="hidden" name="type" class="DepositW" value="deposit">
               </div>
             </div>
             <div class="row mt-2">
@@ -50,6 +61,7 @@
               <div class="col">
                 <label for="">Balance</label>
                 <input type="text" class="form-control ml0" placeholder="Balance" name="fuBalance" readonly required>
+                <span class="below-input" id="fuBlanceAfter"></span>
               </div>
             </div>
             <div class="row mt-2">
@@ -60,12 +72,17 @@
               <div class="col">
                 <label for="">Balance</label>
                 <input type="text" class="form-control ml0" placeholder="Balance" name="tuBalance" readonly required>
+                <span class="below-input" id="tuBalanceAfter"></span>
               </div>
             </div>
             <div class="row mt-2">
               <div class="col">
                 <label for="">Client P&L</label>
                 <input type="text" class="form-control ml0" placeholder="0.00" name="clintPL" readonly required>
+              </div>
+              <div class="col">
+                <label for="">Amount</label>
+                <input type="number" class="form-control ml0" placeholder="Add Funds" name="amount" value="0" required>
               </div>
             </div>
             <div class="row mt-2">
@@ -80,11 +97,9 @@
                 <input type="text" class="form-control ml0" placeholder="" name="Password" required>
               </div>
               <div class="col">
-                <label for="">Balance</label>
-                <input type="number" class="form-control ml0" placeholder="Add Funds" name="amount" required>
+                <button type="submit" class="btn-submit mt-3">Submit</button>
               </div>
             </div>
-            <button type="submit" class="btn-submit mt-3">Submit</button>
           </form>
         </div>
       </div>
@@ -92,7 +107,7 @@
   </div>
 
 
-  <div class="modal fade" id="myModalSE" role="dialog">
+  <div class="modal fade deposit-withdraw-modal" id="myModalSE" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -101,17 +116,21 @@
           <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
         </div>
         <div class="modal-header">
-          <!-- <h4 class="modal-title" style="color: #fff;">Deposit</h4> -->
+          <h4 class="modal-title">Settelment</h4>
         </div>
         <div class="modal-body">
           <form class="form-data Settlement-form">
             <div class="row">
               <div class="col">
-                <label for="">Choose Option</label>
-                <select name="type" class="DepositW" readonly required >
-                  <option value="deposit">Deposit</option>
-                  <option value="withdrawl">Withdraw</option>
-                </select>
+                <p class="deposite">Deposit</p>
+              </div>
+              <div class="col">
+                <p class="withdraw">Withdraw</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <input type="hidden" name="type" class="DepositW">
               </div>
             </div>
             <div class="row mt-2">
@@ -124,6 +143,7 @@
               <div class="col">
                 <label for="">Balance</label>
                 <input type="text" class="form-control ml0" placeholder="Balance" name="fuBalance" readonly required>
+                <span class="below-input" id="fuBlanceAfter"></span>
               </div>
             </div>
             <div class="row mt-2">
@@ -134,12 +154,17 @@
               <div class="col">
                 <label for="">Balance</label>
                 <input type="text" class="form-control ml0" placeholder="Balance" name="tuBalance" readonly required>
+                <span class="below-input" id="tuBalanceAfter"></span>
               </div>
             </div>
             <div class="row mt-2">
               <div class="col">
                 <label for="">Client P&L</label>
                 <input type="text" class="form-control ml0" placeholder="0.00" name="clintPL" readonly required>
+              </div>
+              <div class="col">
+                <label for="">Amount</label>
+                <input type="number" class="form-control ml0" placeholder="Add Funds" name="amount" value="0" required>
               </div>
             </div>
             <div class="row mt-2">
@@ -154,11 +179,9 @@
                 <input type="text" class="form-control ml0" placeholder="" name="Password" required>
               </div>
               <div class="col">
-                <label for="">Balance</label>
-                <input type="number" class="form-control ml0" placeholder="Add Funds" name="amount" required>
+                <button type="submit" class="btn-submit mt-3">Submit</button>
               </div>
             </div>
-            <button type="submit" class="btn-submit mt-3">Submit</button>
           </form>
         </div>
       </div>
@@ -232,7 +255,7 @@
     </div>
   </div>
 
-  <div class="modal fade" id="myModal2" role="dialog">
+  <div class="modal fade commision-popup" id="myModal2" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -273,7 +296,7 @@
                   </td>
                   <td>
                     <!-- <input type="number" class="form-control" name="matchOdds"> -->
-                    <select name="matchOdds" required>
+                    <select name="matchOdds">
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -300,7 +323,7 @@
                   </td>
                   <td>
                     <!-- <input type="number" class="form-control" name="Bookmaker"> -->
-                    <select name="Bookmaker" id="bookmakerPer" required> 
+                    <select name="Bookmaker" id="bookmakerPer"> 
                       <!-- <option value="0.25">0.25</option>
                       <option value="0.5">0.5</option>
                       <option value="0.75">0.75</option>
@@ -325,7 +348,7 @@
                   </td>
                   <td>
                     <!-- <input type="number" class="form-control" name="fency" > -->
-                    <select name="fency" required>
+                    <select name="fency">
                       <option value="0.25">0.25</option>
                       <option value="0.5">0.5</option>
                       <option value="0.75">0.75</option>
@@ -409,8 +432,9 @@
               <div class="col">
                 <label for="">Account status</label>
                 <select name="status" class="form-control ml0" required>
-                  <option value="true">Active</option>
-                  <option value="false">Close</option>
+                  <option value="active">Active</option>
+                  <option value="suspended">Suspended</option>
+                  <option value="betLock">Bet Locked</option>
                 </select>
               </div>
             </div>
@@ -430,7 +454,7 @@
   </div>
    
 
-  <div class="modal fade" id="myModaladduser" role="dialog">
+  <div class="modal fade align-top-popup" id="myModaladduser" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
@@ -457,12 +481,77 @@
               <div class="col">
                 <label for="">User Role</label>
                 <select name="role" id="roleSelect" class="form-control ml0"  required>
-                  <%for(let i = 0;i<roles.length; i++){%>
-                    <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
+                  <option value="select" selected></option>
+                  <%if(currentUser.roleName === "Admin"){%>
+                    <option value="6492fe4fd09db28e00761695">Super-Duper-Admin</option>
+                    <option value="650bccdbb3fdc8c922c34bbe">Operator</option>
+                  <%}else{%>
+                    <%for(let i = 0;i<roles.length; i++){%>
+                      <option value="<%=roles[i]._id%>"><%=roles[i].roleName%></option>
+                    <%}%>
                   <%}%>
                 </select>
               </div>
             </div>
+            <div class="row mt-2 createRole-form hide" id="operator-authorization">
+              <div class="option-group">
+            <div class="input_group">
+              <label for="HouseManagement">HouseManagement</label>
+              <input type="checkbox" name="operator" value="HouseManagement" id="HouseManagement" class="0">
+            </div>
+            
+            <div class="input_group">
+              <label for="whiteLabelAnalysis">whiteLabelAnalysis</label>
+              <input type="checkbox" name="operator" value="whiteLabelAnalysis" id="whiteLabelAnalysis" class="1">
+            </div>
+            
+            <div class="input_group">
+              <label for="commissionMarkets">commissionMarkets</label>
+              <input type="checkbox" name="operator" value="commissionMarkets" id="commissionMarkets" class="2">
+            </div>
+            
+            <div class="input_group">
+              <label for="settlements">settlements</label>
+              <input type="checkbox" name="operator" value="settlements" id="settlements" class="3">
+            </div>
+            
+            <div class="input_group">
+              <label for="gameAnalysis">gameAnalysis</label>
+              <input type="checkbox" name="operator" value="gameAnalysis" id="gameAnalysis" class="4">
+            </div>
+            
+            <div class="input_group">
+              <label for="notification">notification</label>
+              <input type="checkbox" name="operator" value="notification" id="notification" class="5">
+            </div>
+            
+            <div class="input_group">
+              <label for="betsMonitaring">betsMonitaring</label>
+              <input type="checkbox" name="operator" value="betsMonitaring" id="betsMonitaring" class="6">
+            </div>
+            
+            <div class="input_group">
+              <label for="onlineUsers">onlineUsers</label>
+              <input type="checkbox" name="operator" value="onlineUsers" id="onlineUsers" class="7">
+            </div>
+            
+            <div class="input_group">
+              <label for="alertBets">alertBets</label>
+              <input type="checkbox" name="operator" value="alertBets" id="alertBets" class="8">
+            </div>
+            
+            <div class="input_group">
+              <label for="betLimits">betLimits</label>
+              <input type="checkbox" name="operator" value="betLimits" id="betLimits" class="9">
+            </div>
+            
+            <div class="input_group">
+              <label for="voidBets">voidBets</label>
+              <input type="checkbox" name="operator" value="voidBets" id="voidBets" class="10">
+            </div>
+            
+        </div>
+          </div>
             <%if(currentUser.roleName === "Admin"){ %>
               <div class="row mt-2">
                 <div class="col">
@@ -470,14 +559,14 @@
                   New Domain
                   <input type="checkbox"  id="customOptionCheckbox">
                   </label>
-                  <label for="">WhiteLabel</label>
                   <!-- <input type="text" name="whiteLabel" placeholder="Enter new role"> -->
-                  <select id="whiteLabel" class="form-control ml0"  required>
+                  <label >WhiteLabel</label>
+                  <select id="whiteLabel" name="whiteLabel" class="form-control ml0">
                     <%for(let i = 0; i < WhiteLabel.length; i++){ %>
                       <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
                     <%} %>
                   </select>
-                  <input type="text" class="hide" name="whiteLabel" id="newWhiteLabelInput" placeholder="Enter new WhiteLabel"  required>
+                  <input type="text" class="hide" name="whiteLabel" id="newWhiteLabelInput" placeholder="Enter new WhiteLabel" >
                 </div>
               </div>
             <%} %>
@@ -504,15 +593,15 @@
             <div class="row mt-2" id="shareVisibleActual">
               <div class="col">
                 <label for="">Share</label>
-                <input type="text" id="Share" class="form-control ml0" placeholder="0" name="share" required>
+                <input type="text" id="Share" class="form-control ml0" placeholder="0" name="share" >
               </div>
               <div class="col">
                 <label for="">Visible</label>
-                <input type="text" id="myShare" class="form-control ml0" placeholder="0" name="Visible" required>
+                <input type="text" id="myShare" class="form-control ml0" placeholder="0" name="Visible" >
               </div>
               <div class="col">
                 <label for="">Actual</label>
-                <input type="text" class="form-control ml0" placeholder="0" name="Actual" required>
+                <input type="text" class="form-control ml0" placeholder="0" name="Actual" readonly value="0">
               </div>
             </div>
             <div class="row mt-2">
@@ -520,9 +609,9 @@
                 <label for="">Credit Reference</label>
                 <input type="text" class="form-control ml0" placeholder="0" name="Credit" required>
               </div>
-              <div class="col">
-                <label for="exposureLimit">Expose Limits</label>
-                <input type="number" class="form-control ml0" placeholder="0" name="exposureLimit" required>
+              <div class="col hide" id="ExposureLimits">
+                <label >Expose Limits</label>
+                <input type="number" class="form-control ml0" placeholder="0" name="exposureLimit">
               </div>
             </div>
             <div class="row mt-2">
@@ -646,6 +735,18 @@
         document.getElementById('shareVisibleActual').classList.add("hide") 
       } else {
         document.getElementById('shareVisibleActual').classList.remove("hide") 
+      }
+
+      if (document.getElementById('roleSelect').value === '6492fe4fd09db28e00761694') {  
+        document.getElementById('ExposureLimits').classList.remove("hide") 
+      } else {
+        document.getElementById('ExposureLimits').classList.add("hide") 
+      }
+
+      if (document.getElementById('roleSelect').value === '650bccdbb3fdc8c922c34bbe') {  
+        document.getElementById('operator-authorization').classList.remove("hide") 
+      } else {
+        document.getElementById('operator-authorization').classList.add("hide") 
       }
     });
   </script>

@@ -6,13 +6,20 @@
       <div class="new-head"> 
           <h3>Commission Markets</h1>
            
-          <!-- <form action="">
+          <form action="">
             <div class="input-group">
               <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+              </div>
+              <input type="text" id="searchUser" list="text_editors" class="form-control searchUser" placeholder="Event Name" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
+              <div class="wrapper">
+                <ul id="search" class="users">
+              
+                </ul>
               </div>
               
             </div>
-          </form> -->
+          </form>
       </div>
     <%- include("../loginUserAdminsideDetails") %>
   </section>
@@ -24,11 +31,8 @@
           <h3>White Label Analysis</h3>
           <div class="table-heading-btn">
             <div class="input-group search">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-          </div>
-          <input type="text" placeholder="search match" id="MarketMatch" class="searchUser">
-          <div  id="myMarkets" class="search-result"></div>
+       
+          
         </div>  
           </div>
         </div>

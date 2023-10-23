@@ -3,27 +3,109 @@
   <div class="dashboard-main-wraper">
   <section class="dashboard-welcome-section">
     <div class="container-fluid">
-      <div class="new-head"> 
-          <h3>Bet Monitoring</h3>
-          <form action="">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-              </div>
-              <input type="text" id="searchUser"  list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
-              <div class="wrapper">
-                <ul id="search" class="users">
-              
-                </ul>
-                <ul id="button" class="button">
-                  
-                </ul>
-              </div>
-              
+      <div class="new-head bet-monitoring-heading"> 
+        <h3>Bets Monitoring</h3>
+        <form action="" class="betmonitor-heading-from">
+          <div class="input-group">
+            <label class="up-down-form">Select User</label>
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
             </div>
-          </form>
+            <input type="text" id="searchUser"  list=text_editors class="form-control searchUser" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
+            <div class="wrapper">
+              <ul id="search" class="users">
+            
+              </ul>
+              <ul id="button" class="button">
+                
+              </ul>
+            </div>
+            
+          </div>
+          <div class="input-group">
+            <label class="up-down-form">From Date</label>
+            <input type = "date" id="fromDate">
+          </div>
+          <div class="input-group">
+            <label class="up-down-form">From Time</label>
+            <input type = "text" id="fromTime">
+            <span id="fromTime_err" class="input_error">Please enter valid time</span>
+          </div>
+          <div class="input-group">
+            <label class="up-down-form">To Date</label>
+            <input type = "date" id="toDate">
+          </div>
+          <div class="input-group">
+            <label class="up-down-form">To Time</label>
+            <input type = "text" id="toTime">
+            <span id="toTime_err" class="input_error">Please enter valid time</span>
+          </div>
+          <div class="input-group">
+            <label>Select Sport</label>
+            <select name="Sport" id="Sport">
+              <option value="All" selected>All</option>
+              <option value="4">CRICKET</option>
+              <option value="1">FOOTBALL</option>
+              <option value="2">TENNIS</option>
+              <option value="10">BASKETBALL</option>
+              <option value="20">BASEBALL</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Select Event</label>
+            <select name="Event" id="Event">
+              <option value="All" selected>Select Event</option>
+              <%for(let i = 0;i<events.length;i++){%>
+                <option value="<%=events[i].eventId%>"><%=events[i]._id%></option>
+              <%}%>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Select Market</label>
+            <select name="market" id="market">
+              <option value="All" selected>All</option>
+              <option value="Match Odds">Match Odds</option>
+              <option value="Bookmaker 0%Comm">BookMaker</option>
+              <option value="Fancy">Fancy</option>
+            </select>
+          </div>
+          <%if(currentUser.role.role_level == 1){%>
+            <div class="input-group">
+              <label>Select Whitelabels</label>
+              <select name="whiteLabel" id="whiteLabel">
+                <option value="All" selected>All</option>
+                <%for(let i = 0;i<whiteLabels.length;i++){%>
+                  <option value="<%=whiteLabels[i].whiteLabelName%>"><%=whiteLabels[i].whiteLabelName%></option>
+                <%}%>
+              </select>
+            </div>
+          <%}%>
+          
+          
+          <div class="input-group">
+            <label>Select Result</label>
+            <select name="result" id="result">
+              <option value="All">All</option>
+              <option value="WON">Won</option>
+              <option value="LOSS">Lost</option>
+              <option value="OPEN">OPEN</option>
+              <option value="CANCEL">Void</option>
+              <option value="Alert">Aert</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label class="up-down-form">Stake</label>
+            <input type = "number" id="stake">
+          </div>
+          <div class="input-group">
+            <label class="up-down-form">IP</label>
+            <input type = "text" id="IP">
+          </div>
+          <div class="input-group">
+            <button type="button" class="refresh btn-group">Refresh</button>
+          </div>
+        </form>
       </div>
-    <%- include("../loginUserAdminsideDetails") %>
   </section>
 
   <section>
@@ -31,39 +113,9 @@
         <div class="table-data-section">
             <div class="table-heading betmonitor-heading">
                 <h3>Bet Monitoring</h3>
+                <div class="rowId" data-rowid="1"></div>
                 <div class="table-heading-btn">
-                  <form action="" class="betmonitor-heading-from">
-                    <div class="input-group">
-                      <label>Select Sports</label>
-                      <select name="Sport" id="Sport">
-                        <option value="All">All</option>
-                        <option value="Cricket">CRICKET</option>
-                        <option value="Football">FOOTBALL</option>
-                        <option value="Tennis">TENNIS</option>
-                        <option value="basketball">BASKETBALL</option>
-                        <option value="baseball">BASEBALL</option>
-                      </select>
-                    </div>
-                    <div class="input-group">
-                      <label>Select Market</label>
-                      <select name="market" id="market">
-                        <option value="All">All</option>
-                        <option value="Match Odds">Match Odds</option>
-                        <option value="Bookmaker 0%Comm">BookMaker</option>
-                        <option value="Fancy">Fancy</option>
-                        <!-- <option value="">GoalMarket</option> -->
-                      </select>
-                    </div>
-                    <div class="input-group">
-                      <label class="up-down-form">From Date</label>
-                      <input type = "date" id="fromDate">
-                    </div>
-                    <div class="input-group">
-                      <label class="up-down-form">To Date</label>
-                      <input type = "date" id="toDate">
-                    </div>
-                    </form>
-                    <button class="btn-filter filter"><i class="fa-solid fa-filter"></i> &nbsp; Filter</button>
+                  
                 </div>
             </div>
             <div class="data-table">
@@ -74,6 +126,15 @@
 </section>
 <div class="pageId" data-pageid="1"></div>
 </div>
+<%if(bets.length !== 0){%>
+  <div id="load-more">
+    <button class="load-more">Load More</button>
+  </div>
+<%}else{%>
+  <div id="load-more" style="display: none;">
+    <button class="load-more">Load More</button>
+  </div>
+<%}%>
 <!-- seling section -->
 
 <!--  -->
@@ -107,6 +168,39 @@
       </div>
     </div>
     
+  </div>
+</div>
+
+<div class="modal fade " id="myModal2" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+      </div>
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal"></button> -->
+        <h4 class="modal-title">Alert Bet</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-data alertbet-form">
+          <div class="row">
+              <div class="col">
+                <label for="">password</label>
+                <input type="password" class="form-control ml0" name="password">
+              </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label >Remark</label>
+              <input type="text" class="form-control ml0"  name="Remark">
+            </div>
+          </div>
+        <button type="submit" class="btn-submit mt-3 ">Submit</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 

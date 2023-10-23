@@ -17,7 +17,7 @@
                     
                     
                       <!-- <br><br> -->
-                  <button class="logOut">logout</button>
+                  <!-- <button class="logOut">logout</button> -->
                 </form>
             </div>
           <%- include("../loginUserAdminsideDetails") %>
@@ -26,7 +26,7 @@
   <%- include("./table") %>
 </div>
 
-<div class="modal fade" id="myModal5" role="dialog">
+<div class="modal rolePopup align-top-popup fade" id="myModal5" role="dialog">
   <div class="modal-dialog">
   
     <!-- Modal content-->
@@ -44,6 +44,62 @@
               <input type="text" class="form-control ml0" id="mySelect" placeholder="" name="name" required>
           </div>
           <div class="option-group user_controller" id="user_controller">
+            <h3>Operation Controller</h3>
+            <%for(let i = 0; i < roleAuth.operationModel.length; i++){%>
+              <div class="input_group">
+                <label for=<%=roleAuth.operationModel[i]%>><%=roleAuth.operationModel[i]%></label>
+                <input type="checkbox" name="operator" value="<%=roleAuth.operationModel[i]%>" id="<%=roleAuth.operationModel[i]%>" class="<%=i%>">
+              </div>
+              <%}%>
+          </div>
+          <div class="option-group role-auth">
+            <h3>Admin Controller</h3>
+              <div class="input_group">
+                <label for='Dashboard'>Dashboard</label>
+                <input type="checkbox" name="adminControll" value="Dashboard" id="Dashboard">
+              </div>
+              <div class="input_group">
+                <label for='User Management'>User Management</label>
+                <input type="checkbox" name="adminControll" value="UserManagement" id="User Management">
+              </div>
+              <div class="input_group">
+                <label for='Role Management'>Role Management</label>
+                <input type="checkbox" name="adminControll" value="RoleManagement" id="Role Management">
+              </div>
+              <div class="input_group">
+                <label for='Operation'>Operation</label>
+                <input type="checkbox" name="adminControll" value="Operation" id="Operation">
+              </div>
+              <div class="input_group">
+                <label for='Live Market'>Live Market</label>
+                <input type="checkbox" name="adminControll" value="LiveMarket" id="Live Market">
+              </div>
+              <div class="input_group">
+                <label for='Casino Control'>Casino Control</label>
+                <input type="checkbox" name="adminControll" value="CasinoControl" id="Casino Control">
+              </div>
+              <div class="input_group">
+                <label for='Catalog Control'>Catalog Control</label>
+                <input type="checkbox" name="adminControll" value="CatalogControl" id="Catalog Control">
+              </div>
+              <div class="input_group">
+                <label for='Event Control'>Event Control</label>
+                <input type="checkbox" name="adminControll" value="EventControl" id="Event Control">
+              </div>
+              <div class="input_group">
+                <label for='Report'>Report</label>
+                <input type="checkbox" name="adminControll" value="Report" id="Report">
+              </div>
+              <div class="input_group">
+                <label for='Promotion'>Promotion</label>
+                <input type="checkbox" name="adminControll" value="Promotion" id="Promotion">
+              </div>
+              <div class="input_group">
+                <label for='Cms'>Cms</label>
+                <input type="checkbox" name="adminControll" value="Cms" id="Cms">
+              </div>
+          </div>
+          <!-- <div class="option-group user_controller" id="user_controller">
             <h3>User Controller</h3>
             <%for(let i = 0; i < roleAuth.UserControll.length; i++){%>
               <div class="input_group">
@@ -51,8 +107,8 @@
                 <input type="checkbox" name="userAuthorization" value="<%=roleAuth.UserControll[i]%>" id="<%=roleAuth.UserControll[i]%>" class="<%=i%>">
               </div>
               <%}%>
-          </div>
-          <div class="option-group role-auth">
+          </div> -->
+          <!-- <div class="option-group role-auth">
             <h3>Role Auth</h3>
             <%for(let i = 0; i < roles.length; i++){%>
               <div class="input_group">
@@ -60,7 +116,7 @@
                 <input type="checkbox" name="authorization" value="<%=roles[i].role_level%>" id="<%=roles[i].roleName%>">
               </div>
               <%}%>
-          </div>
+          </div> -->
           <div class="input_group submit">
               <button type="submit" class="btn-submit">Save</button>
           </div>
@@ -70,7 +126,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="myModaladduser" role="dialog">
+<div class="modal fade align-top-popup" id="myModaladduser" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-footer">
@@ -88,58 +144,61 @@
             </div>
           </div>
           <br>
-          <div class="option-group user_controller">
-            <h3>User Controller</h3>
-            <div class="input_group">
-                <label for="createDeleteUser">Create Delete User</label>
-                <input type="checkbox" name="authorization" value="createDeleteUser"  id="createDeleteUser" >
-            </div>
-            <div class="input_group">
-                <label for="betLockAndUnloack">Bet Unlock</label>
-                <input type="checkbox" name="authorization" value="betLockAndUnloack" id="betLockAndUnloack" >
-            </div>
-            <div class="input_group">
-                <label for="userStatus">User Status</label>
-                <input type="checkbox" name="authorization" value="userStatus" id="userStatus">
-            </div>
-            <div class="input_group">
-                <label for="userName">User Name</label>
-                <input type="checkbox" name="authorization" value="userName" id="userName">
-            </div>
-            <div class="input_group">
-                <label for="roleController">Role Controller</label>
-                <input type="checkbox" name="authorization" value="roleController" id="roleController">
-            </div>
-            <div class="input_group">
-                <label for="allUserLogOut">All User Log Out</label>
-                <input type="checkbox" name="authorization" value="allUserLogOut" id="allUserLogOut">
-            </div>
-            <div class="input_group">
-                <label for="changeUserPassword">Change Password</label>
-                <input type="checkbox" name="authorization" value="changeUserPassword" id="changeUserPassword">
-            </div>
-            <div class="input_group">
-                <label for="userManagement">User Management</label>
-                <input type="checkbox" name="authorization" value="userManagement" id="userManagement">
-            </div>
-            <div class="input_group">
-                <label for="roleNameaccountControl">Account Controller</label>
-                <input type="checkbox" name="authorization" value="accountControl" id="accountControl">
-            </div>
-            <div class="input_group">
-                <label for="logOutUser">Log Out User</label>
-                <input type="checkbox" name="authorization" value="logOutUser" id="logOutUser">
-            </div>
+          <div class="option-group user_controller" id="user_controller">
+            <h3>Operation Controller</h3>
+            <%for(let i = 0; i < roleAuth.operationModel.length; i++){%>
+              <div class="input_group">
+                <label for=<%=roleAuth.operationModel[i]%>><%=roleAuth.operationModel[i]%></label>
+                <input type="checkbox" name="operator" value="<%=roleAuth.operationModel[i]%>" id="<%=roleAuth.operationModel[i]%>" class="<%=i%>">
+              </div>
+              <%}%>
           </div>
           <div class="option-group role-auth">
-            <h3>Role Auth</h3>
-            <%for(let i=0;i<roles.length;i++){%>
+            <h3>Admin Controller</h3>
               <div class="input_group">
-                  <label for=<%=roles[i].roleName%>><%=roles[i].roleName%></label>
-                  <input type="checkbox" name="userAuthorization" value='<%=roles[i].role_level%>' 
-                  id='<%=roles[i].roleName%>'>
+                <label for='Dashboard'>Dashboard</label>
+                <input type="checkbox" name="adminControll" value="Dashboard" id="Dashboard">
               </div>
-          <%}%>
+              <div class="input_group">
+                <label for='User Management'>User Management</label>
+                <input type="checkbox" name="adminControll" value="UserManagement" id="User Management">
+              </div>
+              <div class="input_group">
+                <label for='Role Management'>Role Management</label>
+                <input type="checkbox" name="adminControll" value="RoleManagement" id="Role Management">
+              </div>
+              <div class="input_group">
+                <label for='Operation'>Operation</label>
+                <input type="checkbox" name="adminControll" value="Operation" id="Operation">
+              </div>
+              <div class="input_group">
+                <label for='Live Market'>Live Market</label>
+                <input type="checkbox" name="adminControll" value="LiveMarket" id="Live Market">
+              </div>
+              <div class="input_group">
+                <label for='Casino Control'>Casino Control</label>
+                <input type="checkbox" name="adminControll" value="CasinoControl" id="Casino Control">
+              </div>
+              <div class="input_group">
+                <label for='Catalog Control'>Catalog Control</label>
+                <input type="checkbox" name="adminControll" value="CatalogControl" id="Catalog Control">
+              </div>
+              <div class="input_group">
+                <label for='Event Control'>Event Control</label>
+                <input type="checkbox" name="adminControll" value="EventControl" id="Event Control">
+              </div>
+              <div class="input_group">
+                <label for='Report'>Report</label>
+                <input type="checkbox" name="adminControll" value="Report" id="Report">
+              </div>
+              <div class="input_group">
+                <label for='Promotion'>Promotion</label>
+                <input type="checkbox" name="adminControll" value="Promotion" id="Promotion">
+              </div>
+              <div class="input_group">
+                <label for='Cms'>Cms</label>
+                <input type="checkbox" name="adminControll" value="Cms" id="Cms">
+              </div>
           </div>
           <div class="input_group submit">
               <button type="submit" class="btn-submit">Save</button>

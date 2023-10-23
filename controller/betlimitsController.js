@@ -15,7 +15,6 @@ exports.createBetlimit = catchAsync(async(req,res,next)=>{
 exports.updateBetLimit = catchAsync(async(req, res, next)=>{
     let Id = req.body.id;
     delete req.body['id'];
-    console.log(Id,req.body)
     const betLimit = await Betlimit.findByIdAndUpdate(Id,req.body,{new:true})
     res.status(200).json({
         status:'success',

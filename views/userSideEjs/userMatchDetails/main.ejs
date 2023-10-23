@@ -10,7 +10,7 @@
             <div class="exchange-pg-main-col-ro">
                 <div class="exchange-pg-main-col-big col-sm-9 col-12">
                     <div class="exchange-pg-main-col-big-wrp">
-                        <section class="exchange-pg-inn-banner-sec">
+                        <section class="exchange-pg-inn-banner-sec inplay-match">
                           <%-include("./matchDetails")%>
 
                             
@@ -20,6 +20,9 @@
                           <%}%>
                           <%if(match.marketList.bookmaker != null){%>
                             <%-include("./bookmaker")%>
+                          <%}%>
+                          <%if(match.marketList.winner != null){%>
+                            <%-include('./winner')%>
                           <%}%>
                           
                           <%if(match.marketList.odd_even != null || match.marketList.session != null){%>
@@ -463,7 +466,7 @@
 
                 <div class="exchange-pg-main-col-mini my-live-streacoldv col-lg-3 col-md-3 col-12 mbl-exchange-pg-main-col-mini">
                   <%if(user){ %>
-                    <%if(liveStream.data){%>
+                    <%if(status){%>
                   <div class="exchange-pg-rit-ro mb-2">
                     <div class="exchange-pg-rit-ro-livetv-dv">
                       <div class="exchange-pg-rit-ro-livetv-titl">
@@ -493,7 +496,11 @@
                             </thead>
                             <tbody id="tableBET">
                              <%for(let i = 0; i < betsOnthisMatch.length; i++){%>
-                              <tr>
+                              <%if(betsOnthisMatch[i].bettype2 === "BACK"){%>
+                                <tr class="back-inplaymatch" >
+                              <%}else{%>
+                                <tr class="lay-inplaymatch" >
+                              <%}%>
                                 <td><%= betsOnthisMatch[i].selectionName%></td>
                                 <td><%= betsOnthisMatch[i].oddValue %></td>
                                 <td><%= betsOnthisMatch[i].Stake %></td>
@@ -826,23 +833,23 @@
         ],
       });
     </script>
-     <script>
+     <!-- <script>
       $(document).ready(function(){
         $("#offsetmenubtnn").click(function(){
           $("#offsetmenubody").toggleClass("offset-mnu-width");
         });
       });
-    </script>
+    </script> -->
     
-    <script>
+    <!-- <script>
       $(document).ready(function(){
         $("#offsetmenubtnn").click(function(){
           $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
         });
       });
-    </script>
+    </script> -->
 
-    <script>
+    <!-- <script>
       $(document).ready(function(){
         $("#offsertmnuclosbtn").click(function(){
           $("#offsetmenubody").toggleClass("offset-mnu-width");
@@ -856,6 +863,11 @@
           $("#ofsetoverlaydv").toggleClass("overlay-offset-mnu-on");
         });
       });
+    </script> -->
+    <script>
+      $(".my-exc-inn-colaps-txt-dv .close-btn").click(function(){
+    $(this).parents(".collapse").removeClass("show");
+  });
     </script>
     <!-- SLICK SLIDER CDN  -->
 
@@ -865,7 +877,7 @@
       crossorigin="anonymous"
     ></script>
     <!-- Add the Bootstrap CSS in the head section -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <!-- Add Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

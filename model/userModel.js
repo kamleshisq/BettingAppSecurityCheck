@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 // const validator = require('validator');
 const bycrypt = require('bcrypt');
-function roundToTwoDecimals(value) {
-    return parseFloat(value).toFixed(2);
-}
+
+
 // const { default: isEmail } = require('validator/lib/isEmail');
 // const { string } = require('joi');
 
@@ -200,7 +199,10 @@ const userSchema = mongoose.Schema({
     netCommisssion:{
         type:Number,
         default:0
-    }
+    },
+    OperatorAuthorization:[{
+            type:String
+        }]
 })
 
 userSchema.pre('save', async function(next){
@@ -213,7 +215,7 @@ userSchema.pre('save', async function(next){
 userSchema.pre(/^find/, function(next){
     this.populate({
         path:'role',
-        select:'roleName authorization role_type role_level userAuthorization'
+        select:'roleName authorization role_type role_level userAuthorization operationAuthorization AdminController'
     })
     next()
 })
@@ -230,38 +232,77 @@ userSchema.pre(/^find/, function(next){
 //     return parseFloat(value).toFixed(2);
 // }
 
-userSchema.virtual('roundedDownlineBalance').get(function () {
-    return this.downlineBalance.toFixed(2);
-}).set(function (value) {
-    this.downlineBalance = parseFloat(value);
-});
+// userSchema.virtual('roundedDownlineBalance').get(function () {
+//     return this.downlineBalance.toFixed(2);
+// }).set(function (value) {
+//     this.downlineBalance = parseFloat(value);
+// });
 
-userSchema.virtual('roundedMyPL').get(function () {
-    return this.myPL.toFixed(2);
-}).set(function (value) {
-    this.myPL = parseFloat(value);
-});
+// userSchema.virtual('roundedMyPL').get(function () {
+//     return this.myPL.toFixed(2);
+// }).set(function (value) {
+//     this.myPL = parseFloat(value);
+// });
 
-userSchema.virtual('roundedUplinePL').get(function () {
-    return this.uplinePL.toFixed(2);
-}).set(function (value) {
-    this.uplinePL = parseFloat(value);
-});
+// userSchema.virtual('roundedUplinePL').get(function () {
+//     return this.uplinePL.toFixed(2);
+// }).set(function (value) {
+//     this.uplinePL = parseFloat(value);
+// });
 
-userSchema.virtual('roundedLifetimePL').get(function () {
-    return this.lifetimePL.toFixed(2);
-}).set(function (value) {
-    this.lifetimePL = parseFloat(value);
-});
+// userSchema.virtual('roundedLifetimePL').get(function () {
+//     return this.lifetimePL.toFixed(2);
+// }).set(function (value) {
+//     this.lifetimePL = parseFloat(value);
+// });
 
-userSchema.virtual('roundedPointsWL').get(function () {
-    return this.pointsWL.toFixed(2);
-}).set(function (value) {
-    this.pointsWL = parseFloat(value);
-});
+// userSchema.virtual('roundedPointsWL').get(function () {
+//     return this.pointsWL.toFixed(2);
+// }).set(function (value) {
+//     this.pointsWL = parseFloat(value);
+// });
 // userSchema.pre(/^find/, async function(next){
 //     this.find({isActive:true})
 // })
+
+function roundToTwoDecimals(value) {
+    if (typeof value === 'number' && !isNaN(value)) {
+        return parseFloat(value.toFixed(2));
+    } else {
+        // Handle cases where value is not a number or is undefined
+        // You can return an error message or a default value here.
+        return NaN; // or any other appropriate handling
+    }
+}
+
+userSchema.post(/^find/, function (docs) {
+    // console.log(docs)
+    // if(docs){
+    if(docs != null){
+        if(Array.isArray(docs)){
+            for(const i in docs){
+                // console.log(docs[i], "MODEL")
+                docs[i].myPL = roundToTwoDecimals(docs[i].myPL);
+                docs[i].uplinePL = roundToTwoDecimals(docs[i].uplinePL);
+                docs[i].lifetimePL = roundToTwoDecimals(docs[i].lifetimePL);
+                docs[i].pointsWL = roundToTwoDecimals(docs[i].pointsWL);
+                docs[i].availableBalance = roundToTwoDecimals(docs[i].availableBalance);
+                docs[i].downlineBalance = roundToTwoDecimals(docs[i].downlineBalance);
+                // console.log(docs[i].myPL, "MODEL")
+            }
+        }else{
+            docs.myPL = roundToTwoDecimals(docs.myPL);
+            docs.uplinePL = roundToTwoDecimals(docs.uplinePL);
+            docs.lifetimePL = roundToTwoDecimals(docs.lifetimePL);
+            docs.pointsWL = roundToTwoDecimals(docs.pointsWL);
+            docs.availableBalance = roundToTwoDecimals(docs.availableBalance);
+            docs.downlineBalance = roundToTwoDecimals(docs.downlineBalance);
+        }
+    }
+    // }
+});
+
+
 
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword){
     return await bycrypt.compare(candidatePassword, userPassword)

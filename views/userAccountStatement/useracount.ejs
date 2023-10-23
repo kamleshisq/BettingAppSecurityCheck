@@ -4,13 +4,14 @@
   <section class="dashboard-welcome-section">
     <div class="container-fluid">
       <div class="new-head"> 
-        <h3 class="main-heading">User Account Statement</h3>
-        <form action="">
+        <h3 class="main-heading">My Account Statement</h3>
+        <div class="rowId" data-rowid="1"></div>
+        <!-- <form action="">
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
             </div>
-            <input type="text" id="searchUser" onkeyup="myFunction()" list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
+            <input type="text" id="searchUser" onkeyup="myFunction()" list=text_editors class="form-control searchUser" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
             <div class="wrapper">
               <ul id="search" class="users">
               </ul>
@@ -18,11 +19,10 @@
               </ul>
             </div>
           </div>
-          <!-- <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button> -->
-        </form>
+          <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
+        </form> -->
       </div>
       <%- include("../loginUserAdminsideDetails") %>
-    </div>
   </section>
 
   <section>
@@ -52,16 +52,15 @@
                 <th>S.No</th>
                 <th>Date</th>
                 <th>Time</th>
-                <th>Stake</th>
-                <th>Credit</th>
-                <th>Debit</th>
                 <th>From / To</th>
-                <th>Closing</th>
-                <th>Description</th>
+                <th>Opening Balance</th>
+                <th>Amount</th>
+                <th>Closing Balance</th>
                 <th>Remarks</th>
               </tr>
             </thead>
             <tbody class="new-body">
+              <%if(data.length !== 0){%>
               <%for(let i = 0; i < data.length; i++){%>
               <% let date = new Date(data[i].date)%>
               <%if((i%2 == 0)){%>
@@ -69,14 +68,7 @@
                 <td><%= i + 1%></td>
                 <td class="text-nowrap" ><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
                 <td class="text-nowrap" ><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
-                <%if(data[i].stake){%>
-                <td><%=data[i].stake%></td>
-                <%}else{%>
-                <td>-</td>
-                <%}%>
                 <%if(data[i].creditDebitamount > 0){%>
-                <td><%=data[i].creditDebitamount%></td>
-                <td>0</td>
                 <%if(data[i].parent_id){%>
                 <%if(data[i].parent_id.userName == data[i].user_id.userName){%>
                 <%if(data[i].child_id == null){ %>
@@ -95,9 +87,7 @@
                 <td>-</td>  
                 <%}%>
                 <%}else{%>
-                <td>0</td>
                 <%if(data[i].parent_id){%>
-                <td><%=data[i].creditDebitamount%></td>
                 <%if(data[i].parent_id.userName == data[i].user_id.userName){%>
                 <%if(data[i].child_id == null){ %>
                 <td><%=data[i].parent_id.userName%>/-</td>
@@ -112,27 +102,24 @@
                 <%} %>
                 <%}%>
                 <%}else{%>
-                <td><%=data[i].creditDebitamount%></td>
                 <td>-</td>  
                 <%}%>
                 <%}%>
+                <td><%=(data[i].balance - data[i].creditDebitamount).toFixed(2)%></td>
+                <td><%=data[i].creditDebitamount%></td>
                 <td><%=data[i].balance%></td>
-                <td><a class="ownAccDetails" id="<%=data[i]._id%>" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=data[i].description%>&nbsp;</a></td>
-                <td>-</td>
+                <%if(data[i].Remark){%>
+                  <td><%=data[i].Remark%></td>
+                <%}else{%>
+                  <td>-</td>
+                <%}%>
               </tr>
               <%}else{%>
               <tr>
                 <td><%= i + 1%></td>
                 <td class="text-nowrap" ><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear()%></td>
                 <td class="text-nowrap" ><%=date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
-                <%if(data[i].stake){%>
-                <td><%=data[i].stake%></td>
-                <%}else{%>
-                <td>-</td>
-                <%}%>
                 <%if(data[i].creditDebitamount > 0){%>
-                <td><%=data[i].creditDebitamount%></td>
-                <td>0</td>
                 <%if(data[i].parent_id){%>
                 <%if(data[i].parent_id.userName == data[i].user_id.userName){%>
                 <%if(data[i].child_id == null){ %>
@@ -151,8 +138,6 @@
                 <td>-</td>  
                 <%}%>
                 <%}else{%>
-                <td>0</td>
-                <td><%=data[i].creditDebitamount%></td>
                 <%if(data[i].parent_id){%>
                 <%if(data[i].parent_id.userName == data[i].user_id.userName){%>
                 <%if(data[i].child_id == null){ %>
@@ -171,11 +156,19 @@
                 <td>-</td>  
                 <%}%>
                 <%}%>
+                <td><%=(data[i].balance - data[i].creditDebitamount).toFixed(2)%></td>
+                <td><%=data[i].creditDebitamount%></td>
                 <td><%=data[i].balance%></td>
-                <td><a class="ownAccDetails" id="<%=data[i]._id%>" data-bs-toggle="modal" data-bs-target="#myModal5"> <%=data[i].description%> &nbsp;</a></td>
-                <td>-</td>
+                <%if(data[i].Remark){%>
+                  <td><%=data[i].Remark%></td>
+                <%}else{%>
+                  <td>-</td>
+                <%}%>
               </tr>
               <%}%>
+              <%}%>
+              <%}else{%>
+                <tr class="empty_table"><td>No record found</td></tr>
               <%}%>
             </tbody>
           </table>
@@ -209,6 +202,11 @@
       </div>
     </div>
   </div>
+</div>
+<div id="load-more">
+  
+  <button class="load-more">Load More</button>
+  
 </div>
 
 <script type="text/javascript" src="../js/bundle.js"></script>

@@ -10,7 +10,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
             </div>
-            <input type="text" id="searchUser" onkeyup="myFunction()" list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
+            <input type="text" id="searchUser" onkeyup="myFunction()" list=text_editors class="form-control searchUser" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
             <div class="wrapper">
               <ul id="search" class="users">
 
@@ -29,10 +29,22 @@
     <div class="container-fluid">
       <div class="table-data-section">
         <div class="table-heading">
-          <h3>Game Reports</h3>
+          <div class="table-heading-btn">
+            <form action="" class="betlist-heading-from">
+              <div class="input-group">
+                <label>From Date</label>
+                <input type="date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="fromDate"> 
+              </div>
+              <div class="input-group">
+                <label>To Date</label>
+                <input type="date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="toDate"> 
+              </div>
+            </form>
+            <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Download CSV</button>
+          </div>
         </div>
         <div class="data-table">
-          <table>
+          <table id="table12">
             <thead>
               <tr>
                 <th>S.No</th>
@@ -41,6 +53,7 @@
                 <th>Bets</th>
                 <th>Won</th>
                 <th>Loss</th>
+                <th>Void</th>
                 <th>Profit/Loss</th>
               </tr>
             </thead>
@@ -52,15 +65,16 @@
                 <tr>
                   <%}%>
                   <td><%=i + 1%></td>
-                  <td><%=games[i]._id%></td>
+                  <td class="clickableelement getajaxdataclick" data-href="/admin/gamereport/match?userName=<%=games[i]._id%>" data-parent="<%=games[i]._id%>"><%=games[i]._id%></td>
                   <td><%=games[i].gameCount%></td>
                   <td><%=games[i].betCount%></td>
                   <td><%=games[i].won%></td>
                   <td><%=games[i].loss%></td>
+                  <td><%=games[i].void%></td>
                   <%if(games[i].returns >= 0){%>
-                  <td class="green">+<%=games[i].returns%></td>
+                  <td class="green">+<%=(games[i].returns).toFixed(2)%></td>
                   <%}else{%>
-                  <td class="red"><%=games[i].returns%></td>
+                  <td class="red"><%=(games[i].returns).toFixed(2)%></td>
                   <%}%>
                 </tr>
                 <%}%>
@@ -75,6 +89,15 @@
   <div class="pageId" data-pageid="1"></div>
 
 </div>
+<%if(games.length != 0){%>
+<div id="load-more" >
+  <button class="load-more">Load More</button>
+</div>
+<%}else{%>
+  <div id="load-more" style="display: none;">
+    <button class="load-more">Load More</button>
+  </div>
+<%}%>
 
   <script>
     function myFunction() {

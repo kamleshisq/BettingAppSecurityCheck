@@ -4,7 +4,7 @@ const notificationControl = require('../controller/notificationController');
 const authController = require("../controller/authorizationController");
 
 
-
+// Admin Panal
 route.use(authController.isProtected,  authController.isAdmin);
 route.post('/createNotification', notificationControl.createNewNotification);
 route.get('/myNotifications', notificationControl.getMyNotification);

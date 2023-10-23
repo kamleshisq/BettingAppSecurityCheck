@@ -4,10 +4,14 @@
       <div class="exchange-pg-inn-banner-col-titi-txt">
           <h6><span>Bookmaker</span><span class="game-info-popup-spn" data-bs-toggle="modal" data-bs-target="#gameroulspop"> 
             <i class="fa-solid fa-circle-info"></i> 
-          </span></h6>
+          </span>
+          <%if(commissionmarkerarr.includes(match.marketList.bookmaker[0].marketId)){%>
+            <span class="blink-commission-bookmaker">*</span>
+          <%}%>
+        </h6>
       </div>
       <div class="exchange-pg-inn-banner-col-titi-txt-tim">
-          <h6><b>Min : <%=min%>, Max : <%=max%></b></h6>
+          <h6 class="market-limit" id="<%=match.marketList.bookmaker[0].marketId%>"><b>Min : <%=minBookMaker%>, Max : <%=maxBookMaker%></b></h6>
       </div>
     </div>
     <div class="star-hedtitl-dv multi_market" id="<%=match.marketList.bookmaker[0].marketId%>">  
@@ -48,13 +52,13 @@
                       </td>
                       
                       <td class="tbl-td-with5">
-                          <span data-bs-toggle="collapse" href="#bt-slp-colps-bookmaker-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-bookmaker-<%=i%>" class="tbl-bg-blu-spn bookmaker_blue button" id="<%=jsonData[i].secId%>1">
+                          <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-bookmaker-<%=i%>" class="tbl-bg-blu-spn bookmaker_blue button" id="<%=jsonData[i].secId%>1">
                               
                               
                           </span> 
                       </td>
                       <td class="tbl-td-with5">
-                          <span data-bs-toggle="collapse" href="#bt-slp-colps-bookmaker-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-bookmaker-<%=i%>" class="tbl-bg-pech-spn bookmaker_red button" id="<%=jsonData[i].secId%>2">
+                          <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-bookmaker-<%=i%>" class="tbl-bg-pech-spn bookmaker_red button" id="<%=jsonData[i].secId%>2">
                               
                               
                           </span> 
@@ -81,6 +85,7 @@
         </table>
         
   </div>
+  <div class="odd-scroll-text marketNotification" id="<%=match.marketList.bookmaker[0].marketId%>"></div>
 
  
 
@@ -96,7 +101,7 @@
             </span></h6>
         </div>
         <div class="exchange-pg-inn-banner-col-titi-txt-tim">
-            <h6><b>Min : <%=min%>, Max : <%=max%></b></h6>
+            <h6 class="market-limit" id="<%=match.marketList.bookmaker[1].marketId%>"><b>Min : <%=minBookMaker%>, Max : <%=maxBookMaker%></b></h6>
         </div>
       </div>
       <div class="star-hedtitl-dv multi_market" id="<%=match.marketList.bookmaker[1].marketId%>">  
@@ -170,7 +175,7 @@
           </table>
           
     </div>
-  
+    <div class="odd-scroll-text marketNotification" id="<%=match.marketList.bookmaker[1].marketId%>"></div>
    
   
   </div>

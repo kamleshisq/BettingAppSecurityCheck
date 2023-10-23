@@ -1,4 +1,6 @@
 const app = require('./app');
+const mongoose = require('mongoose')
+const util = require('util');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const fetch = require('node-fetch');
@@ -11,6 +13,7 @@ const horizontalMenuModel = require("./model/horizontalMenuModel");
 const AccModel  = require("./model/accountStatementByUserModel");
 const pagesModel = require("./model/pageModel");
 const Promotion = require("./model/promotion")
+const Stream = require('./model/streammanagement')
 const userController = require("./websocketController/userController");
 const accountControl = require("./controller/accountController");
 const getmarketDetails = require("./utils/getmarketsbymarketId");
@@ -40,25 +43,33 @@ const catalogController = require("./model/catalogControllModel");
 const commissionMarketModel = require("./model/CommissionMarketsModel");
 const netCommissionModel = require('./model/netCommissionModel');
 const commissionRepportModel = require('./model/commissionReport');
+const featureEventModel = require('./model/featureEventModel')
+const InPlayEvent = require('./model/inPlayModel')
+
+const { error } = require('console');
+const checkPass = require("./websocketController/checkPassUser");
+const { type } = require('os');
+const checkPassAsync = util.promisify(checkPass.checkPass);
+const betLimitMatchWisemodel = require('./model/betLimitMatchWise');
+const voidbetAfterPlace = require('./utils/voideBetAfterPlace');
+const voidBetBeforePlace = require('./utils/voidBetForOpen');
+const rollBackBet = require('./utils/RollBackAfterPlace');
+const InprogreshModel = require('./model/InprogressModel');
+const eventNotification = require('./model/eventNotification');
+const newCommissionModel = require('./model/commissioNNModel'); 
+const timelyNotificationModel = require('./model/timelyVoideNotification');
+const resumeSuspendModel = require('./model/resumeSuspendMarket');
+const Decimal = require('decimal.js');
+const runnerDataModel = require('./model/runnersData');
 // const { Linter } = require('eslint');
 io.on('connection', (socket) => {
     console.log('connected to client')
-    let loginData = {}
-    // console.log(global)
-    if(global._token){
-        loginData.User = global._User
-        loginData.Token = global._token.split(';')[0]
-        if(!loginData.Token.startsWith("JWT")){
-            loginData.Token = global._token.split(';')[1]
-        }
-    }else{
-        loginData.User = ""
-        loginData.Token = ""
-    }
+   
     // console.log(loginData.Token)
     // console.log(global._token)
     socket.emit("loginUser", {
-        loginData
+        loginData:global.loginData,
+        socket:socket.request.connection.remoteAddress
     })
     const urlRequestAdd = async(url,method, Token, user) => {
         const login = await loginlogs.findOne({session_id:Token, isOnline:true})
@@ -118,6 +129,47 @@ io.on('connection', (socket) => {
 
 
 
+//......................FOR user profile page .......................//
+
+    socket.on('editMyProfile',async(data)=>{
+        try{
+            await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,data.data)
+            socket.emit('editMyProfile',{status:'success',msg:'profile edited successfully'})
+        }catch(err){
+            console.log(err)
+            socket.emit('editMyProfile',{status:'success',msg:'something went wrong'})
+        }
+    })
+
+    socket.on('editMyPassword',async(data)=>{
+        try{
+            let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
+            if(user){
+                const passcheck = await user.correctPassword(data.data.oldpassword, user.password)
+                if(passcheck){
+                    if(await user.correctPassword(data.data.password, user.password)){
+                        socket.emit('editMyPassword',{status:'fail',msg:'Please enter other password'})
+                    
+                    }else if(data.data.password == data.data.passwordConfirm){
+                        user.password = data.data.password
+                        user.passwordConfirm = data.data.passwordConfirm
+                        user.save()
+                        socket.emit('editMyPassword',{status:'success',msg:'Password Updated Successfully'})
+                    }else{
+                        socket.emit('editMyPassword',{status:'fail',msg:'Your new password and confirm new password are not match'})
+                    }
+                        
+                }else{
+                    socket.emit('editMyPassword',{status:'fail',msg:'Your old password is wrong'})
+                }
+            }else{
+                socket.emit('editMyPassword',{status:'fail',msg:'user not found'})
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit('editMyPassword',{status:'fail',msg:'something went wrong'})
+        }
+    })
 //......................FOR user management page .......................//
 
 
@@ -128,121 +180,190 @@ io.on('connection', (socket) => {
 
     socket.on("search", async(data) => {
         // console.log(data.LOGINDATA.LOGINTOKEN);
-        // console.log(data.filterData);
+        // console.log(data);
         let page = data.page; 
-        let limit = 10
-        // const me = await User.findById(data.id)
-        console.log(data.LOGINDATA)
-        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
-        data.filterData.parentUsers = { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
-        let role_type =[]
-        for(let i = 0; i < roles.length; i++){
-            role_type.push(roles[i].role_type)
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = limit * page
+        }
+        let user
+        const me = await User.findById(data.id)
+        // console.log(data.LOGINDATA)
+        let roles ;
+        let operationId;
+        let operationUser;
+        if(me.roleName == 'Operator'){
+            operationUser = await User.findById(me.parent_id)
+            operationId = operationUser._id
+            roles = await Role.find({role_level: {$gt:operationUser.role.role_level}});
+        }else{
+            operationUser = me
+            operationId = operationUser._id
+            roles = await Role.find({role_level: {$gt:operationUser.role.role_level}});
         }
         
-        let user
-        if(data.filterData.userName){
-            var regexp = new RegExp(data.filterData.userName);
-            data.filterData.userName = regexp
-        }
-        if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
-            // console.log(data.filterData)
-            // console.log(data.filterData)
-            // user = await User.find({userName:new RegExp(data.filterData.userName,"i"), data.filterData})
-           
-            if(data.filterData.role_type){
+        if(Object.keys(data.filterData).length !== 0){
+            data.filterData.roleName = {$ne:'Operator'}
+
+            data.filterData.parentUsers = operationId
+            let role_type =[]
+            for(let i = 0; i < roles.length; i++){
+                role_type.push(roles[i].role_type)
+            }
+            
+            
+            if(data.filterData.userName){
+                var regexp = new RegExp(data.filterData.userName);
+                data.filterData.userName = regexp
+            }
+            if(data.filterData.status){
+                if(data.filterData.status == 'true'){
+                    data.filterData.isActive = true
+                }else if(data.filterData.status == 'false'){
+                    data.filterData.isActive = false
+                }else{
+                    data.filterData.betLock = true
+                }
+                delete data.filterData['status']
+            }
+            if(operationUser.role.role_level == 1){
+                // console.log(data.filterData)
+                // console.log(data.filterData)
+                // user = await User.find({userName:new RegExp(data.filterData.userName,"i"), data.filterData})
+                if(data.filterData.role_type){
                 // console.log(parseInt(data.filterData.role_type))
                 if(role_type.includes(parseInt(data.filterData.role_type))){
-                    user = await User.find(data.filterData).skip(page * limit).limit(limit)
+                    user = await User.find(data.filterData).skip(skip).limit(limit)
                 }else{
                     socket.emit('searchErr',{
                         message:'you not have permition'
                     })
                 }
-            }else{
-                data.filterData.role_type = {
-                    $ne : 1
-                }
-                user = await User.find(data.filterData).skip(page * limit).limit(limit)
-            }
-          
-        }else{
-            if(data.filterData.role_type){
-                if(role_type.includes((data.filterData.role_type) * 1)){
-                    // console.log('here')
-                    user = await User.find(data.filterData).skip(page * limit).limit(limit)
                 }else{
-                    socket.on('searchErr',{
-                        message:'you not have permition'
-                    })
-                }
+                    data.filterData.role_type = {
+                        $ne : 1
+                    }
+                    user = await User.find(data.filterData).skip(skip).limit(limit)
+                }            
             }else{
+                if(data.filterData.role_type){
+                    if(role_type.includes((data.filterData.role_type) * 1)){
+                        // console.log('here')
+                        user = await User.find(data.filterData).skip(skip).limit(limit)
+                    }else{
+                        socket.emit('searchErr',{
+                            message:'you not have permition'
+                        })
+                    }
+                }else{
 
-                let role_Type = {
-                    $in:role_type
+                    let role_Type = {
+                        $in:role_type
+                    }
+                    data.filterData.role_type = role_Type
+                    console.log(data.filterData)
+                    user = await User.find(data.filterData).skip(skip).limit(limit)
                 }
-                data.filterData.role_type = role_Type
-                console.log(data.filterData)
-                user = await User.find(data.filterData).skip(page * limit).limit(limit)
             }
-        }
+        }else{
+            let parent = await User.findById(data.id)
+            if(parent.roleName == 'Operator'){
+                user = await User.find({parent_id:parent.parent_id,roleName:{$ne:'Operator'}}).skip(skip).limit(limit)
+            }else{
+                user = await User.find({parent_id:parent._id,roleName:{$ne:'Operator'}}).skip(skip).limit(limit)
+            }
+           }
         let currentUser = data.LOGINDATA.LOGINUSER
 
         // console.log(user)
         // console.log(page)
         let response = user;
         //urlRequestAdd(`/api/v1/users/searchUser?username = ${data.filterData.userName}& role=${data.filterData.role}& whiteLable = ${data.filterData.whiteLabel}`,'GET', data.LOGINDATA.LOGINTOKEN)
-        socket.emit("getOwnChild", {status : 'success',response, currentUser,page,roles})
+        socket.emit("getOwnChild", {status : 'success',response, currentUser,page,roles,refreshStatus:data.refreshStatus})
     })
 
+    socket.on('getOperatorPermission',async(id)=>{
+        let user = await User.findById(id)
+        let permissions = user.OperatorAuthorization
+        socket.emit('getOperatorPermission',{status:'success',permissions})
+    })
+
+    socket.on('editOperatorPermission',async(data)=>{
+        try{
+            let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
+            if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
+                socket.emit("editOperatorPermission",{status:'fail',msg:"please provide a valid password"})
+            }else{
+                await User.findByIdAndUpdate(data.data.id,{OperatorAuthorization:data.data.OperatorAuthorization})
+                socket.emit('editOperatorPermission',{status:'success',msg:'permission updated successfully'})
+            }
+           
+        }catch(err){
+            socket.emit('editOperatorPermission',{status:'fail',msg:'somethig went wrong'})
+
+        }
+    })
+
+    socket.on('loginuserbalance',async(data)=>{
+        const user = await User.findById(data.LOGINUSER._id)
+        socket.emit('loginuserbalance',user)
+    })
 
     socket.on('userHistory',async(data)=>{
+        console.log(data.filterData)
         let page = data.page;
         let limit = 10;
-        User.aggregate([
+        let filter = {}
+       
+        if(data.filterData.fromDate && data.filterData.toDate){
+            filter.login_time = {$gte:new Date(data.filterData.fromDate),$lte:new Date(data.filterData.toDate)}
+        }else if(data.filterData.fromDate && !data.filterData.toDate){
+            filter.login_time = {$gte:new Date(data.filterData.fromDate)}
+        }else if(data.filterData.toDate && !data.filterData.fromDate){
+            filter.login_time = {$lte:new Date(data.filterData.toDate)}
+        }
+        // console.log(filter)
+        let childrenUsername = []
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }else{
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }
+
+        if(data.filterData.userName){
+            filter.userName = data.filterData.userName
+        }else{
+            filter.userName = {$in:childrenUsername}
+        }
+        let users = await loginlogs.aggregate([
             {
-              $match: {
-                parentUsers: { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
-              }
+                $match:filter
             },
             {
-              $group: {
-                _id: null,
-                userIds: { $push: '$_id' } 
-              }
-            }
-          ])
-            .then((userResult) => {
-              const userIds = userResult.length > 0 ? userResult[0].userIds : [];
-              loginlogs.aggregate([
-                {
-                  $match:{
-                    user_id:{$in:userIds}
-                  }
-                },{
-                    $sort:{
-                        login_time:-1
-                    }
-                },
-                {
-                    $skip:(limit * page)
-                },
-                {
-                    $limit:limit
+                $sort:{
+                    login_time:-1
                 }
-              ])
-                .then((Logs) => {
-                //   socket.emit("aggreat", betResult)
-                let users = Logs
-                socket.emit('userHistory',{users,page})
-                })
-                .catch((error) => {
-                  console.error(error);
-                });
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+            },
+            {
+                $skip:(page * 10)
+            },
+            {
+                $limit:10
+            }
+        ])
+        console.log(users)
+        socket.emit('userHistory',{users,page})
     })
     
     // status:'success',
@@ -288,7 +409,7 @@ io.on('connection', (socket) => {
     socket.on("SelectLogoutUserId",async(id)=>{
         // console.log(id)
         // let data = {userId:`${id}`}
-        const fullUrl = fullUrl `/api/v1/auth/logOutSelectedUser?userId=`+id
+        let fullUrl =  `http://127.0.0.1/api/v1/auth/logOutSelectedUser?userId=`+id
         fetch(fullUrl, {
             method: 'POST',
             headers: { 'Authorization': `Bearer ` + loginData.Token }
@@ -349,13 +470,19 @@ io.on('connection', (socket) => {
     // })
 
     socket.on("AccountScroll", async(data)=>{
+        // console.log(data)
         let fullUrl
-        if(data.id){
-            let id = await User.findOne({userName:data.id})
-            // console.log()
-            fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement?id=' + id.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
+        let operatorId;
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            operatorId = data.LOGINDATA.LOGINUSER.parent_id
         }else{
-            fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement?id=' + data.LOGINDATA.LOGINUSER._id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
+            operatorId = data.LOGINDATA.LOGINUSER._id
+        }
+        if(data.id){
+            // console.log()
+            fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  + "&refreshStatus=" + data.refreshStatus 
+        }else{
+            fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement?id=' + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate + "&refreshStatus=" + data.refreshStatus 
 
         }
 
@@ -376,6 +503,101 @@ io.on('connection', (socket) => {
             // me:currentUser,
             // data})
         });
+    })
+
+    socket.on("AccountScroll1", async(data)=>{
+        // console.log(data)
+        let fullUrl
+        let operatorId;
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            operatorId = data.LOGINDATA.LOGINUSER.parent_id
+        }else{
+            operatorId = data.LOGINDATA.LOGINUSER._id
+        }
+        if(data.id){
+            // console.log()
+            fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement1?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
+        }else{
+            fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement1?id=' + operatorId + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate 
+
+        }
+
+        //urlRequestAdd(`/api/v1/Account/getUserAccStatement?id = ${data.id}&page=${data.page}&from = ${data.from}&from = ${data.from}&to = ${data.to}&search = ${data.search}`,'GET', data.LOGINDATA.LOGINTOKEN)
+
+
+        // console.log(fullUrl)
+        fetch(fullUrl, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ` + loginData.Token },
+        }).then(res => res.json())
+        .then(json =>{ 
+            // console.log(json)
+            socket.emit('Acc1', {json,page:data.page})
+            // const data = json.userAcc
+            // res.status(200).render('./userAccountStatement/useracount',{
+            // title:"UserAccountStatement",
+            // me:currentUser,
+            // data})
+        });
+    })
+
+    socket.on("AccountScroll2", async(data)=>{
+        console.log(data)
+        const user = await User.findById(data.id)
+        let fullUrl
+        let account;
+        let json  = {}
+        let filter = {};
+        let limit = 10
+        if(data.Fdate != '' && data.Tdate != ''){
+            filter.date = {$gte:new Date(data.Fdate),$lte:new Date(data.Tdate)}
+        }else if(data.Fdate != '' && data.Tdate == ''){
+            filter.date = {$gte:new Date(data.Fdate)}
+
+        }else if(data.Fdata == '' && data.Tdate != ''){
+            filter.date = {$lte:new Date(data.Tdate)}
+        }
+        filter.user_id = new mongoose.Types.ObjectId(data.id)
+
+        if(data.id){
+            // console.log()
+            let Logs = await AccModel.aggregate([
+                {
+                    $match:filter
+                },
+                {
+                    $lookup:{
+                        from:'betmodels',
+                        localField:'transactionId',
+                        foreignField:'transactionId',
+                        as:'betDetails'
+                    }
+                },
+                // {
+                //     $unwind:"$betDetails"
+                // },
+                {
+                    $sort:{"date":-1}
+                },
+                {
+                    $skip:limit * data.page
+                },
+                {
+                    $limit:limit
+                }
+            ])
+            json.userAcc = Logs
+
+            // account  = await AccModel.find({user_id:data.id})
+            
+            // fullUrl = 'http://127.0.0.1/api/v1/Account/getUserAccStatement1?id=' + data.id + "&page=" + data.page + "&from=" + data.Fdate + "&to=" + data.Tdate  
+        }else{
+            json.userAcc = [] 
+            
+        }
+        json.status = 'success'
+        socket.emit('Acc2', {json,page:data.page,user})
+
     })
 
     // socket.on("SearchACC", async(data) => {
@@ -548,7 +770,7 @@ io.on('connection', (socket) => {
             if(!bet){
                 const result = acc.transactionId.replace(/Parent$/, '');
                 bet = await Bet.findOne({transactionId:result})
-        }
+            }
         }else{
             bet = acc
         }
@@ -572,93 +794,347 @@ io.on('connection', (socket) => {
 
     socket.on('gameReport',async(data)=>{
         let page = data.page
-        let limit = 10
-        let dataM 
-        console.log(data.filterData)
-        console.log(data.LOGINDATA.LOGINUSER.userName)
-        
-        User.aggregate([
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = page * limit
+        }
+        let childrenUsername = []
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }else{
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }
+        if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
+            childrenUsername = [data.filterData.userName]
+        }
+        if(data.filterData.fromDate && data.filterData.toDate){
+            data.filterData.date = {$gte:new Date(data.filterData.fromDate),$lte:new Date(data.filterData.toDate)}
+        }else if(data.filterData.fromDate && !data.filterData.toDate){
+            data.filterData.date = {$gte:new Date(data.filterData.fromDate)}
+        }else if(data.filterData.toDate && !data.filterData.fromDate){
+            data.filterData.date = {$lte:new Date(data.filterData.toDate)}
+        }else if(!data.filterData.toDate && !data.filterData.fromDate){
+            data.filterData.date = {$exists:true}
+        }
+        let games = await Bet.aggregate([
             {
-              $match: {
-                parentUsers: { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
-              }
+                $match: {
+                userName: { $in: childrenUsername },
+                status: {$in:["WON",'LOSS','CANCEL']},
+                date:data.filterData.date
+                }
             },
             {
-              $group: {
-                _id: null,
-                userIds: { $push: '$userName' } 
-              }
+                $group:{
+                    _id:{
+                        userName:'$userName',
+                        gameId: '$event'
+                    },
+                    gameCount:{$sum:1},
+                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+                    returns:{$sum:'$returns'}
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:'$_id.userName',
+                    gameCount:{$sum:1},
+                    betCount:{$sum:'$gameCount'},
+                    loss:{$sum:'$loss'},
+                    won:{$sum:'$won'},
+                    void:{$sum:'$void'},
+                    returns:{$sum:'$returns'}
+    
+                }
+            },
+            {
+                $sort: {
+                  _id: 1,
+                  returns: 1
+                }
+            },
+            {
+                $skip:skip
+            },
+            {
+                $limit:limit
             }
           ])
-            .then((userResult) => {
-              const userIds = userResult.length > 0 ? userResult[0].userIds : [];
-                if(data.filterData.userName === data.LOGINDATA.LOGINUSER.userName){
-                    dataM = {
-                        status:{$ne:"OPEN"},
-                        userName: { $in: userIds }
-                    }
-                }else{
-                    dataM = {
-                        userName: data.filterData.userName,
-                        status: {$ne:"OPEN"}
-                    }
-                }
-              Bet.aggregate([
-                {
-                  $match:dataM
-                },
-                {
-                    $group:{
-                        _id:{
-                            userName:'$userName',
-                            gameId: '$event'
-                        },
-                        gameCount:{$sum:1},
-                        loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
-                        won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
-                        returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
-                        
-                    }
-                },
-                {
-                    $group:{
-                        _id:'$_id.userName',
-                        gameCount:{$sum:1},
-                        betCount:{$sum:'$gameCount'},
-                        loss:{$sum:'$loss'},
-                        won:{$sum:'$won'},
-                        returns:{$sum:'$returns'}
-        
-                    }
-                },
-                {
-                    $sort: {
-                      _id: 1,
-                      returns: 1
-                    }
-                },
-                {
-                    $skip:(page * limit)
-                },
-                {
-                    $limit:limit
-                }
-              ])
-                .then((betResult) => {
-                //   socket.emit("aggreat", betResult)
-                let games = betResult
-                socket.emit('gameReport',{games,page})
-                })
-                .catch((error) => {
-                  console.error(error);
-                });
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        })
 
+        socket.emit('gameReport',{games,page,refreshStatus:data.refreshStatus})
+    })
+    socket.on('gameReportByMatch',async(data)=>{
+        let page = data.page
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = page * limit
+        }
+    
+        let games = await Bet.aggregate([
+            {
+                $match: {
+                userName: { $in: [data.filterData.userName] },
+                status: {$in:["WON",'LOSS','CANCEL']},
+                date:{$gte:new Date(data.filterData.fromDate),$lte:new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))}          
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:{
+                        match:'$match',
+                        marketName: '$marketName'
+                    },
+                    eventDate:{$first:'$eventDate'},
+                    gameCount:{$sum:1},
+                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+                    returns:{$sum:'$returns'}
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:'$_id.match',
+                    eventDate:{$first:'$eventDate'},
+                    gameCount:{$sum:1},
+                    betCount:{$sum:'$gameCount'},
+                    loss:{$sum:'$loss'},
+                    won:{$sum:'$won'},
+                    void:{$sum:'$void'},
+                    returns:{$sum:'$returns'}
+        
+        
+                }
+            },
+            {
+                $sort: {
+                    _id: 1,
+                    returns: 1
+                }
+            },
+            {
+                $skip:skip
+            },
+            {
+                $limit:limit
+            }
+            ])
+            let url = `/admin/gamereport/match/market?userName=${data.filterData.userName}&fromDate=${data.filterData.fromDate}&toDate=${data.filterData.toDate}`
+
+        socket.emit('gameReportByMatch',{games,url,page,refreshStatus:data.refreshStatus})
+    })
+    socket.on('gameReportByMarket',async(data)=>{
+        let page = data.page
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = page * limit
+        }
+    
+        let games = await Bet.aggregate([
+            {
+                $match: {
+                    userName: { $in: [data.filterData.userName] },
+                    status: {$in:["WON",'LOSS','CANCEL']},
+                    date:{$gte:new Date(data.filterData.fromDate),$lte:new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))},
+                    match:data.filterData.match
+                }
+            },
+            {
+                $group:{
+                    _id:'$marketName',
+                    date:{$first:'$date'},
+                    gameCount:{$sum:1},
+                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+                    returns:{$sum:'$returns'}
+                    
+                }
+            },
+            {
+                $sort: {
+                    _id: 1,
+                    returns: 1
+                }
+            },
+            {
+                $skip:skip
+            },
+            {
+                $limit:limit
+            }
+            ])
+            let url = `/admin/gamereport/match/market?userName=${data.filterData.userName}&fromDate=${data.filterData.fromDate}&toDate=${data.filterData.toDate}&match=${data.filterData.match}`
+
+        socket.emit('gameReportByMarket',{games,url,page,refreshStatus:data.refreshStatus})
+    })
+    socket.on('gameReportFinal',async(data)=>{
+        let page = data.page
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = page * limit
+        }
+        let market;
+        if(data.filterData.market.toLowerCase().startsWith('book')){
+            market =  {
+                $regex: /^book/i
+              }
+        }else{
+            market = data.filterData.market
+        }
+        let games = await Bet.aggregate([
+            {
+                $match: {
+                    userName: { $in: [data.filterData.userName] },
+                    status: {$in:["WON",'LOSS','CANCEL']},
+                    date:{$gte:new Date(data.filterData.fromDate),$lte:new Date(new Date(data.filterData.toDate).getTime() + ((24 * 60*60*1000)-1))},
+                    match:data.filterData.match,
+                    marketName:market
+                }
+            },
+            {
+                $project:{
+                    date:1,
+                    selectionName:1,
+                    oddValue:1,
+                    ip:1,
+                    Stake:1,
+                    returns:'$returns'
+                }
+            },
+            {
+                $sort: {
+                    date: -1,
+                }
+            },
+            {
+                $skip:skip
+            },
+            {
+                $limit:limit
+            }
+            ])
+
+
+        socket.emit('gameReportFinal',{games,page,refreshStatus:data.refreshStatus})
+    })
+
+
+
+    socket.on("searchEvents", async(data) => {
+        let cricketList;
+        let footballList;
+        let tennisList;
+        console.log(data);
+        const sportData = await getCrkAndAllData()
+        // console.log(sportData)
+        cricketList = sportData[0].gameList[0].eventList
+        footballList = sportData[1].gameList.find(item => item.sportId == parseInt('1'))
+        footballList = footballList.eventList
+        tennisList = sportData[1].gameList.find(item => item.sportId == parseInt('2'))
+        tennisList = tennisList.eventList
+        let sportList = cricketList.concat(footballList,tennisList)
+        sportList = sportList.filter(item => item.eventData.name.toLowerCase().includes(data.x.toLowerCase()))
+        console.log(sportList)
+        socket.emit("searchEvents", {sportList,type:data.type})
+    })
     socket.on("SearchACC", async(data) => {
+        let page = data.page
+        if(!page){
+            page = 0
+        }
+        limit = 10
+        // console.log(data)
+        let roles;
+        let operatorId;
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            let parentUser = await User.findById(data.LOGINDATA.LOGINUSER.parent_id)
+            roles = await Role.find({role_level: {$gt:parentUser.role.role_level}});
+            operatorId = parentUser._id
+        }else{
+            roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
+            operatorId = data.LOGINDATA.LOGINUSER._id
+        }
+        // console.log(roles)
+        let role_type =[]
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+        // console.log(role_type, 123)
+        
+        var regexp = new RegExp(data.x);
+
+        let user = await User.aggregate([
+            {
+                $match:{
+                    userName:regexp,
+                    parentUsers:{$elemMatch:{$eq:operatorId}}
+                }
+            },
+            {
+                $sort:{
+                    userName:-1,
+                    _id:-1
+                }
+            },
+            {
+                $skip:(page*limit)
+            },{
+                $limit:limit
+            }
+        ])
+
+        // if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
+        //         user = await User.find({userName:regexp}).skip(page * limit).limit(limit)
+        // }else{
+        //         // let role_Type = {
+        //         //     $in:role_type
+        //         // }
+        //         // let xfiletr  = {}
+        //         // xfiletr.role_Type = role_Type
+        //         // xfiletr.userName = regexp
+        //         // console.log(data.filterData)
+        //         // console.log(xfiletr)
+        //         user = await User.find({ role_type:{$in: role_type}, userName: regexp, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}} }).skip(page * limit).limit(limit)
+        // }
+        page++
+        if(user.length === 0 ){
+            page = null
+        }
+        socket.emit("ACCSEARCHRES", {user, page})
+    })
+    socket.on("SearchACC1", async(data) => {
         let page = data.page
         if(!page){
             page = 0
@@ -674,107 +1150,103 @@ io.on('connection', (socket) => {
         // console.log(role_type, 123)
         
         var regexp = new RegExp(data.x);
-        let user
-        if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
-                user = await User.find({userName:regexp}).skip(page * limit).limit(limit)
-        }else{
-                // let role_Type = {
-                //     $in:role_type
-                // }
-                // let xfiletr  = {}
-                // xfiletr.role_Type = role_Type
-                // xfiletr.userName = regexp
-                // console.log(data.filterData)
-                // console.log(xfiletr)
-                user = await User.find({ role_type:{$in: role_type}, userName: regexp, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}} }).skip(page * limit).limit(limit)
-        }
+
+        let user = await User.aggregate([
+            {
+                $match:{
+                    userName:regexp,
+                    parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}},
+                    roleName:{$ne:'user'}
+                }
+            },
+            {
+                $sort:{
+                    userName:-1,
+                    _id:-1
+                }
+            },
+            {
+                $skip:(page*limit)
+            },{
+                $limit:limit
+            }
+        ])
+
+        // if(data.LOGINDATA.LOGINUSER.role.role_level == 1){
+        //         user = await User.find({userName:regexp}).skip(page * limit).limit(limit)
+        // }else{
+        //         // let role_Type = {
+        //         //     $in:role_type
+        //         // }
+        //         // let xfiletr  = {}
+        //         // xfiletr.role_Type = role_Type
+        //         // xfiletr.userName = regexp
+        //         // console.log(data.filterData)
+        //         // console.log(xfiletr)
+        //         user = await User.find({ role_type:{$in: role_type}, userName: regexp, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}} }).skip(page * limit).limit(limit)
+        // }
         page++
         if(user.length === 0 ){
             page = null
         }
-        socket.emit("ACCSEARCHRES", {user, page})
+        socket.emit("ACCSEARCHRES1", {user, page})
     })
 
     socket.on('userBetDetail',async(data)=>{
-        console.log(data)
-        let limit = 10;
-        let page = data.page;
-        // console.log(data.filterData)
-        // const roles = await Role.find({role_type: {$gt:data.LOGINDATA.LOGINUSER.role.role_type}});
-        // let role_type =[]
-        // for(let i = 0; i < roles.length; i++){
-        //     role_type.push(roles[i].role_type)
-        // }
-        // data.filterData.role_type = {
-        //     $in:role_type
-        // }
-        // data.filterData.status = {
-        //     $ne:"OPEN"
-        // }
-        // const user = await User.findOne({userName:data.filterData.userName})
-        // if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
-        //     delete data.filterData['userName']
-        //     let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-        //     socket.emit('userBetDetail',{ubDetails,page})
-        // }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
-        //     let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-        //     socket.emit('userBetDetail',{ubDetails,page})
+        let page = data.page
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = page * limit
+        }
 
-        // }
-        
-        User.aggregate([
-            {
-              $match: {
-                parentUsers: { $elemMatch: { $eq: data.LOGINDATA.LOGINUSER._id } }
-              }
-            },
-            {
-              $group: {
-                _id: null,
-                userIds: { $push: '$_id' } 
-              }
-            }
-          ])
-            .then((userResult) => {
-              const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-              let Name123
-              if(data.filterData.userName === data.LOGINDATA.LOGINUSER.userName){
-                  Name123 = {
-                      userId: { $in: userIds },
-                      status: {$ne:"OPEN"}
-                    }
-              }else{
-                Name123 = {
-                    userId: { $in: userIds },
-                    status: {$ne:"OPEN"},
-                    userName: data.filterData.userName
-              }}
-              Bet.aggregate([
-                {
-                  $match: Name123
-                },
-                {
-                    $skip:(page * limit)
-                },
-                {
-                    $limit:limit
-                }
-              ])
-                .then((betResult) => {
-                //   socket.emit("aggreat", betResult)
-                    let ubDetails = betResult
-                    socket.emit('userBetDetail',{ubDetails,page})
-                })
-                .catch((error) => {
-                  console.error(error);
-                });
+
+        if(data.filterData.fromDate && data.filterData.toDate){
+            data.filterData.date = {$gte:new Date(data.filterData.fromDate),$lte:new Date(data.filterData.toDate)}
+            delete data.filterData.fromDate;
+            delete data.filterData.toDate;
+        }else if(data.filterData.fromDate && !data.filterData.toDate){
+            data.filterData.date = {$gte:new Date(data.filterData.fromDate)}
+            delete data.filterData.fromDate
+        }else if(data.filterData.toDate && !data.filterData.fromDate){
+            data.filterData.date = {$lte:new Date(data.filterData.toDate)}
+            delete data.filterData.toDate
+        }
+
+        if(data.filterData.betType === 'All'){
+            delete data.filterData['betType']
+        }
+
+        if(data.filterData.status == 'All'){
+            data.filterData.status = {$ne: "OPEN"}
+        }
+        console.log(data.filterData)
+
+        let childrenUsername = []
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
             })
-            .catch((error) => {
-              console.error(error);
-            });
-        
-        
-        // console.log(user)
+        }else{
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }
+
+        if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
+            data.filterData.userName = {$in:childrenUsername}
+        }
+        let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
+
+
+        socket.emit('userBetDetail',{ubDetails,page,refreshStatus:data.refreshStatus})
+
     })
 
 
@@ -783,12 +1255,118 @@ io.on('connection', (socket) => {
         if(data.filterData.marketName == "All"){
             delete data.filterData.marketName
         }
+
         if(data.filterData.marketName == "Fancy"){
             data.filterData.marketName = {$nin:["Match Odds", "Bookmaker 0%Comm"]}
         }
+
         if(data.filterData.betType == "All"){
             delete data.filterData.betType; 
+        }else if(data.filterData.betType == "4"){
+            data.filterData.betType = 'Cricket'
+        }else if(data.filterData.betType == "1"){
+            data.filterData.betType = "Football"
+        }else if(data.filterData.betType == "2"){
+            data.filterData.betType = "Tennis"
         }
+
+        if(data.filterData.status == "All"){
+            delete data.filterData.status
+        }
+
+        if(data.filterData.eventId == "All"){
+            delete data.filterData.eventId
+        }
+
+        if(data.filterData.Stake){
+            data.filterData.Stake = {$gte:data.filterData.Stake}
+        }
+
+        if(data.filterData.fromDate && data.filterData.toDate){
+            data.filterData.date = {$gte : new Date(data.filterData.fromDate),$lte : new Date(new Date(data.filterData.toDate))}
+            delete data.filterData.fromDate;
+            delete data.filterData.toDate;
+        }else{
+            if(data.filterData.fromDate){
+                data.filterData.date = {$gte : data.filterData.fromDate}
+                delete data.filterData.fromDate;
+
+            }
+            if(data.filterData.toDate){
+                data.filterData.date = {$lte : new Date(new Date(data.filterData.toDate))}
+                delete data.filterData.toDate;
+
+            }
+        }
+        if(data.filterData.whiteLabel == 'All'){
+            delete data.filterData.whiteLabel
+        }
+
+        
+
+        let limit;
+        let page = data.page;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = limit * page
+        }
+        let childrenUsername = []
+        let userFilter = {};
+        let operatorId;
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            operatorId = data.LOGINDATA.LOGINUSER.parent_id
+        }else{
+            operatorId = data.LOGINDATA.LOGINUSER._id
+        }
+        userFilter.parentUsers = operatorId
+        if(data.filterData.whiteLabel){
+            userFilter.whiteLabel = data.filterData.whiteLabel
+        }
+        if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
+            userFilter.userName = data.filterData.userName
+        }
+        let children = await User.find(userFilter)
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+
+        if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
+            data.filterData.userName = {$in:childrenUsername}
+        }else{
+            if(data.filterData.whiteLabel){
+                data.filterData.userName = {$in:childrenUsername}
+                
+            }
+        }
+        delete data.filterData.whiteLabel
+        let events;
+        if(data.type){
+
+        }else{
+            events = await Bet.aggregate([
+                {
+                    $match: data.filterData
+                },
+                {
+                    $group:{
+                        _id:'$match',
+                        eventId:{$first:'$eventId'}
+                    }
+                }
+            ])
+        }
+        let ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
+        socket.emit('betMoniter',{ubDetails,page,events,refreshStatus:data.refreshStatus})
+
+    })
+
+    socket.on('matchBets',async(data)=>{
+        console.log(data.filterData)
+        let ubDetails;
         let limit = 10;
         let page = data.page;
         const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
@@ -799,65 +1377,189 @@ io.on('connection', (socket) => {
         data.filterData.role_type = {
             $in:role_type
         }
-        data.filterData.status = 'OPEN';
-        const user = await User.findOne({userName:data.filterData.userName})
-        if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
-            delete data.filterData['userName']
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('betMoniter',{ubDetails,page})
+        data.filterData.status = 'OPEN'
+        if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
+            let childrenUsername = []
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+            data.filterData.userName = {$in:childrenUsername}
+            ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
+        }else{
+            ubDetails = await Bet.find(data.filterData).sort({'date':-1}).skip(page * limit).limit(limit)
         }
-        else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
-            delete data.filterData['userName']
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('betMoniter',{ubDetails,page})
-        }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('betMoniter',{ubDetails,page})
-
-        }
+        socket.emit('matchBets',{ubDetails,page})
     })
 
 
-    socket.on('voidBET',async(data)=>{
-        let limit = 10;
-        let page = data.page;
-        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
-        let role_type =[]
-        for(let i = 0; i < roles.length; i++){
-            role_type.push(roles[i].role_type)
-        }
-        data.filterData.role_type = {
-            $in:role_type
-        }
-        data.filterData.status = 'CANCEL';
-        const user = await User.findOne({userName:data.filterData.userName})
-        if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
-            delete data.filterData['userName']
-            let ubDetails = await Bet.find({status:"CANCEL"}).skip(page * limit).limit(limit)
-            socket.emit('voidBET',{ubDetails,page})
-        }
-        else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
-            delete data.filterData['userName']
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('voidBET',{ubDetails,page})
-        }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('voidBET',{ubDetails,page})
 
+
+    socket.on('voidBET', async(data)=>{
+        data.filterData.status = 'OPEN'
+        if(data.filterData.marketName == "All"){
+            delete data.filterData.marketName
         }
+
+        if(data.filterData.marketName == "Fancy"){
+            data.filterData.marketName = {$nin:["Match Odds", "Bookmaker 0%Comm"]}
+        }
+
+        if(data.filterData.betType == "All"){
+            delete data.filterData.betType; 
+        }else if(data.filterData.betType == "4"){
+            data.filterData.betType = 'Cricket'
+        }else if(data.filterData.betType == "1"){
+            data.filterData.betType = "Football"
+        }else if(data.filterData.betType == "2"){
+            data.filterData.betType = "Tennis"
+        }
+
+
+        if(data.filterData.eventId == "All"){
+            delete data.filterData.eventId
+        }
+
+
+        if(data.filterData.from_date && data.filterData.to_date){
+            data.filterData.date = {$gte : new Date(data.filterData.from_date),$lte : new Date(new Date(data.filterData.to_date))}
+            delete data.filterData.from_date;
+            delete data.filterData.to_date;
+        }else{
+            if(data.filterData.from_date){
+                data.filterData.date = {$gte : data.filterData.from_date}
+                delete data.filterData.from_date;
+
+            }
+            if(data.filterData.to_date){
+                data.filterData.date = {$lte : new Date(new Date(data.filterData.to_date))}
+                delete data.filterData.to_date;
+
+            }
+        }
+        let limit;
+        let page = data.page;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = limit * page
+        }
+        let childrenUsername = []
+        let userFilter = {};
+        let operatorId;
+        let operatoruserName;
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            operatorId = data.LOGINDATA.LOGINUSER.parent_id
+            let parentUser = await User.findById(operatorId)
+            operatoruserName = parentUser.userName
+        }else{
+            operatorId = data.LOGINDATA.LOGINUSER._id
+            operatoruserName = data.LOGINDATA.LOGINUSER.userName
+        }
+        userFilter.parentUsers = operatorId
+        if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
+            userFilter.userName = data.filterData.userName
+        }
+        let children = await User.find(userFilter)
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+
+        if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
+            data.filterData.userName = {$in:childrenUsername}
+        }
+        let events;
+        if(data.type){
+
+        }else{
+            events = await Bet.aggregate([
+                {
+                    $match: data.filterData
+                },
+                {
+                    $group:{
+                        _id:'$match',
+                        eventId:{$first:'$eventId'}
+                    }
+                }
+            ])
+        }
+        let betResult = await Bet.find(data.filterData).sort({'date':-1}).skip(skip).limit(limit)
+
+        socket.emit("voidBET", {betResult,events,page,refreshStatus:data.refreshStatus})
+
     })
 
     socket.on('userPLDetail',async(data)=>{
-        let page = data.page;
-        let limit = 10;
-        let user = await User.findOne({userName:`${data.filterData.userName}`, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}}})
-        if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName && !user){
-            let users = await User.find({parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}}}).skip(page * limit).limit(limit)
-            socket.emit('userPLDetail',{users,page})
+        let page = data.page
+        let limit;
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
         }else{
-            let users = await User.find({userName:`${data.filterData.userName}`, parentUsers:{$elemMatch:{$eq:data.LOGINDATA.LOGINUSER._id}}}).skip(page * limit).limit(limit)
-            socket.emit('userPLDetail', {users, page})
+            limit = 10
+            skip = page * limit
         }
+        let childrenUsername = []
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }else{
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }
+        if(data.filterData.userName != data.LOGINDATA.LOGINUSER.userName){
+            childrenUsername = [data.filterData.userName]
+        }
+        if(data.filterData.fromDate && data.filterData.toDate){
+            data.filterData.date = {$gte:new Date(data.filterData.fromDate),$lte:new Date(data.filterData.toDate)}
+        }else if(data.filterData.fromDate && !data.filterData.toDate){
+            data.filterData.date = {$gte:new Date(data.filterData.fromDate)}
+        }else if(data.filterData.toDate && !data.filterData.fromDate){
+            data.filterData.date = {$lte:new Date(data.filterData.toDate)}
+        }else if(!data.filterData.toDate && !data.filterData.fromDate){
+            data.filterData.date = {$exists:true}
+        }
+        let games = await Bet.aggregate([
+            {
+                $match: {
+                userName: { $in: childrenUsername },
+                status: {$in:["LOSS","WON"]},
+                date:data.filterData.date
+                }
+            },
+            {
+                $group:{
+                    _id:'$userName',
+                    gameCount:{$sum:1},
+                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','WON']]},'$returns',0]}}
+                    
+                }
+            },
+            {
+                $sort: {
+                  returns: -1
+                }
+            },
+            {
+                $skip:skip
+            },
+            {
+                $limit:limit
+            }
+          ])
+
+        socket.emit('userPLDetail',{games,page,refreshStatus:data.refreshStatus})
     })
 
     socket.on("SearchOnlineUser", async(data) => {
@@ -889,21 +1591,20 @@ io.on('connection', (socket) => {
         let page
         let limit = 10
         page = data.page
-        if(!page){
-            page = 0
-        }
+        
         // const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
         // let role_type =[]
         // for(let i = 0; i < roles.length; i++){
         //     role_type.push(roles[i].role_type)
         // }
+        data.filterData.is_Online = true
+        data.filterData.parentUsers = data.LOGINDATA.LOGINUSER._id
         let onlineUsers
-        if(data.filterData && page == 0){
-                onlineUsers = await User.find({is_Online:true, userName:data.filterData.userName, parentUsers:{$in:[data.LOGINDATA.LOGINUSER._id]}})
-                page = 0
+        if(data.filterData.userName == data.LOGINDATA.LOGINUSER.userName){
+            delete data.filterData['userName']
+            onlineUsers = await User.find(data.filterData).skip(page * limit).limit(limit)
         }else{
-                onlineUsers = await User.find({is_Online:true, parentUsers:{$in:[data.LOGINDATA.LOGINUSER._id]}}).skip(page * limit).limit(limit)
-                page++
+            onlineUsers = await User.find(data.filterData).skip(page * limit).limit(limit)
         }
         // if(data.LOGINDATA.LOGINUSER.role_type === 1){
         // }else{
@@ -913,12 +1614,58 @@ io.on('connection', (socket) => {
     })
 
     socket.on("marketId", async(data) => {
-        // console.log(data)
-        const result = await marketDetailsBymarketID(data)
+        const result = await marketDetailsBymarketID(data.ids)
         let finalResult = result.data
+        // console.log(finalResult, "finalResultfinalResultfinalResult")
         const betLimits = await betLimit.find({type:"Sport"})
-        // console.log(finalResult)
-        socket.emit("marketId", {finalResult,betLimits})
+        let resumeSuspendMarkets = await resumeSuspendModel.aggregate([
+            {
+                $match:{
+                    marketId : {
+                        $in:data.ids
+                    },
+                    status:false
+                }
+            }
+        ])
+        let forFancy 
+        // console.log(finalResult, "finalResult[1].event_idfinalResult[1].event_id")
+        if(finalResult.items.length > 0 ){
+            if(finalResult.items[1]){
+                forFancy = await resumeSuspendModel.find({marketId:`${finalResult.items[1].event_id}/FANCY`, status:false})
+            }
+        }
+        // console.log(forFancy)
+        let allData =  await getCrkAndAllData()
+        const cricket = allData[0].gameList[0].eventList
+        let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
+        let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
+        footBall = footBall.eventList
+        Tennis = Tennis.eventList
+        const resultSearch = cricket.concat(footBall, Tennis);
+        let status;
+        // console.log(data,"==>marketId eventId error")
+        if(data.eventId){
+            let event = resultSearch.find(item => item.eventData.eventId == data.eventId)
+            // console.log(event,data.eventId,"==>Event")
+            if(await InPlayEvent.findOne({Id:event.eventData.eventId})){
+                status = true
+            }else{
+                if(event.eventData.type == "IN_PLAY"){
+                    status = true
+                }else{
+                    status = false
+                }
+            }
+
+        }else{
+            // for(let i = 0; i < finalResult.item.length; i++){
+                
+            // }
+        }
+
+        // console.log(resumeSuspendMarkets)
+        socket.emit("marketId", {finalResult,betLimits, status,resumeSuspendMarkets, forFancy})
     })
 
     socket.on("SPORTDATA", async(data) => {
@@ -1006,58 +1753,77 @@ io.on('connection', (socket) => {
 
 
     socket.on('betDetails', async(data) => {
-        // console.log(data)
+        // console.log(data, "DATA")
         let marketDetails = await marketDetailsBymarketID([`${data.data.market}`])
         // console.log(marketDetails.data.items)
+        // data.data.oldData = data.data.odds
+        data.LOGINDATA.IP = data.LOGINDATA.IP.replace('::ffff:','')
         let thatMarket = marketDetails.data.items[0]
-        console.log(thatMarket, 11111)
         if(data.data.secId.startsWith('odd_Even_')){
             if(data.data.secId == "odd_Even_Yes"){
-                let odds = thatMarket.odd
-                if(!odds){
-                    odds = thatMarket.yes
+                let odds
+                if(thatMarket.odd){
+                    odds = (parseFloat(thatMarket.odd * 100) - 100).toFixed(2)
+                    data.data.selectionName = thatMarket.title + "@" + odds
+                }else{
+                    odds = thatMarket.yes_rate
+                    data.data.selectionName = thatMarket.title + "@" + thatMarket.yes
                 }
                 data.data.odds = odds
+                data.data.bettype2 = 'BACK'
                 
             }else{
-                let odds = thatMarket.even
-                if(!odds){
-                    odds = thatMarket.no
+                let odds
+                if(thatMarket.even){
+                    odds = (parseFloat(thatMarket.even * 100) - 100).toFixed(2)
+                    data.data.selectionName = thatMarket.title + "@" + odds
+
+                }else{
+                    odds = thatMarket.no_rate
+                    data.data.selectionName = thatMarket.title + "@" + thatMarket.no
+
                 }
                 data.data.odds = odds
+                data.data.bettype2 = 'LAY'
             }
         }else if(thatMarket.title != "Bookmaker 0%Comm" && thatMarket.title != "TOSS" && thatMarket.title != 'BOOKMAKER 0% COMM'){
             // console.log(thatMarket, 45454545454)
             let realodd = thatMarket.odds.find(item => item.selectionId == data.data.secId.slice(0,-1))
             let name
+            // let bettype2
             if(data.data.secId.slice(-1) > 3){
                 name = `layPrice${data.data.secId.slice(-1) - 3}`
+                data.data.bettype2 = 'LAY'
             }else{
                 name = `backPrice${data.data.secId.slice(-1)}`
+                data.data.bettype2 = 'BACK'
             }
-            let odds = realodd[name];
-            data.data.odds = odds
+            // let odds = realodd[name];
+            // data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
         }else if(thatMarket.title == "Bookmaker 0%Comm" || thatMarket.title == "TOSS" || thatMarket.title != 'BOOKMAKER 0% COMM'){
             // console.log(thatMarket, 4545454)
             let realodd = thatMarket.runners.find(item => item.secId == data.data.secId.slice(0,-1))
             let name
-            console.log(data)
+            // console.log(data)
             if(data.data.secId.slice(-1) == 2){
                 name = `layPrice${data.data.secId.slice(-1) - 3}`
                 name =  name.slice(0, -2)
+
+                data.data.bettype2 = 'LAY'
             }else{
                 name = `backPrice${data.data.secId.slice(-1)}`
                 name = name.slice(0, -1)
+                data.data.bettype2 = 'BACK'
             }
             // console.log(name)
             // console.log(name)
             // console.log(realodd[name], realodd, "realodds")
-            let odds = realodd[name];
-            data.data.odds = odds
+            // let odds = realodd[name];
+            // data.data.odds = odds
             data.data.secId = data.data.secId.slice(0,-1)
         }
-        // console.log(data.data)
+        // console.log(data ,'++++++==>DATA')
         let result = await placeBet(data)
         let openBet = []
         if(data.pathname === "/exchange/multimarkets"){
@@ -1065,69 +1831,103 @@ io.on('connection', (socket) => {
         }else{
             openBet = await Bet.find({userId:data.LOGINDATA.LOGINUSER._id, status:"OPEN", match:data.data.title})
         }
+        console.log(openBet, "openBet")
         let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
         socket.emit("betDetails", {result, openBet, user})
     })
 
     socket.on('voidBet', async(data) => {
         try{
-
-            let bet = await Bet.findByIdAndUpdate(data, {status:"CANCEL"});
-            // console.log(bet);
-            let user = await User.findByIdAndUpdate(bet.userId, {$inc:{balance: bet.Stake, availableBalance: bet.Stake, myPL: bet.Stake, exposure:-bet.Stake}})
-            let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
-            let description2 = `Bet for ${bet.match}/stake = ${bet.Stake}/user = ${user.userName}/CANCEL `
-            let userAcc = {
-                "user_id":user._id,
-                "description": description,
-                "creditDebitamount" : bet.Stake,
-                "balance" : user.availableBalance + bet.Stake,
-                "date" : Date.now(),
-                "userName" : user.userName,
-                "role_type" : user.role_type,
-                "Remark":"-",
-                "stake": bet.Stake,
-                "transactionId":`${bet.transactionId}`
-            }
-            let parentAcc
-            if(user.parentUsers.length < 2){
-                await User.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: bet.Stake, downlineBalance: bet.Stake}})
-                let parent = await User.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:-bet.Stake}})
-                parentAcc = {
-                    "user_id":parent._id,
-                    "description": description2,
-                    "creditDebitamount" : -bet.Stake,
-                    "balance" : parent.availableBalance - (bet.Stake * 1),
+            let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
+            const passcheck = await user.correctPassword(data.data.password, user.password)
+            if(passcheck){
+                let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",alertStatus:"CANCEL",remark:data.data.Remark,returns:0});
+                let DebitCreditAmount 
+                if(bet.bettype2 === "Back"){
+                    if(bet.marketName.toLowerCase().startsWith('match')){
+                        DebitCreditAmount = bet.Stake
+                    }else if(bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('toss')){
+                        DebitCreditAmount = bet.Stake
+                    }else{
+                        DebitCreditAmount = bet.Stake
+                    }
+                }else{
+                    if(bet.marketName.toLowerCase().startsWith('match')){
+                        DebitCreditAmount = ((bet.Stake * bet.oddValue) - bet.Stake).toFixed(2)
+                    }else if(bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('toss')){
+                        DebitCreditAmount = ((bet.Stake * bet.oddValue)/100).toFixed(2)
+                    }else{
+                        DebitCreditAmount = ((bet.Stake * bet.oddValue)/100).toFixed(2)
+                    }
+                }
+                // console.log(bet);
+                let user = await User.findByIdAndUpdate(bet.userId, {$inc:{availableBalance: DebitCreditAmount, myPL: DebitCreditAmount, exposure:-DebitCreditAmount}})
+                let timelyVoideCheck = await timelyNotificationModel.findOne({marketId : bet.marketId})
+                let notification
+                if(timelyVoideCheck){
+                    notification = await timelyNotificationModel.findOneAndUpdate({marketId : bet.marketId}, {message:data.data.Remark})
+                }else{
+                    let timelyNotification = {
+                        message : data.data.Remark,
+                        userName : user.userName,
+                        marketId : bet.marketId
+                    }
+                    notification = await timelyNotificationModel.create(timelyNotification)
+                }
+                let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
+                // console.log(user.availableBalance, DebitCreditAmount, user.availableBalance + DebitCreditAmount)
+                let userAcc = {
+                    "user_id":user._id,
+                    "description": description,
+                    "creditDebitamount" : DebitCreditAmount,
+                    "balance" : user.availableBalance + parseFloat(DebitCreditAmount),
                     "date" : Date.now(),
-                    "userName" : parent.userName,
-                    "role_type" : parent.role_type,
+                    "userName" : user.userName,
+                    "role_type" : user.role_type,
                     "Remark":"-",
-                    "stake": bet.Stake,
-                    "transactionId":`${bet.transactionId}Parent`
+                    "stake": DebitCreditAmount,
+                    "transactionId":`${bet.transactionId}`
                 }
                 
+                let debitAmountForP = DebitCreditAmount
+                  for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                      let parentUser1 = await User.findById(user.parentUsers[i])
+                      let parentUser2 = await User.findById(user.parentUsers[i - 1])
+                      let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                      let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                      parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                      parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                      await User.findByIdAndUpdate(user.parentUsers[i], {
+                        $inc: {
+                            downlineBalance: DebitCreditAmount,
+                            myPL: -parentUser1Amount,
+                            uplinePL: -parentUser2Amount,
+                            lifetimePL: -parentUser1Amount,
+                            pointsWL: DebitCreditAmount
+                        }
+                    });
+                
+                    if (i === 1) {
+                        await User.findByIdAndUpdate(user.parentUsers[i - 1], {
+                            $inc: {
+                                downlineBalance: DebitCreditAmount,
+                                myPL: -parentUser2Amount,
+                                lifetimePL: -parentUser2Amount,
+                                pointsWL: DebitCreditAmount
+                            }
+                        });
+                    }
+                      debitAmountForP = parentUser2Amount
+                  }
+                
+                await AccModel.create(userAcc);
+                socket.emit('voidBet', {bet, status:"success"})
             }else{
-                await User.updateMany({ _id: { $in: user.parentUsers.slice(1) } }, {$inc:{balance: bet.Stake, downlineBalance: bet.Stake}})
-                let parent = await User.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-bet.Stake}})
-                parentAcc = {
-                    "user_id":parent._id,
-                    "description": description2,
-                    "creditDebitamount" : -bet.Stake,
-                    "balance" : parent.availableBalance - (bet.Stake * 1),
-                    "date" : Date.now(),
-                    "userName" : parent.userName,
-                    "role_type" : parent.role_type,
-                    "Remark":"-",
-                    "stake": bet.Stake,
-                    "transactionId":`${bet.transactionId}Parent`
-                }
+                socket.emit('voidBet', {status:"fail",msg:'Please provide valide password'})
             }
-            await AccModel.create(userAcc);
-            await AccModel.create(parentAcc);
-            socket.emit('voidBet', {bet, status:"success"})
         }catch(err){
             console.log(err)
-            socket.emit("voidBet",{message:"err", status:"error"})
+            socket.emit("voidBet",{msg:"Please try again leter", status:"fail"})
         }
         })
 
@@ -1414,6 +2214,20 @@ io.on('connection', (socket) => {
         }
     })
 
+
+    socket.on('editImageSport', async(data) => {
+        let name = data.split("//")[1]
+        let slider = await sliderModel.findOne({name:name})
+        let imageName = data.split("//")[0]
+        let index = slider.images.findIndex(item => item.name == imageName)
+        if(index !== -1) {
+            let details = slider.images[index]
+            socket.emit('editImageSport', details)
+        }else{
+            socket.emit('editImageSport', "Please try again later")
+        }
+    })
+
     socket.on("dleteImageRoyal", async(data) => {
         let slider = await sliderModel.findOne({name:"Royal_Gaming"})
         let index = slider.images.findIndex(item => item.name == data)
@@ -1455,11 +2269,18 @@ io.on('connection', (socket) => {
     socket.on('liveData', async(data) => {
         let sportListData = await getCrkAndAllData()
         const cricket = sportListData[0].gameList[0].eventList
-        let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
+        let featureEventId = []
+        let featureStatusArr = await featureEventModel.find();
+        featureStatusArr.map(ele => {
+            featureEventId.push(parseInt(ele.Id))
+        })
+
+    
+        let LiveCricket = cricket.filter(item => featureEventId.includes(item.eventData.eventId))
         let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
         let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
-        let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
-        let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
+        let liveFootBall = footBall.eventList.filter(item => featureEventId.includes(item.eventData.eventId));
+        let liveTennis = Tennis.eventList.filter(item => featureEventId.includes(item.eventData.eventId))
         socket.emit("liveData", {liveFootBall, liveTennis, LiveCricket})
     })
 
@@ -1649,19 +2470,21 @@ io.on('connection', (socket) => {
     })
 
     socket.on("STAKELABEL", async(data) => {
+        // console.log(data)
         let stakeArray = data.input1Values.map((key, index) => ({
             key: parseInt(key.replace(/,/g, ''), 10),
             value: parseInt(data.input2Values[index].replace(/,/g, ''), 10)
           }));
+        //   console.log(stakeArray)
         let userId = data.LOGINDATA.LOGINUSER._id
         let check = await stakeLabelModel.find({userId})
-        console.log(check.length)
-        console.log(stakeArray, userId)
+        // console.log(check.length)
+        // console.log(stakeArray, userId)
         if(check.length === 0){
-            console.log("WORKING")
+            // console.log("WORKING")
             try{
-                let data = await stakeLabelModel.create({stakeArray:stakeArray,userId:userId})
-                console.log(data)
+                let data = await stakeLabelModel.create({stakeArray:stakeArray, userId:userId})
+                // console.log(data)
                 socket.emit("STAKELABEL", "Updated")
             }catch(err){
                 socket.emit("STAKELABEL", "Please try again later")
@@ -1669,11 +2492,26 @@ io.on('connection', (socket) => {
         }else{
             try{
                 const data = await stakeLabelModel.findOneAndUpdate({userId:userId}, {stakeArray:stakeArray})
-                console.log(data)
+                // console.log(data)
                 socket.emit("STAKELABEL", "Updated")
             }catch(err){
                 socket.emit("STAKELABEL", "Please try again later")
             }
+        }
+    })
+
+
+    socket.on('socketStakeLABLEDATA', async(data) => {
+        console.log(data)
+        let check = []
+        if(data.LOGINUSER){
+            check = await stakeLabelModel.find({userId:data.LOGINUSER._id})
+        }
+        // console.log(check)
+        if(check.length === 0){
+            socket.emit('socketStakeLABLEDATA', {status:"notFound"})
+        }else{
+            socket.emit('socketStakeLABLEDATA', check[0])
         }
     })
 
@@ -1839,8 +2677,8 @@ io.on('connection', (socket) => {
                 $match: {
                     userName: data.LOGINUSER.userName,
                     date: {
-                        $gte: tenDaysAgo, // Change this to currentDate
-                        $lte: currentDate, // Add this line
+                        $gte: tenDaysAgo,
+                        $lte: currentDate,
                     },
                 },
             },
@@ -1865,7 +2703,7 @@ io.on('connection', (socket) => {
         ]);
     
         const newDataArray = [];
-        const currentDate1 = new Date(tenDaysAgo); // Change this to currentDate
+        const currentDate1 = new Date(tenDaysAgo);
         for (let i = 0; i < 10; i++) {
             const matchingData = accountForGraph.find(item =>
                 item._id.year === currentDate1.getFullYear() &&
@@ -1890,140 +2728,108 @@ io.on('connection', (socket) => {
             currentDate1.setDate(currentDate1.getDate() + 1);
         }
     
-        // console.log(newDataArray);
+        // Format data to two decimal places
+        const formattedDataArray = newDataArray.map(item => ({
+            _id: item._id,
+            totalIncome: item.totalIncome.toFixed(2),
+            totalIncome2: item.totalIncome2.toFixed(2),
+        }));
     
-        const Income = newDataArray.map(item => item.totalIncome);
-        const Revanue = newDataArray.map(item => item.totalIncome2);
-        socket.emit("chartMain", {Income, Revanue})
-        // Now you can use the Income and Revanue arrays as needed
+        const Income = formattedDataArray.map(item => parseFloat(item.totalIncome));
+        const Revanue = formattedDataArray.map(item => parseFloat(item.totalIncome2));
+        socket.emit("chartMain", { Income, Revanue });
     });
+    
 
     socket.on("FIlterDashBoard", async(data) => {
-        let filter = {}
+        let filter;
+        let filter2;
         let result = {}
-        const currentDate = new Date();
 
-        const currentDateString = currentDate.toISOString().slice(0, 10);
-        const oneDayAgo = new Date(currentDate);
-        oneDayAgo.setDate(currentDate.getDate() - 1);
-        const oneDayAgoString = oneDayAgo.toISOString().slice(0, 10);
-        const threeDaysAgo = new Date(currentDate);
-        threeDaysAgo.setDate(currentDate.getDate() - 3);
-        const threeDaysAgoString = threeDaysAgo.toISOString().slice(0, 10);
+        let childrenUsername = []
+        let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+        
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() - 1);
+        var tomorrowFormatted = formatDate(tomorrow);
+        var thirdDay = new Date();
+        thirdDay.setDate(today.getDate() - 2);
+        var thirdDayFormatted = formatDate(thirdDay);
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
         if (data.value === "today") {
             filter = {
-                $gte: new Date(currentDateString),
-                $lt: new Date(new Date(currentDateString).getTime() + 24 * 60 * 60 * 1000) // Next day
+                $or:[{login_time: {$gte:new Date(todayFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}},{logOut_time: {$exists:false}}],
+                userName:{$in:childrenUsername}
+                
             };
+            filter2 = {$gte:new Date(todayFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}
         } else if (data.value === "yesterday") {
             filter = {
-                $gte: new Date(oneDayAgoString),
-                $lt: new Date(currentDateString)
+                $or:[{login_time: {$lte:new Date(new Date(tomorrowFormatted).getTime() + ((24 * 60*60*1000)-1))}},{logOut_time:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(tomorrowFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                userName:{$in:childrenUsername}
+                
             };
+            filter2 = {$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(tomorrowFormatted).getTime() + ((24 * 60*60*1000)-1))}
+
         } else if (data.value === "all") {
             filter = {
-                $lt : new Date(currentDateString)
+                userName:{$in:childrenUsername}
             };
+            filter2 = {$exists:true}
+
         } else {
             filter = {
-                $gte: new Date(threeDaysAgoString),
-                $lt: new Date(currentDateString)
+                $or:[{login_time: {$lte:new Date(new Date(thirdDayFormatted).getTime() + ((24 * 60*60*1000)-1))}},{logOut_time:{$gte:new Date(thirdDayFormatted),$lte:new Date(new Date(thirdDayFormatted).getTime() + ((24 * 60*60*1000)-1))}}],
+                userName:{$in:childrenUsername}
             };
-        }
+            filter2 = {$gte:new Date(thirdDayFormatted),$lte:new Date(new Date(thirdDayFormatted).getTime() + ((24 * 60*60*1000)-1))}
 
+        }
+        filter.role_Type = 5
         const userCount = await loginLogs.aggregate([
             {
-                $match:{
-                    // isOnline: true,
-                    login_time:filter
-                }
-            },
-            {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-            },
-            {
-                $unwind: "$user"
-            },
-            {
-                $match: {
-                  "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] },
-                  "user.roleName" : "user",
-                //   "user.is_Online" : true
-                }
+                $match:filter
             },
             {
                 $group: {
-                    _id: null,
-                    uniqueUsers: { $addToSet: "$user._id" } 
-                }
-            },
-            {
-                $project: {
-                    totalAmount: { $size: "$uniqueUsers" } 
+                    _id: '$userName'
                 }
             }
         ])
 
-        if(userCount.length > 0){
-            result.userCount = userCount[0].totalAmount
-        }else{
-            result.userCount = 0
-        }
+       
+        result.userCount = userCount.length > 0?userCount.length : 0;
 
+        filter.role_Type = {$ne:5}
         const adminCount = await loginLogs.aggregate([
             {
-                $match:{
-                    // isOnline: true,
-                    login_time:filter
-                }
-            },
-            {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-            },
-            {
-                $unwind: "$user"
-            },
-            {
-                $match: {
-                  "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] },
-                  "user.roleName" : {$ne:"user"},
-                //   "user.is_Online" : true
-                }
+                $match:filter
             },
             {
                 $group: {
-                    _id: null,
-                    uniqueUsers: { $addToSet: "$user._id" } 
-                }
-            },
-            {
-                $project: {
-                    totalAmount: { $size: "$uniqueUsers" } 
+                    _id: '$userName'
                 }
             }
         ])
 
-        if(adminCount.length > 0){
-            result.adminCount = adminCount[0].totalAmount
-        }else{
-            result.adminCount = 0
-        }
+      
+        result.adminCount = adminCount.length > 0?adminCount.length : 0;
 
         let turnOver = await AccModel.aggregate([
             {
                 $match:{
                     userName:data.LOGINDATA.LOGINUSER.userName,
-                    date:filter
+                    date:filter2
                 }
             },
             {
@@ -2034,6 +2840,8 @@ io.on('connection', (socket) => {
                 }
             }
         ])
+
+        console.log(turnOver,'turnOver')
         if(turnOver.length > 0){
             result.turnOver = turnOver[0].totalAmount
             result.Income = turnOver[0].Income
@@ -2044,68 +2852,211 @@ io.on('connection', (socket) => {
 
         if(data.value === "all"){
             betCount = await Bet.aggregate([
-                // {
-                //     $match:{
-                //         date:filter
-                //     }
-                // },
                 {
-                    $lookup: {
-                      from: "users",
-                      localField: "userName",
-                      foreignField: "userName",
-                      as: "user"
+                    $match:{
+                        date:filter2,
+                        userName : {$in:childrenUsername}
                     }
-                  },
-                  {
-                    $unwind: "$user"
-                  },
-                  {
-                    $match: {
-                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
-                    }
-                  },
-                {
-                    $count: "totalBets"
-                  }
+                }
+               
               ])
         }else{
             betCount = await Bet.aggregate([
                 {
                     $match:{
-                        date:filter
+                        date:filter2,
+                        userName : {$in:childrenUsername}
                     }
-                },
-                {
-                    $lookup: {
-                      from: "users",
-                      localField: "userName",
-                      foreignField: "userName",
-                      as: "user"
-                    }
-                  },
-                  {
-                    $unwind: "$user"
-                  },
-                  {
-                    $match: {
-                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
-                    }
-                  },
-                {
-                    $count: "totalBets"
-                  }
+                }
+            
               ])
         }
-          console.log(betCount)
-          if(betCount.length > 0){
-            result.betCount = betCount[0].totalBets
-          }
+
+        // console.log(betCount,'betCount')
+
+        result.betCount = betCount.length
         // console.log(turnOver)
         // console.log(turnOver.length)
 
         socket.emit("FIlterDashBoard", {result})
 
+    })
+
+    socket.on('dashboardrefresh',async(data)=>{
+        let roles
+        let users
+        let topGames
+        let Categories
+        let userCount = 0
+        let adminCount = 0
+        let betCount = 0
+        let alertBet
+        let betsEventWise
+        let turnOver
+        let childrenUsername = []
+        let children = await User.find({parentUsers:data.LOGINUSER._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+      
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    
+        topGames = await Bet.aggregate([
+            {
+                $match: {
+                    status: { $ne: "OPEN" },
+                    date: { $gte: sevenDaysAgo },
+                    userName:{$in:childrenUsername}
+                }
+            },
+    
+            {
+                $group: {
+                    _id: "$event",
+                    totalCount: { $sum: 1 },
+                    uniqueUsers: { $addToSet: "$userId" },
+                    totalReturns: { $sum: "$Stake" }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    event: "$_id",
+                    totalCount: 1,
+                    noOfUniqueUsers: { $size: "$uniqueUsers" },
+                    totalReturns: 1
+                }
+            },
+            {
+                $sort: {
+                    totalCount: -1
+                }
+            },
+            {
+                $limit: 5
+            }
+        ]);
+    
+        Categories = await Bet.aggregate([
+            {
+                $match: {
+                    status: { $ne: "OPEN" },
+                    date: { $gte: sevenDaysAgo },
+                    userName:{$in:childrenUsername}
+                }
+            },
+            {
+                $group: {
+                    _id: "$betType",
+                    totalBets: { $sum: 1 },
+                    totalReturns: { $sum: "$Stake" },
+                    uniqueEvent: { $addToSet: "$event" }
+                }
+            },
+            {
+                $sort: {
+                    totalBets: -1
+                }
+            }
+        ])
+    
+        var today = new Date();
+        var todayFormatted = formatDate(today);
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var day = date.getDate().toString().padStart(2, '0');
+            return year + "-" + month + "-" + day;
+        }
+
+    
+        alertBet = await Bet.aggregate([
+            {
+                $match: {
+                    "status": "Alert",
+                    userName:{$in:childrenUsername}
+    
+                }
+            },
+            {
+                $sort: {
+                    Stake: -1
+                }
+            },
+            {
+                $limit: 5
+            }
+        ]);
+        
+        betsEventWise = await Bet.aggregate([
+            {
+                $match: {
+                    status: "OPEN",
+                    userName: {$in:childrenUsername}
+                }
+            },
+            {
+                $group: {
+                    _id: "$match",
+                    count: { $sum: 1 },
+                    eventdate: { $first: "$eventDate" },
+                    eventid: { $first: "$eventId" },
+                    series: { $first: "$event" },
+                    sport: { $first: "$betType" }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    matchName: "$_id",
+                    eventdate: 1,
+                    eventid: 1,
+                    series: 1,
+                    count: 1,
+                    sport: 1
+                }
+            },
+            {
+                $sort: { count: -1 }
+            },
+            {
+                $limit: 5
+            }
+        ]);
+        
+    
+    
+    
+        let topBets = await Bet.aggregate([
+            {
+                $match: {
+                    status:"OPEN",
+                    userName: {$in:childrenUsername}
+                }
+            },
+            {
+                $sort:{
+                    Stake: -1
+                }
+            },
+            {
+                $limit:5
+            }
+        ])
+            
+            
+    
+            // console.log(topBets, "topBets 741258963")
+        const topPlayers = await User.find({Bets:{ $nin : [0, null, undefined] }, parentUsers : { $in: [data.LOGINUSER._id] }}).limit(5).sort({Bets:-1})
+        const dashboard = {};
+        dashboard.topPlayers = topPlayers
+        dashboard.topGames = topGames
+        dashboard.Categories = Categories
+        dashboard.alertBet = alertBet
+        dashboard.settlement = betsEventWise
+        dashboard.topBets = topBets
+        socket.emit('dashboardrefresh',dashboard)
     })
 
     socket.on("getUserDetaisl", async(data) => {
@@ -2190,23 +3141,45 @@ io.on('connection', (socket) => {
 
     socket.on("alertBet", async(data) => {
         try{
-            let bet = await Bet.findByIdAndUpdate(data, {status:"Alert"});
-            socket.emit('alertBet', {bet, status:"success"})
+            let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
+            const passcheck = await user.correctPassword(data.data.password, user.password)
+            if(passcheck){
+                let bet = await Bet.findOne({_id:data.id});
+                if(bet.alertStatus == 'CANCEL'){
+                    socket.emit('alertBet', {bet, status:"fail",msg:'Cannot alert this bet'})
+                }else if(bet.alertStatus == 'ACCEPT'){
+                    socket.emit('alertBet', {bet, status:"fail",msg:'Bet alredy accepted'})
+                }else if(bet.status == 'Alert'){
+                    await Bet.findOneAndUpdate({_id:data.id}, {status:"OPEN",$unset:{'alertStatus':1},remark:data.data.Remark});
+                    socket.emit('alertBet', {bet, status:"fail",msg:'Removed alert successfully'})
+                }else if(bet.status == 'OPEN'){
+                    await Bet.findOneAndUpdate({_id:data.id}, {status:"Alert",alertStatus:"ALERT",remark:data.data.Remark});
+                    socket.emit('alertBet', {status:"success"})
+                }else if(['LOSS','WON'].includes(bet.status)){
+                    socket.emit('alertBet', {bet, status:"fail",msg:'Cannot alert this bet'})
+
+                }
+                // let bet = await Bet.findOneAndUpdate({_id:data.id,status:'OPEN'}, {status:"Alert",alertStatus:"ALERT",remark:data.data.Remark});
+            }else{
+                socket.emit("alertBet",{msg:"Please Provide valide password", status:"fail"})
+
+            }
 
         }catch(err){
             console.log(err)
-            socket.emit("alertBet",{message:"err", status:"error"})
+            socket.emit("alertBet",{msg:"Please try again leter", status:"fail"})
         }
     })
 
     socket.on("acceptBet", async(data) => {
         try{
-            let bet = await Bet.findByIdAndUpdate(data, {status:"OPEN"});
+            let remark = `accept by ${data.LOGINDATA.LOGINUSER.userName}`
+            let bet = await Bet.findByIdAndUpdate(data.id, {status:"OPEN",alertStatus:"ACCEPT",remark});
             socket.emit('acceptBet', {bet, status:"success"})
 
         }catch(err){
             console.log(err)
-            socket.emit("acceptBet",{message:"err", status:"error"})
+            socket.emit("acceptBet",{msg:"Please try again leter", status:"fail"})
         }
     })
 
@@ -2218,35 +3191,58 @@ io.on('connection', (socket) => {
         if(data.filterData.marketName == "Fancy"){
             data.filterData.marketName = {$nin:["Match Odds", "Bookmaker 0%Comm"]}
         }
+        if(data.filterData.alertStatus == 'All' || !data.filterData.alertStatus){
+            data.filterData.alertStatus = {$in:['ALERT','ACCEPT','CANCEL']}
+        }
         if(data.filterData.betType == "All"){
             delete data.filterData.betType; 
         }
-        let limit = 10;
+        if(data.filterData.fromDate && data.filterData.toDate){
+            data.filterData.date = {$gte : new Date(data.filterData.fromDate),$lte : new Date(new Date(data.filterData.toDate))}
+            delete data.filterData.fromDate;
+            delete data.filterData.toDate;
+        }else{
+            if(data.filterData.fromDate){
+                data.filterData.date = {$gte : data.filterData.fromDate}
+                delete data.filterData.fromDate;
+
+            }
+            if(data.filterData.toDate){
+                data.filterData.date = {$lte : new Date(new Date(data.filterData.toDate))}
+                delete data.filterData.toDate;
+
+            }
+        }
+        let limit;
         let page = data.page;
-        const roles = await Role.find({role_level: {$gt:data.LOGINDATA.LOGINUSER.role.role_level}});
-        let role_type =[]
-        for(let i = 0; i < roles.length; i++){
-            role_type.push(roles[i].role_type)
+        let skip;
+        if(data.refreshStatus){
+            limit = (10 * page) + 10
+            skip = 0
+        }else{
+            limit = 10
+            skip = limit * page
         }
-        data.filterData.role_type = {
-            $in:role_type
+        let childrenUsername = []
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }else{
+            let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }     
+        if(data.LOGINDATA.LOGINUSER.userName != data.filterData.userName){
         }
-        data.filterData.status = 'Alert';
-        const user = await User.findOne({userName:data.filterData.userName})
-        if(data.LOGINDATA.LOGINUSER.role_type == 1 && data.filterData.userName == 'admin'){
-            delete data.filterData['userName']
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('AlertBet',{ubDetails,page})
-        }
-        else if(data.LOGINDATA.LOGINUSER.userName == data.filterData.userName){
-            delete data.filterData['userName']
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('AlertBet',{ubDetails,page})
-        }else if(data.LOGINDATA.LOGINUSER.role.role_level < user.role.role_level){
-            let ubDetails = await Bet.find(data.filterData).skip(page * limit).limit(limit)
-            socket.emit('AlertBet',{ubDetails,page})
+        else{
+            data.filterData.userName = {$in:childrenUsername}
 
         }
+        let ubDetails = await Bet.find(data.filterData).sort({date:-1}).skip(skip).limit(limit)
+        socket.emit('AlertBet',{ubDetails,page,refreshStatus:data.refreshStatus})
     })
 
     socket.on("myShare", async(data) => {
@@ -2352,7 +3348,7 @@ io.on('connection', (socket) => {
     socket.on("ACCSTATEMENTADMINSIDE", async(data) => {
         try{
 
-            let limit = 20;
+            let limit = 10;
             let page = data.page;
             // console.log(page)
             // console.log(data.LOGINDATA.LOGINUSER)
@@ -2402,158 +3398,270 @@ io.on('connection', (socket) => {
     })
 
     socket.on('settlement',async(data)=>{
-        // console.log(data)
+        console.log(data)
         const me = data.LOGINUSER
         let dataobj;
-        if(data.from_date && data.to_date){
-            dataobj = {$gte:data.from_date,$lte:data.to_date}
-        }else if(data.from_date && !data.to_date){
-            dataobj = {$gte:data.from_date}
-        }else if(!data.from_date && data.to_date){
-            dataobj = {$$lte:data.to_date}
+
+        if(data.fromdate && data.todate){
+            let fromDate = new Date(data.fromdate)
+            let toDate = new Date(data.todate)
+            toDate.setDate(toDate.getDate() + 1);
+            // fromDate = Math.floor(fromDate.getTime()/1000)
+            // toDate = Math.floor(toDate.getTime()/1000)
+            dataobj = {$gte:new Date(fromDate) ,$lte:new Date(toDate)}
+        }else if(data.fromdate && !data.todate){
+            let fromDate = new Date(data.fromdate)
+            // fromDate = Math.floor(fromDate.getTime()/1000)
+            dataobj = {$gte:new Date(fromDate)}
+        }else if(!data.fromdate && data.todate){
+            let toDate = new Date(data.todate)
+            // toDate = Math.floor(toDate.getTime()/1000)
+            toDate.setDate(toDate.getDate() + 1);
+            dataobj = {$lte:new Date(toDate)}
         }
-        // console.log(me)
+        console.log(dataobj, "dateObj")
+        let childrenUsername = []
+        if(me.roleName == 'Operator'){
+            let children = await User.find({parentUsers:{ $in: [me.parent_id] }})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+        }else{
+            let children = await User.find({parentUsers:{ $in: [me._id] }})
+            children.map(ele => {
+                childrenUsername.push(ele.userName) 
+            })
+
+        }
+    
+    
         let betsEventWise = await Bet.aggregate([
             {
                 $match: {
-                    status:"OPEN" ,
-                    eventdate: dataobj
+                    // status:"OPEN" ,
+                    eventDate: dataobj,
+                    userName:{$in:childrenUsername}
                 }
             },
-            {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-              },
               {
-                $unwind: "$user"
-              },
-              {
-                $match: {
-                  "user.parentUsers": { $in: [me._id] }
-                }
-              },
-            {
                 $group: {
-                  _id: "$match",
+                  _id: {
+                    betType: "$betType",
+                    matchName: "$match"
+                  },
                   count: { $sum: 1 },
                   eventdate: { $first: "$eventDate" }, 
                   eventid: { $first: "$eventId" },
-                  series: {$first: "$event"} 
+                  series: {$first: "$event"},
+                  betType : {$first: '$betType'},
+                  count2: { 
+                      $sum: {
+                        $cond: [{ $eq: ["$status", "OPEN"] }, 1, 0],
+                      },
+                  },
+                }
+              },
+              {
+                $group: {
+                  _id: "$_id.betType",
+                  data: {
+                    $push: {
+                      matchName: "$_id.matchName",
+                      count: "$count",
+                      eventdate : '$eventdate',
+                      eventid : "$eventid",
+                      series : '$series',
+                      count2: "$count2",
+                      betType : '$betType'
+                    }
+                  }
                 }
               },
               {
                 $project: {
                   _id: 0,
-                  matchName: "$_id",
-                  eventdate: 1,
-                  eventid: 1,
-                  series:1,
-                  count: 1
+                  id: "$_id", 
+                  data: 1
                 }
-              }
+              },
+              {
+                $sort: {
+                    "data.eventdate": -1 
+                }
+            }
+        
         ])
-        socket.emit('settlement',{betsEventWise})
+        socket.emit('settlement',{betsEventWise,dataobj,data})
 
     })
 
     socket.on('settlementHistory',async(data)=>{
         let me = data.USER
         let page = data.page;
-        let limit = 50
+        let limit = 10
+        let operationId;
+        let operationroleName;
+        if(me.roleName == 'Operator'){
+            operationId = me.parent_id
+            let parentUser = await User.findById(operationId)
+            operationroleName = parentUser.roleName
+        }else{
+            operationId = me._id
+            operationroleName = me.roleName
+    
+        }
         // console.log(me)
-        let History
         let filter = {}
         if(data.from_date && data.to_date){
-            filter.date = {$gte:data.from_date,$lte:data.to_date}
+            filter.date = {$gte:new Date(data.from_date),$lte:new Date(data.to_date)}
         }else if(data.from_date && !data.to_date){
-            filter.date = {$gte:data.from_date}
+            filter.date = {$gte:new Date(data.from_date)}
         }else if(data.to_date && !data.from_date){
-            filter.date = {$lte:data.to_date}
+            filter.date = {$lte:new Date(data.to_date)}
         }
         console.log(filter)
-        if(me.roleName === "Admin"){
-            History = await settlementHistory.find(filter).skip(page * limit).limit(limit)
+     
+        if(operationroleName === "Admin"){
         }else{
-            filter.userId = me._id
-            History = await settlementHistory.find(filter).skip(page * limit).limit(limit)
+            filter.userId = operationId
         }
-        socket.emit('settlementHistory',{History,page})
+        let History2 = await settlementHistory.aggregate([
+            {
+                $match:filter
+            },
+            {
+                $addFields: {
+                  userIdObjectId: { $toObjectId: '$userId' } 
+                }
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "userIdObjectId",
+                    foreignField: '_id',
+                    as: "user"
+                  }
+            },
+            {
+                $sort:{
+                    date:-1
+                }
+            },
+            {
+                $skip:(page * limit)
+            },
+            {
+                $limit:limit
+            }
+        ])
+        socket.emit('settlementHistory',{History:History2,page})
     })
 
     socket.on("VoidBetIn", async(data) => {
         try{
-            let bets = await Bet.find({marketId:data.id, status: 'OPEN'})
-        for(const bet in bets){
-            // console.log(bets[bet].id, 12)
-            await Bet.findByIdAndUpdate(bets[bet].id, {status:"CANCEL"});
-            let user = await User.findByIdAndUpdate(bets[bet].userId, {$inc:{balance: bets[bet].Stake, availableBalance: bets[bet].Stake, myPL: bets[bet].Stake, exposure:-bets[bet].Stake}})
-            let description = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/CANCEL`
-            let description2 = `Bet for ${bets[bet].match}/stake = ${bets[bet].Stake}/user = ${user.userName}/CANCEL `
-            let userAcc = {
-                "user_id":user._id,
-                "description": description,
-                "creditDebitamount" : bets[bet].Stake,
-                "balance" : user.availableBalance + bets[bet].Stake,
-                "date" : Date.now(),
-                "userName" : user.userName,
-                "role_type" : user.role_type,
-                "Remark":"-",
-                "stake": bets[bet].Stake,
-                "transactionId":`${bets[bet].transactionId}`
-            }
-            let parentAcc
-            if(user.parentUsers.length < 2){
-                await User.updateMany({ _id: { $in: user.parentUsers } }, {$inc:{balance: bets[bet].Stake, downlineBalance: bets[bet].Stake}})
-                let parent = await User.findByIdAndUpdate(user.parentUsers[0], {$inc:{availableBalance:-bets[bet].Stake}})
-                parentAcc = {
-                    "user_id":parent._id,
-                    "description": description2,
-                    "creditDebitamount" : -bets[bet].Stake,
-                    "balance" : parent.availableBalance - (bets[bet].Stake * 1),
-                    "date" : Date.now(),
-                    "userName" : parent.userName,
-                    "role_type" : parent.role_type,
-                    "Remark":"-",
-                    "stake": bets[bet].Stake,
-                    "transactionId":`${bets[bet].transactionId}Parent`
-                }
-                
+            let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
+            if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
+                socket.emit("VoidBetIn",{message:"please provide a valid password", status:"error"})
             }else{
-                await User.updateMany({ _id: { $in: user.parentUsers.slice(1) } }, {$inc:{balance: bets[bet].Stake, downlineBalance: bets[bet].Stake}})
-                let parent = await User.findByIdAndUpdate(user.parentUsers[1], {$inc:{availableBalance:-bets[bet].Stake}})
-                parentAcc = {
-                    "user_id":parent._id,
-                    "description": description2,
-                    "creditDebitamount" : -bets[bet].Stake,
-                    "balance" : parent.availableBalance - (bets[bet].Stake * 1),
-                    "date" : Date.now(),
-                    "userName" : parent.userName,
-                    "role_type" : parent.role_type,
-                    "Remark":"-",
-                    "stake": bets[bet].Stake,
-                    "transactionId":`${bets[bet].transactionId}Parent`
-                }
+                socket.emit('VoidBetIn', {message: 'Void Bet Process Start', id:data.id})
+                let result = await voidBetBeforePlace(data)
             }
-            await AccModel.create(userAcc);
-            await AccModel.create(parentAcc);  // socket.emit('voidBet', {bet, status:"success"})
-        }
-        socket.emit('VoidBetIn', {marketId:data.id, status:"success"})
         }catch(err){
             console.log(err)
-            socket.emit("VoidBetIn",{message:"err", status:"error"})
+            socket.emit("VoidBetIn",{status:"error"})
         }     
+    })
+
+
+    socket.on('VoidBetIn2', async(data) => {
+        try{
+            let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password'); 
+            if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
+                socket.emit('VoidBetIn2', 'please provide a valid password') 
+            }else{
+                socket.emit('VoidBetIn2', 'Void Bet Process Start')
+                let reultData = await voidbetAfterPlace(data)
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit("VoidBetIn2",{message:"err", status:"error"})
+        }
+    })
+
+
+    socket.on('unmapBet', async(data) => {
+        try{
+            await Bet.updateMany({ marketId: data.id, status: 'MAP' }, { $unset: { result: 1 }, $set: { status: 'OPEN' } });
+            let betdata = await Bet.findOne({marketId:data.id})
+            socket.emit('unmapBet', {status:"success", betdata, result:data.result})
+        }catch(err){
+            console.log(err)
+            socket.emit('unmapBet', {message:'err', status:'error'})
+        }
+    })
+
+    socket.on('Settle', async(data) => {
+        try{
+            // console.log(data)
+            socket.emit("Settle", {message:"Settleed Process start", status:'success', id:data.id})
+            let data1 = mapBet.mapbet(data)
+            // socket.emit('Settle', {marketId:data.id, status:"success"})
+        }catch(err){
+            console.log(err)
+            socket.emit("Settle",{message:"err", status:"error"})
+        }
     })
 
     socket.on("VoidBetIn22", async(data) => {
         // let marketIds = [`${data.id}`]
         try{
-             console.log(data)
-             let data1 = mapBet.mapbet(data)
-             socket.emit('VoidBetIn', {marketId:data.id, status:"success"})
+             console.log(data, "BETDATA")
+             if(data.result != ""){
+                // let bets = await Bet.aggregate([
+                //     {
+                //       $match: {
+                //         marketId: `${data.id}`,
+                //         status: "OPEN",
+                //       },
+                //     },
+                //     {
+                //       $lookup: {
+                //         from: "users",
+                //         localField: "userName",
+                //         foreignField: "userName",
+                //         as: "user",
+                //       },
+                //     },
+                //     {
+                //       $unwind: "$user",
+                //     },
+                //     {
+                //       $match: {
+                //         "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] },
+                //       },
+                //     },
+                //     {
+                //       $group: {
+                //         _id: null,
+                //         betIds: { $push: { $toString: "$_id" } }, 
+                //       },
+                //     },
+                //     {
+                //       $project: {
+                //         _id: 0, 
+                //         betIds: 1, 
+                //       },
+                //     },
+                //   ]);
+                // console.log(bets)
+                await Bet.updateMany({marketId:data.id, status:'OPEN'}, {$set:{result:data.result, status:'MAP'}})
+                let betdata = await Bet.findOne({marketId:data.id})
+                socket.emit('VoidBetIn22', {status:"success", betdata, result:data.result})
+             }else{
+                socket.emit('VoidBetIn22', {message:"Please select a result", status:"error"})
+             }
+            //  let data1 = mapBet.mapbet(data)
+            //  socket.emit('VoidBetIn22', {marketId:data.id, status:"success"})
         }catch(err){
             console.log(err)
             socket.emit("VoidBetIn22",{message:"err", status:"error"})
@@ -2571,14 +3679,21 @@ io.on('connection', (socket) => {
     })
 
     socket.on("updateCommission", async(data) => {
-        // console.log(data)
+        console.log(data)
         try{
             let newValues = {
                 matchOdd: { percentage: data.data.matchOdds, type: `${data.data.matchOddsType}` , status: data.data.matchOddsStatus},
                 Bookmaker: { percentage: data.data.Bookmaker, type:  `${data.data.BookmakerType}`, status: data.data.BookmakerStatus},
                 fency: { percentage: data.data.fency, type: `${data.data.fencyType}`, status: data.data.fencyStatus}
             }
-            let newdata = await commissionModel.findOneAndUpdate({userId:data.data.id}, newValues)
+            let newdata
+            if(!await commissionModel.findOne({userId:data.data.id})){
+                newValues.userId = data.data.id
+                newdata = await commissionModel.create(newValues)
+            }else{
+
+                newdata = await commissionModel.findOneAndUpdate({userId:data.data.id}, newValues)
+            }
 
         socket.emit("updateCommission",{newdata, status:"success"})
         }catch(err){
@@ -2587,7 +3702,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on("CommissionRReport", async(data) => {
-        let limit = 20;
+        let limit = 10;
         let page = data.page;
         // console.log(page)
         // console.log(data.LOGINDATA.LOGINUSER)
@@ -2700,7 +3815,10 @@ io.on('connection', (socket) => {
                 type : "event",
                 status : false      
             }
-            let cataLog = await catalogController.create(createData)
+            let cataLog
+            if(!await catalogController.findOne({Id:data.id})){
+                cataLog = await catalogController.create(createData)
+            }
             if(cataLog){
                 msg = 'series deactivated'
                 socket.emit('sportStatusChange2',{status:'success',msg})
@@ -2732,6 +3850,84 @@ io.on('connection', (socket) => {
         // }catch(error){
         //     socket.emit('sportStatusChange',{status:'fail'})
         // }
+    })
+    socket.on('sportStatusChange3',async(data) => {
+        console.log(data)
+        let allData =  await getCrkAndAllData()
+        const cricket = allData[0].gameList[0].eventList
+        let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
+        let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
+        footBall = footBall.eventList
+        Tennis = Tennis.eventList
+        const resultSearch = cricket.concat(footBall, Tennis);
+        let result = resultSearch.find(item => item.eventData.eventId == data.id)
+        if(data.status){
+            let createData = {
+                Id : data.id,
+                name : result.eventData.name
+            }
+            let cataLog
+            if(!await featureEventModel.findOne({Id:data.id})){
+                cataLog = await featureEventModel.create(createData)
+            }
+            if(cataLog){
+                msg = 'event activated'
+                socket.emit('sportStatusChange3',{status:'success',msg})
+            }else{
+                msg = "Something went wrong please try again later!"
+                socket.emit('sportStatusChange3',{status:'success',msg})
+            }
+           
+        }else{
+            let cataLog =  await featureEventModel.findOneAndDelete({Id:data.id})
+            if(cataLog){
+                msg = 'event deactivated'
+                socket.emit('sportStatusChange3',{status:'success',msg})
+            }else{
+                msg = "Something went wrong please try again later!"
+                socket.emit('sportStatusChange3',{status:'success',msg})
+            }
+          
+        }
+    })
+    socket.on('sportStatusChange4',async(data) => {
+        console.log(data)
+        let allData =  await getCrkAndAllData()
+        const cricket = allData[0].gameList[0].eventList
+        let footBall = allData[1].gameList.find(item => item.sport_name === "Football")
+        let Tennis = allData[1].gameList.find(item => item.sport_name === "Tennis")
+        footBall = footBall.eventList
+        Tennis = Tennis.eventList
+        const resultSearch = cricket.concat(footBall, Tennis);
+        let result = resultSearch.find(item => item.eventData.eventId == data.id)
+        if(data.status){
+            let createData = {
+                Id : data.id,
+                name : result.eventData.name
+            }
+            let cataLog
+            if(!await InPlayEvent.findOne({Id:data.id})){
+                cataLog = await InPlayEvent.create(createData)
+            }
+            if(cataLog){
+                msg = 'event activated'
+                socket.emit('sportStatusChange4',{status:'success',msg})
+            }else{
+                msg = "Something went wrong please try again later!"
+                socket.emit('sportStatusChange4',{status:'success',msg})
+            }
+           
+        }else{
+            let cataLog =  await InPlayEvent.findOneAndDelete({Id:data.id})
+            if(cataLog){
+                msg = 'event deactivated'
+                socket.emit('sportStatusChange4',{status:'success',msg})
+            }else{
+                msg = "Something went wrong please try again later!"
+                socket.emit('sportStatusChange4',{status:'success',msg})
+            }
+          
+        }
     })
 
     socket.on("MarketMatch", async(data) => {
@@ -2779,27 +3975,45 @@ io.on('connection', (socket) => {
             }else{
                 let data1 = await commissionMarketModel.findOneAndDelete({marketId:data.marketId})
             }
+            socket.emit("commissionMarketbyId", {status:'success',msg:'market status changed successfully'})
         }catch(err){
             console.log(err)
-            socket.emit("commissionMarketbyId", "err")
+            socket.emit("commissionMarketbyId", {status:'fail',msg:'somothing went wrong'})
         }
     })
 
     socket.on("claimCommission", async(data) => {
-        console.log(data)
-        let user = await User.findById(data.LOGINDATA.LOGINUSER._id)
+        // console.log(data)
+        let user = await User.findById(data.LOGINDATA.LOGINUSER._id) 
+        let commissionAmount = await newCommissionModel.aggregate([
+            {
+                $match:{
+                    userId: data.LOGINDATA.LOGINUSER._id,
+                    commissionStatus: 'Unclaimed'
+                }
+            },
+            {
+                $group: {
+                  _id: null, 
+                  totalCommission: { $sum: "$commission" } 
+                }
+              }
+        ])
         if(user){
-            if(user.commission > 0){
+            if(commissionAmount.length != 0 && commissionAmount[0].totalCommission > 0){
                 try{
-                    await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:user.commission, commission:-user.commission}})
-                    let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{availableBalance: -user.commission}})
-                    let desc1 = `Claim Commisiion`
-                    let desc2 = `Claim Commisiion of chiled user ${user.userName}`
+                    console.log(commissionAmount[0].totalCommission, "COMMISSIONDATA")
+                    let commission = commissionAmount[0].totalCommission
+                    user = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER._id,{$inc:{availableBalance:commission}})
+                    let parenet = await User.findByIdAndUpdate(data.LOGINDATA.LOGINUSER.parent_id, {$inc:{availableBalance: -commission}})
+                    // console.log(user)
+                    let desc1 = `Claim Commisiion, ${user.userName}/${parenet.userName}`
+                    let desc2 = `Claim Commisiion of chiled user ${user.userName}, ${user.userName}/${parenet.userName}`
                     let childdata = {
                         user_id:data.LOGINDATA.LOGINUSER._id,
                         description : desc1,
-                        creditDebitamount : user.commission,
-                        balance : user.availableBalance + user.commission,
+                        creditDebitamount : commission,
+                        balance : user.availableBalance + commission,
                         date : Date.now(),
                         userName : user.userName,
                         role_type:user.role_type,
@@ -2807,15 +4021,15 @@ io.on('connection', (socket) => {
                     let perentData = {
                         user_id:data.LOGINDATA.LOGINUSER.parent_id,
                         description : desc2,
-                        creditDebitamount : parenet.commission,
-                        balance : parenet.availableBalance + user.commission,
+                        creditDebitamount : -commission,
+                        balance : parenet.availableBalance - commission,
                         date : Date.now(),
                         userName : parenet.userName,
                         role_type:parenet.role_type
                     }
                     await AccModel.create(childdata)
                     await AccModel.create(perentData)
-                    await commissionRepportModel.updateMany({userId:data.LOGINDATA.LOGINUSER._id}, {status:'Deposit'})
+                    await newCommissionModel.updateMany({userId:data.LOGINDATA.LOGINUSER._id}, {commissionStatus:'Claimed', claimeDate: Date.now()})
                     socket.emit("claimCommission", "Success")
                 }catch(err){
                     console.log(err)
@@ -2843,12 +4057,30 @@ io.on('connection', (socket) => {
 
     socket.on('BETONEVENT', async(data) => {
         try{
+            let page = data.page;
+            let skip;
+            let limit = 10;
+            if(data.type == 'loop'){
+                limit *= page
+                skip = 0
+            }else{
+                skip = limit * page
+            }
             let Bets = await Bet.aggregate([
                 {
                     $match: {
                         status: "OPEN" ,
                         eventId: data.id
                     }
+                },
+                {
+                    $sort:{"date":-1}
+                },
+                {
+                    $skip:skip
+                },
+                {
+                    $limit:limit
                 },
                 {
                     $lookup: {
@@ -2866,8 +4098,9 @@ io.on('connection', (socket) => {
                       "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
                     }
                   }
+                  
             ])
-            socket.emit('BETONEVENT', {data:Bets, status:'success'})
+            socket.emit('BETONEVENT', {data:Bets,page,type:data.type, status:'success'})
         }catch(err){
             socket.emit('BETONEVENT', {message:"err", status:"error"})
         }
@@ -2875,68 +4108,1711 @@ io.on('connection', (socket) => {
 
 
     socket.on('UerBook', async(data) => {
-        console.log(data)
-        try{
-            let Bets = await Bet.aggregate([
-                {
-                    $match: {
-                        status: "OPEN" ,
-                        marketId: data.marketId
-                    }
-                },
-                {
-                    $lookup: {
-                      from: "users",
-                      localField: "userName",
-                      foreignField: "userName",
-                      as: "user"
-                    }
-                  },
-                  {
-                    $unwind: "$user"
-                  },
-                  {
-                    $match: {
-                      "user.parentUsers": { $in: [data.LOGINDATA.LOGINUSER._id] }
-                    }
-                  },
-                {
-                    $group: {
-                    _id: {
-                        userName: "$userName",
-                        selectionName: "$selectionName",
-                        matchName: "$match",
-                    },
-                    totalAmount: { $sum: { $multiply: ["$oddValue", "$Stake"] } },
-                    },
-                },
-                {
-                    $group: {
-                    _id: "$_id.userName",
-                    selections: {
-                        $push: {
-                        selectionName: "$_id.selectionName",
-                        totalAmount: "$totalAmount",
-                        matchName: "$_id.matchName",
-                        },
-                    },
-                    },
-                },
-                {
-                    $project: {
-                    _id: 0,
-                    userName: "$_id",
-                    selections: 1,
-                    },
-                },
-            ])
-           console.log(Bets)
-        //    console.log(Bets[0].selections)
-           socket.emit('UerBook', Bets);
-        }catch(err){
+        // console.log(data)
+        // let users = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id,role_type:2})
+        let users = []
+        let falg = false
+        let Id 
+        if(data.userName){
+            let thatUSer = await User.findOne({userName:data.userName})
+            if(thatUSer){
+                Id = thatUSer.userName
+                falg = true
+                users = await User.find({parent_id:thatUSer._id, isActive:true , roleName:{$ne:'Operator'}})
+                // parentIdOfClickedUser = thatUSer._id
+            }
+            // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
+        }else{
+            users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
+            // parentIdOfClickedUser = data.LOGINDATA.LOGINUSER._id
+            Id = data.LOGINDATA.LOGINUSER.userName
 
+        }
+        try{
+            let newUser = users.map(async(ele)=>{
+                let childrenUsername1 = []
+                let children
+                let parentIdOfClickedUser
+                if(falg){
+                    children = await User.find({parentUsers:ele.id})
+                    parentIdOfClickedUser = ele.id
+                }else{
+                    children = await User.find({parentUsers:ele._id})
+                    parentIdOfClickedUser = ele._id
+                }
+                children.map(ele1 => {
+                    childrenUsername1.push(ele1.userName) 
+                })
+                if(childrenUsername1.length > 0){
+                    let Bets = await Bet.aggregate([
+                        {
+                            $match: {
+                                status: "OPEN",
+                                marketId: data.marketId,
+                                userName:{$in:childrenUsername1}
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: {
+                                    userName: "$userName",
+                                    selectionName: "$selectionName",
+                                    matchName: "$match",
+                                },
+                                totalAmount: {
+                                    $sum: {
+                                        $cond: { 
+                                            if : {$eq: ['$bettype2', "BACK"]},
+                                            then:{
+                                                $cond:{
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    then:{
+                                                        $sum: {
+                                                            $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                                                        }
+                                                    },
+                                                    else:{
+                                                        $sum: {
+                                                            $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            else:{
+                                                $cond:{
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    then:{
+                                                        $sum: {
+                                                           $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                                                        }
+                                                    },
+                                                    else:{
+                                                        $sum: { 
+                                                            $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                Stake: {
+                                    $sum: { 
+                                        $cond: { 
+                                            if : {$eq: ['$bettype2', "BACK"]},
+                                            then : {
+                                                $sum: '$Stake' 
+                                            },
+                                            else : {
+                                                $multiply: ['$Stake', -1]
+                                            }
+                                        }
+                                    }
+                                },
+                                parentArray: { $first: "$parentArray" },
+                                role_type: { $first: "$role_type" },
+                                parentId: { $first: "$parentId" },
+                            },
+                        },
+                        {
+                            $group: {
+                                _id: "$_id.userName",
+                                parentArray: { $first: "$parentArray" },
+                                role_type: { $first: "$role_type" },
+                                parentId: { $first: "$parentId" },
+                                selections: {
+                                    $push: {
+                                        selectionName: "$_id.selectionName",
+                                        totalAmount: '$totalAmount',
+                                        matchName: "$_id.matchName",
+                                        Stake: { $multiply: ["$Stake", -1] },
+                                    },
+                                },
+                            },
+                        },
+                        {
+                            $project: { 
+                                _id:0,
+                                userName: "$_id",
+                                parentArray:"$parentArray",
+                                parentId: "$parentId",
+                                selections: { 
+                                    $map: { 
+                                        input: "$selections",
+                                        as: "selection",
+                                        in: { 
+                                            selectionName: "$$selection.selectionName",
+                                            totalAmount: "$$selection.totalAmount",
+                                            matchName: "$$selection.matchName",
+                                            Stake: "$$selection.Stake",
+                                            winAmount: "$$selection.totalAmount",
+                                            lossAmount:"$$selection.Stake"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            $sort: {
+                                "userName": 1, 
+                            }
+                        },
+                        {
+                            $project: { 
+                                _id:0,
+                                userName: "$userName",
+                                elementUser : ele.userName,
+                                parentArray:"$parentArray",
+                                parentId: "$parentId",
+                                selections2:{ 
+                                    $map: { 
+                                        input: "$selections",
+                                        as: "selection",
+                                        in: { 
+                                            selectionName: "$$selection.selectionName",
+                                            totalAmount: "$$selection.totalAmount",
+                                            matchName: "$$selection.matchName",
+                                            Stake: "$$selection.Stake",
+                                            winAmount :"$$selection.winAmount",
+                                            lossAmount : "$$selection.lossAmount",
+                                            winAmount2: {
+                                                $reduce:{
+                                                    input:'$parentArray',
+                                                    initialValue: { value: 0, flag: true },
+                                                    in : {
+                                                        $cond:{
+                                                            if : {
+                                                                $and: [
+                                                                  { $ne: ['$$this.parentUSerId', ele.id] }, 
+                                                                  { $eq: ['$$value.flag', true] } 
+                                                                ]
+                                                              },
+                                                            then : {
+                                                                value: { 
+                                                                    $cond:{
+                                                                        if:{ $eq: ["$$value.value", 0] },
+                                                                        then:{
+                                                                            $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        },
+                                                                        else:{
+                                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        }
+                                                                    }
+                                                                },
+                                                                flag: true,
+                                                                
+                                                            },
+                                                            else : {
+                                                                value: {
+                                                                    $cond : {
+                                                                        if : { $eq : ["$$value.value" , 0]},
+                                                                        then : {
+                                                                            $cond:{
+                                                                                if : {$eq : ["$parentId", ele.id]},
+                                                                                then:"$$selection.winAmount",
+                                                                                else:{$subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                                            }
+                                                                        },
+                                                                        else : "$$value.value"
+                                                                    }
+                                                                },
+                                                                flag:false
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            lossAmount2:{
+                                                $reduce:{
+                                                    input:'$parentArray',
+                                                    initialValue: { value: 0, flag: true },
+                                                    in : {
+                                                        $cond:{
+                                                            if : {
+                                                                $and: [
+                                                                  { $ne: ['$$this.parentUSerId', ele.id] }, 
+                                                                  { $eq: ['$$value.flag', true] } 
+                                                                ]
+                                                              },
+                                                            then : {
+                                                                value: { 
+                                                                    $cond:{
+                                                                        if:{ $eq: ["$$value.value", 0] },
+                                                                        then:{
+                                                                            $multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        },
+                                                                        else:{
+                                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        }
+                                                                    }
+                                                                },
+                                                                flag: true,
+                                                                
+                                                            },
+                                                            else : {
+                                                                value: {
+                                                                    $cond : {
+                                                                        if : { $eq : ["$$value.value" , 0]},
+                                                                        then : {
+                                                                            $cond:{
+                                                                                if : {$eq : ["$parentId", ele.id]},
+                                                                                then:"$$selection.lossAmount",
+                                                                                else:{$subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]}
+                                                                            }
+                                                                        },
+                                                                        else : "$$value.value"
+                                                                    }
+                                                                },
+                                                                flag:false
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            $unwind: "$selections2"
+                        },
+                        {
+                            $group: {
+                              _id: {
+                                elementUser: "$elementUser",
+                                selectionName: "$selections2.selectionName"
+                              },
+                              totalWinAmount: { $sum: "$selections2.winAmount2.value" },
+                              totalLossAmount: { $sum: "$selections2.lossAmount2.value" }
+                            }
+                        },
+                        {
+                            $project: {
+                              _id: 0,
+                              elementUser: "$_id.elementUser",
+                              selection: {
+                                selectionName: "$_id.selectionName",
+                                totalWinAmount: {
+                                    $multiply:["$totalWinAmount", -1]
+                                },
+                                totalLossAmount:{
+                                    $multiply:["$totalLossAmount", -1]
+                                }
+                              }
+                            }
+                        },
+                        {
+                            $group: {
+                              _id: "$elementUser",
+                              selections: { $push: "$selection" }
+                            }
+                        },
+                        {
+                            $project: {
+                              _id: 0,
+                              elementUser: "$_id",
+                              selections: 1
+                            }
+                        },
+                        {
+                            $project: { 
+                                _id:0,
+                                elementUser:"$elementUser",
+                                selections: { 
+                                    $map: { 
+                                        input: "$selections",
+                                        as: "selection",
+                                        in: { 
+                                            selectionName: "$$selection.selectionName",
+                                            totalAmount: "$$selection.totalWinAmount",
+                                            winAmount: { 
+                                                $add : [
+                                                    "$$selection.totalWinAmount", 
+                                                    {
+                                                        $reduce: {
+                                                            input: "$selections",
+                                                            initialValue: 0,
+                                                            in: {
+                                                                $cond: {
+                                                                    if: {
+                                                                      $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                                    },
+                                                                    then: { $add: ["$$value", "$$this.totalLossAmount"] },
+                                                                    else: {
+                                                                        $add: ["$$value", 0] 
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            lossAmount:{ 
+                                                $add : [
+                                                    "$$selection.totalLossAmount", 
+                                                    {
+                                                        $reduce: {
+                                                            input: "$selections",
+                                                            initialValue: 0,
+                                                            in: {
+                                                                $cond: {
+                                                                    if: {
+                                                                      $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                                    },
+                                                                    then: { $add: ["$$value", "$$this.totalWinAmount"] },
+                                                                    else: {
+                                                                        $add: ["$$value", 0] 
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        
+                        
+                    ])
+
+                    if(falg){
+                        return({User:ele, Bets:Bets, userName:data.userName})
+                    }else{
+                        return({User:ele, Bets:Bets})
+                    }
+                }else{
+                    if(ele.roleName === "user"){
+                        let Bets = await Bet.aggregate([
+                            {
+                                $match: {
+                                    status: "OPEN",
+                                    marketId: data.marketId,
+                                    userName:ele.userName
+                                }
+                            },
+                            {
+                                $group: {
+                                    _id: {
+                                        userName: "$userName",
+                                        selectionName: "$selectionName",
+                                        matchName: "$match",
+                                    },
+                                    totalAmount: {
+                                        $sum: {
+                                            $cond: { 
+                                                if : {$eq: ['$bettype2', "BACK"]},
+                                                then:{
+                                                    $cond:{
+                                                        if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                        then:{
+                                                            $sum: {
+                                                                $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                                                            }
+                                                        },
+                                                        else:{
+                                                            $sum: {
+                                                                $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                else:{
+                                                    $cond:{
+                                                        if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                        then:{
+                                                            $sum: {
+                                                               $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                                                            }
+                                                        },
+                                                        else:{
+                                                            $sum: { 
+                                                                $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    Stake: {
+                                        $sum: { 
+                                            $cond: { 
+                                                if : {$eq: ['$bettype2', "BACK"]},
+                                                then : {
+                                                    $sum: '$Stake' 
+                                                },
+                                                else : {
+                                                    $multiply: ['$Stake', -1]
+                                                }
+                                            }
+                                        }
+                                    },
+                                    parentArray: { $first: "$parentArray" }
+                                },
+                            },
+                            {
+                                $group: {
+                                    _id: "$_id.userName",
+                                    parentArray: { $first: "$parentArray" },
+                                    selections: {
+                                        $push: {
+                                            selectionName: "$_id.selectionName",
+                                            totalAmount: "$totalAmount",
+                                            matchName: "$_id.matchName",
+                                            Stake: { $multiply: ["$Stake", -1] },
+                                        },
+                                    },
+                                },
+                            },
+                            {
+                                $project: { 
+                                    _id:0,
+                                    userName: "$_id",
+                                    parentArray:"$parentArray",
+                                    selections: { 
+                                        $map: { 
+                                            input: "$selections",
+                                            as: "selection",
+                                            in: { 
+                                                selectionName: "$$selection.selectionName",
+                                                totalAmount: "$$selection.totalAmount",
+                                                matchName: "$$selection.matchName",
+                                                Stake: "$$selection.Stake",
+                                                winAmount: "$$selection.totalAmount",
+                                                lossAmount:"$$selection.Stake"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                $sort: {
+                                    "userName": 1, 
+                                }
+                            },
+                            {
+                                $unwind: "$selections"
+                            },
+                            {
+                                $group: {
+                                  _id: {
+                                    elementUser: "$userName",
+                                    selectionName: "$selections.selectionName"
+                                  },
+                                  totalWinAmount: { $sum: "$selections.winAmount" },
+                                  totalLossAmount: { $sum: "$selections.lossAmount" }
+                                }
+                            },
+                            {
+                                $project: {
+                                  _id: 0,
+                                  elementUser: "$_id.elementUser",
+                                  selection: {
+                                    selectionName: "$_id.selectionName",
+                                    totalWinAmount: "$totalWinAmount",
+                                    totalLossAmount: "$totalLossAmount"
+                                  }
+                                }
+                            },
+                            {
+                                $group: {
+                                  _id: "$elementUser",
+                                  selections: { $push: "$selection" }
+                                }
+                            },
+                            {
+                                $project: {
+                                  _id: 0,
+                                  elementUser: "$_id",
+                                  selections: 1
+                                }
+                            },
+                            {
+                                $project: { 
+                                    _id:0,
+                                    elementUser:"$elementUser",
+                                    selections: { 
+                                        $map: { 
+                                            input: "$selections",
+                                            as: "selection",
+                                            in: { 
+                                                selectionName: "$$selection.selectionName",
+                                                totalAmount: "$$selection.totalWinAmount",
+                                                winAmount: { 
+                                                    $add : [
+                                                        "$$selection.totalWinAmount", 
+                                                        {
+                                                            $reduce: {
+                                                                input: "$selections",
+                                                                initialValue: 0,
+                                                                in: {
+                                                                    $cond: {
+                                                                        if: {
+                                                                          $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                                        },
+                                                                        then: { $add: ["$$value", "$$this.totalLossAmount"] },
+                                                                        else: {
+                                                                            $add: ["$$value", 0] 
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                lossAmount:{ 
+                                                    $add : [
+                                                        "$$selection.totalLossAmount", 
+                                                        {
+                                                            $reduce: {
+                                                                input: "$selections",
+                                                                initialValue: 0,
+                                                                in: {
+                                                                    $cond: {
+                                                                        if: {
+                                                                          $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                                        },
+                                                                        then: { $add: ["$$value", "$$this.totalWinAmount"] },
+                                                                        else: {
+                                                                            $add: ["$$value", 0] 
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+
+                        ])
+
+                        return({User:ele, Bets:Bets, status:'User', userName:data.userName})
+
+                    }
+                }
+            })
+            let resultPromise = await Promise.all(newUser)
+            let result = []
+            for(let i = 0;i<resultPromise.length;i++){
+                // console.log(resultPromise[i], 123)
+                if(resultPromise[i] && resultPromise[i].Bets.length > 0){
+                    result.push(resultPromise[i])
+                    // console.log(resultPromise[i].Bets)
+                    // console.log(resultPromise[i].Bets[0].selections)
+                }
+            }
+            
+            let matchName2 = await Bet.findOne({marketId: data.marketId})
+            let matchName
+            let sport
+            if(matchName2){
+                matchName = matchName2.match
+                sport = matchName2.betType
+            }
+
+            // console.log(Id, "IdIdIdIdIdIdId")
+           socket.emit('UerBook', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport});
+        //    socket.emit();
+        }catch(err){
+            console.log(err)
             socket.emit('UerBook', {message:"err", status:"error"})
         }
+    })
+    
+    socket.on('Book', async(data) => {
+        console.log(data, "datadatadatadata")
+        let users = []
+        let falg = false
+        let Id 
+        let loginId = data.LOGINDATA.LOGINUSER._id
+        if(data.userName){
+            let thatUSer = await User.findOne({userName:data.userName})
+            if(thatUSer){
+                Id = thatUSer.userName
+                falg = true
+                users = await User.find({parent_id:thatUSer._id, isActive:true , roleName:{$ne:'Operator'}})
+            }
+            // users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
+        }else{
+            users = await User.find({parent_id:data.LOGINDATA.LOGINUSER._id, isActive:true , roleName:{$ne:'Operator'}})
+            Id = data.LOGINDATA.LOGINUSER.userName
+
+        }
+
+        try{
+            let newUser = users.map(async(ele)=>{ 
+                let childrenUsername1 = []
+                let children
+                if(falg){
+                    children = await User.find({parentUsers:ele.id})
+                }else{
+                    children = await User.find({parentUsers:ele._id})
+                }
+                children.map(ele1 => {
+                    childrenUsername1.push(ele1.userName) 
+                })
+                if(childrenUsername1.length > 0){
+                    let Bets = await Bet.aggregate([
+                        {
+                            $match: {
+                                status: "OPEN",
+                                marketId: data.marketId,
+                                userName:{$in:childrenUsername1}
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: {
+                                    userName: "$userName",
+                                    selectionName: "$selectionName",
+                                    matchName: "$match",
+                                },
+                                totalAmount: {
+                                    $sum: {
+                                        $cond: { 
+                                            if : {$eq: ['$bettype2', "BACK"]},
+                                            then:{
+                                                $cond:{
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    then:{
+                                                        $sum: {
+                                                            $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                                                        }
+                                                    },
+                                                    else:{
+                                                        $sum: {
+                                                            $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            else:{
+                                                $cond:{
+                                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                    then:{
+                                                        $sum: {
+                                                           $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                                                        }
+                                                    },
+                                                    else:{
+                                                        $sum: { 
+                                                            $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                Stake: {
+                                    $sum: { 
+                                        $cond: { 
+                                            if : {$eq: ['$bettype2', "BACK"]},
+                                            then : {
+                                                $sum: '$Stake' 
+                                            },
+                                            else : {
+                                                $multiply: ['$Stake', -1]
+                                            }
+                                        }
+                                    }
+                                },
+                                parentArray: { $first: "$parentArray" },
+                                role_type : { $first: "$role_type" }
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: "$_id.userName",
+                                parentArray: { $first: "$parentArray" },
+                                role_type : { $first: "$role_type" },
+                                selections: {
+                                    $push: {
+                                        selectionName: "$_id.selectionName",
+                                        totalAmount: "$totalAmount",
+                                        matchName: "$_id.matchName",
+                                        Stake: { $multiply: ["$Stake", -1] },
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            $project: { 
+                                _id:0,
+                                userName: "$_id",
+                                parentArray:"$parentArray",
+                                role_type : "$role_type",
+                                selections: { 
+                                    $map: { 
+                                        input: "$selections",
+                                        as: "selection",
+                                        in: { 
+                                            selectionName: "$$selection.selectionName",
+                                            totalAmount: "$$selection.totalAmount",
+                                            matchName: "$$selection.matchName",
+                                            Stake: "$$selection.Stake",
+                                            winAmount: "$$selection.totalAmount",
+                                            lossAmount:"$$selection.Stake"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            $sort: {
+                                "userName": 1, 
+                            }
+                        },
+                        {
+                            $project: { 
+                                _id:0,
+                                userName: "$userName",
+                                elementUser : ele.userName,
+                                parentArray:"$parentArray",
+                                selections2:{ 
+                                    $map: { 
+                                        input: "$selections",
+                                        as: "selection",
+                                        in: { 
+                                            selectionName: "$$selection.selectionName",
+                                            totalAmount: "$$selection.totalAmount",
+                                            matchName: "$$selection.matchName",
+                                            Stake: "$$selection.Stake",
+                                            winAmount :"$$selection.winAmount",
+                                            lossAmount : "$$selection.lossAmount",
+                                            winAmount2: {
+                                                $reduce:{
+                                                    input:'$parentArray',
+                                                    initialValue: { value: 0, flag: true },
+                                                    in : {
+                                                        $cond:{
+                                                            if : {
+                                                                $and: [
+                                                                  { $ne: ['$$this.parentUSerId', loginId] }, 
+                                                                  { $eq: ['$$value.flag', true] } 
+                                                                ]
+                                                              },
+                                                            then : {
+                                                                value: { 
+                                                                    $cond:{
+                                                                        if:{ $eq: ["$$value.value", 0] },
+                                                                        then:{
+                                                                            $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        },
+                                                                        else:{
+                                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        }
+                                                                    }
+                                                                },
+                                                                flag: true,
+                                                                
+                                                            },
+                                                            else : {
+                                                                value: {
+                                                                    $cond : {
+                                                                        if : { $eq : ["$$value.value" , 0]},
+                                                                        then : {
+                                                                            $subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                        },
+                                                                        else : "$$value.value"
+                                                                    }
+                                                                },
+                                                                flag:false
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            lossAmount2:{
+                                                $reduce:{
+                                                    input:'$parentArray',
+                                                    initialValue: { value: 0, flag: true },
+                                                    in : {
+                                                        $cond:{
+                                                            if : {
+                                                                $and: [
+                                                                  { $ne: ['$$this.parentUSerId', loginId] }, 
+                                                                  { $eq: ['$$value.flag', true] } 
+                                                                ]
+                                                              },
+                                                            then : {
+                                                                value: { 
+                                                                    $cond:{
+                                                                        if:{ $eq: ["$$value.value", 0] },
+                                                                        then:{
+                                                                            $multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        },
+                                                                        else:{
+                                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                        }
+                                                                    }
+                                                                },
+                                                                flag: true,
+                                                                
+                                                            },
+                                                            else : {
+                                                                value: {
+                                                                    $cond : {
+                                                                        if : { $eq : ["$$value.value" , 0]},
+                                                                        then : {
+                                                                            $subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                        },
+                                                                        else : "$$value.value"
+                                                                    }
+                                                                },
+                                                                flag:false
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            $unwind: "$selections2"
+                        },
+                        {
+                            $group: {
+                              _id: {
+                                elementUser: "$elementUser",
+                                selectionName: "$selections2.selectionName"
+                              },
+                              totalWinAmount: { $sum: "$selections2.winAmount2.value" },
+                              totalLossAmount: { $sum: "$selections2.lossAmount2.value" }
+                            }
+                        },
+                        {
+                            $project: {
+                              _id: 0,
+                              elementUser: "$_id.elementUser",
+                              selection: {
+                                selectionName: "$_id.selectionName",
+                                totalWinAmount: {
+                                    $multiply:["$totalWinAmount", -1]
+                                },
+                                totalLossAmount:{
+                                    $multiply:["$totalLossAmount", -1]
+                                }
+                              }
+                            }
+                        },
+                        {
+                            $group: {
+                              _id: "$elementUser",
+                              selections: { $push: "$selection" }
+                            }
+                        },
+                        {
+                            $project: {
+                              _id: 0,
+                              elementUser: "$_id",
+                              selections: 1
+                            }
+                        },
+                        {
+                            $project: { 
+                                _id:0,
+                                elementUser:"$elementUser",
+                                selections: { 
+                                    $map: { 
+                                        input: "$selections",
+                                        as: "selection",
+                                        in: { 
+                                            selectionName: "$$selection.selectionName",
+                                            totalAmount: "$$selection.totalWinAmount",
+                                            winAmount: { 
+                                                $add : [
+                                                    "$$selection.totalWinAmount", 
+                                                    {
+                                                        $reduce: {
+                                                            input: "$selections",
+                                                            initialValue: 0,
+                                                            in: {
+                                                                $cond: {
+                                                                    if: {
+                                                                      $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                                    },
+                                                                    then: { $add: ["$$value", "$$this.totalLossAmount"] },
+                                                                    else: {
+                                                                        $add: ["$$value", 0] 
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            lossAmount:{ 
+                                                $add : [
+                                                    "$$selection.totalLossAmount", 
+                                                    {
+                                                        $reduce: {
+                                                            input: "$selections",
+                                                            initialValue: 0,
+                                                            in: {
+                                                                $cond: {
+                                                                    if: {
+                                                                      $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                                    },
+                                                                    then: { $add: ["$$value", "$$this.totalWinAmount"] },
+                                                                    else: {
+                                                                        $add: ["$$value", 0] 
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                    ])
+
+
+                    if(falg){
+                        return({User:ele, Bets:Bets, userName:data.userName})
+                    }else{
+                        return({User:ele, Bets:Bets})
+                    }
+
+                }else{
+                    if(ele.roleName === "user"){ 
+                        let Bets = await Bet.aggregate([
+                            {
+                                $match: {
+                                    status: "OPEN",
+                                    marketId: data.marketId,
+                                    userName:ele.userName
+                                }
+                            },
+                            {
+                                $group: {
+                                    _id: {
+                                        userName: "$userName",
+                                        selectionName: "$selectionName",
+                                        matchName: "$match",
+                                    },
+                                    totalAmount: {
+                                        $sum: {
+                                            $cond: { 
+                                                if : {$eq: ['$bettype2', "BACK"]},
+                                                then:{
+                                                    $cond:{
+                                                        if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                        then:{
+                                                            $sum: {
+                                                                $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                                                            }
+                                                        },
+                                                        else:{
+                                                            $sum: {
+                                                                $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                else:{
+                                                    $cond:{
+                                                        if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                                        then:{
+                                                            $sum: {
+                                                               $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                                                            }
+                                                        },
+                                                        else:{
+                                                            $sum: { 
+                                                                $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    Stake: {
+                                        $sum: { 
+                                            $cond: { 
+                                                if : {$eq: ['$bettype2', "BACK"]},
+                                                then : {
+                                                    $sum: '$Stake' 
+                                                },
+                                                else : {
+                                                    $multiply: ['$Stake', -1]
+                                                }
+                                            }
+                                        }
+                                    },
+                                    parentArray: { $first: "$parentArray" }
+                                },
+                            },
+                            {
+                                $group: {
+                                    _id: "$_id.userName",
+                                    parentArray: { $first: "$parentArray" },
+                                    selections: {
+                                        $push: {
+                                            selectionName: "$_id.selectionName",
+                                            totalAmount: "$totalAmount",
+                                            matchName: "$_id.matchName",
+                                            Stake: { $multiply: ["$Stake", -1] },
+                                        },
+                                    },
+                                },
+                            },
+                            {
+                                $project: { 
+                                    _id:0,
+                                    userName: "$_id",
+                                    parentArray:"$parentArray",
+                                    selections: { 
+                                        $map: { 
+                                            input: "$selections",
+                                            as: "selection",
+                                            in: { 
+                                                selectionName: "$$selection.selectionName",
+                                                totalAmount: "$$selection.totalAmount",
+                                                matchName: "$$selection.matchName",
+                                                Stake: "$$selection.Stake",
+                                                winAmount: "$$selection.totalAmount",
+                                                lossAmount:"$$selection.Stake"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                $sort: {
+                                    "userName": 1, 
+                                }
+                            },
+                            {
+                                $project: { 
+                                    _id:0,
+                                    userName: "$userName",
+                                    elementUser : ele.userName,
+                                    parentArray:"$parentArray",
+                                    selections2:{ 
+                                        $map: { 
+                                            input: "$selections",
+                                            as: "selection",
+                                            in: { 
+                                                selectionName: "$$selection.selectionName",
+                                                totalAmount: "$$selection.totalAmount",
+                                                matchName: "$$selection.matchName",
+                                                Stake: "$$selection.Stake",
+                                                winAmount :"$$selection.winAmount",
+                                                lossAmount : "$$selection.lossAmount",
+                                                winAmount2: {
+                                                    $reduce:{
+                                                        input:'$parentArray',
+                                                        initialValue: { value: 0, flag: true },
+                                                        in : {
+                                                            $cond:{
+                                                                if : {
+                                                                    $and: [
+                                                                      { $ne: ['$$this.parentUSerId', loginId] }, 
+                                                                      { $eq: ['$$value.flag', true] } 
+                                                                    ]
+                                                                  },
+                                                                then : {
+                                                                    value: { 
+                                                                        $cond:{
+                                                                            if:{ $eq: ["$$value.value", 0] },
+                                                                            then:{
+                                                                                $multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                                            },
+                                                                            else:{
+                                                                                $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    flag: true,
+                                                                    
+                                                                },
+                                                                else : {
+                                                                    value: {
+                                                                        $cond : {
+                                                                            if : { $eq : ["$$value.value" , 0]},
+                                                                            then : {
+                                                                                $subtract : ["$$selection.winAmount",{$multiply: ["$$selection.winAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                            },
+                                                                            else : "$$value.value"
+                                                                        }
+                                                                    },
+                                                                    flag:false
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                lossAmount2:{
+                                                    $reduce:{
+                                                        input:'$parentArray',
+                                                        initialValue: { value: 0, flag: true },
+                                                        in : {
+                                                            $cond:{
+                                                                if : {
+                                                                    $and: [
+                                                                      { $ne: ['$$this.parentUSerId', loginId] }, 
+                                                                      { $eq: ['$$value.flag', true] } 
+                                                                    ]
+                                                                  },
+                                                                then : {
+                                                                    value: { 
+                                                                        $cond:{
+                                                                            if:{ $eq: ["$$value.value", 0] },
+                                                                            then:{
+                                                                                $multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                                            },
+                                                                            else:{
+                                                                                $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    flag: true,
+                                                                    
+                                                                },
+                                                                else : {
+                                                                    value: {
+                                                                        $cond : {
+                                                                            if : { $eq : ["$$value.value" , 0]},
+                                                                            then : {
+                                                                                $subtract:["$$selection.lossAmount", {$multiply: ["$$selection.lossAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                                            },
+                                                                            else : "$$value.value"
+                                                                        }
+                                                                    },
+                                                                    flag:false
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                $unwind: "$selections2"
+                            },
+                            {
+                                $group: {
+                                  _id: {
+                                    elementUser: "$elementUser",
+                                    selectionName: "$selections2.selectionName"
+                                  },
+                                  totalWinAmount: { $sum: "$selections2.winAmount2.value" },
+                                  totalLossAmount: { $sum: "$selections2.lossAmount2.value" }
+                                }
+                            },
+                            {
+                                $project: {
+                                  _id: 0,
+                                  elementUser: "$_id.elementUser",
+                                  selection: {
+                                    selectionName: "$_id.selectionName",
+                                    totalWinAmount: {
+                                        $multiply:["$totalWinAmount", -1]
+                                    },
+                                    totalLossAmount:{
+                                        $multiply:["$totalLossAmount", -1]
+                                    }
+                                  }
+                                }
+                            },
+                            {
+                                $group: {
+                                  _id: "$elementUser",
+                                  selections: { $push: "$selection" }
+                                }
+                            },
+                            {
+                                $project: {
+                                  _id: 0,
+                                  elementUser: "$_id",
+                                  selections: 1
+                                }
+                            },
+                            {
+                                $project: { 
+                                    _id:0,
+                                    elementUser:"$elementUser",
+                                    selections: { 
+                                        $map: { 
+                                            input: "$selections",
+                                            as: "selection",
+                                            in: { 
+                                                selectionName: "$$selection.selectionName",
+                                                totalAmount: "$$selection.totalWinAmount",
+                                                winAmount: { 
+                                                    $add : [
+                                                        "$$selection.totalWinAmount", 
+                                                        {
+                                                            $reduce: {
+                                                                input: "$selections",
+                                                                initialValue: 0,
+                                                                in: {
+                                                                    $cond: {
+                                                                        if: {
+                                                                          $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                                        },
+                                                                        then: { $add: ["$$value", "$$this.totalLossAmount"] },
+                                                                        else: {
+                                                                            $add: ["$$value", 0] 
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                lossAmount:{ 
+                                                    $add : [
+                                                        "$$selection.totalLossAmount", 
+                                                        {
+                                                            $reduce: {
+                                                                input: "$selections",
+                                                                initialValue: 0,
+                                                                in: {
+                                                                    $cond: {
+                                                                        if: {
+                                                                          $ne: ["$$this.selectionName", "$$selection.selectionName"] 
+                                                                        },
+                                                                        then: { $add: ["$$value", "$$this.totalWinAmount"] },
+                                                                        else: {
+                                                                            $add: ["$$value", 0] 
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                        ])
+                        console.log(Bets, "BETSBETS")
+                        // console.log(Bets[0].selections, "selectionsselections")
+                        if(Bets.length > 0){
+
+                            return({User:ele, Bets:Bets, status:'User', userName:data.userName})
+                        }
+                    }
+                }
+            })
+
+
+            let resultPromise = await Promise.all(newUser)
+            let result = []
+            for(let i = 0;i<resultPromise.length;i++){
+                if(resultPromise[i] && resultPromise[i].Bets.length > 0){
+                    result.push(resultPromise[i])
+                }
+            }
+            let matchName2 = await Bet.findOne({marketId: data.marketId})
+            let matchName
+            let sport
+            if(matchName2){
+                matchName = matchName2.match
+                sport = matchName2.betType
+            }
+
+           socket.emit('Book', {Bets:result,type:data.type,newData:data.newData, matchName, Id,sport});
+        }catch(err){
+            console.log(err)
+            socket.emit('Book', {message:"err", status:"error"})
+        }
+    })
+
+    socket.on('FANCYBOOK', async(data) => {
+        // console.log(data, "FANCYDATA")
+        let childrenUsername1 = []
+        // let loginUser = await User.findById()
+        let forcheck = await Bet.find({marketId: data.marketId}) 
+        let children = await User.find({parentUsers:data.id, role_type: 5})
+        children.map(ele1 => {
+            childrenUsername1.push(ele1.userName) 
+        })
+        // let checkBET = await Bet.findOne({marketId:data.marketId})
+        if(forcheck.length > 0){
+            if(data.marketId.slice(-2).startsWith('OE')){
+                let betData = await Bet.aggregate([
+                    {
+                        $match: {
+                            status: "OPEN",
+                            marketId: data.marketId,
+                            userName:{$in:childrenUsername1}
+                        }
+                    },
+                    {
+                        $group: { 
+                            _id: {
+                                "secId":"$secId",
+                                "userName":"$userName"
+                            },
+                            parentArray: { $first: "$parentArray" },
+                            totalAmount: { 
+                                $sum: '$returns'
+                            },
+                            totalWinAmount:{
+                                $sum: { 
+                                    $cond : {
+                                        if : {$eq: ["$secId", "odd_Even_Yes"]},
+                                    then:{
+                                        $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                    },
+                                    else:"$Stake"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        $project:{
+                            _id:0,
+                            userName: "$_id.userName",
+                            secId: "$_id.secId",
+                            parentArray: "$parentArray",
+                            totalAmount1: "$totalAmount",
+                            totalWinAmount1: "$totalWinAmount",
+                            totalAmount:{
+                                $reduce:{
+                                    input:'$parentArray',
+                                    initialValue: { value: 0, flag: true },
+                                    in : { 
+                                        $cond:{
+                                            if : {
+                                                $and: [
+                                                  { $ne: ['$$this.parentUSerId', data.id] }, 
+                                                  { $eq: ['$$value.flag', true] } 
+                                                ]
+                                              },
+                                            then : {
+                                                value: { 
+                                                    $cond:{
+                                                        if:{ $eq: ["$$value.value", 0] },
+                                                        then:{
+                                                            $multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                        },
+                                                        else:{
+                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                        }
+                                                    }
+                                                },
+                                                flag: true,
+                                                
+                                            },
+                                            else : {
+                                                value: {
+                                                    $cond : {
+                                                        if : { $eq : ["$$value.value" , 0]},
+                                                        then : {
+                                                            $subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                        },
+                                                        else : "$$value.value"
+                                                    }
+                                                },
+                                                flag:false
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            totalWinAmount:{
+                                $reduce:{
+                                    input:'$parentArray',
+                                    initialValue: { value: 0, flag: true },
+                                    in : { 
+                                        $cond:{
+                                            if : {
+                                                $and: [
+                                                  { $ne: ['$$this.parentUSerId', data.id] }, 
+                                                  { $eq: ['$$value.flag', true] } 
+                                                ]
+                                              },
+                                            then : {
+                                                value: { 
+                                                    $cond:{
+                                                        if:{ $eq: ["$$value.value", 0] },
+                                                        then:{
+                                                            $multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                        },
+                                                        else:{
+                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                        }
+                                                    }
+                                                },
+                                                flag: true,
+                                                
+                                            },
+                                            else : {
+                                                value: {
+                                                    $cond : {
+                                                        if : { $eq : ["$$value.value" , 0]},
+                                                        then : {
+                                                            $subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                        },
+                                                        else : "$$value.value"
+                                                    }
+                                                },
+                                                flag:false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        $project:{
+                            _id:"$secId",
+                            totalAmount:{
+                                $sum: '$totalAmount.value'
+                            },
+                            totalWinAmount:{
+                                $sum: '$totalWinAmount.value'
+                            },
+    
+                        }
+                    },
+                    {
+                        $group: {
+                          _id: null,
+                          data: {
+                            $push: {
+                              _id: "$_id",
+                              totalAmount: {
+                                $multiply:["$totalAmount", -1]
+                              },
+                              totalWinAmount: {
+                                $multiply:["$totalWinAmount", -1]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        $project: {
+                          _id: 0,
+                          data: {
+                            $map: {
+                              input: "$data",
+                              as: "item",
+                              in: {
+                                _id: "$$item._id",
+                                totalAmount: "$$item.totalAmount",
+                                totalWinAmount: "$$item.totalWinAmount",
+                                totalWinAmount2: {
+                                  $add: ["$$item.totalWinAmount", {
+                                    $reduce: { 
+                                        input: "$data",
+                                        initialValue: 0,
+                                        in: {
+                                            $cond: {
+                                                if: {
+                                                    $ne: ["$$this._id", "$$item._id"] 
+                                                },
+                                                then: { $add: ["$$value", "$$this.totalAmount"] },
+                                                else: {
+                                                    $add: ["$$value", 0] 
+                                                }
+                                            }
+                                        }
+                                    }
+                                  }]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                ])
+    
+                // console.log(betData, "betData")
+                // console.log(betData[0].data, "betData[0].databetData[0].databetData[0].data")
+                socket.emit('FANCYBOOK', {betData:betData[0].data, type:'ODD'})
+            }else{
+                console.log('WORKING123', data)
+                let betData = await Bet.aggregate([
+                    {
+                        $match: {
+                            status: "OPEN",
+                            marketId: data.marketId,
+                            userName:{$in:childrenUsername1}
+                        }
+                    },
+                    {
+                        $addFields: {
+                          runs: {
+                            $toInt: {
+                              $arrayElemAt: [
+                                { $split: ["$selectionName", "@"] },
+                                1 
+                              ]
+                            }
+                          }
+                        }
+                    },
+                    {
+                        $group: { 
+                            _id: {
+                                "secId":"$secId",
+                                "userName":"$userName",
+                                "runs":"$runs"
+                            },
+                            parentArray: { $first: "$parentArray" },
+                            totalAmount: { 
+                                $sum: '$returns'
+                            },
+                            totalWinAmount:{
+                                $sum: { 
+                                    $cond : {
+                                        if : {$eq: ["$secId", "odd_Even_Yes"]},
+                                    then:{
+                                        $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                    },
+                                    else:"$Stake"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        $project:{
+                            _id:0,
+                            userName: "$_id.userName",
+                            secId: "$_id.secId",
+                            runs: "$_id.runs",
+                            parentArray: "$parentArray",
+                            totalAmount1: "$totalAmount",
+                            totalWinAmount1: "$totalWinAmount",
+                            totalAmount:{
+                                $reduce:{
+                                    input:'$parentArray',
+                                    initialValue: { value: 0, flag: true },
+                                    in : { 
+                                        $cond:{
+                                            if : {
+                                                $and: [
+                                                  { $ne: ['$$this.parentUSerId', data.id] }, 
+                                                  { $eq: ['$$value.flag', true] } 
+                                                ]
+                                              },
+                                            then : {
+                                                value: { 
+                                                    $cond:{
+                                                        if:{ $eq: ["$$value.value", 0] },
+                                                        then:{
+                                                            $multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                        },
+                                                        else:{
+                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                        }
+                                                    }
+                                                },
+                                                flag: true,
+                                                
+                                            },
+                                            else : {
+                                                value: {
+                                                    $cond : {
+                                                        if : { $eq : ["$$value.value" , 0]},
+                                                        then : {
+                                                            $subtract : ["$totalAmount",{$multiply: ["$totalAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                        },
+                                                        else : "$$value.value"
+                                                    }
+                                                },
+                                                flag:false
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            totalWinAmount:{
+                                $reduce:{
+                                    input:'$parentArray',
+                                    initialValue: { value: 0, flag: true },
+                                    in : { 
+                                        $cond:{
+                                            if : {
+                                                $and: [
+                                                  { $ne: ['$$this.parentUSerId', data.id] }, 
+                                                  { $eq: ['$$value.flag', true] } 
+                                                ]
+                                              },
+                                            then : {
+                                                value: { 
+                                                    $cond:{
+                                                        if:{ $eq: ["$$value.value", 0] },
+                                                        then:{
+                                                            $multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]
+                                                        },
+                                                        else:{
+                                                            $multiply: ["$$value.value", { $divide: ["$$this.uplineShare", 100] }]
+                                                        }
+                                                    }
+                                                },
+                                                flag: true,
+                                                
+                                            },
+                                            else : {
+                                                value: {
+                                                    $cond : {
+                                                        if : { $eq : ["$$value.value" , 0]},
+                                                        then : {
+                                                            $subtract : ["$totalWinAmount",{$multiply: ["$totalWinAmount", { $divide: ["$$this.uplineShare", 100] }]}]
+                                                        },
+                                                        else : "$$value.value"
+                                                    }
+                                                },
+                                                flag:false
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        $project:{
+                            _id:0,
+                            secId: "$secId",
+                            runs: "$runs",
+                            totalAmount:"$totalAmount.value",
+                            totalWinAmount:"$totalWinAmount.value"
+                        }
+                    }
+                    
+                    
+                ])
+                console.log(betData, "betData")
+            }
+
+        }else{
+            socket.emit('FANCYBOOK', {type:'notFound'})
+        }
+
+
     })
 
     socket.on("updateUserDetailssss", async(data) => {
@@ -2948,7 +5824,1067 @@ io.on('connection', (socket) => {
             socket.emit('updateUserDetailssss', {message:"err", status:"error"})
         }
     })
-    
+
+
+    socket.on('gameAnalysis', async(data) => {
+        // console.log(data.Sport)
+        let me = data.USER
+        let page = data.page;
+        let limit = 10
+        let childrenUsername = []
+        let children = await User.find({parentUsers:me._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+        let role_type = []
+        let roles
+        if(data.USER.roleName == 'Operator'){
+            let parentUser = await User.findById(data.USER.parent_id)
+            roles = await Role.find({role_level: {$gt:parentUser.role.role_level}});
+        }else{
+            roles = await Role.find({role_level: {$gt:me.role.role_level}});
+        }
+        for(let i = 0; i < roles.length; i++){
+            role_type.push(roles[i].role_type)
+        }
+
+        let filter = {}
+        if(data.from_date && data.to_date){
+            filter.date = {$gte:new Date(data.from_date),$lte:new Date(data.to_date)}
+        }else if(data.from_date && !data.to_date){
+            filter.date = {$gte:new Date(data.from_date)}
+        }else if(data.to_date && !data.from_date){
+            filter.date = {$lte:new Date(data.to_date)}
+        }
+        if(data.Sport != "All"){
+            filter.eventId = data.Sport
+        }
+        if(data.market != "All"){
+            if(data.market === "Match Odds"){
+                filter.marketName = { '$regex': '^Match', '$options': 'i' }
+            }else if (data.market === "Bookmaker 0%Comm"){
+                filter.marketName = { '$regex': '^Bookma', '$options': 'i' }
+            }else if (data.market === "Fancy"){
+                filter.marketName = { '$not': { '$regex': '^(match|bookma)', '$options': 'i' } }
+            }
+        }
+
+        // console.log(filter)
+        const gameAnalist = await Bet.aggregate([
+            {
+                $match:filter
+            },
+            {
+                $lookup:{
+                    from:'users',
+                    localField:'userName',
+                    foreignField:'userName',
+                    as:'userDetails'
+                }
+            },
+            {
+                $unwind:'$userDetails'
+            },
+            {
+                $match:{
+                    'userDetails.isActive':true,
+                    'userDetails.roleName':{$ne:'Admin'},
+                    'userDetails.role_type':{$in:role_type},
+                    'userDetails.parentUsers':{$elemMatch:{$eq:me._id}}
+                }
+            },
+            {
+                $group:{
+                    _id:{
+                        userName:'$userName',
+                        whiteLabel:'$userDetails.whiteLabel'
+                    },
+                    betCount:{$sum:1},
+                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    open:{$sum:{$cond:[{$in:['$status',['MAP','OPEN']]},1,0]}},
+                    void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','WON']]},'$returns',0]}}
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:'$_id.whiteLabel',
+                    Total_User:{$sum:1},
+                    betcount:{$sum:'$betCount'},
+                    loss:{$sum:'$loss'},
+                    won:{$sum:'$won'},
+                    open:{$sum:'$open'},
+                    void:{$sum:'$void'},
+                    returns:{$sum:'$returns'}
+                }
+            },
+            {
+                $sort: {
+                    betcount: -1 ,
+                    open : -1,
+                    won : -1,
+                    loss : -1,
+                    Total_User:-1
+                }
+            },
+            {
+                $skip: page * limit
+            },
+            {
+                $limit: limit 
+            }
+        ])
+
+        filter.userName = {$in:childrenUsername}
+
+        const marketAnalist =  await Bet.aggregate([
+            {
+                $match:filter
+            },
+            {
+                $group:{
+                    _id:'$marketName',
+                    betcount:{$sum:1},
+                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                    open:{$sum:{$cond:[{$in:['$status',['MAP','OPEN']]},1,0]}},
+                    void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+                    returns:{$sum:{$cond:[{$in:['$status',['LOSS','WON']]},'$returns',0]}}
+                    
+                }
+            },
+            {
+                $sort: {
+                    betcount: -1 ,
+                    open : -1,
+                    won : -1,
+                    loss : -1,
+                    Total_User:-1
+                }
+            },
+            {
+                $skip: page * limit
+            },
+            {
+                $limit: limit 
+            }
+        ])
+        // console.log(gameAnalist)
+        socket.emit('gameAnalysis', {gameAnalist,marketAnalist, page,filter})
+    })
+
+    socket.on('matchOdds',async(data)=>{
+        let page = data.page;
+        let limit = 10
+        // console.log(me)
+
+        let filter = {}
+        if(data.from_date && data.to_date){
+            filter.date = {$gte:new Date(data.from_date),$lte:new Date(data.to_date)}
+        }else if(data.from_date && !data.to_date){
+            filter.date = {$gte:new Date(data.from_date)}
+        }else if(data.to_date && !data.from_date){
+            filter.date = {$lte:new Date(data.to_date)}
+        }
+        if(data.Sport != "All"){
+            filter.eventId = data.Sport
+        }
+        if(data.market != "All"){
+            if(data.market === "Match Odds"){
+                filter.marketName = { '$regex': '^Match', '$options': 'i' }
+            }else if (data.market === "Bookmaker 0%Comm"){
+                filter.marketName = { '$regex': '^Bookma', '$options': 'i' }
+            }else if (data.market === "Fancy"){
+                filter.marketName = { '$not': { '$regex': '^(match|bookma)', '$options': 'i' } }
+            }
+        }
+
+        const matchOdds =  await Bet.aggregate([
+            {
+                $match:filter
+            },
+            {
+                $sort: {
+                    date: -1 
+                }
+            },
+            {
+                $skip: page * limit
+            },
+            {
+                $limit: limit 
+            }
+        ])
+
+        socket.emit('matchOdds',{matchOdds,page})
+    })
+    socket.on('matchOddsOwn',async(data)=>{
+        let own = data.own
+        let page = data.page;
+        let limit = 10
+        let filter = {}
+        filter.userName = own
+        if(data.from_date && data.to_date){
+            filter.date = {$gte:new Date(data.from_date),$lte:new Date(data.to_date)}
+        }else if(data.from_date && !data.to_date){
+            filter.date = {$gte:new Date(data.from_date)}
+        }else if(data.to_date && !data.from_date){
+            filter.date = {$lte:new Date(data.to_date)}
+        }
+        if(data.Sport != "All"){
+            filter.eventId = data.Sport
+        }
+
+        if(data.market != "All"){
+            if(data.market === "Match Odds"){
+                filter.marketName = { '$regex': '^Match', '$options': 'i' }
+            }else if (data.market === "Bookmaker 0%Comm"){
+                filter.marketName = { '$regex': '^Bookma', '$options': 'i' }
+            }else if (data.market === "Fancy"){
+                filter.marketName = { '$not': { '$regex': '^(match|bookma)', '$options': 'i' } }
+            }
+        }
+
+        const matchOdds =  await Bet.aggregate([
+            {
+                $match:filter
+            },
+            {
+                $sort: {
+                    date: -1 
+                }
+            },
+            {
+                $skip: page * limit
+            },
+            {
+                $limit: limit 
+            }
+        ])
+
+        socket.emit('matchOddsOwn',{matchOdds,page})
+    })
+
+    socket.on('childGameAnalist',async(data)=>{
+        console.log(data)
+        let roleType = data.roleType;
+        let parent = data.parent
+        let users;
+        let breadcum;
+        let type;
+        let page = data.page;
+        let limit = 10
+        let roles;
+        let role_type =[]
+        let filter = {}
+        if(data.from_date && data.to_date){
+            filter.date = {$gte:new Date(data.from_date),$lte:new Date(data.to_date)}
+        }else if(data.from_date && !data.to_date){
+            filter.date = {$gte:new Date(data.from_date)}
+        }else if(data.to_date && !data.from_date){
+            filter.date = {$lte:new Date(data.to_date)}
+        }
+        if(data.Sport != "All"){
+            filter.eventId = data.Sport
+        }
+        if(data.market != "All"){
+            if(data.market === "Match Odds"){
+                filter.marketName = { '$regex': '^Match', '$options': 'i' }
+            }else if (data.market === "Bookmaker 0%Comm"){
+                filter.marketName = { '$regex': '^Bookma', '$options': 'i' }
+            }else if (data.market === "Fancy"){
+                filter.marketName = { '$not': { '$regex': '^(match|bookma)', '$options': 'i' } }
+            }
+        }
+        if(roleType == '1'){
+            type = 'user'
+            let admin = await User.findOne({role_type:1})
+            users = await User.find({parent_id:admin._id,whiteLabel:parent,role_type:2})
+            breadcum = [parent]
+        }else if(roleType == '2'){
+            type = 'user'
+            let parentName = await User.findOne({userName:parent})
+            users = await User.find({parentUsers:parentName._id,role_type:5})
+            breadcum = [parentName.whiteLabel,parentName.userName]
+        }else if(roleType == '5'){
+            type = 'matchOdd'
+            users = await User.find({userName:parent})
+            let parentName = await User.findOne({_id:users[0].parent_id})
+            breadcum = [parentName.whiteLabel,parentName.userName,users[0].userName]
+        }
+
+        let newUsers = users.map(async(ele) => {
+            let userfilter;
+            role_type = []
+            roles = await Role.find({role_level: {$gt:ele.role.role_level}});
+            for(let i = 0; i < roles.length; i++){
+                role_type.push(roles[i].role_type)
+            }
+            let childrenUsername = []
+           
+            if(ele.role_type == 2){
+                let children = await User.find({parentUsers:ele._id,isActive:true,role_type:{$in:role_type}})
+                children.map(ele => {
+                    childrenUsername.push(ele.userName) 
+                })
+            }
+            else if(ele.role_type == 5){
+                let children = await User.find({userName:ele.userName,isActive:true})
+                children.map(ele => {
+                    childrenUsername.push(ele.userName) 
+                })
+            }
+
+            
+            filter.userName = {$in:childrenUsername}
+            let betDetails = await Bet.aggregate([
+                {
+                    $match:filter
+                },
+                {
+                    $group:{
+                        _id:'$userName',
+                        betcount:{$sum:1},
+                        loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+                        won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+                        open:{$sum:{$cond:[{$in:['$status',['MAP','OPEN']]},1,0]}},
+                        void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+                        returns:{$sum:{$cond:[{$in:['$status',['LOSS','WON']]},'$returns',0]}},
+                        marketName:{ $first: '$marketName' }
+                        
+                    }
+                },
+                {
+                    $sort: {
+                        betcount: -1 ,
+                        open : -1,
+                        won : -1,
+                        loss : -1
+                    }
+                },
+                {
+                    $skip: page * limit
+                },
+                {
+                    $limit: limit 
+                }
+            ]) 
+            if(betDetails.length !== 0){
+                return ({ele,betDetails:betDetails[0]})
+            }
+            
+        })
+
+        let resultPromise = await Promise.all(newUsers)
+        let result = []
+        for(let i = 0;i<resultPromise.length;i++){
+            if(resultPromise[i]){
+                result.push(resultPromise[i])
+            }
+        }
+
+        console.log(result)
+
+        socket.emit('childGameAnalist',{result,page,type,breadcum})
+
+
+
+    })
+
+    socket.on('getEvetnsOfSport',async(data)=>{
+        console.log(data);
+        const sportData = await getCrkAndAllData()
+        console.log(sportData)
+        let sportList;
+        if(data.sport == '4'){
+            sportList = sportData[0].gameList[0]
+        }else{
+            sportList = sportData[1].gameList.find(item => item.sportId == parseInt(data.sport))
+        }
+
+        socket.emit('getEvetnsOfSport',sportList)
+
+    })
+
+    socket.on('claimCommissionAdmin', async(data) => {
+        // console.log(data)
+        let operationId;
+        let operationUser;
+        if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+            operationId = data.LOGINDATA.LOGINUSER.parent_id
+            operationUser = await User.findById(operationId)
+        }else{
+            operationId = data.LOGINDATA.LOGINUSER._id
+            operationUser = data.LOGINDATA.LOGINUSER
+        }
+        let user = await User.findById(operationId._id)
+        let commissionAmount = await newCommissionModel.aggregate([
+            {
+                $match:{
+                    userId: operationId._id,
+                    commissionStatus: 'Unclaimed'
+                }
+            },
+            {
+                $group: {
+                  _id: null, 
+                  totalCommission: { $sum: "$commission" } 
+                }
+              }
+        ])
+        console.log(commissionAmount)
+        if(user){
+            if(commissionAmount.length != 0 && commissionAmount[0].totalCommission > 0){
+                try{
+                    let commission = commissionAmount[0].totalCommission
+                    await User.findByIdAndUpdate(operationUser._id,{$inc:{availableBalance:commission}})
+                    let parenet = await User.findByIdAndUpdate(operationUser.parent_id, {$inc:{availableBalance: -commission}})
+                    let desc1 = `Claim Commisiion, ${user.userName}/${parenet.userName}`
+                    let desc2 = `Claim Commisiion of chiled user ${user.userName}, ${user.userName}/${parenet.userName}`
+                    let childdata = {
+                        user_id:operationUser._id,
+                        description : desc1,
+                        creditDebitamount : commission,
+                        balance : user.availableBalance + commission,
+                        date : Date.now(),
+                        userName : user.userName,
+                        role_type:user.role_type,
+                    }
+                    let perentData = {
+                        user_id:operationUser.parent_id,
+                        description : desc2,
+                        creditDebitamount : -commission,
+                        balance : parenet.availableBalance - commission,
+                        date : Date.now(),
+                        userName : parenet.userName,
+                        role_type:parenet.role_type
+                    }
+                    await AccModel.create(childdata)
+                    await AccModel.create(perentData)
+                    await newCommissionModel.updateMany({userId:operationUser._id}, {commissionStatus:'Claimed', claimeDate: Date.now()})
+                    socket.emit("claimCommissionAdmin", "Success")
+                }catch(err){
+                    console.log(err)
+                    socket.emit("claimCommissionAdmin", "error")
+                }
+            }
+            // else{
+            //     socket.emit("claimCommissionAdmin", "Success")
+            // }
+
+           
+        }else{
+            socket.emit("claimCommissionAdmin", "error")
+        }
+    })
+
+
+    socket.on('BetLimitDetails', async(data) => {
+        try{
+            let details = await betLimit.findOne({type:data})
+            if(details){
+                socket.emit('BetLimitDetails', {details, type:data})
+            }else{
+                socket.emit("BetLimitDetails", {message:'', status:'notFound', type:data})
+            }
+
+        }catch(err){
+            socket.emit('BetLimitDetails', {message:"try again leter", status:"err"})
+        }
+    })
+
+
+    socket.on('UpdateBetLimit', async(data) => {
+        // console.log(data, "LimitData")
+        try{
+            let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
+            // console.log(loginUser, "loginUser")
+            if(loginUser && (await loginUser.correctPassword(data.data.password, loginUser.password))){
+                let check = await betLimit.findOne({type:data.data.type})
+                // console.log(check)
+                if(check){
+                    // console.log('WORKING')
+                    await betLimit.findOneAndUpdate({type:data.data.type}, data.data)
+                    socket.emit('UpdateBetLimit', {status:'success'})
+                }else{
+                    await betLimit.create(data.data)
+                    socket.emit('UpdateBetLimit', {status:'success'})
+                }
+            }else{
+                socket.emit('UpdateBetLimit', {message:"Please provide a valid password", status:"err"})
+            }   
+
+
+
+        }catch(err){
+            console.log(err)
+            socket.emit('UpdateBetLimit', {message:"Please try again leter", status:"err"})
+        }
+    })
+
+    socket.on('updateBetLimitMATCH', async(data) => {
+
+        console.log(data)
+        let data1 = await betLimit.findOne({type:data.id})
+        if(data1 != null){
+            socket.emit('updateBetLimitMATCH', {marketData:data1, data:data.innerText, id:data.id})
+        }else{
+            socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data.innerText, id:data.id})
+        }
+        // let matchName = data.split('/')[0]
+        // let Marketname = data.split('/')[1]
+        // let dataDb = await betLimitMatchWisemodel.findOne({matchTitle:matchName})
+        // if(dataDb != null){
+        //     console.log(dataDb)
+        //     console.log(matchName, Marketname)
+        //     let marketData = dataDb.marketDetails.find(item => item.title == Marketname)
+        //     if(marketData){
+        //         socket.emit('updateBetLimitMATCH', {marketData, data:data})
+        //     }else{
+        //         socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data})
+        //     }
+        // }else{
+        //     socket.emit('updateBetLimitMATCH', {status:'notFound', message:'notFOund', data:data})
+        // }
+    })
+
+
+    socket.on('updateBetLimitMarket', async(data) => {
+        console.log('WORKING')
+       let dbData = await betLimit.findOne({type:data.id})
+       if(dbData){
+        // console.log(dbData)
+        let marketDetails = await betLimit.findOneAndUpdate({type:data.id}, {min_stake:data.min_stake, max_stake:data.max_stake, max_profit:data.max_profit, max_odd:data.max_odd, delay:data.delay})
+        socket.emit('updateBetLimitMarket', marketDetails)
+       }else{
+        // console.log(data)
+        let marketDetails = await betLimit.create({type:data.id, min_stake:data.min_stake, max_stake:data.max_stake, max_profit:data.max_profit, max_odd:data.max_odd, delay:data.delay})
+        socket.emit('updateBetLimitMarket', marketDetails)
+       }
+       
+    })
+
+
+    socket.on('ROLLBACKDETAILS', async(data) => {
+        try{
+            
+            let loginUser = await User.findOne({userName:data.LOGINDATA.LOGINUSER.userName}).select('+password');
+            if(!loginUser || !(await loginUser.correctPassword(data.data.password, loginUser.password))){
+                socket.emit('ROLLBACKDETAILS', 'please provide a valid password') 
+            }else{ 
+                socket.emit('ROLLBACKDETAILS', {message:'RollBack Process Start', id:data.id})
+                let resultDate = rollBackBet(data)
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit("ROLLBACKDETAILS",{message:"err", status:"error"})
+        }
+    })
+
+
+    socket.on('marketLimitId', async(data) => {
+        try{
+            let LimitData = await betLimit.find({type:{$in:data}})
+            socket.emit('marketLimitId', LimitData)
+
+        }catch(err){
+            console.log(err)
+        }
+    })
+
+    socket.on('HouseFundData', async(data) => {
+        try{
+            let page = data.page
+            let limit = 10
+            let houseData = await houseFundModel.find({userId:data.LOGINDATA.LOGINUSER._id}).sort({date:-1}).skip(page * limit).limit(limit)
+            socket.emit('HouseFundData', houseData)
+        }catch(err){
+            console.log(err)
+        }
+    })
+
+    socket.on('addnewStream',async(data)=>{
+        try{
+            if(!await Stream.findOne({eventId:data.eventId})){
+
+                await Stream.create(data)
+                socket.emit('addnewStream',{status:'success',msg:'stream created successfully'})
+            }else{
+                socket.emit('addnewStream',{status:'success',msg:'stream already addedd'})
+
+            }
+        }catch(err){
+            console.log(err)
+        }
+    })
+
+    socket.on('delteStreame',async(id) =>{
+        try{
+            await Stream.findByIdAndDelete(id)
+            socket.emit('delteStreame',{status:'success'})
+        }catch(err){
+            console.log(err)
+        }
+    })
+    socket.on('editStream',async(data) =>{
+        try{
+            let stream = await Stream.findOne({eventId:data.eventId})
+            if(stream){
+                await Stream.findOneAndUpdate({eventId:data.eventId},{url:data.url,status:data.status})
+            }else{
+                await Stream.create(data)
+            }
+            socket.emit('editStream',{status:'success'})
+        }catch(err){
+            console.log(err)
+            socket.emit('editStream',{status:'fail',err})
+        }
+    })
+
+
+    socket.on('getinProgressData', async(data) => {
+        try{
+            let inprogressData = await InprogreshModel.find({eventId:data})
+            socket.emit('getinProgressData', inprogressData)
+        }catch(err){
+            console.log(err)
+        }
+    })
+
+    socket.on('eventNotification', async(data) => {
+        try{
+            let eventNotificationSetting = await eventNotification.findOne({id:data.id})
+            if(eventNotificationSetting){
+                socket.emit('eventNotification', {eventNotificationSetting, id:data.id})
+            }else{
+                socket.emit('eventNotification', {status:'noFound', id:data.id})
+            }
+
+        }catch(err){
+            console.log(err)
+        }
+    })
+
+
+    socket.on('eventNotification2', async(data) => {
+        try{
+            let notificationData = await eventNotification.findOne({id:data.id})
+            if(notificationData){
+                notificationData = await eventNotification.findOneAndUpdate({id:data.id}, data)
+            }else{
+                notificationData = await eventNotification.create({id:data.id, message:data.message})
+            }
+            socket.emit('eventNotification2', notificationData)
+        }catch(err){
+            // console.log(err)
+            socket.emit('eventNotification2', {status:'err'})
+        }
+    })
+
+
+    socket.on('commissionReportFilter', async(data) => {
+        try{
+            // `{ fromTime: '2023-10-12', toTime: '' }`
+            // console.log(data.data, "DATE")
+            let dateFilter
+            if(data.data.fromTime == ''){
+                dateFilter = {$lte: new Date(data.data.toTime)}
+            }else if(data.data.toTime == ''){
+                dateFilter = {$gte: new Date(data.data.fromTime)}
+            }else{
+                dateFilter = {
+                    $gte: new Date(data.data.fromTime),
+                    $lte: new Date(data.data.toTime)
+                }
+            }
+            let childrenUsername = []
+            if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+                children.map(ele => {
+                    childrenUsername.push(ele.userName) 
+                })
+            }else{
+                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+                children.map(ele => {
+                    childrenUsername.push(ele.userName) 
+                })
+            }
+            let eventData = await newCommissionModel.aggregate([
+                {
+                    $match: {
+                      eventDate: dateFilter,
+                      userName:{$in:childrenUsername}
+                    }
+                  },
+                  {
+                      $group: {
+                          _id: "$eventName",
+                      totalCommission: { $sum: "$commission" },
+                      eventDate: { $first: "$eventDate" }
+                    }
+                },
+                {
+                  $sort:{
+                      eventDate : -1,
+                      totalCommission : 1,
+                      _id : 1
+                  }
+                },
+                {
+                    $skip:(data.page * 10)
+                },
+                  {
+                    $limit:10
+                  }
+            ])
+
+            socket.emit('commissionReportFilter', {eventData, page:data.page})
+        }catch(err){
+            console.log(err)
+        }
+    })
+
+
+
+    socket.on('commissionAccFilter', async(data) => {
+        console.log(data.data, data.id)
+        try{
+            let dateFilter
+            if(data.data.fromTime == '' && data.data.toTime != ''){
+                dateFilter = {$lte: new Date(data.data.toTime)}
+            }else if(data.data.toTime == '' && data.data.fromTime != ''){
+                dateFilter = {$gte: new Date(data.data.fromTime)}
+            }else if (data.data.toTime != '' && data.data.fromTime != ''){
+                dateFilter = {
+                    $gte: new Date(data.data.fromTime),
+                    $lte: new Date(data.data.toTime)
+                }
+            }else{
+                // console.log(new Date(), 7 * 24 * 60 * 60 * 1000)
+                dateFilter = {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000)
+                  }
+            }
+            console.log(dateFilter)
+            let childrenUsername = []
+            if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+                children.map(ele => {
+                    childrenUsername.push(ele.userName) 
+                })
+            }else{
+                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+                children.map(ele => {
+                    childrenUsername.push(ele.userName) 
+                })
+            }
+            let accStatements
+            if(data.id){
+                // console.log(data.id ,"data.id")
+                // let user = await User.findById(data.id)
+                // console.log(user, "WORKING")
+                accStatements = await AccModel.aggregate([
+                    {
+                        $match:{
+                            date: dateFilter,
+                            // userName:req.currentUser.userName,
+                            description:{
+                                $regex: /^Claim Commisiion/i
+                            },
+                            userName:data.id
+                        }
+                    },
+                    {
+                        $sort:{
+                            date : -1,
+                            userName : 1
+                        }
+                    },
+                    {
+                        $skip:(data.page * 10)
+                    },
+                    {
+                      $limit:10
+                    }
+                ])
+            }else{
+
+            accStatements = await AccModel.aggregate([
+                {
+                    $match:{
+                        date: dateFilter,
+                        // userName:req.currentUser.userName,
+                        description:{
+                            $regex: /^Claim Commisiion/i
+                        },
+                        userName:{$in:childrenUsername}
+                    }
+                },
+                {
+                    $sort:{
+                        date : -1,
+                        userName : 1
+                    }
+                },
+                {
+                    $skip:(data.page * 10)
+                },
+                {
+                  $limit:10
+                }
+            ])
+        }
+
+
+            console.log(accStatements,"accStatements")
+            socket.emit("commissionAccFilter", {accStatements, page:data.page})
+        }catch(err){
+            console.log(err)
+        }
+
+    })
+
+
+    socket.on('commissionUserLevel', async(data) => {
+        // console.log(data.data)
+        try{
+            let dateFilter = {}
+            // let dateFilter
+            if(data.data.fromTime == '' && data.data.toTime != ''){
+                dateFilter = {$lte: new Date(data.data.toTime)}
+            }else if(data.data.toTime == '' && data.data.fromTime != ''){
+                dateFilter = {$gte: new Date(data.data.fromTime)}
+            }else if (data.data.toTime != '' && data.data.fromTime != ''){
+                dateFilter = {
+                    $gte: new Date(data.data.fromTime),
+                    $lte: new Date(data.data.toTime)
+                }
+            }else{
+                // console.log(new Date(), 7 * 24 * 60 * 60 * 1000)
+                dateFilter = {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000)
+                  }
+            }
+            let childrenUsername = []
+            if(data.LOGINDATA.LOGINUSER.roleName == 'Operator'){
+                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER.parent_id})
+                children.map(ele => {
+                    childrenUsername.push(ele.userName) 
+                })
+            }else{
+                let children = await User.find({parentUsers:data.LOGINDATA.LOGINUSER._id})
+                children.map(ele => {
+                    childrenUsername.push(ele.userName) 
+                })
+            }
+            let userWiseData = await newCommissionModel.aggregate([
+                {
+                    $match: {
+                      eventDate: dateFilter,
+                      userName:{$in:childrenUsername},
+                      loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true}
+                    }
+                  },
+                  {
+                    $lookup: {
+                        from: "commissionnewmodels",
+                        let: {ud:{$cond:{if:{$ifNull: ["$uniqueId", false]},then:{ $toObjectId: "$uniqueId" },else:'$_id'}},loginId:'$loginUserId',parentArr:'$parentIdArray'},
+                        pipeline: [
+                            {
+                              $match: {
+                                $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
+                                loginUserId:{$exists:true},
+                                parentIdArray:{$exists:true}
+                              }
+                            }
+                          ],
+                        as: "parentdata"
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$userName",
+                        totalCommission: { $sum: "$commission" },
+                        totalUPline: { $sum:{
+                            $reduce:{
+                                input:'$parentdata',
+                                initialValue:0,
+                                in: { $add: ["$$value", "$$this.commission"] }
+                            }
+                        }},
+                    }
+                },
+                    {
+                      $sort:{
+                        _id : 1,
+                        totalCommission : 1,
+                        totalUPline : 1
+                      }
+                    },
+                    {
+                        $skip:(data.page * 10)
+                    },
+                  {
+                    $limit:10
+                  }
+            ])
+            console.log(userWiseData, "userWiseData")
+            socket.emit('commissionUserLevel', {userWiseData, page:data.page})
+        }catch(err){
+            console.log(err)
+        }
+    })
+
+
+    socket.on('timelyVoideBEt', async(data) => {
+        console.log(data)
+        try{
+            let user = await User.findById(data.LOGINDATA.LOGINUSER._id).select('+password')
+            const passcheck = await user.correctPassword(data.data.password, user.password)
+            // console.log(passcheck, "PASSWORD CHECK")
+            if(passcheck){
+            let bet = await Bet.findByIdAndUpdate(data.id, {status:"CANCEL",remark:data.Remark,alertStatus:'CANCEL',returns:0});
+          
+            // console.log(bet, "BETS")
+            let DebitCreditAmount 
+            if(bet.bettype2 === "Back"){
+                if(bet.marketName.toLowerCase().startsWith('match')){
+                    DebitCreditAmount = bet.Stake
+                }else if(bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('toss')){
+                    DebitCreditAmount = bet.Stake
+                }else{
+                    DebitCreditAmount = bet.Stake
+                }
+            }else{
+                if(bet.marketName.toLowerCase().startsWith('match')){
+                    DebitCreditAmount = ((bet.Stake * bet.oddValue) - bet.Stake).toFixed(2)
+                }else if(bet.marketName.toLowerCase().startsWith('book') || bet.marketName.toLowerCase().startsWith('toss')){
+                    DebitCreditAmount = ((bet.Stake * bet.oddValue)/100).toFixed(2)
+                }else{
+                    DebitCreditAmount = ((bet.Stake * bet.oddValue)/100).toFixed(2)
+                }
+            }
+            let user = await User.findByIdAndUpdate(bet.userId, {$inc:{availableBalance: DebitCreditAmount, myPL: DebitCreditAmount, exposure:-DebitCreditAmount}})
+            let timelyVoideCheck = await timelyNotificationModel.findOne({marketId : bet.marketId})
+            let notification
+            if(timelyVoideCheck){
+                notification = await timelyNotificationModel.findOneAndUpdate({marketId : bet.marketId}, {message:data.data.Remark})
+            }else{
+                let timelyNotification = {
+                    message : data.data.Remark,
+                    userName : user.userName,
+                    marketId : bet.marketId
+                }
+                notification = await timelyNotificationModel.create(timelyNotification)
+            }
+            let description = `Bet for ${bet.match}/stake = ${bet.Stake}/CANCEL`
+            // console.log(user.availableBalance, DebitCreditAmount, user.availableBalance + DebitCreditAmount)
+            let userAcc = {
+                "user_id":user._id,
+                "description": description,
+                "creditDebitamount" : DebitCreditAmount,
+                "balance" : user.availableBalance + parseFloat(DebitCreditAmount),
+                "date" : Date.now(),
+                "userName" : user.userName,
+                "role_type" : user.role_type,
+                "Remark":"-",
+                "stake": DebitCreditAmount,
+                "transactionId":`${bet.transactionId}`
+            }
+            
+            let debitAmountForP = DebitCreditAmount
+              for(let i = user.parentUsers.length - 1; i >= 1; i--){
+                  let parentUser1 = await User.findById(user.parentUsers[i])
+                  let parentUser2 = await User.findById(user.parentUsers[i - 1])
+                  let parentUser1Amount = new Decimal(parentUser1.myShare).times(debitAmountForP).dividedBy(100)
+                  let parentUser2Amount = new Decimal(parentUser1.Share).times(debitAmountForP).dividedBy(100);
+                  parentUser1Amount = parentUser1Amount.toDecimalPlaces(4);
+                  parentUser2Amount =  parentUser2Amount.toDecimalPlaces(4);
+                  await User.findByIdAndUpdate(user.parentUsers[i], {
+                    $inc: {
+                        downlineBalance: DebitCreditAmount,
+                        myPL: -parentUser1Amount,
+                        uplinePL: -parentUser2Amount,
+                        lifetimePL: -parentUser1Amount,
+                        pointsWL: DebitCreditAmount
+                    }
+                });
+            
+                if (i === 1) {
+                    await User.findByIdAndUpdate(user.parentUsers[i - 1], {
+                        $inc: {
+                            downlineBalance: DebitCreditAmount,
+                            myPL: -parentUser2Amount,
+                            lifetimePL: -parentUser2Amount,
+                            pointsWL: DebitCreditAmount
+                        }
+                    });
+                }
+                  debitAmountForP = parentUser2Amount
+              }
+            
+            await AccModel.create(userAcc);
+            socket.emit('timelyVoideBEt', {bet, status:"success"})
+            }else{
+                socket.emit('timelyVoideBEt', {status:'err', message:'Please Provide valide password'})
+            }
+        }catch(err){
+            console.log(err)
+            socket.emit('timelyVoideBEt', {status:'err', message:'Please try again leter'})
+        }
+    })
+
+
+    socket.on('marketnotificationId', async(data) => {
+        // console.log(data, "dataId")
+        try{
+            let notifications = await timelyNotificationModel.find({marketId:{$in:data}})
+            socket.emit('marketnotificationId', notifications)
+        }catch(err){
+            console.log(err)
+        }
+    })
+
+    socket.on('userLoginBalance', async(data) => {
+        // console.log(data, "LOGINDATA")
+        if(data.LOGINUSER){
+            let userData = await User.findById(data.LOGINUSER._id)
+            socket.emit('userLoginBalance', userData)
+        }
+    })
+
+    socket.on('suspendResume', async(data) => {
+        try{
+            let check = await resumeSuspendModel.findOne({marketId:data.id})
+            let status 
+            if(check){
+                await resumeSuspendModel.findOneAndUpdate({marketId:data.id}, {userName:data.LOGINDATA.LOGINUSER.userName, status:!check.status})
+                status = !check.status
+            }else{
+                await resumeSuspendModel.create({marketId:data.id, userName:data.LOGINDATA.LOGINUSER.userName, status:false})
+                status = false
+            }
+            socket.emit('suspendResume', {status, marketId:data.id, status2:'success'})
+        }catch(err){
+            console.log(err)
+        }
+    })
+
+
+    socket.on('WINNERMARKET', async(data) => {
+        try{
+            if(data){
+                let runners = await runnerDataModel.findOne({marketId:data})
+                socket.emit('WINNERMARKET', runners)
+            }
+        }catch(err){
+            console.log(err)
+        }
+    })
+
 })
 
 http.listen(80,()=> {

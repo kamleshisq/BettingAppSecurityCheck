@@ -1,6 +1,7 @@
 const sliderModel = require('../model/sliderModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require("../utils/AppError");
+const fs = require('fs')
 
 exports.createNewSlider = catchAsync(async(req, res, next) => {
     let allSlider = await sliderModel.find()
@@ -57,6 +58,69 @@ exports.addImage = catchAsync(async(req, res, next) =>{
     return next(new AppError("Aplease Uploade Image"))
    } 
 });
+
+
+
+exports.editSliderinImage =  catchAsync(async(req, res, next) => {
+    let name = req.body.id.split("//")[1]
+    let slider = await sliderModel.findOne({name:name})
+    let imageName = req.body.id.split("//")[0]
+    let index = slider.images.findIndex(item => item.name == imageName)
+    try{
+        if(index !== -1) {
+            if(req.files){
+                if(req.files.file.mimetype.startsWith('image')){
+                    const image = req.files.file
+                    // console.log(logo)
+                    image.mv(`public/sliderImages/${req.body.name}.png`, (err)=>{
+                        if(err) 
+                        return next(new AppError("Something went wrong please try again later", 400))
+                    })
+                    // slider.images[index].name = req.body.name
+                    // slider.images[index].url = req.body.url
+                    // await slider.save()
+                    let updatedslider = await sliderModel.findOneAndUpdate({name:name},{
+                        $set: {
+                          [`images.${index}.name`]: req.body.name,
+                          [`images.${index}.url`]: req.body.url,
+                        },
+                      })
+                    res.status(200).json({
+                        status:"success"
+                    })
+                }else{
+                    return next(new AppError("Please upload an image file", 400))
+                }
+            }else{
+            let originalImage = `public/sliderImages/${slider.images[index].name}.png`
+            let updatedPath = `public/sliderImages/${req.body.name}.png`
+            fs.rename(originalImage, updatedPath, (err) => {
+                if (err) {
+                  console.error('Error renaming file:', err);
+                } else {
+                  console.log('File renamed successfully');
+                }
+              });
+              let updatedslider = await sliderModel.findOneAndUpdate({name:name},{
+                $set: {
+                  [`images.${index}.name`]: req.body.name,
+                  [`images.${index}.url`]: req.body.url,
+                },
+              })
+            res.status(200).json({
+                status:"success"
+            })
+           } 
+        }else{
+            return next(new AppError('please tyr again leter', 404))
+        }
+
+    }catch(err){
+        console.log(err)
+        return next(new AppError('please tyr again leter', 404))
+    }
+    
+})
 
 
 exports.updateSlider = catchAsync(async(req, res, next) => {

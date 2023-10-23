@@ -30,7 +30,7 @@
                   <%for(let i = 0; i < pages.length; i++){%>
                   <tr>
                     <td><%= i+1 %></td>
-                    <td><%=pages[i].Name%></td>
+                    <td><%=pages[i].heading%></td>
                     <td>
                       <div class="btn-group">
                         <button data-bs-toggle="modal" data-bs-target="#uploadFile" id="<%=pages[i]._id%>" class="UploadEjs"><i class="fa-solid fa-database"></i></button>

@@ -5,17 +5,10 @@
     <div class="container-fluid">
       <div class="new-head"> 
           <h3 class="main-heading">Stream Management</h3>
-          <form action="">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
-              </div>
-              <input type="text" class="form-control" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
-            <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
-          </form>
+          <div class="form">
+            
+          </div>
       </div>
-    <%- include("../loginUserAdminsideDetails") %>
   </section>
 
   <section>
@@ -23,103 +16,40 @@
         <div class="table-data-section">
             <div class="table-heading">
                 <h3>Stream Management</h3>
+                <div class="rowId" data-rowid="1"></div>
                 <div class="table-heading-btn">
-                  <form action="" class="game-analysis-heading-from">
-                    <div class="input-group">
-                      <label>Select Event</label>
-                      <select name="" id="">
-                        <option value="">Cricket</option>
-                        <option value="">Cricket</option>
-                        <option value="">FOOTBALL</option>
-                        <option value="">TENNIS</option>
-                        <option value="">BASKETBALL</option>
-                        <option value="">BASEBALL</option>
-                        <option value="">Primium</option>
-                        <option value="">Sports Books</option>
-              
-                      </select>
-                    </div>  
-                    <div class="input-group">
-                      <label>Url</label>
-                      <input type="text" placeholder="Stream URL">
-                    </div> 
-                    </form>
-                    <button class="btn-filter"> Add Stream URL</button>
+                  
                 </div>
             </div>
             <div class="data-table">
               <table>
                 <thead>
-                    <tr style="text-align: center;font-size: 11px;">
-                      <th>S.No</th>
-                      <th>Event</th>
-                      <th>Open Date </th>
-                      <th>Stream Link</th>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Sport</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody class="new-body">
-                  <tr>
-                    <td>1</td>
-                    <td>Cricket </td>
-                    <td>22-12-2022, 03:05</td>
-                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Cricket </td>
-                    <td>22-12-2022, 03:05</td>
-                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Cricket </td>
-                    <td>22-12-2022, 03:05</td>
-                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Cricket </td>
-                    <td>22-12-2022, 03:05</td>
-                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Cricket </td>
-                    <td>22-12-2022, 03:05</td>
-                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Cricket </td>
-                    <td>22-12-2022, 03:05</td>
-                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Cricket </td>
-                    <td>22-12-2022, 03:05</td>
-                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Cricket </td>
-                    <td>22-12-2022, 03:05</td>
-                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Cricket </td>
-                    <td>22-12-2022, 03:05</td>
-                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Cricket </td>
-                    <td>22-12-2022, 03:05</td>
-                    <td><div class="btn-group"><a class="btn delete">Delete </a> <a class="btn delete delete-all">Delete to all </a></div></td>
-                  </tr>
+                    <% for(let i = 0; i < sportList.length; i++){%>
+                    <%if((i%2)==0){%>
+                    <tr>
+                        <%}else{%>
+                        <tr>
+                            <%}%>
+                            <td><%=i + 1%></td>
+                            <td><%=sportList[i].sport_name%></td>
+                            <td>
+                                <div class="btn-group">
+                                    <button class="series_list"> <a href="/admin/streammanagement/event?sportId=<%=sportList[i].sportId%>">Event List</a></button>
+                                </div>
+                            </td>
+                            <%}%>
+                        </tr>
+                    </tr>
                 </tbody>
-              </table>
+            </table>
+             
             </div>
         </div>
     </div>
@@ -136,7 +66,7 @@
       </div>
       <div class="modal-header" style="text-align: center;">
         <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-        <h4 class="modal-title" style="color: #fff;">Add HouseFunds</h4>
+        <h4 class="modal-title" style="color: #fff;">Edit Stream</h4>
       </div>
       <div class="modal-body">
         <form class="form-data">
@@ -145,11 +75,8 @@
               <label for="">Amounts</label>
               <input type="text" class="form-control ml0" placeholder="1000000" name="email">
             </div>
-            <div class="col">
-
-            </div>
           </div>
-                   <button type="button" class="btn-submit mt-3">AddFunds &nbsp; <img src="../images/sub.png" alt=""></button>
+          <button type="button" class="btn-submit mt-3">AddFunds &nbsp; <img src="../images/sub.png" alt=""></button>
         </form>
       </div>
     </div>

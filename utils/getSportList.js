@@ -7,9 +7,10 @@ async function getSportList(){
     await fetch(fullUrl, {
         method: 'GET'
     })
-    .then(res =>res.json())
+    .then(res => res.json())
     .then(result => {
         DATA = result
+        // console.log(result)
     })
     return DATA
 }

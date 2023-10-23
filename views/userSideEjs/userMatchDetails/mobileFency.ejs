@@ -17,19 +17,19 @@
                 <button class="nav-link active exch-pg-inn-fancy-tab-btn" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">All</button>
               </li>
               <%if(match.marketList.session != null){%>
-                <%let sessionData = match.marketList.session.filter(item => item.status == 1 && !item.title.startsWith("Only") && item.title.includes("Over"))%>
+                <%let sessionData = match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && !item.title.startsWith("Only") && item.title.includes("Over"))%>
                 <%if(sessionData.length > 0){ %>
                   <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
                     <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab5-tab" data-bs-toggle="pill" data-bs-target="#fancytab5" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Session</button>
                   </li>
                 <%} %>
-                <% let dataSessionOnly = match.marketList.session.filter(item => item.status == 1 && item.title.startsWith("Only")) %>
+                <% let dataSessionOnly = match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && item.title.startsWith("Only")) %>
                 <%if(dataSessionOnly.length > 0){%>
                   <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
                     <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab3-tab" data-bs-toggle="pill" data-bs-target="#fancytab3" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Only Over</button>
                   </li>
                 <%} %>
-                <% let dataNotOnly = match.marketList.session.filter(item => item.status == 1 && !item.title.includes("Over")) %>
+                <% let dataNotOnly = match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && !item.title.includes("Over")) %>
                 <%if(dataNotOnly.length > 0 ) {%>
                   <li class="nav-item exch-pg-inn-fancy-tab-li" role="presentation">
                     <button class="nav-link exch-pg-inn-fancy-tab-btn" id="fancytab4-tab" data-bs-toggle="pill" data-bs-target="#fancytab4" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">W/P Market</button>
@@ -48,7 +48,7 @@
                 <div class="exch-pg-inn-fancy-tab-txt-inn">
                  
                   <%if(match.marketList.session != null){%>
-                    <%let sessionData = match.marketList.session.filter(item => item.status == 1 && !item.title.startsWith("Only") &&  item.title.includes("Over"))%>
+                    <%let sessionData = match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && !item.title.startsWith("Only") &&  item.title.includes("Over"))%>
                     <%if(sessionData.length > 0){ %>
                       <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
                         <table class="acount-stat-tbl mt-2">
@@ -69,7 +69,7 @@
                                     <%=sessionData[i].title%>
                                   </td>
           
-                                  <td><span class="c-activee">Min : <%=min%>, Max : <%=max%></span></td>
+                                  <td><span class="c-activee market-limit" id="<%=sessionData[i].marketId%>">Min : <%=minFancy%>, Max : <%=maxFancy%></span></td>
                                   
                                   <td class="tbl-td-with5">
                                       <snan data-bs-toggle="collapse" href="#bt-slp-colps-sessionData-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-sessionData-<%=i%>" class="tbl-bg-blu-spn button only_over_blue" id="<%=sessionData[i].marketId%>1">
@@ -99,7 +99,7 @@
                         </table>
                       </div>
                     <%} %>
-                    <% let dataSessionOnly = match.marketList.session.filter(item => item.status == 1 && item.title.startsWith("Only")) %>
+                    <% let dataSessionOnly = match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && item.title.startsWith("Only")) %>
                     <%if(dataSessionOnly.length > 0){%>
                         <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
                           <table class="acount-stat-tbl mt-2">
@@ -120,7 +120,7 @@
                                       <%=dataSessionOnly[i].title%>
                                     </td>
             
-                                    <td><span class="c-activee">Min : <%=min%>, Max : <%=max%></span></td>
+                                    <td><span class="c-activee market-limit" id="<%=dataSessionOnly[i].marketId%>">Min : <%=minFancy%>, Max : <%=maxFancy%></span></td>
                                     
                                     <td class="tbl-td-with5">
                                         <snan data-bs-toggle="collapse" href="#bt-slp-colps-dataSessionOnly-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-dataSessionOnly-<%=i%>" class="tbl-bg-blu-spn button only_over_blue" id="<%=dataSessionOnly[i].marketId%>1">
@@ -151,7 +151,7 @@
                         </div>
                     <%} %>
       
-                  <% let dataNotOnly = match.marketList.session.filter(item => item.status == 1 && !item.title.includes("Over")) %>
+                  <% let dataNotOnly = match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && !item.title.includes("Over")) %>
                   <%if(dataNotOnly.length > 0) {%>
                     <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
                       <table class="acount-stat-tbl mt-2">
@@ -173,7 +173,7 @@
                                   <%=dataNotOnly[i].title%>
                                 </td>
         
-                                <td><span class="c-activee">Min : <%=min%>, Max : <%=max%></span></td>
+                                <td><span class="c-activee market-limit" id="<%=dataNotOnly[i].marketId%>">Min : <%=minFancy%>, Max : <%=maxFancy%></span></td>
                                 
                                 <td class="tbl-td-with5">
                                     <snan data-bs-toggle="collapse" href="#bt-slp-colps-dataNotOnly-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-dataNotOnly-<%=i%>" class="tbl-bg-blu-spn button only_over_blue" id="<%=dataNotOnly[i].marketId%>1">
@@ -226,7 +226,7 @@
                                       <%=match.marketList.odd_even[i].title%>
                                     </td>
             
-                                    <td><span class="c-activee">Min : <%=min%>, Max : <%=max%></span></td>
+                                    <td><span class="c-activee market-limit" id="<%=match.marketList.odd_even[i].marketId%>">Min : <%=minFancy%>, Max : <%=maxFancy%></span></td>
                                     
                                     <td class="tbl-td-with5">
                                         <snan data-bs-toggle="collapse" href="#bt-slp-colps-odd-even-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-odd-even-<%=i%>" class="tbl-bg-blu-spn button odd_even_blue" id="<%=match.marketList.odd_even[i].marketId%>1">
@@ -262,7 +262,7 @@
                 </div>
               </div>
               <%if(match.marketList.session != null){%>
-              <%let sessionData = match.marketList.session.filter(item => item.status == 1 && !item.title.startsWith("Only") &&  item.title.includes("Over"))%>
+              <%let sessionData = match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && !item.title.startsWith("Only") &&  item.title.includes("Over"))%>
               <%if(sessionData.length > 0){ %>
               <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab5" role="tabpanel" aria-labelledby="fancytab5-tab" tabindex="0">
                 <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
@@ -284,7 +284,7 @@
                               <%=sessionData[i].title%>
                             </td>
       
-                            <td><span class="c-activee">Min : <%=min%>, Max : <%=max%></span></td>
+                            <td><span class="c-activee market-limit" id="<%=sessionData[i].marketId%>">Min : <%=minFancy%>, Max : <%=maxFancy%></span></td>
                             
                             <td class="tbl-td-with5">
                                 <snan data-bs-toggle="collapse" href="#bt-slp-colps-sessionData-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-sessionData-<%=i%>" class="tbl-bg-blu-spn button only_over_blue" id="<%=sessionData[i].marketId%>1">
@@ -338,7 +338,7 @@
                                 <%=match.marketList.odd_even[i].title%>
                               </td>
       
-                              <td><span class="c-activee">Min : <%=min%>, Max : <%=max%></span></td>
+                              <td><span class="c-activee market-limit" id="<%=match.marketList.odd_even[i].marketId%>">Min : <%=minFancy%>, Max : <%=maxFancy%></span></td>
                               
                               <td class="tbl-td-with5">
                                   <snan data-bs-toggle="collapse" href="#bt-slp-colps-odd-even-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-odd-even-<%=i%>" class="tbl-bg-blu-spn button odd_even_blue" id="<%=match.marketList.odd_even[i].marketId%>1">
@@ -372,7 +372,7 @@
 
 
               <%if(match.marketList.session != null){%>
-                <% let dataSessionOnly = match.marketList.session.filter(item => item.status == 1 && item.title.startsWith("Only")) %>
+                <% let dataSessionOnly = match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && item.title.startsWith("Only")) %>
                 <%if(dataSessionOnly.length != 0){%>
                   <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab3" role="tabpanel" aria-labelledby="fancytab3-tab" tabindex="0">
                     <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
@@ -394,7 +394,7 @@
                                   <%=dataSessionOnly[i].title%>
                                 </td>
         
-                                <td><span class="c-activee">Min : <%=min%>, Max : <%=max%></span></td>
+                                <td><span class="c-activee market-limit" id="<%=dataSessionOnly[i].marketId%>">Min : <%=minFancy%>, Max : <%=maxFancy%></span></td>
                                 
                                 <td class="tbl-td-with5">
                                     <snan data-bs-toggle="collapse" href="#bt-slp-colps-dataSessionOnly-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-dataSessionOnly-<%=i%>" class="tbl-bg-blu-spn button only_over_blue" id="<%=dataSessionOnly[i].marketId%>1">
@@ -429,7 +429,7 @@
               
 
               <%if(match.marketList.session != null){%>
-              <% let dataNotOnly = match.marketList.session.filter(item => item.status == 1 && !item.title.includes("Over")) %>
+              <% let dataNotOnly = match.marketList.session.filter(item =>  item.status == 1 && item.bet_allowed == 1 && item.game_over == 0 && !item.title.includes("Over")) %>
               <%if(dataNotOnly.length > 0) {%>
                 <div class="exch-pg-inn-fancy-tab-txtdv tab-pane fade" id="fancytab4" role="tabpanel" aria-labelledby="fancytab4-tab" tabindex="0">
                   <div class="exch-pg-inn-fancy-tab-txt-inn-scrol">
@@ -451,7 +451,7 @@
                                 <%=dataNotOnly[i].title%>
                               </td>
       
-                              <td><span class="c-activee">Min : <%=min%>, Max : <%=max%></span></td>
+                              <td><span class="c-activee market-limit" id="<%=dataNotOnly[i].marketId%>">Min : <%=minFancy%>, Max : <%=maxFancy%></span></td>
                               
                               <td class="tbl-td-with5">
                                   <snan data-bs-toggle="collapse" href="#bt-slp-colps-dataNotOnly-<%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-dataNotOnly-<%=i%>" class="tbl-bg-blu-spn button only_over_blue" id="<%=dataNotOnly[i].marketId%>1">

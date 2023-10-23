@@ -6,7 +6,7 @@
           </span></h6>
       </div>
       <div class="exchange-pg-inn-banner-col-titi-txt-tim">
-          <h6><b>Min : <%=min%>, Max : <%=max%></b></h6>
+          <h6 class="market-limit" id="<%=match.marketList.match_odd.marketId%>"><b>Min : <%=minMatchOdds%>, Max : <%=maxMatchOdds%></b></h6>
       </div>
     </div>
 
@@ -36,7 +36,7 @@
                     </td>
                     
                     <td class="tbl-td-with5">
-                        <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-<%=i%>M" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=i%>M" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="<%=secIds[i]%>3" >
+                        <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=i%>M" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="<%=secIds[i]%>3" >
                                 
                         </span> 
                     </td>
@@ -44,7 +44,7 @@
                     
       
                     <td class="tbl-td-with5">
-                        <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-<%=i%>M" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=i%>M" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="<%=secIds[i]%>6" >
+                        <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=i%>M" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="<%=secIds[i]%>6" >
                                 
                         </span> 
                     </td>
@@ -66,4 +66,5 @@
 
       
     </div>
+    <div class="odd-scroll-text marketNotification" id="<%=match.marketList.match_odd.marketId%>"></div>
   </div>

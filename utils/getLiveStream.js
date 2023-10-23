@@ -21,6 +21,7 @@ async function getLiveStream(id, ipv4){
     .then(result => {
         DATA = result
     })
+    // console.log(DATA, "===> DATA")
     return DATA
 }
 

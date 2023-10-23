@@ -1,0 +1,104 @@
+<%- include("../header") %>
+  <!--Container Main start-->
+<div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
+    <div class="container-fluid">
+      <div class="new-head"> 
+        <div class="bredcum-container">
+          <ul>
+            <li class="active"><a href="/admin/gamereport">Game Reports</a></li>
+            <li><%=userName%></li>
+          </ul>
+        </div>
+      
+      </div>
+    <%- include("../loginUserAdminsideDetails") %>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="table-data-section">
+        <div class="table-heading">
+          <div class="table-heading-btn">
+          </div>
+        </div>
+        <div class="data-table">
+          <table id="table12">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Match Date</th>
+                <th>Match Name</th>
+                <th>Markets Count</th>
+                <th>Bets</th>
+                <th>Won</th>
+                <th>Loss</th>
+                <th>Void</th>
+                <th>Profit/Loss</th>
+                <th>Match Desc</th>
+              </tr>
+            </thead>
+            <tbody class="new-body">
+              <%for(let i = 0;i<games.length;i++){%>
+              <%if(i % 2 == 0){%>
+              <tr>
+                <%}else{%>
+                <tr>
+                  <%}%>
+                  <td><%=i + 1%></td>
+                  <td><%=games[i].eventDate%></td>
+                  <td class="clickableelement getajaxdataclick" data-href="<%=url%>&match=<%=games[i]._id%>" data-parent="<%=games[i]._id%>"><%=games[i]._id%></td>
+                  <td><%=games[i].gameCount%></td>
+                  <td><%=games[i].betCount%></td>
+                  <td><%=games[i].won%></td>
+                  <td><%=games[i].loss%></td>
+                  <td><%=games[i].void%></td>
+                  <%if(games[i].returns >= 0){%>
+                  <td class="green">+<%=(games[i].returns).toFixed(2)%></td>
+                  <%}else{%>
+                  <td class="red"><%=(games[i].returns).toFixed(2)%></td>
+                  <%}%>
+                  <td>-</td>
+                </tr>
+                <%}%>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="pageId" data-pageid="1"></div>
+
+</div>
+<%if(games.length != 0){%>
+<div id="load-more" >
+  <button class="load-more">Load More</button>
+</div>
+<%}else{%>
+  <div id="load-more" style="display: none;">
+    <button class="load-more">Load More</button>
+  </div>
+<%}%>
+
+  <script>
+    function myFunction() {
+      var input, filter, ul, li, a, i, txtValue;
+      input = document.getElementById("searchUser");
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("search");
+      li = ul.getElementsByTagName("li");
+      for (i = 0; i < li.length; i++) {
+          txtValue = li.textContent || li.innerText;
+      }
+  }
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+<script type="text/javascript" src="../js/bundle.js"></script>
+
+
+</body>
+    </html> 

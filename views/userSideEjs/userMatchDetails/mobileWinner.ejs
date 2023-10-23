@@ -1,0 +1,75 @@
+<div class="mbl-exc-inn-tbl-datadv-wrp">
+    <div class="exchange-pg-inn-banner-col-titi">
+      <div class="exchange-pg-inn-banner-col-titi-txt">
+          <h6><span><%=match.marketList.winner.title%></span> <span class="game-info-popup-spn" data-bs-toggle="modal" data-bs-target="#gameroulspop"> 
+            <i class="fa-solid fa-circle-info"></i> 
+          </span></h6>
+      </div>
+      <div class="exchange-pg-inn-banner-col-titi-txt-tim">
+          <h6 class="market-limit" id="<%=match.marketList.winner.marketId%>"><b>Min : <%=minMatchOdds%>, Max : <%=maxMatchOdds%></b></h6>
+      </div>
+    </div>
+
+    <div class="exc-inn-colaps-data-wrpdv">
+
+      <table class="acount-stat-tbl" id="<%=match.marketList.winner.marketId%>">
+
+        <thead class="acount-stat-tbl-hed2">
+            <tr class="acount-stat-tbl-hed-tr2">
+                <th style="text-align: left;" class="bod-red-lft ">Market</th>
+                <th style="text-align: center;" colspan="2">Back</th>
+                <th style="text-align: center;" colspan="2" class="bod-red-rit">Lay</th>
+            </tr>
+        </thead>
+        <% let runners = JSON.parse(match.marketList.winner.runners); %>
+                <% const runners1 = []; %>
+                <%const secIds = []; %>
+                <%runners.forEach(item => {%>
+                    <%runners1.push(item.runner);%>
+                    <%secIds.push(item.secId);%>
+                <%});%>
+        <tbody class="acount-stat-tbl-body">
+            <%for(let i = 0; i < runners1.length; i++){%>
+                <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href="#">
+                    <td colspan="2" style=" text-align: left;">
+                        <%=runners1[i]%>
+                    </td>
+                    
+                    <td class="tbl-td-with5">
+                        <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=i%>M" class="tbl-bg-blu-spn winner_Blue button collapsed" id="<%=secIds[i]%>3" >
+                                
+                        </span> 
+                    </td>
+      
+                    
+      
+                    <td class="tbl-td-with5">
+                        <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=i%>M" class="tbl-bg-pech-spn winner_Red button collapsed" id="<%=secIds[i]%>6" >
+                                
+                        </span>
+                        <div class="match-status-message">
+                            Suspended
+                        </div> 
+                    </td>
+                    
+                    
+                    
+                </tr>
+                <tr>
+                    <td colspan="8">
+                      <div class="my-exc-inn-colaps-txt-dv collapse" id="bt-slp-colps-match-odds-<%=i%>M" >
+                        <%-include("../betslip")%>
+                      </div>
+                    </td>
+                  </tr>
+            <%} %>
+          
+      </tbody>
+      </table>
+
+      
+    </div>
+    <div class="odd-scroll-text">
+      <marquee>NO MORE BETS</marquee>
+  </div>
+  </div>

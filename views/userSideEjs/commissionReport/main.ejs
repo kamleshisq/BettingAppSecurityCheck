@@ -32,7 +32,7 @@
                       </div> -->
                       
                       
-                      <button class="commission btn acount-stat-ro-titl-form-btnn load"><i class="fa-solid fa-money-check-dollar"></i> Claim Commission (<%=user.commission%>)</button>
+                      <button class="commission btn acount-stat-ro-titl-form-btnn load"><i class="fa-solid fa-money-check-dollar"></i> Claim Commission (<%=unclaimCommission%>)</button>
                       <!-- <button  id="pdfDownload" class="btn acount-stat-ro-titl-form-btnn load">Download PDF</button> -->
                     </form>
               </div>
@@ -50,17 +50,17 @@
                     </tr>
                 </thead>
                 <tbody class="acount-stat-tbl-body">
-                    <%for(let i = 0; i < data.length; i++){%>
-                        <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/myCommissionReportsIn?id=<%=data[i]._id%>'>
+                    <%for(let i = 0; i < commissionData.length; i++){%>
+                        <tr class="acount-stat-tbl-body-tr tbl-data-href" data-href = '/myCommissionReportsIn?id=<%=commissionData[i]._id%>'>
                         <td title="SR No." ><%=i+1%></td>
-                        <%if(data[i]._id == 4){%>
+                        <%if(commissionData[i]._id == 4){%>
                             <td title="Sport" >Cricket</td>
-                        <%}else if(data[i]._id == 1){%>
+                        <%}else if(commissionData[i]._id == 1){%>
                             <td title="Sport" >Football</td>
-                        <%}else if(data[i]._id == 2){%>
+                        <%}else if(commissionData[i]._id == 2){%>
                             <td title="Sport" >Tennis</td>
                         <%}%>
-                        <td title="Commission" ><%=data[i].totalCommissionPoints%></td>
+                        <td title="Commission" ><%=commissionData[i].totalCommissionPoints%></td>
                     </tr>
                     <%} %>
                 </tbody>

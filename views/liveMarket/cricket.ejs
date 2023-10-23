@@ -1,5 +1,6 @@
 <div id="Cricket" class="tabcontent">
   <div class="row">
+    
     <%let check1 = false %>
     <%for(let i = 0; i < openBet.length; i++){%>
       <%if(openBet[i].bettype == "Cricket"){%>
@@ -35,10 +36,10 @@
                           <%
                             let data 
                             let matchodd = false
-                            data = liveCricket.find(item => (item.marketList.match_odd != null) &&(item.marketList.match_odd.marketId == openBet[i].details[j][k].id))
+                            data = liveCricket.find(item => (item.marketList) && (item.marketList.match_odd != null) &&(item.marketList.match_odd.marketId == openBet[i].details[j][k].id))
                             if(!data){
                               matchodd = true
-                              data = liveCricket.find(item => (item.marketList.bookmaker != null) &&(item.marketList.bookmaker[0].marketId == openBet[i].details[j][k].id))
+                              data = liveCricket.find(item => (item.marketList) && (item.marketList.bookmaker != null) &&(item.marketList.bookmaker[0].marketId == openBet[i].details[j][k].id))
                             }
                           %>
                           <%if(data){%>

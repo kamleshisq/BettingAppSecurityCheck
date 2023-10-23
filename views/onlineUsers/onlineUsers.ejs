@@ -10,7 +10,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
               </div>
-              <input type="text" id="searchUser"  list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
+              <input type="text" id="searchUser"  list=text_editors class="form-control searchUser" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
               <div class="wrapper">
                 <ul id="search" class="users">
               
@@ -36,6 +36,14 @@
 </section>
   <div class="pageId" data-pageid="1"></div>
 </div>
+
+<%if(users.length != 0){%>
+  <div id="load-more">
+        
+    <button class="load-more">Load More</button>
+    
+  </div>
+<%}%>
 
 <div class="modal fade" id="myModaladduser" role="dialog">
   <div class="modal-dialog">

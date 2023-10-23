@@ -1,4 +1,4 @@
-<div class="mbl-exc-inn-tab-dv-main">
+<div class="mbl-exc-inn-tab-dv-main inplay-match">
   <div class="container-fluid">
     <%-include("../navbar2")%>
     <div class="mbl-exc-inn-tab-dv">
@@ -51,8 +51,8 @@
                   <h5>Live Stream</h5>
                 </div>
                 <div class="exchange-pg-rit-ro-livetv-dv-wrp">
-                  <%if(liveStream.data){%>
-                    <%-liveStream.data%>
+                  <%if(status){%>
+                    <iframe src="<%=src%>"  class="my-livestrem-ifream"></iframe>
                   <%}%>
                 </div>
               </div>
@@ -73,7 +73,11 @@
                   </thead>
                   <tbody id="tableBET1">
                    <%for(let i = 0; i < betsOnthisMatch.length; i++){%>
-                    <tr>
+                    <%if(betsOnthisMatch[i].bettype2 === "BACK"){%>
+                      <tr class="back-inplaymatch" >
+                    <%}else{%>
+                      <tr class="lay-inplaymatch" >
+                    <%}%>
                       <td><%= betsOnthisMatch[i].selectionName%></td>
                       <td><%= betsOnthisMatch[i].oddValue %></td>
                       <td><%= betsOnthisMatch[i].Stake %></td>
@@ -87,6 +91,13 @@
           </div>
         </div>
       </div>
+      <%if(notification){%>
+        <%if(notification.status){%>
+            <div class="odd-scroll-text">
+                <marquee><%=notification.message%></marquee>
+            </div>
+        <%}%>
+    <%}%>
     </div>
 
     <div class="mbl-exc-inn-tbl-datadv">
@@ -96,6 +107,10 @@
       <%if(match.marketList.bookmaker != null){%>
         <%-include("./mobileBookmaker")%>
       <%}%>
+      <%if(match.marketList.winner){%>
+        <%-include("./mobileWinner")%>
+      <%}%>
+
       <%if(match.marketList.odd_even != null || match.marketList.session != null){%>
         <%-include("./mobileFency")%>
       <%}%>

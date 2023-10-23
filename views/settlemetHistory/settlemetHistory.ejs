@@ -50,6 +50,7 @@
                   <th>Settelment Date</th>
                   <th>Event Name</th>
                   <th>Market Name</th>
+                  <th>User Name</th>
                   <th>Results</th>
                 </tr>
             </thead>
@@ -60,9 +61,10 @@
                     var date = History[i].date
                   %>
                   <td><%= i+1%></td>
-                  <td class="date-time"><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear(), date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
+                  <td class="date-time"><%=date.getDate() + '-' +(date.getMonth() + 1) + '-' + date.getFullYear() + " "+ date.getHours() + ':' + date.getMinutes() +':' + date.getSeconds()%></td>
                   <td class="text-nowrap"><%= History[i].eventName%></td>
                   <td><%= History[i].marketName%></td>
+                  <td><%= History[i].user[0].userName%></td>
                   <td><%= History[i].result%></td>
                 </tr>
               <% } %>
@@ -73,7 +75,11 @@
       </div>
         </section>
       </div>
-
+      <div id="load-more" >
+      <%if(History.length >= 10){ %>
+        <button class="load-more">Load More</button>
+        <%}%>
+      </div>
 <!-- end gallary -->
 <div class="modal fade" id="myModaladduser" role="dialog">
   <div class="modal-dialog">

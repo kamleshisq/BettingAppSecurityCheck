@@ -1,7 +1,6 @@
 <div class="container-fluid">
   <div class="meDetails" id="meDatails" data-me='<%=JSON.stringify(me)%>'></div>
   <div class="currentUserDetails" id="currentUserDetails" data-currentuser='<%=JSON.stringify(currentUser)%>'></div>
-  <div class="pageLink" data-page="1"></div>
   <span data-rowid="1" class="rowId"></span>
   <div class="table-data-section">
     <div class="table-heading">
@@ -11,7 +10,7 @@
             fill="#212121"></path>
         </svg> User Management</h3>
       <div class="table-heading-btn">
-        <button class="btn-filter"><i class="fa-solid fa-money-check-dollar"></i> &nbsp; Claim Commission (<%=currentUser.commission%>)</button>
+        <button class="btn-filter COMMISSIONADMIN"><i class="fa-solid fa-money-check-dollar"></i> &nbsp; Claim Commission (<%=unclaimCommission%>)</button>
         <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
         <%if(currentUser.role.authorization.includes('createDeleteUser')){%>
               <button class="btn-filter" data-bs-toggle="modal" data-bs-target="#myModaladduser"><i
@@ -25,16 +24,16 @@
           <tr>
             <th>S.No</th>
             <th>User Name</th>
-            <%if(currentUser.roleName == "admin"){ %>
+            <th>Type</th>
+            <%if(currentUser.roleName == "Admin"){ %>
               <th>White Labels</th>
             <%}%>
-            <th>Type</th>
             <th>Credit Reference</th>
             <th>Available Balance</th>
             <th>Downlevel Balance</th>
             <th>Points W/L</th>
             <th>Upline P/L</th>
-            <th>Exposure Limit</th>
+            <!-- <th>Exposure Limit</th> -->
             <th>Exposure</th>
 
             <!-- <th>Exposure<br>0.00</th> -->
@@ -48,6 +47,7 @@
           </tr>
         </thead>
         <tbody class="new-body">
+          <%if(users.length > 0){%>
           <%for(let i=0; i<users.length; i++){%>
             <%if((i+1) % 2 !=0){%>
               <tr class="trtable" id="<%=i+1%>" data-id="<%=users[i]._id%>">
@@ -58,6 +58,14 @@
                     <%=i + 1%>
                   </td>
                   <td class="getOwnChild">
+                    <div class="user-status-section" >
+                    <%if(users[i].isActive && users[i].betLock){%>
+                      <span class="user-status bet-lock" >BL</span>
+                    <%}else if(users[i].isActive && !users[i].betLock){ %>
+                      <span class="user-status active" >A</span>
+                    <%}else{%>
+                      <span class="user-status suspended" >S</span>
+                    <%}%>
                     <%if(users[i].roleName !='user' ){%>
                       <a href="/admin/userManagement?id=<%=users[i]._id%>">
                         <%=users[i].userName%>
@@ -66,17 +74,18 @@
                       <%}else{%>
                         <%=users[i].userName%>
                           <%}%>
+                        </div>
                   </td>
-                  <%if(currentUser.roleName == "admin"){ %>
-                    <td>
-                      <%=users[i].whiteLabel%>
-                    </td>
-                  <%}%>
                   <td>
                     <span class="role-type">
                       <%=users[i].roleName%>
                     </span>
                   </td>
+                  <%if(currentUser.roleName == "Admin"){ %>
+                    <td>
+                      <%=users[i].whiteLabel%>
+                    </td>
+                  <%}%>
                   <td>
                     <%=users[i].balance%>
                   </td>
@@ -99,9 +108,6 @@
                     <%=users[i].uplinePL%>
                   </td>
                   <td>
-                    <%=users[i].exposureLimit%>
-                  </td>
-                  <td>
                     <%=users[i].exposure%>
                   </td>
                   <!-- <td><%=users[i].userName%></td> -->
@@ -119,13 +125,13 @@
                           class="PasswordChange" title="Change Password">P</button>
                       <%}%>
                       <button  data-bs-toggle="modal" data-bs-target="#myModalSE " class="Settlement" title="Settlement">S</button>
-                      <%if(currentUser.role.authorization.includes('betLockAndUnloack')){%>
+                      <!-- <%if(currentUser.role.authorization.includes('betLockAndUnloack')){%>
                         <%if(users[i].betLock){%>
                           <button type="button" class="betLockStatus Locked" title="Bet Unlock">B</button>
                         <%}else{ %>
                           <button type="button" class="betLockStatus" title="Bet Lock">B</button>
                         <%} %>
-                      <%}%>
+                      <%}%> -->
                       <%if(currentUser.role.authorization.includes('userStatus')){%>
                         <button data-bs-toggle="modal" data-bs-target="#myModal4"
                           class="StatusChange" title="Change Status">CS</button>
@@ -137,7 +143,9 @@
                   </td>
               </tr>
               <%}%>
-
+              <%}else{%>
+                <tr class="empty_table"><td>No record found</td></tr>
+              <%}%>
         </tbody>
       </table>
     </div>

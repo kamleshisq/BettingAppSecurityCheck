@@ -10,7 +10,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
               </div>
-              <input type="text" id="searchUser" onkeyup="myFunction()" list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
+              <input type="text" id="searchUser" onkeyup="myFunction()" list=text_editors class="form-control searchUser" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
               <div class="wrapper">
                 <ul id="search" class="users"> </ul>
                 <ul id="button" class="button"> </ul>
@@ -36,7 +36,7 @@
                       <input type="date" id="toDate">
                     </div> 
                     </form>
-                    <button class="btn-filter filter"><i class="fa-solid fa-filter"></i> Filter</button>
+                    <!-- <button class="btn-filter filter"><i class="fa-solid fa-filter"></i> Filter</button> -->
                 </div>
             </div>
             <div class="data-table">
@@ -47,6 +47,11 @@
 </section>
   <div class="pageId" data-pageid="1"></div>
   </div>
+  <div id="load-more" >
+    <%if(Logs.length >= 10){ %>
+      <button class="load-more">Load More</button>
+      <%}%>
+    </div>
   <script>
     function myFunction() {
       var input, filter, ul, li, a, i, txtValue;

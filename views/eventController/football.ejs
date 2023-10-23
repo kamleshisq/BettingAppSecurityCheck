@@ -1,0 +1,117 @@
+<div id="FOOTBALL" class="tabcontent">
+  <div class="row">
+    <section class="eventController">
+      <div class="container-fluid">
+        <div class="table-data-section">
+          <div class="data-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Enabled</th>
+                  <th>Date</th>
+                  <th>Team</th>
+                  <th>Open Bet</th>
+                  <th>Feature</th>
+                  <th>In Play</th>
+                  <%if(currentUser.roleName != 'Operator'){%>
+                  <th>Action</th>
+                  <%}%>
+                </tr>
+              </thead>
+              <tbody class="new-body">
+                <% for(let i = 0; i < data.footballEvents.length; i++){%>
+                <%if((i%2)==0){%>
+                <tr>
+                  <%}else{%>
+                  <tr>
+                    <%}%>
+                    <td><%=i + 1%></td>
+                    <td>
+                      <%if(data.footballEvents[i].eventData.status){%>
+                      <div class="on-off-btn-section">
+                        <span class="on-off">OFF &nbsp; <label class="switch">
+                        <input class="checkbox status_check" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].eventData.eventId%>" checked>
+                        <span class="slider round"></span>
+                        </label>&nbsp; ON</span>
+                      </div>
+                      <%}else{%>
+                      <div class="on-off-btn-section">
+                        <span class="on-off">OFF &nbsp; <label class="switch">
+                        <input class="checkbox status_check" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].eventData.eventId%>">
+                        <span class="slider round"></span>
+                        </label>&nbsp; ON</span>
+                      </div>
+                      <%}%>
+                    </td>
+                    <%
+                      var timestamp = data.footballEvents[i].eventData.time * 1000 
+                      var date = new Date(timestamp);
+                      var options = { 
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          hour12: true
+                      };
+                      var formattedTime = date.toLocaleString('en-US', options);
+                    %>
+                   
+                    <td><%=formattedTime %></td>
+                    <td><%=data.footballEvents[i].eventData.name%></td>
+                    <td><%=data.footballEvents[i].eventData.count%></td>
+                    <td> 
+                      <%if(data.footballEvents[i].eventData.featureStatus){%>
+                        <div class="on-off-btn-section">
+                          <span class="on-off">OFF &nbsp; <label class="switch on">
+                          <input class="checkbox status_check_feature" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].eventData.eventId%>" checked>
+                          <span class="slider round"></span>
+                          </label>&nbsp; ON</span>
+                        </div>
+                        <%}else{%>
+                        <div class="on-off-btn-section">
+                          <span class="on-off">OFF &nbsp; <label class="switch">
+                          <input class="checkbox status_check_feature" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].eventData.eventId%>">
+                          <span class="slider round"></span>
+                          </label>&nbsp; ON</span>
+                        </div>
+                        <%}%>
+                    </td>
+                    <td> 
+                      <%if(data.footballEvents[i].eventData.inPlayStatus){%>
+                        <div class="on-off-btn-section">
+                          <span class="on-off">OFF &nbsp; <label class="switch on">
+                          <input class="checkbox status_check_inPlay" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].eventData.eventId%>" checked>
+                          <span class="slider round"></span>
+                          </label>&nbsp; ON</span>
+                        </div>
+                        <%}else{%>
+                        <div class="on-off-btn-section">
+                          <span class="on-off">OFF &nbsp; <label class="switch">
+                          <input class="checkbox status_check_inPlay" name="autoSattled" type="checkbox" data-id="<%=data.footballEvents[i].eventData.eventId%>">
+                          <span class="slider round"></span>
+                          </label>&nbsp; ON</span>
+                        </div>
+                        <%}%>
+                    </td>
+                    <%if(currentUser.roleName != 'Operator'){%>
+                    <td>
+                      <div class="btn-group">
+                        <a class="btn" href="/admin/riskAnalysis?id=<%=data.footballEvents[i].eventData.eventId%>">View Details</a>
+                      </div>
+                    </td>
+                    <%}%>
+                    <%}%>
+                  </tr>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+  </div>
+  <!-- <button class="btn btn-view-all">View All</button> -->
+</div>

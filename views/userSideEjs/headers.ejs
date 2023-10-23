@@ -3,7 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Royal 777</title>
+    <%if(title){%>
+      <title><%=title%></title>
+      <%}else{%>
+      <title>Royal 777</title>
+    <%}%>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -81,7 +86,11 @@
     </style>
     <%} %>
   </head>
-  <body>
+  <%if(loginData){%>
+    <body data-logindata="<%=JSON.stringify(loginData)%>">
+      <%}else{%>
+    <body >
+  <%}%>
     <%if(check != "ACCC" && check != "My Bets" && check != "My game"){%>
     <div class="popup" id="popup-1">
       <div class="overlay"></div>
@@ -225,7 +234,7 @@
                                       <%}%>
                                       <li class=""><a href="#" title="" data-bs-toggle="modal" data-bs-target="#navmod2"> Set Button Stake</a></li>
                                   </ul>
-                                  <a class="logOut profile-contnt-mnu-option-logout-btn">logOut</a>
+                                  <a class="logOutUser profile-contnt-mnu-option-logout-btn">logOut</a>
                                   </div>
                               </div>
                           </div>
@@ -259,7 +268,7 @@
               </ul>
   
                 <div class="nav-login-regstr-btn-dv dropup-center">
-                  <div class="bet-blns-nav-wrp">
+                  <div class="bet-blns-nav-wrp" id="userBalance">
                     <!-- <i class="fa-solid fa-wallet"></i> -->
                     <div class="bet-blns-nav-wrp-amount-num">
                       <span> <i class="fa-solid fa-wallet text-white"></i>  Bal : <%=user.availableBalance%></span>
@@ -357,7 +366,7 @@
                                       <%}%>
                                       <li class=""><a href="#" title="" data-bs-toggle="modal" data-bs-target="#navmod2"> Set Button Stake</a></li>
                                   </ul>
-                                  <a class="logOut profile-contnt-mnu-option-logout-btn">logOut</a>
+                                  <a class="logOutUser profile-contnt-mnu-option-logout-btn">logOut</a>
                                   </div>
                               </div>
                           </div>
@@ -446,21 +455,7 @@
                           </div>
                         </div>
                         <ul id="demonames">
-                          <!-- <li><a class="demoname" href="#">Adele</a></li>
-                          <li><a class="demoname" href="#">Agnes</a></li>
-                        
-                          <li><a class="demoname" href="#">Billy</a></li>
-                          <li><a class="demoname" href="#">Bob</a></li>
-                        
-                          <li><a class="demoname" href="#">Calvin</a></li>
-                          <li><a class="demoname" href="#">Christina</a></li>
-                          <li><a class="demoname" href="#">Cindy</a></li> <li><a class="demoname" href="#">Calvin</a></li>
-                          <li><a class="demoname" href="#">Christina</a></li>
-                          <li><a class="demoname" href="#">Cindy</a></li> <li><a class="demoname" href="#">Calvin</a></li>
-                          <li><a class="demoname" href="#">Christina</a></li>
-                          <li><a class="demoname" href="#">Cindy</a></li> <li><a class="demoname" href="#">Calvin</a></li>
-                          <li><a class="demoname" href="#">Christina</a></li>
-                          <li><a class="demoname" href="#">Cindy</a></li> -->
+                          
                         </ul>
                       </div>
                     </div>
@@ -474,8 +469,9 @@
       <%}%>
 
 
-      <div class="exchange-pg-inn-tbl-marqq-dv2">
+      <div class="exchange-pg-inn-tbl-marqq-dv2 natification-bar">
         <div class="exchange-pg-inn-tbl-marqq-dv-wrp2">
+          <button data-bs-toggle="modal" data-bs-target="#latest-notifiction-popup"><i class="fa-solid fa-bell"></i>Latest</button>
             <marquee>
               <%for(let i = 0; i < notifications.length; i++){%>
                 &nbsp; &nbsp;
@@ -486,6 +482,53 @@
         </div>
       </div>
 
+
+      <div id="latest-notifiction-popup"  class="modal fade latest-notifiction-popup" role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2> <i class="fa-solid fa-bell"></i> Notification</h2>
+                    <button type="button" class="closbtn" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-close"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="notification-list">
+                      <%for(let i = 0; i < notifications.length; i++){%>
+                        <%
+                          var date = new Date(notifications[i].startDate);
+                          var options = { 
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          hour12: true
+                          };
+                          var formattedTime = date.toLocaleString('en-US', options);
+                          var formattedDATE = formattedTime.split(" at ")[0];
+                          var formattedtime = formattedTime.split(" at ")[1];
+                        %>
+                        <div class="box">
+                            <div class="notification-header"><%=formattedDATE%></div>
+                            <div class="notification-content">
+                                <div class="date-titme">
+                                  <%
+                                  let formattedDATE2 = formattedTime.split(",")[0]
+                                  %>
+                                    <p class="date"><%=formattedDATE2%></p>
+                                    <p class="time"><%=formattedtime%></p>
+                                </div>
+                                <div class="conent">
+                                    <p><%=notifications[i].message%></p>
+                                    <!-- <p class="cat">Cricket</p> -->
+                                </div>
+                            </div>
+                        </div>
+                      <%}%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
       <!-- <script type="text/javascript">
         let closeClicked = false;
     

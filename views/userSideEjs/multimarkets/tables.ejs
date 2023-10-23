@@ -1,7 +1,6 @@
 
 <%
 let multiTrue = true;
-console.log(multimarket, "444444444444444444")
 for(let i = 0; i <  multimarket.marketIds.length; i++){
   let result
   let isBookmaker = false
@@ -15,32 +14,26 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
       let Tennis = sportData[1].gameList.find(item => item.sport_name === "Tennis")
       Tennis = Tennis.eventList
       result = Tennis.find(item => item.marketList.match_odd != null&&  item.marketList.match_odd.marketId == multimarket.marketIds[i])
-      console.log("WORKINGGGG0", result)
       if(!result){
         result = sportData[0].gameList[0].eventList.find(item => item.marketList.bookmaker != null && item.marketList.bookmaker[0] &&  item.marketList.bookmaker[0].marketId == multimarket.marketIds[i])
-        console.log("WORKINGGGG1", result)
               if(result){
                 isBookmaker = true
               }else{
 
                   result = sportData[0].gameList[0].eventList.find(item => item.marketList.bookmaker != null && item.marketList.bookmaker[1] &&  item.marketList.bookmaker[1].marketId == multimarket.marketIds[i])
-                  console.log("WORKINGGGG2", result)
                   if(result){
                     isToss = true
                   }
               }
-              console.log("WORKINGGGG3", result)
               if(!result){
                 
 
                 result = Tennis.find(item => item.marketList.bookmaker != null&&  item.marketList.bookmaker[0].marketId == multimarket.marketIds[i])
-                console.log("WORKINGGGG4", result)
               if(result){
                 isBookmaker = true
               }else{
 
                   result = Tennis.find(item => item.marketList.bookmaker != null && item.marketList.bookmaker[1] &&  item.marketList.bookmaker[1].marketId == multimarket.marketIds[i])
-                  console.log("WORKINGGGG4", result)
                   if(result){
                     isToss = true
                   }
@@ -66,7 +59,8 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
               </span></h6>
           </div>
           <div class="exchange-pg-inn-banner-col-titi-txt-tim">
-              <h6><b>Min : <%=SportLimits.min_stake%>, Max : <%=SportLimits.max_stake%></b></h6>
+              <!-- <h6><b>Min : SportLimits.min_stake, Max : SportLimits.max_stake</b></h6> -->
+              <h6><b>Min : 100, Max : 100</b></h6>
           </div>
         </div>
         <div class="star-hedtitl-dv multi_market" id="<%=result.marketList.match_odd.marketId%>">  
@@ -98,39 +92,42 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
                         <td colspan="2" style=" text-align: left;">
                           <%=runners1[j]%>
                         </td>
-                        
                         <td class="tbl-td-with5" >
-                          <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-<%=j%><%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="<%=secIds[j]%>1" >
+                          <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-blu-spn match_odd_Blue button collapsed opacity-5" id="<%=secIds[j]%>3">
                                       
                           </span>
                         </td>
+                        
                         <td class="tbl-td-with5" >
-                          <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-<%=j%><%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="<%=secIds[j]%>2">
-                                      
+                          <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-blu-spn match_odd_Blue button collapsed opacity-7" id="<%=secIds[j]%>2">
+                            
                           </span> 
                         </td>
-      
+                        
+                        <td class="tbl-td-with5" >
+                          <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-blu-spn match_odd_Blue button collapsed " id="<%=secIds[j]%>1" >
+                                      
+                          </span>
+                        </td>
                         
       
                         <td class="tbl-td-with5" >
-                          <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-<%=j%><%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-blu-spn match_odd_Blue button collapsed" id="<%=secIds[j]%>3">
-                                      
-                          </span>
-                        </td>
-                        <td class="tbl-td-with5" >
-                          <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-<%=j%><%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="<%=secIds[j]%>4">
+                          <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="<%=secIds[j]%>4">
                                       
                           </span>  
                         </td>
                         <td class="tbl-td-with5" >
-                          <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-<%=j%><%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="<%=secIds[j]%>5">
+                          <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-pech-spn match_odd_Red button collapsed opacity-7" id="<%=secIds[j]%>5">
                                       
                           </span>
                         </td>
                         <td class="tbl-td-with5" >
-                          <span data-bs-toggle="collapse" href="#bt-slp-colps-match-odds-<%=j%><%=i%>" role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-pech-spn match_odd_Red button collapsed" id="<%=secIds[j]%>6">
+                          <span data-bs-toggle="collapse"  role="button" aria-expanded="false" aria-controls="bt-slp-colps-match-odds-<%=j%><%=i%>" class="tbl-bg-pech-spn match_odd_Red button collapsed opacity-5" id="<%=secIds[j]%>6">
                                       
-                          </span>  
+                          </span>
+                          <div class="match-status-message suspend full-suspend">
+                            Suspended
+                          </div>   
                         </td>
                         
                         
@@ -140,6 +137,7 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
                       <td colspan="8">
                         <div class="my-exc-inn-colaps-txt-dv collapse" id="bt-slp-colps-match-odds-<%=j%><%=i%>" >
                           <div class="card card-body my-exc-inn-colaps-txt-body">
+                            <div class="close-btn">×</div>
                             <div class="nww-bet-slip-wrp">
                               <div class="nww-bet-slip-wrp-col3">
                                 <div class="nww-bet-slip-wrp-col3-txt1">
@@ -176,13 +174,13 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
                               <div class="nww-bet-slip-wrp-col2 betSlip-price-placebutton">
                                 <div class="nww-bet-slip-wrp-col2-inn">
                                   <%for(let i = 0; i < stakeLabledata.stakeArray.length; i++){%>
-                                    <!-- <span id="<%=stakeLabledata.stakeArray[i].value%>">+<%=stakeLabledata.stakeArray[i].key%></span> -->
+                                    <span id="<%=stakeLabledata.stakeArray[i].value%>">+<%=stakeLabledata.stakeArray[i].key%></span>
                                   <%}%>
-                                  <span id="100">+100</span>
+                                  <!-- <span id="100">+100</span>
                                   <span id="1000">+1000</span>
                                   <span id="50000">+50000</span>
-                                  <span id="10000">+10000</span>
-                                  <span id="<%=SportLimits.max_stake%>" class="MAX">MAX</span>
+                                  <span id="10000">+10000</span> -->
+                                  <span id="1000" class="MAX">MAX</span>
                                   <%if(user){%>
                                   <span id="<%=user.availableBalance%>" class="ALLIN">ALL IN</span>
                                   <%}%>
@@ -235,7 +233,7 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
               </span></h6>
           </div>
           <div class="exchange-pg-inn-banner-col-titi-txt-tim">
-              <h6><b>Min : <%=SportLimits.min_stake%>, Max : <%=SportLimits.max_stake%></b></h6>
+              <h6><b>Min : 100, Max : 1000</b></h6>
           </div>
         </div>
         <div class="star-hedtitl-dv multi_market" id="<%=result.marketList.bookmaker[0].marketId%>">  
@@ -277,6 +275,9 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
                                   
                                   
                               </span> 
+                              <div class="match-status-message">
+                                Suspended
+                              </div>
                           </td>
                           
                           
@@ -286,6 +287,7 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
                         <td colspan="8">
                           <div class="my-exc-inn-colaps-txt-dv collapse" id="bt-slp-colps-bookmaker-<%=i%>" >
                             <div class="card card-body my-exc-inn-colaps-txt-body">
+                              <div class="close-btn">×</div>
                               <div class="nww-bet-slip-wrp">
                                 <div class="nww-bet-slip-wrp-col3">
                                   <div class="nww-bet-slip-wrp-col3-txt1">
@@ -375,7 +377,7 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
               </span></h6>
           </div>
           <div class="exchange-pg-inn-banner-col-titi-txt-tim">
-              <h6><b>Min : <%=SportLimits.min_stake%>, Max : <%=SportLimits.max_stake%></b></h6>
+              <h6><b>Min : 100, Max : 1000</b></h6>
           </div>
         </div>
         <div class="star-hedtitl-dv multi_market" id="<%=result.marketList.bookmaker[1].marketId%>">  
@@ -417,6 +419,9 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
                                   
                                   
                               </span> 
+                              <div class="match-status-message">
+                                Suspended
+                              </div>
                           </td>
                           
                           
@@ -426,6 +431,7 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
                         <td colspan="8">
                           <div class="my-exc-inn-colaps-txt-dv collapse" id="bt-slp-colps-bookmaker-<%=i%>1" >
                             <div class="card card-body my-exc-inn-colaps-txt-body">
+                              <div class="close-btn">×</div>
                               <div class="nww-bet-slip-wrp">
                                 <div class="nww-bet-slip-wrp-col3">
                                   <div class="nww-bet-slip-wrp-col3-txt1">
@@ -462,13 +468,13 @@ for(let i = 0; i <  multimarket.marketIds.length; i++){
                                 <div class="nww-bet-slip-wrp-col2 betSlip-price-placebutton">
                                   <div class="nww-bet-slip-wrp-col2-inn">
                                     <%for(let i = 0; i < stakeLabledata.stakeArray.length; i++){%>
-                                      <!-- <span id="<%=stakeLabledata.stakeArray[i].value%>">+<%=stakeLabledata.stakeArray[i].key%></span> -->
+                                      <span id="<%=stakeLabledata.stakeArray[i].value%>">+<%=stakeLabledata.stakeArray[i].key%></span>
                                     <%}%>
-                                    <span id="100">+100</span>
+                                    <!-- <span id="100">+100</span>
                                     <span id="1000">+1000</span>
                                     <span id="50000">+50000</span>
-                                    <span id="10000">+10000</span>
-                                    <span id="<%=SportLimits.max_stake%>" class="MAX">MAX</span>
+                                    <span id="10000">+10000</span> -->
+                                    <span id="1000" class="MAX">MAX</span>
                                     <%if(user){%>
                                     <span id="<%=user.availableBalance%>" class="ALLIN">ALL IN</span>
                                     <%}%>

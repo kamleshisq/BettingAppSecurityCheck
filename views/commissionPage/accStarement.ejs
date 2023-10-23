@@ -1,0 +1,72 @@
+<form class="commision-filter">
+  <div class="table-top-from-data">
+    
+
+    <div class="input-group">
+        <input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="FdateAccCom">
+        
+        
+    </div>
+    <div class="input-group" ><input type="date" class="form-control form-control-sm acount-stat-ro-form-input" id="TdateAccCom"></div>
+    <div class="input-group search-input-group" ><input type="text" class="form-control form-control-sm acount-stat-ro-form-input searchUser" placeholder="Search User" id="searchUser">
+      <div class="wrapper">
+        <ul id="search" class="users">
+      
+        </ul>
+        <ul id="button" class="button">
+          
+        </ul>
+      </div></div>
+  </div>
+  </form>
+<div class="pageIdACCComm" data-pageid="1"></div>
+<div class="data-table">
+    <table>
+      <thead>
+          <tr>
+            <th>Date</th>
+            <th>USer</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Bal. Before</th>
+            <th>Bal. After</th>
+          </tr>
+      </thead>
+      <tbody class="new-body" id="AccountCom-tbody">
+        <%for(let i = 0; i < accStatements.length; i++){%>
+            <%
+                var timestamp = accStatements[i].date ; 
+                var date = new Date(timestamp);
+                var options = { 
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: 'numeric',
+                  minute: 'numeric',
+                  hour12: true
+              };
+              var formattedTime = date.toLocaleString('en-US', options);
+               
+            %>
+            <%
+              let bal = (accStatements[i].balance - accStatements[i].creditDebitamount).toFixed(2)
+            %>
+            <tr >
+                <td><%=formattedTime%></td>
+                <td><%=accStatements[i].userName%></td>
+                <td><%=accStatements[i].description%></td>
+                <td><%=accStatements[i].creditDebitamount%></td>
+                <td><%=bal%></td>
+                <td><%=accStatements[i].balance.toFixed(2)%></td>
+            </tr>
+        <%}%>
+      </tbody>
+    </table>
+    <div class="loadMorediveAccCom" id="loadMorediveAccCom">
+    <%if(accStatements.length >= 10){%>
+      <a id="loadMoreAccCom">Load More</a>
+      <%}%>
+    </div>
+  </div>
+
+

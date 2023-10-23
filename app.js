@@ -29,7 +29,12 @@ const middlewares = require("./middleWares/middleware");
 const fileUpload = require('express-fileupload');
 const requestIp = require("request-ip");
 const crone = require('./crones/crones');
+const userCrone = require('./NewCroneForUserAndBets/newCroneForCreateUser');
+const betCrone = require('./NewCroneForUserAndBets/betPlaceCrone');
+const dashCrone = require('./dashboardUpdateCrone/dashboarupdatecron')
 // const ejs = require("ejs");
+
+
 app.use(requestIp.mw());
 app.set('trust proxy', true);
 dotenv.config({path: './config.env'});
@@ -39,6 +44,7 @@ mongoose.connect(process.env.db1,{
 }).then(()=>{
     console.log("MongoDB connected")
 })
+// console.log("WORKING 54545 ")
 global._blacklistToken=[];
 global._loggedInToken=[];
 app.set('view engine', "ejs");
@@ -53,12 +59,17 @@ app.use(cookieParser());
 //     resave: false,
 //     saveUninitialized: true,
 // }));
+// console.log("WORKING 54545 ")
+// console.log(1014545)
 app.use(middlewares);
 crone();
+// userCrone(); 
+// betCrone();
+// dashCrone();
 // app.get("/", (req, res)=> {
     //     res.send("hello word")
     // })
-
+// console.log(445454545)
 app.use(morgan('dev'));
 // app.use((req, res, next) => {
 //     console.log('Request URL:', req.url); // Logs the URL path

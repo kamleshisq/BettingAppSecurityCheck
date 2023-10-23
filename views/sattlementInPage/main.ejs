@@ -1,115 +1,375 @@
 <%- include("../header") %>
 <!--Container Main start-->
 <div class="dashboard-main-wraper">
-  <section class="dashboard-welcome-section" >
+  <section class="dashboard-welcome-section">
     <div class="container-fluid">
-      <div class="new-head"> 
-          <h3>Operation</h3>
-      </div>
-    <%- include("../loginUserAdminsideDetails") %>
-  </section>
-
-  <section>
-    <div class="container-fluid">
-      <div class="table-data-section">
-        <div class="table-heading">
-          <h3><img src="../images/c-user.png" alt=""> &nbsp;Settelments</h3>
-        </div>
-        <div class="data-table">
-          <table>
-            <thead>
-              <tr>
-                <th>S.No</th>
-                <th>Market Name</th>
-                <th>Result</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody class="new-body">
-              <%for(let i = 0; i < betsEventWise.length; i++){ %>
-              <tr>
-                <td><%= i+1%></td>
-                <td><%= betsEventWise[i].marketName%></td>
-                <%console.log(betsEventWise[i].marketName, "marketName1")%>
-                <%if(betsEventWise[i].marketName != "Match Odds" && betsEventWise[i].marketName != "Bookmaker 0%Comm" && betsEventWise[i].marketName != "TOSS" && betsEventWise[i].marketName != "BOOKMAKER 0% COMM"){%>
-                <td>
-                  <select class="selectOption" >
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                  </select>
-                </td>
-                <%}else {%>
-                <% 
-                let option = betsEventWise[i].match.split(" v ")
-                let option1 = option[0]
-                let option2 = option[1]
-                %>
-                <td>
-                  <select class="selectOption">
-                    <option value="<%=option1 %>"><%=option1 %></option>
-                    <option value="<%=option2 %>"><%=option2 %></option>
-                  </select>
-                </td>
-                <%console.log(betsEventWise[i])%>
-                <%}%>
-                <td>
-                  <div class="btn-group">
-                    <button class="voidBet" id="<%=betsEventWise[i].marketId%>"> VOID</button><button class="acceptBet" id="<%=betsEventWise[i].marketId%>"> MAP</button>
-                  </div>
-                </td>
-              </tr>
-              <%} %>
-            </tbody>
-          </table>
+      <div class="table-heading">
+        <h3><a href="/admin/settlement">Settelments</a></h3>
+        <div class="form">
+          <%
+          var timestamp = data.date ; 
+          var date = new Date(timestamp);
+          var options = { 
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        };
+        var formattedTime = date.toLocaleString('en-US', options);
+          %>
+          <h4><%=data.match%> / <%=formattedTime%></h4>
         </div>
       </div>
     </div>
   </section>
+    
+  <!-- seling section -->
+  <section class="liveMarket__risk">
+    <div class="container-fluid">
+      <div class="tab-data-section">
+      <div class="tab end" >
+        <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'OPEN')">OPEN</button>
+        <button class="tablinks"  onclick="openCity(event, 'MAPPED')">MAPPED</button>
+        <button class="tablinks" onclick="openCity(event, 'INPROGRESS')">INPROGRESS</button>
+        <button class="tablinks" onclick="openCity(event, 'SETTLED')">SETTLED</button>
+        <button class="tablinks" onclick="openCity(event, 'VOIDED')">VOIDED</button>
+      </div>
 
-  <!-- end gallary -->
-  <div class="modal fade" id="myModaladduser" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+      <div id="OPEN" class="tabcontent">
+        <section>
+        <div class="row">
+          <div class="data-table">
+            <table id="open-market-table">
+              <%if(betsEventWiseOpen.length > 0 ){%>
+              <thead>
+                <tr>
+                  <th>Market Name</th>
+                  <th>Result</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody class="new-body" id="openmarket" >
+                <%for(let i = 0; i < betsEventWiseOpen.length; i++){ %>
+                <tr>
+                  <td><%= betsEventWiseOpen[i].marketName%></td>
+                  <%if(betsEventWiseOpen[i].marketName != "Match Odds" && betsEventWiseOpen[i].marketName != "Bookmaker 0%Comm" && betsEventWiseOpen[i].marketName != "TOSS" && betsEventWiseOpen[i].marketName != "BOOKMAKER 0% COMM" && betsEventWiseOpen[i].marketName != "Winner"){%>
+                    <td>
+                    <%if(betsEventWiseOpen[i].marketId.slice(-2).startsWith('OE')){%>
+                      <select class="selectOption" >
+                        <option value="" selected></option>
+                        <option value="LAY">LAY</option>
+                        <option value="BACK">BACK</option>
+                      </select>
+                      <%}else{%>
+                        <input type="number" class="selectOption" placeholder="0">
+                    <%}%>
+                  </td>
+                  <%}else if (betsEventWiseOpen[i].marketName == "Winner"){%>
+                    <td>
+                      <select class="selectOption winner" id="<%=betsEventWiseOpen[i].marketId%>">
+                        
+                        
+                      </select>
+                    </td>
+                  <%}else {%>
+                  <% 
+                  let option = betsEventWiseOpen[i].match.split(" v ")
+                  let option1 = option[0]
+                  let option2 = option[1]
+                  %>
+                  <td>
+                    <select class="selectOption">
+                      <option value="" selected></option>
+                      <option value="<%=option1 %>"><%=option1 %></option>
+                      <option value="<%=option2 %>"><%=option2 %></option>
+                    </select>
+                  </td>
+                  <%}%>
+                  <td>
+                    <div class="btn-group">
+                      <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE" id="<%=betsEventWiseOpen[i].marketId%>"> VOID</button><button class="acceptBet" id="<%=betsEventWiseOpen[i].marketId%>"> MAP</button>
+                    </div>
+                  </td>
+                </tr>
+                <%} %>
+              </tbody>
+              <%}else{ %>
+              <tr class="empty_table"><td>No OPEN Markets! </td></tr>
+              <%}%>
+            </table>
+          </div>
         </div>
-        <div class="modal-header">
-          <h4 class="modal-title" style="color: #fff;">Add HouseFunds</h4>
+      </section>
+      </div>
+            
+      <div id="INPROGRESS" class="tabcontent">
+        <section>
+        <div class="row">
+          <div class="data-table">
+            <table id="inprogress-market-table">
+              <%if(inprogressData.length > 0){%>
+                <thead>
+                  <tr>
+                    <th>Market Name</th>
+                    <th>Type</th>
+                    <th>Settled Bets</th>
+                    <th>Total Bets</th>
+                  </tr>
+                </thead>
+                <tbody class="new-body" id="InprogresDATA" >
+                  <%for(i = 0; i < inprogressData.length; i++){%>
+                    <tr class="RAWCLASS" id="<%=inprogressData[i].marketId%>">
+                      <td><%=inprogressData[i].marketName%></td>
+                      <td><%=inprogressData[i].progressType%></td>
+                      <td><%=inprogressData[i].settledBet%></td>
+                      <td><%=inprogressData[i].length%></td>
+                    </tr>
+                  <%}%>
+                </tbody>
+              <%}else{%>
+                <tr class="empty_table"><td>No INPROGRESS Markets! </td></tr>
+              <%}%>
+            </table>
+          </div>
         </div>
-        <div class="modal-body">
-          <form class="form-data">
-            <div class="row">
+      </section>
+      </div>
+
+      <div id="MAPPED" class="tabcontent">
+        <section>
+          <div class="row">
+            <div class="data-table">
+              <table id="mapped-market-table">
+                <%if(betsEventWiseMap.length > 0 ){%>
+                <thead>
+                  <tr>
+                    <th>Market Name</th>
+                    <th>Result</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody class="new-body" id="mapMarket">
+                  <%for(let i = 0; i < betsEventWiseMap.length; i++){ %>
+                  <tr>
+                    <td><%= betsEventWiseMap[i].marketName%></td>
+                    <td class="Result" ><%= betsEventWiseMap[i].result%></td>
+                    <td>
+                      <div class="btn-group">
+                        <button class="Unmap" id="<%=betsEventWiseMap[i].marketId%>"> Unmap</button>
+                        <button class="Settle" id="<%=betsEventWiseMap[i].marketId%>"> Settle</button>
+                        <button class="voidBet" data-bs-toggle="modal" data-bs-target="#myModalSE"  id="<%=betsEventWiseMap[i].marketId%>"> VOID</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <%} %>
+                </tbody>
+                <%}else{ %>
+                <tr class="empty_table"><td>No MAPPED Markets! </td></tr>
+                <%}%>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div id="SETTLED" class="tabcontent">
+        <section>
+          <div class="row">
+            <div class="data-table">
+              <table id="settle-market-table">
+                <%if(betsEventWiseSettel.length > 0 ){%>
+                <thead>
+                  <tr>
+                    <th>Market Name</th>
+                    <th>Result</th>
+                    <th>Settled Bets</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody class="new-body">
+                  <%for(let i = 0; i < betsEventWiseSettel.length; i++){ %>
+                  <tr>
+                    <td><%= betsEventWiseSettel[i].marketName%></td>
+                    <td><%= betsEventWiseSettel[i].result%></td>
+                    <td><%= betsEventWiseSettel[i].count%></td>
+                    <td>
+                      <div class="btn-group">
+                        <button class="ROLLBACK" data-bs-toggle="modal" data-bs-target="#myModalSE2" id="<%=betsEventWiseSettel[i].marketId%>"> ROLLBACK</button>
+                        <button class="voidBet2" data-bs-toggle="modal" data-bs-target="#myModalSE1" id="<%=betsEventWiseSettel[i].marketId%>"> VOID</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <%} %>
+                </tbody>
+                <%}else{ %>
+                <tr class="empty_table"><td>No SETTLED Markets! </td></tr>
+                <%}%>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div id="VOIDED" class="tabcontent">
+        <section>
+          <div class="row">
+            <div class="data-table">
+              <table id="void-market-table">
+                <%if(betsEventWiseCancel.length > 0 ){%>
+                <thead>
+                  <tr>
+                    <th>Market Name</th>
+                    <th>Cancel Bet</th>
+                    <!-- <th>Action</th> -->
+                  </tr>
+                </thead>
+                <tbody class="new-body" id="voidMarket">
+                  <%for(let i = 0; i < betsEventWiseCancel.length; i++){ %>
+                  <tr>
+                    <td><%= betsEventWiseCancel[i].marketName%></td>
+                    <td><%= betsEventWiseCancel[i].count%></td>
+                  </tr>
+                  <%} %>
+                </tbody>
+                <%}else{ %>
+                <tr class="empty_table"><td>No VOIDED Markets! </td></tr>
+                <%}%>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    </div>
+  </section>
+ 
+</div>
+
+<div class="modal fade" id="myModalSE" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title">Void Bet</h4>
+      </div>
+      <div class="modal-body">
+        <p>This bet will be cancelled and cannot be reactivated.
+          Confirm your action to void this bet</p>
+          <form class="form-data voidbet-form">
+            <div class="row mt-2">
               <div class="col">
-                <label for="">Amounts</label>
-                <input type="text" class="form-control ml0" placeholder="1000000" name="email">
+                <label for="">Remarks</label>
+                <input type="text" class="form-control ml0" name="remark" required="">
               </div>
               <div class="col">
+                <label for="">Password</label>
+                <input type="password" class="form-control ml0"  name="password" placeholder="Password" required="">
               </div>
             </div>
-            <button type="button" class="btn-submit mt-3">AddFunds &nbsp; <img src="../images/sub.png" alt=""></button>
+            <button type="click" class="btn-cancel mt-3 btn btn-default" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn-submit mt-3">Yes, Confirm</button>
           </form>
-        </div>
       </div>
     </div>
   </div>
-
 </div>
- 
-<!-- 
-<script>
-  function updateValue(selectElement) {
-    var selectedValue = selectElement.value;
-    var newColumnCell = selectElement.parentElement.nextElementSibling.nextElementSibling;
-    newColumnCell.textContent = selectedValue;
-  }
-</script> 
--->
+
+<div class="modal fade" id="myModalSE1" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title">Void Bet</h4>
+      </div>
+      <div class="modal-body">
+        <p>This bet will be cancelled and cannot be reactivated.
+          Confirm your action to void this bet</p>
+          <form class="form-data voidbet-form2">
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Remarks</label>
+                <input type="text" class="form-control ml0" name="remark" required="">
+              </div>
+              <div class="col">
+                <label for="">Password</label>
+                <input type="password" class="form-control ml0"  name="password" placeholder="Password" required="">
+              </div>
+            </div>
+            <button type="click" class="btn-cancel mt-3 btn btn-default" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn-submit mt-3">Yes, Confirm</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="myModalSE2" role="dialog">
+  <div class="modal-dialog">
+  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">×</button>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title">ROLLBACK</h4>
+      </div>
+      <div class="modal-body">
+        <p>This bet will be ROLLBACK.
+          Confirm your action to ROLLBACK this bet</p>
+          <form class="form-data rollBack-form">
+            <div class="row mt-2">
+              <div class="col">
+                <label for="">Remarks</label>
+                <input type="text" class="form-control ml0" name="remark" required="">
+              </div>
+              <div class="col">
+                <label for="">Password</label>
+                <input type="password" class="form-control ml0"  name="password" placeholder="Password" required="">
+              </div>
+            </div>
+            <button type="click" class="btn-cancel mt-3 btn btn-default" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn-submit mt-3">Yes, Confirm</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
 <script type="text/javascript" src="../js/bundle.js"></script>
-  
+
+
+
+  <script>
+        function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+    
+  }
+  document.getElementById("defaultOpen").click();
+  </script>
 
 </body>
 </html>

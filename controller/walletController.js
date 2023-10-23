@@ -78,13 +78,14 @@ exports.betrequest = catchAsync(async(req, res, next) => {
             res.status(404).json({
                 "status":"RS_ERRORbalance"
             })
-        }else if(betLimit.min_stake > req.body.debitAmount ){
-            return `Invalide stake, Please play with atleast minimum stake (${betLimit.min_stake})`
-        }else if(betLimit.max_stake < req.body.debitAmount){
-            return `Invalide stake, Please play with atmost maximum stake (${betLimit.max_stake})`
-        }else if(betLimit.max_odd < req.body.oddValue ){
-            return `Invalide odds valur, Please play with atmost maximum odds (${betLimit.max_odd})`
         }
+        // else if(betLimit.min_stake > req.body.debitAmount ){
+        //     return `Invalide stake, Please play with atleast minimum stake (${betLimit.min_stake})`
+        // }else if(betLimit.max_stake < req.body.debitAmount){
+        //     return `Invalide stake, Please play with atmost maximum stake (${betLimit.max_stake})`
+        // }else if(betLimit.max_odd < req.body.oddValue ){
+        //     return `Invalide odds valur, Please play with atmost maximum odds (${betLimit.max_odd})`
+        // }
         // console.log(req.body)
         let user = await userModel.findByIdAndUpdate(req.body.userId, {$inc:{availableBalance: -req.body.debitAmount, myPL: -req.body.debitAmount, Bets : 1, exposure:req.body.debitAmount, uplinePL:req.body.debitAmount, pointsWL:-req.body.debitAmount}})
         // let betDetails = await betLimitModel.find()

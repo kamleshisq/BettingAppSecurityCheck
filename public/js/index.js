@@ -1,5 +1,6 @@
 import { login } from "./login";
 import { logout } from "./logOut";
+import {logoutUser} from "./logOutUser"
 import { reset } from "./resetPass";
 import { createUser } from "./createUser";
 import { debitCredit } from "./debitCredit";
@@ -23,6 +24,7 @@ import { createBanner } from "./createBanner";
 import { updateBanner } from "./updateBanner";
 import { createPage } from "./createpage";
 import { addImage } from "./addImage";
+import { editSliderInImage } from "./editSliderInImage";
 import { updateSlider } from "./updateSlider";
 import { createSlider } from "./addSlider";
 import { userLogin } from "./userLogin";
@@ -48,8 +50,8 @@ const {
 
 $(document).ready(function(){ 
     const linkColor = document.querySelectorAll('.nav_link')
-	const operationPathnameArr = ['/admin/houseManagement','/admin/whiteLableAnalysis','/admin/commissionMarkets','/admin/settlement','/admin/settlementHistory','/admin/commissionReport','/admin/gameanalysis','/admin/Notification','/admin/betmoniter','/admin/onlineUsers','/admin/alertbet','/admin/betlimit','/admin/voidbet']
-    const reportsPathnameArr = ['/admin/gamereport','/admin/useracount','/admin/reports','/admin/userhistoryreport','/admin/plreport']
+	const operationPathnameArr = ['/admin/houseManagement','/admin/streammanagement','/admin/whiteLableAnalysis','/admin/commissionMarkets','/admin/settlement','/admin/gameanalysis','/admin/Notification','/admin/betmoniter','/admin/onlineUsers','/admin/alertbet','/admin/betlimit','/admin/voidbet']
+    const reportsPathnameArr = ['/admin/gamereport','/admin/myaccount','/admin/adminaccount','/admin/useraccount','/admin/settlementHistory','/admin/reports','/admin/userhistoryreport','/admin/plreport','/admin/commissionReport']
     const cmsPathnameArr = ['/admin/cms','/admin/pageManager','/admin/gameRules']
 	function colorLink(){
         if(linkColor){
@@ -59,26 +61,45 @@ $(document).ready(function(){
             $("a[href='"+pathname+"'").parent().parent().siblings('a').addClass('active')
             $("a[href='"+pathname+"'").parent().parent().addClass('open')
         }
-        console.log(pathname)
         if(pathname == '/admin/catalogcontrol/compitations' || pathname == '/admin/catalogcontrol/compitations/events'){
             $("a[href='"+'/admin/catalogcontrol'+"'").addClass('active')
-
-        }else if(pathname == '/admin/riskAnalysis'){
+        }else if(pathname == '/admin/riskAnalysis' || pathname == '/admin/matchBets'){
             $("a[href='"+'/admin/liveMarket'+"'").addClass('active')
-
-        }else if(pathname == '/admin/userdetails'){
+        }else if(pathname.startsWith('/admin/userdetails' || pathname == '/admin/allOperators' ||  pathname == '/admin/profiledetail')){
             $("a[href='"+'/admin/userManagement'+"'").addClass('active')
-
         }else if(pathname == '/admin/settlementIn'){
             $("a[href='"+'/admin/settlement'+"'").addClass('active')
             $("a[href='"+'/admin/settlement'+"'").parent().parent().siblings('a').addClass('active')
             $("a[href='"+'/admin/settlement'+"'").parent().parent().addClass('open')
-
+        }else if(pathname.startsWith('/admin/streammanagement/event')){
+            $("a[href='"+'/admin/streammanagement'+"'").addClass('active')
+            $("a[href='"+'/admin/streammanagement'+"'").parent().parent().siblings('a').addClass('active')
+            $("a[href='"+'/admin/streammanagement'+"'").parent().parent().addClass('open')
+        }else if(pathname.startsWith('/admin/betlimit/sport') || pathname.startsWith('/admin/betlimit/sports') ||  pathname.startsWith('/admin/betlimit/sports/event') || pathname.startsWith('/admin/betlimit/sports/match')){
+            $("a[href='"+'/admin/betlimit'+"'").addClass('active')
+            $("a[href='"+'/admin/betlimit'+"'").parent().parent().siblings('a').addClass('active')
+            $("a[href='"+'/admin/betlimit'+"'").parent().parent().addClass('open')
         }
-        // this.classList.add('active')
         }
 	}
     colorLink()
+
+    $('input:checked').parents('.switch').addClass("on");
+    $('input:checkbox').change(function(){
+        if($(this).is(":checked")) {
+            $(this).parents('.switch').addClass("on");
+        } else {
+            $(this).parents('.switch').removeClass("on");
+        }
+    });
+    
+    $('.searchUser').keypress(function(event){
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13'){
+          event.preventDefault()  
+        }
+      });
+
 });
 
 
@@ -93,9 +114,14 @@ $(document).on("submit", ".loginFormAdmin", function(e){
 })
 $(document).on('click', ".logOut", function(e){
     e.preventDefault()
-    // console.log('Working')
     // console.log(this)
     logout()
+})
+$(document).on('click', ".logOutUser", function(e){
+    e.preventDefault()
+    // console.log('Working')
+    // console.log(this)
+    logoutUser()
 })
 
 // if(document.querySelector("ResetFORM")){
@@ -114,27 +140,28 @@ e.preventDefault();
 const form = document.getElementById('Add-User');
 let data = new FormData(form) 
 const formDataObj = Object.fromEntries(data.entries());
+if(formDataObj.role == "select"){
+    alert('please select role of user')
+}
+
 if(formDataObj.whiteLabel == ""){
     formDataObj.whiteLabel = document.getElementById("whiteLabel").value
 }
-// console.log(formDataObj)
+
+let checkedValues = [];
+if(formDataObj.role == "650bccdbb3fdc8c922c34bbe"){
+    let checkboxes = document.querySelectorAll("input[name='operator']:checked");
+    for (let i = 0 ; i < checkboxes.length; i++) {
+        checkedValues.push(checkboxes[i].value)
+    }
+}
+formDataObj.OperatorAuthorization = checkedValues
+// console.log(formDataObj, "+==> data")
+// console.log(checkedValues);
 createUser(formDataObj)
 });
 
-$(document).on('click','.updateBetLimit',function(e){
-    let rowId = $(this).parent().parent().parent().attr('id')
-    $('.rowId').attr('data-rowid',rowId)
-    let modleName = $(this).data('bs-target')
-    let form = $(modleName).find('.form-data')
-    let betLimit = $(this).parent().data('details')
-    form.find('input[name = "min_stake"]').val(betLimit.min_stake)
-    form.find('input[name = "max_stake"]').val(betLimit.max_stake)
-    form.find('input[name = "max_profit"]').val(betLimit.max_profit)
-    form.find('input[name = "max_odd"]').val(betLimit.max_odd)
-    form.find('input[name = "delay"]').val(betLimit.delay)
-    form.find('input[name = "type"]').val(betLimit.type)
-    form.find('input[name = "id"]').val(betLimit._id)
-})
+
 
 $(document).on('submit','.passReset-form',function(e){
     e.preventDefault();
@@ -170,28 +197,7 @@ $(document).on('submit','#edit-form',async function(e){
 //     socket.emit('Login', data);
 //     })
 
-$(document).on('submit','.form-betLimit',async function(e){
-    e.preventDefault();
-    let form = $(this)[0];
-    let fd = new FormData(form);
-    let data = Object.fromEntries(fd.entries());
-    // console.log(data)
-    let res = await betLimit(data)
-    if(res){
-        let betLimit = res
-        let rowId = $('.rowId').attr('data-rowid')
-        $('#'+rowId).html(`
-            <td class="btn-filter">${betLimit.type}</td>
-            <td><input type="text" class="form-datas" value='${betLimit.min_stake}'></td>
-            <td><input type="text" class="form-datas" value='${betLimit.max_stake}'></td>
-            <td><input type="text" class="form-datas" value='${betLimit.max_profit}'></td>
-            <td><input type="text" class="form-datas" value='${betLimit.max_odd}'></td>
-            <td><input type="text" class="form-datas" value='${betLimit.delay}'></td>
-            <td data-details='${JSON.stringify(betLimit)}'><button type="button" data-bs-toggle="modal" data-bs-target="#myModal2"class="updateBetLimit">Update</button></td>`)
-        alert("updated SuccessFully")
-    }
-    
-})
+
 
 $(document).on('submit','.acc-form',async function(e) {
     e.preventDefault()
@@ -200,21 +206,25 @@ $(document).on('submit','.acc-form',async function(e) {
     let fd = new FormData(form);
     let formDataObj = Object.fromEntries(fd.entries());
     formDataObj.id = id ;
-    console.log(formDataObj)
+    // console.log(formDataObj)
+    if(formDataObj.amount == 0){
+        alert('please enter amount greater than 0')
+    }else{
+        const user = await debitCredit(formDataObj)
+        var trElements = document.querySelectorAll('tr.trtable');
+        // console.log(trElements)
+        // console.log(user)
+        trElements.forEach(function(trElement) {
+            if (trElement.getAttribute('data-id') === user.id) {
+            }
+        })    
+    }
     // const url = window.location.href
     // const id = url.split("=")[1]
     // formDataObj.id = id
     // console.log(formDataObj)
     // let rowId = $('.rowId').attr('data-rowid')
-    const user = await debitCredit(formDataObj)
-    var trElements = document.querySelectorAll('tr.trtable');
-    // console.log(trElements)
-    // console.log(user)
-    trElements.forEach(function(trElement) {
-        if (trElement.getAttribute('data-id') === user.id) {
-            console.log(trElement, 4545445454)
-        }
-    })
+ 
     // console.log(rowId)
     // let currentUser = $('#currentUserDetails').data('currentuser')
     // updateRow(user,rowId,currentUser)
@@ -228,13 +238,17 @@ $(document).on('submit','.Settlement-form',async function(e) {
     let fd = new FormData(form);
     let formDataObj = Object.fromEntries(fd.entries());
     formDataObj.id = id ;
-    console.log(formDataObj)
+    if(formDataObj.amount == 0){
+        alert('please enter amount greater than 0')
+    }else{
+        creditDebitSettle(formDataObj)
+    }
+    // console.log(formDataObj)
     // const url = window.location.href
     // const id = url.split("=")[1]
     // formDataObj.id = id
     // console.log(formDataObj)
     // let rowId = $('.rowId').attr('data-rowid')
-    creditDebitSettle(formDataObj)
     // const user = await creditDebitSettle(formDataObj)
     // var trElements = document.querySelectorAll('tr.trtable');
     // // console.log(trElements)
@@ -264,28 +278,6 @@ $(document).on('submit','.Settlement-form',async function(e) {
 //     betLockStatus(data)
 // })
 
-$('.createRole-form1').submit(function(e) {
-    e.preventDefault()
-    let authorization = []; 
-    let authCheck = document.querySelectorAll("input[name='authorization']:checked");
-    for (let i = 0 ; i < authCheck.length; i++) {
-     authorization.push(authCheck[i].value)
-    }
-    let roleAuthorization = [];
-    let checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-    for (let i = 0 ; i < checkboxes.length; i++) {
-        roleAuthorization.push(checkboxes[i].value)
-    }
-    let roleName = $('#roleName').val();
-    let data = {
-        authorization:authorization,
-        userAuthorization:roleAuthorization,
-        roleName,
-        name:roleName
-    }
-    console.log(data)
-    createRole(data)
-})
 
 // $('#searchUser').keyup(function(){
 //     let data = $(this).val()
@@ -386,10 +378,10 @@ $(document).on('submit','.userStatus',function(e) {
     let id = form.id
     let formDataObj = Object.fromEntries(fd.entries());
     formDataObj.id = id
-    // let rowId = $('.rowId').attr('data-rowid')
-    console.log(formDataObj)
-    var trElement = document.querySelector(`tr[data-id="${id}"]`);
-    let rowId = trElement.id
+    let rowId = $('.rowId').attr('data-rowid')
+    // console.log(formDataObj, "WORKING1212121")
+    // var trElement = document.querySelector(`tr[data-id="${id}"]`);
+    // let rowId = trElement.id
     // console.log(rowId)
     // console.log(formDataObj)
     userStatus(formDataObj, rowId)
@@ -445,12 +437,35 @@ $(document).on('click','.Withdraw',function(){
 
 
 
+$('.createRole-form1').submit(function(e) {
+    e.preventDefault()
+    let authorization = []; 
+    let authCheck = document.querySelectorAll("input[name='operator']:checked");
+    for (let i = 0 ; i < authCheck.length; i++) {
+     authorization.push(authCheck[i].value)
+    }
+    let roleAuthorization = [];
+    let checkboxes = document.querySelectorAll("input[name='adminControll']:checked");
+    for (let i = 0 ; i < checkboxes.length; i++) {
+        roleAuthorization.push(checkboxes[i].value)
+    }
+    let roleName = $('#roleName').val();
+    let data = {
+        operationAuthorization:authorization,
+        AdminController:roleAuthorization,
+        roleName,
+        name:roleName
+    }
+    // console.log(data)
+    createRole(data)
+})
+
+
 
 $(document).on('click','.RoleDetails',function(){
-    console.log("Working") 
     let modleName = $(this).data('bs-target')
     let roledata = $(this).parent().parent('td').siblings('.getRoleForPopUP').data('bs-dismiss')
-    console.log(roledata)
+    // console.log(roledata)
     let form = $(modleName).find('.UpdateRole-form')
     // let x = form.find('input[id="check"]').length
     // console.log(x)
@@ -468,6 +483,12 @@ $(document).on('click','.RoleDetails',function(){
     for(let i = 0; i < roledata.userAuthorization.length; i++){
         form.find(`input[value = "${roledata.userAuthorization[i]}"]`).attr("checked", "checked");
     }
+    for(let i = 0; i < roledata.AdminController.length; i++){
+        form.find(`input[value = "${roledata.AdminController[i]}"]`).attr("checked", "checked");
+    }
+    for(let i = 0; i < roledata.operationAuthorization.length; i++){
+        form.find(`input[value = "${roledata.operationAuthorization[i]}"]`).attr("checked", "checked");
+    }
     // document.getElementById("role_controller").innerHTML = `
     //         <label for="level"> <h3>Role Level </h3></label><br>
     //         <input type="number" name="level" placeholder='${roledata.role_level}' id='role_level'>`
@@ -478,22 +499,35 @@ $(document).on("submit", ".UpdateRole-form", function(e){
     let id = $(this).attr("id")
     let roleName = document.getElementById("mySelect").value
     let authorization = [];
+    let AdminController = []
     let roleAuthorization = [];
-    let authCheck = document.querySelectorAll("input[name='authorization']:checked");
-    for (let i = 0 ; i < authCheck.length; i++) {
-        roleAuthorization.push(authCheck[i].value)
+    let operationAuthorization = [];
+    // let authCheck = document.querySelectorAll("input[name='authorization']:checked");
+    // for (let i = 0 ; i < authCheck.length; i++) {
+    //     roleAuthorization.push(authCheck[i].value)
+    // }
+    // let checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
+    // for (let i = 0 ; i < checkboxes.length; i++) {
+    //     authorization.push(checkboxes[i].value)
+    // }
+    let operator = document.querySelectorAll("input[name='operator']:checked");
+    for( let i = 0; i < operator.length; i++){
+        operationAuthorization.push(operator[i].value)
     }
-    let checkboxes = document.querySelectorAll("input[name='userAuthorization']:checked");
-    for (let i = 0 ; i < checkboxes.length; i++) {
-        authorization.push(checkboxes[i].value)
+    let adminAuth = document.querySelectorAll("input[name='adminControll']:checked");
+    for( let i = 0; i < adminAuth.length; i++){
+        AdminController.push(adminAuth[i].value)
     }
+
     let data = {
         id,
-        authorization,
-        userAuthorization:roleAuthorization,
-        roleName
+        // authorization,
+        // userAuthorization:roleAuthorization,
+        roleName,
+        operationAuthorization,
+        AdminController
         }
-    console.log(data)
+    // console.log(data)
     updateRole(data)
 })
 $(document).on('click','.deleteRole',function(e){
@@ -554,7 +588,7 @@ $(document).on('submit', ".form-data23", function(e){
     let fd = new FormData(form);
     fd.append('id', id)
     let data = Object.fromEntries(fd.entries());
-    console.log(data)
+    // console.log(data)
     // form.append('image',document.getElementById('file').files[0])
     // console.log(form)
     updateHorizontalMenu(fd)
@@ -596,6 +630,15 @@ $(document).on('submit', ".form-data26", function(e){
     addImage(fd)
 })
 
+$(document).on('submit', ".editImageSportForm", function(e){
+    e.preventDefault()
+    let id = $(this).attr('id')
+    let form = $(this)[0];
+    let fd = new FormData(form);
+    fd.append('id', id)
+    editSliderInImage(fd)
+})
+ 
 $(document).on('submit', ".slider-form", function(e){
     e.preventDefault()
     let id = $(this).attr("id")
@@ -611,6 +654,7 @@ $(document).on('submit', ".addSlider-form", function(e){
     let fd = new FormData(form);
     createSlider(fd)
 });
+
 
 $(document).on('submit', ".myloginmodl-form-dv", function(e){
     e.preventDefault()

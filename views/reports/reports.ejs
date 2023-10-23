@@ -5,12 +5,13 @@
     <div class="container-fluid">
       <div class="new-head"> 
         <h3>Bet List</h3>
+        <div class="rowId" data-rowid="1"></div>
         <form action="">
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
             </div>
-            <input type="text" id="searchUser"  list=text_editors class="form-control searchUser" placeholder="Search or type  a URL" aria-label="Username" aria-describedby="basic-addon1">
+            <input type="text" id="searchUser"  list=text_editors class="form-control searchUser" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
             <div class="wrapper">
               <ul id="search" class="users">
 
@@ -34,25 +35,22 @@
             <form action="" class="betlist-heading-from">
               <div class="input-group">
                 <label>Select Game</label>
-                <select name="" id="fGame">
-                  <option value="Cricket" selected>Cricket</option>
-                  <option value="FOOTBALL">FOOTBALL</option>
-                  <option value="TENNIS">TENNIS</option>
-                  <option value="BASKETBALL">BASKETBALL</option>
-                  <option value="BASEBALL">BASEBALL</option>
-                  <option value="Primium">Primium</option>
-                  <option value="Sports Books">Sports Books</option>
-                  <option value="Casino">Casino</option>
+                <select name="Sport" id="fGame">
+                  <option value="All" selected=""> All </option>
+                  <option value="Cricket">Cricket</option>
+                  <option value="Football">FOOTBALL</option>
+                  <option value="Tennis">TENNIS</option>
+                  <option value="Basketball">BASKETBALL</option>
+                  <option value="Baseball">BASEBALL</option>
                 </select>
               </div>
               <div class="input-group">
                 <label>Filter Bets</label>
-                <select name="" id="fBets">
-                  <option value="OPEN" selected>Open Bets</option>
-                  <option value="SETTLE">Settle</option>
+                <select  id="fBets">
+                  <option value="All" selected>All</option>
                   <option value="WON">Won</option>
                   <option value="LOSS">Lost</option>
-                  <option value="VOLD">Vold</option>
+                  <option value="CANCEL">Vold</option>
                 </select>
               </div>
               <div class="input-group">
@@ -64,8 +62,7 @@
                 <input type = "date" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;" id="toDate"> 
               </div>
             </form>
-            <button class="btn-filter filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button>
-            <button class="btn-filter"><i class="fa-solid fa-download"></i> &nbsp; Excel</button>
+            <button class="btn-filter" id="downloadBtn"><i class="fa-solid fa-download"></i> &nbsp; Download CSV</button>
           </div>
         </div>
         <div class="data-table">
@@ -78,6 +75,14 @@
   <div class="pageId" data-pageid="1"></div>
 
 </div>
+<%if(bets.length !== 0){%>
+
+  <div id="load-more" >
+    <%if(bets.length >= 10){ %>
+      <button class="load-more">Load More</button>
+      <%}%>
+    </div>
+<%}%>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

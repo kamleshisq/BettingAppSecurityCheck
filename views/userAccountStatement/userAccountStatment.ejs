@@ -1,0 +1,128 @@
+<%- include("../header") %>
+<!--Container Main start-->
+<div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section">
+    <div class="container-fluid">
+      <div class="new-head"> 
+        <h3 class="main-heading">User Account Statement</h3>
+        <div class="rowId" data-rowid="1"></div>
+        <form action="">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+            </div>
+            <input type="text" id="searchUser" onkeyup="myFunction()" list=text_editors class="form-control searchUser" placeholder="search user" aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
+            <div class="wrapper">
+              <ul id="search" class="users">
+              </ul>
+              <ul id="button" class="button">
+              </ul>
+            </div>
+          </div>
+          <!-- <button class="btn-filter"><i class="fa-solid fa-filter"></i>&nbsp;Filter</button> -->
+        </form>
+      </div>
+      <%- include("../loginUserAdminsideDetails") %>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="table-data-section">
+        <div class="table-heading">
+          <div class="table-heading-btn">
+            <form class="game-analysis-heading-from">
+              <div class="input-group">
+                <label>From Date</label>
+                <input type = "date" id="Fdate" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+              </div>
+              <div class="input-group">
+                <label>To Date</label>
+                <input type = "date" id="Tdate" style="border-radius: 10px;padding: 5px;border: 2px solid #EAEEF7;"> 
+              </div>
+            </form>
+            <!-- <button type="click" class="btn-filter load"> &nbsp; Load</button> -->
+            <button  id="downloadBtn" class="btn-filter load">Download CSV</button>
+            <button  id="pdfDownload" class="btn-filter load">Download PDF</button>
+          </div>
+        </div>
+        <div class="data-table">
+          <table id="table12">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Event</th>
+                <th>Market Type</th>
+                <th>Credit</th>
+                <th>Debit</th>
+                <th>Balance</th>
+                <th>Descreption</th>
+                <th>Remark</th>
+              </tr>
+            </thead>
+            <tbody class="new-body">
+                <tr class="empty_table"><td>No record found</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="pageLink" data-page="1"></div>
+
+  <div class="meDetails" id="meDatails" data-me='<%=JSON.stringify(me)%>'></div>
+
+  <!-- end gallary -->
+
+  <div class="modal fade useracount-modal" id="myModal5" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header" >
+          <h4 class="modal-title">Transaction Details</h4>
+        </div>
+        <div class="modal-body">
+          <div class="data-table">
+            <table>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="load-more" style="display: none;">
+  
+  <button class="load-more">Load More</button>
+  
+</div>
+
+<script type="text/javascript" src="../js/bundle.js"></script>
+<script>
+  function myFunction() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("searchUser");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("search");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        txtValue = li.textContent || li.innerText;
+    }
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+<script type="text/javascript" src="../js/bundle.js"></script>
+
+
+</body>
+    </html> 

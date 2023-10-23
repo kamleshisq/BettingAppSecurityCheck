@@ -4,6 +4,7 @@ const User = require('../model/userModel');
 const loginLogs = require("../model/loginLogs");
 const Role = require('../model/roleModel');
 const betModel = require("../model/betmodel");
+const Stream = require('./../model/streammanagement')
 const promotionModel = require("../model/promotion");
 const roleAuth = require('../model/authorizationModel');
 const gameModel = require('../model/gameModel');
@@ -34,8 +35,17 @@ const houseFundModel = require('../model/houseFundmodel');
 const sattlementModel =  require("../model/sattlementModel");
 const commissionModel = require("../model/CommissionModel");
 const settlementHisory = require("../model/settelementHistory");
-const catalogController = require("./../model/catalogControllModel")
+const catalogController = require("./../model/catalogControllModel");
+const FeatureventModel = require('./../model/featureEventModel')
+const InPlayEvent = require('./../model/inPlayModel')
 const commissionReportModel = require("../model/commissionReport");
+const betLimitMatchWisemodel = require('../model/betLimitMatchWise');
+const streamModel = require('../model/streammanagement');
+const InprogreshModel = require('../model/InprogressModel');
+const commissionMarketModel = require('../model/CommissionMarketsModel')
+let eventNotification = require('../model/eventNotification');
+const commissionNewModel = require('../model/commissioNNModel');
+const resumeSuspendModel = require('../model/resumeSuspendMarket');
 // exports.userTable = catchAsync(async(req, res, next) => {
 //     // console.log(global._loggedInToken)
 //     // console.log(req.token, req.currentUser);
@@ -67,25 +77,26 @@ const commissionReportModel = require("../model/commissionReport");
 // });
 
 exports.userTable = catchAsync(async(req, res, next) => {
-    // let AllUsers = await User.find()
-    // for(let i = 0; i < AllUsers.length; i++){
-    //     await commissionModel.create({userId:AllUsers[i].id})
-    // }
-    // console.log(global._loggedInToken)
-    // console.log(req.token, req.currentUser);
-    // let users
-    // let users = await User.find();
     var WhiteLabel = await whiteLabel.find()
-    // var roles = await Role.find({role_level:{$gt : req.currentUser.role.role_level}})
     let id = req.query.id;
     let page = req.query.page;
-    // console.log(req.query)
     let urls;
-    if(id && id != req.currentUser.parent_id){
+    let roles1
+    let operationparentId;
+    if(req.currentUser.roleName == 'Operator'){
+        let parentUser = await User.findById(req.currentUser.parent_id)
+        roles1 = await Role.find({role_level:{$gt:parentUser.role.role_type}}).sort({role_level:1});
+        operationparentId = parentUser.parent_id
+    }else{
+        roles1 = await Role.find({role_level:{$gt:req.currentUser.role.role_type}}).sort({role_level:1});
+        operationparentId = req.currentUser.parent_id
+
+    }
+    if(id && id != operationparentId){
         var isValid = mongoose.Types.ObjectId.isValid(id)
 
         if(!isValid){
-            return next(new AppError('id is not valid'))
+            return res.redirect('/admin/userManagement')
         }
         urls = [
             {
@@ -130,16 +141,41 @@ exports.userTable = catchAsync(async(req, res, next) => {
             }
           );
         });
-      });
-    let roles1 = await Role.find({role_level:{$in:req.currentUser.role.userAuthorization}}).sort({role_level:1});
+    });
+  
     const data = await Promise.all(requests);
-    // console.log(data)
+    if(data[0].status == 'Error'){
+        return res.redirect('/admin/userManagement')
+    }
     const users = data[0].child;
     const roles = roles1;
     const currentUser = req.currentUser
     const rows = data[0].rows
     const me = data[0].me
     // console.log(currentUser)
+
+    let sumData = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id,
+                commissionStatus: 'Unclaimed'
+            }
+        },
+        {
+            $group: {
+              _id: null, 
+              totalCommission: { $sum: "$commission" } 
+            }
+          }
+    ])
+    let sum 
+    if(sumData.length != 0){
+        sum = sumData[0].totalCommission
+    }else{
+        sum = 0
+    }
+
+
     res.status(200).render('./userManagement/main',{
         title: "User Management",
         users,
@@ -147,70 +183,31 @@ exports.userTable = catchAsync(async(req, res, next) => {
         currentUser,
         me,
         WhiteLabel,
-        roles
+        roles,
+        unclaimCommission:sum
         // userLogin:global._loggedInToken
     })
 
    
 });
 
+exports.allOperators = catchAsync(async(req, res, next)=>{
+    const users = await User.find({roleName:"Operator",parent_id:req.currentUser._id})
+
+    res.status(200).render('./allOperators/main',{
+        title:'All Operators', 
+        users,
+        currentUser:req.currentUser
+    })
+})
+
 exports.login = catchAsync(async(req, res, next) => {
-    // console.log("1")
-    console.log(req.currentUser)
     if(req.currentUser){
         if(req.currentUser.role_type < 5){
-            var WhiteLabel = await whiteLabel.find()
-            let urls = [
-                {
-                    url:`http://172.105.58.243/api/v1/users/getOwnChild?id=${req.currentUser.id}`,
-                    name:'user'
-                },
-                {
-                    url:`http://172.105.58.243/api/v1/role/getAuthROle`,
-                    name:'role'
-                }
-            ]
-            let requests = urls.map((item) => {
-                return new Promise((resolve, reject) => {
-                  request(
-                    {
-                      url: item.url,
-                      headers: {
-                        'Content-type': 'application/json',
-                        'Authorization': `Bearer ${req.token}`,
-                      },
-                    },
-                    (error, response, body) => {
-                      if (error) {
-                        reject(error);
-                      } else {
-                        resolve(JSON.parse(body));
-                      }
-                    }
-                  );
-                });
-              });
-            let roles1 = await Role.find({role_level:{$in:req.currentUser.role.userAuthorization}}).sort({role_level:1});
-            const data = await Promise.all(requests);
-            // console.log(data)
-            const users = data[0].child;
-            const roles = roles1;
-            const currentUser = req.currentUser
-            const rows = data[0].rows
-            const me = data[0].me
-            res.status(200).render('./userManagement/main',{
-                title: "User Management",
-                users,
-                rows,
-                currentUser,
-                me,
-                WhiteLabel,
-                roles
-                // userLogin:global._loggedInToken
-            })
+           return res.redirect('/admin/dashboard')
         }
     }
-    res.status(200).render('loginPage', {
+    return res.status(200).render('loginPage', {
         title:"Login form"
     })
 });
@@ -366,6 +363,7 @@ exports.inactiveUser = catchAsync(async(req, res, next) => {
     })
 });
 exports.onlineUsers = catchAsync(async(req, res, next) => {
+    let limit = 10;
     // const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
     // let role_type =[]
     // for(let i = 0; i < roles.length; i++){
@@ -378,7 +376,7 @@ exports.onlineUsers = catchAsync(async(req, res, next) => {
     // }else{
     //     users = await User.find({role_type:{$in:role_type},is_Online:true , whiteLabel:req.currentUser.whiteLabel, parentUsers:{$elemMatch:{$eq:req.currentUser.id}}})
     // }
-    let users = await User.find({is_Online:true , parentUsers:{$in:[currentUser._id]}})
+    let users = await User.find({is_Online:true , parentUsers:{$in:[currentUser._id]}}).limit(limit)
     let me = req.currentUser
     res.status(200).render('./onlineUsers/onlineUsers',{
         title:"Online Users",
@@ -394,64 +392,48 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
     let userDetails = await User.findById(req.query.id)
     // if(userDetails.roleName)
     // console.log(userDetails)
+    let limit = 10
     let bets
     let betsDetails
     if(userDetails.roleName != "user"){
+        let childrenUsername = []
+        let children = await User.find({parentUsers:req.query.id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
         bets = await betModel.aggregate([
             {
-                $lookup: {
-                  from: "users",
-                  localField: "userName",
-                  foreignField: "userName",
-                  as: "user"
-                }
-              },
-              {
-                $unwind: "$user"
-              },
-              {
                 $match: {
-                  "user.parentUsers": { $in: [req.query.id] }
+                    userName: { $in: childrenUsername }
                 }
-              },
-              {
-            $sort: {
-                date: -1
+            },
+            {
+                $sort: {
+                    date: -1
+                }
+            },
+            {
+                $limit: limit
             }
-        },
-        {
-            $limit: 20
-        }
-            ])
+        ])
 
-            betsDetails = await betModel.aggregate([
-                {
-                    $lookup: {
-                      from: "users",
-                      localField: "userName",
-                      foreignField: "userName",
-                      as: "user"
-                    }
-                  },
-                  {
-                    $unwind: "$user"
-                  },
-                  {
-                    $match: {
-                      "user.parentUsers": { $in: [req.query.id] }
-                    }
-                  },
-                  {
-                    $group: {
-                      _id: null,
-                      totalReturns: { $sum: '$returns' },
-                      totalCount: { $sum: 1 }
-                    }
-                  }
-                ])
+        betsDetails = await betModel.aggregate([
+            {
+                $match: {
+                    userName: { $in: childrenUsername }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalReturns: { $sum: '$returns' },
+                    totalCount: { $sum: 1 }
+                }
+            }
+        ])
         
     }else{
-        bets = await betModel.find({userId:req.query.id}).sort({date:-1}).limit(20)
+        bets = await betModel.find({userId:req.query.id}).sort({date:-1}).limit(limit)
         betsDetails = await betModel.aggregate([
             {
                 $match:{
@@ -468,8 +450,8 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
         ])
     }
 
-    let ACCount = await accountStatement.find({user_id:req.query.id}).sort({date: -1}).limit(20)
-    let historty = await loginLogs.find({userName:userDetails.userName}).sort({login_time:-1}).limit(20)
+    let ACCount = await accountStatement.find({user_id:req.query.id}).sort({date: -1}).limit(limit)
+    let historty = await loginLogs.find({userName:userDetails.userName}).sort({login_time:-1}).limit(limit)
     // console.log(bets)
     // console.log(betsDetails)
     res.status(200).render("./userDetailsAdmin/main",{
@@ -481,6 +463,14 @@ exports.userDetailsAdminSide = catchAsync(async(req, res, next) => {
         betsDetails,
         ACCount,
         historty
+
+    })
+})
+
+exports.profile = catchAsync(async(req,res,next)=>{
+    res.status(200).render("./myProfile/myprofile",{
+        title:"User Details",
+        currentUser:req.currentUser
 
     })
 })
@@ -509,18 +499,24 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     let pages = await pagesModel.find()
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-    let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
+    let featureEventId = []
+    let featureStatusArr = await FeatureventModel.find();
+    featureStatusArr.map(ele => {
+        featureEventId.push(parseInt(ele.Id))
+    })
+    let LiveCricket = cricket.filter(item => featureEventId.includes(item.eventData.eventId))
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
     footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-    let liveFootBall = footBall.filter(item => item.eventData.type === "IN_PLAY");
-    let liveTennis = Tennis.filter(item => item.eventData.type === "IN_PLAY")
+    let liveFootBall = footBall.filter(item => featureEventId.includes(item.eventData.eventId));
+    let liveTennis = Tennis.filter(item => featureEventId.includes(item.eventData.eventId))
     let userLog
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render("./userSideEjs/home/homePage",{
+        title:'Home',
         user,
         data,
         verticalMenus,
@@ -532,7 +528,8 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         LiveCricket,
         liveFootBall,
         liveTennis,
-        notifications:req.notifications
+        notifications:req.notifications,
+        featureStatusArr
     })
 })
 
@@ -587,7 +584,7 @@ exports.myProfile = catchAsync(async(req, res, next) => {
     // .then(json =>
     //     console.log(json) 
         res.status(200).render("./userSideEjs/myProfile/main", {
-        title:"Account Statement",
+        title:"My Profile",
         user:req.currentUser,
         verticalMenus,
         check:"ACCC",
@@ -621,7 +618,6 @@ exports.APIcall = catchAsync(async(req, res, next) => {
     .then(res => res.json())
     .then(result => {
 
-        console.log(result)
         res.status(200).json({
             status:"success",
             result
@@ -633,54 +629,86 @@ exports.APIcall = catchAsync(async(req, res, next) => {
 
 exports.ReportPage = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
-    // const role_type = []
-    // const roles = await Role.find({role_type: {$gt:currentUser.role_type}});
-    // // let role_type =[]
-    // for(let i = 0; i < roles.length; i++){
-    //     role_type.push(roles[i].role_type)
-    // }
-    // const bets = await betModel.find({role_type:{$in:role_type}, status:{$ne:"OPEN"}}).limit(10)
-    User.aggregate([
+    let childrenUsername = []
+    if(req.currentUser.roleName == 'Operator'){
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }else{
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }
+    let bets = await betModel.aggregate([
         {
-          $match: {
-            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
-          }
+            $match: {
+              status: {$ne:"OPEN"},
+              userName:{$in:childrenUsername}
+            }
         },
         {
-          $group: {
-            _id: null,
-            userIds: { $push: '$_id' } 
-          }
-        }
-      ])
-        .then((userResult) => {
-          const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
+            $sort:{
+                date:-1
+            }
+        },
+        { $limit : 10 }
+    ])
+
+    res.status(200).render("./reports/reports",{
+        title:"Bet List",
+        bets:bets,
+        me : currentUser,
+        currentUser
+    })
+
+    // User.aggregate([
+    //     {
+    //       $match: {
+    //         parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
+    //       }
+    //     },
+    //     {
+    //       $group: {
+    //         _id: null,
+    //         userIds: { $push: '$_id' } 
+    //       }
+    //     }
+    //   ])
+    //     .then((userResult) => {
+    //       const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
       
-          betModel.aggregate([
-            {
-              $match: {
-                userId: { $in: userIds },
-                status: {$ne:"OPEN"}
-              }
-            },
-            { $limit : 10 }
-          ])
-            .then((betResult) => {
-            //   socket.emit("aggreat", betResult)
-                res.status(200).render("./reports/reports",{
-                    title:"Reports",
-                    bets:betResult,
-                    me : currentUser,
-                    currentUser
-                })
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+    //       betModel.aggregate([
+    //         {
+    //           $match: {
+    //             userId: { $in: userIds },
+    //             status: {$ne:"OPEN"}
+    //           }
+    //         },
+    //         {
+    //             $sort:{
+    //                 date:-1
+    //             }
+    //         },
+    //         { $limit : 10 }
+    //       ])
+    //         .then((betResult) => {
+    //         //   socket.emit("aggreat", betResult)
+    //             res.status(200).render("./reports/reports",{
+    //                 title:"Reports",
+    //                 bets:betResult,
+    //                 me : currentUser,
+    //                 currentUser
+    //             })
+    //         })
+    //         .catch((error) => {
+    //           console.error(error);
+    //         });
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
     // res.status(200).render('./reports/reports',{
     //     title:"Reports",
     //     me:currentUser,
@@ -688,85 +716,88 @@ exports.ReportPage = catchAsync(async(req, res, next) => {
     // })
 })
 
+
 exports.gameReportPage = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
-
-    User.aggregate([
-        {
-          $match: {
-            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
-          }
-        },
-        {
-          $group: {
-            _id: null,
-            userIds: { $push: '$userName' } 
-          }
-        }
-      ])
-        .then((userResult) => {
-          const userIds = userResult.length > 0 ? userResult[0].userIds : [];
-      
-          betModel.aggregate([
-            {
-              $match: {
-                userName: { $in: userIds },
-                status: {$ne:"OPEN"}
-              }
-            },
-            {
-                $group:{
-                    _id:{
-                        userName:'$userName',
-                        gameId: '$event'
-                    },
-                    gameCount:{$sum:1},
-                    loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
-                    won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
-                    returns:{$sum:{$cond:[{$eq:['$status','LOSS']},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
-                    
-                }
-            },
-            {
-                $group:{
-                    _id:'$_id.userName',
-                    gameCount:{$sum:1},
-                    betCount:{$sum:'$gameCount'},
-                    loss:{$sum:'$loss'},
-                    won:{$sum:'$won'},
-                    returns:{$sum:'$returns'}
-    
-                }
-            },
-            {
-                $sort: {
-                  _id: 1,
-                  returns: 1
-                }
-            },
-            {
-                $skip:0
-            },
-            {
-                $limit:10
-            }
-          ])
-            .then((betResult) => {
-            //   socket.emit("aggreat", betResult)
-            res.status(200).render('./gamereports/gamereport',{
-                title:"gameReports",
-                me:currentUser,
-                games:betResult,
-                currentUser
-            })
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+    let childrenUsername = []
+    if(req.currentUser.roleName == 'Operator'){
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
         })
-        .catch((error) => {
-          console.error(error);
-        });    
+    }else{
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }
+    var today = new Date();
+    var todayFormatted = formatDate(today);
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate() - 7);
+    var tomorrowFormatted = formatDate(tomorrow);
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
+    let betResult = await betModel.aggregate([
+    {
+        $match: {
+        userName: { $in: childrenUsername },
+        status: {$in:["WON",'LOSS','CANCEL']},
+        date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
+            
+        }
+    },
+    {
+        $group:{
+            _id:{
+                userName:'$userName',
+                gameId: '$event'
+            },
+            gameCount:{$sum:1},
+            loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+            won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+            void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+            returns:{$sum:'$returns'}
+            
+        }
+    },
+    {
+        $group:{
+            _id:'$_id.userName',
+            gameCount:{$sum:1},
+            betCount:{$sum:'$gameCount'},
+            loss:{$sum:'$loss'},
+            won:{$sum:'$won'},
+            void:{$sum:'$void'},
+            returns:{$sum:'$returns'}
+
+        }
+    },
+    {
+        $sort: {
+            _id: 1,
+            returns: 1
+        }
+    },
+    {
+        $skip:0
+    },
+    {
+        $limit:10
+    }
+    ])
+
+    res.status(200).render('./gamereports/gamereport',{
+        title:"Game Reports",
+        me:currentUser,
+        games:betResult,
+        currentUser
+    })
+         
 
     // let roles
     // if(currentUser.role_type == 1){
@@ -822,11 +853,236 @@ exports.gameReportPage = catchAsync(async(req, res, next) => {
     //     games
     // })
 })
+exports.gameReportPageByMatch = catchAsync(async(req, res, next) => {
+    const currentUser = req.currentUser
+    
+    var today = new Date(req.query.toDate);
+    var todayFormatted = formatDate(today);
+    var tomorrow = new Date(req.query.fromDate);
+    var tomorrowFormatted = formatDate(tomorrow);
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
+    let betResult = await betModel.aggregate([
+    {
+        $match: {
+        userName: { $in: [req.query.userName] },
+        status: {$in:["WON",'LOSS','CANCEL']},
+        date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
+            
+        }
+    },
+    {
+        $group:{
+            _id:{
+                match:'$match',
+                marketName: '$marketName'
+            },
+            eventDate:{$first:'$eventDate'},
+            gameCount:{$sum:1},
+            loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+            won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+            void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+            returns:{$sum:'$returns'}
+            
+        }
+    },
+    {
+        $group:{
+            _id:'$_id.match',
+            eventDate:{$first:'$eventDate'},
+            gameCount:{$sum:1},
+            betCount:{$sum:'$gameCount'},
+            loss:{$sum:'$loss'},
+            won:{$sum:'$won'},
+            void:{$sum:'$void'},
+            returns:{$sum:'$returns'}
 
-exports.useracount = catchAsync(async(req, res, next) => {
+
+        }
+    },
+    {
+        $sort: {
+            _id: 1,
+            returns: 1
+        }
+    },
+    {
+        $skip:0
+    },
+    {
+        $limit:10
+    }
+    ])
+
+    let url = `/admin/gamereport/match/market?userName=${req.query.userName}&fromDate=${req.query.fromDate}&toDate=${req.query.toDate}`
+    
+
+    res.status(200).render('./gamereports/matchwisegamereport',{
+        title:"Game Reports",
+        me:currentUser,
+        games:betResult,
+        currentUser,
+        userName:req.query.userName,
+        url
+    })
+         
+
+   
+})
+exports.gameReportPageByMatchByMarket = catchAsync(async(req, res, next) => {
+    const currentUser = req.currentUser
+    var today = new Date(req.query.toDate);
+    var todayFormatted = formatDate(today);
+    var tomorrow = new Date(req.query.fromDate);
+    var tomorrowFormatted = formatDate(tomorrow);
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
+    let betResult = await betModel.aggregate([
+    {
+        $match: {
+            userName: { $in: [req.query.userName] },
+            status: {$in:["WON",'LOSS','CANCEL']},
+            date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},
+            match:req.query.match
+        }
+    },
+    {
+        $group:{
+            _id:'$marketName',
+            date:{$first:'$date'},
+            gameCount:{$sum:1},
+            loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+            won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+            void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+            returns:{$sum:'$returns'}
+            
+        }
+    },
+    {
+        $sort: {
+            _id: 1,
+            returns: 1
+        }
+    },
+    {
+        $skip:0
+    },
+    {
+        $limit:10
+    }
+    ])
+
+    let url = `/admin/gamereport/match/market/report?userName=${req.query.userName}&fromDate=${req.query.fromDate}&toDate=${req.query.toDate}&match=${req.query.match}`
+    let oldurl = `/admin/gamereport/match?userName=${req.query.userName}&fromDate=${req.query.fromDate}&toDate=${req.query.toDate}`
+    
+
+    res.status(200).render('./gamereports/gamereportBymarket',{
+        title:"Game Reports",
+        me:currentUser,
+        games:betResult,
+        currentUser,
+        userName:req.query.userName,
+        url,
+        matchName:req.query.match,
+        oldurl
+    })
+         
+
+    
+})
+
+exports.gameReportPageFinal = catchAsync(async(req, res, next) => {
+    const currentUser = req.currentUser
+    var today = new Date(req.query.toDate);
+    var todayFormatted = formatDate(today);
+    var tomorrow = new Date(req.query.fromDate);
+    var tomorrowFormatted = formatDate(tomorrow);
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
+    let market;
+    if(req.query.market.toLowerCase().startsWith('book')){
+        market =  {
+            $regex: /^book/i
+          }
+    }else{
+        market = req.query.market
+    }
+    let betResult = await betModel.aggregate([
+    {
+        $match: {
+            userName: { $in: [req.query.userName] },
+            status: {$in:["WON",'LOSS','CANCEL']},
+            date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))},
+            match:req.query.match,
+            marketName:market
+        }
+    },
+    {
+        $project:{
+            date:1,
+            selectionName:1,
+            oddValue:1,
+            ip:1,
+            Stake:1,
+            returns:'$returns'
+        }
+    },
+    {
+        $sort: {
+            date: -1
+        }
+    },
+    {
+        $skip:0
+    },
+    {
+        $limit:10
+    }
+    ])
+
+    let oldurl1 = `/admin/gamereport/match?userName=${req.query.userName}&fromDate=${req.query.fromDate}&toDate=${req.query.toDate}`
+    let oldurl = `/admin/gamereport/match/market?userName=${req.query.userName}&fromDate=${req.query.fromDate}&toDate=${req.query.toDate}&match=${req.query.match}`
+    
+
+    res.status(200).render('./gamereports/gamereportfinal',{
+        title:"Game Reports",
+        me:currentUser,
+        games:betResult,
+        currentUser,
+        userName:req.query.userName,
+        matchName:req.query.match,
+        oldurl,
+        oldurl1,
+        marketName:req.query.market
+    })
+         
+
+   
+})
+
+
+exports.myaccount = catchAsync(async(req, res, next) => {
     const currentUser = req.currentUser
     // console.log(currentUser)
-    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement?id=' + currentUser._id 
+    let operatorId;
+    if(req.currentUser.roleName == 'Operator'){
+        operatorId = req.currentUser.parent_id
+    }else{
+        operatorId = req.currentUser._id
+    }
+    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement?id=' + operatorId 
     fetch(fullUrl, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ` + req.token }
@@ -835,7 +1091,7 @@ exports.useracount = catchAsync(async(req, res, next) => {
         // console.log(json)
         const data = json.userAcc
         res.status(200).render('./userAccountStatement/useracount',{
-        title:"UserAccountStatement",
+        title:"My Account Statement",
         me:currentUser,
         data,
         currentUser
@@ -844,89 +1100,183 @@ exports.useracount = catchAsync(async(req, res, next) => {
 
     
 })
+exports.adminaccount = catchAsync(async(req, res, next) => {
+    const currentUser = req.currentUser
+    // console.log(currentUser)
+    let operatorId;
+    if(req.currentUser.roleName == 'Operator'){
+        operatorId = req.currentUser.parent_id
+    }else{
+        operatorId = req.currentUser._id
+    }
+    var fullUrl = req.protocol + '://' + req.get('host') + '/api/v1/Account/getUserAccStatement1?id=' + operatorId 
+    fetch(fullUrl, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ` + req.token }
+    }).then(res => res.json())
+    .then(json =>{ 
+        // console.log(json)
+        const data = json.userAcc
+        res.status(200).render('./userAccountStatement/adminAccountStatment',{
+        title:"Admin Account Statement",
+        me:currentUser,
+        data,
+        currentUser
+    })
+
+})
+
+    
+})
+exports.useracount = catchAsync(async(req, res, next) => {
+    const currentUser = req.currentUser
+    res.status(200).render('./userAccountStatement/userAccountStatment',{
+        title:"User Account Statement",
+        me:currentUser,
+        data:[],
+        currentUser
+    })
+
+    
+})
 
 exports.userhistoryreport = catchAsync(async(req, res, next) => {
     // const currentUser = global._User
     const currentUser = req.currentUser
-    // const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
-    // let role_type =[]
-    // for(let i = 0; i < roles.length; i++){
-    //     role_type.push(roles[i].role_type)
-    // }
-    // // console.log(role_type)
-    // let Logs
-    // if(currentUser.role_type == 1){
-    //     Logs = await loginLogs.find().limit(10)
-    // }else{
-    //     Logs = await loginLogs.find({ parentUsers:{$elemMatch:{$eq:req.currentUser.id}}}).limit(10)
-    // }
-    // console.log(Logs)
-    User.aggregate([
+    let limit = 10;
+    let childrenUsername = []
+    if(req.currentUser.roleName == 'Operator'){
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }else{
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }
+    let Logs = await loginLogs.aggregate([
+      
         {
-          $match: {
-            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
-          }
+            $match:{
+               userName : {$in:childrenUsername}
+            }
         },
         {
-          $group: {
-            _id: null,
-            userIds: { $push: '$_id' } 
-          }
-        }
-      ])
-        .then((userResult) => {
-          const userIds = userResult.length > 0 ? userResult[0].userIds : [];
-        loginLogs.aggregate([
-            {
-              $match:{
-                user_id:{$in:userIds}
-              }
-            },{
-                $sort:{
-                    login_time:-1
-                }
-            },
-            {
-                $limit:10
+            $sort:{
+                login_time:-1
             }
-          ])
-            .then((Logs) => {
-            //   socket.emit("aggreat", betResult)
-            res.status(200).render('./userHistory/userhistoryreport',{
-                title:"UserHistory",
-                me:currentUser,
-                Logs,
-                currentUser
-            })
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+        },
+        {
+            $limit:10
+        }
+    ])
+
+    // console.log(Logs)
+
+    res.status(200).render('./userHistory/userhistoryreport',{
+        title:"User History",
+        me:currentUser,
+        Logs,
+        currentUser
+    })
+
+    // User.aggregate([
+    //     {
+    //       $match: {
+    //         parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
+    //       }
+    //     },
+    //     {
+    //       $group: {
+    //         _id: null,
+    //         userIds: { $push: '$_id' } 
+    //       }
+    //     }
+    //   ])
+    //     .then((userResult) => {
+    //       const userIds = userResult.length > 0 ? userResult[0].userIds : [];
+    //     loginLogs.aggregate([
+    //         {
+    //           $match:{
+    //             user_id:{$in:userIds}
+    //           }
+    //         },{
+    //             $sort:{
+    //                 login_time:-1
+    //             }
+    //         },
+    //         {
+    //             $limit:10
+    //         }
+    //       ])
+    //         .then((Logs) => {
+    //         //   socket.emit("aggreat", betResult)
+    //         res.status(200).render('./userHistory/userhistoryreport',{
+    //             title:"UserHistory",
+    //             me:currentUser,
+    //             Logs,
+    //             currentUser
+    //         })
+    //         })
+    //         .catch((error) => {
+    //           console.error(error);
+    //         });
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
     })
 
 exports.plreport = catchAsync(async(req, res, next) => {
-    const roles = await Role.find({role_level: {$gt:req.currentUser.role.role_level}});
-    let role_type =[]
-    for(let i = 0; i < roles.length; i++){
-        role_type.push(roles[i].role_type)
-    }
-    // console.log(role_type)
     const currentUser = req.currentUser
-    let users
-    if(currentUser.role_type == 1){
-        users = await User.find({isActive:true}).limit(10)
+    let childrenUsername = []
+    if(req.currentUser.roleName == 'Operator'){
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
     }else{
-        users = await User.find({role_type:{$in:role_type},isActive:true , parentUsers:{$elemMatch:{$eq:req.currentUser.id}}}).limit(10)
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
     }
-        // console.log(users)
+
+    let betResult = await betModel.aggregate([
+    {
+        $match: {
+        userName: { $in: childrenUsername },
+        status: {$in:["LOSS","WON"]}
+        }
+    },
+    {
+        $group:{
+            _id:'$userName',
+            gameCount:{$sum:1},
+            loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+            won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+            returns:{$sum:{$cond:[{$in:['$status',['LOSS','WON']]},'$returns',0]}}
+            
+        }
+    },
+    {
+        $sort: {
+            returns: -1
+        }
+    },
+    {
+        $skip:0
+    },
+    {
+        $limit:10
+    }
+    ])
     res.status(200).render('./PL_Report/plreport',{
         title:"P/L Report",
         me:currentUser,
-        users:users,
+        games:betResult,
         currentUser
     })
     
@@ -1004,7 +1354,7 @@ exports.getPromotionPage = catchAsync(async(req, res, next) => {
 
 exports.getoperationsPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
-    const fundList = await houseFundModel.find({userId:me.id})
+    const fundList = await houseFundModel.find({userId:me.id}).sort({date:-1}).limit(10)
     res.status(200).render("./operations/operation",{
         title:"House Management",
         me,
@@ -1021,81 +1371,76 @@ exports.getSettlementPage = catchAsync(async(req, res, next) => {
     if(settlement === null){
         settlement = await sattlementModel.create({userId:me.id})
     }
+    const currentDate = new Date(); // Current date
+    const fiveDaysAgo = new Date(currentDate);
+    fiveDaysAgo.setDate(currentDate.getDate() - 5);
+    let childrenUsername = []
+    if(req.currentUser.roleName == 'Operator'){
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }else{
+
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }
     let betsEventWise = await betModel.aggregate([
         {
-            $match: {
-                status:"OPEN" 
-            }
+          $match: {
+            eventDate: {$gte: fiveDaysAgo},
+            userName:{$in:childrenUsername}
+          }
         },
         {
-            $lookup: {
-              from: "users",
-              localField: "userName",
-              foreignField: "userName",
-              as: "user"
-            }
-          },
-          {
-            $unwind: "$user"
-          },
-          {
-            $match: {
-              "user.parentUsers": { $in: [req.currentUser.id] }
-            }
-          },
-        //   {
-        //     $group: {
-        //       _id: "$match",
-        //       count: { $sum: 1 }
-        //     }
-        //   },
-        //   {
-        //     $project: {
-        //       _id: 0,
-        //       eventname: "$_id",
-        //       count: 1
-        //     }
-        //   }
-        {
-            $group: {
-              _id: "$match",
-              count: { $sum: 1 },
-              eventdate: { $first: "$eventDate" }, 
-              eventid: { $first: "$eventId" },
-              series: {$first: "$event"} 
-            }
-          },
-          {
-            $project: {
-              _id: 0,
-              matchName: "$_id",
-              eventdate: 1,
-              eventid: 1,
-              series:1,
-              count: 1
-            }
-          },
-          {
-              $sort:{
-                eventdate: -1
-              }
+          $group: {
+            _id: {
+              betType: "$betType",
+              eventid: "$eventId"
+            },
+            count: { $sum: 1 },
+            eventdate: { $first: "$eventDate" }, 
+            matchName: { $first: "$match" },
+            series: {$first: "$event"},
+            count2: { 
+                $sum: {
+                  $cond: [{ $eq: ["$status", "OPEN"] }, 1, 0],
+                },
+            },
           }
-    ])
-    // let users = await User.find({roleName:"Super-Duper-Admin"})
-    // for(let i = 0; i < users.length; i++){
-    //     await commissionModel.create({userId:users[i].id})
-    //     // let settlement = await sattlementModel.findOne({userId:users[i].id})
-    //     // if(settlement === null){
-    //     //     await sattlementModel.create({userId:users[i].id})
-    //     // }
-
-    // }
-    // let sportData = await getCrkAndAllData()
-    // const cricket1 = sportData[0].gameList[0].eventList
-    // console.log(cricket1)
-    // console.log(betsEventWise)
+        },
+        {
+          $group: {
+            _id: "$_id.betType",
+            data: {
+              $push: {
+                matchName: "$matchName",
+                count: "$count",
+                eventdate : '$eventdate',
+                eventid : "$_id.eventid",
+                series : '$series',
+                count2: "$count2",
+              }
+            }
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            id: "$_id", 
+            data: 1
+          }
+        },
+        {
+            $sort:{
+                'data.eventdate':-1
+            }
+        }
+      ]);
     res.status(200).render("./sattelment/setalment",{
-        title:"SETTLEMENTS",
+        title:"Settlements",
         me,
         currentUser:me,
         settlement,
@@ -1132,12 +1477,20 @@ exports.WhiteLabelAnalysis = catchAsync(async(req, res, next) => {
                 onLineUser:{$sum:{$cond:[{$eq:['$is_Online',true]},1,0]}},
                 pL:{$sum:"$myPL"}
             }
-        }
+        },
+        {
+            $project: {
+              _id: 1,
+              activeUser: 1,
+              onLineUser: 1,
+              pL: { $round: ['$pL', 2] } 
+            }
+          }
     ])
     const me = req.currentUser
     // console.log(whiteLabelWise)
     res.status(200).render("./whiteLableAnalysis/whiteLableAnalysis",{
-        title:"whiteLableAnalysis",
+        title:"White Lable Analysis",
         whiteLabelWise,
         me,
         currentUser:me
@@ -1158,59 +1511,72 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
     }else{
         fWhitlabel = req.currentUser.whiteLabel
     }
-    const gameAnalist = await betModel.aggregate([
-        {
-            $lookup:{
-                from:'users',
-                localField:'userName',
-                foreignField:'userName',
-                as:'userDetails'
-            }
-        },
-        {
-            $unwind:'$userDetails'
-        },
-        {
-            $match:{
-                'userDetails.isActive':true,
-                'userDetails.roleName':{$ne:'Admin'},
-                'userDetails.role_type':{$in:role_type},
-                'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}},
-                'userDetails.whiteLabel':fWhitlabel
-            }
-        },
-        {
-            $group:{
-                _id:{
-                    event:'$event',
-                    userName:'$userName'
-                },
-                betCount:{$sum:1},
-                loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
-                won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
-                open:{$sum:{$cond:[{$eq:['$status','OPEN']},1,0]}},
-                returns:{$sum:{$cond:[{$in:['$status',['LOSS','OPEN']]},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
+    // const gameAnalist = await betModel.aggregate([
+    //     {
+    //         $lookup:{
+    //             from:'users',
+    //             localField:'userName',
+    //             foreignField:'userName',
+    //             as:'userDetails'
+    //         }
+    //     },
+    //     {
+    //         $unwind:'$userDetails'
+    //     },
+    //     {
+    //         $match:{
+    //             'userDetails.isActive':true,
+    //             'userDetails.roleName':{$ne:'Admin'},
+    //             'userDetails.role_type':{$in:role_type},
+    //             'userDetails.parentUsers':{$elemMatch:{$eq:req.currentUser.id}}
+    //         }
+    //     },
+    //     {
+    //         $group:{
+    //             _id:{
+    //                 userName:'$userName',
+    //                 whiteLabel:'$userDetails.whiteLabel'
+    //             },
+    //             betCount:{$sum:1},
+    //             loss:{$sum:{$cond:[{$eq:['$status','LOSS']},1,0]}},
+    //             won:{$sum:{$cond:[{$eq:['$status','WON']},1,0]}},
+    //             open:{$sum:{$cond:[{$in:['$status',['MAP','OPEN']]},1,0]}},
+    //             void:{$sum:{$cond:[{$eq:['$status','CANCEL']},1,0]}},
+    //             returns:{$sum:{$cond:[{$in:['$status',['LOSS','OPEN']]},'$returns',{ "$subtract": [ "$returns", "$Stake" ] }]}}
                 
-            }
-        },
-        {
-            $group:{
-                _id:'$_id.event',
-                Total_User:{$sum:1},
-                betcount:{$sum:'$betCount'},
-                loss:{$sum:'$loss'},
-                won:{$sum:'$won'},
-                open:{$sum:'$open'},
-                returns:{$sum:'$returns'}
-            }
-        }
-    ])
+    //         }
+    //     },
+    //     {
+    //         $group:{
+    //             _id:'$_id.whiteLabel',
+    //             Total_User:{$sum:1},
+    //             betcount:{$sum:'$betCount'},
+    //             loss:{$sum:'$loss'},
+    //             won:{$sum:'$won'},
+    //             open:{$sum:'$open'},
+    //             void:{$sum:'$void'},
+    //             returns:{$sum:'$returns'}
+    //         }
+    //     },
+    //     {
+    //         $sort: {
+    //             betcount: -1 ,
+    //             open : -1,
+    //             won : -1,
+    //             loss : -1,
+    //             Total_User:-1
+    //         }
+    //     },
+    //     {
+    //         $limit: 10 
+    //     }
+    // ])
     // console.log(gameAnalist)
 
     const me = req.currentUser
     res.status(200).render("./gameAnalysis/gameanalysis",{
         title:"Game Analysis",
-        gameAnalist,
+        // gameAnalist,
         me,
         currentUser:me
     })
@@ -1218,11 +1584,108 @@ exports.gameAnalysis =  catchAsync(async(req, res, next) => {
 
 exports.getStreamManagementPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
+    const sportData = await getCrkAndAllData()
+    let cricketList;
+    cricketList = sportData[0].gameList[0]
+    const sportList =[
+        {sport_name:"Cricket",sportId:4}	,
+        {sport_name:"Football",sportId:1}	,
+        {sport_name:"Tennis",sportId:2}
+    ]
+   
+    const streams = await Stream.find()
     res.status(200).render("./streamManagement/streammanagement",{
-        title:"Streammanagement",
+        title:"Stream Management",
         me,
-        currentUser:me
+        currentUser:me,
+        cricketList,
+        streams,
+        sportList
     })
+})
+
+exports.getStreamEventListPage = catchAsync(async(req, res, next)=>{
+    const sportData = await getCrkAndAllData()
+    const sportId = req.query.sportId;
+    const me = req.currentUser
+    let cricketEvents;
+    let footballEvents;
+    let tennisEvents;
+    let sportList;
+    let eventList = [];
+    let sportName;
+   
+    let data = {};
+
+    if(sportId == '4'){
+        sportList = sportData[0].gameList[0]
+    }else{
+        sportList = sportData[1].gameList.find(item => item.sportId == parseInt(sportId))
+    }
+    
+    if(sportList){
+        sportName = sportList.sport_name;
+        let newSportList = sportList.eventList.map(async(item) => {
+            if(item.eventData.type == 'IN_PLAY' && item.eventData.isTv == 1){
+                let stream = await Stream.findOne({sportId:sportId,eventId:item.eventData.eventId})
+                let liveStream = await liveStreameData(item.eventData.channelId)
+                let status;
+                let url;
+                if(stream){
+                    status = stream.status
+                    if(stream.url != ''){
+                        url = stream.url
+                    }else{
+                        const src_regex = /src='([^']+)'/;
+                        let match1
+                        if(liveStream.data){
+                            match1 = liveStream.data.match(src_regex);
+                            if (match1) {
+                                url = match1[1];
+                            } else {
+                                console.log("No 'src' attribute found in the iframe tag.");
+                            }
+                        }
+                    
+                    }
+                    eventList.push({eventId:item.eventData.eventId,sportId,created_on:item.eventData.created_on,eventName:item.eventData.name,sportName:sportName,status,url})
+                }else{
+                    const src_regex = /src='([^']+)'/;
+                    let match1
+                    if(liveStream.data){
+                        match1 = liveStream.data.match(src_regex);
+                        if (match1) {
+                            url = match1[1];
+                        } else {
+                            console.log("No 'src' attribute found in the iframe tag.");
+                        }
+                        // console.log(src, 123)
+                    }
+                    eventList.push({eventId:item.eventData.eventId,sportId,created_on:item.eventData.created_on,eventName:item.eventData.name,sportName:sportName,status:true,url})
+
+                }
+            }
+        })
+
+        Promise.all(newSportList).then(()=>{
+            res.status(200).render("./streamManagement/events",{
+                title:"Stream Management",
+                me,
+                currentUser:me,
+                eventList
+            })
+        })
+
+    }else{
+        res.status(200).render("./streamManagement/events",{
+            title:"Stream Management",
+            me,
+            currentUser:me,
+            eventList
+        })
+    }
+
+
 })
 
 exports.getNotificationsPage = catchAsync(async(req, res, next) => {
@@ -1261,99 +1724,132 @@ exports.getBetMoniterPage = catchAsync(async(req, res, next) => {
     //     bets = await betModel.find({role_type:{$in:role_type},status:'OPEN'}).limit(10)
     // }
     // console.log(bets)
-    User.aggregate([
+    let limit = 10;
+    // const sportListData = await getCrkAndAllData()
+    // let events = sportListData[0].gameList[0].eventList
+    // sportListData[1].gameList.map(ele => {
+    //     events = events.concat(ele.eventList)
+    // })
+    let whiteLabels;
+    if(req.currentUser.role.role_level == 1){
+        whiteLabels = await whiteLabel.find()
+    }
+
+    let childrenUsername = []
+    if(req.currentUser.roleName == "Operator"){
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }else{
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }
+    var today = new Date();
+    var todayFormatted = formatDate(today);
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate() - 1);
+    var tomorrowFormatted = formatDate(tomorrow);
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
+
+    let betResult = await betModel.aggregate([
         {
           $match: {
-            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
-          }
+            userName: { $in: childrenUsername },
+            date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
+            }
         },
         {
-          $group: {
-            _id: null,
-            userIds: { $push: '$_id' } 
-          }
-        }
-      ])
-        .then((userResult) => {
-          const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-      
-          betModel.aggregate([
-            {
-              $match: {
-                userId: { $in: userIds },
-                status: 'OPEN'
+            $sort:{
+                date:-1
+            }
+        },
+        { $limit : limit }
+    ])
+
+    let events = await betModel.aggregate([
+        {
+            $match: {
+              userName: { $in: childrenUsername },
+              date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
               }
-            },
-            { $limit : 10 }
-          ])
-            .then((betResult) => {
-            //   socket.emit("aggreat", betResult)
-              let me = req.currentUser
-                res.status(200).render("./betMonitering/betmoniter",{
-                    title:"Betmoniter",
-                    bets:betResult,
-                    me,
-                    currentUser:me
-                })
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    // const me = global._User
-    // res.status(200).render("./betMonitering/betmoniter",{
-    //     title:"Betmoniter",
-    //     bets,
-    //     me
-    // })
+        },
+        {
+            $group:{
+                _id:'$match',
+                eventId:{$first:'$eventId'}
+            }
+        }
+    ])
+
+   
+    let me = req.currentUser
+    res.status(200).render("./betMonitering/betmoniter",{
+        title:"Bet Moniter",
+        bets:betResult,
+        me,
+        currentUser:me,
+        events,
+        whiteLabels
+    })
+           
 })
 
 exports.getBetAlertPage = catchAsync(async(req, res, next) => {
-    User.aggregate([
+    var today = new Date();
+    var todayFormatted = formatDate(today);
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate() - 7);
+    var tomorrowFormatted = formatDate(tomorrow);
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
+    let childrenUsername = []
+    if(req.currentUser.roleName == "Operator"){
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }else{
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }
+    let betResult = await betModel.aggregate([
         {
           $match: {
-            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
+            userName: { $in: childrenUsername },
+            alertStatus:{$in:['ALERT','CANCEL','ACCEPT']},
+            date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
           }
         },
         {
-          $group: {
-            _id: null,
-            userIds: { $push: '$_id' } 
-          }
-        }
+            $sort:{
+                date: -1
+            }
+        },
+        { $limit : 10 }
       ])
-        .then((userResult) => {
-          const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-      
-          betModel.aggregate([
-            {
-              $match: {
-                userId: { $in: userIds },
-                status: 'Alert'
-              }
-            },
-            { $limit : 10 }
-          ])
-            .then((betResult) => {
-            //   socket.emit("aggreat", betResult)
-              let me = req.currentUser
-              res.status(200).render("./alertBet/alertbet", {
-                title:"Alert Bet",
-                bets:betResult,
-                me,
-                currentUser:me
-            })
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        })
-        .catch((error) => {
-          console.error(error);
-        }); 
+    //   socket.emit("aggreat", betResult)
+    let me = req.currentUser
+        res.status(200).render("./alertBet/alertbet", {
+        title:"Alert Bet",
+        bets:betResult,
+        me,
+        currentUser:me
+    })
+          
 })
 
 exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
@@ -1364,7 +1860,7 @@ exports.getCasinoControllerPage = catchAsync(async(req, res, next) => {
     RG = await gameModel.find({sub_provider_name:"Royal Gaming"})
     // console.log(RG.length)
     res.status(200).render("./casinoController/casinocontrol", {
-        title:"casinoController",
+        title:"Casino Controller",
         data:data,
         RG,
         currentUser,
@@ -1381,10 +1877,10 @@ exports.promotion = catchAsync(async(req, res, next) => {
 });
 
 exports.getAllCasinoPageFOrTEsting = catchAsync(async(req, res, next) => {
-    const data = await gameModel.find();
+    const data = await gameModel.find({status:true});
     let user = req.currentUser
     res.status(200).render('allCasinoGame', {
-        title:"allGame",
+        title:"All Games",
         data,
         user
     })
@@ -1421,61 +1917,87 @@ exports.getVoidBetPage = catchAsync(async(req, res, next) => {
     // }else{
     //     bets = await betModel.find({role_type:{$in:role_type},status:'CANCEL'}).limit(10)
     // }
+    let limit = 10;
+    let childrenUsername = []
+    if(req.currentUser.roleName == 'Operator'){
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }else{
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }
+    var today = new Date();
+    var todayFormatted = formatDate(today);
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate() - 1);
+    var tomorrowFormatted = formatDate(tomorrow);
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        return year + "-" + month + "-" + day;
+    }
 
-
-    User.aggregate([
+    let betResult = await betModel.aggregate([
         {
-          $match: {
-            parentUsers: { $elemMatch: { $eq: req.currentUser.id } }
-          }
+            $match:{
+                status: 'OPEN',
+                userName:{$in:childrenUsername},
+                date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
+            }
         },
         {
-          $group: {
-            _id: null,
-            userIds: { $push: '$_id' } 
-          }
+            $sort:{
+                date:-1
+            }
+        },
+        {
+            $limit:limit
         }
-      ])
-        .then((userResult) => {
-          const userIds = userResult.length > 0 ? userResult[0].userIds.map(id => id.toString()) : [];
-      
-          betModel.aggregate([
-            {
-              $match: {
-                userId: { $in: userIds },
-                status: 'CANCEL'
-              }
-            },
-            { $limit : 10 }
-          ])
-            .then((betResult) => {
-            //   socket.emit("aggreat", betResult)
-              let me = req.currentUser
-                res.status(200).render("./voidBet/voidBet",{
-                    title:"Void Bets",
-                    bets:betResult,
-                    me,
-                    currentUser:me
-                })
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+    ])
+    let events = await betModel.aggregate([
+        {
+            $match:{
+                status: 'CANCEL',
+                userName:{$in:childrenUsername},
+                date:{$gte:new Date(tomorrowFormatted),$lte:new Date(new Date(todayFormatted).getTime() + ((24 * 60*60*1000)-1))}          
+            }
+        },
+        {
+            $group:{
+                _id:'$match',
+                eventId:{$first:'$eventId'}
+            }
+        }
+    ])
+
+    let me = req.currentUser
+    res.status(200).render("./voidBet/voidBet",{
+        title:"Void Bets",
+        bets:betResult,
+        me,
+        currentUser:me,
+        events
+    })
 });
 
 
 exports.getBetLimitPage = catchAsync(async(req, res, next) => {
     const me = req.currentUser
-    const betLimit = await betLimitModel.find()
+    // const betLimit = await betLimitModel.find()
+    let homeData = await betLimitModel.findOne({type:'Home'})
+    let sportData = await betLimitModel.findOne({type:'Sport'})
     res.status(200).render("./betLimit/betLimit", {
         title:"Bet Limits",
-        betLimit,
+        // betLimit,
         me,
-        currentUser:me
+        currentUser:me,
+        homeData,
+        sportData
     })
 });
 
@@ -1525,7 +2047,7 @@ exports.getCricketData = catchAsync(async(req, res, next) => {
 // });
 
 exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
-    let body = JSON.stringify(["4.2042765376-F2", "4.689323283-F2"]);
+    let body = JSON.stringify(["4.1696509847-F2"]);
     // console.log(body)
     var fullUrl = 'https://oddsserver.dbm9.com/dream/get_odds';
     fetch(fullUrl, {
@@ -1538,7 +2060,6 @@ exports.getmarketDetailsByMarketId = catchAsync(async(req, res, next) => {
     })
     .then(res =>res.json())
     .then(result => {
-        console.log(result)
         res.status(200).json({
             result
         })
@@ -1558,7 +2079,6 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
     })
     .then(res =>res.json())
     .then(result => {
-        console.log(result)
         res.status(200).json({
             result
         })
@@ -1567,7 +2087,7 @@ exports.getLiveTv = catchAsync(async(req, res, next) => {
 
 
 exports.getMarketResult = catchAsync(async(req, res, next) => {
-    let body = JSON.stringify(["1.216954411"]);
+    let body = JSON.stringify([ "4.1697461669317-F2"]);
     // console.log(body)
     let fullUrl = "https://admin-api.dreamexch9.com/api/dream/markets/result";
     fetch(fullUrl, {
@@ -1677,30 +2197,22 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
     let liveFootBall = footBall.eventList;
     let liveTennis = Tennis.eventList
     let currentUser =  req.currentUser
+    let childrenUsername = []
+    let children = await User.find({parentUsers:req.currentUser._id})
+    children.map(ele => {
+        childrenUsername.push(ele.userName) 
+    })
+
+    // console.log(childrenUsername, "+====>> childrenUsername ")
     // console.log(req.currentUser)
     let openBet = topGames = await betModel.aggregate([
         {
             $match: {
-                status:"OPEN" 
+                status:"OPEN" ,
+                userName:{$in:childrenUsername}
             }
         },
         {
-            $lookup: {
-              from: "users",
-              localField: "userName",
-              foreignField: "userName",
-              as: "user"
-            }
-          },
-          {
-            $unwind: "$user"
-          },
-          {
-            $match: {
-              "user.parentUsers": { $in: [req.currentUser.id] }
-            }
-          },
-          {
             $addFields: {
                 shortMarketName: { $substrCP: [{ $toLower: "$marketName" }, 0, 3] }
             }
@@ -1710,20 +2222,6 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
                 shortMarketName: { $in: ["mat", "boo", "tos"] }
             }
         },
-        //   {
-        //     $group: {
-        //         _id: "$betType",
-        //         details: {
-        //             $push: {
-        //                 id: "$marketId",
-        //                 marketName: "$marketName",
-        //                 match:"$match",
-        //                 date:'$date'
-        //                 // Add other fields you want here
-        //             }
-        //         }
-        //     }
-        // },
         {
             $group: {
                 _id: {
@@ -1774,86 +2272,10 @@ exports.getLiveMarketsPage = catchAsync(async(req, res, next) => {
                 bettype: "$_id",
                 details: 1
             }
-        },
-        // {
-        //     $unwind: "$details"
-        // },
-        // {
-        //     $match: {
-        //         "details.shortMarketName": {
-        //             $in: ["mat", "boo", "tos"]
-        //         }
-        //     }
-        // },
-        // {
-        //     $project: {
-        //         _id: 0,
-        //         bettype: "$_id",
-        //         details: 1
-        //     }
-        // }
-        // {
-        //     $group: {
-        //         _id: {
-        //             betType: "$_id.betType",
-        //             marketId: "$_id.marketId"
-        //         },
-        //         details: {
-        //             $push: {
-        //                 id: "$_id.marketId",
-        //                 marketName: "$marketName",
-        //                 match: "$match",
-        //                 date: "$date",
-        //                 stake: "$stake",
-        //                 beton: "$_id.beton"
-        //             }
-        //         }
-        //     }
-        // },
-        // {
-        //     $group: {
-        //         _id: "$_id.betType",
-        //         details: { $push: "$details" }
-        //     }
-        // },
-        // {
-        //     $project: {
-        //         _id: 0,
-        //         bettype: "$_id",
-        //         details: 1
-        //     }
-        // },
-        // {
-        //     $project: {
-        //         _id: 0,
-        //         bettype: "$_id",
-        //         details: 1
-        //     }
-        // }
-        // {
-        //     $project: {
-        //         _id: 0,
-        //         bettype: "$_id",
-        //         details: {
-        //             $filter: {
-        //                 input: "$details",
-        //                 as: "detail",
-        //                 cond: {
-        //                     $in: [
-        //                         { $substrCP: [{ $toLower: "$$detail.marketName" }, 0, 3] },
-        //                         ["mat", "boo", "tos"]
-        //                     ]
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        }
     ])
-    console.log(openBet[0].details, "openBet")
-    // console.log(openBet[0].details[0][0], "openBet")
-    // console.log(liveFootBall)
-    // console.log(liveTennis)
-    // console.log(liveCricket)
+
+    // console.log(openBet[0].details, "openBetopenBet")
     res.status(200).render("./liveMarket/liveMarket", {
         title:"Live Market",
         liveCricket,
@@ -1874,7 +2296,7 @@ exports.getCmsPage = catchAsync(async(req, res, next) => {
     let banner = await bannerModel.find()
     let sliders = await sliderModel.find().sort({Number:1})
     res.status(200).render("./Cms/cms",{
-        title:"CMS",
+        title:"Home Page Management",
         user,
         me:user,
         currentUser:user,
@@ -1903,13 +2325,18 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-    let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
+    let featureEventId = []
+    let featureStatusArr = await FeatureventModel.find();
+    featureStatusArr.map(ele => {
+        featureEventId.push(parseInt(ele.Id))
+    })
+    let LiveCricket = cricket.filter(item => featureEventId.includes(item.eventData.eventId))
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
     footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-    let liveFootBall = footBall.filter(item => item.eventData.type === "IN_PLAY");
-    let liveTennis = Tennis.filter(item => item.eventData.type === "IN_PLAY")
+    let liveFootBall = footBall.filter(item => featureEventId.includes(item.eventData.eventId));
+    let liveTennis = Tennis.filter(item => featureEventId.includes(item.eventData.eventId))
     let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
     let upcomintFootball = footBall.filter(item => item.eventData.type != "IN_PLAY")
     let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY")
@@ -1951,6 +2378,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
     }
     let catalog = await catalogController.find()
     res.status(200).render('./userSideEjs/exchangePage/main',{
+        title:"Exchange Page",
         user,
         verticalMenus,
         check:"Exchange",
@@ -1967,8 +2395,7 @@ exports.getUserExchangePage = catchAsync(async(req, res, next) => {
         cricketSeries,
         footbalSeries,
         tennisSeries,
-        catalog
-        
+        catalog,        
     })
 })
 
@@ -1977,13 +2404,21 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
+    let featureEventId = []
+    let featureStatusArr = await FeatureventModel.find();
+    featureStatusArr.map(ele => {
+        featureEventId.push(parseInt(ele.Id))
+    })
     let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
+    let LiveCricket1 = cricket.filter(item => featureEventId.includes(item.eventData.eventId))
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
     footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-    let liveFootBall = footBall.filter(item => item.eventData.type === "IN_PLAY");
     let liveTennis = Tennis.filter(item => item.eventData.type === "IN_PLAY")
+    let liveTennis1 = Tennis.filter(item => featureEventId.includes(item.eventData.eventId))
+    let liveFootBall = footBall.filter(item => item.eventData.type === "IN_PLAY");
+    let liveFootBall1 = footBall.filter(item => featureEventId.includes(item.eventData.eventId));
     const data = await promotionModel.find();
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     let userLog
@@ -2020,14 +2455,19 @@ exports.inplayMatches = catchAsync(async(req, res, next) => {
         }
     });
     let catalog = await catalogController.find()
+
     res.status(200).render('./userSideEjs/inplayPage/main',{
+        title:'In Play',
         user,
         verticalMenus,
         check:"In-Play",
         data,
+        liveFootBall1,
         liveFootBall,
         liveTennis,
+        liveTennis1,
         LiveCricket,
+        LiveCricket1,
         userLog,
         notifications:req.notifications,
         userMultimarkets,
@@ -2043,7 +2483,12 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
     let user = req.currentUser
     const sportListData = await getCrkAndAllData()
     const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-    let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
+    let featureEventId = []
+    let featureStatusArr = await FeatureventModel.find();
+    featureStatusArr.map(ele => {
+        featureEventId.push(parseInt(ele.Id))
+    })
+    let LiveCricket = cricket.filter(item => featureEventId.includes(item.eventData.eventId))
     let upcomintCricket = cricket.filter(item => item.eventData.type != "IN_PLAY")
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
@@ -2063,7 +2508,10 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
         }
     });
     let catalog = await catalogController.find()
+  
+
     res.status(200).render("./userSideEjs/cricketPage/main", {
+        title:'Cricket',
         user,
         verticalMenus,
         check:"Cricket",
@@ -2075,7 +2523,7 @@ exports.cricketPage = catchAsync(async(req, res, next)=>{
         userMultimarkets,
         cricketSeries,
         catalog
-    })
+        })
 })
 
 
@@ -2083,7 +2531,7 @@ exports.cardsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:true});
     let userLog
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
@@ -2096,6 +2544,7 @@ exports.cardsPage = catchAsync(async(req, res, next) => {
         check = "Slots"
     }
     res.status(200).render("./userSideEjs/cards/main",{
+        title:'Cards Games',
         user,
         verticalMenus,
         data,
@@ -2112,7 +2561,12 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
     const sportListData = await getCrkAndAllData()
     let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
     footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-    let liveFootBall = footBall.filter(item => item.eventData.type === "IN_PLAY");
+    let featureEventId = []
+    let featureStatusArr = await FeatureventModel.find();
+    featureStatusArr.map(ele => {
+        featureEventId.push(parseInt(ele.Id))
+    })
+    let liveFootBall = footBall.filter(item => featureEventId.includes(item.eventData.eventId));
     let upcomintFootball = footBall.filter(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
     let userLog
@@ -2131,7 +2585,9 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
         }
     });
     let catalog = await catalogController.find()
+
     res.status(200).render('.//userSideEjs/footballPage/main',{
+        title:'Football',
         user,
         verticalMenus,
         check:"Football",
@@ -2142,7 +2598,8 @@ exports.footBallPage = catchAsync(async(req, res, next) => {
         notifications:req.notifications,
         userMultimarkets,
         footbalSeries,
-        catalog
+        catalog,
+        featureStatusArr
     })
 })
 
@@ -2152,7 +2609,12 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
     const sportListData = await getCrkAndAllData()
     let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
     Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-    let liveTennis = Tennis.filter(item => item.eventData.type === "IN_PLAY")
+    let featureEventId = []
+    let featureStatusArr = await FeatureventModel.find();
+    featureStatusArr.map(ele => {
+        featureEventId.push(parseInt(ele.Id))
+    })
+    let liveTennis = Tennis.filter(item => featureEventId.includes(item.eventData.eventId))
     let upcomintTennis = Tennis.filter(item => item.eventData.type != "IN_PLAY")
     const data = await promotionModel.find();
     let userLog
@@ -2171,7 +2633,9 @@ exports.TennisPage = catchAsync(async(req, res, next) => {
         }
     });
     let catalog = await catalogController.find()
+
     res.status(200).render('.//userSideEjs/tennisPage/main',{
+        title:'Tennis',
         user,
         verticalMenus,
         check:"Tennis",
@@ -2218,6 +2682,7 @@ exports.userPlReports = catchAsync(async(req, res, next) => {
     }
     // console.log(data)
     res.status(200).render("./userSideEjs/plStatemenet/main",{
+        title:'P/L Reports',
         user: req.currentUser,
         data,
         verticalMenus,
@@ -2232,7 +2697,6 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
     let ip = req.ip
     let ipv4
     if (ip.indexOf('::ffff:') === 0) {
-        // Extract the IPv4 portion from the IPv6 address
         ipv4 = ip.split('::ffff:')[1];
     }else{
         ipv4 = ip
@@ -2251,40 +2715,31 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             message:"This match is no more live"
         })
     }
-    const liveStream = await liveStreameData(match.eventData.channelId, ipv4)
-    const src_regex = /src='([^']+)'/;
-    let match1
     let src
-    if(liveStream.data){
-
-        match1 = liveStream.data.match(src_regex);
-        if (match1) {
-            src = match1[1];
-        } else {
-            console.log("No 'src' attribute found in the iframe tag.");
+    let status = false
+    let liveStream
+    let StreamData = await streamModel.findOne({eventId:req.query.id})
+    if(StreamData){
+        if(StreamData.status){
+            src = StreamData.url
+            status = true
         }
-        // console.log(src, 123)
+    }else{
+        liveStream = await liveStreameData(match.eventData.channelId, ipv4)
+        const src_regex = /src='([^']+)'/;
+        let match1
+        // let src
+        if(liveStream.data){
+    
+            match1 = liveStream.data.match(src_regex);
+            if (match1) {
+                src = match1[1];
+                status = true
+            } else {
+                console.log("No 'src' attribute found in the iframe tag.");
+            }
+        }
     }
-    const betLimit = await betLimitModel.find()
-    // console.log(match.marketList.goals)
-    // let session = match.marketList.session.filter(item => {
-        //     let date = new Date(item.updated_on);
-        //     return date < Date.now() - 1000 * 60 * 60;
-        // });
-        let SportLimits = betLimit.find(item => item.type === "Sport")
-        let min 
-        let max 
-        if (SportLimits.min_stake >= 1000) {
-            min = (SportLimits.min_stake / 1000) + 'K';
-        } else {
-            min = SportLimits.min_stake.toString();
-        }
-        if (SportLimits.max_stake >= 1000) {
-            max = (SportLimits.max_stake / 1000) + 'K';
-          } else {
-            max = SportLimits.max_stake.toString();
-        }
-        console.log(SportLimits, min , max)
         let userLog
         let stakeLabledata
         let userMultimarkets
@@ -2301,13 +2756,88 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         }else{
             stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
         }
+
+        let filtertinMatch = {}
+        let sportName = ''
+        if(match.eventData.sportId === 1){
+            filtertinMatch = {
+                type : {
+                    $in :['Home', "Football", 'Football/matchOdds', match.eventData.league, match.eventData.name]
+                }
+            }
+
+            sportName = 'Football'
+        }else if (match.eventData.sportId === 2){
+            filtertinMatch = {
+                type : {
+                    $in :['Home', "Tennis", 'Tennis/matchOdds', match.eventData.league, match.eventData.name]
+                }
+            }
+            sportName = 'Tennis'
+        }else if(match.eventData.sportId === 4){
+            filtertinMatch = {
+                type : {
+                    $in :['Home', "Cricket", 'Cricket/matchOdds', "Cricket/bookMaker", 'Cricket/fency', match.eventData.league, match.eventData.name]
+                }
+            }
+            sportName = 'Cricket'
+        }
+
+        let betLimit = await betLimitModel.findOne({type:match.eventData.name})
+        if(!betLimit){
+            betLimit = await betLimitModel.findOne({type:match.eventData.league})
+            if(!betLimit){
+                betLimit = await betLimitModel.findOne({type:sportName})
+                if(!betLimit){
+                    betLimit = await betLimitModel.findOne({type:'Sport'})
+                    if(!betLimit){
+                        betLimit = await betLimitModel.findOne({type:'Home'})
+                    }
+                }
+            }
+        }
+
+        let minMatchOdds = betLimit.min_stake
+        let maxMatchOdds = betLimit.max_stake
+        let minBookMaker = betLimit.min_stake
+        let maxBookMaker = betLimit.max_stake
+        let minFancy = betLimit.min_stake
+        let maxFancy = betLimit.max_stake
+        let MATCHODDDATA = await betLimitModel.findOne({type:`${sportName}/matchOdds`})
+        if(MATCHODDDATA){
+            minMatchOdds = MATCHODDDATA.min_stake
+            maxMatchOdds = MATCHODDDATA.max_stake
+        }
+        let BOOKMAKER = await betLimitModel.findOne({type:`${sportName}/bookMaker`})
+        if(BOOKMAKER){
+            minBookMaker = BOOKMAKER.min_stake
+            maxBookMaker = BOOKMAKER.max_stake
+        }
+        let FENCY = await betLimitModel.findOne({type:`${sportName}/fency`})
+        if(FENCY){
+            minFancy = FENCY.min_stake
+            maxFancy = FENCY.max_stake
+        }
+
+        const commissionmarket = await commissionMarketModel.find();
+        let commissionmarkerarr = [];
+        commissionmarket.map(ele=>{
+            commissionmarkerarr.push(ele.marketId)
+        })
+
+        // console.log(betLimit)
+        // console.log(minMatchOdds, maxMatchOdds, minFancy, maxFancy, minBookMaker, maxBookMaker)
+
+        const betLimitMarekt = await betLimitMatchWisemodel.findOne({matchTitle:match.eventData.name})
+        let notification = await eventNotification.findOne({id:req.query.id})
         res.status(200).render("./userSideEjs/userMatchDetails/main",{
+            title:match.eventData.name,
             user: req.currentUser,
             verticalMenus,
             check:"ExchangeIn",
             match,
-            SportLimits,
             liveStream,
+            status,
             userLog,
             notifications:req.notifications,
             stakeLabledata,
@@ -2315,8 +2845,16 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
             rules,
             src,
             userMultimarkets,
-            min,
-            max
+            betLimitMarekt,
+            betLimit,
+            minBookMaker,
+            maxBookMaker,
+            minMatchOdds,
+            maxMatchOdds,
+            minFancy,
+            maxFancy,
+            commissionmarkerarr,
+            notification
     })
 });
 
@@ -2327,22 +2865,23 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     const sportData = await getCrkAndAllData()
     
     const betLimit = await betLimitModel.find()
+    // let rules = await gamrRuleModel.find()
     // console.log(match.marketList.goals)
     // let session = match.marketList.session.filter(item => {
     //     let date = new Date(item.updated_on);
     //     return date < Date.now() - 1000 * 60 * 60;
     // });
-    let SportLimits = betLimit.find(item => item.type === "Sport")
-    if (SportLimits.min_stake >= 1000) {
-        SportLimits.min_stake = ( SportLimits.min_stake / 1000).toFixed(1) + 'K';
-      } else {
-        SportLimits.min_stake =  SportLimits.min_stake.toString();
-    }
-    if (SportLimits.max_stake >= 1000) {
-        SportLimits.max_stake = ( SportLimits.max_stake / 1000).toFixed(1) + 'K';
-      } else {
-        SportLimits.max_stake =  SportLimits.max_stake.toString();
-    }
+    // let SportLimits = betLimit.find(item => item.type === "Sport")
+    // if (SportLimits.min_stake >= 1000) {
+    //     SportLimits.min_stake = ( SportLimits.min_stake / 1000).toFixed(1) + 'K';
+    //   } else {
+    //     SportLimits.min_stake =  SportLimits.min_stake.toString();
+    // }
+    // if (SportLimits.max_stake >= 1000) {
+    //     SportLimits.max_stake = ( SportLimits.max_stake / 1000).toFixed(1) + 'K';
+    //   } else {
+    //     SportLimits.max_stake =  SportLimits.max_stake.toString();
+    // }
     let userLog
     let multimarket 
     let stakeLabledata
@@ -2361,12 +2900,12 @@ exports.multimarkets = catchAsync(async(req, res, next) => {
     }else{
         stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
     }
-    console.log(multimarket)
     res.status(200).render("./userSideEjs/multimarkets/main",{
+        title:'Multi Markets',
         user: req.currentUser,
         verticalMenus,
         check:"Multi Markets",
-        SportLimits,
+        // SportLimits,
         userLog,
         notifications:req.notifications,
         multimarket,
@@ -2398,6 +2937,7 @@ exports.getCardInplayGame = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render("./userSideEjs/CardInplayPage/main",{
+        title:'Cards Games',
         user,
         verticalMenus,
         data,
@@ -2452,6 +2992,7 @@ exports.getSportBookGame = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render("./userSideEjs/SportBook/main",{
+        title:'Sports Book',
         user,
         verticalMenus,
         data,
@@ -2474,6 +3015,7 @@ exports.royalGamingPage = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render("./userSideEjs/royalGamingPage/main",{
+        title:'Royal Games',
         user,
         verticalMenus,
         data,
@@ -2489,12 +3031,13 @@ exports.virtualsPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:true});
     let userLog
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render("./userSideEjs/virtuals/main",{
+        title:'Virtuals Games',
         user,
         verticalMenus,
         data,
@@ -2515,6 +3058,7 @@ exports.OthersGames = catchAsync(async(req, res, next) => {
         userLog = await loginLogs.find({user_id:user._id})
     }
     res.status(200).render("./userSideEjs/others/main",{
+        title:'Others Games',
         user,
         verticalMenus,
         data,
@@ -2529,7 +3073,7 @@ exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:true});
     let userLog
     let gamesFe = []
     if(user){
@@ -2540,6 +3084,7 @@ exports.getLiveCasinoPage = catchAsync(async(req, res, next) => {
         }
     }
     res.status(200).render("./userSideEjs/liveCasino/main", {
+        title:'Live Casino',
         user,
         verticalMenus,
         data,
@@ -2556,7 +3101,7 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:true});
     // console.log(user._id)
     let userLog = await loginLogs.find({user_id:user.id})
     let bets = await betModel.find({userId:user._id}).sort({date:-1}).limit(20)
@@ -2576,6 +3121,7 @@ exports.getMyBetsPageUser = catchAsync(async(req, res, next) => {
     ])
     // console.log(betsDetails)
     res.status(200).render("./userSideEjs/myBetsPage/main", {
+        title:'Bet Reports',
         user,
         verticalMenus,
         data,
@@ -2593,7 +3139,7 @@ exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:true});
     let userLog = await loginLogs.find({user_id:user._id})
     let bets = await betModel.aggregate([
         {
@@ -2634,6 +3180,7 @@ exports.getGameReportPageUser = catchAsync(async(req, res, next) => {
       ])
     //   console.log(bets)
     res.status(200).render("./userSideEjs/gameReportPage/main",{
+        title:'Game Reports',
         user,
         verticalMenus,
         data,
@@ -2649,7 +3196,7 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:true});
     let userLog = await loginLogs.find({user_id:user._id})
     let result = await betModel.aggregate([
         {
@@ -2694,6 +3241,7 @@ exports.getGameReportInPageUser = catchAsync(async(req, res, next) => {
       ]);
       
     res.status(200).render("./userSideEjs/gameReportEvent/main",{
+        title:'Game Reports',
         user,
         verticalMenus,
         data,
@@ -2709,12 +3257,13 @@ exports.getGameReportInINPageUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:true});
     let userLog = await loginLogs.find({user_id:user._id})
     // console.log(req.query)
     let result = await betModel.find({event:req.query.eventName, match:req.query.matchName, userId:user.id}).limit(20)
     //   console.log(result)
     res.status(200).render("./userSideEjs/gameReportmatch/main",{
+        title:'Game Reports',
         user,
         verticalMenus,
         data,
@@ -2730,7 +3279,7 @@ exports.getMyProfileUser = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:true});
     let userLog = await loginLogs.find({user_id:user._id})
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
@@ -2773,6 +3322,7 @@ exports.getMyProfileUser = catchAsync(async(req, res, next) => {
     ])
     // console.log(userProfileContent)
     res.status(200).render("./userSideEjs/userProfile/main",{
+        title:'My Profile',
         user,
         verticalMenus,
         data,
@@ -2794,7 +3344,7 @@ exports.gameRulesPage = catchAsync(async(req, res, next) => {
     let sliders = await sliderModel.find().sort({Number:1})
     let rules = await gamrRuleModel.find()
     res.status(200).render("./Cms/ruleManager",{
-        title:"CMS",
+        title:"Rules Management",
         user,
         me:user,
         currentUser:user,
@@ -2812,9 +3362,10 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     const data = await promotionModel.find();
-    let games = await gameModel.find();
+    let games = await gameModel.find({status:true});
     let userLog = await loginLogs.find({user_id:user._id})
     res.status(200).render("./userSideEjs/Kyc/main",{
+        title:'KYC',
         user,
         verticalMenus,
         data,
@@ -2827,37 +3378,34 @@ exports.getMyKycPage = catchAsync(async(req, res, next) => {
 
 exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
     let me = req.currentUser
-    // console.log("working")
-    // console.log(req.query.id)
-    let betsEventWise = await betModel.aggregate([
+    let inprogressData = await InprogreshModel.find({eventId:req.query.id})
+    let childrenUsername = []
+    if(req.currentUser.roleName == 'Operator'){
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }else{
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }
+    let betsEventWiseOpen = await betModel.aggregate([
         {
             $match: {
                 status:"OPEN",
-                eventId:req.query.id
+                eventId:req.query.id,
+                userName:{$in:childrenUsername}
             }
         },
-        {
-            $lookup: {
-              from: "users",
-              localField: "userName",
-              foreignField: "userName",
-              as: "user"
-            }
-          },
-          {
-            $unwind: "$user"
-          },
-          {
-            $match: {
-              "user.parentUsers": { $in: [req.currentUser.id] }
-            }
-          },
         {
             $group: {
               _id: "$marketName",
               count: { $sum: 1 },
               marketId: { $first: "$marketId" },
               match: { $first: "$match" },
+              date: {$first:'$date'}
             }
           },
           {
@@ -2866,33 +3414,178 @@ exports.getSettlementPageIn = catchAsync(async(req, res, next) => {
               marketName: "$_id",
               marketId: 1,
               count: 1,
-              match : 1
+              match : 1,
+              date:1
             }
           }
     ])
+
+    let betsEventWiseMap = await betModel.aggregate([
+        {
+            $match: {
+                status:"MAP",
+                eventId:req.query.id,
+                userName:{$in:childrenUsername}
+            }
+        },
+        {
+            $group: {
+              _id: "$marketName",
+              count: { $sum: 1 },
+              marketId: { $first: "$marketId" },
+              match: { $first: "$match" },
+              date: {$first:'$date'},
+              result:{$first : '$result'}
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              marketName: "$_id",
+              marketId: 1,
+              count: 1,
+              match : 1,
+              date:1,
+              result : 1
+            }
+          }
+    ])
+
+    let betsEventWiseCancel = await betModel.aggregate([
+        {
+            $match: {
+                status:"CANCEL",
+                eventId:req.query.id,
+                userName:{$in:childrenUsername}
+            }
+        },
+        {
+            $group: {
+              _id: "$marketName",
+              count: { $sum: 1 },
+              marketId: { $first: "$marketId" },
+              match: { $first: "$match" },
+              date: {$first:'$date'},
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              marketName: "$_id",
+              marketId: 1,
+              count: 1,
+              match : 1,
+              date:1,
+            }
+          }
+    ])
+
+    let betsEventWiseSettel = await betModel.aggregate([
+        {
+            $match: {
+                status:{$nin: ["OPEN", "CANCEL", "MAP"]},
+                eventId:req.query.id,
+                userName:{$in:childrenUsername}
+            }
+        },
+        {
+            $group: {
+              _id: "$marketName",
+              count: { $sum: 1 },
+              marketId: { $first: "$marketId" },
+              match: { $first: "$match" },
+              date: {$first:'$date'},
+              result : {$first : '$result'}
+            }
+          },
+          {
+            $project: {
+              _id: 0,
+              marketName: "$_id",
+              marketId: 1,
+              count: 1,
+              match : 1,
+              date:1,
+              result : 1
+            }
+          }
+    ])
+
+    let data = await betModel.findOne({eventId:req.query.id})
     res.status(200).render("./sattlementInPage/main",{
-        title:"SETTLEMENTS",
+        title:"Settlements",
         me,
         currentUser:me,
-        betsEventWise
+        betsEventWiseOpen,
+        data,
+        betsEventWiseMap,
+        betsEventWiseCancel,
+        betsEventWiseSettel,
+        inprogressData
     })
 } )
 
 exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
     let me = req.currentUser
-    let limit = 50
-    // console.log(me)
-    let History
-    if(me.roleName === "Admin"){
-        History = await settlementHisory.find().limit(limit)
+    let limit = 10
+    let operationId;
+    let operationroleName;
+    if(req.currentUser.roleName == 'Operator'){
+        operationId = req.currentUser.parent_id
+        let parentUser = await User.findById(operationId)
+        operationroleName = parentUser.roleName
     }else{
-        History = await settlementHisory.find({userId:me._id}).limit(limit)
+        operationId = req.currentUser._id
+        operationroleName = req.currentUser.roleName
+
     }
+    // console.log(me)
+    // let History
+    // if(me.roleName === "Admin"){
+    //     History = await settlementHisory.find().sort({ date: -1 }).limit(limit)
+    // }else{
+    //     History = await settlementHisory.find({userId:me._id}).sort({ date: -1 }).limit(limit)
+    // }
+    let filter = {}
+    if(operationroleName == "Admin"){
+        filter = {}
+    }else{
+        filter = {
+            userId:operationId
+        }
+    }
+
+    let History2 = await settlementHisory.aggregate([
+        {
+            $match:filter
+        },
+        {
+            $addFields: {
+              userIdObjectId: { $toObjectId: '$userId' } 
+            }
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "userIdObjectId",
+                foreignField: '_id',
+                as: "user"
+              }
+        },
+        {
+            $sort:{
+                date:-1
+            }
+        },
+        {
+            $limit:limit
+        }
+    ])
     res.status(200).render("./settlemetHistory/settlemetHistory",{
-        title:"SETTLEMENTS",
+        title:"Settlements",
         me,
         currentUser:me,
-        History
+        History:History2
     })
 } )
 
@@ -2900,20 +3593,139 @@ exports.getSettlementHistoryPage = catchAsync(async(req, res, next) => {
 
 exports.getCommissionReport = catchAsync(async(req, res, next) => {
     let me = req.currentUser
-    let data = await accountStatement.find({user_id:me._id,description: { $regex: /^commission for/ } }).sort({date:-1}).limit(20)
-    // console.log(data)
+    let childrenUsername = []
+    // if()
+    // console.log(req.currentUser)
+    if(req.currentUser.roleName == 'Operator'){
+        let children = await User.find({parentUsers:req.currentUser.parent_id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }else{
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
+    }
+    
+    let eventWiseData = await commissionNewModel.aggregate([
+        {
+            $match: {
+              eventDate: {
+                $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+              },
+              userName:{$in:childrenUsername}
+            }
+          },
+          {
+              $group: {
+                  _id: "$eventName",
+              totalCommission: { $sum: "$commission" },
+              eventDate: { $first: "$eventDate" }
+            }
+        },
+        {
+          $sort:{
+              eventDate : -1,
+              totalCommission : 1,
+              _id : 1
+          }
+        },
+          {
+            $limit:10
+          }
+    ])
+
+    let userWiseData = await commissionNewModel.aggregate([
+        {
+            $match: {
+              eventDate: {
+                $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+              },
+              userName:{$in:childrenUsername},
+              loginUserId:{$exists:true},
+              parentIdArray:{$exists:true}
+            }
+        },
+        {
+            $lookup: {
+                from: "commissionnewmodels",
+                let: {ud:{$cond:{if:{$ifNull: ["$uniqueId", false]},then:{ $toObjectId: "$uniqueId" },else:'$_id'}},loginId:'$loginUserId',parentArr:'$parentIdArray'},
+                pipeline: [
+                    {
+                      $match: {
+                        $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
+                        loginUserId:{$exists:true},
+                        parentIdArray:{$exists:true}
+                      }
+                    }
+                  ],
+                as: "parentdata"
+            }
+        },
+        {
+            $group: {
+                _id: "$userName",
+                totalCommission: { $sum: "$commission" },
+                totalUPline: { $sum:{
+                    $reduce:{
+                        input:'$parentdata',
+                        initialValue:0,
+                        in: { $add: ["$$value", "$$this.commission"] }
+                    }
+                }},
+            }
+        },
+        {
+            $sort:{
+            _id : -1,
+            totalCommission : 1,
+            totalUPline : 1
+            }
+        },
+        {
+        $limit:10
+        }
+    ])
+    // res.status(200).json({
+    //     userWiseData
+    // })
+
+    let accStatements = await accountStatement.aggregate([
+        {
+            $match:{
+                date: {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                  },
+                // userName:req.currentUser.userName,
+                description:{
+                    $regex: /^Claim Commisiion/i
+                },
+                userName:{$in:childrenUsername}
+            }
+        },
+        {
+            $sort:{
+                date : -1,
+                userName : 1
+            }
+        },
+        {
+          $limit:10
+        }
+    ])
     res.status(200).render("./commissionPage/commissionPage",{
-        title:"Commission",
+        title:"Commission Report",
         me,
         currentUser:me,
-        data
+        eventWiseData,
+        userWiseData,
+        accStatements
     })
-} )
+})
 
 exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
     let user = req.currentUser
-    // const sportListData = await getCrkAndAllData()
-    // const sportList = sportListData[1].gameList
     const sportList =[
         {sport_name:"baseball",sportId:30},
         {sport_name:"basketball",sportId:10}	,
@@ -2923,24 +3735,14 @@ exports.getCatalogControllerPage = catchAsync(async(req, res, next) => {
         {sport_name:"Football",sportId:1}	,
         {sport_name:"Tennis",sportId:2}
     ]
-    console.log(sportList)
-    // const cricket = sportListData[0].gameList[0].eventList
-    // let LiveCricket = cricket.filter(item => item.eventData.type === "IN_PLAY")
-    // const footBall = sportListData[1].gameList.find(item => item.sport_name === "Football");
-    // const Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis");
-    // let liveFootBall = footBall.eventList.filter(item => item.eventData.type === "IN_PLAY");
-    // let liveTennis = Tennis.eventList.filter(item => item.eventData.type === "IN_PLAY")
-    // console.log(liveTennis.length != 0)
-    console.log("liveFootBall")
+   
     res.status(200).render("./catalogController/catalogcontroller", {
-        title:"catalogController",
+        title:"Catalog Controller",
         data:sportList,
         me: user,
         currentUser: user
     })
-    // res.status(200).json({
-    //     data:sportList
-    // })
+    
 })
 
 exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) => {
@@ -2995,7 +3797,7 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
         })
         Promise.all(seriesPromise).then(()=>{
             return res.status(200).render("./catalogController/compitition", {
-                title:"catalogController",
+                title:"Catalog Controller",
                 data:seriesObjList,
                 me: user,
                 currentUser: user,
@@ -3004,7 +3806,7 @@ exports.getCatalogCompetationControllerPage = catchAsync(async(req, res, next) =
         })
     }else{
         return res.status(200).render("./catalogController/compitition", {
-            title:"catalogController",
+            title:"Catalog Controller",
             data:seriesObjList,
             me: user,
             currentUser: user,
@@ -3037,7 +3839,7 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
 
     if(series){
         nameArr.push(series.sport_name)
-        let = eventListPromis = series.eventList.map(async(item) => {
+        let eventListPromis = series.eventList.map(async(item) => {
             if(item.eventData.compId == compId){
                 if(!nameArr.includes(item.eventData.league)){
                     breadcumArr.push({id:compId,name:item.eventData.league,sportId:sportId})
@@ -3052,20 +3854,19 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
                     //     type:"event"
                     // })
                     count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
-                    seriesObjList.push({name:item.eventData.name,created_on:item.eventData.created_on,status:true,count,eventId:item.eventData.eventId})
+                    seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:true,count,eventId:item.eventData.eventId})
                     
                 }else{
                     count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
-                    seriesObjList.push({name:item.eventData.name,created_on:item.eventData.created_on,status:status.status,count,eventId:item.eventData.eventId})
+                    seriesObjList.push({name:item.eventData.name,created_on:item.eventData.time,status:status.status,count,eventId:item.eventData.eventId})
 
                 }
             }
             
         })
-        console.log(seriesObjList)
         Promise.all(eventListPromis).then(()=>{
             return res.status(200).render("./catalogController/events", {
-                title:"catalogController",
+                title:"Catalog Controller",
                 data:seriesObjList,
                 me: user,
                 currentUser: user,
@@ -3074,7 +3875,7 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
         })
     }else{
         return res.status(200).render("./catalogController/events", {
-            title:"catalogController",
+            title:"Catalog Controller",
             data:seriesObjList,
             me: user,
             currentUser: user,
@@ -3083,12 +3884,115 @@ exports.getCatalogeventsControllerPage = catchAsync(async(req, res, next) => {
     }
 })
 
+exports.getEventControllerPage = catchAsync(async(req,res,next)=>{
+    let user = req.currentUser
+    const sportListData = await getCrkAndAllData()
+    let cricketEvents;
+    let footballEvents;
+    let tennisEvents;
+    
+    let count;
+    let data = {};
 
-exports.CommissionMarkets = catchAsync(async(req, res, next) => {
+    let cricketList = sportListData[0].gameList[0]
+    let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
+
+    let newcricketEvents = cricketList.eventList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.eventData.eventId})
+         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+         count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+         if(!status){
+            item.eventData.status = true
+         }else{
+            item.eventData.status = false
+        }
+        if(!featureStatus){
+            item.eventData.featureStatus = false
+        }else{
+            item.eventData.featureStatus = true
+        }
+        if(!inPlayStatus){
+            item.eventData.inPlayStatus = false
+        }else{
+            item.eventData.inPlayStatus = true
+        }
+        item.eventData.count = count
+
+         return item
+    })
+    let newfootballEvents =  footballList.eventList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.eventData.eventId})
+         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+
+
+         count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+         if(!status){
+            item.eventData.status = true
+         }else{
+            item.eventData.status = false
+        }
+        if(!featureStatus){
+            item.eventData.featureStatus = false
+        }else{
+            item.eventData.featureStatus = true
+        }
+        if(!inPlayStatus){
+            item.eventData.inPlayStatus = false
+        }else{
+            item.eventData.inPlayStatus = true
+        }
+        item.eventData.count = count
+
+         return item
+    })
+    let newtennisEvents = tennisList.eventList.map(async(item) => {
+         let status = await catalogController.findOne({Id:item.eventData.eventId})
+         let featureStatus = await FeatureventModel.findOne({Id:item.eventData.eventId})
+         let inPlayStatus = await InPlayEvent.findOne({Id:item.eventData.eventId})
+
+         count = await betModel.count({eventId:item.eventData.eventId,status:"OPEN"})
+         if(!status){
+            item.eventData.status = true
+         }else{
+            item.eventData.status = false
+        }
+        if(!featureStatus){
+            item.eventData.featureStatus = false
+        }else{
+            item.eventData.featureStatus = true
+        }
+        if(!inPlayStatus){
+            item.eventData.inPlayStatus = false
+        }else{
+            item.eventData.inPlayStatus = true
+        }
+        item.eventData.count = count
+
+         return item
+    })
+
+    cricketEvents = await Promise.all(newcricketEvents);
+    footballEvents = await Promise.all(newfootballEvents);
+    tennisEvents = await Promise.all(newtennisEvents);
+    data = {cricketEvents,footballEvents,tennisEvents}
+
+    return res.status(200).render("./eventController/eventController", {
+        title:"Event Controller",
+        data,
+        me: user,
+        currentUser: user,
+    })
+})
+
+
+exports.CommissionMarkets = catchAsync(async(req, res, next) => { 
     
     const me = req.currentUser
     res.status(200).render("./commissionMarket/main",{
-        title:"CommiSSion Markets",
+        title:"Commission Markets",
         me,
         currentUser:me
     })
@@ -3100,20 +4004,41 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
-    let data =  await commissionReportModel.aggregate([
+    let sumData = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id,
+                commissionStatus: 'Unclaimed'
+            }
+        },
+        {
+            $group: {
+              _id: null, 
+              totalCommission: { $sum: "$commission" } 
+            }
+          }
+    ])
+    // console.log(sumData, "sumData")
+    let commissionData = await commissionNewModel.aggregate([
         {
             $match:{
                 userId: req.currentUser.id
             }
         },
         {
-            $group: {
-              _id: '$Sport',
-              totalCommissionPoints: { $sum: '$commPoints' }
+            $group:{
+                _id:'$sportId',
+                totalCommissionPoints: { $sum: '$commission' }
             }
         }
     ])
-    console.log(data)
+    let sum 
+    if(sumData.length != 0){
+        sum = sumData[0].totalCommission
+    }else{
+        sum = 0
+    }
+    // console.log(commissionData, "commissionData")
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReport/main", {
         title:"Commission Report",
@@ -3122,7 +4047,9 @@ exports.getCommissionReportUserSide = catchAsync(async(req, res, next) => {
         check:"Comm",
         userLog,
         notifications:req.notifications,
-        data
+        // data,
+        commissionData,
+        unclaimCommission:sum
     })
 })
 
@@ -3133,21 +4060,55 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
-    let data =  await commissionReportModel.aggregate([
+    let sumData = await commissionNewModel.aggregate([
         {
             $match:{
                 userId: req.currentUser.id,
-                Sport:sportId
+                commissionStatus: 'Unclaimed'
             }
         },
         {
             $group: {
-              _id: '$event',
-              totalCommissionPoints: { $sum: '$commPoints' }
+              _id: null, 
+              totalCommission: { $sum: "$commission" } 
+            }
+          }
+    ])
+    let sum 
+    if(sumData.length != 0){
+        sum = sumData[0].totalCommission
+    }else{
+        sum = 0
+    }
+    // let data =  await commissionReportModel.aggregate([
+    //     {
+    //         $match:{
+    //             userId: req.currentUser.id,
+    //             Sport:sportId
+    //         }
+    //     },
+    //     {
+    //         $group: {
+    //           _id: '$event',
+    //           totalCommissionPoints: { $sum: '$commPoints' }
+    //         }
+    //     }
+    // ])
+    let data = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id,
+                sportId:sportId
+            }
+        },
+        {
+            $group: {
+              _id: '$seriesName',
+              totalCommissionPoints: { $sum: '$commission' }
             }
         }
     ])
-    // console.log(data)
+    // console.log(data2, "commission")
     let sport = sportId
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportsIn/main", {
@@ -3158,7 +4119,8 @@ exports.getCommissionReporIntUserSide = catchAsync(async(req, res, next) => {
         userLog,
         notifications:req.notifications,
         data,
-        sport
+        sport,
+        unclaimCommission:sum
     })
 })
 
@@ -3170,25 +4132,45 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
-    console.log(sportId)
-    let data = await commissionReportModel.aggregate([
+    // console.log(sportId, "sportIdsportId")
+    let sumData = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id,
+                commissionStatus: 'Unclaimed'
+            }
+        },
+        {
+            $group: {
+              _id: null, 
+              totalCommission: { $sum: "$commission" } 
+            }
+          }
+    ])
+    let sum 
+    if(sumData.length != 0){
+        sum = sumData[0].totalCommission
+    }else{
+        sum = 0
+    }
+    let data = await commissionNewModel.aggregate([
         {
           $match: {
             userId: req.currentUser.id,
-            event: sportId,
+            seriesName: sportId,
           },
         },
         {
           $group: {
             _id: {
-              sportId: '$Sport', // Group by sportId
-              match: '$match',
+              sportId: '$sportId', // Group by sportId
+              match: '$eventName',
             },
-            totalCommissionPoints: { $sum: '$commPoints' },
+            totalCommissionPoints: { $sum: '$commission' },
           },
         },
       ]);
-    console.log(data)
+    // console.log(data)
     let sport = data[0]._id.sportId
     let event = sportId
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
@@ -3201,7 +4183,8 @@ exports.getCommissionReporEvent = catchAsync(async(req, res, next) => {
         notifications:req.notifications,
         data,
         sport,
-        event
+        event,
+        unclaimCommission:sum
     })
 })
 
@@ -3212,16 +4195,38 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
     if(req.currentUser){
         userLog = await loginLogs.find({user_id:req.currentUser._id})
     }
-    console.log(sportId)
-    let data =  await commissionReportModel.aggregate([
+    // console.log(sportId, "SPORTID")
+    let data =  await commissionNewModel.aggregate([
         {
             $match:{
                 userId: req.currentUser.id,
-                match:sportId
+                eventName:sportId
             }
         }
     ])
-    console.log(data)
+    
+
+    let sumData = await commissionNewModel.aggregate([
+        {
+            $match:{
+                userId: req.currentUser.id,
+                commissionStatus: 'Unclaimed'
+            }
+        },
+        {
+            $group: {
+              _id: null, 
+              totalCommission: { $sum: "$commission" } 
+            }
+          }
+    ])
+    let sum 
+    if(sumData.length != 0){
+        sum = sumData[0].totalCommission
+    }else{
+        sum = 0
+    }
+    // console.log(data)
     let verticalMenus = await verticalMenuModel.find().sort({num:1});
     res.status(200).render("./userSideEjs/commissionReportMatch/main", {
         title:"Commission Report",
@@ -3230,13 +4235,15 @@ exports.getCommissionReporMatch = catchAsync(async(req, res, next) => {
         check:"Comm",
         userLog,
         notifications:req.notifications,
-        data
+        data,
+        unclaimCommission:sum
     })
 })
 
 
 exports.RiskAnalysis = catchAsync(async(req, res, next) => {
     let ip = req.ip
+    let limit = 10;
     let ipv4
     if (ip.indexOf('::ffff:') === 0) {
         // Extract the IPv4 portion from the IPv6 address
@@ -3258,26 +4265,55 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
             message:"This match is no more live"
         })
     }
-    const liveStream = await liveStreameData(match.eventData.channelId, ipv4)
-    const src_regex = /src='([^']+)'/;
-    let match1
     let src
-    if(liveStream.data){
-
-        match1 = liveStream.data.match(src_regex);
-        if (match1) {
-            src = match1[1];
-        } else {
-            console.log("No 'src' attribute found in the iframe tag.");
+    let status = false
+    let liveStream
+    let StreamData = await streamModel.findOne({eventId:req.query.id})
+    if(StreamData){
+        if(StreamData.status){
+            src = StreamData.url
         }
-        // console.log(src, 123)
+    }else{
+        liveStream = await liveStreameData(match.eventData.channelId, ipv4)
+        const src_regex = /src='([^']+)'/;
+        let match1
+        // let src
+        if(liveStream.data){
+    
+            match1 = liveStream.data.match(src_regex);
+            if (match1) {
+                src = match1[1];
+                status = true
+            } else {
+                console.log("No 'src' attribute found in the iframe tag.");
+            }
+            // console.log(src, 123)
+        }
+
     }
+    // const src_regex = /src='([^']+)'/;
+    // let match1
+    // if(liveStream.data){
+
+    //     match1 = liveStream.data.match(src_regex);
+    //     if (match1) {
+    //         src = match1[1];
+    //     } else {
+    //         console.log("No 'src' attribute found in the iframe tag.");
+    //     }
+    //     // console.log(src, 123)
+    // }
     const betLimit = await betLimitModel.find()
     // console.log(match.marketList.goals)
     // let session = match.marketList.session.filter(item => {
         //     let date = new Date(item.updated_on);
         //     return date < Date.now() - 1000 * 60 * 60;
         // });
+        let childrenUsername = []
+        let children = await User.find({parentUsers:req.currentUser._id})
+        children.map(ele => {
+            childrenUsername.push(ele.userName) 
+        })
         let SportLimits = betLimit.find(item => item.type === "Sport")
         let min 
         let max 
@@ -3291,7 +4327,7 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
           } else {
             max = SportLimits.max_stake.toString();
         }
-        console.log(SportLimits, min , max)
+        // console.log(SportLimits, min , max)
         let userLog
         let stakeLabledata
         let userMultimarkets
@@ -3305,32 +4341,33 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
                 stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
             }
             Bets = await betModel.aggregate([
+               
                 {
                     $match: {
                         status: "OPEN" ,
-                        eventId: req.query.id
+                        eventId: req.query.id,
+                        userName:{$in:childrenUsername}
                     }
                 },
                 {
-                    $lookup: {
-                      from: "users",
-                      localField: "userName",
-                      foreignField: "userName",
-                      as: "user"
-                    }
-                  },
-                  {
-                    $unwind: "$user"
-                  },
-                  {
-                    $match: {
-                      "user.parentUsers": { $in: [req.currentUser.id] }
-                    }
-                  }
+                    $sort:{"date":-1}
+                },
+                {
+                     $limit:limit
+                }
+                 
             ])
         }else{
             stakeLabledata = await stakeLable.findOne({userId:"6492fd6cd09db28e00761691"})
         }
+
+        let check = await resumeSuspendModel.aggregate([
+            {
+                $match:{
+                    status:false
+                }
+            }
+        ])
         res.status(200).render("./mainRiskAnalysis/main",{
             title:"Risk Analysis",
             user: req.currentUser,
@@ -3348,15 +4385,21 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
             userMultimarkets,
             min,
             max,
-            currentUser:req.currentUser
+            currentUser:req.currentUser,
+            suspend:check
     })
 });
 
 
 exports.marketBets = catchAsync(async(req, res, next) => {
-    console.log(req.query.id)
-    let bets = await betModel.find({marketId:req.query.id, status: 'OPEN'})
-    console.log(bets)
+    let limit = 10;
+    let page = 0;
+    let childrenUsername = []
+    let children = await User.find({parentUsers:req.currentUser._id})
+    children.map(ele => {
+        childrenUsername.push(ele.userName) 
+    })
+    let bets = await betModel.find({marketId:req.query.id,userName:{$in:childrenUsername} ,status: 'OPEN'}).sort({'date':-1}).skip(limit * page).limit(limit)
         res.status(200).render("./riskMarketsBets/main",{
             title:"Risk Analysis",
             user: req.currentUser,
@@ -3364,3 +4407,272 @@ exports.marketBets = catchAsync(async(req, res, next) => {
             bets
     })
 });
+
+
+exports.getSportBetLimit = catchAsync(async(req, res, next) => {
+    const me = req.currentUser
+    const betLimit = await betLimitModel.find();
+    // const sportListData = await getCrkAndAllData()
+    // let cricketList = sportListData[0].gameList[0]
+    // let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    // let tennisList = sportListData[1].gameList.find(item => item.sportId == 2) 
+    res.status(200).render("./betSportLimit/main.ejs", {
+        title:"Bet Limits",
+        betLimit,
+        me,
+        currentUser:me
+    })
+});
+
+
+
+exports.getBetLimitSportWise = catchAsync(async(req, res, next) => {
+    const me = req.currentUser
+    const betLimit = await betLimitModel.find();
+    const sportListData = await getCrkAndAllData()
+    let cricketList = sportListData[0].gameList[0]
+    let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
+    let gameData = []
+    if(req.query.game === "cricket"){
+        gameData = cricketList.eventList
+    }else if (req.query.game === "football"){
+        gameData = footballList.eventList
+    }else if (req.query.game === "tennis"){
+        gameData = tennisList.eventList
+    }
+    let series = []
+    gameData.forEach(match => {
+        let seriesIndex = series.findIndex(series => series.series === match.eventData.league);
+        if (seriesIndex === -1) {
+            series.push({ series: match.eventData.league, matchdata: [match] });
+        } else {
+            series[seriesIndex].matchdata.push(match);
+        }
+    });
+    res.status(200).render("./betSportWise/main.ejs", {
+        title:"Bet Limits",
+        betLimit,
+        me,
+        currentUser:me,
+        gameData,
+        series,
+        gameName:req.query.game
+    })
+})
+
+
+
+exports.getBetLimitMatchWise = catchAsync(async(req, res, next) => {
+    const me = req.currentUser
+    const betLimit = await betLimitModel.find();
+    const sportListData = await getCrkAndAllData()
+    let cricketList = sportListData[0].gameList[0].eventList
+    let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    footballList = footballList.eventList
+    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
+    tennisList = tennisList.eventList
+    let allData = cricketList.concat(footballList, tennisList)
+    let series = req.query.event
+    let seriesMatch = allData.filter(item => item.eventData.league == series)
+    // console.log(seriesMatch)
+    res.status(200).render("./betLimitMatchWise/main.ejs", {
+        title:"Bet Limits",
+        betLimit,
+        me,
+        currentUser:me,
+        seriesMatch
+    })
+});
+
+
+exports.getBetLimitMatch = catchAsync(async(req, res, next) => {
+    const me = req.currentUser
+    const betLimit = await betLimitModel.find();
+    const sportListData = await getCrkAndAllData()
+    let cricketList = sportListData[0].gameList[0].eventList
+    let footballList = sportListData[1].gameList.find(item => item.sportId == 1)
+    footballList = footballList.eventList
+    let tennisList = sportListData[1].gameList.find(item => item.sportId == 2)
+    tennisList = tennisList.eventList
+    let allData = cricketList.concat(footballList, tennisList)
+    let series = req.query.match
+    let seriesMatch = allData.filter(item => item.eventData.name == series)
+    let betLimitMatchWise = await betLimitMatchWisemodel.findOne({matchTitle:series})
+    
+    // console.log(seriesMatch)
+    res.status(200).render("./betLimitMatch/main.ejs", {
+        title:"Bet Limits",
+        betLimit,
+        me,
+        currentUser:me,
+        seriesMatch,
+        series,
+        betLimitMatchWise
+    })
+});
+
+
+exports.getcommissionMarketWise1 = catchAsync(async(req, res, next) => {
+    let limit = 10
+    const me = req.currentUser
+    let match = req.query.event
+    let childrenUsername = []
+    let children = await User.find({parentUsers:req.currentUser._id})
+    children.map(ele => {
+        childrenUsername.push(ele.userName) 
+    })
+    if(req.query.market){
+        let market 
+        let marketName 
+        if(req.query.market.toLowerCase().startsWith('book')){
+            market =  {
+                $regex: /^book/i
+              }
+              marketName = 'BOOKMAKER'
+        }else{
+            market = req.query.market
+            marketName = req.query.market
+        }
+        // console.log(market)
+        let thatMarketData = await commissionNewModel.aggregate([
+            {
+                $match: {
+                eventDate: {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                },
+                userName:{$in:childrenUsername},
+                eventName:match,
+                marketName:market,
+                loginUserId:{$exists:true},
+                parentIdArray:{$exists:true}
+                }
+            },
+            {
+                $lookup: {
+                    from: "commissionnewmodels",
+                    let: {ud:{$cond:{if:{$ifNull: ["$uniqueId", false]},then:{ $toObjectId: "$uniqueId" },else:'$_id'}},loginId:'$loginUserId',parentArr:'$parentIdArray'},
+                    pipeline: [
+                        {
+                          $match: {
+                            $expr: { $and: [{ $eq: ["$loginUserId", "$$loginId"] },{ $eq: [{ $toObjectId: "$uniqueId" }, "$$ud"] }, { $in: ["$userId", "$$parentArr"] }] },
+                            loginUserId:{$exists:true},
+                            parentIdArray:{$exists:true}
+                          }
+                        }
+                      ],
+                    as: "parentdata"
+                }
+            },
+            {
+                $group: {
+                    _id: "$userName",
+                    totalCommission: { $sum: "$commission" },
+                    netupline: { $sum:{
+                        $reduce:{
+                            input:'$parentdata',
+                            initialValue:0,
+                            in: { $add: ["$$value", "$$this.commission"] }
+                        }
+                    }},
+                }
+            },
+            {
+                $sort:{
+                _id : -1,
+                totalCommission : 1,
+                netupline : 1
+                }
+            }
+        ])
+        // console.log(thatMarketData, "thatMarketData")
+        res.status(200).render('./commissionMarketWise/commissionMarketWise2/commissionMarketWise2.ejs', {
+            title:"Commission Report",
+            me,
+            currentUser:me,
+            thatMarketData,
+            match,
+            marketName
+        })
+    }else{
+        let marketWiseData = await commissionNewModel.aggregate([
+            {
+                $match: {
+                eventDate: {
+                    $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                },
+                userName:{$in:childrenUsername},
+                eventName:match
+                }
+            },
+            {
+                $group: {
+                _id: "$marketName",
+                totalCommission: { $sum: "$commission" },
+                eventDate: { $first: "$eventDate" }
+                }
+            }
+        ])
+        res.status(200).render('./commissionMarketWise/commissionMarketWise1/commissionMarketWise1.ejs', {
+            title:"Commission Report",
+            me,
+            currentUser:me,
+            marketWiseData,
+            match,
+        })
+    }
+});
+
+
+exports.getcommissionUser = catchAsync(async(req, res, next) => {
+    const me = req.currentUser
+    let user = req.query.User
+    // console.log(req.query.event)
+    if(req.query.event){
+        let eventData = await commissionNewModel.aggregate([
+            {
+                $match:{
+                    eventDate: {
+                        $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                    },
+                    userName:user,
+                    eventName:req.query.event
+                }
+            }
+        ])
+        res.status(200).render('./commissionUser/commissionUser2.ejs', {
+            title:"Commission Report",
+            me,
+            currentUser:me,
+            user,
+            eventName:req.query.event,
+            eventData
+        })
+    }else{
+
+        let Userdata = await commissionNewModel.aggregate([
+                {
+                    $match: {
+                    eventDate: {
+                        $gte: new Date(new Date() - 7 * 24 * 60 * 60 * 1000) 
+                    },
+                    userName:user
+                    }
+                },
+                {
+                    $group: {
+                    _id: "$eventName",
+                    totalCommission: { $sum: "$commission" },
+                    eventDate: { $first: "$eventDate" }
+                    }
+                }
+        ])
+        res.status(200).render('./commissionUser/commissionUser.ejs', {
+            title:"Commission Report",
+            me,
+            currentUser:me,
+            user,
+            Userdata
+        })
+    }
+})

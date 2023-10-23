@@ -16,6 +16,7 @@ $(document).on('submit', ".myloginmodl-form-dv", function(e){
             if(res.data.status === 'success'){
                 alert('Logged in successfully!!!!');
                 sessionStorage.setItem('loginUserDetails',JSON.stringify(res.data.data.user));
+                sessionStorage.setItem('token',JSON.stringify(res.data.token));
                 sessionStorage.setItem('roles',JSON.stringify(res.data.data.roles))
                 // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
                 // console.log(res.data)

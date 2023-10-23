@@ -4,11 +4,16 @@ const userController = require('../controller/userController')
 const authController = require('../controller/authorizationController');
 // const { route } = require('./roleRoutes');
 
+
+// User Panal
+router.post("/updateCurrentUserPass",authController.isProtected_User, userController.currentUserPasswordupdate);
+
+
+// Admin Panal
+router.use(authController.isProtected)
 router.get("/createuser10000" , userController.createUser10000)
 
-router.use(authController.isProtected)
-
-router.post("/updateCurrentUserPass", userController.currentUserPasswordupdate);
+router.post("/admin_updateCurrentUserPass", userController.currentUserPasswordupdate); // use in both side
 //createDeleteUser//
 router.post('/createUser', authController.restrictTo("createDeleteUser"), authController.checkPass, userController.createUser);
 router.post('/deleteUser', authController.restrictTo("createDeleteUser"), userController.deletUser);

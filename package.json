@@ -32,14 +32,18 @@
     "node-cron": "^3.0.2",
     "node-fetch": "^2.6.7",
     "parcel-bundler": "^1.12.5",
-    "path": "^0.12.7", 
+    "path": "^0.12.7",
     "puppeteer": "^20.4.0",
     "request": "^2.88.2",
     "request-ip": "^3.3.0",
+    "serve-favicon": "^2.5.0",
     "socket.io": "^4.6.1",
     "socket.io-client": "^4.6.1",
     "util": "^0.12.5",
     "validator": "^13.9.0",
     "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }

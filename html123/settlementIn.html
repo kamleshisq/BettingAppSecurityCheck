@@ -1,0 +1,115 @@
+<%- include("../header") %>
+<!--Container Main start-->
+<div class="dashboard-main-wraper">
+  <section class="dashboard-welcome-section" >
+    <div class="container-fluid">
+      <div class="new-head"> 
+          <h3>Operation</h3>
+      </div>
+    <%- include("../loginUserAdminsideDetails") %>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="table-data-section">
+        <div class="table-heading">
+          <h3><img src="../images/c-user.png" alt=""> &nbsp;Settelments</h3>
+        </div>
+        <div class="data-table">
+          <table>
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Market Name</th>
+                <th>Result</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody class="new-body">
+              <%for(let i = 0; i < betsEventWise.length; i++){ %>
+              <tr>
+                <td><%= i+1%></td>
+                <td><%= betsEventWise[i].marketName%></td>
+                <%console.log(betsEventWise[i].marketName, "marketName1")%>
+                <%if(betsEventWise[i].marketName != "Match Odds" && betsEventWise[i].marketName != "Bookmaker 0%Comm" && betsEventWise[i].marketName != "TOSS" && betsEventWise[i].marketName != "BOOKMAKER 0% COMM"){%>
+                <td>
+                  <select class="selectOption" >
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                </td>
+                <%}else {%>
+                <% 
+                let option = betsEventWise[i].match.split(" v ")
+                let option1 = option[0]
+                let option2 = option[1]
+                %>
+                <td>
+                  <select class="selectOption">
+                    <option value="<%=option1 %>"><%=option1 %></option>
+                    <option value="<%=option2 %>"><%=option2 %></option>
+                  </select>
+                </td>
+                <%console.log(betsEventWise[i])%>
+                <%}%>
+                <td>
+                  <div class="btn-group">
+                    <button class="voidBet" id="<%=betsEventWise[i].marketId%>"> VOID</button><button class="acceptBet" id="<%=betsEventWise[i].marketId%>"> MAP</button>
+                  </div>
+                </td>
+              </tr>
+              <%} %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end gallary -->
+  <div class="modal fade" id="myModaladduser" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-bs-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-header">
+          <h4 class="modal-title" style="color: #fff;">Add HouseFunds</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-data">
+            <div class="row">
+              <div class="col">
+                <label for="">Amounts</label>
+                <input type="text" class="form-control ml0" placeholder="1000000" name="email">
+              </div>
+              <div class="col">
+              </div>
+            </div>
+            <button type="button" class="btn-submit mt-3">AddFunds &nbsp; <img src="../images/sub.png" alt=""></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+ 
+<!-- 
+<script>
+  function updateValue(selectElement) {
+    var selectedValue = selectElement.value;
+    var newColumnCell = selectElement.parentElement.nextElementSibling.nextElementSibling;
+    newColumnCell.textContent = selectedValue;
+  }
+</script> 
+-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.40.0/dist/apexcharts.min.js"></script>
+<script type="text/javascript" src="../js/bundle.js"></script>
+  
+
+</body>
+</html>

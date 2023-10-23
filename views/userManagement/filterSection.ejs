@@ -1,32 +1,46 @@
 <div class="new-head"> 
   <h3 >User Management</h3>
+  <div class="rowId" data-rowid="1"></div>
   <!-- <form> -->
     <div class="form" >
     <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
       </div>
-      <input type="text" placeholder="search user" id="searchUser" class=" searchUser">
+      <input type="text" placeholder="search user" id="searchUser" class=" searchUser" autocomplete="off">
       
     </div>
     <!-- <button ><i class="fa-solid fa-filter"></i>&nbsp;Filter</button> -->
       <!-- <label for="role" style="color-scheme: #0000;">Choose a Role</label> -->
+      <div class="input-group">
       <select name="ROLEselect" id="ROLEselect" class="ROLEselect">
         <option value="" selected >Select Role</option>
         <%for(let i = 0 ; i < roles.length; i++){%>
           <option value="<%=roles[i].role_type%>"><%=roles[i].roleName%></option>
         <%}%>
       </select>
+    </div>
+
+    <div class="input-group">
+      <select name="userStatusSelect" id="userStatusSelect" class="userStatusSelect">
+        <option value="" selected>Select Status</option>
+        <option value="true">Active</option>
+        <option value="false">Suspended</option>
+        <option value="betlock">Bet Locked</option>
+      </select>
+    </div>
       <%if(currentUser.role_type == 1){%>
-        <select name="WhiteLabel" id="WhiteLabel" class="WhiteLabel">
-          <option value="" selected >select WhiteLabel</option>
-          <%for(let i = 0 ; i < WhiteLabel.length; i++){%>
-            <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
-          <%}%>
-        </select>
+        <div class="input-group">
+          <select name="WhiteLabelSelect" id="WhiteLabelSelect" class="WhiteLabelSelect">
+            <option value="" selected >select WhiteLabel</option>
+            <%for(let i = 0 ; i < WhiteLabel.length; i++){%>
+              <option value="<%=WhiteLabel[i].whiteLabelName%>"><%=WhiteLabel[i].whiteLabelName%></option>
+            <%}%>
+          </select>
+        </div>
       <%}%>
-        <!-- <br><br> -->
-    <button class="logOut">logout</button>
-  <!-- </form> -->
+      <div class="input-group">
+        <button type="button"><a href="/admin/allOperators">All Operators</a></button>
+      </div>
 </div>
 </div>
