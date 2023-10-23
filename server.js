@@ -5804,7 +5804,19 @@ io.on('connection', (socket) => {
                             totalWinAmount:"$totalWinAmount.value",
                             uniqueRuns:"$uniqueRuns",
                         }
+                    },
+                    {
+                        $addFields: {
+                          dataTOShow: {
+                            $cond: {
+                              if: { $eq: ["$secId", "odd_Even_Yes"] },
+                              then: { $concat: ["$runs", " or more"] },
+                              else: { $concat: ["$runs", " less than"] }
+                            }
+                          }
+                        }
                     }
+                    
                     
                     
                 ])
