@@ -5817,6 +5817,14 @@ io.on('connection', (socket) => {
                         }
                     },
                     {
+                        $unwind: "$uniqueRuns" 
+                    },
+                    {
+                        $sort: {
+                          uniqueRuns: 1 
+                        }
+                    },
+                    {
                         $project:{
                             _id:"$dataTOShow",
                             secId: "$secId",
