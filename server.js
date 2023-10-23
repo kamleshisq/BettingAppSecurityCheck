@@ -5679,6 +5679,7 @@ io.on('connection', (socket) => {
                                 "userName":"$userName",
                                 "runs":"$runs"
                             },
+                            uniqueRuns: { $addToSet: "$runs" },
                             parentArray: { $first: "$parentArray" },
                             totalAmount: { 
                                 $sum: '$returns'
@@ -5705,6 +5706,7 @@ io.on('connection', (socket) => {
                             parentArray: "$parentArray",
                             totalAmount1: "$totalAmount",
                             totalWinAmount1: "$totalWinAmount",
+                            uniqueRuns:"$uniqueRuns",
                             totalAmount:{
                                 $reduce:{
                                     input:'$parentArray',
@@ -5799,7 +5801,8 @@ io.on('connection', (socket) => {
                             secId: "$secId",
                             runs: "$runs",
                             totalAmount:"$totalAmount.value",
-                            totalWinAmount:"$totalWinAmount.value"
+                            totalWinAmount:"$totalWinAmount.value",
+                            uniqueRuns:"$uniqueRuns",
                         }
                     }
                     
