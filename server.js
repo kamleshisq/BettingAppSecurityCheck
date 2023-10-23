@@ -5870,7 +5870,7 @@ io.on('connection', (socket) => {
                     
                     
                 ])
-                console.log(betData, "betData")
+                console.log(betData[0].customResults, "betData")
                 socket.emit('FANCYBOOK', {betData, type:'Fancy'})
             }
 
