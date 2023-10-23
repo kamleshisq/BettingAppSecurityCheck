@@ -5815,6 +5815,16 @@ io.on('connection', (socket) => {
                             }
                           }
                         }
+                    },
+                    {
+                        $project:{
+                            _id:"dataTOShow",
+                            secId: "$secId",
+                            runs: "$runs",
+                            totalAmount:"$totalAmount.value",
+                            totalWinAmount:"$totalWinAmount.value",
+                            uniqueRuns:"$uniqueRuns",
+                        }
                     }
                     
                     
