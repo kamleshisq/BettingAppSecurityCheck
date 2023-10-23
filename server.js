@@ -5810,22 +5810,62 @@ io.on('connection', (socket) => {
                           dataTOShow: {
                             $cond: {
                               if: { $eq: ["$secId", "odd_Even_Yes"] },
-                              then: { $concat: [ { $toString: "$runs" }, " or more" ] },
-                              else: { $concat: [ { $toString: "$runs" }, " less than" ] }
+                              then: { $concat: [{ $toString: "$runs" }, " or more"] },
+                              else: { $concat: [{ $toString: "$runs" }, " less than"] }
                             }
                           }
                         }
-                    },
-                    {
-                        $project:{
-                            _id:"$dataTOShow",
-                            secId: "$secId",
-                            runs: "$runs",
-                            totalAmount:"$totalAmount",
-                            totalWinAmount:"$totalWinAmount",
-                            uniqueRuns:"$uniqueRuns",
+                      },
+                      {
+                        $group: {
+                          _id: null, // Group all documents into a single group
+                          conditions: {
+                            $push: {
+                              dataTOShow: "$dataTOShow",
+                              totalAmount: "$totalAmount"
+                            }
+                          }
                         }
-                    }
+                      },
+                      {
+                        $addFields: {
+                          customResults: {
+                            $map: {
+                              input: ["0 less than", "1 or more", "2 or more"], // Define your custom numeric ranges
+                              as: "range",
+                              in: {
+                                range: "$$range",
+                                totalAmountSum: {
+                                  $sum: {
+                                    $reduce: {
+                                      input: "$conditions",
+                                      initialValue: 0,
+                                      in: {
+                                        $cond: {
+                                          if: {
+                                            $and: [
+                                              { $eq: ["$$range", "$$this.dataTOShow"] },
+                                              { $ne: ["$$this.dataTOShow", "0 less than"] } // Handle "0 less than" differently
+                                            ]
+                                          },
+                                          then: { $add: ["$$value", "$$this.totalAmount"] },
+                                          else: "$$value"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        $project: {
+                          _id: 0, // Exclude the default _id field
+                          customResults: 1
+                        }
+                      }
                     
                     
                     
