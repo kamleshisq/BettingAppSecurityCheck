@@ -5818,7 +5818,11 @@ io.on('connection', (socket) => {
                     },
                     {
                         $addFields: {
-                          uniqueRuns: { $sort: "$uniqueRuns" } 
+                          uniqueRuns: {
+                            $each: {
+                              $sort: "$uniqueRuns"
+                            }
+                          }
                         }
                     },
                     {
