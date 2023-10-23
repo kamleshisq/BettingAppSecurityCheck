@@ -20,7 +20,7 @@ router.post("/withdrawlSettle", authController.checkPass ,accountController.with
 router.post("/depositSettle", authController.checkPass ,accountController.depositSettle);
 router.post("/getUserAccStatement", accountController.getUserAccountStatement);
 router.post("/getUserAccStatement1", accountController.getUserAccountStatement1);
-router.get("/getExposer", authController.isProtected,accountController.getexposure);
+router.get("/getExposer", authController.isProtected_User,accountController.getexposure);
 
 
 
