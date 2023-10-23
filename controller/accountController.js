@@ -373,8 +373,7 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
         {
             $match: {
                 status: "OPEN",
-                marketId: data.marketId,
-                userName:{$in:childrenUsername1}
+                userName:req.currentUser.userName
             }
         },
         {
