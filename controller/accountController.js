@@ -513,6 +513,9 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
         {
             $group:{
                 _id:"$_id.marketId",
+                runs:{
+                    $push:{'$_id.runs'}
+                },
                 data:{
                     $push:{
                         run:'$_id.runs',
