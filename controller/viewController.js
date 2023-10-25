@@ -4921,8 +4921,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                               ]
                             }
                           }
-                        },
-                        uniqueRuns: { $addToSet: "$runs" },
+                        }
                     },
                     {
                         $group: { 
@@ -4931,7 +4930,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                                 "userName":"$userName",
                                 "runs":"$runs"
                             },
-                            uniqueRuns :{$first : '$uniqueRuns'},
+                            uniqueRuns: { $addToSet: "$runs" },
                             parentArray: { $first: "$parentArray" },
                             totalAmount: { 
                                 $sum: '$returns'
