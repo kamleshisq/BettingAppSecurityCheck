@@ -5139,61 +5139,10 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                     
                   ])
                 console.log(betData, "betData")
+                betData =  betData[0]
                 let dataToshow = []
-                for(let i = 0; i < betData[0].uniqueRuns.length; i++){
-                    let data = {}
-                    if(i === 0 && !(i === (betData[0].uniqueRuns.length - 1))){
-                        data.message = `${betData[0].uniqueRuns[i] - 1} or less`
-                        let sum = 0
-                        for(let j = 0; j < betData[0].data[0].length; j++){
-                            if(betData[0].data[0][j].secId === "odd_Even_No" && betData[0].data[0][j].runs <= (betData[0].uniqueRuns[i] - 1)){
-                                sum += betData[0].data[0][j].totalWinAmount
-                            }else{
-                                sum -= betData[0].data[0][j].totalAmount
-                            }
-                        }
-                        dataToshow.push(data)
-                    }else if ( i === (betData[0].uniqueRuns.length - 1)){
-                        data.message = `between ${betData[0].uniqueRuns[i - 1]} and ${betData[0].uniqueRuns[i] - 1}`
-                        let sum = 0
-                        for(let j = 0; j < betData[0].data[0].length; j++){
-                            if(betData[0].data[0][j].secId === "odd_Even_No" && betData[0].data[0][j].runs <= betData[0].uniqueRuns[i]){
-                                sum += betData[0].data[0][j].totalWinAmount
-                            }else if (betData[0].data[0][j].secId === "odd_Even_Yes" && betData[0].data[0][j].runs >= betData[0].uniqueRuns[i - 1]){
-                                sum += betData[0].data[0][j].totalWinAmount
-                            }
-                            else{
-                                sum -= betData[0].data[0][j].totalAmount
-                            }
-                        }
-                        dataToshow.push(data)
-
-                        data.message = `${betData[0].uniqueRuns[i]} or more`
-                        for(let j = 0; j < betData[0].data[0].length; j++){
-                            if(betData[0].data[0][j].secId === "odd_Even_Yes" && betData[0].data[0][j].runs >= betData[0].uniqueRuns[i]){
-                                sum += betData[0].data[0][j].totalWinAmount
-                            }
-                            else{
-                                sum -= betData[0].data[0][j].totalAmount
-                            }
-                        }
-                        dataToshow.push(data)
-
-                    }else{
-                        data.message = `between ${betData[0].uniqueRuns[i - 1]} and ${betData[0].uniqueRuns[i] - 1}`
-                        let sum = 0
-                        for(let j = 0; j < betData[0].data[0].length; j++){
-                            if(betData[0].data[0][j].secId === "odd_Even_No" && betData[0].data[0][j].runs <= betData[0].uniqueRuns[i]){
-                                sum += betData[0].data[0][j].totalWinAmount
-                            }else if (betData[0].data[0][j].secId === "odd_Even_Yes" && betData[0].data[0][j].runs >= betData[0].uniqueRuns[i - 1]){
-                                sum += betData[0].data[0][j].totalWinAmount
-                            }
-                            else{
-                                sum -= betData[0].data[0][j].totalAmount
-                            }
-                        }
-                        dataToshow.push(data)
-                    }
+                for(let i = 0; i < betData.uniqueRuns.length; i++){ 
+                    console.log(betData.uniqueRuns)
                 }
                 // socket.emit('FANCYBOOK', {betData, type:'Fancy'})
                 res.status(200).json({
