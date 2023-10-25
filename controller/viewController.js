@@ -4925,7 +4925,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                     },
                     {
                         $group: {
-                          _id: "$runs",
+                          _id: null,
                           uniqueRuns: { $addToSet: "$runs" }
                         }
                       },
