@@ -379,12 +379,12 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
         {
             $group:{
                 _id:'$marketId',
-                selectionName:'$selectionName',
-                match:'$match',
-                bettype2:"$bettype2",
-                marketName:"$marketName",
-                oddValue:"$oddValue",
-                Stake:"$Stake",
+                selectionName:{$first:'$selectionName'},
+                match:{$first:'$match'},
+                bettype2:{$first:"$bettype2"},
+                marketName:{$first:"$marketName"},
+                oddValue:{$first:"$oddValue"},
+                Stake:{$first:"$Stake"},
 
 
             }
