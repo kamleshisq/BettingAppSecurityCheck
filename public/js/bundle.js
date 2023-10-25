@@ -5489,15 +5489,15 @@ var login = /*#__PURE__*/function () {
             sessionStorage.setItem('roles', JSON.stringify(res.data.data.roles));
             // sessionStorage.setItem('grandParentDetails','{"parent_id":"0"}');
             // console.log(res.data)
-            if (res.data.count) {
-              window.setTimeout(function () {
-                location.assign('/updatePassWord');
-              }, 100);
-            } else {
-              window.setTimeout(function () {
-                location.assign('/admin/userManagement');
-              }, 100);
-            }
+            // if(res.data.count){
+            //     window.setTimeout(()=>{ 
+            //         location.assign('/updatePassWord')
+            //     }, 100)
+            // }else{
+            //     window.setTimeout(()=>{ 
+            //         location.assign('/admin/userManagement')
+            //     }, 100)
+            // }
           }
           _context.next = 11;
           break;
