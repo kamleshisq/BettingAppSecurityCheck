@@ -29,7 +29,7 @@ async function getSportDATA(){
         // console.log(err, "ERROR")
 
         data = await Promise.all(requests2)
-        // console.log(data)
+        console.log(data)
     }
     return data
 }
