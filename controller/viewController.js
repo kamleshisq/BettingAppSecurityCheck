@@ -4936,6 +4936,21 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                           uniqueRuns: 1,
                           data: 1 
                         }
+                      },
+                      {
+                        $unwind: "$uniqueRuns" 
+                      },
+                      {
+                        $sort: {
+                          "uniqueRuns": 1 
+                        }
+                      },
+                      {
+                        $group: {
+                          _id: null,
+                          uniqueRuns: { $push: "$uniqueRuns" },
+                          data: { $push: "$data" }
+                        }
                       }
                     // {
                     //     $group: { 
