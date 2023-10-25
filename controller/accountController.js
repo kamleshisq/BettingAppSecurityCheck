@@ -510,18 +510,18 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
            
             },
         },
-        // {
-        //     $group:{
-        //         _id:"$_id.marketId",
-        //         data:{
-        //             $push:{
-        //                 run:'$_id.runs',
-        //                 exposure:'$exposure',
-        //                 WinAmount:'$WinAmount'
-        //             }
-        //         }
-        //     }
-        // }
+        {
+            $group:{
+                _id:"$_id.marketId",
+                data:{
+                    $push:{
+                        run:'$_id.runs',
+                        exposure:'$exposure',
+                        WinAmount:'$WinAmount'
+                    }
+                }
+            }
+        }
         // {
         //     $group: {
         //         _id: null,
