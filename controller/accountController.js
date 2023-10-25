@@ -373,7 +373,9 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
         {
             $match: {
                 status: "OPEN",
-                userName:req.currentUser.userName
+                userName:req.currentUser.userName,
+                marketId:{$ne:[{$substr: ["$marketId", -2, 2]},'F2']}
+                
             }
         },
         // {
@@ -439,6 +441,102 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
             }},
         }
     }
+    ])
+
+    res.status(200).json({
+        status:'success',
+        data:exposure
+    })
+})
+exports.getexposureFancy = catchAsync(async(req, res, next)=>{
+    const exposure = await betModel.aggregate([
+        {
+            $match: {
+                status: "OPEN",
+                userName:req.currentUser.userName,
+                marketId:{$eq:[{$substr: ["$marketId", -2, 2]},'F2']}
+                
+            }
+        },
+        {
+            $addFields: {
+              runs: {
+                $toInt: {
+                  $arrayElemAt: [
+                    { $split: ["$selectionName", "@"] },
+                    1 
+                  ]
+                }
+              }
+            }
+        },
+        // {
+        //     $group:{
+        //         _id: {
+        //             selectionName: "$selectionName",
+        //             matchName: "$match",
+        //             marketId:"$marketId"
+        //         },
+        //         selectionName:{$first:'$selectionName'},
+        //         match:{$first:'$match'},
+        //         bettype2:{$first:"$bettype2"},
+        //         marketName:{$first:"$marketName"},
+        //         oddValue:{$first:"$oddValue"},
+        //         Stake:{$first:"$Stake"},
+
+
+        //     }
+        // },
+        {
+            $group: {
+                _id: {
+                    marketId:"$marketId",
+                    runs:'$runs'
+                },
+
+                // totalAmountB: {
+                //     $sum: {
+                //         $cond: {
+                //             if : {$eq: ['$bettype2', "BACK"]},
+                //             then:{$multiply:["$exposure",-1]},
+                //             else:'$WinAmount'
+                //         }
+                //     }
+                // },
+                // totalAmountL: {
+                //     $sum: {
+                //         $cond: {
+                //             if : {$eq: ['$bettype2', "LAY"]},
+                //             then:{$multiply:["$exposure",-1]},
+                //             else:'$WinAmount'
+                //         }
+                //     }
+                // }
+           
+            },
+        },
+        // {
+        //     $group: {
+        //         _id: null,
+        //         totalAmount: {$sum:{$cond:{
+        //             if:{
+        //                 $eq:[{$cmp:['$totalAmountB','$totalAmountL']},0]
+        //             },
+        //             then:"$totalAmountL",
+        //             else:{
+        //                 $cond:{
+        //                     if:{
+        //                         $eq:[{$cmp:['$totalAmountB','$totalAmountL']},1]
+        //                     },
+        //                     then:"$totalAmountL",
+        //                     else:"$totalAmountB"
+        //                 }
+                       
+        //             }
+        //         },
+        //     }},
+        // }
+        // }
     ])
 
     res.status(200).json({

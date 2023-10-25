@@ -9,6 +9,7 @@ const Usermiddlewares = require("../middleWares/user_middleware");
 // User Panal
 router.post("/getMyAccStatement",authController.isProtected_User, accountController.getMyAccountStatement);
 router.get("/getExposer", authController.isProtected_User,accountController.getexposure);
+router.get("/getExposerFance", authController.isProtected_User,accountController.getexposureFancy);
 
 // Admin Panal
 router.use(authController.isProtected, authController.restrictTo('accountControl'))
