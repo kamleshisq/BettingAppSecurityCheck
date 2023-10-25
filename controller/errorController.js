@@ -38,11 +38,19 @@ const sendErrorDev = (err, req,res) => {
             message : err.message,
         })
     }else{
-        return res.status(err.statusCode).json({
-            status : err.status,
-        error: err,
-        message : err.message,
-        stack: err.stack
+        // return res.status(err.statusCode).json({
+        //     status : err.status,
+        // error: err,
+        // message : err.message,
+        // stack: err.stack
+        // })
+        let message
+        if(err.message.startsWith('Cannot read properties of undefined')){
+            message = "Opps! Please try again later"
+        }
+        return res.render('./errorMessage',{
+            statusCode : err.statusCode,
+            message,
         })
     }
     // return res.status(err.statusCode).render('loginPage',{
