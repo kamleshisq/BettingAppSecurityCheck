@@ -395,18 +395,13 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
         // },
         {
             $group: {
-                _id: {
-                    matchName: "$match",
-                    marketId:"$marketId"
-                },
+                _id: "$marketId",
                 totalAmountB: {
                     $sum: {
                         $cond: {
                             if : {$eq: ['$bettype2', "BACK"]},
-                            then:{$sum:{$multiply:["$exposure",-1]}},
-                            else:{
-                                $sum: '$winamount'
-                            }
+                            then:{$multiply:["$exposure",-1]},
+                            else:'$WinAmount'
                         }
                     }
                 },
@@ -414,10 +409,8 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
                     $sum: {
                         $cond: {
                             if : {$eq: ['$bettype2', "LAY"]},
-                            then:{$sum:{$multiply:["$exposure",-1]}},
-                            else:{
-                                $sum: '$winamount'
-                            }
+                            then:{$multiply:["$exposure",-1]},
+                            else:'$WinAmount'
                         }
                     }
                 }
@@ -426,8 +419,8 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
         },
         {
             $group: {
-                _id: "$_id.marketId",
-                totalAmount: {$cond:{
+                _id: null,
+                totalAmount: {$sum:{$cond:{
                     if:{
                         $eq:[{$cmp:['$totalAmountB','$totalAmountL']},0]
                     },
@@ -442,7 +435,7 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
                         else:"$totalAmountB"
                     }
                 },
-            },
+            }},
         }
     }
     ])
