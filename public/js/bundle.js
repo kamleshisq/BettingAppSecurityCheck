@@ -7070,63 +7070,67 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //     // console.log(email)
 //     login(email, password);
 // })};
-
-// const {
-//     host, hostname, href, origin, pathname, port, protocol, search
-//   } = window.location
-
-// $(document).ready(function(){ 
-//     const linkColor = document.querySelectorAll('.nav_link')
-// 	const operationPathnameArr = ['/admin/houseManagement','/admin/streammanagement','/admin/whiteLableAnalysis','/admin/commissionMarkets','/admin/settlement','/admin/gameanalysis','/admin/Notification','/admin/betmoniter','/admin/onlineUsers','/admin/alertbet','/admin/betlimit','/admin/voidbet']
-//     const reportsPathnameArr = ['/admin/gamereport','/admin/myaccount','/admin/adminaccount','/admin/useraccount','/admin/settlementHistory','/admin/reports','/admin/userhistoryreport','/admin/plreport','/admin/commissionReport']
-//     const cmsPathnameArr = ['/admin/cms','/admin/pageManager','/admin/gameRules']
-// 	function colorLink(){
-//         if(linkColor){
-//         linkColor.forEach(l=> l.classList.remove('active'))
-//         $("a[href='"+pathname+"'").addClass('active')
-//         if(operationPathnameArr.includes(pathname) || reportsPathnameArr.includes(pathname) || cmsPathnameArr.includes(pathname)){
-//             $("a[href='"+pathname+"'").parent().parent().siblings('a').addClass('active')
-//             $("a[href='"+pathname+"'").parent().parent().addClass('open')
-//         }
-//         if(pathname == '/admin/catalogcontrol/compitations' || pathname == '/admin/catalogcontrol/compitations/events'){
-//             $("a[href='"+'/admin/catalogcontrol'+"'").addClass('active')
-//         }else if(pathname == '/admin/riskAnalysis' || pathname == '/admin/matchBets'){
-//             $("a[href='"+'/admin/liveMarket'+"'").addClass('active')
-//         }else if(pathname.startsWith('/admin/userdetails' || pathname == '/admin/allOperators' ||  pathname == '/admin/profiledetail')){
-//             $("a[href='"+'/admin/userManagement'+"'").addClass('active')
-//         }else if(pathname == '/admin/settlementIn'){
-//             $("a[href='"+'/admin/settlement'+"'").addClass('active')
-//             $("a[href='"+'/admin/settlement'+"'").parent().parent().siblings('a').addClass('active')
-//             $("a[href='"+'/admin/settlement'+"'").parent().parent().addClass('open')
-//         }else if(pathname.startsWith('/admin/streammanagement/event')){
-//             $("a[href='"+'/admin/streammanagement'+"'").addClass('active')
-//             $("a[href='"+'/admin/streammanagement'+"'").parent().parent().siblings('a').addClass('active')
-//             $("a[href='"+'/admin/streammanagement'+"'").parent().parent().addClass('open')
-//         }else if(pathname.startsWith('/admin/betlimit/sport') || pathname.startsWith('/admin/betlimit/sports') ||  pathname.startsWith('/admin/betlimit/sports/event') || pathname.startsWith('/admin/betlimit/sports/match')){
-//             $("a[href='"+'/admin/betlimit'+"'").addClass('active')
-//             $("a[href='"+'/admin/betlimit'+"'").parent().parent().siblings('a').addClass('active')
-//             $("a[href='"+'/admin/betlimit'+"'").parent().parent().addClass('open')
-//         }
-//         }
-// 	}
-//     colorLink()
-
-//     $('input:checked').parents('.switch').addClass("on");
-//     $('input:checkbox').change(function(){
-//         if($(this).is(":checked")) {
-//             $(this).parents('.switch').addClass("on");
-//         } else {
-//             $(this).parents('.switch').removeClass("on");
-//         }
-//     });
-
-//     $('.searchUser').keypress(function(event){
-//         var keycode = (event.keyCode ? event.keyCode : event.which);
-//         if(keycode == '13'){
-//           event.preventDefault()  
-//         }
-//       });
-// });
+var _window$location = window.location,
+  host = _window$location.host,
+  hostname = _window$location.hostname,
+  href = _window$location.href,
+  origin = _window$location.origin,
+  pathname = _window$location.pathname,
+  port = _window$location.port,
+  protocol = _window$location.protocol,
+  search = _window$location.search;
+$(document).ready(function () {
+  var linkColor = document.querySelectorAll('.nav_link');
+  var operationPathnameArr = ['/admin/houseManagement', '/admin/streammanagement', '/admin/whiteLableAnalysis', '/admin/commissionMarkets', '/admin/settlement', '/admin/gameanalysis', '/admin/Notification', '/admin/betmoniter', '/admin/onlineUsers', '/admin/alertbet', '/admin/betlimit', '/admin/voidbet'];
+  var reportsPathnameArr = ['/admin/gamereport', '/admin/myaccount', '/admin/adminaccount', '/admin/useraccount', '/admin/settlementHistory', '/admin/reports', '/admin/userhistoryreport', '/admin/plreport', '/admin/commissionReport'];
+  var cmsPathnameArr = ['/admin/cms', '/admin/pageManager', '/admin/gameRules'];
+  function colorLink() {
+    if (linkColor) {
+      linkColor.forEach(function (l) {
+        return l.classList.remove('active');
+      });
+      $("a[href='" + pathname + "'").addClass('active');
+      if (operationPathnameArr.includes(pathname) || reportsPathnameArr.includes(pathname) || cmsPathnameArr.includes(pathname)) {
+        $("a[href='" + pathname + "'").parent().parent().siblings('a').addClass('active');
+        $("a[href='" + pathname + "'").parent().parent().addClass('open');
+      }
+      if (pathname == '/admin/catalogcontrol/compitations' || pathname == '/admin/catalogcontrol/compitations/events') {
+        $("a[href='" + '/admin/catalogcontrol' + "'").addClass('active');
+      } else if (pathname == '/admin/riskAnalysis' || pathname == '/admin/matchBets') {
+        $("a[href='" + '/admin/liveMarket' + "'").addClass('active');
+      } else if (pathname.startsWith('/admin/userdetails' || pathname == '/admin/allOperators' || pathname == '/admin/profiledetail')) {
+        $("a[href='" + '/admin/userManagement' + "'").addClass('active');
+      } else if (pathname == '/admin/settlementIn') {
+        $("a[href='" + '/admin/settlement' + "'").addClass('active');
+        $("a[href='" + '/admin/settlement' + "'").parent().parent().siblings('a').addClass('active');
+        $("a[href='" + '/admin/settlement' + "'").parent().parent().addClass('open');
+      } else if (pathname.startsWith('/admin/streammanagement/event')) {
+        $("a[href='" + '/admin/streammanagement' + "'").addClass('active');
+        $("a[href='" + '/admin/streammanagement' + "'").parent().parent().siblings('a').addClass('active');
+        $("a[href='" + '/admin/streammanagement' + "'").parent().parent().addClass('open');
+      } else if (pathname.startsWith('/admin/betlimit/sport') || pathname.startsWith('/admin/betlimit/sports') || pathname.startsWith('/admin/betlimit/sports/event') || pathname.startsWith('/admin/betlimit/sports/match')) {
+        $("a[href='" + '/admin/betlimit' + "'").addClass('active');
+        $("a[href='" + '/admin/betlimit' + "'").parent().parent().siblings('a').addClass('active');
+        $("a[href='" + '/admin/betlimit' + "'").parent().parent().addClass('open');
+      }
+    }
+  }
+  colorLink();
+  $('input:checked').parents('.switch').addClass("on");
+  $('input:checkbox').change(function () {
+    if ($(this).is(":checked")) {
+      $(this).parents('.switch').addClass("on");
+    } else {
+      $(this).parents('.switch').removeClass("on");
+    }
+  });
+  $('.searchUser').keypress(function (event) {
+    var keycode = event.keyCode ? event.keyCode : event.which;
+    if (keycode == '13') {
+      event.preventDefault();
+    }
+  });
+});
 $(document).on("submit", ".loginFormAdmin", function (e) {
   e.preventDefault();
   // console.log("Working")
