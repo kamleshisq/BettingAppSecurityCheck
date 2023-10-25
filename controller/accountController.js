@@ -401,7 +401,7 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
                         $cond: {
                             if : {$eq: ['$bettype2', "BACK"]},
                             then:{$multiply:["$exposure",-1]},
-                            else:'$WinAmount'
+                            else:0
                         }
                     }
                 },
@@ -410,7 +410,7 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
                         $cond: {
                             if : {$eq: ['$bettype2', "LAY"]},
                             then:{$multiply:["$exposure",-1]},
-                            else:'$WinAmount'
+                            else:0
                         }
                     }
                 }
