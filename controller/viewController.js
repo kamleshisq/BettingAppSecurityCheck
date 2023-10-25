@@ -5148,7 +5148,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                         let sum = 0
                         console.log(betData.data[0])
                         for(let j = 0; j < betData.data[0].length; j++){
-                            if(betData.data[0][j].secId === odd_Even_No){
+                            if(betData.data[0][j].secId === "odd_Even_No"){
                                 sum += betData.data[0][j].totalWinAmount
                             }else{
                                 sum -= betData.data[0][j].totalAmount
