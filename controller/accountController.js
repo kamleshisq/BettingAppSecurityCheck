@@ -377,9 +377,21 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
             }
         },
         {
+            $group:{
+                _id:'$marketId',
+                selectionName:'$selectionName',
+                match:'$match',
+                bettype2:"$bettype2",
+                marketName:"$marketName",
+                oddValue:"$oddValue",
+                Stake:"$Stake",
+
+
+            }
+        },
+        {
             $group: {
                 _id: {
-                    userName: "$userName",
                     selectionName: "$selectionName",
                     matchName: "$match",
                 },
@@ -419,31 +431,12 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
                             }
                         }
                     }
-                },
-                Stake: {
-                    $sum: { 
-                        $cond: { 
-                            if : {$eq: ['$bettype2', "BACK"]},
-                            then : {
-                                $sum: '$Stake' 
-                            },
-                            else : {
-                                $multiply: ['$Stake', -1]
-                            }
-                        }
-                    }
-                },
-                parentArray: { $first: "$parentArray" },
-                role_type: { $first: "$role_type" },
-                parentId: { $first: "$parentId" },
+                }
             },
         },
         {
             $group: {
-                _id: "$_id.userName",
-                parentArray: { $first: "$parentArray" },
-                role_type: { $first: "$role_type" },
-                parentId: { $first: "$parentId" },
+                _id: null,
                 selections: {
                     $push: {
                         selectionName: "$_id.selectionName",
