@@ -14292,7 +14292,20 @@ socket.on('connect', () => {
                     let html = `<tr class="empty_table">No record found</tr>`
                     document.getElementById('FENCY').innerHTML = html
                 }else{
-                    let html = `<tr class="empty_table">No record found</tr>`
+                    let html = ""
+                    html += `<table id="FANCYBOOK"
+                    <tbody>
+                    <tr class="headDetail"><th>Runner Name</th>
+                    <th>Profit/Loss</th></tr>`
+                    for(let i = 0; i < data.betData.length; i++){
+                        html += `<tr><td>${data.betData[i]._id}</td>`
+                        if(data.betData[i].totalWinAmount < 0){
+                            html += `<td class="red" >${(data.betData[i].totalWinAmount).toFixed(2)}</td></tr>`
+                        }else{
+                            html += `<td class="green" >${(data.betData[i].totalWinAmount).toFixed(2)}</td></tr>`
+                        }
+                    } 
+
                     document.getElementById('FENCY').innerHTML = html
                 }
             })

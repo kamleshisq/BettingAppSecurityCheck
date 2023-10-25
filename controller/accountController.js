@@ -4,6 +4,7 @@ const User = require("../model/userModel");
 const Role = require('./../model/roleModel')
 // const { required } = require("joi");
 const accountStatement = require('../model/accountStatementByUserModel');
+const betModel = require("../model/betmodel");
 // const { use } = require("../routes/viewRoutes");
 
 exports.deposit = catchAsync(async(req, res, next) => {
@@ -366,6 +367,100 @@ exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
     })
 });
 
+
+exports.getexposure = catchAsync(async(req, res, next)=>{
+    const exposure = await betModel.aggregate([
+        {
+            $match: {
+                status: "OPEN",
+                userName:req.currentUser.userName
+            }
+        },
+        {
+            $group: {
+                _id: {
+                    userName: "$userName",
+                    selectionName: "$selectionName",
+                    matchName: "$match",
+                },
+                totalAmount: {
+                    $sum: {
+                        $cond: { 
+                            if : {$eq: ['$bettype2', "BACK"]},
+                            then:{
+                                $cond:{
+                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                    then:{
+                                        $sum: {
+                                            $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+                                        }
+                                    },
+                                    else:{
+                                        $sum: {
+                                            $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+                                        }
+                                    }
+                                }
+                            },
+                            else:{
+                                $cond:{
+                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+                                    then:{
+                                        $sum: {
+                                           $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+                                        }
+                                    },
+                                    else:{
+                                        $sum: { 
+                                            $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                Stake: {
+                    $sum: { 
+                        $cond: { 
+                            if : {$eq: ['$bettype2', "BACK"]},
+                            then : {
+                                $sum: '$Stake' 
+                            },
+                            else : {
+                                $multiply: ['$Stake', -1]
+                            }
+                        }
+                    }
+                },
+                parentArray: { $first: "$parentArray" },
+                role_type: { $first: "$role_type" },
+                parentId: { $first: "$parentId" },
+            },
+        },
+        {
+            $group: {
+                _id: "$_id.userName",
+                parentArray: { $first: "$parentArray" },
+                role_type: { $first: "$role_type" },
+                parentId: { $first: "$parentId" },
+                selections: {
+                    $push: {
+                        selectionName: "$_id.selectionName",
+                        totalAmount: '$totalAmount',
+                        matchName: "$_id.matchName",
+                        Stake: { $multiply: ["$Stake", -1] },
+                    },
+                },
+            },
+        }
+    ])
+
+    res.status(200).json({
+        status:'success',
+        data:exposure
+    })
+})
 
 
 //for user
