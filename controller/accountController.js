@@ -394,6 +394,7 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
                 _id: {
                     selectionName: "$selectionName",
                     matchName: "$match",
+                    marketId:"$marketId"
                 },
                 totalAmount: {
                     $sum: {
@@ -436,7 +437,7 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
         },
         {
             $group: {
-                _id: null,
+                _id: "$_id.marketId",
                 selections: {
                     $push: {
                         selectionName: "$_id.selectionName",
