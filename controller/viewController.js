@@ -5056,35 +5056,35 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                             uniqueRuns:"$uniqueRuns",
                         }
                     },
-                    // {
-                    //     $group: {
-                    //       _id: null,
-                    //       uniqueRuns: { $addToSet: "$runs" },
-                    //       data: { $push: "$$ROOT" } 
-                    //     }
-                    //   },
-                    //   {
-                    //     $project: {
-                    //       _id: 0, 
-                    //       uniqueRuns: 1,
-                    //       data: 1 
-                    //     }
-                    //   },
-                    //   {
-                    //     $unwind: "$uniqueRuns" 
-                    //   },
-                    //   {
-                    //     $sort: {
-                    //       "uniqueRuns": 1 
-                    //     }
-                    //   },
-                    //   {
-                    //     $group: {
-                    //       _id: null,
-                    //       uniqueRuns: { $push: "$uniqueRuns" },
-                    //       data: { $push: "$data" }
-                    //     }
-                    //   },
+                    {
+                        $group: {
+                          _id: null,
+                          uniqueRuns: { $addToSet: "$runs" },
+                          data: { $push: "$$ROOT" } 
+                        }
+                      },
+                      {
+                        $project: {
+                          _id: 0, 
+                          uniqueRuns: 1,
+                          data: 1 
+                        }
+                      },
+                      {
+                        $unwind: "$uniqueRuns" 
+                      },
+                      {
+                        $sort: {
+                          "uniqueRuns": 1 
+                        }
+                      },
+                      {
+                        $group: {
+                          _id: null,
+                          uniqueRuns: { $push: "$uniqueRuns" },
+                          data: { $push: "$data" }
+                        }
+                      },
                    
                    
                     
