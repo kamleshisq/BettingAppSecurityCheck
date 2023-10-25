@@ -568,6 +568,80 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
         let runLength = runs.length;
         let groupruns = [];
         for(let i = 0;i<runLength + 1;i++){
+            if(runLength == 1){
+                let data1 = {}
+                data1.message = `${runs[i] - 1} or less`
+                let sum = 0
+                for(let j = 0; j < data[0].length; j++){
+                    if(data[0].run < runs[i]){
+                        sum += data[0].run
+                    }
+                }
+                data1.sum = sum
+                dataToshow.push(data1)
+                let data2 = {}
+                data2.message = `${runs[i]} or more`
+                for(let j = 0; j < data[0].length; j++){
+                    if(data[0].run >= runs[i]){
+                        sum += data[0].run
+                    }
+                }
+                data2.sum = sum
+                dataToshow.push(data2)
+            }else{
+                if(i === 0){
+                    let data = {}
+                    data.message = `${runs[i] - 1} or less`
+                    let sum = 0
+                    for(let j = 0; j < data[0].length; j++){
+                        if(data[i].run < runs[i]){
+                            sum += data[i].run
+                        }
+                    }
+                    data.sum = sum
+                    dataToshow.push(data)
+                }else if (i === (runs.length - 1)){
+                    let data = {}
+                    let data1 = {}
+                    data.message = `between ${runs[i - 1]} and ${runs[i] - 1}`
+                    let sum = 0
+                    for(let j = 0; j < data.length; j++){
+                        if(data[i].runs == runs[i]){
+                            sum += data[i].totalWinAmount
+                        }
+                    }
+                    data.sum = sum
+                    dataToshow.push(data)
+                    let sum2 = 0
+                    data1.message = `${runs[i]} or more`
+                    for(let j = 0; j < data.length; j++){
+                        if(data[0][j].secId === "odd_Even_Yes" && data[0][j].runs <= runs[i]){
+                            sum2 += data[0][j].totalWinAmount
+                        }
+                        else{
+                            sum2 += data[0][j].totalAmount
+                        }
+                    }
+                    data1.sum = sum2
+                    dataToshow.push(data1)
+                }else{
+                    let data = {}
+                    data.message = `between ${runs[i - 1]} and ${runs[i] - 1}`
+                    let sum = 0
+                    for(let j = 0; j < data.length; j++){
+                        if(data[0][j].runs == runs[i]){
+                            sum += data[0][j].totalWinAmount
+                        }else if (data[0][j].secId === "odd_Even_Yes" && data[0][j].runs == runs[i - 1]){
+                            sum += data[0][j].totalWinAmount
+                        }
+                        else{
+                            sum += data[0][j].totalAmount
+                        }
+                    }
+                    data.sum = sum
+                    dataToshow.push(data)
+                }
+            }
             if(i == 0 && i != runLength){
                 groupruns.push([0,runs[i] - 1])
             }else if(i == 0 && i == runLength){
