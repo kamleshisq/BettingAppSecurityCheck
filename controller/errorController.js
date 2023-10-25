@@ -23,9 +23,9 @@ const handleValidationErrorDB = err => {
 }
 
 const sendErrorDev = (err, req,res) => {
-    console.log( req , 'abc')
+    // console.log( req , 'abc')
     if(req.originalUrl.startsWith('/api')){
-    console.log(err, "THis is the ERROR")
+    // console.log(err, "THis is the ERROR")
     return res.status(err.statusCode).json({
         status : err.status,
         error: err,
@@ -44,6 +44,7 @@ const sendErrorDev = (err, req,res) => {
         // message : err.message,
         // stack: err.stack
         // })
+        console.log(err, "THis is the ERROR")
         let message
         if(err.message.startsWith('Cannot read properties of undefined')){
             message = "Opps! Please try again later"
