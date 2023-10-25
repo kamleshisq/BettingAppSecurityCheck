@@ -5856,15 +5856,16 @@ io.on('connection', (socket) => {
                         data1.sum = sum
                         dataToshow.push(data1)
                         let data2 = {}
+                        let sum2 = 0
                         data2.message = `${betData.uniqueRuns[i]} or more`
                         for(let j = 0; j < betData.data[0].length; j++){
                             if(betData.data[0][j].secId === "odd_Even_Yes"){
-                                sum += betData.data[0][j].totalWinAmount
+                                sum2 += betData.data[0][j].totalWinAmount
                             }else{
-                                sum += betData.data[0][j].totalAmount
+                                sum2 += betData.data[0][j].totalAmount
                             }
                         }
-                        data2.sum = sum
+                        data2.sum = sum2
                         dataToshow.push(data2)
                     }else{
                         if(i === 0){
