@@ -376,29 +376,33 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
                 userName:req.currentUser.userName
             }
         },
-        {
-            $group:{
-                _id:'$marketId',
-                selectionName:{$first:'$selectionName'},
-                match:{$first:'$match'},
-                bettype2:{$first:"$bettype2"},
-                marketName:{$first:"$marketName"},
-                oddValue:{$first:"$oddValue"},
-                Stake:{$first:"$Stake"},
+        // {
+        //     $group:{
+        //         _id: {
+        //             selectionName: "$selectionName",
+        //             matchName: "$match",
+        //             marketId:"$marketId"
+        //         },
+        //         selectionName:{$first:'$selectionName'},
+        //         match:{$first:'$match'},
+        //         bettype2:{$first:"$bettype2"},
+        //         marketName:{$first:"$marketName"},
+        //         oddValue:{$first:"$oddValue"},
+        //         Stake:{$first:"$Stake"},
 
 
-            }
-        },
+        //     }
+        // },
         {
             $group: {
                 _id: {
                     selectionName: "$selectionName",
                     matchName: "$match",
-                    marketId:"$id_marketId"
+                    marketId:"$marketId"
                 },
                 totalAmount: {
                     $sum: {
-                        $cond: { 
+                        $cond: {
                             if : {$eq: ['$bettype2', "BACK"]},
                             then:{
                                 $cond:{
