@@ -497,20 +497,20 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
     const banner = await bannerModel.find()
     let sliders = await sliderModel.find().sort({Number:1})
     let pages = await pagesModel.find()
-    const sportListData = await getCrkAndAllData()
-    const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
+    // const sportListData = await getCrkAndAllData()
+    // const cricket = sportListData[0].gameList[0].eventList.sort((a, b) => a.eventData.time - b.eventData.time);
     let featureEventId = []
     let featureStatusArr = await FeatureventModel.find();
     featureStatusArr.map(ele => {
         featureEventId.push(parseInt(ele.Id))
     })
-    let LiveCricket = cricket.filter(item => featureEventId.includes(item.eventData.eventId))
-    let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
-    let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
-    footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-    Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
-    let liveFootBall = footBall.filter(item => featureEventId.includes(item.eventData.eventId));
-    let liveTennis = Tennis.filter(item => featureEventId.includes(item.eventData.eventId))
+    // let LiveCricket = cricket.filter(item => featureEventId.includes(item.eventData.eventId))
+    // let footBall = sportListData[1].gameList.find(item => item.sport_name === "Football")
+    // let Tennis = sportListData[1].gameList.find(item => item.sport_name === "Tennis")
+    // footBall = footBall.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
+    // Tennis = Tennis.eventList.sort((a, b) => a.eventData.time - b.eventData.time);
+    // let liveFootBall = footBall.filter(item => featureEventId.includes(item.eventData.eventId));
+    // let liveTennis = Tennis.filter(item => featureEventId.includes(item.eventData.eventId))
     let userLog
     if(user){
         userLog = await loginLogs.find({user_id:user._id})
@@ -525,9 +525,9 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         pages,
         check:"Home",
         userLog,
-        LiveCricket,
-        liveFootBall,
-        liveTennis,
+        // LiveCricket,
+        // liveFootBall,
+        // liveTennis,
         notifications:req.notifications,
         featureStatusArr
     })
