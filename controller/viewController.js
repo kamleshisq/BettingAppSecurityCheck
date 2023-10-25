@@ -5138,7 +5138,8 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                     
                     
                   ])
-                console.log(betData, "betData")
+                  console.log(betData[0], "betData")
+                console.log(betData[0].data, "betData")
                 betData =  betData[0]
                 let dataToshow = []
                 for(let i = 0; i < betData.uniqueRuns.length; i++){ 
