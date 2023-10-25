@@ -525,9 +525,9 @@ exports.userdashboard = catchAsync(async(req, res, next) => {
         pages,
         check:"Home",
         userLog,
-        LiveCricket,
-        liveFootBall,
-        liveTennis,
+        // LiveCricket,
+        // liveFootBall,
+        // liveTennis,
         notifications:req.notifications,
         featureStatusArr
     })
