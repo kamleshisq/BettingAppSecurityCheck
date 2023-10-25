@@ -8,7 +8,7 @@ const Usermiddlewares = require("../middleWares/user_middleware");
 
 // User Panal
 router.post("/getMyAccStatement",authController.isProtected_User, accountController.getMyAccountStatement);
-
+router.get("/getExposer", authController.isProtected_User,accountController.getexposure);
 
 // Admin Panal
 router.use(authController.isProtected, authController.restrictTo('accountControl'))
@@ -20,7 +20,7 @@ router.post("/withdrawlSettle", authController.checkPass ,accountController.with
 router.post("/depositSettle", authController.checkPass ,accountController.depositSettle);
 router.post("/getUserAccStatement", accountController.getUserAccountStatement);
 router.post("/getUserAccStatement1", accountController.getUserAccountStatement1);
-router.get("/getExposer", authController.isProtected_User,accountController.getexposure);
+
 
 
 
