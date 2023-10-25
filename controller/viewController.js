@@ -5208,7 +5208,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                                 }
                             }
                             data1.sum = sum2
-                            dataToshow.push(data)
+                            dataToshow.push(data1)
                         }else{
                             let data = {}
                             data.message = `between ${betData.uniqueRuns[i - 1]} and ${betData.uniqueRuns[i] - 1}`
