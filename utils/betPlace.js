@@ -210,13 +210,17 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
 // // FOR LAY BACK DIFF
 
     let creditDebitamount
+    let WinAmount
     if(data.data.bettype2 === "BACK"){
         if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.toLowerCase().startsWith('winne')){
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
+            WinAmount = (parseFloat(data.data.stake * data.data.odds) - parseFloat(data.data.stake)).toFixed(2)
         }else if (marketDetails.title.toLowerCase().startsWith('book') || marketDetails.title.toLowerCase().startsWith('toss')){
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
+            WinAmount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }else{
             creditDebitamount = (parseFloat(data.data.stake)).toFixed(2)
+            WinAmount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }
     }else{
         if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.toLowerCase().startsWith('winne')){
@@ -226,6 +230,7 @@ if(marketDetails.title.toLowerCase().startsWith('match') || marketDetails.title.
         }else{
             creditDebitamount = (parseFloat(data.data.stake * data.data.odds)/100).toFixed(2)
         }
+        WinAmount = (parseFloat(data.data.stake)).toFixed(2)
     }
 
     // console.log(creditDebitamount, data, marketDetails, "creditDebitamountcreditDebitamountcreditDebitamountcreditDebitamount")
@@ -280,7 +285,8 @@ if(marketDetails.title === "Winner"){
             ip:data.LOGINDATA.IP,
             parentArray:parentArray,
             parentId:data.LOGINDATA.LOGINUSER.parent_id,
-            exposure:creditDebitamount
+            exposure:creditDebitamount,
+            WinAmount
         }
     }else{
         let runnersData = JSON.parse(marketDetails.runners)
@@ -312,7 +318,8 @@ if(marketDetails.title === "Winner"){
                 ip:data.LOGINDATA.IP,
                 parentArray:parentArray,
                 parentId:data.LOGINDATA.LOGINUSER.parent_id,
-                exposure:creditDebitamount
+                exposure:creditDebitamount,
+                WinAmount
 
             }
     }
