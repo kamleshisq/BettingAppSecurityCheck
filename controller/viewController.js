@@ -5142,7 +5142,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                 let dataToshow = []
                 for(let i = 0; i < betData[0].uniqueRuns.length; i++){
                     let data = {}
-                    if(i === 0){
+                    if(i === 0 && !(i === (betData[0].uniqueRuns.length - 1))){
                         data.message = `${betData[0].uniqueRuns[i] - 1} or less`
                         let sum = 0
                         for(let j = 0; j < betData[0].data[0].length; j++){
