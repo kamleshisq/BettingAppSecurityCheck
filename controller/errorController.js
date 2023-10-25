@@ -44,6 +44,7 @@ const sendErrorDev = (err, req,res) => {
         // message : err.message,
         // stack: err.stack
         // })
+        let mainMassage = "Sorry the page you are looking is doesn't exist. If you think something is broken, click contact us."
         console.log(err, "THis is the ERROR")
         let message
         if(err.message.startsWith('Cannot read properties of undefined')){
@@ -52,6 +53,7 @@ const sendErrorDev = (err, req,res) => {
         return res.render('./errorMessage',{
             statusCode : err.statusCode,
             message,
+            mainMassage
         })
     }
     // return res.status(err.statusCode).render('loginPage',{
