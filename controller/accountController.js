@@ -377,11 +377,24 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
             }
         },
         {
+            $group:{
+                _id:'$marketId',
+                selectionName:{$first:'$selectionName'},
+                match:{$first:'$match'},
+                bettype2:{$first:"$bettype2"},
+                marketName:{$first:"$marketName"},
+                oddValue:{$first:"$oddValue"},
+                Stake:{$first:"$Stake"},
+
+
+            }
+        },
+        {
             $group: {
                 _id: {
-                    userName: "$userName",
                     selectionName: "$selectionName",
                     matchName: "$match",
+                    marketId:"$id_marketId"
                 },
                 totalAmount: {
                     $sum: {
@@ -419,31 +432,12 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
                             }
                         }
                     }
-                },
-                Stake: {
-                    $sum: { 
-                        $cond: { 
-                            if : {$eq: ['$bettype2', "BACK"]},
-                            then : {
-                                $sum: '$Stake' 
-                            },
-                            else : {
-                                $multiply: ['$Stake', -1]
-                            }
-                        }
-                    }
-                },
-                parentArray: { $first: "$parentArray" },
-                role_type: { $first: "$role_type" },
-                parentId: { $first: "$parentId" },
+                }
             },
         },
         {
             $group: {
-                _id: "$_id.userName",
-                parentArray: { $first: "$parentArray" },
-                role_type: { $first: "$role_type" },
-                parentId: { $first: "$parentId" },
+                _id: "$_id.marketId",
                 selections: {
                     $push: {
                         selectionName: "$_id.selectionName",
