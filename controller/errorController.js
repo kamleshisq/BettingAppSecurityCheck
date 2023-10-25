@@ -94,7 +94,7 @@ module.exports=(err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
     err.status = err.status || "Error"
     if(process.env.NODE_ENV === 'development'){
-    //    console.log('working')
+       console.log('working', "THIS IS THE ERROE MAIN ")
         sendErrorDev(err, req,res)
 
     } else if (process.env.NODE_ENV === 'production'){
