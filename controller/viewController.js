@@ -4926,13 +4926,15 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                     {
                         $group: {
                           _id: null,
-                          uniqueRuns: { $addToSet: "$runs" }
+                          uniqueRuns: { $addToSet: "$runs" },
+                          data: { $push: "$$ROOT" } 
                         }
                       },
                       {
                         $project: {
                           _id: 0, 
-                          uniqueRuns: 1
+                          uniqueRuns: 1,
+                          data: 1 
                         }
                       }
                     // {
