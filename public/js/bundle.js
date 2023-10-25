@@ -7070,15 +7070,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //     // console.log(email)
 //     login(email, password);
 // })};
-// var _window$location = window.location,
-//   host = _window$location.host,
-//   hostname = _window$location.hostname,
-//   href = _window$location.href,
-//   origin = _window$location.origin,
-//   pathname = _window$location.pathname,
-//   port = _window$location.port,
-//   protocol = _window$location.protocol,
-//   search = _window$location.search;
+var _window$location = window.location,
+  host = _window$location.host,
+  hostname = _window$location.hostname,
+  href = _window$location.href,
+  origin = _window$location.origin,
+  pathname = _window$location.pathname,
+  port = _window$location.port,
+  protocol = _window$location.protocol,
+  search = _window$location.search;
 $(document).ready(function () {
   var linkColor = document.querySelectorAll('.nav_link');
   var operationPathnameArr = ['/admin/houseManagement', '/admin/streammanagement', '/admin/whiteLableAnalysis', '/admin/commissionMarkets', '/admin/settlement', '/admin/gameanalysis', '/admin/Notification', '/admin/betmoniter', '/admin/onlineUsers', '/admin/alertbet', '/admin/betlimit', '/admin/voidbet'];
