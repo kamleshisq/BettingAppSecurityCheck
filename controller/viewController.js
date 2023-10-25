@@ -4702,12 +4702,12 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
         })
         // let checkBET = await betModel.findOne({marketId:data.marketId})
         if(forcheck.length > 0){
-            if(data.marketId.slice(-2).startsWith('OE')){
+            if(req.body.marketId.slice(-2).startsWith('OE')){
                 let betData = await betModel.aggregate([
                     {
                         $match: {
                             status: "OPEN",
-                            marketId: data.marketId,
+                            marketId: req.body.marketId,
                             userName:{$in:childrenUsername1}
                         }
                     },
@@ -4907,7 +4907,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                     {
                         $match: {
                             status: "OPEN",
-                            marketId: data.marketId,
+                            marketId: req.body.marketId,
                             userName:{$in:childrenUsername1}
                         }
                     },
