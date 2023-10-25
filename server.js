@@ -5884,7 +5884,11 @@ io.on('connection', (socket) => {
                         }else if (i === (betData.uniqueRuns.length - 1)){
                             let data = {}
                             let data1 = {}
-                            data.message = `between ${betData.uniqueRuns[i - 1]} and ${betData.uniqueRuns[i] - 1}`
+                            if(betData.uniqueRuns[i - 1] == (betData.uniqueRuns[i] - 1)){
+                                data.message = `${betData.uniqueRuns[i - 1]}`
+                            }else{
+                                data.message = `between ${betData.uniqueRuns[i - 1]} and ${betData.uniqueRuns[i] - 1}`
+                            }
                             let sum = 0
                             for(let j = 0; j < betData.data[0].length; j++){
                                 if(betData.data[0][j].secId === "odd_Even_No" && betData.data[0][j].runs == betData.uniqueRuns[i]){
@@ -5912,7 +5916,11 @@ io.on('connection', (socket) => {
                             dataToshow.push(data1)
                         }else{
                             let data = {}
-                            data.message = `between ${betData.uniqueRuns[i - 1]} and ${betData.uniqueRuns[i] - 1}`
+                            if(betData.uniqueRuns[i - 1] == (betData.uniqueRuns[i] - 1)){
+                                data.message = `${betData.uniqueRuns[i] - 1}`
+                            }else{
+                                data.message = `between ${betData.uniqueRuns[i - 1]} and ${betData.uniqueRuns[i] - 1}`
+                            }
                             let sum = 0
                             for(let j = 0; j < betData.data[0].length; j++){
                                 if(betData.data[0][j].secId === "odd_Even_No" && betData.data[0][j].runs == betData.uniqueRuns[i]){
