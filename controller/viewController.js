@@ -4923,6 +4923,18 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                           }
                         }
                     },
+                    {
+                        $group: {
+                          _id: "$runs",
+                          uniqueRuns: { $addToSet: "$runs" }
+                        }
+                      },
+                      {
+                        $project: {
+                          _id: 0, 
+                          uniqueRuns: 1
+                        }
+                      }
                     // {
                     //     $group: { 
                     //         _id: {
