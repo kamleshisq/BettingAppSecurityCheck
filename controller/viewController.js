@@ -2710,9 +2710,14 @@ exports.getExchangePageIn = catchAsync(async(req, res, next) => {
         match = data1liveCricket.find(item => item != undefined)
     }
     if(match == undefined){
-        res.status(404).json({
-            status:"Success",
-            message:"This match is no more live"
+        // res.status(404).json({
+        //     status:"Success",
+        //     message:"This match is no more live"
+        // })
+        res.render('./errorMessage', {
+            statusCode : 404,
+            message:"Opps! Please try again later",
+            mainMassage:"The match you are looking for is no more live"
         })
     }
     let src
@@ -4260,9 +4265,14 @@ exports.RiskAnalysis = catchAsync(async(req, res, next) => {
         match = data1liveCricket.find(item => item != undefined)
     }
     if(match == undefined){
-        res.status(404).json({
-            status:"Success",
-            message:"This match is no more live"
+        // res.status(404).json({
+        //     status:"Success",
+        //     message:"This match is no more live"
+        // })
+        res.render('./errorMessage', {
+            statusCode : 404,
+            message:"Opps! Please try again later",
+            mainMassage:"The match you are looking for is no more live"
         })
     }
     let src

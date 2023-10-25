@@ -1,6 +1,12 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&display=swap');
     body { font-family: 'Kanit', sans-serif; font-size: 14px; line-height: 1.2; font-weight: 400; background-color: #EFEFEF;-webkit-font-smoothing: antialiased; font-smoothing: antialiased; margin: 0;}
+    .page-not-found { height: 100vh; display: flex; align-items: center; flex-direction: column; justify-content: center; }
+    .page-not-found h2 { margin: 0; font-size: 45px; }
+    .page-not-found h2 span { display: block; font-size: 200%; color: #182ea6; }
+    .page-not-found p { margin: 10px 0 40px; font-size: 20px; }
+    .page-not-found .error-404-btn a { display: inline-block; text-decoration: none; background: #182ea6; color: #fff; padding: 11px 15px 12px; min-width: 110px; text-align: center; border-radius: 5px; font-size: 20px; border: 1px solid #182ea6; margin: 0 5px;}
+    .page-not-found .error-404-btn a:nth-child(2) { background: transparent; color: #182ea6; }
 </style>
 <div class="page-not-found">
     <h2><span><%=statusCode%></span><%=message%></h2>
