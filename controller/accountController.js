@@ -454,7 +454,7 @@ exports.getexposureFancy = catchAsync(async(req, res, next)=>{
             $match: {
                 status: "OPEN",
                 userName:req.currentUser.userName,
-                marketId:{$eq:[{$substr: ["$marketId", -2, 2]},'F2']}
+                marketId:{$regex: /F2$/}
                 
             }
         },
