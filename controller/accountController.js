@@ -458,6 +458,18 @@ exports.getexposureFancy = catchAsync(async(req, res, next)=>{
                 
             }
         },
+        {
+            $addFields: {
+              runs: {
+                $toInt: {
+                  $arrayElemAt: [
+                    { $split: ["$selectionName", "@"] },
+                    1 
+                  ]
+                }
+              }
+            }
+        },
         // {
         //     $group:{
         //         _id: {
@@ -477,50 +489,54 @@ exports.getexposureFancy = catchAsync(async(req, res, next)=>{
         // },
         {
             $group: {
-                _id: "$marketId",
-                totalAmountB: {
-                    $sum: {
-                        $cond: {
-                            if : {$eq: ['$bettype2', "BACK"]},
-                            then:{$multiply:["$exposure",-1]},
-                            else:'$WinAmount'
-                        }
-                    }
+                _id: {
+                    marketId:"$marketId",
+                    runs:'$runs'
                 },
-                totalAmountL: {
-                    $sum: {
-                        $cond: {
-                            if : {$eq: ['$bettype2', "LAY"]},
-                            then:{$multiply:["$exposure",-1]},
-                            else:'$WinAmount'
-                        }
-                    }
-                }
+
+                // totalAmountB: {
+                //     $sum: {
+                //         $cond: {
+                //             if : {$eq: ['$bettype2', "BACK"]},
+                //             then:{$multiply:["$exposure",-1]},
+                //             else:'$WinAmount'
+                //         }
+                //     }
+                // },
+                // totalAmountL: {
+                //     $sum: {
+                //         $cond: {
+                //             if : {$eq: ['$bettype2', "LAY"]},
+                //             then:{$multiply:["$exposure",-1]},
+                //             else:'$WinAmount'
+                //         }
+                //     }
+                // }
            
             },
         },
-        {
-            $group: {
-                _id: null,
-                totalAmount: {$sum:{$cond:{
-                    if:{
-                        $eq:[{$cmp:['$totalAmountB','$totalAmountL']},0]
-                    },
-                    then:"$totalAmountL",
-                    else:{
-                        $cond:{
-                            if:{
-                                $eq:[{$cmp:['$totalAmountB','$totalAmountL']},1]
-                            },
-                            then:"$totalAmountL",
-                            else:"$totalAmountB"
-                        }
+        // {
+        //     $group: {
+        //         _id: null,
+        //         totalAmount: {$sum:{$cond:{
+        //             if:{
+        //                 $eq:[{$cmp:['$totalAmountB','$totalAmountL']},0]
+        //             },
+        //             then:"$totalAmountL",
+        //             else:{
+        //                 $cond:{
+        //                     if:{
+        //                         $eq:[{$cmp:['$totalAmountB','$totalAmountL']},1]
+        //                     },
+        //                     then:"$totalAmountL",
+        //                     else:"$totalAmountB"
+        //                 }
                        
-                    }
-                },
-            }},
-        }
-    }
+        //             }
+        //         },
+        //     }},
+        // }
+        // }
     ])
 
     res.status(200).json({
