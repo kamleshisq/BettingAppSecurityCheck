@@ -5148,7 +5148,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                         let sum = 0
                         console.log(data1)
                         dataToshow.push(data1)
-                        let data2
+                        let data2 = {}
                         data2.message = `${betData.uniqueRuns[i]} or more`
                         console.log(data2)
                         dataToshow.push(data2)
