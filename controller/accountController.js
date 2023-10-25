@@ -429,10 +429,11 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
                         $cond:{
                             if:{
                                 $eq:[{$cmp:['$totalAmountB','$totalAmountL']},1]
-                            }
-                        },
-                        then:"$totalAmountL",
-                        else:"$totalAmountB"
+                            },
+                            then:"$totalAmountL",
+                            else:"$totalAmountB"
+                        }
+                       
                     }
                 },
             }},
