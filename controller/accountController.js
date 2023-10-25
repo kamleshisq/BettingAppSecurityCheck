@@ -389,65 +389,65 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
 
             }
         },
-        {
-            $group: {
-                _id: {
-                    selectionName: "$selectionName",
-                    matchName: "$match",
-                    marketId:"$id_marketId"
-                },
-                totalAmount: {
-                    $sum: {
-                        $cond: { 
-                            if : {$eq: ['$bettype2', "BACK"]},
-                            then:{
-                                $cond:{
-                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
-                                    then:{
-                                        $sum: {
-                                            $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
-                                        }
-                                    },
-                                    else:{
-                                        $sum: {
-                                            $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
-                                        }
-                                    }
-                                }
-                            },
-                            else:{
-                                $cond:{
-                                    if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
-                                    then:{
-                                        $sum: {
-                                           $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
-                                        }
-                                    },
-                                    else:{
-                                        $sum: { 
-                                            $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-        },
-        {
-            $group: {
-                _id: "$_id.marketId",
-                selections: {
-                    $push: {
-                        selectionName: "$_id.selectionName",
-                        totalAmount: '$totalAmount',
-                        matchName: "$_id.matchName",
-                        Stake: { $multiply: ["$Stake", -1] },
-                    },
-                },
-            },
-        }
+        // {
+        //     $group: {
+        //         _id: {
+        //             selectionName: "$selectionName",
+        //             matchName: "$match",
+        //             marketId:"$id_marketId"
+        //         },
+        //         totalAmount: {
+        //             $sum: {
+        //                 $cond: { 
+        //                     if : {$eq: ['$bettype2', "BACK"]},
+        //                     then:{
+        //                         $cond:{
+        //                             if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+        //                             then:{
+        //                                 $sum: {
+        //                                     $subtract: [{ $multiply: ["$oddValue", "$Stake"] }, "$Stake"]
+        //                                 }
+        //                             },
+        //                             else:{
+        //                                 $sum: {
+        //                                     $divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]
+        //                                 }
+        //                             }
+        //                         }
+        //                     },
+        //                     else:{
+        //                         $cond:{
+        //                             if: { $regexMatch: { input: "$marketName", regex: /^match/i } },
+        //                             then:{
+        //                                 $sum: {
+        //                                    $multiply : [ {$subtract: [ { $multiply: ["$oddValue", "$Stake"] }, "$Stake" ]}, -1]
+        //                                 }
+        //                             },
+        //                             else:{
+        //                                 $sum: { 
+        //                                     $multiply : [ {$divide: [{ $multiply: ["$oddValue", "$Stake"] }, 100]}, -1]
+        //                                 }
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     },
+        // },
+        // {
+        //     $group: {
+        //         _id: "$_id.marketId",
+        //         selections: {
+        //             $push: {
+        //                 selectionName: "$_id.selectionName",
+        //                 totalAmount: '$totalAmount',
+        //                 matchName: "$_id.matchName",
+        //                 Stake: { $multiply: ["$Stake", -1] },
+        //             },
+        //         },
+        //     },
+        // }
     ])
 
     res.status(200).json({
