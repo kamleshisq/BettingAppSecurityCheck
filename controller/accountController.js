@@ -484,9 +484,7 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
         {
             $group: {
                 _id:"$marketId",
-                runs:{$addToSet: {
-                    $concatArrays: ["$runs", ["$runs"]]
-                  }}
+                runs:{$addToSet: '$runs'},
                 // totalAmountB: {
                 //     $sum: {
                 //         $cond: {
