@@ -369,7 +369,7 @@ exports.getUserAccountStatement1 = catchAsync(async(req, res, next) => {
 
 
 exports.getexposure = catchAsync(async(req, res, next)=>{
-    const exposure = await betModel.aggregate([
+    const exposure1 = await betModel.aggregate([
         {
             $match: {
                 status: "OPEN",
@@ -443,13 +443,7 @@ exports.getexposure = catchAsync(async(req, res, next)=>{
     }
     ])
 
-    res.status(200).json({
-        status:'success',
-        data:exposure
-    })
-})
-exports.getexposureFancy = catchAsync(async(req, res, next)=>{
-    const exposure = await betModel.aggregate([
+    const exposure2 = await betModel.aggregate([
         {
             $match: {
                 status: "OPEN",
@@ -489,11 +483,8 @@ exports.getexposureFancy = catchAsync(async(req, res, next)=>{
         // },
         {
             $group: {
-                _id: {
-                    marketId:"$marketId",
-                    runs:'$runs'
-                },
-
+                _id:"$marketId",
+                runs:{$push:'$runs'}
                 // totalAmountB: {
                 //     $sum: {
                 //         $cond: {
@@ -541,9 +532,10 @@ exports.getexposureFancy = catchAsync(async(req, res, next)=>{
 
     res.status(200).json({
         status:'success',
-        data:exposure
+        data:{exposure1,exposure2}
     })
 })
+
 
 
 //for user
