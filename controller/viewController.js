@@ -4902,7 +4902,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                     betData:betData[0].data, type:'ODD'
                 })
             }else{
-                console.log('WORKING123', data)
+                // console.log('WORKING123', data)
                 let betData = await betModel.aggregate([
                     {
                         $match: {
