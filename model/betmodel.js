@@ -105,6 +105,9 @@ const betSchema = mongoose.Schema({
     commissionStatus:{
         type:Boolean,
         default:false
+    },
+    WinAmount : {
+        type:Number
     }
 })
 

@@ -46,7 +46,7 @@ const sendErrorDev = (err, req,res) => {
         // })
         let mainMassage = "Sorry the page you are looking is doesn't exist. If you think something is broken, click contact us."
         console.log(err, "THis is the ERROR")
-        let message
+        let message = "Opps! Please try again later"
         if(err.message.startsWith('Cannot read properties of undefined')){
             message = "Opps! Please try again later"
         }
