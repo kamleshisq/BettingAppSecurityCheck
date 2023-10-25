@@ -4966,7 +4966,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                                         $cond:{
                                             if : {
                                                 $and: [
-                                                  { $ne: ['$$this.parentUSerId', data.id] }, 
+                                                  { $ne: ['$$this.parentUSerId', req.body.id] }, 
                                                   { $eq: ['$$value.flag', true] } 
                                                 ]
                                               },
