@@ -5046,6 +5046,16 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                             }
                         }
                     },
+                    {
+                        $project:{
+                            _id:0,
+                            secId: "$secId",
+                            runs: "$runs",
+                            totalAmount:"$totalAmount.value",
+                            totalWinAmount:"$totalWinAmount.value",
+                            uniqueRuns:"$uniqueRuns",
+                        }
+                    },
                     // {
                     //     $group: {
                     //       _id: null,
@@ -5077,16 +5087,7 @@ exports.getFancyBookDATA = catchAsync(async(req, res, next) => {
                     //   },
                    
                    
-                    // {
-                    //     $project:{
-                    //         _id:0,
-                    //         secId: "$secId",
-                    //         runs: "$runs",
-                    //         totalAmount:"$totalAmount.value",
-                    //         totalWinAmount:"$totalWinAmount.value",
-                    //         uniqueRuns:"$uniqueRuns",
-                    //     }
-                    // },
+                    
                     // {
                     //     $addFields: {
                     //       dataTOShow: {
